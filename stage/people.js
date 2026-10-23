@@ -263,6 +263,25 @@ function makePerson(type) {
     g.position.set(s * 0.027, 0.013, 0.062);
     head.add(g);
     mesh(sphere(0.014, 24, 16), eyeM, g, [0, 0, 0], [1.1, 0.85, 0.5]);
+    // 눈꺼풀: 눈알보다 조금 큰 살색 껍질. 윗꺼풀은 눈알 위쪽을 덮고 앞으로 돌아 내려오며 감기고(깜빡임),
+    // 아랫꺼풀은 아래쪽에 가만히 있다. 윗꺼풀 가장자리에 짙은 속눈썹 선
+    const lids = new THREE.Group();
+    lids.scale.set(1.1, 0.85, 0.5);
+    g.add(lids);
+    const R = 0.0152, UP = 1.15, LO = 0.75;
+    const lid = new THREE.Group();
+    lids.add(lid);
+    mesh(sphere(R, 24, 10, 0, Math.PI * 2, 0, UP), skin, lid);
+    // 속눈썹 선은 앞쪽 반원만 (감았을 때 둥근 테두리가 보이지 않게)
+    const lashG = new THREE.Group(), A = 1.2;
+    lashG.position.y = R * Math.cos(UP); lashG.rotation.x = Math.PI / 2;
+    lid.add(lashG);
+    const lash = mesh(new THREE.TorusGeometry(R * Math.sin(UP), 0.0011, 4, 24, A * 2), mat('#2a1a10'), lashG);
+    lash.rotation.z = Math.PI / 2 - A;
+    lash.castShadow = false;
+    mesh(sphere(R * 0.99, 24, 8, 0, Math.PI * 2, Math.PI - LO, LO), skin, lids);
+    lid.rotation.x = -0.4;
+    g.userData.lid = lid;
     const brow = mesh(new THREE.CapsuleGeometry(0.0035, 0.018, 3, 6), mat(t.hair || '#3b2616'), head, [s * 0.028, 0.032, 0.071]);
     brow.rotation.z = Math.PI / 2 - s * 0.1; // 바깥쪽으로 살짝 처진 부드러운 눈썹
     return g;
@@ -627,7 +646,8 @@ class Actor {
     p.baby.visible = carry;
     // 눈 깜빡임(사람마다 박자가 다르게), 말할 때 입 움직임
     const blink = (t * 0.27) % 1 < 0.035 ? 0.12 : 1;
-    p.eyes.forEach(e => { e.scale.y = damp(e.scale.y, lie > 0.5 ? 0.12 : blink, 30, dt); });
+    // 윗꺼풀을 앞으로 돌려 내리면 감긴다 (-0.4: 뜬 눈, 1.4: 감은 눈)
+    p.eyes.forEach(e => { const L = e.userData.lid; L.rotation.x = damp(L.rotation.x, lie > 0.5 || blink < 1 ? 1.4 : -0.4, 30, dt); });
     const talk = this.pose === 'speak' && !this.solemn ? 0.55 + Math.abs(Math.sin(t * 8.5) * Math.sin(t * 3.1)) * 1.6 : 0.35;
     p.mouth.scale.y = damp(p.mouth.scale.y, talk, 18, dt);
     p.bed.visible = lie > 0.5;
