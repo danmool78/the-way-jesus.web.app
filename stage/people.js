@@ -54,6 +54,8 @@ const TYPES = {
   sadducee: { robe: '#e9dfc8', trim: '#7a2a5e', mantle: '#7a2a5e', hair: '#2b1b10', beard: true, sash: '#7a2a5e', skin: 2 }, // 사두개인 (부유한 제사장 가문)
   highpriest: { robe: '#f1ece0', trim: '#d6a93a', mantle: '#3c5d96', hair: '#d9d4c8', beard: true, turban: '#efe8d8', sash: '#a3554a', skin: 2, height: 0.98 }, // 대제사장 가야바
   pilate:   { robe: '#f2ede2', trim: '#9d3328', mantle: '#9d3328', hair: '#3a2a1c', sash: '#9d3328', skin: 2 }, // 총독 빌라도 (로마 옷, 수염 없음)
+  risen:    { robe: '#fbf8f0', trim: '#d9b46a', mantle: '#efe4cc', hair: '#4a2e1c', beard: true, long: true, sash: '#d9b46a', glow: true }, // 부활하신 예수 (밝은 흰옷, 은은한 빛)
+  whiteman: { robe: '#fffdf8', trim: '#e8dcc0', hair: '#c9a86a', sash: '#e8dcc0', glow: true, skin: 2 }, // 흰옷 입은 사람 (날개 없는 하늘의 전령)
   levi:     { robe: '#5a3e6e', trim: '#c9a24a', mantle: '#b9935a', hair: '#2b1b10', beard: true, sash: '#c9a24a', skin: 2 }, // 세리 마태 (값진 옷)
   official: { robe: '#2f4f6a', trim: '#d6a93a', mantle: '#c8b48c', hair: '#2b1b10', beard: true, sash: '#d6a93a', skin: 2 }, // 왕의 신하
 };
