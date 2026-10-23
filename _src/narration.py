@@ -8,13 +8,12 @@
 """
 import hashlib, re
 
-# 목소리 설계 (Qwen3-TTS VoiceDesign). 목소리마다 기준 음성을 한 번 만들어 _src/voices/에 두고,
-# 문장은 그 기준 음성을 복제해(Qwen3-TTS Base) 읽는다. 그래서 장면이 바뀌어도 같은 목소리다.
-# DESIGN_EACH에 든 목소리만 문장마다 묘사로 새로 만든다.
-# 기준 음성은 직접 듣고 고른 것이므로 지우지 않는다. 묘사를 바꾸려면 해당 wav를 지우고 다시 만든다.
+# 목소리 설계 (ElevenLabs 보이스 디자인 묘사). voice.py --design이 이 묘사로 목소리를 만들고 ID를
+# _src/voices/eleven.json에 적는다. 예수는 직접 듣고 고른 음성(_src/voices/jesus.wav)을 복제한다(--clone jesus).
+# 한 목소리가 모든 장면을 같은 목소리 ID로 읽으므로 장면이 바뀌어도 같은 목소리다.
 _PLAIN = ' Natural Korean speech at a normal pace; sincere, not theatrical, not slow.'
 VOICES = {
-    'narrator':  'A Korean woman in her late forties, a seasoned audiobook narrator. Mature, warm mid-low voice with a firm, grounded delivery and natural speaking pace. Sincere and moving but composed, every word clear and alive.',
+    'narrator':  'A Korean woman in her late forties with a mature, warm mid-low voice and standard Seoul pronunciation. Reads an audiobook plainly and calmly, like quietly reading a book aloud to a friend. Even, understated and natural; no acting, no dramatic emphasis, no exaggerated emotion, normal pace.',
     'jesus':     'A Korean man in his thirties, a plain-spoken village carpenter. Clear, grounded, natural voice; short, firm and sincere sentences, simple and direct with quiet confidence. No sweetness, no whispering, no theatrical drama, not greasy.',
     'gabriel':   'A Korean man in his twenties with a bright, clear, ringing voice, an angel bringing astonishing news; gentle reassurance with radiant joy.' + _PLAIN,
     'angel':     'A Korean man in his thirties with a calm, clear, solemn voice, a heavenly messenger giving urgent instructions in a dream; steady and certain.' + _PLAIN,
@@ -39,14 +38,15 @@ VOICES = {
     'magdalene': 'A Korean woman in her twenties, voice trembling with tears turning into overwhelming joy, breathless.' + _PLAIN,
     'thomas':    'A Korean man in his thirties with a deep, earnest voice breaking with emotion, overwhelmed with awe.' + _PLAIN,
 }
-# 기준 음성을 복제하지 않고 문장마다 묘사로 새로 만드는 목소리 (표현이 더 살아난다. 들어 보고 고른 것)
-DESIGN_EACH = {'narrator'}
-# 기준 음성을 만들 때 각 목소리가 읽는 문장
-REF_TEXT = {
-    'narrator': '갈릴리 언덕 마을 나사렛. 구약 어디에도 이름이 나오지 않는 작은 동네의 오후, 물동이를 내려놓은 소녀 마리아 앞에 빛이 섰다.',
-    'jesus': '두려워하지 마라. 나다. 평안히 가거라, 네 믿음이 너를 살렸다.',
+ELEVEN_MODEL = 'eleven_v3'
+# eleven_v3의 안정성: 1.0(Robust)은 가장 담담하고 일정하며, 0.5(Natural)는 감정이 조금 더 실린다.
+STABILITY = {'narrator': 1.0, 'jesus': 1.0}
+stability = lambda v: STABILITY.get(v, 0.5)
+# 보이스 디자인이 목소리를 만들며 읽어 보는 문장 (100자 이상이어야 한다)
+SAMPLE_TEXT = {
+    'narrator': '갈릴리 언덕 마을 나사렛. 구약 어디에도 이름이 나오지 않는 작은 동네의 오후, 물동이를 내려놓은 소녀 마리아 앞에 빛이 섰다. 천사 가브리엘이었다. 세상이 모르는 사이, 하늘은 가장 낮은 자리에서 가장 큰 이야기를 시작하고 있었다.',
 }
-REF_DEFAULT = '정말입니다. 제 눈으로 똑똑히 보았어요. 그날 일은 평생 잊지 못할 겁니다.'
+SAMPLE_DEFAULT = '정말입니다. 제 눈으로 똑똑히 보았어요. 그날 일은 평생 잊지 못할 겁니다. 처음에는 저도 믿을 수가 없었지요. 하지만 그분이 하신 말씀과 일을 다 듣고 보고 나니, 이제는 누구에게라도 말할 수 있습니다.'
 
 # 인물 → 목소리. 기록·예언 인용은 내레이터가 읽는다.
 SPEAKER_VOICE = {
@@ -129,10 +129,10 @@ def clips(data):
     return list(out.values())
 
 
-def digest(clip):
-    """문장이나 목소리 설계가 바뀌면 달라지는 지문. 음원을 다시 만들지 판단한다."""
-    mode = 'design' if clip['voice'] in DESIGN_EACH else 'clone'
-    return hashlib.sha1(f"{mode}|{VOICES[clip['voice']]}\n{clip['text']}".encode()).hexdigest()[:10]
+def digest(clip, ids):
+    """문장·목소리·설정이 바뀌면 달라지는 지문. 음원을 다시 만들지 판단한다. ids: 목소리 → ElevenLabs ID"""
+    v = clip['voice']
+    return hashlib.sha1(f"{ELEVEN_MODEL}|{ids.get(v)}|{stability(v)}\n{clip['text']}".encode()).hexdigest()[:10]
 
 
 def filename(clip, h):

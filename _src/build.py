@@ -24,7 +24,9 @@ print(len(events), 'events,', sum(1 for e in events if 'img' in e), 'with images
 import narration
 audio = os.path.join(here, '..', 'audio.json')
 have = json.load(open(audio, encoding='utf-8'))['clips'] if os.path.exists(audio) else {}
+ids_path = os.path.join(here, 'voices', 'eleven.json')
+ids = json.load(open(ids_path, encoding='utf-8')) if os.path.exists(ids_path) else {}
 clips = narration.clips(out)
-stale = [c['key'] for c in clips if have.get(c['key']) != narration.filename(c, narration.digest(c))]
+stale = [c['key'] for c in clips if have.get(c['key']) != narration.filename(c, narration.digest(c, ids))]
 if stale:
     print(f'낭독 음원: {len(clips)}개 중 {len(stale)}개가 없거나 원고와 다릅니다 (음성 합성으로 읽음). 예: {", ".join(stale[:5])}')
