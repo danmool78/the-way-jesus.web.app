@@ -1,0 +1,33 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>소품 확인</title>
+<!-- 소품을 가까이서 보는 도구. 서버를 저장소 루트에서 띄우고 /_src/tools/props.html?p=camel,donkey
+     &yaw=0.6 은 돌린 각도, &d=2 는 카메라 거리 배율 -->
+<style>body{margin:0;background:#2a241c}canvas{display:block}</style>
+<script type="module">
+import { THREE } from '../../stage/kit.js';
+import { makeProp } from '../../stage/props.js';
+const q = new URLSearchParams(location.search);
+const kinds = (q.get('p') || 'camel,donkey').split(',');
+const yaw = +(q.get('yaw') || 0), d = +(q.get('d') || 1);
+const W = innerWidth, H = innerHeight;
+const r = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+r.setPixelRatio(devicePixelRatio); r.setSize(W, H); r.shadowMap.enabled = true;
+r.outputColorSpace = THREE.SRGBColorSpace;
+document.body.appendChild(r.domElement);
+const s = new THREE.Scene();
+s.add(new THREE.HemisphereLight('#fff6e6', '#6b5a44', 1.6));
+const L = new THREE.DirectionalLight('#fff1d8', 2.2); L.position.set(-1.5, 3, 2.5); s.add(L);
+const gap = 1.1;
+kinds.forEach((k, i) => {
+  const p = makeProp(k, (i - (kinds.length - 1) / 2) * gap, 0);
+  p.obj.rotation.y += yaw;
+  p.update(0, 0.016, {});
+  s.add(p.obj);
+});
+const span = Math.max(1.2, kinds.length * gap);
+const cam = new THREE.PerspectiveCamera(30, W / H, 0.01, 50);
+cam.position.set(0, 0.9 * d, span * 1.6 * d); cam.lookAt(0, 0.4, 0);
+r.render(s, cam);
+document.title = 'ready';
+</script>
