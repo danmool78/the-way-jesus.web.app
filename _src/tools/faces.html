@@ -1,0 +1,34 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>얼굴 확인</title>
+<!-- 사람 모형의 머리·얼굴을 가까이서 보는 도구. 서버를 저장소 루트에서 띄우고 /_src/tools/faces.html?t=jesus,mary,peter
+     &yaw=0.6 은 고개를 돌린 각도, &far=1 은 무대에서 보는 거리 -->
+<style>body{margin:0;background:#2a241c}canvas{display:block}</style>
+<script type="module">
+import { THREE } from '../../stage/kit.js';
+import { makePerson } from '../../stage/people.js';
+const q = new URLSearchParams(location.search);
+const types = (q.get('t') || 'jesus,mary,peter,john,man,elder').split(',');
+const yaw = +(q.get('yaw') || 0), far = q.has('far');
+const W = innerWidth, H = innerHeight;
+const r = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+r.setPixelRatio(devicePixelRatio); r.setSize(W, H); r.shadowMap.enabled = true;
+r.outputColorSpace = THREE.SRGBColorSpace;
+document.body.appendChild(r.domElement);
+const s = new THREE.Scene();
+s.add(new THREE.HemisphereLight('#fff6e6', '#6b5a44', 1.6));
+const d = new THREE.DirectionalLight('#fff1d8', 2.2); d.position.set(-1.5, 3, 2.5); s.add(d);
+const gap = 0.3;
+types.forEach((t, i) => {
+  const p = makePerson(t);
+  p.root.position.x = (i - (types.length - 1) / 2) * gap;
+  p.head.rotation.y = yaw;
+  s.add(p.root);
+});
+const span = types.length * gap;
+const cam = new THREE.PerspectiveCamera(far ? 30 : 22, W / H, 0.01, 50);
+if (far) cam.position.set(0, 1.6, span * 2.6), cam.lookAt(0, 0.45, 0);
+else cam.position.set(0, 0.82, span * 1.25), cam.lookAt(0, 0.8, 0);
+r.render(s, cam);
+document.title = 'ready';
+</script>
