@@ -9,7 +9,8 @@
 import hashlib, re
 
 # 목소리 설계 (Qwen3-TTS VoiceDesign). 목소리마다 기준 음성을 한 번 만들어 _src/voices/에 두고,
-# 모든 문장은 그 기준 음성을 복제해(Qwen3-TTS Base) 읽는다. 그래서 장면이 바뀌어도 같은 목소리다.
+# 문장은 그 기준 음성을 복제해(Qwen3-TTS Base) 읽는다. 그래서 장면이 바뀌어도 같은 목소리다.
+# DESIGN_EACH에 든 목소리만 문장마다 묘사로 새로 만든다.
 # 기준 음성은 직접 듣고 고른 것이므로 지우지 않는다. 묘사를 바꾸려면 해당 wav를 지우고 다시 만든다.
 _PLAIN = ' Natural Korean speech at a normal pace; sincere, not theatrical, not slow.'
 VOICES = {
@@ -38,6 +39,8 @@ VOICES = {
     'magdalene': 'A Korean woman in her twenties, voice trembling with tears turning into overwhelming joy, breathless.' + _PLAIN,
     'thomas':    'A Korean man in his thirties with a deep, earnest voice breaking with emotion, overwhelmed with awe.' + _PLAIN,
 }
+# 기준 음성을 복제하지 않고 문장마다 묘사로 새로 만드는 목소리 (표현이 더 살아난다. 들어 보고 고른 것)
+DESIGN_EACH = {'narrator'}
 # 기준 음성을 만들 때 각 목소리가 읽는 문장
 REF_TEXT = {
     'narrator': '갈릴리 언덕 마을 나사렛. 구약 어디에도 이름이 나오지 않는 작은 동네의 오후, 물동이를 내려놓은 소녀 마리아 앞에 빛이 섰다.',
@@ -128,7 +131,8 @@ def clips(data):
 
 def digest(clip):
     """문장이나 목소리 설계가 바뀌면 달라지는 지문. 음원을 다시 만들지 판단한다."""
-    return hashlib.sha1(f"{VOICES[clip['voice']]}\n{clip['text']}".encode()).hexdigest()[:10]
+    mode = 'design' if clip['voice'] in DESIGN_EACH else 'clone'
+    return hashlib.sha1(f"{mode}|{VOICES[clip['voice']]}\n{clip['text']}".encode()).hexdigest()[:10]
 
 
 def filename(clip, h):

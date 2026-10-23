@@ -66,29 +66,42 @@ def main():
     if args.refs_only:
         return
 
-    # 2. 기준 음성을 복제해 모든 문장을 읽는다
+    # 2. 문장을 읽는다: DESIGN_EACH 목소리는 묘사로, 나머지는 기준 음성을 복제해서.
+    #    두 모델을 함께 올리면 메모리가 모자라므로 모델별로 나눠 돈다.
     todo = [c for c in clips if (not args.only or c['key'].startswith(args.only))
             and not os.path.exists(os.path.join(audio_dir, N.filename(c, N.digest(c))))]
     print(f'{len(clips)}개 중 {len(todo)}개 생성', flush=True)
-    if not todo:
-        write_manifest(clips)
-        return
-    base = load(BASE)
-    prompts = {}
-    t0 = time.time()
-    for n, c in enumerate(todo, 1):
-        v = c['voice']
-        if v not in prompts:
-            prompts[v] = base.create_voice_clone_prompt(ref_audio=ref_wav(v), ref_text=ref_text(v))
-        torch.manual_seed(1)
-        wavs, sr = base.generate_voice_clone(text=c['text'], language='Korean', voice_clone_prompt=prompts[v])
+    t0, done = time.time(), 0
+    def save(c, wav, sr):
+        nonlocal done
         with tempfile.NamedTemporaryFile(suffix='.wav') as tmp:
-            sf.write(tmp.name, wavs[0], sr)
+            sf.write(tmp.name, wav, sr)
             encode(tmp.name, os.path.join(audio_dir, N.filename(c, N.digest(c))))
-        if n % 10 == 0 or n == len(todo):
+        done += 1
+        if done % 10 == 0 or done == len(todo):
             write_manifest(clips)
             el = time.time() - t0
-            print(f'{n}/{len(todo)}  경과 {el / 60:.0f}분, 남은 시간 약 {el / n * (len(todo) - n) / 60:.0f}분', flush=True)
+            print(f'{done}/{len(todo)}  경과 {el / 60:.0f}분, 남은 시간 약 {el / done * (len(todo) - done) / 60:.0f}분', flush=True)
+
+    designed = [c for c in todo if c['voice'] in N.DESIGN_EACH]
+    cloned = [c for c in todo if c['voice'] not in N.DESIGN_EACH]
+    if designed:
+        model = load(DESIGN)
+        for c in designed:
+            torch.manual_seed(1)
+            wavs, sr = model.generate_voice_design(text=c['text'], language='Korean', instruct=N.VOICES[c['voice']])
+            save(c, wavs[0], sr)
+        del model; gc.collect()
+    if cloned:
+        model = load(BASE)
+        prompts = {}
+        for c in cloned:
+            v = c['voice']
+            if v not in prompts:
+                prompts[v] = model.create_voice_clone_prompt(ref_audio=ref_wav(v), ref_text=ref_text(v))
+            torch.manual_seed(1)
+            wavs, sr = model.generate_voice_clone(text=c['text'], language='Korean', voice_clone_prompt=prompts[v])
+            save(c, wavs[0], sr)
 
     # 원고에서 사라졌거나 바뀐 조각의 옛 음원을 지운다
     keep = set(write_manifest(clips).values())
