@@ -18,15 +18,20 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
-EXTENT = dict(lat0=30.45, lat1=34.05, lng0=33.85, lng1=36.65)  # app.js RELIEF와 동일
+EXTENT = dict(lat0=29.9, lat1=34.6, lng0=33.0, lng1=37.4)  # app.js RELIEF와 동일 (넓은 화면에서도 가장자리가 비지 않게)
 COS = math.cos(32.3 * math.pi / 180)
-PX_PER_UNIT = 0.8  # 지도 단위(1/1000도) 당 픽셀
+PX_PER_UNIT = 0.62  # 지도 단위(1/1000도) 당 픽셀 (휴대폰 메모리를 생각해 약 650만 화소 이내로)
 Z = 10
+# 애굽 쪽 바탕: 본 바탕의 서쪽에 이어 붙인다 (겹치는 띠는 가장자리 투명으로 섞인다). app.js의 RELIEF_WEST와 같게
+WEST = dict(lat0=29.9, lat1=31.9, lng0=30.6, lng1=33.25)
+# 나일 삼각주(동쪽 절반): 비는 거의 없지만 강물로 푸른 땅
+DELTA = [(30.05, 31.25), (30.6, 30.6), (31.3, 30.6), (31.5, 31.0), (31.55, 31.4), (31.45, 31.85), (31.25, 32.25), (30.9, 32.3), (30.5, 31.8)]
 URL = 'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'
 OUT = Path(__file__).resolve().parent.parent / 'assets' / 'relief.webp'
 
-# 확대용 정밀 타일: 장소들이 모인 핵심 지역만, 약 30m 고도 자료로. app.js의 RELIEF_HI와 같게
-HI = dict(lat0=30.95, lat1=33.45, lng0=34.6, lng1=36.0)
+# 확대용 정밀 타일: 바탕과 거의 같은 넓이로, 약 30m 고도 자료로. app.js의 RELIEF_HI와 같게
+# (핵심 지역만 덮었더니 넓은 화면에서 그 바깥만 흐려 지도를 일부만 그린 것처럼 보였다)
+HI = dict(lat0=30.2, lat1=34.4, lng0=33.4, lng1=37.0)
 Z_HI = 12
 HI_TILE_UNITS = 160  # 타일 한 장이 덮는 지도 단위
 HI_TILE_PX = 512     # → 지도 단위당 3.2픽셀
@@ -139,12 +144,8 @@ def paint(dem, rain, land, k):
     return np.clip(rgb * k[..., None], 0, 255)
 
 
-def main(cache):
-    cache = Path(cache)
-    cache.mkdir(parents=True, exist_ok=True)
-    e = EXTENT
-
-    # 1) 전체 바탕 (assets/relief.webp)
+def base(cache, e, out, green=None):
+    """넓은 바탕 한 장. green: 강·관개로 푸른 땅의 (위도, 경도) 다각형 — 비가 적어도 초록으로 칠한다(나일 삼각주)"""
     w = round((e['lng1'] - e['lng0']) * COS * 1000 * PX_PER_UNIT)
     h = round((e['lat1'] - e['lat0']) * 1000 * PX_PER_UNIT)
     lng = e['lng0'] + (np.arange(w) + .5) / w * (e['lng1'] - e['lng0'])
@@ -152,20 +153,39 @@ def main(cache):
     dem = sample(mosaic_for(cache, e, Z), Z, lat, lng)
 
     # 지중해 해저는 평평하게 지운다(바다는 지도에서 벡터로 덮음). 각 행의 서쪽 끝에서
-    # 첫 육지까지만 바다로 보므로, 해수면 아래인 요단·아라바 골짜기는 그대로 남는다
-    first_land = np.argmax(dem > 0, axis=1)
+    # 첫 육지까지만 바다로 보므로, 해수면 아래인 요단·아라바 골짜기는 그대로 남는다.
+    # 육지가 하나도 없는 행(삼각주 북쪽 바다)은 통째로 바다
+    has = (dem > 0).any(axis=1)
+    first_land = np.where(has, np.argmax(dem > 0, axis=1), w)
     land = np.arange(w)[None, :] >= first_land[:, None]
     dem = np.where(land, dem, 0)
-    rain = rain_field(dem, lat, first_land, w)
+    rain = rain_field(dem, lat, np.minimum(first_land, w - 1), w)
+    if green:
+        from PIL import ImageDraw
+        m = Image.new('L', (w, h), 0)
+        ImageDraw.Draw(m).polygon([((g - e['lng0']) / (e['lng1'] - e['lng0']) * w, (e['lat1'] - a) / (e['lat1'] - e['lat0']) * h) for a, g in green], fill=255)
+        m = blur(np.asarray(m, dtype=np.float32) / 255, 8)
+        rain = rain + m * 700
     rgb = paint(dem, rain, land, shading(dem, lat, lng, 2.5))
 
     # 가장자리는 투명하게 풀어 바탕 땅색으로 자연스럽게 이어지게
     ramp = lambda n, m: np.clip(np.minimum(np.arange(n), np.arange(n)[::-1]) / m, 0, 1)
     alpha = np.outer(ramp(h, h * .06), ramp(w, w * .06)) ** .8 * 255
     img = Image.fromarray(np.dstack([rgb, alpha]).astype(np.uint8), 'RGBA')
-    OUT.parent.mkdir(exist_ok=True)
-    img.save(OUT, 'WEBP', quality=80, method=6)
-    print(f'{OUT} {w}x{h} {OUT.stat().st_size // 1024}KB, dem {dem.min():.0f}..{dem.max():.0f}m')
+    out.parent.mkdir(exist_ok=True)
+    img.save(out, 'WEBP', quality=80, method=6)
+    print(f'{out} {w}x{h} {out.stat().st_size // 1024}KB, dem {dem.min():.0f}..{dem.max():.0f}m')
+    return lat, lng, first_land, rain, w, h
+
+
+def main(cache):
+    cache = Path(cache)
+    cache.mkdir(parents=True, exist_ok=True)
+    e = EXTENT
+
+    # 1) 전체 바탕 (assets/relief.webp), 서쪽 애굽 쪽 바탕 (assets/relief-west.webp — 시나이 북부와 나일 삼각주 동쪽)
+    lat, lng, first_land, rain, w, h = base(cache, e, OUT)
+    base(cache, WEST, OUT.parent / 'relief-west.webp', green=DELTA)
 
     # 2) 확대용 정밀 타일 (assets/relief-hi/행_열.webp), 3) 도성 초정밀 타일 (assets/relief-city/)
     # 강수량·해안선은 바탕 격자에서 보간
@@ -197,7 +217,7 @@ def tiles(cache, ext, z, units, out, zf, lat, lng, coast, rain, w, h):
             train = (rain[iy, ix] * (1 - ax) + rain[iy, ix + 1] * ax) * (1 - ay) + (rain[iy + 1, ix] * (1 - ax) + rain[iy + 1, ix + 1] * ax) * ay
             trgb = paint(tdem, train, tland, shading(tdem, tlat, tlng, zf))[1:-1, 1:-1]
             f = out / f'{r}_{c}.webp'
-            Image.fromarray(trgb.astype(np.uint8), 'RGB').save(f, 'WEBP', quality=74, method=6)
+            Image.fromarray(trgb.astype(np.uint8), 'RGB').save(f, 'WEBP', quality=70, method=6)
             total += f.stat().st_size
     print(f'{out} {rows}x{cols} tiles, {total // 1024}KB')
 
