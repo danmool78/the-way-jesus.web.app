@@ -15,7 +15,7 @@ const TYPES = {
   anna:     { robe: '#4f4a5e', trim: '#3a3646', mantle: '#8a8172', hair: '#cfc8bb', veil: true, inner: '#ddd6c8', skin: 1, soft: true, slim: true, sash: '#3a3646', height: 0.93 }, // 여든 넷의 과부 예언자
   magus2:   { robe: '#1f5a5a', trim: '#d6a93a', mantle: '#b0402e', hair: '#e2ddd2', beard: true, turban: '#d8b45a', skin: 1, sash: '#d6a93a' },
   magus3:   { robe: '#8a3c1c', trim: '#d6a93a', mantle: '#2f4f8a', hair: '#1d140c', beard: true, crown: true, skin: 3, sash: '#d6a93a' },
-  boyJesus: { robe: '#efe7d6', trim: '#a8843f', mantle: '#9b3b2a', hair: '#4a2e1c', sash: '#b08a4e', height: 0.78 }, // 열두 살 소년
+  boyJesus: { robe: '#d8c49c', trim: '#8a6a44', hair: '#4a2e1c', sash: '#7a5a38', height: 0.78, kid: true }, // 열두 살 소년: 어른 예수의 흰 옷·붉은 망토 대신 거친 무명 속옷에 끈 띠만
   mother:   { robe: '#7a5a48', trim: '#5a3e30', mantle: '#4a4a52', veil: true, inner: '#e7dfd0', skin: 1, soft: true, slim: true, sash: '#5a3e30' },
   crossed:  { robe: '#efe7d6', hair: '#4a2e1c', beard: true, long: true, bare: true }, // 십자가 위의 예수 (실루엣 전용)
   john:     { robe: '#cdb994', trim: '#7a3b2e', mantle: '#7a3b2e', hair: '#5a3a22', sash: '#7a3b2e' }, // 젊은 제자: 수염 없음
@@ -31,13 +31,13 @@ const TYPES = {
   thief:    { robe: '#cbb79a', hair: '#2b1b10', beard: true, bare: true, height: 0.96 }, // 십자가의 두 죄수 (실루엣 전용)
   pharisee: { robe: '#d9cfb6', trim: '#3e5470', mantle: '#3e5470', hair: '#2b1b10', beard: true, hood: '#efe8d8', band: '#3e5470', skin: 2 },
   man:      { robe: '#8b6f50', trim: '#6b5438', mantle: '#a99069', hair: '#2e1d12', beard: true, sash: '#5b4630' },
-  child:    { robe: '#e6dcc4', trim: '#8f6d4b', mantle: '#8f6d4b', hair: '#4a2e1c', height: 0.66 },
+  child:    { robe: '#e6dcc4', trim: '#8f6d4b', mantle: '#8f6d4b', hair: '#4a2e1c', height: 0.66, kid: true },
   samaritan: { robe: '#9c5b3a', trim: '#6e3a22', mantle: '#d8b878', veil: true, inner: '#f1e6d0', skin: 1, soft: true, slim: true, sash: '#6e3a22' }, // 수가의 여인
   centurion: { robe: '#9d3328', trim: '#d6a93a', mantle: '#6b2a20', hair: '#2b1b10', helmet: true, sash: '#5a3d22' }, // 백부장 (창 없이)
   youth:    { robe: '#efe9dc', trim: '#cdbf9e', hair: '#3b2616', sash: '#cdbf9e' }, // 나인의 청년 (흰 수의)
   wild:     { robe: '#6e6254', trim: '#5a4e40', hair: '#3a2a1c', beard: true, long: true, skin: 1 }, // 무덤 사이의 사람 (헝클어진 머리, 해진 옷)
   healed:   { robe: '#e3d6b8', trim: '#8b6f50', mantle: '#8b6f50', hair: '#3a2a1c', beard: true, sash: '#6b5438', skin: 1 }, // 옷을 입고 정신이 돌아온 그 사람
-  girl:     { robe: '#f1e7cf', trim: '#c0607a', hair: '#3b2616', long: true, soft: true, slim: true, sash: '#c0607a', height: 0.72 }, // 열두 살 소녀
+  girl:     { robe: '#f1e7cf', trim: '#c0607a', hair: '#3b2616', long: true, soft: true, slim: true, sash: '#c0607a', height: 0.72, kid: true }, // 열두 살 소녀
   phoenician: { robe: '#6b2a5e', trim: '#d6a93a', mantle: '#c99a5a', veil: true, inner: '#efe6d4', skin: 2, soft: true, slim: true, sash: '#d6a93a' }, // 두로의 어머니 (자주색 옷)
   moses:    { robe: '#e8e0cc', trim: '#7a5a32', mantle: '#8a5a32', hair: '#ece6da', beard: true, long: true, sash: '#7a5a32', skin: 1, glow: true }, // 변화산의 모세
   elijah:   { robe: '#7a5a32', trim: '#4a3620', mantle: '#c9b48c', hair: '#d9d2c4', beard: true, long: true, sash: '#4a3620', skin: 1, glow: true }, // 변화산의 엘리야 (털옷)
@@ -178,6 +178,43 @@ function eyeTexture(iris) {
 }
 let personNo = 0;
 
+// 얼굴 피부 그림: 머리 공에 입히는 한 장. 공의 +z(앞)가 그림 가로 1/4, 위에서 아래로 그림 위→아래.
+// 덧붙인 볼터치 대신 피부 안에서 은은하게 — 볼·코끝·입술 둘레는 따뜻하게, 눈두덩과 관자놀이는 살짝 그늘지게,
+// 수염 없는 남자는 턱에 옅은 면도 자국, 고르지 않은 피부 톤
+const skinTex = new Map();
+function skinMaterial(color, soft, shave) {
+  const key = color + soft + shave;
+  if (skinTex.has(key)) return skinTex.get(key);
+  const c = document.createElement('canvas'); c.width = 512; c.height = 256;
+  const g = c.getContext('2d'), base = new THREE.Color(color);
+  const css = (col, a) => `rgba(${Math.round(col.r * 255)},${Math.round(col.g * 255)},${Math.round(col.b * 255)},${a})`;
+  g.fillStyle = '#' + base.getHexString(); g.fillRect(0, 0, 512, 256);
+  const blob = (x, y, rx, ry, col, a) => {
+    g.save(); g.translate(x, y); g.scale(1, ry / rx);
+    const gr = g.createRadialGradient(0, 0, 0, 0, 0, rx);
+    gr.addColorStop(0, css(col, a)); gr.addColorStop(1, css(col, 0));
+    g.fillStyle = gr; g.beginPath(); g.arc(0, 0, rx, 0, Math.PI * 2); g.fill(); g.restore();
+  };
+  const X = 128, warm = base.clone().lerp(new THREE.Color('#d0645a'), 0.55), shade = base.clone().multiplyScalar(0.72);
+  // 피부 톤의 고르지 않음: 크고 옅은 얼룩 몇 개 (작은 점은 주근깨처럼 보여 쓰지 않는다)
+  for (let i = 0; i < 14; i++) blob(Math.random() * 512, 40 + Math.random() * 180, 30 + Math.random() * 40, 20 + Math.random() * 30,
+    Math.random() < 0.5 ? base.clone().multiplyScalar(0.92) : base.clone().lerp(new THREE.Color('#ffffff'), 0.08), 0.25);
+  [-1, 1].forEach(s => {
+    blob(X + s * 46, 148, 30, 22, warm, soft ? 0.38 : 0.2);    // 볼
+    blob(X + s * 26, 112, 16, 9, shade, 0.35);                  // 눈두덩 아래 그늘
+    blob(X + s * 70, 110, 22, 30, shade, 0.25);                 // 관자놀이
+  });
+  blob(X, 140, 10, 8, warm, 0.25);                               // 코끝
+  blob(X, 166, 20, 10, warm, soft ? 0.3 : 0.18);                 // 입술 둘레
+  if (shave) blob(X, 186, 58, 22, base.clone().lerp(new THREE.Color('#3a3a44'), 0.5), 0.22); // 면도 자국
+  blob(X, 60, 60, 26, base.clone().lerp(new THREE.Color('#ffffff'), 0.25), 0.25); // 이마 윗부분 빛
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4;
+  const m = new THREE.MeshStandardMaterial({ map: t, roughness: 0.7 });
+  skinTex.set(key, m);
+  return m;
+}
+
 function makePerson(type) {
   const t = TYPES[type] || TYPES.man;
   const skin = mat(SKIN[t.skin || 0], { roughness: 0.7 });
@@ -252,9 +289,9 @@ function makePerson(type) {
   // 머리
   const head = new THREE.Group();
   head.position.set(0, 0.8, 0);
-  head.scale.setScalar(t.slim ? 0.9 : 0.93); // 머리를 조금 작게 해서 늘씬한 비율로
+  head.scale.setScalar((t.slim ? 0.9 : 0.93) * (t.kid ? 1.14 : 1)); // 머리를 조금 작게 해서 늘씬한 비율로 (아이는 머리가 몸에 비해 크게)
   upper.add(head);
-  mesh(headShape(sphere(0.08, 48, 36), [0, 0, 0], true), skin, head);
+  mesh(headShape(sphere(0.08, 48, 36), [0, 0, 0], true), skinMaterial(SKIN[t.skin || 0], !!t.soft, !t.beard && !t.soft && !t.bare && (t.height || 1) > 0.8), head);
   [-1, 1].forEach(s => mesh(sphere(0.017, 10, 8), skin, head, [s * 0.068, -0.004, -0.004], [0.45, 1, 0.75])); // 귀
   mesh(noseGeo(globalThis.NOSE || 'B'), skin, head, [0, -0.001, 0.0695]); // A 곧은 코 · B 오똑한 코 · C 매부리 코 (faces.html?nose=로 비교)
   const eyeM = eyeTexture(t.eye || IRIS[(personNo++ * 5 + type.length) % IRIS.length]); // 사람마다 눈 색이 조금씩 다르게
@@ -287,7 +324,6 @@ function makePerson(type) {
     return g;
   });
   const mouth = mesh(sphere(0.011, 12, 8), mat('#7a3a2e', { roughness: 0.6 }), head, [0, -0.045, 0.068], [1.5, 0.35, 0.45]);
-  if (t.soft) [-1, 1].forEach(s => mesh(sphere(0.016, 10, 8), mat('#e3958a', { transparent: true, opacity: 0.32, depthWrite: false }), head, [s * 0.043, -0.02, 0.062], [1, 0.7, 0.4]));
 
   // 머리카락
   if (t.hair) {
