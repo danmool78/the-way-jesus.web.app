@@ -47,6 +47,10 @@ const TYPES = {
   prodigal: { robe: '#a0927c', trim: '#7a6a54', hair: '#3a2a1c', beard: true, skin: 1 }, // 돌아온 둘째 아들 (해진 옷)
   thomas:   { robe: '#5d6b7a', trim: '#3e4a56', mantle: '#a89a7c', hair: '#2b1b10', beard: true, sash: '#3e4a56' },
   lazarus:  { robe: '#f2ede2', trim: '#d8d0c0', hood: '#f2ede2', hair: '#3b2616', skin: 2, height: 0.97 }, // 수의에 감긴 나사로
+  rich:     { robe: '#2f6a5a', trim: '#d6a93a', mantle: '#d8c49a', hair: '#2b1b10', sash: '#d6a93a', skin: 2 }, // 부자 청년 (수염 없는 젊은이, 값진 옷)
+  beggar:   { robe: '#8a7c66', trim: '#6a5c48', mantle: '#6a5c48', hair: '#3a2a1c', beard: true, skin: 1 }, // 눈먼 바디매오
+  zacchaeus: { robe: '#7a3b2e', trim: '#d6a93a', mantle: '#c9a26a', hair: '#2b1b10', beard: true, sash: '#d6a93a', skin: 2, height: 0.8 }, // 키 작은 세리장
+  judas:    { robe: '#8a7a3a', trim: '#5a4a24', mantle: '#4a3e2a', hair: '#1d140c', beard: true, sash: '#5a4a24', skin: 1 }, // 가룟 유다
   levi:     { robe: '#5a3e6e', trim: '#c9a24a', mantle: '#b9935a', hair: '#2b1b10', beard: true, sash: '#c9a24a', skin: 2 }, // 세리 마태 (값진 옷)
   official: { robe: '#2f4f6a', trim: '#d6a93a', mantle: '#c8b48c', hair: '#2b1b10', beard: true, sash: '#d6a93a', skin: 2 }, // 왕의 신하
 };
@@ -299,8 +303,13 @@ function makePerson(type) {
   const alabaster = new THREE.Group();
   mesh(lathe([[0.001, 0], [0.022, 0], [0.03, 0.04], [0.02, 0.08], [0.012, 0.09], [0.016, 0.1], [0.001, 0.1]], 16), mat('#f1ece0', { roughness: 0.4 }), alabaster, [0, -0.04, 0]);
   alabaster.position.set(0, 0.47, 0.15);
-  [doves, gift, jar, scroll, alabaster].forEach(g => { g.visible = false; upper.add(g); });
-  const items = { basket, doves, gift, jar, scroll, alabaster };
+  // 종려나무 가지: 들어 올려 흔든다 (손에 쥔 채 위로 솟은 잎)
+  const palm = new THREE.Group();
+  mesh(new THREE.CylinderGeometry(0.004, 0.006, 0.3, 5), mat('#6b7a3a'), palm, [0, 0.13, 0]);
+  for (let i = 0; i < 8; i++) { const l = mesh(new THREE.BoxGeometry(0.11, 0.004, 0.018), mat('#5f8a3a', DS), palm, [0, 0.12 + i * 0.022, 0]); l.rotation.z = (i % 2 ? 1 : -1) * 0.5; l.position.x = (i % 2 ? 1 : -1) * 0.04; }
+  palm.position.set(0.02, 0.5, 0.15);
+  [doves, gift, jar, scroll, alabaster, palm].forEach(g => { g.visible = false; upper.add(g); });
+  const items = { basket, doves, gift, jar, scroll, alabaster, palm };
 
   // 발: 샌들 위의 맨발이 옷자락 아래로
   const feet = [1, -1].map(s => {
