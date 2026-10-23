@@ -173,7 +173,8 @@ const MAKERS = {
     const calm = new THREE.Color('#7aa3ab'), storm = new THREE.Color('#5f7f87');
     let amp = 0.01;
     const P = new Prop(g, (P, t, dt, env) => {
-      amp = damp(amp, 0.008 + (env.wave || 0) * 0.07, 1.2, dt);
+      // 폭풍 물결은 배 뱃전(물 위 약 0.15)을 넘지 않게: 넘으면 배가 물에 잠겨 사람만 물 위에 선 것처럼 보였다
+      amp = damp(amp, 0.008 + (env.wave || 0) * 0.045, 1.2, dt);
       const pos = geo.attributes.position;
       for (let i = 0; i < pos.count; i++) {
         const x = base[i * 3], z = base[i * 3 + 2];
@@ -208,7 +209,7 @@ const MAKERS = {
       const wv = env.waveNow || 0;
       rock.rotation.z = Math.sin(t * 1.3) * (0.02 + wv * 0.16);
       rock.rotation.x = Math.sin(t * 1.7 + 1) * (0.01 + wv * 0.08);
-      rock.position.y = Math.sin(t * 1.9) * (0.005 + wv * 0.04);
+      rock.position.y = Math.sin(t * 1.9) * (0.005 + wv * 0.04) + wv * 0.05; // 높은 물결 위로 들려 오른다
     });
     P.deck = deck;
     return P;
