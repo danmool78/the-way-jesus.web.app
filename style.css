@@ -77,7 +77,8 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 /* map styling */
 .relief{transition:opacity .6s}
 .riverbank{fill:none;stroke:var(--oasis);stroke-width:11;stroke-linecap:round;stroke-linejoin:round;opacity:.55}
-.zoom-city .relief{opacity:0}
+.relief .tile{opacity:0;transition:opacity .7s}
+.relief .tile.ready{opacity:1}
 .sea{opacity:.95}
 .coast{fill:none;stroke:#f6efdc;stroke-width:1.6;vector-effect:non-scaling-stroke;opacity:.7}
 .lake{fill:var(--sea);stroke:#5f8a92;stroke-width:1;vector-effect:non-scaling-stroke}

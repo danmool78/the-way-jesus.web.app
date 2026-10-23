@@ -32,9 +32,15 @@ HI_TILE_UNITS = 160  # 타일 한 장이 덮는 지도 단위
 HI_TILE_PX = 512     # → 지도 단위당 3.2픽셀
 HI_OUT = OUT.parent / 'relief-hi'
 
-# 고도(m) → 색. 바탕 땅색 #e3d5b4를 해수면 근처에 두고, 꺼진 요단 골짜기는 짙게, 헤르몬 정상은 희게
-STOPS = [(-450, (196, 172, 126)), (-200, (210, 189, 146)), (0, (227, 213, 180)), (300, (228, 214, 179)),
-         (700, (220, 203, 164)), (1100, (208, 189, 147)), (1900, (194, 178, 144)), (2600, (236, 231, 219))]
+# 도성 확대용 초정밀 타일: 예루살렘과 감람산·베다니만, 약 8m 고도 자료로. app.js의 RELIEF_CITY와 같게
+CITY = dict(lat0=31.74, lat1=31.81, lng0=35.19, lng1=35.28)
+Z_CITY = 14
+CITY_TILE_UNITS = 20  # → 지도 단위당 25.6픽셀
+CITY_OUT = OUT.parent / 'relief-city'
+
+# 고도(m) → 색. 낮은 땅은 밝은 모래색, 오를수록 황토·갈색 바위, 헤르몬 정상은 눈. 꺼진 요단 골짜기는 짙은 흙빛
+STOPS = [(-450, (170, 140, 98)), (-200, (196, 166, 118)), (0, (226, 204, 156)), (300, (218, 192, 140)),
+         (700, (196, 164, 114)), (1100, (172, 140, 100)), (1900, (150, 126, 100)), (2600, (242, 240, 234))]
 
 
 def tile_xy(lat, lng, z):
@@ -62,7 +68,8 @@ def blur(a, r):
 
 
 # 연 강수량(mm) → (섞을 색, 비율). 사막은 그대로, 비가 많을수록 초원 → 올리브·관목 → 숲·곡창
-VEG = [(180, (0, 0, 0), 0), (300, (206, 199, 148), .22), (450, (176, 180, 118), .32), (650, (152, 168, 104), .42)]
+# 갈릴리·해안 평야는 또렷한 초록으로, 유대 광야·네게브는 모래색 그대로 남긴다
+VEG = [(180, (0, 0, 0), 0), (300, (196, 190, 118), .3), (450, (148, 166, 88), .55), (650, (102, 140, 72), .72)]
 
 
 def rain_field(dem, lat, first_land, w):
@@ -160,22 +167,26 @@ def main(cache):
     img.save(OUT, 'WEBP', quality=80, method=6)
     print(f'{OUT} {w}x{h} {OUT.stat().st_size // 1024}KB, dem {dem.min():.0f}..{dem.max():.0f}m')
 
-    # 2) 확대용 정밀 타일 (assets/relief-hi/행_열.webp) — 강수량·해안선은 바탕 격자에서 보간
+    # 2) 확대용 정밀 타일 (assets/relief-hi/행_열.webp), 3) 도성 초정밀 타일 (assets/relief-city/)
+    # 강수량·해안선은 바탕 격자에서 보간
     coast = e['lng0'] + (first_land + .5) / w * (e['lng1'] - e['lng0'])  # 행마다 첫 육지 경도
-    hi = HI
-    mos = mosaic_for(cache, {**hi, 'lat0': hi['lat0'] - .05, 'lng1': hi['lng1'] + .05}, Z_HI)
-    lng0u = (hi['lng0'] - e['lng0']) * COS * 1000  # 바탕 격자 기준 지도 단위
-    cols = math.ceil((hi['lng1'] - hi['lng0']) * COS * 1000 / HI_TILE_UNITS)
-    rows = math.ceil((hi['lat1'] - hi['lat0']) * 1000 / HI_TILE_UNITS)
-    HI_OUT.mkdir(exist_ok=True)
+    for ext, z, units, out, zf in [(HI, Z_HI, HI_TILE_UNITS, HI_OUT, 1.8), (CITY, Z_CITY, CITY_TILE_UNITS, CITY_OUT, 1.4)]:
+        tiles(cache, ext, z, units, out, zf, lat, lng, coast, rain, w, h)
+
+
+def tiles(cache, ext, z, units, out, zf, lat, lng, coast, rain, w, h):
+    mos = mosaic_for(cache, {**ext, 'lat0': ext['lat0'] - .05 * units / 160, 'lng1': ext['lng1'] + .05 * units / 160}, z)
+    cols = math.ceil((ext['lng1'] - ext['lng0']) * COS * 1000 / units)
+    rows = math.ceil((ext['lat1'] - ext['lat0']) * 1000 / units)
+    out.mkdir(exist_ok=True)
     total, P = 0, HI_TILE_PX
     for r in range(rows):
         for c in range(cols):
             # 경사 계산이 타일 경계에서 끊기지 않게 1픽셀씩 여유를 두고 계산한 뒤 잘라 낸다
-            u = (np.arange(-1, P + 1) + .5) / P * HI_TILE_UNITS
-            tlng = hi['lng0'] + (c * HI_TILE_UNITS + u) / (COS * 1000)
-            tlat = hi['lat1'] - (r * HI_TILE_UNITS + u) / 1000
-            tdem = sample(mos, Z_HI, tlat, tlng)
+            u = (np.arange(-1, P + 1) + .5) / P * units
+            tlng = ext['lng0'] + (c * units + u) / (COS * 1000)
+            tlat = ext['lat1'] - (r * units + u) / 1000
+            tdem = sample(mos, z, tlat, tlng)
             tland = tlng[None, :] >= np.interp(tlat, lat[::-1], coast[::-1])[:, None]
             tdem = np.where(tland, tdem, 0)
             # 바탕 강수량을 이 타일 좌표로 쌍선형 보간
@@ -184,11 +195,11 @@ def main(cache):
             ix, iy = np.clip(np.floor(FX).astype(int), 0, w - 2), np.clip(np.floor(FY).astype(int), 0, h - 2)
             ax, ay = FX - ix, FY - iy
             train = (rain[iy, ix] * (1 - ax) + rain[iy, ix + 1] * ax) * (1 - ay) + (rain[iy + 1, ix] * (1 - ax) + rain[iy + 1, ix + 1] * ax) * ay
-            trgb = paint(tdem, train, tland, shading(tdem, tlat, tlng, 1.8))[1:-1, 1:-1]
-            f = HI_OUT / f'{r}_{c}.webp'
+            trgb = paint(tdem, train, tland, shading(tdem, tlat, tlng, zf))[1:-1, 1:-1]
+            f = out / f'{r}_{c}.webp'
             Image.fromarray(trgb.astype(np.uint8), 'RGB').save(f, 'WEBP', quality=74, method=6)
             total += f.stat().st_size
-    print(f'{HI_OUT} {rows}x{cols} tiles, {total // 1024}KB (x={lng0u:.1f} units)')
+    print(f'{out} {rows}x{cols} tiles, {total // 1024}KB')
 
 
 if __name__ == '__main__':

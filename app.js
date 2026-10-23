@@ -56,7 +56,9 @@ const GEO = {
 // 음영 기복도(assets/relief.webp)가 덮는 범위 — _src/relief.py의 EXTENT와 같게
 const RELIEF = { lat0: 30.45, lat1: 34.05, lng0: 33.85, lng1: 36.65 };
 // 확대했을 때만 불러오는 정밀 타일(assets/relief-hi/행_열.webp) — _src/relief.py의 HI와 같게
-const RELIEF_HI = { lat0: 30.95, lat1: 33.45, lng0: 34.6, lng1: 36.0, tile: 160 };
+const RELIEF_HI = { lat0: 30.95, lat1: 33.45, lng0: 34.6, lng1: 36.0, tile: 160, dir: 'relief-hi', below: 1 };
+// 도성까지 확대했을 때 얹는 초정밀 타일(assets/relief-city/) — _src/relief.py의 CITY와 같게
+const RELIEF_CITY = { lat0: 31.74, lat1: 31.81, lng0: 35.19, lng1: 35.28, tile: 20, dir: 'relief-city', below: .15 };
 // 비가 아니라 샘·강 덕분에 푸르렀던 곳: [위도, 경도, 반지름(지도 단위≈1/1000도)]
 const OASES = [[31.855, 35.455, 22], [31.462, 35.388, 9], [32.865, 35.525, 18]]; // 여리고, 엔게디, 게네사렛 평야
 const REGIONS = [
@@ -87,6 +89,7 @@ function buildMap() {
   <rect x="${-W * 2}" y="${-H * 2}" width="${W * 5}" height="${H * 5}" fill="var(--land)"/>
   <image href="assets/relief.webp" class="relief" x="${rx0}" y="${ry0}" width="${rx1 - rx0}" height="${ry1 - ry0}" preserveAspectRatio="none"/>
   <g id="reliefHi" class="relief"></g>
+  <g id="reliefCity" class="relief"></g>
   <path d="${smooth(GEO.jordanN)}" class="riverbank"/>
   <path d="${smooth(GEO.jordanS)}" class="riverbank"/>
   ${OASES.map(([a, b, r]) => `<circle cx="${px([a, b])[0]}" cy="${px([a, b])[1]}" r="${r}" fill="url(#oasis)"/>`).join('')}
@@ -168,28 +171,43 @@ function applyView() {
 }
 
 // 바탕 지형은 지도 단위당 0.8픽셀이라 확대하면 뭉개진다. 화면 1px이 지도 1단위보다 작아지면
-// 보이는 범위의 정밀 타일(단위당 3.2픽셀)을 얹는다. 한 번 만든 타일은 숨겼다 다시 쓴다.
+// 보이는 범위의 정밀 타일(단위당 3.2픽셀)을, 도성까지 들어가면 초정밀 타일(25.6픽셀)을 얹는다.
+// 타일은 다 받은 뒤 서서히 나타나고, 한 번 만든 타일은 숨겼다 다시 쓴다
 const hiTiles = new Map();
-function showHiRelief(x, y, w, h, u) {
-  const g = $('#reliefHi', map), T = RELIEF_HI.tile;
-  const [ox, oy] = px([RELIEF_HI.lat1, RELIEF_HI.lng0]);
-  const cols = Math.ceil((RELIEF_HI.lng1 - RELIEF_HI.lng0) * COS * K / T), rows = Math.ceil((RELIEF_HI.lat1 - RELIEF_HI.lat0) * K / T);
-  const want = new Set();
-  if (u < 1) {
-    const c0 = Math.max(0, Math.floor((x - ox) / T)), c1 = Math.min(cols - 1, Math.floor((x + w - ox) / T));
-    const r0 = Math.max(0, Math.floor((y - oy) / T)), r1 = Math.min(rows - 1, Math.floor((y + h - oy) / T));
-    for (let r = r0; r <= r1; r++) for (let c = c0; c <= c1; c++) want.add(`${r}_${c}`);
-  }
-  want.forEach(k => {
-    if (hiTiles.has(k)) return;
-    const [r, c] = k.split('_').map(Number), im = document.createElementNS(svgNS, 'image');
-    im.setAttribute('href', `assets/relief-hi/${k}.webp`);
-    // 이웃 타일과의 실선 틈이 보이지 않게 0.3단위 겹친다
-    Object.entries({ x: ox + c * T, y: oy + r * T, width: T + .3, height: T + .3 }).forEach(([a, v]) => im.setAttribute(a, v));
+function reliefTiles(L, x, y, w, h, u, show) {
+  const T = L.tile, [ox, oy] = px([L.lat1, L.lng0]), keys = [];
+  if (u >= L.below) return keys;
+  const cols = Math.ceil((L.lng1 - L.lng0) * COS * K / T), rows = Math.ceil((L.lat1 - L.lat0) * K / T);
+  const c0 = Math.max(0, Math.floor((x - ox) / T)), c1 = Math.min(cols - 1, Math.floor((x + w - ox) / T));
+  const r0 = Math.max(0, Math.floor((y - oy) / T)), r1 = Math.min(rows - 1, Math.floor((y + h - oy) / T));
+  for (let r = r0; r <= r1; r++) for (let c = c0; c <= c1; c++) {
+    const k = `${L.dir}/${r}_${c}`; keys.push(k);
+    if (hiTiles.has(k)) continue;
+    const im = document.createElementNS(svgNS, 'image');
+    im.setAttribute('class', 'tile');
+    im.addEventListener('load', () => im.classList.add('ready'), { once: true });
+    im.setAttribute('href', `assets/${k}.webp`);
+    // 이웃 타일과의 실선 틈이 보이지 않게 조금 겹친다
+    const lap = T / 500;
+    Object.entries({ x: ox + c * T, y: oy + r * T, width: T + lap, height: T + lap }).forEach(([a, v]) => im.setAttribute(a, v));
     im.setAttribute('preserveAspectRatio', 'none');
-    g.appendChild(im); hiTiles.set(k, im);
-  });
+    if (!show) im.style.display = 'none';
+    $(L === RELIEF_CITY ? '#reliefCity' : '#reliefHi', map).appendChild(im); hiTiles.set(k, im);
+  }
+  return keys;
+}
+function showHiRelief(x, y, w, h, u) {
+  const want = new Set([RELIEF_HI, RELIEF_CITY].flatMap(L => reliefTiles(L, x, y, w, h, u, true)));
   hiTiles.forEach((im, k) => { im.style.display = want.has(k) ? '' : 'none'; });
+}
+// 확대가 시작될 때 도착할 화면의 타일을 미리 받아 둔다 — 다 들어왔을 때 이미 준비되어 있게
+function preloadRelief(t) {
+  const r = map.getBoundingClientRect();
+  if (!r.width) return;
+  let { x, y, w, h } = t;
+  const ar = r.width / r.height;
+  if (w / h > ar) { const nh = w / ar; y -= (nh - h) / 2; h = nh; } else { const nw = h * ar; x -= (nw - w) / 2; w = nw; }
+  [RELIEF_HI, RELIEF_CITY].forEach(L => reliefTiles(L, x, y, w, h, w / r.width, false));
 }
 
 function frame(ids, ms = 1300, reserve = true) {
@@ -246,9 +264,12 @@ function frameStage(i, ms = 1300, mode = 'open') {
 window.recenterStage = () => { if (fitMode !== 'all' && EVENTS) frameStage(idx, 600, $('#scene').classList.contains('peek') ? 'peek' : 'open'); };
 // 화면을 돌리거나 창 크기를 바꾸면 빈 영역도 바뀌므로 다시 맞춘다
 let recenterT; addEventListener('resize', () => { clearTimeout(recenterT); recenterT = setTimeout(() => window.recenterStage(), 250); });
-function fitAll() { animateTo({ x: 0, y: 0, w: W, h: H }, 1100); }
+// 전체 경로: 지도 틀 전체가 아니라 장소들이 모인 땅을 카드에 가리지 않는 영역에 꽉 차게
+const LAND = (() => { const [x0, y0] = px([33.36, 34.92]), [x1, y1] = px([31.62, 35.82]); return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }; })();
+function fitAll() { animateTo(reserveCard({ ...LAND }), 1100); }
 function animateTo(target, ms) {
   cancelAnimationFrame(anim);
+  preloadRelief(target);
   const from = { ...view }, t0 = performance.now();
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) ms = 0;
   // 로그 스케일 보간: 크게 확대/축소할 때도 자연스럽게
