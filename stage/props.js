@@ -467,11 +467,17 @@ Object.assign(MAKERS, {
   },
 
   // 무화과나무: 굽은 줄기와 넓은 잎 덩이
+  // state 'withered'면 잎이 갈색으로 마르며 줄어든다 (열매 없는 무화과나무)
   figtree() {
     const g = new THREE.Group(), bark = mat('#6e5640'), leaf = mat('#5f7f3a', { roughness: 0.9 });
     const trunk = mesh(new THREE.CylinderGeometry(0.03, 0.05, 0.6, 8), bark, g, [0, 0.3, 0]); trunk.rotation.z = 0.12;
-    [[0, 0.72, 0, 0.22], [0.18, 0.62, 0.05, 0.16], [-0.17, 0.64, -0.03, 0.17], [0.05, 0.62, 0.18, 0.15], [-0.04, 0.6, -0.17, 0.15]].forEach(([x, y, z, r]) => mesh(sphere(r, 14, 10), leaf, g, [x, y, z], [1, 0.75, 1]));
-    return new Prop(g);
+    const leaves = [[0, 0.72, 0, 0.22], [0.18, 0.62, 0.05, 0.16], [-0.17, 0.64, -0.03, 0.17], [0.05, 0.62, 0.18, 0.15], [-0.04, 0.6, -0.17, 0.15]].map(([x, y, z, r]) => mesh(sphere(r, 14, 10), leaf, g, [x, y, z], [1, 0.75, 1]));
+    const green = new THREE.Color('#5f7f3a'), dry = new THREE.Color('#7a6038');
+    return new Prop(g, (P, t, dt) => {
+      const w = P.state === 'withered';
+      leaf.color.lerp(w ? dry : green, 1 - Math.exp(-0.8 * dt));
+      leaves.forEach(l => l.scale.setScalar(damp(l.scale.x, w ? 0.6 : 1, 0.6, dt)));
+    });
   },
 
   // 돌항아리 여섯 개: state 'empty' | 'water' | 'wine' (포도주가 되면 은은히 빛난다)
@@ -734,6 +740,42 @@ Object.assign(MAKERS, {
     [[-1, -1], [-1, 1], [1, -1], [1, 1]].forEach(([a, b]) => mesh(new THREE.BoxGeometry(0.02, 0.36, 0.02), w, g, [a * 0.16, 0.18, b * 0.12]));
     for (let i = 0; i < 7; i++) mesh(new THREE.BoxGeometry(0.4, 0.025, 0.035), leaf, g, [0, 0.37, -0.12 + i * 0.04]).rotation.y = (Math.random() - 0.5) * 0.3;
     mesh(new THREE.BoxGeometry(0.34, 0.3, 0.01), mat('#c8b48c', { ...DS }), g, [0, 0.17, -0.12]);
+    return new Prop(g);
+  },
+});
+
+Object.assign(MAKERS, {
+  // 종려나무: 비늘진 줄기와 늘어진 잎 (여리고 오아시스)
+  palm(o = {}) {
+    const g = new THREE.Group(), bark = mat('#8a7050', { roughness: 1 }), leaf = mat('#5f8a3a', { ...DS, roughness: 0.9 });
+    const H = o.h || 0.9;
+    for (let i = 0; i < 8; i++) mesh(new THREE.CylinderGeometry(0.03, 0.036, H / 8 + 0.01, 8), bark, g, [Math.sin(i * 0.3) * 0.02, H / 16 + i * H / 8, 0]);
+    for (let i = 0; i < 9; i++) {
+      const a = (i / 9) * Math.PI * 2, f = new THREE.Group();
+      f.position.set(0, H, 0); f.rotation.y = a; g.add(f);
+      const l = mesh(new THREE.BoxGeometry(0.34, 0.006, 0.07), leaf, f, [0.16, -0.05, 0]); l.rotation.z = -0.45;
+    }
+    return new Prop(g);
+  },
+
+  // 길에 편 겉옷들 (입성 행렬)
+  cloaks(o = {}) {
+    const g = new THREE.Group(), cols = ['#a3554a', '#3c5d96', '#b9a07a', '#5d6b4a', '#c99a3a', '#7a3b2e'];
+    for (let i = 0; i < (o.n || 7); i++) {
+      const c = mesh(new THREE.BoxGeometry(0.22, 0.008, 0.16), mat(cols[i % cols.length], { roughness: 1 }), g, [(i - (o.n || 7) / 2) * 0.26, 0.005, (i % 2) * 0.06]);
+      c.rotation.y = (Math.random() - 0.5) * 0.5; c.castShadow = false; c.receiveShadow = true;
+    }
+    return new Prop(g);
+  },
+
+  // 성벽: 탑이 있는 돌담 (멀리 보이는 예루살렘)
+  walls(o = {}) {
+    const g = new THREE.Group(), stone = mat('#d8c8a6', { roughness: 0.95 }), W = o.w || 2.2;
+    mesh(new THREE.BoxGeometry(W, 0.32, 0.12), stone, g, [0, 0.16, 0]).receiveShadow = true;
+    for (let i = 0; i <= 4; i++) mesh(new THREE.BoxGeometry(0.16, 0.44, 0.18), stone, g, [-W / 2 + i * W / 4, 0.22, 0]);
+    for (let i = 0; i < 18; i++) mesh(new THREE.BoxGeometry(0.05, 0.04, 0.13), stone, g, [-W / 2 + 0.06 + i * (W - 0.12) / 17, 0.34, 0]);
+    mesh(new THREE.BoxGeometry(0.5, 0.36, 0.3), mat('#ece4d2'), g, [0.25, 0.5, -0.2]); // 성전의 윤곽
+    mesh(new THREE.BoxGeometry(0.52, 0.03, 0.32), mat('#d6a93a', { metalness: 0.5, roughness: 0.4 }), g, [0.25, 0.69, -0.2]);
     return new Prop(g);
   },
 });
