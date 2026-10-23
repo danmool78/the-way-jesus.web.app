@@ -1,0 +1,39 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>예루살렘 그리기</title>
+<!-- stage/jerusalem.js의 도성 모형을 지도와 같은 투영으로, 비스듬히(45°) 내려다본 그림으로 그린다.
+     땅바닥은 지도와 정확히 겹치고(깊이 방향을 1/sin 늘려 둠), 건물 높이만 화면 위쪽으로 솟는다.
+     _src/tools/jerusalem.mjs가 이 페이지를 열어 assets/jerusalem.webp로 저장한다.
+     ?px=100 은 지도 단위당 픽셀 -->
+<style>body{margin:0;background:#c9b48e}canvas{display:block}</style>
+<script type="module">
+import { THREE } from '../../stage/kit.js';
+import { buildJerusalem, SIZE } from '../../stage/jerusalem.js';
+const q = new URLSearchParams(location.search), PXU = +(q.get('px') || 100);
+// 높이 솟음 여백: app.js의 CITY3D.top과 같게 (가장 높은 건물이 잘리지 않을 만큼)
+const TOP = 1.6, E = 45 * Math.PI / 180;
+const W = Math.round(SIZE.w * PXU), H = Math.round((SIZE.h + TOP) * PXU);
+const r = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+r.setPixelRatio(1); r.setSize(W, H); r.shadowMap.enabled = true; r.shadowMap.type = THREE.PCFSoftShadowMap;
+r.outputColorSpace = THREE.SRGBColorSpace; r.setClearColor(0x000000, 0);
+document.body.appendChild(r.domElement);
+const s = new THREE.Scene();
+const world = new THREE.Group(); world.scale.z = 1 / Math.sin(E); s.add(world);
+world.add(buildJerusalem());
+// 그림자 받는 바닥 (보이지 않고 그림자만)
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(SIZE.w, SIZE.h), new THREE.ShadowMaterial({ opacity: 0.32 }));
+ground.rotation.x = -Math.PI / 2; ground.position.set(SIZE.w / 2, 0, SIZE.h / 2); ground.receiveShadow = true; world.add(ground);
+s.add(new THREE.HemisphereLight('#fff6e6', '#9a8360', 1.9));
+// 남서쪽 높은 해: 카메라(남쪽)에서 보이는 남쪽 벽면이 밝게 (지도 음영의 북서 빛을 따르면 보이는 면이 모두 그늘이 된다)
+const sun = new THREE.DirectionalLight('#fff1d8', 2.4);
+sun.position.set(SIZE.w / 2 - 5, 10, SIZE.h / 2 / Math.sin(E) + 3); sun.target.position.set(SIZE.w / 2, 0, SIZE.h / 2 / Math.sin(E));
+Object.assign(sun.shadow.camera, { left: -16, right: 16, top: 16, bottom: -16, near: 0.1, far: 40 });
+sun.shadow.mapSize.set(4096, 4096); sun.shadow.bias = -0.0004; sun.castShadow = true;
+s.add(sun, sun.target);
+// 직교 카메라: 북쪽을 향해 45° 내려다본다. 화면 위쪽 좌표 = 높이·cos45° − 남쪽 거리
+const cam = new THREE.OrthographicCamera(0, SIZE.w, TOP, -SIZE.h, -50, 50);
+cam.position.set(0, Math.sin(E), Math.cos(E)); cam.up.set(0, 1, 0); cam.lookAt(0, 0, 0);
+r.render(s, cam);
+window.png = () => r.domElement.toDataURL('image/png');
+document.title = 'ready';
+</script>
