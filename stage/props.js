@@ -700,6 +700,44 @@ Object.assign(MAKERS, {
   },
 });
 
+Object.assign(MAKERS, {
+  // 바위 벼랑과 벽감, 그 밑에서 솟는 샘 (가이사랴 빌립보, 헤르몬산 기슭)
+  cliffshrine(o = {}) {
+    const g = new THREE.Group(), rock = mat('#a8977c', { roughness: 1, flatShading: true });
+    mesh(new THREE.BoxGeometry(1.6, 0.75, 0.3), rock, g, [0, 0.375, 0]).receiveShadow = true;
+    [[-0.9, 0.5, 0.35], [0.95, 0.42, 0.3], [0.2, 0.8, 0.28]].forEach(([x, y, r]) => mesh(new THREE.DodecahedronGeometry(r, 0), rock, g, [x, y * 0.6, 0.02], [1, 0.9, 0.7]));
+    [-0.5, -0.15, 0.2, 0.55].forEach(x => {
+      mesh(new THREE.BoxGeometry(0.14, 0.22, 0.05), mat('#3a2e24'), g, [x, 0.42, 0.14]);
+      mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.05, 12, 1, false, 0, Math.PI), mat('#3a2e24'), g, [x, 0.53, 0.14]).rotation.set(Math.PI / 2, 0, Math.PI / 2);
+    });
+    const spring = mesh(new THREE.CircleGeometry(0.3, 24), new THREE.MeshStandardMaterial({ color: '#7aa3ab', roughness: 0.2, transparent: true, opacity: 0.85 }), g, [0.1, 0.012, 0.35], [1.6, 0.6, 1]);
+    spring.rotation.x = -Math.PI / 2; spring.castShadow = false;
+    return new Prop(g);
+  },
+
+  // 빛나는 구름: 부드러운 흰 덩이들이 피어오르며 산 위를 덮는다 (show로 짙어진다)
+  cloud(o = {}) {
+    const g = new THREE.Group(), m = mat('#ffffff', { emissive: '#fff3d0', emissiveIntensity: 0.6, transparent: true, opacity: 0.8, depthWrite: false });
+    const puffs = [];
+    for (let i = 0; i < 14; i++) {
+      const a = (i / 14) * Math.PI * 2, r = 0.35 + Math.random() * 0.45;
+      puffs.push(mesh(sphere(0.22 + Math.random() * 0.15, 16, 12), m, g, [Math.cos(a) * r * 1.4, 0.3 + Math.random() * 0.5, Math.sin(a) * r * 0.5]));
+    }
+    puffs.forEach(p => { p.castShadow = false; });
+    const glow = glowSprite(2.6, 0.7); glow.position.y = 0.6; g.add(glow);
+    return new Prop(g, (P, t) => { m.opacity = 0.75 * P.show; glow.material.opacity = 0.6 * P.show; puffs.forEach((p, i) => { p.position.y += Math.sin(t * 0.6 + i) * 0.0006; }); }, { fade: 'opacity' });
+  },
+
+  // 초막: 나뭇가지로 지붕을 엮은 작은 오두막 (초막절)
+  sukkah() {
+    const g = new THREE.Group(), w = wood(), leaf = mat('#6f8c40', { roughness: 1 });
+    [[-1, -1], [-1, 1], [1, -1], [1, 1]].forEach(([a, b]) => mesh(new THREE.BoxGeometry(0.02, 0.36, 0.02), w, g, [a * 0.16, 0.18, b * 0.12]));
+    for (let i = 0; i < 7; i++) mesh(new THREE.BoxGeometry(0.4, 0.025, 0.035), leaf, g, [0, 0.37, -0.12 + i * 0.04]).rotation.y = (Math.random() - 0.5) * 0.3;
+    mesh(new THREE.BoxGeometry(0.34, 0.3, 0.01), mat('#c8b48c', { ...DS }), g, [0, 0.17, -0.12]);
+    return new Prop(g);
+  },
+});
+
 export function makeProp(kind, x = 0, z = 0, o = {}) {
   const P = MAKERS[kind](o);
   P.obj.position.set(x, o.y || 0, z);
