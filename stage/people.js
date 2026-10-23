@@ -125,6 +125,23 @@ function headShape(geo, off = [0, 0, 0], face = false) {
   return geo;
 }
 
+// 코: 공을 이어 붙이지 않고 한 덩어리로 빚는다. 위(미간)는 가늘고 얼굴에 묻히며, 아래로 갈수록 앞으로 솟고
+// 코끝에서 콧방울 너비로 매끄럽게 퍼진다 (높이는 1.45배로 오똑하게). 뒷면은 얼굴 안에 들어가 보이지 않는다
+function noseGeo(style) {
+  const g = sphere(0.01, 28, 24), p = g.attributes.position;
+  for (let i = 0; i < p.count; i++) {
+    const x = p.getX(i) / 0.01, y = p.getY(i) / 0.01, z = p.getZ(i) / 0.01, u = (1 - y) / 2; // u: 0 미간 … 1 코밑
+    let hw, f;
+    if (style === 'A') { hw = 0.003 + 0.0025 * u + 0.0035 * Math.exp(-(((u - 0.86) / 0.12) ** 2)); f = 0.003 + 0.0105 * u ** 1.3; }
+    if (style === 'B') { hw = 0.0028 + 0.0016 * u + 0.0028 * Math.exp(-(((u - 0.88) / 0.1) ** 2)); f = 0.006 + 0.0095 * u ** 1.1; }
+    if (style === 'C') { hw = 0.0032 + 0.0022 * u + 0.0034 * Math.exp(-(((u - 0.86) / 0.12) ** 2)); f = 0.004 + 0.009 * u + 0.0025 * Math.exp(-(((u - 0.45) / 0.18) ** 2)); }
+    const Y = y * 0.0185 - (style === 'C' ? 0.0015 * u * u : 0);
+    p.setXYZ(i, x * hw, Y, z > 0 ? z * f * 1.45 : z * 0.004);
+  }
+  g.computeVertexNormals();
+  return g;
+}
+
 function makePerson(type) {
   const t = TYPES[type] || TYPES.man;
   const skin = mat(SKIN[t.skin || 0], { roughness: 0.7 });
@@ -203,11 +220,7 @@ function makePerson(type) {
   upper.add(head);
   mesh(headShape(sphere(0.08, 48, 36), [0, 0, 0], true), skin, head);
   [-1, 1].forEach(s => mesh(sphere(0.017, 10, 8), skin, head, [s * 0.068, -0.004, -0.004], [0.45, 1, 0.75])); // 귀
-  // 코: 눈 사이에서 곧게 내려오는 가는 콧대 + 앞으로 솟은 둥근 코끝 + 작은 콧방울
-  const bridge = mesh(new THREE.CapsuleGeometry(0.0047, 0.036, 4, 10), skin, head, [0, 0.001, 0.0715], [1, 1, 0.95]);
-  bridge.rotation.x = -0.4; // 위는 미간으로 들어가고 아래는 앞으로
-  mesh(sphere(0.0066, 14, 12), skin, head, [0, -0.0185, 0.0792], [1, 0.85, 0.95]);
-  [-1, 1].forEach(s => mesh(sphere(0.0047, 10, 8), skin, head, [s * 0.0072, -0.0205, 0.0715], [1, 0.8, 1]));
+  mesh(noseGeo(globalThis.NOSE || 'A'), skin, head, [0, -0.001, 0.0695]);
   const eyes = [-1, 1].map(s => {
     const g = new THREE.Group();
     g.position.set(s * 0.027, 0.013, 0.062);

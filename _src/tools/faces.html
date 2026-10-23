@@ -6,7 +6,8 @@
 <style>body{margin:0;background:#2a241c}canvas{display:block}</style>
 <script type="module">
 import { THREE } from '../../stage/kit.js';
-import { makePerson } from '../../stage/people.js';
+globalThis.NOSE = new URLSearchParams(location.search).get('nose') || undefined;
+const { makePerson } = await import('../../stage/people.js');
 const q = new URLSearchParams(location.search);
 const types = (q.get('t') || 'jesus,mary,peter,john,man,elder').split(',');
 const yaw = +(q.get('yaw') || 0), far = q.has('far');
