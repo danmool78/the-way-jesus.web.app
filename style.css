@@ -59,7 +59,7 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .walker.moving .wglow{animation:glow 1.2s ease-in-out infinite alternate}
 @keyframes bob{from{transform:translateY(0)}to{transform:translateY(-3px)}}
 @keyframes glow{from{opacity:.15}to{opacity:.4}}
-.walker.arrive .wglow{animation:burst 1.1s ease-out}
+.walker.arrive .wglow{animation:burst 1.1s ease-out;transform-box:fill-box;transform-origin:center}
 @keyframes burst{0%{transform:scale(.6);opacity:.7}100%{transform:scale(3.2);opacity:0}}
 .nexthint{fill:none;stroke:#5a4528;stroke-width:calc(var(--u,1) * 1.6px);stroke-dasharray:calc(var(--u,1) * 2px) calc(var(--u,1) * 7px);stroke-linecap:round;opacity:.55}
 .is-walking .nexthint{display:none}
@@ -112,7 +112,7 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .pin.offmap text{opacity:0}
 .pin.now .dot{fill:var(--period);stroke:#fff;stroke-width:2;opacity:1}
 .pin.now text{opacity:1;font-size:15px;fill:#24170a}
-.pin.now .halo{fill:var(--period);opacity:.35;animation:pulse 2.2s ease-out infinite;transform-origin:center}
+.pin.now .halo{fill:var(--period);opacity:.35;animation:pulse 2.2s ease-out infinite;transform-box:fill-box;transform-origin:center}
 @keyframes pulse{0%{transform:scale(.4);opacity:.6}100%{transform:scale(1.8);opacity:0}}
 .maptools{position:absolute;top:14px;left:14px;display:flex;gap:6px;z-index:2}
 .maptools button{border:1px solid rgba(60,45,25,.25);background:rgba(250,244,228,.86);color:#3b2a14;border-radius:999px;padding:6px 12px;font-size:12px;backdrop-filter:blur(4px)}
