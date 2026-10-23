@@ -203,10 +203,11 @@ function makePerson(type) {
   upper.add(head);
   mesh(headShape(sphere(0.08, 48, 36), [0, 0, 0], true), skin, head);
   [-1, 1].forEach(s => mesh(sphere(0.017, 10, 8), skin, head, [s * 0.068, -0.004, -0.004], [0.45, 1, 0.75])); // 귀
-  // 코: 콧등에서 내려와 끝이 둥근 콧날 + 양쪽 콧방울
-  const nose = mesh(sphere(0.012, 14, 12), skin, head, [0, -0.006, 0.07], [0.7, 1.6, 1]);
-  nose.rotation.x = -0.28;
-  [-1, 1].forEach(s => mesh(sphere(0.0065, 8, 6), skin, head, [s * 0.0085, -0.02, 0.07]));
+  // 코: 눈 사이에서 곧게 내려오는 가는 콧대 + 앞으로 솟은 둥근 코끝 + 작은 콧방울
+  const bridge = mesh(new THREE.CapsuleGeometry(0.0047, 0.036, 4, 10), skin, head, [0, 0.001, 0.0715], [1, 1, 0.95]);
+  bridge.rotation.x = -0.4; // 위는 미간으로 들어가고 아래는 앞으로
+  mesh(sphere(0.0066, 14, 12), skin, head, [0, -0.0185, 0.0792], [1, 0.85, 0.95]);
+  [-1, 1].forEach(s => mesh(sphere(0.0047, 10, 8), skin, head, [s * 0.0072, -0.0205, 0.0715], [1, 0.8, 1]));
   const eyes = [-1, 1].map(s => {
     const g = new THREE.Group();
     g.position.set(s * 0.027, 0.013, 0.062);
