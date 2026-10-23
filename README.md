@@ -24,7 +24,7 @@
 
 ## 낭독 음원
 `_src/narration.py`가 앱이 읽는 모든 문장(장면 머리말·이야기·말씀·이동 안내, 540조각)을 녹음용 표기로 뽑고, 인물별 목소리 설계(`VOICES`)를 담고 있습니다.
-`_src/voice.py`는 [OmniVoice](https://github.com/k2-fsa/OmniVoice)(Apache 2.0)로 음원을 만들어 `assets/audio/`와 `audio.json`에 씁니다. 목소리마다 기준 음성을 한 번 만들어(`_src/voices/`) 모든 문장을 그 목소리로 읽으므로 톤이 일정합니다.
+`_src/voice.py`는 [Qwen3-TTS](https://github.com/QwenLM/Qwen3-TTS)(Apache 2.0)로 음원을 만들어 `assets/audio/`와 `audio.json`에 씁니다. 목소리마다 묘사로 기준 음성을 한 번 만들고(`_src/voices/`, 직접 듣고 고른 것), 모든 문장은 그 기준 음성을 복제해 읽으므로 장면이 바뀌어도 목소리가 같습니다.
 원고를 고친 뒤 `python3 _src/voice.py`를 다시 돌리면 바뀐 문장만 새로 만듭니다. `build.py`는 원고와 어긋난 음원 수를 알려 줍니다.
 
 ## 배포

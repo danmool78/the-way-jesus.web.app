@@ -8,37 +8,42 @@
 """
 import hashlib, re
 
-# 목소리 설계 (OmniVoice voice design). 같은 설계라도 생성할 때마다 목소리가 달라지므로,
-# seed로 기준 목소리를 한 번 만들어 _src/voices/에 두고 모든 문장을 그 목소리로 복제해 읽는다.
-# 설계나 seed를 바꾸면 기준 목소리와 그 목소리의 음원이 모두 다시 만들어진다.
+# 목소리 설계 (Qwen3-TTS VoiceDesign). 목소리마다 기준 음성을 한 번 만들어 _src/voices/에 두고,
+# 모든 문장은 그 기준 음성을 복제해(Qwen3-TTS Base) 읽는다. 그래서 장면이 바뀌어도 같은 목소리다.
+# 기준 음성은 직접 듣고 고른 것이므로 지우지 않는다. 묘사를 바꾸려면 해당 wav를 지우고 다시 만든다.
+_PLAIN = ' Natural Korean speech at a normal pace; sincere, not theatrical, not slow.'
 VOICES = {
-    'narrator':   ('female, middle-aged, moderate pitch', 1),
-    'jesus':      ('male, young adult, low pitch', 1),
-    'gabriel':    ('male, young adult, high pitch', 1),
-    'angel':      ('male, young adult, moderate pitch', 7),
-    'host':       ('female, young adult, high pitch', 1),
-    'heaven':     ('male, elderly, very low pitch', 1),
-    'mary':       ('female, teenager, high pitch', 1),
-    'shepherd':   ('male, middle-aged, low pitch', 1),
-    'simeon':     ('male, elderly, moderate pitch', 1),
-    'magi':       ('male, middle-aged, moderate pitch', 1),
-    'priest':     ('male, middle-aged, very low pitch', 1),
-    'herod':      ('male, elderly, low pitch', 1),
-    'nathanael':  ('male, young adult, high pitch', 2),
-    'samaritan':  ('female, young adult, moderate pitch', 1),
-    'official':   ('male, middle-aged, high pitch', 1),
-    'peter':      ('male, middle-aged, low pitch', 2),
-    'centurion':  ('male, middle-aged, very low pitch', 2),
-    'crowd':      ('male, young adult, moderate pitch', 3),
-    'disciples':  ('male, young adult, moderate pitch', 4),
-    'canaanite':  ('female, middle-aged, low pitch', 1),
-    'healed':     ('male, young adult, high pitch', 3),
-    'martha':     ('female, young adult, low pitch', 1),
-    'magdalene':  ('female, young adult, high pitch', 2),
-    'thomas':     ('male, middle-aged, moderate pitch', 2),
+    'narrator':  'A Korean woman in her late forties, a seasoned audiobook narrator. Mature, warm mid-low voice with a firm, grounded delivery and natural speaking pace. Sincere and moving but composed, every word clear and alive.',
+    'jesus':     'A Korean man in his thirties, a plain-spoken village carpenter. Clear, grounded, natural voice; short, firm and sincere sentences, simple and direct with quiet confidence. No sweetness, no whispering, no theatrical drama, not greasy.',
+    'gabriel':   'A Korean man in his twenties with a bright, clear, ringing voice, an angel bringing astonishing news; gentle reassurance with radiant joy.' + _PLAIN,
+    'angel':     'A Korean man in his thirties with a calm, clear, solemn voice, a heavenly messenger giving urgent instructions in a dream; steady and certain.' + _PLAIN,
+    'host':      'A Korean woman in her twenties with a pure, bright, uplifting voice, joyfully proclaiming glory and peace, full of wonder.' + _PLAIN,
+    'heaven':    'A Korean man in his sixties with a very deep, resonant, majestic voice; slow-measured but warm, like a loving father speaking from above.',
+    'mary':      'A Korean young woman, about seventeen, with a soft but steady voice; humble, earnest and brave, a little trembling yet sure.' + _PLAIN,
+    'shepherd':  'A Korean man in his forties, a rough rural shepherd with a husky, earthy voice, excited and eager, speaking to his friends.' + _PLAIN,
+    'simeon':    'A Korean man in his eighties with a frail, cracked but joyful voice, an old man whose long wait is finally fulfilled; tearful gratitude.' + _PLAIN,
+    'magi':      'A Korean man in his fifties, a learned foreign scholar with a dignified, polite, deliberate voice and curious eagerness.' + _PLAIN,
+    'priest':    'A Korean man in his fifties, a stern religious official with a low, formal, cold and authoritative voice.' + _PLAIN,
+    'herod':     'A Korean man in his sixties, a cunning king with a smooth, low, oily voice that hides suspicion behind politeness.' + _PLAIN,
+    'nathanael': 'A Korean man in his twenties with a clear, youthful voice, bursting with sudden amazement and conviction.' + _PLAIN,
+    'samaritan': 'A Korean woman in her thirties with a lively, slightly husky voice, breathless with excitement, calling her neighbors.' + _PLAIN,
+    'official':  'A Korean man in his forties, a royal official with a refined voice strained by desperation, begging urgently for his dying son.' + _PLAIN,
+    'peter':     'A Korean man in his thirties, a burly Galilean fisherman with a strong, rough, honest voice; impulsive and deeply sincere.' + _PLAIN,
+    'centurion': 'A Korean man in his forties, a Roman army officer with a firm, low, disciplined voice, humble and respectful.' + _PLAIN,
+    'crowd':     'A Korean man in his forties among a crowd, voice full of awe and amazement, speaking with excitement to the people around him.' + _PLAIN,
+    'disciples': 'A Korean man in his twenties, a young disciple with a clear voice filled with wonder and a little fear.' + _PLAIN,
+    'canaanite': 'A Korean woman in her forties, a desperate but quick-witted mother with a steady, warm, pleading voice.' + _PLAIN,
+    'healed':    'A Korean man in his twenties, plain and blunt, who was born blind and now sees; simple, bold, unshakable voice.' + _PLAIN,
+    'martha':    'A Korean woman in her thirties with a firm, mature voice, grieving yet speaking with strong faith.' + _PLAIN,
+    'magdalene': 'A Korean woman in her twenties, voice trembling with tears turning into overwhelming joy, breathless.' + _PLAIN,
+    'thomas':    'A Korean man in his thirties with a deep, earnest voice breaking with emotion, overwhelmed with awe.' + _PLAIN,
 }
-# 기준 목소리가 읽는 문장 (3~10초)
-REF_TEXT = '오늘은 바람이 잔잔합니다. 호숫가 마을에 햇빛이 고요히 내려앉고, 사람들이 하나둘 모여들었습니다.'
+# 기준 음성을 만들 때 각 목소리가 읽는 문장
+REF_TEXT = {
+    'narrator': '갈릴리 언덕 마을 나사렛. 구약 어디에도 이름이 나오지 않는 작은 동네의 오후, 물동이를 내려놓은 소녀 마리아 앞에 빛이 섰다.',
+    'jesus': '두려워하지 마라. 나다. 평안히 가거라, 네 믿음이 너를 살렸다.',
+}
+REF_DEFAULT = '정말입니다. 제 눈으로 똑똑히 보았어요. 그날 일은 평생 잊지 못할 겁니다.'
 
 # 인물 → 목소리. 기록·예언 인용은 내레이터가 읽는다.
 SPEAKER_VOICE = {
@@ -123,8 +128,7 @@ def clips(data):
 
 def digest(clip):
     """문장이나 목소리 설계가 바뀌면 달라지는 지문. 음원을 다시 만들지 판단한다."""
-    instruct, seed = VOICES[clip['voice']]
-    return hashlib.sha1(f"{instruct}|{seed}|{REF_TEXT}\n{clip['text']}".encode()).hexdigest()[:10]
+    return hashlib.sha1(f"{VOICES[clip['voice']]}\n{clip['text']}".encode()).hexdigest()[:10]
 
 
 def filename(clip, h):
