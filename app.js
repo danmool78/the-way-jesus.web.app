@@ -61,6 +61,9 @@ const RELIEF_WEST = { lat0: 29.9, lat1: 31.9, lng0: 30.6, lng1: 33.25 };
 const RELIEF_HI = { lat0: 30.2, lat1: 34.4, lng0: 33.4, lng1: 37.0, tile: 160, dir: 'relief-hi', below: 1.2 };
 // 도성까지 확대했을 때 얹는 초정밀 타일(assets/relief-city/) — _src/relief.py의 CITY와 같게
 const RELIEF_CITY = { lat0: 31.74, lat1: 31.81, lng0: 35.19, lng1: 35.28, tile: 20, dir: 'relief-city', below: .15 };
+// 예루살렘 3D 도성 그림(assets/jerusalem.webp) — stage/jerusalem.js의 EXTENT와 같게.
+// top: 그림 위쪽의 건물 솟음 여백(지도 단위, _src/tools/jerusalem.html의 TOP과 같게)
+const CITY3D = { lat0: 31.7685, lat1: 31.7840, lng0: 35.2235, lng1: 35.2480, top: 1.6 };
 // 비가 아니라 샘·강 덕분에 푸르렀던 곳: [위도, 경도, 반지름(지도 단위≈1/1000도)]
 const OASES = [[31.855, 35.455, 22], [31.462, 35.388, 9], [32.865, 35.525, 18]]; // 여리고, 엔게디, 게네사렛 평야
 const REGIONS = [
@@ -82,6 +85,7 @@ function buildMap() {
   const t = (txt, [x, y], cls) => `<g class="lbl ${cls}" transform="translate(${x},${y})"><text>${esc(txt)}</text></g>`;
   const [rx0, ry0] = px([RELIEF.lat1, RELIEF.lng0]), [rx1, ry1] = px([RELIEF.lat0, RELIEF.lng1]);
   const [wx0, wy0] = px([RELIEF_WEST.lat1, RELIEF_WEST.lng0]), [wx1, wy1] = px([RELIEF_WEST.lat0, RELIEF_WEST.lng1]);
+  const [cx0, cy0] = px([CITY3D.lat1, CITY3D.lng0]), [cx1, cy1] = px([CITY3D.lat0, CITY3D.lng1]);
   map.setAttribute('viewBox', `0 0 ${W} ${H}`);
   map.innerHTML = `
   <defs>
@@ -105,10 +109,10 @@ function buildMap() {
   <path d="${smooth(GEO.jordanN)}" class="river"/>
   <path d="${smooth(GEO.jordanS)}" class="river"/>
   <g class="jlm-detail">
-    <path d="${smooth(GEO.jwall, true)}" class="wall"/>
     <path d="${smooth(GEO.kidron)}" class="valley"/>
     <path d="${smooth(GEO.hinnom)}" class="valley"/>
   </g>
+  <image id="city3d" class="city3d" x="${cx0}" y="${cy0 - CITY3D.top}" width="${cx1 - cx0}" height="${cy1 - cy0 + CITY3D.top}" preserveAspectRatio="none"/>
   ${t('지 중 해', px([32.35, 34.48]), 'sea-lbl')}
   ${t('갈릴리 바다', px([32.80, 35.60]), 'water-lbl')}
   ${t('사해', px([31.42, 35.49]), 'water-lbl')}
@@ -163,6 +167,9 @@ function applyView() {
   map.classList.toggle('zoom-city', u < 0.06);
   map.classList.toggle('zoom-near', u < 0.6);
   showHiRelief(x, y, w, h, u);
+  // 예루살렘 도성 그림: 가까이 들어갔을 때만 받아서(약 200KB) 서서히 보인다
+  const city = $('#city3d', map);
+  if (u < 0.6 && !city.getAttribute('href')) { city.addEventListener('load', () => city.classList.add('ready'), { once: true }); city.setAttribute('href', 'assets/jerusalem.webp'); }
   $$('.pin, .lbl', map).forEach(el => {
     const tr = el.dataset.x ? `translate(${el.dataset.x},${el.dataset.y})` : (el.dataset.t ||= el.getAttribute('transform'));
     el.setAttribute('transform', `${tr} scale(${u})`);

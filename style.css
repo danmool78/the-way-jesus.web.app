@@ -85,6 +85,8 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .lake.dead{fill:#9cb6ad}
 .river{fill:none;stroke:#6f9aa2;stroke-width:2.2;vector-effect:non-scaling-stroke;stroke-linecap:round}
 .jlm-detail{opacity:0;transition:opacity .5s}
+.city3d{opacity:0;transition:opacity .8s;pointer-events:none}
+.zoom-near .city3d.ready{opacity:1}
 .zoom-city .jlm-detail{opacity:1}
 .wall{fill:rgba(140,105,60,.16);stroke:#8a6b40;stroke-width:2;stroke-dasharray:6 3;vector-effect:non-scaling-stroke}
 .valley{fill:none;stroke:#a68f66;stroke-width:5;opacity:.45;vector-effect:non-scaling-stroke;stroke-linecap:round}
