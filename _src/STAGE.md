@@ -29,7 +29,7 @@
 
 ```js
 e02: {
-  env: 'night',        // 기본 분위기: day · dusk · night · storm · calm · overcast · dark
+  env: 'night',        // 기본 분위기: day · dusk · night · storm · calm · overcast · dark · dawn(부활의 새벽) · glory(승천)
   wide: 1.3,           // 무대를 넓게(인물 크기는 그대로). 넓은 장면일수록 키운다
   scale: 0.85,         // 무대 전체 축소 (군중 장면 등)
   at: [32.888, 35.572], // 무대 바닥의 중심을 이 위경도로 옮긴다 (핀이 물가라 핀 앞이 물인 곳의 뭍 장면)

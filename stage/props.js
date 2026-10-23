@@ -731,7 +731,7 @@ Object.assign(MAKERS, {
     }
     puffs.forEach(p => { p.castShadow = false; });
     const glow = glowSprite(2.6, 0.7); glow.position.y = 0.6; g.add(glow);
-    return new Prop(g, (P, t) => { m.opacity = 0.75 * P.show; glow.material.opacity = 0.6 * P.show; puffs.forEach((p, i) => { p.position.y += Math.sin(t * 0.6 + i) * 0.0006; }); }, { fade: 'opacity' });
+    return new Prop(g, (P, t, dt) => { m.opacity = 0.75 * P.show; glow.material.opacity = 0.6 * P.show; puffs.forEach((p, i) => { p.position.y += Math.sin(t * 0.6 + i) * 0.0006; }); g.position.y = damp(g.position.y, P.y ?? g.position.y, 0.8, dt); }, { fade: 'opacity' });
   },
 
   // 초막: 나뭇가지로 지붕을 엮은 작은 오두막 (초막절)

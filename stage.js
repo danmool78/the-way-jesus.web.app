@@ -51,6 +51,10 @@ const ENV = {
   calm:     { hemi: [1.25, '#ffe2c2'], sun: [1.7, '#ffc58e'], shadow: 0.3, map: 'sepia(.22) brightness(.92)', wave: 0 },
   overcast: { hemi: [1.15, '#e8e2d6'], sun: [1.0, '#e9e4da'], shadow: 0.16, map: 'saturate(.6) brightness(.85)' },
   dark:     { hemi: [0.55, '#9a96a8'], sun: [0.3, '#a8a4b4'], shadow: 0.08, map: 'brightness(.36) saturate(.25)' },
+  // 부활의 새벽: 골고다의 어둠과 대비되게, 장밋빛 금빛이 번지며 색이 돌아온다
+  dawn:     { hemi: [1.35, '#ffe0d0'], sun: [1.9, '#ffc9a0'], shadow: 0.26, map: 'sepia(.12) saturate(1.15) brightness(.97) hue-rotate(-6deg)' },
+  // 영광: 맑고 밝은 빛 (승천)
+  glory:    { hemi: [1.9, '#fff8e8'], sun: [2.5, '#fff4dc'], shadow: 0.24, map: 'saturate(1.15) brightness(1.06)' },
 };
 let env = { ...ENV.day, name: 'day' };
 const envNow = { hemi: 1.6, sun: 2.2, waveNow: 0, rainNow: 0, wave: 0 };
