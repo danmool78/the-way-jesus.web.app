@@ -1,7 +1,7 @@
 :root{
   --bg:#15110d;--panel:#1d1813;--panel2:#251f18;--line:#3a3026;--ink:#f1e8d8;--muted:#b3a58f;--faint:#7f735f;
   --gold:#d9b46a;--gold2:#f0d79a;--period:#c8963e;
-  --land:#e3d5b4;--land-hi:#ece0c2;--hill:#b59d6f;--sea:#8fb2b4;--sea-deep:#6f97a0;--grain:rgba(90,70,40,.09);
+  --land:#e3d5b4;--land-hi:#ece0c2;--hill:#b59d6f;--sea:#8fb2b4;--sea-deep:#6f97a0;--oasis:#7f9a52;--grain:rgba(90,70,40,.09);
   --serif:'Gowun Batang','Nanum Myeongjo',Georgia,serif;--sans:'Noto Sans KR',system-ui,-apple-system,'Apple SD Gothic Neo',sans-serif;
   color-scheme:dark;
 }
@@ -33,7 +33,9 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 /* journey layout — 지도가 화면 전체, 장면은 지도 위 카드 */
 .journey{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto;height:calc(100dvh - 60px)}
 .mapwrap{position:relative;min-height:0;overflow:hidden;background:var(--land)}
-#map{width:100%;height:100%;display:block;touch-action:manipulation}
+#map{width:100%;height:100%;display:block;touch-action:manipulation;transition:filter 1.6s}
+.stage3d{position:absolute;left:0;top:0;pointer-events:none;opacity:0;transition:opacity .5s;will-change:transform}
+.stage-on .pin.now text{opacity:0}
 .dock{border-top:1px solid var(--line);background:#120f0b;padding:8px 14px calc(8px + env(safe-area-inset-bottom))}
 
 /* 장면 카드 */
@@ -74,7 +76,8 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 
 /* map styling */
 .relief{transition:opacity .6s}
-.zoom-city .relief{opacity:.45}
+.riverbank{fill:none;stroke:var(--oasis);stroke-width:11;stroke-linecap:round;stroke-linejoin:round;opacity:.55}
+.zoom-city .relief{opacity:0}
 .sea{opacity:.95}
 .coast{fill:none;stroke:#f6efdc;stroke-width:1.6;vector-effect:non-scaling-stroke;opacity:.7}
 .lake{fill:var(--sea);stroke:#5f8a92;stroke-width:1;vector-effect:non-scaling-stroke}

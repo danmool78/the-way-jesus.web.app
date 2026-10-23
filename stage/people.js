@@ -1,0 +1,472 @@
+/* 3D 무대 인물: 미니어처 피규어 생성과 자세·동작 */
+import { THREE, mat, DS, lathe, folds, mesh, BACK, SBACK, sphere, glowTexture, damp } from './kit.js';
+
+const SKIN = ['#c99a74', '#b9845d', '#d6ad89', '#a87451'];
+const TYPES = {
+  jesus:    { robe: '#efe7d6', trim: '#a8843f', mantle: '#9b3b2a', hair: '#4a2e1c', beard: true, long: true, sash: '#b08a4e' },
+  mary:     { robe: '#a3554a', trim: '#c9a24a', mantle: '#3c5d96', veil: true, inner: '#f3ece0', skin: 2, soft: true, slim: true, sash: '#c9a24a' },
+  joseph:   { robe: '#7b5b3a', trim: '#5a4128', mantle: '#b89b6c', hair: '#3b2616', beard: true, hood: '#d8c9a6', band: '#6e5131', sash: '#5a4128' },
+  angel:    { robe: '#fbf7ee', trim: '#d9b46a', hair: '#d8b56a', curls: true, wings: true, glow: true, halo: true, sash: '#d9b46a', skin: 2, soft: true },
+  crossed:  { robe: '#efe7d6', hair: '#4a2e1c', beard: true, long: true, bare: true }, // 십자가 위의 예수 (실루엣 전용)
+  john:     { robe: '#cdb994', trim: '#7a3b2e', mantle: '#7a3b2e', hair: '#5a3a22', sash: '#7a3b2e' }, // 젊은 제자: 수염 없음
+  woman2:   { robe: '#6e5a7a', trim: '#4d3f57', mantle: '#d8c9a6', veil: true, inner: '#f1e9da', skin: 3, soft: true, slim: true, sash: '#4d3f57' },
+  woman:    { robe: '#8e6d4e', trim: '#6e5232', mantle: '#c8b48c', veil: true, inner: '#efe6d4', skin: 1, soft: true, slim: true, sash: '#6e5232' },
+  disciple: { robe: '#8a7350', trim: '#6b5638', mantle: '#5d6b4a', hair: '#2e1d12', beard: true, sash: '#5b4630' },
+  peter:    { robe: '#6e5a40', trim: '#54442f', mantle: '#4f6a7d', hair: '#8c8378', beard: true, skin: 1, sash: '#3f3324' },
+  elder:    { robe: '#e3dccb', trim: '#6c6a8f', mantle: '#6c6a8f', hair: '#d9d4c8', beard: true, hood: '#e8e1d0', band: '#6c6a8f', height: 0.96 },
+  shepherd: { robe: '#7d6446', trim: '#5e4a33', mantle: '#a58a5c', hair: '#2e1d12', beard: true, hood: '#cdbb94', band: '#5e4a33', staff: true, skin: 1 },
+  magus:    { robe: '#5b3a78', trim: '#d6a93a', mantle: '#c99a3a', hair: '#1d140c', beard: true, turban: '#e9dcc0', skin: 3, sash: '#d6a93a' },
+  king:     { robe: '#6b2a5e', trim: '#d6a93a', mantle: '#b8892f', hair: '#2b1b10', beard: true, crown: true, sash: '#d6a93a' },
+  soldier:  { robe: '#9d3328', trim: '#7a2a20', mantle: '#7a2a20', hair: '#2b1b10', helmet: true, spear: true, sash: '#5a3d22' },
+  thief:    { robe: '#cbb79a', hair: '#2b1b10', beard: true, bare: true, height: 0.96 }, // 십자가의 두 죄수 (실루엣 전용)
+  pharisee: { robe: '#d9cfb6', trim: '#3e5470', mantle: '#3e5470', hair: '#2b1b10', beard: true, hood: '#efe8d8', band: '#3e5470', skin: 2 },
+  man:      { robe: '#8b6f50', trim: '#6b5438', mantle: '#a99069', hair: '#2e1d12', beard: true, sash: '#5b4630' },
+  child:    { robe: '#e6dcc4', trim: '#8f6d4b', mantle: '#8f6d4b', hair: '#4a2e1c', height: 0.66 },
+};
+
+// 깃털 한 장: 길이 방향 +y
+const featherGeo = (len, wid) => {
+  const s = new THREE.Shape();
+  s.moveTo(0, 0);
+  s.quadraticCurveTo(wid, len * 0.5, wid * 0.15, len);
+  s.quadraticCurveTo(-wid * 0.55, len * 0.55, 0, 0);
+  return new THREE.ShapeGeometry(s, 6);
+};
+// 날개: 어깨에서 위·바깥으로 솟는 앞가장자리(활 모양)에 깃털을 달아 아래로 늘어뜨린다.
+// 겹친 세 층 — 긴 깃털(끝으로 갈수록 길게), 중간 깃털, 덮깃. 로컬 +x가 바깥쪽
+function makeWing(side, parent) {
+  const pivot = new THREE.Group();
+  pivot.position.set(side * 0.035, 0.62, -0.09);
+  parent.add(pivot);
+  const w = new THREE.Group();
+  w.scale.x = side;
+  pivot.add(w);
+  const edge = f => [0.02 + 0.36 * Math.sin(f * Math.PI / 2), 0.03 + 0.3 * Math.sin(f * Math.PI * 0.8)]; // 앞가장자리
+  const layers = [
+    { n: 12, len: [0.26, 0.56], wid: 0.085, col: '#f1ebdf', z: 0, rot: [-3.05, -2.35], drop: 0 },
+    { n: 10, len: [0.17, 0.3], wid: 0.075, col: '#f8f4ea', z: 0.01, rot: [-3.0, -2.5], drop: 0.02 },
+    { n: 8, len: [0.09, 0.14], wid: 0.06, col: '#fffdf7', z: 0.02, rot: [-2.95, -2.6], drop: 0.01 },
+  ];
+  layers.forEach(L => {
+    const m = mat(L.col, { ...DS, emissive: '#8a7448', emissiveIntensity: 0.35, roughness: 0.55 });
+    for (let i = 0; i < L.n; i++) {
+      const f = i / (L.n - 1);
+      const [bx, by] = edge(f);
+      const o = mesh(featherGeo(L.len[0] + (L.len[1] - L.len[0]) * f ** 1.4, L.wid), m, w, [bx, by - L.drop, L.z + f * 0.006]);
+      o.rotation.z = L.rot[0] + (L.rot[1] - L.rot[0]) * f;
+    }
+  });
+  // 앞가장자리를 덮는 둥근 어깨깃
+  const curve = new THREE.CatmullRomCurve3([0, 0.25, 0.5, 0.75, 1].map(f => new THREE.Vector3(...edge(f), 0.03)));
+  mesh(new THREE.TubeGeometry(curve, 20, 0.022, 8), mat('#fffdf7', { emissive: '#8a7448', emissiveIntensity: 0.35 }), w);
+  return pivot;
+}
+
+function makePerson(type) {
+  const t = TYPES[type] || TYPES.man;
+  const skin = mat(SKIN[t.skin || 0], { roughness: 0.7 });
+  const root = new THREE.Group();           // 위치·방향
+  const body = new THREE.Group();           // 기울기·낮춤·눕기
+  root.add(body);
+  body.scale.setScalar(t.height || 1);
+  const robe = mat(t.robe), trim = mat(t.trim || t.robe, { roughness: 0.55, metalness: /c9a24a|d9b46a|d6a93a|a8843f/.test(t.trim) ? 0.35 : 0 });
+
+  // 겉옷: 어깨가 둥근 종 모양 + 아래로 깊어지는 주름. 여인은 좁은 어깨·잘록한 허리·가슴선·퍼지는 치맛단
+  const slim = !!t.slim;
+  const B = slim
+    ? { robe: [[0.001, 0], [0.152, 0], [0.15, 0.03], [0.132, 0.15], [0.112, 0.29], [0.096, 0.39], [0.084, 0.465], [0.09, 0.52], [0.101, 0.57], [0.098, 0.625], [0.08, 0.665], [0.05, 0.692], [0.033, 0.705], [0.001, 0.71]],
+        hem: 0.15, waist: [0.086, 0.465], shoulder: 0.1, sleeve: 0.054, fold: 0.009,
+        mantle: [[0.05, 0.7], [0.096, 0.668], [0.112, 0.6], [0.112, 0.45], [0.124, 0.25], [0.142, 0.05]], mantleLen: Math.PI * 1.05 }
+    : { robe: [[0.001, 0], [0.148, 0], [0.146, 0.03], [0.132, 0.16], [0.118, 0.3], [0.104, 0.44], [0.104, 0.52], [0.114, 0.6], [0.106, 0.65], [0.078, 0.685], [0.042, 0.705], [0.001, 0.71]],
+        hem: 0.145, waist: [0.106, 0.45], shoulder: 0.108, sleeve: 0.06, fold: 0.011,
+        mantle: [[0.055, 0.705], [0.104, 0.67], [0.126, 0.6], [0.13, 0.45], [0.14, 0.25], [0.152, 0.06]], mantleLen: Math.PI * 1.25 };
+  // 옷을 허리에서 나눈다: 무릎 꿇으면 치마(skirt)가 낮아지며 바닥에 퍼지고, 상체(upper)는 그만큼 내려앉는다
+  const wy = B.waist[1], i = B.robe.findIndex(([, y]) => y > wy);
+  const [r0, y0] = B.robe[i - 1], [r1, y1] = B.robe[i], rw = r0 + (r1 - r0) * (wy - y0) / (y1 - y0);
+  // torso: 허리 높이에 둔 회전축. 숙이거나 젖힐 때 허리에서 접힌다 (upper는 그 안에서 원래 높이로 되돌려 놓은 상체)
+  const skirt = new THREE.Group(), torso = new THREE.Group(), upper = new THREE.Group();
+  torso.position.y = wy;
+  upper.position.y = -wy;
+  torso.add(upper);
+  body.add(skirt, torso);
+  // 허리 이음매: 숙이거나 꿇어도 틈이 보이지 않게 상체를 따라다니는 옷 색의 둥근 연결부
+  if (!t.bare) mesh(sphere(rw * 1.03, 24, 12), robe, torso, [0, 0, 0], [1, 0.55, 1]);
+  let skirtMesh = null, hemTrim = null;
+  if (t.bare) {
+    // 겉옷 없이 허리에 두른 천만 (십자가 위의 예수 — 윤곽으로만 보인다)
+    [-1, 1].forEach(s => mesh(new THREE.CylinderGeometry(0.032, 0.026, 0.4, 12), skin, skirt, [s * 0.042, 0.21, 0]));
+    mesh(folds(lathe([[0.001, 0.33], [0.098, 0.33], [0.094, 0.4], [0.09, 0.47], [0.001, 0.47]], 28), 7, 0.008, 0.47), mat('#e9e1cf', DS), skirt);
+    mesh(lathe([[0.001, 0.46], [0.082, 0.46], [0.086, 0.52], [0.098, 0.59], [0.094, 0.64], [0.06, 0.685], [0.03, 0.705], [0.001, 0.71]], 28), skin, upper);
+  } else {
+    // 치마: 서 있는 모양 + 무릎 꿇은 모양(허리에서 바닥으로 매끈하게 퍼지는 낮은 둔덕, 접은 다리가 놓이는 뒤쪽은 더 길게).
+    // 두 모양의 점 수를 같게 만들어 모핑으로 사이를 부드럽게 바꾼다 — 눌러서 생기던 각진 턱이 없다
+    const sk = [...B.robe.slice(0, i), [rw, wy], [0.001, wy]], KH = wy * 0.42;
+    const kp = sk.map(([r, y], j) => {
+      if (j === 0) return [0.001, 0];
+      if (j === sk.length - 1) return [0.001, KH];
+      const u = Math.min(1, y / wy);
+      return [rw + (B.hem * 1.22 - rw) * Math.pow(1 - u, 1.5), KH * (1 - Math.pow(1 - u, 1.6))];
+    });
+    const stand = folds(lathe(sk, 40), 9, B.fold, 0.5), knelt = folds(lathe(kp, 40), 9, B.fold * 1.3, KH);
+    const kpos = knelt.attributes.position;
+    for (let v = 0; v < kpos.count; v++) if (kpos.getZ(v) < 0) kpos.setZ(v, kpos.getZ(v) * 1.45);
+    knelt.computeVertexNormals();
+    stand.morphAttributes.position = [kpos];
+    stand.morphAttributes.normal = [knelt.attributes.normal];
+    skirtMesh = mesh(stand, robe, skirt);
+    hemTrim = mesh(new THREE.TorusGeometry(B.hem, 0.008, 6, 40), trim, skirt, [0, 0.028, 0]);
+    hemTrim.rotation.x = Math.PI / 2;
+    mesh(lathe([[0.001, wy - 0.01], [rw, wy - 0.01], ...B.robe.slice(i)], 40), robe, upper);
+    mesh(new THREE.TorusGeometry(slim ? 0.04 : 0.048, 0.006, 6, 24), trim, upper, [0, 0.7, 0.004]).rotation.x = Math.PI / 2;
+  }
+  if (t.sash && !t.bare) {
+    const s = mat(t.sash), [wr, wy] = B.waist;
+    mesh(new THREE.TorusGeometry(wr, slim ? 0.007 : 0.011, 6, 32), s, upper, [0, wy, 0]).rotation.x = Math.PI / 2;
+    mesh(sphere(slim ? 0.011 : 0.017, 10, 8), s, upper, [0.02, wy, wr - 0.003]);
+    [-1, 1].forEach(k => { const e = mesh(new THREE.BoxGeometry(slim ? 0.01 : 0.016, slim ? 0.14 : 0.11, 0.006), s, upper, [0.02 + k * 0.01, wy - (slim ? 0.075 : 0.06), wr]); e.rotation.z = k * 0.1; });
+  }
+  // 망토: 등과 어깨를 감싸며 늘어진다 (여인은 몸에 붙게 좁게)
+  // (어깨에 매단 묶음이라, 무릎 꿇을 때 위에서부터 줄여 끝자락이 땅에 묻히지 않게 한다)
+  const mantleG = new THREE.Group();
+  mantleG.position.y = B.mantle[0][1];
+  upper.add(mantleG);
+  if (t.mantle && !t.wings && !t.bare) mesh(folds(lathe(B.mantle, 32, ...BACK(B.mantleLen)), 11, slim ? 0.006 : 0.01, 0.62), mat(t.mantle, DS), mantleG, [0, -B.mantle[0][1], 0]);
+  mesh(new THREE.CylinderGeometry(0.029, 0.033, 0.07, 14), skin, upper, [0, 0.72, 0]);
+
+  // 머리
+  const head = new THREE.Group();
+  head.position.set(0, 0.8, 0);
+  head.scale.setScalar(t.slim ? 0.9 : 0.93); // 머리를 조금 작게 해서 늘씬한 비율로
+  upper.add(head);
+  mesh(sphere(0.08, 28, 20), skin, head, [0, 0, 0], [0.95, 1.06, 1]);
+  mesh(sphere(0.054, 20, 14), skin, head, [0, -0.034, 0.02], [1, 0.82, 1]);       // 턱
+  [-1, 1].forEach(s => mesh(sphere(0.017, 10, 8), skin, head, [s * 0.075, -0.002, -0.002], [0.5, 1, 0.8])); // 귀
+  mesh(sphere(0.012, 10, 8), skin, head, [0, -0.008, 0.08], [0.8, 1, 1.15]);     // 코
+  const eyes = [-1, 1].map(s => {
+    const g = new THREE.Group();
+    g.position.set(s * 0.027, 0.013, 0.068);
+    head.add(g);
+    mesh(sphere(0.014, 12, 10), mat('#f6f1e8', { roughness: 0.4 }), g, [0, 0, 0], [1.1, 0.85, 0.5]);
+    mesh(sphere(0.008, 10, 8), mat('#2a1a0e', { roughness: 0.3 }), g, [0, -0.001, 0.005]);
+    mesh(sphere(0.0022, 6, 4), mat('#ffffff', { emissive: '#ffffff', emissiveIntensity: 0.6 }), g, [0.003, 0.002, 0.0115]);
+    const brow = mesh(new THREE.CapsuleGeometry(0.0035, 0.018, 3, 6), mat(t.hair || '#3b2616'), head, [s * 0.028, 0.034, 0.072]);
+    brow.rotation.z = Math.PI / 2 + s * 0.15;
+    return g;
+  });
+  const mouth = mesh(sphere(0.011, 12, 8), mat('#7a3a2e', { roughness: 0.6 }), head, [0, -0.042, 0.074], [1.5, 0.35, 0.45]);
+  if (t.soft) [-1, 1].forEach(s => mesh(sphere(0.016, 10, 8), mat('#e3958a', { transparent: true, opacity: 0.32, depthWrite: false }), head, [s * 0.043, -0.02, 0.062], [1, 0.7, 0.4]));
+
+  // 머리카락
+  if (t.hair) {
+    const hair = mat(t.hair, { roughness: 0.75 });
+    mesh(sphere(0.085, 28, 16, 0, Math.PI * 2, 0, Math.PI * 0.36), hair, head, [0, 0.004, -0.004], [0.97, 1.06, 1.02]);
+    mesh(sphere(0.087, 28, 16, ...SBACK(Math.PI * 1.3), 0, Math.PI * 0.68), mat(t.hair, { ...DS, roughness: 0.75 }), head, [0, 0.002, -0.006], [0.97, 1.06, 1.02]);
+    if (t.long) {
+      mesh(lathe([[0.083, 0.0], [0.088, -0.05], [0.09, -0.12], [0.082, -0.18]], 24, ...BACK(Math.PI * 1.3)), mat(t.hair, { ...DS, roughness: 0.75 }), head);
+      [-1, 1].forEach(s => mesh(new THREE.CapsuleGeometry(0.02, 0.09, 4, 10), hair, head, [s * 0.066, -0.075, 0.012]).rotation.z = s * -0.08);
+    }
+    if (t.curls) for (let i = 0; i < 11; i++) {
+      const a = (i / 10) * Math.PI * 1.25 - Math.PI * 0.125;
+      mesh(sphere(0.026, 10, 8), hair, head, [Math.cos(a) * 0.072, 0.03 + Math.sin(a) * 0.05, -0.02 - Math.sin(a) * 0.02]);
+    }
+  }
+  if (t.beard) {
+    const b = mat(t.hair || '#3b2616', { roughness: 0.8 });
+    mesh(sphere(0.064, 24, 14, 0, Math.PI * 2, Math.PI * 0.48, Math.PI * 0.4), b, head, [0, -0.012, 0.012], [1, 1.15, 0.98]);
+    mesh(new THREE.ConeGeometry(0.034, 0.05, 14), b, head, [0, -0.095, 0.048]).rotation.x = Math.PI + 0.35;
+    const mus = mesh(new THREE.TorusGeometry(0.019, 0.0065, 6, 14, Math.PI), b, head, [0, -0.04, 0.077]);
+    mus.rotation.z = Math.PI;
+    mouth.position.z = 0.082;
+  }
+  // 베일(여인): 흰 속두건 + 겉 베일 + 어깨로 흘러내림
+  if (t.veil) {
+    mesh(sphere(0.087, 28, 16, ...SBACK(Math.PI * 1.55), 0, Math.PI * 0.8), mat(t.inner, DS), head, [0, 0.004, -0.002], [0.97, 1.06, 1.02]);
+    const v = mat(t.mantle, DS);
+    mesh(sphere(0.096, 28, 16, ...SBACK(Math.PI * 1.38), 0, Math.PI * 0.82), v, head, [0, 0.008, -0.006], [0.97, 1.05, 1.02]);
+    mesh(folds(lathe([[0.093, -0.03], [0.104, -0.1], [0.116, -0.16], [0.126, -0.22]], 32, ...BACK(Math.PI * 1.3)), 9, 0.005, 0), v, head);
+  }
+  // 머릿수건(남자): 천 + 이마 끈
+  if (t.hood) {
+    const h = mat(t.hood, DS);
+    mesh(sphere(0.094, 28, 16, ...SBACK(Math.PI * 1.4), 0, Math.PI * 0.78), h, head, [0, 0.008, -0.004], [0.97, 1.05, 1.02]);
+    mesh(folds(lathe([[0.092, -0.03], [0.108, -0.1], [0.128, -0.16]], 28, ...BACK(Math.PI * 1.3)), 8, 0.006, 0), h, head);
+    if (t.band) mesh(new THREE.TorusGeometry(0.088, 0.008, 6, 32), mat(t.band), head, [0, 0.045, -0.004], [0.97, 1.02, 1]).rotation.x = Math.PI / 2 - 0.15;
+  }
+  if (t.turban) mesh(sphere(0.1, 20, 10, 0, Math.PI * 2, 0, Math.PI * 0.5), mat(t.turban), head, [0, 0.025, 0], [1, 1.25, 1]);
+  if (t.crown) mesh(new THREE.CylinderGeometry(0.088, 0.082, 0.05, 20, 1, true), mat('#d6a93a', { metalness: 0.6, roughness: 0.35, ...DS }), head, [0, 0.075, 0]);
+  if (t.helmet) {
+    mesh(sphere(0.094, 20, 10, 0, Math.PI * 2, 0, Math.PI * 0.55), mat('#a88a4a', { metalness: 0.5, roughness: 0.4 }), head, [0, 0.01, 0]);
+    mesh(new THREE.BoxGeometry(0.02, 0.06, 0.15), mat('#9d3328'), head, [0, 0.11, -0.01]);
+  }
+  if (t.halo) {
+    const h = mesh(new THREE.TorusGeometry(0.075, 0.0055, 8, 40), mat('#f3d27a', { emissive: '#d9a940', emissiveIntensity: 0.9, metalness: 0.4, roughness: 0.3 }), head, [0, 0.105, -0.035]);
+    h.rotation.x = Math.PI / 2 - 0.35;
+    h.castShadow = false;
+  }
+
+  // 팔: 어깨 축에서 매달림. rotation.x 음수 = 앞으로, rotation.z(바깥쪽 부호) = 옆으로, 팔꿈치 x 음수 = 굽힘
+  const arm = side => {
+    const p = new THREE.Group();
+    p.position.set(side * B.shoulder, 0.635, 0);
+    upper.add(p);
+    const a = slim ? 0.78 : 0.88; // 팔도 가늘게 (여인은 더)
+    const sleeveM = t.bare ? skin : robe; // 옷이 없으면 맨팔
+    mesh(sphere(0.044 * a * (t.bare ? 0.8 : 1), 16, 12), sleeveM, p, [0, -0.005, 0]);
+    mesh(new THREE.CylinderGeometry(0.037 * a * (t.bare ? 0.8 : 1), 0.042 * a * (t.bare ? 0.75 : 1), 0.16, 16), sleeveM, p, [0, -0.075, 0]);
+    const elbow = new THREE.Group();
+    elbow.position.y = -0.15;
+    p.add(elbow);
+    if (t.bare) mesh(new THREE.CylinderGeometry(0.026, 0.021, 0.15, 14), skin, elbow, [0, -0.07, 0]);
+    else {
+      mesh(new THREE.CylinderGeometry(0.043 * a, B.sleeve, 0.15, 18, 1, true), mat(t.robe, DS), elbow, [0, -0.07, 0]);
+      mesh(new THREE.TorusGeometry(B.sleeve - 0.001, 0.004, 6, 24), trim, elbow, [0, -0.146, 0]).rotation.x = Math.PI / 2;
+    }
+    mesh(new THREE.CylinderGeometry(0.019, 0.021, 0.05, 12), skin, elbow, [0, -0.135, 0]);
+    mesh(sphere(0.025, 14, 10), skin, elbow, [0, -0.172, 0.004], [0.8, 1.15, 0.58]);
+    mesh(new THREE.CapsuleGeometry(0.0075, 0.018, 3, 8), skin, elbow, [-side * 0.017, -0.162, 0.012]).rotation.z = -side * 0.5;
+    // 손에 든 빵 한 덩이 (빵 떼는 자세에서만)
+    const loaf = mesh(new THREE.CapsuleGeometry(0.022, 0.03, 4, 10), mat('#c99a5a', { roughness: 0.9 }), elbow, [0, -0.19, 0.02]);
+    loaf.rotation.z = Math.PI / 2;
+    loaf.visible = false;
+    p.userData.side = side;
+    p.userData.elbow = elbow;
+    p.userData.loaf = loaf;
+    return p;
+  };
+  const armL = arm(1), armR = arm(-1);
+  // 품에 안은 바구니 (빵과 물고기)
+  const basket = new THREE.Group();
+  mesh(new THREE.CylinderGeometry(0.075, 0.055, 0.06, 16, 1, true), mat('#9a7442', { ...DS, roughness: 0.95 }), basket);
+  mesh(new THREE.TorusGeometry(0.075, 0.008, 6, 20), mat('#7d5a30'), basket, [0, 0.03, 0]).rotation.x = Math.PI / 2;
+  mesh(sphere(0.066, 14, 8, 0, Math.PI * 2, 0, Math.PI / 2), mat('#d0a462', { roughness: 0.9 }), basket, [0, 0.005, 0], [1, 0.45, 1]);
+  basket.position.set(0, 0.47, 0.15);
+  basket.visible = false;
+  upper.add(basket);
+
+  // 발: 샌들 위의 맨발이 옷자락 아래로
+  const feet = [1, -1].map(s => {
+    const f = new THREE.Group();
+    f.position.set(s * 0.055, 0, 0.085);
+    root.add(f);
+    mesh(new THREE.BoxGeometry(0.052, 0.01, 0.105), mat('#6b4a2a'), f, [0, 0.005, 0.005]);
+    mesh(sphere(0.026, 12, 8), skin, f, [0, 0.018, 0.012], [1, 0.55, 1.7]);
+    mesh(new THREE.TorusGeometry(0.024, 0.004, 4, 12, Math.PI), mat('#5a3d22'), f, [0, 0.012, 0.03]);
+    return f;
+  });
+
+  let wings, glow, staff;
+  if (t.wings) wings = [1, -1].map(s => makeWing(s, upper));
+  if (t.glow) {
+    glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexture(), blending: THREE.AdditiveBlending, depthWrite: false, transparent: true }));
+    glow.scale.set(1.5, 1.5, 1);
+    glow.position.set(0, 0.55, -0.1);
+    upper.add(glow);
+  }
+  if (t.staff) {
+    staff = new THREE.Group();
+    mesh(new THREE.CylinderGeometry(0.012, 0.012, 0.95, 8), mat('#6b4a2a'), staff, [0, 0.475, 0]);
+    mesh(new THREE.TorusGeometry(0.05, 0.012, 6, 12, Math.PI), mat('#6b4a2a'), staff, [-0.05, 0.95, 0]);
+    staff.position.set(-0.2, 0, 0.06);
+    root.add(staff);
+  }
+  if (t.spear) { // 로마 병사의 창: 곧게 세워 든다
+    staff = new THREE.Group();
+    mesh(new THREE.CylinderGeometry(0.01, 0.012, 1.12, 8), mat('#5e4128'), staff, [0, 0.56, 0]);
+    mesh(new THREE.ConeGeometry(0.022, 0.09, 8), mat('#9a9a92', { metalness: 0.6, roughness: 0.4 }), staff, [0, 1.16, 0]);
+    staff.position.set(-0.17, 0, 0.07);
+    root.add(staff);
+  }
+  // 아기 (안는 자세에서만 보임)
+  const baby = new THREE.Group();
+  mesh(new THREE.CapsuleGeometry(0.045, 0.1, 6, 12), mat('#f2ead8'), baby).rotation.z = Math.PI / 2;
+  mesh(sphere(0.04, 14, 10), mat(SKIN[2]), baby, [0.08, 0.01, 0]);
+  baby.position.set(0, 0.47, 0.12);
+  baby.visible = false;
+  upper.add(baby);
+  // 잠자리 깔개 (누운 자세에서만)
+  const bed = mesh(new THREE.BoxGeometry(0.95, 0.025, 0.36), mat('#a2875c'), root, [0, 0.012, 0]);
+  bed.visible = false;
+  bed.receiveShadow = true;
+
+  return { type, t, root, body, skirt, skirtMesh, hemTrim, upper, torso, waist: wy, mantleG, mantleSpan: B.mantle[0][1] - B.mantle[B.mantle.length - 1][1], head, armL, armR, feet, wings, glow, staff, baby, bed, eyes, mouth, basket };
+}
+
+// 실루엣: 모든 재질을 어두운 단색으로 바꿔 얼굴·무늬가 보이지 않게 한다 (골고다)
+const SIL = new THREE.MeshStandardMaterial({ color: '#241b14', roughness: 1 });
+function silhouette(p) {
+  p.root.traverse(o => { if (o.isMesh) o.material = SIL; });
+  if (p.glow) p.glow.visible = false;
+}
+
+/* ---------- 배우: 자세 목표값을 향해 부드럽게 움직인다 ---------- */
+class Actor {
+  // o: { silhouette, solemn(입·손짓을 멈추고 느리게), speed, y }
+  constructor(type, x = 0, z = 0, face = 0, o = {}) {
+    this.p = makePerson(type);
+    if (o.silhouette) silhouette(this.p);
+    this.solemn = !!o.solemn;
+    this.noGaze = o.gaze === false; // 남이 말해도 돌아보지 않음 (멀리 있는 사람 등)
+    this.item = null;
+    this.pos = new THREE.Vector2(x, z);
+    this.goal = this.pos.clone();
+    this.face = face; this.faceT = face;
+    this.pose = 'idle'; this.t0 = 0;
+    this.y = 0; this.yT = 0;
+    this.show = 1; this.showT = 1;
+    this.floating = !!this.p.t.wings;
+    this.speed = 0.55;
+    this.walkPhase = Math.random() * 6;
+    this.seed = Math.random() * 10;
+    if (o.speed) this.speed = o.speed;
+    if (o.y) { this.y = this.yT = o.y; this.fixedY = true; } // 높이를 직접 정한 사람(십자가 위)은 지면을 따르지 않는다
+    this.ground = 0;
+    this.p.root.position.set(x, this.y, z);
+    // 나타나고 사라질 때 크기 대신 투명도로 — 재질을 인물마다 따로 둔다
+    this.mats = [];
+    this.p.root.traverse(m => {
+      if (!m.isMesh) return;
+      m.material = m.material.clone();
+      Object.assign(m.material.userData, { op: m.material.opacity, tr: m.material.transparent, dw: m.material.depthWrite });
+      this.mats.push(m.material);
+    });
+    this.op = -1;
+  }
+  fadeTo(op) {
+    if (Math.abs(op - this.op) < 0.004) return;
+    const solid = op > 0.995;
+    this.mats.forEach(m => {
+      const tr = !solid || m.userData.tr;
+      if (m.transparent !== tr) { m.transparent = tr; m.needsUpdate = true; }
+      m.opacity = m.userData.op * op;
+      m.depthWrite = solid ? m.userData.dw : false;
+    });
+    this.op = op;
+  }
+  set(pose) { if (pose !== this.pose) { this.pose = pose; this.t0 = performance.now() / 1000; } }
+  moveTo(x, z = this.goal.y) { this.goal.set(x, z); }
+  look(dir) { this.faceT = dir; this.target = null; } // -1 왼쪽, 0 정면, 1 오른쪽 (중간값 허용)
+  update(time, dt) {
+    const p = this.p, t = time + this.seed;
+    // 이동
+    const d = this.goal.clone().sub(this.pos), dist = d.length();
+    const moving = dist > 0.02;
+    if (moving) {
+      const step = Math.min(dist, this.speed * dt);
+      this.pos.addScaledVector(d.normalize(), step);
+    }
+    // 걷는 동안만 가는 쪽을 보고, 멈추면 지정한 방향(상대)을 다시 본다
+    // (놀라 뒷걸음칠 때는 상대를 본 채로 물러난다)
+    // 바라볼 상대가 있으면(대화 중) 그 사람 쪽으로 — 몸은 얼굴이 보이는 데까지만, 나머지는 고개로 돌린다
+    let want = this.faceT, headY = 0;
+    if (this.target && this.target.showT > 0 && this.pose !== 'sleep') {
+      const ang = Math.atan2(this.target.pos.x - this.pos.x, this.target.pos.y - this.pos.y);
+      want = THREE.MathUtils.clamp(ang, -1.15, 1.15);
+      headY = THREE.MathUtils.clamp(ang - this.face, -0.45, 0.45);
+    }
+    const faceTo = moving && Math.abs(d.x) > 0.01 && !this.floating && this.pose !== 'afraid' ? Math.sign(d.x) * 1.35 : want;
+    this.face = damp(this.face, faceTo, 6, dt);
+    p.head.rotation.y = damp(p.head.rotation.y, moving ? 0 : headY, 5, dt);
+    this.y = damp(this.y, this.yT + (this.floating ? 0.22 + Math.sin(t * 1.6) * 0.035 : 0), 2.2, dt);
+    this.show = damp(this.show, this.showT, 4, dt);
+    p.root.position.set(this.pos.x, this.y + this.ground, this.pos.y);
+    p.root.rotation.y = this.face;
+    p.root.scale.setScalar(0.94 + 0.06 * this.show);
+    p.root.visible = this.show > 0.01;
+    this.fadeTo(Math.min(1, this.show));
+
+    // 자세별 목표: 팔 [앞, 옆, 팔꿈치], 몸 기울기, 머리 숙임, 낮춤(무릎 꿇기), 눕기
+    // kneel: 0 서 있음 → 1 무릎 꿇음 (치마가 낮아져 바닥에 퍼지고 상체가 내려앉는다)
+    let aL = [0.05, 0.07, -0.15], aR = [0.05, 0.07, -0.15], lean = 0, nod = 0, sink = 0, lie = 0, kneel = 0, carry = false;
+    const squash = 1 + Math.sin(t * 1.8) * 0.008;
+    const chest = [-0.3, -0.22, -1.55]; // 두 손을 가슴 앞에 모음
+    switch (moving && !this.floating ? 'walk' : this.pose) {
+      case 'walk': {
+        this.walkPhase += dt * 7.5;
+        const s = Math.sin(this.walkPhase);
+        aL = [s * 0.4, 0.07, -0.3]; aR = [-s * 0.4, 0.07, -0.3];
+        sink = -Math.abs(Math.cos(this.walkPhase)) * 0.02;
+        lean = 0.06;
+        p.feet[0].position.z = 0.09 + s * 0.07; p.feet[1].position.z = 0.09 - s * 0.07;
+        if (this.pose === 'carry') { carry = true; aL = aR = [-0.4, -0.25, -1.3]; }
+        break;
+      }
+      case 'speak':
+        aR = [-0.5 + Math.sin(t * 2.6) * 0.2, 0.3 + Math.sin(t * 1.3) * 0.1, -0.9 + Math.sin(t * 2.6 + 1) * 0.25];
+        aL = [-0.1, 0.1, -0.4];
+        nod = Math.sin(t * 2.2) * 0.07;
+        break;
+      case 'listen': nod = 0.08 + Math.sin(t * 0.9) * 0.03; aL = aR = [-0.1, 0.05, -0.5]; break;
+      case 'afraid':
+        aL = aR = [-0.25, -0.12, -2.1]; lean = -0.14; nod = -0.1;
+        p.root.position.x += Math.sin(t * 38) * 0.004;
+        break;
+      case 'kneel': aL = aR = chest; lean = 0.12; nod = 0.32; kneel = 1; break;
+      case 'pray': aL = aR = chest; nod = 0.25; break;
+      case 'bless': aR = [-1.5 + Math.sin(t * 1.5) * 0.08, 0.95, -0.55]; aL = [-0.1, 0.12, -0.4]; nod = -0.05; break;
+      case 'raise': aL = aR = [-2.6 + Math.sin(t * 2) * 0.06, 0.45, -0.1]; nod = -0.2; break;
+      case 'bow': lean = 0.45; nod = 0.3; aL = aR = [-0.3, -0.1, -0.8]; break;
+      case 'look-up': nod = -0.35; aL = aR = [-0.1, 0.15, -0.4]; break;
+      case 'sleep': lie = 1; aL = aR = [0, 0.1, -0.2]; nod = 0.1; break;
+      case 'carry': aL = aR = [-0.4, -0.25, -1.3]; nod = 0.18; carry = true; break;
+      case 'point': aR = [-1.5, 0.25, 0]; break;
+      case 'sit': kneel = 0.75; aL = aR = [-0.3, -0.15, -0.9]; break;
+      case 'rebuke': aR = [-1.95, 0.3, -0.05]; aL = [-0.7, 0.55, -0.25]; lean = 0.04; nod = -0.12; break; // 바람을 꾸짖음
+      case 'break': { // 빵을 떼어 나눔: 두 손을 앞에 모았다 벌린다
+        const o = (Math.sin(t * 1.6) + 1) * 0.1;
+        aL = [-0.95, -0.1 + o, -0.95]; aR = [-0.95, -0.1 + o, -0.95]; nod = 0.18; break;
+      }
+      case 'shrug': aL = aR = [-0.45, 0.6, -1.05]; nod = 0.08; break; // 어쩔 줄 모름
+      case 'cower': aL = aR = [-0.25, -0.12, -2.1]; lean = 0.22; nod = 0.25; kneel = 0.55; p.root.position.x += Math.sin(t * 34) * 0.003; break;
+      case 'mourn': aL = aR = [-0.45, -0.32, -2.05]; lean = 0.25; nod = 0.55; kneel = 1; break; // 얼굴을 감싸고 엎드림
+      case 'crucified': aL = aR = [0, 1.5, 0]; nod = 0.3; break;
+      case 'crucified-dead': aL = aR = [0, 1.42, 0]; nod = 0.62; break;
+      case 'sit-ground': kneel = 0.9; aL = aR = [-0.3, -0.2, -1.0]; nod = 0.05; break;
+      case 'hold-basket': aL = aR = [-0.45, -0.3, -1.25]; nod = 0.12; break;
+    }
+    // 엄숙한 장면: 숨쉬기 외의 작은 몸짓을 멈춘다
+    if (this.solemn) { nod += 0.05; }
+    p.armL.userData.loaf.visible = p.armR.userData.loaf.visible = this.pose === 'break';
+    p.basket.visible = this.item === 'basket' || (this.pose === 'hold-basket');
+    if (p.basket.visible && this.pose !== 'hold-basket' && !moving) { aL = aR = [-0.45, -0.3, -1.25]; }
+    if (!moving) { p.feet[0].position.z = damp(p.feet[0].position.z, 0.09, 8, dt); p.feet[1].position.z = damp(p.feet[1].position.z, 0.09, 8, dt); }
+    const k = 5;
+    const arm = (a, [fx, sx, ex]) => {
+      a.rotation.x = damp(a.rotation.x, fx, k, dt);
+      a.rotation.z = damp(a.rotation.z, sx * a.userData.side, k, dt);
+      a.userData.elbow.rotation.x = damp(a.userData.elbow.rotation.x, ex, k, dt);
+    };
+    arm(p.armL, aL); arm(p.armR, aR);
+    p.torso.rotation.x = damp(p.torso.rotation.x, lean, k, dt);
+    p.head.rotation.x = damp(p.head.rotation.x, nod, k, dt);
+    p.body.scale.y = damp(p.body.scale.y, squash * (p.t.height || 1), k, dt);
+    p.body.rotation.z = damp(p.body.rotation.z, lie * Math.PI / 2 * -Math.sign(this.face || 1), 3, dt);
+    p.body.position.y = damp(p.body.position.y, lie * 0.12 - sink, 3, dt);
+    this.kneel = damp(this.kneel || 0, kneel, 3.5, dt);
+    const kn = this.kneel;
+    if (p.skirtMesh) {
+      p.skirtMesh.morphTargetInfluences[0] = kn; // 서 있는 치마 → 꿇은 치마
+      p.hemTrim.scale.set(1 + 0.22 * kn, 1 + 0.5 * kn, 1); // 단 장식도 넓게 퍼진 치맛단을 따라 (회전된 고리라 y가 깊이)
+      p.hemTrim.position.z = -0.04 * kn;
+      p.hemTrim.position.y = 0.028 - 0.012 * kn;
+    }
+    p.torso.position.y = p.waist * (1 - 0.58 * kn);
+    p.mantleG.scale.y = 1 - (p.waist * 0.58 * kn) / p.mantleSpan;
+    p.feet.forEach(f => (f.visible = lie < 0.5 && kn < 0.3 && !this.floating));
+    p.baby.visible = carry;
+    // 눈 깜빡임(사람마다 박자가 다르게), 말할 때 입 움직임
+    const blink = (t * 0.27) % 1 < 0.035 ? 0.12 : 1;
+    p.eyes.forEach(e => { e.scale.y = damp(e.scale.y, lie > 0.5 ? 0.12 : blink, 30, dt); });
+    const talk = this.pose === 'speak' && !this.solemn ? 0.55 + Math.abs(Math.sin(t * 8.5) * Math.sin(t * 3.1)) * 1.6 : 0.35;
+    p.mouth.scale.y = damp(p.mouth.scale.y, talk, 18, dt);
+    p.bed.visible = lie > 0.5;
+    // 누우면 몸 가운데가 깔개 위에 오도록 발 쪽으로 옮긴다
+    p.body.position.x = damp(p.body.position.x, lie * 0.42 * -Math.sign(this.face || 1), 3, dt);
+    if (p.wings) {
+      const flap = 0.35 + Math.sin(t * (this.y > 0.4 ? 7 : 2.2)) * (this.y > 0.4 ? 0.35 : 0.12);
+      p.wings[0].rotation.y = flap; p.wings[1].rotation.y = -flap; // 끝이 등 뒤로 젖혀진다
+    }
+    if (p.glow) p.glow.material.opacity = (0.65 + Math.sin(t * 2.4) * 0.15) * this.show;
+  }
+}
+
+export { TYPES, SKIN, makePerson, Actor, damp };

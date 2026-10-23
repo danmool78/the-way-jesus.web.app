@@ -55,6 +55,10 @@ const GEO = {
 };
 // 음영 기복도(assets/relief.webp)가 덮는 범위 — _src/relief.py의 EXTENT와 같게
 const RELIEF = { lat0: 30.45, lat1: 34.05, lng0: 33.85, lng1: 36.65 };
+// 확대했을 때만 불러오는 정밀 타일(assets/relief-hi/행_열.webp) — _src/relief.py의 HI와 같게
+const RELIEF_HI = { lat0: 30.95, lat1: 33.45, lng0: 34.6, lng1: 36.0, tile: 160 };
+// 비가 아니라 샘·강 덕분에 푸르렀던 곳: [위도, 경도, 반지름(지도 단위≈1/1000도)]
+const OASES = [[31.855, 35.455, 22], [31.462, 35.388, 9], [32.865, 35.525, 18]]; // 여리고, 엔게디, 게네사렛 평야
 const REGIONS = [
   ['갈릴리', 32.80, 35.30], ['사마리아', 32.27, 35.12], ['유대', 31.52, 35.02], ['베레아', 31.98, 35.78],
   ['데가볼리', 32.52, 35.86], ['빌립의 영지', 33.02, 35.86], ['페니키아', 33.42, 35.42], ['이두매', 31.12, 34.86]
@@ -68,17 +72,24 @@ let view = { x: 0, y: 0, w: W, h: H }, anim = null, fitMode = 'scene';
 function buildMap() {
   // 지도 범위 밖까지 땅과 바다를 넉넉히 이어 그려, 확대·축소 때 빈 가장자리가 보이지 않게 한다
   const far = (lat, lng) => px([lat, lng]).join(',');
-  const sea = `M${far(35.2, 36.0)} L${far(34.2, 35.65)} ` + smooth(GEO.coast).replace(/^M/, 'L') + ` L${far(31.1, 33.9)} L${far(31.05, 32.0)} L${far(35.2, 32.0)} Z`;
+  // 남쪽은 시나이 북부 → 나일 삼각주 → 알렉산드리아 해안을 따라, 넓은 화면에서도 바다가 끊기지 않게 서쪽으로 넉넉히
+  const sinai = [[31.13, 33.8], [31.15, 33.1], [31.26, 32.3], [31.52, 31.85], [31.47, 30.4], [31.2, 29.9], [30.9, 28.5], [30.8, 26]];
+  const sea = `M${far(35.2, 36.0)} L${far(34.2, 35.65)} ` + smooth(GEO.coast).replace(/^M/, 'L') + ' ' + sinai.map(p => 'L' + far(...p)).join(' ') + ` L${far(36, 26)} Z`;
   const t = (txt, [x, y], cls) => `<g class="lbl ${cls}" transform="translate(${x},${y})"><text>${esc(txt)}</text></g>`;
   const [rx0, ry0] = px([RELIEF.lat1, RELIEF.lng0]), [rx1, ry1] = px([RELIEF.lat0, RELIEF.lng1]);
   map.setAttribute('viewBox', `0 0 ${W} ${H}`);
   map.innerHTML = `
   <defs>
     <linearGradient id="seaGrad" x1="0" x2="1"><stop offset="0" stop-color="var(--sea-deep)"/><stop offset="1" stop-color="var(--sea)"/></linearGradient>
+    <radialGradient id="oasis"><stop offset="0" stop-color="var(--oasis)" stop-opacity=".75"/><stop offset=".6" stop-color="var(--oasis)" stop-opacity=".4"/><stop offset="1" stop-color="var(--oasis)" stop-opacity="0"/></radialGradient>
     <filter id="waterEdge" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur in="SourceAlpha" stdDeviation="4" result="b"/><feComposite in="SourceAlpha" in2="b" operator="arithmetic" k2="1" k3="-1" result="edge"/><feFlood flood-color="#21474f" flood-opacity=".5"/><feComposite in2="edge" operator="in"/><feComposite in2="SourceGraphic" operator="over"/></filter>
   </defs>
   <rect x="${-W * 2}" y="${-H * 2}" width="${W * 5}" height="${H * 5}" fill="var(--land)"/>
   <image href="assets/relief.webp" class="relief" x="${rx0}" y="${ry0}" width="${rx1 - rx0}" height="${ry1 - ry0}" preserveAspectRatio="none"/>
+  <g id="reliefHi" class="relief"></g>
+  <path d="${smooth(GEO.jordanN)}" class="riverbank"/>
+  <path d="${smooth(GEO.jordanS)}" class="riverbank"/>
+  ${OASES.map(([a, b, r]) => `<circle cx="${px([a, b])[0]}" cy="${px([a, b])[1]}" r="${r}" fill="url(#oasis)"/>`).join('')}
   <path d="${sea}" fill="url(#seaGrad)" class="sea"/>
   <path d="${smooth(GEO.coast)}" class="coast"/>
   <path d="${smooth(GEO.galilee, true)}" class="lake" filter="url(#waterEdge)"/>
@@ -144,6 +155,7 @@ function applyView() {
   map.style.setProperty('--u', u);
   map.classList.toggle('zoom-city', u < 0.06);
   map.classList.toggle('zoom-near', u < 0.6);
+  showHiRelief(x, y, w, h, u);
   $$('.pin, .lbl', map).forEach(el => {
     const tr = el.dataset.x ? `translate(${el.dataset.x},${el.dataset.y})` : (el.dataset.t ||= el.getAttribute('transform'));
     el.setAttribute('transform', `${tr} scale(${u})`);
@@ -153,6 +165,31 @@ function applyView() {
   const eg = $('#egyptArrow', map);
   eg.dataset.t ||= eg.getAttribute('transform');
   eg.setAttribute('transform', `${eg.dataset.t} scale(${Math.max(u, .25)})`);
+}
+
+// 바탕 지형은 지도 단위당 0.8픽셀이라 확대하면 뭉개진다. 화면 1px이 지도 1단위보다 작아지면
+// 보이는 범위의 정밀 타일(단위당 3.2픽셀)을 얹는다. 한 번 만든 타일은 숨겼다 다시 쓴다.
+const hiTiles = new Map();
+function showHiRelief(x, y, w, h, u) {
+  const g = $('#reliefHi', map), T = RELIEF_HI.tile;
+  const [ox, oy] = px([RELIEF_HI.lat1, RELIEF_HI.lng0]);
+  const cols = Math.ceil((RELIEF_HI.lng1 - RELIEF_HI.lng0) * COS * K / T), rows = Math.ceil((RELIEF_HI.lat1 - RELIEF_HI.lat0) * K / T);
+  const want = new Set();
+  if (u < 1) {
+    const c0 = Math.max(0, Math.floor((x - ox) / T)), c1 = Math.min(cols - 1, Math.floor((x + w - ox) / T));
+    const r0 = Math.max(0, Math.floor((y - oy) / T)), r1 = Math.min(rows - 1, Math.floor((y + h - oy) / T));
+    for (let r = r0; r <= r1; r++) for (let c = c0; c <= c1; c++) want.add(`${r}_${c}`);
+  }
+  want.forEach(k => {
+    if (hiTiles.has(k)) return;
+    const [r, c] = k.split('_').map(Number), im = document.createElementNS(svgNS, 'image');
+    im.setAttribute('href', `assets/relief-hi/${k}.webp`);
+    // 이웃 타일과의 실선 틈이 보이지 않게 0.3단위 겹친다
+    Object.entries({ x: ox + c * T, y: oy + r * T, width: T + .3, height: T + .3 }).forEach(([a, v]) => im.setAttribute(a, v));
+    im.setAttribute('preserveAspectRatio', 'none');
+    g.appendChild(im); hiTiles.set(k, im);
+  });
+  hiTiles.forEach((im, k) => { im.style.display = want.has(k) ? '' : 'none'; });
 }
 
 function frame(ids, ms = 1300, reserve = true) {
@@ -199,6 +236,14 @@ function animateTo(target, ms) {
   };
   anim = requestAnimationFrame(step);
 }
+
+// 위경도 → 화면(client) 좌표. 3D 무대(stage.js)가 물가·들판 같은 실제 지점에 소품을 세울 때 쓴다
+window.geoToClient = (lat, lng) => {
+  const [x, y] = px([lat, lng]), pt = map.createSVGPoint();
+  pt.x = x; pt.y = y;
+  const p = pt.matrixTransform(map.getScreenCTM());
+  return { x: p.x, y: p.y };
+};
 
 function setWalker([x, y]) {
   const wk = $('#walker', map);
@@ -257,6 +302,7 @@ function walkTo(i, done) {
   const from = EVENTS[idx], to = EVENTS[i], A = PLACES[from.place], B = PLACES[to.place];
   const path = $(`.route[data-i="${i}"]`, map);
   walking = true; document.body.classList.add('is-walking');
+  dispatchEvent(new CustomEvent('stage:walk', { detail: { ev: to } }));
   setCard('peek');
   $('#nextHint', map).style.display = 'none';
   banner(`<span class="wk">👣</span><b>${esc(A.name)}</b> → <b>${esc(B.name)}</b><small>${travelText(A, B)}</small>`);
@@ -393,6 +439,8 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
   const arrive = () => {
     idx = i;
     renderScene(); updateMap(prev, { camera: !stepped || fitMode === 'all' }); updateTrack(); markVisited(EVENTS[i].id);
+    window.__stageScene = EVENTS[i]; // stage.js가 늦게 로드돼도 따라잡도록
+    dispatchEvent(new CustomEvent('stage:scene', { detail: { ev: EVENTS[i] } }));
     history.replaceState(null, '', '#' + EVENTS[i].id);
     $('#prev').disabled = idx === 0; $('#next').disabled = idx === EVENTS.length - 1;
     const p = PLACES[EVENTS[i].place];
@@ -435,16 +483,18 @@ function speakQueue(items, onDone) {
   const narrator = voices.find(v => /female|여|yuna|sun-?hi|heami|google/i.test(v.name)) || voices[0];
   const other = voices.find(v => v !== narrator && /male|남|injoon|hyunsu|minsu/i.test(v.name)) || voices.find(v => v !== narrator);
   const queue = [];
-  items.forEach(it => sentences(it.text).forEach(s => s.trim() && queue.push({ ...it, text: s.trim() })));
+  items.forEach(it => sentences(it.text).forEach((s, k) => s.trim() && queue.push({ ...it, text: s.trim(), s: k })));
+  const staged = items.some(it => it.beat);
   const readMs = it => (600 + it.text.length * 140) / rate; // 눈으로 읽는 속도
   let n = 0;
   speaking = true; setListenUI();
   const next = () => {
     if (token !== speechToken) return;
     $$('.speaking').forEach(x => x.classList.remove('speaking'));
-    if (n >= queue.length) { speaking = false; setListenUI(); onDone && onDone(); return; }
+    if (n >= queue.length) { speaking = false; setListenUI(); if (staged) stageBeat('end'); onDone && onDone(); return; }
     const it = queue[n++];
     if (it.el) { it.el.classList.add('speaking'); scrollToEl(it.el); }
+    if (it.beat) stageBeat(it.beat, it.s);
     let done = false, guard;
     const advance = d => { if (done) return; done = true; clearTimeout(guard); autoTimer = setTimeout(next, d); };
     if (!useVoice) { guard = setTimeout(() => advance(it.pause || 0), readMs(it)); return; }
@@ -470,13 +520,14 @@ function scrollToEl(el) {
 
 function sceneScript() {
   const e = EVENTS[idx], sc = $('#scene');
-  const items = [{ text: `${e.title}. ${PLACES[e.place].name.replace(/[()·]/g, ' ')}, ${e.when.replace(/·/g, ',')}.`, el: $('.hero-text', sc), pause: 500 }];
-  e.story.forEach((s, i) => items.push({ text: s, el: $(`[data-para="${i}"]`, sc), pause: 350 }));
+  // beat: 3D 무대(stage.js)가 연출을 맞추는 표지 — intro, p0…(문단), w0…(말씀)
+  const items = [{ text: `${e.title}. ${PLACES[e.place].name.replace(/[()·]/g, ' ')}, ${e.when.replace(/·/g, ',')}.`, el: $('.hero-text', sc), pause: 500, beat: 'intro' }];
+  e.story.forEach((s, i) => items.push({ text: s, el: $(`[data-para="${i}"]`, sc), pause: 350, beat: 'p' + i }));
   const jesus = e.words.some(w => w.who === '예수');
   items.push({ text: jesus ? '그분의 말씀.' : '그날의 목소리.', el: $('.words-sec h3', sc), pause: 400 });
   e.words.forEach((w, i) => {
-    if (w.who !== '예수') items.push({ text: `${w.who}.`, el: $(`blockquote[data-say="${i}"]`, sc) });
-    items.push({ text: w.text, el: $(`blockquote[data-say="${i}"]`, sc), jesus: w.who === '예수', pause: 500 });
+    if (w.who !== '예수') items.push({ text: `${w.who}.`, el: $(`blockquote[data-say="${i}"]`, sc), beat: 'w' + i });
+    items.push({ text: w.text, el: $(`blockquote[data-say="${i}"]`, sc), jesus: w.who === '예수', pause: 500, beat: 'w' + i });
   });
   return items;
 }
@@ -486,7 +537,9 @@ function speakWord(i) {
   const w = EVENTS[idx].words[i];
   speakQueue([{ text: w.text, el: $(`blockquote[data-say="${i}"]`, $('#scene')), jesus: w.who === '예수' }]);
 }
+const stageBeat = (beat, s) => dispatchEvent(new CustomEvent('stage:beat', { detail: { beat, s } }));
 function stopSpeech(keepAuto) {
+  if (speaking) dispatchEvent(new CustomEvent('stage:stop'));
   speechToken++; clearTimeout(autoTimer);
   if (synth) synth.cancel();
   speaking = false; $$('.speaking').forEach(x => x.classList.remove('speaking'));

@@ -1,9 +1,11 @@
 {
   "hosting": {
     "public": ".",
-    "ignore": ["firebase.json", "README.md", "**/.*", "**/node_modules/**", "_src/**"],
+    "ignore": ["firebase.json", "README.md", "**/.*", "**/node_modules/**", "_src/**", "**/*-firebase-adminsdk-*.json"],
     "headers": [
-      { "source": "/sw.js", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] },
+      { "source": "**/*.@(js|css|html|json)", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] },
+      { "source": "/assets/vendor/**", "headers": [{ "key": "Cache-Control", "value": "public, max-age=2592000" }] },
+      { "source": "/assets/relief*/**", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }] },
       { "source": "/assets/img/**", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }] }
     ]
   }
