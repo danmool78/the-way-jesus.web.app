@@ -73,6 +73,8 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .is-walking .walk{opacity:.6}
 
 /* map styling */
+.relief{transition:opacity .6s}
+.zoom-city .relief{opacity:.45}
 .sea{opacity:.95}
 .coast{fill:none;stroke:#f6efdc;stroke-width:1.6;vector-effect:non-scaling-stroke;opacity:.7}
 .lake{fill:var(--sea);stroke:#5f8a92;stroke-width:1;vector-effect:non-scaling-stroke}
@@ -83,7 +85,7 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .wall{fill:rgba(140,105,60,.16);stroke:#8a6b40;stroke-width:2;stroke-dasharray:6 3;vector-effect:non-scaling-stroke}
 .valley{fill:none;stroke:#a68f66;stroke-width:5;opacity:.45;vector-effect:non-scaling-stroke;stroke-linecap:round}
 .lbl text{font-family:var(--serif);text-anchor:middle;paint-order:stroke;stroke-linejoin:round}
-.region text{font-size:14px;letter-spacing:.4em;fill:#7a6440;opacity:.75;stroke:var(--land-hi);stroke-width:3px}
+.region text{font-size:14px;letter-spacing:.4em;fill:#6b5434;opacity:.85;stroke:var(--land-hi);stroke-width:3.5px}
 .sea-lbl text{font-size:16px;letter-spacing:.5em;fill:#e8f1ef;opacity:.75;font-style:italic}
 .water-lbl text{font-size:11px;fill:#335d66;stroke:rgba(255,255,255,.5);stroke-width:2.5px;font-style:italic}
 .river-lbl text{writing-mode:vertical-rl;letter-spacing:.2em}

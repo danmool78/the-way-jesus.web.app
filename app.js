@@ -53,6 +53,8 @@ const GEO = {
   kidron: [[31.787,35.2392],[31.781,35.2385],[31.776,35.2378],[31.771,35.2364],[31.766,35.2360]],
   hinnom: [[31.7765,35.2252],[31.7735,35.2258],[31.7705,35.2290],[31.7698,35.2340],[31.7690,35.2362]]
 };
+// 음영 기복도(assets/relief.webp)가 덮는 범위 — _src/relief.py의 EXTENT와 같게
+const RELIEF = { lat0: 30.45, lat1: 34.05, lng0: 33.85, lng1: 36.65 };
 const REGIONS = [
   ['갈릴리', 32.80, 35.30], ['사마리아', 32.27, 35.12], ['유대', 31.52, 35.02], ['베레아', 31.98, 35.78],
   ['데가볼리', 32.52, 35.86], ['빌립의 영지', 33.02, 35.86], ['페니키아', 33.42, 35.42], ['이두매', 31.12, 34.86]
@@ -68,20 +70,19 @@ function buildMap() {
   const far = (lat, lng) => px([lat, lng]).join(',');
   const sea = `M${far(35.2, 36.0)} L${far(34.2, 35.65)} ` + smooth(GEO.coast).replace(/^M/, 'L') + ` L${far(31.1, 33.9)} L${far(31.05, 32.0)} L${far(35.2, 32.0)} Z`;
   const t = (txt, [x, y], cls) => `<g class="lbl ${cls}" transform="translate(${x},${y})"><text>${esc(txt)}</text></g>`;
+  const [rx0, ry0] = px([RELIEF.lat1, RELIEF.lng0]), [rx1, ry1] = px([RELIEF.lat0, RELIEF.lng1]);
   map.setAttribute('viewBox', `0 0 ${W} ${H}`);
   map.innerHTML = `
   <defs>
     <linearGradient id="seaGrad" x1="0" x2="1"><stop offset="0" stop-color="var(--sea-deep)"/><stop offset="1" stop-color="var(--sea)"/></linearGradient>
-    <filter id="soft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="55"/></filter>
+    <filter id="waterEdge" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur in="SourceAlpha" stdDeviation="4" result="b"/><feComposite in="SourceAlpha" in2="b" operator="arithmetic" k2="1" k3="-1" result="edge"/><feFlood flood-color="#21474f" flood-opacity=".5"/><feComposite in2="edge" operator="in"/><feComposite in2="SourceGraphic" operator="over"/></filter>
   </defs>
   <rect x="${-W * 2}" y="${-H * 2}" width="${W * 5}" height="${H * 5}" fill="var(--land)"/>
-  <ellipse cx="${px([31.75, 35.15])[0]}" cy="${px([31.75, 35.15])[1]}" rx="160" ry="420" fill="var(--hill)" filter="url(#soft)" opacity=".38"/>
-  <ellipse cx="${px([32.95, 35.40])[0]}" cy="${px([32.95, 35.40])[1]}" rx="190" ry="160" fill="var(--hill)" filter="url(#soft)" opacity=".32"/>
-  <ellipse cx="${px([32.25, 35.25])[0]}" cy="${px([32.25, 35.25])[1]}" rx="150" ry="230" fill="var(--hill)" filter="url(#soft)" opacity=".28"/>
+  <image href="assets/relief.webp" class="relief" x="${rx0}" y="${ry0}" width="${rx1 - rx0}" height="${ry1 - ry0}" preserveAspectRatio="none"/>
   <path d="${sea}" fill="url(#seaGrad)" class="sea"/>
   <path d="${smooth(GEO.coast)}" class="coast"/>
-  <path d="${smooth(GEO.galilee, true)}" class="lake"/>
-  <path d="${smooth(GEO.dead, true)}" class="lake dead"/>
+  <path d="${smooth(GEO.galilee, true)}" class="lake" filter="url(#waterEdge)"/>
+  <path d="${smooth(GEO.dead, true)}" class="lake dead" filter="url(#waterEdge)"/>
   <path d="${smooth(GEO.hula, true)}" class="lake"/>
   <path d="${smooth(GEO.jordanN)}" class="river"/>
   <path d="${smooth(GEO.jordanS)}" class="river"/>

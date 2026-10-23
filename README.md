@@ -28,5 +28,6 @@
 
 ## 출처
 그림은 제임스 티소(James Tissot, 1836–1902)의 「그리스도의 생애」 연작(브루클린 미술관 소장, 퍼블릭 도메인)을 위키미디어 공용에서 가져왔습니다. 연대는 학계의 대표적 추정(공생애 AD 26–30)을 따른 근사값입니다.
+지도 음영 기복은 AWS Open Data의 Terrain Tiles(Mapzen, SRTM 등 공개 고도 자료)로 만들었습니다(`python _src/relief.py <캐시 폴더>`, numpy·Pillow 필요).
 
 자매 앱: [열왕기 — 두 왕국의 연대기](https://kings-chronicle-app.web.app/)
