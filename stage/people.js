@@ -178,6 +178,43 @@ function eyeTexture(iris) {
 }
 let personNo = 0;
 
+// 얼굴 피부 그림: 머리 공에 입히는 한 장. 공의 +z(앞)가 그림 가로 1/4, 위에서 아래로 그림 위→아래.
+// 덧붙인 볼터치 대신 피부 안에서 은은하게 — 볼·코끝·입술 둘레는 따뜻하게, 눈두덩과 관자놀이는 살짝 그늘지게,
+// 수염 없는 남자는 턱에 옅은 면도 자국, 고르지 않은 피부 톤
+const skinTex = new Map();
+function skinMaterial(color, soft, shave) {
+  const key = color + soft + shave;
+  if (skinTex.has(key)) return skinTex.get(key);
+  const c = document.createElement('canvas'); c.width = 512; c.height = 256;
+  const g = c.getContext('2d'), base = new THREE.Color(color);
+  const css = (col, a) => `rgba(${Math.round(col.r * 255)},${Math.round(col.g * 255)},${Math.round(col.b * 255)},${a})`;
+  g.fillStyle = '#' + base.getHexString(); g.fillRect(0, 0, 512, 256);
+  const blob = (x, y, rx, ry, col, a) => {
+    g.save(); g.translate(x, y); g.scale(1, ry / rx);
+    const gr = g.createRadialGradient(0, 0, 0, 0, 0, rx);
+    gr.addColorStop(0, css(col, a)); gr.addColorStop(1, css(col, 0));
+    g.fillStyle = gr; g.beginPath(); g.arc(0, 0, rx, 0, Math.PI * 2); g.fill(); g.restore();
+  };
+  const X = 128, warm = base.clone().lerp(new THREE.Color('#d0645a'), 0.55), shade = base.clone().multiplyScalar(0.72);
+  // 피부 톤의 고르지 않음: 크고 옅은 얼룩 몇 개 (작은 점은 주근깨처럼 보여 쓰지 않는다)
+  for (let i = 0; i < 14; i++) blob(Math.random() * 512, 40 + Math.random() * 180, 30 + Math.random() * 40, 20 + Math.random() * 30,
+    Math.random() < 0.5 ? base.clone().multiplyScalar(0.92) : base.clone().lerp(new THREE.Color('#ffffff'), 0.08), 0.25);
+  [-1, 1].forEach(s => {
+    blob(X + s * 46, 148, 30, 22, warm, soft ? 0.38 : 0.2);    // 볼
+    blob(X + s * 26, 112, 16, 9, shade, 0.35);                  // 눈두덩 아래 그늘
+    blob(X + s * 70, 110, 22, 30, shade, 0.25);                 // 관자놀이
+  });
+  blob(X, 140, 10, 8, warm, 0.25);                               // 코끝
+  blob(X, 166, 20, 10, warm, soft ? 0.3 : 0.18);                 // 입술 둘레
+  if (shave) blob(X, 186, 58, 22, base.clone().lerp(new THREE.Color('#3a3a44'), 0.5), 0.22); // 면도 자국
+  blob(X, 60, 60, 26, base.clone().lerp(new THREE.Color('#ffffff'), 0.25), 0.25); // 이마 윗부분 빛
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4;
+  const m = new THREE.MeshStandardMaterial({ map: t, roughness: 0.7 });
+  skinTex.set(key, m);
+  return m;
+}
+
 function makePerson(type) {
   const t = TYPES[type] || TYPES.man;
   const skin = mat(SKIN[t.skin || 0], { roughness: 0.7 });
@@ -254,7 +291,7 @@ function makePerson(type) {
   head.position.set(0, 0.8, 0);
   head.scale.setScalar(t.slim ? 0.9 : 0.93); // 머리를 조금 작게 해서 늘씬한 비율로
   upper.add(head);
-  mesh(headShape(sphere(0.08, 48, 36), [0, 0, 0], true), skin, head);
+  mesh(headShape(sphere(0.08, 48, 36), [0, 0, 0], true), skinMaterial(SKIN[t.skin || 0], !!t.soft, !t.beard && !t.soft && !t.bare && (t.height || 1) > 0.8), head);
   [-1, 1].forEach(s => mesh(sphere(0.017, 10, 8), skin, head, [s * 0.068, -0.004, -0.004], [0.45, 1, 0.75])); // 귀
   mesh(noseGeo(globalThis.NOSE || 'B'), skin, head, [0, -0.001, 0.0695]); // A 곧은 코 · B 오똑한 코 · C 매부리 코 (faces.html?nose=로 비교)
   const eyeM = eyeTexture(t.eye || IRIS[(personNo++ * 5 + type.length) % IRIS.length]); // 사람마다 눈 색이 조금씩 다르게
@@ -287,7 +324,6 @@ function makePerson(type) {
     return g;
   });
   const mouth = mesh(sphere(0.011, 12, 8), mat('#7a3a2e', { roughness: 0.6 }), head, [0, -0.045, 0.068], [1.5, 0.35, 0.45]);
-  if (t.soft) [-1, 1].forEach(s => mesh(sphere(0.016, 10, 8), mat('#e3958a', { transparent: true, opacity: 0.32, depthWrite: false }), head, [s * 0.043, -0.02, 0.062], [1, 0.7, 0.4]));
 
   // 머리카락
   if (t.hair) {
