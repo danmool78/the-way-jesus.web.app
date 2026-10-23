@@ -219,6 +219,33 @@ function reserveCard(t, reserve = true) {
   const f = Math.min(.5, (Math.min(460, r.width * .42) + 28) / r.width);
   const nw = w / (1 - f), nh = h * nw / w; return { x, y: y - (nh - h) / 2, w: nw, h: nh };
 }
+// 무대가 있는 장면: 무대(캔버스의 가운데)가 장면 카드에 가리지 않은 지도 영역의 한가운데 오도록 맞춘다.
+// 다음 목적지까지 함께 담지 않고 지금 장소만 본다. 무대가 없거나 아직 준비 전이면 false
+// 카드 크기는 어림하지 않고 실제 크기로 잰다 — 모바일 시트는 내용에 따라 높이가 달라서 고정 비율로는 무대가 위로 쏠렸다
+function freeArea(mode) {
+  const r = map.getBoundingClientRect(), c = $('#scene'), mobile = innerWidth <= 900;
+  if (mobile) {
+    // 펼친 시트는 지도 높이의 68%까지, 접으면 68px (style.css와 같은 값)
+    const h = mode === 'peek' ? 68 : Math.min(c.scrollHeight, r.height * .68);
+    return { l: 0, t: 0, r: r.width, b: Math.max(r.height * .25, r.height - h) };
+  }
+  const cw = Math.min(460, r.width * .42) + 14;
+  return { l: 0, t: 0, r: r.width - cw, b: r.height };
+}
+function frameStage(i, ms = 1300, mode = 'open') {
+  const e = EVENTS[i], st = window.stageFrame?.(e), r = map.getBoundingClientRect();
+  if (!st || !r.width) return false;
+  const [cx, cy] = st.at ? px(st.at) : P(PLACES[e.place]);
+  const min = PLACES[e.place].jlm || e.place === 'jerusalem' ? 14 : 300;
+  const u = reserveCard({ x: 0, y: 0, w: min, h: min }).w / r.width; // 이 확대에서 화면 1px 당 지도 단위
+  const f = freeArea(mode), fx = (f.l + f.r) / 2, fy = (f.t + f.b) / 2;
+  // 핀 + 무대 어긋남(dx,dy)이 빈 영역의 가운데에 오도록 보기 상자를 놓는다
+  animateTo({ x: cx - (fx - st.dx) * u, y: cy - (fy - st.dy) * u, w: r.width * u, h: r.height * u }, ms);
+  return true;
+}
+window.recenterStage = () => { if (fitMode !== 'all' && EVENTS) frameStage(idx, 600, $('#scene').classList.contains('peek') ? 'peek' : 'open'); };
+// 화면을 돌리거나 창 크기를 바꾸면 빈 영역도 바뀌므로 다시 맞춘다
+let recenterT; addEventListener('resize', () => { clearTimeout(recenterT); recenterT = setTimeout(() => window.recenterStage(), 250); });
 function fitAll() { animateTo({ x: 0, y: 0, w: W, h: H }, 1100); }
 function animateTo(target, ms) {
   cancelAnimationFrame(anim);
@@ -273,7 +300,7 @@ function updateMap(prevIdx, { camera = true } = {}) {
   } else hint.style.display = 'none';
   if (camera) {
     if (fitMode === 'all') fitAll();
-    else frame(nx && nx.place !== e.place ? [e.place, nx.place] : [e.place]);
+    else if (!frameStage(idx)) frame(nx && nx.place !== e.place ? [e.place, nx.place] : [e.place]);
   }
   const p = PLACES[e.place];
   $('#mapCaption').innerHTML = `<b>${esc(p.name)}</b><span>${esc(p.region)}${p.approx ? ' · 위치 추정' : ''}</span>`;
@@ -395,7 +422,7 @@ function renderScene() {
     ${idx < EVENTS.length - 1 ? `<button data-go="${idx + 1}" class="sn next"><small>다음 장면 · ${esc(PLACES[EVENTS[idx + 1].place].name)}</small>${esc(EVENTS[idx + 1].title)} →</button>` : `<button class="sn next" data-view-go="quiz"><small>여정을 마쳤습니다</small>퀴즈로 돌아보기 →</button>`}
   </nav>`;
   $('#scene').scrollTop = 0;
-  $('#cardToggle').onclick = () => setCard($('#scene').classList.contains('open') ? 'peek' : 'open');
+  $('#cardToggle').onclick = () => { setCard($('#scene').classList.contains('open') ? 'peek' : 'open'); window.recenterStage(); };
   $('.cardbar', $('#scene')).ondblclick = () => setCard('open');
   if (e.img) $('#heroBtn').onclick = () => openViewer(e);
   $$('.say', $('#scene')).forEach(b => b.onclick = ev => { ev.stopPropagation(); speakWord(+b.dataset.say); });
@@ -447,7 +474,7 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
     if (stepped) {
       banner(`<span class="wk">📍</span>${EVENTS[prev].place === EVENTS[i].place ? '같은 곳, 새로운 일' : '도착'} · <b>${esc(p.name)}</b><small>${esc(EVENTS[i].when)}</small>`, 2600);
       const nx = EVENTS[i + 1];
-      if (fitMode !== 'all') frame(nx && nx.place !== EVENTS[i].place ? [EVENTS[i].place, nx.place] : [EVENTS[i].place], 1100);
+      if (fitMode !== 'all' && !frameStage(i, 1100)) frame(nx && nx.place !== EVENTS[i].place ? [EVENTS[i].place, nx.place] : [EVENTS[i].place], 1100);
       $('#walker', map).classList.remove('arrive'); void $('#walker', map).getBoundingClientRect(); $('#walker', map).classList.add('arrive');
       setTimeout(() => setCard('open'), reduced() ? 0 : 650);
     } else setCard('open');
@@ -702,7 +729,7 @@ fetch('data.json').then(r => { if (!r.ok) throw Error(r.status); return r.json()
   $('#listen').onclick = () => { if (speaking && !autoOn) stopSpeech(); else { stopAuto(); speakScene(); } };
   $('#auto').onclick = () => { if (autoOn) stopSpeech(); else { stopSpeech(); startAuto(); } };
   $('#fitAll').onclick = () => { fitMode = 'all'; fitAll(); $('#fitAll').classList.add('active'); $('#fitNow').classList.remove('active'); };
-  $('#fitNow').onclick = () => { fitMode = 'scene'; frame([EVENTS[idx].place], 900); $('#fitNow').classList.add('active'); $('#fitAll').classList.remove('active'); };
+  $('#fitNow').onclick = () => { fitMode = 'scene'; if (!frameStage(idx, 900)) frame([EVENTS[idx].place], 900); $('#fitNow').classList.add('active'); $('#fitAll').classList.remove('active'); };
   $$('.tabs button').forEach(b => b.onclick = () => setView(b.dataset.view));
   $('#wordSearch').oninput = renderWords;
   $('#closeViewer').onclick = () => $('#viewer').close();
