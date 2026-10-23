@@ -32,6 +32,8 @@ const TYPES = {
   pharisee: { robe: '#d9cfb6', trim: '#3e5470', mantle: '#3e5470', hair: '#2b1b10', beard: true, hood: '#efe8d8', band: '#3e5470', skin: 2 },
   man:      { robe: '#8b6f50', trim: '#6b5438', mantle: '#a99069', hair: '#2e1d12', beard: true, sash: '#5b4630' },
   child:    { robe: '#e6dcc4', trim: '#8f6d4b', mantle: '#8f6d4b', hair: '#4a2e1c', height: 0.66 },
+  samaritan: { robe: '#9c5b3a', trim: '#6e3a22', mantle: '#d8b878', veil: true, inner: '#f1e6d0', skin: 1, soft: true, slim: true, sash: '#6e3a22' }, // 수가의 여인
+  official: { robe: '#2f4f6a', trim: '#d6a93a', mantle: '#c8b48c', hair: '#2b1b10', beard: true, sash: '#d6a93a', skin: 2 }, // 왕의 신하
 };
 
 // 깃털 한 장: 길이 방향 +y
@@ -269,8 +271,17 @@ function makePerson(type) {
   mesh(new THREE.BoxGeometry(0.086, 0.018, 0.066), mat('#7a2a5e', { roughness: 0.5 }), gift, [0, 0.035, 0]);
   mesh(sphere(0.012, 8, 6), gold, gift, [0, 0.05, 0]);
   gift.position.set(0, 0.47, 0.15);
-  [doves, gift].forEach(g => { g.visible = false; upper.add(g); });
-  const items = { basket, doves, gift };
+  // 물동이 (우물가의 여인): 배가 불룩한 질그릇
+  const jar = new THREE.Group();
+  mesh(lathe([[0.001, 0], [0.035, 0], [0.058, 0.05], [0.055, 0.1], [0.03, 0.13], [0.034, 0.15], [0.001, 0.15]], 18), mat('#b5653e', { roughness: 0.9 }), jar, [0, -0.06, 0]);
+  jar.position.set(0, 0.47, 0.15);
+  // 두루마리 (회당에서 읽는 이사야서): 양 끝의 막대에 감긴 양피지
+  const scroll = new THREE.Group();
+  [-1, 1].forEach(s => mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.11, 12), mat('#e8dcbf', { roughness: 0.8 }), scroll, [s * 0.04, 0, 0]));
+  mesh(new THREE.BoxGeometry(0.08, 0.1, 0.004), mat('#f1e7cf', { ...DS, roughness: 0.8 }), scroll, [0, 0, 0.012]);
+  scroll.position.set(0, 0.5, 0.16); scroll.rotation.x = -0.5;
+  [doves, gift, jar, scroll].forEach(g => { g.visible = false; upper.add(g); });
+  const items = { basket, doves, gift, jar, scroll };
 
   // 발: 샌들 위의 맨발이 옷자락 아래로
   const feet = [1, -1].map(s => {
