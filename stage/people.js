@@ -12,7 +12,7 @@ const TYPES = {
   steward:  { robe: '#e3d6b8', trim: '#8a3c1c', mantle: '#8a3c1c', hair: '#4a3a2a', beard: true, sash: '#8a3c1c' }, // 잔치를 맡은 이
   groom:    { robe: '#f1e7cf', trim: '#d6a93a', mantle: '#3c5d96', hair: '#2b1b10', beard: true, sash: '#d6a93a' },
   servant:  { robe: '#b9a07a', trim: '#8b6f50', hair: '#2e1d12', sash: '#6b5438' },
-  anna:     { robe: '#4f4a5e', trim: '#3a3646', mantle: '#8a8172', veil: true, inner: '#ddd6c8', skin: 1, soft: true, slim: true, sash: '#3a3646', height: 0.93 }, // 여든 넷의 과부 예언자
+  anna:     { robe: '#4f4a5e', trim: '#3a3646', mantle: '#8a8172', hair: '#cfc8bb', veil: true, inner: '#ddd6c8', skin: 1, soft: true, slim: true, sash: '#3a3646', height: 0.93 }, // 여든 넷의 과부 예언자
   magus2:   { robe: '#1f5a5a', trim: '#d6a93a', mantle: '#b0402e', hair: '#e2ddd2', beard: true, turban: '#d8b45a', skin: 1, sash: '#d6a93a' },
   magus3:   { robe: '#8a3c1c', trim: '#d6a93a', mantle: '#2f4f8a', hair: '#1d140c', beard: true, crown: true, skin: 3, sash: '#d6a93a' },
   boyJesus: { robe: '#efe7d6', trim: '#a8843f', mantle: '#9b3b2a', hair: '#4a2e1c', sash: '#b08a4e', height: 0.78 }, // 열두 살 소년
@@ -315,6 +315,19 @@ function makePerson(type) {
   }
   // 베일(여인): 흰 속두건 + 겉 베일 + 어깨로 흘러내림
   if (t.veil) {
+    // 앞머리: 베일 아래로 보이는 이마 위 머리. 가운데 가르마에서 양옆 관자놀이로 갈수록 길게 쓸어 내린 두 갈래
+    const fh = mat(t.hair || '#3b2616', { ...DS, roughness: 0.75 });
+    [-1, 1].forEach(k => {
+      const g = sphere(0.0838, 20, 10, Math.PI / 2 + (k > 0 ? 0.012 : -0.8), 0.788, 0, Math.PI * 0.3), q = g.attributes.position;
+      for (let i = 0; i < q.count; i++) {
+        const x = q.getX(i), y = q.getY(i), z = q.getZ(i), r = Math.hypot(x, y, z), h = Math.hypot(x, z);
+        const th = Math.acos(y / r), dp = Math.abs(Math.atan2(z, -x) - Math.PI / 2) / 0.8;
+        const nt = th * (0.62 + 0.55 * dp); // 가르마 쪽은 짧게, 바깥은 길게
+        const f = h > 1e-6 ? r * Math.sin(nt) / h : 0;
+        q.setXYZ(i, x * f, r * Math.cos(nt), z * f);
+      }
+      mesh(headShape(g, [0, 0.004, -0.002]), fh, head, [0, 0.004, -0.002]);
+    });
     mesh(sphere(0.087, 28, 16, ...SBACK(Math.PI * 1.55), 0, Math.PI * 0.8), mat(t.inner, DS), head, [0, 0.004, -0.002], [0.97, 1.06, 1.02]);
     const v = mat(t.mantle, DS);
     mesh(sphere(0.096, 28, 16, ...SBACK(Math.PI * 1.38), 0, Math.PI * 0.82), v, head, [0, 0.008, -0.006], [0.97, 1.05, 1.02]);
@@ -645,7 +658,10 @@ class Actor {
     if (this.item === 'baby') { carry = true; if (!moving) aL = aR = [-0.4, -0.25, -1.3]; }
     p.baby.visible = carry;
     // 눈 깜빡임(사람마다 박자가 다르게), 말할 때 입 움직임
-    const blink = (t * 0.27) % 1 < 0.035 ? 0.12 : 1;
+    // 저마다 2~6.5초 사이 제멋대로, 가끔은 두 번 연달아 깜빡인다
+    if (this.blinkAt === undefined || this.blinkAt - t > 8) this.blinkAt = t + 0.5 + Math.random() * 4; // 장면을 되감아 시간이 뒤로 가도 다시 맞춘다
+    if (t > this.blinkAt + 0.13) this.blinkAt = t + (Math.random() < 0.15 ? 0.2 : 2 + Math.random() * 4.5);
+    const blink = t >= this.blinkAt ? 0.12 : 1;
     // 윗꺼풀을 앞으로 돌려 내리면 감긴다 (-0.4: 뜬 눈, 1.4: 감은 눈)
     p.eyes.forEach(e => { const L = e.userData.lid; L.rotation.x = damp(L.rotation.x, lie > 0.5 || blink < 1 ? 1.4 : -0.4, 30, dt); });
     const talk = this.pose === 'speak' && !this.solemn ? 0.55 + Math.abs(Math.sin(t * 8.5) * Math.sin(t * 3.1)) * 1.6 : 0.35;
