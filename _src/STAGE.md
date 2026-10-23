@@ -32,6 +32,7 @@ e02: {
   env: 'night',        // 기본 분위기: day · dusk · night · storm · calm · overcast · dark
   wide: 1.3,           // 무대를 넓게(인물 크기는 그대로). 넓은 장면일수록 키운다
   scale: 0.85,         // 무대 전체 축소 (군중 장면 등)
+  at: [32.888, 35.572], // 무대 바닥의 중심을 이 위경도로 옮긴다 (핀이 물가라 핀 앞이 물인 곳의 뭍 장면)
   solemn: false,
   props: { 이름: ['종류', x, z, { y, scale, size:[sx,sy,sz], rot, speed, geo, faceCenter, …소품별 옵션 }] },
   cast:  { 이름: ['유형', x, z, 바라보는 방향, { board, y, speed, silhouette, gaze:false }] },
@@ -85,4 +86,5 @@ manger, sheep, star, beam(내려오는 빛), host(하늘 군대), water(호수·
 - **언덕에 다리가 묻힘** → 지형 소품은 heightAt을 제공.
 - **물결 골이 바닥 아래로** → 물은 y를 띄운다(0.05~0.07).
 - **배·짐승 방향** → 배는 도착하면 옆모습으로, 짐승(directional)은 머리가 앞.
+- **물가 핀 앞의 뭍 장면이 물 위에** → 가버나움처럼 핀이 물가에 있으면 핀 앞(+z)이 호수다. 집·마을 장면은 대본의 `at`으로 무대를 뭍의 실제 지점에 옮긴다.
 - **확대하면 지형이 흐림** → 정밀 지형 타일(assets/relief-hi)은 확대할 때만 불러온다. 도성 확대에서는 지형을 끈다.

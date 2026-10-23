@@ -207,15 +207,20 @@ function anchor() {
 
 /* ---------- 실제 지점에 세우기: 위경도 → 지도 화면 위치 → 무대 바닥(y=0)의 좌표 ---------- */
 const ray = new THREE.Raycaster(), floor = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0), hit = new THREE.Vector3();
-function geoToStage([lat, lng]) {
+function geoToWorld([lat, lng]) {
   if (!window.geoToClient) return null;
   const c = window.geoToClient(lat, lng), r = canvas.getBoundingClientRect();
   ray.setFromCamera(new THREE.Vector2((c.x - r.left) / r.width * 2 - 1, -((c.y - r.top) / r.height * 2 - 1)), camera);
-  if (!ray.ray.intersectPlane(floor, hit)) return null;
+  return ray.ray.intersectPlane(floor, hit) ? hit : null;
+}
+function geoToStage(ll) {
+  const w = geoToWorld(ll); if (!w) return null;
   const s = stageGroup.scale.x;
-  return new THREE.Vector2(hit.x / s, hit.z / s);
+  return new THREE.Vector2((w.x - stageGroup.position.x) / s, (w.z - stageGroup.position.z) / s);
 }
 function placeGeo() {
+  // 무대 바닥의 중심(at): 핀이 물가에 있어 핀 앞이 물인 곳(가버나움)에서, 뭍의 실제 지점으로 무대를 옮긴다
+  if (script?.at) { const w = geoToWorld(script.at); if (w) stageGroup.position.set(w.x, 0, w.z); } else stageGroup.position.set(0, 0, 0);
   Object.values(props).forEach(p => {
     if (p.geo) { // 고정: 매 프레임 그 자리로
       const g = geoToStage(p.geo); if (!g) return;

@@ -33,6 +33,7 @@ const TYPES = {
   man:      { robe: '#8b6f50', trim: '#6b5438', mantle: '#a99069', hair: '#2e1d12', beard: true, sash: '#5b4630' },
   child:    { robe: '#e6dcc4', trim: '#8f6d4b', mantle: '#8f6d4b', hair: '#4a2e1c', height: 0.66 },
   samaritan: { robe: '#9c5b3a', trim: '#6e3a22', mantle: '#d8b878', veil: true, inner: '#f1e6d0', skin: 1, soft: true, slim: true, sash: '#6e3a22' }, // 수가의 여인
+  levi:     { robe: '#5a3e6e', trim: '#c9a24a', mantle: '#b9935a', hair: '#2b1b10', beard: true, sash: '#c9a24a', skin: 2 }, // 세리 마태 (값진 옷)
   official: { robe: '#2f4f6a', trim: '#d6a93a', mantle: '#c8b48c', hair: '#2b1b10', beard: true, sash: '#d6a93a', skin: 2 }, // 왕의 신하
 };
 
