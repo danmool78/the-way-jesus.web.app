@@ -780,6 +780,44 @@ Object.assign(MAKERS, {
   },
 });
 
+Object.assign(MAKERS, {
+  // 헌금함: 나팔 모양 입구가 달린 나무 궤 (성전 뜰)
+  treasury() {
+    const g = new THREE.Group(), w = wood(), brass = mat('#c99a3a', { metalness: 0.55, roughness: 0.4 });
+    mesh(new THREE.BoxGeometry(0.22, 0.2, 0.16), w, g, [0, 0.1, 0]);
+    mesh(new THREE.CylinderGeometry(0.07, 0.02, 0.14, 14, 1, true), mat('#c99a3a', { ...DS, metalness: 0.55, roughness: 0.4 }), g, [0, 0.27, 0]);
+    mesh(new THREE.TorusGeometry(0.07, 0.006, 6, 18), brass, g, [0, 0.34, 0]).rotation.x = Math.PI / 2;
+    return new Prop(g);
+  },
+
+  // 대야와 물동이 (발 씻기기, 손 씻는 빌라도)
+  basin() {
+    const g = new THREE.Group();
+    mesh(lathe([[0.001, 0], [0.07, 0], [0.11, 0.05], [0.115, 0.06], [0.001, 0.02]], 20), mat('#a8673e', { ...DS, roughness: 0.85 }), g);
+    const w = mesh(new THREE.CircleGeometry(0.1, 20), mat('#7fb0c0', { roughness: 0.2 }), g, [0, 0.045, 0]); w.rotation.x = -Math.PI / 2; w.castShadow = false;
+    return new Prop(g);
+  },
+
+  // 올리브 나무: 비틀린 줄기와 은빛 초록 잎 덩이 (겟세마네)
+  olive(o = {}) {
+    const g = new THREE.Group(), bark = mat('#6a5a48', { roughness: 1 }), leaf = mat('#8a9a6a', { roughness: 0.9 });
+    [[0, 0.2, 0, 0.25], [0.04, 0.42, 0.02, -0.35]].forEach(([x, y, z, r]) => { const t = mesh(new THREE.CylinderGeometry(0.035, 0.055, 0.42, 8), bark, g, [x, y, z]); t.rotation.z = r; });
+    [[0.08, 0.68, 0, 0.2], [-0.12, 0.6, 0.05, 0.16], [0.2, 0.58, -0.05, 0.14], [-0.02, 0.62, -0.15, 0.15]].forEach(([x, y, z, r]) => mesh(sphere(r, 12, 10), leaf, g, [x, y, z], [1.2, 0.65, 1]));
+    return new Prop(g);
+  },
+
+  // 숯불: 돌 화로의 불과 일렁이는 빛 (대제사장 집 안뜰)
+  fire() {
+    const g = new THREE.Group();
+    mesh(new THREE.CylinderGeometry(0.12, 0.1, 0.06, 14), mat('#5a4e42', { roughness: 1 }), g, [0, 0.03, 0]);
+    const embers = mesh(sphere(0.08, 12, 8, 0, Math.PI * 2, 0, Math.PI / 2), mat('#ff7a2a', { emissive: '#ff5a10', emissiveIntensity: 2 }), g, [0, 0.055, 0], [1, 0.45, 1]);
+    embers.castShadow = false;
+    const halo = glowSprite(0.7, 0.8); halo.position.y = 0.14; g.add(halo);
+    const light = new THREE.PointLight('#ff9a50', 2, 1.8, 1.4); light.position.y = 0.25; g.add(light);
+    return new Prop(g, (P, t) => { const f = 1 + Math.sin(t * 11) * 0.08 + Math.sin(t * 27) * 0.05; light.intensity = 2 * f * P.show; halo.material.opacity = 0.7 * f * P.show; });
+  },
+});
+
 export function makeProp(kind, x = 0, z = 0, o = {}) {
   const P = MAKERS[kind](o);
   P.obj.position.set(x, o.y || 0, z);

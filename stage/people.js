@@ -51,6 +51,9 @@ const TYPES = {
   beggar:   { robe: '#8a7c66', trim: '#6a5c48', mantle: '#6a5c48', hair: '#3a2a1c', beard: true, skin: 1 }, // 눈먼 바디매오
   zacchaeus: { robe: '#7a3b2e', trim: '#d6a93a', mantle: '#c9a26a', hair: '#2b1b10', beard: true, sash: '#d6a93a', skin: 2, height: 0.8 }, // 키 작은 세리장
   judas:    { robe: '#8a7a3a', trim: '#5a4a24', mantle: '#4a3e2a', hair: '#1d140c', beard: true, sash: '#5a4a24', skin: 1 }, // 가룟 유다
+  sadducee: { robe: '#e9dfc8', trim: '#7a2a5e', mantle: '#7a2a5e', hair: '#2b1b10', beard: true, sash: '#7a2a5e', skin: 2 }, // 사두개인 (부유한 제사장 가문)
+  highpriest: { robe: '#f1ece0', trim: '#d6a93a', mantle: '#3c5d96', hair: '#d9d4c8', beard: true, turban: '#efe8d8', sash: '#a3554a', skin: 2, height: 0.98 }, // 대제사장 가야바
+  pilate:   { robe: '#f2ede2', trim: '#9d3328', mantle: '#9d3328', hair: '#3a2a1c', sash: '#9d3328', skin: 2 }, // 총독 빌라도 (로마 옷, 수염 없음)
   levi:     { robe: '#5a3e6e', trim: '#c9a24a', mantle: '#b9935a', hair: '#2b1b10', beard: true, sash: '#c9a24a', skin: 2 }, // 세리 마태 (값진 옷)
   official: { robe: '#2f4f6a', trim: '#d6a93a', mantle: '#c8b48c', hair: '#2b1b10', beard: true, sash: '#d6a93a', skin: 2 }, // 왕의 신하
 };
@@ -308,8 +311,19 @@ function makePerson(type) {
   mesh(new THREE.CylinderGeometry(0.004, 0.006, 0.3, 5), mat('#6b7a3a'), palm, [0, 0.13, 0]);
   for (let i = 0; i < 8; i++) { const l = mesh(new THREE.BoxGeometry(0.11, 0.004, 0.018), mat('#5f8a3a', DS), palm, [0, 0.12 + i * 0.022, 0]); l.rotation.z = (i % 2 ? 1 : -1) * 0.5; l.position.x = (i % 2 ? 1 : -1) * 0.04; }
   palm.position.set(0.02, 0.5, 0.15);
-  [doves, gift, jar, scroll, alabaster, palm].forEach(g => { g.visible = false; upper.add(g); });
-  const items = { basket, doves, gift, jar, scroll, alabaster, palm };
+  // 잔 (마지막 만찬)
+  const cup = new THREE.Group();
+  mesh(lathe([[0.001, 0], [0.022, 0], [0.006, 0.01], [0.006, 0.04], [0.03, 0.06], [0.032, 0.09], [0.001, 0.08]], 16), mat('#b98a4a', { metalness: 0.4, roughness: 0.5 }), cup, [0, -0.03, 0]);
+  cup.position.set(0, 0.5, 0.16);
+  // 횃불: 손에 든 막대 끝의 불꽃과 빛 (겟세마네의 밤)
+  const torch = new THREE.Group();
+  mesh(new THREE.CylinderGeometry(0.008, 0.01, 0.3, 6), mat('#5a3d22'), torch, [0, 0.1, 0]);
+  const fl = mesh(new THREE.ConeGeometry(0.025, 0.07, 8), mat('#ffc060', { emissive: '#ff9a30', emissiveIntensity: 2.5 }), torch, [0, 0.28, 0]);
+  fl.castShadow = false;
+  const tl = new THREE.PointLight('#ffa850', 1.2, 1.3, 1.5); tl.position.y = 0.32; torch.add(tl);
+  torch.position.set(0.05, 0.5, 0.16);
+  [doves, gift, jar, scroll, alabaster, palm, cup, torch].forEach(g => { g.visible = false; upper.add(g); });
+  const items = { basket, doves, gift, jar, scroll, alabaster, palm, cup, torch };
 
   // 발: 샌들 위의 맨발이 옷자락 아래로
   const feet = [1, -1].map(s => {
