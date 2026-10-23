@@ -431,6 +431,8 @@ Object.assign(MAKERS, {
 
 Object.assign(MAKERS, {
   // 들짐승(자칼), 소
+  pig: o => beast({ coat: '#4e3a32', dark: '#2a1e18', size: 0.95, ears: 0.035, neck: 0.03, graze: true, ...o }),
+  dog: o => beast({ coat: '#b08a5a', dark: '#5a4630', size: 0.7, ears: 0.05, neck: 0.07, ...o }),
   jackal: o => beast({ coat: '#9a7a52', dark: '#5a4630', size: 0.9, ears: 0.06, neck: 0.08, graze: false, ...o }),
   ox: o => {
     const P = beast({ coat: '#7a5a3a', dark: '#3a2a1c', size: 1.9, ears: 0.03, neck: 0.06, ...o });
