@@ -534,6 +534,90 @@ Object.assign(MAKERS, {
   },
 });
 
+Object.assign(MAKERS, {
+  // 등잔 하나가 놓인 낮은 상: 흔들리는 불빛이 둘러앉은 사람의 얼굴을 비춘다 (밤의 방)
+  lamp() {
+    const g = new THREE.Group(), w = wood();
+    mesh(new THREE.BoxGeometry(0.22, 0.02, 0.16), w, g, [0, 0.09, 0]);
+    [[-1, -1], [-1, 1], [1, -1], [1, 1]].forEach(([a, b]) => mesh(new THREE.BoxGeometry(0.02, 0.09, 0.02), w, g, [a * 0.09, 0.045, b * 0.06]));
+    const clay = mat('#a8673e', { roughness: 0.9 });
+    mesh(sphere(0.035, 14, 8, 0, Math.PI * 2, 0, Math.PI / 2), clay, g, [0, 0.1, 0], [1.3, 0.55, 1]);
+    mesh(new THREE.CylinderGeometry(0.008, 0.012, 0.03, 8), clay, g, [0.045, 0.11, 0]).rotation.z = -1.2;
+    const flame = mesh(new THREE.ConeGeometry(0.011, 0.035, 8), mat('#ffd27a', { emissive: '#ffb347', emissiveIntensity: 2.5 }), g, [0.058, 0.135, 0]);
+    flame.castShadow = false;
+    const halo = glowSprite(0.55, 0.8);
+    halo.position.set(0.058, 0.14, 0);
+    g.add(halo);
+    const light = new THREE.PointLight('#ffc070', 1.8, 1.8, 1.4);
+    light.position.set(0.058, 0.25, 0.05);
+    g.add(light);
+    return new Prop(g, (P, t) => {
+      const f = 1 + Math.sin(t * 9) * 0.06 + Math.sin(t * 23) * 0.04;
+      flame.scale.set(1, f, 1); halo.material.opacity = 0.7 * f * P.show;
+      light.intensity = 1.8 * f * P.show;
+    });
+  },
+
+  // 우물: 돌을 쌓은 둥근 둘레, 어두운 물, 두레박을 매다는 나무 틀 (야곱의 우물)
+  well() {
+    const g = new THREE.Group(), stone = mat('#b8a888', { roughness: 1, flatShading: true });
+    mesh(lathe([[0.15, 0], [0.17, 0], [0.17, 0.14], [0.15, 0.15], [0.13, 0.14], [0.13, 0.02]], 18), stone, g).receiveShadow = true;
+    mesh(new THREE.CircleGeometry(0.13, 20), mat('#1c2a2e', { roughness: 0.2 }), g, [0, 0.08, 0]).rotation.x = -Math.PI / 2;
+    const w = wood();
+    [-1, 1].forEach(s => mesh(new THREE.BoxGeometry(0.02, 0.32, 0.02), w, g, [s * 0.15, 0.3, 0]));
+    mesh(new THREE.CylinderGeometry(0.012, 0.012, 0.34, 8), w, g, [0, 0.44, 0]).rotation.z = Math.PI / 2;
+    mesh(new THREE.CylinderGeometry(0.002, 0.002, 0.2, 4), mat('#6b5a44'), g, [0, 0.34, 0]);
+    mesh(new THREE.CylinderGeometry(0.025, 0.02, 0.035, 10), mat('#7a5634'), g, [0, 0.23, 0]);
+    return new Prop(g);
+  },
+
+  // 땅에 놓인 물동이 하나 (여인이 버려 두고 간)
+  pot() {
+    const g = new THREE.Group();
+    mesh(lathe([[0.001, 0], [0.035, 0], [0.058, 0.05], [0.055, 0.1], [0.03, 0.13], [0.034, 0.15], [0.001, 0.15]], 18), mat('#b5653e', { roughness: 0.9 }), g);
+    return new Prop(g);
+  },
+
+  // 회당: 뒤쪽 돌벽과 기둥, 양옆의 돌 의자, 가운데 낭독대 (나사렛)
+  synagogue(o = {}) {
+    const g = new THREE.Group(), stone = mat('#d8ccb2', { roughness: 0.9 }), shade = mat('#b9ab8e', { roughness: 1 });
+    mesh(new THREE.BoxGeometry(2.0, 0.05, 1.1), shade, g, [0, 0.025, 0.1]).receiveShadow = true;
+    mesh(new THREE.BoxGeometry(1.9, 0.62, 0.08), stone, g, [0, 0.31, -0.45]);
+    for (let i = 0; i < 5; i++) mesh(new THREE.CylinderGeometry(0.035, 0.04, 0.62, 12), stone, g, [-0.8 + i * 0.4, 0.31, -0.37]);
+    mesh(new THREE.BoxGeometry(1.95, 0.05, 0.16), stone, g, [0, 0.64, -0.4]);
+    [-1, 1].forEach(s => mesh(new THREE.BoxGeometry(0.16, 0.1, 0.95), shade, g, [s * 0.88, 0.075, 0.05]).receiveShadow = true);
+    // 두루마리를 넣어 두는 궤(벽 가운데)와 낭독대
+    mesh(new THREE.BoxGeometry(0.22, 0.22, 0.08), mat('#7a5634'), g, [0, 0.2, -0.38]);
+    mesh(new THREE.BoxGeometry(0.14, 0.18, 0.1), wood(), g, [0.05, 0.12, -0.12]);
+    return new Prop(g);
+  },
+
+  // 그물: 바닥에 펼친 그물망. state 'full'이면 은빛 고기가 가득 차 불룩해진다
+  net(o = {}) {
+    const g = new THREE.Group();
+    const tex = (() => {
+      const c = document.createElement('canvas'); c.width = c.height = 64;
+      const x = c.getContext('2d'); x.strokeStyle = 'rgba(70,58,40,0.9)'; x.lineWidth = 2;
+      for (let i = 0; i <= 64; i += 8) { x.beginPath(); x.moveTo(i, 0); x.lineTo(i, 64); x.stroke(); x.beginPath(); x.moveTo(0, i); x.lineTo(64, i); x.stroke(); }
+      const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(4, 3); return t;
+    })();
+    const sheet = mesh(new THREE.CircleGeometry(0.32, 24), new THREE.MeshStandardMaterial({ map: tex, transparent: true, alphaTest: 0.3, side: THREE.DoubleSide, roughness: 1 }), g, [0, 0.012, 0], [1, 0.75, 1]);
+    sheet.rotation.x = -Math.PI / 2; sheet.castShadow = false;
+    const fish = new THREE.Group(), silver = mat('#c9d2d6', { metalness: 0.5, roughness: 0.35 });
+    for (let i = 0; i < 26; i++) {
+      const a = Math.random() * Math.PI * 2, r = Math.sqrt(Math.random()) * 0.22;
+      const f = mesh(new THREE.CapsuleGeometry(0.012, 0.045, 4, 8), silver, fish, [Math.cos(a) * r, 0.02 + Math.random() * 0.05, Math.sin(a) * r * 0.75]);
+      f.rotation.set(Math.random(), Math.random() * 3, Math.PI / 2);
+    }
+    g.add(fish);
+    return new Prop(g, (P, t, dt) => {
+      const k = damp(fish.scale.x, P.state === 'full' ? 1 : 0.0001, 2.5, dt);
+      fish.scale.setScalar(k); fish.visible = k > 0.02;
+      fish.children.forEach((f, i) => { f.rotation.y += Math.sin(t * 6 + i) * 0.02 * k; });
+    }, { state: 'empty' });
+  },
+});
+
 export function makeProp(kind, x = 0, z = 0, o = {}) {
   const P = MAKERS[kind](o);
   P.obj.position.set(x, o.y || 0, z);
