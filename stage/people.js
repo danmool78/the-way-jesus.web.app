@@ -42,6 +42,11 @@ const TYPES = {
   moses:    { robe: '#e8e0cc', trim: '#7a5a32', mantle: '#8a5a32', hair: '#ece6da', beard: true, long: true, sash: '#7a5a32', skin: 1, glow: true }, // 변화산의 모세
   elijah:   { robe: '#7a5a32', trim: '#4a3620', mantle: '#c9b48c', hair: '#d9d2c4', beard: true, long: true, sash: '#4a3620', skin: 1, glow: true }, // 변화산의 엘리야 (털옷)
   guard:    { robe: '#5a6b7d', trim: '#3a4656', mantle: '#3a4656', hair: '#2b1b10', beard: true, hood: '#c9c0a8', band: '#3a4656', staff: true, sash: '#3a4656' }, // 성전 경비병
+  traveler: { robe: '#6b7d5a', trim: '#4a5a3c', mantle: '#c9a26a', hair: '#2b1b10', beard: true, hood: '#e0d2b0', band: '#4a5a3c', sash: '#4a5a3c', skin: 1 }, // 선한 사마리아 사람
+  martha:   { robe: '#7a5a3a', trim: '#c9a24a', mantle: '#b9a07a', veil: true, inner: '#f1e9da', skin: 2, soft: true, slim: true, sash: '#c9a24a' }, // 베다니의 마르다
+  prodigal: { robe: '#a0927c', trim: '#7a6a54', hair: '#3a2a1c', beard: true, skin: 1 }, // 돌아온 둘째 아들 (해진 옷)
+  thomas:   { robe: '#5d6b7a', trim: '#3e4a56', mantle: '#a89a7c', hair: '#2b1b10', beard: true, sash: '#3e4a56' },
+  lazarus:  { robe: '#f2ede2', trim: '#d8d0c0', hood: '#f2ede2', hair: '#3b2616', skin: 2, height: 0.97 }, // 수의에 감긴 나사로
   levi:     { robe: '#5a3e6e', trim: '#c9a24a', mantle: '#b9935a', hair: '#2b1b10', beard: true, sash: '#c9a24a', skin: 2 }, // 세리 마태 (값진 옷)
   official: { robe: '#2f4f6a', trim: '#d6a93a', mantle: '#c8b48c', hair: '#2b1b10', beard: true, sash: '#d6a93a', skin: 2 }, // 왕의 신하
 };
