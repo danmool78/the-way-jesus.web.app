@@ -645,6 +645,59 @@ Object.assign(MAKERS, {
   },
 });
 
+Object.assign(MAKERS, {
+  // 들꽃: 비탈에 흩어진 작은 꽃들 (들의 백합화)
+  flowers(o = {}) {
+    const g = new THREE.Group(), cols = ['#f3ece0', '#e9c75a', '#c0607a', '#b9a0d6'], stem = mat('#6f8c40');
+    for (let i = 0; i < (o.n || 28); i++) {
+      const a = Math.random() * Math.PI * 2, r = Math.sqrt(Math.random()) * (o.r || 0.6), x = Math.cos(a) * r, z = Math.sin(a) * r * 0.6;
+      mesh(new THREE.CylinderGeometry(0.003, 0.003, 0.05, 4), stem, g, [x, 0.025, z]);
+      mesh(sphere(0.014, 8, 6), mat(cols[i % cols.length], { roughness: 0.7 }), g, [x, 0.055, z]);
+    }
+    return new Prop(g);
+  },
+
+  // 성문: 돌담 사이의 아치 문 (나인)
+  gate(o = {}) {
+    const g = new THREE.Group(), stone = mat('#c8b896', { roughness: 1, flatShading: true });
+    [-1, 1].forEach(s => mesh(new THREE.BoxGeometry(0.55, 0.42, 0.14), stone, g, [s * 0.42, 0.21, 0]).receiveShadow = true);
+    [-1, 1].forEach(s => mesh(new THREE.BoxGeometry(0.1, 0.5, 0.18), stone, g, [s * 0.16, 0.25, 0]));
+    const arch = mesh(new THREE.TorusGeometry(0.16, 0.05, 6, 16, Math.PI), stone, g, [0, 0.5, 0]);
+    arch.scale.z = 1.8;
+    mesh(new THREE.BoxGeometry(0.22, 0.48, 0.02), mat('#2a1c10'), g, [0, 0.24, -0.06]);
+    return new Prop(g);
+  },
+
+  // 상여: 네 손잡이가 달린 들것. deck에 누운 사람을 싣는다
+  bier(o = {}) {
+    const g = new THREE.Group(), w = wood();
+    mesh(new THREE.BoxGeometry(0.62, 0.025, 0.2), w, g, [0, 0.25, 0]);
+    [-1, 1].forEach(s => mesh(new THREE.CylinderGeometry(0.012, 0.012, 0.95, 6), w, g, [0, 0.24, s * 0.11]).rotation.z = Math.PI / 2);
+    [[-1, -1], [-1, 1], [1, -1], [1, 1]].forEach(([a, b]) => mesh(new THREE.BoxGeometry(0.02, 0.24, 0.02), w, g, [a * 0.26, 0.12, b * 0.08]));
+    const deck = new THREE.Group();
+    deck.position.y = 0.24;
+    g.add(deck);
+    const P = new Prop(g);
+    P.deck = deck;
+    return P;
+  },
+
+  // 밭: 갈아 놓은 흙과 이랑. state 'grow'면 이삭이 자라 오른다 (씨 뿌리는 비유)
+  field(o = {}) {
+    const g = new THREE.Group(), W = o.w || 0.9, D = o.d || 0.45;
+    mesh(new THREE.BoxGeometry(W, 0.012, D), mat('#8a6a48', { roughness: 1 }), g, [0, 0.006, 0]).receiveShadow = true;
+    for (let i = 0; i < 5; i++) mesh(new THREE.BoxGeometry(W * 0.95, 0.01, 0.02), mat('#755a3c'), g, [0, 0.014, -D / 2 + (i + 0.5) * D / 5]);
+    const crop = new THREE.Group(), stalk = mat('#c9b25a', { roughness: 0.9 });
+    for (let i = 0; i < 40; i++) mesh(new THREE.CylinderGeometry(0.004, 0.006, 0.12, 4), stalk, crop, [(Math.random() - 0.5) * W * 0.9, 0.06, (Math.random() - 0.5) * D * 0.85]);
+    g.add(crop);
+    return new Prop(g, (P, t, dt) => {
+      const k = damp(crop.scale.y, P.state === 'grow' ? 1 : 0.0001, 1.2, dt);
+      crop.scale.set(1, k, 1); crop.visible = k > 0.02;
+      crop.rotation.z = Math.sin(t * 0.9) * 0.03;
+    }, { state: 'bare' });
+  },
+});
+
 export function makeProp(kind, x = 0, z = 0, o = {}) {
   const P = MAKERS[kind](o);
   P.obj.position.set(x, o.y || 0, z);
