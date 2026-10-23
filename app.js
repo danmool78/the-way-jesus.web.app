@@ -1,0 +1,672 @@
+'use strict';
+/* 그 길 — 예수의 발자취. 정적 웹앱: data.json + SVG 지도 + Web Speech 낭독 */
+
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const GOSPELS = [['mt', '마태', '마'], ['mk', '마가', '막'], ['lk', '누가', '눅'], ['jn', '요한', '요']];
+
+let DATA, EVENTS, PLACES, PERIODS, idx = 0;
+
+/* ---------- 저장된 진행 상황 ---------- */
+const store = {
+  key: 'theway-progress-v1',
+  load() { try { return JSON.parse(localStorage.getItem(this.key)) || {}; } catch { return {}; } },
+  save() { try { localStorage.setItem(this.key, JSON.stringify(state)); } catch { /* 사생활 보호 모드 등 */ } }
+};
+const state = Object.assign({ visited: [], quiz: {}, last: null }, store.load());
+const visited = new Set(state.visited);
+function markVisited(id) {
+  if (!visited.has(id)) { visited.add(id); state.visited = [...visited]; }
+  state.last = id; store.save(); updateProgress();
+}
+
+/* ---------- 지도 투영 ---------- */
+const BOUNDS = { lat0: 30.95, lat1: 33.62, lng0: 34.15, lng1: 36.05 };
+const K = 1000, COS = Math.cos(32.3 * Math.PI / 180);
+const W = (BOUNDS.lng1 - BOUNDS.lng0) * COS * K, H = (BOUNDS.lat1 - BOUNDS.lat0) * K;
+const px = ([lat, lng]) => [(lng - BOUNDS.lng0) * COS * K, (BOUNDS.lat1 - lat) * K];
+const P = p => px([p.lat, p.lng]);
+
+// 매끄러운 곡선 (Catmull-Rom → Bézier)
+function smooth(points, closed = false) {
+  const p = points.map(px), n = p.length;
+  const at = i => closed ? p[(i + n) % n] : p[Math.max(0, Math.min(n - 1, i))];
+  let d = `M${p[0][0].toFixed(1)},${p[0][1].toFixed(1)}`;
+  for (let i = 0; i < (closed ? n : n - 1); i++) {
+    const p0 = at(i - 1), p1 = at(i), p2 = at(i + 1), p3 = at(i + 2);
+    const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6];
+    const c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
+    d += `C${c1[0].toFixed(1)},${c1[1].toFixed(1)} ${c2[0].toFixed(1)},${c2[1].toFixed(1)} ${p2[0].toFixed(1)},${p2[1].toFixed(1)}`;
+  }
+  return closed ? d + 'Z' : d;
+}
+
+const GEO = {
+  coast: [[33.62,35.40],[33.56,35.37],[33.45,35.29],[33.37,35.25],[33.27,35.19],[33.17,35.15],[33.09,35.10],[32.99,35.08],[32.92,35.07],[32.88,35.08],[32.84,35.06],[32.82,35.02],[32.83,34.96],[32.75,34.95],[32.69,34.93],[32.60,34.91],[32.50,34.89],[32.40,34.87],[32.30,34.84],[32.17,34.80],[32.05,34.75],[31.95,34.70],[31.80,34.63],[31.67,34.55],[31.58,34.49],[31.50,34.42],[31.40,34.35],[31.32,34.26],[31.25,34.18],[31.22,34.15]],
+  galilee: [[32.885,35.555],[32.895,35.585],[32.888,35.625],[32.86,35.645],[32.82,35.652],[32.77,35.643],[32.73,35.615],[32.705,35.585],[32.72,35.565],[32.76,35.545],[32.80,35.525],[32.825,35.515],[32.85,35.52],[32.873,35.540]],
+  dead: [[31.775,35.53],[31.77,35.58],[31.72,35.585],[31.60,35.575],[31.50,35.57],[31.40,35.555],[31.30,35.53],[31.20,35.51],[31.10,35.48],[31.05,35.44],[31.10,35.40],[31.20,35.395],[31.35,35.40],[31.50,35.44],[31.62,35.46],[31.72,35.47],[31.76,35.49]],
+  hula: [[33.10,35.605],[33.09,35.625],[33.06,35.628],[33.045,35.612],[33.06,35.595],[33.085,35.595]],
+  jordanN: [[33.25,35.63],[33.17,35.62],[33.10,35.61],[33.03,35.615],[32.97,35.62],[32.92,35.615],[32.893,35.60]],
+  jordanS: [[32.708,35.572],[32.65,35.578],[32.58,35.566],[32.50,35.562],[32.42,35.552],[32.34,35.552],[32.26,35.536],[32.17,35.532],[32.08,35.538],[31.99,35.536],[31.91,35.546],[31.84,35.548],[31.775,35.556]],
+  jwall: [[31.7810,35.2280],[31.7815,35.2365],[31.7790,35.2368],[31.7760,35.2365],[31.7735,35.2355],[31.7712,35.2320],[31.7715,35.2283],[31.7745,35.2270],[31.7780,35.2268]],
+  kidron: [[31.787,35.2392],[31.781,35.2385],[31.776,35.2378],[31.771,35.2364],[31.766,35.2360]],
+  hinnom: [[31.7765,35.2252],[31.7735,35.2258],[31.7705,35.2290],[31.7698,35.2340],[31.7690,35.2362]]
+};
+const REGIONS = [
+  ['갈릴리', 32.80, 35.30], ['사마리아', 32.27, 35.12], ['유대', 31.52, 35.02], ['베레아', 31.98, 35.78],
+  ['데가볼리', 32.52, 35.86], ['빌립의 영지', 33.02, 35.86], ['페니키아', 33.42, 35.42], ['이두매', 31.12, 34.86]
+];
+const REFCITIES = [['디베랴', 32.79, 35.535], ['가이사랴', 32.50, 34.905], ['욥바', 32.05, 34.765], ['세바스테', 32.276, 35.19], ['마케루스', 31.565, 35.63]];
+
+const svgNS = 'http://www.w3.org/2000/svg';
+const map = $('#map');
+let view = { x: 0, y: 0, w: W, h: H }, anim = null, fitMode = 'scene';
+
+function buildMap() {
+  // 지도 범위 밖까지 땅과 바다를 넉넉히 이어 그려, 확대·축소 때 빈 가장자리가 보이지 않게 한다
+  const far = (lat, lng) => px([lat, lng]).join(',');
+  const sea = `M${far(35.2, 36.0)} L${far(34.2, 35.65)} ` + smooth(GEO.coast).replace(/^M/, 'L') + ` L${far(31.1, 33.9)} L${far(31.05, 32.0)} L${far(35.2, 32.0)} Z`;
+  const t = (txt, [x, y], cls) => `<g class="lbl ${cls}" transform="translate(${x},${y})"><text>${esc(txt)}</text></g>`;
+  map.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  map.innerHTML = `
+  <defs>
+    <linearGradient id="seaGrad" x1="0" x2="1"><stop offset="0" stop-color="var(--sea-deep)"/><stop offset="1" stop-color="var(--sea)"/></linearGradient>
+    <filter id="soft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="55"/></filter>
+  </defs>
+  <rect x="${-W * 2}" y="${-H * 2}" width="${W * 5}" height="${H * 5}" fill="var(--land)"/>
+  <ellipse cx="${px([31.75, 35.15])[0]}" cy="${px([31.75, 35.15])[1]}" rx="160" ry="420" fill="var(--hill)" filter="url(#soft)" opacity=".38"/>
+  <ellipse cx="${px([32.95, 35.40])[0]}" cy="${px([32.95, 35.40])[1]}" rx="190" ry="160" fill="var(--hill)" filter="url(#soft)" opacity=".32"/>
+  <ellipse cx="${px([32.25, 35.25])[0]}" cy="${px([32.25, 35.25])[1]}" rx="150" ry="230" fill="var(--hill)" filter="url(#soft)" opacity=".28"/>
+  <path d="${sea}" fill="url(#seaGrad)" class="sea"/>
+  <path d="${smooth(GEO.coast)}" class="coast"/>
+  <path d="${smooth(GEO.galilee, true)}" class="lake"/>
+  <path d="${smooth(GEO.dead, true)}" class="lake dead"/>
+  <path d="${smooth(GEO.hula, true)}" class="lake"/>
+  <path d="${smooth(GEO.jordanN)}" class="river"/>
+  <path d="${smooth(GEO.jordanS)}" class="river"/>
+  <g class="jlm-detail">
+    <path d="${smooth(GEO.jwall, true)}" class="wall"/>
+    <path d="${smooth(GEO.kidron)}" class="valley"/>
+    <path d="${smooth(GEO.hinnom)}" class="valley"/>
+  </g>
+  ${t('지 중 해', px([32.35, 34.48]), 'sea-lbl')}
+  ${t('갈릴리 바다', px([32.80, 35.60]), 'water-lbl')}
+  ${t('사해', px([31.42, 35.49]), 'water-lbl')}
+  ${t('요단 강', px([32.40, 35.585]), 'water-lbl river-lbl')}
+  ${REGIONS.map(([n, a, b]) => t(n, px([a, b]), 'region')).join('')}
+  ${REFCITIES.map(([n, a, b]) => `<g class="lbl refcity" transform="translate(${px([a, b]).join(',')})"><circle r="2.2"/><text x="5" y="3">${n}</text></g>`).join('')}
+  <g id="egyptArrow" class="egypt" transform="translate(${px([31.08, 34.40]).join(',')})"><path d="M0,0 L-34,26 M-34,26 l12,-2 M-34,26 l2,-12"/><text x="-4" y="-8">애굽으로 · 약 500km</text></g>
+  <g id="routes"><path id="nextHint" class="nexthint"/></g>
+  <g id="markers"></g>
+  <g id="walker" class="walker"><circle class="wglow" r="18"/><g class="wfig"><circle class="wbody" r="8"/><text class="wicon" y="4.5">✦</text></g></g>`;
+  // 장소 마커
+  const g = $('#markers', map);
+  Object.entries(PLACES).forEach(([id, p]) => {
+    const [x, y] = P(p);
+    const m = document.createElementNS(svgNS, 'g');
+    m.setAttribute('class', 'pin' + (p.jlm ? ' jlm' : '') + (p.offmap ? ' offmap' : ''));
+    m.dataset.place = id; m.dataset.x = x; m.dataset.y = y;
+    m.innerHTML = `<circle class="halo" r="15"/><circle class="dot" r="5.5"/><text x="9" y="4">${esc(p.name)}</text>`;
+    m.addEventListener('click', () => { const i = EVENTS.findIndex((e, j) => e.place === id && j > idx) ; go(i >= 0 ? i : EVENTS.findIndex(e => e.place === id)); });
+    g.appendChild(m);
+  });
+  // 경로 (연속된 서로 다른 장소 사이의 곡선)
+  const r = $('#routes', map);
+  EVENTS.forEach((e, i) => {
+    if (!i) return;
+    const a = PLACES[EVENTS[i - 1].place], b = PLACES[e.place];
+    if (a === b) return;
+    const [x1, y1] = P(a), [x2, y2] = P(b), dx = x2 - x1, dy = y2 - y1;
+    const bend = (i % 2 ? 1 : -1) * 0.18;
+    const cx = (x1 + x2) / 2 - dy * bend, cy = (y1 + y2) / 2 + dx * bend;
+    const path = document.createElementNS(svgNS, 'path');
+    path.setAttribute('d', `M${x1},${y1} Q${cx},${cy} ${x2},${y2}`);
+    path.setAttribute('pathLength', '1');
+    path.setAttribute('class', 'route');
+    path.style.setProperty('--c', PERIODS[e.p].color);
+    path.dataset.i = i;
+    r.appendChild(path);
+  });
+  new ResizeObserver(() => applyView()).observe(map);
+}
+
+function applyView() {
+  const r = map.getBoundingClientRect();
+  if (!r.width) return;
+  // 화면 비율에 맞춰 보이는 영역 확장
+  let { x, y, w, h } = view;
+  const ar = r.width / r.height;
+  if (w / h > ar) { const nh = w / ar; y -= (nh - h) / 2; h = nh; } else { const nw = h * ar; x -= (nw - w) / 2; w = nw; }
+  map.setAttribute('viewBox', `${x} ${y} ${w} ${h}`);
+  const u = w / r.width; // 화면 1px 당 지도 단위
+  map.style.setProperty('--u', u);
+  map.classList.toggle('zoom-city', u < 0.06);
+  map.classList.toggle('zoom-near', u < 0.6);
+  $$('.pin, .lbl', map).forEach(el => {
+    const tr = el.dataset.x ? `translate(${el.dataset.x},${el.dataset.y})` : (el.dataset.t ||= el.getAttribute('transform'));
+    el.setAttribute('transform', `${tr} scale(${u})`);
+  });
+  const wk = $('#walker', map);
+  if (wk.dataset.x) wk.setAttribute('transform', `translate(${wk.dataset.x},${wk.dataset.y}) scale(${u})`);
+  const eg = $('#egyptArrow', map);
+  eg.dataset.t ||= eg.getAttribute('transform');
+  eg.setAttribute('transform', `${eg.dataset.t} scale(${Math.max(u, .25)})`);
+}
+
+function frame(ids, ms = 1300, reserve = true) {
+  const pts = ids.map(id => P(PLACES[id]));
+  const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
+  let x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
+  const allCity = ids.every(id => PLACES[id].jlm || id === 'jerusalem');
+  const min = allCity ? 14 : 300;
+  const pad = Math.max(x1 - x0, y1 - y0) * 0.28;
+  let w = Math.max(x1 - x0 + pad * 2, min), h = Math.max(y1 - y0 + pad * 2, min);
+  let target = { x: (x0 + x1) / 2 - w / 2, y: (y0 + y1) / 2 - h / 2, w, h };
+  animateTo(reserveCard(target, reserve), ms);
+}
+// 장면 카드가 가리는 영역을 비워 두고, 남은 지도 영역 가운데에 대상을 놓는다
+function reserveCard(t, reserve = true) {
+  if (!reserve) return t;
+  const r = map.getBoundingClientRect(), mobile = innerWidth <= 900;
+  if (!r.width) return t;
+  const ar = r.width / r.height;
+  // 화면 비율에 맞춘 실제 보이는 박스
+  let { x, y, w, h } = t;
+  if (w / h > ar) { const nh = w / ar; y -= (nh - h) / 2; h = nh; } else { const nw = h * ar; x -= (nw - w) / 2; w = nw; }
+  if (mobile) {
+    const f = .6; // 하단 시트가 지도 아래쪽 약 60%를 덮는다
+    const nh = h / (1 - f), nw = w * nh / h; return { x: x - (nw - w) / 2, y, w: nw, h: nh };
+  }
+  const f = Math.min(.5, (Math.min(460, r.width * .42) + 28) / r.width);
+  const nw = w / (1 - f), nh = h * nw / w; return { x, y: y - (nh - h) / 2, w: nw, h: nh };
+}
+function fitAll() { animateTo({ x: 0, y: 0, w: W, h: H }, 1100); }
+function animateTo(target, ms) {
+  cancelAnimationFrame(anim);
+  const from = { ...view }, t0 = performance.now();
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) ms = 0;
+  // 로그 스케일 보간: 크게 확대/축소할 때도 자연스럽게
+  const lerp = (a, b, k) => a + (b - a) * k;
+  const step = now => {
+    const k = ms ? Math.min(1, (now - t0) / ms) : 1, e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+    const w = Math.exp(lerp(Math.log(from.w), Math.log(target.w), e)), h = Math.exp(lerp(Math.log(from.h), Math.log(target.h), e));
+    const cx = lerp(from.x + from.w / 2, target.x + target.w / 2, e), cy = lerp(from.y + from.h / 2, target.y + target.h / 2, e);
+    view = { x: cx - w / 2, y: cy - h / 2, w, h };
+    applyView();
+    if (k < 1) anim = requestAnimationFrame(step);
+  };
+  anim = requestAnimationFrame(step);
+}
+
+function setWalker([x, y]) {
+  const wk = $('#walker', map);
+  wk.dataset.x = x; wk.dataset.y = y;
+  const u = parseFloat(map.style.getPropertyValue('--u')) || 1;
+  wk.setAttribute('transform', `translate(${x},${y}) scale(${u})`);
+}
+function updateMap(prevIdx, { camera = true } = {}) {
+  const e = EVENTS[idx];
+  const seen = new Set(EVENTS.slice(0, idx + 1).map(x => x.place));
+  $$('.pin', map).forEach(m => {
+    m.classList.toggle('seen', seen.has(m.dataset.place));
+    m.classList.toggle('now', m.dataset.place === e.place);
+  });
+  $$('.route', map).forEach(r => {
+    r.classList.toggle('done', +r.dataset.i <= idx);
+    r.classList.toggle('last', +r.dataset.i === idx);
+    r.classList.remove('walking'); r.style.strokeDashoffset = '';
+  });
+  $('#egyptArrow', map).classList.toggle('show', e.place === 'egypt' || seen.has('egypt'));
+  setWalker(P(PLACES[e.place]));
+  // 다음 목적지를 잇는 점선 힌트
+  const nx = EVENTS[idx + 1], hint = $('#nextHint', map);
+  if (nx && nx.place !== e.place) {
+    const [x1, y1] = P(PLACES[e.place]), [x2, y2] = P(PLACES[nx.place]);
+    hint.setAttribute('d', `M${x1},${y1} L${x2},${y2}`); hint.style.display = '';
+  } else hint.style.display = 'none';
+  if (camera) {
+    if (fitMode === 'all') fitAll();
+    else frame(nx && nx.place !== e.place ? [e.place, nx.place] : [e.place]);
+  }
+  const p = PLACES[e.place];
+  $('#mapCaption').innerHTML = `<b>${esc(p.name)}</b><span>${esc(p.region)}${p.approx ? ' · 위치 추정' : ''}</span>`;
+}
+
+/* ---------- 걷기 ---------- */
+const toRad = d => d * Math.PI / 180;
+function km(a, b) {
+  if (a.offmap || b.offmap) return 500; // 애굽(나일 삼각주)까지의 대략 거리
+  const dLat = toRad(b.lat - a.lat), dLng = toRad(b.lng - a.lng);
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(a.lat)) * Math.cos(toRad(b.lat)) * Math.sin(dLng / 2) ** 2;
+  return 6371 * 2 * Math.asin(Math.sqrt(h)) * 1.25; // 길은 직선보다 굽어 있으므로 25% 가산
+}
+function travelText(a, b) {
+  const d = km(a, b);
+  const t = d < 22 ? `걸어서 약 ${Math.max(1, Math.round(d / 4.5))}시간` : `걸어서 약 ${Math.round(d / 25)}일`;
+  return `약 ${d < 10 ? d.toFixed(1) : Math.round(d)}km · ${t}`;
+}
+let walking = false, walkAnim = null;
+const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+function banner(html, ms) {
+  const b = $('#walkBanner'); b.innerHTML = html; b.classList.add('show');
+  clearTimeout(banner.t); if (ms) banner.t = setTimeout(() => b.classList.remove('show'), ms);
+}
+function walkTo(i, done) {
+  const from = EVENTS[idx], to = EVENTS[i], A = PLACES[from.place], B = PLACES[to.place];
+  const path = $(`.route[data-i="${i}"]`, map);
+  walking = true; document.body.classList.add('is-walking');
+  setCard('peek');
+  $('#nextHint', map).style.display = 'none';
+  banner(`<span class="wk">👣</span><b>${esc(A.name)}</b> → <b>${esc(B.name)}</b><small>${travelText(A, B)}</small>`);
+  if (autoOn) speakQueue([{ text: `${A.name.replace(/[()·]/g, ' ')}에서 ${B.name.replace(/[()·]/g, ' ')}으로.` }]);
+  frame([from.place, to.place], 900, innerWidth > 900);
+  const total = path.getTotalLength(), dur = reduced() ? 0 : Math.min(6500, Math.max(2200, km(A, B) * 30));
+  path.classList.add('walking'); path.style.strokeDashoffset = 1;
+  $('#walker', map).classList.add('moving');
+  const start = performance.now() + (reduced() ? 0 : 700);
+  const step = now => {
+    const k = dur ? Math.max(0, Math.min(1, (now - start) / dur)) : 1;
+    const e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+    const pt = path.getPointAtLength(e * total);
+    setWalker([pt.x, pt.y]);
+    path.style.strokeDashoffset = 1 - e;
+    if (k < 1) { walkAnim = requestAnimationFrame(step); return; }
+    $('#walker', map).classList.remove('moving');
+    walking = false; document.body.classList.remove('is-walking');
+    done();
+  };
+  walkAnim = requestAnimationFrame(step);
+}
+function cancelWalk() {
+  if (!walking) return;
+  cancelAnimationFrame(walkAnim); walking = false;
+  document.body.classList.remove('is-walking'); $('#walker', map).classList.remove('moving');
+}
+function setCard(mode) {
+  const c = $('#scene');
+  c.classList.toggle('peek', mode === 'peek');
+  c.classList.toggle('open', mode === 'open');
+  const t = $('#cardToggle'); if (t) { t.textContent = mode === 'open' ? '지도 보기 ▾' : '장면 열기 ▴'; t.setAttribute('aria-expanded', mode === 'open'); }
+}
+
+/* ---------- 장면 ---------- */
+const refText = e => GOSPELS.filter(([k]) => e.refs[k]).map(([k, , ab]) => `${ab} ${e.refs[k]}`).concat(e.refs.acts ? [`행 ${e.refs.acts}`] : []).join(' · ');
+
+function renderScene() {
+  const e = EVENTS[idx], per = PERIODS[e.p], place = PLACES[e.place];
+  document.documentElement.style.setProperty('--period', per.color);
+  const img = e.img
+    ? `<button class="hero-img" id="heroBtn" aria-label="그림 크게 보기"><img src="${e.img.src}" alt="${esc(e.title)} — ${esc(e.img.title)}" loading="eager"></button>`
+    : `<div class="hero-img placeholder"><span>${esc(place.name)}</span></div>`;
+  const jesus = e.words.filter(w => w.who === '예수'), others = e.words.filter(w => w.who !== '예수');
+  const word = (w, i) => `<blockquote class="word ${w.who === '예수' ? 'jesus' : 'other'}" data-say="${i}">
+      <p>${esc(w.text)}</p>
+      <footer><span>${w.who === '예수' ? '예수' : esc(w.who)}</span><cite>${esc(w.ref)}</cite><button class="say" data-say="${i}" aria-label="이 말씀 듣기">🔊</button></footer>
+    </blockquote>`;
+  const q = e.quiz, answered = state.quiz[e.id];
+  $('#scene').innerHTML = `
+  <div class="cardbar">
+    <span class="pdot"></span>
+    <div><b>${esc(e.title)}</b><small>${esc(place.name)} · ${esc(e.when)}</small></div>
+    <button id="cardToggle" class="cardtoggle" aria-controls="scene">지도 보기 ▾</button>
+  </div>
+  <div class="hero">
+    ${img}
+    <div class="hero-text">
+      <div class="eyebrow"><span class="pdot"></span>${esc(per.en)} · ${esc(per.name)} · ${idx + 1} / ${EVENTS.length}</div>
+      <h1>${esc(e.title)}</h1>
+      <p class="subtitle">${esc(e.subtitle)}</p>
+    </div>
+  </div>
+  ${e.img ? `<p class="credit"><a href="${esc(e.img.source)}" target="_blank" rel="noreferrer">${esc(e.img.credit)} ↗</a></p>` : ''}
+  <div class="meta">
+    <span>📍 ${esc(place.name)}${place.approx ? ' <i>(추정)</i>' : ''}</span>
+    <span>🕰 ${esc(e.when)}</span>
+  </div>
+  <div class="gospels" aria-label="이 장면을 기록한 복음서">
+    ${GOSPELS.map(([k, name]) => `<span class="g ${e.refs[k] ? 'on' : ''}" title="${name}복음 ${e.refs[k] || '기록 없음'}"><b>${name}</b><small>${e.refs[k] || '—'}</small></span>`).join('')}
+  </div>
+  <section class="story" aria-label="이야기">
+    ${e.story.map((s, i) => `<p data-para="${i}">${esc(s)}</p>`).join('')}
+  </section>
+  <section class="words-sec">
+    <h3>${jesus.length ? '그분의 말씀' : '그날의 목소리'}</h3>
+    ${e.words.map(word).join('')}
+    <p class="fine">말씀은 원문의 뜻을 살려 오늘의 말로 옮긴 재구성입니다. 본문: ${esc(refText(e))}</p>
+  </section>
+  <aside class="note"><h4>알고 가기</h4><p>${esc(e.note)}</p></aside>
+  <aside class="reflect"><h4>머물러 생각하기</h4><p>${esc(e.reflect)}</p></aside>
+  <section class="quizcard" aria-label="확인 퀴즈">
+    <h4>확인 퀴즈 ${answered === true ? '<span class="star">★</span>' : ''}</h4>
+    <p class="q">${esc(q.q)}</p>
+    <div class="opts">${q.options.map((o, i) => `<button data-opt="${i}">${esc(o)}</button>`).join('')}</div>
+    <p class="explain" hidden></p>
+  </section>
+  <nav class="scene-nav">
+    ${idx > 0 ? `<button data-go="${idx - 1}" class="sn prev"><small>이전 장면</small>${esc(EVENTS[idx - 1].title)}</button>` : '<span></span>'}
+    ${idx < EVENTS.length - 1 ? `<button data-go="${idx + 1}" class="sn next"><small>다음 장면 · ${esc(PLACES[EVENTS[idx + 1].place].name)}</small>${esc(EVENTS[idx + 1].title)} →</button>` : `<button class="sn next" data-view-go="quiz"><small>여정을 마쳤습니다</small>퀴즈로 돌아보기 →</button>`}
+  </nav>`;
+  $('#scene').scrollTop = 0;
+  $('#cardToggle').onclick = () => setCard($('#scene').classList.contains('open') ? 'peek' : 'open');
+  $('.cardbar', $('#scene')).ondblclick = () => setCard('open');
+  if (e.img) $('#heroBtn').onclick = () => openViewer(e);
+  $$('.say', $('#scene')).forEach(b => b.onclick = ev => { ev.stopPropagation(); speakWord(+b.dataset.say); });
+  $$('[data-go]', $('#scene')).forEach(b => b.onclick = () => go(+b.dataset.go));
+  $$('[data-view-go]', $('#scene')).forEach(b => b.onclick = () => setView(b.dataset.viewGo));
+  $$('.opts button', $('#scene')).forEach(b => b.onclick = () => answer(e, +b.dataset.opt, $('.quizcard', $('#scene'))));
+}
+
+function answer(e, i, card) {
+  const q = e.quiz, ok = i === q.answer;
+  $$('.opts button', card).forEach((b, j) => { b.disabled = true; b.classList.toggle('right', j === q.answer); b.classList.toggle('wrong', j === i && !ok); });
+  const ex = $('.explain', card); ex.hidden = false;
+  ex.innerHTML = `<b>${ok ? '정답입니다 ✦' : '아쉬워요 — 정답은 “' + esc(q.options[q.answer]) + '”'}</b> ${esc(q.explain)}`;
+  if (state.quiz[e.id] !== true) state.quiz[e.id] = ok;
+  store.save(); updateProgress();
+  return ok;
+}
+
+function renderTrack() {
+  let last = null;
+  $('#track').innerHTML = EVENTS.map((e, i) => {
+    const per = PERIODS[e.p], sep = last !== e.p; last = e.p;
+    return `${sep ? `<span class="pmark" style="--c:${per.color}">${esc(per.name)}</span>` : ''}<button class="tick" data-i="${i}" style="--c:${per.color}" title="${esc(e.title)} · ${esc(PLACES[e.place].name)}" aria-label="${i + 1}. ${esc(e.title)}"></button>`;
+  }).join('');
+  $$('.tick').forEach(b => b.onclick = () => go(+b.dataset.i));
+}
+function updateTrack() {
+  $$('.tick').forEach((b, i) => { b.classList.toggle('now', i === idx); b.classList.toggle('seen', visited.has(EVENTS[i].id)); });
+  const now = $('.tick.now'), tr = $('#track');
+  if (now) tr.scrollTo({ left: now.offsetLeft - tr.clientWidth / 2, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+}
+
+function go(i, { keepSpeech = false, onArrive } = {}) {
+  if (i < 0 || i >= EVENTS.length || i === idx && $('#scene').innerHTML) return;
+  if (walking && i === idx + 1) return; // 이미 그곳으로 걷는 중
+  if (!keepSpeech) stopSpeech(true);
+  cancelWalk();
+  const prev = idx;
+  const prevPlace = $('#scene').innerHTML ? EVENTS[prev].place : null;
+  const stepped = i === prev + 1 && prevPlace !== null;
+  const arrive = () => {
+    idx = i;
+    renderScene(); updateMap(prev, { camera: !stepped || fitMode === 'all' }); updateTrack(); markVisited(EVENTS[i].id);
+    history.replaceState(null, '', '#' + EVENTS[i].id);
+    $('#prev').disabled = idx === 0; $('#next').disabled = idx === EVENTS.length - 1;
+    const p = PLACES[EVENTS[i].place];
+    if (stepped) {
+      banner(`<span class="wk">📍</span>${EVENTS[prev].place === EVENTS[i].place ? '같은 곳, 새로운 일' : '도착'} · <b>${esc(p.name)}</b><small>${esc(EVENTS[i].when)}</small>`, 2600);
+      const nx = EVENTS[i + 1];
+      if (fitMode !== 'all') frame(nx && nx.place !== EVENTS[i].place ? [EVENTS[i].place, nx.place] : [EVENTS[i].place], 1100);
+      $('#walker', map).classList.remove('arrive'); void $('#walker', map).getBoundingClientRect(); $('#walker', map).classList.add('arrive');
+      setTimeout(() => setCard('open'), reduced() ? 0 : 650);
+    } else setCard('open');
+    onArrive && onArrive();
+  };
+  if (stepped && prevPlace !== EVENTS[i].place) walkTo(i, arrive);
+  else if (stepped) { setCard('peek'); setTimeout(arrive, reduced() ? 0 : 700); }
+  else arrive();
+}
+
+/* ---------- 낭독 (Web Speech API) ---------- */
+const synth = window.speechSynthesis;
+let voices = [], speaking = false, autoOn = false, autoTimer = null, speechToken = 0;
+function pickVoices() {
+  if (!synth) return;
+  voices = synth.getVoices().filter(v => /^ko/i.test(v.lang));
+}
+if (synth) { pickVoices(); synth.onvoiceschanged = pickVoices; }
+const sentences = text => text.match(/[^.?!…]+[.?!…]*["”’]?\s*/g) || [text];
+
+let warnedNoVoice = false;
+function speakQueue(items, onDone) {
+  // items: [{text, el, jesus, pause}] — 문장 단위로 읽으며 해당 문단을 강조한다
+  const token = ++speechToken;
+  const rate = +$('#rate').value;
+  pickVoices();
+  const useVoice = !!synth && voices.length > 0;
+  if (!useVoice && !warnedNoVoice) {
+    warnedNoVoice = true;
+    toast(synth ? '이 기기에 한국어 음성이 없어, 읽는 속도에 맞춰 글을 따라갑니다.' : '이 브라우저는 음성 낭독을 지원하지 않아, 읽는 속도에 맞춰 글을 따라갑니다.');
+  }
+  if (synth) synth.cancel();
+  const narrator = voices.find(v => /female|여|yuna|sun-?hi|heami|google/i.test(v.name)) || voices[0];
+  const other = voices.find(v => v !== narrator && /male|남|injoon|hyunsu|minsu/i.test(v.name)) || voices.find(v => v !== narrator);
+  const queue = [];
+  items.forEach(it => sentences(it.text).forEach(s => s.trim() && queue.push({ ...it, text: s.trim() })));
+  const readMs = it => (600 + it.text.length * 140) / rate; // 눈으로 읽는 속도
+  let n = 0;
+  speaking = true; setListenUI();
+  const next = () => {
+    if (token !== speechToken) return;
+    $$('.speaking').forEach(x => x.classList.remove('speaking'));
+    if (n >= queue.length) { speaking = false; setListenUI(); onDone && onDone(); return; }
+    const it = queue[n++];
+    if (it.el) { it.el.classList.add('speaking'); scrollToEl(it.el); }
+    let done = false, guard;
+    const advance = d => { if (done) return; done = true; clearTimeout(guard); autoTimer = setTimeout(next, d); };
+    if (!useVoice) { guard = setTimeout(() => advance(it.pause || 0), readMs(it)); return; }
+    const u = new SpeechSynthesisUtterance(it.text);
+    u.lang = 'ko-KR'; u.rate = rate;
+    const v = it.jesus ? other || narrator : narrator;
+    if (v) u.voice = v;
+    u.pitch = it.jesus && !other ? 0.8 : 1;
+    // 일부 브라우저는 onend를 빠뜨리므로 감시 타이머로 다음 문장을 보장한다
+    guard = setTimeout(() => advance(0), 4000 + it.text.length * 260 / rate);
+    u.onend = () => advance(it.pause || 120);
+    u.onerror = ev => { if (ev.error !== 'interrupted' && ev.error !== 'canceled') { clearTimeout(guard); guard = setTimeout(() => advance(0), readMs(it)); } };
+    synth.speak(u);
+  };
+  next();
+}
+function scrollToEl(el) {
+  // 낭독 중인 문단이 보이도록 해당 스크롤 영역만 움직인다 (창 전체가 밀리지 않게)
+  const box = el.closest('#scene') || document.scrollingElement;
+  const r = el.getBoundingClientRect(), b = box === document.scrollingElement ? { top: 0, height: innerHeight } : box.getBoundingClientRect();
+  if (r.top < b.top + 40 || r.bottom > b.top + b.height - 40) box.scrollBy({ top: r.top - b.top - b.height / 3, behavior: 'smooth' });
+}
+
+function sceneScript() {
+  const e = EVENTS[idx], sc = $('#scene');
+  const items = [{ text: `${e.title}. ${PLACES[e.place].name.replace(/[()·]/g, ' ')}, ${e.when.replace(/·/g, ',')}.`, el: $('.hero-text', sc), pause: 500 }];
+  e.story.forEach((s, i) => items.push({ text: s, el: $(`[data-para="${i}"]`, sc), pause: 350 }));
+  const jesus = e.words.some(w => w.who === '예수');
+  items.push({ text: jesus ? '그분의 말씀.' : '그날의 목소리.', el: $('.words-sec h3', sc), pause: 400 });
+  e.words.forEach((w, i) => {
+    if (w.who !== '예수') items.push({ text: `${w.who}.`, el: $(`blockquote[data-say="${i}"]`, sc) });
+    items.push({ text: w.text, el: $(`blockquote[data-say="${i}"]`, sc), jesus: w.who === '예수', pause: 500 });
+  });
+  return items;
+}
+function speakScene(onDone) { speakQueue(sceneScript(), onDone); }
+function speakWord(i) {
+  stopAuto();
+  const w = EVENTS[idx].words[i];
+  speakQueue([{ text: w.text, el: $(`blockquote[data-say="${i}"]`, $('#scene')), jesus: w.who === '예수' }]);
+}
+function stopSpeech(keepAuto) {
+  speechToken++; clearTimeout(autoTimer);
+  if (synth) synth.cancel();
+  speaking = false; $$('.speaking').forEach(x => x.classList.remove('speaking'));
+  if (!keepAuto) stopAuto();
+  setListenUI();
+}
+function stopAuto() { autoOn = false; clearTimeout(autoTimer); setListenUI(); }
+function startAuto() {
+  autoOn = true; setListenUI();
+  const run = () => {
+    if (!autoOn) return;
+    speakScene(() => {
+      if (!autoOn) return;
+      if (idx >= EVENTS.length - 1) { stopAuto(); toast('여정의 끝에 이르렀습니다. 함께 걸어 주셔서 고맙습니다.'); return; }
+      autoTimer = setTimeout(() => { if (!autoOn) return; go(idx + 1, { keepSpeech: true, onArrive: () => { autoTimer = setTimeout(run, 1400); } }); }, 1200);
+    });
+  };
+  run();
+}
+function setListenUI() {
+  const l = $('#listen'), a = $('#auto');
+  l.classList.toggle('on', speaking && !autoOn);
+  $('.lbl', l).textContent = speaking && !autoOn ? '멈춤' : '듣기';
+  $('.ico', l).textContent = speaking && !autoOn ? '■' : '🔊';
+  a.classList.toggle('on', autoOn);
+  $('.lbl', a).textContent = autoOn ? '여정 멈춤' : '자동 여정';
+  $('.ico', a).textContent = autoOn ? '❚❚' : '▶';
+}
+
+/* ---------- 말씀 모음 ---------- */
+function renderWords() {
+  const q = $('#wordSearch').value.trim();
+  let html = '', lastP = null, count = 0;
+  EVENTS.forEach((e, i) => e.words.forEach((w, j) => {
+    if (w.who !== '예수') return;
+    if (q && !(w.text + e.title + PLACES[e.place].name).includes(q)) return;
+    if (lastP !== e.p) { html += `<h3 class="psep" style="--c:${PERIODS[e.p].color}">${esc(PERIODS[e.p].name)} <small>${esc(PERIODS[e.p].span)}</small></h3>`; lastP = e.p; }
+    count++;
+    html += `<div class="wcard" style="--c:${PERIODS[e.p].color}">
+      <p>${q ? esc(w.text).split(esc(q)).join(`<mark>${esc(q)}</mark>`) : esc(w.text)}</p>
+      <footer><cite>${esc(w.ref)}</cite><span>${esc(e.title)} · ${esc(PLACES[e.place].name)}</span>
+      <button class="say" data-e="${i}" data-w="${j}" aria-label="듣기">🔊</button><button class="goto" data-e="${i}">장면 보기 →</button></footer></div>`;
+  }));
+  $('#wordList').innerHTML = (count ? `<p class="count">${count}개의 말씀</p>` : '<p class="empty">찾는 말씀이 없습니다.</p>') + html;
+  $$('#wordList .goto').forEach(b => b.onclick = () => { setView('journey'); go(+b.dataset.e); });
+  $$('#wordList .say').forEach(b => b.onclick = () => { const w = EVENTS[+b.dataset.e].words[+b.dataset.w]; speakQueue([{ text: w.text, el: b.closest('.wcard'), jesus: true }]); });
+}
+
+/* ---------- 대조표 ---------- */
+let harmonyFilter = 'all';
+function renderHarmony() {
+  const filters = [['all', '전체'], ['four', '네 복음서 모두'], ['jn', '요한만'], ['lk', '누가만'], ['mt', '마태만']];
+  $('#harmonyFilter').innerHTML = filters.map(([k, n]) => `<button data-f="${k}" class="${harmonyFilter === k ? 'active' : ''}">${n}</button>`).join('');
+  $$('#harmonyFilter button').forEach(b => b.onclick = () => { harmonyFilter = b.dataset.f; renderHarmony(); });
+  const has = e => GOSPELS.filter(([k]) => e.refs[k]).map(([k]) => k);
+  const keep = e => { const h = has(e); return harmonyFilter === 'all' || (harmonyFilter === 'four' ? h.length === 4 : h.length === 1 && h[0] === harmonyFilter); };
+  $('#harmonyStats').innerHTML = GOSPELS.map(([k, n]) => {
+    const c = EVENTS.filter(e => e.refs[k]).length;
+    return `<div><b>${c}</b><span>${n}복음</span><i style="width:${c / EVENTS.length * 100}%"></i></div>`;
+  }).join('') + `<div><b>${EVENTS.filter(e => has(e).length === 4).length}</b><span>네 복음서 공통</span></div>`;
+  let lastP = null;
+  $('#harmonyTable').innerHTML = `<thead><tr><th>장면</th>${GOSPELS.map(([, n]) => `<th>${n}</th>`).join('')}</tr></thead><tbody>` +
+    EVENTS.map((e, i) => {
+      if (!keep(e)) return '';
+      const sep = lastP !== e.p ? `<tr class="psep-row"><td colspan="5" style="--c:${PERIODS[e.p].color}">${esc(PERIODS[e.p].name)} · ${esc(PERIODS[e.p].span)}</td></tr>` : ''; lastP = e.p;
+      return `${sep}<tr data-e="${i}"><td><b>${esc(e.title)}</b><small>${esc(PLACES[e.place].name)} · ${esc(e.when)}</small></td>${GOSPELS.map(([k]) => `<td class="${e.refs[k] ? 'on' : ''}">${e.refs[k] || ''}</td>`).join('')}</tr>`;
+    }).join('') + '</tbody>';
+  $$('#harmonyTable tbody tr[data-e]').forEach(tr => tr.onclick = () => { setView('journey'); go(+tr.dataset.e); });
+}
+
+/* ---------- 퀴즈 ---------- */
+let quizRun = null;
+function renderQuizHome() {
+  quizRun = null;
+  $('#quizBody').innerHTML = `<div class="pgrid">${Object.values(PERIODS).map(p => {
+    const evs = EVENTS.filter(e => e.p === p.id), right = evs.filter(e => state.quiz[e.id] === true).length;
+    const done = right === evs.length;
+    return `<button class="pcard ${done ? 'done' : ''}" data-p="${p.id}" style="--c:${p.color}">
+      <span class="stamp" aria-hidden="true">${done ? '✦' : right ? right : ''}</span>
+      <small>${esc(p.en)}</small><b>${esc(p.name)}</b><span>${esc(p.span)} · ${evs.length}문제</span>
+      <span class="bar"><i style="width:${right / evs.length * 100}%"></i></span><em>${right}/${evs.length} 맞힘</em></button>`;
+  }).join('')}</div>
+  <button class="bigbtn" id="quizAll">무작위 10문제 도전</button>`;
+  $$('.pcard').forEach(b => b.onclick = () => startQuiz(EVENTS.filter(e => e.p === b.dataset.p), PERIODS[b.dataset.p].name));
+  $('#quizAll').onclick = () => startQuiz([...EVENTS].sort(() => Math.random() - .5).slice(0, 10), '무작위 10문제');
+}
+function startQuiz(list, name) { quizRun = { list, name, i: 0, score: 0 }; renderQuizStep(); }
+function renderQuizStep() {
+  const r = quizRun;
+  if (r.i >= r.list.length) {
+    const pct = r.score / r.list.length;
+    $('#quizBody').innerHTML = `<div class="qresult"><div class="big">${r.score} / ${r.list.length}</div>
+      <p>${pct === 1 ? '완벽합니다! 이 길을 온전히 걸으셨네요.' : pct >= .7 ? '훌륭해요. 그 길이 마음에 새겨지고 있어요.' : '괜찮아요. 장면을 다시 걸으며 천천히 익혀 보세요.'}</p>
+      <button class="bigbtn" id="qBack">시기 목록으로</button></div>`;
+    $('#qBack').onclick = renderQuizHome; return;
+  }
+  const e = r.list[r.i], gi = EVENTS.indexOf(e);
+  $('#quizBody').innerHTML = `<div class="qrun quizcard" style="--c:${PERIODS[e.p].color}">
+    <div class="qtop"><span>${esc(r.name)}</span><span>${r.i + 1} / ${r.list.length}</span></div>
+    <div class="eyebrow">${esc(e.title)} · ${esc(PLACES[e.place].name)}</div>
+    <p class="q">${esc(e.quiz.q)}</p>
+    <div class="opts">${e.quiz.options.map((o, i) => `<button data-opt="${i}">${esc(o)}</button>`).join('')}</div>
+    <p class="explain" hidden></p>
+    <div class="qnav"><button class="textbtn" id="qScene">장면 다시 보기</button><button class="bigbtn" id="qNext" hidden>다음 →</button></div></div>`;
+  const card = $('.qrun');
+  $$('.opts button', card).forEach(b => b.onclick = () => { if (answer(e, +b.dataset.opt, card)) r.score++; $('#qNext').hidden = false; $('#qNext').focus(); });
+  $('#qNext').onclick = () => { r.i++; renderQuizStep(); };
+  $('#qScene').onclick = () => { setView('journey'); go(gi); };
+}
+
+/* ---------- 진행 상황 · 도장 ---------- */
+function updateProgress() {
+  const n = visited.size, total = EVENTS.length;
+  $('#progressText').textContent = `${n}/${total}`;
+  $('#ring').style.strokeDashoffset = String(97.4 * (1 - n / total));
+}
+function renderStamps() {
+  $('#stampGrid').innerHTML = Object.values(PERIODS).map(p => {
+    const evs = EVENTS.filter(e => e.p === p.id), seen = evs.filter(e => visited.has(e.id)).length, stars = evs.filter(e => state.quiz[e.id] === true).length;
+    const done = seen === evs.length;
+    return `<div class="stampcell ${done ? 'done' : ''}" style="--c:${p.color}"><div class="seal">${done ? '✦' : `${seen}/${evs.length}`}</div><b>${esc(p.name)}</b><small>발자취 ${seen}/${evs.length} · ★ ${stars}</small></div>`;
+  }).join('');
+}
+
+/* ---------- 보기 전환 · 기타 ---------- */
+function setView(v) {
+  $$('.view').forEach(m => m.hidden = m.id !== v);
+  $$('.tabs button').forEach(b => { b.classList.toggle('active', b.dataset.view === v); b.setAttribute('aria-selected', b.dataset.view === v); });
+  if (v !== 'journey') stopSpeech();
+  if (v === 'words') renderWords();
+  if (v === 'harmony') renderHarmony();
+  if (v === 'quiz') renderQuizHome();
+  if (v === 'journey') requestAnimationFrame(applyView);
+  scrollTo(0, 0);
+}
+function openViewer(e) {
+  $('#viewerImg').src = e.img.src; $('#viewerImg').alt = e.img.title;
+  $('#viewerCap').textContent = e.img.credit;
+  $('#viewer').showModal();
+}
+let toastT;
+function toast(msg) {
+  let t = $('.toast'); if (!t) { t = document.createElement('div'); t.className = 'toast'; t.setAttribute('role', 'status'); document.body.appendChild(t); }
+  t.textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 3800);
+}
+
+fetch('data.json').then(r => { if (!r.ok) throw Error(r.status); return r.json(); }).then(d => {
+  DATA = d; EVENTS = d.events; PLACES = d.places;
+  PERIODS = Object.fromEntries(d.periods.map(p => [p.id, p]));
+  buildMap(); renderTrack();
+  const fromHash = EVENTS.findIndex(e => '#' + e.id === location.hash);
+  const fromLast = EVENTS.findIndex(e => e.id === state.last);
+  idx = fromHash >= 0 ? fromHash : Math.max(0, fromLast);
+  view = { x: 0, y: 0, w: W, h: H }; applyView();
+  const start = idx; idx = -1; go(start);
+  updateProgress();
+
+  $('#prev').onclick = () => go(idx - 1);
+  $('#next').onclick = () => go(idx + 1);
+  $('#listen').onclick = () => { if (speaking && !autoOn) stopSpeech(); else { stopAuto(); speakScene(); } };
+  $('#auto').onclick = () => { if (autoOn) stopSpeech(); else { stopSpeech(); startAuto(); } };
+  $('#fitAll').onclick = () => { fitMode = 'all'; fitAll(); $('#fitAll').classList.add('active'); $('#fitNow').classList.remove('active'); };
+  $('#fitNow').onclick = () => { fitMode = 'scene'; frame([EVENTS[idx].place], 900); $('#fitNow').classList.add('active'); $('#fitAll').classList.remove('active'); };
+  $$('.tabs button').forEach(b => b.onclick = () => setView(b.dataset.view));
+  $('#wordSearch').oninput = renderWords;
+  $('#closeViewer').onclick = () => $('#viewer').close();
+  $('#viewer').onclick = ev => { if (ev.target.id === 'viewer') $('#viewer').close(); };
+  $('#progressPill').onclick = () => { renderStamps(); $('#stamps').showModal(); };
+  $('#closeStamps').onclick = () => $('#stamps').close();
+  $('#resetProgress').onclick = () => {
+    if (!confirm('발자취와 퀴즈 기록을 모두 지울까요?')) return;
+    visited.clear(); state.visited = []; state.quiz = {}; store.save(); markVisited(EVENTS[idx].id); renderStamps(); renderTrack(); updateTrack();
+  };
+  addEventListener('keydown', ev => {
+    if ($('#journey').hidden || ev.target.matches('input, select, textarea') || document.querySelector('dialog[open]')) return;
+    if (ev.key === 'ArrowRight') go(idx + 1);
+    if (ev.key === 'ArrowLeft') go(idx - 1);
+  });
+  addEventListener('hashchange', () => { const i = EVENTS.findIndex(e => '#' + e.id === location.hash); if (i >= 0 && i !== idx) go(i); });
+}).catch(err => {
+  $('#scene').innerHTML = `<p class="empty">여정 데이터를 불러오지 못했습니다. 새로고침해 주세요. (${esc(err.message)})</p>`;
+});
+
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});

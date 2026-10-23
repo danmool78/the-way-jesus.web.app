@@ -1,0 +1,19 @@
+name: Deploy to Firebase Hosting preview on PR
+on: pull_request
+permissions:
+  checks: write
+  contents: read
+  pull-requests: write
+jobs:
+  build_and_preview:
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check data.json is up to date with _src
+        run: python3 _src/build.py && git diff --exit-code data.json
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_THE_WAY_JESUS }}
+          projectId: the-way-jesus

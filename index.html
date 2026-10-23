@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#16120e">
+<meta name="description" content="사복음서를 따라 시간과 장소별로 걷는 예수의 생애 — 지도, 그림, 낭독, 말씀, 퀴즈">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<title>그 길 — 예수의 발자취</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#" aria-label="그 길 처음으로">
+    <span class="mark" aria-hidden="true">✦</span>
+    <span><b>그 길</b><small>예수의 발자취 · 사복음서로 걷는 여정</small></span>
+  </a>
+  <nav class="tabs" role="tablist" aria-label="보기 전환">
+    <button role="tab" data-view="journey" class="active">여정</button>
+    <button role="tab" data-view="words">말씀</button>
+    <button role="tab" data-view="harmony">대조표</button>
+    <button role="tab" data-view="quiz">퀴즈</button>
+  </nav>
+  <button class="progress-pill" id="progressPill" title="나의 발자취">
+    <svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15.5" class="ring-bg"/><circle cx="18" cy="18" r="15.5" class="ring" id="ring"/></svg>
+    <span id="progressText">0/61</span>
+  </button>
+</header>
+
+<main id="journey" class="view journey">
+  <section class="mapwrap" aria-label="여정 지도">
+    <svg id="map" role="img" aria-label="갈릴리·사마리아·유대 지도 위의 예수의 이동 경로"></svg>
+    <div class="maptools">
+      <button id="fitAll" title="전체 경로 보기">전체 경로</button>
+      <button id="fitNow" title="현재 위치로">현재 위치</button>
+    </div>
+    <div class="walkbanner" id="walkBanner" aria-live="polite"></div>
+    <div class="mapcaption" id="mapCaption"></div>
+    <article class="scene" id="scene" tabindex="-1" aria-live="polite"></article>
+  </section>
+
+  <footer class="dock" aria-label="여정 조작">
+    <div class="track" id="track" aria-label="시간 순 장면 목록"></div>
+    <div class="controls">
+      <button id="prev" class="round" aria-label="이전 장면">‹</button>
+      <button id="listen" class="listen" aria-label="이 장면 듣기"><span class="ico">🔊</span><span class="lbl">듣기</span></button>
+      <button id="next" class="walk" aria-label="다음 장소로 걷기"><span class="ico">👣</span><span class="lbl">다음 장소로 걷기</span></button>
+      <button id="auto" class="auto" aria-label="자동 여정 시작"><span class="ico">▶</span><span class="lbl">자동 여정</span></button>
+      <label class="speed">속도
+        <select id="rate" aria-label="낭독 속도">
+          <option value="0.85">0.85×</option><option value="1" selected>1×</option><option value="1.15">1.15×</option><option value="1.3">1.3×</option>
+        </select>
+      </label>
+    </div>
+  </footer>
+</main>
+
+<main id="words" class="view list-view" hidden>
+  <div class="list-head">
+    <div class="eyebrow">THE WORDS</div>
+    <h2>그분의 말씀</h2>
+    <p>사복음서에 기록된 예수의 말씀을 여정의 순서대로 모았습니다. 모든 말씀은 원문의 뜻을 살려 오늘의 말로 새로 옮긴 재구성입니다.</p>
+    <input id="wordSearch" type="search" placeholder="말씀 검색 — 예: 사랑, 빵, 평화" aria-label="말씀 검색">
+  </div>
+  <div id="wordList"></div>
+</main>
+
+<main id="harmony" class="view list-view" hidden>
+  <div class="list-head">
+    <div class="eyebrow">GOSPEL HARMONY</div>
+    <h2>사복음서 대조표</h2>
+    <p>네 복음서가 각 장면을 어디에 기록했는지 한눈에 봅니다. 같은 사건을 서로 다른 눈으로 본 네 증인의 이야기입니다.</p>
+    <div class="chips" id="harmonyFilter"></div>
+  </div>
+  <div id="harmonyStats" class="stats"></div>
+  <div class="tablewrap"><table id="harmonyTable"></table></div>
+</main>
+
+<main id="quiz" class="view list-view" hidden>
+  <div class="list-head">
+    <div class="eyebrow">QUIZ & STAMPS</div>
+    <h2>여정 퀴즈</h2>
+    <p>시기별로 문제를 풀고 발자취 도장을 모아 보세요. 맞힌 문제는 이 기기에 기록됩니다.</p>
+  </div>
+  <div id="quizBody"></div>
+</main>
+
+<dialog id="viewer" class="viewer">
+  <button class="close" id="closeViewer" aria-label="닫기">×</button>
+  <img id="viewerImg" alt="">
+  <p id="viewerCap"></p>
+</dialog>
+
+<dialog id="stamps" class="stamps-dlg">
+  <button class="close" id="closeStamps" aria-label="닫기">×</button>
+  <div class="eyebrow">MY FOOTSTEPS</div>
+  <h2>나의 발자취</h2>
+  <div id="stampGrid" class="stampgrid"></div>
+  <p class="fine">장면을 열면 발자취가, 퀴즈를 맞히면 별이 기록됩니다. 기록은 이 기기의 브라우저에만 저장됩니다.</p>
+  <button class="textbtn" id="resetProgress">기록 지우기</button>
+</dialog>
+
+<script src="app.js"></script>
+</body>
+</html>
