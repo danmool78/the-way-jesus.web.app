@@ -142,6 +142,42 @@ function noseGeo(style) {
   return g;
 }
 
+// 눈알 무늬: 흰자 위에 홍채(바깥 테두리·결·안쪽 밝은 고리)와 동공, 빛 맺힘을 그린 그림을 눈알 공에 입힌다.
+// 공의 +z(앞)가 그림의 가로 1/4, 세로 가운데에 온다. 홍채 색마다 한 장씩 만들어 같이 쓴다
+const IRIS = ['#4a2c17', '#5c3a1e', '#3b2414', '#6b4a2a', '#2e1c10', '#7a5a30', '#5a5a34']; // 짙은 갈색이 대부분, 드물게 담갈색·올리브
+const eyeTex = new Map();
+function eyeTexture(iris) {
+  if (eyeTex.has(iris)) return eyeTex.get(iris);
+  const c = document.createElement('canvas'); c.width = 512; c.height = 256;
+  const g = c.getContext('2d'), X = 128, Y = 128, R = 60;
+  // 흰자: 가운데는 따뜻한 흰색, 가장자리로 갈수록 살짝 붉고 어둡게
+  const w = g.createRadialGradient(X, Y, R, X, Y, 200);
+  w.addColorStop(0, '#f7f2ea'); w.addColorStop(0.6, '#eee2d6'); w.addColorStop(1, '#d9b9a8');
+  g.fillStyle = w; g.fillRect(0, 0, 512, 256);
+  // 홍채: 가장자리는 짙은 고리, 동공 둘레는 밝게
+  const col = new THREE.Color(iris), hex = k => '#' + col.clone().multiplyScalar(k).getHexString();
+  const ir = g.createRadialGradient(X, Y, 0, X, Y, R);
+  ir.addColorStop(0, hex(1.5)); ir.addColorStop(0.45, hex(1.25)); ir.addColorStop(0.8, hex(1)); ir.addColorStop(1, hex(0.45));
+  g.fillStyle = ir; g.beginPath(); g.arc(X, Y, R, 0, Math.PI * 2); g.fill();
+  // 홍채 결: 동공에서 바깥으로 뻗는 가는 선
+  for (let i = 0; i < 90; i++) {
+    const a = i / 90 * Math.PI * 2 + Math.sin(i * 7.3) * 0.03, r0 = R * 0.3, r1 = R * (0.75 + 0.2 * Math.abs(Math.sin(i * 3.7)));
+    g.strokeStyle = i % 2 ? hex(1.7) + '55' : hex(0.6) + '66'; g.lineWidth = 1.2;
+    g.beginPath(); g.moveTo(X + Math.cos(a) * r0, Y + Math.sin(a) * r0); g.lineTo(X + Math.cos(a) * r1, Y + Math.sin(a) * r1); g.stroke();
+  }
+  // 동공
+  g.fillStyle = '#0d0806'; g.beginPath(); g.arc(X, Y, R * 0.36, 0, Math.PI * 2); g.fill();
+  // 빛 맺힘 (왼쪽 위의 큰 점 + 오른쪽 아래의 작은 점)
+  g.fillStyle = 'rgba(255,255,255,.95)'; g.beginPath(); g.arc(X - R * 0.32, Y - R * 0.34, R * 0.16, 0, Math.PI * 2); g.fill();
+  g.fillStyle = 'rgba(255,255,255,.5)'; g.beginPath(); g.arc(X + R * 0.3, Y + R * 0.3, R * 0.07, 0, Math.PI * 2); g.fill();
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4;
+  const m = new THREE.MeshStandardMaterial({ map: t, roughness: 0.25 });
+  eyeTex.set(iris, m);
+  return m;
+}
+let personNo = 0;
+
 function makePerson(type) {
   const t = TYPES[type] || TYPES.man;
   const skin = mat(SKIN[t.skin || 0], { roughness: 0.7 });
@@ -221,13 +257,12 @@ function makePerson(type) {
   mesh(headShape(sphere(0.08, 48, 36), [0, 0, 0], true), skin, head);
   [-1, 1].forEach(s => mesh(sphere(0.017, 10, 8), skin, head, [s * 0.068, -0.004, -0.004], [0.45, 1, 0.75])); // 귀
   mesh(noseGeo(globalThis.NOSE || 'A'), skin, head, [0, -0.001, 0.0695]);
+  const eyeM = eyeTexture(t.eye || IRIS[(personNo++ * 5 + type.length) % IRIS.length]); // 사람마다 눈 색이 조금씩 다르게
   const eyes = [-1, 1].map(s => {
     const g = new THREE.Group();
     g.position.set(s * 0.027, 0.013, 0.062);
     head.add(g);
-    mesh(sphere(0.014, 12, 10), mat('#f6f1e8', { roughness: 0.4 }), g, [0, 0, 0], [1.1, 0.85, 0.5]);
-    mesh(sphere(0.008, 10, 8), mat('#2a1a0e', { roughness: 0.3 }), g, [0, -0.001, 0.005]);
-    mesh(sphere(0.0022, 6, 4), mat('#ffffff', { emissive: '#ffffff', emissiveIntensity: 0.6 }), g, [0.003, 0.002, 0.0115]);
+    mesh(sphere(0.014, 24, 16), eyeM, g, [0, 0, 0], [1.1, 0.85, 0.5]);
     const brow = mesh(new THREE.CapsuleGeometry(0.0035, 0.018, 3, 6), mat(t.hair || '#3b2616'), head, [s * 0.028, 0.032, 0.071]);
     brow.rotation.z = Math.PI / 2 - s * 0.1; // 바깥쪽으로 살짝 처진 부드러운 눈썹
     return g;
