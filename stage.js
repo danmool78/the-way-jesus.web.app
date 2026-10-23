@@ -111,7 +111,8 @@ function apply(cmds, instant = false) {
       // geo: 실제 위경도 지점으로 (움직이는 소품이면 그곳을 향해 가고, instant면 그 자리에 둔다)
       if (o.geo) { p.geoGoal = o.geo; p.snap = instant; }
       if (o.x !== undefined || o.z !== undefined) { p.geoGoal = null; p.goal.set(o.x ?? p.goal.x, o.z ?? p.goal.y); }
-      if (instant) { p.show = p.showT; p.obj.position.x = p.goal.x; p.obj.position.z = p.goal.y; }
+      if (o.y !== undefined) p.y = o.y; // 높이 (내려오는 비둘기 등 — 소품이 스스로 그 높이로 옮겨 간다)
+      if (instant) { p.show = p.showT; p.obj.position.x = p.goal.x; p.obj.position.z = p.goal.y; if (o.y !== undefined) p.obj.position.y = o.y; }
     }
   });
 }

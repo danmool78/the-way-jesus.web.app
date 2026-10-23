@@ -7,6 +7,11 @@ const TYPES = {
   mary:     { robe: '#a3554a', trim: '#c9a24a', mantle: '#3c5d96', veil: true, inner: '#f3ece0', skin: 2, soft: true, slim: true, sash: '#c9a24a' },
   joseph:   { robe: '#7b5b3a', trim: '#5a4128', mantle: '#b89b6c', hair: '#3b2616', beard: true, hood: '#d8c9a6', band: '#6e5131', sash: '#5a4128' },
   angel:    { robe: '#fbf7ee', trim: '#d9b46a', hair: '#d8b56a', curls: true, wings: true, glow: true, halo: true, sash: '#d9b46a', skin: 2, soft: true },
+  baptist:  { robe: '#7a5a32', trim: '#5a4024', hair: '#2b1b10', beard: true, long: true, sash: '#3e2a18', skin: 1 }, // 낙타털 옷, 가죽 띠
+  tempter:  { robe: '#2c2533', mantle: '#1e1824', hood: '#1e1824', hair: '#120c10' }, // 시험하는 자 (실루엣으로만)
+  steward:  { robe: '#e3d6b8', trim: '#8a3c1c', mantle: '#8a3c1c', hair: '#4a3a2a', beard: true, sash: '#8a3c1c' }, // 잔치를 맡은 이
+  groom:    { robe: '#f1e7cf', trim: '#d6a93a', mantle: '#3c5d96', hair: '#2b1b10', beard: true, sash: '#d6a93a' },
+  servant:  { robe: '#b9a07a', trim: '#8b6f50', hair: '#2e1d12', sash: '#6b5438' },
   anna:     { robe: '#4f4a5e', trim: '#3a3646', mantle: '#8a8172', veil: true, inner: '#ddd6c8', skin: 1, soft: true, slim: true, sash: '#3a3646', height: 0.93 }, // 여든 넷의 과부 예언자
   magus2:   { robe: '#1f5a5a', trim: '#d6a93a', mantle: '#b0402e', hair: '#e2ddd2', beard: true, turban: '#d8b45a', skin: 1, sash: '#d6a93a' },
   magus3:   { robe: '#8a3c1c', trim: '#d6a93a', mantle: '#2f4f8a', hair: '#1d140c', beard: true, crown: true, skin: 3, sash: '#d6a93a' },

@@ -429,11 +429,117 @@ Object.assign(MAKERS, {
   },
 });
 
+Object.assign(MAKERS, {
+  // 들짐승(자칼), 소
+  jackal: o => beast({ coat: '#9a7a52', dark: '#5a4630', size: 0.9, ears: 0.06, neck: 0.08, graze: false, ...o }),
+  ox: o => {
+    const P = beast({ coat: '#7a5a3a', dark: '#3a2a1c', size: 1.9, ears: 0.03, neck: 0.06, ...o });
+    const head = P.obj.children[0].children.find(c => c.isGroup && c.children.length); // 목
+    [-1, 1].forEach(s => { const h = mesh(new THREE.ConeGeometry(0.012, 0.07, 6), mat('#e8dcc0'), head, [0.17, 0.14, s * 0.06]); h.rotation.x = s * 0.9; });
+    return P;
+  },
+
+  // 날아 내려오는 비둘기 (성령): state 'fly'면 날갯짓, 'rest'면 날개를 접는다. y로 높이를 정한다
+  dove() {
+    const g = new THREE.Group(), white = mat('#ffffff', { emissive: '#fff4d8', emissiveIntensity: 0.6 });
+    mesh(sphere(0.04, 14, 10), white, g, [0, 0, 0], [1.5, 0.9, 0.9]);
+    mesh(sphere(0.026, 12, 8), white, g, [0.055, 0.025, 0]);
+    mesh(new THREE.ConeGeometry(0.008, 0.02, 6), mat('#e0a070'), g, [0.084, 0.022, 0]).rotation.z = -Math.PI / 2;
+    mesh(new THREE.ConeGeometry(0.03, 0.06, 6), white, g, [-0.07, 0.005, 0]).rotation.z = Math.PI / 2;
+    const wings = [-1, 1].map(s => { const w = mesh(new THREE.CircleGeometry(0.07, 10, 0, Math.PI), mat('#ffffff', { ...DS, emissive: '#fff4d8', emissiveIntensity: 0.6 }), g, [0, 0.015, s * 0.02]); w.rotation.x = -s * Math.PI / 2; w.userData.s = s; return w; });
+    const halo = glowSprite(0.5, 0.8);
+    g.add(halo);
+    return new Prop(g, (P, t, dt) => {
+      const fly = P.state === 'fly';
+      wings.forEach(w => { w.rotation.x = -w.userData.s * (fly ? Math.PI / 2 + Math.sin(t * 14) * 0.8 : 0.2); });
+      g.position.y = damp(g.position.y, P.y ?? g.position.y, 1.1, dt);
+      halo.material.opacity = 0.6 + Math.sin(t * 2) * 0.15;
+    });
+  },
+
+  // 바위 몇 개 (광야)
+  rocks(o = {}) {
+    const g = new THREE.Group(), m = mat('#a08c6e', { roughness: 1, flatShading: true });
+    (o.spots || [[0, 0, 0.12]]).forEach(([x, z, r]) => { const s = mesh(new THREE.DodecahedronGeometry(r, 0), m, g, [x, r * 0.5, z], [1, 0.7, 0.9]); s.rotation.y = x * 7; s.receiveShadow = true; });
+    return new Prop(g);
+  },
+
+  // 무화과나무: 굽은 줄기와 넓은 잎 덩이
+  figtree() {
+    const g = new THREE.Group(), bark = mat('#6e5640'), leaf = mat('#5f7f3a', { roughness: 0.9 });
+    const trunk = mesh(new THREE.CylinderGeometry(0.03, 0.05, 0.6, 8), bark, g, [0, 0.3, 0]); trunk.rotation.z = 0.12;
+    [[0, 0.72, 0, 0.22], [0.18, 0.62, 0.05, 0.16], [-0.17, 0.64, -0.03, 0.17], [0.05, 0.62, 0.18, 0.15], [-0.04, 0.6, -0.17, 0.15]].forEach(([x, y, z, r]) => mesh(sphere(r, 14, 10), leaf, g, [x, y, z], [1, 0.75, 1]));
+    return new Prop(g);
+  },
+
+  // 돌항아리 여섯 개: state 'empty' | 'water' | 'wine' (포도주가 되면 은은히 빛난다)
+  jars(o = {}) {
+    const g = new THREE.Group(), stone = mat('#d2c6ae', { roughness: 0.95 }), tops = [];
+    const water = new THREE.Color('#7fb0c0'), wine = new THREE.Color('#7a1f2e'), empty = new THREE.Color('#3a2e22');
+    for (let i = 0; i < 6; i++) {
+      const j = new THREE.Group();
+      j.position.set((i - 2.5) * 0.17, 0, (i % 2) * 0.06);
+      mesh(lathe([[0.001, 0], [0.05, 0], [0.068, 0.08], [0.064, 0.17], [0.045, 0.22], [0.05, 0.24], [0.001, 0.24]], 20), stone, j);
+      const top = mesh(new THREE.CircleGeometry(0.043, 20), new THREE.MeshStandardMaterial({ color: empty, roughness: 0.2, emissive: '#000000' }), j, [0, 0.235, 0]);
+      top.rotation.x = -Math.PI / 2; top.castShadow = false;
+      tops.push(top);
+      g.add(j);
+    }
+    const glow = glowSprite(1.1, 0);
+    glow.position.y = 0.25;
+    g.add(glow);
+    return new Prop(g, (P, t, dt) => {
+      const want = P.state === 'wine' ? wine : P.state === 'water' ? water : empty;
+      tops.forEach(tp => { tp.material.color.lerp(want, 1 - Math.exp(-1.5 * dt)); tp.material.emissive.set(P.state === 'wine' ? '#3a0810' : '#000000'); });
+      glow.material.opacity = damp(glow.material.opacity, P.state === 'wine' ? 0.45 + Math.sin(t * 2) * 0.1 : 0, 1.5, dt);
+    }, { state: 'empty' });
+  },
+
+  // 잔칫상: 낮고 긴 상과 음식
+  feast(o = {}) {
+    const g = new THREE.Group(), w = wood();
+    mesh(new THREE.BoxGeometry(o.len || 1.2, 0.03, 0.3), mat('#e9dfc8'), g, [0, 0.12, 0]);
+    [[-1, -1], [-1, 1], [1, -1], [1, 1]].forEach(([a, b]) => mesh(new THREE.BoxGeometry(0.03, 0.12, 0.03), w, g, [a * ((o.len || 1.2) / 2 - 0.05), 0.06, b * 0.12]));
+    const food = [['#c99a5a', 0.04], ['#7a1f2e', 0.03], ['#8fa45a', 0.035], ['#d6a93a', 0.03]];
+    for (let i = 0; i < 9; i++) { const [c, r] = food[i % 4]; mesh(sphere(r, 10, 8), mat(c), g, [(i / 8 - 0.5) * ((o.len || 1.2) - 0.2), 0.15, (i % 2 - 0.5) * 0.12], [1, 0.6, 1]); }
+    return new Prop(g);
+  },
+
+  // 환전상의 상: state 'over'면 옆으로 넘어지고 동전이 쏟아진다
+  table() {
+    const g = new THREE.Group(), top = new THREE.Group(), w = wood(), coin = mat('#d6a93a', { metalness: 0.6, roughness: 0.35 });
+    g.add(top);
+    mesh(new THREE.BoxGeometry(0.34, 0.025, 0.2), w, top, [0, 0.16, 0]);
+    [[-1, -1], [-1, 1], [1, -1], [1, 1]].forEach(([a, b]) => mesh(new THREE.BoxGeometry(0.025, 0.15, 0.025), w, top, [a * 0.15, 0.075, b * 0.08]));
+    const coins = [];
+    for (let i = 0; i < 10; i++) coins.push(mesh(new THREE.CylinderGeometry(0.012, 0.012, 0.004, 10), coin, g, [(Math.random() - 0.5) * 0.25, 0.177, (Math.random() - 0.5) * 0.14]));
+    const start = coins.map(c => c.position.clone()), spill = coins.map(() => new THREE.Vector3((Math.random() - 0.5) * 0.6, 0.004, 0.08 + Math.random() * 0.3));
+    return new Prop(g, (P, t, dt) => {
+      const over = P.state === 'over' ? 1 : 0;
+      top.rotation.x = damp(top.rotation.x, over * 1.45, 4, dt);
+      top.position.y = damp(top.position.y, over * 0.0, 4, dt);
+      coins.forEach((c, i) => c.position.lerp(over ? spill[i] : start[i], 1 - Math.exp(-3 * dt)));
+    });
+  },
+
+  // 비둘기 장: 나무 우리 안의 하얀 새들
+  cage() {
+    const g = new THREE.Group(), w = wood();
+    mesh(new THREE.BoxGeometry(0.22, 0.015, 0.14), w, g, [0, 0.008, 0]);
+    mesh(new THREE.BoxGeometry(0.22, 0.015, 0.14), w, g, [0, 0.15, 0]);
+    [[-1, -1], [-1, 1], [1, -1], [1, 1]].forEach(([a, b]) => mesh(new THREE.BoxGeometry(0.012, 0.15, 0.012), w, g, [a * 0.1, 0.075, b * 0.06]));
+    for (let i = -2; i <= 2; i++) mesh(new THREE.BoxGeometry(0.004, 0.13, 0.004), w, g, [i * 0.04, 0.075, 0.068]);
+    [-0.05, 0.05].forEach(x => mesh(sphere(0.03, 10, 8), mat('#f4f1ea'), g, [x, 0.04, 0], [1.3, 0.9, 0.9]));
+    return new Prop(g);
+  },
+});
+
 export function makeProp(kind, x = 0, z = 0, o = {}) {
   const P = MAKERS[kind](o);
   P.obj.position.set(x, o.y || 0, z);
   P.goal.set(x, z);
   if (o.scale) { P.obj.scale.setScalar(o.scale); P.base = P.obj.scale.clone(); }
+  if (o.size) { P.obj.scale.set(...o.size); P.base = P.obj.scale.clone(); } // 축마다 다른 크기 (물줄기를 길게 등)
   if (o.rot) P.obj.rotation.y = o.rot;
   if (o.speed) P.speed = o.speed;
   if (o.geo) P.geo = o.geo;               // 실제 위경도에 고정 (지도 확대와 무관하게 그 자리에)
