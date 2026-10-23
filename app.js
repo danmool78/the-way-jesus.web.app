@@ -259,7 +259,7 @@ function walkTo(i, done) {
   setCard('peek');
   $('#nextHint', map).style.display = 'none';
   banner(`<span class="wk">👣</span><b>${esc(A.name)}</b> → <b>${esc(B.name)}</b><small>${travelText(A, B)}</small>`);
-  if (autoOn) speakQueue([{ text: `${A.name.replace(/[()·]/g, ' ')}에서 ${B.name.replace(/[()·]/g, ' ')}으로.` }]);
+  if (autoOn) speakQueue([{ text: `${spokenPlace(A.name)}에서 ${spokenPlace(B.name)}${ro(spokenPlace(B.name))}.`, clip: `move/${from.place}/${to.place}` }]);
   frame([from.place, to.place], 900, innerWidth > 900);
   const total = path.getTotalLength(), dur = reduced() ? 0 : Math.min(6500, Math.max(2200, km(A, B) * 30));
   path.classList.add('walking'); path.style.strokeDashoffset = 1;
@@ -409,7 +409,19 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
   else arrive();
 }
 
-/* ---------- 낭독 (Web Speech API) ---------- */
+/* ---------- 낭독 (녹음 음원, 없으면 Web Speech API) ---------- */
+// audio.json: 낭독 조각 이름 → 음원 파일 (_src/voice.py가 만든다). 없는 조각은 음성 합성으로 읽는다.
+let AUDIO = {};
+fetch('audio.json').then(r => r.ok ? r.json() : {}).then(a => { AUDIO = a.clips || {}; }).catch(() => {});
+const player = new Audio();
+player.preservesPitch = true;
+const prefetched = new Audio();
+prefetched.preload = 'auto';
+const clipSrc = it => it.clip && AUDIO[it.clip] ? 'assets/audio/' + AUDIO[it.clip] : null;
+// 낭독용 표기: '엠마오 (추정)' → '엠마오', '골고다 · 동산 무덤' → '골고다, 동산 무덤'
+const spokenPlace = name => name.replace(/\s*\([^)]*\)/g, '').replace(/ · /g, ', ').trim();
+const ro = w => { const c = w.charCodeAt(w.length - 1) - 0xAC00; return c < 0 || c >= 11172 || c % 28 === 0 || c % 28 === 8 ? '로' : '으로'; };
+
 const synth = window.speechSynthesis;
 let voices = [], speaking = false, autoOn = false, autoTimer = null, speechToken = 0;
 function pickVoices() {
@@ -421,20 +433,21 @@ const sentences = text => text.match(/[^.?!…]+[.?!…]*["”’]?\s*/g) || [te
 
 let warnedNoVoice = false;
 function speakQueue(items, onDone) {
-  // items: [{text, el, jesus, pause}] — 문장 단위로 읽으며 해당 문단을 강조한다
+  // items: [{text, el, jesus, pause, clip}] — 녹음이 있으면 조각째 재생하고, 없으면 문장 단위로 합성해 읽는다
   const token = ++speechToken;
   const rate = +$('#rate').value;
   pickVoices();
   const useVoice = !!synth && voices.length > 0;
-  if (!useVoice && !warnedNoVoice) {
+  if (!useVoice && !warnedNoVoice && items.some(it => !clipSrc(it))) {
     warnedNoVoice = true;
     toast(synth ? '이 기기에 한국어 음성이 없어, 읽는 속도에 맞춰 글을 따라갑니다.' : '이 브라우저는 음성 낭독을 지원하지 않아, 읽는 속도에 맞춰 글을 따라갑니다.');
   }
   if (synth) synth.cancel();
+  player.pause();
   const narrator = voices.find(v => /female|여|yuna|sun-?hi|heami|google/i.test(v.name)) || voices[0];
   const other = voices.find(v => v !== narrator && /male|남|injoon|hyunsu|minsu/i.test(v.name)) || voices.find(v => v !== narrator);
   const queue = [];
-  items.forEach(it => sentences(it.text).forEach(s => s.trim() && queue.push({ ...it, text: s.trim() })));
+  items.forEach(it => clipSrc(it) ? queue.push(it) : sentences(it.text).forEach(s => s.trim() && queue.push({ ...it, clip: null, text: s.trim() })));
   const readMs = it => (600 + it.text.length * 140) / rate; // 눈으로 읽는 속도
   let n = 0;
   speaking = true; setListenUI();
@@ -446,6 +459,17 @@ function speakQueue(items, onDone) {
     if (it.el) { it.el.classList.add('speaking'); scrollToEl(it.el); }
     let done = false, guard;
     const advance = d => { if (done) return; done = true; clearTimeout(guard); autoTimer = setTimeout(next, d); };
+    const src = clipSrc(it);
+    if (src) {
+      const after = queue.slice(n).map(clipSrc).find(Boolean);
+      if (after) prefetched.src = after;
+      player.src = src; player.playbackRate = rate;
+      player.onended = () => advance(it.pause || 120);
+      // 재생이 막히거나 파일을 못 받으면 이 조각만 눈으로 읽는 속도에 맞춰 넘긴다
+      player.onerror = () => { guard = setTimeout(() => advance(0), readMs(it)); };
+      player.play().catch(err => { if (token === speechToken && err.name !== 'AbortError') player.onerror(); });
+      return;
+    }
     if (!useVoice) { guard = setTimeout(() => advance(it.pause || 0), readMs(it)); return; }
     const u = new SpeechSynthesisUtterance(it.text);
     u.lang = 'ko-KR'; u.rate = rate;
@@ -469,13 +493,13 @@ function scrollToEl(el) {
 
 function sceneScript() {
   const e = EVENTS[idx], sc = $('#scene');
-  const items = [{ text: `${e.title}. ${PLACES[e.place].name.replace(/[()·]/g, ' ')}, ${e.when.replace(/·/g, ',')}.`, el: $('.hero-text', sc), pause: 500 }];
-  e.story.forEach((s, i) => items.push({ text: s, el: $(`[data-para="${i}"]`, sc), pause: 350 }));
+  const items = [{ text: `${e.title}. ${spokenPlace(PLACES[e.place].name)}, ${e.when.replace(/·/g, ',')}.`, el: $('.hero-text', sc), pause: 500, clip: `${e.id}/h` }];
+  e.story.forEach((s, i) => items.push({ text: s, el: $(`[data-para="${i}"]`, sc), pause: 350, clip: `${e.id}/s${i}` }));
   const jesus = e.words.some(w => w.who === '예수');
-  items.push({ text: jesus ? '그분의 말씀.' : '그날의 목소리.', el: $('.words-sec h3', sc), pause: 400 });
+  items.push({ text: jesus ? '그분의 말씀.' : '그날의 목소리.', el: $('.words-sec h3', sc), pause: 400, clip: jesus ? 'say/words' : 'say/voices' });
   e.words.forEach((w, i) => {
-    if (w.who !== '예수') items.push({ text: `${w.who}.`, el: $(`blockquote[data-say="${i}"]`, sc) });
-    items.push({ text: w.text, el: $(`blockquote[data-say="${i}"]`, sc), jesus: w.who === '예수', pause: 500 });
+    if (w.who !== '예수') items.push({ text: `${w.who}.`, el: $(`blockquote[data-say="${i}"]`, sc), clip: `who/${w.who}` });
+    items.push({ text: w.text, el: $(`blockquote[data-say="${i}"]`, sc), jesus: w.who === '예수', pause: 500, clip: `${e.id}/w${i}` });
   });
   return items;
 }
@@ -483,11 +507,12 @@ function speakScene(onDone) { speakQueue(sceneScript(), onDone); }
 function speakWord(i) {
   stopAuto();
   const w = EVENTS[idx].words[i];
-  speakQueue([{ text: w.text, el: $(`blockquote[data-say="${i}"]`, $('#scene')), jesus: w.who === '예수' }]);
+  speakQueue([{ text: w.text, el: $(`blockquote[data-say="${i}"]`, $('#scene')), jesus: w.who === '예수', clip: `${EVENTS[idx].id}/w${i}` }]);
 }
 function stopSpeech(keepAuto) {
   speechToken++; clearTimeout(autoTimer);
   if (synth) synth.cancel();
+  player.pause();
   speaking = false; $$('.speaking').forEach(x => x.classList.remove('speaking'));
   if (!keepAuto) stopAuto();
   setListenUI();
@@ -531,7 +556,7 @@ function renderWords() {
   }));
   $('#wordList').innerHTML = (count ? `<p class="count">${count}개의 말씀</p>` : '<p class="empty">찾는 말씀이 없습니다.</p>') + html;
   $$('#wordList .goto').forEach(b => b.onclick = () => { setView('journey'); go(+b.dataset.e); });
-  $$('#wordList .say').forEach(b => b.onclick = () => { const w = EVENTS[+b.dataset.e].words[+b.dataset.w]; speakQueue([{ text: w.text, el: b.closest('.wcard'), jesus: true }]); });
+  $$('#wordList .say').forEach(b => b.onclick = () => { const w = EVENTS[+b.dataset.e].words[+b.dataset.w]; speakQueue([{ text: w.text, el: b.closest('.wcard'), jesus: true, clip: `${EVENTS[+b.dataset.e].id}/w${b.dataset.w}` }]); });
 }
 
 /* ---------- 대조표 ---------- */
