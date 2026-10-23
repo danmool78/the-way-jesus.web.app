@@ -12,7 +12,7 @@ const TYPES = {
   steward:  { robe: '#e3d6b8', trim: '#8a3c1c', mantle: '#8a3c1c', hair: '#4a3a2a', beard: true, sash: '#8a3c1c' }, // 잔치를 맡은 이
   groom:    { robe: '#f1e7cf', trim: '#d6a93a', mantle: '#3c5d96', hair: '#2b1b10', beard: true, sash: '#d6a93a' },
   servant:  { robe: '#b9a07a', trim: '#8b6f50', hair: '#2e1d12', sash: '#6b5438' },
-  anna:     { robe: '#4f4a5e', trim: '#3a3646', mantle: '#8a8172', veil: true, inner: '#ddd6c8', skin: 1, soft: true, slim: true, sash: '#3a3646', height: 0.93 }, // 여든 넷의 과부 예언자
+  anna:     { robe: '#4f4a5e', trim: '#3a3646', mantle: '#8a8172', hair: '#cfc8bb', veil: true, inner: '#ddd6c8', skin: 1, soft: true, slim: true, sash: '#3a3646', height: 0.93 }, // 여든 넷의 과부 예언자
   magus2:   { robe: '#1f5a5a', trim: '#d6a93a', mantle: '#b0402e', hair: '#e2ddd2', beard: true, turban: '#d8b45a', skin: 1, sash: '#d6a93a' },
   magus3:   { robe: '#8a3c1c', trim: '#d6a93a', mantle: '#2f4f8a', hair: '#1d140c', beard: true, crown: true, skin: 3, sash: '#d6a93a' },
   boyJesus: { robe: '#efe7d6', trim: '#a8843f', mantle: '#9b3b2a', hair: '#4a2e1c', sash: '#b08a4e', height: 0.78 }, // 열두 살 소년
@@ -125,6 +125,59 @@ function headShape(geo, off = [0, 0, 0], face = false) {
   return geo;
 }
 
+// 코: 공을 이어 붙이지 않고 한 덩어리로 빚는다. 위(미간)는 가늘고 얼굴에 묻히며, 아래로 갈수록 앞으로 솟고
+// 코끝에서 콧방울 너비로 매끄럽게 퍼진다 (높이는 1.45배로 오똑하게). 뒷면은 얼굴 안에 들어가 보이지 않는다
+function noseGeo(style) {
+  const g = sphere(0.01, 28, 24), p = g.attributes.position;
+  for (let i = 0; i < p.count; i++) {
+    const x = p.getX(i) / 0.01, y = p.getY(i) / 0.01, z = p.getZ(i) / 0.01, u = (1 - y) / 2; // u: 0 미간 … 1 코밑
+    let hw, f;
+    if (style === 'A') { hw = 0.003 + 0.0025 * u + 0.0035 * Math.exp(-(((u - 0.86) / 0.12) ** 2)); f = 0.003 + 0.0105 * u ** 1.3; }
+    if (style === 'B') { hw = 0.0028 + 0.0016 * u + 0.0028 * Math.exp(-(((u - 0.88) / 0.1) ** 2)); f = 0.006 + 0.0095 * u ** 1.1; }
+    if (style === 'C') { hw = 0.0032 + 0.0022 * u + 0.0034 * Math.exp(-(((u - 0.86) / 0.12) ** 2)); f = 0.004 + 0.009 * u + 0.0025 * Math.exp(-(((u - 0.45) / 0.18) ** 2)); }
+    const Y = y * 0.0185 - (style === 'C' ? 0.0015 * u * u : 0);
+    p.setXYZ(i, x * hw, Y, z > 0 ? z * f * 1.45 : z * 0.004);
+  }
+  g.computeVertexNormals();
+  return g;
+}
+
+// 눈알 무늬: 흰자 위에 홍채(바깥 테두리·결·안쪽 밝은 고리)와 동공, 빛 맺힘을 그린 그림을 눈알 공에 입힌다.
+// 공의 +z(앞)가 그림의 가로 1/4, 세로 가운데에 온다. 홍채 색마다 한 장씩 만들어 같이 쓴다
+const IRIS = ['#4a2c17', '#5c3a1e', '#3b2414', '#6b4a2a', '#2e1c10', '#7a5a30', '#5a5a34']; // 짙은 갈색이 대부분, 드물게 담갈색·올리브
+const eyeTex = new Map();
+function eyeTexture(iris) {
+  if (eyeTex.has(iris)) return eyeTex.get(iris);
+  const c = document.createElement('canvas'); c.width = 512; c.height = 256;
+  const g = c.getContext('2d'), X = 128, Y = 128, R = 60;
+  // 흰자: 가운데는 따뜻한 흰색, 가장자리로 갈수록 살짝 붉고 어둡게
+  const w = g.createRadialGradient(X, Y, R, X, Y, 200);
+  w.addColorStop(0, '#f7f2ea'); w.addColorStop(0.6, '#eee2d6'); w.addColorStop(1, '#d9b9a8');
+  g.fillStyle = w; g.fillRect(0, 0, 512, 256);
+  // 홍채: 가장자리는 짙은 고리, 동공 둘레는 밝게
+  const col = new THREE.Color(iris), hex = k => '#' + col.clone().multiplyScalar(k).getHexString();
+  const ir = g.createRadialGradient(X, Y, 0, X, Y, R);
+  ir.addColorStop(0, hex(1.5)); ir.addColorStop(0.45, hex(1.25)); ir.addColorStop(0.8, hex(1)); ir.addColorStop(1, hex(0.45));
+  g.fillStyle = ir; g.beginPath(); g.arc(X, Y, R, 0, Math.PI * 2); g.fill();
+  // 홍채 결: 동공에서 바깥으로 뻗는 가는 선
+  for (let i = 0; i < 90; i++) {
+    const a = i / 90 * Math.PI * 2 + Math.sin(i * 7.3) * 0.03, r0 = R * 0.3, r1 = R * (0.75 + 0.2 * Math.abs(Math.sin(i * 3.7)));
+    g.strokeStyle = i % 2 ? hex(1.7) + '55' : hex(0.6) + '66'; g.lineWidth = 1.2;
+    g.beginPath(); g.moveTo(X + Math.cos(a) * r0, Y + Math.sin(a) * r0); g.lineTo(X + Math.cos(a) * r1, Y + Math.sin(a) * r1); g.stroke();
+  }
+  // 동공
+  g.fillStyle = '#0d0806'; g.beginPath(); g.arc(X, Y, R * 0.36, 0, Math.PI * 2); g.fill();
+  // 빛 맺힘 (왼쪽 위의 큰 점 + 오른쪽 아래의 작은 점)
+  g.fillStyle = 'rgba(255,255,255,.95)'; g.beginPath(); g.arc(X - R * 0.32, Y - R * 0.34, R * 0.16, 0, Math.PI * 2); g.fill();
+  g.fillStyle = 'rgba(255,255,255,.5)'; g.beginPath(); g.arc(X + R * 0.3, Y + R * 0.3, R * 0.07, 0, Math.PI * 2); g.fill();
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4;
+  const m = new THREE.MeshStandardMaterial({ map: t, roughness: 0.25 });
+  eyeTex.set(iris, m);
+  return m;
+}
+let personNo = 0;
+
 function makePerson(type) {
   const t = TYPES[type] || TYPES.man;
   const skin = mat(SKIN[t.skin || 0], { roughness: 0.7 });
@@ -203,17 +256,32 @@ function makePerson(type) {
   upper.add(head);
   mesh(headShape(sphere(0.08, 48, 36), [0, 0, 0], true), skin, head);
   [-1, 1].forEach(s => mesh(sphere(0.017, 10, 8), skin, head, [s * 0.068, -0.004, -0.004], [0.45, 1, 0.75])); // 귀
-  // 코: 콧등에서 내려와 끝이 둥근 콧날 + 양쪽 콧방울
-  const nose = mesh(sphere(0.012, 14, 12), skin, head, [0, -0.006, 0.07], [0.7, 1.6, 1]);
-  nose.rotation.x = -0.28;
-  [-1, 1].forEach(s => mesh(sphere(0.0065, 8, 6), skin, head, [s * 0.0085, -0.02, 0.07]));
+  mesh(noseGeo(globalThis.NOSE || 'B'), skin, head, [0, -0.001, 0.0695]); // A 곧은 코 · B 오똑한 코 · C 매부리 코 (faces.html?nose=로 비교)
+  const eyeM = eyeTexture(t.eye || IRIS[(personNo++ * 5 + type.length) % IRIS.length]); // 사람마다 눈 색이 조금씩 다르게
   const eyes = [-1, 1].map(s => {
     const g = new THREE.Group();
     g.position.set(s * 0.027, 0.013, 0.062);
     head.add(g);
-    mesh(sphere(0.014, 12, 10), mat('#f6f1e8', { roughness: 0.4 }), g, [0, 0, 0], [1.1, 0.85, 0.5]);
-    mesh(sphere(0.008, 10, 8), mat('#2a1a0e', { roughness: 0.3 }), g, [0, -0.001, 0.005]);
-    mesh(sphere(0.0022, 6, 4), mat('#ffffff', { emissive: '#ffffff', emissiveIntensity: 0.6 }), g, [0.003, 0.002, 0.0115]);
+    mesh(sphere(0.014, 24, 16), eyeM, g, [0, 0, 0], [1.1, 0.85, 0.5]);
+    // 눈꺼풀: 눈알보다 조금 큰 살색 껍질. 윗꺼풀은 눈알 위쪽을 덮고 앞으로 돌아 내려오며 감기고(깜빡임),
+    // 아랫꺼풀은 아래쪽에 가만히 있다. 윗꺼풀 가장자리에 짙은 속눈썹 선
+    const lids = new THREE.Group();
+    lids.scale.set(1.1, 0.85, 0.5);
+    g.add(lids);
+    const R = 0.0152, UP = 1.15, LO = 0.75;
+    const lid = new THREE.Group();
+    lids.add(lid);
+    mesh(sphere(R, 24, 10, 0, Math.PI * 2, 0, UP), skin, lid);
+    // 속눈썹 선은 앞쪽 반원만 (감았을 때 둥근 테두리가 보이지 않게)
+    const lashG = new THREE.Group(), A = 1.2;
+    lashG.position.y = R * Math.cos(UP); lashG.rotation.x = Math.PI / 2;
+    lid.add(lashG);
+    const lash = mesh(new THREE.TorusGeometry(R * Math.sin(UP), 0.0011, 4, 24, A * 2), mat('#2a1a10'), lashG);
+    lash.rotation.z = Math.PI / 2 - A;
+    lash.castShadow = false;
+    mesh(sphere(R * 0.99, 24, 8, 0, Math.PI * 2, Math.PI - LO, LO), skin, lids);
+    lid.rotation.x = -0.4;
+    g.userData.lid = lid;
     const brow = mesh(new THREE.CapsuleGeometry(0.0035, 0.018, 3, 6), mat(t.hair || '#3b2616'), head, [s * 0.028, 0.032, 0.071]);
     brow.rotation.z = Math.PI / 2 - s * 0.1; // 바깥쪽으로 살짝 처진 부드러운 눈썹
     return g;
@@ -247,6 +315,19 @@ function makePerson(type) {
   }
   // 베일(여인): 흰 속두건 + 겉 베일 + 어깨로 흘러내림
   if (t.veil) {
+    // 앞머리: 베일 아래로 보이는 이마 위 머리. 가운데 가르마에서 양옆 관자놀이로 갈수록 길게 쓸어 내린 두 갈래
+    const fh = mat(t.hair || '#3b2616', { ...DS, roughness: 0.75 });
+    [-1, 1].forEach(k => {
+      const g = sphere(0.0838, 20, 10, Math.PI / 2 + (k > 0 ? 0.012 : -0.8), 0.788, 0, Math.PI * 0.3), q = g.attributes.position;
+      for (let i = 0; i < q.count; i++) {
+        const x = q.getX(i), y = q.getY(i), z = q.getZ(i), r = Math.hypot(x, y, z), h = Math.hypot(x, z);
+        const th = Math.acos(y / r), dp = Math.abs(Math.atan2(z, -x) - Math.PI / 2) / 0.8;
+        const nt = th * (0.62 + 0.55 * dp); // 가르마 쪽은 짧게, 바깥은 길게
+        const f = h > 1e-6 ? r * Math.sin(nt) / h : 0;
+        q.setXYZ(i, x * f, r * Math.cos(nt), z * f);
+      }
+      mesh(headShape(g, [0, 0.004, -0.002]), fh, head, [0, 0.004, -0.002]);
+    });
     mesh(sphere(0.087, 28, 16, ...SBACK(Math.PI * 1.55), 0, Math.PI * 0.8), mat(t.inner, DS), head, [0, 0.004, -0.002], [0.97, 1.06, 1.02]);
     const v = mat(t.mantle, DS);
     mesh(sphere(0.096, 28, 16, ...SBACK(Math.PI * 1.38), 0, Math.PI * 0.82), v, head, [0, 0.008, -0.006], [0.97, 1.05, 1.02]);
@@ -577,8 +658,12 @@ class Actor {
     if (this.item === 'baby') { carry = true; if (!moving) aL = aR = [-0.4, -0.25, -1.3]; }
     p.baby.visible = carry;
     // 눈 깜빡임(사람마다 박자가 다르게), 말할 때 입 움직임
-    const blink = (t * 0.27) % 1 < 0.035 ? 0.12 : 1;
-    p.eyes.forEach(e => { e.scale.y = damp(e.scale.y, lie > 0.5 ? 0.12 : blink, 30, dt); });
+    // 저마다 2~6.5초 사이 제멋대로, 가끔은 두 번 연달아 깜빡인다
+    if (this.blinkAt === undefined || this.blinkAt - t > 8) this.blinkAt = t + 0.5 + Math.random() * 4; // 장면을 되감아 시간이 뒤로 가도 다시 맞춘다
+    if (t > this.blinkAt + 0.13) this.blinkAt = t + (Math.random() < 0.15 ? 0.2 : 2 + Math.random() * 4.5);
+    const blink = t >= this.blinkAt ? 0.12 : 1;
+    // 윗꺼풀을 앞으로 돌려 내리면 감긴다 (-0.4: 뜬 눈, 1.4: 감은 눈)
+    p.eyes.forEach(e => { const L = e.userData.lid; L.rotation.x = damp(L.rotation.x, lie > 0.5 || blink < 1 ? 1.4 : -0.4, 30, dt); });
     const talk = this.pose === 'speak' && !this.solemn ? 0.55 + Math.abs(Math.sin(t * 8.5) * Math.sin(t * 3.1)) * 1.6 : 0.35;
     p.mouth.scale.y = damp(p.mouth.scale.y, talk, 18, dt);
     p.bed.visible = lie > 0.5;
