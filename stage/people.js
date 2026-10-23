@@ -7,6 +7,11 @@ const TYPES = {
   mary:     { robe: '#a3554a', trim: '#c9a24a', mantle: '#3c5d96', veil: true, inner: '#f3ece0', skin: 2, soft: true, slim: true, sash: '#c9a24a' },
   joseph:   { robe: '#7b5b3a', trim: '#5a4128', mantle: '#b89b6c', hair: '#3b2616', beard: true, hood: '#d8c9a6', band: '#6e5131', sash: '#5a4128' },
   angel:    { robe: '#fbf7ee', trim: '#d9b46a', hair: '#d8b56a', curls: true, wings: true, glow: true, halo: true, sash: '#d9b46a', skin: 2, soft: true },
+  anna:     { robe: '#4f4a5e', trim: '#3a3646', mantle: '#8a8172', veil: true, inner: '#ddd6c8', skin: 1, soft: true, slim: true, sash: '#3a3646', height: 0.93 }, // 여든 넷의 과부 예언자
+  magus2:   { robe: '#1f5a5a', trim: '#d6a93a', mantle: '#b0402e', hair: '#e2ddd2', beard: true, turban: '#d8b45a', skin: 1, sash: '#d6a93a' },
+  magus3:   { robe: '#8a3c1c', trim: '#d6a93a', mantle: '#2f4f8a', hair: '#1d140c', beard: true, crown: true, skin: 3, sash: '#d6a93a' },
+  boyJesus: { robe: '#efe7d6', trim: '#a8843f', mantle: '#9b3b2a', hair: '#4a2e1c', sash: '#b08a4e', height: 0.78 }, // 열두 살 소년
+  mother:   { robe: '#7a5a48', trim: '#5a3e30', mantle: '#4a4a52', veil: true, inner: '#e7dfd0', skin: 1, soft: true, slim: true, sash: '#5a3e30' },
   crossed:  { robe: '#efe7d6', hair: '#4a2e1c', beard: true, long: true, bare: true }, // 십자가 위의 예수 (실루엣 전용)
   john:     { robe: '#cdb994', trim: '#7a3b2e', mantle: '#7a3b2e', hair: '#5a3a22', sash: '#7a3b2e' }, // 젊은 제자: 수염 없음
   woman2:   { robe: '#6e5a7a', trim: '#4d3f57', mantle: '#d8c9a6', veil: true, inner: '#f1e9da', skin: 3, soft: true, slim: true, sash: '#4d3f57' },
@@ -242,6 +247,25 @@ function makePerson(type) {
   basket.position.set(0, 0.47, 0.15);
   basket.visible = false;
   upper.add(basket);
+  // 손에 드는 물건들: 비둘기 한 쌍(성전 제물), 예물 상자(박사들) — item 이름으로 하나만 보인다
+  const doves = new THREE.Group();
+  [-1, 1].forEach(s => {
+    const b = new THREE.Group();
+    mesh(sphere(0.026, 12, 10), mat('#f4f1ea'), b, [0, 0, 0], [1.3, 0.9, 0.9]);
+    mesh(sphere(0.016, 10, 8), mat('#f4f1ea'), b, [0.03, 0.018, 0]);
+    mesh(new THREE.ConeGeometry(0.006, 0.014, 6), mat('#d08a5a'), b, [0.046, 0.017, 0]).rotation.z = -Math.PI / 2;
+    b.position.set(s * 0.03, 0, 0); b.rotation.y = s * 0.4;
+    doves.add(b);
+  });
+  doves.position.set(0, 0.47, 0.15);
+  const gift = new THREE.Group();
+  const gold = mat('#d6a93a', { metalness: 0.6, roughness: 0.35 });
+  mesh(new THREE.BoxGeometry(0.08, 0.055, 0.06), gold, gift);
+  mesh(new THREE.BoxGeometry(0.086, 0.018, 0.066), mat('#7a2a5e', { roughness: 0.5 }), gift, [0, 0.035, 0]);
+  mesh(sphere(0.012, 8, 6), gold, gift, [0, 0.05, 0]);
+  gift.position.set(0, 0.47, 0.15);
+  [doves, gift].forEach(g => { g.visible = false; upper.add(g); });
+  const items = { basket, doves, gift };
 
   // 발: 샌들 위의 맨발이 옷자락 아래로
   const feet = [1, -1].map(s => {
@@ -288,7 +312,7 @@ function makePerson(type) {
   bed.visible = false;
   bed.receiveShadow = true;
 
-  return { type, t, root, body, skirt, skirtMesh, hemTrim, upper, torso, waist: wy, mantleG, mantleSpan: B.mantle[0][1] - B.mantle[B.mantle.length - 1][1], head, armL, armR, feet, wings, glow, staff, baby, bed, eyes, mouth, basket };
+  return { type, t, root, body, skirt, skirtMesh, hemTrim, upper, torso, waist: wy, mantleG, mantleSpan: B.mantle[0][1] - B.mantle[B.mantle.length - 1][1], head, armL, armR, feet, wings, glow, staff, baby, bed, eyes, mouth, basket, items };
 }
 
 // 실루엣: 모든 재질을 어두운 단색으로 바꿔 얼굴·무늬가 보이지 않게 한다 (골고다)
@@ -331,17 +355,20 @@ class Actor {
     });
     this.op = -1;
   }
+  // 나타나고 사라질 때: 반투명(transparent) 대신 점묘 투명도(alphaHash)를 쓴다.
+  // 반투명은 겹친 천(망토·베일·소매)의 앞뒤가 엉켜 뒤쪽이 비쳐 보이고, 다 나타나는 순간 옷 위치가 바뀐 듯 보였다
   fadeTo(op) {
     if (Math.abs(op - this.op) < 0.004) return;
     const solid = op > 0.995;
     this.mats.forEach(m => {
-      const tr = !solid || m.userData.tr;
-      if (m.transparent !== tr) { m.transparent = tr; m.needsUpdate = true; }
-      m.opacity = m.userData.op * op;
-      m.depthWrite = solid ? m.userData.dw : false;
+      if (m.userData.tr) { m.opacity = m.userData.op * op; return; } // 원래 반투명인 것(볼 홍조)은 그대로
+      if (m.alphaHash !== !solid) { m.alphaHash = !solid; m.needsUpdate = true; }
+      m.opacity = solid ? 1 : op;
     });
     this.op = op;
   }
+  // 자세를 바로 맞춘다 — 생성되거나 장면이 다시 시작될 때 기본 자세에서 천천히 바뀌는 모습이 보이지 않게
+  settle() { const s = this.show; for (let i = 0; i < 60; i++) this.update(i * 0.05, 0.05); this.show = s; this.fadeTo(Math.min(1, s)); }
   set(pose) { if (pose !== this.pose) { this.pose = pose; this.t0 = performance.now() / 1000; } }
   moveTo(x, z = this.goal.y) { this.goal.set(x, z); }
   look(dir) { this.faceT = dir; this.target = null; } // -1 왼쪽, 0 정면, 1 오른쪽 (중간값 허용)
@@ -408,6 +435,7 @@ class Actor {
       case 'look-up': nod = -0.35; aL = aR = [-0.1, 0.15, -0.4]; break;
       case 'sleep': lie = 1; aL = aR = [0, 0.1, -0.2]; nod = 0.1; break;
       case 'carry': aL = aR = [-0.4, -0.25, -1.3]; nod = 0.18; carry = true; break;
+      case 'ride': kneel = 0.8; aL = aR = [-0.3, -0.2, -1.2]; nod = 0.08; break; // 나귀 등에 걸터앉음
       case 'point': aR = [-1.5, 0.25, 0]; break;
       case 'sit': kneel = 0.75; aL = aR = [-0.3, -0.15, -0.9]; break;
       case 'rebuke': aR = [-1.95, 0.3, -0.05]; aL = [-0.7, 0.55, -0.25]; lean = 0.04; nod = -0.12; break; // 바람을 꾸짖음
@@ -426,8 +454,10 @@ class Actor {
     // 엄숙한 장면: 숨쉬기 외의 작은 몸짓을 멈춘다
     if (this.solemn) { nod += 0.05; }
     p.armL.userData.loaf.visible = p.armR.userData.loaf.visible = this.pose === 'break';
-    p.basket.visible = this.item === 'basket' || (this.pose === 'hold-basket');
-    if (p.basket.visible && this.pose !== 'hold-basket' && !moving) { aL = aR = [-0.45, -0.3, -1.25]; }
+    // 손에 든 물건: item 이름의 것 하나만 보이고, 서 있거나 무릎 꿇은 동안엔 두 손으로 받쳐 든다
+    let holding = false;
+    Object.entries(p.items).forEach(([k, g]) => { g.visible = this.item === k || (k === 'basket' && this.pose === 'hold-basket'); holding ||= g.visible; });
+    if (holding && !moving && ['idle', 'listen', 'kneel', 'hold-basket', 'bow'].includes(this.pose)) { aL = aR = [-0.45, -0.3, -1.25]; }
     if (!moving) { p.feet[0].position.z = damp(p.feet[0].position.z, 0.09, 8, dt); p.feet[1].position.z = damp(p.feet[1].position.z, 0.09, 8, dt); }
     const k = 5;
     const arm = (a, [fx, sx, ex]) => {
@@ -452,6 +482,8 @@ class Actor {
     p.torso.position.y = p.waist * (1 - 0.58 * kn);
     p.mantleG.scale.y = 1 - (p.waist * 0.58 * kn) / p.mantleSpan;
     p.feet.forEach(f => (f.visible = lie < 0.5 && kn < 0.3 && !this.floating));
+    // 아기: 안는 자세이거나, item으로 'baby'를 들고 있을 때(나귀를 타고 가면서 등)
+    if (this.item === 'baby') { carry = true; if (!moving) aL = aR = [-0.4, -0.25, -1.3]; }
     p.baby.visible = carry;
     // 눈 깜빡임(사람마다 박자가 다르게), 말할 때 입 움직임
     const blink = (t * 0.27) % 1 < 0.035 ? 0.12 : 1;

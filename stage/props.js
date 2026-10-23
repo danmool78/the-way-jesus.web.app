@@ -18,10 +18,16 @@ class Prop {
     if (this.speed) { // 일정한 속도로 미끄러지듯 (배가 물 위를 나아가듯) — 끝에서 살짝 늦춘다
       const dx = this.goal.x - pos.x, dz = this.goal.y - pos.z, d = Math.hypot(dx, dz);
       if (d > 1e-3) { const s = Math.min(d, this.speed * dt * Math.min(1, 0.3 + d * 2)); pos.x += dx / d * s; pos.z += dz / d * s; }
-      // 가는 동안은 뱃머리(+x 축)를 진행 방향으로, 도착하면 다시 옆모습(카메라와 나란히)으로 돌아선다
-      let head = this.rest || 0;
-      if (d > 0.08) { head = Math.atan2(-dz, dx); if (head > Math.PI / 2) head -= Math.PI; if (head < -Math.PI / 2) head += Math.PI; }
-      this.obj.rotation.y = damp(this.obj.rotation.y, head, 1.6, dt);
+      // 가는 동안은 앞(+x 축)을 진행 방향으로. 배는 도착하면 다시 옆모습으로 돌아서고(앞뒤가 같으니 가까운 쪽으로),
+      // 짐승(directional)은 머리가 앞이라 그대로 가는 쪽을 보고 선다
+      this.moving = d > 0.02;
+      if (this.directional) {
+        if (d > 0.08) { const want = Math.atan2(-dz, dx); let diff = want - this.obj.rotation.y; diff = Math.atan2(Math.sin(diff), Math.cos(diff)); this.obj.rotation.y += diff * (1 - Math.exp(-3 * dt)); }
+      } else {
+        let head = this.rest || 0;
+        if (d > 0.08) { head = Math.atan2(-dz, dx); if (head > Math.PI / 2) head -= Math.PI; if (head < -Math.PI / 2) head += Math.PI; }
+        this.obj.rotation.y = damp(this.obj.rotation.y, head, 1.6, dt);
+      }
     } else {
       pos.x = damp(pos.x, this.goal.x, 3, dt);
       pos.z = damp(pos.z, this.goal.y, 3, dt);
@@ -333,6 +339,95 @@ const MAKERS = {
     }, { state: 'open' });
   },
 };
+
+// 네발짐승(나귀·낙타): 앞이 +x. 걸을 때 다리를 엇갈려 움직이고 고개를 끄덕인다. deck에 사람을 태울 수 있다
+function beast(o) {
+  const g = new THREE.Group(), body = new THREE.Group();
+  g.add(body);
+  const S = o.size || 1, coat = mat(o.coat || '#8a7a68', { roughness: 0.95 }), dark = mat(o.dark || '#4a3e34', { roughness: 0.9 });
+  const H = 0.24 * S; // 등 높이
+  mesh(new THREE.CapsuleGeometry(0.075 * S, 0.2 * S, 8, 14), coat, body, [0, H, 0]).rotation.z = Math.PI / 2;
+  if (o.hump) mesh(sphere(0.08 * S, 14, 10), coat, body, [-0.01 * S, H + 0.07 * S, 0], [1.1, 1, 0.85]);
+  const neck = new THREE.Group();
+  neck.position.set(0.15 * S, H + 0.03 * S, 0);
+  body.add(neck);
+  mesh(new THREE.CapsuleGeometry(0.035 * S, (o.neck || 0.12) * S, 6, 10), coat, neck, [0.03 * S, 0.06 * S, 0]).rotation.z = -0.55;
+  const headG = new THREE.Group();
+  headG.position.set(0.08 * S, ((o.neck || 0.12) + 0.04) * S, 0);
+  neck.add(headG);
+  mesh(new THREE.CapsuleGeometry(0.035 * S, 0.07 * S, 6, 10), coat, headG, [0.04 * S, 0, 0]).rotation.z = Math.PI / 2 + 0.35;
+  mesh(sphere(0.03 * S, 10, 8), dark, headG, [0.09 * S, -0.025 * S, 0]);
+  [-1, 1].forEach(s => mesh(sphere(0.006 * S, 6, 4), mat('#120c08'), headG, [0.045 * S, 0.012 * S, s * 0.03 * S]));
+  [-1, 1].forEach(s => { const e = mesh(new THREE.ConeGeometry(0.014 * S, (o.ears || 0.07) * S, 6), coat, headG, [0.0, 0.04 * S, s * 0.022 * S]); e.rotation.x = s * 0.35; });
+  const legs = [[0.1, 1], [0.1, -1], [-0.1, 1], [-0.1, -1]].map(([x, s]) => {
+    const l = new THREE.Group();
+    l.position.set(x * S, H - 0.02 * S, s * 0.045 * S);
+    body.add(l);
+    mesh(new THREE.CylinderGeometry(0.018 * S, 0.014 * S, H, 8), coat, l, [0, -H / 2, 0]);
+    mesh(new THREE.CylinderGeometry(0.017 * S, 0.017 * S, 0.02 * S, 8), dark, l, [0, -H + 0.01 * S, 0]);
+    return l;
+  });
+  const tail = mesh(new THREE.CylinderGeometry(0.006 * S, 0.004 * S, 0.12 * S, 6), dark, body, [-0.19 * S, H - 0.03 * S, 0]);
+  tail.rotation.z = -0.3;
+  if (o.saddle) mesh(new THREE.BoxGeometry(0.16 * S, 0.02 * S, 0.17 * S), mat(o.saddle), body, [-0.02 * S, H + 0.075 * S, 0]);
+  const deck = new THREE.Group();
+  deck.position.set(-0.02 * S, H + 0.02 * S, 0);
+  body.add(deck); // 탄 사람은 짐승의 옆으로 걸터앉는다 (바라보는 쪽은 look으로)
+  let phase = Math.random() * 6;
+  const P = new Prop(g, (P, t, dt) => {
+    if (P.moving) phase += dt * 9;
+    const sw = P.moving ? Math.sin(phase) * 0.45 : 0;
+    legs.forEach((l, i) => { l.rotation.z = damp(l.rotation.z, (i === 0 || i === 3 ? sw : -sw), 10, dt); });
+    neck.rotation.z = damp(neck.rotation.z, P.moving ? Math.sin(phase * 2) * 0.08 : Math.sin(t * 0.6) * 0.05 - (o.graze ? 0.4 : 0), 4, dt);
+    body.position.y = P.moving ? Math.abs(Math.cos(phase)) * 0.012 * S : 0;
+    tail.rotation.x = Math.sin(t * 1.3) * 0.25;
+  });
+  P.deck = deck;
+  P.directional = true;
+  return P;
+}
+
+Object.assign(MAKERS, {
+  // 크기는 사람(키 약 0.88)과의 비례로: 나귀 등은 허벅지 높이, 낙타 등은 어깨 높이쯤
+  donkey: o => beast({ coat: '#8d8073', dark: '#3e3630', size: 1.65, saddle: '#7a3b2e', ears: 0.08, ...o }),
+  camel: o => beast({ coat: '#c4a273', dark: '#7a5f3e', size: 2.5, hump: true, neck: 0.2, ears: 0.03, saddle: '#7a2a5e', ...o }),
+
+  // 성전: 계단 단 위의 흰 돌 건물, 금빛 처마와 기둥 현관 (멀리 배경으로)
+  temple(o = {}) {
+    const g = new THREE.Group(), stone = mat('#ece4d2', { roughness: 0.85 }), gold = mat('#d6a93a', { metalness: 0.55, roughness: 0.35 }), shade = mat('#b9ad96');
+    mesh(new THREE.BoxGeometry(2.2, 0.08, 0.9), shade, g, [0, 0.04, 0]).receiveShadow = true;
+    mesh(new THREE.BoxGeometry(2.0, 0.06, 0.8), stone, g, [0, 0.11, 0]).receiveShadow = true;
+    mesh(new THREE.BoxGeometry(1.1, 0.95, 0.55), stone, g, [0, 0.62, -0.1]);
+    mesh(new THREE.BoxGeometry(1.16, 0.05, 0.6), gold, g, [0, 1.12, -0.1]);
+    for (let i = 0; i < 9; i++) mesh(new THREE.ConeGeometry(0.018, 0.06, 4), gold, g, [-0.52 + i * 0.13, 1.17, 0.18]);
+    mesh(new THREE.BoxGeometry(0.26, 0.5, 0.02), mat('#3a2a1a'), g, [0, 0.4, 0.18]);
+    mesh(new THREE.BoxGeometry(0.3, 0.04, 0.03), gold, g, [0, 0.67, 0.19]);
+    for (let i = 0; i < 6; i++) { const x = -0.9 + i * 0.36; if (Math.abs(x) < 0.5) continue; mesh(new THREE.CylinderGeometry(0.03, 0.035, 0.62, 12), stone, g, [x, 0.45, 0.25]); }
+    mesh(new THREE.BoxGeometry(1.95, 0.05, 0.16), stone, g, [0, 0.78, 0.25]);
+    return new Prop(g);
+  },
+
+  // 헤롯의 왕좌
+  throne() {
+    const g = new THREE.Group(), gold = mat('#d6a93a', { metalness: 0.55, roughness: 0.35 }), cloth = mat('#6b2a5e');
+    mesh(new THREE.BoxGeometry(0.42, 0.06, 0.34), mat('#8a7a68'), g, [0, 0.03, 0]);
+    mesh(new THREE.BoxGeometry(0.24, 0.16, 0.2), gold, g, [0, 0.14, 0]);
+    mesh(new THREE.BoxGeometry(0.24, 0.03, 0.2), cloth, g, [0, 0.235, 0]);
+    mesh(new THREE.BoxGeometry(0.26, 0.42, 0.04), gold, g, [0, 0.38, -0.1]);
+    mesh(sphere(0.03, 10, 8), gold, g, [0, 0.62, -0.1]);
+    return new Prop(g);
+  },
+
+  // 흙벽돌 집 (평평한 지붕, 어두운 문)
+  house(o = {}) {
+    const g = new THREE.Group(), wall = mat(o.wall || '#cdb48e', { roughness: 1 });
+    mesh(new THREE.BoxGeometry(0.62, 0.42, 0.42), wall, g, [0, 0.21, 0]).receiveShadow = true;
+    mesh(new THREE.BoxGeometry(0.68, 0.04, 0.48), mat('#a98f68'), g, [0, 0.44, 0]);
+    mesh(new THREE.BoxGeometry(0.13, 0.24, 0.02), mat('#2a1c10'), g, [0.12, 0.12, 0.215]);
+    mesh(new THREE.BoxGeometry(0.07, 0.06, 0.02), mat('#2a1c10'), g, [-0.16, 0.28, 0.215]);
+    return new Prop(g);
+  },
+});
 
 export function makeProp(kind, x = 0, z = 0, o = {}) {
   const P = MAKERS[kind](o);

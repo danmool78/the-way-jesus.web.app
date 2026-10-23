@@ -99,6 +99,7 @@ function apply(cmds, instant = false) {
       if (pose) a.set(pose);
       if ('board' in o) (o.board ? props[o.board].deck : stageGroup).add(a.p.root);
       if (o.x !== undefined || o.z !== undefined) a.moveTo(o.x ?? a.goal.x, o.z ?? a.goal.y);
+      if ('board' in o) a.pos.copy(a.goal); // 타고 내릴 때는 그 자리로 바로 (좌표 기준이 바뀌므로 걸어가지 않는다)
       if (o.look !== undefined) a.look(o.look);
       if (o.show !== undefined) a.showT = o.show;
       if (o.y !== undefined) a.yT = o.y;
@@ -135,7 +136,7 @@ function setScene(ev) {
   });
   setEnv(script.env || 'day', true);
   apply(script.beats.enter, true);
-  Object.values(actors).forEach(a => { a.show = 0; });
+  Object.values(actors).forEach(a => { a.show = 0; a.settle(); }); // 처음부터 정해진 자세로 놓고 서서히 나타난다
   // 연출 확인용: ?beat=p1.3 이면 그 순간까지의 동작을 즉시 적용한다
   const until = new URLSearchParams(location.search).get('beat');
   if (until) {
@@ -151,7 +152,7 @@ function beat(key) {
   if (key === 'intro') {
     token++; // 예약된 동작 취소
     apply(script.beats.intro || script.beats.enter, true);
-    Object.values(actors).forEach(a => { if (a.showT) a.show = 0.0001; });
+    Object.values(actors).forEach(a => { if (a.showT) a.show = 0.0001; a.settle(); });
     return;
   }
   apply(script.beats[key]);
