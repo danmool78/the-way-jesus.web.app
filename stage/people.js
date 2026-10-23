@@ -33,6 +33,8 @@ const TYPES = {
   man:      { robe: '#8b6f50', trim: '#6b5438', mantle: '#a99069', hair: '#2e1d12', beard: true, sash: '#5b4630' },
   child:    { robe: '#e6dcc4', trim: '#8f6d4b', mantle: '#8f6d4b', hair: '#4a2e1c', height: 0.66 },
   samaritan: { robe: '#9c5b3a', trim: '#6e3a22', mantle: '#d8b878', veil: true, inner: '#f1e6d0', skin: 1, soft: true, slim: true, sash: '#6e3a22' }, // 수가의 여인
+  centurion: { robe: '#9d3328', trim: '#d6a93a', mantle: '#6b2a20', hair: '#2b1b10', helmet: true, sash: '#5a3d22' }, // 백부장 (창 없이)
+  youth:    { robe: '#efe9dc', trim: '#cdbf9e', hair: '#3b2616', sash: '#cdbf9e' }, // 나인의 청년 (흰 수의)
   levi:     { robe: '#5a3e6e', trim: '#c9a24a', mantle: '#b9935a', hair: '#2b1b10', beard: true, sash: '#c9a24a', skin: 2 }, // 세리 마태 (값진 옷)
   official: { robe: '#2f4f6a', trim: '#d6a93a', mantle: '#c8b48c', hair: '#2b1b10', beard: true, sash: '#d6a93a', skin: 2 }, // 왕의 신하
 };
@@ -281,8 +283,12 @@ function makePerson(type) {
   [-1, 1].forEach(s => mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.11, 12), mat('#e8dcbf', { roughness: 0.8 }), scroll, [s * 0.04, 0, 0]));
   mesh(new THREE.BoxGeometry(0.08, 0.1, 0.004), mat('#f1e7cf', { ...DS, roughness: 0.8 }), scroll, [0, 0, 0.012]);
   scroll.position.set(0, 0.5, 0.16); scroll.rotation.x = -0.5;
-  [doves, gift, jar, scroll].forEach(g => { g.visible = false; upper.add(g); });
-  const items = { basket, doves, gift, jar, scroll };
+  // 향유 옥합: 흰 돌의 작은 병
+  const alabaster = new THREE.Group();
+  mesh(lathe([[0.001, 0], [0.022, 0], [0.03, 0.04], [0.02, 0.08], [0.012, 0.09], [0.016, 0.1], [0.001, 0.1]], 16), mat('#f1ece0', { roughness: 0.4 }), alabaster, [0, -0.04, 0]);
+  alabaster.position.set(0, 0.47, 0.15);
+  [doves, gift, jar, scroll, alabaster].forEach(g => { g.visible = false; upper.add(g); });
+  const items = { basket, doves, gift, jar, scroll, alabaster };
 
   // 발: 샌들 위의 맨발이 옷자락 아래로
   const feet = [1, -1].map(s => {
