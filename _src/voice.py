@@ -1,6 +1,7 @@
 """낭독 음원 생성: data.json의 낭독 원고를 ElevenLabs(eleven_v3)로 읽어 assets/audio/와 audio.json을 만든다.
 
-키는 다정 리딩북과 같은 환경 변수 ELEVENLABS_API_KEY에서 읽는다 (저장소에 두지 않는다). ffmpeg가 필요하다.
+키는 다정 리딩북과 같은 환경 변수 ELEVENLABS_API_KEY에서 읽는다 (저장소에 두지 않는다). 변수가 없으면 키 없이
+보내므로, 프록시가 xi-api-key 헤더를 붙여 주는 환경(Claude 클라우드의 네트워크 시크릿)에서도 쓸 수 있다. ffmpeg가 필요하다.
 목소리 ID는 _src/voices/eleven.json에 둔다 (비밀 아님).
 
   python3 _src/voice.py --design              # ID가 없는 목소리를 VOICES 묘사로 만든다 (보이스 디자인)
@@ -20,16 +21,15 @@ ids_path = os.path.join(voice_dir, 'eleven.json')
 API, RATE = 'https://api.elevenlabs.io/v1', 24000
 
 
-def key():
+def key_header():
+    # 환경 변수가 없으면 키 없이 보낸다: Claude 클라우드 환경의 네트워크 시크릿처럼 프록시가 xi-api-key를 붙이는 경우
     k = os.environ.get('ELEVENLABS_API_KEY', '').strip()
-    if not k:
-        raise SystemExit('ELEVENLABS_API_KEY 환경 변수가 없습니다.')
-    return k
+    return {'xi-api-key': k} if k else {}
 
 
 def call(path, body=None, files=None, raw=False):
     """ElevenLabs API 호출. body는 JSON, files는 multipart(필드 → 값 또는 (파일명, 바이트))."""
-    headers = {'xi-api-key': key()}
+    headers = key_header()
     if files is not None:
         b = uuid.uuid4().hex
         parts = []
@@ -51,6 +51,8 @@ def call(path, body=None, files=None, raw=False):
                 return out if raw else json.loads(out)
         except urllib.error.HTTPError as e:
             msg = e.read().decode(errors='replace')[:300]
+            if e.code == 401:
+                raise SystemExit('ElevenLabs 키가 없거나 맞지 않습니다: ELEVENLABS_API_KEY 환경 변수나 api.elevenlabs.io 네트워크 시크릿(xi-api-key)을 확인하세요.')
             if e.code in (429, 500, 502, 503) and attempt < 3:  # 혼잡하면 잠시 쉬었다 다시
                 time.sleep(5 * 2 ** attempt); continue
             raise SystemExit(f'ElevenLabs {e.code} {path}: {msg}')
