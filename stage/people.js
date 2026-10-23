@@ -98,6 +98,33 @@ function makeWing(side, parent) {
   return pivot;
 }
 
+// 공 모양 머리를 사람 머리로: 얼굴은 길고 턱으로 좁아지며, 뒤통수는 나오고, 앞얼굴은 평평하게.
+// 머리 공간(반지름 0.08 기준)에서 꼭짓점을 옮긴다. off는 그 도형이 머리 안에서 놓이는 위치,
+// face면 눈두덩·눈자리·광대까지 새긴다 (머리카락·수염 껍질은 윤곽만 따른다)
+function headShape(geo, off = [0, 0, 0], face = false) {
+  const p = geo.attributes.position, R = 0.08, g = (a, b, w) => Math.exp(-(a * a + b * b) / (w * w));
+  for (let i = 0; i < p.count; i++) {
+    let X = (p.getX(i) + off[0]) / R, Y = (p.getY(i) + off[1]) / R, Z = (p.getZ(i) + off[2]) / R;
+    if (Y < 0) Y *= 1.18;                                   // 얼굴 아래쪽을 길게
+    const t = Math.min(1, Math.max(0, (-Y - 0.12) / 0.9));  // 0: 광대 위 … 1: 턱 끝
+    X *= 0.9 * (1 - 0.36 * t * t);                          // 턱으로 갈수록 좁게
+    if (Z < 0) Z *= (Y > -0.1 ? 1.08 : 1) * (1 - 0.4 * t);  // 뒤통수는 나오고, 아래턱 뒤(목 쪽)는 들어가게
+    else {
+      Z = Z * 0.92 + 0.1 * t;                               // 앞얼굴은 평평하게, 턱끝은 앞으로
+      if (face && Z > 0.4) {
+        const ax = Math.abs(X);
+        Z += 0.05 * Math.exp(-(((Y - 0.37) / 0.1) ** 2)) * Math.exp(-((X / 0.55) ** 2)); // 눈두덩
+        Z -= 0.07 * g(ax - 0.34, Y - 0.15, 0.15);                                         // 눈자리
+        Z += 0.05 * g(ax - 0.52, Y + 0.08, 0.17);                                         // 광대
+        Z += 0.03 * g(X, Y + 0.62, 0.22);                                                 // 턱끝 둥글게
+      }
+    }
+    p.setXYZ(i, X * R - off[0], Y * R - off[1], Z * R - off[2]);
+  }
+  geo.computeVertexNormals();
+  return geo;
+}
+
 function makePerson(type) {
   const t = TYPES[type] || TYPES.man;
   const skin = mat(SKIN[t.skin || 0], { roughness: 0.7 });
@@ -174,32 +201,36 @@ function makePerson(type) {
   head.position.set(0, 0.8, 0);
   head.scale.setScalar(t.slim ? 0.9 : 0.93); // 머리를 조금 작게 해서 늘씬한 비율로
   upper.add(head);
-  mesh(sphere(0.08, 28, 20), skin, head, [0, 0, 0], [0.95, 1.06, 1]);
-  mesh(sphere(0.054, 20, 14), skin, head, [0, -0.034, 0.02], [1, 0.82, 1]);       // 턱
-  [-1, 1].forEach(s => mesh(sphere(0.017, 10, 8), skin, head, [s * 0.075, -0.002, -0.002], [0.5, 1, 0.8])); // 귀
-  mesh(sphere(0.012, 10, 8), skin, head, [0, -0.008, 0.08], [0.8, 1, 1.15]);     // 코
+  mesh(headShape(sphere(0.08, 48, 36), [0, 0, 0], true), skin, head);
+  [-1, 1].forEach(s => mesh(sphere(0.017, 10, 8), skin, head, [s * 0.068, -0.004, -0.004], [0.45, 1, 0.75])); // 귀
+  // 코: 콧등에서 내려와 끝이 둥근 콧날 + 양쪽 콧방울
+  const nose = mesh(sphere(0.012, 14, 12), skin, head, [0, -0.006, 0.07], [0.7, 1.6, 1]);
+  nose.rotation.x = -0.28;
+  [-1, 1].forEach(s => mesh(sphere(0.0065, 8, 6), skin, head, [s * 0.0085, -0.02, 0.07]));
   const eyes = [-1, 1].map(s => {
     const g = new THREE.Group();
-    g.position.set(s * 0.027, 0.013, 0.068);
+    g.position.set(s * 0.027, 0.013, 0.062);
     head.add(g);
     mesh(sphere(0.014, 12, 10), mat('#f6f1e8', { roughness: 0.4 }), g, [0, 0, 0], [1.1, 0.85, 0.5]);
     mesh(sphere(0.008, 10, 8), mat('#2a1a0e', { roughness: 0.3 }), g, [0, -0.001, 0.005]);
     mesh(sphere(0.0022, 6, 4), mat('#ffffff', { emissive: '#ffffff', emissiveIntensity: 0.6 }), g, [0.003, 0.002, 0.0115]);
-    const brow = mesh(new THREE.CapsuleGeometry(0.0035, 0.018, 3, 6), mat(t.hair || '#3b2616'), head, [s * 0.028, 0.034, 0.072]);
-    brow.rotation.z = Math.PI / 2 + s * 0.15;
+    const brow = mesh(new THREE.CapsuleGeometry(0.0035, 0.018, 3, 6), mat(t.hair || '#3b2616'), head, [s * 0.028, 0.032, 0.071]);
+    brow.rotation.z = Math.PI / 2 - s * 0.1; // 바깥쪽으로 살짝 처진 부드러운 눈썹
     return g;
   });
-  const mouth = mesh(sphere(0.011, 12, 8), mat('#7a3a2e', { roughness: 0.6 }), head, [0, -0.042, 0.074], [1.5, 0.35, 0.45]);
+  const mouth = mesh(sphere(0.011, 12, 8), mat('#7a3a2e', { roughness: 0.6 }), head, [0, -0.045, 0.068], [1.5, 0.35, 0.45]);
   if (t.soft) [-1, 1].forEach(s => mesh(sphere(0.016, 10, 8), mat('#e3958a', { transparent: true, opacity: 0.32, depthWrite: false }), head, [s * 0.043, -0.02, 0.062], [1, 0.7, 0.4]));
 
   // 머리카락
   if (t.hair) {
     const hair = mat(t.hair, { roughness: 0.75 });
-    mesh(sphere(0.085, 28, 16, 0, Math.PI * 2, 0, Math.PI * 0.36), hair, head, [0, 0.004, -0.004], [0.97, 1.06, 1.02]);
-    mesh(sphere(0.087, 28, 16, ...SBACK(Math.PI * 1.3), 0, Math.PI * 0.68), mat(t.hair, { ...DS, roughness: 0.75 }), head, [0, 0.002, -0.006], [0.97, 1.06, 1.02]);
+    // 정수리 덮개는 뒤로 젖혀 이마의 머리선을 올린다 (앞머리가 바가지처럼 일자로 내려오지 않게)
+    const cap = mesh(headShape(sphere(0.0835, 32, 16, 0, Math.PI * 2, 0, Math.PI * 0.36), [0, 0.004, -0.004]), hair, head, [0, 0.004, -0.004]);
+    cap.rotation.x = -0.22;
+    mesh(headShape(sphere(0.085, 32, 18, ...SBACK(Math.PI * 1.3), 0, Math.PI * 0.66), [0, 0.002, -0.006]), mat(t.hair, { ...DS, roughness: 0.75 }), head, [0, 0.002, -0.006]);
     if (t.long) {
       mesh(lathe([[0.083, 0.0], [0.088, -0.05], [0.09, -0.12], [0.082, -0.18]], 24, ...BACK(Math.PI * 1.3)), mat(t.hair, { ...DS, roughness: 0.75 }), head);
-      [-1, 1].forEach(s => mesh(new THREE.CapsuleGeometry(0.02, 0.09, 4, 10), hair, head, [s * 0.066, -0.075, 0.012]).rotation.z = s * -0.08);
+      [-1, 1].forEach(s => mesh(new THREE.CapsuleGeometry(0.018, 0.09, 4, 10), hair, head, [s * 0.062, -0.075, -0.004]).rotation.z = s * -0.08);
     }
     if (t.curls) for (let i = 0; i < 11; i++) {
       const a = (i / 10) * Math.PI * 1.25 - Math.PI * 0.125;
@@ -208,11 +239,11 @@ function makePerson(type) {
   }
   if (t.beard) {
     const b = mat(t.hair || '#3b2616', { roughness: 0.8 });
-    mesh(sphere(0.064, 24, 14, 0, Math.PI * 2, Math.PI * 0.48, Math.PI * 0.4), b, head, [0, -0.012, 0.012], [1, 1.15, 0.98]);
-    mesh(new THREE.ConeGeometry(0.034, 0.05, 14), b, head, [0, -0.095, 0.048]).rotation.x = Math.PI + 0.35;
-    const mus = mesh(new THREE.TorusGeometry(0.019, 0.0065, 6, 14, Math.PI), b, head, [0, -0.04, 0.077]);
+    mesh(headShape(sphere(0.085, 32, 18, Math.PI * 0.1, Math.PI * 0.8, Math.PI * 0.6, Math.PI * 0.34), [0, 0, 0.004]), mat(t.hair || '#3b2616', { ...DS, roughness: 0.8 }), head, [0, 0, 0.004]);
+    mesh(sphere(0.028, 16, 12), b, head, [0, -0.084, 0.05], [1.15, 1, 0.75]); // 턱수염
+    const mus = mesh(new THREE.TorusGeometry(0.017, 0.006, 6, 14, Math.PI), b, head, [0, -0.037, 0.073]);
     mus.rotation.z = Math.PI;
-    mouth.position.z = 0.082;
+    mouth.position.z = 0.076;
   }
   // 베일(여인): 흰 속두건 + 겉 베일 + 어깨로 흘러내림
   if (t.veil) {
