@@ -201,6 +201,19 @@ function resize() {
   const v = new THREE.Vector3(0, 0, 0).project(camera);
   groundPx = { x: (v.x + 1) / 2 * w, y: (1 - v.y) / 2 * h };
 }
+// 무대를 화면 가운데에 두려고 app.js가 묻는다: 장면 무대 캔버스의 가운데가 장소 핀(무대 바닥 중심)에서
+// 화면 몇 px 떨어져 있는지. 무대 바닥을 다른 위경도로 옮긴 장면(at)이면 그 지점도 알려 준다
+window.stageFrame = ev => {
+  const s = ev && SCRIPTS[ev.id];
+  if (!s || !canvas) return null;
+  const mobile = innerWidth <= 900, wide = s.wide || 1;
+  const w = Math.round((mobile ? 230 : 300) * wide), h = Math.round((mobile ? 200 : 270) * wide);
+  const cam = camera.clone();
+  cam.fov = THREE.MathUtils.radToDeg(2 * Math.atan(wide * Math.tan(THREE.MathUtils.degToRad(FOV / 2))));
+  cam.aspect = w / h; cam.updateProjectionMatrix(); cam.updateMatrixWorld();
+  const v = new THREE.Vector3(0, 0, 0).project(cam);
+  return { dx: w / 2 - (v.x + 1) / 2 * w, dy: h / 2 - (1 - v.y) / 2 * h, at: s.at || null };
+};
 function anchor() {
   const el = curEv && map.querySelector(`.pin[data-place="${curEv.place}"] .dot`);
   if (!el) return null;
@@ -275,5 +288,5 @@ if (canvas) {
   addEventListener('stage:stop', () => { if (!script) return; token++; setEnv(script.env || 'day'); apply(script.beats.enter); });
   loop();
   // app.js가 먼저 장면을 열었으면 따라잡는다
-  if (window.__stageScene) setScene(window.__stageScene);
+  if (window.__stageScene) { setScene(window.__stageScene); window.recenterStage?.(); } // 늦게 로드됐으면 무대 쪽으로 다시 맞춘다
 }
