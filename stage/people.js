@@ -35,6 +35,10 @@ const TYPES = {
   samaritan: { robe: '#9c5b3a', trim: '#6e3a22', mantle: '#d8b878', veil: true, inner: '#f1e6d0', skin: 1, soft: true, slim: true, sash: '#6e3a22' }, // 수가의 여인
   centurion: { robe: '#9d3328', trim: '#d6a93a', mantle: '#6b2a20', hair: '#2b1b10', helmet: true, sash: '#5a3d22' }, // 백부장 (창 없이)
   youth:    { robe: '#efe9dc', trim: '#cdbf9e', hair: '#3b2616', sash: '#cdbf9e' }, // 나인의 청년 (흰 수의)
+  wild:     { robe: '#6e6254', trim: '#5a4e40', hair: '#3a2a1c', beard: true, long: true, skin: 1 }, // 무덤 사이의 사람 (헝클어진 머리, 해진 옷)
+  healed:   { robe: '#e3d6b8', trim: '#8b6f50', mantle: '#8b6f50', hair: '#3a2a1c', beard: true, sash: '#6b5438', skin: 1 }, // 옷을 입고 정신이 돌아온 그 사람
+  girl:     { robe: '#f1e7cf', trim: '#c0607a', hair: '#3b2616', long: true, soft: true, slim: true, sash: '#c0607a', height: 0.72 }, // 열두 살 소녀
+  phoenician: { robe: '#6b2a5e', trim: '#d6a93a', mantle: '#c99a5a', veil: true, inner: '#efe6d4', skin: 2, soft: true, slim: true, sash: '#d6a93a' }, // 두로의 어머니 (자주색 옷)
   levi:     { robe: '#5a3e6e', trim: '#c9a24a', mantle: '#b9935a', hair: '#2b1b10', beard: true, sash: '#c9a24a', skin: 2 }, // 세리 마태 (값진 옷)
   official: { robe: '#2f4f6a', trim: '#d6a93a', mantle: '#c8b48c', hair: '#2b1b10', beard: true, sash: '#d6a93a', skin: 2 }, // 왕의 신하
 };
