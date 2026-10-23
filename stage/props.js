@@ -618,6 +618,33 @@ Object.assign(MAKERS, {
   },
 });
 
+Object.assign(MAKERS, {
+  // 세관: 동전이 쌓인 상과 햇볕 가리개 (호숫가 길목)
+  booth() {
+    const g = new THREE.Group(), w = wood(), coin = mat('#d6a93a', { metalness: 0.6, roughness: 0.35 });
+    mesh(new THREE.BoxGeometry(0.36, 0.025, 0.2), w, g, [0, 0.17, 0]);
+    [[-1, -1], [-1, 1], [1, -1], [1, 1]].forEach(([a, b]) => mesh(new THREE.BoxGeometry(0.025, 0.17, 0.025), w, g, [a * 0.16, 0.085, b * 0.08]));
+    [[-0.08, 0], [0.02, 0.03], [0.1, -0.02]].forEach(([x, z], i) => { for (let k = 0; k < 3 + i; k++) mesh(new THREE.CylinderGeometry(0.014, 0.014, 0.005, 10), coin, g, [x, 0.185 + k * 0.006, z]); });
+    [-1, 1].forEach(s => mesh(new THREE.CylinderGeometry(0.01, 0.01, 0.55, 6), w, g, [s * 0.22, 0.275, -0.14]));
+    const cloth = mesh(new THREE.BoxGeometry(0.5, 0.008, 0.3), mat('#b0402e', { ...DS, roughness: 0.9 }), g, [0, 0.55, -0.04]);
+    cloth.rotation.x = 0.25;
+    return new Prop(g);
+  },
+
+  // 베데스다 못: 돌 둘레의 네모난 물과 뒤편의 기둥 회랑
+  pool(o = {}) {
+    const g = new THREE.Group(), W = o.w || 1.4, D = o.d || 0.4, stone = mat('#d8ccb2', { roughness: 0.9 });
+    mesh(new THREE.BoxGeometry(W + 0.12, 0.05, D + 0.12), stone, g, [0, 0.025, 0]).receiveShadow = true;
+    const water = mesh(new THREE.PlaneGeometry(W, D), new THREE.MeshStandardMaterial({ color: '#6f97a0', roughness: 0.2, metalness: 0.1 }), g, [0, 0.052, 0]);
+    water.rotation.x = -Math.PI / 2; water.castShadow = false;
+    const n = Math.round(W / 0.28) + 1;
+    for (let i = 0; i < n; i++) mesh(new THREE.CylinderGeometry(0.03, 0.035, 0.55, 12), stone, g, [-W / 2 + i * (W / (n - 1)), 0.3, -D / 2 - 0.22]);
+    mesh(new THREE.BoxGeometry(W + 0.2, 0.05, 0.2), stone, g, [0, 0.6, -D / 2 - 0.22]);
+    // 물이 움직일 때의 잔물결
+    return new Prop(g, (P, t) => { water.position.y = 0.052 + Math.sin(t * 1.5) * 0.002; });
+  },
+});
+
 export function makeProp(kind, x = 0, z = 0, o = {}) {
   const P = MAKERS[kind](o);
   P.obj.position.set(x, o.y || 0, z);
