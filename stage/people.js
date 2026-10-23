@@ -256,7 +256,7 @@ function makePerson(type) {
   upper.add(head);
   mesh(headShape(sphere(0.08, 48, 36), [0, 0, 0], true), skin, head);
   [-1, 1].forEach(s => mesh(sphere(0.017, 10, 8), skin, head, [s * 0.068, -0.004, -0.004], [0.45, 1, 0.75])); // 귀
-  mesh(noseGeo(globalThis.NOSE || 'A'), skin, head, [0, -0.001, 0.0695]);
+  mesh(noseGeo(globalThis.NOSE || 'B'), skin, head, [0, -0.001, 0.0695]); // A 곧은 코 · B 오똑한 코 · C 매부리 코 (faces.html?nose=로 비교)
   const eyeM = eyeTexture(t.eye || IRIS[(personNo++ * 5 + type.length) % IRIS.length]); // 사람마다 눈 색이 조금씩 다르게
   const eyes = [-1, 1].map(s => {
     const g = new THREE.Group();
