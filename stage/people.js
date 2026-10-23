@@ -15,7 +15,7 @@ const TYPES = {
   anna:     { robe: '#4f4a5e', trim: '#3a3646', mantle: '#8a8172', hair: '#cfc8bb', veil: true, inner: '#ddd6c8', skin: 1, soft: true, slim: true, sash: '#3a3646', height: 0.93 }, // 여든 넷의 과부 예언자
   magus2:   { robe: '#1f5a5a', trim: '#d6a93a', mantle: '#b0402e', hair: '#e2ddd2', beard: true, turban: '#d8b45a', skin: 1, sash: '#d6a93a' },
   magus3:   { robe: '#8a3c1c', trim: '#d6a93a', mantle: '#2f4f8a', hair: '#1d140c', beard: true, crown: true, skin: 3, sash: '#d6a93a' },
-  boyJesus: { robe: '#efe7d6', trim: '#a8843f', mantle: '#9b3b2a', hair: '#4a2e1c', sash: '#b08a4e', height: 0.78 }, // 열두 살 소년
+  boyJesus: { robe: '#d8c49c', trim: '#8a6a44', hair: '#4a2e1c', sash: '#7a5a38', height: 0.78, kid: true }, // 열두 살 소년: 어른 예수의 흰 옷·붉은 망토 대신 거친 무명 속옷에 끈 띠만
   mother:   { robe: '#7a5a48', trim: '#5a3e30', mantle: '#4a4a52', veil: true, inner: '#e7dfd0', skin: 1, soft: true, slim: true, sash: '#5a3e30' },
   crossed:  { robe: '#efe7d6', hair: '#4a2e1c', beard: true, long: true, bare: true }, // 십자가 위의 예수 (실루엣 전용)
   john:     { robe: '#cdb994', trim: '#7a3b2e', mantle: '#7a3b2e', hair: '#5a3a22', sash: '#7a3b2e' }, // 젊은 제자: 수염 없음
@@ -31,13 +31,13 @@ const TYPES = {
   thief:    { robe: '#cbb79a', hair: '#2b1b10', beard: true, bare: true, height: 0.96 }, // 십자가의 두 죄수 (실루엣 전용)
   pharisee: { robe: '#d9cfb6', trim: '#3e5470', mantle: '#3e5470', hair: '#2b1b10', beard: true, hood: '#efe8d8', band: '#3e5470', skin: 2 },
   man:      { robe: '#8b6f50', trim: '#6b5438', mantle: '#a99069', hair: '#2e1d12', beard: true, sash: '#5b4630' },
-  child:    { robe: '#e6dcc4', trim: '#8f6d4b', mantle: '#8f6d4b', hair: '#4a2e1c', height: 0.66 },
+  child:    { robe: '#e6dcc4', trim: '#8f6d4b', mantle: '#8f6d4b', hair: '#4a2e1c', height: 0.66, kid: true },
   samaritan: { robe: '#9c5b3a', trim: '#6e3a22', mantle: '#d8b878', veil: true, inner: '#f1e6d0', skin: 1, soft: true, slim: true, sash: '#6e3a22' }, // 수가의 여인
   centurion: { robe: '#9d3328', trim: '#d6a93a', mantle: '#6b2a20', hair: '#2b1b10', helmet: true, sash: '#5a3d22' }, // 백부장 (창 없이)
   youth:    { robe: '#efe9dc', trim: '#cdbf9e', hair: '#3b2616', sash: '#cdbf9e' }, // 나인의 청년 (흰 수의)
   wild:     { robe: '#6e6254', trim: '#5a4e40', hair: '#3a2a1c', beard: true, long: true, skin: 1 }, // 무덤 사이의 사람 (헝클어진 머리, 해진 옷)
   healed:   { robe: '#e3d6b8', trim: '#8b6f50', mantle: '#8b6f50', hair: '#3a2a1c', beard: true, sash: '#6b5438', skin: 1 }, // 옷을 입고 정신이 돌아온 그 사람
-  girl:     { robe: '#f1e7cf', trim: '#c0607a', hair: '#3b2616', long: true, soft: true, slim: true, sash: '#c0607a', height: 0.72 }, // 열두 살 소녀
+  girl:     { robe: '#f1e7cf', trim: '#c0607a', hair: '#3b2616', long: true, soft: true, slim: true, sash: '#c0607a', height: 0.72, kid: true }, // 열두 살 소녀
   phoenician: { robe: '#6b2a5e', trim: '#d6a93a', mantle: '#c99a5a', veil: true, inner: '#efe6d4', skin: 2, soft: true, slim: true, sash: '#d6a93a' }, // 두로의 어머니 (자주색 옷)
   moses:    { robe: '#e8e0cc', trim: '#7a5a32', mantle: '#8a5a32', hair: '#ece6da', beard: true, long: true, sash: '#7a5a32', skin: 1, glow: true }, // 변화산의 모세
   elijah:   { robe: '#7a5a32', trim: '#4a3620', mantle: '#c9b48c', hair: '#d9d2c4', beard: true, long: true, sash: '#4a3620', skin: 1, glow: true }, // 변화산의 엘리야 (털옷)
@@ -289,7 +289,7 @@ function makePerson(type) {
   // 머리
   const head = new THREE.Group();
   head.position.set(0, 0.8, 0);
-  head.scale.setScalar(t.slim ? 0.9 : 0.93); // 머리를 조금 작게 해서 늘씬한 비율로
+  head.scale.setScalar((t.slim ? 0.9 : 0.93) * (t.kid ? 1.14 : 1)); // 머리를 조금 작게 해서 늘씬한 비율로 (아이는 머리가 몸에 비해 크게)
   upper.add(head);
   mesh(headShape(sphere(0.08, 48, 36), [0, 0, 0], true), skinMaterial(SKIN[t.skin || 0], !!t.soft, !t.beard && !t.soft && !t.bare && (t.height || 1) > 0.8), head);
   [-1, 1].forEach(s => mesh(sphere(0.017, 10, 8), skin, head, [s * 0.068, -0.004, -0.004], [0.45, 1, 0.75])); // 귀
