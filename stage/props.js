@@ -351,25 +351,73 @@ function beast(o) {
   const neck = new THREE.Group();
   neck.position.set(0.15 * S, H + 0.03 * S, 0);
   body.add(neck);
-  mesh(new THREE.CapsuleGeometry(0.035 * S, (o.neck || 0.12) * S, 6, 10), coat, neck, [0.03 * S, 0.06 * S, 0]).rotation.z = -0.55;
+  // 목: 어깨에서 뻗은 원통. 낙타(curve)는 앞으로 처졌다가 들어 올리는 S자 곡선.
+  // 머리는 목 끝점에 붙인다 (목 길이·모양이 달라도 떨어지지 않게 끝점을 계산)
+  let tip;
+  if (o.curve) {
+    const pts = o.curve.map(([x, y]) => new THREE.Vector3(x * S, y * S, 0));
+    const tube = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 16, 0.034 * S, 10);
+    // 목뿌리는 굵고 머리 쪽은 가늘게
+    const tp = tube.attributes.position, c = new THREE.Vector3();
+    for (let i = 0; i < tp.count; i++) {
+      const k = Math.floor(i / 11) / 16, q = new THREE.Vector3().fromBufferAttribute(tp, i);
+      new THREE.CatmullRomCurve3(pts).getPoint(k, c);
+      q.sub(c).multiplyScalar(1.25 - 0.55 * k).add(c);
+      tp.setXYZ(i, q.x, q.y, q.z);
+    }
+    tube.computeVertexNormals();
+    mesh(tube, coat, neck);
+    mesh(sphere(0.045 * S, 12, 10), coat, neck, [0.005 * S, -0.005 * S, 0]); // 목뿌리를 몸에 묻는 둥근 어깨 (원통의 열린 끝을 가린다)
+    tip = pts[pts.length - 1];
+  } else {
+    const nl = (o.neck || 0.12) * S, na = o.neckTilt ?? 0.55, nd = [Math.sin(na), Math.cos(na)];
+    mesh(new THREE.CapsuleGeometry(0.035 * S, nl, 6, 10), coat, neck, [nd[0] * nl / 2, nd[1] * nl / 2, 0]).rotation.z = -na;
+    tip = new THREE.Vector3(nd[0] * nl, nd[1] * nl, 0);
+    if (o.mane) { // 갈기: 목덜미를 따라 선 짧은 털
+      const m = mesh(new THREE.BoxGeometry(0.012 * S, nl * 0.95, 0.012 * S), dark, neck, [nd[0] * nl / 2 - 0.03 * S * nd[1], nd[1] * nl / 2 + 0.03 * S * nd[0], 0]);
+      m.rotation.z = -na;
+    }
+  }
   const headG = new THREE.Group();
-  headG.position.set(0.08 * S, ((o.neck || 0.12) + 0.04) * S, 0);
+  headG.position.set(tip.x + 0.012 * S, tip.y + 0.02 * S, 0);
   neck.add(headG);
-  mesh(new THREE.CapsuleGeometry(0.035 * S, 0.07 * S, 6, 10), coat, headG, [0.04 * S, 0, 0]).rotation.z = Math.PI / 2 + 0.35;
-  mesh(sphere(0.03 * S, 10, 8), dark, headG, [0.09 * S, -0.025 * S, 0]);
-  [-1, 1].forEach(s => mesh(sphere(0.006 * S, 6, 4), mat('#120c08'), headG, [0.045 * S, 0.012 * S, s * 0.03 * S]));
-  [-1, 1].forEach(s => { const e = mesh(new THREE.ConeGeometry(0.014 * S, (o.ears || 0.07) * S, 6), coat, headG, [0.0, 0.04 * S, s * 0.022 * S]); e.rotation.x = s * 0.35; });
+  if (o.camelHead) {
+    // 낙타 머리: 길쭉한 머리 + 늘어진 아랫입술 + 작고 둥근 귀
+    mesh(new THREE.CapsuleGeometry(0.03 * S, 0.075 * S, 6, 12), coat, headG, [0.045 * S, -0.008 * S, 0]).rotation.z = Math.PI / 2 + 0.25;
+    mesh(sphere(0.026 * S, 12, 10), coat, headG, [0.1 * S, -0.03 * S, 0], [1.1, 0.9, 0.95]);           // 주둥이
+    mesh(sphere(0.016 * S, 10, 8), dark, headG, [0.105 * S, -0.052 * S, 0], [1.3, 0.6, 1]);           // 처진 입술
+    [-1, 1].forEach(k => mesh(sphere(0.006 * S, 6, 4), mat('#120c08'), headG, [0.04 * S, 0.012 * S, k * 0.027 * S]));
+    [-1, 1].forEach(k => mesh(sphere(0.012 * S, 8, 6), coat, headG, [0.0, 0.026 * S, k * 0.022 * S], [0.6, 1, 0.5]));
+  } else {
+    mesh(new THREE.CapsuleGeometry(0.035 * S, 0.07 * S, 6, 10), coat, headG, [0.04 * S, 0, 0]).rotation.z = Math.PI / 2 + 0.35;
+    mesh(sphere(0.03 * S, 10, 8), dark, headG, [0.09 * S, -0.025 * S, 0]);
+    [-1, 1].forEach(k => mesh(sphere(0.006 * S, 6, 4), mat('#120c08'), headG, [0.045 * S, 0.012 * S, k * 0.03 * S]));
+    [-1, 1].forEach(k => { const e = mesh(new THREE.ConeGeometry(0.014 * S, (o.ears || 0.07) * S, 6), coat, headG, [0.0, 0.04 * S, k * 0.022 * S]); e.rotation.x = k * 0.35; });
+  }
   const legs = [[0.1, 1], [0.1, -1], [-0.1, 1], [-0.1, -1]].map(([x, s]) => {
     const l = new THREE.Group();
     l.position.set(x * S, H - 0.02 * S, s * 0.045 * S);
     body.add(l);
-    mesh(new THREE.CylinderGeometry(0.018 * S, 0.014 * S, H, 8), coat, l, [0, -H / 2, 0]);
-    mesh(new THREE.CylinderGeometry(0.017 * S, 0.017 * S, 0.02 * S, 8), dark, l, [0, -H + 0.01 * S, 0]);
+    if (o.camelHead) {
+      mesh(new THREE.CylinderGeometry(0.02 * S, 0.012 * S, H * 0.5, 8), coat, l, [0, -H * 0.25, 0]);   // 넓적다리
+      mesh(sphere(0.016 * S, 8, 6), coat, l, [0, -H * 0.52, 0]);                                      // 무릎 마디
+      mesh(new THREE.CylinderGeometry(0.011 * S, 0.01 * S, H * 0.46, 8), coat, l, [0, -H * 0.76, 0]);  // 정강이
+      mesh(sphere(0.022 * S, 10, 6), dark, l, [0.004 * S, -H + 0.008 * S, 0], [1.25, 0.45, 1.1]);     // 넓은 발바닥
+    } else {
+      mesh(new THREE.CylinderGeometry(0.018 * S, 0.014 * S, H, 8), coat, l, [0, -H / 2, 0]);
+      mesh(new THREE.CylinderGeometry(0.017 * S, 0.017 * S, 0.02 * S, 8), dark, l, [0, -H + 0.01 * S, 0]);
+    }
     return l;
   });
   const tail = mesh(new THREE.CylinderGeometry(0.006 * S, 0.004 * S, 0.12 * S, 6), dark, body, [-0.19 * S, H - 0.03 * S, 0]);
   tail.rotation.z = -0.3;
-  if (o.saddle) mesh(new THREE.BoxGeometry(0.16 * S, 0.02 * S, 0.17 * S), mat(o.saddle), body, [-0.02 * S, H + 0.075 * S, 0]);
+  mesh(new THREE.ConeGeometry(0.01 * S, 0.035 * S, 6), dark, tail, [0, -0.07 * S, 0]).rotation.x = Math.PI; // 꼬리 끝의 털 술
+  if (o.saddle && o.hump) {
+    // 혹을 덮어 양옆으로 늘어진 안장 천 + 금빛 단
+    const cl = mat(o.saddle, { side: THREE.DoubleSide, roughness: 0.9 });
+    mesh(sphere(0.092 * S, 18, 12, 0, Math.PI * 2, 0, Math.PI * 0.62), cl, body, [-0.01 * S, H + 0.05 * S, 0], [1.15, 1.05, 1.05]);
+    mesh(new THREE.TorusGeometry(0.087 * S, 0.006 * S, 6, 24), mat('#d6a93a', { metalness: 0.4, roughness: 0.4 }), body, [-0.01 * S, H + 0.02 * S, 0], [1.15, 1.05, 1]).rotation.x = Math.PI / 2;
+  } else if (o.saddle) mesh(new THREE.BoxGeometry(0.16 * S, 0.02 * S, 0.17 * S), mat(o.saddle), body, [-0.02 * S, H + 0.075 * S, 0]);
   const deck = new THREE.Group();
   deck.position.set(-0.02 * S, H + 0.02 * S, 0);
   body.add(deck); // 탄 사람은 짐승의 옆으로 걸터앉는다 (바라보는 쪽은 look으로)
@@ -389,8 +437,8 @@ function beast(o) {
 
 Object.assign(MAKERS, {
   // 크기는 사람(키 약 0.88)과의 비례로: 나귀 등은 허벅지 높이, 낙타 등은 어깨 높이쯤
-  donkey: o => beast({ coat: '#8d8073', dark: '#3e3630', size: 1.65, saddle: '#7a3b2e', ears: 0.08, ...o }),
-  camel: o => beast({ coat: '#c4a273', dark: '#7a5f3e', size: 2.5, hump: true, neck: 0.2, ears: 0.03, saddle: '#7a2a5e', ...o }),
+  donkey: o => beast({ coat: '#8d8073', dark: '#3e3630', size: 1.65, saddle: '#7a3b2e', ears: 0.08, mane: true, ...o }),
+  camel: o => beast({ coat: '#c4a273', dark: '#7a5f3e', size: 2.5, hump: true, camelHead: true, curve: [[0, 0], [0.07, -0.03], [0.13, 0.02], [0.16, 0.12], [0.17, 0.19]], ears: 0.03, saddle: '#7a2a5e', ...o }),
 
   // 성전: 계단 단 위의 흰 돌 건물, 금빛 처마와 기둥 현관 (멀리 배경으로)
   temple(o = {}) {

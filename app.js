@@ -54,9 +54,11 @@ const GEO = {
   hinnom: [[31.7765,35.2252],[31.7735,35.2258],[31.7705,35.2290],[31.7698,35.2340],[31.7690,35.2362]]
 };
 // 음영 기복도(assets/relief.webp)가 덮는 범위 — _src/relief.py의 EXTENT와 같게
-const RELIEF = { lat0: 30.45, lat1: 34.05, lng0: 33.85, lng1: 36.65 };
+const RELIEF = { lat0: 29.9, lat1: 34.6, lng0: 33.0, lng1: 37.4 };
+// 서쪽 애굽 쪽 바탕(assets/relief-west.webp — 시나이 북부, 나일 삼각주) — _src/relief.py의 WEST와 같게
+const RELIEF_WEST = { lat0: 29.9, lat1: 31.9, lng0: 30.6, lng1: 33.25 };
 // 확대했을 때만 불러오는 정밀 타일(assets/relief-hi/행_열.webp) — _src/relief.py의 HI와 같게
-const RELIEF_HI = { lat0: 30.95, lat1: 33.45, lng0: 34.6, lng1: 36.0, tile: 160, dir: 'relief-hi', below: 1 };
+const RELIEF_HI = { lat0: 30.2, lat1: 34.4, lng0: 33.4, lng1: 37.0, tile: 160, dir: 'relief-hi', below: 1.2 };
 // 도성까지 확대했을 때 얹는 초정밀 타일(assets/relief-city/) — _src/relief.py의 CITY와 같게
 const RELIEF_CITY = { lat0: 31.74, lat1: 31.81, lng0: 35.19, lng1: 35.28, tile: 20, dir: 'relief-city', below: .15 };
 // 예루살렘 3D 도성 그림(assets/jerusalem.webp) — stage/jerusalem.js의 EXTENT와 같게.
@@ -82,6 +84,7 @@ function buildMap() {
   const sea = `M${far(35.2, 36.0)} L${far(34.2, 35.65)} ` + smooth(GEO.coast).replace(/^M/, 'L') + ' ' + sinai.map(p => 'L' + far(...p)).join(' ') + ` L${far(36, 26)} Z`;
   const t = (txt, [x, y], cls) => `<g class="lbl ${cls}" transform="translate(${x},${y})"><text>${esc(txt)}</text></g>`;
   const [rx0, ry0] = px([RELIEF.lat1, RELIEF.lng0]), [rx1, ry1] = px([RELIEF.lat0, RELIEF.lng1]);
+  const [wx0, wy0] = px([RELIEF_WEST.lat1, RELIEF_WEST.lng0]), [wx1, wy1] = px([RELIEF_WEST.lat0, RELIEF_WEST.lng1]);
   const [cx0, cy0] = px([CITY3D.lat1, CITY3D.lng0]), [cx1, cy1] = px([CITY3D.lat0, CITY3D.lng1]);
   map.setAttribute('viewBox', `0 0 ${W} ${H}`);
   map.innerHTML = `
@@ -91,6 +94,7 @@ function buildMap() {
     <filter id="waterEdge" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur in="SourceAlpha" stdDeviation="4" result="b"/><feComposite in="SourceAlpha" in2="b" operator="arithmetic" k2="1" k3="-1" result="edge"/><feFlood flood-color="#21474f" flood-opacity=".5"/><feComposite in2="edge" operator="in"/><feComposite in2="SourceGraphic" operator="over"/></filter>
   </defs>
   <rect x="${-W * 2}" y="${-H * 2}" width="${W * 5}" height="${H * 5}" fill="var(--land)"/>
+  <image href="assets/relief-west.webp" class="relief" x="${wx0}" y="${wy0}" width="${wx1 - wx0}" height="${wy1 - wy0}" preserveAspectRatio="none"/>
   <image href="assets/relief.webp" class="relief" x="${rx0}" y="${ry0}" width="${rx1 - rx0}" height="${ry1 - ry0}" preserveAspectRatio="none"/>
   <g id="reliefHi" class="relief"></g>
   <g id="reliefCity" class="relief"></g>
@@ -271,8 +275,9 @@ function frameStage(i, ms = 1300, mode = 'open') {
 window.recenterStage = () => { if (fitMode !== 'all' && EVENTS) frameStage(idx, 600, $('#scene').classList.contains('peek') ? 'peek' : 'open'); };
 // 화면을 돌리거나 창 크기를 바꾸면 빈 영역도 바뀌므로 다시 맞춘다
 let recenterT; addEventListener('resize', () => { clearTimeout(recenterT); recenterT = setTimeout(() => window.recenterStage(), 250); });
-// 전체 경로: 지도 틀 전체가 아니라 장소들이 모인 땅을 카드에 가리지 않는 영역에 꽉 차게
-const LAND = (() => { const [x0, y0] = px([33.36, 34.92]), [x1, y1] = px([31.62, 35.82]); return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }; })();
+// 전체 경로: 지도 틀 전체가 아니라 장소들이 모인 땅을 카드에 가리지 않는 영역에 꽉 차게.
+// 남서쪽 '애굽으로' 화살표(애굽 피난)까지 들어오게 남쪽·서쪽을 넉넉히
+const LAND = (() => { const [x0, y0] = px([33.36, 34.2]), [x1, y1] = px([30.98, 35.82]); return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }; })();
 function fitAll() { animateTo(reserveCard({ ...LAND }), 1100); }
 function animateTo(target, ms) {
   cancelAnimationFrame(anim);
