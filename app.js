@@ -501,6 +501,18 @@ function travelText(a, b) {
   const w = d < 22 ? t('walkHours', { n: Math.max(1, Math.round(d / 4.5)) }) : t('walkDays', { n: Math.round(d / 25) });
   return t('distance', { d: d < 10 ? d.toFixed(1) : Math.round(d), t: w });
 }
+// 걸어온 길: 첫 장면부터 지금 장면까지 장소가 바뀔 때마다 두 곳 사이 길(km)을 더한다. 걸음은 보폭 75cm로 셈
+// 배로 호수를 건너 닿은 장면(풍랑·거라사·다시 건너옴·벳새다 들·물 위·가버나움)은 걸은 길에 더하지 않는다
+const STRIDE_M = 0.75, BY_BOAT = new Set(['e28', 'e29', 'e30', 'e31', 'e32', 'e33']);
+let odoCum = null;
+const legKm = (a, e) => a === e.place || BY_BOAT.has(e.id) ? 0 : km(PLACES[a], PLACES[e.place]);
+const odoAt = i => (odoCum ||= EVENTS.reduce((c, e, k) => (c.push(k ? c[k - 1] + legKm(EVENTS[k - 1].place, e) : 0), c), []))[i];
+function setOdo(d) {
+  const el = $('#odo'); if (!el) return;
+  const steps = Math.round(d * 1000 / STRIDE_M);
+  el.textContent = t('odo', { d: Math.round(d).toLocaleString(LANG), s: steps >= 1e4 ? new Intl.NumberFormat(LANG, { notation: 'compact', maximumFractionDigits: 1 }).format(steps) : steps.toLocaleString(LANG) });
+  el.title = t('odoTitle');
+}
 let walking = false, walkAnim = null;
 const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 function banner(html, ms) {
@@ -527,6 +539,7 @@ function walkTo(i, done) {
     const pt = path.getPointAtLength(e * total);
     setWalker([pt.x, pt.y]);
     path.style.strokeDashoffset = 1 - e;
+    setOdo(odoAt(idx) + (odoAt(i) - odoAt(idx)) * e);
     if (k < 1) { walkAnim = requestAnimationFrame(step); return; }
     $('#walker', map).classList.remove('moving');
     walking = false; document.body.classList.remove('is-walking');
@@ -693,6 +706,7 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
     window.__stageScene = EVENTS[i]; // stage.js가 늦게 로드돼도 따라잡도록
     dispatchEvent(new CustomEvent('stage:scene', { detail: { ev: EVENTS[i] } }));
     bgmFollow(); // 읽는 중에 장면이 바뀌면 그 장면의 곡으로 겹쳐 바꾼다
+    setOdo(odoAt(i));
     history.replaceState(null, '', '#' + EVENTS[i].id);
     $('#prev').disabled = idx === 0; $('#next').disabled = $('#skip').disabled = idx === EVENTS.length - 1;
     const p = PLACES[EVENTS[i].place];

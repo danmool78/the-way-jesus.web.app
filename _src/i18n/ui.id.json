@@ -52,6 +52,8 @@
  "walkHours": "sekitar {n} jam berjalan kaki",
  "walkDays": "sekitar {n} hari berjalan kaki",
  "distance": "sekitar {d} km · {t}",
+ "odo": "Ditempuh {d} km · {s} langkah",
+ "odoTitle": "Jarak yang ditempuh Yesus sampai adegan ini (perkiraan jalan antartempat; langkah 75 cm)",
  "walkSpeak": "Dari {a} ke {b}.",
  "arrive": "Tiba",
  "samePlace": "Tempat yang sama, hari yang baru",
