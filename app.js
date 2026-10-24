@@ -143,7 +143,7 @@ const REGIONS = [
   ['데가볼리', 32.52, 35.86], ['빌립의 영지', 33.02, 35.86], ['페니키아', 33.42, 35.42], ['이두매', 31.12, 34.86],
   ['애 굽', 30.72, 30.95], ['시 나 이', 30.55, 33.55]
 ];
-const REFCITIES = [['디베랴', 32.79, 35.535], ['가이사랴', 32.50, 34.905], ['욥바', 32.05, 34.765], ['세바스테', 32.276, 35.19], ['마케루스', 31.565, 35.63],
+const REFCITIES = [['디베랴', 32.79, 35.535], ['가이사랴', 32.50, 34.905], ['욥바', 32.05, 34.765], ['세바스테', 32.276, 35.19], ['에브라임', 31.953, 35.30], ['마케루스', 31.565, 35.63],
   ['가사', 31.50, 34.46], ['라피아', 31.28, 34.25], ['리노코루라', 31.13, 33.80], ['펠루시움', 31.04, 32.55], ['부바스티스', 30.57, 31.51],
   ['레온토폴리스', 30.29, 31.33], ['헬리오폴리스 (온)', 30.13, 31.29], ['멤피스', 29.85, 31.25], ['알렉산드리아', 31.20, 29.92]];
 
@@ -226,7 +226,7 @@ function buildMap() {
     const bend = (i % 2 ? 1 : -1) * 0.18;
     const cx = (x1 + x2) / 2 - dy * bend, cy = (y1 + y2) / 2 + dx * bend;
     const path = document.createElementNS(svgNS, 'path');
-    const via = routeVia(a, b);
+    const via = routeVia(a, b, e);
     // 경유지가 있는 길(애굽으로 가는 해안 길)은 그 지점들을 잇는 곡선으로
     path.setAttribute('d', via ? smooth([[a.lat, a.lng], ...via, [b.lat, b.lng]]) : `M${x1},${y1} Q${cx},${cy} ${x2},${y2}`);
     path.setAttribute('pathLength', '1');
@@ -481,13 +481,14 @@ function updateMap(prevIdx, { camera = true } = {}) {
 /* ---------- 걷기 ---------- */
 const toRad = d => d * Math.PI / 180;
 // 두 장소 사이의 경유지: 애굽 쪽(via를 가진 장소)에서 가까운 순서가 길의 끝 쪽에 오게
-function routeVia(a, b) {
+function routeVia(a, b, e) {
+  if (e?.via) return e.via; // 장면에 적힌 경유지 (예: 나사로 일 뒤 에브라임을 거쳐 베레아로)
   if (b.via) return b.via;
   if (a.via) return [...a.via].reverse();
   return null;
 }
-function km(a, b) {
-  const via = routeVia(a, b);
+function km(a, b, e) {
+  const via = routeVia(a, b, e);
   // 해안 길(경유지가 있는 길)은 경유지를 이어 잰다 — 거의 곧은 길이라 덜 가산한다
   if (via) { const pts = [a, ...via.map(([lat, lng]) => ({ lat, lng })), b]; return pts.slice(1).reduce((s, p, i) => s + arc(pts[i], p) * 1.1, 0); }
   return arc(a, b) * 1.25; // 길은 직선보다 굽어 있으므로 25% 가산
@@ -497,8 +498,8 @@ function arc(a, b) {
   const h = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(a.lat)) * Math.cos(toRad(b.lat)) * Math.sin(dLng / 2) ** 2;
   return 6371 * 2 * Math.asin(Math.sqrt(h));
 }
-function travelText(a, b) {
-  const d = km(a, b);
+function travelText(a, b, e) {
+  const d = km(a, b, e);
   const w = d < 22 ? t('walkHours', { n: Math.max(1, Math.round(d / 4.5)) }) : t('walkDays', { n: Math.round(d / 25) });
   return t('distance', { d: d < 10 ? d.toFixed(1) : Math.round(d), t: w });
 }
@@ -506,7 +507,7 @@ function travelText(a, b) {
 // 배로 호수를 건너 닿은 장면(풍랑·거라사·다시 건너옴·벳새다 들·물 위·가버나움)은 걸은 길에 더하지 않는다
 const STRIDE_M = 0.75, BY_BOAT = new Set(['e28', 'e29', 'e30', 'e31', 'e32', 'e33']);
 let odoCum = null;
-const legKm = (a, e) => a === e.place || BY_BOAT.has(e.id) ? 0 : km(PLACES[a], PLACES[e.place]);
+const legKm = (a, e) => a === e.place || BY_BOAT.has(e.id) ? 0 : km(PLACES[a], PLACES[e.place], e);
 const odoAt = i => (odoCum ||= EVENTS.reduce((c, e, k) => (c.push(k ? c[k - 1] + legKm(EVENTS[k - 1].place, e) : 0), c), []))[i];
 const stepsText = km => { const s = Math.round(km * 1000 / STRIDE_M); return s >= 1e4 ? new Intl.NumberFormat(LANG, { notation: 'compact', maximumFractionDigits: 1 }).format(s) : s.toLocaleString(LANG); };
 function setOdo(d) {
@@ -527,9 +528,9 @@ function walkTo(i, done) {
   dispatchEvent(new CustomEvent('stage:walk', { detail: { ev: to } }));
   setCard('peek');
   $('#nextHint', map).style.display = 'none';
-  banner(`<span class="wk">👣</span><b>${esc(A.name)}</b> → <b>${esc(B.name)}</b><small>${travelText(A, B)}</small>`);
+  banner(`<span class="wk">👣</span><b>${esc(A.name)}</b> → <b>${esc(B.name)}</b><small>${travelText(A, B, to)}</small>`);
   if (autoOn) speakQueue([{ text: t('walkSpeak', { a: A.name.replace(/[()·]/g, ' '), b: B.name.replace(/[()·]/g, ' ') }) }]);
-  const total = path.getTotalLength(), dur = reduced() ? 0 : Math.min(6500, Math.max(2200, km(A, B) * 30));
+  const total = path.getTotalLength(), dur = reduced() ? 0 : Math.min(6500, Math.max(2200, km(A, B, to) * 30));
   // 카메라가 걷는 사람을 따라간다: 장면에서 물러나 길이 넉넉히 보이는 높이로 올라간 뒤 걷는 사람을 화면 가운데 두고 함께 옮겨 간다.
   // 도착하면 go()의 frameStage가 지금 화면에서 이어 무대로 내려간다. 전체 경로 보기·3D 지형·움직임 줄이기에서는 예전처럼 두 곳을 한 화면에
   followWalk = fitMode !== 'all' && !window.terrainOn && !!dur;
