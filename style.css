@@ -46,11 +46,47 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 #map{width:100%;height:100%;display:block;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none;transition:filter 1.6s} /* 끌어서 둘러보기 — 브라우저가 화면을 밀지 않게 */
 #map.dragging{cursor:grabbing}
 .stage3d{position:absolute;left:0;top:0;pointer-events:none;opacity:0;transition:opacity .5s;will-change:transform}
+/* 장면 분위기의 빛 (stage.js가 .mapwrap에 data-env를 단다). 층마다 opacity만 바꿔 서서히 겹쳐 바뀐다.
+   서쪽(왼쪽)은 해 지는 쪽, 동쪽(오른쪽)은 해 뜨는 쪽 — 지도 방위와 맞춘다 */
+.atmos{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.atmos i{position:absolute;inset:0;opacity:0;transition:opacity 1.8s ease}
+.a-vig{background:radial-gradient(ellipse 75% 70% at 45% 48%,transparent 40%,rgba(8,6,4,.55) 100%)}
+.a-cool{background:linear-gradient(170deg,#24386e,#16234a);mix-blend-mode:multiply}
+.a-moon{background:radial-gradient(ellipse 55% 50% at 12% 6%,rgba(196,214,255,.32),transparent 70%);mix-blend-mode:screen}
+.a-stars{background-image:radial-gradient(1.6px 1.6px at 23px 31px,#fff,transparent),radial-gradient(1.2px 1.2px at 97px 78px,#e8eeff,transparent),radial-gradient(2px 2px at 151px 19px,#fff,transparent),radial-gradient(1.2px 1.2px at 61px 133px,#dfe7ff,transparent),radial-gradient(1.5px 1.5px at 183px 117px,#fff,transparent),radial-gradient(1.1px 1.1px at 131px 171px,#e8eeff,transparent);background-size:200px 190px;-webkit-mask-image:linear-gradient(#000,rgba(0,0,0,.35) 45%,transparent 75%);mask-image:linear-gradient(#000,rgba(0,0,0,.35) 45%,transparent 75%)}
+.a-warm{background:linear-gradient(95deg,rgba(255,138,64,.5),rgba(255,170,90,.18) 45%,transparent 75%);mix-blend-mode:soft-light}
+/* 새벽빛은 동쪽 위에서 — 오른쪽 끝은 장면 카드에 가리므로 보이는 지도의 오른쪽 위에 둔다 */
+.a-dawn{background:radial-gradient(ellipse 65% 60% at 62% -8%,rgba(255,168,140,.62),rgba(255,200,160,.24) 50%,transparent 80%),linear-gradient(rgba(255,190,170,.12),transparent 60%);mix-blend-mode:screen}
+.a-glory{background:radial-gradient(ellipse 60% 55% at 45% 0%,rgba(255,246,214,.6),transparent 70%),repeating-conic-gradient(from 0deg at 45% -10%,rgba(255,240,200,.09) 0 3deg,transparent 3deg 9deg);mix-blend-mode:screen;-webkit-mask-image:linear-gradient(#000,transparent 85%);mask-image:linear-gradient(#000,transparent 85%)}
+.a-cloud{inset:-30%!important;background:radial-gradient(ellipse 22% 16% at 30% 35%,rgba(14,20,26,.8),transparent),radial-gradient(ellipse 30% 20% at 68% 55%,rgba(14,20,26,.7),transparent),radial-gradient(ellipse 22% 16% at 45% 82%,rgba(14,20,26,.65),transparent),radial-gradient(ellipse 24% 17% at 82% 18%,rgba(14,20,26,.65),transparent),radial-gradient(ellipse 18% 13% at 12% 70%,rgba(14,20,26,.6),transparent);animation:clouds 40s linear infinite}
+.a-flash{background:radial-gradient(ellipse at 60% 20%,rgba(235,240,255,.55),transparent 70%);mix-blend-mode:screen}
+@keyframes clouds{from{transform:translate(-6%,-2%)}to{transform:translate(6%,3%)}}
+@keyframes twinkle{0%,100%{opacity:.85}50%{opacity:.45}}
+@keyframes lightning{0%,88%,92%,96%,100%{opacity:0}89%,94%{opacity:1}}
+[data-env=day] .a-vig{opacity:.25}
+[data-env=dusk] .a-vig,[data-env=calm] .a-vig{opacity:.45}
+[data-env=dusk] .a-warm{opacity:1}
+[data-env=calm] .a-warm{opacity:.6}
+[data-env=night] .a-vig{opacity:.8}
+[data-env=night] .a-cool{opacity:.7}
+[data-env=night] .a-moon{opacity:1}
+[data-env=night] .a-stars{opacity:.85;animation:twinkle 5s ease-in-out infinite;transition:none}
+[data-env=storm] .a-vig{opacity:.7}
+[data-env=storm] .a-cool{opacity:.45}
+[data-env=storm] .a-cloud{opacity:1}
+[data-env=storm] .a-flash{animation:lightning 11s 2s infinite;transition:none}
+[data-env=overcast] .a-vig{opacity:.4}
+[data-env=overcast] .a-cloud{opacity:.45}
+[data-env=dark] .a-vig{opacity:1}
+[data-env=dark] .a-cool{opacity:.3}
+[data-env=dawn] .a-vig{opacity:.3}
+[data-env=dawn] .a-dawn{opacity:1}
+[data-env=glory] .a-glory{opacity:1}
 .stage-on .pin.now text{opacity:0}
 .dock{border-top:1px solid #2b241b;background:linear-gradient(#16120d,#100c09);padding:10px 20px calc(10px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:22px}
 
 /* 장면 카드 */
-.scene{position:absolute;top:14px;right:14px;bottom:14px;width:min(460px,42%);overflow-y:auto;padding:0;background:rgba(21,17,13,.96);border:1px solid #4a3c2c;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.55);outline:none;transition:transform .55s cubic-bezier(.2,.8,.2,1),opacity .4s,height .45s;transform-origin:top right;backdrop-filter:blur(8px)}
+.scene{position:absolute;top:14px;right:14px;bottom:14px;width:min(460px,42%);overflow-y:auto;padding:0;background:rgba(21,17,13,.86);border:1px solid #4a3c2c;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.55);outline:none;transition:transform .55s cubic-bezier(.2,.8,.2,1),opacity .4s,height .45s;transform-origin:top right;backdrop-filter:blur(14px) saturate(1.1);-webkit-backdrop-filter:blur(14px) saturate(1.1)}
 .scene:not(.open):not(.peek){opacity:0;pointer-events:none}
 .scene.peek{bottom:auto;max-height:64px;overflow:hidden}
 .scene.peek>*:not(.cardbar):not(.cardtoggle){display:none}
@@ -62,6 +98,7 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .cardbar b{display:block;font-family:var(--serif);font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cardbar small{display:block;font-size:11.5px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 /* 접기(—) / 펼치기(+) 단추: 카드 오른쪽 위에 늘 떠 있다 */
+.sheetgrip{display:none}
 .cardtoggle{position:absolute;top:10px;right:12px;z-index:4;width:30px;height:30px;border:0;border-radius:8px;background:rgba(0,0,0,.25);display:grid;place-items:center}
 .scene.peek .cardtoggle{top:17px;background:var(--panel2)}
 .scene.peek .cardbar{padding-right:54px}
@@ -123,7 +160,7 @@ html:not(:lang(ko)):not(:lang(zh)):not(:lang(ja)) .river-lbl text{writing-mode:h
 .route{fill:none;stroke:var(--c);stroke-width:calc(var(--u,1) * 2.6px);stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;transition:opacity .4s}
 .route.done{opacity:.38;stroke-dashoffset:0}
 .route.last{opacity:.95}
-.route.walking{opacity:.95;stroke-width:calc(var(--u,1) * 3.4px)}
+.route.walking{opacity:.95;stroke-width:calc(var(--u,1) * 3.4px);filter:drop-shadow(0 0 calc(var(--u,1) * 5px) var(--c))} /* 걷는 길은 시기 색으로 은은히 빛난다 */
 .pin{cursor:pointer}
 .pin .dot{fill:#fff8e6;stroke:#6b5434;stroke-width:1.2;opacity:.28}
 .pin .halo{fill:none}
@@ -137,6 +174,7 @@ html:not(:lang(ko)):not(:lang(zh)):not(:lang(ja)) .river-lbl text{writing-mode:h
 .pin.now .dot{fill:var(--period);stroke:#fff;stroke-width:2;opacity:1}
 .pin.now text{opacity:1;font-size:15px;fill:#24170a}
 .pin.now .halo{fill:var(--period);opacity:.35;animation:pulse 2.2s ease-out infinite;transform-box:fill-box;transform-origin:center}
+.is-reading .pin.now .halo{animation:none;opacity:0}
 @keyframes pulse{0%{transform:scale(.4);opacity:.6}100%{transform:scale(1.8);opacity:0}}
 .maptools{position:absolute;top:16px;left:16px;display:flex;align-items:center;gap:8px;z-index:2}
 .placechip{display:flex;align-items:center;gap:9px;border:1px solid rgba(217,180,106,.35);background:rgba(20,16,11,.82);color:var(--ink);border-radius:14px;padding:10px 16px 10px 12px;backdrop-filter:blur(6px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
@@ -144,10 +182,14 @@ html:not(:lang(ko)):not(:lang(zh)):not(:lang(ja)) .river-lbl text{writing-mode:h
 .placechip b{font-family:var(--serif);font-size:19px;letter-spacing:.04em;white-space:nowrap}
 .placechip .chev{font-size:20px;color:var(--muted);margin-left:4px}
 .mapbtn{border:1px solid rgba(60,45,25,.25);background:rgba(250,244,228,.86);color:#3b2a14;border-radius:999px;padding:7px 13px;font-size:12px;backdrop-filter:blur(4px)}
+.odo{position:absolute;top:66px;left:16px;z-index:2;background:rgba(21,17,13,.78);color:#f3e3bf;border:1px solid rgba(217,180,106,.35);border-radius:999px;padding:5px 12px;font-size:12px;font-variant-numeric:tabular-nums;letter-spacing:.01em;backdrop-filter:blur(4px);pointer-events:auto;white-space:nowrap}
 .mapbtn.active{background:#3b2a14;color:#f6e7c4}
 /* 자막: 지금 읽는 문장을 지도 아래쪽 가운데에 (장면 카드에 가리지 않는 영역) */
 .caption{position:absolute;left:0;right:calc(min(460px,42%) + 28px);bottom:18px;margin:0 auto;width:fit-content;max-width:min(680px,calc(100% - min(460px,42%) - 60px));text-align:center;padding:12px 30px 14px;border-radius:12px;background:linear-gradient(90deg,rgba(14,11,8,0),rgba(14,11,8,.78) 18%,rgba(14,11,8,.78) 82%,rgba(14,11,8,0));opacity:0;transform:translateY(8px);transition:opacity .35s,transform .35s;pointer-events:none;z-index:3}
 .caption.show{opacity:1;transform:none}
+.caption p,.caption p span{text-wrap:balance}
+.caption p span{display:block}
+:lang(ko) .caption p{word-break:keep-all} /* 한국어는 낱말 안에서 끊지 않는다 (중·일은 띄어쓰기가 없어 그대로) */
 .caption small{display:block;font-size:12.5px;color:var(--gold2);letter-spacing:.08em}
 .caption .cline{display:none;width:28px;height:1px;margin:5px auto 6px;background:var(--gold)}
 .caption.who .cline{display:block}
@@ -193,8 +235,9 @@ html:not(:lang(ko)):not(:lang(zh)):not(:lang(ja)) .river-lbl text{writing-mode:h
 /* scene */
 .hero{position:relative;margin:18px 18px 0;height:230px;border-radius:12px;overflow:hidden;border:1px solid #4a3c2c}
 .hero-img{position:absolute;inset:0;border:0;padding:0;margin:0;background:#000;display:block;width:100%}
-.hero-img img{width:100%;height:100%;object-fit:cover;object-position:center 30%;animation:kenburns 26s ease-out both;opacity:.95}
-@keyframes kenburns{from{transform:scale(1.12)}to{transform:scale(1)}}
+/* 명화는 천천히 밀려가며 확대·축소를 오간다 (켄 번스). 밀리는 방향(--kx, --ky)은 장면마다 다르게 app.js가 정한다 */
+.hero-img img{width:100%;height:100%;object-fit:cover;object-position:center 30%;animation:kenburns 30s ease-in-out infinite alternate;opacity:.95;will-change:transform}
+@keyframes kenburns{from{transform:scale(1.14) translate(var(--kx,0%),var(--ky,0%))}to{transform:scale(1.06) translate(0,0)}} /* 1.06 밑으로는 그림 가장자리의 밝은 테두리가 보인다 */
 .hero-img.placeholder{display:grid;place-items:center;background:radial-gradient(circle at 50% 30%,color-mix(in srgb,var(--period) 55%,#000),#120e0a 75%)}
 .hero-img.placeholder span{font-family:var(--serif);font-size:48px;color:rgba(255,255,255,.18);letter-spacing:.2em}
 .credrow{display:flex;align-items:center;gap:10px;padding:10px 18px 0}
@@ -267,18 +310,19 @@ html:not(:lang(ko)):not(:lang(zh)):not(:lang(ja)) .river-lbl text{writing-mode:h
 .track{flex:1;min-width:0;display:flex;align-items:flex-end;gap:0;overflow-x:auto;scrollbar-width:none;padding:2px 0}
 .track::-webkit-scrollbar{display:none}
 .tseg{flex:1 1 0!important;display:flex;flex-direction:column;align-items:center;min-width:38px;position:relative}
-.ticon{border:0;background:none;padding:0 0 2px;color:#6d5d47;height:26px}
+.ticon{border:0;background:none;padding:0 0 2px;color:color-mix(in srgb,var(--c) 55%,#3a2f22);height:26px;transition:color .3s}
 .ticon svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linejoin:round;stroke-linecap:round}
-.tseg.now .ticon{color:var(--gold2);filter:drop-shadow(0 0 6px rgba(217,180,106,.6))}
+/* 시기마다 사복음서 대조표와 같은 색(--c, PERIODS.color). 지금 시기는 밝게 빛나고, 다녀간 장면의 점은 그 색으로 채운다 */
+.tseg.now .ticon{color:color-mix(in srgb,var(--c) 75%,#fff);filter:drop-shadow(0 0 6px var(--c))}
 .tline{width:100%;display:flex;align-items:center;justify-content:space-around;height:14px;position:relative}
-.tline::before{content:'';position:absolute;left:0;right:0;top:50%;height:1px;background:#4a3d2c}
-.tseg.now .tline::before{background:linear-gradient(90deg,#4a3d2c,var(--gold),#4a3d2c)}
-.tick{position:relative;flex:none;width:5px;height:5px;border-radius:50%;border:0;background:#5a4a35;padding:0;transition:transform .2s}
-.tick.seen{background:#a58a5c}
-.tick.now{width:14px;height:14px;background:radial-gradient(circle,#fff6dc 30%,var(--gold) 31%,var(--gold) 55%,transparent 56%);box-shadow:0 0 0 3px rgba(217,180,106,.35),0 0 14px var(--gold)}
+.tline::before{content:'';position:absolute;left:1px;right:1px;top:50%;height:2px;margin-top:-1px;border-radius:1px;background:color-mix(in srgb,var(--c) 38%,#211a12)}
+.tseg.now .tline::before{background:color-mix(in srgb,var(--c) 70%,#211a12);box-shadow:0 0 6px color-mix(in srgb,var(--c) 50%,transparent)}
+.tick{position:relative;flex:none;width:5px;height:5px;border-radius:50%;border:0;background:color-mix(in srgb,var(--c) 30%,#2a2118);padding:0;transition:transform .2s}
+.tick.seen{background:color-mix(in srgb,var(--c) 80%,#fff)}
+.tick.now{width:14px;height:14px;background:radial-gradient(circle,#fff6dc 30%,var(--c) 31%,var(--c) 55%,transparent 56%);box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 40%,transparent),0 0 14px var(--c)}
 .tick:hover{transform:scale(1.6)}
 /* 시기 이름은 지금 시기만 (여덟 개를 다 쓰면 좁은 칸에서 겹친다 — 나머지는 그림에 마우스를 올리면 보인다) */
-.tname{font-size:11.5px;color:var(--gold2);font-weight:700;white-space:nowrap;margin-top:5px;visibility:hidden;height:15px}
+.tname{font-size:11.5px;color:color-mix(in srgb,var(--c) 70%,#fff);font-weight:700;white-space:nowrap;margin-top:5px;visibility:hidden;height:15px}
 .tseg.now .tname{visibility:visible}
 .controls{flex:none;display:flex;align-items:center;gap:14px}
 .ibtn{width:36px;height:36px;border:0;background:none;color:var(--gold);padding:6px}
@@ -400,8 +444,18 @@ dialog{position:fixed}
   .progress{margin-left:auto}
   .pbar{width:64px}
   .journey{height:calc(100dvh - 92px)}
-  .scene{top:auto;left:0;right:0;bottom:0;width:auto;max-height:66%;border-radius:20px 20px 0 0;border-bottom:0}
+  /* 하단 시트: 기본은 지도 아래 절반(무대가 위에 크게 보이게), 글을 읽을 때는 끝까지(full), 접으면 제목줄 */
+  .scene{top:auto;left:0;right:0;bottom:0;width:auto;max-height:48%;border-radius:20px 20px 0 0;border-bottom:0;transition:max-height .45s cubic-bezier(.2,.8,.2,1),opacity .4s}
+  .scene.full{max-height:calc(100% - 10px)}
   .scene.peek{bottom:0;top:auto;max-height:64px}
+  .sheetgrip{display:block;position:sticky;top:0;height:22px;margin-bottom:-22px;z-index:5;touch-action:none;cursor:grab}
+  .sheetgrip i{display:block;width:38px;height:4px;border-radius:2px;background:rgba(232,220,196,.35);margin:7px auto 0}
+  .scene.peek .sheetgrip{display:none}
+  .scene.peek .cardbar{touch-action:none}
+  .scene:not(.full) .hero{height:96px}
+  /* 반만 연 시트는 단추가 탭을 덮지 않게 글 끝으로 보내고 출처 줄은 숨긴다 — 끝까지 올리면 다시 보인다 */
+  .scene:not(.full) .cardfoot{position:static}
+  .scene:not(.full) .credrow{display:none}
   .hero{height:130px;margin:12px 14px 0}
   .hero-text{padding:10px 16px 0}
   .hero-text h1{font-size:24px}
@@ -410,14 +464,15 @@ dialog{position:fixed}
   .placechip{padding:7px 12px 7px 9px}
   .placechip b{font-size:16px}
   .mapbtn{padding:6px 10px;font-size:11px}
-  .walkbanner{top:56px;font-size:12.5px;padding:7px 14px;max-width:94vw}
+  .odo{top:56px;left:10px;font-size:11px;padding:4px 10px}
+  .walkbanner{top:88px;font-size:12.5px;padding:7px 14px;max-width:94vw}
   .walkbanner small{display:none}
   .mapctl{left:auto;right:10px;top:10px;transform:none}
   /* 모바일은 손가락으로 끌고 벌려 보므로 단추는 3D 켜기만 */
   .terrain-on .m3tools{display:none}
   /* 모바일 자막은 지도 위쪽, 칩 아래에 */
   .caption{left:10px;right:10px;bottom:auto;top:58px;max-width:none;padding:8px 14px}
-  .caption p{font-size:16px}
+  .caption p{font-size:16px;-webkit-line-clamp:4} /* 좁은 화면은 긴 문장이 4줄까지 */
   .credit,.meta,.gospels,.story,.words-sec{padding-left:16px;padding-right:16px}
   .note,.reflect,.pad{margin-left:16px;margin-right:16px}
   .story{font-size:17px;line-height:1.9}

@@ -345,7 +345,7 @@ function reserveCard(t, reserve = true) {
   let { x, y, w, h } = t;
   if (w / h > ar) { const nh = w / ar; y -= (nh - h) / 2; h = nh; } else { const nw = h * ar; x -= (nw - w) / 2; w = nw; }
   if (mobile) {
-    const f = .6; // 하단 시트가 지도 아래쪽 약 60%를 덮는다
+    const f = .48; // 하단 시트가 지도 아래쪽 약 절반을 덮는다 (style.css의 .scene max-height와 같게)
     const nh = h / (1 - f), nw = w * nh / h; return { x: x - (nw - w) / 2, y, w: nw, h: nh };
   }
   const f = Math.min(.5, (Math.min(460, r.width * .42) + 28) / r.width);
@@ -357,8 +357,8 @@ function reserveCard(t, reserve = true) {
 function freeArea(mode) {
   const r = map.getBoundingClientRect(), c = $('#scene'), mobile = innerWidth <= 900;
   if (mobile) {
-    // 펼친 시트는 지도 높이의 66%까지, 접으면 64px (style.css와 같은 값)
-    const h = mode === 'peek' ? 64 : Math.min(c.scrollHeight, r.height * .66);
+    // 펼친 시트는 지도 높이의 48%까지, 접으면 64px (style.css와 같은 값)
+    const h = mode === 'peek' ? 64 : Math.min(c.scrollHeight, r.height * .48);
     return { l: 0, t: 0, r: r.width, b: Math.max(r.height * .25, r.height - h) };
   }
   const cw = Math.min(460, r.width * .42) + 14;
@@ -415,7 +415,7 @@ function animateTo(target, ms) {
     const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
     if (!drag.moved) {
       if (Math.hypot(dx, dy) < 6) return;
-      drag.moved = true; cancelAnimationFrame(anim); map.setPointerCapture(e.pointerId); map.classList.add('dragging');
+      drag.moved = true; cancelAnimationFrame(anim); followWalk = false; // 걷는 중에 끌면 카메라 따라가기를 멈춘다 map.setPointerCapture(e.pointerId); map.classList.add('dragging');
     }
     const u = map.viewBox.baseVal.width / map.getBoundingClientRect().width;
     const { w, h } = drag.v, cx = Math.min(LAND.x + LAND.w * 1.25, Math.max(LAND.x - LAND.w * 0.25, drag.v.x + w / 2 - dx * u));
@@ -501,6 +501,18 @@ function travelText(a, b) {
   const w = d < 22 ? t('walkHours', { n: Math.max(1, Math.round(d / 4.5)) }) : t('walkDays', { n: Math.round(d / 25) });
   return t('distance', { d: d < 10 ? d.toFixed(1) : Math.round(d), t: w });
 }
+// 걸어온 길: 첫 장면부터 지금 장면까지 장소가 바뀔 때마다 두 곳 사이 길(km)을 더한다. 걸음은 보폭 75cm로 셈
+// 배로 호수를 건너 닿은 장면(풍랑·거라사·다시 건너옴·벳새다 들·물 위·가버나움)은 걸은 길에 더하지 않는다
+const STRIDE_M = 0.75, BY_BOAT = new Set(['e28', 'e29', 'e30', 'e31', 'e32', 'e33']);
+let odoCum = null;
+const legKm = (a, e) => a === e.place || BY_BOAT.has(e.id) ? 0 : km(PLACES[a], PLACES[e.place]);
+const odoAt = i => (odoCum ||= EVENTS.reduce((c, e, k) => (c.push(k ? c[k - 1] + legKm(EVENTS[k - 1].place, e) : 0), c), []))[i];
+function setOdo(d) {
+  const el = $('#odo'); if (!el) return;
+  const steps = Math.round(d * 1000 / STRIDE_M);
+  el.textContent = t('odo', { d: Math.round(d).toLocaleString(LANG), s: steps >= 1e4 ? new Intl.NumberFormat(LANG, { notation: 'compact', maximumFractionDigits: 1 }).format(steps) : steps.toLocaleString(LANG) });
+  el.title = t('odoTitle');
+}
 let walking = false, walkAnim = null;
 const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 function banner(html, ms) {
@@ -516,8 +528,16 @@ function walkTo(i, done) {
   $('#nextHint', map).style.display = 'none';
   banner(`<span class="wk">👣</span><b>${esc(A.name)}</b> → <b>${esc(B.name)}</b><small>${travelText(A, B)}</small>`);
   if (autoOn) speakQueue([{ text: t('walkSpeak', { a: A.name.replace(/[()·]/g, ' '), b: B.name.replace(/[()·]/g, ' ') }) }]);
-  frame([from.place, to.place], 900, innerWidth > 900);
   const total = path.getTotalLength(), dur = reduced() ? 0 : Math.min(6500, Math.max(2200, km(A, B) * 30));
+  // 카메라가 걷는 사람을 따라간다: 장면에서 물러나 길이 넉넉히 보이는 높이로 올라간 뒤 걷는 사람을 화면 가운데 두고 함께 옮겨 간다.
+  // 도착하면 go()의 frameStage가 지금 화면에서 이어 무대로 내려간다. 전체 경로 보기·3D 지형·움직임 줄이기에서는 예전처럼 두 곳을 한 화면에
+  followWalk = fitMode !== 'all' && !window.terrainOn && !!dur;
+  if (!followWalk) frame([from.place, to.place], 900, innerWidth > 900);
+  else cancelAnimationFrame(anim);
+  const [ax, ay] = P(A), [bx, by] = P(B), from0 = { ...view }, t0 = performance.now();
+  // 걷는 동안 화면 가로에 담는 지도 폭: 길이에 맞추되, 도착해 무대를 볼 때(frameStage)보다 가깝지는 않게 — 다가갔다 다시 물러나지 않게
+  const near = B.jlm || to.place === 'jerusalem' ? 14 : 300, stageW = reserveCard({ x: 0, y: 0, w: near, h: near }).w;
+  const span = Math.min(1400, Math.max(stageW, Math.hypot(bx - ax, by - ay) * .9));
   path.classList.add('walking'); path.style.strokeDashoffset = 1;
   $('#walker', map).classList.add('moving');
   const start = performance.now() + (reduced() ? 0 : 700);
@@ -526,7 +546,9 @@ function walkTo(i, done) {
     const e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
     const pt = path.getPointAtLength(e * total);
     setWalker([pt.x, pt.y]);
+    if (followWalk) followCam(pt, span, from0, Math.min(1, (now - t0) / 1400));
     path.style.strokeDashoffset = 1 - e;
+    setOdo(odoAt(idx) + (odoAt(i) - odoAt(idx)) * e);
     if (k < 1) { walkAnim = requestAnimationFrame(step); return; }
     $('#walker', map).classList.remove('moving');
     walking = false; document.body.classList.remove('is-walking');
@@ -534,15 +556,33 @@ function walkTo(i, done) {
   };
   walkAnim = requestAnimationFrame(step);
 }
+let followWalk = false;
+// 걷는 사람을 보이는 지도(펼친 카드·하단 시트에 가리지 않는 곳)의 가운데에 둔다. j: 처음 화면에서 따라가는 화면으로 넘어가는 정도(0→1)
+function followCam(pt, span, from0, j) {
+  const r = map.getBoundingClientRect();
+  if (!r.width) return;
+  // 걷는 동안 카드는 접혀 있다 — 데스크톱은 지도 전체, 모바일은 접힌 시트 위
+  const f = innerWidth <= 900 ? freeArea('peek') : { l: 0, t: 0, r: r.width, b: r.height };
+  const u = span / r.width, fx = (f.l + f.r) / 2, fy = (f.t + f.b) / 2;
+  const to = { x: pt.x - fx * u, y: pt.y - fy * u, w: r.width * u, h: r.height * u };
+  const q = j < .5 ? 4 * j * j * j : 1 - Math.pow(-2 * j + 2, 3) / 2, lerp = (a, b) => a + (b - a) * q;
+  const w = Math.exp(lerp(Math.log(from0.w), Math.log(to.w))), h = w * r.height / r.width;
+  const cx = lerp(from0.x + from0.w / 2, to.x + to.w / 2), cy = lerp(from0.y + from0.h / 2, to.y + to.h / 2);
+  view = { x: cx - w / 2, y: cy - h / 2, w, h };
+  applyView();
+}
 function cancelWalk() {
   if (!walking) return;
   cancelAnimationFrame(walkAnim); walking = false;
   document.body.classList.remove('is-walking'); $('#walker', map).classList.remove('moving');
 }
+// mode: open(펼침) · peek(제목줄만) · full(모바일에서 글을 읽을 때 지도 위로 끝까지 올린 시트 — open도 함께 단다)
 function setCard(mode) {
   const c = $('#scene');
+  if (mode === 'full' && innerWidth > 900) mode = 'open';
   c.classList.toggle('peek', mode === 'peek');
-  c.classList.toggle('open', mode === 'open');
+  c.classList.toggle('open', mode === 'open' || mode === 'full');
+  c.classList.toggle('full', mode === 'full');
   const b = $('#cardToggle'); if (b) { b.classList.toggle('folded', mode !== 'open'); b.setAttribute('aria-label', mode === 'open' ? t('showMap') : t('openScene')); b.setAttribute('aria-expanded', mode === 'open'); }
 }
 
@@ -569,6 +609,7 @@ function renderScene() {
     <div><b>${esc(e.title)}</b><small>${esc(place.name)} · ${esc(e.when)}</small></div>
   </div>
   <button id="cardToggle" class="cardtoggle" aria-controls="scene" aria-label="${esc(t('showMap'))}"><i></i></button>
+  <div class="sheetgrip" aria-hidden="true"><i></i></div>
   <div class="hero">${img}</div>
   <div class="credrow">
     ${e.img ? `<a class="credit" href="${esc(e.img.source)}" target="_blank" rel="noreferrer">${esc(e.img.credit)}</a>` : '<span></span>'}
@@ -603,14 +644,38 @@ function renderScene() {
   </section>
   <div class="cardfoot"><button class="goldbtn" id="contBtn"></button></div>`;
   $('#scene').scrollTop = 0;
+  // 명화가 밀려가는 방향을 장면마다 돌려 가며 (오른쪽 위 → 왼쪽 위 → 왼쪽 아래 → 오른쪽 아래)
+  const kb = [[3, 2], [-3, 2], [-3, -2], [3, -2]][idx % 4];
+  $('#scene').style.setProperty('--kx', kb[0] + '%'); $('#scene').style.setProperty('--ky', kb[1] + '%');
   $('#cardToggle').onclick = () => { setCard($('#scene').classList.contains('open') ? 'peek' : 'open'); window.recenterStage(); };
   $('.cardbar', $('#scene')).ondblclick = () => setCard('open');
+  sheetDrag();
   if (e.img) { $('#heroBtn').onclick = () => openViewer(e); $('#viewBtn').onclick = () => openViewer(e); }
   $$('.say', $('#scene')).forEach(b => b.onclick = ev => { ev.stopPropagation(); speakWord(+b.dataset.say); });
   $$('.ctabs button', $('#scene')).forEach(b => b.onclick = () => showTab(b.dataset.tab));
   $('#toHarmony').onclick = () => setView('harmony');
   showTab('story');
   updateQuizBtn();
+}
+// 모바일 하단 시트: 손잡이(또는 접힌 제목줄)를 위로 끌면 한 단계 올리고(제목줄 → 반 → 끝까지) 아래로 끌면 내린다.
+// 누르기만 하면 반 ↔ 끝까지. 반만 열린 시트에서 글을 위로 밀어 올리면 끝까지 올라온다 (낭독이 문단을 따라 내리는 스크롤은 건드리지 않는다)
+function sheetDrag() {
+  const sc = $('#scene'), mobile = () => innerWidth <= 900;
+  const level = () => sc.classList.contains('peek') ? 0 : sc.classList.contains('full') ? 2 : 1;
+  const to = n => { setCard(['peek', 'open', 'full'][n]); if (n < 2) window.recenterStage(); };
+  let d = null;
+  const down = e => { if (!mobile()) return; d = { id: e.pointerId, y: e.clientY }; e.currentTarget.setPointerCapture(e.pointerId); };
+  const up = e => {
+    if (!d || e.pointerId !== d.id) return;
+    const dy = e.clientY - d.y, n = level(); d = null;
+    if (dy < -30) to(Math.min(2, n + 1));
+    else if (dy > 30) to(Math.max(0, n - 1));
+    else if (Math.abs(dy) < 8) { if (e.currentTarget.classList.contains('sheetgrip')) to(n === 2 ? 1 : 2); else if (!n) to(1); }
+  };
+  [$('.sheetgrip', sc), $('.cardbar', sc)].forEach(el => { el.onpointerdown = down; el.onpointerup = up; el.onpointercancel = () => { d = null; }; });
+  let ty = null;
+  sc.ontouchstart = e => { ty = e.touches[0].clientY; };
+  sc.ontouchmove = e => { if (ty !== null && mobile() && level() === 1 && ty - e.touches[0].clientY > 14) { ty = null; setCard('full'); } };
 }
 // 탭 바꾸기. 아래 금빛 단추는 다음 탭으로 이어 읽게 하고, 마지막 탭에서는 다음 장소로 걷기
 function showTab(k) {
@@ -619,7 +684,7 @@ function showTab(k) {
   $$('.ctabs button', sc).forEach(b => b.classList.toggle('active', b.dataset.tab === k));
   $$('.pane', sc).forEach(p => { p.hidden = p.dataset.pane !== k; });
   const order = ['story', 'text', 'compare'], nx = order[order.indexOf(k) + 1], b = $('#contBtn', sc);
-  if (nx) { b.innerHTML = `${esc(t('continueReading'))} <span aria-hidden="true">→</span>`; b.onclick = () => { showTab(nx); $('.ctabs', sc).scrollIntoView({ block: 'start', behavior: 'smooth' }); }; }
+  if (nx) { b.innerHTML = `${esc(t('continueReading'))} <span aria-hidden="true">→</span>`; b.onclick = () => { if (sc.classList.contains('open')) setCard('full'); showTab(nx); $('.ctabs', sc).scrollIntoView({ block: 'start', behavior: 'smooth' }); }; }
   else if (idx < EVENTS.length - 1) { b.innerHTML = `${esc(t('walkNext'))} <span aria-hidden="true">→</span>`; b.onclick = () => go(idx + 1); }
   else { b.innerHTML = `${esc(t('quizReview'))}`; b.onclick = () => setView('quiz'); }
 }
@@ -693,6 +758,7 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
     window.__stageScene = EVENTS[i]; // stage.js가 늦게 로드돼도 따라잡도록
     dispatchEvent(new CustomEvent('stage:scene', { detail: { ev: EVENTS[i] } }));
     bgmFollow(); // 읽는 중에 장면이 바뀌면 그 장면의 곡으로 겹쳐 바꾼다
+    setOdo(odoAt(i));
     history.replaceState(null, '', '#' + EVENTS[i].id);
     $('#prev').disabled = idx === 0; $('#next').disabled = $('#skip').disabled = idx === EVENTS.length - 1;
     const p = PLACES[EVENTS[i].place];
@@ -839,8 +905,42 @@ function showCaption(it) {
   if (!it || !it.text) { c.classList.remove('show'); return; }
   $('small', c).textContent = it.who || '';
   c.classList.toggle('who', !!it.who);
-  $('p', c).textContent = it.text;
   c.classList.add('show');
+  captionLines($('p', c), it.text);
+}
+// 자막 줄바꿈: 한 줄에 다 들어가지 않으면 쉼표 같은 쉼 자리에서 줄을 나눈다. 실제 글자 폭을 재서 줄 수가 가장 적고
+// 줄 길이가 고른 자리를 고른다. 쉼표에서 나누면 오히려 줄이 늘어날 때는 나누지 않고 브라우저에 맡긴다
+// (style.css: 한국어는 낱말 안에서 끊지 않고, 줄 길이를 고르게 해 끝에 '니다.'만 남지 않게)
+const capCtx = document.createElement('canvas').getContext('2d');
+function captionLines(p, text) {
+  p.textContent = text;
+  // 자막 상자는 글 길이만큼 넓어지므로, 잠깐 최대 폭으로 펴서 한 줄에 쓸 수 있는 폭을 잰다
+  const box = p.parentElement;
+  box.style.width = '100%'; const max = p.clientWidth * .97; box.style.width = '';
+  const cs = getComputedStyle(p);
+  capCtx.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+  const wd = s => capCtx.measureText(s.trim()).width;
+  if (!max || wd(text) <= max) return;
+  // 나눌 수 있는 자리: 쉼표·가운뎃점·줄표·쌍점 뒤 (중·일의 、，도)
+  const cuts = [0];
+  text.replace(/[,，、;；:·—]\s*/g, (m, i) => { const k = i + m.length; if (k < text.length - 1) cuts.push(k); return m; });
+  cuts.push(text.length);
+  // 한 덩이의 값: 줄 수가 먼저(줄마다 1000), 한 줄이면 남는 폭이 적을수록, 저절로 다시 꺾이면 덤으로 500, 너무 짧은 덩이는 300.
+  // 통째로 두면 줄이 어디서 꺾일지 모르므로 150을 더 얹는다 — 줄 수가 같으면 쉼표에서 나누는 쪽을 고른다
+  const cost = (a, b, many) => {
+    const w = wd(text.slice(a, b)), n = Math.ceil(w / max);
+    return n * 1000 + (n > 1 ? 500 + (many ? 0 : 150) : ((max - w) / max) ** 2 * 100) + (many && w < max * .3 ? 300 : 0);
+  };
+  const best = cuts.map(() => Infinity), from = cuts.map(() => -1);
+  best[0] = 0;
+  for (let j = 1; j < cuts.length; j++) for (let i = 0; i < j; i++) {
+    const v = best[i] + cost(cuts[i], cuts[j], i > 0 || j < cuts.length - 1);
+    if (v < best[j]) { best[j] = v; from[j] = i; }
+  }
+  const parts = [];
+  for (let j = cuts.length - 1; j > 0; j = from[j]) parts.unshift(text.slice(cuts[from[j]], cuts[j]).trim());
+  if (parts.length < 2) return; // 나누지 않는 편이 낫다
+  p.innerHTML = parts.map(x => `<span>${esc(x)}</span>`).join(''); // 덩이마다 따로 줄 길이를 고르게 (style.css)
 }
 function scrollToEl(el) {
   // 낭독 중인 문단이 보이도록 해당 스크롤 영역만 움직인다 (창 전체가 밀리지 않게)
@@ -852,7 +952,8 @@ function scrollToEl(el) {
 function sceneScript() {
   const e = EVENTS[idx], sc = $('#scene');
   // beat: 3D 무대(stage.js)가 연출을 맞추는 표지 — intro, p0…(문단), w0…(말씀)
-  const items = [{ text: `${e.title}. ${PLACES[e.place].name.replace(/[()·]/g, ' ')}, ${e.when.replace(/·/g, ',')}.`, el: $('.hero-text', sc), pause: 500, beat: 'intro' }];
+  // 제목 줄은 '수태고지. 장소, 나사렛. 시기, BC 6년경.'으로 읽는다 (장소와 때를 이름 붙여 알려 준다)
+  const items = [{ text: `${e.title}. ${t('sayPlace')}, ${PLACES[e.place].name.replace(/[()·]/g, ' ')}. ${t('sayWhen')}, ${e.when.replace(/\s*·\s*/g, ', ')}.`, el: $('.hero-text', sc), pause: 500, beat: 'intro' }];
   e.story.forEach((s, i) => items.push({ text: s, el: $(`[data-para="${i}"]`, sc), pause: 350, beat: 'p' + i }));
   const jesus = e.words.some(w => w.j);
   items.push({ text: (jesus ? t('hisWords') : t('voicesOfDay')) + '.', el: $('.words-sec h3', sc), pause: 400 });
@@ -896,6 +997,7 @@ function startAuto() {
 function setListenUI() {
   const l = $('#listen');
   l.classList.toggle('on', speaking); // 재생 중이면 일시정지 모양
+  document.body.classList.toggle('is-reading', speaking); // 연극이 도는 동안 지도의 현재 위치 물결을 끈다 (무대를 가린다)
   l.setAttribute('aria-label', speaking ? t('stop') : t('listenScene'));
   $('#auto').checked = autoOn;
   bgmFollow();

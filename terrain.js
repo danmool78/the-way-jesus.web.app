@@ -457,7 +457,7 @@ function loop(now) {
   cam.pitch = damp(cam.pitch, ui.pitch, 4, dt); cam.yaw = damp(cam.yaw, ui.yaw, 4, dt);
   placeCam();
   window.terrainView = { yaw: cam.yaw, pitch: cam.pitch, zoom: zoomAt(cam.dist, EVENTS[idx].place) };
-  window.stageFrame?.(); // 바뀐 시점으로 무대를 붙이고 그린다
+  window.stageRender?.(); // 바뀐 시점으로 무대를 붙이고 그린다
   // 안개는 카메라 거리에 맞춰 — 멀리 물러나도 땅의 끝이 하늘과 안개 속으로 녹아든다
   scene.fog.near = cam.dist * 1.1; scene.fog.far = cam.dist * 3.6;
   boats.forEach((b, i) => { b.position.y = lv(-210) + 0.3 + Math.sin(now / 900 + b.userData.phase) * 0.1; b.rotation.z = Math.sin(now / 1300 + i) * 0.04; });
@@ -468,6 +468,7 @@ function loop(now) {
     const t = now / 1000;
     W.beam.visible = W.orb.visible = W.halo.visible = walking;
     W.orb.position.y = W.halo.position.y = 3.2 + Math.sin(t * 6) * 0.35;
+    W.ring.visible = walking || !document.body.classList.contains('is-reading'); // 연극 중에는 물결 고리를 끈다
     W.ring.scale.setScalar(walking ? 1 + (t * 1.4 % 1) * 1.6 : 1 + (t * 0.6 % 1) * 1.2);
     W.ring.material.opacity = walking ? 1 - (t * 1.4 % 1) : 0.7 * (1 - (t * 0.6 % 1));
     if (walking) ensureNear(W.x, W.z);
