@@ -33,11 +33,12 @@ const regions = Object.entries(TREG).map(([name, r]) => {
   return { name, ...r, X0, Z0, X1, Z1, heights: null, hw: 0, hh: 0, load: null, color: null };
 });
 const regionAt = (x, z) => regions.find(r => x >= r.X0 && x <= r.X1 && z >= r.Z0 && z <= r.Z1);
-const isCity = k => PLACES[k].jlm || k === 'jerusalem';
 // 카메라: 바라보는 점(tx, tz), 거리, 기울기(내려다보는 각), 방위
 const cam = { tx: 0, tz: 0, dist: 150, pitch: 0.62, yaw: 0, goal: null };
 const placeDist = k => (isCity(k) ? 42 : 150); // 도성 안 장소는 바짝 다가가 3D 도성이 보이게
 const CITY = (() => { const [x0, z0] = px([JLM.lat1 + 0.003, JLM.lng0 - 0.004]), [x1, z1] = px([JLM.lat0 - 0.003, JLM.lng1 + 0.004]); return { x0, z0, x1, z1 }; })();
+// 3D 도성 모형 안의 장소 (베다니처럼 성 밖 마을은 아니다 — 거기는 보통 거리에서 집을 둔다)
+const isCity = k => { const [x, z] = px([PLACES[k].lat, PLACES[k].lng]); return x > CITY.x0 && x < CITY.x1 && z > CITY.z0 && z < CITY.z1; };
 
 /* ---------- 높이 ---------- */
 function heightAt(x, z) { // 지도 단위 좌표의 지형 높이 (불러온 지역 안이면 쌍선형, 바깥은 0)
