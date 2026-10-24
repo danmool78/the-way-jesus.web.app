@@ -23,6 +23,14 @@ const tm = s => DATA?.ui?.map?.[s] || s;
 function applyStatic() {
   const u = DATA.ui, h = document.documentElement;
   h.lang = LANG; h.dir = u.dir || 'ltr';
+  // 중국어·일본어는 한글 글꼴에 없는 한자·가나가 있어 그 언어의 글꼴을 따로 받는다
+  const CJK = { zh: ['Noto Serif SC', 'Noto Sans SC'], ja: ['Noto Serif JP', 'Noto Sans JP'] }[LANG];
+  if (CJK) {
+    const l = document.createElement('link'); l.rel = 'stylesheet';
+    l.href = `https://fonts.googleapis.com/css2?family=${CJK[0].replace(/ /g, '+')}:wght@400;700&family=${CJK[1].replace(/ /g, '+')}:wght@400;500;700&display=swap`;
+    document.head.appendChild(l);
+    h.style.setProperty('--serif', `'${CJK[0]}',serif`); h.style.setProperty('--sans', `'${CJK[1]}',system-ui,sans-serif`);
+  }
   document.title = u.docTitle;
   $('meta[name="description"]')?.setAttribute('content', u.metaDesc);
   GOSPELS = ['mt', 'mk', 'lk', 'jn'].map(k => [k, ...u.gospels[k]]);
