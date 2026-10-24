@@ -340,11 +340,21 @@ function enterTerrain(T) {
 function leaveTerrain() {
   inTerrain = false;
   scene.add(stageGroup); holder.removeFromParent();
-  stageGroup.traverse(o => { if (o.isPointLight && o.userData.d0 !== undefined) { o.distance = o.userData.d0; o.intensity = o.userData.i0; delete o.userData.d0; } });
+  stageGroup.traverse(o => { if (o.isPointLight && o.userData.d0 !== undefined) { o.distance = o.userData.d0; o.intensity = o.userData.raw; delete o.userData.d0; delete o.userData.raw; } });
   Object.values(props).forEach(p => { p.lift.position.set(0, 0, 0); if (p.fade !== 'scale') p.obj.scale.copy(p.base); });
   Object.values(actors).forEach(a => { a.big = 1; });
 }
 // 지형 위 (무대 좌표) 지점의 땅 높이 — 무대 바닥 중심과의 차이를 무대 단위로
+// 등잔·불빛: 빛이 닿는 거리는 묶음의 크기를 따라 커지지 않으므로 직접 늘리고, 멀어진 만큼 세기도 올린다.
+// 소품이 매 프레임 세기를 정하므로(깜박임·켜짐) 그 뒤에 곱하고, 다음 프레임 전에는 소품이 정한 값으로 되돌려 둔다
+function unscaleLights() { stageGroup.traverse(o => { if (o.isPointLight && o.userData.raw !== undefined) o.intensity = o.userData.raw; }); }
+function scaleLights() {
+  stageGroup.traverse(o => {
+    if (!o.isPointLight) return;
+    if (o.userData.d0 === undefined) o.userData.d0 = o.distance;
+    o.userData.raw = o.intensity; o.distance = o.userData.d0 * base.k; o.intensity = o.userData.raw * base.k ** o.decay;
+  });
+}
 const skyC = new THREE.Color(), toneH = new THREE.Color(), toneS = new THREE.Color(), WHITE = new THREE.Color('#fff4e4');
 const groundAt = (x, z) => inTerrain ? (window.terrain3d.heightAt(base.x + x * base.k, base.z + z * base.k) - base.y) / base.k : 0;
 let bigNow = 1;
@@ -374,12 +384,6 @@ function placeTerrain(T, dt) {
   const hk = 0.4 + 0.6 * envNow.hemi / ENV.day.hemi[0], sk = 0.3 + 0.7 * envNow.sun / ENV.day.sun[0];
   window.stageTone = { hemi: hk, sun: sk, hemiC: toneH.copy(hemi.color).lerp(WHITE, 0.5), sunC: toneS.copy(sun.color).lerp(WHITE, 0.5),
     skyC: skyC.copy(hemi.color).lerp(WHITE, 0.3).multiplyScalar(Math.min(1, hk * 1.05)) };
-  // 등잔·불빛: 빛이 닿는 거리는 묶음의 크기를 따라 커지지 않으므로 직접 늘리고, 멀어진 만큼 세기도 올린다
-  stageGroup.traverse(o => {
-    if (!o.isPointLight) return;
-    if (o.userData.d0 === undefined) { o.userData.d0 = o.distance; o.userData.i0 = o.intensity; }
-    o.distance = o.userData.d0 * base.k; o.intensity = o.userData.i0 * base.k ** o.decay;
-  });
 }
 
 /* ---------- 루프 ---------- */
@@ -409,6 +413,7 @@ function frame() {
     canvas.style.transform = `translate(${Math.round(a.x - groundPx.x)}px, ${Math.round(a.y - groundPx.y)}px)`;
   }
   updateEnv(dt);
+  if (inTerrain) unscaleLights();
   placeGeo();
   Object.values(props).forEach(p => {
     if (p.follow) { p.goal.copy(p.follow.pos); p.obj.position.x = p.follow.pos.x; p.obj.position.z = p.follow.pos.y; }
@@ -434,6 +439,7 @@ function frame() {
     ac.big = inTerrain && !onDeck ? bigNow : 1; // 배·나귀에 탄 사람은 그 소품과 함께 커진다
     ac.update(time, dt);
   });
+  if (inTerrain) scaleLights();
   if (!T) renderer.render(scene, camera);
 }
 
