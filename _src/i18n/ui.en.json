@@ -182,5 +182,20 @@
  "introF4": "Recall the scenes you have walked through",
  "introStart": "Begin the journey",
  "introContinue": "Continue · {n}. {title}",
- "introRestart": "Start from the beginning"
+ "introRestart": "Start from the beginning",
+ "landGuide": "How it works",
+ "landWhat": "What you'll find",
+ "landHowTo": "How to walk the way",
+ "statScenes": "scenes",
+ "statPlaces": "places",
+ "statGospels": "Gospels",
+ "landStep1h": "Choose a scene",
+ "landStep1": "Pick a scene on the timeline at the bottom, or follow the road with '{walk}'",
+ "landStep2h": "Read and listen",
+ "landStep2": "Read the story, the texts and the Gospel comparison on the card, and press ▶ to hear it read aloud",
+ "landStep3h": "Explore the map",
+ "landStep3": "Drag the map to look around, and press 3D to see the land in relief",
+ "landStep4h": "His words and quizzes",
+ "landStep4": "Gather the sayings of Jesus in the '{words}' tab and revisit the scenes with '{quiz}'",
+ "landEnd": "Ready to set out?"
 }

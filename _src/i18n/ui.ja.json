@@ -182,5 +182,20 @@
  "introF4": "歩んできた場面をクイズで思い起こします",
  "introStart": "旅をはじめる",
  "introContinue": "つづきから · {n}. {title}",
- "introRestart": "はじめから歩く"
+ "introRestart": "はじめから歩く",
+ "landGuide": "使い方",
+ "landWhat": "ここで出会えるもの",
+ "landHowTo": "この道の歩き方",
+ "statScenes": "場面",
+ "statPlaces": "か所",
+ "statGospels": "福音書",
+ "landStep1h": "場面を選ぶ",
+ "landStep1": "下の年表で場面を選ぶか、「{walk}」で道をたどります",
+ "landStep2h": "読んで聞く",
+ "landStep2": "カードで物語・本文・福音書の比較を読み、▶ で朗読を聞きます",
+ "landStep3h": "地図を見て回る",
+ "landStep3": "地図をドラッグして周りを見渡し、3D で土地の起伏を立体で見ます",
+ "landStep4h": "み言葉とクイズ",
+ "landStep4": "「{words}」タブでイエスの言葉を集めて読み、「{quiz}」で歩んだ場面をふり返ります",
+ "landEnd": "さあ、出発しましょう"
 }

@@ -182,5 +182,20 @@
  "introF4": "Ingat kembali adegan yang telah kamu lalui",
  "introStart": "Mulai perjalanan",
  "introContinue": "Lanjutkan · {n}. {title}",
- "introRestart": "Mulai dari awal"
+ "introRestart": "Mulai dari awal",
+ "landGuide": "Cara menggunakan",
+ "landWhat": "Yang akan kamu temui",
+ "landHowTo": "Cara menempuh jalan ini",
+ "statScenes": "adegan",
+ "statPlaces": "tempat",
+ "statGospels": "Injil",
+ "landStep1h": "Pilih adegan",
+ "landStep1": "Pilih adegan di garis waktu bawah, atau ikuti jalannya dengan '{walk}'",
+ "landStep2h": "Baca dan dengarkan",
+ "landStep2": "Baca kisah, teks, dan perbandingan Injil di kartu, lalu tekan ▶ untuk mendengarkannya",
+ "landStep3h": "Jelajahi peta",
+ "landStep3": "Geser peta untuk melihat sekeliling, dan tekan 3D untuk melihat relief tanah",
+ "landStep4h": "Sabda dan kuis",
+ "landStep4": "Kumpulkan sabda Yesus di tab '{words}' dan ingat kembali adegan dengan '{quiz}'",
+ "landEnd": "Siap berangkat?"
 }
