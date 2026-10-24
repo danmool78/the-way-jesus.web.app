@@ -695,13 +695,19 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
   else arrive();
 }
 
-/* ---------- 첫 시작 화면 ---------- */
+/* ---------- 랜딩페이지 (첫 시작 화면) ---------- */
 // resume: 이어서 걸을 장면 번호(없으면 -1). 다녀간 사람에게는 '이어서 걷기'와 '처음부터 걷기'를 함께 준다
 function showIntro(resume) {
-  const box = $('#intro'), start = $('#introStart'), again = $('#introRestart');
+  const box = $('#intro'), starts = $$('.go-start', box), agains = $$('.go-again', box);
   $('#introLead').textContent = t('introLead', { n: EVENTS.length });
-  start.textContent = resume > 0 ? t('introContinue', { n: resume + 1, title: EVENTS[resume].title }) : t('introStart');
-  again.hidden = !(resume > 0);
+  $('#statScenes').textContent = EVENTS.length;
+  $('#statPlaces').textContent = new Set(EVENTS.map(e => e.place)).size;
+  // 안내 글의 단추 이름은 실제 화면 글씨를 그대로 끌어 쓴다 (언어마다 맞게)
+  const names = { walk: t('walkNext'), words: t('tabWords'), quiz: t('tabQuiz') };
+  [1, 2, 3, 4].forEach(k => { $('#landStep' + k).textContent = t('landStep' + k, names); });
+  const label = resume > 0 ? t('introContinue', { n: resume + 1, title: EVENTS[resume].title }) : t('introStart');
+  starts.forEach(b => { b.textContent = label; });
+  agains.forEach(b => { b.hidden = !(resume > 0); });
   // 떠 있는 동안 뒤 화면은 inert — Tab 초점·클릭이 가려진 단추로 가지 않게 (방향키 단축키는 아래 keydown에서 막는다)
   const behind = [...document.body.children].filter(el => el !== box && el.tagName !== 'SCRIPT');
   // walk: 여정으로 가는 단추(이어서·처음부터)는 다른 탭에서 열었어도 여정 화면으로 돌아간다. Esc는 있던 화면 그대로
@@ -713,11 +719,12 @@ function showIntro(resume) {
     if (i !== idx) go(i);
   };
   const esc = ev => { if (ev.key === 'Escape') close(idx); };
-  start.onclick = () => close(resume > 0 ? resume : 0, true);
-  again.onclick = () => close(0, true);
+  starts.forEach(b => { b.onclick = () => close(resume > 0 ? resume : 0, true); });
+  agains.forEach(b => { b.onclick = () => close(0, true); });
+  $('.land-down', box).onclick = ev => { ev.preventDefault(); $('#landHow').scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth' }); };
   addEventListener('keydown', esc);
   behind.forEach(el => { el.inert = true; });
-  box.hidden = false; start.focus({ preventScroll: true });
+  box.scrollTop = 0; box.hidden = false; starts[0].focus({ preventScroll: true });
 }
 
 /* ---------- 낭독 (Web Speech API) ---------- */

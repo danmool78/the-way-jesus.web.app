@@ -181,5 +181,20 @@
  "introF4": "用问答重温走过的场景",
  "introStart": "开始旅程",
  "introContinue": "继续 · {n}. {title}",
- "introRestart": "从头开始"
+ "introRestart": "从头开始",
+ "landGuide": "使用说明",
+ "landWhat": "你将看到",
+ "landHowTo": "这样走这条路",
+ "statScenes": "个场景",
+ "statPlaces": "个地点",
+ "statGospels": "卷福音书",
+ "landStep1h": "选择场景",
+ "landStep1": "在下方时间轴上选择场景，或用“{walk}”沿路前行",
+ "landStep2h": "阅读与聆听",
+ "landStep2": "在卡片中阅读故事、经文与四福音对照，按 ▶ 聆听朗读",
+ "landStep3h": "探索地图",
+ "landStep3": "拖动地图四处看看，按 3D 查看立体地形",
+ "landStep4h": "主的话语与问答",
+ "landStep4": "在“{words}”中汇集耶稣的话语，用“{quiz}”温习走过的场景",
+ "landEnd": "准备好出发了吗？"
 }
