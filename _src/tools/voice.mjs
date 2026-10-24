@@ -29,14 +29,16 @@ function script(e) {
   const items = [{ text: `${e.title}. ${ui.sayPlace}, ${d.places[e.place].name.replace(/[()·]/g, ' ')}. ${ui.sayWhen}, ${e.when.replace(/\s*·\s*/g, ', ')}.` }];
   e.story.forEach(s => items.push({ text: s }));
   items.push({ text: (e.words.some(w => w.j) ? ui.hisWords : ui.voicesOfDay) + '.' });
-  e.words.forEach(w => { if (!w.j) items.push({ text: `${w.who}.` }); items.push({ text: w.text, jesus: !!w.j }); });
+  e.words.forEach(w => { if (!w.j) items.push({ text: `${w.who}.` }); items.push({ text: w.text, jesus: !!w.j, gemini: w.tts === 'gemini' }); });
   // 제목 줄의 '장소, 나사렛.'·'시기, 때.'는 쉼표에서 나눠 따로 녹음해 잇는다 — 한 번에 읽히면 장소 이름을 늘이고 멈칫한다
-  return items.flatMap((it, i) => sentences(it.text).map(s => s.trim()).filter(Boolean).map((text, k) => ({ text, jesus: it.jesus, split: i === 0 && k > 0 })));
+  return items.flatMap((it, i) => sentences(it.text).map(s => s.trim()).filter(Boolean).map((text, k) => ({ text, jesus: it.jesus, gemini: it.gemini, split: i === 0 && k > 0 })));
 }
+// Gemini 성우로 읽는 말씀(관리자 페이지에서 고른 것, words의 tts: 'gemini')은 열쇠에 'gemini-'를 붙여 따로 둔다 (app.js와 같은 계산)
+const keyOf = s => voiceKey(`${s.gemini ? 'gemini-' : ''}${s.jesus ? VOICE.jesus.name : VOICE.narr.name}`, s.text);
 
 if (old) {
-  const said = e => script(e).map(x => `${x.jesus ? 1 : 0}|${x.text}`).join('\n');
-  const recorded = e => script(e).some(x => existsSync(`${OUT}/${voiceKey(x.jesus ? VOICE.jesus.name : VOICE.narr.name, x.text)}.mp3`));
+  const said = e => script(e).map(keyOf).join('\n');
+  const recorded = e => script(e).some(x => existsSync(`${OUT}/${keyOf(x)}.mp3`));
   events = d.events.filter(e => { const o = old.events.find(x => x.id === e.id); return o && said(o) !== said(e) && recorded(o); });
   console.log('다시 녹음할 장면:', events.map(e => e.id).join(' ') || '없음');
   if (!events.length) process.exit(0);
@@ -77,6 +79,34 @@ async function synth(text, v, rate) {
   return pcmOf(Buffer.from(j.audioContent, 'base64'));
 }
 
+// Gemini 성우 (다정 리딩북과 같은 모델·온도). 목소리 이름은 Chirp와 같은 Aoede·Algenib. 이 모델은 지시문(system)을 받지 않아
+// 글만 보낸다. 분당 한도(429)나 일시 오류는 잠깐 기다렸다 다시 하고, 하루 한도가 찬 모델은 건너 다음 모델로 (모델마다 한도가 따로다 —
+// 같은 키를 리딩북도 쓴다). 답은 WAV(24kHz 16비트 모노)라 data 덩이만 꺼낸다. 모두 막히면 null
+const GEMINI_KEY = process.env.GEMINI_API_KEY, GEMINI_TTS = ['gemini-3.8-flash-lite-tts', 'gemini-3.8-flash-tts', 'gemini-3.1-flash-tts-preview', 'gemini-2.5-flash-preview-tts'];
+const spent = new Set();
+async function geminiSynth(text, v) {
+  if (!GEMINI_KEY) { console.warn('GEMINI_API_KEY가 없습니다'); return null; }
+  for (const model of GEMINI_TTS.filter(m => !spent.has(m))) {
+    for (let tries = 0; tries < 4; tries++) {
+      const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, { method: 'POST', headers: { 'x-goog-api-key': GEMINI_KEY, 'content-type': 'application/json' },
+        body: JSON.stringify({ contents: [{ parts: [{ text: spoken(text) }] }], generationConfig: { temperature: 0.6, responseModalities: ['AUDIO'], speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: v.name } } } } }) });
+      const j = await r.json().catch(() => ({}));
+      const inline = j.candidates?.[0]?.content?.parts?.find(x => x.inlineData?.data)?.inlineData;
+      if (r.ok && inline) {
+        const buf = Buffer.from(inline.data, 'base64');
+        if (buf.toString('latin1', 0, 4) !== 'RIFF') return new Int16Array(buf.buffer.slice(buf.byteOffset, buf.byteOffset + (buf.length & ~1)));
+        if (buf.readUInt32LE(24) === SR) return pcmOf(buf);
+        break; // 다른 표본율 — 다음 모델로
+      }
+      const msg = j.error?.message || String(r.status);
+      if (r.status === 429 && /per_?day|PerDay/i.test(msg)) { spent.add(model); console.warn(`${model}: 하루 한도`); break; }
+      if (r.ok || (r.status !== 429 && r.status < 500)) { console.warn(`${model}: ${msg.slice(0, 120)}`); break; }
+      await new Promise(res => setTimeout(res, 20000));
+    }
+  }
+  return null;
+}
+
 // 같은 배속이어도 Chirp는 가끔 짧은 말을 빨리 읽는다. 말소리만의 초당 글자 수가 기준에서 5% 넘게 벗어나면
 // 배속을 고쳐 다시 만들고, 다섯 번 안에 못 맞추면 가장 가까운 판을 쓴다. 숫자는 글자 수로 잴 수 없어 그대로
 async function record(text, v) {
@@ -95,10 +125,14 @@ await mkdir(OUT, { recursive: true }); await mkdir(TMP, { recursive: true });
 let made = 0;
 for (const e of events) {
   for (const s of script(e)) {
-    const v = s.jesus ? VOICE.jesus : VOICE.narr, key = voiceKey(v.name, s.text), mp3 = `${OUT}/${key}.mp3`;
+    const v = s.jesus ? VOICE.jesus : VOICE.narr, key = keyOf(s), mp3 = `${OUT}/${key}.mp3`;
     if (existsSync(mp3)) continue;
     let b, pcm;
-    if (s.split) {
+    const g = s.gemini && await geminiSynth(s.text, v);
+    // Gemini가 모두 막히면 그 문장은 Google 음성으로 대신 녹음한다 (고친 말씀이 녹음 없이 남지 않게). 열쇠는 그대로
+    if (s.gemini && !g) console.warn(`::warning::Gemini 성우 한도 — Google 음성으로 대신 녹음: ${s.text.slice(0, 30)}`);
+    if (g) pcm = tidy((b = { pcm: g }).pcm);
+    else if (s.split) {
       const parts = [];
       for (const piece of s.text.split(/,\s*/)) parts.push(tidy((b = await record(piece, v)).pcm));
       const gap = new Int16Array(Math.round(0.35 * SR)); // 장소와 때 사이 쉼
@@ -108,7 +142,7 @@ for (const e of events) {
     const raw = `${TMP}/${key}.pcm`;
     await writeFile(raw, Buffer.from(pcm.buffer, pcm.byteOffset, pcm.byteLength));
     execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-f', 's16le', '-ar', String(SR), '-ac', '1', '-i', raw, '-c:a', 'libmp3lame', '-b:a', '48k', mp3]);
-    console.log(e.id, v.name, key, `${(pcm.length / SR).toFixed(1)}초`, b.cps ? `${b.cps.toFixed(1)}자/초 ×${b.rate.toFixed(2)}` : '', s.text.slice(0, 30));
+    console.log(e.id, (s.gemini ? 'Gemini ' : '') + v.name, key, `${(pcm.length / SR).toFixed(1)}초`, b.cps ? `${b.cps.toFixed(1)}자/초 ×${b.rate.toFixed(2)}` : '', s.text.slice(0, 30));
     made++;
   }
 }
