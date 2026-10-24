@@ -25,13 +25,16 @@ main{max-width:860px;margin:0 auto;padding:16px 16px 80px}
 .btn{white-space:nowrap;border:1px solid var(--gold);background:linear-gradient(#e2c17c,#c99f52);color:#1b140c;border-radius:10px;padding:8px 16px;font-weight:700}
 .btn:disabled{opacity:.35;cursor:default}
 .ghost{border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:10px;padding:7px 12px}
-input[type=search],input[type=password],input.f,textarea{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:8px 11px;outline:none}
+input[type=search],input[type=password],input[type=text],input.f,textarea{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:8px 11px;outline:none}
 input:focus,textarea:focus{border-color:var(--gold)}
 #search{max-width:280px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
 .login h2{margin:0 0 6px;font:700 20px var(--serif);color:var(--gold2)}
 .login ol{color:var(--muted);padding-left:20px}
-.login .row{display:flex;gap:8px;margin-top:12px}
+.login .row{display:flex;gap:8px}
+.login form label{display:block;font-size:12px;color:var(--faint);margin:12px 0 3px}
+.login form>input{max-width:280px}
+.login form+.note{margin-top:10px}
 .msg{min-height:1.6em;margin:8px 0 0;color:var(--muted)}
 .msg.bad{color:var(--bad)}
 .note{color:var(--faint);font-size:13px;margin:0 0 14px}
@@ -68,7 +71,14 @@ input:focus,textarea:focus{border-color:var(--gold)}
       <li>Repository access: <b>Only select repositories</b> → <code>the-way-jesus.web.app</code></li>
       <li>Permissions: <b>Contents</b> Read and write, <b>Actions</b> Read-only</li>
     </ol>
-    <div class="row"><input id="token" type="password" placeholder="github_pat_…" autocomplete="off"><button id="enter" class="btn">들어가기</button></div>
+    <!-- 브라우저 비밀번호 저장(크롬·아이폰)이 알아보도록 아이디·비밀번호 로그인 양식으로: 한 번 저장하면 다른 기기에서도 자동 채우기로 들어간다 -->
+    <form id="loginForm" method="post" action="#">
+      <label for="user">GitHub 아이디</label>
+      <input id="user" name="username" type="text" autocomplete="username" autocapitalize="off" spellcheck="false" value="danmool78">
+      <label for="token">토큰 (비밀번호처럼 저장됩니다)</label>
+      <div class="row"><input id="token" name="password" type="password" placeholder="github_pat_…" autocomplete="current-password"><button id="enter" class="btn" type="submit">들어가기</button></div>
+    </form>
+    <p class="note">들어가면 브라우저가 "비밀번호를 저장할까요?"라고 묻습니다. 저장해 두면 휴대폰·다른 PC에서도 자동 채우기로 들어갈 수 있습니다.</p>
     <p id="loginMsg" class="msg"></p>
   </section>
   <section id="editor" hidden>

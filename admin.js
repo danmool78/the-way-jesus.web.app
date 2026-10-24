@@ -24,14 +24,18 @@ async function readFile(path) {
 }
 
 /* ---------- 들어가기 ---------- */
-async function enter(t) {
+async function enter(t, user) {
   token = t.trim();
   const msg = $('#loginMsg');
   msg.className = 'msg'; msg.textContent = '확인하는 중…';
   try {
-    const repo = await gh(`/repos/${REPO}`);
+    // 토큰의 주인이 적은 아이디와 같은지, 그 계정이 이 저장소에 쓸 수 있는지 GitHub에 묻는다
+    const [me, repo] = await Promise.all([gh('/user'), gh(`/repos/${REPO}`)]);
+    if (user && me.login.toLowerCase() !== user.trim().toLowerCase()) throw new Error(`이 토큰은 ${me.login} 계정의 것입니다`);
     if (!repo.permissions?.push) throw new Error('이 토큰에는 저장소에 쓸 권한이 없습니다');
     try { localStorage.setItem(KEY, token); } catch { /* 이번 방문만 */ }
+    // 크롬은 이 줄로 바로 "비밀번호 저장"을 띄운다 (다른 브라우저는 양식 제출로 알아본다)
+    if (user && window.PasswordCredential) navigator.credentials.store(new PasswordCredential({ id: me.login, password: token })).catch(() => {});
     await load();
   } catch (err) {
     token = '';
@@ -40,8 +44,7 @@ async function enter(t) {
     msg.className = 'msg bad'; msg.textContent = err.status === 401 ? '토큰이 맞지 않습니다' : err.message;
   }
 }
-$('#enter').onclick = () => enter($('#token').value);
-$('#token').onkeydown = e => { if (e.key === 'Enter') enter($('#token').value); };
+$('#loginForm').onsubmit = e => { e.preventDefault(); enter($('#token').value, $('#user').value); };
 $('#logout').onclick = () => { try { localStorage.removeItem(KEY); } catch { /* 없음 */ } location.reload(); };
 
 /* ---------- 목록 ---------- */
