@@ -17,8 +17,10 @@ const INNER = 0.93, SR = 24000;
 const d = JSON.parse(await readFile('data.json', 'utf8'));
 const ui = JSON.parse(await readFile('_src/i18n/ui.ko.json', 'utf8'));
 const args = process.argv.slice(2);
-const events = args.includes('all') ? d.events : d.events.filter(e => args.includes(e.id));
-if (!events.length) { console.error('장면 id를 주세요 (예: e01, 또는 all)'); process.exit(1); }
+// changed <예전 data.json>: 관리자 페이지에서 글을 고친 뒤 (GitHub Actions) — 읽을 문장이 바뀐 장면 가운데 녹음이 있던 장면만
+const old = args[0] === 'changed' && JSON.parse(await readFile(args[1], 'utf8'));
+let events = args.includes('all') ? d.events : d.events.filter(e => args.includes(e.id));
+if (!events.length && !old) { console.error('장면 id를 주세요 (예: e01, 또는 all, 또는 changed <예전 data.json>)'); process.exit(1); }
 
 // app.js의 sentences·sceneScript와 같은 규칙
 const sentences = text => text.match(/[^.?!…。！？]+[.?!…。！？]*["”’」』]?\s*/g) || [text];
@@ -30,6 +32,14 @@ function script(e) {
   e.words.forEach(w => { if (!w.j) items.push({ text: `${w.who}.` }); items.push({ text: w.text, jesus: !!w.j }); });
   // 제목 줄의 '장소, 나사렛.'·'시기, 때.'는 쉼표에서 나눠 따로 녹음해 잇는다 — 한 번에 읽히면 장소 이름을 늘이고 멈칫한다
   return items.flatMap((it, i) => sentences(it.text).map(s => s.trim()).filter(Boolean).map((text, k) => ({ text, jesus: it.jesus, split: i === 0 && k > 0 })));
+}
+
+if (old) {
+  const said = e => script(e).map(x => `${x.jesus ? 1 : 0}|${x.text}`).join('\n');
+  const recorded = e => script(e).some(x => existsSync(`${OUT}/${voiceKey(x.jesus ? VOICE.jesus.name : VOICE.narr.name, x.text)}.mp3`));
+  events = d.events.filter(e => { const o = old.events.find(x => x.id === e.id); return o && said(o) !== said(e) && recorded(o); });
+  console.log('다시 녹음할 장면:', events.map(e => e.id).join(' ') || '없음');
+  if (!events.length) process.exit(0);
 }
 
 // 20ms 창의 소리 크기로 무음(-40dB 아래)을 가린다
@@ -104,10 +114,12 @@ for (const e of events) {
 }
 
 // 목록은 폴더에 있는 파일 전부로 다시 쓴다 (길이는 감시 타이머용)
+// 이미 잰 파일은 예전 목록의 길이를 그대로 쓴다 (Actions에서 1천여 개를 매번 재지 않게)
+const known = existsSync(`${OUT}/index.json`) ? JSON.parse(await readFile(`${OUT}/index.json`, 'utf8')) : {};
 const index = {};
 for (const f of (await readdir(OUT)).filter(f => f.endsWith('.mp3')).sort()) {
-  const ms = Math.round(1000 * +execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', `${OUT}/${f}`]).toString().trim());
-  index[f.slice(0, -4)] = ms;
+  const k = f.slice(0, -4);
+  index[k] = known[k] ?? Math.round(1000 * +execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', `${OUT}/${f}`]).toString().trim());
 }
 await writeFile(`${OUT}/index.json`, JSON.stringify(index) + '\n');
 console.log(`새로 ${made}개, 모두 ${Object.keys(index).length}개`);
