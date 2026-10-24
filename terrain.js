@@ -264,13 +264,21 @@ function addVillages(r) {
   });
 }
 const boats = [];
+// 배의 높이: 뱃전(원점) 아래로 몸통이 1.2 내려가므로 수면(lv(-210)+0.25)보다 0.5 올려 몸통 절반 남짓이 물 위에 — 전에는 뱃전이 수면에 겨우 걸쳤다
+const BOAT_Y = lv(-210) + 0.75;
 function addBoats() {
-  const hull = new THREE.MeshStandardMaterial({ color: '#6e4a2c', roughness: 0.9 }), sail = new THREE.MeshStandardMaterial({ color: '#efe6d2', side: THREE.DoubleSide });
+  // 몸통은 위가 뚫린 반구라 안쪽 면도 그린다(DoubleSide) — 한쪽만 그리면 위에서 볼 때 물속 테두리와 돛만 보여 잠긴 배 같았다
+  const hull = new THREE.MeshStandardMaterial({ color: '#6e4a2c', roughness: 0.9, side: THREE.DoubleSide }), dark = new THREE.MeshStandardMaterial({ color: '#4a301c', roughness: 0.9 });
+  const deck = new THREE.MeshStandardMaterial({ color: '#8a6440', roughness: 0.9 }), sail = new THREE.MeshStandardMaterial({ color: '#efe6d2', side: THREE.DoubleSide });
   [[32.83, 35.57], [32.86, 35.6], [32.79, 35.6]].forEach(([a, b], i) => {
     const g = new THREE.Group(), [x, z] = px([a, b]);
-    const h = new THREE.Mesh(new THREE.SphereGeometry(2.4, 12, 6, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2), hull); h.scale.set(1.6, 0.5, 0.6); g.add(h);
-    const s = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 3.4), sail); s.position.y = 2.2; s.rotation.y = 1.2; g.add(s);
-    g.position.set(x, lv(-210) + 0.3, z); g.rotation.y = i * 1.7; g.userData.phase = i * 2;
+    const h = new THREE.Mesh(new THREE.SphereGeometry(2.4, 16, 6, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2), hull); h.scale.set(1.6, 0.5, 0.6); g.add(h);
+    const rim = new THREE.Mesh(new THREE.TorusGeometry(2.4, 0.09, 6, 32), dark); rim.scale.set(1.6, 0.6, 1); rim.rotation.x = Math.PI / 2; g.add(rim); // 뱃전
+    const d = new THREE.Mesh(new THREE.BoxGeometry(5.6, 0.08, 1.9), deck); d.position.y = -0.3; g.add(d); // 갑판
+    const mast = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.08, 4.2, 6), dark); mast.position.set(0.6, 1.8, 0); g.add(mast);
+    const s = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 3.0), sail); s.position.set(0.6, 2.2, 0); s.rotation.y = 1.2; g.add(s);
+    g.traverse(o => { if (o.isMesh) o.castShadow = o.receiveShadow = true; });
+    g.position.set(x, BOAT_Y, z); g.rotation.y = i * 1.7; g.userData.phase = i * 2;
     scene.add(g); boats.push(g);
   });
 }
@@ -488,7 +496,7 @@ function loop(now) {
   window.stageRender?.(); // 바뀐 시점으로 무대를 붙이고 그린다
   // 안개는 카메라 거리에 맞춰 — 멀리 물러나도 땅의 끝이 하늘과 안개 속으로 녹아든다
   scene.fog.near = cam.dist * 1.1; scene.fog.far = cam.dist * 3.6;
-  boats.forEach((b, i) => { b.position.y = lv(-210) + 0.3 + Math.sin(now / 900 + b.userData.phase) * 0.1; b.rotation.z = Math.sin(now / 1300 + i) * 0.04; });
+  boats.forEach((b, i) => { b.position.y = BOAT_Y + Math.sin(now / 900 + b.userData.phase) * 0.1; b.rotation.z = Math.sin(now / 1300 + i) * 0.04; });
   // 걷는 사람: 화면에서 늘 알아보게 거리에 맞춰 크기를 바꾼다. 서 있을 때는 고리만 은은하게
   if (walker.has) {
     const W = walker, s = Math.max(0.6, cam.dist / 150);
