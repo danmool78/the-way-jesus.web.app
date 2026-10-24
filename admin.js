@@ -1,0 +1,146 @@
+/* 그 길 — 관리자: 장면의 말씀(_src/content-*.json의 words)을 고쳐 GitHub main에 바로 올린다.
+   올리면 Actions(firebase-hosting-merge.yml)가 data를 다시 만들고 바뀐 장면의 녹음을 새로 만들어 배포한다.
+   들어가는 열쇠는 이 저장소에 쓰기 권한이 있는 GitHub 토큰 — 토큰이 없으면 아무도 고칠 수 없다 */
+const REPO = 'danmool78/the-way-jesus.web.app', BRANCH = 'main', KEY = 'theway-admin-token';
+const $ = (s, el = document) => el.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+let token = '', files = {}, data = null; // files: 경로 → { raw, json }
+
+async function gh(path, init = {}) {
+  const r = await fetch(`https://api.github.com${path}`, { ...init, cache: 'no-store',
+    headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${token}`, 'X-GitHub-Api-Version': '2022-11-28', ...(init.body ? { 'Content-Type': 'application/json' } : {}) } });
+  const j = r.status === 204 ? null : await r.json().catch(() => null);
+  if (!r.ok) throw Object.assign(new Error(j?.message || `GitHub ${r.status}`), { status: r.status });
+  return j;
+}
+// GitHub 내용 API는 base64 — 한글이 깨지지 않게 바이트로 풀고 묶는다
+const fromB64 = b => new TextDecoder().decode(Uint8Array.from(atob(b.replace(/\n/g, '')), c => c.charCodeAt(0)));
+const toB64 = s => { let bin = ''; new TextEncoder().encode(s).forEach(b => { bin += String.fromCharCode(b); }); return btoa(bin); };
+
+async function readFile(path) {
+  const j = await gh(`/repos/${REPO}/contents/${path}?ref=${BRANCH}`);
+  const raw = fromB64(j.content);
+  return files[path] = { raw, json: JSON.parse(raw), sha: j.sha };
+}
+
+/* ---------- 들어가기 ---------- */
+async function enter(t) {
+  token = t.trim();
+  const msg = $('#loginMsg');
+  msg.className = 'msg'; msg.textContent = '확인하는 중…';
+  try {
+    const repo = await gh(`/repos/${REPO}`);
+    if (!repo.permissions?.push) throw new Error('이 토큰에는 저장소에 쓸 권한이 없습니다');
+    try { localStorage.setItem(KEY, token); } catch { /* 이번 방문만 */ }
+    await load();
+  } catch (err) {
+    token = '';
+    try { localStorage.removeItem(KEY); } catch { /* 없음 */ }
+    $('#login').hidden = false; $('#editor').hidden = $('#search').hidden = $('#logout').hidden = true;
+    msg.className = 'msg bad'; msg.textContent = err.status === 401 ? '토큰이 맞지 않습니다' : err.message;
+  }
+}
+$('#enter').onclick = () => enter($('#token').value);
+$('#token').onkeydown = e => { if (e.key === 'Enter') enter($('#token').value); };
+$('#logout').onclick = () => { try { localStorage.removeItem(KEY); } catch { /* 없음 */ } location.reload(); };
+
+/* ---------- 목록 ---------- */
+async function load() {
+  $('#loginMsg').textContent = '말씀을 불러오는 중…';
+  // 장면 제목·장소는 배포된 data.json에서, 말씀은 GitHub의 최신 원본에서 (방금 고친 것도 바로 보이게)
+  const [d, dir] = await Promise.all([fetch('data.json', { cache: 'no-store' }).then(r => r.json()), gh(`/repos/${REPO}/contents/_src?ref=${BRANCH}`)]);
+  data = d;
+  await Promise.all(dir.filter(f => /^content-.*\.json$/.test(f.name)).map(f => readFile(f.path)));
+  $('#login').hidden = true; $('#editor').hidden = $('#search').hidden = $('#logout').hidden = false;
+  render();
+}
+const sceneOf = id => { for (const [path, f] of Object.entries(files)) { const c = f.json.find(x => x.id === id); if (c) return { path, c }; } return null; };
+
+function render() {
+  const html = data.events.map(e => {
+    const s = sceneOf(e.id);
+    if (!s) return '';
+    return `<div class="scene" data-scene="${e.id}"><h2>${esc(e.title)}</h2><span>${e.id} · ${esc(data.places[e.place]?.name || '')}</span></div>` +
+      s.c.words.map((w, i) => `<div class="word${w.who === '예수' ? ' jesus' : ''}" data-e="${e.id}" data-w="${i}">
+        <div class="meta"><div><label>말하는 이</label><input class="f who" value="${esc(w.who)}"></div><div><label>출처</label><input class="f ref" value="${esc(w.ref)}"></div></div>
+        <textarea class="text" rows="2">${esc(w.text)}</textarea>
+        <div class="act"><span class="state"></span><button class="ghost undo" hidden>되돌리기</button><button class="btn save" disabled>저장</button></div></div>`).join('');
+  }).join('');
+  $('#list').innerHTML = html || '<p class="empty">말씀이 없습니다</p>';
+  document.querySelectorAll('.word').forEach(bind);
+  filter();
+}
+const fields = box => ({ who: $('.who', box).value.trim(), ref: $('.ref', box).value.trim(), text: $('.text', box).value.trim().replace(/\s*\n\s*/g, ' ') });
+const original = box => sceneOf(box.dataset.e).c.words[+box.dataset.w];
+function bind(box) {
+  const changed = () => { const o = original(box), n = fields(box); return o.who !== n.who || o.ref !== n.ref || o.text !== n.text; };
+  const sync = () => { const c = changed(); box.classList.toggle('dirty', c); $('.save', box).disabled = !c || !fields(box).text || !fields(box).who; $('.undo', box).hidden = !c; };
+  box.addEventListener('input', sync);
+  $('.undo', box).onclick = () => { const o = original(box); $('.who', box).value = o.who; $('.ref', box).value = o.ref; $('.text', box).value = o.text; sync(); };
+  $('.save', box).onclick = () => save(box).catch(err => setState(box, `저장하지 못했습니다: ${err.message}`, 'bad')).finally(sync);
+}
+function filter() {
+  const q = $('#search').value.trim().toLowerCase();
+  document.querySelectorAll('.scene').forEach(h => {
+    const id = h.dataset.scene, boxes = [...document.querySelectorAll(`.word[data-e="${id}"]`)];
+    const head = !q || h.textContent.toLowerCase().includes(q);
+    let any = false;
+    boxes.forEach(b => { const f = fields(b), show = head || `${f.who} ${f.ref} ${f.text}`.toLowerCase().includes(q); b.hidden = !show; any ||= show; });
+    h.hidden = !any;
+  });
+}
+$('#search').oninput = filter;
+const setState = (box, text, cls = '') => { const s = $('.state', box); s.className = `state ${cls}`; s.innerHTML = text; };
+
+/* ---------- 저장 ---------- */
+// 원본은 사람이 손으로 정리한 JSON이라 통째로 다시 쓰지 않는다: 그 말씀 객체 안의 값만 바꿔 끼우고,
+// 바꾼 파일을 다시 읽어 그 말씀 하나만 바뀌었는지 확인한 뒤에 올린다
+const valueRe = (key, v) => new RegExp(`"${key}"\\s*:\\s*${JSON.stringify(v).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`);
+function patch(raw, id, i, from, to) {
+  const start = raw.indexOf(`"id": "${id}"`);
+  if (start < 0) throw new Error(`${id} 장면을 원본에서 찾지 못했습니다`);
+  const next = raw.indexOf('"id": "', start + 1), end = next < 0 ? raw.length : next;
+  const block = raw.slice(start, end), m = block.match(valueRe('text', from.text));
+  if (!m || block.indexOf(m[0]) !== block.lastIndexOf(m[0])) throw new Error('원본에서 이 말씀을 하나로 찾지 못했습니다');
+  const at = start + m.index, open = raw.lastIndexOf('{', at), close = raw.indexOf('}', at);
+  let obj = raw.slice(open, close + 1);
+  for (const k of ['who', 'ref', 'text']) obj = obj.replace(valueRe(k, from[k]), () => `"${k}": ${JSON.stringify(to[k])}`);
+  const out = raw.slice(0, open) + obj + raw.slice(close + 1);
+  const want = JSON.parse(raw); want.find(c => c.id === id).words[i] = { ...from, ...to };
+  if (JSON.stringify(JSON.parse(out)) !== JSON.stringify(want)) throw new Error('바꾼 원본을 확인하는 데 실패했습니다');
+  return out;
+}
+async function save(box) {
+  const id = box.dataset.e, i = +box.dataset.w, to = fields(box);
+  setState(box, '저장하는 중…');
+  const { path } = sceneOf(id);
+  const from = files[path].json.find(c => c.id === id).words[i];
+  // 그사이 다른 곳에서 고쳤을 수 있으니 올리기 직전에 최신 원본을 다시 받는다
+  const fresh = await readFile(path), now = fresh.json.find(c => c.id === id).words[i];
+  if (now.text !== from.text || now.who !== from.who || now.ref !== from.ref) throw new Error('그사이 이 말씀이 바뀌었습니다 — 새로 고침 뒤 다시 고쳐 주세요');
+  const raw = patch(fresh.raw, id, i, now, to);
+  const title = data.events.find(e => e.id === id)?.title || id;
+  const res = await gh(`/repos/${REPO}/contents/${path}`, { method: 'PUT', body: JSON.stringify({
+    message: `Edit words in ${id} (#${i + 1}) from the admin page\n\n${title}: ${to.text}`, content: toB64(raw), sha: fresh.sha, branch: BRANCH }) });
+  files[path] = { raw, json: JSON.parse(raw), sha: res.content.sha };
+  box.classList.toggle('jesus', to.who === '예수');
+  follow(box, res.commit.sha);
+}
+// 저장한 커밋의 배포 작업을 지켜본다 (녹음을 새로 만드느라 몇 분 걸린다)
+async function follow(box, sha) {
+  const link = `<a href="https://github.com/${REPO}/commit/${sha}" target="_blank" rel="noopener">${sha.slice(0, 7)}</a>`;
+  setState(box, `저장됨 ${link} · 음성 만들고 배포하는 중…`);
+  for (let n = 0; n < 60; n++) {
+    await new Promise(r => setTimeout(r, 10000));
+    let run;
+    try { run = (await gh(`/repos/${REPO}/actions/runs?head_sha=${sha}&per_page=1`)).workflow_runs?.[0]; } catch { continue; }
+    if (!run || run.status !== 'completed') continue;
+    const ok = run.conclusion === 'success';
+    setState(box, ok ? `저장됨 ${link} · 음성 교체·배포 완료 ✓` : `저장됨 ${link} · <a href="${run.html_url}" target="_blank" rel="noopener">배포 실패 — 기록 보기</a>`, ok ? 'ok' : 'bad');
+    return;
+  }
+  setState(box, `저장됨 ${link} · 배포 상태를 확인하지 못했습니다 (GitHub Actions에서 확인)`);
+}
+
+let saved = null; try { saved = localStorage.getItem(KEY); } catch { /* 없음 */ }
+if (saved) enter(saved); else $('#login').hidden = false;
