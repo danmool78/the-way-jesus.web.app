@@ -161,5 +161,12 @@
  "settings": "Settings",
  "nextScene": "Next scene",
  "compareNote": "Which Gospels record this scene, with chapter and verse — the same event seen through different witnesses’ eyes.",
- "fullHarmony": "See the full Gospel harmony"
+ "fullHarmony": "See the full Gospel harmony",
+ "map3d": "3D terrain view",
+ "tiltUp": "Tilt toward the horizon",
+ "tiltDown": "Look more from above",
+ "rotate": "Rotate",
+ "resetView": "Reset view",
+ "only3dGalilee": "The 3D terrain preview covers only the area around Galilee for now.",
+ "mtHermon": "Mount Hermon"
 }
