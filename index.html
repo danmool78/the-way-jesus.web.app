@@ -16,46 +16,53 @@
 <body>
 <header class="top">
   <a class="brand" href="#" aria-label="그 길 처음으로">
-    <span class="mark" aria-hidden="true">✦</span>
-    <span><b>그 길</b><small>예수의 발자취 · 사복음서로 걷는 여정</small></span>
+    <b>그 길</b><small>예수의 발자취 · 사복음서로 걷는 여정</small>
   </a>
   <nav class="tabs" role="tablist" aria-label="보기 전환">
     <button role="tab" data-view="journey" class="active">여정</button>
     <button role="tab" data-view="words">말씀</button>
-    <button role="tab" data-view="harmony">대조표</button>
     <button role="tab" data-view="quiz">퀴즈</button>
   </nav>
-  <select id="langPick" class="langpick" aria-label="언어"><option>한국어</option></select>
-  <button class="progress-pill" id="progressPill" title="나의 발자취">
-    <svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15.5" class="ring-bg"/><circle cx="18" cy="18" r="15.5" class="ring" id="ring"/></svg>
-    <span id="progressText">0/61</span>
+  <button class="progress" id="progressPill" title="나의 발자취">
+    <span id="progressText">0 / 61</span>
+    <span class="pbar" aria-hidden="true"><i id="ring"></i></span>
   </button>
+  <div class="settings">
+    <button class="gear" id="gear" aria-label="설정" aria-expanded="false" aria-controls="settingsPanel">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm8.4 3.5-.1-1.2 2-1.6-2-3.4-2.4.9a8 8 0 0 0-2-1.2L15.5 3h-4l-.4 2.5a8 8 0 0 0-2 1.2l-2.4-.9-2 3.4 2 1.6a8 8 0 0 0 0 2.4l-2 1.6 2 3.4 2.4-.9a8 8 0 0 0 2 1.2l.4 2.5h4l.4-2.5a8 8 0 0 0 2-1.2l2.4.9 2-3.4-2-1.6.1-1.2Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="spanel" id="settingsPanel" hidden>
+      <label><span data-i="language">언어</span><select id="langPick" class="langpick" aria-label="언어"><option>한국어</option></select></label>
+      <button class="sbtn" id="openHarmony" data-i="harmonyHead">사복음서 대조표</button>
+      <button class="sbtn" id="openStamps" data-i="myFootsteps">나의 발자취</button>
+    </div>
+  </div>
 </header>
 
 <main id="journey" class="view journey">
   <section class="mapwrap" aria-label="여정 지도">
     <svg id="map" role="img" aria-label="갈릴리·사마리아·유대 지도 위의 예수의 이동 경로"></svg>
     <div class="maptools">
-      <button id="fitAll" title="전체 경로 보기">전체 경로</button>
-      <button id="fitNow" title="현재 위치로">현재 위치</button>
+      <button id="fitNow" class="placechip" title="현재 위치로"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.3 7-12a7 7 0 1 0-14 0c0 5.7 7 12 7 12Z" fill="currentColor"/><circle cx="12" cy="10" r="2.6" fill="#1a140e"/></svg><b id="placeName"></b><span class="chev">›</span></button>
+      <button id="fitAll" class="mapbtn" title="전체 경로 보기">전체 경로</button>
     </div>
     <div class="walkbanner" id="walkBanner" aria-live="polite"></div>
-    <div class="mapcaption" id="mapCaption"></div>
+    <div class="caption" id="caption" aria-hidden="true"><small></small><span class="cline"></span><p></p></div>
     <article class="scene" id="scene" tabindex="-1" aria-live="polite"></article>
   </section>
 
   <footer class="dock" aria-label="여정 조작">
     <div class="track" id="track" aria-label="시간 순 장면 목록"></div>
     <div class="controls">
-      <button id="prev" class="round" aria-label="이전 장면">‹</button>
-      <button id="listen" class="listen" aria-label="이 장면 듣기"><span class="ico">🔊</span><span class="lbl">듣기</span></button>
-      <button id="next" class="walk" aria-label="다음 장소로 걷기"><span class="ico">👣</span><span class="lbl">다음 장소로 걷기</span></button>
-      <button id="auto" class="auto" aria-label="자동 여정 시작"><span class="ico">▶</span><span class="lbl">자동 여정</span></button>
-      <label class="speed">속도
-        <select id="rate" aria-label="낭독 속도">
-          <option value="0.85">0.85×</option><option value="1" selected>1×</option><option value="1.15">1.15×</option><option value="1.3">1.3×</option>
-        </select>
-      </label>
+      <button id="prev" class="ibtn" aria-label="이전 장면"><svg viewBox="0 0 24 24"><path d="M6 5v14M19 5 9 12l10 7Z" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></button>
+      <button id="listen" class="play" aria-label="이 장면 듣기"><svg class="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7Z" fill="currentColor"/></svg><svg class="i-pause" viewBox="0 0 24 24"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/></svg></button>
+      <button id="skip" class="ibtn" aria-label="다음 장면"><svg viewBox="0 0 24 24"><path d="M18 5v14M5 5l10 7-10 7Z" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></button>
+      <label class="switch" title="자동 여정"><span class="lbl" data-i="auto">자동 여정</span><input type="checkbox" id="auto" role="switch"><i></i></label>
+      <select id="rate" class="rate" aria-label="낭독 속도">
+        <option value="0.85">0.85×</option><option value="1" selected>1×</option><option value="1.15">1.15×</option><option value="1.3">1.3×</option>
+      </select>
+      <button id="next" class="walk" aria-label="다음 장소로 걷기"><span class="lbl">다음 장소로 걷기</span><span aria-hidden="true">→</span></button>
+      <button id="quizBtn" class="qcard"><svg class="laurel" viewBox="0 0 32 32" aria-hidden="true"><path d="M10 27C5 23 3 17 5 9M22 27c5-4 7-10 5-18" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><g fill="currentColor"><ellipse cx="5.2" cy="12" rx="1.3" ry="2.6" transform="rotate(-25 5.2 12)"/><ellipse cx="5.6" cy="17" rx="1.3" ry="2.6" transform="rotate(-45 5.6 17)"/><ellipse cx="7.6" cy="21.6" rx="1.3" ry="2.6" transform="rotate(-60 7.6 21.6)"/><ellipse cx="26.8" cy="12" rx="1.3" ry="2.6" transform="rotate(25 26.8 12)"/><ellipse cx="26.4" cy="17" rx="1.3" ry="2.6" transform="rotate(45 26.4 17)"/><ellipse cx="24.4" cy="21.6" rx="1.3" ry="2.6" transform="rotate(60 24.4 21.6)"/></g><path d="M16 9l1.6 3.4 3.7.4-2.8 2.5.8 3.7-3.3-1.9-3.3 1.9.8-3.7-2.8-2.5 3.7-.4Z" fill="currentColor" opacity=".8"/></svg><span><small data-i="rememberScene">이 장면, 기억하나요?</small><b data-i="tabQuiz">퀴즈</b></span><span class="chev">›</span></button>
     </div>
   </footer>
 </main>
@@ -94,6 +101,11 @@
   <button class="close" id="closeViewer" aria-label="닫기">×</button>
   <img id="viewerImg" alt="">
   <p id="viewerCap"></p>
+</dialog>
+
+<dialog id="quizDlg" class="quiz-dlg">
+  <button class="close" id="closeQuiz" aria-label="닫기">×</button>
+  <div id="quizDlgBody"></div>
 </dialog>
 
 <dialog id="stamps" class="stamps-dlg">

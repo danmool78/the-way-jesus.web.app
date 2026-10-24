@@ -151,5 +151,15 @@
   "요단 강": "Río Jordán",
   "나일 강": "Nilo",
   "수에즈 만": "Golfo de Suez"
- }
+ },
+ "tabStory": "Relato",
+ "tabText": "Texto",
+ "tabCompare": "Comparar",
+ "continueReading": "Seguir leyendo",
+ "viewPainting": "Ver la pintura",
+ "rememberScene": "¿Recuerdas esta escena?",
+ "settings": "Ajustes",
+ "nextScene": "Escena siguiente",
+ "compareNote": "Qué Evangelios recogen esta escena, con capítulo y versículo: el mismo hecho visto por distintos testigos.",
+ "fullHarmony": "Ver la concordancia completa"
 }

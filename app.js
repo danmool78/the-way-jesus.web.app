@@ -36,19 +36,18 @@ function applyStatic() {
   GOSPELS = ['mt', 'mk', 'lk', 'jn'].map(k => [k, ...u.gospels[k]]);
   // [선택자, 글씨 키, 속성(없으면 글자)]
   [['.brand', 'home', 'aria-label'], ['.brand b', 'appName'], ['.brand small', 'appTag'], ['.tabs', 'tabsLabel', 'aria-label'],
-    ['[data-view="journey"]', 'tabJourney'], ['[data-view="words"]', 'tabWords'], ['[data-view="harmony"]', 'tabHarmony'], ['[data-view="quiz"]', 'tabQuiz'],
-    ['#progressPill', 'myFootsteps', 'title'], ['.mapwrap', 'mapLabel', 'aria-label'], ['#map', 'mapAria', 'aria-label'],
-    ['#fitAll', 'fitAll'], ['#fitAll', 'fitAllTitle', 'title'], ['#fitNow', 'fitNow'], ['#fitNow', 'fitNowTitle', 'title'],
-    ['.dock', 'dockLabel', 'aria-label'], ['#track', 'trackLabel', 'aria-label'], ['#prev', 'prevScene', 'aria-label'],
-    ['#listen', 'listenScene', 'aria-label'], ['#next', 'walkNext', 'aria-label'], ['#next .lbl', 'walkNext'], ['#auto', 'autoStart', 'aria-label'],
-    ['.speed', 'speed', 'data-label'], ['#rate', 'speedLabel', 'aria-label'],
+    ['[data-view="journey"]', 'tabJourney'], ['[data-view="words"]', 'tabWords'], ['[data-view="quiz"]', 'tabQuiz'],
+    ['#progressPill', 'myFootsteps', 'title'], ['#gear', 'settings', 'aria-label'], ['.mapwrap', 'mapLabel', 'aria-label'], ['#map', 'mapAria', 'aria-label'],
+    ['#fitAll', 'fitAll'], ['#fitAll', 'fitAllTitle', 'title'], ['#fitNow', 'fitNowTitle', 'title'],
+    ['.dock', 'dockLabel', 'aria-label'], ['#track', 'trackLabel', 'aria-label'], ['#prev', 'prevScene', 'aria-label'], ['#skip', 'nextScene', 'aria-label'],
+    ['#listen', 'listenScene', 'aria-label'], ['#next', 'walkNext', 'aria-label'], ['#next .lbl', 'walkNext'], ['.switch', 'autoStart', 'title'],
+    ['#rate', 'speedLabel', 'aria-label'],
     ['#words h2', 'wordsHead'], ['#words .list-head p', 'wordsIntro'], ['#wordSearch', 'wordsSearch', 'placeholder'], ['#wordSearch', 'wordsSearchLabel', 'aria-label'],
     ['#harmony h2', 'harmonyHead'], ['#harmony .list-head p', 'harmonyIntro'], ['#quiz h2', 'quizHead'], ['#quiz .list-head p', 'quizIntro'],
-    ['#closeViewer', 'close', 'aria-label'], ['#closeStamps', 'close', 'aria-label'], ['#stamps h2', 'myFootsteps'], ['#stamps .fine', 'stampsNote'],
+    ['#closeViewer', 'close', 'aria-label'], ['#closeStamps', 'close', 'aria-label'], ['#closeQuiz', 'close', 'aria-label'], ['#stamps h2', 'myFootsteps'], ['#stamps .fine', 'stampsNote'],
     ['#resetProgress', 'resetProgress']
   ].forEach(([sel, k, attr]) => { const el = $(sel); if (!el) return; if (attr) el.setAttribute(attr, t(k)); else el.textContent = t(k); });
-  // 속도 라벨: 글자 마디만 바꾼다 (안의 select는 그대로)
-  const sp = $('.speed'); if (sp?.firstChild?.nodeType === 3) sp.firstChild.textContent = t('speed') + ' ';
+  $$('[data-i]').forEach(el => { el.textContent = t(el.dataset.i); }); // 글씨 키를 단 요소들
   document.body.style.setProperty('--walking', `'👣 ${t('walking')} · '`);
   // 언어 고르기
   const sel = $('#langPick');
@@ -344,8 +343,8 @@ function reserveCard(t, reserve = true) {
 function freeArea(mode) {
   const r = map.getBoundingClientRect(), c = $('#scene'), mobile = innerWidth <= 900;
   if (mobile) {
-    // 펼친 시트는 지도 높이의 68%까지, 접으면 68px (style.css와 같은 값)
-    const h = mode === 'peek' ? 68 : Math.min(c.scrollHeight, r.height * .68);
+    // 펼친 시트는 지도 높이의 66%까지, 접으면 64px (style.css와 같은 값)
+    const h = mode === 'peek' ? 64 : Math.min(c.scrollHeight, r.height * .66);
     return { l: 0, t: 0, r: r.width, b: Math.max(r.height * .25, r.height - h) };
   }
   const cw = Math.min(460, r.width * .42) + 14;
@@ -425,7 +424,8 @@ function updateMap(prevIdx, { camera = true } = {}) {
     else if (!frameStage(idx)) frame(nx && nx.place !== e.place ? [e.place, nx.place] : [e.place]);
   }
   const p = PLACES[e.place];
-  $('#mapCaption').innerHTML = `<b>${esc(p.name)}</b><span>${esc(p.region)}${p.approx ? ' · ' + t('approxPlace') : ''}</span>`;
+  $('#placeName').textContent = p.name; // 왼쪽 위 장소 칩 (누르면 이 장소로)
+  $('#fitNow').title = `${p.name} · ${p.region}${p.approx ? ' · ' + t('approxPlace') : ''}`;
 }
 
 /* ---------- 걷기 ---------- */
@@ -494,12 +494,13 @@ function setCard(mode) {
   const c = $('#scene');
   c.classList.toggle('peek', mode === 'peek');
   c.classList.toggle('open', mode === 'open');
-  const b = $('#cardToggle'); if (b) { b.textContent = mode === 'open' ? t('showMap') : t('openScene'); b.setAttribute('aria-expanded', mode === 'open'); }
+  const b = $('#cardToggle'); if (b) { b.classList.toggle('folded', mode !== 'open'); b.setAttribute('aria-label', mode === 'open' ? t('showMap') : t('openScene')); b.setAttribute('aria-expanded', mode === 'open'); }
 }
 
 /* ---------- 장면 ---------- */
 const refText = e => GOSPELS.filter(([k]) => e.refs[k]).map(([k, , ab]) => `${ab} ${e.refs[k]}`).concat(e.refs.acts ? [`${DATA.ui.gospels.acts[1]} ${e.refs.acts}`] : []).join(' · ');
 
+let cardTab = 'story'; // 장면 카드의 탭: story(이야기) · text(본문) · compare(비교)
 function renderScene() {
   const e = EVENTS[idx], per = PERIODS[e.p], place = PLACES[e.place];
   document.documentElement.style.setProperty('--period', per.color);
@@ -511,57 +512,86 @@ function renderScene() {
       <p>${esc(w.text)}</p>
       <footer><span>${w.j ? esc(t('jesus')) : esc(w.who)}</span><cite>${esc(w.ref)}</cite><button class="say" data-say="${i}" aria-label="${esc(t('listenWord'))}">🔊</button></footer>
     </blockquote>`;
-  const q = e.quiz, answered = state.quiz[e.id];
+  const tabs = [['story', t('tabStory')], ['text', t('tabText')], ['compare', t('tabCompare')]];
+  cardTab = 'story';
   $('#scene').innerHTML = `
   <div class="cardbar">
     <span class="pdot"></span>
     <div><b>${esc(e.title)}</b><small>${esc(place.name)} · ${esc(e.when)}</small></div>
-    <button id="cardToggle" class="cardtoggle" aria-controls="scene">${esc(t('showMap'))}</button>
   </div>
-  <div class="hero">
-    ${img}
-    <div class="hero-text">
-      <div class="eyebrow"><span class="pdot"></span>${LANG === 'ko' ? esc(per.en) + ' · ' : ''}${esc(per.name)} · ${idx + 1} / ${EVENTS.length}</div>
-      <h1>${esc(e.title)}</h1>
-      <p class="subtitle">${esc(e.subtitle)}</p>
-    </div>
+  <button id="cardToggle" class="cardtoggle" aria-controls="scene" aria-label="${esc(t('showMap'))}"><i></i></button>
+  <div class="hero">${img}</div>
+  <div class="credrow">
+    ${e.img ? `<a class="credit" href="${esc(e.img.source)}" target="_blank" rel="noreferrer">${esc(e.img.credit)}</a>` : '<span></span>'}
+    ${e.img ? `<button class="viewbtn" id="viewBtn">${esc(t('viewPainting'))} ↗</button>` : ''}
   </div>
-  ${e.img ? `<p class="credit"><a href="${esc(e.img.source)}" target="_blank" rel="noreferrer">${esc(e.img.credit)} ↗</a></p>` : ''}
-  <div class="meta">
-    <span>📍 ${esc(place.name)}${place.approx ? ` <i>(${esc(t('approxShort'))})</i>` : ''}</span>
-    <span>🕰 ${esc(e.when)}</span>
+  <div class="hero-text">
+    <div class="eyebrow"><span class="pdot"></span>${LANG === 'ko' ? esc(per.en) + ' · ' : ''}${esc(per.name)} · ${idx + 1} / ${EVENTS.length}</div>
+    <h1>${esc(e.title)}</h1>
+    <p class="subtitle">${esc(e.subtitle)}</p>
   </div>
-  <div class="gospels" aria-label="${esc(t('gospelsLabel'))}">
-    ${GOSPELS.map(([k, name]) => `<span class="g ${e.refs[k] ? 'on' : ''}" title="${esc(t('gospelTitle', { g: name, r: e.refs[k] || t('noRecord') }))}"><b>${esc(name)}</b><small>${e.refs[k] || '—'}</small></span>`).join('')}
-  </div>
-  <section class="story" aria-label="${esc(t('storyLabel'))}">
-    ${e.story.map((s, i) => `<p data-para="${i}">${esc(s)}</p>`).join('')}
+  <div class="ctabs" role="tablist">${tabs.map(([k, n]) => `<button role="tab" data-tab="${k}" class="${k === cardTab ? 'active' : ''}">${esc(n)}</button>`).join('')}</div>
+  <section class="pane" data-pane="story" aria-label="${esc(t('storyLabel'))}">
+    <div class="story">${e.story.map((s, i) => `<p data-para="${i}">${esc(s)}</p>`).join('')}</div>
+    <aside class="note"><h4>${esc(t('noteHead'))}</h4><p>${esc(e.note)}</p></aside>
+    <aside class="reflect"><h4>${esc(t('reflectHead'))}</h4><p>${esc(e.reflect)}</p></aside>
   </section>
-  <section class="words-sec">
+  <section class="pane words-sec" data-pane="text" hidden>
     <h3>${esc(jesus.length ? t('hisWords') : t('voicesOfDay'))}</h3>
     ${e.words.map(word).join('')}
     <p class="fine">${esc(t('wordsNote', { r: refText(e) }))}</p>
   </section>
-  <aside class="note"><h4>${esc(t('noteHead'))}</h4><p>${esc(e.note)}</p></aside>
-  <aside class="reflect"><h4>${esc(t('reflectHead'))}</h4><p>${esc(e.reflect)}</p></aside>
-  <section class="quizcard" aria-label="${esc(t('quizLabel'))}">
+  <section class="pane" data-pane="compare" hidden>
+    <div class="meta">
+      <span>📍 ${esc(place.name)}${place.approx ? ` <i>(${esc(t('approxShort'))})</i>` : ''}</span>
+      <span>🕰 ${esc(e.when)}</span>
+    </div>
+    <div class="gospels" aria-label="${esc(t('gospelsLabel'))}">
+      ${GOSPELS.map(([k, name]) => `<span class="g ${e.refs[k] ? 'on' : ''}" title="${esc(t('gospelTitle', { g: name, r: e.refs[k] || t('noRecord') }))}"><b>${esc(name)}</b><small>${e.refs[k] || '—'}</small></span>`).join('')}
+    </div>
+    <p class="fine pad">${esc(t('compareNote'))}</p>
+    <button class="textbtn pad" id="toHarmony">${esc(t('fullHarmony'))} →</button>
+  </section>
+  <div class="cardfoot"><button class="goldbtn" id="contBtn"></button></div>`;
+  $('#scene').scrollTop = 0;
+  $('#cardToggle').onclick = () => { setCard($('#scene').classList.contains('open') ? 'peek' : 'open'); window.recenterStage(); };
+  $('.cardbar', $('#scene')).ondblclick = () => setCard('open');
+  if (e.img) { $('#heroBtn').onclick = () => openViewer(e); $('#viewBtn').onclick = () => openViewer(e); }
+  $$('.say', $('#scene')).forEach(b => b.onclick = ev => { ev.stopPropagation(); speakWord(+b.dataset.say); });
+  $$('.ctabs button', $('#scene')).forEach(b => b.onclick = () => showTab(b.dataset.tab));
+  $('#toHarmony').onclick = () => setView('harmony');
+  showTab('story');
+  updateQuizBtn();
+}
+// 탭 바꾸기. 아래 금빛 단추는 다음 탭으로 이어 읽게 하고, 마지막 탭에서는 다음 장소로 걷기
+function showTab(k) {
+  cardTab = k;
+  const sc = $('#scene');
+  $$('.ctabs button', sc).forEach(b => b.classList.toggle('active', b.dataset.tab === k));
+  $$('.pane', sc).forEach(p => { p.hidden = p.dataset.pane !== k; });
+  const order = ['story', 'text', 'compare'], nx = order[order.indexOf(k) + 1], b = $('#contBtn', sc);
+  if (nx) { b.innerHTML = `${esc(t('continueReading'))} <span aria-hidden="true">→</span>`; b.onclick = () => { showTab(nx); $('.ctabs', sc).scrollIntoView({ block: 'start', behavior: 'smooth' }); }; }
+  else if (idx < EVENTS.length - 1) { b.innerHTML = `${esc(t('walkNext'))} <span aria-hidden="true">→</span>`; b.onclick = () => go(idx + 1); }
+  else { b.innerHTML = `${esc(t('quizReview'))}`; b.onclick = () => setView('quiz'); }
+}
+// 지금 장면의 퀴즈: 아래 조작부의 카드에서 창으로 연다
+function updateQuizBtn() {
+  const e = EVENTS[idx], done = state.quiz[e.id] === true;
+  $('#quizBtn').classList.toggle('done', done);
+  $('#quizBtn b').textContent = done ? `${t('tabQuiz')} ★` : t('tabQuiz');
+}
+function openSceneQuiz() {
+  const e = EVENTS[idx], q = e.quiz, answered = state.quiz[e.id];
+  $('#quizDlgBody').innerHTML = `<section class="quizcard" aria-label="${esc(t('quizLabel'))}" style="--c:${PERIODS[e.p].color}">
+    <div class="eyebrow">${esc(e.title)} · ${esc(PLACES[e.place].name)}</div>
     <h4>${esc(t('quizLabel'))} ${answered === true ? '<span class="star">★</span>' : ''}</h4>
     <p class="q">${esc(q.q)}</p>
     <div class="opts">${q.options.map((o, i) => `<button data-opt="${i}">${esc(o)}</button>`).join('')}</div>
     <p class="explain" hidden></p>
-  </section>
-  <nav class="scene-nav">
-    ${idx > 0 ? `<button data-go="${idx - 1}" class="sn prev"><small>${esc(t('prevSceneSmall'))}</small>${esc(EVENTS[idx - 1].title)}</button>` : '<span></span>'}
-    ${idx < EVENTS.length - 1 ? `<button data-go="${idx + 1}" class="sn next"><small>${esc(t('nextSceneSmall', { p: PLACES[EVENTS[idx + 1].place].name }))}</small>${esc(EVENTS[idx + 1].title)} →</button>` : `<button class="sn next" data-view-go="quiz"><small>${esc(t('journeyDone'))}</small>${esc(t('quizReview'))}</button>`}
-  </nav>`;
-  $('#scene').scrollTop = 0;
-  $('#cardToggle').onclick = () => { setCard($('#scene').classList.contains('open') ? 'peek' : 'open'); window.recenterStage(); };
-  $('.cardbar', $('#scene')).ondblclick = () => setCard('open');
-  if (e.img) $('#heroBtn').onclick = () => openViewer(e);
-  $$('.say', $('#scene')).forEach(b => b.onclick = ev => { ev.stopPropagation(); speakWord(+b.dataset.say); });
-  $$('[data-go]', $('#scene')).forEach(b => b.onclick = () => go(+b.dataset.go));
-  $$('[data-view-go]', $('#scene')).forEach(b => b.onclick = () => setView(b.dataset.viewGo));
-  $$('.opts button', $('#scene')).forEach(b => b.onclick = () => answer(e, +b.dataset.opt, $('.quizcard', $('#scene'))));
+  </section>`;
+  const card = $('#quizDlgBody .quizcard');
+  $$('.opts button', card).forEach(b => b.onclick = () => { answer(e, +b.dataset.opt, card); updateQuizBtn(); });
+  $('#quizDlg').showModal();
 }
 
 function answer(e, i, card) {
@@ -574,16 +604,28 @@ function answer(e, i, card) {
   return ok;
 }
 
+// 시기마다 작은 그림 (아래 시간선): 탄생의 별, 요단의 비둘기, 우물, 갈릴리의 배, 산, 성, 언덕의 십자가, 떠오르는 해
+const PICONS = {
+  p1: '<path d="M12 3l2 5 5 .5-4 3.5 1.3 5L12 14.3 7.7 17l1.3-5-4-3.5 5-.5Z"/>',
+  p2: '<path d="M4 13c3-1 5-3 6-6 1 3 3 4 6 4l4-2-2 4c-1 3-4 5-8 5H5l2-2c-2 0-3-1-3-3Z"/>',
+  p3: '<path d="M6 10h12M7 10v9h10v-9M5 7h14l-2-3H7Z M12 13v3"/>',
+  p4: '<path d="M3 15h18l-3 4H6Z M12 4v11 M12 5l6 8h-6"/>',
+  p5: '<path d="M2 19l7-11 4 6 3-4 6 9Z"/>',
+  p6: '<path d="M3 20V10h3V7h3v3h2V6h2v4h2V7h3v3h3v10Z M10 20v-4h4v4"/>',
+  p7: '<path d="M12 3v14 M8 7h8 M3 21c3-4 6-5 9-5s6 1 9 5"/>',
+  p8: '<path d="M3 18h18 M6 18a6 6 0 0 1 12 0 M12 6V3 M5 9 3 7 M19 9l2-2"/>',
+};
 function renderTrack() {
-  let last = null;
-  $('#track').innerHTML = EVENTS.map((e, i) => {
-    const per = PERIODS[e.p], sep = last !== e.p; last = e.p;
-    return `${sep ? `<span class="pmark" style="--c:${per.color}">${esc(per.name)}</span>` : ''}<button class="tick" data-i="${i}" style="--c:${per.color}" title="${esc(e.title)} · ${esc(PLACES[e.place].name)}" aria-label="${i + 1}. ${esc(e.title)}"></button>`;
-  }).join('');
-  $$('.tick').forEach(b => b.onclick = () => go(+b.dataset.i));
+  const groups = Object.values(PERIODS).map(per => ({ per, evs: EVENTS.map((e, i) => [e, i]).filter(([e]) => e.p === per.id) }));
+  $('#track').innerHTML = groups.map(({ per, evs }) => `<div class="tseg" data-p="${per.id}" style="--c:${per.color};flex:${evs.length + 3}">
+      <button class="ticon" data-i="${evs[0][1]}" title="${esc(per.name)}" aria-label="${esc(per.name)}"><svg viewBox="0 0 24 24" aria-hidden="true">${PICONS[per.id] || ''}</svg></button>
+      <div class="tline">${evs.map(([e, i]) => `<button class="tick" data-i="${i}" title="${esc(e.title)} · ${esc(PLACES[e.place].name)}" aria-label="${i + 1}. ${esc(e.title)}"></button>`).join('')}</div>
+      <span class="tname">${esc(per.name)}</span></div>`).join('');
+  $$('#track [data-i]').forEach(b => b.onclick = () => go(+b.dataset.i));
 }
 function updateTrack() {
   $$('.tick').forEach((b, i) => { b.classList.toggle('now', i === idx); b.classList.toggle('seen', visited.has(EVENTS[i].id)); });
+  $$('.tseg').forEach(g => g.classList.toggle('now', g.dataset.p === EVENTS[idx].p));
   const now = $('.tick.now'), tr = $('#track');
   if (now) tr.scrollTo({ left: now.offsetLeft - tr.clientWidth / 2, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
 }
@@ -602,7 +644,7 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
     window.__stageScene = EVENTS[i]; // stage.js가 늦게 로드돼도 따라잡도록
     dispatchEvent(new CustomEvent('stage:scene', { detail: { ev: EVENTS[i] } }));
     history.replaceState(null, '', '#' + EVENTS[i].id);
-    $('#prev').disabled = idx === 0; $('#next').disabled = idx === EVENTS.length - 1;
+    $('#prev').disabled = idx === 0; $('#next').disabled = $('#skip').disabled = idx === EVENTS.length - 1;
     const p = PLACES[EVENTS[i].place];
     if (stepped) {
       banner(`<span class="wk">📍</span>${esc(EVENTS[prev].place === EVENTS[i].place ? t('samePlace') : t('arrive'))} · <b>${esc(p.name)}</b><small>${esc(EVENTS[i].when)}</small>`, 2600);
@@ -652,9 +694,12 @@ function speakQueue(items, onDone) {
   const next = () => {
     if (token !== speechToken) return;
     $$('.speaking').forEach(x => x.classList.remove('speaking'));
-    if (n >= queue.length) { speaking = false; setListenUI(); if (staged) stageBeat('end'); onDone && onDone(); return; }
+    if (n >= queue.length) { speaking = false; setListenUI(); showCaption(null); if (staged) stageBeat('end'); onDone && onDone(); return; }
     const it = queue[n++];
+    const pane = it.el && it.el.closest('.pane');
+    if (pane && pane.hidden) showTab(pane.dataset.pane);
     if (it.el) { it.el.classList.add('speaking'); scrollToEl(it.el); }
+    showCaption(it);
     if (it.beat) stageBeat(it.beat, it.s);
     let done = false, guard;
     const advance = d => { if (done) return; done = true; clearTimeout(guard); autoTimer = setTimeout(next, d); };
@@ -672,6 +717,15 @@ function speakQueue(items, onDone) {
   };
   next();
 }
+// 지도 위 자막: 지금 읽는 문장 (말씀이면 말하는 이도). 영화 자막처럼 지도 아래쪽 가운데에
+function showCaption(it) {
+  const c = $('#caption');
+  if (!it || !it.text) { c.classList.remove('show'); return; }
+  $('small', c).textContent = it.who || '';
+  c.classList.toggle('who', !!it.who);
+  $('p', c).textContent = it.text;
+  c.classList.add('show');
+}
 function scrollToEl(el) {
   // 낭독 중인 문단이 보이도록 해당 스크롤 영역만 움직인다 (창 전체가 밀리지 않게)
   const box = el.closest('#scene') || document.scrollingElement;
@@ -687,8 +741,9 @@ function sceneScript() {
   const jesus = e.words.some(w => w.j);
   items.push({ text: (jesus ? t('hisWords') : t('voicesOfDay')) + '.', el: $('.words-sec h3', sc), pause: 400 });
   e.words.forEach((w, i) => {
+    const who = w.j ? t('jesus') : w.who;
     if (!w.j) items.push({ text: `${w.who}.`, el: $(`blockquote[data-say="${i}"]`, sc), beat: 'w' + i });
-    items.push({ text: w.text, el: $(`blockquote[data-say="${i}"]`, sc), jesus: !!w.j, pause: 500, beat: 'w' + i });
+    items.push({ text: w.text, who, el: $(`blockquote[data-say="${i}"]`, sc), jesus: !!w.j, pause: 500, beat: 'w' + i });
   });
   return items;
 }
@@ -696,7 +751,7 @@ function speakScene(onDone) { speakQueue(sceneScript(), onDone); }
 function speakWord(i) {
   stopAuto();
   const w = EVENTS[idx].words[i];
-  speakQueue([{ text: w.text, el: $(`blockquote[data-say="${i}"]`, $('#scene')), jesus: !!w.j }]);
+  speakQueue([{ text: w.text, who: w.j ? t('jesus') : w.who, el: $(`blockquote[data-say="${i}"]`, $('#scene')), jesus: !!w.j }]);
 }
 const stageBeat = (beat, s) => dispatchEvent(new CustomEvent('stage:beat', { detail: { beat, s } }));
 function stopSpeech(keepAuto) {
@@ -704,6 +759,7 @@ function stopSpeech(keepAuto) {
   speechToken++; clearTimeout(autoTimer);
   if (synth) synth.cancel();
   speaking = false; $$('.speaking').forEach(x => x.classList.remove('speaking'));
+  showCaption(null);
   if (!keepAuto) stopAuto();
   setListenUI();
 }
@@ -721,13 +777,10 @@ function startAuto() {
   run();
 }
 function setListenUI() {
-  const l = $('#listen'), a = $('#auto');
-  l.classList.toggle('on', speaking && !autoOn);
-  $('.lbl', l).textContent = speaking && !autoOn ? t('stop') : t('listen');
-  $('.ico', l).textContent = speaking && !autoOn ? '■' : '🔊';
-  a.classList.toggle('on', autoOn);
-  $('.lbl', a).textContent = autoOn ? t('autoStop') : t('auto');
-  $('.ico', a).textContent = autoOn ? '❚❚' : '▶';
+  const l = $('#listen');
+  l.classList.toggle('on', speaking); // 재생 중이면 일시정지 모양
+  l.setAttribute('aria-label', speaking ? t('stop') : t('listenScene'));
+  $('#auto').checked = autoOn;
 }
 
 /* ---------- 말씀 모음 ---------- */
@@ -815,8 +868,8 @@ function renderQuizStep() {
 /* ---------- 진행 상황 · 도장 ---------- */
 function updateProgress() {
   const n = visited.size, total = EVENTS.length;
-  $('#progressText').textContent = `${n}/${total}`;
-  $('#ring').style.strokeDashoffset = String(97.4 * (1 - n / total));
+  $('#progressText').textContent = `${n} / ${total}`;
+  $('#ring').style.width = `${n / total * 100}%`;
 }
 function renderStamps() {
   $('#stampGrid').innerHTML = Object.values(PERIODS).map(p => {
@@ -829,7 +882,7 @@ function renderStamps() {
 /* ---------- 보기 전환 · 기타 ---------- */
 function setView(v) {
   $$('.view').forEach(m => m.hidden = m.id !== v);
-  $$('.tabs button').forEach(b => { b.classList.toggle('active', b.dataset.view === v); b.setAttribute('aria-selected', b.dataset.view === v); });
+  $$('.tabs button').forEach(b => { const on = b.dataset.view === v || (v === 'harmony' && b.dataset.view === 'words'); b.classList.toggle('active', on); b.setAttribute('aria-selected', on); });
   if (v !== 'journey') stopSpeech();
   if (v === 'words') renderWords();
   if (v === 'harmony') renderHarmony();
@@ -863,8 +916,18 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
 
   $('#prev').onclick = () => go(idx - 1);
   $('#next').onclick = () => go(idx + 1);
-  $('#listen').onclick = () => { if (speaking && !autoOn) stopSpeech(); else { stopAuto(); speakScene(); } };
-  $('#auto').onclick = () => { if (autoOn) stopSpeech(); else { stopSpeech(); startAuto(); } };
+  $('#skip').onclick = () => go(idx + 1);
+  $('#listen').onclick = () => { if (speaking) stopSpeech(); else { stopAuto(); speakScene(); } };
+  $('#auto').onchange = () => { stopSpeech(); if ($('#auto').checked) startAuto(); };
+  $('#quizBtn').onclick = openSceneQuiz;
+  $('#closeQuiz').onclick = () => $('#quizDlg').close();
+  // 설정: 톱니바퀴를 누르면 언어·대조표·발자취
+  const panel = $('#settingsPanel'), gear = $('#gear');
+  const closePanel = () => { panel.hidden = true; gear.setAttribute('aria-expanded', 'false'); };
+  gear.onclick = ev => { ev.stopPropagation(); panel.hidden = !panel.hidden; gear.setAttribute('aria-expanded', String(!panel.hidden)); };
+  document.addEventListener('click', ev => { if (!panel.hidden && !panel.contains(ev.target)) closePanel(); });
+  $('#openHarmony').onclick = () => { closePanel(); setView('harmony'); };
+  $('#openStamps').onclick = () => { closePanel(); renderStamps(); $('#stamps').showModal(); };
   $('#fitAll').onclick = () => { fitMode = 'all'; fitAll(); $('#fitAll').classList.add('active'); $('#fitNow').classList.remove('active'); };
   $('#fitNow').onclick = () => { fitMode = 'scene'; if (!frameStage(idx, 900)) frame([EVENTS[idx].place], 900); $('#fitNow').classList.add('active'); $('#fitAll').classList.remove('active'); };
   $$('.tabs button').forEach(b => b.onclick = () => setView(b.dataset.view));

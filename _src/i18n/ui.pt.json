@@ -98,13 +98,68 @@
  "reviewScene": "Ver a cena de novo",
  "nextQ": "Próxima →",
  "footsteps": "Passos {s}/{n} · ★ {r}",
- "gospels": { "mt": ["Mateus", "Mt"], "mk": ["Marcos", "Mc"], "lk": ["Lucas", "Lc"], "jn": ["João", "Jo"], "acts": ["Atos", "At"] },
+ "gospels": {
+  "mt": [
+   "Mateus",
+   "Mt"
+  ],
+  "mk": [
+   "Marcos",
+   "Mc"
+  ],
+  "lk": [
+   "Lucas",
+   "Lc"
+  ],
+  "jn": [
+   "João",
+   "Jo"
+  ],
+  "acts": [
+   "Atos",
+   "At"
+  ]
+ },
  "map": {
-  "갈릴리": "GALILEIA", "사마리아": "SAMARIA", "유대": "JUDEIA", "베레아": "PEREIA", "데가볼리": "DECÁPOLIS", "빌립의 영지": "TETRARQUIA DE FILIPE",
-  "페니키아": "FENÍCIA", "이두매": "IDUMEIA", "애 굽": "EGITO", "시 나 이": "SINAI",
-  "디베랴": "Tiberíades", "가이사랴": "Cesareia", "욥바": "Jope", "세바스테": "Sebaste", "마케루스": "Maqueronte", "가사": "Gaza", "라피아": "Ráfia",
-  "리노코루라": "Rinocorura", "펠루시움": "Pelúsio", "부바스티스": "Bubástis", "레온토폴리스": "Leontópolis", "헬리오폴리스 (온)": "Heliópolis (Om)",
-  "멤피스": "Mênfis", "알렉산드리아": "Alexandria",
-  "지 중 해": "MAR MEDITERRÂNEO", "갈릴리 바다": "Mar da Galileia", "사해": "Mar Morto", "요단 강": "Rio Jordão", "나일 강": "Nilo", "수에즈 만": "Golfo de Suez"
- }
+  "갈릴리": "GALILEIA",
+  "사마리아": "SAMARIA",
+  "유대": "JUDEIA",
+  "베레아": "PEREIA",
+  "데가볼리": "DECÁPOLIS",
+  "빌립의 영지": "TETRARQUIA DE FILIPE",
+  "페니키아": "FENÍCIA",
+  "이두매": "IDUMEIA",
+  "애 굽": "EGITO",
+  "시 나 이": "SINAI",
+  "디베랴": "Tiberíades",
+  "가이사랴": "Cesareia",
+  "욥바": "Jope",
+  "세바스테": "Sebaste",
+  "마케루스": "Maqueronte",
+  "가사": "Gaza",
+  "라피아": "Ráfia",
+  "리노코루라": "Rinocorura",
+  "펠루시움": "Pelúsio",
+  "부바스티스": "Bubástis",
+  "레온토폴리스": "Leontópolis",
+  "헬리오폴리스 (온)": "Heliópolis (Om)",
+  "멤피스": "Mênfis",
+  "알렉산드리아": "Alexandria",
+  "지 중 해": "MAR MEDITERRÂNEO",
+  "갈릴리 바다": "Mar da Galileia",
+  "사해": "Mar Morto",
+  "요단 강": "Rio Jordão",
+  "나일 강": "Nilo",
+  "수에즈 만": "Golfo de Suez"
+ },
+ "tabStory": "História",
+ "tabText": "Texto",
+ "tabCompare": "Comparar",
+ "continueReading": "Continuar lendo",
+ "viewPainting": "Ver a pintura",
+ "rememberScene": "Lembra desta cena?",
+ "settings": "Configurações",
+ "nextScene": "Próxima cena",
+ "compareNote": "Quais Evangelhos registram esta cena, com capítulo e versículo: o mesmo fato visto por testemunhas diferentes.",
+ "fullHarmony": "Ver a harmonia completa"
 }

@@ -98,13 +98,68 @@
  "reviewScene": "Revoir la scène",
  "nextQ": "Suivante →",
  "footsteps": "Empreintes {s}/{n} · ★ {r}",
- "gospels": { "mt": ["Matthieu", "Mt"], "mk": ["Marc", "Mc"], "lk": ["Luc", "Lc"], "jn": ["Jean", "Jn"], "acts": ["Actes", "Ac"] },
+ "gospels": {
+  "mt": [
+   "Matthieu",
+   "Mt"
+  ],
+  "mk": [
+   "Marc",
+   "Mc"
+  ],
+  "lk": [
+   "Luc",
+   "Lc"
+  ],
+  "jn": [
+   "Jean",
+   "Jn"
+  ],
+  "acts": [
+   "Actes",
+   "Ac"
+  ]
+ },
  "map": {
-  "갈릴리": "GALILÉE", "사마리아": "SAMARIE", "유대": "JUDÉE", "베레아": "PÉRÉE", "데가볼리": "DÉCAPOLE", "빌립의 영지": "TÉTRARCHIE DE PHILIPPE",
-  "페니키아": "PHÉNICIE", "이두매": "IDUMÉE", "애 굽": "ÉGYPTE", "시 나 이": "SINAÏ",
-  "디베랴": "Tibériade", "가이사랴": "Césarée", "욥바": "Jaffa", "세바스테": "Sébaste", "마케루스": "Machéronte", "가사": "Gaza", "라피아": "Raphia",
-  "리노코루라": "Rhinocorura", "펠루시움": "Péluse", "부바스티스": "Bubastis", "레온토폴리스": "Léontopolis", "헬리오폴리스 (온)": "Héliopolis (On)",
-  "멤피스": "Memphis", "알렉산드리아": "Alexandrie",
-  "지 중 해": "MER MÉDITERRANÉE", "갈릴리 바다": "Mer de Galilée", "사해": "Mer Morte", "요단 강": "Jourdain", "나일 강": "Nil", "수에즈 만": "Golfe de Suez"
- }
+  "갈릴리": "GALILÉE",
+  "사마리아": "SAMARIE",
+  "유대": "JUDÉE",
+  "베레아": "PÉRÉE",
+  "데가볼리": "DÉCAPOLE",
+  "빌립의 영지": "TÉTRARCHIE DE PHILIPPE",
+  "페니키아": "PHÉNICIE",
+  "이두매": "IDUMÉE",
+  "애 굽": "ÉGYPTE",
+  "시 나 이": "SINAÏ",
+  "디베랴": "Tibériade",
+  "가이사랴": "Césarée",
+  "욥바": "Jaffa",
+  "세바스테": "Sébaste",
+  "마케루스": "Machéronte",
+  "가사": "Gaza",
+  "라피아": "Raphia",
+  "리노코루라": "Rhinocorura",
+  "펠루시움": "Péluse",
+  "부바스티스": "Bubastis",
+  "레온토폴리스": "Léontopolis",
+  "헬리오폴리스 (온)": "Héliopolis (On)",
+  "멤피스": "Memphis",
+  "알렉산드리아": "Alexandrie",
+  "지 중 해": "MER MÉDITERRANÉE",
+  "갈릴리 바다": "Mer de Galilée",
+  "사해": "Mer Morte",
+  "요단 강": "Jourdain",
+  "나일 강": "Nil",
+  "수에즈 만": "Golfe de Suez"
+ },
+ "tabStory": "Récit",
+ "tabText": "Texte",
+ "tabCompare": "Comparer",
+ "continueReading": "Continuer la lecture",
+ "viewPainting": "Voir le tableau",
+ "rememberScene": "Vous souvenez-vous de cette scène ?",
+ "settings": "Réglages",
+ "nextScene": "Scène suivante",
+ "compareNote": "Quels Évangiles rapportent cette scène, avec chapitre et verset : le même événement vu par des témoins différents.",
+ "fullHarmony": "Voir la synopse complète"
 }
