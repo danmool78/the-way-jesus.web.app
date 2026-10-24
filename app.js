@@ -189,6 +189,8 @@ function applyView() {
   if (!r.width) return;
   // 화면 비율에 맞춰 보이는 영역 확장
   let { x, y, w, h } = view;
+  // 숫자가 아닌 값(Infinity·NaN)은 viewBox·transform에 쓰지 않는다 — 콘솔 오류만 수십 개 쏟아진다
+  if (!r.height || ![x, y, w, h].every(Number.isFinite) || w <= 0 || h <= 0) return;
   const ar = r.width / r.height;
   if (w / h > ar) { const nh = w / ar; y -= (nh - h) / 2; h = nh; } else { const nw = h * ar; x -= (nw - w) / 2; w = nw; }
   map.setAttribute('viewBox', `${x} ${y} ${w} ${h}`);
@@ -324,7 +326,9 @@ function animateTo(target, ms) {
   // 로그 스케일 보간: 크게 확대/축소할 때도 자연스럽게
   const lerp = (a, b, k) => a + (b - a) * k;
   const step = now => {
-    const k = ms ? Math.min(1, (now - t0) / ms) : 1, e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+    // rAF가 넘겨주는 시각은 그 프레임이 시작된 때라 t0(performance.now())보다 이를 수 있다 — 첫 로딩처럼 긴 작업 뒤에는 몇 초까지.
+    // 그러면 k가 음수가 되어 3차 곡선이 수백 배로 튀고, 로그 보간한 w·h가 Infinity가 되었다. 0 아래로는 자른다
+    const k = ms ? Math.min(1, Math.max(0, (now - t0) / ms)) : 1, e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
     const w = Math.exp(lerp(Math.log(from.w), Math.log(target.w), e)), h = Math.exp(lerp(Math.log(from.h), Math.log(target.h), e));
     const cx = lerp(from.x + from.w / 2, target.x + target.w / 2, e), cy = lerp(from.y + from.h / 2, target.y + target.h / 2, e);
     view = { x: cx - w / 2, y: cy - h / 2, w, h };
