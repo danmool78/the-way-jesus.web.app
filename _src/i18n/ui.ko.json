@@ -170,6 +170,7 @@
  "fullHarmony": "사복음서 대조표 전체 보기",
  "map3d": "3D 지형 보기",
  "tiltUp": "더 눕혀 보기",
+ "plainTerrain": "지형 색 끄기 (길이 잘 보이게)",
  "tiltDown": "더 내려다보기",
  "rotate": "돌리기",
  "resetView": "처음 시점",

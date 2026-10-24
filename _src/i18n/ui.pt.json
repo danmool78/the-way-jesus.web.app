@@ -169,6 +169,7 @@
  "fullHarmony": "Ver a harmonia completa",
  "map3d": "Ver relevo em 3D",
  "tiltUp": "Inclinar para o horizonte",
+ "plainTerrain": "Terreno sem cor (rotas mais visíveis)",
  "tiltDown": "Olhar mais de cima",
  "rotate": "Girar",
  "resetView": "Vista inicial",
