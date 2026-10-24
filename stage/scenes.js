@@ -457,7 +457,7 @@ export const SCRIPTS = {
   e13: {
     env: 'night', wide: 1.2,
     props: {
-      house: ['house', -0.75, -0.76, { scale: 0.9 }],
+      house: ['house', -0.75, -0.76, { scale: 0.9, terrain: false }], // 3D 지형에서는 도성 모형의 집들이 대신한다
       lamp: ['lamp', 0, 0.12],
     },
     cast: {
@@ -2138,13 +2138,15 @@ export const SCRIPTS = {
 
   /* 55. 골고다 — 절제된 표현: 십자가는 멀리 윤곽으로만, 고통·폭력은 그리지 않는다.
      조롱과 십자가 지기(p0.0–p0.1)는 낭독만 하고 무대는 비워 둔다. 사람들은 십자가를 향해 등을 보인다. */
+  // 무대 바닥은 핀(둘째 성벽 바로 밖)에서 북서쪽 빈 들로 조금 옮긴다(at) — 3D 지도에서 무대는 실제보다 훨씬 크게 그려져
+  // 핀에 두면 언덕과 무덤이 성벽·도성 모형 위에 걸쳐 떠 보였다. 언덕도 세 십자가가 겨우 올라설 만큼 낮고 작게
   e55: {
-    env: 'dusk', wide: 1.2, solemn: true,
+    env: 'dusk', wide: 1.2, solemn: true, at: [31.7797, 35.2272],
     props: {
-      hill: ['hill', 0, -0.6, { w: 1.55, h: 0.3, d: 0.75 }],
-      crosses: ['crosses', 0, -0.55, { y: 0.2 }],
+      hill: ['hill', 0, -0.6, { w: 1.05, h: 0.24, d: 0.5, soft: true, color: '#9a8a6a' }],
+      crosses: ['crosses', 0, -0.55, { y: 0.18 }],
       beam: ['beam', 0, -0.5, { r: 0.35, h: 3 }],
-      tomb: ['tomb', 1.3, -0.2, { scale: 0.85, rot: -0.4 }],
+      tomb: ['tomb', 1.15, -0.35, { scale: 0.7, rot: -0.4 }],
     },
     cast: {
       jesus: ['crossed', 0, -0.5, 0, { silhouette: true, y: 0.5, gaze: false }],
@@ -2189,7 +2191,7 @@ export const SCRIPTS = {
   /* 56. 마리아야 — 동산 무덤의 새벽. 골고다의 어둠과 대비되게 장밋빛 새벽(dawn)에서 밝은 아침(day)으로, 꽃과 올리브 나무가 있는 동산.
      열린 무덤, 달려오는 두 제자, 무덤 안의 두 천사, 동산지기로 여겼던 부활하신 예수(밝은 흰옷) */
   e56: {
-    env: 'dawn', wide: 1.4,
+    env: 'dawn', wide: 1.4, at: [31.7797, 35.2272], // 골고다(e55)와 같은 자리 — 성벽에 걸치지 않게
     props: {
       tomb: ['tomb', 0.9, -0.5, { scale: 0.9, rot: -0.35 }],
       beam: ['beam', 0.9, -0.3, { on: 'angel1', r: 0.4, h: 2.4, peak: 0.35 }],
