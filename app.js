@@ -1334,8 +1334,14 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   $('#skip').onclick = () => go(idx + 1);
   $('#listen').onclick = () => { if (speaking) stopSpeech(); else { stopAuto(); speakScene(() => { if (idx === EVENTS.length - 1) endJourney(true); }); } };
   // stopSpeech가 스위치를 autoOn(=false)으로 되돌리므로 켠 상태를 먼저 읽어 둔다.
-  // 이야기를 읽는 중에 켜면 낭독을 끊지 않고 그대로 이어 간다 (startAuto)
-  $('#auto').onchange = () => { const on = $('#auto').checked; if (on && speaking && sceneReading) startAuto(); else { stopSpeech(); if (on) startAuto(); } };
+  // 이야기를 읽는 중에는 켜도 꺼도 낭독을 끊지 않는다: 켜면 끝난 뒤 다음 장소로(startAuto), 끄면 이 장면만 마저 읽고 멈춘다
+  $('#auto').onchange = () => {
+    const on = $('#auto').checked;
+    if (speaking && sceneReading) {
+      if (on) startAuto();
+      else { stopAuto(); speechDone = () => { if (idx === EVENTS.length - 1) endJourney(true); }; }
+    } else { stopSpeech(); if (on) startAuto(); }
+  };
   $('#music').hidden = !EVENTS.some(e => e.music);
   $('#music').onclick = () => { bgmPref = !bgmPref; try { localStorage.setItem(BGM.key, bgmPref ? 'on' : 'off'); } catch { /* 이번 방문만 */ } bgmFollow(); };
   $('#quizBtn').onclick = openSceneQuiz;
