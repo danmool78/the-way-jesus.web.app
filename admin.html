@@ -38,12 +38,29 @@ input:focus,textarea:focus{border-color:var(--gold)}
 .msg{min-height:1.6em;margin:8px 0 0;color:var(--muted)}
 .msg.bad{color:var(--bad)}
 .note{color:var(--faint);font-size:13px;margin:0 0 14px}
-.scene{margin:26px 0 8px;display:flex;align-items:baseline;gap:10px}
-.scene h2{margin:0;font:700 17px var(--serif);color:var(--gold2)}
-.scene span{color:var(--faint);font-size:13px}
+.tools{display:flex;gap:8px;justify-content:flex-end;margin:-4px 0 10px}
+details>summary{list-style:none;cursor:pointer;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;user-select:none}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:'›';display:inline-block;width:12px;color:var(--faint);transition:transform .15s}
+details[open]>summary::before{transform:rotate(90deg)}
+details>summary span{color:var(--faint);font-size:13px}
+.mark{display:none;font:600 11px var(--sans);font-style:normal;color:#1b140c;background:var(--gold);border-radius:6px;padding:1px 6px}
+details:has(.word.dirty)>summary .mark{display:inline}
+.period{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--c);border-radius:14px;margin:10px 0;padding:0 14px}
+.period>summary{padding:14px 0}
+.period>summary b{font:700 18px var(--serif);color:var(--gold2)}
+.period .dot{width:10px;height:10px;border-radius:50%;background:var(--c);align-self:center}
+.period[open]{padding-bottom:10px}
+.scene{border-top:1px solid var(--line)}
+.scene>summary{padding:11px 0 11px 6px}
+.scene>summary b{font:700 16px var(--serif);color:var(--ink)}
+.scene[open]>summary b{color:var(--gold2)}
+.scene .word{background:var(--panel2);margin-left:6px}
 .word{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--line);border-radius:12px;padding:12px 14px;margin:8px 0}
 .word.jesus{border-left-color:var(--gold)}
 .word.dirty{border-color:var(--gold)}
+.word.playing{box-shadow:0 0 0 1px var(--gold2)}
+.word .play{white-space:nowrap}
 .word .meta{display:grid;grid-template-columns:1fr 1fr 140px;gap:8px;margin-bottom:8px}
 select.f{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:8px 9px;outline:none;font:inherit;color:inherit}
 .word label{display:block;font-size:12px;color:var(--faint);margin-bottom:2px}
@@ -84,6 +101,7 @@ select.f{width:100%;background:var(--panel2);border:1px solid var(--line);border
   </section>
   <section id="editor" hidden>
     <p class="note">한국어 말씀을 고칩니다. 저장하면 GitHub에 기록되고, 몇 분 안에 그 장면의 녹음 낭독을 새로 만들어 운영 사이트에 반영합니다. 목소리에서 <b>Gemini 성우</b>를 고르면 그 말씀만 Gemini 성우(다정 리딩북과 같은 모델)로 녹음합니다. 다른 언어판의 말씀은 바뀌지 않습니다.</p>
+    <div class="tools"><button id="openAll" class="ghost">모두 펼치기</button><button id="closeAll" class="ghost">모두 접기</button></div>
     <div id="list"></div>
   </section>
 </main>
