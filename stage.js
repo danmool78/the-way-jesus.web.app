@@ -144,6 +144,7 @@ function setScene(ev) {
   size = { w: 0, h: 0 }; // 넓은 무대(wide)가 바뀌었을 수 있으니 다시 잰다
   Object.entries(script.props || {}).forEach(([name, [kind, x, z, o]]) => {
     const p = makeProp(kind, x, z, o);
+    p.terrainHide = o?.terrain === false; // 3D 지형의 도성 모형에 이미 있는 건물 — 무대에 또 세우면 모형 위에 걸쳐 떠 보인다
     props[name] = p; stageGroup.add(p.obj);
   });
   Object.entries(script.cast).forEach(([name, [type, x, z, face, o = {}]]) => {
@@ -325,6 +326,7 @@ function frame() {
   Object.values(props).forEach(p => {
     if (p.follow) { p.goal.copy(p.follow.pos); p.obj.position.x = p.follow.pos.x; p.obj.position.z = p.follow.pos.y; }
     p.update(time, dt, envNow);
+    if (p.terrainHide && window.terrainOn) p.obj.visible = false;
   });
   // 지면 높이: 언덕 같은 소품 위에 선 사람은 그 표면에 올라선다 (배에 탄 사람, 높이를 직접 정한 사람은 제외)
   const grounds = Object.values(props).filter(p => p.heightAt);

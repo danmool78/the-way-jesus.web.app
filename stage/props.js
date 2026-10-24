@@ -323,8 +323,17 @@ const MAKERS = {
   // 낮은 언덕 (골고다)
   hill(o = {}) {
     const g = new THREE.Group(), W = o.w || 1.3, Hh = o.h || 0.28, D = o.d || 0.7;
-    const h = mesh(sphere(1, 40, 16, 0, Math.PI * 2, 0, Math.PI / 2), mat('#857664', { roughness: 1 }), g, [0, 0, 0], [W, Hh, D]);
+    const geo = sphere(1, 40, 16, 0, Math.PI * 2, 0, Math.PI / 2);
+    let m = mat(o.color || '#857664', { roughness: 1 });
+    if (o.soft) { // 밑동을 서서히 투명하게 — 무대는 지도 위에 겹쳐 그리는 그림이라 언덕 테두리가 또렷하면 땅 위에 얹힌 접시처럼 떠 보인다
+      const p = geo.attributes.position, c = [];
+      for (let i = 0; i < p.count; i++) { const a = THREE.MathUtils.smoothstep(p.getY(i), 0, 0.55); c.push(1, 1, 1, a); }
+      geo.setAttribute('color', new THREE.Float32BufferAttribute(c, 4));
+      m = new THREE.MeshStandardMaterial({ color: o.color || '#857664', roughness: 1, vertexColors: true, transparent: true, depthWrite: false });
+    }
+    const h = mesh(geo, m, g, [0, 0, 0], [W, Hh, D]);
     h.receiveShadow = true;
+    if (o.soft) h.castShadow = false; // 비치는 밑동이 바닥에 진한 그림자 테를 만들지 않게
     const P = new Prop(g);
     // 언덕 위 (x, z) 지점의 지면 높이 — 사람이 비탈에 파묻히지 않고 그 위에 서도록
     P.heightAt = (x, z) => {

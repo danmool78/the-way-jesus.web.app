@@ -362,7 +362,7 @@ function placeLabels() {
       if (pr > 0 && taken.some(b => box[0] < b[2] && box[2] > b[0] && box[1] < b[3] && box[3] > b[1])) show = false;
       else taken.push(box);
     }
-    L.el.style.transform = `translate(${x}px, ${y}px)`;
+    L.el.style.transform = `translate(${x}px, ${y}px) translateX(-50%)`; // 이름표 가운데(점)를 장소에 — 왼쪽 끝을 맞추면 점이 이름표 너비 절반만큼 오른쪽에 찍혔다
     L.el.style.opacity = show ? 1 : 0;
     L.el.classList.toggle('now', L.key === cur);
   });
