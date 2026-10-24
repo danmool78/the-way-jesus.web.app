@@ -150,6 +150,9 @@ function setScene(ev) {
     const p = makeProp(kind, x, z, o);
     p.terrainHide = o?.terrain === false; // 3D 지형의 도성 모형에 이미 있는 건물 — 무대에 또 세우면 모형 위에 걸쳐 떠 보인다
     // lift: 3D 지형 안에서 소품을 그 자리의 땅 높이로 올리고 내리는 받침 (2D 무대에서는 늘 0)
+    // 바닥 넓이(소품 자리에서 앞뒤좌우로 얼마나 퍼지나): 바닥이 평평한 건물을 비탈에 앉힐 때 쓴다
+    p.obj.updateMatrixWorld(true); const fb = new THREE.Box3().setFromObject(p.obj);
+    p.foot = [fb.min.x - p.obj.position.x, fb.max.x - p.obj.position.x, fb.min.z - p.obj.position.z, fb.max.z - p.obj.position.z];
     p.lift = new THREE.Group(); p.lift.add(p.obj); p.kind = kind;
     props[name] = p; stageGroup.add(p.lift);
   });
@@ -359,6 +362,8 @@ const skyC = new THREE.Color(), toneH = new THREE.Color(), toneS = new THREE.Col
 const groundAt = (x, z) => inTerrain ? (window.terrain3d.heightAt(base.x + x * base.k, base.z + z * base.k) - base.y) / base.k : 0;
 let bigNow = 1;
 // 땅에 붙은 소품: 지형과 같은 고정 축척에 둔다. 나머지(사람 곁의 십자가·배·짐승·상·바구니…)는 사람과 함께 커진다
+// 바닥이 평평한 건물: 가운데 땅 높이에 앉히면 비탈 위쪽이 땅에 묻힌다(골짜기 바닥의 실로암 못) — 바닥 네 귀퉁이 가운데 가장 높은 땅에 앉힌다
+const FLAT = new Set(['pool', 'house', 'well', 'synagogue', 'temple', 'gate', 'walls', 'cliffshrine']);
 const FIXED = new Set(['water', 'grass', 'hill', 'tomb', 'temple', 'house', 'rocks', 'figtree', 'synagogue', 'well', 'pool', 'flowers', 'gate', 'field', 'cliffshrine', 'palm', 'walls', 'olive', 'star', 'host', 'rain']);
 // '@at' 명령: 3D 지형에서만 무대 바닥을 다른 실제 지점으로 옮긴다 — 무대 (x, z) 자리가 그 위경도에 오도록.
 // 나사렛 회당에서 낭떠러지로 끌고 가는 대목처럼, 이야기가 근처의 실제 지형으로 옮겨 갈 때. 2D 무대는 그대로 둔다
@@ -423,7 +428,9 @@ function frame() {
       // 땅에 붙은 소품은 무대를 옮겨도(@at) 제자리에 남는다
       const stay = FIXED.has(p.kind);
       p.lift.position.x = stay ? (home.x - base.x) / base.k : 0; p.lift.position.z = stay ? (home.z - base.z) / base.k : 0;
-      p.lift.position.y = groundAt(p.obj.position.x + p.lift.position.x, p.obj.position.z + p.lift.position.z);
+      const ox = p.obj.position.x + p.lift.position.x, oz = p.obj.position.z + p.lift.position.z, f = p.foot;
+      p.lift.position.y = FLAT.has(p.kind) ? Math.max(groundAt(ox, oz), groundAt(ox + f[0], oz + f[2]), groundAt(ox + f[1], oz + f[2]), groundAt(ox + f[0], oz + f[3]), groundAt(ox + f[1], oz + f[3]))
+        : groundAt(ox, oz);
       if (!FIXED.has(p.kind)) { // 사람과 함께 키운다: 크기는 제자리에서, 높이(십자가가 선 언덕 위, 나는 비둘기)는 바닥에서부터
         if (p.fade === 'scale') p.obj.scale.multiplyScalar(bigNow); else p.obj.scale.copy(p.base).multiplyScalar(bigNow);
         p.lift.position.y += p.obj.position.y * (bigNow - 1);
