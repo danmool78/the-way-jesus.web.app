@@ -56,6 +56,12 @@ details:has(.word.dirty)>summary .mark{display:inline}
 .scene>summary b{font:700 16px var(--serif);color:var(--ink)}
 .scene[open]>summary b{color:var(--gold2)}
 .scene .word{background:var(--panel2);margin-left:6px}
+.part{margin:10px 0 4px 6px;font:600 12px var(--sans);letter-spacing:.08em;color:var(--faint)}
+.word.story{border-left-color:var(--muted)}
+.word.story textarea{font-size:15px;min-height:7.6em}
+.word.story .meta{grid-template-columns:1fr 140px;align-items:end}
+.ptitle{font:600 13px var(--sans);color:var(--muted);padding-bottom:9px}
+
 .word{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--line);border-radius:12px;padding:12px 14px;margin:8px 0}
 .word.jesus{border-left-color:var(--gold)}
 .word.dirty{border-color:var(--gold)}
@@ -69,12 +75,12 @@ select.f{width:100%;background:var(--panel2);border:1px solid var(--line);border
 .word .state{flex:1;font-size:13px;color:var(--muted)}
 .word .state.ok{color:var(--ok)}.word .state.bad{color:var(--bad)}
 .empty{color:var(--faint);text-align:center;margin:40px 0}
-@media (max-width:560px){header{flex-wrap:wrap}#search{max-width:none;order:3}.word .meta{grid-template-columns:1fr}}
+@media (max-width:560px){header{flex-wrap:wrap}#search{max-width:none;order:3}.word .meta{grid-template-columns:1fr}.word.story .meta{grid-template-columns:1fr 140px}.word.story textarea{min-height:10em}}
 </style>
 </head>
 <body>
 <header>
-  <h1>그 길 · 말씀 관리</h1>
+  <h1>그 길 · 해설·말씀 관리</h1>
   <div class="grow"></div>
   <input id="search" type="search" placeholder="말씀·인물·장면 찾기" aria-label="말씀 찾기" hidden>
   <button id="logout" class="ghost" hidden>나가기</button>
@@ -100,7 +106,7 @@ select.f{width:100%;background:var(--panel2);border:1px solid var(--line);border
     <p id="loginMsg" class="msg"></p>
   </section>
   <section id="editor" hidden>
-    <p class="note">한국어 말씀을 고칩니다. 저장하면 GitHub에 기록되고, 몇 분 안에 그 장면의 녹음 낭독을 새로 만들어 운영 사이트에 반영합니다. 목소리에서 <b>Gemini 성우</b>를 고르면 그 말씀만 Gemini 성우(다정 리딩북과 같은 모델)로 녹음합니다. 다른 언어판의 말씀은 바뀌지 않습니다.</p>
+    <p class="note">한국어 해설과 말씀을 고칩니다. 저장하면 GitHub에 기록되고, 몇 분 안에 그 장면의 녹음 낭독을 새로 만들어 운영 사이트에 반영합니다. 목소리에서 <b>Gemini 성우</b>를 고르면 그 글만 Gemini 성우(다정 리딩북과 같은 모델)로 녹음합니다. 다른 언어판의 말씀은 바뀌지 않습니다.</p>
     <div class="tools"><button id="openAll" class="ghost">모두 펼치기</button><button id="closeAll" class="ghost">모두 접기</button></div>
     <div id="list"></div>
   </section>

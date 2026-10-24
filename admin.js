@@ -67,6 +67,7 @@ const sentences = text => text.match(/[^.?!…。！？]+[.?!…。！？]*["”
 const voiceKey = (voice, text) => { let h = 0x811c9dc5; for (const c of `${voice}|${text}`) { h ^= c.codePointAt(0); h = Math.imul(h, 0x01000193) >>> 0; } return h.toString(36); };
 let voiceIndex = {};
 const loadVoices = () => fetch('assets/voice/ko/index.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : {}).then(j => { voiceIndex = j; }).catch(() => {});
+// 해설 문단(story)은 말하는 이가 없어 늘 해설 목소리(Aoede)
 const clipsOf = w => sentences(w.text).map(t => t.trim()).filter(Boolean)
   .map(t => voiceKey(`${w.tts === 'gemini' ? 'gemini-' : ''}${w.who === '예수' ? 'Algenib' : 'Aoede'}`, t));
 const player = new Audio();
@@ -80,7 +81,7 @@ function play(box) {
   if (playing === box) { stopPlay(); return; }
   stopPlay();
   const clips = clipsOf(original(box));
-  if (!clips.every(k => voiceIndex[k])) { setState(box, '이 말씀의 녹음이 아직 없습니다 (앱에서는 브라우저 음성으로 읽힘)', 'bad'); return; }
+  if (!clips.every(k => voiceIndex[k])) { setState(box, '녹음이 아직 없습니다 (앱에서는 브라우저 음성으로 읽힘)', 'bad'); return; }
   playing = box; box.classList.add('playing'); $('.play', box).textContent = '■ 멈춤';
   let n = 0;
   const next = () => { if (playing !== box) return; if (n >= clips.length) { stopPlay(); return; } player.src = `assets/voice/ko/${clips[n++]}.mp3`; player.play().catch(stopPlay); };
@@ -88,16 +89,23 @@ function play(box) {
   next();
 }
 
-// 시대 → 장면 → 말씀, 시대와 장면은 접었다 폈다 (펼친 자리는 이 브라우저에 기억해 둔다)
+// 시대 → 장면 → 해설·말씀, 시대와 장면은 접었다 폈다 (펼친 자리는 이 브라우저에 기억해 둔다)
 const OPEN = 'theway-admin-open';
 let opened = new Set(); try { opened = new Set(JSON.parse(localStorage.getItem(OPEN) || '[]')); } catch { /* 처음 */ }
 const keepOpen = () => { try { localStorage.setItem(OPEN, JSON.stringify([...opened])); } catch { /* 이번 방문만 */ } };
+const ttsSelect = tts => `<div><label>목소리</label><select class="f tts"><option value="">Google 음성</option><option value="gemini"${tts === 'gemini' ? ' selected' : ''}>Gemini 성우</option></select></div>`;
+const actHtml = '<div class="act"><button class="ghost play" type="button">▶ 듣기</button><span class="state"></span><button class="ghost undo" hidden>되돌리기</button><button class="btn save" disabled>저장</button></div>';
+// 해설 문단: 글과 목소리만 (data-kind="story", data-w는 문단 번호)
+function storyHtml(e, c, i) {
+  return `<div class="word story" data-kind="story" data-e="${e.id}" data-w="${i}">
+        <div class="meta"><b class="ptitle">해설 ${i + 1}</b>${ttsSelect((c.storyTts || []).includes(i) ? 'gemini' : '')}</div>
+        <textarea class="text" rows="4">${esc(c.story[i])}</textarea>${actHtml}</div>`;
+}
 function wordHtml(e, w, i) {
   return `<div class="word${w.who === '예수' ? ' jesus' : ''}" data-e="${e.id}" data-w="${i}">
         <div class="meta"><div><label>말하는 이</label><input class="f who" value="${esc(w.who)}"></div><div><label>출처</label><input class="f ref" value="${esc(w.ref)}"></div>
-          <div><label>목소리</label><select class="f tts"><option value="">Google 음성</option><option value="gemini"${w.tts === 'gemini' ? ' selected' : ''}>Gemini 성우</option></select></div></div>
-        <textarea class="text" rows="2">${esc(w.text)}</textarea>
-        <div class="act"><button class="ghost play" type="button">▶ 듣기</button><span class="state"></span><button class="ghost undo" hidden>되돌리기</button><button class="btn save" disabled>저장</button></div></div>`;
+          ${ttsSelect(w.tts)}</div>
+        <textarea class="text" rows="2">${esc(w.text)}</textarea>${actHtml}</div>`;
 }
 function render() {
   const html = data.periods.map(p => {
@@ -107,8 +115,9 @@ function render() {
     return `<details class="period" data-key="${p.id}" style="--c:${p.color}"${opened.has(p.id) ? ' open' : ''}>
       <summary><i class="dot"></i><b>${esc(p.name)}</b><span>${esc(p.span || '')} · 장면 ${scenes.length} · 말씀 ${words}</span><em class="mark">고침</em></summary>` +
       scenes.map(({ e, s }) => `<details class="scene" data-key="${e.id}" data-scene="${e.id}"${opened.has(e.id) ? ' open' : ''}>
-        <summary><b>${esc(e.title)}</b><span>${e.id} · ${esc(data.places[e.place]?.name || '')} · 말씀 ${s.c.words.length}${s.c.words.some(w => w.tts === 'gemini') ? ' · Gemini' : ''}</span><em class="mark">고침</em></summary>
-        ${s.c.words.map((w, i) => wordHtml(e, w, i)).join('')}</details>`).join('') + '</details>';
+        <summary><b>${esc(e.title)}</b><span>${e.id} · ${esc(data.places[e.place]?.name || '')} · 해설 ${s.c.story.length} · 말씀 ${s.c.words.length}${s.c.words.some(w => w.tts === 'gemini') || s.c.storyTts?.length ? ' · Gemini' : ''}</span><em class="mark">고침</em></summary>
+        <h3 class="part">해설</h3>${s.c.story.map((t, i) => storyHtml(e, s.c, i)).join('')}
+        <h3 class="part">말씀</h3>${s.c.words.map((w, i) => wordHtml(e, w, i)).join('')}</details>`).join('') + '</details>';
   }).join('');
   $('#list').innerHTML = html || '<p class="empty">말씀이 없습니다</p>';
   document.querySelectorAll('.word').forEach(bind);
@@ -125,14 +134,19 @@ function setAll(open) {
 }
 $('#openAll').onclick = () => setAll(true);
 $('#closeAll').onclick = () => setAll(false);
-const fields = box => ({ who: $('.who', box).value.trim(), ref: $('.ref', box).value.trim(), text: $('.text', box).value.trim().replace(/\s*\n\s*/g, ' '), tts: $('.tts', box).value });
-const original = box => sceneOf(box.dataset.e).c.words[+box.dataset.w];
+const isStory = box => box.dataset.kind === 'story';
+const fields = box => ({ ...(isStory(box) ? {} : { who: $('.who', box).value.trim(), ref: $('.ref', box).value.trim() }),
+  text: $('.text', box).value.trim().replace(/\s*\n\s*/g, ' '), tts: $('.tts', box).value });
+// 해설 문단도 말씀과 같은 모양으로 ({text, tts})
+const storyOf = (c, i) => ({ text: c.story[i], ...((c.storyTts || []).includes(i) ? { tts: 'gemini' } : {}) });
+const original = box => { const c = sceneOf(box.dataset.e).c, i = +box.dataset.w; return isStory(box) ? storyOf(c, i) : c.words[i]; };
+const same = (o, n) => Object.keys(n).every(k => (o[k] || '') === n[k]);
 function bind(box) {
-  const changed = () => { const o = original(box), n = fields(box); return o.who !== n.who || o.ref !== n.ref || o.text !== n.text || (o.tts || '') !== n.tts; };
-  const sync = () => { const c = changed(); box.classList.toggle('dirty', c); $('.save', box).disabled = !c || !fields(box).text || !fields(box).who; $('.undo', box).hidden = !c; };
+  const changed = () => !same(original(box), fields(box));
+  const sync = () => { const c = changed(), f = fields(box); box.classList.toggle('dirty', c); $('.save', box).disabled = !c || !f.text || f.who === ''; $('.undo', box).hidden = !c; };
   box.addEventListener('input', sync);
   $('.play', box).onclick = () => play(box);
-  $('.undo', box).onclick = () => { const o = original(box); $('.who', box).value = o.who; $('.ref', box).value = o.ref; $('.text', box).value = o.text; $('.tts', box).value = o.tts || ''; sync(); };
+  $('.undo', box).onclick = () => { const o = original(box); for (const k of ['who', 'ref', 'text', 'tts']) { const el = $(`.${k}`, box); if (el) el.value = o[k] || ''; } sync(); };
   $('.save', box).onclick = () => save(box).catch(err => setState(box, `저장하지 못했습니다: ${err.message}`, 'bad')).finally(sync);
 }
 // 찾을 때는 맞는 말씀이 있는 시대·장면만 펼쳐 보이고, 지우면 내가 펼쳐 둔 대로 돌아간다
@@ -141,7 +155,7 @@ function filter() {
   document.querySelectorAll('.scene').forEach(sc => {
     const head = !q || $('summary', sc).textContent.toLowerCase().includes(q);
     let any = false;
-    sc.querySelectorAll('.word').forEach(b => { const f = fields(b), show = head || `${f.who} ${f.ref} ${f.text}`.toLowerCase().includes(q); b.hidden = !show; any ||= show; });
+    sc.querySelectorAll('.word').forEach(b => { const f = fields(b), show = head || `${f.who || ''} ${f.ref || ''} ${f.text}`.toLowerCase().includes(q); b.hidden = !show; any ||= show; });
     sc.hidden = !any;
     sc.open = q ? any : opened.has(sc.dataset.key);
   });
@@ -176,18 +190,43 @@ function patch(raw, id, i, from, to) {
   if (JSON.stringify(JSON.parse(out)) !== JSON.stringify(want)) throw new Error('바꾼 원본을 확인하는 데 실패했습니다');
   return out;
 }
+// 해설 문단: 그 장면 안에서 그 문장(JSON 문자열)을 바꿔 끼우고, Gemini로 고른 문단 번호는 장면의 "storyTts": [..]에 둔다
+// ("id" 바로 뒤에 붙이고, 비면 뺀다)
+function patchStory(raw, id, i, from, to) {
+  const start = raw.indexOf(`"id": "${id}"`);
+  if (start < 0) throw new Error(`${id} 장면을 원본에서 찾지 못했습니다`);
+  const next = raw.indexOf('"id": "', start + 1), end = next < 0 ? raw.length : next;
+  let block = raw.slice(start, end);
+  const old = JSON.stringify(from.text);
+  if (block.indexOf(old) < 0 || block.indexOf(old) !== block.lastIndexOf(old)) throw new Error('원본에서 이 해설을 하나로 찾지 못했습니다');
+  block = block.replace(old, () => JSON.stringify(to.text));
+  const want = JSON.parse(raw), scene = want.find(c => c.id === id);
+  scene.story[i] = to.text;
+  if ((from.tts || '') !== to.tts) {
+    const list = new Set(scene.storyTts || []); to.tts ? list.add(i) : list.delete(i);
+    const keep = [...list].sort((a, b) => a - b), entry = keep.length ? `, "storyTts": ${JSON.stringify(keep)}` : '';
+    block = /"storyTts"/.test(block) ? block.replace(/,\s*"storyTts"\s*:\s*\[[^\]]*\]/, entry) : block.replace(`"id": "${id}"`, m => m + entry);
+    if (keep.length) scene.storyTts = keep; else delete scene.storyTts;
+  }
+  const out = raw.slice(0, start) + block + raw.slice(end);
+  // 열쇠 순서는 그대로 두고 값만 견준다 (storyTts가 "id" 바로 뒤에 들어가므로)
+  const norm = x => JSON.stringify(x.map(c => Object.fromEntries(Object.entries(c).sort(([a], [b]) => a < b ? -1 : 1))));
+  if (norm(JSON.parse(out)) !== norm(want)) throw new Error('바꾼 원본을 확인하는 데 실패했습니다');
+  return out;
+}
 async function save(box) {
-  const id = box.dataset.e, i = +box.dataset.w, to = fields(box);
+  const id = box.dataset.e, i = +box.dataset.w, to = fields(box), story = isStory(box);
+  const pick = c => story ? storyOf(c, i) : c.words[i];
   setState(box, '저장하는 중…');
   const { path } = sceneOf(id);
-  const from = files[path].json.find(c => c.id === id).words[i];
+  const from = pick(files[path].json.find(c => c.id === id));
   // 그사이 다른 곳에서 고쳤을 수 있으니 올리기 직전에 최신 원본을 다시 받는다
-  const fresh = await readFile(path), now = fresh.json.find(c => c.id === id).words[i];
-  if (now.text !== from.text || now.who !== from.who || now.ref !== from.ref || now.tts !== from.tts) throw new Error('그사이 이 말씀이 바뀌었습니다 — 새로 고침 뒤 다시 고쳐 주세요');
-  const raw = patch(fresh.raw, id, i, now, to);
+  const fresh = await readFile(path), now = pick(fresh.json.find(c => c.id === id));
+  if (JSON.stringify(now) !== JSON.stringify(from)) throw new Error('그사이 이 글이 바뀌었습니다 — 새로 고침 뒤 다시 고쳐 주세요');
+  const raw = story ? patchStory(fresh.raw, id, i, now, to) : patch(fresh.raw, id, i, now, to);
   const title = data.events.find(e => e.id === id)?.title || id;
   const res = await gh(`/repos/${REPO}/contents/${path}`, { method: 'PUT', body: JSON.stringify({
-    message: `Edit words in ${id} (#${i + 1}) from the admin page\n\n${title}: ${to.text}${to.tts ? ` (voice: ${to.tts})` : ''}`, content: toB64(raw), sha: fresh.sha, branch: BRANCH }) });
+    message: `Edit ${story ? 'narration' : 'words'} in ${id} (#${i + 1}) from the admin page\n\n${title}: ${to.text}${to.tts ? ` (voice: ${to.tts})` : ''}`, content: toB64(raw), sha: fresh.sha, branch: BRANCH }) });
   files[path] = { raw, json: JSON.parse(raw), sha: res.content.sha };
   box.classList.toggle('jesus', to.who === '예수');
   follow(box, res.commit.sha);
