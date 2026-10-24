@@ -151,7 +151,7 @@ html:not(:lang(ko)):not(:lang(zh)):not(:lang(ja)) .river-lbl text{writing-mode:h
 .caption p{margin:0;font-family:var(--serif);font-size:21px;line-height:1.5;color:#fbf2dc;text-shadow:0 2px 12px #000;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 
 /* 3D 지형 모드 (terrain.js) */
-.terrain3d{position:absolute;inset:0;display:none;touch-action:none;cursor:grab}
+.terrain3d{position:absolute;inset:0;display:none;touch-action:none;cursor:grab;transition:filter 1.6s}
 .terrain3d:active{cursor:grabbing}
 .terrain-on .terrain3d{display:block}
 .terrain-on #fitAll{display:none}
@@ -163,6 +163,9 @@ html:not(:lang(ko)):not(:lang(zh)):not(:lang(ja)) .river-lbl text{writing-mode:h
 .tlabel.now i{width:14px;height:14px;background:var(--gold2);border-color:#fff;box-shadow:0 0 14px var(--gold)}
 .tlabel.now span{font-size:18px;color:var(--gold2)}
 .tlabel.feature span{font-size:12.5px;font-weight:400;color:#eef4f6;letter-spacing:.15em}
+.tlabel.ref span{font-size:11.5px;font-weight:400;color:#f3ead6}
+.tlabel.region span{font-size:13px;font-weight:400;letter-spacing:.3em;color:rgba(255,248,230,.8)}
+.tlabel.place:not(.now) span{font-size:13px}
 /* 지도 조작기: 오른쪽 위가 장면 카드라 왼쪽 가장자리 가운데에 세로로 */
 .mapctl{position:absolute;left:16px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;z-index:3}
 .mapctl button{width:40px;height:40px;border-radius:12px;border:1px solid rgba(217,180,106,.35);background:rgba(20,16,11,.82);color:var(--gold2);font-size:16px;backdrop-filter:blur(6px);display:grid;place-items:center;padding:0}
