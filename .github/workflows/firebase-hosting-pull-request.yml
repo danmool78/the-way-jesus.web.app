@@ -26,7 +26,8 @@ jobs:
           jq -r '"channel list: \(.status) \(.error // "")"' "$RUNNER_TEMP/channels.json"
           jq -r '(.result.channels? // .result // [])[] | .name | split("/") | last' "$RUNNER_TEMP/channels.json" | grep -E '^pr[0-9]+-' | while read -r ch; do
               n=${ch#pr}; n=${n%%-*}
-              if [ "$(gh pr view "$n" --repo "$GITHUB_REPOSITORY" --json state -q .state)" != OPEN ]; then
+              st=$(gh pr view "$n" --repo "$GITHUB_REPOSITORY" --json state -q .state) || continue # 조회가 실패하면 지우지 않는다
+              if [ "$st" = CLOSED ] || [ "$st" = MERGED ]; then
                 echo "delete $ch"; npx -y firebase-tools hosting:channel:delete "$ch" --project the-way-jesus --force
               fi
             done
