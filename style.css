@@ -158,6 +158,7 @@ html:not(:lang(ko)):not(:lang(zh)):not(:lang(ja)) .river-lbl text{writing-mode:h
 .landmark.ready{opacity:1}
 .nilebank{stroke-width:9;opacity:.6}
 .river.nile{stroke-width:2.6}
+#map.prologue .river{stroke:#3f86b0;stroke-width:4} /* 에덴의 강들은 또렷한 푸른색으로 */
 .route{fill:none;stroke:var(--c);stroke-width:calc(var(--u,1) * 2.6px);stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;transition:opacity .4s}
 .route.done{opacity:.38;stroke-dashoffset:0}
 .route.last{opacity:.95}
@@ -185,6 +186,7 @@ html:not(:lang(ko)):not(:lang(zh)):not(:lang(ja)) .river-lbl text{writing-mode:h
 .mapbtn{border:1px solid rgba(60,45,25,.25);background:rgba(250,244,228,.86);color:#3b2a14;border-radius:999px;padding:7px 13px;font-size:12px;backdrop-filter:blur(4px)}
 .odo{position:absolute;top:66px;left:16px;z-index:2;background:rgba(21,17,13,.78);color:#f3e3bf;border:1px solid rgba(217,180,106,.35);border-radius:999px;padding:5px 12px;font-size:12px;font-variant-numeric:tabular-nums;letter-spacing:.01em;backdrop-filter:blur(4px);pointer-events:auto;white-space:nowrap}
 .mapbtn.active{background:#3b2a14;color:#f6e7c4}
+.mapbtn:disabled{opacity:.4;cursor:default}
 /* 자막: 지금 읽는 문장을 지도 아래쪽 가운데에 (장면 카드에 가리지 않는 영역) */
 .caption{position:absolute;left:0;right:calc(min(460px,42%) + 28px);bottom:18px;margin:0 auto;width:fit-content;max-width:min(680px,calc(100% - min(460px,42%) - 60px));text-align:center;padding:12px 30px 14px;border-radius:12px;background:linear-gradient(90deg,rgba(14,11,8,0),rgba(14,11,8,.78) 18%,rgba(14,11,8,.78) 82%,rgba(14,11,8,0));opacity:0;transform:translateY(8px);transition:opacity .35s,transform .35s;pointer-events:none;z-index:3}
 .caption.show{opacity:1;transform:none}
@@ -329,7 +331,7 @@ html:not(:lang(ko)):not(:lang(zh)):not(:lang(ja)) .river-lbl text{writing-mode:h
 .tpro.now{color:#e9cf8f;filter:drop-shadow(0 0 6px rgba(217,180,106,.7))}
 /* 프롤로그: 지도 위에 걷는 사람·다음 길 표시가 없다 */
 #map.prologue .walker,#map.prologue .nexthint{display:none}
-#map.prologue .lbl{opacity:.3} /* 지명이 동산 위에 겹쳐 보이지 않게 흐리게 */
+#map:not(.prologue) .lbl.meso{display:none} /* 에덴 둘레 지명은 프롤로그에서만 */
 .prologue-on .odo{display:none} /* 아직 걷기 전 */
 /* 시기 이름은 지금 시기만 (여덟 개를 다 쓰면 좁은 칸에서 겹친다 — 나머지는 그림에 마우스를 올리면 보인다) */
 .tname{font-size:11.5px;color:color-mix(in srgb,var(--c) 70%,#fff);font-weight:700;white-space:nowrap;margin-top:5px;visibility:hidden;height:15px}

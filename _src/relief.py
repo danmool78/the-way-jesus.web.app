@@ -4,7 +4,7 @@ AWS Open Data의 Terrarium 고도 타일(SRTM 등, Mapzen 제공)을 받아
 app.js 지도와 같은 등장방형(위경도 선형) 격자로 다시 표본화한 뒤,
 양피지 톤의 고도 채색 + 북서쪽 빛의 음영을 입힌다.
 
-  python _src/relief.py <타일 캐시 폴더>
+  python _src/relief.py <타일 캐시 폴더> [east]   (east: 에덴 둘레 바탕만)
 
 EXTENT를 바꾸면 app.js의 RELIEF도 같이 바꿀 것.
 """
@@ -36,6 +36,16 @@ NILE = [[(29.15, 31.18), (29.5, 31.22), (29.85, 31.26), (30.06, 31.23), (30.18, 
 NILE_VALLEY = [(30.12, 31.17), (29.8, 31.18), (29.5, 31.12), (29.15, 31.08), (29.15, 31.3), (29.5, 31.32), (29.8, 31.33), (30.12, 31.3)]
 FAYUM = [(29.45, 30.55), (29.5, 30.85), (29.35, 31.05), (29.2, 31.0), (29.17, 30.7), (29.3, 30.5)]
 WADI_TUMILAT = [(30.52, 31.6), (30.58, 31.95), (30.6, 32.25), (30.52, 32.25), (30.48, 31.95), (30.45, 31.6)]
+# 프롤로그의 에덴(메소포타미아 남부) 둘레 바탕: 다른 바탕과 떨어져 홀로 있다. app.js의 RELIEF_EAST와 같게
+EAST = dict(lat0=29.55, lat1=32.45, lng0=45.2, lng1=49.3)
+# 유프라테스·티그리스·샤트알아랍 (app.js의 GEO와 같은 점) — 강물로 짓는 밭과 물가 초록
+MESO = [[(32.54, 44.42), (32.03, 44.4), (31.6, 44.9), (31.31, 45.28), (31.04, 46.26), (30.98, 46.9), (31.0, 47.43)],
+        [(32.9, 44.9), (32.5, 45.82), (31.84, 47.15), (31.3, 47.4), (31.0, 47.43)],
+        [(31.0, 47.43), (30.5, 47.81), (30.2, 48.2), (29.97, 48.53)]]
+# 두 강이 만나는 곳의 습지·대추야자 숲 (강물로 푸른 땅). 나머지는 강을 따라 띠로 (farmland의 bands)
+MESO_GREEN = [[(31.28, 46.6), (31.42, 46.85), (31.52, 47.12), (31.46, 47.38), (31.3, 47.58), (31.08, 47.66), (30.9, 47.6), (30.8, 47.45),
+               (30.86, 47.2), (30.95, 46.98), (30.98, 46.72), (31.1, 46.58)]]
+MESO_BANDS = [(MESO[0], .05), (MESO[1], .05), (MESO[2], .04)]
 URL = 'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'
 OUT = Path(__file__).resolve().parent.parent / 'assets' / 'relief.webp'
 
@@ -160,7 +170,7 @@ def vnoise(lat, lng, cell):
     return (a * (1 - fx) + b * fx) * (1 - fy) + (c * (1 - fx) + d * fx) * fy
 
 
-def farmland(lat, lng, polys):
+def farmland(lat, lng, polys, lines=NILE, bands=()):
     """강물로 짓는 밭: (덮는 정도 0~1, 색). 다각형 가장자리는 잡음으로 들쭉날쭉하게, 안은 크고 작은 밭 조각
     (푸른 보리·밀, 누런 밀, 아마, 묵힌 땅)의 조각보, 물줄기에서 1~2km 안은 짙은 초록(대추야자·갈대)"""
     from PIL import ImageDraw
@@ -171,6 +181,8 @@ def farmland(lat, lng, polys):
     for poly in polys:
         ImageDraw.Draw(m).polygon([(sx(g), sy(a)) for a, g in poly], fill=255)
     px_deg = abs(lat[0] - lat[-1]) / h
+    for line, wd in bands:  # 강을 따라 wd도 너비의 띠
+        ImageDraw.Draw(m).line([(sx(g), sy(a)) for a, g in line], fill=255, width=max(1, round(wd / px_deg)), joint='curve')
     m = blur(np.asarray(m, dtype=np.float32) / 255, max(1, int(0.03 / px_deg)))
     edge = vnoise(lat, lng, 0.06) * 0.6 + vnoise(lat, lng, 0.015) * 0.4
     cover = np.clip((m - 0.5 + (edge - 0.5) * 0.55) * 6 + 0.5, 0, 1)
@@ -187,7 +199,7 @@ def farmland(lat, lng, polys):
     # 물줄기 둘레의 짙은 초록
     near = np.full((h, w), 1e9, np.float32)
     LA, LO = lat[:, None], lng[None, :] * COS
-    for line in NILE:
+    for line in lines:
         for (a1, g1), (a2, g2) in zip(line, line[1:]):
             ax, ay, bx, by = g1 * COS, a1, g2 * COS, a2
             dx, dy = bx - ax, by - ay
@@ -214,7 +226,7 @@ def paint(dem, rain, land, k, farm=None):
     return np.clip(rgb * k[..., None], 0, 255)
 
 
-def base(cache, e, out, green=None, keep=''):
+def base(cache, e, out, green=None, keep='', lines=NILE, dry=False, bands=()):
     """넓은 바탕 한 장. green: 강·관개로 푸른 땅의 (위도, 경도) 다각형들 — 비가 적어도 초록으로 칠한다(나일 삼각주).
     keep: 투명하게 풀지 않을 가장자리('l','r') — 두 장이 맞닿는 쪽을 둘 다 풀면 그 사이로 바탕색 띠가 보인다"""
     w = round((e['lng1'] - e['lng0']) * COS * 1000 * PX_PER_UNIT)
@@ -229,9 +241,13 @@ def base(cache, e, out, green=None, keep=''):
     has = (dem > 0).any(axis=1)
     first_land = np.where(has, np.argmax(dem > 0, axis=1), w)
     land = np.arange(w)[None, :] >= first_land[:, None]
+    if dry:  # 메소포타미아: 바다(페르시아 만)가 동쪽이고 비는 거의 없다 — 강물로 푸른 땅만 초록
+        land = dem > -2
+        rain = np.zeros_like(dem)
+    else:
+        rain = rain_field(np.where(land, dem, 0), lat, np.minimum(first_land, w - 1), w)
     dem = np.where(land, dem, 0)
-    rain = rain_field(dem, lat, np.minimum(first_land, w - 1), w)
-    rgb = paint(dem, rain, land, shading(dem, lat, lng, 2.5), farmland(lat, lng, green) if green else None)
+    rgb = paint(dem, rain, land, shading(dem, lat, lng, 2.5), farmland(lat, lng, green, lines, bands) if green else None)
 
     # 가장자리는 투명하게 풀어 바탕 땅색으로 자연스럽게 이어지게
     ramp = lambda n, m: np.clip(np.minimum(np.arange(n), np.arange(n)[::-1]) / m, 0, 1)
@@ -246,10 +262,14 @@ def base(cache, e, out, green=None, keep=''):
     return lat, lng, first_land, rain, w, h
 
 
-def main(cache):
+def main(cache, only=None):
     cache = Path(cache)
     cache.mkdir(parents=True, exist_ok=True)
     e = EXTENT
+    # 에덴 둘레 바탕 (assets/relief-east.webp) — 홀로 있어 네 가장자리를 모두 풀고, 따로 만들 수 있다 (`... east`)
+    base(cache, EAST, OUT.parent / 'relief-east.webp', green=MESO_GREEN, lines=MESO, dry=True, bands=MESO_BANDS)
+    if only == 'east':
+        return
 
     # 1) 전체 바탕 (assets/relief.webp), 서쪽 애굽 쪽 바탕 (assets/relief-west.webp — 시나이 북부와 나일 삼각주 동쪽)
     lat, lng, first_land, rain, w, h = base(cache, e, OUT, keep='l')
@@ -294,4 +314,4 @@ def tiles(cache, ext, z, units, out, zf, lat, lng, coast, rain, w, h, green=None
 
 
 if __name__ == '__main__':
-    main(sys.argv[1])
+    main(sys.argv[1], *sys.argv[2:3])
