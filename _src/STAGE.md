@@ -69,6 +69,11 @@ e02: {
   - `board: '나귀'`면 그 소품의 등(deck)에 태운다(배·나귀·낙타). `board: null`이면 내린다.
 - 문장 키는 `node _src/tools/beats.mjs e13`으로 확인한다.
 
+### 프롤로그 (e00 · 잃어버린 동산)
+
+61개 장면 앞의 창세기 장면. data의 `prologue`로 따로 실리고 앱에서는 장면 번호 -1이다(장면 수·퀴즈·도장·대조표 밖). 장소 `eden`은 `hidden`이라 지도에 핀이 없고, 무대는 대본의 `at`(전통적 추정지인 메소포타미아 남부, 유프라테스·티그리스가 만나는 곳)에 선다. 지도는 그 자리만큼 동쪽으로 강·만을 벡터로 더 그렸고, 프롤로그에서만 그 범위까지 끌 수 있다. 다음 장면(나사렛)으로는 두 번에 나눠 날아간다(둘을 함께 담고 → 무대로).
+아담과 하와는 타락 전에는 빛의 실루엣(cast 옵션 `silhouette: 'light'`), 범죄한 뒤에는 어두운 실루엣, 마지막에 가죽옷 입은 모습 — 세 쌍을 `show`로 바꿔 낀다. 하나님은 모습 없이 빛(`beam`)으로만, 뱀은 가지에 감긴 그림자(`serpent`)로만.
+
 ### 인물 유형 (TYPES)
 jesus, mary, joseph, angel, woman, woman2, mother, anna, john(젊은 제자, 수염 없음), disciple, peter, man, elder, shepherd, magus, magus2, magus3, king, soldier(창), pharisee, child, boyJesus, baptist, tempter, steward, groom, servant, crossed(십자가 위 예수 — 실루엣 전용), thief(실루엣 전용)
 
@@ -79,7 +84,7 @@ idle, walk(자동), speak, listen, afraid, kneel, pray, bless, raise, bow, look-
 손에 드는 물건(item): basket, doves, gift, baby
 
 ### 소품 (MAKERS)
-manger, sheep, star, beam(내려오는 빛), host(하늘 군대), water(호수·강 — size로 길게), boat(deck), rain, grass, crowd(spots, state stand/sit, face, faceCenter), baskets, hill(지면 높이 제공), crosses, tomb(open/closed), temple, throne, house, donkey(deck), camel(deck), jackal, ox, dove(fly/rest, y), rocks, figtree, jars(empty/water/wine), feast, table(over), cage
+manger, sheep, star, beam(내려오는 빛), fruittree(fruit/taken), lifetree(open/closed), serpent(rest/hiss), flamesword, host(하늘 군대), water(호수·강 — size로 길게), boat(deck), rain, grass, crowd(spots, state stand/sit, face, faceCenter), baskets, hill(지면 높이 제공), crosses, tomb(open/closed), temple, throne, house, donkey(deck), camel(deck), jackal, ox, dove(fly/rest, y), rocks, figtree, jars(empty/water/wine), feast, table(over), cage
 
 새 소품은 `MAKERS`에 추가하고, 움직이는 것은 `new Prop(group, update)`의 update에서 처리한다. 사람이 올라설 수 있는 지형은 `P.heightAt(x, z)`를 제공하면 자동으로 그 위에 선다.
 

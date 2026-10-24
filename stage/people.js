@@ -536,17 +536,19 @@ function makePerson(type) {
 
 // 실루엣: 모든 재질을 어두운 단색으로 바꿔 얼굴·무늬가 보이지 않게 한다 (골고다)
 const SIL = new THREE.MeshStandardMaterial({ color: '#241b14', roughness: 1 });
-function silhouette(p) {
-  p.root.traverse(o => { if (o.isMesh) o.material = SIL; });
+// 빛 속의 실루엣: 타락 전의 아담과 하와 (프롤로그) — 얼굴·몸의 세부 없이 따뜻한 빛의 윤곽만
+const SIL_LIGHT = new THREE.MeshStandardMaterial({ color: '#f4dfae', emissive: '#e9c47c', emissiveIntensity: 0.6, roughness: 1 });
+function silhouette(p, light) {
+  p.root.traverse(o => { if (o.isMesh) o.material = light ? SIL_LIGHT : SIL; });
   if (p.glow) p.glow.visible = false;
 }
 
 /* ---------- 배우: 자세 목표값을 향해 부드럽게 움직인다 ---------- */
 class Actor {
-  // o: { silhouette, solemn(입·손짓을 멈추고 느리게), speed, y }
+  // o: { silhouette(true 어두운 윤곽 · 'light' 빛의 윤곽), solemn(입·손짓을 멈추고 느리게), speed, y }
   constructor(type, x = 0, z = 0, face = 0, o = {}) {
     this.p = makePerson(type);
-    if (o.silhouette) silhouette(this.p);
+    if (o.silhouette) silhouette(this.p, o.silhouette === 'light');
     this.solemn = !!o.solemn;
     this.noGaze = o.gaze === false; // 남이 말해도 돌아보지 않음 (멀리 있는 사람 등)
     this.item = null;

@@ -250,7 +250,7 @@ function addVillages(r) {
   const m = new THREE.MeshStandardMaterial({ color: '#d8c49c', roughness: 0.9 }), geo = new THREE.BoxGeometry(1, 1, 1);
   Object.entries(PLACES).forEach(([k, p]) => {
     const [x0, z0] = px([p.lat, p.lng]);
-    if (isCity(k) || regionAt(x0, z0) !== r || k === 'sea') return;
+    if (isCity(k) || regionAt(x0, z0) !== r || k === 'sea' || p.hidden) return; // 핀 없는 장소(프롤로그의 에덴)에는 마을을 두지 않는다
     const n = 8 + Math.floor(rnd() * 6), grp = new THREE.Group();
     for (let i = 0; i < n; i++) {
       const a = rnd() * 6.28, d = 1.2 + rnd() * 3.5, x = x0 + Math.cos(a) * d, z = z0 + Math.sin(a) * d, y = heightAt(x, z);
@@ -316,7 +316,7 @@ function clearStageSpot() {
   const f = window.stageFoot, stageOn = document.body.classList.contains('stage-on') && f;
   let cx = 1e9, cz = 1e9, r = 0;
   if (stageOn) {
-    const p = PLACES[EVENTS[idx].place];
+    const p = PLACES[curEvent().place];
     [cx, cz] = f.xz || px(f.at || [p.lat, p.lng]); // xz: 지형 안 무대가 알려 주는 지금의 바닥 중심 (@at으로 옮겨 갈 때)
     const D = camera.position.distanceTo(v3.set(cx, heightAt(cx, cz), cz)), H = wrap.clientHeight || 1;
     r = f.r ?? f.rpx * 2 * D * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) / H; // r: 지형 안에 선 무대가 알려 주는 지도 단위 반지름
@@ -360,7 +360,7 @@ function addLabels() {
     el.querySelector('span').textContent = text; box.appendChild(el);
     labels.push({ el, key, kind, lat, lng, pr, w: 0, h: 0 });
   };
-  Object.entries(PLACES).forEach(([k, p]) => add('place', k, p.lat, p.lng, p.name, isCity(k) ? 3 : 2));
+  Object.entries(PLACES).forEach(([k, p]) => { if (!p.hidden) add('place', k, p.lat, p.lng, p.name, isCity(k) ? 3 : 2); });
   // 지형 이름: 산·바다·강 (2D 지도의 이름과 같은 글씨)
   [['hermon', 33.416, 35.857, t('mtHermon')], ['lake', 32.80, 35.60, tm('갈릴리 바다')], ['dead', 31.45, 35.49, tm('사해')],
     ['jordan', 32.30, 35.575, tm('요단 강')], ['med', 32.35, 34.48, tm('지 중 해')], ['nile', 29.95, 31.24, tm('나일 강')], ['suez', 29.6, 32.6, tm('수에즈 만')]]
@@ -380,7 +380,7 @@ function project(lat, lng, lift = 0) {
 }
 // 겹치는 이름은 덜 중요한 쪽을 숨긴다: 지금 장소 → 장소(도성 안은 뒤로) → 산·바다 → 도시 → 지역
 function placeLabels() {
-  const cur = EVENTS[idx].place, nx = EVENTS[idx + 1]?.place, r = wrap.getBoundingClientRect(), taken = [];
+  const cur = curEvent().place, nx = EVENTS[idx + 1]?.place, r = wrap.getBoundingClientRect(), taken = [];
   const fogFar = scene.fog.far * 0.85;
   const list = labels.map(L => {
     const s = project(L.lat, L.lng, L.kind === 'place' ? 1.5 : 0.5);
@@ -449,7 +449,7 @@ function figZoom(dist, city) {
 // 가장 가까이 당길 수 있는 거리: 무대(인물과 함께 커지는 캔버스)가 카드에 가리지 않은 지도 영역을 채우는 데까지.
 // 크기 공식은 stage.js의 resize와 같게 (폭 300·높이 270, 모바일 230·200, 넓은 무대 wide)
 function minDist() {
-  const ev = EVENTS[idx];
+  const ev = curEvent();
   if (isCity(ev.place)) return 25;
   const r = wrap.getBoundingClientRect(), mobile = innerWidth <= 900, wide = SCRIPTS[ev.id]?.wide || 1;
   const fw = mobile ? r.width : r.width - (Math.min(460, r.width * 0.42) + 28), fh = mobile ? r.height * 0.52 : r.height;
@@ -458,7 +458,7 @@ function minDist() {
 }
 // 확대·축소는 늘 지금 장면의 무대를 가운데로 다시 맞추며 한다 — 끌어서 옮겨 둔 곳을 기준으로 당기면 무대가 화면 밖에 남았다
 function zoomToStage(dist) {
-  const ev = EVENTS[idx], at = SCRIPTS[ev.id]?.at, p = PLACES[ev.place];
+  const ev = curEvent(), at = SCRIPTS[ev.id]?.at, p = PLACES[ev.place];
   let [tx, tz] = px([p.lat, p.lng]);
   if (at) { const [x1, z1] = px(at); if (Math.hypot(x1 - tx, z1 - tz) >= 8) { tx = (tx + x1) / 2; tz = (tz + z1) / 2; } }
   cam.goal = { tx, tz, dist: THREE.MathUtils.clamp(dist, minDist(), 520) };
@@ -492,7 +492,7 @@ function loop(now) {
   if (now - nearT > 500) { nearT = now; ensureNear(cam.tx, cam.tz, 60); } // 둘러보다 다가간 지역도 불러온다
   cam.pitch = damp(cam.pitch, ui.pitch, 4, dt); cam.yaw = damp(cam.yaw, ui.yaw, 4, dt);
   placeCam();
-  window.terrainView = { yaw: cam.yaw, pitch: cam.pitch, zoom: zoomAt(cam.dist, EVENTS[idx].place) };
+  window.terrainView = { yaw: cam.yaw, pitch: cam.pitch, zoom: zoomAt(cam.dist, curEvent().place) };
   window.stageRender?.(); // 바뀐 시점으로 무대를 붙이고 그린다
   // 안개는 카메라 거리에 맞춰 — 멀리 물러나도 땅의 끝이 하늘과 안개 속으로 녹아든다
   scene.fog.near = cam.dist * 1.1; scene.fog.far = cam.dist * 3.6;
@@ -572,12 +572,12 @@ async function setOn(v) {
     document.body.classList.add('terrain-loading');
     if (!loading) { loading = build().then(() => { bindInput(renderer.domElement); resize(); }); }
     await loading;
-    const k = EVENTS[idx].place, p = PLACES[k], [x, z] = px([p.lat, p.lng]);
+    const k = curEvent().place, p = PLACES[k], [x, z] = px([p.lat, p.lng]);
     await Promise.all(regions.filter(r => regionAt(x, z) === r).map(ensureRegion));
     if (!on) return; // 불러오는 사이에 다시 눌러 껐다
     window.terrainOn = true;
     window.geoToClient = (lat, lng) => { const s = project(lat, lng); return { x: s.x, y: s.y }; };
-    cam.tx = x; cam.tz = z; cam.dist = 420; flyToScene(EVENTS[idx]); // 높은 곳에서 내려앉듯
+    cam.tx = x; cam.tz = z; cam.dist = 420; flyToScene(curEvent()); // 높은 곳에서 내려앉듯
     await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))); // 첫 화면을 그린 다음에 보인다
     if (!on) return;
     document.body.classList.remove('terrain-loading'); document.body.classList.add('terrain-on');
@@ -630,7 +630,7 @@ function controls() {
     if (k === 'right') ui.yaw -= 0.35;
     if (k === 'in') zoomToStage(cam.dist * 0.7);
     if (k === 'out') zoomToStage(cam.dist * 1.4);
-    if (k === 'reset') { ui.pitch = 0.62; ui.yaw = 0; flyTo(EVENTS[idx].place); }
+    if (k === 'reset') { ui.pitch = 0.62; ui.yaw = 0; flyTo(curEvent().place); }
   });
 }
 
@@ -643,7 +643,7 @@ function start() {
   // 걷기를 시작하면: 두 장소 사이 거리에 맞춰 물러나 길 전체의 흐름이 보이게
   addEventListener('stage:walk', e => {
     if (!on) return;
-    const a = PLACES[EVENTS[idx].place], b = PLACES[e.detail.ev.place], [x1, z1] = px([a.lat, a.lng]), [x2, z2] = px([b.lat, b.lng]);
+    const a = PLACES[curEvent().place], b = PLACES[e.detail.ev.place], [x1, z1] = px([a.lat, a.lng]), [x2, z2] = px([b.lat, b.lng]);
     walkDist = THREE.MathUtils.clamp(Math.hypot(x2 - x1, z2 - z1) * 0.9, 90, 480);
     ensureNear(x2, z2);
   });

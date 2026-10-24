@@ -7,6 +7,11 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;',
 let GOSPELS = [['mt', '마태', '마'], ['mk', '마가', '막'], ['lk', '누가', '눅'], ['jn', '요한', '요']];
 
 let DATA, EVENTS, PLACES, PERIODS, idx = 0;
+// 프롤로그(창세기의 첫 아담, data의 prologue)는 장면 번호 -1 — 61개 장면 목록·퀴즈·도장·대조표 밖에 있다
+const evAt = i => i < 0 ? DATA.prologue : EVENTS[i];
+const isPro = () => idx < 0;
+const firstIdx = () => DATA?.prologue ? -1 : 0;
+window.curEvent = () => evAt(idx); // 3D 지형(terrain.js)이 지금 장면을 물을 때
 
 /* ---------- 언어 ---------- */
 // 고르는 순서: 주소의 ?lang= → 지난번 고른 언어 → 브라우저 언어 → 그 밖의 언어는 영어.
@@ -115,7 +120,12 @@ const GEO = {
   sirbonis: [[31.17,32.75],[31.2,33.15],[31.13,33.45],[31.06,33.2],[31.08,32.85]],
   bitter: [[30.45,32.33],[30.4,32.42],[30.28,32.45],[30.32,32.36]],
   suez: [[29.97,32.53],[29.6,32.38],[29.0,32.62],[28.5,32.88],[28.0,33.3],[28.0,33.62],[28.5,33.22],[29.0,32.95],[29.6,32.72],[29.97,32.6]],
-  hinnom: [[31.7765,35.2252],[31.7735,35.2258],[31.7705,35.2290],[31.7698,35.2340],[31.7690,35.2362]]
+  hinnom: [[31.7765,35.2252],[31.7735,35.2258],[31.7705,35.2290],[31.7698,35.2340],[31.7690,35.2362]],
+  // 메소포타미아 (프롤로그의 에덴: 창 2:14의 힛데겔·유브라데가 만나는 남쪽 — 전승의 자리). 지형 음영이 없는 곳이라 강과 바다만 그린다
+  euphrates: [[38.75,38.75],[37.6,38.3],[37.0,38.05],[36.6,38.2],[35.95,39.0],[35.33,40.14],[34.45,40.92],[34.1,42.35],[33.42,43.3],[33.35,43.78],[32.54,44.42],[32.03,44.4],[31.6,44.9],[31.31,45.28],[31.04,46.26],[30.98,46.9],[31.0,47.43]],
+  tigris: [[38.0,40.2],[37.5,41.6],[37.32,42.19],[36.34,43.13],[35.47,43.26],[34.6,43.68],[34.2,43.87],[33.32,44.42],[32.9,44.9],[32.5,45.82],[31.84,47.15],[31.3,47.4],[31.0,47.43]],
+  shatt: [[31.0,47.43],[30.5,47.81],[30.2,48.2],[29.97,48.53]],
+  gulf: [[30.05,48.45],[29.95,48.05],[29.55,47.75],[29.35,47.95],[29.0,48.15],[28.4,48.5],[27.8,48.9],[27.0,49.6],[26.5,50.3],[27.0,51.5],[27.8,51.2],[28.6,50.8],[29.3,50.6],[29.9,50.1],[30.1,49.5],[30.2,48.9]]
 };
 // 음영 기복도(assets/relief.webp)가 덮는 범위 — _src/relief.py의 EXTENT와 같게
 const RELIEF = { lat0: 29.15, lat1: 34.6, lng0: 33.0, lng1: 37.4 };
@@ -168,11 +178,14 @@ function buildMap() {
     <radialGradient id="oasis"><stop offset="0" stop-color="var(--oasis)" stop-opacity=".75"/><stop offset=".6" stop-color="var(--oasis)" stop-opacity=".4"/><stop offset="1" stop-color="var(--oasis)" stop-opacity="0"/></radialGradient>
     <filter id="waterEdge" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur in="SourceAlpha" stdDeviation="4" result="b"/><feComposite in="SourceAlpha" in2="b" operator="arithmetic" k2="1" k3="-1" result="edge"/><feFlood flood-color="#21474f" flood-opacity=".5"/><feComposite in2="edge" operator="in"/><feComposite in2="SourceGraphic" operator="over"/></filter>
   </defs>
-  <rect x="${-W * 2}" y="${-H * 2}" width="${W * 5}" height="${H * 5}" fill="var(--land)"/>
+  <rect x="${-W * 2}" y="${-H * 2}" width="${W * 12}" height="${H * 5}" fill="var(--land)"/>
   <image href="assets/relief-west.webp" class="relief" x="${wx0}" y="${wy0}" width="${wx1 - wx0}" height="${wy1 - wy0}" preserveAspectRatio="none"/>
   <image href="assets/relief.webp" class="relief" x="${rx0}" y="${ry0}" width="${rx1 - rx0}" height="${ry1 - ry0}" preserveAspectRatio="none"/>
   <g id="reliefHi" class="relief"></g>
   <g id="reliefCity" class="relief"></g>
+  ${['euphrates', 'tigris', 'shatt'].map(k => `<path d="${smooth(GEO[k])}" class="riverbank"/>`).join('')}
+  <path d="${smooth(GEO.gulf, true)}" fill="url(#seaGrad)" class="sea"/>
+  ${['euphrates', 'tigris', 'shatt'].map(k => `<path d="${smooth(GEO[k])}" class="river"/>`).join('')}
   ${['nile', 'canopic', 'rosetta', 'damietta', 'pelusiac'].map(k => `<path d="${smooth(GEO[k])}" class="riverbank nilebank"/>`).join('')}
   <path d="${smooth(GEO.jordanN)}" class="riverbank"/>
   <path d="${smooth(GEO.jordanS)}" class="riverbank"/>
@@ -201,6 +214,11 @@ function buildMap() {
   ${REFCITIES.map(([n, a, b]) => `<g class="lbl refcity" transform="translate(${px([a, b]).join(',')})"><circle r="2.2"/><text x="5" y="3">${esc(tm(n))}</text></g>`).join('')}
   ${lbl(tm('나일 강'), px([29.7, 31.33]), 'water-lbl river-lbl')}
   ${lbl(tm('수에즈 만'), px([29.55, 32.66]), 'water-lbl river-lbl')}
+  ${lbl(tm('메소포타미아'), px([32.55, 44.35]), 'region')}
+  ${lbl(tm('유프라테스 강'), px([33.62, 42.05]), 'water-lbl river-lbl')}
+  ${lbl(tm('티그리스 강'), px([33.95, 44.6]), 'water-lbl river-lbl')}
+  ${lbl(tm('페르시아 만'), px([29.25, 49.3]), 'water-lbl river-lbl')}
+  ${lbl(tm('아라비아 사막'), px([31.2, 40.8]), 'region')}
   <path class="offmap" fill-rule="evenodd" d="M${DRAWN.x - 1e5},${DRAWN.y - 1e5}h${DRAWN.w + 2e5}v${DRAWN.h + 2e5}h${-DRAWN.w - 2e5}Z M${DRAWN.x},${DRAWN.y}v${DRAWN.h}h${DRAWN.w}v${-DRAWN.h}Z"/>
   <g id="routes"><path id="nextHint" class="nexthint"/></g>
   <g id="markers"></g>
@@ -208,6 +226,7 @@ function buildMap() {
   // 장소 마커
   const g = $('#markers', map);
   Object.entries(PLACES).forEach(([id, p]) => {
+    if (p.hidden) return; // 프롤로그의 에덴: 지도에 핀이 없다
     const [x, y] = P(p);
     const m = document.createElementNS(svgNS, 'g');
     m.setAttribute('class', 'pin' + (p.jlm ? ' jlm' : ''));
@@ -240,7 +259,8 @@ function buildMap() {
 
 // 지형 그림(relief·relief-west)이 불투명하게 그려진 범위 — 지도는 이 밖(그림 없는 맨바닥)을 보이지 않는다.
 // 두 그림의 바깥 범위(29.15–34.6, 29.4–37.4)에서 가장자리의 투명하게 흐린 띠(0.16–0.32°)를 뺐다
-const DRAWN = (() => { const [x0, y0] = px([34.28, 29.63]), [x1, y1] = px([29.47, 37.14]); return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }; })();
+// 동쪽은 프롤로그의 에덴(메소포타미아)까지 — 지형 음영이 없는 맨바닥에 강과 바다만 그린 곳
+const DRAWN = (() => { const [x0, y0] = px([34.28, 29.63]), [x1, y1] = px([29.47, 49.6]); return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }; })();
 function applyView() {
   const r = map.getBoundingClientRect();
   if (!r.width) return;
@@ -367,10 +387,10 @@ function freeArea(mode) {
 }
 function frameStage(i, ms = 1300, mode = 'open') {
   if (window.terrainOn) return true; // 3D 지형 모드에서는 terrain.js가 카메라를 맡는다
-  const e = EVENTS[i], st = window.stageFrame?.(e), r = map.getBoundingClientRect();
+  const e = evAt(i), st = window.stageFrame?.(e), r = map.getBoundingClientRect();
   if (!st || !r.width) return false;
   const [cx, cy] = st.at ? px(st.at) : P(PLACES[e.place]);
-  const min = PLACES[e.place].jlm || e.place === 'jerusalem' ? 14 : 300;
+  const min = i < 0 ? 620 : PLACES[e.place].jlm || e.place === 'jerusalem' ? 14 : 300; // 프롤로그는 온 땅이 보이게 멀리서
   const u = reserveCard({ x: 0, y: 0, w: min, h: min }).w / r.width; // 이 확대에서 화면 1px 당 지도 단위
   const f = freeArea(mode), fx = (f.l + f.r) / 2, fy = (f.t + f.b) / 2;
   // 핀 + 무대 어긋남(dx,dy)이 빈 영역의 가운데에 오도록 보기 상자를 놓는다
@@ -419,8 +439,9 @@ function animateTo(target, ms) {
       drag.moved = true; cancelAnimationFrame(anim); followWalk = false; // 걷는 중에 끌면 카메라 따라가기를 멈춘다 map.setPointerCapture(e.pointerId); map.classList.add('dragging');
     }
     const u = map.viewBox.baseVal.width / map.getBoundingClientRect().width;
-    const { w, h } = drag.v, cx = Math.min(LAND.x + LAND.w * 1.25, Math.max(LAND.x - LAND.w * 0.25, drag.v.x + w / 2 - dx * u));
-    const cy = Math.min(LAND.y + LAND.h * 1.25, Math.max(LAND.y - LAND.h * 0.25, drag.v.y + h / 2 - dy * u));
+    const B = isPro() ? DRAWN : LAND; // 프롤로그(메소포타미아)에서는 그린 범위 안에서
+    const { w, h } = drag.v, cx = Math.min(B.x + B.w * 1.25, Math.max(B.x - B.w * 0.25, drag.v.x + w / 2 - dx * u));
+    const cy = Math.min(B.y + B.h * 1.25, Math.max(B.y - B.h * 0.25, drag.v.y + h / 2 - dy * u));
     view = { x: cx - w / 2, y: cy - h / 2, w, h };
     applyView();
   });
@@ -451,7 +472,9 @@ function setWalker([x, y]) {
   dispatchEvent(new CustomEvent('walker', { detail: { x, y } })); // 3D 지형 모드의 걷는 사람이 따라온다
 }
 function updateMap(prevIdx, { camera = true } = {}) {
-  const e = EVENTS[idx];
+  const e = evAt(idx);
+  map.classList.toggle('prologue', isPro()); // 프롤로그: 걷는 사람과 다음 길 표시를 숨긴다
+  document.body.classList.toggle('prologue-on', isPro());
   const seen = new Set(EVENTS.slice(0, idx + 1).map(x => x.place));
   $$('.pin', map).forEach(m => {
     m.classList.toggle('seen', seen.has(m.dataset.place));
@@ -590,11 +613,12 @@ function setCard(mode) {
 }
 
 /* ---------- 장면 ---------- */
-const refText = e => GOSPELS.filter(([k]) => e.refs[k]).map(([k, , ab]) => `${ab} ${e.refs[k]}`).concat(e.refs.acts ? [`${DATA.ui.gospels.acts[1]} ${e.refs.acts}`] : []).join(' · ');
+const refText = e => GOSPELS.filter(([k]) => e.refs[k]).map(([k, , ab]) => `${ab} ${e.refs[k]}`).concat(e.refs.acts ? [`${DATA.ui.gospels.acts[1]} ${e.refs.acts}`] : [], e.refs.gen ? [`${DATA.ui.gospels.gen[1]} ${e.refs.gen}`] : []).join(' · ');
 
 let cardTab = 'story'; // 장면 카드의 탭: story(이야기) · text(본문) · compare(비교)
 function renderScene() {
-  const e = EVENTS[idx], per = PERIODS[e.p], place = PLACES[e.place];
+  const e = evAt(idx), place = PLACES[e.place];
+  const per = isPro() ? { color: '#b89a5e', name: t('prologue'), en: 'PROLOGUE' } : PERIODS[e.p];
   document.documentElement.style.setProperty('--period', per.color);
   const img = e.img
     ? `<button class="hero-img" id="heroBtn" aria-label="${esc(t('bigImage'))}"><img src="${e.img.src}" alt="${esc(e.title)} — ${esc(e.img.title)}" loading="eager"></button>`
@@ -604,7 +628,7 @@ function renderScene() {
       <p>${esc(w.text)}</p>
       <footer><span>${w.j ? esc(t('jesus')) : esc(w.who)}</span><cite>${esc(w.ref)}</cite><button class="say" data-say="${i}" aria-label="${esc(t('listenWord'))}">🔊</button></footer>
     </blockquote>`;
-  const tabs = [['story', t('tabStory')], ['text', t('tabText')], ['compare', t('tabCompare')]];
+  const tabs = [['story', t('tabStory')], ['text', t('tabText')], ['compare', t('tabCompare')]].filter(([k]) => !(isPro() && k === 'compare')); // 프롤로그는 복음서 비교가 없다
   cardTab = 'story';
   $('#scene').innerHTML = `
   <div class="cardbar">
@@ -619,7 +643,7 @@ function renderScene() {
     ${e.img ? `<button class="viewbtn" id="viewBtn">${esc(t('viewPainting'))} ↗</button>` : ''}
   </div>
   <div class="hero-text">
-    <div class="eyebrow"><span class="pdot"></span>${LANG === 'ko' ? esc(per.en) + ' · ' : ''}${esc(per.name)} · ${idx + 1} / ${EVENTS.length}</div>
+    <div class="eyebrow"><span class="pdot"></span>${LANG === 'ko' ? esc(per.en) + ' · ' : ''}${esc(per.name)}${isPro() ? '' : ` · ${idx + 1} / ${EVENTS.length}`}</div>
     <h1>${esc(e.title)}</h1>
     <p class="subtitle">${esc(e.subtitle)}</p>
   </div>
@@ -648,7 +672,7 @@ function renderScene() {
   <div class="cardfoot"><button class="goldbtn" id="contBtn"></button></div>`;
   $('#scene').scrollTop = 0;
   // 명화가 밀려가는 방향을 장면마다 돌려 가며 (오른쪽 위 → 왼쪽 위 → 왼쪽 아래 → 오른쪽 아래)
-  const kb = [[3, 2], [-3, 2], [-3, -2], [3, -2]][idx % 4];
+  const kb = [[3, 2], [-3, 2], [-3, -2], [3, -2]][(idx % 4 + 4) % 4]; // 프롤로그(-1)도
   $('#scene').style.setProperty('--kx', kb[0] + '%'); $('#scene').style.setProperty('--ky', kb[1] + '%');
   $('#cardToggle').onclick = () => { setCard($('#scene').classList.contains('open') ? 'peek' : 'open'); window.recenterStage(); };
   $('.cardbar', $('#scene')).ondblclick = () => setCard('open');
@@ -686,13 +710,15 @@ function showTab(k) {
   const sc = $('#scene');
   $$('.ctabs button', sc).forEach(b => b.classList.toggle('active', b.dataset.tab === k));
   $$('.pane', sc).forEach(p => { p.hidden = p.dataset.pane !== k; });
-  const order = ['story', 'text', 'compare'], nx = order[order.indexOf(k) + 1], b = $('#contBtn', sc);
+  const order = isPro() ? ['story', 'text'] : ['story', 'text', 'compare'], nx = order[order.indexOf(k) + 1], b = $('#contBtn', sc);
   if (nx) { b.innerHTML = `${esc(t('continueReading'))} <span aria-hidden="true">→</span>`; b.onclick = () => { if (sc.classList.contains('open')) setCard('full'); showTab(nx); $('.ctabs', sc).scrollIntoView({ block: 'start', behavior: 'smooth' }); }; }
   else if (idx < EVENTS.length - 1) { b.innerHTML = `${esc(t('walkNext'))} <span aria-hidden="true">→</span>`; b.onclick = () => go(idx + 1); }
   else { b.innerHTML = esc(t('finishJourney')); b.onclick = () => endJourney(); }
 }
 // 지금 장면의 퀴즈: 아래 조작부의 카드에서 창으로 연다
 function updateQuizBtn() {
+  $('#quizBtn').style.visibility = isPro() ? 'hidden' : ''; // 프롤로그에는 퀴즈가 없다
+  if (isPro()) return;
   const e = EVENTS[idx], done = state.quiz[e.id] === true;
   $('#quizBtn').classList.toggle('done', done);
   $('#quizBtn b').textContent = done ? `${t('tabQuiz')} ★` : t('tabQuiz');
@@ -734,7 +760,9 @@ const PICONS = {
 };
 function renderTrack() {
   const groups = Object.values(PERIODS).map(per => ({ per, evs: EVENTS.map((e, i) => [e, i]).filter(([e]) => e.p === per.id) }));
-  $('#track').innerHTML = groups.map(({ per, evs }) => `<div class="tseg" data-p="${per.id}" style="--c:${per.color};flex:${evs.length + 3}">
+  // 맨 앞의 작은 프롤로그 단추 (동산의 나무)
+  const pro = DATA.prologue ? `<button class="tpro" data-i="-1" title="${esc(t('prologue'))} · ${esc(DATA.prologue.title)}" aria-label="${esc(t('prologue'))}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21v-7M12 14c-4 0-6.5-2.3-6.5-5.3S8.5 3 12 3s6.5 2.7 6.5 5.7S16 14 12 14Z"/><circle cx="9.5" cy="9" r="1"/><circle cx="14" cy="7.5" r="1"/></svg></button>` : '';
+  $('#track').innerHTML = pro + groups.map(({ per, evs }) => `<div class="tseg" data-p="${per.id}" style="--c:${per.color};flex:${evs.length + 3}">
       <button class="ticon" data-i="${evs[0][1]}" title="${esc(per.name)}" aria-label="${esc(per.name)}"><svg viewBox="0 0 24 24" aria-hidden="true">${PICONS[per.id] || ''}</svg></button>
       <div class="tline">${evs.map(([e, i]) => `<button class="tick" data-i="${i}" title="${esc(e.title)} · ${esc(PLACES[e.place].name)}" aria-label="${i + 1}. ${esc(e.title)}"></button>`).join('')}</div>
       <span class="tname">${esc(per.name)}</span></div>`).join('');
@@ -742,39 +770,43 @@ function renderTrack() {
 }
 function updateTrack() {
   $$('.tick').forEach((b, i) => { b.classList.toggle('now', i === idx); b.classList.toggle('seen', visited.has(EVENTS[i].id)); });
-  $$('.tseg').forEach(g => g.classList.toggle('now', g.dataset.p === EVENTS[idx].p));
+  $$('.tseg').forEach(g => g.classList.toggle('now', g.dataset.p === evAt(idx).p));
+  $('.tpro')?.classList.toggle('now', isPro());
   const now = $('.tick.now'), tr = $('#track');
   if (now) tr.scrollTo({ left: now.offsetLeft - tr.clientWidth / 2, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
 }
 
 function go(i, { keepSpeech = false, onArrive } = {}) {
-  if (i < 0 || i >= EVENTS.length || i === idx && $('#scene').innerHTML) return;
+  if (i < firstIdx() || i >= EVENTS.length || i === idx && $('#scene').innerHTML) return;
   if (walking && i === idx + 1) return; // 이미 그곳으로 걷는 중
   if (!keepSpeech) stopSpeech(true);
   cancelWalk();
   const prev = idx;
-  const prevPlace = $('#scene').innerHTML ? EVENTS[prev].place : null;
+  const prevPlace = $('#scene').innerHTML ? evAt(prev).place : null;
   const stepped = i === prev + 1 && prevPlace !== null;
   const arrive = () => {
     idx = i;
-    renderScene(); updateMap(prev, { camera: !stepped || fitMode === 'all' }); updateTrack(); markVisited(EVENTS[i].id);
-    window.__stageScene = EVENTS[i]; // stage.js가 늦게 로드돼도 따라잡도록
-    dispatchEvent(new CustomEvent('stage:scene', { detail: { ev: EVENTS[i] } }));
+    renderScene(); updateMap(prev, { camera: !stepped || fitMode === 'all' }); updateTrack(); if (i >= 0) markVisited(EVENTS[i].id);
+    window.__stageScene = evAt(i); // stage.js가 늦게 로드돼도 따라잡도록
+    dispatchEvent(new CustomEvent('stage:scene', { detail: { ev: evAt(i) } }));
     bgmFollow(); // 읽는 중에 장면이 바뀌면 그 장면의 곡으로 겹쳐 바꾼다
-    setOdo(odoAt(i));
-    history.replaceState(null, '', '#' + EVENTS[i].id);
-    $('#prev').disabled = idx === 0; $('#next').disabled = $('#skip').disabled = idx === EVENTS.length - 1;
-    const p = PLACES[EVENTS[i].place];
+    setOdo(odoAt(Math.max(0, i)));
+    history.replaceState(null, '', '#' + evAt(i).id);
+    $('#prev').disabled = idx === firstIdx(); $('#next').disabled = $('#skip').disabled = idx === EVENTS.length - 1;
+    const p = PLACES[evAt(i).place];
     if (stepped) {
-      banner(`<span class="wk">📍</span>${esc(EVENTS[prev].place === EVENTS[i].place ? t('samePlace') : t('arrive'))} · <b>${esc(p.name)}</b><small>${esc(EVENTS[i].when)}</small>`, 2600);
+      banner(`<span class="wk">📍</span>${esc(evAt(prev).place === EVENTS[i].place ? t('samePlace') : t('arrive'))} · <b>${esc(p.name)}</b><small>${esc(EVENTS[i].when)}</small>`, 2600);
       const nx = EVENTS[i + 1];
-      if (fitMode !== 'all' && !frameStage(i, 1100)) frame(nx && nx.place !== EVENTS[i].place ? [EVENTS[i].place, nx.place] : [EVENTS[i].place], 1100);
+      // 프롤로그(메소포타미아의 에덴)에서는 먼 길이라: 두 곳이 다 보이게 물러났다가 서쪽 나사렛으로 내려앉는다
+      if (prev < 0 && fitMode !== 'all') { frame([evAt(prev).place, EVENTS[i].place], 1400, false); setTimeout(() => { if (idx === i && !frameStage(i, 1700)) frame([EVENTS[i].place], 1700); }, reduced() ? 0 : 1500); }
+      else if (fitMode !== 'all' && !frameStage(i, 1100)) frame(nx && nx.place !== EVENTS[i].place ? [EVENTS[i].place, nx.place] : [EVENTS[i].place], 1100);
       $('#walker', map).classList.remove('arrive'); void $('#walker', map).getBoundingClientRect(); $('#walker', map).classList.add('arrive');
       setTimeout(() => setCard('open'), reduced() ? 0 : 650);
     } else setCard('open');
     onArrive && onArrive();
   };
-  if (stepped && prevPlace !== EVENTS[i].place) walkTo(i, arrive);
+  // 프롤로그에서 첫 장면으로는 걷지 않고, 온 땅을 내려다보던 자리에서 나사렛으로 내려앉는다 (arrive의 frameStage)
+  if (stepped && prev >= 0 && prevPlace !== EVENTS[i].place) walkTo(i, arrive);
   else if (stepped) { setCard('peek'); setTimeout(arrive, reduced() ? 0 : 700); }
   else arrive();
 }
@@ -803,8 +835,9 @@ function showIntro(resume) {
     if (i !== idx) go(i);
   };
   const esc = ev => { if (ev.key === 'Escape') close(idx); };
-  starts.forEach(b => { b.onclick = () => close(resume > 0 ? resume : 0, true); });
-  agains.forEach(b => { b.onclick = () => close(0, true); });
+  // 처음 걷는 사람과 '처음부터 다시'는 프롤로그(첫 아담)부터
+  starts.forEach(b => { b.onclick = () => close(resume > 0 ? resume : firstIdx(), true); });
+  agains.forEach(b => { b.onclick = () => close(firstIdx(), true); });
   $('.land-down', box).onclick = ev => { ev.preventDefault(); $('#landHow').scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth' }); };
   addEventListener('keydown', esc);
   behind.forEach(el => { el.inert = true; });
@@ -823,7 +856,7 @@ const sentences = text => text.match(/[^.?!…。！？]+[.?!…。！？]*["”
 
 // 녹음 낭독 (한국어만): _src/tools/voice.mjs가 만든 문장별 mp3. 열쇠는 목소리|문장의 FNV-1a (voice.mjs와 같은 계산)
 // 한 번 듣기에 쓸 문장이 모두 녹음돼 있을 때만 녹음으로 읽고, 하나라도 없으면 지금처럼 브라우저 음성으로 읽는다
-const VOICE_NAME = { narr: 'Aoede', jesus: 'Algenib' };
+const VOICE_NAME = { narr: 'Aoede', jesus: 'Algenib', god: 'Charon' }; // god: 프롤로그의 하나님 말씀 (예수님과 다른 남성 목소리)
 const voiceKey = (voice, text) => { let h = 0x811c9dc5; for (const c of `${voice}|${text}`) { h ^= c.codePointAt(0); h = Math.imul(h, 0x01000193) >>> 0; } return h.toString(36); };
 let voiceIndex = {};
 if (LANG === 'ko') fetch('assets/voice/ko/index.json').then(r => r.ok ? r.json() : {}).then(j => { voiceIndex = j; }).catch(() => {});
@@ -849,7 +882,7 @@ function speakQueue(items, onDone) {
     ss.forEach((s, k) => queue.push({ ...it, text: s, s: k, last: k === ss.length - 1 }));
   });
   // Gemini 성우로 녹음한 말씀(관리자 페이지에서 고른 것)은 열쇠에 'gemini-'가 붙는다 (voice.mjs의 keyOf)
-  queue.forEach(it => { it.clip = voiceKey(`${it.gemini ? 'gemini-' : ''}${it.jesus ? VOICE_NAME.jesus : VOICE_NAME.narr}`, it.text); });
+  queue.forEach(it => { it.clip = voiceKey(`${it.gemini ? 'gemini-' : ''}${it.jesus ? VOICE_NAME.jesus : it.god ? VOICE_NAME.god : VOICE_NAME.narr}`, it.text); });
   const recorded = LANG === 'ko' && queue.length > 0 && queue.every(it => voiceIndex[it.clip]);
   // 녹음으로 읽는 장면이면 브라우저 음성이 없어도 안내하지 않는다
   if (!recorded && !useVoice && !warnedNoVoice) {
@@ -892,7 +925,7 @@ function speakQueue(items, onDone) {
     if (!useVoice) { guard = setTimeout(() => advance(it.pause || 0), readMs(it)); return; }
     const u = new SpeechSynthesisUtterance(it.text);
     u.lang = DATA.ui.lang; u.rate = rate;
-    const v = it.jesus ? other || narrator : narrator;
+    const v = it.jesus || it.god ? other || narrator : narrator; // 브라우저 음성으로 읽을 때도 하나님 말씀은 남성 목소리 쪽으로
     if (v) u.voice = v;
     u.pitch = it.jesus && !other ? 0.8 : 1;
     // 일부 브라우저는 onend를 빠뜨리므로 감시 타이머로 다음 문장을 보장한다
@@ -954,7 +987,7 @@ function scrollToEl(el) {
 }
 
 function sceneScript() {
-  const e = EVENTS[idx], sc = $('#scene');
+  const e = evAt(idx), sc = $('#scene');
   // beat: 3D 무대(stage.js)가 연출을 맞추는 표지 — intro, p0…(문단), w0…(말씀)
   // 제목 줄은 '수태고지. 장소, 나사렛. 시기, BC 6년경.'으로 읽는다 (장소와 때를 이름 붙여 알려 준다)
   const items = [{ text: `${e.title}. ${t('sayPlace')}, ${PLACES[e.place].name.replace(/[()·]/g, ' ')}. ${t('sayWhen')}, ${e.when.replace(/\s*·\s*/g, ', ')}.`, el: $('.hero-text', sc), pause: 500, beat: 'intro' }];
@@ -965,15 +998,15 @@ function sceneScript() {
   e.words.forEach((w, i) => {
     const who = w.j ? t('jesus') : w.who;
     if (!w.j) items.push({ text: `${w.who}.`, el: $(`blockquote[data-say="${i}"]`, sc), beat: 'w' + i });
-    items.push({ text: w.text, who, el: $(`blockquote[data-say="${i}"]`, sc), jesus: !!w.j, gemini: w.tts === 'gemini', pause: 500, beat: 'w' + i });
+    items.push({ text: w.text, who, el: $(`blockquote[data-say="${i}"]`, sc), jesus: !!w.j, god: !!w.g, gemini: w.tts === 'gemini', pause: 500, beat: 'w' + i });
   });
   return items;
 }
 function speakScene(onDone) { speakQueue(sceneScript(), onDone); }
 function speakWord(i) {
   stopAuto();
-  const w = EVENTS[idx].words[i];
-  speakQueue([{ text: w.text, who: w.j ? t('jesus') : w.who, el: $(`blockquote[data-say="${i}"]`, $('#scene')), jesus: !!w.j, gemini: w.tts === 'gemini' }]);
+  const w = evAt(idx).words[i];
+  speakQueue([{ text: w.text, who: w.j ? t('jesus') : w.who, el: $(`blockquote[data-say="${i}"]`, $('#scene')), jesus: !!w.j, god: !!w.g, gemini: w.tts === 'gemini' }]);
 }
 const stageBeat = (beat, s) => dispatchEvent(new CustomEvent('stage:beat', { detail: { beat, s } }));
 function stopSpeech(keepAuto) {
@@ -1068,7 +1101,7 @@ function bgmStop(s) {
 // 낭독 상태가 바뀔 때마다 (setListenUI)
 function bgmFollow() {
   $('#music')?.setAttribute('aria-pressed', String(bgmOn()));
-  const cue = bgmOn() && speaking ? EVENTS?.[idx]?.music : null;
+  const cue = bgmOn() && speaking && EVENTS ? evAt(idx)?.music : null;
   if (!cue) { if (bgmCue) bgmStop(0.3); return; }
   if (!bgmReady()) return;
   if (bgmCtx.state === 'suspended') bgmCtx.resume().catch(() => {});
@@ -1266,14 +1299,16 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   window.EVENTS_READY = true; // 3D 지형 모드(terrain.js)가 이것을 기다렸다가 조작기를 단다
   PERIODS = Object.fromEntries(d.periods.map(p => [p.id, p]));
   buildMap(); renderTrack();
-  const fromHash = EVENTS.findIndex(e => '#' + e.id === location.hash);
+  // 장면 주소(#e05, 프롤로그는 #e00)가 있으면 그 장면, 없으면 지난번 장면, 처음 온 사람은 프롤로그부터
+  const hashIdx = () => d.prologue && location.hash === '#' + d.prologue.id ? -1 : EVENTS.findIndex(e => '#' + e.id === location.hash);
+  const fromHash = hashIdx(), hashOk = fromHash >= 0 || (fromHash === -1 && !!d.prologue && location.hash === '#' + d.prologue.id);
   const fromLast = EVENTS.findIndex(e => e.id === state.last);
-  idx = fromHash >= 0 ? fromHash : Math.max(0, fromLast);
+  idx = hashOk ? fromHash : fromLast >= 0 ? fromLast : firstIdx();
   view = { x: 0, y: 0, w: W, h: H }; applyView();
-  const start = idx; idx = -1; go(start);
+  const start = idx; idx = -2; go(start);
   updateProgress();
   // 첫 시작 화면: 장면 주소로 바로 들어온 때(#e05)와 연출 확인(?beat=)은 건너뛴다
-  if (fromHash < 0 && !new URLSearchParams(location.search).has('beat')) showIntro(fromLast > 0 ? fromLast : -1);
+  if (!hashOk && !new URLSearchParams(location.search).has('beat')) showIntro(fromLast > 0 ? fromLast : -1);
   $('.brand').onclick = ev => { ev.preventDefault(); showIntro(idx > 0 ? idx : -1); };
 
   $('#prev').onclick = () => go(idx - 1);
@@ -1298,7 +1333,7 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
     if (fitMode === 'all') { $('#fitNow').onclick(); return; }
     fitMode = 'all'; fitAll(); $('#fitAll').classList.add('active'); $('#fitNow').classList.remove('active');
   };
-  $('#fitNow').onclick = () => { fitMode = 'scene'; if (!frameStage(idx, 900)) frame([EVENTS[idx].place], 900); $('#fitNow').classList.add('active'); $('#fitAll').classList.remove('active'); };
+  $('#fitNow').onclick = () => { fitMode = 'scene'; if (!frameStage(idx, 900)) frame([evAt(idx).place], 900); $('#fitNow').classList.add('active'); $('#fitAll').classList.remove('active'); };
   $$('.tabs button').forEach(b => b.onclick = () => setView(b.dataset.view));
   $('#wordSearch').oninput = renderWords;
   $('#closeViewer').onclick = () => $('#viewer').close();
@@ -1309,14 +1344,14 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   $('#closeEnd').onclick = () => $('#journeyEnd').close();
   $('#resetProgress').onclick = () => {
     if (!confirm(t('resetConfirm'))) return;
-    visited.clear(); state.visited = []; state.quiz = {}; delete state.ended; delete state.fav; store.save(); markVisited(EVENTS[idx].id); renderStamps(); renderTrack(); updateTrack();
+    visited.clear(); state.visited = []; state.quiz = {}; delete state.ended; delete state.fav; store.save(); if (idx >= 0) markVisited(EVENTS[idx].id); renderStamps(); renderTrack(); updateTrack();
   };
   addEventListener('keydown', ev => {
     if ($('#journey').hidden || ev.target.matches('input, select, textarea') || document.querySelector('dialog[open]') || !$('#intro').hidden) return; // 시작 화면이 떠 있으면 뒤 여정을 움직이지 않는다
     if (ev.key === 'ArrowRight') go(idx + 1);
     if (ev.key === 'ArrowLeft') go(idx - 1);
   });
-  addEventListener('hashchange', () => { const i = EVENTS.findIndex(e => '#' + e.id === location.hash); if (i >= 0 && i !== idx) go(i); });
+  addEventListener('hashchange', () => { const i = hashIdx(); if ((i >= 0 || location.hash === '#' + d.prologue?.id) && i !== idx) go(i); });
 }).catch(err => {
   $('#scene').innerHTML = `<p class="empty">${LANG === 'ko' ? '여정 데이터를 불러오지 못했습니다. 새로고침해 주세요.' : 'The journey data could not be loaded. Please refresh the page.'} (${esc(err.message)})</p>`;
 });

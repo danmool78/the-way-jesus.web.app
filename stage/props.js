@@ -920,6 +920,53 @@ Object.assign(MAKERS, {
     return new Prop(g);
   },
 
+  // 동산 한가운데의 나무 (프롤로그): 붉은 열매가 달린 나무. state 'fruit' | 'taken'(하와가 딴 열매 하나가 사라진다)
+  fruittree(o = {}) {
+    const g = new THREE.Group(), bark = mat('#6a5240', { roughness: 1 }), leaf = mat('#4d7a38', { roughness: 0.85 }), red = mat('#c2412c', { roughness: 0.45 });
+    [[0, 0.24, 0, 0.1], [0.05, 0.5, 0.02, -0.3], [-0.06, 0.48, 0, 0.4]].forEach(([x, y, z, r], i) => { const t = mesh(new THREE.CylinderGeometry(i ? 0.022 : 0.045, i ? 0.035 : 0.065, i ? 0.32 : 0.5, 8), bark, g, [x, y, z]); t.rotation.z = r; });
+    [[0, 0.8, 0, 0.27], [0.22, 0.7, 0.04, 0.2], [-0.22, 0.7, -0.03, 0.21], [0.05, 0.7, 0.2, 0.18], [-0.04, 0.68, -0.2, 0.18]].forEach(([x, y, z, r]) => mesh(sphere(r, 16, 12), leaf, g, [x, y, z], [1, 0.8, 1]));
+    const fruits = [[0.16, 0.6, 0.17], [-0.2, 0.58, 0.12], [0.26, 0.66, -0.08], [-0.08, 0.62, 0.24], [0.02, 0.92, 0.16], [-0.27, 0.72, -0.12]].map(p => mesh(sphere(0.035, 10, 8), red, g, p));
+    return new Prop(g, P => { fruits[0].visible = P.state !== 'taken'; }, { state: o.state || 'fruit' });
+  },
+  // 생명나무 (프롤로그): 은은히 빛나는 금빛 잎. dim(0~1)로 빛을 거둔다 — 길이 닫힐 때
+  lifetree(o = {}) {
+    const g = new THREE.Group(), bark = mat('#7a6248', { roughness: 1 }), leaf = mat('#c9d98a', { roughness: 0.7, emissive: '#e9d27a', emissiveIntensity: 0.45 });
+    mesh(new THREE.CylinderGeometry(0.04, 0.07, 0.62, 8), bark, g, [0, 0.31, 0]);
+    [[0, 0.86, 0, 0.26], [0.2, 0.74, 0.05, 0.19], [-0.2, 0.75, -0.04, 0.2], [0.04, 0.74, 0.19, 0.17], [-0.03, 0.72, -0.19, 0.17]].forEach(([x, y, z, r]) => mesh(sphere(r, 16, 12), leaf, g, [x, y, z], [1, 0.85, 1]));
+    const halo = glowSprite(1.6, 0.5); halo.position.y = 0.78; g.add(halo);
+    return new Prop(g, (P, t) => {
+      const on = P.state === 'closed' ? 0.35 : 1;
+      leaf.emissiveIntensity = damp(leaf.emissiveIntensity, 0.45 * on, 1, 1 / 60);
+      halo.material.opacity = P.show * on * (0.42 + Math.sin(t * 1.3) * 0.08);
+    }, { state: o.state || 'open' });
+  },
+  // 뱀 (프롤로그): 나뭇가지에 감긴 어두운 그림자 — 형체만 (연출 원칙 2). state 'rest' | 'hiss'(머리를 들고 흔들며 속삭인다)
+  serpent() {
+    const g = new THREE.Group(), dark = mat('#1d1813', { roughness: 0.9 });
+    const pts = []; for (let i = 0; i <= 40; i++) { const a = i / 40 * Math.PI * 3.2, r = 0.075 - i * 0.0008; pts.push(new THREE.Vector3(Math.cos(a) * r, i * 0.009, Math.sin(a) * r)); }
+    mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 80, 0.014, 8), dark, g);
+    const head = new THREE.Group(); head.position.set(pts[40].x, pts[40].y, pts[40].z); g.add(head);
+    mesh(new THREE.CylinderGeometry(0.012, 0.014, 0.12, 8), dark, head, [0, 0.06, 0]);
+    mesh(sphere(0.022, 10, 8), dark, head, [0.012, 0.12, 0], [1.5, 0.8, 1]);
+    return new Prop(g, (P, t) => {
+      const up = P.state === 'hiss' ? 1 : 0;
+      head.rotation.z = damp(head.rotation.z, -0.5 + up * 0.35 + Math.sin(t * (up ? 3.2 : 1.1)) * (0.08 + up * 0.12), 3, 1 / 60);
+      head.scale.y = damp(head.scale.y, 0.8 + up * 0.6, 3, 1 / 60);
+    }, { state: 'rest' });
+  },
+  // 불칼 (프롤로그): 생명나무로 가는 길을 지키는, 스스로 도는 불꽃의 칼 — 빛으로만 그린다
+  flamesword() {
+    const g = new THREE.Group(), spin = new THREE.Group(); g.add(spin); spin.position.y = 0.5;
+    const blade = mesh(new THREE.BoxGeometry(0.022, 0.42, 0.006), new THREE.MeshBasicMaterial({ color: '#ffd27a' }), spin);
+    const flame = glowSprite(0.55, 0.85); spin.add(flame);
+    const light = new THREE.PointLight('#ffb050', 0, 1.6, 1.6); light.position.y = 0.5; g.add(light);
+    return new Prop(g, (P, t) => {
+      spin.rotation.z = t * 2.2; blade.scale.y = 1 + Math.sin(t * 9) * 0.04;
+      flame.material.opacity = P.show * (0.7 + Math.sin(t * 11) * 0.15);
+      light.intensity = P.show * 1.2;
+    });
+  },
+
   // 숯불: 돌 화로의 불과 일렁이는 빛 (대제사장 집 안뜰)
   fire() {
     const g = new THREE.Group();

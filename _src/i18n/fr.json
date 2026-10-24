@@ -34,6 +34,10 @@
   }
  },
  "places": {
+  "eden": {
+   "name": "Jardin d’Éden",
+   "region": "Mésopotamie"
+  },
   "nazareth": {
    "name": "Nazareth",
    "region": "Galilée"
@@ -164,6 +168,33 @@
   }
  },
  "events": {
+  "e00": {
+   "title": "Le jardin perdu",
+   "when": "Au commencement",
+   "subtitle": "Un chemin fermé, et une première promesse",
+   "story": [
+    "Au commencement, Dieu planta un jardin en Éden, à l’orient, et insuffla le souffle de vie dans l’homme qu’il avait façonné avec la poussière. Adam et Ève marchaient avec lui et goûtaient tous les fruits du jardin. Seulement, de l’arbre au milieu du jardin, celui qui donne la connaissance du bien et du mal, il leur dit de ne pas manger. Le jour où ils en mangeraient, ils mourraient à coup sûr.",
+    "Mais le serpent s’approcha d’Ève et lui murmura : Dieu a-t-il vraiment dit cela ? Vous ne mourrez pas du tout ; vos yeux s’ouvriront et vous serez comme Dieu. Ève cueillit le fruit, en mangea et en donna aussi à Adam, qui était avec elle. À cet instant, ils connurent la honte, et quand ils entendirent les pas de Dieu dans la brise du soir, ils se cachèrent parmi les arbres.",
+    "Adam, où es-tu ? appela Dieu. Ce jour-là, le péché s’est glissé entre les hommes et Dieu, et par le péché la mort est entrée dans le monde. Dieu dit au serpent que la descendance de la femme lui écraserait la tête. Puis il leur fit des vêtements de peau, les en revêtit, les renvoya à l’orient du jardin et plaça des chérubins et une épée de feu pour garder le chemin de l’arbre de vie. L’histoire qui rouvre ce chemin fermé commence maintenant avec une jeune fille de Nazareth."
+   ],
+   "words": [
+    {
+     "who": "Dieu",
+     "text": "Vous pouvez manger librement du fruit de tous les arbres du jardin. Mais ne mangez pas de l’arbre qui donne la connaissance du bien et du mal, car le jour où vous en mangerez, vous mourrez à coup sûr."
+    },
+    {
+     "who": "Dieu",
+     "text": "Où es-tu ?"
+    },
+    {
+     "who": "Dieu",
+     "text": "Je mettrai l’hostilité entre toi et la femme, entre ta descendance et la sienne. Sa descendance t’écrasera la tête, et toi, tu lui mordras le talon."
+    }
+   ],
+   "note": "Genèse 3,15 est appelé depuis longtemps le « premier évangile ». Le Nouveau Testament trouve en Jésus-Christ la réponse : il est la descendance de la femme qui écrase la tête du serpent. Paul l’a appelé « le dernier Adam ».",
+   "reflect": "Devant sa question, où es-tu ?, puis-je lui répondre au lieu de me cacher ?",
+   "credit": "Giovanni di Paolo, The Creation of the World and the Expulsion from Paradise, 1445 (détail) · Metropolitan Museum of Art · Domaine public"
+  },
   "e01": {
    "title": "L'Annonciation",
    "when": "vers 6 av. J.-C.",

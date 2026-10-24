@@ -15,6 +15,69 @@ const ring = (r, n, a0, a1, squash = 0.7) => Array.from({ length: n }, (_, i) =>
 const CROWD = [...ring(1.2, 11, Math.PI + 0.3, Math.PI * 2 - 0.3, 0.62), ...ring(1.58, 13, Math.PI + 0.12, Math.PI * 2 - 0.12, 0.62), [-1.3, 0.25], [-1.6, 0.45], [1.3, 0.27], [1.62, 0.44]];
 
 export const SCRIPTS = {
+  /* 0. 프롤로그 — 잃어버린 동산 (창 2–3장). 지도에 핀이 없는 장면이라 무대를 에덴의 전승 자리(at)에 세운다.
+     타락 전의 아담과 하와는 빛 속의 실루엣으로만, 범죄한 뒤에는 어두운 실루엣으로, 마지막에 가죽옷을 입은 모습으로 동산 동쪽(오른쪽)으로 떠난다.
+     하나님은 모습 없이 빛(presence)으로만, 뱀은 가지에 감긴 어두운 그림자로만 (연출 원칙 2). 생명나무로 가는 길은 그룹과 불칼이 지킨다 */
+  e00: {
+    env: 'glory', wide: 1.25, at: [31.0, 47.43], // 에덴: 창 2:10–14의 힛데겔(티그리스)·유브라데(유프라테스)가 만나는 메소포타미아 남쪽 (전승의 자리, 정확한 곳은 알 수 없다)
+    props: {
+      grass: ['grass', 0, 0.05, { r: 1.9 }],
+      river: ['water', 0, -1.0, { r: 1.2, y: 0.05, size: [1.9, 1, 0.22] }], // 동산을 적시며 흐르는 강 (창 2:10)
+      flowers: ['flowers', -1.05, 0.42, { r: 0.42 }],
+      flowers2: ['flowers', 0.95, 0.5, { r: 0.36 }],
+      olive: ['olive', 1.15, -0.62],
+      olive2: ['olive', -1.55, -0.22, { scale: 1.1 }],
+      life: ['lifetree', -0.95, -0.6, { scale: 1.1 }],
+      tree: ['fruittree', 0.18, -0.38, { scale: 1.15 }],
+      serpent: ['serpent', 0.36, -0.34, { y: 0.4 }],
+      presence: ['beam', -0.3, -0.15, { r: 0.5, h: 3, peak: 0.5 }],
+      sword: ['flamesword', -0.55, 0.0],
+    },
+    cast: {
+      adam: ['man', -1.3, 0.4, 0.5, { silhouette: 'light', gaze: false }],
+      eve: ['woman', -1.05, 0.48, 0.3, { silhouette: 'light', gaze: false }],
+      adamD: ['man', -0.3, 0.12, 0.6, { silhouette: true, gaze: false }],
+      eveD: ['woman', 0.0, 0.1, 0.8, { silhouette: true, gaze: false }],
+      adamC: ['man', -1.3, -0.3, 1.2, { gaze: false }],
+      eveC: ['woman', -1.08, -0.36, 1.2, { gaze: false }],
+      cherub: ['angel', -0.78, -0.02, 0.9, { gaze: false }],
+    },
+    beats: {
+      enter: [['@env', 'glory'], ['adam', 'idle', { show: 1, x: -0.45, z: 0.28, look: 0.5 }], ['eve', 'idle', { show: 1, x: -0.18, z: 0.32, look: -0.6 }],
+        ['adamD', 'idle', { show: 0 }], ['eveD', 'idle', { show: 0 }], ['adamC', 'idle', { show: 0 }], ['eveC', 'idle', { show: 0 }], ['cherub', 'idle', { show: 0 }],
+        ['tree', 'fruit'], ['life', 'open'], ['serpent', 'rest', { show: 0 }], ['presence', null, { show: 0 }], ['sword', null, { show: 0 }]],
+      intro: [['@env', 'glory'], ['adam', 'idle', { show: 0, x: -1.3, z: 0.4 }], ['eve', 'idle', { show: 0, x: -1.05, z: 0.48 }],
+        ['adamD', 'idle', { show: 0, x: -0.3, z: 0.12 }], ['eveD', 'idle', { show: 0, x: 0.0, z: 0.1 }], ['adamC', 'idle', { show: 0, x: -1.3, z: -0.3 }], ['eveC', 'idle', { show: 0, x: -1.08, z: -0.36 }],
+        ['cherub', 'idle', { show: 0 }], ['tree', 'fruit'], ['life', 'open'], ['serpent', 'rest', { show: 0 }], ['presence', null, { show: 0 }], ['sword', null, { show: 0 }]],
+      // 흙으로 빚은 사람에게 생명의 숨 — 빛이 내려오고 아담이 나타나 고개를 든다
+      'p0.0': [['presence', null, { show: 1 }], ['adam', 'look-up', { show: 1 }], ['presence', null, { show: 0, delay: 4200 }]],
+      'p0.1': [['eve', 'idle', { show: 1 }], ['adam', 'idle', { x: -0.45, z: 0.28, look: 0.5, delay: 900 }], ['eve', 'idle', { x: -0.18, z: 0.32, look: -0.6, delay: 900 }]],
+      'p0.2': [['presence', null, { show: 1 }], ['adam', 'listen', { look: 1 }], ['eve', 'listen', { look: 1 }]],
+      'p0.3': [['presence', null, { show: 0, delay: 2500 }]],
+      // 뱀의 속삭임 — 빛이 흐려지고 하와가 나무 곁으로
+      'p1.0': [['@env', 'overcast'], ['serpent', 'hiss', { show: 1 }], ['eve', 'idle', { x: 0.0, z: 0.1, look: 1.2 }]],
+      'p1.1': [['eve', 'listen', { look: 1.2 }]],
+      'p1.2': [['eve', 'raise', { look: 1.2 }], ['tree', 'taken', { delay: 1400 }], ['adam', 'idle', { x: -0.3, z: 0.12, look: 0.6 }], ['serpent', 'rest', { delay: 2000 }], ['eve', 'idle', { look: -1.2, delay: 2600 }]],
+      // 부끄러움 — 빛의 윤곽이 어두운 그림자로 바뀌고, 하나님의 발소리에 나무 사이로 숨는다
+      'p1.3': [['@env', 'dusk'], ['adam', 'idle', { show: 0 }], ['eve', 'idle', { show: 0 }], ['adamD', 'idle', { show: 1 }], ['eveD', 'idle', { show: 1 }],
+        ['adamD', 'cower', { x: -1.3, z: -0.3, look: 1.2, delay: 1600 }], ['eveD', 'cower', { x: -1.08, z: -0.36, look: 1.2, delay: 1700 }], ['presence', null, { show: 1, delay: 3200 }]],
+      'p2.0': [['presence', null, { show: 1 }], ['adamD', 'cower', { look: 1.2 }], ['eveD', 'cower', { look: 1.2 }]],
+      'p2.1': [['@env', 'dark']],
+      // 첫 약속: 여자의 후손이 뱀의 머리를 — 뱀은 사라진다
+      'p2.2': [['@env', 'dusk'], ['serpent', 'rest', { show: 0, delay: 2500 }]],
+      // 가죽옷을 입혀 동쪽으로 내보내시고, 그룹과 불칼이 생명나무로 가는 길을 지킨다
+      'p2.3': [['adamD', 'idle', { show: 0 }], ['eveD', 'idle', { show: 0 }], ['adamC', 'idle', { show: 1 }], ['eveC', 'idle', { show: 1 }], ['presence', null, { show: 0, delay: 1500 }],
+        ['adamC', 'idle', { x: 1.55, z: 0.42, look: 1.3, delay: 1800 }], ['eveC', 'idle', { x: 1.8, z: 0.5, look: 1.3, delay: 2000 }],
+        ['cherub', 'idle', { show: 1, delay: 3500 }], ['sword', null, { show: 1, delay: 3800 }], ['life', 'closed', { delay: 3800 }]],
+      // 그 닫힌 길을 다시 여는 이야기 — 새벽빛
+      'p2.4': [['@env', 'dawn'], ['adamC', 'look-up', { look: -1 }], ['eveC', 'look-up', { look: -1 }]],
+      w0: [['presence', null, { show: 1 }]],
+      w2: [['presence', null, { show: 1 }]],
+      end: [['@env', 'dawn'], ['adam', 'idle', { show: 0 }], ['eve', 'idle', { show: 0 }], ['adamD', 'idle', { show: 0 }], ['eveD', 'idle', { show: 0 }], ['serpent', 'rest', { show: 0 }], ['presence', null, { show: 0 }],
+        ['adamC', 'idle', { show: 1, x: 1.55, z: 0.42, look: -1 }], ['eveC', 'idle', { show: 1, x: 1.8, z: 0.5, look: -1 }], ['cherub', 'idle', { show: 1 }], ['sword', null, { show: 1 }], ['life', 'closed'], ['tree', 'taken']],
+    },
+  },
+
   /* 1. 수태고지 */
   e01: {
     props: {

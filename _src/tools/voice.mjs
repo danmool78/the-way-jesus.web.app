@@ -11,7 +11,7 @@ import { pauses } from './tts-pauses.mjs';
 const KEY = process.env.GOOGLE_TTS_KEY;
 if (!KEY) { console.error('GOOGLE_TTS_KEY 환경변수가 없습니다'); process.exit(1); }
 const OUT = 'assets/voice/ko', TMP = '/tmp/voice-ko';
-const VOICE = { narr: { name: 'Aoede', rate: 0.95, cps: 6.8 }, jesus: { name: 'Algenib', rate: 1, cps: 7.5 } };
+const VOICE = { narr: { name: 'Aoede', rate: 0.95, cps: 6.8 }, jesus: { name: 'Algenib', rate: 1, cps: 7.5 }, god: { name: 'Charon', rate: 0.95, cps: 6.8 } }; // god: 프롤로그의 하나님 말씀 (남성, 예수님과 다른 목소리)
 const INNER = 0.93, SR = 24000;
 
 const d = JSON.parse(await readFile('data.json', 'utf8'));
@@ -19,7 +19,8 @@ const ui = JSON.parse(await readFile('_src/i18n/ui.ko.json', 'utf8'));
 const args = process.argv.slice(2);
 // changed <예전 data.json>: 관리자 페이지에서 글을 고친 뒤 (GitHub Actions) — 읽을 문장이 바뀐 장면 가운데 녹음이 있던 장면만
 const old = args[0] === 'changed' && JSON.parse(await readFile(args[1], 'utf8'));
-let events = args.includes('all') ? d.events : d.events.filter(e => args.includes(e.id));
+const scenes = [...(d.prologue ? [d.prologue] : []), ...d.events]; // 프롤로그(e00, data의 prologue)도 같은 방식으로
+let events = args.includes('all') ? scenes : scenes.filter(e => args.includes(e.id));
 if (!events.length && !old) { console.error('장면 id를 주세요 (예: e01, 또는 all, 또는 changed <예전 data.json>)'); process.exit(1); }
 
 // app.js의 sentences·sceneScript와 같은 규칙
@@ -29,17 +30,19 @@ function script(e) {
   const items = [{ text: `${e.title}. ${ui.sayPlace}, ${d.places[e.place].name.replace(/[()·]/g, ' ')}. ${ui.sayWhen}, ${e.when.replace(/\s*·\s*/g, ', ')}.` }];
   e.story.forEach((s, i) => items.push({ text: s, gemini: (e.storyTts || []).includes(i) }));
   items.push({ text: (e.words.some(w => w.j) ? ui.hisWords : ui.voicesOfDay) + '.' });
-  e.words.forEach(w => { if (!w.j) items.push({ text: `${w.who}.` }); items.push({ text: w.text, jesus: !!w.j, gemini: w.tts === 'gemini' }); });
+  e.words.forEach(w => { if (!w.j) items.push({ text: `${w.who}.` }); items.push({ text: w.text, jesus: !!w.j, god: !!w.g, gemini: w.tts === 'gemini' }); });
   // 제목 줄의 '장소, 나사렛.'·'시기, 때.'는 쉼표에서 나눠 따로 녹음해 잇는다 — 한 번에 읽히면 장소 이름을 늘이고 멈칫한다
-  return items.flatMap((it, i) => sentences(it.text).map(s => s.trim()).filter(Boolean).map((text, k) => ({ text, jesus: it.jesus, gemini: it.gemini, split: i === 0 && k > 0 })));
+  return items.flatMap((it, i) => sentences(it.text).map(s => s.trim()).filter(Boolean).map((text, k) => ({ text, jesus: it.jesus, god: it.god, gemini: it.gemini, split: i === 0 && k > 0 })));
 }
 // Gemini 성우로 읽는 말씀(관리자 페이지에서 고른 것, words의 tts: 'gemini')은 열쇠에 'gemini-'를 붙여 따로 둔다 (app.js와 같은 계산)
-const keyOf = s => voiceKey(`${s.gemini ? 'gemini-' : ''}${s.jesus ? VOICE.jesus.name : VOICE.narr.name}`, s.text);
+const voiceOf = s => s.jesus ? VOICE.jesus : s.god ? VOICE.god : VOICE.narr;
+const keyOf = s => voiceKey(`${s.gemini ? 'gemini-' : ''}${voiceOf(s).name}`, s.text);
 
 if (old) {
   const said = e => script(e).map(keyOf).join('\n');
   const recorded = e => script(e).some(x => existsSync(`${OUT}/${keyOf(x)}.mp3`));
-  events = d.events.filter(e => { const o = old.events.find(x => x.id === e.id); return o && said(o) !== said(e) && recorded(o); });
+  const oldScenes = [...(old.prologue ? [old.prologue] : []), ...old.events]; // 프롤로그도 함께 견준다
+  events = scenes.filter(e => { const o = oldScenes.find(x => x.id === e.id); return o && said(o) !== said(e) && recorded(o); });
   console.log('다시 녹음할 장면:', events.map(e => e.id).join(' ') || '없음');
   if (!events.length) process.exit(0);
 }
@@ -125,10 +128,14 @@ await mkdir(OUT, { recursive: true }); await mkdir(TMP, { recursive: true });
 let made = 0;
 for (const e of events) {
   for (const s of script(e)) {
-    const v = s.jesus ? VOICE.jesus : VOICE.narr, key = keyOf(s), mp3 = `${OUT}/${key}.mp3`;
+    const v = voiceOf(s), key = keyOf(s), mp3 = `${OUT}/${key}.mp3`;
     if (existsSync(mp3)) continue;
     let b, pcm;
-    const g = s.gemini && await geminiSynth(s.text, v);
+    let g = s.gemini && await geminiSynth(s.text, v);
+    // 글에 없는 말까지 읽어 지나치게 길어진 판은 버리고 두 번까지 다시 (글 앞에 지시를 붙이면 Gemini가 그 지시까지 읽었다)
+    const tooLong = pcm => { const n = s.text.replace(/[\s.,?!'"“”‘’…·:;()\-–—]/g, '').length; return n >= 4 && speechSec(pcm) > n / v.cps * 2.5; }; // 지시문을 읽으면 7배쯤 길어졌다
+    for (let k = 0; g && tooLong(g) && k < 2; k++) { console.warn(`Gemini 녹음이 글보다 너무 김 — 다시: ${s.text.slice(0, 20)}`); g = await geminiSynth(s.text, v); }
+    if (g && tooLong(g)) g = null;
     // Gemini가 모두 막히면 그 문장은 Google 음성으로 대신 녹음한다 (고친 말씀이 녹음 없이 남지 않게). 열쇠는 그대로
     if (s.gemini && !g) console.warn(`::warning::Gemini 성우 한도 — Google 음성으로 대신 녹음: ${s.text.slice(0, 30)}`);
     if (g) pcm = tidy((b = { pcm: g }).pcm);

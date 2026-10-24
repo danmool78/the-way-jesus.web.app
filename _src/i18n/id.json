@@ -34,6 +34,10 @@
   }
  },
  "places": {
+  "eden": {
+   "name": "Taman Eden",
+   "region": "Mesopotamia"
+  },
   "nazareth": {
    "name": "Nazaret",
    "region": "Galilea"
@@ -164,6 +168,33 @@
   }
  },
  "events": {
+  "e00": {
+   "title": "Taman yang Hilang",
+   "when": "Pada mulanya",
+   "subtitle": "Jalan yang tertutup, dan janji pertama",
+   "story": [
+    "Pada mulanya Allah membuat sebuah taman di Eden, di sebelah timur, dan mengembuskan napas hidup ke dalam manusia yang dibentuk-Nya dari debu. Adam dan Hawa berjalan bersama-Nya dan menikmati segala buah di taman itu. Hanya dari pohon di tengah taman, pohon yang memberi pengetahuan tentang yang baik dan yang jahat, Ia melarang mereka makan. Pada hari mereka memakannya, mereka pasti mati.",
+    "Tetapi ular mendekati Hawa dan berbisik: sungguhkah Allah berkata begitu? Kalian sama sekali tidak akan mati; mata kalian akan terbuka dan kalian akan menjadi seperti Allah. Hawa memetik buah itu, memakannya, dan memberikannya juga kepada Adam yang bersamanya. Saat itu juga mereka mengenal rasa malu, dan ketika mendengar langkah Allah di tengah angin senja, mereka bersembunyi di antara pepohonan.",
+    "Adam, di manakah engkau? Allah memanggil. Hari itu dosa masuk di antara manusia dan Allah, dan oleh dosa maut masuk ke dalam dunia. Allah berkata kepada ular bahwa keturunan perempuan itu akan menghancurkan kepalanya. Lalu Ia membuat pakaian dari kulit, mengenakannya kepada mereka, menyuruh mereka keluar ke sebelah timur taman, dan menempatkan kerub serta pedang yang bernyala untuk menjaga jalan ke pohon kehidupan. Kisah tentang dibukanya kembali jalan yang tertutup itu kini dimulai dari seorang gadis di Nazaret."
+   ],
+   "words": [
+    {
+     "who": "Allah",
+     "text": "Buah dari pohon mana pun di taman ini boleh kaumakan sepuasnya. Tetapi jangan makan buah dari pohon yang memberi pengetahuan tentang yang baik dan yang jahat, sebab pada hari engkau memakannya, engkau pasti mati."
+    },
+    {
+     "who": "Allah",
+     "text": "Di manakah engkau?"
+    },
+    {
+     "who": "Allah",
+     "text": "Engkau dan perempuan itu akan Kubuat saling bermusuhan, begitu juga keturunanmu dan keturunannya. Keturunannya akan menghancurkan kepalamu, dan engkau akan menggigit tumitnya."
+    }
+   ],
+   "note": "Kejadian 3:15 sejak lama disebut \"Injil pertama\". Perjanjian Baru menemukan jawabannya di dalam Yesus Kristus: Dialah keturunan perempuan yang menghancurkan kepala ular. Paulus menyebut-Nya \"Adam yang terakhir\".",
+   "reflect": "Di hadapan pertanyaan-Nya, di manakah engkau, dapatkah aku menjawab-Nya alih-alih bersembunyi?",
+   "credit": "Giovanni di Paolo, The Creation of the World and the Expulsion from Paradise, 1445 (detail) · Metropolitan Museum of Art · Domain publik"
+  },
   "e01": {
    "title": "Kabar dari Malaikat",
    "when": "sekitar 6 SM",

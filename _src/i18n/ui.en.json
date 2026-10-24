@@ -126,6 +126,10 @@
   "acts": [
    "Acts",
    "Acts"
+  ],
+  "gen": [
+   "Genesis",
+   "Gen"
   ]
  },
  "map": {
@@ -159,7 +163,12 @@
   "사해": "Dead Sea",
   "요단 강": "Jordan River",
   "나일 강": "Nile",
-  "수에즈 만": "Gulf of Suez"
+  "수에즈 만": "Gulf of Suez",
+  "메소포타미아": "Mesopotamia",
+  "유프라테스 강": "Euphrates",
+  "티그리스 강": "Tigris",
+  "페르시아 만": "Persian Gulf",
+  "아라비아 사막": "Arabian Desert"
  },
  "tabStory": "Story",
  "tabText": "Scripture",
@@ -233,5 +242,6 @@
  "endWords": "See his words",
  "missedQuizName": "Remaining questions",
  "endReopen": "Open the journey’s end",
- "favLine": "The scene that stayed with you · {t}"
+ "favLine": "The scene that stayed with you · {t}",
+ "prologue": "Prologue"
 }

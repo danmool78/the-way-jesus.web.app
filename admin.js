@@ -69,7 +69,7 @@ let voiceIndex = {};
 const loadVoices = () => fetch('assets/voice/ko/index.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : {}).then(j => { voiceIndex = j; }).catch(() => {});
 // 해설 문단(story)은 말하는 이가 없어 늘 해설 목소리(Aoede)
 const clipsOf = w => sentences(w.text).map(t => t.trim()).filter(Boolean)
-  .map(t => voiceKey(`${w.tts === 'gemini' ? 'gemini-' : ''}${w.who === '예수' ? 'Algenib' : 'Aoede'}`, t));
+  .map(t => voiceKey(`${w.tts === 'gemini' ? 'gemini-' : ''}${w.who === '예수' ? 'Algenib' : w.who === '하나님' ? 'Charon' : 'Aoede'}`, t)); // 하나님(프롤로그)은 Charon
 const player = new Audio();
 let playing = null; // 지금 트는 말씀 칸
 function stopPlay() {
@@ -108,8 +108,11 @@ function wordHtml(e, w, i) {
         <textarea class="text" rows="2">${esc(w.text)}</textarea>${actHtml}</div>`;
 }
 function render() {
-  const html = data.periods.map(p => {
-    const scenes = data.events.filter(e => e.p === p.id).map(e => ({ e, s: sceneOf(e.id) })).filter(x => x.s);
+  // 맨 앞에 프롤로그(data.prologue, 61개 장면 목록 밖)를 한 묶음으로 — 시대와 같은 모양
+  const groups = [...(data.prologue ? [{ id: 'p0', name: '프롤로그', span: '창세기', color: '#b89a5e', evs: [data.prologue] }] : []),
+    ...data.periods.map(p => ({ ...p, evs: data.events.filter(e => e.p === p.id) }))];
+  const html = groups.map(p => {
+    const scenes = p.evs.map(e => ({ e, s: sceneOf(e.id) })).filter(x => x.s);
     if (!scenes.length) return '';
     const words = scenes.reduce((n, x) => n + x.s.c.words.length, 0);
     return `<details class="period" data-key="${p.id}" style="--c:${p.color}"${opened.has(p.id) ? ' open' : ''}>
@@ -224,7 +227,7 @@ async function save(box) {
   const fresh = await readFile(path), now = pick(fresh.json.find(c => c.id === id));
   if (JSON.stringify(now) !== JSON.stringify(from)) throw new Error('그사이 이 글이 바뀌었습니다 — 새로 고침 뒤 다시 고쳐 주세요');
   const raw = story ? patchStory(fresh.raw, id, i, now, to) : patch(fresh.raw, id, i, now, to);
-  const title = data.events.find(e => e.id === id)?.title || id;
+  const title = (data.prologue?.id === id ? data.prologue : data.events.find(e => e.id === id))?.title || id;
   const res = await gh(`/repos/${REPO}/contents/${path}`, { method: 'PUT', body: JSON.stringify({
     message: `Edit ${story ? 'narration' : 'words'} in ${id} (#${i + 1}) from the admin page\n\n${title}: ${to.text}${to.tts ? ` (voice: ${to.tts})` : ''}`, content: toB64(raw), sha: fresh.sha, branch: BRANCH }) });
   files[path] = { raw, json: JSON.parse(raw), sha: res.content.sha };
