@@ -69,6 +69,15 @@ function tidy(pcm) {
   return res;
 }
 const speechSec = pcm => frames(pcm).filter(Boolean).length * W / SR;
+// Gemini 녹음은 Google 음성보다 4dB쯤 크고 최고점이 0dB를 넘어 mp3로 줄이면 재생할 때 지직거렸다.
+// 말소리 구간의 크기를 Google 음성(약 -19dB)에 맞추고, 최고점은 -3dB 아래로 누른다
+function level(pcm) {
+  const loud = frames(pcm); let e = 0, n = 0, peak = 1;
+  loud.forEach((on, w) => { if (!on) return; for (let x = w * W; x < (w + 1) * W; x++) { e += pcm[x] * pcm[x]; n++; } });
+  for (const v of pcm) peak = Math.max(peak, Math.abs(v));
+  const k = Math.min(n ? 32768 * 10 ** (-19 / 20) / Math.sqrt(e / n) : 1, 32768 * 10 ** (-3 / 20) / peak);
+  return pcm.map(v => Math.round(v * k));
+}
 
 // 읽을 때만 바꾸는 말: 영어 글자 BC·AD 앞에서 Chirp가 앞말을 늘이고 멈칫하므로 우리말로 읽힌다 (화면 글과 열쇠는 그대로)
 const spoken = text => text.replace(/\bBC\s*/g, '기원전 ').replace(/\bAD\s*/g, '서기 ');
@@ -126,6 +135,7 @@ async function record(text, v) {
 
 await mkdir(OUT, { recursive: true }); await mkdir(TMP, { recursive: true });
 let made = 0;
+const fresh = new Set(); // 이번에 새로 만든 녹음 — 예전 목록의 길이를 쓰지 않고 다시 잰다
 for (const e of events) {
   for (const s of script(e)) {
     const v = voiceOf(s), key = keyOf(s), mp3 = `${OUT}/${key}.mp3`;
@@ -138,7 +148,7 @@ for (const e of events) {
     if (g && tooLong(g)) g = null;
     // Gemini가 모두 막히면 그 문장은 Google 음성으로 대신 녹음한다 (고친 말씀이 녹음 없이 남지 않게). 열쇠는 그대로
     if (s.gemini && !g) console.warn(`::warning::Gemini 성우 한도 — Google 음성으로 대신 녹음: ${s.text.slice(0, 30)}`);
-    if (g) pcm = tidy((b = { pcm: g }).pcm);
+    if (g) pcm = level(tidy((b = { pcm: g }).pcm));
     else if (s.split) {
       const parts = [];
       for (const piece of s.text.split(/,\s*/)) parts.push(tidy((b = await record(piece, v)).pcm));
@@ -150,7 +160,7 @@ for (const e of events) {
     await writeFile(raw, Buffer.from(pcm.buffer, pcm.byteOffset, pcm.byteLength));
     execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-f', 's16le', '-ar', String(SR), '-ac', '1', '-i', raw, '-c:a', 'libmp3lame', '-b:a', '48k', mp3]);
     console.log(e.id, (s.gemini ? 'Gemini ' : '') + v.name, key, `${(pcm.length / SR).toFixed(1)}초`, b.cps ? `${b.cps.toFixed(1)}자/초 ×${b.rate.toFixed(2)}` : '', s.text.slice(0, 30));
-    made++;
+    made++; fresh.add(key);
   }
 }
 
@@ -160,7 +170,7 @@ const known = existsSync(`${OUT}/index.json`) ? JSON.parse(await readFile(`${OUT
 const index = {};
 for (const f of (await readdir(OUT)).filter(f => f.endsWith('.mp3')).sort()) {
   const k = f.slice(0, -4);
-  index[k] = known[k] ?? Math.round(1000 * +execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', `${OUT}/${f}`]).toString().trim());
+  index[k] = (!fresh.has(k) && known[k]) || Math.round(1000 * +execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', `${OUT}/${f}`]).toString().trim());
 }
 await writeFile(`${OUT}/index.json`, JSON.stringify(index) + '\n');
 console.log(`새로 ${made}개, 모두 ${Object.keys(index).length}개`);
