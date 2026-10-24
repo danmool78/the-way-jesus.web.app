@@ -861,6 +861,8 @@ const voiceKey = (voice, text) => { let h = 0x811c9dc5; for (const c of `${voice
 let voiceIndex = {};
 if (LANG === 'ko') fetch('assets/voice/ko/index.json').then(r => r.ok ? r.json() : {}).then(j => { voiceIndex = j; }).catch(() => {});
 const voiceAudio = new Audio();
+// 녹음 파일은 오래 캐시한다(immutable). 같은 열쇠로 다시 녹음하면 길이가 달라지므로, 길이를 주소에 붙여 새 파일을 받게 한다
+const voiceUrl = clip => `assets/voice/ko/${clip}.mp3?v=${voiceIndex[clip] || 0}`;
 // 문장 사이 쉼(ms, 1배속 기준). 녹음은 앞뒤 무음을 덜어 냈으므로 여기서 준다 — 문장 끝은 본디 쉼의 0.9배쯤, 제목 뒤는 넉넉히
 const VOICE_GAP = { sentence: 800, item: 850, intro: 1700 };
 
@@ -910,7 +912,7 @@ function speakQueue(items, onDone) {
       // 감시 타이머는 실제로 소리가 나기 시작할 때부터 남은 길이로 잰다 (받는 중·버퍼링 시간은 빼고).
       // 15초가 지나도 시작하지 못하면 그 문장은 건너뛴다
       guard = setTimeout(() => advance(0), 15000);
-      voiceAudio.src = `assets/voice/ko/${it.clip}.mp3`;
+      voiceAudio.src = voiceUrl(it.clip);
       voiceAudio.playbackRate = rate;
       voiceAudio.onplaying = () => { clearTimeout(guard); guard = setTimeout(() => advance(0), (voiceIndex[it.clip] - voiceAudio.currentTime * 1000) / rate + 3000); };
       voiceAudio.onwaiting = () => { clearTimeout(guard); guard = setTimeout(() => advance(0), 15000); };
@@ -919,7 +921,7 @@ function speakQueue(items, onDone) {
       voiceAudio.onerror = () => { clearTimeout(guard); guard = setTimeout(() => advance(0), readMs(it)); };
       voiceAudio.play().catch(err => { if (err.name !== 'AbortError') voiceAudio.onerror(); });
       // 다음 문장 파일을 미리 받아 두어 문장 사이에 불러오는 시간이 끼지 않게
-      if (queue[n]) fetch(`assets/voice/ko/${queue[n].clip}.mp3`).catch(() => {});
+      if (queue[n]) fetch(voiceUrl(queue[n].clip)).catch(() => {});
       return;
     }
     if (!useVoice) { guard = setTimeout(() => advance(it.pause || 0), readMs(it)); return; }

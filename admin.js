@@ -84,7 +84,7 @@ function play(box) {
   if (!clips.every(k => voiceIndex[k])) { setState(box, '녹음이 아직 없습니다 (앱에서는 브라우저 음성으로 읽힘)', 'bad'); return; }
   playing = box; box.classList.add('playing'); $('.play', box).textContent = '■ 멈춤';
   let n = 0;
-  const next = () => { if (playing !== box) return; if (n >= clips.length) { stopPlay(); return; } player.src = `assets/voice/ko/${clips[n++]}.mp3`; player.play().catch(stopPlay); };
+  const next = () => { if (playing !== box) return; if (n >= clips.length) { stopPlay(); return; } { const k = clips[n++]; player.src = `assets/voice/ko/${k}.mp3?v=${voiceIndex[k]}`; /* 다시 녹음한 파일도 캐시 말고 새것으로 (app.js voiceUrl과 같게) */ } player.play().catch(stopPlay); };
   player.onended = () => setTimeout(next, 500); player.onerror = stopPlay;
   next();
 }

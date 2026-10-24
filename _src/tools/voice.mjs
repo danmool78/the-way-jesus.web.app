@@ -69,6 +69,20 @@ function tidy(pcm) {
   return res;
 }
 const speechSec = pcm => frames(pcm).filter(Boolean).length * W / SR;
+// Gemini 녹음은 말 끝(드물게 처음)에 0.1~0.2초짜리 지직거리는 잡음 덩어리가 붙어 나온다.
+// 20ms마다 이웃 표본 사이 큰 뜀(8000 넘게)을 세어, 끝(처음)에서부터 뜀이 잦은 구간을 잘라 내고 40ms로 줄여 맺는다
+function trimNoise(pcm) {
+  const n = Math.floor(pcm.length / W), d = [];
+  for (let w = 0; w < n; w++) { let c = 0; for (let x = Math.max(1, w * W); x < (w + 1) * W; x++) if (Math.abs(pcm[x] - pcm[x - 1]) > 8000) c++; d.push(c); }
+  let a = 0, b = n;
+  while (b > 0 && d[b - 1] > 20) b--;
+  if (!d.slice(b).some(c => c > 80)) b = n; // 말소리의 거센소리 정도면 그대로
+  while (a < b && d[a] > 20) a++;
+  if (!d.slice(0, a).some(c => c > 80)) a = 0;
+  const out = pcm.slice(a * W, b < n ? b * W : pcm.length), f = 2 * W;
+  for (let i = 0; i < Math.min(f, out.length); i++) { out[out.length - 1 - i] = Math.round(out[out.length - 1 - i] * i / f); if (a) out[i] = Math.round(out[i] * i / f); }
+  return out;
+}
 // Gemini 녹음은 Google 음성보다 4dB쯤 크고 최고점이 0dB를 넘어 mp3로 줄이면 재생할 때 지직거렸다.
 // 말소리 구간의 크기를 Google 음성(약 -19dB)에 맞추고, 최고점은 -3dB 아래로 누른다
 function level(pcm) {
@@ -148,7 +162,7 @@ for (const e of events) {
     if (g && tooLong(g)) g = null;
     // Gemini가 모두 막히면 그 문장은 Google 음성으로 대신 녹음한다 (고친 말씀이 녹음 없이 남지 않게). 열쇠는 그대로
     if (s.gemini && !g) console.warn(`::warning::Gemini 성우 한도 — Google 음성으로 대신 녹음: ${s.text.slice(0, 30)}`);
-    if (g) pcm = level(tidy((b = { pcm: g }).pcm));
+    if (g) pcm = level(tidy(trimNoise((b = { pcm: g }).pcm)));
     else if (s.split) {
       const parts = [];
       for (const piece of s.text.split(/,\s*/)) parts.push(tidy((b = await record(piece, v)).pcm));
