@@ -846,7 +846,8 @@ function speakQueue(items, onDone) {
     const ss = sentences(it.text).map(s => s.trim()).filter(Boolean);
     ss.forEach((s, k) => queue.push({ ...it, text: s, s: k, last: k === ss.length - 1 }));
   });
-  queue.forEach(it => { it.clip = voiceKey(it.jesus ? VOICE_NAME.jesus : VOICE_NAME.narr, it.text); });
+  // Gemini 성우로 녹음한 말씀(관리자 페이지에서 고른 것)은 열쇠에 'gemini-'가 붙는다 (voice.mjs의 keyOf)
+  queue.forEach(it => { it.clip = voiceKey(`${it.gemini ? 'gemini-' : ''}${it.jesus ? VOICE_NAME.jesus : VOICE_NAME.narr}`, it.text); });
   const recorded = LANG === 'ko' && queue.length > 0 && queue.every(it => voiceIndex[it.clip]);
   // 녹음으로 읽는 장면이면 브라우저 음성이 없어도 안내하지 않는다
   if (!recorded && !useVoice && !warnedNoVoice) {
@@ -961,7 +962,7 @@ function sceneScript() {
   e.words.forEach((w, i) => {
     const who = w.j ? t('jesus') : w.who;
     if (!w.j) items.push({ text: `${w.who}.`, el: $(`blockquote[data-say="${i}"]`, sc), beat: 'w' + i });
-    items.push({ text: w.text, who, el: $(`blockquote[data-say="${i}"]`, sc), jesus: !!w.j, pause: 500, beat: 'w' + i });
+    items.push({ text: w.text, who, el: $(`blockquote[data-say="${i}"]`, sc), jesus: !!w.j, gemini: w.tts === 'gemini', pause: 500, beat: 'w' + i });
   });
   return items;
 }
@@ -969,7 +970,7 @@ function speakScene(onDone) { speakQueue(sceneScript(), onDone); }
 function speakWord(i) {
   stopAuto();
   const w = EVENTS[idx].words[i];
-  speakQueue([{ text: w.text, who: w.j ? t('jesus') : w.who, el: $(`blockquote[data-say="${i}"]`, $('#scene')), jesus: !!w.j }]);
+  speakQueue([{ text: w.text, who: w.j ? t('jesus') : w.who, el: $(`blockquote[data-say="${i}"]`, $('#scene')), jesus: !!w.j, gemini: w.tts === 'gemini' }]);
 }
 const stageBeat = (beat, s) => dispatchEvent(new CustomEvent('stage:beat', { detail: { beat, s } }));
 function stopSpeech(keepAuto) {
@@ -1091,7 +1092,7 @@ function renderWords() {
   }));
   $('#wordList').innerHTML = (count ? `<p class="count">${esc(t('wordCount', { n: count }))}</p>` : `<p class="empty">${esc(t('noWords'))}</p>`) + html;
   $$('#wordList .goto').forEach(b => b.onclick = () => { setView('journey'); go(+b.dataset.e); });
-  $$('#wordList .say').forEach(b => b.onclick = () => { const w = EVENTS[+b.dataset.e].words[+b.dataset.w]; speakQueue([{ text: w.text, el: b.closest('.wcard'), jesus: true }]); });
+  $$('#wordList .say').forEach(b => b.onclick = () => { const w = EVENTS[+b.dataset.e].words[+b.dataset.w]; speakQueue([{ text: w.text, el: b.closest('.wcard'), jesus: true, gemini: w.tts === 'gemini' }]); });
 }
 
 /* ---------- 대조표 ---------- */

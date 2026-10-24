@@ -65,7 +65,8 @@ function render() {
     if (!s) return '';
     return `<div class="scene" data-scene="${e.id}"><h2>${esc(e.title)}</h2><span>${e.id} · ${esc(data.places[e.place]?.name || '')}</span></div>` +
       s.c.words.map((w, i) => `<div class="word${w.who === '예수' ? ' jesus' : ''}" data-e="${e.id}" data-w="${i}">
-        <div class="meta"><div><label>말하는 이</label><input class="f who" value="${esc(w.who)}"></div><div><label>출처</label><input class="f ref" value="${esc(w.ref)}"></div></div>
+        <div class="meta"><div><label>말하는 이</label><input class="f who" value="${esc(w.who)}"></div><div><label>출처</label><input class="f ref" value="${esc(w.ref)}"></div>
+          <div><label>목소리</label><select class="f tts"><option value="">Google 음성</option><option value="gemini"${w.tts === 'gemini' ? ' selected' : ''}>Gemini 성우</option></select></div></div>
         <textarea class="text" rows="2">${esc(w.text)}</textarea>
         <div class="act"><span class="state"></span><button class="ghost undo" hidden>되돌리기</button><button class="btn save" disabled>저장</button></div></div>`).join('');
   }).join('');
@@ -73,13 +74,13 @@ function render() {
   document.querySelectorAll('.word').forEach(bind);
   filter();
 }
-const fields = box => ({ who: $('.who', box).value.trim(), ref: $('.ref', box).value.trim(), text: $('.text', box).value.trim().replace(/\s*\n\s*/g, ' ') });
+const fields = box => ({ who: $('.who', box).value.trim(), ref: $('.ref', box).value.trim(), text: $('.text', box).value.trim().replace(/\s*\n\s*/g, ' '), tts: $('.tts', box).value });
 const original = box => sceneOf(box.dataset.e).c.words[+box.dataset.w];
 function bind(box) {
-  const changed = () => { const o = original(box), n = fields(box); return o.who !== n.who || o.ref !== n.ref || o.text !== n.text; };
+  const changed = () => { const o = original(box), n = fields(box); return o.who !== n.who || o.ref !== n.ref || o.text !== n.text || (o.tts || '') !== n.tts; };
   const sync = () => { const c = changed(); box.classList.toggle('dirty', c); $('.save', box).disabled = !c || !fields(box).text || !fields(box).who; $('.undo', box).hidden = !c; };
   box.addEventListener('input', sync);
-  $('.undo', box).onclick = () => { const o = original(box); $('.who', box).value = o.who; $('.ref', box).value = o.ref; $('.text', box).value = o.text; sync(); };
+  $('.undo', box).onclick = () => { const o = original(box); $('.who', box).value = o.who; $('.ref', box).value = o.ref; $('.text', box).value = o.text; $('.tts', box).value = o.tts || ''; sync(); };
   $('.save', box).onclick = () => save(box).catch(err => setState(box, `저장하지 못했습니다: ${err.message}`, 'bad')).finally(sync);
 }
 function filter() {
@@ -108,8 +109,12 @@ function patch(raw, id, i, from, to) {
   const at = start + m.index, open = raw.lastIndexOf('{', at), close = raw.indexOf('}', at);
   let obj = raw.slice(open, close + 1);
   for (const k of ['who', 'ref', 'text']) obj = obj.replace(valueRe(k, from[k]), () => `"${k}": ${JSON.stringify(to[k])}`);
+  // 목소리: Gemini 성우면 "tts": "gemini"를 그 말씀 끝에 붙이고, Google 음성(기본)이면 뺀다
+  if ((from.tts || '') !== to.tts) obj = from.tts ? obj.replace(/,\s*"tts"\s*:\s*"[^"]*"/, to.tts ? `, "tts": "${to.tts}"` : '') : obj.replace(/\s*}$/, m => `, "tts": "${to.tts}"${m}`);
   const out = raw.slice(0, open) + obj + raw.slice(close + 1);
-  const want = JSON.parse(raw); want.find(c => c.id === id).words[i] = { ...from, ...to };
+  const want = JSON.parse(raw), word = { ...from, ...to };
+  if (!word.tts) delete word.tts;
+  want.find(c => c.id === id).words[i] = word;
   if (JSON.stringify(JSON.parse(out)) !== JSON.stringify(want)) throw new Error('바꾼 원본을 확인하는 데 실패했습니다');
   return out;
 }
@@ -120,11 +125,11 @@ async function save(box) {
   const from = files[path].json.find(c => c.id === id).words[i];
   // 그사이 다른 곳에서 고쳤을 수 있으니 올리기 직전에 최신 원본을 다시 받는다
   const fresh = await readFile(path), now = fresh.json.find(c => c.id === id).words[i];
-  if (now.text !== from.text || now.who !== from.who || now.ref !== from.ref) throw new Error('그사이 이 말씀이 바뀌었습니다 — 새로 고침 뒤 다시 고쳐 주세요');
+  if (now.text !== from.text || now.who !== from.who || now.ref !== from.ref || now.tts !== from.tts) throw new Error('그사이 이 말씀이 바뀌었습니다 — 새로 고침 뒤 다시 고쳐 주세요');
   const raw = patch(fresh.raw, id, i, now, to);
   const title = data.events.find(e => e.id === id)?.title || id;
   const res = await gh(`/repos/${REPO}/contents/${path}`, { method: 'PUT', body: JSON.stringify({
-    message: `Edit words in ${id} (#${i + 1}) from the admin page\n\n${title}: ${to.text}`, content: toB64(raw), sha: fresh.sha, branch: BRANCH }) });
+    message: `Edit words in ${id} (#${i + 1}) from the admin page\n\n${title}: ${to.text}${to.tts ? ` (voice: ${to.tts})` : ''}`, content: toB64(raw), sha: fresh.sha, branch: BRANCH }) });
   files[path] = { raw, json: JSON.parse(raw), sha: res.content.sha };
   box.classList.toggle('jesus', to.who === '예수');
   follow(box, res.commit.sha);
@@ -138,6 +143,8 @@ async function follow(box, sha) {
     let run;
     try { run = (await gh(`/repos/${REPO}/actions/runs?head_sha=${sha}&per_page=1`)).workflow_runs?.[0]; } catch { continue; }
     if (!run || run.status !== 'completed') continue;
+    // 연달아 저장하면 앞의 배포는 건너뛰고 마지막 배포가 모두 담아 간다
+    if (run.conclusion === 'cancelled') { setState(box, `저장됨 ${link} · 다음 저장의 배포에 함께 반영됩니다`, 'ok'); return; }
     const ok = run.conclusion === 'success';
     setState(box, ok ? `저장됨 ${link} · 음성 교체·배포 완료 ✓` : `저장됨 ${link} · <a href="${run.html_url}" target="_blank" rel="noopener">배포 실패 — 기록 보기</a>`, ok ? 'ok' : 'bad');
     return;

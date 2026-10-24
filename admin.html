@@ -15,7 +15,7 @@
   --serif:'Gowun Batang',Georgia,serif;--sans:'Noto Sans KR',system-ui,-apple-system,'Apple SD Gothic Neo',sans-serif;color-scheme:dark}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
-button,input,textarea{font:inherit;color:inherit}
+button,input,textarea,select{font:inherit;color:inherit}
 button{cursor:pointer}
 a{color:var(--gold2)}
 header{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(21,17,13,.94);border-bottom:1px solid var(--line);backdrop-filter:blur(8px)}
@@ -44,7 +44,8 @@ input:focus,textarea:focus{border-color:var(--gold)}
 .word{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--line);border-radius:12px;padding:12px 14px;margin:8px 0}
 .word.jesus{border-left-color:var(--gold)}
 .word.dirty{border-color:var(--gold)}
-.word .meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.word .meta{display:grid;grid-template-columns:1fr 1fr 140px;gap:8px;margin-bottom:8px}
+select.f{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:8px 9px;outline:none;font:inherit;color:inherit}
 .word label{display:block;font-size:12px;color:var(--faint);margin-bottom:2px}
 .word textarea{font:16px/1.7 var(--serif);resize:vertical;min-height:4.4em}
 .word .act{display:flex;align-items:center;gap:8px;margin-top:8px}
@@ -82,7 +83,7 @@ input:focus,textarea:focus{border-color:var(--gold)}
     <p id="loginMsg" class="msg"></p>
   </section>
   <section id="editor" hidden>
-    <p class="note">한국어 말씀을 고칩니다. 저장하면 GitHub에 기록되고, 몇 분 안에 그 장면의 녹음 낭독을 새로 만들어 운영 사이트에 반영합니다. 다른 언어판의 말씀은 바뀌지 않습니다.</p>
+    <p class="note">한국어 말씀을 고칩니다. 저장하면 GitHub에 기록되고, 몇 분 안에 그 장면의 녹음 낭독을 새로 만들어 운영 사이트에 반영합니다. 목소리에서 <b>Gemini 성우</b>를 고르면 그 말씀만 Gemini 성우(다정 리딩북과 같은 모델)로 녹음합니다. 다른 언어판의 말씀은 바뀌지 않습니다.</p>
     <div id="list"></div>
   </section>
 </main>
