@@ -662,6 +662,31 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
   else arrive();
 }
 
+/* ---------- 첫 시작 화면 ---------- */
+// resume: 이어서 걸을 장면 번호(없으면 -1). 다녀간 사람에게는 '이어서 걷기'와 '처음부터 걷기'를 함께 준다
+function showIntro(resume) {
+  const box = $('#intro'), start = $('#introStart'), again = $('#introRestart');
+  $('#introLead').textContent = t('introLead', { n: EVENTS.length });
+  start.textContent = resume > 0 ? t('introContinue', { n: resume + 1, title: EVENTS[resume].title }) : t('introStart');
+  again.hidden = !(resume > 0);
+  // 떠 있는 동안 뒤 화면은 inert — Tab 초점·클릭이 가려진 단추로 가지 않게 (방향키 단축키는 아래 keydown에서 막는다)
+  const behind = [...document.body.children].filter(el => el !== box && el.tagName !== 'SCRIPT');
+  // walk: 여정으로 가는 단추(이어서·처음부터)는 다른 탭에서 열었어도 여정 화면으로 돌아간다. Esc는 있던 화면 그대로
+  const close = (i, walk) => {
+    box.classList.add('out'); removeEventListener('keydown', esc);
+    behind.forEach(el => { el.inert = false; });
+    setTimeout(() => { box.hidden = true; box.classList.remove('out'); }, 500);
+    if (walk && $('#journey').hidden) setView('journey');
+    if (i !== idx) go(i);
+  };
+  const esc = ev => { if (ev.key === 'Escape') close(idx); };
+  start.onclick = () => close(resume > 0 ? resume : 0, true);
+  again.onclick = () => close(0, true);
+  addEventListener('keydown', esc);
+  behind.forEach(el => { el.inert = true; });
+  box.hidden = false; start.focus({ preventScroll: true });
+}
+
 /* ---------- 낭독 (Web Speech API) ---------- */
 const synth = window.speechSynthesis;
 let voices = [], speaking = false, autoOn = false, autoTimer = null, speechToken = 0;
@@ -951,6 +976,9 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   view = { x: 0, y: 0, w: W, h: H }; applyView();
   const start = idx; idx = -1; go(start);
   updateProgress();
+  // 첫 시작 화면: 장면 주소로 바로 들어온 때(#e05)와 연출 확인(?beat=)은 건너뛴다
+  if (fromHash < 0 && !new URLSearchParams(location.search).has('beat')) showIntro(fromLast > 0 ? fromLast : -1);
+  $('.brand').onclick = ev => { ev.preventDefault(); showIntro(idx > 0 ? idx : -1); };
 
   $('#prev').onclick = () => go(idx - 1);
   $('#next').onclick = () => go(idx + 1);
@@ -983,7 +1011,7 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
     visited.clear(); state.visited = []; state.quiz = {}; store.save(); markVisited(EVENTS[idx].id); renderStamps(); renderTrack(); updateTrack();
   };
   addEventListener('keydown', ev => {
-    if ($('#journey').hidden || ev.target.matches('input, select, textarea') || document.querySelector('dialog[open]')) return;
+    if ($('#journey').hidden || ev.target.matches('input, select, textarea') || document.querySelector('dialog[open]') || !$('#intro').hidden) return; // 시작 화면이 떠 있으면 뒤 여정을 움직이지 않는다
     if (ev.key === 'ArrowRight') go(idx + 1);
     if (ev.key === 'ArrowLeft') go(idx - 1);
   });

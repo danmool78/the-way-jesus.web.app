@@ -168,5 +168,18 @@
  "rotate": "旋转",
  "resetView": "初始视角",
  "only3dGalilee": "3D地形试用版目前只覆盖加利利一带。",
- "mtHermon": "黑门山"
+ "mtHermon": "黑门山",
+ "introTag": "循着四福音走过耶稣的足迹",
+ "introLead": "将马太、马可、路加、约翰四卷福音书的记载，按事情发生的时间与地点编织在一起。在地图上行走，透过 {n} 个场景认识耶稣的一生。",
+ "introF1h": "地图上的旅程",
+ "introF1": "从伯利恒到加利利，再到耶路撒冷，循着地点前行",
+ "introF2h": "那一天的舞台",
+ "introF2": "借名画与 3D 舞台看见每一个场景",
+ "introF3h": "聆听与对照",
+ "introF3": "聆听故事的朗读，并将四福音的记载并列对照",
+ "introF4h": "温习问答",
+ "introF4": "用问答重温走过的场景",
+ "introStart": "开始旅程",
+ "introContinue": "继续 · {n}. {title}",
+ "introRestart": "从头开始"
 }
