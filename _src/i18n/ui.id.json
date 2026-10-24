@@ -126,6 +126,10 @@
   "acts": [
    "Kisah Para Rasul",
    "Kis"
+  ],
+  "gen": [
+   "Kejadian",
+   "Kej"
   ]
  },
  "map": {
@@ -205,5 +209,6 @@
  "landStep3": "Geser peta untuk melihat sekeliling, dan tekan 3D untuk melihat relief tanah",
  "landStep4h": "Sabda dan kuis",
  "landStep4": "Kumpulkan sabda Yesus di tab '{words}' dan ingat kembali adegan dengan '{quiz}'",
- "landEnd": "Siap berangkat?"
+ "landEnd": "Siap berangkat?",
+ "prologue": "Prolog"
 }

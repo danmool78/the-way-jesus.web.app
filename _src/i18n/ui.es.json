@@ -126,6 +126,10 @@
   "acts": [
    "Hechos",
    "Hch"
+  ],
+  "gen": [
+   "Génesis",
+   "Gn"
   ]
  },
  "map": {
@@ -205,5 +209,6 @@
  "landStep3": "Arrastra el mapa para mirar alrededor y pulsa 3D para ver el relieve",
  "landStep4h": "Sus palabras y preguntas",
  "landStep4": "Reúne las palabras de Jesús en la pestaña «{words}» y repasa las escenas con «{quiz}»",
- "landEnd": "¿Listo para partir?"
+ "landEnd": "¿Listo para partir?",
+ "prologue": "Prólogo"
 }

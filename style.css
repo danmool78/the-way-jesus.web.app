@@ -323,6 +323,14 @@ html:not(:lang(ko)):not(:lang(zh)):not(:lang(ja)) .river-lbl text{writing-mode:h
 .tick.seen{background:color-mix(in srgb,var(--c) 80%,#fff)}
 .tick.now{width:14px;height:14px;background:radial-gradient(circle,#fff6dc 30%,var(--c) 31%,var(--c) 55%,transparent 56%);box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 40%,transparent),0 0 14px var(--c)}
 .tick:hover{transform:scale(1.6)}
+/* 시간 막대 맨 앞의 프롤로그(첫 아담) 단추 — 작은 나무 */
+.tpro{flex:none;align-self:center;border:0;background:none;padding:0 6px 14px 0;color:#7a6a4e;width:30px;height:40px;transition:color .3s}
+.tpro svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.tpro.now{color:#e9cf8f;filter:drop-shadow(0 0 6px rgba(217,180,106,.7))}
+/* 프롤로그: 지도 위에 걷는 사람·다음 길 표시가 없다 */
+#map.prologue .walker,#map.prologue .nexthint{display:none}
+#map.prologue .lbl{opacity:.3} /* 지명이 동산 위에 겹쳐 보이지 않게 흐리게 */
+.prologue-on .odo{display:none} /* 아직 걷기 전 */
 /* 시기 이름은 지금 시기만 (여덟 개를 다 쓰면 좁은 칸에서 겹친다 — 나머지는 그림에 마우스를 올리면 보인다) */
 .tname{font-size:11.5px;color:color-mix(in srgb,var(--c) 70%,#fff);font-weight:700;white-space:nowrap;margin-top:5px;visibility:hidden;height:15px}
 .tseg.now .tname{visibility:visible}

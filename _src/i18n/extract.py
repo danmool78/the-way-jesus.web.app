@@ -23,7 +23,7 @@ for s in skeleton:
         'title': s['title'], 'when': s['when'], 'subtitle': c['subtitle'], 'story': c['story'],
         'words': [{'who': w['who'], 'text': w['text']} for w in c['words']],
         'note': c['note'], 'reflect': c['reflect'],
-        'quiz': {'q': c['quiz']['q'], 'options': c['quiz']['options'], 'explain': c['quiz']['explain']},
+        **({'quiz': {'q': c['quiz']['q'], 'options': c['quiz']['options'], 'explain': c['quiz']['explain']}} if 'quiz' in c else {}),  # 프롤로그는 퀴즈 없음
         'credit': images[s['id']]['credit'] if s['id'] in images else '',
     }
 json.dump(out, open(os.path.join(here, 'ko.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)

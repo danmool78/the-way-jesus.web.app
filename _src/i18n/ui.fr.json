@@ -126,6 +126,10 @@
   "acts": [
    "Actes",
    "Ac"
+  ],
+  "gen": [
+   "Genèse",
+   "Gn"
   ]
  },
  "map": {
@@ -205,5 +209,6 @@
  "landStep3": "Faites glisser la carte pour regarder autour, et appuyez sur 3D pour voir le relief",
  "landStep4h": "Ses paroles et les quiz",
  "landStep4": "Rassemblez les paroles de Jésus dans l’onglet « {words} » et revisitez les scènes avec « {quiz} »",
- "landEnd": "Prêt à partir ?"
+ "landEnd": "Prêt à partir ?",
+ "prologue": "Prologue"
 }

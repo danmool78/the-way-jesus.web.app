@@ -1,4 +1,5 @@
 [
+ {"id":"e00","p":"p0","when":"태초","year":-9999,"place":"eden","title":"잃어버린 동산","refs":{"gen":"2:8–3:24"}},
  {"id":"e01","p":"p1","when":"BC 6년경","year":-6,"place":"nazareth","title":"수태고지","refs":{"mt":"1:18–25","lk":"1:26–38"}},
  {"id":"e02","p":"p1","when":"BC 5년경 겨울","year":-5,"place":"bethlehem","title":"베들레헴의 밤","refs":{"mt":"1:25","lk":"2:1–20"}},
  {"id":"e03","p":"p1","when":"탄생 40일 후","year":-5,"place":"temple","title":"성전에서 만난 시므온과 안나","refs":{"lk":"2:21–38"}},

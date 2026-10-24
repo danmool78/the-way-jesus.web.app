@@ -126,6 +126,10 @@
   "acts": [
    "Acts",
    "Acts"
+  ],
+  "gen": [
+   "Genesis",
+   "Gen"
   ]
  },
  "map": {
@@ -205,5 +209,6 @@
  "landStep3": "Drag the map to look around, and press 3D to see the land in relief",
  "landStep4h": "His words and quizzes",
  "landStep4": "Gather the sayings of Jesus in the '{words}' tab and revisit the scenes with '{quiz}'",
- "landEnd": "Ready to set out?"
+ "landEnd": "Ready to set out?",
+ "prologue": "Prologue"
 }

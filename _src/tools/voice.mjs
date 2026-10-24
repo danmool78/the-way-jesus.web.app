@@ -19,7 +19,8 @@ const ui = JSON.parse(await readFile('_src/i18n/ui.ko.json', 'utf8'));
 const args = process.argv.slice(2);
 // changed <예전 data.json>: 관리자 페이지에서 글을 고친 뒤 (GitHub Actions) — 읽을 문장이 바뀐 장면 가운데 녹음이 있던 장면만
 const old = args[0] === 'changed' && JSON.parse(await readFile(args[1], 'utf8'));
-let events = args.includes('all') ? d.events : d.events.filter(e => args.includes(e.id));
+const scenes = [...(d.prologue ? [d.prologue] : []), ...d.events]; // 프롤로그(e00, data의 prologue)도 같은 방식으로
+let events = args.includes('all') ? scenes : scenes.filter(e => args.includes(e.id));
 if (!events.length && !old) { console.error('장면 id를 주세요 (예: e01, 또는 all, 또는 changed <예전 data.json>)'); process.exit(1); }
 
 // app.js의 sentences·sceneScript와 같은 규칙

@@ -7,6 +7,11 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;',
 let GOSPELS = [['mt', '마태', '마'], ['mk', '마가', '막'], ['lk', '누가', '눅'], ['jn', '요한', '요']];
 
 let DATA, EVENTS, PLACES, PERIODS, idx = 0;
+// 프롤로그(창세기의 첫 아담, data의 prologue)는 장면 번호 -1 — 61개 장면 목록·퀴즈·도장·대조표 밖에 있다
+const evAt = i => i < 0 ? DATA.prologue : EVENTS[i];
+const isPro = () => idx < 0;
+const firstIdx = () => DATA?.prologue ? -1 : 0;
+window.curEvent = () => evAt(idx); // 3D 지형(terrain.js)이 지금 장면을 물을 때
 
 /* ---------- 언어 ---------- */
 // 고르는 순서: 주소의 ?lang= → 지난번 고른 언어 → 브라우저 언어 → 그 밖의 언어는 영어.
@@ -208,6 +213,7 @@ function buildMap() {
   // 장소 마커
   const g = $('#markers', map);
   Object.entries(PLACES).forEach(([id, p]) => {
+    if (p.hidden) return; // 프롤로그의 에덴: 지도에 핀이 없다
     const [x, y] = P(p);
     const m = document.createElementNS(svgNS, 'g');
     m.setAttribute('class', 'pin' + (p.jlm ? ' jlm' : ''));
@@ -367,10 +373,10 @@ function freeArea(mode) {
 }
 function frameStage(i, ms = 1300, mode = 'open') {
   if (window.terrainOn) return true; // 3D 지형 모드에서는 terrain.js가 카메라를 맡는다
-  const e = EVENTS[i], st = window.stageFrame?.(e), r = map.getBoundingClientRect();
+  const e = evAt(i), st = window.stageFrame?.(e), r = map.getBoundingClientRect();
   if (!st || !r.width) return false;
   const [cx, cy] = st.at ? px(st.at) : P(PLACES[e.place]);
-  const min = PLACES[e.place].jlm || e.place === 'jerusalem' ? 14 : 300;
+  const min = i < 0 ? 620 : PLACES[e.place].jlm || e.place === 'jerusalem' ? 14 : 300; // 프롤로그는 온 땅이 보이게 멀리서
   const u = reserveCard({ x: 0, y: 0, w: min, h: min }).w / r.width; // 이 확대에서 화면 1px 당 지도 단위
   const f = freeArea(mode), fx = (f.l + f.r) / 2, fy = (f.t + f.b) / 2;
   // 핀 + 무대 어긋남(dx,dy)이 빈 영역의 가운데에 오도록 보기 상자를 놓는다
@@ -451,7 +457,9 @@ function setWalker([x, y]) {
   dispatchEvent(new CustomEvent('walker', { detail: { x, y } })); // 3D 지형 모드의 걷는 사람이 따라온다
 }
 function updateMap(prevIdx, { camera = true } = {}) {
-  const e = EVENTS[idx];
+  const e = evAt(idx);
+  map.classList.toggle('prologue', isPro()); // 프롤로그: 걷는 사람과 다음 길 표시를 숨긴다
+  document.body.classList.toggle('prologue-on', isPro());
   const seen = new Set(EVENTS.slice(0, idx + 1).map(x => x.place));
   $$('.pin', map).forEach(m => {
     m.classList.toggle('seen', seen.has(m.dataset.place));
@@ -589,11 +597,12 @@ function setCard(mode) {
 }
 
 /* ---------- 장면 ---------- */
-const refText = e => GOSPELS.filter(([k]) => e.refs[k]).map(([k, , ab]) => `${ab} ${e.refs[k]}`).concat(e.refs.acts ? [`${DATA.ui.gospels.acts[1]} ${e.refs.acts}`] : []).join(' · ');
+const refText = e => GOSPELS.filter(([k]) => e.refs[k]).map(([k, , ab]) => `${ab} ${e.refs[k]}`).concat(e.refs.acts ? [`${DATA.ui.gospels.acts[1]} ${e.refs.acts}`] : [], e.refs.gen ? [`${DATA.ui.gospels.gen[1]} ${e.refs.gen}`] : []).join(' · ');
 
 let cardTab = 'story'; // 장면 카드의 탭: story(이야기) · text(본문) · compare(비교)
 function renderScene() {
-  const e = EVENTS[idx], per = PERIODS[e.p], place = PLACES[e.place];
+  const e = evAt(idx), place = PLACES[e.place];
+  const per = isPro() ? { color: '#b89a5e', name: t('prologue'), en: 'PROLOGUE' } : PERIODS[e.p];
   document.documentElement.style.setProperty('--period', per.color);
   const img = e.img
     ? `<button class="hero-img" id="heroBtn" aria-label="${esc(t('bigImage'))}"><img src="${e.img.src}" alt="${esc(e.title)} — ${esc(e.img.title)}" loading="eager"></button>`
@@ -603,7 +612,7 @@ function renderScene() {
       <p>${esc(w.text)}</p>
       <footer><span>${w.j ? esc(t('jesus')) : esc(w.who)}</span><cite>${esc(w.ref)}</cite><button class="say" data-say="${i}" aria-label="${esc(t('listenWord'))}">🔊</button></footer>
     </blockquote>`;
-  const tabs = [['story', t('tabStory')], ['text', t('tabText')], ['compare', t('tabCompare')]];
+  const tabs = [['story', t('tabStory')], ['text', t('tabText')], ['compare', t('tabCompare')]].filter(([k]) => !(isPro() && k === 'compare')); // 프롤로그는 복음서 비교가 없다
   cardTab = 'story';
   $('#scene').innerHTML = `
   <div class="cardbar">
@@ -618,7 +627,7 @@ function renderScene() {
     ${e.img ? `<button class="viewbtn" id="viewBtn">${esc(t('viewPainting'))} ↗</button>` : ''}
   </div>
   <div class="hero-text">
-    <div class="eyebrow"><span class="pdot"></span>${LANG === 'ko' ? esc(per.en) + ' · ' : ''}${esc(per.name)} · ${idx + 1} / ${EVENTS.length}</div>
+    <div class="eyebrow"><span class="pdot"></span>${LANG === 'ko' ? esc(per.en) + ' · ' : ''}${esc(per.name)}${isPro() ? '' : ` · ${idx + 1} / ${EVENTS.length}`}</div>
     <h1>${esc(e.title)}</h1>
     <p class="subtitle">${esc(e.subtitle)}</p>
   </div>
@@ -647,7 +656,7 @@ function renderScene() {
   <div class="cardfoot"><button class="goldbtn" id="contBtn"></button></div>`;
   $('#scene').scrollTop = 0;
   // 명화가 밀려가는 방향을 장면마다 돌려 가며 (오른쪽 위 → 왼쪽 위 → 왼쪽 아래 → 오른쪽 아래)
-  const kb = [[3, 2], [-3, 2], [-3, -2], [3, -2]][idx % 4];
+  const kb = [[3, 2], [-3, 2], [-3, -2], [3, -2]][(idx % 4 + 4) % 4]; // 프롤로그(-1)도
   $('#scene').style.setProperty('--kx', kb[0] + '%'); $('#scene').style.setProperty('--ky', kb[1] + '%');
   $('#cardToggle').onclick = () => { setCard($('#scene').classList.contains('open') ? 'peek' : 'open'); window.recenterStage(); };
   $('.cardbar', $('#scene')).ondblclick = () => setCard('open');
@@ -685,13 +694,15 @@ function showTab(k) {
   const sc = $('#scene');
   $$('.ctabs button', sc).forEach(b => b.classList.toggle('active', b.dataset.tab === k));
   $$('.pane', sc).forEach(p => { p.hidden = p.dataset.pane !== k; });
-  const order = ['story', 'text', 'compare'], nx = order[order.indexOf(k) + 1], b = $('#contBtn', sc);
+  const order = isPro() ? ['story', 'text'] : ['story', 'text', 'compare'], nx = order[order.indexOf(k) + 1], b = $('#contBtn', sc);
   if (nx) { b.innerHTML = `${esc(t('continueReading'))} <span aria-hidden="true">→</span>`; b.onclick = () => { if (sc.classList.contains('open')) setCard('full'); showTab(nx); $('.ctabs', sc).scrollIntoView({ block: 'start', behavior: 'smooth' }); }; }
   else if (idx < EVENTS.length - 1) { b.innerHTML = `${esc(t('walkNext'))} <span aria-hidden="true">→</span>`; b.onclick = () => go(idx + 1); }
   else { b.innerHTML = `${esc(t('quizReview'))}`; b.onclick = () => setView('quiz'); }
 }
 // 지금 장면의 퀴즈: 아래 조작부의 카드에서 창으로 연다
 function updateQuizBtn() {
+  $('#quizBtn').style.visibility = isPro() ? 'hidden' : ''; // 프롤로그에는 퀴즈가 없다
+  if (isPro()) return;
   const e = EVENTS[idx], done = state.quiz[e.id] === true;
   $('#quizBtn').classList.toggle('done', done);
   $('#quizBtn b').textContent = done ? `${t('tabQuiz')} ★` : t('tabQuiz');
@@ -733,7 +744,9 @@ const PICONS = {
 };
 function renderTrack() {
   const groups = Object.values(PERIODS).map(per => ({ per, evs: EVENTS.map((e, i) => [e, i]).filter(([e]) => e.p === per.id) }));
-  $('#track').innerHTML = groups.map(({ per, evs }) => `<div class="tseg" data-p="${per.id}" style="--c:${per.color};flex:${evs.length + 3}">
+  // 맨 앞의 작은 프롤로그 단추 (동산의 나무)
+  const pro = DATA.prologue ? `<button class="tpro" data-i="-1" title="${esc(t('prologue'))} · ${esc(DATA.prologue.title)}" aria-label="${esc(t('prologue'))}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21v-7M12 14c-4 0-6.5-2.3-6.5-5.3S8.5 3 12 3s6.5 2.7 6.5 5.7S16 14 12 14Z"/><circle cx="9.5" cy="9" r="1"/><circle cx="14" cy="7.5" r="1"/></svg></button>` : '';
+  $('#track').innerHTML = pro + groups.map(({ per, evs }) => `<div class="tseg" data-p="${per.id}" style="--c:${per.color};flex:${evs.length + 3}">
       <button class="ticon" data-i="${evs[0][1]}" title="${esc(per.name)}" aria-label="${esc(per.name)}"><svg viewBox="0 0 24 24" aria-hidden="true">${PICONS[per.id] || ''}</svg></button>
       <div class="tline">${evs.map(([e, i]) => `<button class="tick" data-i="${i}" title="${esc(e.title)} · ${esc(PLACES[e.place].name)}" aria-label="${i + 1}. ${esc(e.title)}"></button>`).join('')}</div>
       <span class="tname">${esc(per.name)}</span></div>`).join('');
@@ -741,31 +754,32 @@ function renderTrack() {
 }
 function updateTrack() {
   $$('.tick').forEach((b, i) => { b.classList.toggle('now', i === idx); b.classList.toggle('seen', visited.has(EVENTS[i].id)); });
-  $$('.tseg').forEach(g => g.classList.toggle('now', g.dataset.p === EVENTS[idx].p));
+  $$('.tseg').forEach(g => g.classList.toggle('now', g.dataset.p === evAt(idx).p));
+  $('.tpro')?.classList.toggle('now', isPro());
   const now = $('.tick.now'), tr = $('#track');
   if (now) tr.scrollTo({ left: now.offsetLeft - tr.clientWidth / 2, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
 }
 
 function go(i, { keepSpeech = false, onArrive } = {}) {
-  if (i < 0 || i >= EVENTS.length || i === idx && $('#scene').innerHTML) return;
+  if (i < firstIdx() || i >= EVENTS.length || i === idx && $('#scene').innerHTML) return;
   if (walking && i === idx + 1) return; // 이미 그곳으로 걷는 중
   if (!keepSpeech) stopSpeech(true);
   cancelWalk();
   const prev = idx;
-  const prevPlace = $('#scene').innerHTML ? EVENTS[prev].place : null;
+  const prevPlace = $('#scene').innerHTML ? evAt(prev).place : null;
   const stepped = i === prev + 1 && prevPlace !== null;
   const arrive = () => {
     idx = i;
-    renderScene(); updateMap(prev, { camera: !stepped || fitMode === 'all' }); updateTrack(); markVisited(EVENTS[i].id);
-    window.__stageScene = EVENTS[i]; // stage.js가 늦게 로드돼도 따라잡도록
-    dispatchEvent(new CustomEvent('stage:scene', { detail: { ev: EVENTS[i] } }));
+    renderScene(); updateMap(prev, { camera: !stepped || fitMode === 'all' }); updateTrack(); if (i >= 0) markVisited(EVENTS[i].id);
+    window.__stageScene = evAt(i); // stage.js가 늦게 로드돼도 따라잡도록
+    dispatchEvent(new CustomEvent('stage:scene', { detail: { ev: evAt(i) } }));
     bgmFollow(); // 읽는 중에 장면이 바뀌면 그 장면의 곡으로 겹쳐 바꾼다
-    setOdo(odoAt(i));
-    history.replaceState(null, '', '#' + EVENTS[i].id);
-    $('#prev').disabled = idx === 0; $('#next').disabled = $('#skip').disabled = idx === EVENTS.length - 1;
-    const p = PLACES[EVENTS[i].place];
+    setOdo(odoAt(Math.max(0, i)));
+    history.replaceState(null, '', '#' + evAt(i).id);
+    $('#prev').disabled = idx === firstIdx(); $('#next').disabled = $('#skip').disabled = idx === EVENTS.length - 1;
+    const p = PLACES[evAt(i).place];
     if (stepped) {
-      banner(`<span class="wk">📍</span>${esc(EVENTS[prev].place === EVENTS[i].place ? t('samePlace') : t('arrive'))} · <b>${esc(p.name)}</b><small>${esc(EVENTS[i].when)}</small>`, 2600);
+      banner(`<span class="wk">📍</span>${esc(evAt(prev).place === EVENTS[i].place ? t('samePlace') : t('arrive'))} · <b>${esc(p.name)}</b><small>${esc(EVENTS[i].when)}</small>`, 2600);
       const nx = EVENTS[i + 1];
       if (fitMode !== 'all' && !frameStage(i, 1100)) frame(nx && nx.place !== EVENTS[i].place ? [EVENTS[i].place, nx.place] : [EVENTS[i].place], 1100);
       $('#walker', map).classList.remove('arrive'); void $('#walker', map).getBoundingClientRect(); $('#walker', map).classList.add('arrive');
@@ -773,7 +787,8 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
     } else setCard('open');
     onArrive && onArrive();
   };
-  if (stepped && prevPlace !== EVENTS[i].place) walkTo(i, arrive);
+  // 프롤로그에서 첫 장면으로는 걷지 않고, 온 땅을 내려다보던 자리에서 나사렛으로 내려앉는다 (arrive의 frameStage)
+  if (stepped && prev >= 0 && prevPlace !== EVENTS[i].place) walkTo(i, arrive);
   else if (stepped) { setCard('peek'); setTimeout(arrive, reduced() ? 0 : 700); }
   else arrive();
 }
@@ -802,8 +817,9 @@ function showIntro(resume) {
     if (i !== idx) go(i);
   };
   const esc = ev => { if (ev.key === 'Escape') close(idx); };
-  starts.forEach(b => { b.onclick = () => close(resume > 0 ? resume : 0, true); });
-  agains.forEach(b => { b.onclick = () => close(0, true); });
+  // 처음 걷는 사람과 '처음부터 다시'는 프롤로그(첫 아담)부터
+  starts.forEach(b => { b.onclick = () => close(resume > 0 ? resume : firstIdx(), true); });
+  agains.forEach(b => { b.onclick = () => close(firstIdx(), true); });
   $('.land-down', box).onclick = ev => { ev.preventDefault(); $('#landHow').scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth' }); };
   addEventListener('keydown', esc);
   behind.forEach(el => { el.inert = true; });
@@ -953,7 +969,7 @@ function scrollToEl(el) {
 }
 
 function sceneScript() {
-  const e = EVENTS[idx], sc = $('#scene');
+  const e = evAt(idx), sc = $('#scene');
   // beat: 3D 무대(stage.js)가 연출을 맞추는 표지 — intro, p0…(문단), w0…(말씀)
   // 제목 줄은 '수태고지. 장소, 나사렛. 시기, BC 6년경.'으로 읽는다 (장소와 때를 이름 붙여 알려 준다)
   const items = [{ text: `${e.title}. ${t('sayPlace')}, ${PLACES[e.place].name.replace(/[()·]/g, ' ')}. ${t('sayWhen')}, ${e.when.replace(/\s*·\s*/g, ', ')}.`, el: $('.hero-text', sc), pause: 500, beat: 'intro' }];
@@ -971,7 +987,7 @@ function sceneScript() {
 function speakScene(onDone) { speakQueue(sceneScript(), onDone); }
 function speakWord(i) {
   stopAuto();
-  const w = EVENTS[idx].words[i];
+  const w = evAt(idx).words[i];
   speakQueue([{ text: w.text, who: w.j ? t('jesus') : w.who, el: $(`blockquote[data-say="${i}"]`, $('#scene')), jesus: !!w.j, gemini: w.tts === 'gemini' }]);
 }
 const stageBeat = (beat, s) => dispatchEvent(new CustomEvent('stage:beat', { detail: { beat, s } }));
@@ -1067,7 +1083,7 @@ function bgmStop(s) {
 // 낭독 상태가 바뀔 때마다 (setListenUI)
 function bgmFollow() {
   $('#music')?.setAttribute('aria-pressed', String(bgmOn()));
-  const cue = bgmOn() && speaking ? EVENTS?.[idx]?.music : null;
+  const cue = bgmOn() && speaking && EVENTS ? evAt(idx)?.music : null;
   if (!cue) { if (bgmCue) bgmStop(0.3); return; }
   if (!bgmReady()) return;
   if (bgmCtx.state === 'suspended') bgmCtx.resume().catch(() => {});
@@ -1203,14 +1219,16 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   window.EVENTS_READY = true; // 3D 지형 모드(terrain.js)가 이것을 기다렸다가 조작기를 단다
   PERIODS = Object.fromEntries(d.periods.map(p => [p.id, p]));
   buildMap(); renderTrack();
-  const fromHash = EVENTS.findIndex(e => '#' + e.id === location.hash);
+  // 장면 주소(#e05, 프롤로그는 #e00)가 있으면 그 장면, 없으면 지난번 장면, 처음 온 사람은 프롤로그부터
+  const hashIdx = () => d.prologue && location.hash === '#' + d.prologue.id ? -1 : EVENTS.findIndex(e => '#' + e.id === location.hash);
+  const fromHash = hashIdx(), hashOk = fromHash >= 0 || (fromHash === -1 && !!d.prologue && location.hash === '#' + d.prologue.id);
   const fromLast = EVENTS.findIndex(e => e.id === state.last);
-  idx = fromHash >= 0 ? fromHash : Math.max(0, fromLast);
+  idx = hashOk ? fromHash : fromLast >= 0 ? fromLast : firstIdx();
   view = { x: 0, y: 0, w: W, h: H }; applyView();
-  const start = idx; idx = -1; go(start);
+  const start = idx; idx = -2; go(start);
   updateProgress();
   // 첫 시작 화면: 장면 주소로 바로 들어온 때(#e05)와 연출 확인(?beat=)은 건너뛴다
-  if (fromHash < 0 && !new URLSearchParams(location.search).has('beat')) showIntro(fromLast > 0 ? fromLast : -1);
+  if (!hashOk && !new URLSearchParams(location.search).has('beat')) showIntro(fromLast > 0 ? fromLast : -1);
   $('.brand').onclick = ev => { ev.preventDefault(); showIntro(idx > 0 ? idx : -1); };
 
   $('#prev').onclick = () => go(idx - 1);
@@ -1235,7 +1253,7 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
     if (fitMode === 'all') { $('#fitNow').onclick(); return; }
     fitMode = 'all'; fitAll(); $('#fitAll').classList.add('active'); $('#fitNow').classList.remove('active');
   };
-  $('#fitNow').onclick = () => { fitMode = 'scene'; if (!frameStage(idx, 900)) frame([EVENTS[idx].place], 900); $('#fitNow').classList.add('active'); $('#fitAll').classList.remove('active'); };
+  $('#fitNow').onclick = () => { fitMode = 'scene'; if (!frameStage(idx, 900)) frame([evAt(idx).place], 900); $('#fitNow').classList.add('active'); $('#fitAll').classList.remove('active'); };
   $$('.tabs button').forEach(b => b.onclick = () => setView(b.dataset.view));
   $('#wordSearch').oninput = renderWords;
   $('#closeViewer').onclick = () => $('#viewer').close();
@@ -1244,14 +1262,14 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   $('#closeStamps').onclick = () => $('#stamps').close();
   $('#resetProgress').onclick = () => {
     if (!confirm(t('resetConfirm'))) return;
-    visited.clear(); state.visited = []; state.quiz = {}; store.save(); markVisited(EVENTS[idx].id); renderStamps(); renderTrack(); updateTrack();
+    visited.clear(); state.visited = []; state.quiz = {}; store.save(); if (idx >= 0) markVisited(EVENTS[idx].id); renderStamps(); renderTrack(); updateTrack();
   };
   addEventListener('keydown', ev => {
     if ($('#journey').hidden || ev.target.matches('input, select, textarea') || document.querySelector('dialog[open]') || !$('#intro').hidden) return; // 시작 화면이 떠 있으면 뒤 여정을 움직이지 않는다
     if (ev.key === 'ArrowRight') go(idx + 1);
     if (ev.key === 'ArrowLeft') go(idx - 1);
   });
-  addEventListener('hashchange', () => { const i = EVENTS.findIndex(e => '#' + e.id === location.hash); if (i >= 0 && i !== idx) go(i); });
+  addEventListener('hashchange', () => { const i = hashIdx(); if ((i >= 0 || location.hash === '#' + d.prologue?.id) && i !== idx) go(i); });
 }).catch(err => {
   $('#scene').innerHTML = `<p class="empty">${LANG === 'ko' ? '여정 데이터를 불러오지 못했습니다. 새로고침해 주세요.' : 'The journey data could not be loaded. Please refresh the page.'} (${esc(err.message)})</p>`;
 });

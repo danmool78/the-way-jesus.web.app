@@ -34,6 +34,10 @@
   }
  },
  "places": {
+  "eden": {
+   "name": "Garden of Eden",
+   "region": "Genesis"
+  },
   "nazareth": {
    "name": "Nazareth",
    "region": "Galilee"
@@ -164,6 +168,33 @@
   }
  },
  "events": {
+  "e00": {
+   "title": "The Lost Garden",
+   "when": "In the beginning",
+   "subtitle": "A road closed, and a first promise",
+   "story": [
+    "In the beginning God planted a garden in Eden, in the east, and breathed the breath of life into the man he had shaped from the dust. Adam and Eve walked with him and enjoyed every fruit of the garden. Only from the tree in the middle of the garden, the tree that gives knowledge of good and evil, he told them not to eat. If they ate from it, he said, they would surely die.",
+    "But the serpent came to Eve and whispered: did God really say that? You will not die at all; your eyes will be opened and you will be like God. Eve picked the fruit and ate, and gave some to Adam, who was with her. In that moment they knew shame, and when they heard the sound of God walking in the evening breeze, they hid among the trees.",
+    "Adam, where are you? God called. That day sin came between people and God, and through sin death came into the world. God told the serpent that the woman’s offspring would crush its head. Then he made garments of skin and clothed them, sent them out to the east of the garden, and set cherubim and a flaming sword to guard the way to the tree of life. The story of how that closed road is opened again now begins with a young girl in Nazareth."
+   ],
+   "words": [
+    {
+     "who": "God",
+     "text": "You may eat freely from any tree in the garden. But do not eat from the tree that gives knowledge of good and evil, for on the day you eat from it you will certainly die."
+    },
+    {
+     "who": "God",
+     "text": "Where are you?"
+    },
+    {
+     "who": "God",
+     "text": "I will set hostility between you and the woman, between your offspring and hers. Her offspring will crush your head, and you will bite his heel."
+    }
+   ],
+   "note": "Genesis 3:15 has long been called the “first gospel”. The New Testament finds in Jesus Christ the answer to who the woman’s offspring is that crushes the serpent’s head. Paul called him “the last Adam”.",
+   "reflect": "Faced with his question, where are you, can I answer him instead of hiding?",
+   "credit": "Giovanni di Paolo, The Creation of the World and the Expulsion from Paradise, 1445 (detail) · The Metropolitan Museum of Art · Public domain"
+  },
   "e01": {
    "title": "The Annunciation",
    "when": "c. 6 BC",

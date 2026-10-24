@@ -126,6 +126,10 @@
   "acts": [
    "Atos",
    "At"
+  ],
+  "gen": [
+   "Gênesis",
+   "Gn"
   ]
  },
  "map": {
@@ -205,5 +209,6 @@
  "landStep3": "Arraste o mapa para olhar ao redor e toque em 3D para ver o relevo",
  "landStep4h": "Suas palavras e perguntas",
  "landStep4": "Reúna as palavras de Jesus na aba “{words}” e relembre as cenas com “{quiz}”",
- "landEnd": "Pronto para partir?"
+ "landEnd": "Pronto para partir?",
+ "prologue": "Prólogo"
 }

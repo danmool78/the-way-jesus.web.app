@@ -2,6 +2,7 @@
   "_comment": "낭독 밑에 깔리는 배경음악. 곡(cue)마다 30초 반복 곡 하나 — assets/music/<곡>.mp3 (node _src/tools/music.mjs가 Lyria로 만든다). scenes는 장면마다 곡 하나. 곡 설명(sound)을 고치면 그 mp3를 지우고 다시 만든다",
   "setting": "First-century Galilee and Judea, the Gospel story told on a map: an ancient Near-Eastern acoustic ensemble of oud, kinnor lyre, ney and shepherd's reed flute, soft frame drum and a low string drone, modal (Dorian, Phrygian, Aeolian), reverent and timeless; never cinematic-epic, never modern pop",
   "cues": {
+    "eden": { "sound": "A first garden and a home that is lost: a pure, luminous drone like early light, slow open lyre figures in Dorian, a distant shepherd's reed answering; innocence touched by a quiet ache of longing, tender and hopeful at the edge." },
     "wonder": { "sound": "Hushed wonder at a quiet visitation: a sustained warm drone, slow lyre arpeggios like light falling, a far ney phrase now and then; tender, luminous, expectant." },
     "nativity": { "sound": "A starlit night lullaby in the fields: gentle plucked lyre in a slow rocking 6/8, a soft shepherd's flute melody, a hush of night air; peaceful, humble, glowing." },
     "flight": { "sound": "A hurried flight by night: low pulsing frame drum like footsteps, a dark string drone, a few uneasy oud notes in Phrygian; restrained urgency and grief, never loud." },
@@ -20,6 +21,7 @@
     "glory": { "sound": "Glory and blessing on a mountain, rising into the clouds: a radiant layered drone, slow ascending lyre and flute lines, a gentle swell; majestic yet peaceful, full of promise." }
   },
   "scenes": {
+    "e00": "eden",
     "e01": "wonder", "e02": "nativity", "e03": "wonder", "e04": "nativity", "e05": "flight", "e06": "village", "e07": "village",
     "e08": "river", "e09": "wilderness", "e10": "village", "e11": "joy",
     "e12": "zeal", "e13": "night", "e14": "wilderness", "e15": "healing",

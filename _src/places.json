@@ -1,4 +1,5 @@
 {
+  "eden":              {"name":"에덴동산",          "lat":32.15,  "lng":35.05,  "region":"창세기", "hidden":true},
   "nazareth":          {"name":"나사렛",            "lat":32.699, "lng":35.304, "region":"갈릴리"},
   "bethlehem":         {"name":"베들레헴",          "lat":31.705, "lng":35.200, "region":"유대"},
   "jerusalem":         {"name":"예루살렘",          "lat":31.7767,"lng":35.2330,"region":"유대", "city":true},

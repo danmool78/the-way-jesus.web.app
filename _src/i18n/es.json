@@ -34,6 +34,10 @@
   }
  },
  "places": {
+  "eden": {
+   "name": "Jardín del Edén",
+   "region": "Génesis"
+  },
   "nazareth": {
    "name": "Nazaret",
    "region": "Galilea"
@@ -164,6 +168,33 @@
   }
  },
  "events": {
+  "e00": {
+   "title": "El jardín perdido",
+   "when": "En el principio",
+   "subtitle": "Un camino cerrado y una primera promesa",
+   "story": [
+    "En el principio Dios plantó un jardín en Edén, al oriente, y sopló aliento de vida en el hombre que había formado del polvo. Adán y Eva caminaban con él y disfrutaban de todos los frutos del jardín. Solo del árbol que estaba en medio del jardín, el que da el conocimiento del bien y del mal, les dijo que no comieran. El día que comieran de él, morirían sin remedio.",
+    "Pero la serpiente se acercó a Eva y le susurró: ¿de verdad Dios dijo eso? No morirán en absoluto; se les abrirán los ojos y serán como Dios. Eva tomó el fruto, comió y le dio también a Adán, que estaba con ella. En ese momento conocieron la vergüenza, y cuando oyeron los pasos de Dios en la brisa de la tarde, se escondieron entre los árboles.",
+    "Adán, ¿dónde estás?, llamó Dios. Aquel día el pecado se interpuso entre las personas y Dios, y por el pecado la muerte entró en el mundo. Dios dijo a la serpiente que la descendencia de la mujer le aplastaría la cabeza. Luego les hizo ropas de piel, los vistió, los sacó hacia el oriente del jardín y puso querubines y una espada de fuego para guardar el camino al árbol de la vida. La historia que vuelve a abrir ese camino cerrado comienza ahora con una joven de Nazaret."
+   ],
+   "words": [
+    {
+     "who": "Dios",
+     "text": "Pueden comer con libertad del fruto de cualquier árbol del jardín. Pero no coman del árbol que da el conocimiento del bien y del mal, porque el día que coman de él, morirán sin falta."
+    },
+    {
+     "who": "Dios",
+     "text": "¿Dónde estás?"
+    },
+    {
+     "who": "Dios",
+     "text": "Pondré enemistad entre ti y la mujer, entre tu descendencia y la de ella. Su descendencia te aplastará la cabeza, y tú le morderás el talón."
+    }
+   ],
+   "note": "Génesis 3:15 ha sido llamado desde antiguo el «primer evangelio». El Nuevo Testamento encuentra en Jesucristo la respuesta a quién es la descendencia de la mujer que aplasta la cabeza de la serpiente. Pablo lo llamó «el último Adán».",
+   "reflect": "Ante su pregunta, ¿dónde estás?, ¿puedo responderle en lugar de esconderme?",
+   "credit": "Giovanni di Paolo, The Creation of the World and the Expulsion from Paradise, 1445 (detalle) · Museo Metropolitano de Arte · Dominio público"
+  },
   "e01": {
    "title": "La Anunciación",
    "when": "hacia el 6 a. C.",

@@ -34,6 +34,10 @@
   }
  },
  "places": {
+  "eden": {
+   "name": "Jardim do Éden",
+   "region": "Gênesis"
+  },
   "nazareth": {
    "name": "Nazaré",
    "region": "Galileia"
@@ -164,6 +168,33 @@
   }
  },
  "events": {
+  "e00": {
+   "title": "O jardim perdido",
+   "when": "No princípio",
+   "subtitle": "Um caminho fechado e uma primeira promessa",
+   "story": [
+    "No princípio Deus plantou um jardim no Éden, ao oriente, e soprou o fôlego de vida no homem que tinha formado do pó. Adão e Eva andavam com ele e desfrutavam de todos os frutos do jardim. Só da árvore que estava no meio do jardim, a que dá o conhecimento do bem e do mal, ele lhes disse que não comessem. No dia em que comessem dela, certamente morreriam.",
+    "Mas a serpente se aproximou de Eva e sussurrou: Deus disse mesmo isso? Vocês não vão morrer de jeito nenhum; os seus olhos se abrirão e vocês serão como Deus. Eva colheu o fruto, comeu e deu também a Adão, que estava com ela. Naquele instante conheceram a vergonha, e quando ouviram os passos de Deus na brisa da tarde, esconderam-se entre as árvores.",
+    "Adão, onde você está?, Deus chamou. Naquele dia o pecado se colocou entre as pessoas e Deus, e pelo pecado a morte entrou no mundo. Deus disse à serpente que a descendência da mulher lhe esmagaria a cabeça. Depois fez roupas de pele, vestiu-os, mandou-os para o oriente do jardim e pôs querubins e uma espada de fogo para guardar o caminho da árvore da vida. A história que volta a abrir esse caminho fechado começa agora com uma jovem de Nazaré."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "Vocês podem comer à vontade do fruto de qualquer árvore do jardim. Mas não comam da árvore que dá o conhecimento do bem e do mal, porque no dia em que comerem dela, certamente morrerão."
+    },
+    {
+     "who": "Deus",
+     "text": "Onde você está?"
+    },
+    {
+     "who": "Deus",
+     "text": "Porei inimizade entre você e a mulher, entre a sua descendência e a dela. A descendência dela esmagará a sua cabeça, e você lhe morderá o calcanhar."
+    }
+   ],
+   "note": "Gênesis 3:15 é chamado desde a antiguidade de «primeiro evangelho». O Novo Testamento encontra em Jesus Cristo a resposta sobre quem é a descendência da mulher que esmaga a cabeça da serpente. Paulo o chamou de «o último Adão».",
+   "reflect": "Diante da pergunta dele, onde você está?, consigo responder em vez de me esconder?",
+   "credit": "Giovanni di Paolo, The Creation of the World and the Expulsion from Paradise, 1445 (detalhe) · Museu Metropolitano de Arte · Domínio público"
+  },
   "e01": {
    "title": "A Anunciação",
    "when": "c. 6 a.C.",

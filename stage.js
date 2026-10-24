@@ -256,7 +256,9 @@ function anchor() {
   // 무대 바닥을 실제 지점(at)으로 옮긴 장면은 캔버스도 그 지점에 붙인다 — 핀에 붙여 두면 옮겨 간 인물·집이 캔버스 가장자리에서 잘렸다
   if (script?.at && window.geoToClient) {
     const c = window.geoToClient(...script.at), w = wrap.getBoundingClientRect();
-    if (!map.querySelector(`.pin[data-place="${curEv.place}"] .dot`)?.getBoundingClientRect().width) return null;
+    // 핀이 아직 그려지지 않았으면 기다린다 (핀이 없는 장소 — 프롤로그의 에덴 — 는 그 지점에 바로)
+    const pin = map.querySelector(`.pin[data-place="${curEv.place}"] .dot`);
+    if (pin && !pin.getBoundingClientRect().width) return null;
     return { x: c.x - w.left, y: c.y - w.top };
   }
   const el = curEv && map.querySelector(`.pin[data-place="${curEv.place}"] .dot`);
