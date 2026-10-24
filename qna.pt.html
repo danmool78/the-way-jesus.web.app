@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#16120e">
+<meta name="description" content="O Caminho — perguntas e respostas: por que o criamos, para que serve, por que o palco 3D é desenhado assim e como aproveitá-lo melhor">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<title>Perguntas e respostas — O Caminho</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* Perguntas e respostas — mesmo estilo da tela inicial (.intro): fundo escuro, dourado, títulos com serifa */
+  body{overflow:auto;background:radial-gradient(ellipse at 50% 0%,rgba(217,180,106,.13),transparent 50%),var(--bg)}
+  .qna{max-width:760px;margin:0 auto;padding:28px 20px 64px}
+  .qna-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .qna-top a{color:var(--gold2);text-decoration:none;display:inline-flex;align-items:center;gap:8px;font-size:14px}
+  .qna-top img{width:28px;height:28px}
+  .qna-top .back{border:1px solid #4a3c2c;border-radius:999px;padding:7px 14px}
+  .qna-top .back:hover{border-color:var(--gold)}
+  .qna h1{font-family:var(--serif);font-size:34px;margin:34px 0 8px;color:#f6ead0}
+  .qna .lead{color:var(--muted);line-height:1.8;margin:0 0 10px}
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 8px;padding:0;list-style:none}
+  .toc a{display:block;border:1px solid #4a3c2c;border-radius:999px;padding:6px 13px;font-size:13px;color:var(--ink);text-decoration:none;background:rgba(255,255,255,.02)}
+  .toc a:hover{border-color:var(--gold);color:var(--gold2)}
+  .qna h2{font-family:var(--serif);font-size:22px;color:var(--gold2);margin:44px 0 12px;padding-top:8px;border-top:1px solid #3a3026;scroll-margin-top:16px}
+  details{border:1px solid #3a3026;border-radius:14px;background:rgba(29,24,19,.7);margin:10px 0;overflow:hidden}
+  details[open]{border-color:#5a4830}
+  summary{list-style:none;cursor:pointer;padding:15px 48px 15px 18px;font-weight:700;font-size:16px;line-height:1.5;position:relative}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:'Q';font-family:var(--serif);color:var(--gold);margin-right:10px}
+  summary::after{content:'';position:absolute;right:20px;top:22px;width:9px;height:9px;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(45deg);transition:transform .25s}
+  details[open] summary::after{transform:translateY(4px) rotate(-135deg)}
+  summary:hover{color:var(--gold2)}
+  .a{padding:0 20px 18px 40px;color:#e2d7c3;line-height:1.85;font-size:15px}
+  .a p{margin:0 0 10px}
+  .a ul,.a ol{margin:4px 0 12px;padding-left:20px}
+  .a li{margin:4px 0}
+  .a b{color:var(--gold2);font-weight:700}
+  .a .tip{display:block;border-left:2px solid var(--gold);padding:8px 12px;margin:10px 0;background:rgba(217,180,106,.07);border-radius:0 8px 8px 0;font-size:14px;color:var(--muted)}
+  .end{text-align:center;margin-top:56px}
+  .end a{display:inline-block;padding:14px 28px;border-radius:999px;background:linear-gradient(180deg,#e9c97f,#b88a3e);color:#24180a;font-weight:700;text-decoration:none}
+  .foot{text-align:center;margin-top:28px;font-size:12px;color:var(--faint)}
+  .foot a{color:var(--faint)}
+  @media (max-width:600px){.qna h1{font-size:28px}.a{padding-left:18px}summary{font-size:15px}}
+</style>
+</head>
+<body>
+<main class="qna">
+  <nav class="qna-top">
+    <a href="./?lang=pt"><img src="assets/logo.svg" alt=""><b style="font-family:var(--serif);font-size:20px">O Caminho</b></a>
+    <a class="back" href="./?lang=pt">Voltar à jornada →</a>
+  </nav>
+
+  <h1>Perguntas e respostas</h1>
+  <p class="lead">Por que criamos “O Caminho”, para que ele serve, por que o palco 3D sobre o mapa é desenhado do jeito que é e como aproveitá-lo melhor: reunimos tudo aqui em forma de perguntas e respostas.</p>
+  <ul class="toc">
+    <li><a href="#why">Por que ele existe</a></li>
+    <li><a href="#purpose">Propósito</a></li>
+    <li><a href="#stage">Palco 3D</a></li>
+    <li><a href="#benefit">O que você ganha</a></li>
+    <li><a href="#howto">Como usar</a></li>
+    <li><a href="#more">Outras dúvidas</a></li>
+  </ul>
+
+  <h2 id="why">Por que este aplicativo é necessário?</h2>
+  <details open>
+    <summary>Já existem quatro Evangelhos. Por que juntá-los mais uma vez?</summary>
+    <div class="a">
+      <p>Mateus, Marcos, Lucas e João registraram o mesmo Jesus, cada um com o seu olhar. Alguns acontecimentos aparecem nos quatro; outros, em apenas um. A ordem e a ênfase também variam um pouco.</p>
+      <p>Por isso, lendo um livro de cada vez, você ganha profundidade, mas precisa montar sozinho, na cabeça, <b>“em que ordem e em que lugares a vida dele se desenrolou”</b>. Este aplicativo entrelaça os quatro relatos na ordem em que os fatos aconteceram e nos lugares onde se deram, e mostra 61 cenas, do nascimento à ascensão, como um único caminho.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Por que o mapa é tão importante?</summary>
+    <div class="a">
+      <p>Quando lemos a Bíblia, costumamos passar direto pelos nomes de lugares. Mas, quando você sabe quantos dias de caminhada separam Nazaré de Belém, a que distância o mar da Galileia fica de Jerusalém, ou por que sempre se diz “subir” a Jerusalém, a história ganha outra leitura.</p>
+      <p>Neste aplicativo, cada vez que você passa para outra cena, caminha sobre a terra de verdade. Ele mostra a distância, os dias de viagem e quanto já foi percorrido até ali. A ideia é que você sinta no corpo o quanto Jesus caminhou.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Em que ele é diferente de um aplicativo de Bíblia ou de um comentário?</summary>
+    <div class="a">
+      <p>Um aplicativo de Bíblia é ótimo para ler o texto; um comentário, para explicar o sentido. “O Caminho” vem um passo antes: é <b>um mapa e um guia que mostram o quadro inteiro</b>. Cada cena reúne num só lugar o mapa, uma pintura clássica, o palco 3D, a narração, as palavras de Jesus, a comparação dos quatro Evangelhos, o contexto histórico, perguntas para reflexão e um quiz.</p>
+    </div>
+  </details>
+
+  <h2 id="purpose">Qual é o propósito deste aplicativo?</h2>
+  <details open>
+    <summary>Em poucas palavras, para que ele foi feito?</summary>
+    <div class="a">
+      <p><b>Para que você encontre a vida de Jesus como um único caminho contínuo.</b> Não como pedaços soltos de histórias, mas como a estrada que uma pessoa realmente percorreu, e para que as palavras ditas nesse caminho iluminem a sua vida hoje.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Ele substitui a Bíblia?</summary>
+    <div class="a">
+      <p>Não. Este aplicativo é <b>uma porta de entrada para a Bíblia</b>. Cada cena traz o capítulo e o versículo do texto (aba “Comparar”). Se alguma cena tocar o seu coração, abra a Bíblia e leia aquele trecho você mesmo.</p>
+      <p>As histórias seguem fielmente o texto e não inventam fatos que ele não traz. Acrescentamos apenas a atmosfera: a paisagem, a luz e os sons daquele dia.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Que tradução da Bíblia foi usada para as palavras de Jesus?</summary>
+    <div class="a">
+      <p>Não copiamos frases de nenhuma tradução existente. São <b>novas traduções do sentido original para a linguagem de hoje</b>. Por isso, as palavras podem soar um pouco diferentes da versão que você conhece. Para o texto exato, consulte na Bíblia o capítulo e o versículo indicados.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Como foram definidas a ordem e os lugares das cenas?</summary>
+    <div class="a">
+      <p>A ordem segue a tradicional “harmonia dos Evangelhos”, que coloca os quatro relatos lado a lado. Ainda assim, a sequência de alguns acontecimentos é debatida até entre os estudiosos.</p>
+      <p>O mesmo vale para os lugares. Dos 32, alguns não têm localização exata conhecida (por exemplo, Emaús); nesses casos, usamos o ponto mais provável e o marcamos como <b>“aprox.”</b>. As datas são aproximadas, como “por volta do ano…”.</p>
+    </div>
+  </details>
+
+  <h2 id="stage">Por que o palco 3D é desenhado assim?</h2>
+  <details open>
+    <summary>O que são aquelas pequenas figuras sobre o mapa?</summary>
+    <div class="a">
+      <p>São um <b>palco em miniatura</b> montado no lugar onde a cena aconteceu. Como num diorama de museu, as pessoas daquele dia ficam de pé sobre o marcador do lugar, para que você veja num relance onde se está e o que está acontecendo.</p>
+      <p>O palco se move junto com a narração. A cada frase lida, as figuras entram caminhando, falam, se ajoelham, levantam a cabeça. Quando alguém fala, os outros se voltam para ele. Nas cenas noturnas o mapa inteiro fica azul-escuro; nas tempestades, aparecem sombras de nuvens; e a madrugada da ressurreição se tinge de dourado.</p>
+    </div>
+  </details>
+  <details>
+    <summary>As figuras e o palco parecem bem maiores do que seriam na realidade. Por quê?</summary>
+    <div class="a">
+      <p>É de propósito. O mapa mostra centenas de quilômetros numa só tela. Em tamanho real, uma pessoa seria menor que um ponto e simplesmente não apareceria.</p>
+      <p>Por isso o palco <b>não segue a escala do mapa: ele mantém mais ou menos o mesmo tamanho na tela</b>, cerca de 300 pixels de largura no computador e 230 pixels no celular. Ao aproximar ou afastar o mapa, as figuras continuam num tamanho reconhecível, e a base do palco fica sempre presa ao marcador do lugar. Em troca, visto de longe, o palco parece maior que uma aldeia ou uma cidade. Pense nele como uma placa sobre o mapa que diz: “aqui aconteceu isto”.</p>
+      <span class="tip">Nas cenas com multidões, o palco é um pouco mais largo e as figuras um pouco menores, para caber tudo numa só tela.</span>
+    </div>
+  </details>
+  <details>
+    <summary>Se o tamanho foi aumentado, como a geografia continua certa?</summary>
+    <div class="a">
+      <p>Como o palco ficou maior, fizemos ajustes para que ele não invada lugares que não fazem sentido.</p>
+      <ul>
+        <li>O que precisa combinar com o terreno real, como <b>margens de água e campos</b>, fica na latitude e longitude verdadeiras. Assim, os barcos ficam na água e as pessoas em terra firme.</li>
+        <li>Nas <b>aldeias com o marcador à beira da água</b> (como Cafarnaum), o palco foi deslocado um pouco para o lado da terra.</li>
+        <li>Em <b>Jerusalém</b>, ao aproximar até a cidade, aparece uma imagem 3D da cidade. Por isso o palco não ergue um templo à parte, e em lugares colados à muralha, como o Gólgota, o palco foi deslocado um pouco para o campo aberto fora da cidade.</li>
+        <li>A orientação também segue o mapa: o alto da tela é o norte e a direita é o leste. Nas cenas do Monte das Oliveiras, a cidade fica a oeste (à esquerda).</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>Por que a cena da cruz aparece de longe, só em silhueta?</summary>
+    <div class="a">
+      <p>Ao criar o palco, estabelecemos um princípio: <b>não mostrar sofrimento nem violência</b>. O Gólgota aparece apenas como o contorno distante das cruzes, pessoas ajoelhadas voltadas para lá e uma luz que escurece. Cenas dolorosas, como a zombaria e os açoites, são apenas ouvidas na narração; o palco fica vazio ou mostra só pessoas chorando. Assim, dá para assistir com crianças, e a palavra vem antes da imaginação.</p>
+      <p>Há também outros princípios:</p>
+      <ul>
+        <li><b>O mal só como vulto:</b> o tentador no deserto aparece apenas como uma silhueta escura encapuzada.</li>
+        <li><b>Fidelidade ao texto:</b> não inventamos acontecimentos importantes que a Bíblia não relata. O palco apenas acompanha a narração.</li>
+        <li><b>Nada surge de repente:</b> as pessoas aparecem aos poucos ou entram caminhando.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>O que é o relevo que aparece ao tocar no botão 3D?</summary>
+    <div class="a">
+      <p>É a altitude do terreno, feita a partir de dados reais de elevação (levantamentos topográficos por satélite). As regiões da Galileia, da Judeia e do Egito são carregadas quando você se aproxima de um lugar. A altura foi exagerada um pouco, <b>1,8×</b>. Na proporção real as colinas pareceriam quase planas; assim, vales e cumes ficam bem visíveis.</p>
+      <p>No relevo 3D, você pode arrastar para mover, usar a roda do mouse ou dois dedos para aproximar e, no computador, usar os botões à esquerda para girar a vista. Veja com os próprios olhos por que se “sobe” a Jerusalém e como é íngreme a estrada de Jericó até lá.</p>
+    </div>
+  </details>
+
+  <h2 id="benefit">O que você pode ganhar com ele?</h2>
+  <details open>
+    <summary>O que este aplicativo pode me oferecer?</summary>
+    <div class="a">
+      <ul>
+        <li><b>O quadro inteiro:</b> a vida de Jesus, do nascimento à ascensão, organizada como um só fluxo. Cada acontecimento encontra o seu lugar: quando e onde.</li>
+        <li><b>A sensação da terra:</b> vendo distâncias e relevo, expressões como “subiu”, “atravessou” e “foi para o deserto” ganham vida.</li>
+        <li><b>A voz das quatro testemunhas:</b> compare como cada Evangelho registra o mesmo fato e descubra ênfases diferentes.</li>
+        <li><b>Guardar as palavras por mais tempo:</b> cada cena reúne as palavras centrais de Jesus, e as perguntas para reflexão ajudam a trazê-las para a vida de hoje.</li>
+        <li><b>Lembrar:</b> com pinturas, palco, sons e quiz juntos, uma cena vista uma vez fica na memória.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>Para quem ele é especialmente bom?</summary>
+    <div class="a">
+      <ul>
+        <li><b>Quem vai ler os Evangelhos pela primeira vez:</b> pode captar o fio da história antes de entrar no texto.</li>
+        <li><b>Quem já lê a Bíblia há muito tempo:</b> vai ver histórias conhecidas de um jeito novo, sobre o mapa e em ordem.</li>
+        <li><b>Famílias e pequenos grupos:</b> ótimo para ouvir uma cena juntos e conversar a partir das perguntas para reflexão.</li>
+        <li><b>Escola dominical e adolescentes:</b> com o palco e o quiz, aprender não fica cansativo. E, como as cenas de sofrimento não são mostradas, também é adequado para crianças.</li>
+      </ul>
+    </div>
+  </details>
+
+  <h2 id="howto">Quais recursos existem e como usá-los?</h2>
+  <details open>
+    <summary>Como eu começo?</summary>
+    <div class="a">
+      <ol>
+        <li>Na tela inicial, toque em <b>“Começar a jornada”</b>. Quando voltar, poderá continuar da última cena que estava vendo.</li>
+        <li>No cartão à direita (no celular, embaixo), leia a história ou toque no <b>botão ▶</b> para ouvir a narração.</li>
+        <li>Ao terminar, toque em <b>“Caminhar até o próximo lugar”</b>. Você caminha pelo mapa até a próxima cena.</li>
+      </ol>
+      <span class="tip">Percorrendo uma ou duas cenas por dia, em um ou dois meses você terá acompanhado a vida inteira de Jesus.</span>
+    </div>
+  </details>
+  <details>
+    <summary>Como usar a narração e a “Jornada guiada”?</summary>
+    <div class="a">
+      <ul>
+        <li><b>▶ Ouvir:</b> lê em sequência o título da cena, a história e as palavras de Jesus. A narração gravada, com outra voz para as palavras de Jesus, existe por enquanto só em coreano; em português, quem lê é a voz do seu aparelho. No computador, aparecem legendas na parte de baixo do mapa (no celular, só o áudio, sem legendas), e o palco se move acompanhando cada frase.</li>
+        <li><b>Jornada guiada:</b> se estiver ativada, depois de terminar uma cena você segue caminhando sozinho até o próximo lugar e a leitura continua. Dá para deixar tocando como um audiolivro.</li>
+        <li><b>Velocidade:</b> escolha de 0,85× a 1,3×.</li>
+        <li><b>♫ Música de fundo:</b> uma música suave, combinando com a cena, toca por baixo da narração. Para desligá-la, toque no botão da nota musical.</li>
+      </ul>
+      <span class="tip">Na aba “Texto”, toque no botão 🔊 ao lado de uma palavra de Jesus para ouvir só aquela passagem.</span>
+    </div>
+  </details>
+  <details>
+    <summary>Qual a diferença entre as abas do cartão da cena?</summary>
+    <div class="a">
+      <ul>
+        <li><b>História:</b> a cena contada em forma de texto. Mais abaixo, em <b>“Contexto”</b>, está o pano de fundo histórico e geográfico, e em <b>“Pare e reflita”</b>, perguntas para trazer a cena para a sua vida hoje.</li>
+        <li><b>Texto:</b> reúne as palavras centrais daquela cena, com capítulo e versículo.</li>
+        <li><b>Comparar:</b> mostra quais dos quatro Evangelhos registram a cena, com capítulo e versículo lado a lado.</li>
+      </ul>
+      <p>A pintura no alto do cartão (da série sobre os Evangelhos de James Tissot) pode ser ampliada com <b>“Ver a pintura”</b>.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Como usar o mapa?</summary>
+    <div class="a">
+      <ul>
+        <li><b>Arrastar:</b> arraste o mapa para olhar ao redor. A aproximação e o afastamento acompanham a cena automaticamente. Nas cenas de Jerusalém, a vista entra até a cidade e aparece a imagem 3D dela.</li>
+        <li><b>Etiqueta do lugar</b> (o nome no canto superior esquerdo): toque para voltar ao lugar da cena atual.</li>
+        <li><b>Trajeto inteiro:</b> mostra num relance todo o caminho feito até agora. Toque de novo para voltar à cena atual.</li>
+        <li><b>Tocar num marcador:</b> toque num lugar do mapa para ir à cena que aconteceu ali.</li>
+        <li><b>Botão 3D:</b> mostra o relevo do terreno. No 3D, use a roda do mouse ou dois dedos para aproximar; no computador, também dá para girar ou aproximar com os botões à esquerda.</li>
+        <li><b>Linha do tempo embaixo:</b> cada período tem sua cor e sua imagem. Toque num ponto para ir direto à cena desejada. Os pontos preenchidos e claros são cenas que você já visitou.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>Como fica no celular?</summary>
+    <div class="a">
+      <p>O cartão da cena é uma folha que sobe da parte de baixo da tela. No início ela sobe só até a metade, para que o mapa e o palco apareçam bem.</p>
+      <ul>
+        <li><b>Arraste a alça para cima</b> ou role o texto para cima, e a folha sobe por inteiro, ideal para ler.</li>
+        <li><b>Arrastando para baixo</b>, ela desce um nível de cada vez até sobrar só a linha do título, deixando o mapa amplo.</li>
+        <li>Se você adicionar à tela inicial, poderá abri-lo direto, como um aplicativo.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>Onde ficam as palavras de Jesus, a harmonia e o quiz?</summary>
+    <div class="a">
+      <ul>
+        <li><b>Aba “Palavras”</b> (no alto): reúne, na ordem da jornada, as palavras de Jesus registradas nos quatro Evangelhos. Dá para buscar por termos como “amor”, “pão” ou “paz”.</li>
+        <li><b>“Harmonia dos Evangelhos”</b> (⚙ Configurações, no canto superior direito): uma tabela que mostra onde cada um dos quatro Evangelhos registra as 61 cenas. Também dá para filtrar, por exemplo, por “Nos quatro Evangelhos” ou “Só em João”. Toque numa linha para ir à cena.</li>
+        <li><b>Aba “Quiz”</b> e <b>quiz da cena</b> (o botão “Quiz” embaixo, à direita): relembre em perguntas as cenas que você percorreu.</li>
+        <li><b>“Meus passos”</b> (barra de progresso no alto ou nas Configurações): cada cena aberta deixa um passo, e cada quiz acertado, uma estrela.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>Há boas maneiras de usar em grupo ou no dia a dia?</summary>
+    <div class="a">
+      <ul>
+        <li><b>Devocional pessoal:</b> ouça uma cena por dia e leve uma das perguntas para reflexão com você ao longo do dia. Melhor ainda se ler o trecho daquela cena diretamente na Bíblia.</li>
+        <li><b>Culto doméstico:</b> vejam a tela juntos, ouçam a narração e respondam ao quiz com as crianças.</li>
+        <li><b>Pequenos grupos e estudo bíblico:</b> com a aba “Comparar” e a harmonia, comparem como cada Evangelho registra o mesmo fato e conversem a respeito.</li>
+        <li><b>Escola dominical:</b> projete numa tela grande e sigam o caminho juntos com “Caminhar até o próximo lugar”. Tentar adivinhar a distância percorrida também é divertido.</li>
+        <li><b>No trajeto para o trabalho:</b> ative a jornada guiada e ouça como um audiolivro.</li>
+      </ul>
+    </div>
+  </details>
+
+  <h2 id="more">Outras dúvidas</h2>
+  <details>
+    <summary>Preciso me cadastrar? Onde fica guardado o meu registro?</summary>
+    <div class="a">
+      <p>Não é preciso cadastro nem login. As cenas visitadas e os resultados do quiz ficam salvos <b>apenas no navegador do aparelho que você está usando</b> e não são enviados a lugar nenhum. Por isso, o registro não passa para outro aparelho ou outro navegador. Você pode apagá-lo em “Meus passos”.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Posso usar em outros idiomas?</summary>
+    <div class="a">
+      <p>Você pode trocar o idioma em ⚙ Configurações, no canto superior direito. Há coreano, inglês, espanhol, português, francês, chinês, indonésio e japonês. A narração gravada existe, por enquanto, só em coreano; nos outros idiomas, quem lê é a voz disponível no seu aparelho.</p>
+    </div>
+  </details>
+  <details>
+    <summary>De onde vêm as pinturas?</summary>
+    <div class="a">
+      <p>As imagens no alto dos cartões são da série sobre a vida de Cristo do pintor francês do século XIX <b>James Tissot</b>. Para criá-la, ele viajou várias vezes à Terra Santa e pintou as paisagens e as pessoas de lá. A fonte de cada pintura está indicada.</p>
+    </div>
+  </details>
+
+  <div class="end"><a href="./?lang=pt">Começar a jornada →</a></div>
+  <p class="foot"><a href="https://sssoft-idea.web.app/" target="_blank" rel="noopener">© SSSOFT</a></p>
+</main>
+</body>
+</html>

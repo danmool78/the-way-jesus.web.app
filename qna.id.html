@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#16120e">
+<meta name="description" content="Sang Jalan — tanya jawab tentang mengapa aplikasi ini dibuat, untuk apa, mengapa panggung 3D-nya digambar seperti ini, dan cara terbaik menggunakannya">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<title>Tanya Jawab — Sang Jalan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* Tanya Jawab — senada dengan layar pembuka (.intro): latar gelap, keemasan, judul berhuruf serif */
+  body{overflow:auto;background:radial-gradient(ellipse at 50% 0%,rgba(217,180,106,.13),transparent 50%),var(--bg)}
+  .qna{max-width:760px;margin:0 auto;padding:28px 20px 64px}
+  .qna-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .qna-top a{color:var(--gold2);text-decoration:none;display:inline-flex;align-items:center;gap:8px;font-size:14px}
+  .qna-top img{width:28px;height:28px}
+  .qna-top .back{border:1px solid #4a3c2c;border-radius:999px;padding:7px 14px}
+  .qna-top .back:hover{border-color:var(--gold)}
+  .qna h1{font-family:var(--serif);font-size:34px;margin:34px 0 8px;color:#f6ead0}
+  .qna .lead{color:var(--muted);line-height:1.8;margin:0 0 10px}
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 8px;padding:0;list-style:none}
+  .toc a{display:block;border:1px solid #4a3c2c;border-radius:999px;padding:6px 13px;font-size:13px;color:var(--ink);text-decoration:none;background:rgba(255,255,255,.02)}
+  .toc a:hover{border-color:var(--gold);color:var(--gold2)}
+  .qna h2{font-family:var(--serif);font-size:22px;color:var(--gold2);margin:44px 0 12px;padding-top:8px;border-top:1px solid #3a3026;scroll-margin-top:16px}
+  details{border:1px solid #3a3026;border-radius:14px;background:rgba(29,24,19,.7);margin:10px 0;overflow:hidden}
+  details[open]{border-color:#5a4830}
+  summary{list-style:none;cursor:pointer;padding:15px 48px 15px 18px;font-weight:700;font-size:16px;line-height:1.5;position:relative}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:'Q';font-family:var(--serif);color:var(--gold);margin-right:10px}
+  summary::after{content:'';position:absolute;right:20px;top:22px;width:9px;height:9px;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(45deg);transition:transform .25s}
+  details[open] summary::after{transform:translateY(4px) rotate(-135deg)}
+  summary:hover{color:var(--gold2)}
+  .a{padding:0 20px 18px 40px;color:#e2d7c3;line-height:1.85;font-size:15px}
+  .a p{margin:0 0 10px}
+  .a ul,.a ol{margin:4px 0 12px;padding-left:20px}
+  .a li{margin:4px 0}
+  .a b{color:var(--gold2);font-weight:700}
+  .a .tip{display:block;border-left:2px solid var(--gold);padding:8px 12px;margin:10px 0;background:rgba(217,180,106,.07);border-radius:0 8px 8px 0;font-size:14px;color:var(--muted)}
+  .end{text-align:center;margin-top:56px}
+  .end a{display:inline-block;padding:14px 28px;border-radius:999px;background:linear-gradient(180deg,#e9c97f,#b88a3e);color:#24180a;font-weight:700;text-decoration:none}
+  .foot{text-align:center;margin-top:28px;font-size:12px;color:var(--faint)}
+  .foot a{color:var(--faint)}
+  @media (max-width:600px){.qna h1{font-size:28px}.a{padding-left:18px}summary{font-size:15px}}
+</style>
+</head>
+<body>
+<main class="qna">
+  <nav class="qna-top">
+    <a href="./?lang=id"><img src="assets/logo.svg" alt=""><b style="font-family:var(--serif);font-size:20px">Sang Jalan</b></a>
+    <a class="back" href="./?lang=id">Kembali ke perjalanan →</a>
+  </nav>
+
+  <h1>Tanya Jawab</h1>
+  <p class="lead">Mengapa 'Sang Jalan' dibuat, untuk apa aplikasi ini, mengapa panggung 3D di atas peta digambar seperti ini, dan bagaimana cara terbaik menggunakannya — semuanya kami rangkum dalam bentuk tanya jawab.</p>
+  <ul class="toc">
+    <li><a href="#why">Mengapa perlu</a></li>
+    <li><a href="#purpose">Tujuan</a></li>
+    <li><a href="#stage">Panggung 3D</a></li>
+    <li><a href="#benefit">Manfaat</a></li>
+    <li><a href="#howto">Cara menggunakan</a></li>
+    <li><a href="#more">Lain-lain</a></li>
+  </ul>
+
+  <h2 id="why">Mengapa aplikasi ini perlu?</h2>
+  <details open>
+    <summary>Sudah ada empat Injil. Mengapa masih perlu dirangkai lagi?</summary>
+    <div class="a">
+      <p>Matius, Markus, Lukas, dan Yohanes mencatat Yesus yang sama dari sudut pandang yang berbeda. Ada peristiwa yang tercatat di keempatnya, ada pula yang hanya muncul di satu kitab. Urutan dan penekanannya pun sedikit berbeda.</p>
+      <p>Karena itu, membaca satu per satu memang memberi kedalaman, tetapi <b>"dalam urutan apa dan di mana hidup-Nya berlangsung"</b> harus kita susun sendiri di kepala. Aplikasi ini merangkai keempat catatan itu menurut urutan waktu dan tempat terjadinya, lalu menyambungkan 61 adegan — dari kelahiran sampai kenaikan — menjadi satu jalan.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Mengapa peta itu penting?</summary>
+    <div class="a">
+      <p>Saat membaca Alkitab, nama tempat sering kita lewati begitu saja. Namun begitu kita tahu berapa hari berjalan kaki dari Nazaret ke Betlehem, seberapa jauh Danau Galilea dari Yerusalem, dan mengapa Yerusalem disebut tempat yang "didaki", kisahnya terbaca dengan cara yang lain.</p>
+      <p>Di aplikasi ini, setiap kali berpindah adegan, kita berjalan di atas tanah yang sebenarnya. Jarak, lama perjalanan dalam hari, dan panjang jalan yang sudah ditempuh juga ditampilkan — supaya kita bisa merasakan betapa banyak Ia berjalan.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Apa bedanya dengan aplikasi Alkitab atau buku tafsiran?</summary>
+    <div class="a">
+      <p>Aplikasi Alkitab unggul untuk membaca teks, buku tafsiran unggul untuk menjelaskan maknanya. 'Sang Jalan' berada selangkah sebelumnya: <b>peta dan penunjuk jalan yang memperlihatkan gambaran utuhnya</b>. Untuk setiap adegan, peta, lukisan, panggung 3D, narasi, sabda-Nya, perbandingan keempat Injil, latar belakang, pertanyaan renungan, dan kuis dihimpun di satu tempat.</p>
+    </div>
+  </details>
+
+  <h2 id="purpose">Apa tujuan aplikasi ini?</h2>
+  <details open>
+    <summary>Singkatnya, untuk apa aplikasi ini dibuat?</summary>
+    <div class="a">
+      <p><b>Untuk menjumpai kehidupan Yesus sebagai satu jalan yang bersambung.</b> Bukan sebagai potongan kisah yang tercerai-berai, melainkan sebagai jalan yang sungguh ditempuh oleh seorang Pribadi — lalu membiarkan sabda yang diucapkan di sepanjang jalan itu menerangi hidup kita hari ini.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Apakah aplikasi ini menggantikan Alkitab?</summary>
+    <div class="a">
+      <p>Tidak. Aplikasi ini adalah <b>pintu masuk ke Alkitab</b>. Setiap adegan disertai pasal dan ayatnya (tab 'Bandingkan'). Bila ada adegan yang membekas di hati, bukalah Alkitab dan bacalah sendiri nas tersebut.</p>
+      <p>Kisahnya ditulis setia pada teks, dan kami tidak mengarang fakta yang tidak ada di dalamnya. Yang kami tambahkan hanyalah suasana: pemandangan, cahaya, dan bunyi pada hari itu.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Terjemahan Alkitab mana yang dipakai untuk sabda-Nya?</summary>
+    <div class="a">
+      <p>Kami tidak menyalin kalimat dari terjemahan Alkitab yang sudah ada. Sabda-sabda ini adalah <b>terjemahan baru yang menghidupkan makna aslinya dalam bahasa masa kini</b>. Karena itu, pilihan katanya bisa sedikit berbeda dari terjemahan yang biasa Anda baca. Untuk kalimat yang persis, silakan periksa di Alkitab melalui pasal dan ayat yang dicantumkan.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Bagaimana urutan dan tempat adegan ditentukan?</summary>
+    <div class="a">
+      <p>Urutannya didasarkan pada "harmoni Injil" tradisional, yaitu keempat Injil yang disandingkan dan dicocokkan. Meski begitu, urutan beberapa peristiwa masih diperdebatkan para ahli.</p>
+      <p>Begitu pula tempatnya. Dari 32 tempat, beberapa yang lokasi pastinya tidak diketahui (misalnya Emaus) kami letakkan di titik yang paling mungkin dan diberi tanda <b>'perkiraan'</b>. Tahun-tahunnya pun ditulis sebagai perkiraan, seperti "sekitar tahun …".</p>
+    </div>
+  </details>
+
+  <h2 id="stage">Mengapa panggung 3D digambar seperti itu?</h2>
+  <details open>
+    <summary>Apa tokoh-tokoh kecil di atas peta itu?</summary>
+    <div class="a">
+      <p>Itu adalah <b>panggung miniatur</b> yang didirikan di atas tempat terjadinya adegan. Seperti diorama di museum, orang-orang pada hari itu ditempatkan di atas penanda tempat, sehingga sekilas terlihat di mana dan apa yang sedang terjadi.</p>
+      <p>Panggung bergerak seiring narasi. Setiap kalimat dibacakan, tokoh-tokohnya berjalan masuk, berbicara, berlutut, dan mengangkat kepala. Bila ada yang berbicara, yang lain menoleh kepadanya. Pada adegan malam seluruh peta menjadi biru tua, pada adegan badai muncul bayangan awan, dan fajar kebangkitan diwarnai keemasan.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Tokoh dan panggungnya tampak jauh lebih besar dari aslinya. Mengapa?</summary>
+    <div class="a">
+      <p>Itu disengaja. Peta memuat ratusan kilometer dalam satu layar. Jika memakai ukuran sebenarnya, manusia akan lebih kecil dari satu titik dan tidak terlihat.</p>
+      <p>Karena itu, panggung <b>tidak mengikuti skala peta, melainkan selalu digambar dengan ukuran yang kurang lebih sama di layar</b>: sekitar 300 piksel lebarnya di komputer dan sekitar 230 piksel di ponsel. Saat peta diperbesar atau diperkecil, tokohnya tetap cukup besar untuk dikenali, dan dasar panggung selalu menempel pada penanda tempatnya. Akibatnya, dari jauh panggung tampak lebih besar daripada desa atau kotanya. Anggap saja panggung itu seperti papan penunjuk di peta yang memberi tahu, "Di sinilah hal ini terjadi."</p>
+      <span class="tip">Pada adegan dengan banyak orang, panggung digambar sedikit lebih lebar dan tokohnya sedikit lebih kecil agar semuanya muat dalam satu layar.</span>
+    </div>
+  </details>
+  <details>
+    <summary>Kalau ukurannya diperbesar, bagaimana geografinya tetap tepat?</summary>
+    <div class="a">
+      <p>Karena panggungnya lebih besar, kami menyesuaikannya agar tidak menjorok ke tempat yang salah.</p>
+      <ul>
+        <li>Hal-hal yang harus cocok dengan medan sebenarnya, seperti <b>tepi air dan padang</b>, ditempatkan pada garis lintang dan bujur yang sebenarnya. Jadi perahu berada di atas air, dan orang berdiri di darat.</li>
+        <li>Untuk <b>desa yang penandanya berada di tepi air</b> (seperti Kapernaum), panggungnya digeser sedikit ke arah darat.</li>
+        <li>Saat diperbesar sampai ke kota <b>Yerusalem</b>, gambar kota 3D akan terhampar. Karena itu Bait Allah tidak didirikan lagi di panggung, dan untuk tempat yang persis di samping tembok kota seperti Golgota, panggungnya digeser sedikit ke lahan kosong di luar kota.</li>
+        <li>Arahnya pun mengikuti peta: bagian atas layar adalah utara, kanan adalah timur. Pada adegan di Bukit Zaitun, kota berada di sebelah barat (kiri).</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>Mengapa adegan salib hanya terlihat dari jauh, sebagai siluet?</summary>
+    <div class="a">
+      <p>Ada prinsip yang kami pegang saat membuat panggung: <b>penderitaan dan kekerasan tidak digambarkan</b>. Golgota hanya ditampilkan lewat siluet salib di kejauhan, orang-orang yang berlutut menghadap ke sana, dan cahaya yang meredup. Adegan yang menyakitkan seperti olok-olok atau penyesahan hanya didengar lewat narasi; panggungnya dibiarkan kosong atau hanya diisi orang-orang yang menangis. Tujuannya agar aman ditonton bersama anak-anak, dan agar sabda-Nya mendahului imajinasi kita.</p>
+      <p>Ada juga prinsip lainnya.</p>
+      <ul>
+        <li><b>Sosok jahat hanya berupa bentuk:</b> Si pencoba di padang gurun hanya digambarkan sebagai siluet gelap berkerudung.</li>
+        <li><b>Setia pada teks:</b> Kami tidak mengarang hal besar yang tidak ada di Alkitab. Panggung hanya menopang narasi.</li>
+        <li><b>Tidak muncul tiba-tiba:</b> Orang-orang muncul perlahan atau berjalan masuk.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>Apa medan timbul yang muncul saat tombol 3D ditekan?</summary>
+    <div class="a">
+      <p>Itu adalah tinggi-rendahnya tanah yang dibuat dari data ketinggian sebenarnya (data survei medan dari satelit). Wilayah Galilea, Yudea, dan Mesir dimuat saat Anda mendekati tempatnya. Ketinggiannya sedikit dilebih-lebihkan, yaitu <b>1,8×</b>. Dengan perbandingan asli, perbukitan akan tampak hampir datar; kami ingin lembah dan punggung bukitnya terlihat jelas.</p>
+      <p>Pada medan 3D, Anda bisa menggeser peta, memperbesar dengan roda tetikus atau dua jari, dan di komputer juga memutarnya dengan tombol di sebelah kiri. Lihat sendiri mengapa Yerusalem adalah tempat yang "didaki", dan betapa curamnya jalan dari Yerikho ke Yerusalem.</p>
+    </div>
+  </details>
+
+  <h2 id="benefit">Manfaat apa yang bisa diperoleh?</h2>
+  <details open>
+    <summary>Apa yang bisa saya peroleh dari aplikasi ini?</summary>
+    <div class="a">
+      <ul>
+        <li><b>Gambaran utuh:</b> Kehidupan Yesus dari kelahiran sampai kenaikan tersusun menjadi satu alur. Setiap peristiwa mendapat tempatnya: kapan dan di mana terjadi.</li>
+        <li><b>Rasa akan tanahnya:</b> Dengan melihat jarak dan medan, ungkapan seperti "Ia pergi ke atas", "Ia menyeberang", dan "Ia pergi ke padang gurun" terasa nyata.</li>
+        <li><b>Suara empat saksi:</b> Dengan membandingkan cara keempat Injil mencatat peristiwa yang sama, Anda menemukan penekanan masing-masing.</li>
+        <li><b>Menyimpan sabda-Nya lebih lama:</b> Sabda inti setiap adegan dihimpun, dan pertanyaan renungan membantu menghubungkannya dengan hidup hari ini.</li>
+        <li><b>Mudah diingat:</b> Lukisan, panggung, suara, dan kuis bekerja bersama, sehingga adegan yang sekali dilihat lama teringat.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>Untuk siapa aplikasi ini paling cocok?</summary>
+    <div class="a">
+      <ul>
+        <li><b>Yang baru pertama membaca Injil:</b> Anda bisa menangkap alur besarnya lebih dulu sebelum masuk ke teks.</li>
+        <li><b>Yang sudah lama membaca Alkitab:</b> Kisah-kisah yang akrab akan terlihat baru di atas peta dan dalam urutannya.</li>
+        <li><b>Keluarga dan kelompok kecil:</b> Cocok untuk mendengarkan satu adegan bersama lalu berbagi lewat pertanyaan renungan.</li>
+        <li><b>Sekolah Minggu dan remaja:</b> Belajar tidak membosankan berkat panggung dan kuis. Karena adegan penderitaan tidak digambarkan, aplikasi ini juga pas ditonton bersama anak-anak.</li>
+      </ul>
+    </div>
+  </details>
+
+  <h2 id="howto">Fitur apa saja, dan bagaimana menggunakannya?</h2>
+  <details open>
+    <summary>Bagaimana cara memulainya?</summary>
+    <div class="a">
+      <ol>
+        <li>Di layar pertama, tekan <b>'Mulai perjalanan'</b>. Saat kembali lagi, Anda bisa melanjutkan dari adegan terakhir yang dilihat.</li>
+        <li>Baca kisahnya di kartu sebelah kanan (di ponsel, di bagian bawah), atau dengarkan narasinya dengan <b>tombol ▶</b>.</li>
+        <li>Setelah selesai, tekan <b>'Berjalan ke tempat berikutnya'</b>. Anda akan berjalan di atas peta menuju adegan berikutnya.</li>
+      </ol>
+      <span class="tip">Dengan menempuh satu atau dua adegan sehari, dalam satu atau dua bulan Anda akan selesai mengikuti seluruh kehidupan Yesus satu kali.</span>
+    </div>
+  </details>
+  <details>
+    <summary>Bagaimana memakai fitur dengar dan 'Perjalanan berpemandu'?</summary>
+    <div class="a">
+      <ul>
+        <li><b>▶ Dengarkan:</b> Judul adegan, kisah, dan sabda-Nya dibacakan berurutan. Dalam bahasa Korea, narasinya memakai suara rekaman dan sabda Yesus dibacakan dengan suara yang berbeda; dalam bahasa lain, teks dibacakan dengan suara yang tersedia di perangkat Anda. Di komputer, teks muncul di bagian bawah peta (di ponsel hanya didengar, tanpa teks), dan panggung bergerak mengikuti kalimat.</li>
+        <li><b>Perjalanan berpemandu:</b> Bila dinyalakan, setelah satu adegan selesai dibacakan, Anda otomatis berjalan ke tempat berikutnya dan pembacaan berlanjut. Anda bisa memutarnya seperti buku audio.</li>
+        <li><b>Kecepatan:</b> Dapat dipilih dari 0,85× sampai 1,3×.</li>
+        <li><b>♫ Musik latar:</b> Musik lembut yang sesuai dengan adegan mengalun di bawah narasi. Untuk mematikannya, tekan tombol bergambar not.</li>
+      </ul>
+      <span class="tip">Di tab 'Nas', tekan tombol 🔊 di samping sabda untuk mendengarkan sabda itu saja.</span>
+    </div>
+  </details>
+  <details>
+    <summary>Apa beda tab-tab pada kartu adegan?</summary>
+    <div class="a">
+      <ul>
+        <li><b>Kisah:</b> Uraian adegan dalam bentuk cerita. Di bagian bawah ada <b>'Latar Belakang'</b> berisi konteks sejarah dan geografi, serta <b>'Berhenti dan Renungkan'</b> berisi pertanyaan untuk direnungkan dalam hidup hari ini.</li>
+        <li><b>Nas:</b> Sabda inti dari adegan itu, lengkap dengan pasal dan ayatnya.</li>
+        <li><b>Bandingkan:</b> Menunjukkan Injil mana saja yang mencatat adegan ini, dengan pasal dan ayat yang disandingkan.</li>
+      </ul>
+      <p>Lukisan di atas kartu (seri Injil karya James Tissot) dapat dilihat lebih besar dengan <b>'Lihat lukisan'</b>.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Bagaimana cara menggunakan peta?</summary>
+    <div class="a">
+      <ul>
+        <li><b>Geser:</b> Geser peta untuk melihat sekeliling. Perbesaran dan perkecilan menyesuaikan adegan secara otomatis. Pada adegan di Yerusalem, peta masuk sampai ke kota dan gambar kota 3D muncul.</li>
+        <li><b>Label tempat</b> (nama tempat di kiri atas): tekan untuk kembali ke tempat adegan saat ini.</li>
+        <li><b>Seluruh rute:</b> Lihat seluruh jalan yang sudah ditempuh sekilas. Tekan lagi untuk kembali ke adegan saat ini.</li>
+        <li><b>Tekan penanda:</b> Tekan sebuah tempat di peta untuk menuju adegan yang terjadi di sana.</li>
+        <li><b>Tombol 3D:</b> Lihat tinggi-rendahnya tanah secara timbul. Dalam 3D, perbesar dengan roda tetikus atau dua jari; di komputer, Anda juga bisa memutar atau memperbesar dengan tombol di sebelah kiri.</li>
+        <li><b>Garis waktu di bawah:</b> Setiap masa punya warna dan gambarnya sendiri. Tekan sebuah titik untuk langsung menuju adegan yang diinginkan. Titik yang terisi terang adalah adegan yang sudah dikunjungi.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>Bagaimana tampilannya di ponsel?</summary>
+    <div class="a">
+      <p>Kartu adegan berupa lembar yang naik dari bawah layar. Mula-mula lembar itu hanya naik setengah, sehingga peta dan panggung terlihat besar.</p>
+      <ul>
+        <li><b>Tarik pegangan di atas lembar ke atas</b> atau gulir teksnya ke atas, maka lembar naik penuh dan nyaman untuk membaca.</li>
+        <li><b>Tarik ke bawah</b> untuk menurunkannya selangkah demi selangkah hingga tersisa baris judul saja, sehingga peta terlihat lebih luas.</li>
+        <li>Tambahkan ke layar utama agar bisa dibuka langsung seperti aplikasi.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>Di mana Sabda, Perbandingan Injil, dan Kuis?</summary>
+    <div class="a">
+      <ul>
+        <li><b>Tab Sabda</b> (atas): Perkataan Yesus yang tercatat dalam keempat Injil, dihimpun menurut urutan perjalanan. Anda bisa mencarinya dengan kata seperti "kasih", "roti", atau "damai".</li>
+        <li><b>Perbandingan Injil</b> (⚙ Pengaturan di kanan atas): Tabel yang menunjukkan di mana keempat Injil mencatat ke-61 adegan. Anda juga bisa menyaring, misalnya 'Keempat Injil' atau 'Hanya Yohanes'. Tekan sebuah baris untuk menuju adegan itu.</li>
+        <li><b>Tab Kuis</b> dan <b>kuis adegan</b> (tombol 'Kuis' di kanan bawah): Ingat kembali adegan yang telah dilalui lewat pertanyaan.</li>
+        <li><b>Jejakku</b> (bilah kemajuan di atas atau Pengaturan): Setiap adegan yang dibuka meninggalkan jejak, dan setiap kuis yang dijawab benar mendapat bintang.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>Adakah cara yang baik untuk memakainya bersama-sama?</summary>
+    <div class="a">
+      <ul>
+        <li><b>Renungan pribadi:</b> Dengarkan satu adegan sehari, lalu bawa satu pertanyaan renungan sepanjang hari. Akan lebih baik lagi bila Anda membaca nas adegan itu langsung dari Alkitab.</li>
+        <li><b>Ibadah keluarga:</b> Dengarkan narasi sambil menonton layar bersama, lalu kerjakan kuisnya bersama anak-anak.</li>
+        <li><b>Kelompok kecil dan pemahaman Alkitab:</b> Dengan tab 'Bandingkan' dan tabel perbandingan, bandingkan cara setiap Injil mencatat peristiwa yang sama, lalu diskusikan.</li>
+        <li><b>Sekolah Minggu:</b> Tampilkan di layar besar dan ikuti jalannya bersama-sama dengan 'Berjalan ke tempat berikutnya'. Menebak jarak yang ditempuh juga seru.</li>
+        <li><b>Dalam perjalanan pulang-pergi kerja:</b> Nyalakan perjalanan berpemandu dan dengarkan seperti buku audio.</li>
+      </ul>
+    </div>
+  </details>
+
+  <h2 id="more">Pertanyaan lainnya</h2>
+  <details>
+    <summary>Apakah perlu mendaftar? Di mana catatan saya disimpan?</summary>
+    <div class="a">
+      <p>Tidak perlu mendaftar atau masuk akun. Adegan yang sudah dikunjungi dan hasil kuis hanya disimpan <b>di peramban pada perangkat yang sedang Anda pakai</b>, dan tidak dikirim ke mana pun. Karena itu, catatan tidak berlanjut di perangkat atau peramban lain. Catatan bisa dihapus di 'Jejakku'.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Apakah bisa dilihat dalam bahasa lain?</summary>
+    <div class="a">
+      <p>Bahasa dapat diganti di ⚙ Pengaturan di kanan atas. Tersedia bahasa Korea, Inggris, Spanyol, Portugis, Prancis, Mandarin, Indonesia, dan Jepang. Narasi rekaman saat ini hanya tersedia dalam bahasa Korea; bahasa lain dibacakan dengan suara yang ada di perangkat Anda.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Dari mana lukisan-lukisannya berasal?</summary>
+    <div class="a">
+      <p>Lukisan di atas kartu adalah seri Kehidupan Kristus karya pelukis Prancis abad ke-19, <b>James Tissot</b>. Untuk seri ini, ia beberapa kali mengunjungi Tanah Suci sendiri dan melukis pemandangan serta orang-orangnya. Sumber setiap lukisan dicantumkan.</p>
+    </div>
+  </details>
+
+  <div class="end"><a href="./?lang=id">Mulai perjalanan →</a></div>
+  <p class="foot"><a href="https://sssoft-idea.web.app/" target="_blank" rel="noopener">© SSSOFT</a></p>
+</main>
+</body>
+</html>

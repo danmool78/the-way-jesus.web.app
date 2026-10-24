@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#16120e">
+<meta name="description" content="那条路 — 以问答说明为什么制作、这个应用为了什么、3D舞台为何这样呈现，以及怎样使用">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<title>问与答 — 那条路</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  :root{--serif:'Noto Serif SC',serif;--sans:'Noto Sans SC',system-ui,sans-serif}
+  /* 问与答 — 与首页(.intro)同一风格：深色背景、金色、衬线标题 */
+  body{overflow:auto;background:radial-gradient(ellipse at 50% 0%,rgba(217,180,106,.13),transparent 50%),var(--bg)}
+  .qna{max-width:760px;margin:0 auto;padding:28px 20px 64px}
+  .qna-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .qna-top a{color:var(--gold2);text-decoration:none;display:inline-flex;align-items:center;gap:8px;font-size:14px}
+  .qna-top img{width:28px;height:28px}
+  .qna-top .back{border:1px solid #4a3c2c;border-radius:999px;padding:7px 14px}
+  .qna-top .back:hover{border-color:var(--gold)}
+  .qna h1{font-family:var(--serif);font-size:34px;margin:34px 0 8px;color:#f6ead0}
+  .qna .lead{color:var(--muted);line-height:1.8;margin:0 0 10px}
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 8px;padding:0;list-style:none}
+  .toc a{display:block;border:1px solid #4a3c2c;border-radius:999px;padding:6px 13px;font-size:13px;color:var(--ink);text-decoration:none;background:rgba(255,255,255,.02)}
+  .toc a:hover{border-color:var(--gold);color:var(--gold2)}
+  .qna h2{font-family:var(--serif);font-size:22px;color:var(--gold2);margin:44px 0 12px;padding-top:8px;border-top:1px solid #3a3026;scroll-margin-top:16px}
+  details{border:1px solid #3a3026;border-radius:14px;background:rgba(29,24,19,.7);margin:10px 0;overflow:hidden}
+  details[open]{border-color:#5a4830}
+  summary{list-style:none;cursor:pointer;padding:15px 48px 15px 18px;font-weight:700;font-size:16px;line-height:1.5;position:relative}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:'Q';font-family:var(--serif);color:var(--gold);margin-right:10px}
+  summary::after{content:'';position:absolute;right:20px;top:22px;width:9px;height:9px;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(45deg);transition:transform .25s}
+  details[open] summary::after{transform:translateY(4px) rotate(-135deg)}
+  summary:hover{color:var(--gold2)}
+  .a{padding:0 20px 18px 40px;color:#e2d7c3;line-height:1.85;font-size:15px}
+  .a p{margin:0 0 10px}
+  .a ul,.a ol{margin:4px 0 12px;padding-left:20px}
+  .a li{margin:4px 0}
+  .a b{color:var(--gold2);font-weight:700}
+  .a .tip{display:block;border-left:2px solid var(--gold);padding:8px 12px;margin:10px 0;background:rgba(217,180,106,.07);border-radius:0 8px 8px 0;font-size:14px;color:var(--muted)}
+  .end{text-align:center;margin-top:56px}
+  .end a{display:inline-block;padding:14px 28px;border-radius:999px;background:linear-gradient(180deg,#e9c97f,#b88a3e);color:#24180a;font-weight:700;text-decoration:none}
+  .foot{text-align:center;margin-top:28px;font-size:12px;color:var(--faint)}
+  .foot a{color:var(--faint)}
+  @media (max-width:600px){.qna h1{font-size:28px}.a{padding-left:18px}summary{font-size:15px}}
+</style>
+</head>
+<body>
+<main class="qna">
+  <nav class="qna-top">
+    <a href="./?lang=zh"><img src="assets/logo.svg" alt=""><b style="font-family:var(--serif);font-size:20px">那条路</b></a>
+    <a class="back" href="./?lang=zh">回到旅程 →</a>
+  </nav>
+
+  <h1>问与答</h1>
+  <p class="lead">为什么制作“那条路”？它是为了什么？地图上的 3D 舞台为何这样呈现？又该怎样使用？我们把这些整理成了问与答。</p>
+  <ul class="toc">
+    <li><a href="#why">为什么需要</a></li>
+    <li><a href="#purpose">目的</a></li>
+    <li><a href="#stage">3D 舞台</a></li>
+    <li><a href="#benefit">收获</a></li>
+    <li><a href="#howto">功能用法</a></li>
+    <li><a href="#more">其他</a></li>
+  </ul>
+
+  <h2 id="why">为什么需要这个应用？</h2>
+  <details open>
+    <summary>福音书已经有四卷了，为什么还要把它们编在一起？</summary>
+    <div class="a">
+      <p>马太、马可、路加、约翰四卷福音书，用各自不同的眼光记载了同一位耶稣。有些事四卷都有记载，有些只出现在其中一卷；顺序和侧重点也各有不同。</p>
+      <p>所以一卷一卷地读，虽然能读得深，<b>“他的一生按什么顺序、在哪里展开”</b>却要自己在脑海中拼凑。这个应用把四卷的记载按事情发生的时间与地点编织起来，从降生到升天，把 61 个场景连成一条路呈现出来。</p>
+    </div>
+  </details>
+  <details>
+    <summary>为什么地图很重要？</summary>
+    <div class="a">
+      <p>读圣经时，地名常常一眼带过。可是如果知道从拿撒勒到伯利恒要走好几天，加利利湖和耶路撒冷相距多远，为什么说去耶路撒冷是“上去”，同一段故事就会读出不同的味道。</p>
+      <p>在这个应用里，每换一个场景，都会在真实的土地上走过去，同时显示距离、所需天数和到目前为止走过的路程。我们希望你能亲身感受到，他走了多少路。</p>
+    </div>
+  </details>
+  <details>
+    <summary>它和圣经应用、注释书有什么不同？</summary>
+    <div class="a">
+      <p>圣经应用擅长读经文，注释书擅长讲解意思。“那条路”则是在这之前的一步，也就是<b>呈现全貌的地图和向导</b>。每个场景都把地图、名画、3D 舞台、朗读、话语、四福音对照、背景知识、默想问题和问答汇集在一处。</p>
+    </div>
+  </details>
+
+  <h2 id="purpose">这个应用的目的是什么？</h2>
+  <details open>
+    <summary>一句话说，是为了什么而做的？</summary>
+    <div class="a">
+      <p><b>让人把耶稣的一生当作一条连贯的路来认识。</b>不是零散的故事片段，而是一个人真实走过的路；并且把这条路上所说的话语，放在今天自己的生活中来对照。</p>
+    </div>
+  </details>
+  <details>
+    <summary>它能代替圣经吗？</summary>
+    <div class="a">
+      <p>不能。这个应用是<b>走进圣经的一扇门</b>。每个场景都注明了经文的章节（在“对照”标签页里）。如果有哪个场景打动了你，请一定打开圣经，亲自读一读那段经文。</p>
+      <p>故事忠实于经文来写，经文里没有的事实，我们不去编造；只添上了当天的风景、光线和声音这样的氛围。</p>
+    </div>
+  </details>
+  <details>
+    <summary>话语用的是哪个译本？</summary>
+    <div class="a">
+      <p>我们没有照搬现有圣经译本的句子，而是依照原文的意思，<b>用今天的语言重新译写</b>。所以和你熟悉的译本在用词上可能略有不同。准确的经文，请按照一并注明的章节在圣经中查看。</p>
+    </div>
+  </details>
+  <details>
+    <summary>场景的顺序和地点是怎样确定的？</summary>
+    <div class="a">
+      <p>顺序以传统的“福音书合参”为基础，也就是把四卷福音书并排对照排出来的顺序。不过有几件事的先后，学者之间也有不同看法。</p>
+      <p>地点也是如此。32 处地点中，有几处无法确知准确位置（例如以马忤斯），我们放在最有可能的地方，并标注<b>“推测”</b>。年代也用“约某年”这样的大约说法来写。</p>
+    </div>
+  </details>
+
+  <h2 id="stage">3D 舞台为什么这样呈现？</h2>
+  <details open>
+    <summary>地图上那些小人物是什么？</summary>
+    <div class="a">
+      <p>那是立在事发地点上的<b>微缩舞台</b>。就像博物馆里的立体模型一样，在地点标记上摆出当天的人物，让人一眼看出此刻在哪里发生了什么事。</p>
+      <p>舞台随着朗读而动。每读一句，人物就走进来、说话、跪下、抬头；有人说话时，其他人会转向他。夜里的场景，整张地图会染成深蓝；暴风的场景有云影掠过；复活的清晨则洒满金光。</p>
+    </div>
+  </details>
+  <details>
+    <summary>人物和舞台看起来比实际大得多，为什么？</summary>
+    <div class="a">
+      <p>这是有意的。地图在一个画面里容纳了几百公里。如果按实际比例，人会比一个点还小，根本看不见。</p>
+      <p>所以舞台<b>不按地图的比例尺，而是在画面上始终保持差不多的大小</b>：电脑上宽约 300 像素，手机上约 230 像素。无论地图放大还是缩小，人物都保持在看得清的大小，舞台底部也始终贴着那个地点的标记。代价是从远处看，舞台会显得比村庄或城还大。请把它看作地图上的路标，一幅告诉你“这里发生过这样的事”的图画。</p>
+      <span class="tip">人群众多的场景，舞台会稍宽一些、人物稍小一些，好在一个画面里放得下。</span>
+    </div>
+  </details>
+  <details>
+    <summary>舞台放大了，地理位置怎么对得上？</summary>
+    <div class="a">
+      <p>舞台变大了，为了不让它跨到不相干的地方，我们做了一些调整。</p>
+      <ul>
+        <li><b>水边和田野</b>这类必须和实际地形吻合的东西，按真实的经纬度摆放。所以船在水上，人在陆地上。</li>
+        <li><b>标记在水边的村庄</b>（如迦百农），舞台稍稍往陆地那边挪了一点。</li>
+        <li><b>耶路撒冷</b>放大到城内时，会铺上 3D 的城市图。所以舞台上不另外建圣殿；像各各他这样紧贴城墙的地方，舞台稍稍挪到了城外的空地上。</li>
+        <li>方向也依照地图：画面上方是北，右方是东。在橄榄山的场景里，城在西边（左边）。</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>十字架的场景为什么只在远处、只见剪影？</summary>
+    <div class="a">
+      <p>制作舞台时我们定下了一条原则：<b>不描绘痛苦和暴力</b>。各各他只用远处十字架的轮廓、朝那边跪下的人们和渐渐暗下来的光来表现。像戏弄、鞭打这样令人心痛的场面，只用朗读来听，舞台留空，或只有哭泣的人。这是为了和孩子一起看也无妨，也是为了让话语走在想象的前面。</p>
+      <p>还有其他几条原则：</p>
+      <ul>
+        <li><b>邪恶只显形影：</b>旷野中那试探者，只画成戴兜帽的黑色剪影。</li>
+        <li><b>忠于经文：</b>不大量编造圣经里没有的事。舞台只是衬托朗读。</li>
+        <li><b>不突然出现：</b>人物会慢慢显现，或者走进来。</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>按 3D 按钮出现的立体地形是什么？</summary>
+    <div class="a">
+      <p>那是用真实的高程资料（卫星地形测量资料）做出的地势起伏。加利利、犹太、埃及几个地区，会在你靠近地点时载入。高度稍微夸大成<b>1.8 倍</b>，因为照实际比例，丘陵几乎显得平坦；这样山谷和山脊才看得出来。</p>
+      <p>在立体地形里，可以拖动移动，用滚轮或双指缩放，在电脑上还能用左侧的按钮旋转观看。亲眼看看，为什么说去耶路撒冷是“上去”，从耶利哥到耶路撒冷的路又有多陡。</p>
+    </div>
+  </details>
+
+  <h2 id="benefit">能有什么收获？</h2>
+  <details open>
+    <summary>用这个应用能得到什么？</summary>
+    <div class="a">
+      <ul>
+        <li><b>全貌：</b>从降生到升天，耶稣的一生整理成一条脉络。哪件事在何时、何地发生，都各就其位。</li>
+        <li><b>土地的实感：</b>看着距离和地形，经文中的“上去”“渡过去”“往旷野去”读来格外真切。</li>
+        <li><b>四位见证人的声音：</b>比较四卷福音书如何记载同一件事，发现各自不同的侧重点。</li>
+        <li><b>把话语长久存在心里：</b>每个场景汇集核心话语，并用默想问题对照今天的生活。</li>
+        <li><b>记得更牢：</b>图画、舞台、声音和问答一起出现，看过一次的场景会记得很久。</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>特别适合哪些人？</summary>
+    <div class="a">
+      <ul>
+        <li><b>初次读福音书的人：</b>在进入经文之前，可以先抓住大的脉络。</li>
+        <li><b>读圣经多年的人：</b>在地图和顺序上，重新看见熟悉的故事。</li>
+        <li><b>家庭和小组：</b>适合一起听一个场景，再借着默想问题彼此分享。</li>
+        <li><b>主日学和青少年：</b>借着舞台和问答，学起来不枯燥。因为不描绘痛苦的场面，也适合和孩子一起看。</li>
+      </ul>
+    </div>
+  </details>
+
+  <h2 id="howto">各项功能怎样使用？</h2>
+  <details open>
+    <summary>刚开始要怎么做？</summary>
+    <div class="a">
+      <ol>
+        <li>在首页按<b>“开始旅程”</b>。下次再来时，可以从上次看到的场景接着走。</li>
+        <li>在右侧（手机上在下方）的卡片里阅读故事，或按<b>▶ 按钮</b>聆听朗读。</li>
+        <li>看完后按<b>“走向下一处”</b>，就会在地图上走到下一个场景。</li>
+      </ol>
+      <span class="tip">每天走一两个场景，一两个月就能跟着耶稣的一生走完一遍。</span>
+    </div>
+  </details>
+  <details>
+    <summary>“收听”和“自动旅程”怎么用？</summary>
+    <div class="a">
+      <ul>
+        <li><b>▶ 收听：</b>依次朗读场景的标题、故事和话语。目前只有韩语版本是真人录音朗读，耶稣的话语会用另一个声音读出；中文等其他语言则使用设备自带的语音朗读。在电脑上，地图下方会出现字幕（手机上没有字幕，只能听），舞台也会随着句子而动。</li>
+        <li><b>自动旅程：</b>开启后，读完一个场景会自动走到下一个地点接着读。可以像有声书一样放着听。</li>
+        <li><b>语速：</b>可在 0.85 倍到 1.3 倍之间选择。</li>
+        <li><b>♫ 背景音乐：</b>朗读下面会轻轻铺上与场景相配的音乐。想关掉的话，按音符按钮即可。</li>
+      </ul>
+      <span class="tip">按“经文”标签页里话语旁边的 🔊 按钮，就能只听那一句话。</span>
+    </div>
+  </details>
+  <details>
+    <summary>场景卡片的几个标签页有什么不同？</summary>
+    <div class="a">
+      <ul>
+        <li><b>故事：</b>把场景展开叙述的文字。下方的<b>“背景知识”</b>有历史和地理背景，<b>“停下来想一想”</b>里有对照今天生活的问题。</li>
+        <li><b>经文：</b>汇集这个场景的核心话语，并注明章节。</li>
+        <li><b>对照：</b>并列显示四卷福音书中哪几卷记载了这个场景，以及章节。</li>
+      </ul>
+      <p>卡片上方的名画（詹姆斯·蒂索的福音书系列）可以按<b>“查看名画”</b>放大来看。</p>
+    </div>
+  </details>
+  <details>
+    <summary>地图怎么操作？</summary>
+    <div class="a">
+      <ul>
+        <li><b>拖动：</b>拖动地图看看周围。放大缩小会随着场景自动进行。在耶路撒冷的场景里，会一直进到城内，出现 3D 的城市图。</li>
+        <li><b>地点标签</b>（左上角的地名）：按下就回到当前场景的地点。</li>
+        <li><b>全程：</b>一眼看到到目前为止走过的整条路。再按一次就回到当前场景。</li>
+        <li><b>点按标记：</b>按地图上的地点，就会前往在那里发生的场景。</li>
+        <li><b>3D 按钮：</b>以立体方式查看地势起伏。在 3D 中可以用滚轮或双指缩放，在电脑上还能用左侧的按钮旋转或缩放。</li>
+        <li><b>下方的时间轴：</b>每个时期都有自己的颜色和图案。点一下圆点就能直接跳到想看的场景。亮着填满的圆点，是已经去过的场景。</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>在手机上怎么看？</summary>
+    <div class="a">
+      <p>场景卡片是从画面下方升起的面板。一开始只升到一半，地图和舞台看得很大。</p>
+      <ul>
+        <li><b>把面板顶部的把手往上拖</b>，或把文字往上推，面板就会升到顶，方便阅读。</li>
+        <li><b>往下拖</b>会一级一级降下，最后只留下标题栏，可以把地图看得更开阔。</li>
+        <li>添加到主屏幕后，就能像应用一样直接打开。</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>话语、对照表和问答在哪里？</summary>
+    <div class="a">
+      <ul>
+        <li><b>“话语”标签页</b>（上方）：按旅程顺序汇集四福音所记载的耶稣的话语。可以用“爱”“饼”“平安”这样的词语来搜索。</li>
+        <li><b>四福音对照表</b>（右上角 ⚙ 设置）：用表格查看 61 个场景分别记载在哪几卷福音书里。也可以用“四福音共有”“仅约翰”等条件筛选。点一行就会前往那个场景。</li>
+        <li><b>“问答”标签页</b>和<b>场景问答</b>（右下方的“问答”按钮）：用题目温习走过的场景。</li>
+        <li><b>我的足迹</b>（上方的进度条或设置）：打开过的场景会留下足迹，答对的问答会得到星星。</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>有什么适合一起使用的方法吗？</summary>
+    <div class="a">
+      <ul>
+        <li><b>个人默想：</b>每天听一个场景，带着一个默想问题过这一天。如果再亲自在圣经里读那段经文，就更好了。</li>
+        <li><b>家庭礼拜：</b>一起看着画面听朗读，再和孩子们一起做问答。</li>
+        <li><b>小组·查经：</b>借着“对照”标签页和对照表，比较各卷福音书如何记载同一件事，彼此分享。</li>
+        <li><b>主日学：</b>投在大屏幕上，用“走向下一处”一起沿路前行。猜猜走了多远，也很有趣。</li>
+        <li><b>通勤路上：</b>打开自动旅程，像有声书一样听。</li>
+      </ul>
+    </div>
+  </details>
+
+  <h2 id="more">其他问题</h2>
+  <details>
+    <summary>需要注册吗？记录保存在哪里？</summary>
+    <div class="a">
+      <p>不需要注册或登录。去过的场景和问答记录<b>只保存在你正在使用的设备的浏览器里</b>，不会发送到任何地方。所以换一台设备或换一个浏览器，记录不会接续。记录可以在“我的足迹”里清除。</p>
+    </div>
+  </details>
+  <details>
+    <summary>可以用其他语言查看吗？</summary>
+    <div class="a">
+      <p>可以在右上角的 ⚙ 设置中切换语言。支持韩语、英语、西班牙语、葡萄牙语、法语、中文、印度尼西亚语和日语。真人录音的朗读目前只有韩语，其他语言使用设备自带的语音朗读。</p>
+    </div>
+  </details>
+  <details>
+    <summary>名画是从哪里来的？</summary>
+    <div class="a">
+      <p>卡片上方的画，是 19 世纪法国画家<b>詹姆斯·蒂索</b>（James Tissot）的基督生平系列。为了这个系列，他曾多次亲赴圣地，描绘那里的风景和人物。每幅画都注明了出处。</p>
+    </div>
+  </details>
+
+  <div class="end"><a href="./?lang=zh">开始旅程 →</a></div>
+  <p class="foot"><a href="https://sssoft-idea.web.app/" target="_blank" rel="noopener">© SSSOFT</a></p>
+</main>
+</body>
+</html>
