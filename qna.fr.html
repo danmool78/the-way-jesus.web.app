@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#16120e">
+<meta name="description" content="Le Chemin — pourquoi cette application existe, à quoi elle sert, pourquoi la scène 3D est dessinée ainsi et comment bien l’utiliser : questions et réponses">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<title>Questions et réponses — Le Chemin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* Questions et réponses — même esprit que l’écran d’accueil (.intro) : fond sombre, or, titres à empattements */
+  body{overflow:auto;background:radial-gradient(ellipse at 50% 0%,rgba(217,180,106,.13),transparent 50%),var(--bg)}
+  .qna{max-width:760px;margin:0 auto;padding:28px 20px 64px}
+  .qna-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .qna-top a{color:var(--gold2);text-decoration:none;display:inline-flex;align-items:center;gap:8px;font-size:14px}
+  .qna-top img{width:28px;height:28px}
+  .qna-top .back{border:1px solid #4a3c2c;border-radius:999px;padding:7px 14px}
+  .qna-top .back:hover{border-color:var(--gold)}
+  .qna h1{font-family:var(--serif);font-size:34px;margin:34px 0 8px;color:#f6ead0}
+  .qna .lead{color:var(--muted);line-height:1.8;margin:0 0 10px}
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 8px;padding:0;list-style:none}
+  .toc a{display:block;border:1px solid #4a3c2c;border-radius:999px;padding:6px 13px;font-size:13px;color:var(--ink);text-decoration:none;background:rgba(255,255,255,.02)}
+  .toc a:hover{border-color:var(--gold);color:var(--gold2)}
+  .qna h2{font-family:var(--serif);font-size:22px;color:var(--gold2);margin:44px 0 12px;padding-top:8px;border-top:1px solid #3a3026;scroll-margin-top:16px}
+  details{border:1px solid #3a3026;border-radius:14px;background:rgba(29,24,19,.7);margin:10px 0;overflow:hidden}
+  details[open]{border-color:#5a4830}
+  summary{list-style:none;cursor:pointer;padding:15px 48px 15px 18px;font-weight:700;font-size:16px;line-height:1.5;position:relative}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:'Q';font-family:var(--serif);color:var(--gold);margin-right:10px}
+  summary::after{content:'';position:absolute;right:20px;top:22px;width:9px;height:9px;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(45deg);transition:transform .25s}
+  details[open] summary::after{transform:translateY(4px) rotate(-135deg)}
+  summary:hover{color:var(--gold2)}
+  .a{padding:0 20px 18px 40px;color:#e2d7c3;line-height:1.85;font-size:15px}
+  .a p{margin:0 0 10px}
+  .a ul,.a ol{margin:4px 0 12px;padding-left:20px}
+  .a li{margin:4px 0}
+  .a b{color:var(--gold2);font-weight:700}
+  .a .tip{display:block;border-left:2px solid var(--gold);padding:8px 12px;margin:10px 0;background:rgba(217,180,106,.07);border-radius:0 8px 8px 0;font-size:14px;color:var(--muted)}
+  .end{text-align:center;margin-top:56px}
+  .end a{display:inline-block;padding:14px 28px;border-radius:999px;background:linear-gradient(180deg,#e9c97f,#b88a3e);color:#24180a;font-weight:700;text-decoration:none}
+  .foot{text-align:center;margin-top:28px;font-size:12px;color:var(--faint)}
+  .foot a{color:var(--faint)}
+  @media (max-width:600px){.qna h1{font-size:28px}.a{padding-left:18px}summary{font-size:15px}}
+</style>
+</head>
+<body>
+<main class="qna">
+  <nav class="qna-top">
+    <a href="./?lang=fr"><img src="assets/logo.svg" alt=""><b style="font-family:var(--serif);font-size:20px">Le Chemin</b></a>
+    <a class="back" href="./?lang=fr">Retour au voyage →</a>
+  </nav>
+
+  <h1>Questions et réponses</h1>
+  <p class="lead">Pourquoi avoir créé «&nbsp;Le Chemin&nbsp;», à quoi sert cette application, pourquoi la scène 3D posée sur la carte est dessinée ainsi, et comment en tirer le meilleur parti&nbsp;: voici l’essentiel, en questions et réponses.</p>
+  <ul class="toc">
+    <li><a href="#why">Pourquoi&nbsp;?</a></li>
+    <li><a href="#purpose">Le but</a></li>
+    <li><a href="#stage">La scène 3D</a></li>
+    <li><a href="#benefit">Ce que vous y gagnez</a></li>
+    <li><a href="#howto">Mode d’emploi</a></li>
+    <li><a href="#more">Autres questions</a></li>
+  </ul>
+
+  <h2 id="why">Pourquoi cette application&nbsp;?</h2>
+  <details open>
+    <summary>Il existe déjà quatre Évangiles&nbsp;: pourquoi les entrelacer&nbsp;?</summary>
+    <div class="a">
+      <p>Matthieu, Marc, Luc et Jean ont raconté le même Jésus, chacun avec son propre regard. Certains événements figurent dans les quatre, d’autres dans un seul. L’ordre et les accents diffèrent aussi un peu de l’un à l’autre.</p>
+      <p>En les lisant un par un, on gagne en profondeur, mais il faut reconstituer soi-même <b>«&nbsp;dans quel ordre et en quels lieux sa vie s’est déroulée&nbsp;»</b>. Cette application entrelace les quatre récits selon l’ordre des temps et des lieux, et relie en un seul chemin 61 scènes, de la naissance jusqu’à l’Ascension.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Pourquoi la carte est-elle si importante&nbsp;?</summary>
+    <div class="a">
+      <p>En lisant la Bible, on passe souvent vite sur les noms de lieux. Pourtant, quand on sait combien de jours de marche séparent Nazareth de Bethléem, quelle distance il y a entre le lac de Galilée et Jérusalem, ou pourquoi on «&nbsp;monte&nbsp;» à Jérusalem, le récit se lit autrement.</p>
+      <p>Dans l’application, chaque passage d’une scène à l’autre se fait à pied, sur le terrain réel. La distance, le nombre de jours de marche et le chemin déjà parcouru s’affichent en même temps. L’idée est de faire sentir, presque physiquement, combien il a marché.</p>
+    </div>
+  </details>
+  <details>
+    <summary>En quoi est-ce différent d’une application biblique ou d’un commentaire&nbsp;?</summary>
+    <div class="a">
+      <p>Une application biblique est faite pour lire le texte, un commentaire pour en expliquer le sens. «&nbsp;Le Chemin&nbsp;» se place juste avant&nbsp;: c’est <b>une carte et un guide qui donnent une vue d’ensemble</b>. Pour chaque scène, on trouve réunis au même endroit la carte, un tableau, la scène 3D, la lecture à voix haute, les paroles, la comparaison des quatre Évangiles, des repères historiques, des questions pour méditer et un quiz.</p>
+    </div>
+  </details>
+
+  <h2 id="purpose">Quel est le but de cette application&nbsp;?</h2>
+  <details open>
+    <summary>En un mot, pourquoi l’avoir créée&nbsp;?</summary>
+    <div class="a">
+      <p><b>Pour faire découvrir la vie de Jésus comme un seul chemin continu.</b> Non pas des fragments de récits dispersés, mais la route qu’un homme a réellement parcourue — et, sur cette route, des paroles prononcées qu’on peut laisser éclairer sa propre vie aujourd’hui.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Remplace-t-elle la Bible&nbsp;?</summary>
+    <div class="a">
+      <p>Non. Cette application est <b>une porte d’entrée vers la Bible</b>. Pour chaque scène, les chapitres et versets sont indiqués (onglet «&nbsp;Comparer&nbsp;»). Si une scène vous touche, ouvrez votre Bible et lisez le passage vous-même.</p>
+      <p>Les récits suivent fidèlement le texte biblique et n’inventent aucun fait qui n’y figure pas. Seule l’atmosphère — le paysage, la lumière, les bruits du jour — a été ajoutée.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Quelle traduction de la Bible est utilisée&nbsp;?</summary>
+    <div class="a">
+      <p>Aucune phrase n’est reprise d’une traduction existante. Les paroles sont <b>une traduction nouvelle, dans la langue d’aujourd’hui</b>, qui cherche à rendre le sens du texte original. Les mots peuvent donc différer un peu de la version qui vous est familière. Pour le texte exact, reportez-vous dans votre Bible aux chapitres et versets indiqués.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Comment l’ordre des scènes et les lieux ont-ils été établis&nbsp;?</summary>
+    <div class="a">
+      <p>L’ordre suit la «&nbsp;concordance des Évangiles&nbsp;» traditionnelle, qui met les quatre récits côte à côte pour les harmoniser. Pour quelques événements, toutefois, la chronologie reste débattue entre spécialistes.</p>
+      <p>Il en va de même pour les lieux. Parmi les 32 lieux, quelques-uns dont l’emplacement exact est inconnu (par exemple Emmaüs) ont été placés à l’endroit le plus probable et marqués <b>«&nbsp;approx.&nbsp;»</b>. Les dates sont données de façon approximative («&nbsp;vers l’an…&nbsp;»).</p>
+    </div>
+  </details>
+
+  <h2 id="stage">Pourquoi la scène 3D est-elle représentée ainsi&nbsp;?</h2>
+  <details open>
+    <summary>Que sont ces petits personnages sur la carte&nbsp;?</summary>
+    <div class="a">
+      <p>C’est une <b>scène miniature</b> dressée à l’endroit où l’épisode s’est déroulé. Comme un diorama de musée, elle place les gens de ce jour-là sur le repère du lieu, pour qu’on voie d’un coup d’œil où l’on est et ce qui s’y passe.</p>
+      <p>La scène s’anime au rythme de la lecture. À chaque phrase, les personnages entrent, parlent, s’agenouillent, lèvent les yeux. Quand quelqu’un parle, les autres se tournent vers lui. Pour les scènes de nuit, toute la carte se teinte de bleu profond&nbsp;; pour la tempête, l’ombre des nuages passe dessus&nbsp;; et l’aube de la Résurrection la baigne d’or.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Les personnages et la scène paraissent bien plus grands que nature&nbsp;: pourquoi&nbsp;?</summary>
+    <div class="a">
+      <p>C’est voulu. La carte montre des centaines de kilomètres sur un seul écran. À l’échelle réelle, une personne serait plus petite qu’un point et resterait invisible.</p>
+      <p>La scène <b>ne suit donc pas l’échelle de la carte&nbsp;: elle garde à l’écran une taille à peu près constante</b>, environ 300&nbsp;px de large sur ordinateur et 230&nbsp;px sur téléphone. Que vous zoomiez ou dézoomiez, les personnages restent reconnaissables, et le sol de la scène reste toujours accroché au repère du lieu. En contrepartie, vue de loin, la scène peut sembler plus grande qu’un village ou qu’une ville. Voyez-la comme un panneau posé sur la carte, qui dit&nbsp;: «&nbsp;c’est ici que cela s’est passé&nbsp;».</p>
+      <span class="tip">Dans les scènes où la foule est nombreuse, la scène est un peu plus large et les personnages un peu plus petits, pour que tout tienne à l’écran.</span>
+    </div>
+  </details>
+  <details>
+    <summary>Si la taille est agrandie, comment la géographie reste-t-elle juste&nbsp;?</summary>
+    <div class="a">
+      <p>Comme la scène est plus grande, elle a été ajustée pour ne pas déborder n’importe où.</p>
+      <ul>
+        <li>Ce qui doit coïncider avec le terrain réel, comme <b>les rivages et les champs</b>, est placé à sa latitude et sa longitude réelles&nbsp;: les barques sont sur l’eau, les gens sur la terre ferme.</li>
+        <li>Pour <b>les villages dont le repère est au bord de l’eau</b> (Capharnaüm, par exemple), la scène a été légèrement décalée vers la terre.</li>
+        <li>À <b>Jérusalem</b>, quand on zoome jusqu’à la ville, l’illustration 3D de la cité apparaît. La scène n’y dresse donc pas de Temple à part, et pour les lieux tout proches des remparts, comme le Golgotha, elle a été un peu déplacée vers les terrains vides hors de la ville.</li>
+        <li>L’orientation suit aussi la carte&nbsp;: le haut de l’écran est le nord, la droite est l’est. Dans les scènes du mont des Oliviers, la ville se trouve à l’ouest (à gauche).</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>Pourquoi la scène de la croix n’est-elle montrée que de loin, en silhouette&nbsp;?</summary>
+    <div class="a">
+      <p>En concevant la scène, nous nous sommes fixé un principe&nbsp;: <b>ne pas représenter la souffrance ni la violence</b>. Le Golgotha n’est évoqué que par la silhouette lointaine des croix, des gens agenouillés tournés vers elles et une lumière qui s’assombrit. Les moments douloureux, comme les moqueries ou la flagellation, ne sont qu’entendus dans la lecture&nbsp;; la scène reste vide ou ne montre que des gens qui pleurent. Ainsi, on peut regarder avec des enfants, et la Parole passe avant l’imagination.</p>
+      <p>D’autres principes ont guidé le travail&nbsp;:</p>
+      <ul>
+        <li><b>Le mal, seulement en ombre&nbsp;:</b> le tentateur, au désert, n’apparaît que comme une silhouette sombre encapuchonnée.</li>
+        <li><b>Fidélité au texte&nbsp;:</b> on n’invente rien d’important qui ne soit dans la Bible. La scène ne fait qu’accompagner la lecture.</li>
+        <li><b>Pas d’apparition soudaine&nbsp;:</b> les personnages apparaissent progressivement ou entrent en marchant.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>Quel est ce relief qui apparaît quand on appuie sur le bouton 3D&nbsp;?</summary>
+    <div class="a">
+      <p>Ce sont les reliefs du terrain, construits à partir de vraies données d’altitude (relevés topographiques par satellite). Les régions de Galilée, de Judée et d’Égypte se chargent quand on s’approche d’un lieu. Les hauteurs sont légèrement exagérées, <b>×1,8</b>&nbsp;: à l’échelle réelle, les collines paraîtraient presque plates, et l’on veut que vallées et crêtes sautent aux yeux.</p>
+      <p>En relief, on peut faire glisser la carte, zoomer avec la molette ou à deux doigts, et sur ordinateur la faire pivoter avec les boutons de gauche. Voyez par vous-même pourquoi on «&nbsp;monte&nbsp;» à Jérusalem, et combien la route de Jéricho à Jérusalem est raide.</p>
+    </div>
+  </details>
+
+  <h2 id="benefit">Qu’est-ce que cela peut vous apporter&nbsp;?</h2>
+  <details open>
+    <summary>Que peut-on retirer de cette application&nbsp;?</summary>
+    <div class="a">
+      <ul>
+        <li><b>Une vue d’ensemble&nbsp;:</b> la vie de Jésus, de la naissance à l’Ascension, se met en place comme un seul fil. Chaque événement trouve sa place, dans le temps et dans l’espace.</li>
+        <li><b>Le sens du terrain&nbsp;:</b> en voyant les distances et le relief, des mots comme «&nbsp;il monta&nbsp;», «&nbsp;il passa sur l’autre rive&nbsp;» ou «&nbsp;il se retira au désert&nbsp;» prennent corps.</li>
+        <li><b>La voix de quatre témoins&nbsp;:</b> en comparant la façon dont les quatre Évangiles rapportent un même événement, on découvre leurs accents propres.</li>
+        <li><b>Garder la Parole longtemps&nbsp;:</b> chaque scène rassemble les paroles essentielles, et les questions pour méditer aident à les relier à la vie d’aujourd’hui.</li>
+        <li><b>S’en souvenir&nbsp;:</b> images, scène, son et quiz se conjuguent pour qu’une scène vue une fois reste longtemps en mémoire.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>À qui s’adresse-t-elle tout particulièrement&nbsp;?</summary>
+    <div class="a">
+      <ul>
+        <li><b>À ceux qui lisent les Évangiles pour la première fois&nbsp;:</b> on saisit les grandes lignes avant d’entrer dans le texte.</li>
+        <li><b>Aux lecteurs de longue date&nbsp;:</b> des récits familiers apparaissent sous un jour nouveau, sur la carte et dans leur ordre.</li>
+        <li><b>Aux familles et aux petits groupes&nbsp;:</b> idéal pour écouter une scène ensemble et échanger à partir des questions pour méditer.</li>
+        <li><b>Au catéchisme et aux jeunes&nbsp;:</b> avec la scène 3D et les quiz, on apprend sans s’ennuyer. Comme les scènes de souffrance ne sont pas représentées, l’application convient aussi aux enfants.</li>
+      </ul>
+    </div>
+  </details>
+
+  <h2 id="howto">Comment utiliser les fonctions&nbsp;?</h2>
+  <details open>
+    <summary>Comment commencer&nbsp;?</summary>
+    <div class="a">
+      <ol>
+        <li>Sur l’écran d’accueil, appuyez sur <b>«&nbsp;Commencer le voyage&nbsp;»</b>. Lors de vos visites suivantes, vous pourrez reprendre à la dernière scène consultée.</li>
+        <li>Dans la fiche à droite (en bas sur téléphone), lisez le récit ou écoutez-le avec le <b>bouton ▶</b>.</li>
+        <li>Quand vous avez fini, appuyez sur <b>«&nbsp;Marcher jusqu’au lieu suivant&nbsp;»</b>. Vous rejoignez à pied, sur la carte, la scène suivante.</li>
+      </ol>
+      <span class="tip">À raison d’une ou deux scènes par jour, vous aurez suivi toute la vie de Jésus en un ou deux mois.</span>
+    </div>
+  </details>
+  <details>
+    <summary>Comment utiliser l’écoute et le «&nbsp;Voyage guidé&nbsp;»&nbsp;?</summary>
+    <div class="a">
+      <ul>
+        <li><b>▶ Écouter&nbsp;:</b> le titre de la scène, le récit puis les paroles sont lus à la suite. Les enregistrements de vraies voix n’existent pour l’instant qu’en coréen (où les paroles de Jésus sont dites par une autre voix)&nbsp;; en français, c’est la voix de votre appareil qui lit. Sur ordinateur, des sous-titres s’affichent sous la carte (sur téléphone, on écoute sans sous-titres), et la scène s’anime au fil des phrases.</li>
+        <li><b>Voyage guidé&nbsp;:</b> une fois activé, l’application marche d’elle-même jusqu’au lieu suivant à la fin de chaque scène et poursuit la lecture. On peut l’écouter comme un livre audio.</li>
+        <li><b>Vitesse&nbsp;:</b> réglable de ×0,85 à ×1,3.</li>
+        <li><b>♫ Musique de fond&nbsp;:</b> une musique douce, accordée à la scène, accompagne la lecture. Pour la couper, appuyez sur le bouton en forme de note.</li>
+      </ul>
+      <span class="tip">Dans l’onglet «&nbsp;Texte&nbsp;», le bouton 🔊 à côté d’une parole permet d’écouter cette parole seule.</span>
+    </div>
+  </details>
+  <details>
+    <summary>Quelle différence entre les onglets de la fiche d’une scène&nbsp;?</summary>
+    <div class="a">
+      <ul>
+        <li><b>Récit&nbsp;:</b> le récit développé de la scène. En dessous, <b>«&nbsp;Pour mieux comprendre&nbsp;»</b> donne le contexte historique et géographique, et <b>«&nbsp;Un temps pour méditer&nbsp;»</b> propose des questions pour relier la scène à votre vie.</li>
+        <li><b>Texte&nbsp;:</b> les paroles essentielles de la scène, avec leurs chapitres et versets.</li>
+        <li><b>Comparer&nbsp;:</b> lesquels des quatre Évangiles rapportent cette scène, avec chapitres et versets côte à côte.</li>
+      </ul>
+      <p>Le tableau en haut de la fiche (de la série de James Tissot sur les Évangiles) peut s’afficher en grand avec <b>«&nbsp;Voir le tableau&nbsp;»</b>.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Comment se servir de la carte&nbsp;?</summary>
+    <div class="a">
+      <ul>
+        <li><b>Faire glisser&nbsp;:</b> déplacez la carte pour explorer les alentours. Le zoom s’ajuste tout seul à chaque scène. Dans les scènes de Jérusalem, on entre jusque dans la ville et l’illustration 3D de la cité apparaît.</li>
+        <li><b>Étiquette du lieu</b> (le nom en haut à gauche)&nbsp;: appuyez dessus pour revenir au lieu de la scène en cours.</li>
+        <li><b>Tout le parcours&nbsp;:</b> affiche d’un coup d’œil tout le chemin parcouru jusqu’ici. Appuyez de nouveau pour revenir à la scène en cours.</li>
+        <li><b>Appuyer sur un repère&nbsp;:</b> touchez un lieu sur la carte pour aller à la scène qui s’y déroule.</li>
+        <li><b>Bouton 3D&nbsp;:</b> montre le relief du terrain. En 3D, on zoome avec la molette ou à deux doigts, et sur ordinateur on peut aussi faire pivoter ou zoomer avec les boutons de gauche.</li>
+        <li><b>Frise du temps, en bas&nbsp;:</b> chaque période a sa couleur et son illustration. Appuyez sur un point pour aller directement à la scène voulue. Les points pleins et lumineux sont les scènes déjà visitées.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>Et sur téléphone&nbsp;?</summary>
+    <div class="a">
+      <p>La fiche de la scène est un panneau qui monte du bas de l’écran. Au départ, il ne remonte qu’à moitié, pour laisser voir en grand la carte et la scène.</p>
+      <ul>
+        <li><b>Tirez la poignée vers le haut</b> en haut du panneau, ou faites défiler le texte vers le haut&nbsp;: le panneau monte entièrement et la lecture est plus confortable.</li>
+        <li><b>Tirez-la vers le bas</b> pour le faire descendre d’un cran à la fois, jusqu’à ne laisser que la ligne du titre et dégager la carte.</li>
+        <li>Ajoutée à l’écran d’accueil, l’application s’ouvre directement, comme une application installée.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>Où trouver les paroles, la concordance et les quiz&nbsp;?</summary>
+    <div class="a">
+      <ul>
+        <li><b>Onglet Paroles</b> (en haut)&nbsp;: les paroles de Jésus rapportées par les quatre Évangiles, rassemblées dans l’ordre du voyage. On peut chercher par mot, par exemple «&nbsp;amour&nbsp;», «&nbsp;pain&nbsp;» ou «&nbsp;paix&nbsp;».</li>
+        <li><b>Concordance des Évangiles</b> (⚙ Réglages, en haut à droite)&nbsp;: un tableau qui montre où chacun des quatre Évangiles rapporte les 61 scènes. On peut filtrer, par exemple «&nbsp;Les quatre Évangiles&nbsp;» ou «&nbsp;Jean seulement&nbsp;». Appuyez sur une ligne pour aller à la scène.</li>
+        <li><b>Onglet Quiz</b> et <b>quiz de scène</b> (bouton «&nbsp;Quiz&nbsp;» en bas à droite)&nbsp;: des questions pour revenir sur les scènes parcourues.</li>
+        <li><b>Mes pas</b> (barre de progression en haut, ou Réglages)&nbsp;: chaque scène ouverte y laisse une empreinte, chaque bonne réponse au quiz une étoile.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>Des idées pour l’utiliser, seul ou ensemble&nbsp;?</summary>
+    <div class="a">
+      <ul>
+        <li><b>Méditation personnelle&nbsp;:</b> écoutez une scène par jour et gardez une question pour méditer tout au long de la journée. Mieux encore&nbsp;: lisez le passage dans votre Bible.</li>
+        <li><b>Prière en famille&nbsp;:</b> regardez l’écran ensemble en écoutant la lecture, puis faites le quiz avec les enfants.</li>
+        <li><b>Petits groupes et études bibliques&nbsp;:</b> avec l’onglet «&nbsp;Comparer&nbsp;» et la concordance, comparez la façon dont chaque Évangile rapporte un même événement, et échangez.</li>
+        <li><b>Catéchisme&nbsp;:</b> projetez l’application sur grand écran et suivez le chemin ensemble avec «&nbsp;Marcher jusqu’au lieu suivant&nbsp;». Faire deviner la distance parcourue est aussi un bon jeu.</li>
+        <li><b>Dans les transports&nbsp;:</b> activez le Voyage guidé et écoutez comme un livre audio.</li>
+      </ul>
+    </div>
+  </details>
+
+  <h2 id="more">Autres questions</h2>
+  <details>
+    <summary>Faut-il créer un compte&nbsp;? Où ma progression est-elle enregistrée&nbsp;?</summary>
+    <div class="a">
+      <p>Aucune inscription ni connexion n’est nécessaire. Les scènes visitées et les résultats aux quiz sont enregistrés <b>uniquement dans le navigateur de l’appareil que vous utilisez</b>, et ne sont envoyés nulle part. Votre progression ne suit donc pas d’un appareil ou d’un navigateur à l’autre. Vous pouvez l’effacer depuis «&nbsp;Mes pas&nbsp;».</p>
+    </div>
+  </details>
+  <details>
+    <summary>Peut-on l’utiliser dans d’autres langues&nbsp;?</summary>
+    <div class="a">
+      <p>Vous pouvez changer de langue dans ⚙ Réglages, en haut à droite. Coréen, anglais, espagnol, portugais, français, chinois, indonésien et japonais sont disponibles. La lecture enregistrée n’existe pour l’instant qu’en coréen&nbsp;; dans les autres langues, c’est la voix de votre appareil qui lit.</p>
+    </div>
+  </details>
+  <details>
+    <summary>D’où viennent les tableaux&nbsp;?</summary>
+    <div class="a">
+      <p>Les images en haut des fiches proviennent de la série sur la vie du Christ du peintre français du XIXᵉ siècle <b>James Tissot</b>. Pour la réaliser, il s’est rendu plusieurs fois en Terre sainte afin d’y peindre les paysages et les habitants. La source de chaque tableau est indiquée.</p>
+    </div>
+  </details>
+
+  <div class="end"><a href="./?lang=fr">Commencer le voyage →</a></div>
+  <p class="foot"><a href="https://sssoft-idea.web.app/" target="_blank" rel="noopener">© SSSOFT</a></p>
+</main>
+</body>
+</html>

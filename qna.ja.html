@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#16120e">
+<meta name="description" content="その道 — なぜ作ったのか、何のためのアプリなのか、3D の舞台をなぜこう描いたのか、どう使えばよいのかを、問いと答えでご紹介します">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<title>よくある質問 — その道</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  :root{--serif:'Noto Serif JP',serif;--sans:'Noto Sans JP',system-ui,sans-serif}
+  /* よくある質問 — 最初の画面(.intro)と同じ趣: 暗い地、金色、明朝の見出し */
+  body{overflow:auto;background:radial-gradient(ellipse at 50% 0%,rgba(217,180,106,.13),transparent 50%),var(--bg)}
+  .qna{max-width:760px;margin:0 auto;padding:28px 20px 64px}
+  .qna-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .qna-top a{color:var(--gold2);text-decoration:none;display:inline-flex;align-items:center;gap:8px;font-size:14px}
+  .qna-top img{width:28px;height:28px}
+  .qna-top .back{border:1px solid #4a3c2c;border-radius:999px;padding:7px 14px}
+  .qna-top .back:hover{border-color:var(--gold)}
+  .qna h1{font-family:var(--serif);font-size:34px;margin:34px 0 8px;color:#f6ead0}
+  .qna .lead{color:var(--muted);line-height:1.8;margin:0 0 10px}
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 8px;padding:0;list-style:none}
+  .toc a{display:block;border:1px solid #4a3c2c;border-radius:999px;padding:6px 13px;font-size:13px;color:var(--ink);text-decoration:none;background:rgba(255,255,255,.02)}
+  .toc a:hover{border-color:var(--gold);color:var(--gold2)}
+  .qna h2{font-family:var(--serif);font-size:22px;color:var(--gold2);margin:44px 0 12px;padding-top:8px;border-top:1px solid #3a3026;scroll-margin-top:16px}
+  details{border:1px solid #3a3026;border-radius:14px;background:rgba(29,24,19,.7);margin:10px 0;overflow:hidden}
+  details[open]{border-color:#5a4830}
+  summary{list-style:none;cursor:pointer;padding:15px 48px 15px 18px;font-weight:700;font-size:16px;line-height:1.5;position:relative}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:'Q';font-family:var(--serif);color:var(--gold);margin-right:10px}
+  summary::after{content:'';position:absolute;right:20px;top:22px;width:9px;height:9px;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(45deg);transition:transform .25s}
+  details[open] summary::after{transform:translateY(4px) rotate(-135deg)}
+  summary:hover{color:var(--gold2)}
+  .a{padding:0 20px 18px 40px;color:#e2d7c3;line-height:1.85;font-size:15px}
+  .a p{margin:0 0 10px}
+  .a ul,.a ol{margin:4px 0 12px;padding-left:20px}
+  .a li{margin:4px 0}
+  .a b{color:var(--gold2);font-weight:700}
+  .a .tip{display:block;border-left:2px solid var(--gold);padding:8px 12px;margin:10px 0;background:rgba(217,180,106,.07);border-radius:0 8px 8px 0;font-size:14px;color:var(--muted)}
+  .end{text-align:center;margin-top:56px}
+  .end a{display:inline-block;padding:14px 28px;border-radius:999px;background:linear-gradient(180deg,#e9c97f,#b88a3e);color:#24180a;font-weight:700;text-decoration:none}
+  .foot{text-align:center;margin-top:28px;font-size:12px;color:var(--faint)}
+  .foot a{color:var(--faint)}
+  @media (max-width:600px){.qna h1{font-size:28px}.a{padding-left:18px}summary{font-size:15px}}
+</style>
+</head>
+<body>
+<main class="qna">
+  <nav class="qna-top">
+    <a href="./?lang=ja"><img src="assets/logo.svg" alt=""><b style="font-family:var(--serif);font-size:20px">その道</b></a>
+    <a class="back" href="./?lang=ja">旅に戻る →</a>
+  </nav>
+
+  <h1>よくある質問</h1>
+  <p class="lead">「その道」をなぜ作ったのか、何のためのアプリなのか、地図の上の 3D の舞台をなぜこのように描いたのか、そしてどう使えばよいのかを、問いと答えの形でまとめました。</p>
+  <ul class="toc">
+    <li><a href="#why">なぜ必要か</a></li>
+    <li><a href="#purpose">目的</a></li>
+    <li><a href="#stage">3D の舞台</a></li>
+    <li><a href="#benefit">得られるもの</a></li>
+    <li><a href="#howto">機能の使い方</a></li>
+    <li><a href="#more">そのほか</a></li>
+  </ul>
+
+  <h2 id="why">なぜこのアプリが必要なのですか？</h2>
+  <details open>
+    <summary>福音書はすでに四つもあるのに、なぜ改めて一つに編むのですか？</summary>
+    <div class="a">
+      <p>マタイ・マルコ・ルカ・ヨハネの四つの福音書は、同じイエスをそれぞれ異なる目で記しています。ある出来事は四つすべてに、ある出来事は一つの書にだけ出てきます。順序や強調点も少しずつ違います。</p>
+      <p>そのため一冊ずつ読むと、深さは得られても、<b>「その方の生涯がどんな順序で、どこで繰り広げられたのか」</b>は頭の中で組み立て直さなければなりません。このアプリは四つの記録を、出来事の起きた時と場所の順に編み、誕生から昇天までの 61 の場面を一本の道につないでお見せします。</p>
+    </div>
+  </details>
+  <details>
+    <summary>なぜ地図が大切なのですか？</summary>
+    <div class="a">
+      <p>聖書を読むとき、地名はつい読み飛ばしてしまいがちです。けれども、ナザレからベツレヘムまで歩いて何日かかるのか、ガリラヤ湖とエルサレムがどれほど離れているのか、エルサレムがなぜ「上って行く」場所なのかを知ると、物語の読み方が変わってきます。</p>
+      <p>このアプリでは、場面を移るたびに実際の土地の上を歩いて行きます。距離やかかった日数、これまでに歩いてきた道のりもあわせて表示します。その方がどれほど多く歩かれたのかを、体で感じていただくためです。</p>
+    </div>
+  </details>
+  <details>
+    <summary>聖書アプリや注解書とは何が違うのですか？</summary>
+    <div class="a">
+      <p>聖書アプリは本文を読むことに、注解書は意味を解き明かすことに長けています。「その道」はその一歩手前、つまり<b>全体像を見せてくれる地図であり道案内</b>です。場面ごとに、地図、名画、3D の舞台、朗読、み言葉、四福音書の比較、背景知識、黙想の問い、クイズを一か所に集めました。</p>
+    </div>
+  </details>
+
+  <h2 id="purpose">このアプリの目的は何ですか？</h2>
+  <details open>
+    <summary>ひと言でいうと、何のために作ったのですか？</summary>
+    <div class="a">
+      <p><b>イエスの生涯を、一本につながった道として味わっていただくため</b>です。ばらばらの物語の断片としてではなく、一人の方が実際に歩まれた道として感じ、その道の上で語られた言葉を、今日の自分の生活に照らして考えていただきたいのです。</p>
+    </div>
+  </details>
+  <details>
+    <summary>聖書の代わりになるのですか？</summary>
+    <div class="a">
+      <p>いいえ。このアプリは<b>聖書へと入っていくための門</b>です。場面ごとに本文の章と節を記しています（「比較」タブ）。心に残る場面があれば、ぜひ聖書を開いて、その箇所をご自身で読んでみてください。</p>
+      <p>物語は本文に忠実に書き、本文にない事実は作り出していません。その日の風景や光、音といった雰囲気だけを描き添えました。</p>
+    </div>
+  </details>
+  <details>
+    <summary>み言葉はどの翻訳を使っていますか？</summary>
+    <div class="a">
+      <p>既存の翻訳聖書の文章は写していません。原文の意味を生かして<b>今日の言葉に新しく訳し直したもの</b>です。そのため、なじみのある翻訳とは言葉づかいが少し異なることがあります。正確な文章は、あわせて記した章・節をもとに聖書でご確認ください。</p>
+    </div>
+  </details>
+  <details>
+    <summary>場面の順序と場所はどのように決めたのですか？</summary>
+    <div class="a">
+      <p>四つの福音書を並べて照らし合わせる、伝統的な「福音書対観」をもとに順序を決めました。ただし、いくつかの出来事の前後関係については、学者の間でも意見が分かれています。</p>
+      <p>場所も同じです。32 か所のうち、正確な位置がわからないいくつかの場所（例：エマオ）は最も有力な地点に置き、<b>「推定」</b>と表示しました。年代も「〜年ごろ」のようにおおよその形で記しています。</p>
+    </div>
+  </details>
+
+  <h2 id="stage">3D の舞台はなぜあのように表現したのですか？</h2>
+  <details open>
+    <summary>地図の上の小さな人物たちは何ですか？</summary>
+    <div class="a">
+      <p>場面が起きた場所の上に建てた<b>ミニチュアの舞台</b>です。博物館のジオラマのように、場所のピンの上にその日の人々を立たせ、今どこで何が起きているのかがひと目でわかるようにしました。</p>
+      <p>舞台は朗読とともに動きます。文が読まれるたびに、人物が歩み入り、語り、ひざまずき、顔を上げます。話す人がいれば、ほかの人たちはそちらを見つめます。夜の場面では地図全体が藍色に、嵐の場面では雲の影に、復活の夜明けは金色に染まります。</p>
+    </div>
+  </details>
+  <details>
+    <summary>人物や舞台が実際よりずっと大きく見えるのはなぜですか？</summary>
+    <div class="a">
+      <p>あえてそうしています。地図は数百キロメートルを一つの画面に収めています。実際の大きさのままでは、人は点一つよりも小さくなって見えません。</p>
+      <p>そこで舞台は<b>地図の縮尺に従わず、画面上でいつもほぼ同じ大きさ</b>で描いています。パソコンでは幅 300 ピクセル、スマートフォンでは 230 ピクセル前後です。地図を拡大しても縮小しても、人物は見分けられる大きさのまま残り、舞台の床はいつもその場所のピンについています。そのかわり、遠くから見ると舞台が村や都よりも大きく見えます。地図の上の標識のように、「ここでこんなことがあった」と知らせる絵だと思ってください。</p>
+      <span class="tip">群衆の多い場面では、舞台を少し広く、人物を少し小さく描いて、一つの画面に収まるようにしました。</span>
+    </div>
+  </details>
+  <details>
+    <summary>大きくしたのに、地理はどうやって合わせているのですか？</summary>
+    <div class="a">
+      <p>舞台が大きくなった分、見当違いの場所にはみ出さないよう手を加えました。</p>
+      <ul>
+        <li><b>水辺や野原</b>のように実際の地形と合っている必要があるものは、実際の緯度・経度に置いています。ですから舟は水の上に、人は陸の上に立ちます。</li>
+        <li><b>ピンが水辺にある町</b>（カファルナウムなど）は、舞台を少し陸側へずらしました。</li>
+        <li><b>エルサレム</b>は都まで拡大すると 3D の都の絵が敷かれます。そのため舞台に神殿を別に建てることはせず、ゴルゴタのように城壁のすぐそばの場所は、舞台を城外の空き地へ少し移しました。</li>
+        <li>方角も地図に従います。画面の上が北、右が東です。オリーブ山の場面では、都は西（左）にあります。</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>十字架の場面は、なぜ遠くにシルエットだけで見えるのですか？</summary>
+    <div class="a">
+      <p>舞台を作るにあたって定めた原則があります。<b>苦しみと暴力は描かない</b>ということです。ゴルゴタは、遠くに見える十字架の輪郭と、そちらに向かってひざまずく人々、そして暗くなっていく光だけで表しました。あざけりやむち打ちのような痛ましい場面は朗読だけで聞き、舞台は空けておくか、泣く人々だけで満たしています。子どもと一緒に見ても大丈夫なように、そして想像よりもみ言葉が先に立つようにするためです。</p>
+      <p>ほかにも次のような原則があります。</p>
+      <ul>
+        <li><b>悪しき存在は姿だけ：</b>荒れ野で試みる者は、頭巾をかぶった暗いシルエットだけで描きました。</li>
+        <li><b>本文に忠実に：</b>聖書にないことを大きく作り出しません。舞台は朗読を支えるだけです。</li>
+        <li><b>突然現れないように：</b>人は少しずつ現れるか、歩いて入ってきます。</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>3D ボタンを押すと出てくる立体の地形は何ですか？</summary>
+    <div class="a">
+      <p>実際の標高データ（人工衛星による地形測量データ）で作った土地の起伏です。ガリラヤ・ユダヤ・エジプトの各地域を、その場所に近づいたときに読み込みます。高さは<b>1.8 倍</b>に少し誇張しました。実際の比率のままだと丘陵がほとんど平らに見えてしまうので、谷や尾根が目に入るようにするためです。</p>
+      <p>立体の地形では、ドラッグして動かし、ホイールや二本指で拡大できます。パソコンでは左側のボタンで回転させることもできます。エルサレムがなぜ「上って行く」場所なのか、エリコからエルサレムまでの道がどれほど険しいのか、ぜひご自分の目で確かめてください。</p>
+    </div>
+  </details>
+
+  <h2 id="benefit">どんな益が得られますか？</h2>
+  <details open>
+    <summary>このアプリで何が得られますか？</summary>
+    <div class="a">
+      <ul>
+        <li><b>全体像：</b>誕生から昇天まで、イエスの生涯が一つの流れとして整理されます。どの出来事がいつ、どこで起きたのかが、頭の中で位置づけられます。</li>
+        <li><b>土地の感覚：</b>距離や地形を見ながら読むと、本文の「上って行かれた」「渡って行かれた」「荒れ野に行かれた」が実感をもって読めます。</li>
+        <li><b>四人の証人の声：</b>同じ出来事を四つの福音書がどう記しているかを見比べ、それぞれの強調点の違いに気づきます。</li>
+        <li><b>み言葉を長く心に留める：</b>場面ごとに中心となるみ言葉を集め、黙想の問いで今日の生活に照らして考えます。</li>
+        <li><b>記憶に残す：</b>絵、舞台、音、クイズがそろっているので、一度見た場面が長く記憶に残ります。</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>特にどんな方に向いていますか？</summary>
+    <div class="a">
+      <ul>
+        <li><b>初めて福音書を読む方：</b>本文に入る前に、まず大きな流れをつかむことができます。</li>
+        <li><b>長く聖書を読んできた方：</b>なじみのある物語を、地図と順序の上で新しく見ることができます。</li>
+        <li><b>家庭や小グループ：</b>一緒に一つの場面を聞き、黙想の問いをもとに語り合うのに向いています。</li>
+        <li><b>教会学校や中高生：</b>舞台やクイズで、退屈せずに学べます。苦しみの場面を描いていないので、子どもと一緒に見るのにも適しています。</li>
+      </ul>
+    </div>
+  </details>
+
+  <h2 id="howto">どの機能をどう使えばよいですか？</h2>
+  <details open>
+    <summary>最初はどのように始めればよいですか？</summary>
+    <div class="a">
+      <ol>
+        <li>最初の画面で<b>「旅をはじめる」</b>を押します。次に来たときは、最後に見ていた場面から続けて歩くことができます。</li>
+        <li>右側（スマートフォンでは下側）のカードで物語を読むか、<b>▶ ボタン</b>で朗読を聞きます。</li>
+        <li>見終わったら<b>「次の場所へ歩く」</b>を押します。地図の上を歩いて次の場面へ進みます。</li>
+      </ol>
+      <span class="tip">一日に一、二場面ずつ歩けば、一、二か月でイエスの生涯をひととおりたどることができます。</span>
+    </div>
+  </details>
+  <details>
+    <summary>朗読と「自動の旅」はどう使いますか？</summary>
+    <div class="a">
+      <ul>
+        <li><b>▶ 聞く：</b>場面のタイトル、物語、み言葉を順に読み上げます。録音された朗読は今のところ韓国語だけにあり、日本語ではお使いの端末の音声で読み上げます。パソコンでは地図の下に字幕が表示され（スマートフォンでは字幕なしで音声のみ）、舞台が文に合わせて動きます。</li>
+        <li><b>自動の旅：</b>オンにしておくと、一つの場面を読み終えたあと、自動で次の場所へ歩いて行き、続けて読み上げます。オーディオブックのように流しておいて聞くことができます。</li>
+        <li><b>速さ：</b>0.85 倍から 1.3 倍まで選べます。</li>
+        <li><b>♫ BGM：</b>朗読の下に、場面にふさわしい音楽が静かに流れます。消したいときは音符のボタンを押してください。</li>
+      </ul>
+      <span class="tip">「本文」タブのみ言葉の横にある 🔊 ボタンを押すと、そのみ言葉だけを聞くことができます。</span>
+    </div>
+  </details>
+  <details>
+    <summary>場面カードのタブはそれぞれ何が違うのですか？</summary>
+    <div class="a">
+      <ul>
+        <li><b>物語：</b>場面をわかりやすく書き起こした文章です。下の方にある<b>「知っておきたいこと」</b>に歴史や地理の背景が、<b>「立ち止まって考える」</b>に今日の生活に照らして考える問いがあります。</li>
+        <li><b>本文：</b>その場面の中心となるみ言葉を集めました。章と節もあわせて記しています。</li>
+        <li><b>比較：</b>四つの福音書のうちどの書がこの場面を記しているかを、章と節とともに並べて示します。</li>
+      </ul>
+      <p>カードの上の名画（ジェームズ・ティソの福音書連作）は、<b>「名画を見る」</b>で大きく表示できます。</p>
+    </div>
+  </details>
+  <details>
+    <summary>地図はどう操作しますか？</summary>
+    <div class="a">
+      <ul>
+        <li><b>ドラッグ：</b>地図をドラッグして周りを見渡します。拡大と縮小は場面に合わせて自動で行われます。エルサレムの場面では都の中まで入り、3D の都の絵が現れます。</li>
+        <li><b>場所のチップ</b>（左上の地名）：押すと、今の場面の場所に戻ります。</li>
+        <li><b>全行程：</b>これまでの道のり全体をひと目で見られます。もう一度押すと、今の場面に戻ります。</li>
+        <li><b>ピンを押す：</b>地図上の場所を押すと、そこで起きた場面へ移ります。</li>
+        <li><b>3D ボタン：</b>土地の起伏を立体で見られます。3D ではホイールや二本指で拡大でき、パソコンでは左側のボタンで回転や拡大もできます。</li>
+        <li><b>下の時間バー：</b>時期ごとに色と絵があります。点を押すと、見たい場面へすぐに移れます。明るく塗られた点は、すでに訪れた場面です。</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>スマートフォンではどう見ればよいですか？</summary>
+    <div class="a">
+      <p>場面カードは、画面の下から上がってくるシートになっています。最初は半分だけ上がり、地図と舞台が大きく見えます。</p>
+      <ul>
+        <li>シートの上の<b>つまみを上へドラッグする</b>か、文章を上にスクロールすると、いちばん上まで上がって文章が読みやすくなります。</li>
+        <li><b>下へドラッグすると</b>一段ずつ下がってタイトルの行だけが残り、地図を広く見られます。</li>
+        <li>ホーム画面に追加しておくと、アプリのようにすぐに開けます。</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>み言葉、対照表、クイズはどこにありますか？</summary>
+    <div class="a">
+      <ul>
+        <li><b>「み言葉」タブ</b>（上部）：四福音書に記されたイエスの言葉を、旅の順に集めました。「愛」「パン」「平和」のように言葉で検索できます。</li>
+        <li><b>四福音書対照表</b>（右上の ⚙ 設定）：61 の場面を四つの福音書がどこに記しているかを表で見られます。「四福音書すべて」「ヨハネのみ」のような絞り込みもできます。行を押すと、その場面へ移ります。</li>
+        <li><b>「クイズ」タブ</b>と<b>場面ごとのクイズ</b>（右下の「クイズ」ボタン）：歩んできた場面を問題でふり返ります。</li>
+        <li><b>わたしの足跡</b>（上部の進行バーまたは設定）：開いた場面には足跡が、正解したクイズには星がつきます。</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>みんなで使うのによい方法はありますか？</summary>
+    <div class="a">
+      <ul>
+        <li><b>個人の黙想：</b>一日に一つの場面を聞き、黙想の問いを一つ心に抱いて一日を過ごします。その場面の本文を聖書で直接読めば、なおよいでしょう。</li>
+        <li><b>家庭礼拝：</b>画面を一緒に見ながら朗読を聞き、子どもたちとクイズを解いてみます。</li>
+        <li><b>小グループ・聖書研究：</b>「比較」タブと対照表で、同じ出来事を福音書ごとにどう記しているかを見比べ、語り合います。</li>
+        <li><b>教会学校：</b>大きな画面に映し、「次の場所へ歩く」で一緒に道をたどります。歩いた距離を当ててみるのも楽しいでしょう。</li>
+        <li><b>通勤・通学の途中に：</b>自動の旅をオンにして、オーディオブックのように聞きます。</li>
+      </ul>
+    </div>
+  </details>
+
+  <h2 id="more">そのほかの質問</h2>
+  <details>
+    <summary>登録は必要ですか？記録はどこに残りますか？</summary>
+    <div class="a">
+      <p>登録やログインは必要ありません。訪れた場面やクイズの記録は<b>今お使いの端末のブラウザにだけ</b>保存され、どこにも送信されません。そのため、別の端末や別のブラウザでは記録は引き継がれません。記録は「わたしの足跡」から消すことができます。</p>
+    </div>
+  </details>
+  <details>
+    <summary>ほかの言語でも見られますか？</summary>
+    <div class="a">
+      <p>右上の ⚙ 設定で言語を切り替えられます。韓国語、英語、スペイン語、ポルトガル語、フランス語、中国語、インドネシア語、日本語に対応しています。録音された朗読は今のところ韓国語だけにあり、ほかの言語ではお使いの端末にある音声で読み上げます。</p>
+    </div>
+  </details>
+  <details>
+    <summary>名画はどこから来たのですか？</summary>
+    <div class="a">
+      <p>カードの上の絵は、19 世紀フランスの画家<b>ジェームズ・ティソ</b>（James Tissot）による「キリストの生涯」の連作です。彼はこの連作のために聖地を何度も自ら訪れ、風景や人々を描きました。絵ごとに出典を記しています。</p>
+    </div>
+  </details>
+
+  <div class="end"><a href="./?lang=ja">旅をはじめる →</a></div>
+  <p class="foot"><a href="https://sssoft-idea.web.app/" target="_blank" rel="noopener">© SSSOFT</a></p>
+</main>
+</body>
+</html>

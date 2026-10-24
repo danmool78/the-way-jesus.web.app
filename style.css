@@ -39,6 +39,7 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .langpick{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:13px}
 .sbtn{text-align:left;border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:9px 12px;font-size:13px}
 .sbtn:hover{border-color:var(--gold)}
+a.sbtn{display:block;text-decoration:none;color:inherit}
 
 /* journey layout — 지도가 화면 전체, 장면은 지도 위 카드 */
 .journey{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto;height:calc(100dvh - 56px)}
@@ -99,7 +100,7 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .cardbar small{display:block;font-size:11.5px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 /* 접기(—) / 펼치기(+) 단추: 카드 오른쪽 위에 늘 떠 있다 */
 .sheetgrip{display:none}
-.cardtoggle{position:absolute;top:10px;right:12px;z-index:4;width:30px;height:30px;border:0;border-radius:8px;background:rgba(0,0,0,.25);display:grid;place-items:center}
+.cardtoggle{position:absolute;top:10px;right:12px;z-index:6;width:30px;height:30px;border:0;border-radius:8px;background:rgba(0,0,0,.25);display:grid;place-items:center} /* 모바일 시트 손잡이(z 5)보다 위 — 손잡이가 단추를 덮어 눌리지 않았다 */
 .scene.peek .cardtoggle{top:17px;background:var(--panel2)}
 .scene.peek .cardbar{padding-right:54px}
 .cardtoggle i{display:block;width:14px;height:2px;background:var(--gold2);border-radius:2px;position:relative}
@@ -230,7 +231,8 @@ html:not(:lang(ko)):not(:lang(zh)):not(:lang(ja)) .river-lbl text{writing-mode:h
 .m3tools button{width:34px;height:34px}
 .m3tools svg{width:18px;height:18px}
 .mapctl button:hover{border-color:rgba(240,215,154,.7)}
-.m3tools button:nth-child(2n){margin-bottom:6px} /* 기울이기·돌리기·확대를 두 개씩 묶어 보이게 */
+.m3tools button:nth-child(2n+1){margin-bottom:6px} /* 색 끄기 하나, 그 아래 기울이기·돌리기·확대를 두 개씩 묶어 보이게 */
+.m3tools button[aria-pressed="true"]{background:var(--gold2);color:#1a140e;border-color:var(--gold2)}
 
 /* scene */
 .hero{position:relative;margin:18px 18px 0;height:230px;border-radius:12px;overflow:hidden;border:1px solid #4a3c2c}
@@ -446,7 +448,7 @@ dialog{position:fixed}
   .journey{height:calc(100dvh - 92px)}
   /* 하단 시트: 기본은 지도 아래 절반(무대가 위에 크게 보이게), 글을 읽을 때는 끝까지(full), 접으면 제목줄 */
   .scene{top:auto;left:0;right:0;bottom:0;width:auto;max-height:48%;border-radius:20px 20px 0 0;border-bottom:0;transition:max-height .45s cubic-bezier(.2,.8,.2,1),opacity .4s}
-  .scene.full{max-height:calc(100% - 10px)}
+  .scene.full{max-height:calc(100% - 10px);z-index:5} /* 다 펼치면 지도 단추·거리 표시 위로 올라와 닫기 단추가 가려지지 않게 */
   .scene.peek{bottom:0;top:auto;max-height:64px}
   .sheetgrip{display:block;position:sticky;top:0;height:22px;margin-bottom:-22px;z-index:5;touch-action:none;cursor:grab}
   .sheetgrip i{display:block;width:38px;height:4px;border-radius:2px;background:rgba(232,220,196,.35);margin:7px auto 0}
@@ -468,11 +470,10 @@ dialog{position:fixed}
   .walkbanner{top:88px;font-size:12.5px;padding:7px 14px;max-width:94vw}
   .walkbanner small{display:none}
   .mapctl{left:auto;right:10px;top:10px;transform:none}
-  /* 모바일은 손가락으로 끌고 벌려 보므로 단추는 3D 켜기만 */
-  .terrain-on .m3tools{display:none}
-  /* 모바일 자막은 지도 위쪽, 칩 아래에 */
-  .caption{left:10px;right:10px;bottom:auto;top:58px;max-width:none;padding:8px 14px}
-  .caption p{font-size:16px;-webkit-line-clamp:4} /* 좁은 화면은 긴 문장이 4줄까지 */
+  /* 모바일은 손가락으로 끌고 벌려 보므로 단추는 3D 켜기와 색 끄기만 */
+  .terrain-on .m3tools button:not([data-k="plain"]){display:none}
+  /* 모바일은 자막을 띄우지 않는다 — 좁은 지도에서 무대를 가리고, 낭독을 듣는 것으로 충분하다 */
+  .caption{display:none}
   .credit,.meta,.gospels,.story,.words-sec{padding-left:16px;padding-right:16px}
   .note,.reflect,.pad{margin-left:16px;margin-right:16px}
   .story{font-size:17px;line-height:1.9}
@@ -529,6 +530,11 @@ dialog{position:fixed}
 .land-steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;text-align:left;counter-reset:s}
 .land-steps li{display:grid;grid-template-columns:34px 1fr;column-gap:12px;padding:13px 14px;border-left:2px solid rgba(217,180,106,.5);background:linear-gradient(90deg,rgba(37,31,24,.65),rgba(37,31,24,.15));border-radius:0 12px 12px 0}
 .land-steps i{grid-row:span 2;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-family:var(--serif);font-weight:700;color:#24180a;background:linear-gradient(180deg,#e9c97f,#b88a3e)}
+.land-qna{display:inline-flex;flex-direction:column;align-items:center;gap:2px;margin-top:18px;padding:9px 18px;border:1px solid rgba(217,180,106,.45);border-radius:14px;background:rgba(217,180,106,.07);color:var(--muted);font-size:13px;line-height:1.5;text-decoration:none;max-width:min(92vw,440px)}
+.land-qna span{word-break:keep-all;text-wrap:balance}
+.land-qna b{color:var(--gold2);font-size:15px}
+.land-qna[hidden]{display:none}
+.land-qna:hover{color:var(--ink);border-color:var(--gold);background:rgba(217,180,106,.12)}
 .land-end{padding-top:48px!important;padding-bottom:28px!important}
 .land-foot{margin-top:44px;font-size:11.5px;letter-spacing:.06em}
 .land-foot a{color:var(--faint);text-decoration:none}

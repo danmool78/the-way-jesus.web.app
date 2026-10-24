@@ -92,7 +92,7 @@ async function build() {
   envScene.add(new THREE.Mesh(g, new THREE.MeshBasicMaterial({ vertexColors: true, side: THREE.BackSide })));
   env = new THREE.PMREMGenerator(renderer).fromScene(envScene).texture;
   // 가장 아래: 땅색 큰 판 (바탕 그림의 투명한 가장자리 밑과 그 바깥)
-  const land = new THREE.Mesh(new THREE.PlaneGeometry(30000, 30000), new THREE.MeshStandardMaterial({ color: '#e3d5b4', roughness: 1 }));
+  const land = new THREE.Mesh(new THREE.PlaneGeometry(30000, 30000), greyable(new THREE.MeshStandardMaterial({ color: '#e3d5b4', roughness: 1 })));
   land.rotation.x = -Math.PI / 2; land.position.y = -8; land.receiveShadow = true; scene.add(land);
   await Promise.all(BASES.map(async b => { b.tex = mapTex(await loadImg(b.src)); }));
   addWalker(); addLabels();
@@ -139,7 +139,7 @@ async function loadRegion(r) {
   for (let k = 0; k < hw * hh; k++) pos.setY(k, H[k]);
   geo.translate((r.X0 + r.X1) / 2, 0, (r.Z0 + r.Z1) / 2);
   geo.computeVertexNormals();
-  r.mesh = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ map: mapTex(cImg), roughness: 0.95 }));
+  r.mesh = new THREE.Mesh(geo, greyable(new THREE.MeshStandardMaterial({ map: mapTex(cImg), roughness: 0.95 })));
   r.mesh.receiveShadow = r.mesh.castShadow = true;
   scene.add(r.mesh);
   addTrees(r); addVillages(r);
@@ -172,7 +172,7 @@ async function addCityDetail() {
     pos.setY(i, heightAt(x, z) + 0.08); uv.setXY(i, (x - x0) / U, 1 - (z - z0) / U);
   }
   geo.computeVertexNormals();
-  const m = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ map: mapTex(cv), roughness: 0.95, transparent: true, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 }));
+  const m = new THREE.Mesh(geo, greyable(new THREE.MeshStandardMaterial({ map: mapTex(cv), roughness: 0.95, transparent: true, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 })));
   m.receiveShadow = true; m.renderOrder = 1; scene.add(m);
 }
 
@@ -189,7 +189,7 @@ function decorate() {
     const sh = new THREE.Shape([[bx0, bz0], [bx1, bz0], [bx1, bz1], [bx0, bz1]].map(([x, z]) => new THREE.Vector2(x, z)));
     regions.filter(r => r.heights && r.X0 >= bx0 && r.X1 <= bx1 && r.Z0 >= bz0 && r.Z1 <= bz1)
       .forEach(r => sh.holes.push(new THREE.Path([[r.X0, r.Z0], [r.X0, r.Z1], [r.X1, r.Z1], [r.X1, r.Z0]].map(([x, z]) => new THREE.Vector2(x, z)))));
-    const m = flat(sh, new THREE.MeshStandardMaterial({ map: b.tex, transparent: true, roughness: 1, side: THREE.DoubleSide }), b.y);
+    const m = flat(sh, greyable(new THREE.MeshStandardMaterial({ map: b.tex, transparent: true, roughness: 1, side: THREE.DoubleSide })), b.y);
     const p = m.geometry.attributes.position, uv = m.geometry.attributes.uv;
     for (let i = 0; i < p.count; i++) uv.setXY(i, (p.getX(i) - bx0) / (bx1 - bx0), 1 - (p.getY(i) - bz0) / (bz1 - bz0));
   });
@@ -238,7 +238,7 @@ function addTrees(r) {
     const dd = Math.hypot(Math.max(CITY.x0 - x, 0, x - CITY.x1), Math.max(CITY.z0 - z, 0, z - CITY.z1));
     spots.push([x, y, z, dd < 6 ? 0.3 + 0.7 * dd / 6 : 1]); // 도성 둘레는 작게 — 가까이 볼 때 나무가 성전만 해 보이지 않게
   }
-  const im = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1, 0), new THREE.MeshStandardMaterial({ color: '#7d8f55', roughness: 1, flatShading: true, emissive: '#2a3418', emissiveIntensity: 0.6 }), spots.length); // emissive: 그늘진 면이 새까매지지 않게
+  const im = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1, 0), greyable(new THREE.MeshStandardMaterial({ color: '#7d8f55', roughness: 1, flatShading: true, emissive: '#2a3418', emissiveIntensity: 0.6 })), spots.length); // emissive: 그늘진 면이 새까매지지 않게
   const o = new THREE.Object3D(), c = new THREE.Color();
   spots.forEach(([x, y, z, f], i) => { const s = (0.35 + rnd() * 0.45) * f; o.position.set(x, y + s * 0.6, z); o.scale.set(s, s * 0.85, s); o.rotation.y = rnd() * 6; o.updateMatrix(); im.setMatrixAt(i, o.matrix); im.setColorAt(i, c.set('#7d8f55').multiplyScalar(0.85 + rnd() * 0.3)); });
   im.castShadow = true; scene.add(im);
@@ -428,14 +428,32 @@ function sceneDist(ev) {
   const [x0, z0] = px([p.lat, p.lng]), [x1, z1] = px(at), sep = Math.hypot(x1 - x0, z1 - z0);
   return sep < 8 ? placeDist(ev.place) : Math.max(placeDist(ev.place), sep * 1.6);
 }
-// 무대 인물의 크기: 당기면 커지되 천천히 (도성 가까이에서 건물을 다 가리지 않게). 도성 안에서는 인물을 줄여 건물을 덜 가리게
-const zoomAt = (dist, k) => THREE.MathUtils.clamp((150 / dist) ** 0.6, 0.35, 1.5) * (isCity(k) ? 0.62 : 1);
+// 장소 k에서 dist 거리일 때 예전 무대의 인물 크기 (stage.js가 무대 축척을 정할 때 쓴다)
+const zoomAt = (dist, k) => figZoom(dist, isCity(k));
+// 무대 인물의 크기 (stage.js가 terrainView.zoom으로 받는다). 당기면 천천히 커지다가(0.6제곱) 1.5배에 이르는 거리(FIG_D)부터는
+// 땅과 같은 비율로 커진다 — 인물만 멈추면 땅만 계속 커져 인물이 점점 작아 보였다. 도성 안은 그대로 1.5배에서 멈춘다:
+// 처음부터 바짝(42) 다가가 있어 같이 키우면 성벽·성전을 가리고, 당길수록 건물이 드러나는 편이 낫다
+const FIG_MAX = 1.5, FIG_D = 150 / FIG_MAX ** (1 / 0.6);
+function figZoom(dist, city) {
+  if (city) return THREE.MathUtils.clamp((150 / dist) ** 0.6, 0.35, FIG_MAX) * 0.62; // 도성 안에서는 인물을 줄여 건물을 덜 가리게
+  return dist >= FIG_D ? Math.max(0.35, (150 / dist) ** 0.6) : FIG_MAX * FIG_D / dist;
+}
+// 가장 가까이 당길 수 있는 거리: 무대(인물과 함께 커지는 캔버스)가 카드에 가리지 않은 지도 영역을 채우는 데까지.
+// 크기 공식은 stage.js의 resize와 같게 (폭 300·높이 270, 모바일 230·200, 넓은 무대 wide)
+function minDist() {
+  const ev = EVENTS[idx];
+  if (isCity(ev.place)) return 25;
+  const r = wrap.getBoundingClientRect(), mobile = innerWidth <= 900, wide = SCRIPTS[ev.id]?.wide || 1;
+  const fw = mobile ? r.width : r.width - (Math.min(460, r.width * 0.42) + 28), fh = mobile ? r.height * 0.52 : r.height;
+  const zMax = Math.max(FIG_MAX, 0.95 * Math.min(fw / ((mobile ? 230 : 300) * wide), fh / ((mobile ? 200 : 270) * wide)));
+  return Math.max(25, FIG_MAX * FIG_D / zMax);
+}
 // 확대·축소는 늘 지금 장면의 무대를 가운데로 다시 맞추며 한다 — 끌어서 옮겨 둔 곳을 기준으로 당기면 무대가 화면 밖에 남았다
 function zoomToStage(dist) {
   const ev = EVENTS[idx], at = SCRIPTS[ev.id]?.at, p = PLACES[ev.place];
   let [tx, tz] = px([p.lat, p.lng]);
   if (at) { const [x1, z1] = px(at); if (Math.hypot(x1 - tx, z1 - tz) >= 8) { tx = (tx + x1) / 2; tz = (tz + z1) / 2; } }
-  cam.goal = { tx, tz, dist: THREE.MathUtils.clamp(dist, 25, 520) };
+  cam.goal = { tx, tz, dist: THREE.MathUtils.clamp(dist, minDist(), 520) };
 }
 function resize() {
   const r = wrap.getBoundingClientRect();
@@ -501,6 +519,15 @@ function loop(now) {
 
 /* ---------- 조작: 끌어 옮기기, 바퀴·두 손가락으로 당기기 ---------- */
 const ui = { pitch: 0.62, yaw: 0 };
+// 색 끄기: 땅·바탕·나무의 색을 옅은 회색으로 바꿔 이동 길(색 선)만 또렷하게. 음영은 남아 지형 굴곡은 그대로 보인다
+const PLAIN = { value: (() => { try { return localStorage.getItem('theway-plain') === '1' ? 1 : 0; } catch { return 0; } })() };
+function greyable(m) {
+  m.onBeforeCompile = s => {
+    s.uniforms.uPlain = PLAIN;
+    s.fragmentShader = 'uniform float uPlain;\n' + s.fragmentShader.replace('#include <color_fragment>', '#include <color_fragment>\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(dot(diffuseColor.rgb, vec3(.299, .587, .114)) * .8 + .2), uPlain);');
+  };
+  return m;
+}
 const WORLD = (() => { const [x0, z0] = px([34.6, 29.4]), [x1, z1] = px([29.15, 37.4]); return { x0, z0, x1, z1 }; })();
 function bindInput(c) {
   let drag = null; const pts = new Map();
@@ -510,7 +537,7 @@ function bindInput(c) {
     const prev = pts.get(e.pointerId); pts.set(e.pointerId, [e.clientX, e.clientY]);
     if (pts.size === 2) { // 두 손가락: 벌리고 오므려 당기고, 비틀어 돌린다
       const [a, b] = [...pts.values()], d = Math.hypot(a[0] - b[0], a[1] - b[1]), ang = Math.atan2(b[1] - a[1], b[0] - a[0]);
-      if (drag.d) { cam.dist = THREE.MathUtils.clamp(cam.dist * drag.d / d, 25, 520); zoomToStage(cam.dist); }
+      if (drag.d) { cam.dist = THREE.MathUtils.clamp(cam.dist * drag.d / d, minDist(), 520); zoomToStage(cam.dist); }
       if (drag.ang !== undefined) ui.yaw += ang - drag.ang;
       drag.d = d; drag.ang = ang; return;
     }
@@ -566,11 +593,13 @@ function controls() {
     right: '<path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.5 4v4h-4"/>',
     in: '<path d="M12 5.5v13M5.5 12h13"/>',
     out: '<path d="M5.5 12h13"/>',
+    plain: '<path d="M12 3.5s6 6.3 6 10.6a6 6 0 0 1-12 0C6 9.8 12 3.5 12 3.5Z"/><path d="M4.5 4.5l15 15"/>', // 빗금 친 물방울: 색 끄기
     reset: '<circle cx="12" cy="12" r="6.5"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3"/>',
   };
   const tool = (k, title) => `<button data-k="${k}" title="${title}" aria-label="${title}">${I(ICON[k])}</button>`;
   box.innerHTML = `<button id="mode3d" class="m3" aria-pressed="false">${I(ICON.m3)}</button>
     <div class="m3tools">
+      ${tool('plain', t('plainTerrain'))}
       ${tool('tiltUp', t('tiltUp'))}${tool('tiltDown', t('tiltDown'))}
       ${tool('left', t('rotate'))}${tool('right', t('rotate'))}
       ${tool('in', '+')}${tool('out', '−')}
@@ -579,8 +608,14 @@ function controls() {
   wrap.appendChild(box);
   $('#mode3d').title = t('map3d'); $('#mode3d').setAttribute('aria-label', t('map3d'));
   $('#mode3d').onclick = () => setOn(!on);
+  const plainBtn = box.querySelector('[data-k="plain"]');
+  plainBtn.setAttribute('aria-pressed', String(!!PLAIN.value));
   box.querySelectorAll('.m3tools button').forEach(b => b.onclick = () => {
     const k = b.dataset.k;
+    if (k === 'plain') {
+      PLAIN.value = PLAIN.value ? 0 : 1; plainBtn.setAttribute('aria-pressed', String(!!PLAIN.value));
+      try { localStorage.setItem('theway-plain', PLAIN.value ? '1' : '0'); } catch { /* 이번 방문만 */ }
+    }
     if (k === 'tiltUp') ui.pitch = Math.min(1.45, ui.pitch + 0.15);
     if (k === 'tiltDown') ui.pitch = Math.max(0.25, ui.pitch - 0.15);
     if (k === 'left') ui.yaw += 0.35;

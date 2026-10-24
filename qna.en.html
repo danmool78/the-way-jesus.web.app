@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#16120e">
+<meta name="description" content="The Way — questions and answers on why it was made, what it is for, why the 3D stage looks the way it does, and how to get the most out of it">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<title>Questions &amp; Answers — The Way</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* Q&A — same feel as the intro screen (.intro): dark background, gold, serif headings */
+  body{overflow:auto;background:radial-gradient(ellipse at 50% 0%,rgba(217,180,106,.13),transparent 50%),var(--bg)}
+  .qna{max-width:760px;margin:0 auto;padding:28px 20px 64px}
+  .qna-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .qna-top a{color:var(--gold2);text-decoration:none;display:inline-flex;align-items:center;gap:8px;font-size:14px}
+  .qna-top img{width:28px;height:28px}
+  .qna-top .back{border:1px solid #4a3c2c;border-radius:999px;padding:7px 14px}
+  .qna-top .back:hover{border-color:var(--gold)}
+  .qna h1{font-family:var(--serif);font-size:34px;margin:34px 0 8px;color:#f6ead0}
+  .qna .lead{color:var(--muted);line-height:1.8;margin:0 0 10px}
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 8px;padding:0;list-style:none}
+  .toc a{display:block;border:1px solid #4a3c2c;border-radius:999px;padding:6px 13px;font-size:13px;color:var(--ink);text-decoration:none;background:rgba(255,255,255,.02)}
+  .toc a:hover{border-color:var(--gold);color:var(--gold2)}
+  .qna h2{font-family:var(--serif);font-size:22px;color:var(--gold2);margin:44px 0 12px;padding-top:8px;border-top:1px solid #3a3026;scroll-margin-top:16px}
+  details{border:1px solid #3a3026;border-radius:14px;background:rgba(29,24,19,.7);margin:10px 0;overflow:hidden}
+  details[open]{border-color:#5a4830}
+  summary{list-style:none;cursor:pointer;padding:15px 48px 15px 18px;font-weight:700;font-size:16px;line-height:1.5;position:relative}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:'Q';font-family:var(--serif);color:var(--gold);margin-right:10px}
+  summary::after{content:'';position:absolute;right:20px;top:22px;width:9px;height:9px;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(45deg);transition:transform .25s}
+  details[open] summary::after{transform:translateY(4px) rotate(-135deg)}
+  summary:hover{color:var(--gold2)}
+  .a{padding:0 20px 18px 40px;color:#e2d7c3;line-height:1.85;font-size:15px}
+  .a p{margin:0 0 10px}
+  .a ul,.a ol{margin:4px 0 12px;padding-left:20px}
+  .a li{margin:4px 0}
+  .a b{color:var(--gold2);font-weight:700}
+  .a .tip{display:block;border-left:2px solid var(--gold);padding:8px 12px;margin:10px 0;background:rgba(217,180,106,.07);border-radius:0 8px 8px 0;font-size:14px;color:var(--muted)}
+  .end{text-align:center;margin-top:56px}
+  .end a{display:inline-block;padding:14px 28px;border-radius:999px;background:linear-gradient(180deg,#e9c97f,#b88a3e);color:#24180a;font-weight:700;text-decoration:none}
+  .foot{text-align:center;margin-top:28px;font-size:12px;color:var(--faint)}
+  .foot a{color:var(--faint)}
+  @media (max-width:600px){.qna h1{font-size:28px}.a{padding-left:18px}summary{font-size:15px}}
+</style>
+</head>
+<body>
+<main class="qna">
+  <nav class="qna-top">
+    <a href="./?lang=en"><img src="assets/logo.svg" alt=""><b style="font-family:var(--serif);font-size:20px">The Way</b></a>
+    <a class="back" href="./?lang=en">Back to the journey →</a>
+  </nav>
+
+  <h1>Questions &amp; Answers</h1>
+  <p class="lead">Why we made 'The Way', what it is for, why the 3D stage on the map looks the way it does, and how to get the most out of it — gathered here as questions and answers.</p>
+  <ul class="toc">
+    <li><a href="#why">Why it matters</a></li>
+    <li><a href="#purpose">Purpose</a></li>
+    <li><a href="#stage">The 3D stage</a></li>
+    <li><a href="#benefit">What you gain</a></li>
+    <li><a href="#howto">Using the features</a></li>
+    <li><a href="#more">Other questions</a></li>
+  </ul>
+
+  <h2 id="why">Why is this app needed?</h2>
+  <details open>
+    <summary>There are already four Gospels. Why weave them together again?</summary>
+    <div class="a">
+      <p>Matthew, Mark, Luke and John each recorded the same Jesus through different eyes. Some events appear in all four; others in only one. Their order and emphasis differ a little, too.</p>
+      <p>So reading one Gospel at a time gives you depth, but you have to piece together in your own head <b>"in what order, and where, did his life unfold?"</b> This app weaves the four accounts together in the order of when and where things happened, joining 61 scenes from his birth to his ascension into a single road.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Why does the map matter?</summary>
+    <div class="a">
+      <p>When we read the Bible, we often skim past place names. But once you know how many days' walk it is from Nazareth to Bethlehem, how far the Sea of Galilee is from Jerusalem, and why Jerusalem is a place you "go up" to, the stories read differently.</p>
+      <p>In this app, every move to a new scene is a walk across the real land. You also see the distance, how many days it took, and how far he has walked so far. The aim is to let you feel, almost in your body, just how much he walked.</p>
+    </div>
+  </details>
+  <details>
+    <summary>How is it different from a Bible app or a commentary?</summary>
+    <div class="a">
+      <p>Bible apps are good for reading the text, and commentaries for explaining its meaning. 'The Way' comes one step before both: it is <b>a map and a guide that shows you the whole picture</b>. For every scene it brings together the map, a classic painting, a 3D stage, narration, his words, a comparison of the four Gospels, background notes, reflection questions and a quiz.</p>
+    </div>
+  </details>
+
+  <h2 id="purpose">What is the purpose of this app?</h2>
+  <details open>
+    <summary>In a word, what was it made for?</summary>
+    <div class="a">
+      <p><b>To help you meet the life of Jesus as one continuous road.</b> Not as scattered fragments of story, but as a road one person actually walked — and to let the words spoken along that road shine on your own life today.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Does it replace the Bible?</summary>
+    <div class="a">
+      <p>No. This app is <b>a door into the Bible</b>. Every scene lists the chapters and verses of the text (in the 'Compare' tab). When a scene stays with you, please open your Bible and read that passage for yourself.</p>
+      <p>The stories are written faithfully to the text, and nothing that is not in the text has been invented. Only the atmosphere — the landscape, the light, the sounds of the day — has been added.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Which Bible translation do the sayings use?</summary>
+    <div class="a">
+      <p>We did not copy sentences from any existing Bible translation. The sayings are <b>fresh renderings in today's language</b> that keep the meaning of the original. So the wording may differ a little from the translation you know. For the exact text, please look up the chapter and verse listed alongside in your Bible.</p>
+    </div>
+  </details>
+  <details>
+    <summary>How were the order and the places of the scenes decided?</summary>
+    <div class="a">
+      <p>The order is based on the traditional 'harmony of the Gospels', which sets the four accounts side by side. Even so, scholars disagree about the sequence of some events.</p>
+      <p>The same goes for places. Of the 32 places, a few whose exact location is unknown (Emmaus, for example) are set at the most likely site and marked <b>'approx.'</b> Dates are given as approximations, such as 'c. AD 30'.</p>
+    </div>
+  </details>
+
+  <h2 id="stage">Why does the 3D stage look the way it does?</h2>
+  <details open>
+    <summary>What are the little figures on the map?</summary>
+    <div class="a">
+      <p>They are a <b>miniature stage</b> set up over the place where the scene happened. Like a museum diorama, the people of that day stand on the place pin, so you can see at a glance where you are and what is happening.</p>
+      <p>The stage moves with the narration. As each sentence is read, figures walk in, speak, kneel and look up. When someone speaks, the others turn to look. In night scenes the whole map turns indigo; in storm scenes, cloud shadows pass over it; and on the morning of the resurrection, it glows gold.</p>
+    </div>
+  </details>
+  <details>
+    <summary>The figures and the stage look much bigger than real life. Why?</summary>
+    <div class="a">
+      <p>That is on purpose. The map fits hundreds of kilometres onto one screen. At true scale, a person would be smaller than a single dot and simply invisible.</p>
+      <p>So the stage <b>does not follow the map's scale; it is always drawn at about the same size on screen</b> — around 300px wide on a computer and 230px on a phone. When you zoom the map in or out, the figures stay large enough to recognise, and the floor of the stage stays fixed to that place's pin. The trade-off is that, from far away, the stage looks bigger than the village or city it sits on. Think of it as a picture on the map, like a signpost saying "this is where it happened."</p>
+      <span class="tip">In scenes with large crowds, the stage is drawn a little wider and the figures a little smaller so that everyone fits on one screen.</span>
+    </div>
+  </details>
+  <details>
+    <summary>If the stage is enlarged, how does the geography still fit?</summary>
+    <div class="a">
+      <p>Because the stage is larger, we adjusted it so it does not spill over onto the wrong places.</p>
+      <ul>
+        <li>Things that must match the real terrain, <b>such as shorelines and fields</b>, are placed at their real latitude and longitude. That way boats sit on the water and people stand on land.</li>
+        <li>For <b>towns whose pin is right at the water's edge</b> (such as Capernaum), the stage has been shifted slightly toward land.</li>
+        <li>When you zoom in on <b>Jerusalem</b> as far as the city, a 3D picture of the city appears beneath it. So the stage does not build its own temple, and for places right beside the walls, such as Golgotha, the stage has been moved slightly out into the open ground outside the city.</li>
+        <li>Directions follow the map as well: the top of the screen is north and the right is east. In the Mount of Olives scenes, the city lies to the west (on the left).</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>Why is the crucifixion scene shown only from afar, in silhouette?</summary>
+    <div class="a">
+      <p>We set a principle while making the stage: <b>suffering and violence are not depicted</b>. Golgotha is shown only by the outline of crosses in the distance, people kneeling toward them, and the darkening light. Painful moments such as the mocking and the flogging are heard only in the narration, while the stage is left empty or holds only people weeping. This is so that it is fine to watch with children — and so that the words come before our imagination.</p>
+      <p>There are other principles too.</p>
+      <ul>
+        <li><b>Evil shown only as a shape:</b> the tempter in the wilderness is drawn only as a dark, hooded silhouette.</li>
+        <li><b>Faithful to the text:</b> nothing significant that is not in the Bible is invented. The stage only supports the narration.</li>
+        <li><b>Nothing pops up suddenly:</b> people fade in gradually or walk in.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>What is the relief terrain that appears when I press the 3D button?</summary>
+    <div class="a">
+      <p>It is the rise and fall of the land, built from real elevation data (satellite terrain surveys). The Galilee, Judea and Egypt regions load as you get close to a place. Heights are exaggerated a little, by <b>1.8×</b>. At true proportions the hills would look almost flat, so this makes the valleys and ridges easy to see.</p>
+      <p>In 3D terrain you can drag to move, zoom with the mouse wheel or two fingers, and on a computer rotate the view with the buttons on the left. See for yourself why Jerusalem is a place you "go up" to, and how steep the road is from Jericho to Jerusalem.</p>
+    </div>
+  </details>
+
+  <h2 id="benefit">What can I gain from it?</h2>
+  <details open>
+    <summary>What will this app give me?</summary>
+    <div class="a">
+      <ul>
+        <li><b>The whole picture:</b> the life of Jesus, from his birth to his ascension, comes together as one flow. Each event finds its place — when and where it happened.</li>
+        <li><b>A feel for the land:</b> seeing the distances and terrain makes words like "he went up", "he crossed over" and "he went into the wilderness" come alive.</li>
+        <li><b>The voices of four witnesses:</b> by comparing how the four Gospels record the same event, you discover their different emphases.</li>
+        <li><b>Holding his words longer:</b> each scene gathers its key sayings, and reflection questions help you hold them up to your life today.</li>
+        <li><b>Making it stick:</b> with pictures, a stage, sound and quizzes together, a scene you have seen once stays with you for a long time.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>Who is it especially good for?</summary>
+    <div class="a">
+      <ul>
+        <li><b>Those reading the Gospels for the first time:</b> you can grasp the big storyline before diving into the text.</li>
+        <li><b>Those who have read the Bible for years:</b> you will see familiar stories afresh, laid out on a map and in order.</li>
+        <li><b>Families and small groups:</b> it is a good way to listen to a scene together and talk it over with the reflection questions.</li>
+        <li><b>Sunday schools and youth:</b> the stage and quizzes keep learning from getting dull. Since painful scenes are not depicted, it is also suitable for watching with children.</li>
+      </ul>
+    </div>
+  </details>
+
+  <h2 id="howto">Which features are there, and how should I use them?</h2>
+  <details open>
+    <summary>How do I get started?</summary>
+    <div class="a">
+      <ol>
+        <li>On the first screen, press <b>'Begin the journey'</b>. When you come back, you can carry on from the scene you were last viewing.</li>
+        <li>Read the story on the card on the right (at the bottom on a phone), or press the <b>▶ button</b> to hear it read aloud.</li>
+        <li>When you are done, press <b>'Walk to the next place'</b>. You will walk across the map to the next scene.</li>
+      </ol>
+      <span class="tip">Walk one or two scenes a day, and in a month or two you will have followed the whole life of Jesus once.</span>
+    </div>
+  </details>
+  <details>
+    <summary>How do I use listening and the 'Guided journey'?</summary>
+    <div class="a">
+      <ul>
+        <li><b>▶ Listen:</b> reads the scene's title, story and sayings in turn. Korean is read by recorded voices, with the words of Jesus in a different voice; other languages use your device's voice. On a computer, subtitles appear at the bottom of the map (on a phone you just listen, without subtitles), and the stage moves along with each sentence.</li>
+        <li><b>Guided journey:</b> when it is on, after one scene has been read the app walks on to the next place by itself and keeps reading. You can leave it playing like an audiobook.</li>
+        <li><b>Speed:</b> choose anything from 0.85× to 1.3×.</li>
+        <li><b>♫ Background music:</b> gentle music suited to the scene plays beneath the narration. To turn it off, press the music-note button.</li>
+      </ul>
+      <span class="tip">In the 'Scripture' tab, press the 🔊 button next to a saying to hear just that one saying.</span>
+    </div>
+  </details>
+  <details>
+    <summary>What are the different tabs on the scene card?</summary>
+    <div class="a">
+      <ul>
+        <li><b>Story:</b> the scene retold in prose. Further down, <b>'Background'</b> gives the historical and geographical setting, and <b>'Pause and Reflect'</b> offers questions to hold up to your life today.</li>
+        <li><b>Scripture:</b> the key sayings of the scene, gathered together, with chapter and verse.</li>
+        <li><b>Compare:</b> shows which of the four Gospels record this scene, with their chapters and verses side by side.</li>
+      </ul>
+      <p>The painting at the top of the card (from James Tissot's series on the Gospels) can be enlarged with <b>'View painting'</b>.</p>
+    </div>
+  </details>
+  <details>
+    <summary>How do I use the map?</summary>
+    <div class="a">
+      <ul>
+        <li><b>Drag:</b> drag the map to look around. Zooming in and out happens automatically to suit each scene. In Jerusalem scenes, the view goes right into the city and a 3D picture of the city appears.</li>
+        <li><b>Place chip</b> (the place name at the top left): press it to return to the current scene's place.</li>
+        <li><b>Whole route:</b> see the entire road so far at a glance. Press it again to return to the current scene.</li>
+        <li><b>Press a pin:</b> press a place on the map to go to the scene that happened there.</li>
+        <li><b>3D button:</b> see the rise and fall of the land in relief. In 3D, zoom with the mouse wheel or two fingers; on a computer you can also rotate or zoom with the buttons on the left.</li>
+        <li><b>Timeline at the bottom:</b> each period has its own colour and picture. Press a dot to jump straight to a scene. Brightly filled dots are scenes you have already visited.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>How does it work on a phone?</summary>
+    <div class="a">
+      <p>The scene card is a sheet that slides up from the bottom of the screen. At first it comes only halfway up, so the map and the stage are shown large.</p>
+      <ul>
+        <li><b>Drag the handle at the top of the sheet upward</b>, or scroll the text up, and it rises all the way so the text is easy to read.</li>
+        <li><b>Drag it down</b> and it lowers one step at a time until only the title bar is left, giving you a wide view of the map.</li>
+        <li>Add it to your home screen and you can open it straight away, like an app.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>Where are the Words, the Harmony and the quizzes?</summary>
+    <div class="a">
+      <ul>
+        <li><b>Words tab</b> (at the top): the words of Jesus recorded in the four Gospels, gathered in the order of the journey. You can search by a word such as "love", "bread" or "peace".</li>
+        <li><b>Harmony of the Gospels</b> (⚙ Settings at the top right): a table showing where each of the four Gospels records the 61 scenes. You can filter it too, with options such as 'All four Gospels' or 'John only'. Press a row to go to that scene.</li>
+        <li><b>Quiz tab</b> and <b>scene quizzes</b> (the 'Quiz' button at the bottom right): go back over the scenes you have walked through as questions.</li>
+        <li><b>My footsteps</b> (the progress bar at the top, or Settings): each scene you open leaves a footstep, and each quiz you answer correctly earns a star.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>Are there good ways to use it with others?</summary>
+    <div class="a">
+      <ul>
+        <li><b>Personal devotion:</b> listen to one scene a day and carry one reflection question with you through the day. Better still, read that scene's passage in your own Bible.</li>
+        <li><b>Family worship:</b> watch the screen together, listen to the narration, and try the quiz with your children.</li>
+        <li><b>Small groups and Bible study:</b> use the 'Compare' tab and the Harmony to see how each Gospel records the same event, and talk it over.</li>
+        <li><b>Sunday school:</b> put it on a big screen and follow the road together with 'Walk to the next place'. Guessing the distance walked can be fun, too.</li>
+        <li><b>On your commute:</b> turn on the Guided journey and listen like an audiobook.</li>
+      </ul>
+    </div>
+  </details>
+
+  <h2 id="more">Other questions</h2>
+  <details>
+    <summary>Do I need to sign up? Where is my record kept?</summary>
+    <div class="a">
+      <p>No sign-up or login is needed. The scenes you have visited and your quiz results are saved <b>only in the browser of the device you are using</b>, and are never sent anywhere. That means your record does not carry over to another device or another browser. You can clear your record in 'My footsteps'.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Can I use it in other languages?</summary>
+    <div class="a">
+      <p>You can change the language in ⚙ Settings at the top right. Korean, English, Spanish, Portuguese, French, Chinese, Indonesian and Japanese are supported. Recorded narration is currently available only in Korean; other languages are read aloud by your device's own voice.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Where do the paintings come from?</summary>
+    <div class="a">
+      <p>The pictures at the top of the cards come from the Life of Christ series by the 19th-century French painter <b>James Tissot</b>. For this series he travelled to the Holy Land several times himself, painting its landscapes and people. The source is noted for each painting.</p>
+    </div>
+  </details>
+
+  <div class="end"><a href="./?lang=en">Begin the journey →</a></div>
+  <p class="foot"><a href="https://sssoft-idea.web.app/" target="_blank" rel="noopener">© SSSOFT</a></p>
+</main>
+</body>
+</html>

@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#16120e">
+<meta name="description" content="그 길 — 왜 만들었는지, 무엇을 위한 앱인지, 3D 무대를 왜 이렇게 그렸는지, 어떻게 쓰면 좋은지 묻고 답합니다">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<title>묻고 답하기 — 그 길</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* 묻고 답하기 — 첫 화면(.intro)과 같은 결: 어두운 바탕, 금빛, 명조 제목 */
+  body{overflow:auto;word-break:keep-all;background:radial-gradient(ellipse at 50% 0%,rgba(217,180,106,.13),transparent 50%),var(--bg)}
+  .qna{max-width:760px;margin:0 auto;padding:28px 20px 64px}
+  .qna-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .qna-top a{color:var(--gold2);text-decoration:none;display:inline-flex;align-items:center;gap:8px;font-size:14px}
+  .qna-top img{width:28px;height:28px}
+  .qna-top .back{border:1px solid #4a3c2c;border-radius:999px;padding:7px 14px}
+  .qna-top .back:hover{border-color:var(--gold)}
+  .qna h1{font-family:var(--serif);font-size:34px;margin:34px 0 8px;color:#f6ead0}
+  .qna .lead{color:var(--muted);line-height:1.8;margin:0 0 10px}
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 8px;padding:0;list-style:none}
+  .toc a{display:block;border:1px solid #4a3c2c;border-radius:999px;padding:6px 13px;font-size:13px;color:var(--ink);text-decoration:none;background:rgba(255,255,255,.02)}
+  .toc a:hover{border-color:var(--gold);color:var(--gold2)}
+  .qna h2{font-family:var(--serif);font-size:22px;color:var(--gold2);margin:44px 0 12px;padding-top:8px;border-top:1px solid #3a3026;scroll-margin-top:16px}
+  details{border:1px solid #3a3026;border-radius:14px;background:rgba(29,24,19,.7);margin:10px 0;overflow:hidden}
+  details[open]{border-color:#5a4830}
+  summary{list-style:none;cursor:pointer;padding:15px 48px 15px 18px;font-weight:700;font-size:16px;line-height:1.5;position:relative}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:'Q';font-family:var(--serif);color:var(--gold);margin-right:10px}
+  summary::after{content:'';position:absolute;right:20px;top:22px;width:9px;height:9px;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(45deg);transition:transform .25s}
+  details[open] summary::after{transform:translateY(4px) rotate(-135deg)}
+  summary:hover{color:var(--gold2)}
+  .a{padding:0 20px 18px 40px;color:#e2d7c3;line-height:1.85;font-size:15px}
+  .a p{margin:0 0 10px}
+  .a ul,.a ol{margin:4px 0 12px;padding-left:20px}
+  .a li{margin:4px 0}
+  .a b{color:var(--gold2);font-weight:700}
+  .a .tip{display:block;border-left:2px solid var(--gold);padding:8px 12px;margin:10px 0;background:rgba(217,180,106,.07);border-radius:0 8px 8px 0;font-size:14px;color:var(--muted)}
+  .end{text-align:center;margin-top:56px}
+  .end a{display:inline-block;padding:14px 28px;border-radius:999px;background:linear-gradient(180deg,#e9c97f,#b88a3e);color:#24180a;font-weight:700;text-decoration:none}
+  .foot{text-align:center;margin-top:28px;font-size:12px;color:var(--faint)}
+  .foot a{color:var(--faint)}
+  @media (max-width:600px){.qna h1{font-size:28px}.a{padding-left:18px}summary{font-size:15px}}
+</style>
+</head>
+<body>
+<main class="qna">
+  <nav class="qna-top">
+    <a href="./"><img src="assets/logo.svg" alt=""><b style="font-family:var(--serif);font-size:20px">그 길</b></a>
+    <a class="back" href="./">여정으로 돌아가기 →</a>
+  </nav>
+
+  <h1>묻고 답하기</h1>
+  <p class="lead">'그 길'을 왜 만들었는지, 무엇을 위한 앱인지, 지도 위의 3D 무대를 왜 이렇게 그렸는지, 그리고 어떻게 쓰면 좋은지 물음과 답으로 정리했습니다.</p>
+  <ul class="toc">
+    <li><a href="#why">왜 필요한가</a></li>
+    <li><a href="#purpose">목적</a></li>
+    <li><a href="#stage">3D 무대</a></li>
+    <li><a href="#benefit">얻는 유익</a></li>
+    <li><a href="#howto">기능 활용법</a></li>
+    <li><a href="#more">그 밖에</a></li>
+  </ul>
+
+  <h2 id="why">왜 이 앱이 필요한가요?</h2>
+  <details open>
+    <summary>복음서는 이미 넷이나 있는데, 왜 또 엮어야 하나요?</summary>
+    <div class="a">
+      <p>마태·마가·누가·요한, 네 복음서는 같은 예수를 서로 다른 눈으로 기록했습니다. 어떤 사건은 넷 모두에, 어떤 사건은 한 권에만 나옵니다. 순서와 강조점도 조금씩 다릅니다.</p>
+      <p>그래서 한 권씩 읽으면 깊이는 얻어도 <b>"그분의 삶이 어떤 순서로, 어디에서 펼쳐졌는가"</b>는 머릿속에서 따로 맞춰야 합니다. 이 앱은 네 기록을 일어난 때와 장소의 순서로 엮어, 탄생부터 승천까지 61개 장면을 하나의 길로 이어 보여 줍니다.</p>
+    </div>
+  </details>
+  <details>
+    <summary>지도가 왜 중요한가요?</summary>
+    <div class="a">
+      <p>성경을 읽을 때 지명은 흔히 그냥 지나칩니다. 하지만 나사렛에서 베들레헴까지가 걸어서 며칠 길인지, 갈릴리 호수와 예루살렘이 얼마나 떨어져 있는지, 예루살렘이 왜 '올라가는' 곳인지를 알면 이야기가 달리 읽힙니다.</p>
+      <p>이 앱에서는 장면을 옮길 때마다 실제 땅 위를 걸어갑니다. 거리와 걸린 날수, 지금까지 걸어온 길이도 함께 보여 줍니다. 그분이 얼마나 많이 걸으셨는지가 몸으로 느껴지게 하려는 것입니다.</p>
+    </div>
+  </details>
+  <details>
+    <summary>성경 앱이나 해설서와는 무엇이 다른가요?</summary>
+    <div class="a">
+      <p>성경 앱은 본문을 읽는 데, 해설서는 뜻을 풀어 주는 데 강합니다. '그 길'은 그 앞 단계, 곧 <b>전체 그림을 보여 주는 지도이자 길잡이</b>입니다. 장면마다 지도, 명화, 3D 무대, 낭독, 말씀, 네 복음서 대조, 배경 지식, 묵상 질문, 퀴즈를 한자리에 모았습니다.</p>
+    </div>
+  </details>
+
+  <h2 id="purpose">이 앱의 목적은 무엇인가요?</h2>
+  <details open>
+    <summary>한마디로 무엇을 위해 만들었나요?</summary>
+    <div class="a">
+      <p><b>예수의 생애를 하나의 이어진 길로 만나게 하는 것</b>입니다. 흩어진 이야기 조각이 아니라 한 사람이 실제로 걸어간 길로 느끼고, 그 길 위에서 들려진 말씀을 오늘의 내 삶에 비추어 보게 하려는 것입니다.</p>
+    </div>
+  </details>
+  <details>
+    <summary>성경을 대신하나요?</summary>
+    <div class="a">
+      <p>아닙니다. 이 앱은 <b>성경으로 들어가는 문</b>입니다. 장면마다 본문의 장과 절을 함께 적어 두었습니다('비교' 탭). 마음에 남는 장면이 있으면 꼭 성경을 펴서 그 본문을 직접 읽어 보세요.</p>
+      <p>이야기는 본문에 충실하게 쓰되, 본문에 없는 사실은 지어내지 않았습니다. 그날의 풍경과 빛, 소리 같은 분위기만 덧입혔습니다.</p>
+    </div>
+  </details>
+  <details>
+    <summary>말씀은 어느 번역을 썼나요?</summary>
+    <div class="a">
+      <p>기존 번역 성경의 문장을 베끼지 않았습니다. 원문의 뜻을 살려 <b>오늘의 말로 새로 옮긴 재구성</b>입니다. 그래서 익숙한 번역과 낱말이 조금 다를 수 있습니다. 정확한 문장은 함께 적어 둔 장·절로 성경에서 확인해 주세요.</p>
+    </div>
+  </details>
+  <details>
+    <summary>장면의 순서와 장소는 어떻게 정했나요?</summary>
+    <div class="a">
+      <p>네 복음서를 나란히 놓고 맞춘 전통적인 '복음서 대조'를 바탕으로 순서를 정했습니다. 다만 몇몇 사건의 앞뒤는 학자들 사이에도 의견이 갈립니다.</p>
+      <p>장소도 마찬가지입니다. 32곳 가운데 정확한 위치를 알 수 없는 몇 곳(예: 엠마오)은 가장 유력한 자리에 두고 <b>'추정'</b>이라고 표시했습니다. 연대는 '~년경'처럼 어림으로 적었습니다.</p>
+    </div>
+  </details>
+
+  <h2 id="stage">3D 무대는 왜 저렇게 표현했나요?</h2>
+  <details open>
+    <summary>지도 위의 작은 인물들은 무엇인가요?</summary>
+    <div class="a">
+      <p>장면이 일어난 장소 위에 세운 <b>미니어처 무대</b>입니다. 박물관의 디오라마처럼, 장소 핀 위에 그날의 사람들을 세워 지금 어디에서 무슨 일이 일어나는지 한눈에 보이게 했습니다.</p>
+      <p>무대는 낭독과 함께 움직입니다. 문장이 읽힐 때마다 인물이 걸어 들어오고, 말하고, 무릎 꿇고, 고개를 듭니다. 말하는 사람이 있으면 다른 이들이 그쪽을 바라봅니다. 밤 장면은 지도 전체가 남빛으로, 폭풍 장면은 구름 그림자로, 부활의 새벽은 금빛으로 물듭니다.</p>
+    </div>
+  </details>
+  <details>
+    <summary>인물과 무대가 실제보다 훨씬 커 보이는데, 왜 그런가요?</summary>
+    <div class="a">
+      <p>일부러 그렇게 했습니다. 지도는 수백 킬로미터를 한 화면에 담습니다. 실제 크기대로라면 사람은 점 하나보다 작아서 보이지 않습니다.</p>
+      <p>그래서 무대는 <b>지도의 축척을 따르지 않고 화면에서 늘 비슷한 크기</b>로 그립니다. 컴퓨터에서는 폭 300픽셀, 휴대폰에서는 230픽셀 안팎입니다. 지도를 확대하거나 축소해도 인물은 알아볼 만한 크기로 남고, 무대 바닥은 늘 그 장소의 핀에 붙어 있습니다. 대신 멀리서 보면 무대가 마을이나 도성보다 커 보입니다. 지도 위의 표지판처럼 "여기서 이런 일이 있었다"를 알려 주는 그림이라고 생각해 주세요.</p>
+      <span class="tip">군중이 많은 장면은 무대를 조금 넓게, 인물은 조금 작게 그려 한 화면에 담기게 했습니다.</span>
+    </div>
+  </details>
+  <details>
+    <summary>크기를 키웠는데 지리는 어떻게 맞추나요?</summary>
+    <div class="a">
+      <p>무대가 커진 만큼 엉뚱한 곳에 걸치지 않도록 손봤습니다.</p>
+      <ul>
+        <li><b>물가와 들판</b>처럼 실제 지형과 맞아야 하는 것은 실제 위도·경도에 세웁니다. 그래서 배는 물 위에, 사람은 뭍에 섭니다.</li>
+        <li><b>핀이 물가에 있는 마을</b>(가버나움 등)은 무대를 뭍 쪽으로 조금 옮겼습니다.</li>
+        <li><b>예루살렘</b>은 도성까지 확대하면 3D 도성 그림이 깔립니다. 그래서 무대에 성전을 따로 세우지 않고, 골고다처럼 성벽 바로 곁인 곳은 무대를 성 밖 빈 들로 조금 옮겼습니다.</li>
+        <li>방향도 지도를 따릅니다. 화면 위쪽이 북쪽, 오른쪽이 동쪽입니다. 감람산 장면에서 도성은 서쪽(왼쪽)에 있습니다.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>십자가 장면은 왜 멀리, 실루엣으로만 보이나요?</summary>
+    <div class="a">
+      <p>무대를 만들며 세운 원칙이 있습니다. <b>고통과 폭력은 그리지 않는다</b>는 것입니다. 골고다는 멀리 보이는 십자가의 윤곽, 그쪽을 향해 무릎 꿇은 사람들, 어두워지는 빛으로만 표현했습니다. 조롱이나 채찍질처럼 아픈 장면은 낭독으로만 듣고, 무대는 비워 두거나 우는 사람들로만 채웁니다. 아이와 함께 보아도 괜찮도록, 그리고 상상보다 말씀이 앞서도록 하려는 것입니다.</p>
+      <p>그 밖의 원칙도 있습니다.</p>
+      <ul>
+        <li><b>악한 존재는 형체만:</b> 광야의 시험하는 자는 두건 쓴 어두운 실루엣으로만 그렸습니다.</li>
+        <li><b>본문에 충실하게:</b> 성경에 없는 일을 크게 지어내지 않습니다. 무대는 낭독을 받쳐 줄 뿐입니다.</li>
+        <li><b>갑자기 생기지 않게:</b> 사람은 서서히 나타나거나 걸어 들어옵니다.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>3D 단추를 누르면 나오는 입체 지형은 무엇인가요?</summary>
+    <div class="a">
+      <p>실제 고도 자료(인공위성 지형 측량 자료)로 만든 땅의 높낮이입니다. 갈릴리·유대·애굽 지역을 장소에 가까이 갈 때 불러옵니다. 높이는 <b>1.8배</b>로 조금 과장했습니다. 실제 비율 그대로면 구릉이 거의 평평하게 보여서, 골짜기와 산등성이가 눈에 들어오게 하려는 것입니다.</p>
+      <p>입체 지형에서는 끌어서 옮기고, 휠이나 두 손가락으로 확대하고, 컴퓨터에서는 왼쪽의 단추로 돌려 볼 수도 있습니다. 예루살렘이 왜 '올라가는' 곳인지, 여리고에서 예루살렘까지 길이 얼마나 가파른지 직접 보세요.</p>
+    </div>
+  </details>
+
+  <h2 id="benefit">어떤 유익을 얻을 수 있나요?</h2>
+  <details open>
+    <summary>이 앱으로 무엇을 얻을 수 있나요?</summary>
+    <div class="a">
+      <ul>
+        <li><b>전체 그림:</b> 탄생에서 승천까지 예수의 생애가 하나의 흐름으로 정리됩니다. 어느 사건이 언제, 어디서 있었는지 자리가 잡힙니다.</li>
+        <li><b>땅의 감각:</b> 거리와 지형을 보며 본문의 "올라가셨다", "건너가셨다", "광야로 가셨다"가 실감 나게 읽힙니다.</li>
+        <li><b>네 증인의 목소리:</b> 같은 사건을 네 복음서가 어떻게 기록했는지 견주며, 서로 다른 강조점을 발견합니다.</li>
+        <li><b>말씀을 오래 품기:</b> 장면마다 핵심 말씀을 모으고, 묵상 질문으로 오늘의 삶에 비추어 봅니다.</li>
+        <li><b>기억에 남기기:</b> 그림, 무대, 소리, 퀴즈가 함께 있어 한 번 본 장면이 오래 기억됩니다.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>누구에게 특히 좋은가요?</summary>
+    <div class="a">
+      <ul>
+        <li><b>처음 복음서를 읽는 분:</b> 본문에 들어가기 전에 큰 줄기를 먼저 잡을 수 있습니다.</li>
+        <li><b>성경을 오래 읽어 온 분:</b> 익숙한 이야기를 지도와 순서 위에서 새롭게 보게 됩니다.</li>
+        <li><b>가정과 소그룹:</b> 함께 한 장면을 듣고 묵상 질문으로 이야기를 나누기 좋습니다.</li>
+        <li><b>교회학교와 청소년:</b> 무대와 퀴즈로 지루하지 않게 배울 수 있습니다. 고통스러운 장면을 그리지 않아 어린이와 함께 보기에도 알맞습니다.</li>
+      </ul>
+    </div>
+  </details>
+
+  <h2 id="howto">어떤 기능을 어떻게 쓰면 좋을까요?</h2>
+  <details open>
+    <summary>처음엔 어떻게 시작하면 되나요?</summary>
+    <div class="a">
+      <ol>
+        <li>첫 화면에서 <b>'여정 시작하기'</b>를 누릅니다. 다시 오면 마지막에 보던 장면부터 이어서 걸을 수 있습니다.</li>
+        <li>오른쪽(휴대폰은 아래쪽) 카드에서 이야기를 읽거나, <b>▶ 단추</b>로 낭독을 듣습니다.</li>
+        <li>다 보았으면 <b>'다음 장소로 걷기'</b>를 누릅니다. 지도 위를 걸어 다음 장면으로 갑니다.</li>
+      </ol>
+      <span class="tip">하루에 한두 장면씩 걸으면 한두 달에 예수의 생애를 한 번 따라 걷게 됩니다.</span>
+    </div>
+  </details>
+  <details>
+    <summary>듣기와 '자동 여정'은 어떻게 쓰나요?</summary>
+    <div class="a">
+      <ul>
+        <li><b>▶ 듣기:</b> 장면의 제목, 이야기, 말씀을 차례로 읽어 줍니다. 한국어는 녹음된 목소리로 읽고, 예수의 말씀은 다른 목소리로 들립니다. 컴퓨터에서는 지도 아래쪽에 자막이 뜨고(휴대폰은 자막 없이 듣기만), 무대가 문장에 맞춰 움직입니다.</li>
+        <li><b>자동 여정:</b> 켜 두면 한 장면을 다 읽은 뒤 저절로 다음 장소로 걸어가 이어 읽습니다. 오디오북처럼 틀어 두고 들을 수 있습니다.</li>
+        <li><b>빠르기:</b> 0.85배에서 1.3배까지 고를 수 있습니다.</li>
+        <li><b>♫ 배경음악:</b> 낭독 밑에 장면에 어울리는 음악이 잔잔하게 깔립니다. 끄고 싶으면 음표 단추를 누르세요.</li>
+      </ul>
+      <span class="tip">'본문' 탭의 말씀 옆 🔊 단추를 누르면 그 말씀 하나만 들을 수 있습니다.</span>
+    </div>
+  </details>
+  <details>
+    <summary>장면 카드의 탭은 무엇이 다른가요?</summary>
+    <div class="a">
+      <ul>
+        <li><b>이야기:</b> 장면을 풀어 쓴 글입니다. 아래쪽 <b>'알고 가기'</b>에 역사·지리 배경이, <b>묵상 질문</b>에 오늘의 삶에 비추어 볼 물음이 있습니다.</li>
+        <li><b>본문:</b> 그 장면의 핵심 말씀을 모았습니다. 장과 절이 함께 적혀 있습니다.</li>
+        <li><b>비교:</b> 네 복음서 가운데 어느 책이 이 장면을 기록했는지, 장과 절을 나란히 보여 줍니다.</li>
+      </ul>
+      <p>카드 위의 명화(제임스 티소의 복음서 연작)는 <b>'명화 크게 보기'</b>로 크게 볼 수 있습니다.</p>
+    </div>
+  </details>
+  <details>
+    <summary>지도는 어떻게 다루나요?</summary>
+    <div class="a">
+      <ul>
+        <li><b>끌기:</b> 지도를 끌어 주변을 둘러봅니다. 확대와 축소는 장면에 맞춰 저절로 됩니다. 예루살렘 장면에서는 도성까지 들어가 3D 도성 그림이 나타납니다.</li>
+        <li><b>장소 칩</b>(왼쪽 위 지명): 누르면 지금 장면의 장소로 돌아옵니다.</li>
+        <li><b>전체 경로:</b> 지금까지의 길 전체를 한눈에 봅니다. 다시 누르면 지금 장면으로 돌아옵니다.</li>
+        <li><b>핀 누르기:</b> 지도의 장소를 누르면 그곳에서 일어난 장면으로 갑니다.</li>
+        <li><b>3D 단추:</b> 땅의 높낮이를 입체로 봅니다. 3D에서는 휠이나 두 손가락으로 확대하고, 컴퓨터에서는 왼쪽의 단추로 돌리거나 확대할 수도 있습니다.</li>
+        <li><b>아래 시간 막대:</b> 시기마다 색과 그림이 있습니다. 점을 눌러 원하는 장면으로 바로 갈 수 있습니다. 밝게 채워진 점은 이미 다녀간 장면입니다.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>휴대폰에서는 어떻게 보나요?</summary>
+    <div class="a">
+      <p>장면 카드는 화면 아래에서 올라오는 시트입니다. 처음엔 절반만 올라와 지도와 무대가 크게 보입니다.</p>
+      <ul>
+        <li>시트 위의 <b>손잡이를 위로 끌거나</b> 글을 밀어 올리면 끝까지 올라와 글을 읽기 좋습니다.</li>
+        <li><b>아래로 끌면</b> 한 단계씩 내려가 제목줄만 남고, 지도를 넓게 볼 수 있습니다.</li>
+        <li>홈 화면에 추가해 두면 앱처럼 바로 열 수 있습니다.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>말씀, 대조표, 퀴즈는 어디에 있나요?</summary>
+    <div class="a">
+      <ul>
+        <li><b>말씀 탭</b>(위쪽): 사복음서에 기록된 예수의 말씀을 여정 순서대로 모았습니다. "사랑", "빵", "평화"처럼 낱말로 찾을 수 있습니다.</li>
+        <li><b>사복음서 대조표</b>(오른쪽 위 ⚙ 설정): 61개 장면을 네 복음서가 어디에 기록했는지 표로 봅니다. '넷 모두 기록', '요한만' 같은 걸러 보기도 됩니다. 줄을 누르면 그 장면으로 갑니다.</li>
+        <li><b>퀴즈 탭</b>과 <b>장면 퀴즈</b>(아래 오른쪽 '퀴즈' 단추): 걸어온 장면을 문제로 되새깁니다.</li>
+        <li><b>나의 발자취</b>(위쪽 진행 막대 또는 설정): 연 장면에는 발자취가, 맞힌 퀴즈에는 별이 찍힙니다.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>함께 쓰기 좋은 방법이 있나요?</summary>
+    <div class="a">
+      <ul>
+        <li><b>개인 묵상:</b> 하루 한 장면을 듣고, 묵상 질문 하나를 붙들고 하루를 보냅니다. 그 장면의 본문을 성경에서 직접 읽으면 더 좋습니다.</li>
+        <li><b>가정 예배:</b> 화면을 함께 보며 낭독을 듣고, 아이들과 퀴즈를 풀어 봅니다.</li>
+        <li><b>소그룹·성경 공부:</b> '비교' 탭과 대조표로 같은 사건을 복음서마다 어떻게 기록했는지 견주고 이야기를 나눕니다.</li>
+        <li><b>교회학교:</b> 큰 화면에 띄우고 '다음 장소로 걷기'로 함께 길을 따라갑니다. 걸은 거리를 맞혀 보는 것도 재미있습니다.</li>
+        <li><b>출퇴근길:</b> 자동 여정을 켜고 오디오북처럼 듣습니다.</li>
+      </ul>
+    </div>
+  </details>
+
+  <h2 id="more">그 밖에 궁금한 것</h2>
+  <details>
+    <summary>가입이 필요한가요? 기록은 어디에 남나요?</summary>
+    <div class="a">
+      <p>가입이나 로그인은 필요 없습니다. 다녀간 장면과 퀴즈 기록은 <b>지금 쓰는 기기의 브라우저에만</b> 저장되고, 어디로도 보내지 않습니다. 그래서 다른 기기나 다른 브라우저에서는 기록이 이어지지 않습니다. 기록은 '나의 발자취'에서 지울 수 있습니다.</p>
+    </div>
+  </details>
+  <details>
+    <summary>다른 언어로도 볼 수 있나요?</summary>
+    <div class="a">
+      <p>오른쪽 위 ⚙ 설정에서 언어를 바꿀 수 있습니다. 한국어, 영어, 스페인어, 포르투갈어, 프랑스어, 중국어, 인도네시아어, 일본어를 지원합니다. 녹음된 낭독은 지금 한국어에만 있고, 다른 언어는 기기에 있는 음성으로 읽습니다.</p>
+    </div>
+  </details>
+  <details>
+    <summary>명화는 어디서 왔나요?</summary>
+    <div class="a">
+      <p>카드 위의 그림은 19세기 프랑스 화가 <b>제임스 티소</b>(James Tissot)의 그리스도의 생애 연작입니다. 그는 이 연작을 위해 성지를 여러 차례 직접 다녀오며 풍경과 사람들을 그렸습니다. 그림마다 출처를 적어 두었습니다.</p>
+    </div>
+  </details>
+
+  <div class="end"><a href="./">여정 시작하기 →</a></div>
+  <p class="foot"><a href="https://sssoft-idea.web.app/" target="_blank" rel="noopener">© SSSOFT</a></p>
+</main>
+</body>
+</html>

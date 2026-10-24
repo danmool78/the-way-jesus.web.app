@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#16120e">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<title>그 길 — 관리자</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#15110d;--panel:#1d1813;--panel2:#251f18;--line:#3a3026;--ink:#f1e8d8;--muted:#b3a58f;--faint:#7f735f;--gold:#d9b46a;--gold2:#f0d79a;--ok:#8fbf7a;--bad:#e07a62;
+  --serif:'Gowun Batang',Georgia,serif;--sans:'Noto Sans KR',system-ui,-apple-system,'Apple SD Gothic Neo',sans-serif;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--gold2)}
+header{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(21,17,13,.94);border-bottom:1px solid var(--line);backdrop-filter:blur(8px)}
+header h1{margin:0;font:700 19px var(--serif);color:var(--gold2);white-space:nowrap}
+header .grow{flex:1}
+main{max-width:860px;margin:0 auto;padding:16px 16px 80px}
+.btn{white-space:nowrap;border:1px solid var(--gold);background:linear-gradient(#e2c17c,#c99f52);color:#1b140c;border-radius:10px;padding:8px 16px;font-weight:700}
+.btn:disabled{opacity:.35;cursor:default}
+.ghost{border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:10px;padding:7px 12px}
+input[type=search],input[type=password],input[type=text],input.f,textarea{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:8px 11px;outline:none}
+input:focus,textarea:focus{border-color:var(--gold)}
+#search{max-width:280px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+.login h2{margin:0 0 6px;font:700 20px var(--serif);color:var(--gold2)}
+.login ol{color:var(--muted);padding-left:20px}
+.login .row{display:flex;gap:8px}
+.login form label{display:block;font-size:12px;color:var(--faint);margin:12px 0 3px}
+.login form>input{max-width:280px}
+.login form+.note{margin-top:10px}
+.msg{min-height:1.6em;margin:8px 0 0;color:var(--muted)}
+.msg.bad{color:var(--bad)}
+.note{color:var(--faint);font-size:13px;margin:0 0 14px}
+.tools{display:flex;gap:8px;justify-content:flex-end;margin:-4px 0 10px}
+details>summary{list-style:none;cursor:pointer;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;user-select:none}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:'›';display:inline-block;width:12px;color:var(--faint);transition:transform .15s}
+details[open]>summary::before{transform:rotate(90deg)}
+details>summary span{color:var(--faint);font-size:13px}
+.mark{display:none;font:600 11px var(--sans);font-style:normal;color:#1b140c;background:var(--gold);border-radius:6px;padding:1px 6px}
+details:has(.word.dirty)>summary .mark{display:inline}
+.period{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--c);border-radius:14px;margin:10px 0;padding:0 14px}
+.period>summary{padding:14px 0}
+.period>summary b{font:700 18px var(--serif);color:var(--gold2)}
+.period .dot{width:10px;height:10px;border-radius:50%;background:var(--c);align-self:center}
+.period[open]{padding-bottom:10px}
+.scene{border-top:1px solid var(--line)}
+.scene>summary{padding:11px 0 11px 6px}
+.scene>summary b{font:700 16px var(--serif);color:var(--ink)}
+.scene[open]>summary b{color:var(--gold2)}
+.scene .word{background:var(--panel2);margin-left:6px}
+.part{margin:10px 0 4px 6px;font:600 12px var(--sans);letter-spacing:.08em;color:var(--faint)}
+.word.story{border-left-color:var(--muted)}
+.word.story textarea{font-size:15px;min-height:7.6em}
+.word.story .meta{grid-template-columns:1fr 140px;align-items:end}
+.ptitle{font:600 13px var(--sans);color:var(--muted);padding-bottom:9px}
+
+.word{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--line);border-radius:12px;padding:12px 14px;margin:8px 0}
+.word.jesus{border-left-color:var(--gold)}
+.word.dirty{border-color:var(--gold)}
+.word.playing{box-shadow:0 0 0 1px var(--gold2)}
+.word .play{white-space:nowrap}
+.word .meta{display:grid;grid-template-columns:1fr 1fr 140px;gap:8px;margin-bottom:8px}
+select.f{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:8px 9px;outline:none;font:inherit;color:inherit}
+.word label{display:block;font-size:12px;color:var(--faint);margin-bottom:2px}
+.word textarea{font:16px/1.7 var(--serif);resize:vertical;min-height:4.4em}
+.word .act{display:flex;align-items:center;gap:8px;margin-top:8px}
+.word .state{flex:1;font-size:13px;color:var(--muted)}
+.word .state.ok{color:var(--ok)}.word .state.bad{color:var(--bad)}
+.empty{color:var(--faint);text-align:center;margin:40px 0}
+@media (max-width:560px){header{flex-wrap:wrap}#search{max-width:none;order:3}.word .meta{grid-template-columns:1fr}.word.story .meta{grid-template-columns:1fr 140px}.word.story textarea{min-height:10em}}
+</style>
+</head>
+<body>
+<header>
+  <h1>그 길 · 해설·말씀 관리</h1>
+  <div class="grow"></div>
+  <input id="search" type="search" placeholder="말씀·인물·장면 찾기" aria-label="말씀 찾기" hidden>
+  <button id="logout" class="ghost" hidden>나가기</button>
+</header>
+<main>
+  <!-- 들어가기: 이 저장소에 쓰기 권한이 있는 GitHub 토큰이 있어야만 고칠 수 있다 (토큰은 이 브라우저에만 남는다) -->
+  <section id="login" class="card login" hidden>
+    <h2>관리자 확인</h2>
+    <p class="note">이 저장소에 쓸 수 있는 GitHub 토큰을 넣으면 들어갈 수 있습니다. 토큰은 이 브라우저에만 저장되고 다른 곳으로 보내지 않습니다(GitHub에만 씀).</p>
+    <ol>
+      <li><a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub → Fine-grained token 만들기</a></li>
+      <li>Repository access: <b>Only select repositories</b> → <code>the-way-jesus.web.app</code></li>
+      <li>Permissions: <b>Contents</b> Read and write, <b>Actions</b> Read-only</li>
+    </ol>
+    <!-- 브라우저 비밀번호 저장(크롬·아이폰)이 알아보도록 아이디·비밀번호 로그인 양식으로: 한 번 저장하면 다른 기기에서도 자동 채우기로 들어간다 -->
+    <form id="loginForm" method="post" action="#">
+      <label for="user">GitHub 아이디</label>
+      <input id="user" name="username" type="text" autocomplete="username" autocapitalize="off" spellcheck="false" value="danmool78">
+      <label for="token">토큰 (비밀번호처럼 저장됩니다)</label>
+      <div class="row"><input id="token" name="password" type="password" placeholder="github_pat_…" autocomplete="current-password"><button id="enter" class="btn" type="submit">들어가기</button></div>
+    </form>
+    <p class="note">들어가면 브라우저가 "비밀번호를 저장할까요?"라고 묻습니다. 저장해 두면 휴대폰·다른 PC에서도 자동 채우기로 들어갈 수 있습니다.</p>
+    <p id="loginMsg" class="msg"></p>
+  </section>
+  <section id="editor" hidden>
+    <p class="note">한국어 해설과 말씀을 고칩니다. 저장하면 GitHub에 기록되고, 몇 분 안에 그 장면의 녹음 낭독을 새로 만들어 운영 사이트에 반영합니다. 목소리에서 <b>Gemini 성우</b>를 고르면 그 글만 Gemini 성우(다정 리딩북과 같은 모델)로 녹음합니다. 다른 언어판의 말씀은 바뀌지 않습니다.</p>
+    <div class="tools"><button id="openAll" class="ghost">모두 펼치기</button><button id="closeAll" class="ghost">모두 접기</button></div>
+    <div id="list"></div>
+  </section>
+</main>
+<script type="module" src="admin.js"></script>
+</body>
+</html>
