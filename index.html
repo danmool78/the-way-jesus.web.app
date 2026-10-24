@@ -22,8 +22,8 @@
     <p class="intro-tag" data-i="introTag">사복음서로 걷는 예수의 발자취</p>
     <p class="intro-lead" id="introLead"></p>
     <div class="intro-go"><button class="intro-btn go-start" type="button"></button><button class="intro-link go-again" type="button" data-i="introRestart" hidden></button></div>
-    <!-- 묻고 답하기: 첫 화면에서 바로 보이게 시작 단추 밑에 (한국어에서만, app.js가 다른 언어에서는 숨긴다) -->
-    <a class="land-qna qna-link" href="qna.html"><span>왜 만들었는지, 3D 무대는 왜 이렇게 그렸는지, 어떻게 쓰면 좋은지</span><b>묻고 답하기 →</b></a>
+    <!-- 묻고 답하기: 첫 화면에서 바로 보이게 시작 단추 밑에 (언어마다 qna.<언어>.html로) -->
+    <a class="land-qna qna-link" href="qna.html"><span data-i="qnaLead">왜 만들었는지, 3D 무대는 왜 이렇게 그렸는지, 어떻게 쓰면 좋은지</span><b data-i="qnaGo">묻고 답하기 →</b></a>
     <ul class="land-stats">
       <li><b id="statScenes"></b><span data-i="statScenes"></span></li>
       <li><b id="statPlaces"></b><span data-i="statPlaces"></span></li>
@@ -76,7 +76,7 @@
       <label><span data-i="language">언어</span><select id="langPick" class="langpick" aria-label="언어"><option>한국어</option></select></label>
       <button class="sbtn" id="openHarmony" data-i="harmonyHead">사복음서 대조표</button>
       <button class="sbtn" id="openStamps" data-i="myFootsteps">나의 발자취</button>
-      <a class="sbtn qna-link" href="qna.html">도움말 · 묻고 답하기</a>
+      <a class="sbtn qna-link" href="qna.html" data-i="qnaHelp">도움말 · 묻고 답하기</a>
     </div>
   </div>
 </header>
