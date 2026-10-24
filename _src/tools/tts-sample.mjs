@@ -44,4 +44,4 @@ async function say(text, voice, file, rate = 1) {
 await mkdir(out, { recursive: true });
 console.log(pauses(narration)); console.log(pauses(jesus));
 for (const v of NARRATORS) await say(narration, v, `${out}/${id}-해설-${v}.mp3`, 0.95);
-for (const v of JESUS) await say(jesus, v, `${out}/${id}-예수-${v.name || v}.mp3`, 0.85);
+for (const v of JESUS) await say(jesus, v, `${out}/${id}-예수-${v.name || v}.mp3`, 1);
