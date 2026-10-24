@@ -126,7 +126,7 @@ function setScene(ev) {
   script = SCRIPTS[ev.id] || null;
   mode = script ? 'scene' : 'off';
   document.body.classList.toggle('stage-on', !!script);
-  if (!script) { canvas.style.opacity = 0; map.style.filter = ''; return; }
+  if (!script) { canvas.style.opacity = 0; map.style.filter = ''; window.stageFoot = null; return; }
   stageGroup.scale.setScalar(script.scale || 1);
   size = { w: 0, h: 0 }; // 넓은 무대(wide)가 바뀌었을 수 있으니 다시 잰다
   Object.entries(script.props || {}).forEach(([name, [kind, x, z, o]]) => {
@@ -197,6 +197,8 @@ function resize() {
   renderer.setPixelRatio(Math.min(devicePixelRatio * 2, 3));
   renderer.setSize(w, h, false);
   canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+  // 3D 지형 모드가 무대 밑의 집·나무를 치울 넓이 (무대 바닥이 차지하는 화면 반지름)
+  window.stageFoot = { rpx: w * 0.36, at: script?.at || null };
   // 넓은 무대는 화면을 키우는 만큼 시야각도 넓혀 인물 크기는 그대로 둔다
   camera.fov = THREE.MathUtils.radToDeg(2 * Math.atan(wide * Math.tan(THREE.MathUtils.degToRad(FOV / 2))));
   camera.aspect = w / h; camera.updateProjectionMatrix(); camera.updateMatrixWorld();
@@ -287,6 +289,10 @@ function followTerrain() {
 const clock = new THREE.Clock();
 function loop() {
   requestAnimationFrame(loop);
+  if (!window.terrainDrives) frame(); // 3D 지형 모드에서는 terrain.js가 카메라를 옮긴 직후에 부른다 — 따로 돌면 무대가 한 박자 늦게 따라와 핀에서 벗어나 보였다
+}
+window.stageFrame = frame;
+function frame() {
   if (!canvas || mode === 'off' || document.hidden || wrap.offsetParent === null) return;
   const dt = Math.min(clock.getDelta(), 0.05), time = clock.elapsedTime;
   resize();

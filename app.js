@@ -400,6 +400,7 @@ function setWalker([x, y]) {
   wk.dataset.x = x; wk.dataset.y = y;
   const u = parseFloat(map.style.getPropertyValue('--u')) || 1;
   wk.setAttribute('transform', `translate(${x},${y}) scale(${u})`);
+  dispatchEvent(new CustomEvent('walker', { detail: { x, y } })); // 3D 지형 모드의 걷는 사람이 따라온다
 }
 function updateMap(prevIdx, { camera = true } = {}) {
   const e = EVENTS[idx];
