@@ -692,7 +692,7 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
     renderScene(); updateMap(prev, { camera: !stepped || fitMode === 'all' }); updateTrack(); markVisited(EVENTS[i].id);
     window.__stageScene = EVENTS[i]; // stage.js가 늦게 로드돼도 따라잡도록
     dispatchEvent(new CustomEvent('stage:scene', { detail: { ev: EVENTS[i] } }));
-    bgmFollow(); // 자동 여정이면 도착한 장면의 곡으로 겹쳐 바꾼다
+    bgmFollow(); // 읽는 중에 장면이 바뀌면 그 장면의 곡으로 겹쳐 바꾼다
     history.replaceState(null, '', '#' + EVENTS[i].id);
     $('#prev').disabled = idx === 0; $('#next').disabled = $('#skip').disabled = idx === EVENTS.length - 1;
     const p = PLACES[EVENTS[i].place];
@@ -801,7 +801,7 @@ function speakQueue(items, onDone) {
     showCaption(it);
     if (it.beat) stageBeat(it.beat, it.s);
     let done = false, guard;
-    const advance = d => { if (done) return; done = true; clearTimeout(guard); autoTimer = setTimeout(next, d); };
+    const advance = d => { if (done) return; done = true; clearTimeout(guard); autoTimer = setTimeout(next, n >= queue.length ? 0 : d); }; // 마지막 문장 뒤에는 쉬지 않고 곧바로 끝낸다 (배경음악이 낭독과 함께 멈추게)
     if (recorded) {
       const gap = (!it.last ? VOICE_GAP.sentence : it.beat === 'intro' ? VOICE_GAP.intro : VOICE_GAP.item) / rate;
       // 감시 타이머는 실제로 소리가 나기 시작할 때부터 남은 길이로 잰다 (받는 중·버퍼링 시간은 빼고).
@@ -878,7 +878,7 @@ function stopSpeech(keepAuto) {
   speaking = false; $$('.speaking').forEach(x => x.classList.remove('speaking'));
   showCaption(null);
   if (!keepAuto) stopAuto();
-  setListenUI(true);
+  setListenUI();
 }
 function stopAuto() { autoOn = false; clearTimeout(autoTimer); setListenUI(); }
 function startAuto() {
@@ -893,21 +893,21 @@ function startAuto() {
   };
   run();
 }
-function setListenUI(stopped) {
+function setListenUI() {
   const l = $('#listen');
   l.classList.toggle('on', speaking); // 재생 중이면 일시정지 모양
   l.setAttribute('aria-label', speaking ? t('stop') : t('listenScene'));
   $('#auto').checked = autoOn;
-  bgmFollow(stopped);
+  bgmFollow();
 }
 
 /* ---------- 배경음악 (낭독 밑에) ---------- */
 // 장면마다 곡 하나(_src/music.json → data의 music, assets/music/<곡>.mp3, 30초 반복 곡). 낭독하는 동안만 낮게 깐다.
 // 곡 끝이 다가오면 같은 곡을 처음부터 겹쳐 틀어 이음매가 들리지 않게 하고, 장면이 바뀌어 곡이 다르면 서로 겹쳐 바꾼다.
-// 낭독이 저절로 끝나면 잠깐 두었다가 천천히 내리고(자동 여정의 장면 사이 쉼에는 이어진다), 멈춤을 누르면 바로 내린다.
+// 낭독과 함께 켜지고 함께 멈춘다 (자동 여정의 장면 사이에도 낭독이 없으면 쉰다). 딸깍 소리가 나지 않게 0.3초만 오르내린다.
 // 소리 크기는 Web Audio 사슬로만 정한다 (아이폰은 audio 요소의 volume을 무시한다). 낭독 소리는 이 사슬에 넣지 않는다
 const BGM = { key: 'theway-music', level: 0.144, fade: 2.5 }; // level: 사용자 요청으로 0.16에서 10% 낮춤
-let bgmCtx = null, bgmPlayers = [], bgmCur = 0, bgmCue = null, bgmLoop = null, bgmHush = 0, bgmGo = 0;
+let bgmCtx = null, bgmPlayers = [], bgmCur = 0, bgmCue = null, bgmLoop = null, bgmGo = 0;
 // 켜고 끈 것은 메모리에 두고 localStorage에는 남겨 두기만 한다 (저장이 막힌 브라우저에서도 이번 방문 동안은 끌 수 있게)
 let bgmPref = (() => { try { return localStorage.getItem(BGM.key) !== 'off'; } catch { return true; } })();
 const bgmOn = () => bgmPref;
@@ -941,15 +941,16 @@ function bgmRamp(p, to, s) {
   g.cancelScheduledValues(now); g.setValueAtTime(from, now); g.linearRampToValueAtTime(to, now + s);
   p.fade = { from, to, at: now, s };
 }
-function bgmPlay(cue) {
+// s: 올리는 시간. 반복·곡 바꿈은 겹쳐 잇고, 낭독이 시작될 때는 곧바로 올린다
+function bgmPlay(cue, s = BGM.fade) {
   const from = bgmPlayers[bgmCur], to = bgmPlayers[1 - bgmCur]; ++bgmGo;
-  bgmRamp(from, 0, BGM.fade);
-  setTimeout(() => { if (from !== bgmPlayers[bgmCur]) from.el.pause(); }, BGM.fade * 1000 + 100);
+  bgmRamp(from, 0, s);
+  setTimeout(() => { if (from !== bgmPlayers[bgmCur]) from.el.pause(); }, s * 1000 + 100);
   bgmCur = 1 - bgmCur; bgmCue = cue; bgmLoop = null;
   if (!to.el.src.endsWith(`/${cue}.mp3`)) to.el.src = `assets/music/${cue}.mp3`;
   to.el.currentTime = 0;
   to.el.play().catch(() => {});
-  bgmRamp(to, BGM.level, BGM.fade);
+  bgmRamp(to, BGM.level, s);
 }
 function bgmStop(s) {
   if (!bgmCtx) return;
@@ -957,22 +958,18 @@ function bgmStop(s) {
   bgmPlayers.forEach(p => bgmRamp(p, 0, s));
   setTimeout(() => { if (go === bgmGo) bgmPlayers.forEach(p => p.el.pause()); }, s * 1000 + 100);
 }
-// 낭독 상태가 바뀔 때마다 (setListenUI). stopped: 멈춤을 눌렀을 때
-function bgmFollow(stopped) {
+// 낭독 상태가 바뀔 때마다 (setListenUI)
+function bgmFollow() {
   $('#music')?.setAttribute('aria-pressed', String(bgmOn()));
-  const cue = bgmOn() && (speaking || autoOn) ? EVENTS?.[idx]?.music : null;
-  clearTimeout(bgmHush);
-  if (!cue) {
-    if (bgmCue) { if (stopped || !bgmOn()) bgmStop(0.4); else bgmHush = setTimeout(() => bgmStop(BGM.fade), 1500); }
-    return;
-  }
+  const cue = bgmOn() && speaking ? EVENTS?.[idx]?.music : null;
+  if (!cue) { if (bgmCue) bgmStop(0.3); return; }
   if (!bgmReady()) return;
   if (bgmCtx.state === 'suspended') bgmCtx.resume().catch(() => {});
-  if (cue !== bgmCue) { bgmPlay(cue); return; }
+  if (cue !== bgmCue) { bgmPlay(cue, bgmCue ? BGM.fade : 0.3); return; }
   // 같은 곡이 내려가던 중이면 그 자리에서 다시 올린다
   const p = bgmPlayers[bgmCur];
   if (p.el.paused) p.el.play().catch(() => {});
-  if (bgmLevel(p) < BGM.level - 0.01) { ++bgmGo; bgmRamp(p, BGM.level, 0.6); }
+  if (bgmLevel(p) < BGM.level - 0.01) { ++bgmGo; bgmRamp(p, BGM.level, 0.3); }
 }
 
 /* ---------- 말씀 모음 ---------- */
