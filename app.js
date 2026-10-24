@@ -502,11 +502,11 @@ function travelText(a, b) {
   return t('distance', { d: d < 10 ? d.toFixed(1) : Math.round(d), t: w });
 }
 // 걸어온 길: 첫 장면부터 지금 장면까지 장소가 바뀔 때마다 두 곳 사이 길(km)을 더한다. 걸음은 보폭 75cm로 셈
-// 갈릴리 바다 한가운데(sea)를 오가는 길은 배로 건넜으므로 더하지 않는다
-const STRIDE_M = 0.75;
+// 배로 호수를 건너 닿은 장면(풍랑·거라사·다시 건너옴·벳새다 들·물 위·가버나움)은 걸은 길에 더하지 않는다
+const STRIDE_M = 0.75, BY_BOAT = new Set(['e28', 'e29', 'e30', 'e31', 'e32', 'e33']);
 let odoCum = null;
-const legKm = (a, b) => a === b || a === 'sea' || b === 'sea' ? 0 : km(PLACES[a], PLACES[b]);
-const odoAt = i => (odoCum ||= EVENTS.reduce((c, e, k) => (c.push(k ? c[k - 1] + legKm(EVENTS[k - 1].place, e.place) : 0), c), []))[i];
+const legKm = (a, e) => a === e.place || BY_BOAT.has(e.id) ? 0 : km(PLACES[a], PLACES[e.place]);
+const odoAt = i => (odoCum ||= EVENTS.reduce((c, e, k) => (c.push(k ? c[k - 1] + legKm(EVENTS[k - 1].place, e) : 0), c), []))[i];
 function setOdo(d) {
   const el = $('#odo'); if (!el) return;
   const steps = Math.round(d * 1000 / STRIDE_M);
