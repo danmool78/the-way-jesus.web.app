@@ -132,7 +132,7 @@ const RELIEF = { lat0: 29.15, lat1: 34.6, lng0: 33.0, lng1: 37.4 };
 // 서쪽 애굽 쪽 바탕(assets/relief-west.webp — 시나이 북부, 나일 삼각주) — _src/relief.py의 WEST와 같게
 const RELIEF_WEST = { lat0: 29.15, lat1: 31.9, lng0: 29.4, lng1: 33.25 };
 // 프롤로그의 에덴 둘레 바탕(assets/relief-east.webp) — _src/relief.py의 EAST와 같게
-const RELIEF_EAST = { lat0: 29.55, lat1: 32.45, lng0: 45.2, lng1: 49.3 };
+const RELIEF_EAST = { lat0: 29.2, lat1: 32.8, lng0: 44.6, lng1: 49.9 };
 // 확대했을 때만 불러오는 정밀 타일(assets/relief-hi/행_열.webp) — _src/relief.py의 HI와 같게
 const RELIEF_HI = { lat0: 30.2, lat1: 34.4, lng0: 33.4, lng1: 37.0, tile: 160, dir: 'relief-hi', below: 1.2 };
 // 애굽 쪽 정밀 타일(assets/relief-hi-w/) — _src/relief.py의 HI_W와 같게
@@ -222,7 +222,6 @@ function buildMap() {
   ${lbl(tm('유프라테스 강'), px([30.88, 45.95]), 'water-lbl river-lbl meso')}
   ${lbl(tm('티그리스 강'), px([32.3, 46.7]), 'water-lbl river-lbl meso')}
   ${lbl(tm('페르시아 만'), px([29.88, 48.85]), 'water-lbl river-lbl meso')}
-  ${lbl(tm('아라비아 사막'), px([30.1, 46.4]), 'region meso')}
   <path class="offmap" fill-rule="evenodd" d="${offmapD(DRAWN)}"/>
   <g id="routes"><path id="nextHint" class="nexthint"/></g>
   <g id="markers"></g>
@@ -265,7 +264,7 @@ function buildMap() {
 // 두 그림의 바깥 범위(29.15–34.6, 29.4–37.4)에서 가장자리의 투명하게 흐린 띠(0.16–0.32°)를 뺐다
 const DRAWN = (() => { const [x0, y0] = px([34.28, 29.63]), [x1, y1] = px([29.47, 37.14]); return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }; })();
 // 프롤로그의 에덴은 본 지도와 이어지지 않는 따로 떨어진 무대: 화면은 relief-east가 불투명한 이 안에만 머문다
-const EDEN = (() => { const [x0, y0] = px([32.27, 45.45]), [x1, y1] = px([29.73, 49.05]); return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }; })();
+const EDEN = (() => { const [x0, y0] = px([32.58, 44.92]), [x1, y1] = px([29.42, 49.58]); return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }; })();
 const drawnNow = () => isPro() ? EDEN : DRAWN;
 // 그린 범위 밖을 바탕색으로 덮는 구멍 뚫린 사각형
 const offmapD = D => `M${D.x - 1e5},${D.y - 1e5}h${D.w + 2e5}v${D.h + 2e5}h${-D.w - 2e5}Z M${D.x},${D.y}v${D.h}h${D.w}v${-D.h}Z`;
