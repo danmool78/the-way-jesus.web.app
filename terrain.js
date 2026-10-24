@@ -59,6 +59,7 @@ async function build() {
   renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
   renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   const c = renderer.domElement; c.className = 'terrain3d'; c.setAttribute('aria-hidden', 'true');
+  c.style.display = ''; // three.js가 박아 넣는 display:block을 지워 CSS(.terrain-on일 때만 보임)가 켜고 끄게 한다 — 3D를 꺼도 화면이 남던 것
   svg.after(c);
   scene = new THREE.Scene();
   const sky = '#d6dcd6'; // 땅색이 살짝 섞인 옅은 하늘 — 지평선에서 땅과 하늘이 부드럽게 만난다
