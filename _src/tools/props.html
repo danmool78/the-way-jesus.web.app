@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <title>소품 확인</title>
 <!-- 소품을 가까이서 보는 도구. 서버를 저장소 루트에서 띄우고 /_src/tools/props.html?p=camel,donkey
-     &yaw=0.6 은 돌린 각도, &d=2 는 카메라 거리 배율 -->
+     &yaw=0.6 은 돌린 각도, &d=2 는 카메라 거리 배율, &state=go&at=0.4 는 그 상태로 바꾼 지 0.4초 뒤 모습, &ty=0.1 은 바라보는 높이 -->
 <style>body{margin:0;background:#2a241c}canvas{display:block}</style>
 <script type="module">
 import { THREE } from '../../stage/kit.js';
@@ -22,12 +22,14 @@ const gap = 1.1;
 kinds.forEach((k, i) => {
   const p = makeProp(k, (i - (kinds.length - 1) / 2) * gap, 0);
   p.obj.rotation.y += yaw;
+  if (q.get('state')) { p.set(q.get('state')); p.t0 = performance.now() / 1000 - +(q.get('at') || 0); }
   p.update(0, 0.016, {});
   s.add(p.obj);
 });
 const span = Math.max(1.2, kinds.length * gap);
 const cam = new THREE.PerspectiveCamera(30, W / H, 0.01, 50);
-cam.position.set(0, 0.9 * d, span * 1.6 * d); cam.lookAt(0, 0.4, 0);
+const ty = +(q.get('ty') ?? 0.4); // 바라보는 높이 (작은 짐승은 낮게)
+cam.position.set(0, ty + 0.5 * d, span * 1.6 * d); cam.lookAt(0, ty, 0);
 r.render(s, cam);
 document.title = 'ready';
 </script>

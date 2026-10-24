@@ -215,6 +215,31 @@ const MAKERS = {
     return P;
   },
 
+  // 물보라: 'go' 상태가 되면 퍼지는 물결 고리 세 겹과 튀어 오르는 물방울 (돼지 떼가 호수로 뛰어들 때)
+  splash(o = {}) {
+    const g = new THREE.Group(), R = o.r || 0.25;
+    const ringM = new THREE.MeshBasicMaterial({ color: '#e9f3f4', transparent: true, depthWrite: false });
+    const rings = [0, 1, 2].map(() => { const r = new THREE.Mesh(new THREE.RingGeometry(0.8, 1, 32), ringM.clone()); r.rotation.x = -Math.PI / 2; r.position.y = 0.01; g.add(r); return r; });
+    const dropM = new THREE.MeshStandardMaterial({ color: '#d8ecef', roughness: 0.2, transparent: true });
+    const drops = Array.from({ length: 16 }, (_, i) => {
+      const d = mesh(sphere(0.012 + Math.random() * 0.01, 6, 4), dropM, g);
+      d.userData = { a: (i / 16) * Math.PI * 2 + Math.random() * 0.3, v: 0.5 + Math.random() * 0.6, h: 0.9 + Math.random() * 0.8 };
+      return d;
+    });
+    g.visible = false;
+    return new Prop(g, P => {
+      const k = P.state === 'go' ? performance.now() / 1000 - P.t0 : -1;
+      g.visible = k >= 0 && k < 2.2;
+      if (!g.visible) return;
+      rings.forEach((r, i) => { const u = Math.max(0, k - i * 0.25); r.scale.setScalar(R * (0.2 + u * 1.3)); r.material.opacity = Math.max(0, 0.75 - u * 0.4); });
+      drops.forEach(d => {
+        const { a, v, h } = d.userData, u = Math.min(k, 1.2);
+        d.position.set(Math.cos(a) * v * u * R * 1.6, Math.max(0, h * u - 1.6 * u * u) * R * 2, Math.sin(a) * v * u * R * 1.6);
+        d.visible = k < 1.2;
+      });
+    }, { fade: 'opacity' });
+  },
+
   // 비: 폭풍일 때만 보이는 사선 빗줄기
   rain() {
     const n = 140, pos = new Float32Array(n * 6), seeds = [];
@@ -346,11 +371,11 @@ function beast(o) {
   const g = new THREE.Group(), body = new THREE.Group();
   g.add(body);
   const S = o.size || 1, coat = mat(o.coat || '#8a7a68', { roughness: 0.95 }), dark = mat(o.dark || '#4a3e34', { roughness: 0.9 });
-  const H = 0.24 * S; // 등 높이
-  mesh(new THREE.CapsuleGeometry(0.075 * S, 0.2 * S, 8, 14), coat, body, [0, H, 0]).rotation.z = Math.PI / 2;
+  const H = 0.24 * S * (o.legs || 1), F = o.fat || 1, LN = o.len || 1; // 등 높이 (돼지는 다리가 짧다), 몸통 굵기·길이
+  mesh(new THREE.CapsuleGeometry(0.075 * S * F, 0.2 * S * LN, 8, 14), coat, body, [0, H, 0]).rotation.z = Math.PI / 2;
   if (o.hump) mesh(sphere(0.08 * S, 14, 10), coat, body, [-0.01 * S, H + 0.07 * S, 0], [1.1, 1, 0.85]);
   const neck = new THREE.Group();
-  neck.position.set(0.15 * S, H + 0.03 * S, 0);
+  neck.position.set((0.1 * LN + 0.05 * F) * S, H + 0.03 * S, 0);
   body.add(neck);
   // 목: 어깨에서 뻗은 원통. 낙타(curve)는 앞으로 처졌다가 들어 올리는 S자 곡선.
   // 머리는 목 끝점에 붙인다 (목 길이·모양이 달라도 떨어지지 않게 끝점을 계산)
@@ -382,7 +407,17 @@ function beast(o) {
   const headG = new THREE.Group();
   headG.position.set(tip.x + 0.012 * S, tip.y + 0.02 * S, 0);
   neck.add(headG);
-  if (o.camelHead) {
+  if (o.pigHead) {
+    // 돼지 머리: 둥근 머리 + 앞으로 내민 납작한 코(콧구멍 둘) + 앞으로 접힌 귀
+    headG.position.set(0.02 * S, -0.02 * S, 0);
+    mesh(sphere(0.065 * S, 14, 12), coat, headG, [0.03 * S, 0, 0], [1.1, 0.95, 1]);
+    const sn = mesh(new THREE.CylinderGeometry(0.03 * S, 0.035 * S, 0.04 * S, 14), coat, headG, [0.1 * S, -0.012 * S, 0]);
+    sn.rotation.z = Math.PI / 2;
+    mesh(new THREE.CylinderGeometry(0.029 * S, 0.029 * S, 0.004 * S, 14), dark, headG, [0.121 * S, -0.012 * S, 0]).rotation.z = Math.PI / 2;
+    [-1, 1].forEach(k => mesh(sphere(0.006 * S, 6, 4), mat('#5a2e2a'), headG, [0.123 * S, -0.012 * S, k * 0.011 * S]));
+    [-1, 1].forEach(k => mesh(sphere(0.006 * S, 6, 4), mat('#120c08'), headG, [0.07 * S, 0.022 * S, k * 0.035 * S]));
+    [-1, 1].forEach(k => { const e = mesh(new THREE.ConeGeometry(0.025 * S, 0.05 * S, 4), coat, headG, [0.04 * S, 0.06 * S, k * 0.04 * S]); e.rotation.set(k * 0.3, 0, -0.9); });
+  } else if (o.camelHead) {
     // 낙타 머리: 길쭉한 머리 + 늘어진 아랫입술 + 작고 둥근 귀
     mesh(new THREE.CapsuleGeometry(0.03 * S, 0.075 * S, 6, 12), coat, headG, [0.045 * S, -0.008 * S, 0]).rotation.z = Math.PI / 2 + 0.25;
     mesh(sphere(0.026 * S, 12, 10), coat, headG, [0.1 * S, -0.03 * S, 0], [1.1, 0.9, 0.95]);           // 주둥이
@@ -397,7 +432,7 @@ function beast(o) {
   }
   const legs = [[0.1, 1], [0.1, -1], [-0.1, 1], [-0.1, -1]].map(([x, s]) => {
     const l = new THREE.Group();
-    l.position.set(x * S, H - 0.02 * S, s * 0.045 * S);
+    l.position.set(x * S * LN, H - 0.02 * S, s * 0.045 * S * F);
     body.add(l);
     if (o.camelHead) {
       mesh(new THREE.CylinderGeometry(0.02 * S, 0.012 * S, H * 0.5, 8), coat, l, [0, -H * 0.25, 0]);   // 넓적다리
@@ -412,7 +447,8 @@ function beast(o) {
   });
   const tail = mesh(new THREE.CylinderGeometry(0.006 * S, 0.004 * S, 0.12 * S, 6), dark, body, [-0.19 * S, H - 0.03 * S, 0]);
   tail.rotation.z = -0.3;
-  mesh(new THREE.ConeGeometry(0.01 * S, 0.035 * S, 6), dark, tail, [0, -0.07 * S, 0]).rotation.x = Math.PI; // 꼬리 끝의 털 술
+  if (o.curl) { tail.visible = false; mesh(new THREE.TorusGeometry(0.018 * S, 0.006 * S, 6, 12, Math.PI * 1.6), coat, body, [-(0.1 * LN + 0.075 * F) * S - 0.01 * S, H + 0.03 * S, 0]); } // 돼지의 말린 꼬리
+  else mesh(new THREE.ConeGeometry(0.01 * S, 0.035 * S, 6), dark, tail, [0, -0.07 * S, 0]).rotation.x = Math.PI; // 꼬리 끝의 털 술
   if (o.saddle && o.hump) {
     // 혹을 덮어 양옆으로 늘어진 안장 천 + 금빛 단
     const cl = mat(o.saddle, { side: THREE.DoubleSide, roughness: 0.9 });
@@ -429,6 +465,16 @@ function beast(o) {
     legs.forEach((l, i) => { l.rotation.z = damp(l.rotation.z, (i === 0 || i === 3 ? sw : -sw), 10, dt); });
     neck.rotation.z = damp(neck.rotation.z, P.moving ? Math.sin(phase * 2) * 0.08 : Math.sin(t * 0.6) * 0.05 - (o.graze ? 0.4 : 0), 4, dt);
     body.position.y = P.moving ? Math.abs(Math.cos(phase)) * 0.012 * S : 0;
+    // 'dive': 목표(물가)에 닿으면 그 자리에 물보라를 일으키며 가라앉아 사라진다 (프레임 속도와 상관없이 닿은 뒤에)
+    if (P.state === 'dive') {
+      if (P.dived === undefined && !P.moving && P.goal.distanceTo(new THREE.Vector2(g.position.x, g.position.z)) < 0.05) {
+        P.dived = t;
+        if (!P.spray) { P.spray = MAKERS.splash({ r: 0.22 * S }); g.parent.add(P.spray.obj); }
+        P.spray.obj.position.set(g.position.x, 0, g.position.z); P.spray.state = 'go'; P.spray.t0 = performance.now() / 1000;
+      }
+      if (P.dived !== undefined) { g.position.y = damp(g.position.y, -0.3, 2.5, dt); if (t - P.dived > 0.9) P.showT = 0; }
+    } else if (P.dived !== undefined) { P.dived = undefined; g.position.y = 0; if (P.spray) P.spray.state = 'idle'; }
+    if (P.spray) P.spray.upd(P.spray, t, dt, {});
     tail.rotation.x = Math.sin(t * 1.3) * 0.25;
   });
   P.deck = deck;
@@ -480,7 +526,7 @@ Object.assign(MAKERS, {
 
 Object.assign(MAKERS, {
   // 들짐승(자칼), 소
-  pig: o => beast({ coat: '#4e3a32', dark: '#2a1e18', size: 0.95, ears: 0.035, neck: 0.03, graze: true, ...o }),
+  pig: o => beast({ coat: '#eaaba1', dark: '#c47c74', size: 0.95, neck: 0.02, legs: 0.72, fat: 1.3, len: 0.75, pigHead: true, curl: true, graze: true, ...o }),
   dog: o => beast({ coat: '#b08a5a', dark: '#5a4630', size: 0.7, ears: 0.05, neck: 0.07, ...o }),
   jackal: o => beast({ coat: '#9a7a52', dark: '#5a4630', size: 0.9, ears: 0.06, neck: 0.08, graze: false, ...o }),
   ox: o => {

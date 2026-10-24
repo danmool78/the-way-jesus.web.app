@@ -1067,7 +1067,8 @@ export const SCRIPTS = {
   },
 
   /* 29. 무덤 사이의 사람 — 호수 동쪽 기슭. 왼쪽(서쪽)은 호수, 배는 실제 호수 위(geo). 오른쪽 비탈의 무덤과 돼지 떼.
-     자해·쇠사슬은 그리지 않고 떨며 엎드리는 것으로만. 돼지 떼는 비탈을 내리달려 사라질 뿐. 나은 뒤에는 옷 입은 모습으로 바꿔 세운다 */
+     자해·쇠사슬은 그리지 않고 떨며 엎드리는 것으로만. 돼지 떼는 비탈을 내리달려 호수(실제 위경도)로 뛰어들고, 물보라가 일며 가라앉는다.
+     나은 뒤에는 옷 입은 모습으로 바꿔 세운다 */
   e29: {
     env: 'overcast', wide: 1.45,
     props: {
@@ -1075,7 +1076,8 @@ export const SCRIPTS = {
       tomb: ['tomb', 1.05, -0.5, { scale: 0.7, rot: -0.3 }],
       rocks: ['rocks', 0, 0, { spots: [[0.55, -0.5, 0.1], [1.55, -0.3, 0.12], [0.8, -0.15, 0.06], [1.75, -0.6, 0.15]] }],
       hill: ['hill', 1.85, -0.25, { w: 0.55, h: 0.22, d: 0.45 }],
-      pig1: ['pig', 1.7, -0.15, { speed: 0.9 }], pig2: ['pig', 1.95, -0.3, { speed: 0.9, rot: 2 }], pig3: ['pig', 2.05, -0.05, { speed: 0.9, rot: 1 }], pig4: ['pig', 1.8, -0.45, { speed: 0.9, rot: 0.5 }],
+      pig1: ['pig', 1.7, -0.15, { speed: 1.3 }], pig2: ['pig', 1.95, -0.3, { speed: 1.3, rot: 2 }], pig3: ['pig', 2.05, -0.05, { speed: 1.3, rot: 1 }], pig4: ['pig', 1.8, -0.45, { speed: 1.3, rot: 0.5 }],
+      pig5: ['pig', 2.2, -0.4, { speed: 1.35, rot: 1.5 }], pig6: ['pig', 1.55, -0.5, { speed: 1.25, rot: 2.5 }], pig7: ['pig', 2.25, -0.15, { speed: 1.4, rot: 0.2 }], pig8: ['pig', 1.95, 0.05, { speed: 1.3, rot: 1.2 }],
       town: ['crowd', 1.55, 0.3, { spots: [[0, 0], [0.22, 0.12], [0.18, -0.15], [0.42, 0.02]], face: -Math.PI / 2 }],
     },
     cast: {
@@ -1086,10 +1088,10 @@ export const SCRIPTS = {
       healed: ['healed', 0.75, 0.15, -1.0],
     },
     beats: {
-      enter: [['@env', 'day'], ['boat', null, { geo: [32.826, 35.628] }], ['pig1', null, { show: 0 }], ['pig2', null, { show: 0 }], ['pig3', null, { show: 0 }], ['pig4', null, { show: 0 }], ['town', null, { show: 1 }],
+      enter: [['@env', 'day'], ['boat', null, { geo: [32.826, 35.628] }], ['pig1', 'idle', { show: 0 }], ['pig2', 'idle', { show: 0 }], ['pig3', 'idle', { show: 0 }], ['pig4', 'idle', { show: 0 }], ['pig5', 'idle', { show: 0 }], ['pig6', 'idle', { show: 0 }], ['pig7', 'idle', { show: 0 }], ['pig8', 'idle', { show: 0 }], ['town', null, { show: 1 }],
         ['jesus', 'speak', { board: null, x: 0.3, z: 0.12, look: 1.0 }], ['peter', 'listen', { board: null, x: 0.08, z: -0.08, look: 1.0 }], ['johnD', 'listen', { board: null, x: 0.12, z: 0.32, look: 1.0 }],
         ['wild', 'idle', { show: 0 }], ['healed', 'listen', { show: 1, x: 0.75, z: 0.15, look: -1.0 }]],
-      intro: [['@env', 'overcast'], ['boat', null, { geo: [32.826, 35.628] }], ['pig1', null, { show: 1, x: 1.7, z: -0.15 }], ['pig2', null, { show: 1, x: 1.95, z: -0.3 }], ['pig3', null, { show: 1, x: 2.05, z: -0.05 }], ['pig4', null, { show: 1, x: 1.8, z: -0.45 }], ['town', null, { show: 0 }],
+      intro: [['@env', 'overcast'], ['boat', null, { geo: [32.826, 35.628] }], ['pig1', 'idle', { show: 1, x: 1.7, z: -0.15 }], ['pig2', 'idle', { show: 1, x: 1.95, z: -0.3 }], ['pig3', 'idle', { show: 1, x: 2.05, z: -0.05 }], ['pig4', 'idle', { show: 1, x: 1.8, z: -0.45 }], ['pig5', 'idle', { show: 1, x: 2.2, z: -0.4 }], ['pig6', 'idle', { show: 1, x: 1.55, z: -0.5 }], ['pig7', 'idle', { show: 1, x: 2.25, z: -0.15 }], ['pig8', 'idle', { show: 1, x: 1.95, z: 0.05 }], ['town', null, { show: 0 }],
         ['jesus', 'idle', { board: 'boat', x: 0, z: 0, look: -1.2 }], ['peter', 'idle', { board: 'boat', x: 0.4, z: 0.02, look: -1.0 }], ['johnD', 'idle', { board: 'boat', x: -0.35, z: 0.0, look: 1.0 }],
         ['wild', 'idle', { show: 0, x: 0.9, z: -0.2 }], ['healed', 'idle', { show: 0, x: 0.75, z: 0.15 }]],
       'p0.1': [['jesus', 'idle', { board: null, x: 0.3, z: 0.12, look: 1.0 }], ['peter', 'idle', { board: null, x: 0.08, z: -0.08, look: 1.0 }], ['johnD', 'idle', { board: null, x: 0.12, z: 0.32, look: 1.0 }],
@@ -1098,15 +1100,15 @@ export const SCRIPTS = {
       'p1.0': [['wild', 'mourn', { look: -1.0 }]],
       'p1.1': [['wild', 'afraid']],
       'p1.2': [['jesus', 'speak'], ['wild', 'cower', { delay: 2500 }]],
-      'p1.4': [['jesus', 'rebuke', { look: 1.0 }], ['pig1', null, { x: -0.2, z: -0.6 }], ['pig2', null, { x: 0.0, z: -0.75 }], ['pig3', null, { x: -0.1, z: -0.5 }], ['pig4', null, { x: 0.1, z: -0.65 }],
-        ['pig1', null, { show: 0, delay: 2200 }], ['pig2', null, { show: 0, delay: 2400 }], ['pig3', null, { show: 0, delay: 2300 }], ['pig4', null, { show: 0, delay: 2500 }]],
+      // 더러운 영들이 돼지 떼에 들어가자 비탈을 내리달려 호수로 — 물보라가 일고 떼는 가라앉는다
+      'p1.4': [['jesus', 'rebuke', { look: 1.0 }], ['pig1', 'dive', { geo: [32.840, 35.637], delay: 300 }], ['pig2', 'dive', { geo: [32.839, 35.636], delay: 480 }], ['pig3', 'dive', { geo: [32.842, 35.638], delay: 660 }], ['pig4', 'dive', { geo: [32.838, 35.635], delay: 840 }], ['pig5', 'dive', { geo: [32.841, 35.636], delay: 1020 }], ['pig6', 'dive', { geo: [32.837, 35.636], delay: 1200 }], ['pig7', 'dive', { geo: [32.843, 35.637], delay: 1380 }], ['pig8', 'dive', { geo: [32.840, 35.635], delay: 1560 }]],
       'p2.0': [['@env', 'day'], ['wild', 'idle', { show: 0 }], ['healed', 'sit-ground', { show: 1, x: 0.75, z: 0.15, look: -1.0 }], ['town', null, { show: 1 }], ['town', null, { delay: 3000 }]],
       'p2.1': [['healed', 'pray', { look: -1.0 }], ['jesus', 'speak', { delay: 3000 }]],
       'p2.2': [['healed', 'idle', { x: 1.6, z: 0.05, look: 1.0 }], ['healed', 'speak', { delay: 4000 }]],
       w0: [['@env', 'day'], ['wild', 'idle', { show: 0 }], ['healed', 'listen', { show: 1, x: 0.75, z: 0.15, look: -1.0 }], ['jesus', 'speak', { board: null, x: 0.3, z: 0.12, look: 1.0 }]],
       w1: [['@env', 'overcast'], ['healed', 'idle', { show: 0 }], ['wild', 'cower', { show: 1, x: 0.75, z: 0.15, look: -1.0 }], ['jesus', 'rebuke', { look: 1.0 }]],
       w2: [['jesus', 'speak']],
-      end: [['@env', 'day'], ['boat', null, { geo: [32.826, 35.628] }], ['pig1', null, { show: 0 }], ['pig2', null, { show: 0 }], ['pig3', null, { show: 0 }], ['pig4', null, { show: 0 }], ['town', null, { show: 1 }],
+      end: [['@env', 'day'], ['boat', null, { geo: [32.826, 35.628] }], ['pig1', 'idle', { show: 0 }], ['pig2', 'idle', { show: 0 }], ['pig3', 'idle', { show: 0 }], ['pig4', 'idle', { show: 0 }], ['pig5', 'idle', { show: 0 }], ['pig6', 'idle', { show: 0 }], ['pig7', 'idle', { show: 0 }], ['pig8', 'idle', { show: 0 }], ['town', null, { show: 1 }],
         ['jesus', 'speak', { board: null, x: 0.3, z: 0.12, look: 1.0 }], ['peter', 'listen', { board: null, x: 0.08, z: -0.08, look: 1.0 }], ['johnD', 'listen', { board: null, x: 0.12, z: 0.32, look: 1.0 }],
         ['wild', 'idle', { show: 0 }], ['healed', 'listen', { show: 1, x: 0.75, z: 0.15, look: -1.0 }]],
     },

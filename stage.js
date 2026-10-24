@@ -215,6 +215,12 @@ window.stageFrame = ev => {
   return { dx: w / 2 - (v.x + 1) / 2 * w, dy: h / 2 - (1 - v.y) / 2 * h, at: s.at || null };
 };
 function anchor() {
+  // 무대 바닥을 실제 지점(at)으로 옮긴 장면은 캔버스도 그 지점에 붙인다 — 핀에 붙여 두면 옮겨 간 인물·집이 캔버스 가장자리에서 잘렸다
+  if (script?.at && window.geoToClient) {
+    const c = window.geoToClient(...script.at), w = wrap.getBoundingClientRect();
+    if (!map.querySelector(`.pin[data-place="${curEv.place}"] .dot`)?.getBoundingClientRect().width) return null;
+    return { x: c.x - w.left, y: c.y - w.top };
+  }
   const el = curEv && map.querySelector(`.pin[data-place="${curEv.place}"] .dot`);
   if (!el) return null;
   const r = el.getBoundingClientRect(), w = wrap.getBoundingClientRect();
@@ -236,8 +242,9 @@ function geoToStage(ll) {
   return new THREE.Vector2((w.x - stageGroup.position.x) / s, (w.z - stageGroup.position.z) / s);
 }
 function placeGeo() {
-  // 무대 바닥의 중심(at): 핀이 물가에 있어 핀 앞이 물인 곳(가버나움)에서, 뭍의 실제 지점으로 무대를 옮긴다
-  if (script?.at) { const w = geoToWorld(script.at); if (w) stageGroup.position.set(w.x, 0, w.z); } else stageGroup.position.set(0, 0, 0);
+  // 무대 바닥의 중심(at): 핀이 물가에 있어 핀 앞이 물인 곳(가버나움)에서, 뭍의 실제 지점으로 무대를 옮긴다 — anchor()가 캔버스째 옮긴다
+  // (캔버스를 그 지점에 붙이므로 무대 바닥은 언제나 원점)
+  stageGroup.position.set(0, 0, 0);
   Object.values(props).forEach(p => {
     if (p.geo) { // 고정: 매 프레임 그 자리로
       const g = geoToStage(p.geo); if (!g) return;
