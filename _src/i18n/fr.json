@@ -482,7 +482,7 @@
    "when": "début 27 apr. J.-C.",
    "subtitle": "Une invitation à quatre heures de l'après-midi",
    "story": [
-    "À Béthanie, au-delà du Jourdain, Jean se tenait là avec deux de ses disciples. Voyant passer Jésus, il s'écria : voici l'Agneau de Dieu. À ces mots, les deux disciples le suivirent. Jésus se retourna et leur demanda ce qu'ils cherchaient.",
+    "À Béthanie, au-delà du Jourdain, Jean, qui la veille avait désigné Jésus comme l’Agneau de Dieu qui porte le péché du monde, se tenait là avec deux de ses disciples. Voyant passer Jésus, il s'écria de nouveau : voici l'Agneau de Dieu. À ces mots, les deux disciples le suivirent. Jésus se retourna et leur demanda ce qu'ils cherchaient.",
     "Où demeures-tu, demandèrent-ils. Venez et voyez, répondit-il. Il était environ quatre heures de l'après-midi. André, l'un des deux qui passèrent ce jour-là avec lui, alla trouver son frère Simon et lui dit qu'il avait rencontré le Messie. Jésus donna alors à Simon un nom nouveau, Céphas.",
     "Le lendemain, en route vers la Galilée, Jésus appela Philippe, de Bethsaïde. Philippe courut annoncer la nouvelle à Nathanaël. Celui-ci haussa les épaules : de Nazareth, que pourrait-il sortir de bon ? Mais quand Jésus lui dit qu'il l'avait vu sous le figuier, il céda et confessa sa foi."
    ],
@@ -502,6 +502,10 @@
     {
      "who": "Nathanaël",
      "text": "Rabbi, tu es le Fils de Dieu ! Tu es le roi d'Israël !"
+    },
+    {
+     "who": "Jean le Baptiste",
+     "text": "Regardez ! C’est l’Agneau de Dieu, celui qui porte le péché du monde."
     }
    ],
    "note": "La « dixième heure » se compte, à la manière juive, à partir du lever du soleil ; elle correspond à environ quatre heures de l'après-midi. Céphas signifie « rocher » en araméen ; en grec, c'est Pierre.",
@@ -1802,7 +1806,7 @@
    "story": [
     "Un message arriva de Béthanie : Seigneur, celui que tu aimes est malade. Pourtant Jésus resta encore deux jours là où il était avant de se mettre en route. Quand il proposa de retourner en Judée, Thomas dit : allons, nous aussi, pour mourir avec lui.",
     "À son arrivée, Lazare était au tombeau depuis déjà quatre jours. Marthe accourut : Seigneur, si tu avais été ici, mon frère ne serait pas mort. Je suis la résurrection et la vie. Crois-tu cela ? Puis Marie vint, tomba à ses pieds en pleurant, et Jésus lui aussi pleura.",
-    "Devant le tombeau, une grotte fermée par une pierre, Jésus dit d'enlever la pierre. Marthe craignait l'odeur, mais on ôta la pierre. Jésus leva les yeux au ciel, rendit grâce, puis cria d'une voix forte : Lazare, sors ! Les pieds et les mains liés de bandelettes, celui qui était mort sortit."
+    "Devant le tombeau, une grotte fermée par une pierre, Jésus dit d'enlever la pierre. Marthe craignait l'odeur, mais on ôta la pierre. Jésus leva les yeux au ciel, rendit grâce, puis cria d'une voix forte : Lazare, sors ! Les pieds et les mains liés de bandelettes, celui qui était mort sortit. Après cela, le grand prêtre Caïphe déclara au conseil qu’il valait mieux qu’un seul homme meure pour le peuple. Jean a rapporté ces paroles comme une prophétie : Jésus allait mourir pour la nation, et pour rassembler dans l’unité les enfants de Dieu dispersés."
    ],
    "words": [
     {
@@ -1820,6 +1824,10 @@
     {
      "who": "Marthe",
      "text": "Oui, Seigneur. Je crois que tu es le Christ, le Fils de Dieu, celui qui devait venir dans le monde."
+    },
+    {
+     "who": "Caïphe",
+     "text": "Ne voyez-vous pas qu’il vaut mieux pour vous qu’un homme meure à la place du peuple, plutôt que la nation entière soit perdue ?"
     }
    ],
    "note": "Jean précise que Béthanie était à quinze stades de Jérusalem, soit environ trois kilomètres. Des textes juifs plus tardifs disent que l'âme du défunt reste trois jours près du corps : quatre jours, c'était le moment où tout espoir s'éteignait.",
@@ -1880,7 +1888,7 @@
    "story": [
     "Jéricho, ville-oasis couverte de palmiers. Au passage du cortège de pèlerins qui montait à Jérusalem, un aveugle nommé Bartimée, assis au bord du chemin pour mendier, se mit à crier : Jésus, Fils de David, aie pitié de moi ! Plus on le rabrouait pour le faire taire, plus il criait fort.",
     "Jésus s'arrêta et le fit appeler. L'homme jeta son manteau, bondit et vint à lui. Que veux-tu que je fasse pour toi ? Maître, que je voie de nouveau. Va, ta foi t'a sauvé. Aussitôt ses yeux s'ouvrirent, et il suivit Jésus sur le chemin.",
-    "Dans cette ville vivait Zachée, chef des collecteurs d'impôts, un homme riche. Petit de taille, il ne pouvait voir Jésus à cause de la foule ; il courut en avant et grimpa sur un sycomore. Jésus s'arrêta au pied de l'arbre, leva les yeux et l'appela par son nom. Ce jour-là, Zachée promit de donner aux pauvres la moitié de ses biens."
+    "Dans cette ville vivait Zachée, chef des collecteurs d'impôts, un homme riche. Petit de taille, il ne pouvait voir Jésus à cause de la foule ; il courut en avant et grimpa sur un sycomore. Jésus s'arrêta au pied de l'arbre, leva les yeux et l'appela par son nom. Ce jour-là, Zachée promit de donner aux pauvres la moitié de ses biens. Sur cette route qui monte à Jérusalem, Jésus avait déjà dit à ses disciples que le Fils de l’homme est venu pour servir et livrer sa vie en rançon pour beaucoup."
    ],
    "words": [
     {
@@ -1898,6 +1906,10 @@
     {
      "who": "Jésus",
      "text": "Va. Ta foi t'a guéri."
+    },
+    {
+     "who": "Jésus",
+     "text": "Le Fils de l’homme n’est pas venu pour qu’on le serve, mais pour servir les autres et livrer sa vie en rançon pour beaucoup."
     }
    ],
    "note": "Jéricho, oasis située à environ deux cent cinquante mètres sous le niveau de la mer, abritait un palais d'hiver d'Hérode ; carrefour du commerce des dattes et du baume, elle avait un poste de péage important. Les Évangiles ne s'accordent pas tout à fait sur le nombre des aveugles ni sur le moment de la scène.",
@@ -2121,13 +2133,13 @@
    "subtitle": "La dernière nuit, où il lava les pieds et rompit le pain",
    "story": [
     "Jeudi soir. Pierre et Jean suivent un homme qui porte une cruche d'eau et préparent le repas de la Pâque dans une grande salle à l'étage. Quand les disciples ont pris place à la lueur des lampes, Jésus quitte son vêtement, noue un linge à sa ceinture, verse de l'eau dans une bassine et leur lave les pieds, l'un après l'autre.",
-    "Au cours du repas, il prend le pain, rend grâce, le rompt et le leur donne : ceci est mon corps, donné pour vous. Il leur tend la coupe : la nouvelle alliance, scellée dans mon sang. L'un de vous va me livrer : à ces mots, la salle se fige, et Judas se lève et sort. Il faisait nuit.",
+    "Au cours du repas, il prend le pain, rend grâce, le rompt et le leur donne : ceci est mon corps, donné pour vous. Il leur tend la coupe : mon sang qui scelle l’alliance, répandu pour que les péchés de beaucoup soient pardonnés. L'un de vous va me livrer : à ces mots, la salle se fige, et Judas se lève et sort. Il faisait nuit.",
     "Aux disciples qui restent, Jésus parle longuement. Aimez-vous les uns les autres. Que votre cœur ne se trouble pas. Je suis le chemin. Puis il lève les yeux au ciel et prie pour eux. Après avoir chanté les psaumes, ils sortent dans la nuit, vers le mont des Oliviers."
    ],
    "words": [
     {
      "who": "Jésus",
-     "text": "Ceci est mon corps, donné pour vous. Faites cela en mémoire de moi. Cette coupe est la nouvelle alliance en mon sang, versé pour vous."
+     "text": "Ceci est mon corps, donné pour vous. Faites cela en mémoire de moi. Cette coupe est mon sang, le sang de l’alliance de Dieu, répandu pour que les péchés de beaucoup soient pardonnés."
     },
     {
      "who": "Jésus",
@@ -2274,7 +2286,7 @@
     }
    ],
    "note": "La crucifixion était le supplice le plus infamant, que Rome réservait aux rebelles et aux esclaves. La tradition la plus solide situe le Golgotha à l'emplacement de la basilique du Saint-Sépulcre ; le Jardin de la Tombe, proposé au dix-neuvième siècle, est aussi un lieu de pèlerinage.",
-   "reflect": "Devant sa dernière parole, tout est accompli, qu'est-ce que je peux déposer ?",
+   "reflect": "Est-ce que je sais que mon nom aussi fait partie des raisons pour lesquelles il ne s’est pas détourné de ce chemin ?",
    "quiz": {
     "q": "Qui les soldats obligèrent-ils à porter la croix de Jésus ?",
     "options": [
@@ -2371,7 +2383,7 @@
    "subtitle": "Une paix venue à travers les portes verrouillées",
    "story": [
     "Le soir du jour de la résurrection, les disciples sont réunis, portes verrouillées par peur. Tandis qu'ils s'agitent encore au récit des deux revenus d'Emmaüs, Jésus se tient au milieu d'eux. La paix soit avec vous. Saisis d'effroi, les disciples croient voir un esprit.",
-    "Il leur montre ses mains et ses pieds marqués par les clous, et son côté transpercé par la lance. Il mange devant eux un morceau de poisson grillé, et leur ouvre l'intelligence pour comprendre les Écritures. Puis il souffle sur eux et leur dit : recevez l'Esprit Saint.",
+    "Il leur montre ses mains et ses pieds marqués par les clous, et son côté transpercé par la lance. Il mange devant eux un morceau de poisson grillé, leur ouvre l'intelligence pour comprendre les Écritures, et leur dit que le Christ devait souffrir et ressusciter, et que l'annonce du pardon irait jusqu'à toutes les nations. Puis il souffle sur eux et leur dit : recevez l'Esprit Saint.",
     "Thomas, qui n'était pas là, s'obstine : tant qu'il n'aura pas touché, il ne croira pas. Huit jours plus tard, de nouveau derrière les portes verrouillées, Jésus se tient là et lui tend ses mains et son côté. La confession jaillit des lèvres de Thomas : mon Seigneur et mon Dieu."
    ],
    "words": [
@@ -2390,6 +2402,10 @@
     {
      "who": "Thomas",
      "text": "Mon Seigneur et mon Dieu !"
+    },
+    {
+     "who": "Jésus",
+     "text": "Le Christ devait souffrir et revenir à la vie le troisième jour. Désormais, en son nom, l’appel à revenir à Dieu et à être pardonné partira de Jérusalem vers toutes les nations."
     }
    ],
    "note": "Thomas était surnommé Didyme, c'est-à-dire le Jumeau. Selon la manière juive de compter, qui inclut le premier jour, « huit jours après » désigne le même jour de la semaine suivante, de nouveau le premier jour de la semaine.",
