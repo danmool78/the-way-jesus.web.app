@@ -98,13 +98,68 @@
  "reviewScene": "See the scene again",
  "nextQ": "Next →",
  "footsteps": "Footsteps {s}/{n} · ★ {r}",
- "gospels": { "mt": ["Matthew", "Mt"], "mk": ["Mark", "Mk"], "lk": ["Luke", "Lk"], "jn": ["John", "Jn"], "acts": ["Acts", "Acts"] },
+ "gospels": {
+  "mt": [
+   "Matthew",
+   "Mt"
+  ],
+  "mk": [
+   "Mark",
+   "Mk"
+  ],
+  "lk": [
+   "Luke",
+   "Lk"
+  ],
+  "jn": [
+   "John",
+   "Jn"
+  ],
+  "acts": [
+   "Acts",
+   "Acts"
+  ]
+ },
  "map": {
-  "갈릴리": "GALILEE", "사마리아": "SAMARIA", "유대": "JUDEA", "베레아": "PEREA", "데가볼리": "DECAPOLIS", "빌립의 영지": "TETRARCHY OF PHILIP",
-  "페니키아": "PHOENICIA", "이두매": "IDUMEA", "애 굽": "EGYPT", "시 나 이": "SINAI",
-  "디베랴": "Tiberias", "가이사랴": "Caesarea", "욥바": "Joppa", "세바스테": "Sebaste", "마케루스": "Machaerus", "가사": "Gaza", "라피아": "Raphia",
-  "리노코루라": "Rhinocorura", "펠루시움": "Pelusium", "부바스티스": "Bubastis", "레온토폴리스": "Leontopolis", "헬리오폴리스 (온)": "Heliopolis (On)",
-  "멤피스": "Memphis", "알렉산드리아": "Alexandria",
-  "지 중 해": "MEDITERRANEAN SEA", "갈릴리 바다": "Sea of Galilee", "사해": "Dead Sea", "요단 강": "Jordan River", "나일 강": "Nile", "수에즈 만": "Gulf of Suez"
- }
+  "갈릴리": "GALILEE",
+  "사마리아": "SAMARIA",
+  "유대": "JUDEA",
+  "베레아": "PEREA",
+  "데가볼리": "DECAPOLIS",
+  "빌립의 영지": "TETRARCHY OF PHILIP",
+  "페니키아": "PHOENICIA",
+  "이두매": "IDUMEA",
+  "애 굽": "EGYPT",
+  "시 나 이": "SINAI",
+  "디베랴": "Tiberias",
+  "가이사랴": "Caesarea",
+  "욥바": "Joppa",
+  "세바스테": "Sebaste",
+  "마케루스": "Machaerus",
+  "가사": "Gaza",
+  "라피아": "Raphia",
+  "리노코루라": "Rhinocorura",
+  "펠루시움": "Pelusium",
+  "부바스티스": "Bubastis",
+  "레온토폴리스": "Leontopolis",
+  "헬리오폴리스 (온)": "Heliopolis (On)",
+  "멤피스": "Memphis",
+  "알렉산드리아": "Alexandria",
+  "지 중 해": "MEDITERRANEAN SEA",
+  "갈릴리 바다": "Sea of Galilee",
+  "사해": "Dead Sea",
+  "요단 강": "Jordan River",
+  "나일 강": "Nile",
+  "수에즈 만": "Gulf of Suez"
+ },
+ "tabStory": "Story",
+ "tabText": "Scripture",
+ "tabCompare": "Compare",
+ "continueReading": "Continue reading",
+ "viewPainting": "View painting",
+ "rememberScene": "Remember this scene?",
+ "settings": "Settings",
+ "nextScene": "Next scene",
+ "compareNote": "Which Gospels record this scene, with chapter and verse — the same event seen through different witnesses’ eyes.",
+ "fullHarmony": "See the full Gospel harmony"
 }
