@@ -829,7 +829,9 @@ function setListenUI(stopped) {
 // 소리 크기는 Web Audio 사슬로만 정한다 (아이폰은 audio 요소의 volume을 무시한다). 낭독 소리는 이 사슬에 넣지 않는다
 const BGM = { key: 'theway-music', level: 0.16, fade: 2.5 };
 let bgmCtx = null, bgmPlayers = [], bgmCur = 0, bgmCue = null, bgmLoop = null, bgmHush = 0, bgmGo = 0;
-const bgmOn = () => { try { return localStorage.getItem(BGM.key) !== 'off'; } catch { return true; } };
+// 켜고 끈 것은 메모리에 두고 localStorage에는 남겨 두기만 한다 (저장이 막힌 브라우저에서도 이번 방문 동안은 끌 수 있게)
+let bgmPref = (() => { try { return localStorage.getItem(BGM.key) !== 'off'; } catch { return true; } })();
+const bgmOn = () => bgmPref;
 function bgmReady() {
   if (bgmCtx) return true;
   const Ctx = window.AudioContext || window.webkitAudioContext;
@@ -1033,7 +1035,7 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   // stopSpeech가 스위치를 autoOn(=false)으로 되돌리므로 켠 상태를 먼저 읽어 둔다
   $('#auto').onchange = () => { const on = $('#auto').checked; stopSpeech(); if (on) startAuto(); };
   $('#music').hidden = !EVENTS.some(e => e.music);
-  $('#music').onclick = () => { try { localStorage.setItem(BGM.key, bgmOn() ? 'off' : 'on'); } catch { /* 이번 방문만 */ } bgmFollow(); };
+  $('#music').onclick = () => { bgmPref = !bgmPref; try { localStorage.setItem(BGM.key, bgmPref ? 'on' : 'off'); } catch { /* 이번 방문만 */ } bgmFollow(); };
   $('#quizBtn').onclick = openSceneQuiz;
   $('#closeQuiz').onclick = () => $('#quizDlg').close();
   // 설정: 톱니바퀴를 누르면 언어·대조표·발자취
