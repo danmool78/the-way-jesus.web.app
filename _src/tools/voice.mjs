@@ -131,7 +131,11 @@ for (const e of events) {
     const v = voiceOf(s), key = keyOf(s), mp3 = `${OUT}/${key}.mp3`;
     if (existsSync(mp3)) continue;
     let b, pcm;
-    const g = s.gemini && await geminiSynth(s.text, v);
+    let g = s.gemini && await geminiSynth(s.text, v);
+    // 글에 없는 말까지 읽어 지나치게 길어진 판은 버리고 두 번까지 다시 (글 앞에 지시를 붙이면 Gemini가 그 지시까지 읽었다)
+    const tooLong = pcm => { const n = s.text.replace(/[\s.,?!'"“”‘’…·:;()\-–—]/g, '').length; return n >= 4 && speechSec(pcm) > n / v.cps * 2.5; }; // 지시문을 읽으면 7배쯤 길어졌다
+    for (let k = 0; g && tooLong(g) && k < 2; k++) { console.warn(`Gemini 녹음이 글보다 너무 김 — 다시: ${s.text.slice(0, 20)}`); g = await geminiSynth(s.text, v); }
+    if (g && tooLong(g)) g = null;
     // Gemini가 모두 막히면 그 문장은 Google 음성으로 대신 녹음한다 (고친 말씀이 녹음 없이 남지 않게). 열쇠는 그대로
     if (s.gemini && !g) console.warn(`::warning::Gemini 성우 한도 — Google 음성으로 대신 녹음: ${s.text.slice(0, 30)}`);
     if (g) pcm = tidy((b = { pcm: g }).pcm);

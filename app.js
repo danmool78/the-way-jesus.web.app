@@ -120,7 +120,12 @@ const GEO = {
   sirbonis: [[31.17,32.75],[31.2,33.15],[31.13,33.45],[31.06,33.2],[31.08,32.85]],
   bitter: [[30.45,32.33],[30.4,32.42],[30.28,32.45],[30.32,32.36]],
   suez: [[29.97,32.53],[29.6,32.38],[29.0,32.62],[28.5,32.88],[28.0,33.3],[28.0,33.62],[28.5,33.22],[29.0,32.95],[29.6,32.72],[29.97,32.6]],
-  hinnom: [[31.7765,35.2252],[31.7735,35.2258],[31.7705,35.2290],[31.7698,35.2340],[31.7690,35.2362]]
+  hinnom: [[31.7765,35.2252],[31.7735,35.2258],[31.7705,35.2290],[31.7698,35.2340],[31.7690,35.2362]],
+  // 메소포타미아 (프롤로그의 에덴: 창 2:14의 힛데겔·유브라데가 만나는 남쪽 — 전승의 자리). 지형 음영이 없는 곳이라 강과 바다만 그린다
+  euphrates: [[38.75,38.75],[37.6,38.3],[37.0,38.05],[36.6,38.2],[35.95,39.0],[35.33,40.14],[34.45,40.92],[34.1,42.35],[33.42,43.3],[33.35,43.78],[32.54,44.42],[32.03,44.4],[31.6,44.9],[31.31,45.28],[31.04,46.26],[30.98,46.9],[31.0,47.43]],
+  tigris: [[38.0,40.2],[37.5,41.6],[37.32,42.19],[36.34,43.13],[35.47,43.26],[34.6,43.68],[34.2,43.87],[33.32,44.42],[32.9,44.9],[32.5,45.82],[31.84,47.15],[31.3,47.4],[31.0,47.43]],
+  shatt: [[31.0,47.43],[30.5,47.81],[30.2,48.2],[29.97,48.53]],
+  gulf: [[30.05,48.45],[29.95,48.05],[29.55,47.75],[29.35,47.95],[29.0,48.15],[28.4,48.5],[27.8,48.9],[27.0,49.6],[26.5,50.3],[27.0,51.5],[27.8,51.2],[28.6,50.8],[29.3,50.6],[29.9,50.1],[30.1,49.5],[30.2,48.9]]
 };
 // 음영 기복도(assets/relief.webp)가 덮는 범위 — _src/relief.py의 EXTENT와 같게
 const RELIEF = { lat0: 29.15, lat1: 34.6, lng0: 33.0, lng1: 37.4 };
@@ -173,11 +178,14 @@ function buildMap() {
     <radialGradient id="oasis"><stop offset="0" stop-color="var(--oasis)" stop-opacity=".75"/><stop offset=".6" stop-color="var(--oasis)" stop-opacity=".4"/><stop offset="1" stop-color="var(--oasis)" stop-opacity="0"/></radialGradient>
     <filter id="waterEdge" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur in="SourceAlpha" stdDeviation="4" result="b"/><feComposite in="SourceAlpha" in2="b" operator="arithmetic" k2="1" k3="-1" result="edge"/><feFlood flood-color="#21474f" flood-opacity=".5"/><feComposite in2="edge" operator="in"/><feComposite in2="SourceGraphic" operator="over"/></filter>
   </defs>
-  <rect x="${-W * 2}" y="${-H * 2}" width="${W * 5}" height="${H * 5}" fill="var(--land)"/>
+  <rect x="${-W * 2}" y="${-H * 2}" width="${W * 12}" height="${H * 5}" fill="var(--land)"/>
   <image href="assets/relief-west.webp" class="relief" x="${wx0}" y="${wy0}" width="${wx1 - wx0}" height="${wy1 - wy0}" preserveAspectRatio="none"/>
   <image href="assets/relief.webp" class="relief" x="${rx0}" y="${ry0}" width="${rx1 - rx0}" height="${ry1 - ry0}" preserveAspectRatio="none"/>
   <g id="reliefHi" class="relief"></g>
   <g id="reliefCity" class="relief"></g>
+  ${['euphrates', 'tigris', 'shatt'].map(k => `<path d="${smooth(GEO[k])}" class="riverbank"/>`).join('')}
+  <path d="${smooth(GEO.gulf, true)}" fill="url(#seaGrad)" class="sea"/>
+  ${['euphrates', 'tigris', 'shatt'].map(k => `<path d="${smooth(GEO[k])}" class="river"/>`).join('')}
   ${['nile', 'canopic', 'rosetta', 'damietta', 'pelusiac'].map(k => `<path d="${smooth(GEO[k])}" class="riverbank nilebank"/>`).join('')}
   <path d="${smooth(GEO.jordanN)}" class="riverbank"/>
   <path d="${smooth(GEO.jordanS)}" class="riverbank"/>
@@ -206,6 +214,11 @@ function buildMap() {
   ${REFCITIES.map(([n, a, b]) => `<g class="lbl refcity" transform="translate(${px([a, b]).join(',')})"><circle r="2.2"/><text x="5" y="3">${esc(tm(n))}</text></g>`).join('')}
   ${lbl(tm('나일 강'), px([29.7, 31.33]), 'water-lbl river-lbl')}
   ${lbl(tm('수에즈 만'), px([29.55, 32.66]), 'water-lbl river-lbl')}
+  ${lbl(tm('메소포타미아'), px([32.55, 44.35]), 'region')}
+  ${lbl(tm('유프라테스 강'), px([33.62, 42.05]), 'water-lbl river-lbl')}
+  ${lbl(tm('티그리스 강'), px([33.95, 44.6]), 'water-lbl river-lbl')}
+  ${lbl(tm('페르시아 만'), px([29.25, 49.3]), 'water-lbl river-lbl')}
+  ${lbl(tm('아라비아 사막'), px([31.2, 40.8]), 'region')}
   <path class="offmap" fill-rule="evenodd" d="M${DRAWN.x - 1e5},${DRAWN.y - 1e5}h${DRAWN.w + 2e5}v${DRAWN.h + 2e5}h${-DRAWN.w - 2e5}Z M${DRAWN.x},${DRAWN.y}v${DRAWN.h}h${DRAWN.w}v${-DRAWN.h}Z"/>
   <g id="routes"><path id="nextHint" class="nexthint"/></g>
   <g id="markers"></g>
@@ -246,7 +259,8 @@ function buildMap() {
 
 // 지형 그림(relief·relief-west)이 불투명하게 그려진 범위 — 지도는 이 밖(그림 없는 맨바닥)을 보이지 않는다.
 // 두 그림의 바깥 범위(29.15–34.6, 29.4–37.4)에서 가장자리의 투명하게 흐린 띠(0.16–0.32°)를 뺐다
-const DRAWN = (() => { const [x0, y0] = px([34.28, 29.63]), [x1, y1] = px([29.47, 37.14]); return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }; })();
+// 동쪽은 프롤로그의 에덴(메소포타미아)까지 — 지형 음영이 없는 맨바닥에 강과 바다만 그린 곳
+const DRAWN = (() => { const [x0, y0] = px([34.28, 29.63]), [x1, y1] = px([29.47, 49.6]); return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }; })();
 function applyView() {
   const r = map.getBoundingClientRect();
   if (!r.width) return;
@@ -425,8 +439,9 @@ function animateTo(target, ms) {
       drag.moved = true; cancelAnimationFrame(anim); followWalk = false; // 걷는 중에 끌면 카메라 따라가기를 멈춘다 map.setPointerCapture(e.pointerId); map.classList.add('dragging');
     }
     const u = map.viewBox.baseVal.width / map.getBoundingClientRect().width;
-    const { w, h } = drag.v, cx = Math.min(LAND.x + LAND.w * 1.25, Math.max(LAND.x - LAND.w * 0.25, drag.v.x + w / 2 - dx * u));
-    const cy = Math.min(LAND.y + LAND.h * 1.25, Math.max(LAND.y - LAND.h * 0.25, drag.v.y + h / 2 - dy * u));
+    const B = isPro() ? DRAWN : LAND; // 프롤로그(메소포타미아)에서는 그린 범위 안에서
+    const { w, h } = drag.v, cx = Math.min(B.x + B.w * 1.25, Math.max(B.x - B.w * 0.25, drag.v.x + w / 2 - dx * u));
+    const cy = Math.min(B.y + B.h * 1.25, Math.max(B.y - B.h * 0.25, drag.v.y + h / 2 - dy * u));
     view = { x: cx - w / 2, y: cy - h / 2, w, h };
     applyView();
   });
@@ -782,7 +797,9 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
     if (stepped) {
       banner(`<span class="wk">📍</span>${esc(evAt(prev).place === EVENTS[i].place ? t('samePlace') : t('arrive'))} · <b>${esc(p.name)}</b><small>${esc(EVENTS[i].when)}</small>`, 2600);
       const nx = EVENTS[i + 1];
-      if (fitMode !== 'all' && !frameStage(i, 1100)) frame(nx && nx.place !== EVENTS[i].place ? [EVENTS[i].place, nx.place] : [EVENTS[i].place], 1100);
+      // 프롤로그(메소포타미아의 에덴)에서는 먼 길이라: 두 곳이 다 보이게 물러났다가 서쪽 나사렛으로 내려앉는다
+      if (prev < 0 && fitMode !== 'all') { frame([evAt(prev).place, EVENTS[i].place], 1400, false); setTimeout(() => { if (idx === i && !frameStage(i, 1700)) frame([EVENTS[i].place], 1700); }, reduced() ? 0 : 1500); }
+      else if (fitMode !== 'all' && !frameStage(i, 1100)) frame(nx && nx.place !== EVENTS[i].place ? [EVENTS[i].place, nx.place] : [EVENTS[i].place], 1100);
       $('#walker', map).classList.remove('arrive'); void $('#walker', map).getBoundingClientRect(); $('#walker', map).classList.add('arrive');
       setTimeout(() => setCard('open'), reduced() ? 0 : 650);
     } else setCard('open');

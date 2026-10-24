@@ -163,7 +163,12 @@
   "사해": "Mer Morte",
   "요단 강": "Jourdain",
   "나일 강": "Nil",
-  "수에즈 만": "Golfe de Suez"
+  "수에즈 만": "Golfe de Suez",
+  "메소포타미아": "Mésopotamie",
+  "유프라테스 강": "Euphrate",
+  "티그리스 강": "Tigre",
+  "페르시아 만": "Golfe Persique",
+  "아라비아 사막": "Désert d’Arabie"
  },
  "tabStory": "Récit",
  "tabText": "Texte",
