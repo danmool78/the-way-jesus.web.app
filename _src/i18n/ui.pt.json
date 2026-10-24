@@ -53,6 +53,8 @@
  "walkDays": "cerca de {n} dias a pé",
  "distance": "cerca de {d} km · {t}",
  "walkSpeak": "De {a} a {b}.",
+ "sayPlace": "Lugar",
+ "sayWhen": "Época",
  "arrive": "Chegada",
  "samePlace": "Mesmo lugar, um novo dia",
  "showMap": "Ver mapa ▾",

@@ -852,7 +852,8 @@ function scrollToEl(el) {
 function sceneScript() {
   const e = EVENTS[idx], sc = $('#scene');
   // beat: 3D 무대(stage.js)가 연출을 맞추는 표지 — intro, p0…(문단), w0…(말씀)
-  const items = [{ text: `${e.title}. ${PLACES[e.place].name.replace(/[()·]/g, ' ')}, ${e.when.replace(/·/g, ',')}.`, el: $('.hero-text', sc), pause: 500, beat: 'intro' }];
+  // 제목 줄은 '수태고지. 장소, 나사렛. 시기, BC 6년경.'으로 읽는다 (장소와 때를 이름 붙여 알려 준다)
+  const items = [{ text: `${e.title}. ${t('sayPlace')}, ${PLACES[e.place].name.replace(/[()·]/g, ' ')}. ${t('sayWhen')}, ${e.when.replace(/\s*·\s*/g, ', ')}.`, el: $('.hero-text', sc), pause: 500, beat: 'intro' }];
   e.story.forEach((s, i) => items.push({ text: s, el: $(`[data-para="${i}"]`, sc), pause: 350, beat: 'p' + i }));
   const jesus = e.words.some(w => w.j);
   items.push({ text: (jesus ? t('hisWords') : t('voicesOfDay')) + '.', el: $('.words-sec h3', sc), pause: 400 });

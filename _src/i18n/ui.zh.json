@@ -53,6 +53,8 @@
  "walkDays": "步行约{n}天",
  "distance": "约{d}公里 · {t}",
  "walkSpeak": "从{a}到{b}。",
+ "sayPlace": "地点",
+ "sayWhen": "时间",
  "arrive": "抵达",
  "samePlace": "同一个地方，新的事",
  "showMap": "查看地图 ▾",

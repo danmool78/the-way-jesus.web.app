@@ -54,6 +54,8 @@
  "walkDays": "걸어서 약 {n}일",
  "distance": "약 {d}km · {t}",
  "walkSpeak": "{a}에서 {b}으로.",
+ "sayPlace": "장소",
+ "sayWhen": "시기",
  "arrive": "도착",
  "samePlace": "같은 곳, 새로운 일",
  "showMap": "지도 보기 ▾",

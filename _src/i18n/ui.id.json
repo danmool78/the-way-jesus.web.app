@@ -53,6 +53,8 @@
  "walkDays": "sekitar {n} hari berjalan kaki",
  "distance": "sekitar {d} km · {t}",
  "walkSpeak": "Dari {a} ke {b}.",
+ "sayPlace": "Tempat",
+ "sayWhen": "Waktu",
  "arrive": "Tiba",
  "samePlace": "Tempat yang sama, hari yang baru",
  "showMap": "Tampilkan peta ▾",
