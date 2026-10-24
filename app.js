@@ -41,7 +41,7 @@ function applyStatic() {
     ['#fitAll', 'fitAll'], ['#fitAll', 'fitAllTitle', 'title'], ['#fitNow', 'fitNowTitle', 'title'],
     ['.dock', 'dockLabel', 'aria-label'], ['#track', 'trackLabel', 'aria-label'], ['#prev', 'prevScene', 'aria-label'], ['#skip', 'nextScene', 'aria-label'],
     ['#listen', 'listenScene', 'aria-label'], ['#next', 'walkNext', 'aria-label'], ['#next .lbl', 'walkNext'], ['.switch', 'autoStart', 'title'],
-    ['#rate', 'speedLabel', 'aria-label'],
+    ['#rate', 'speedLabel', 'aria-label'], ['#music', 'music', 'aria-label'], ['#music', 'music', 'title'],
     ['#words h2', 'wordsHead'], ['#words .list-head p', 'wordsIntro'], ['#wordSearch', 'wordsSearch', 'placeholder'], ['#wordSearch', 'wordsSearchLabel', 'aria-label'],
     ['#harmony h2', 'harmonyHead'], ['#harmony .list-head p', 'harmonyIntro'], ['#quiz h2', 'quizHead'], ['#quiz .list-head p', 'quizIntro'],
     ['#closeViewer', 'close', 'aria-label'], ['#closeStamps', 'close', 'aria-label'], ['#closeQuiz', 'close', 'aria-label'], ['#stamps h2', 'myFootsteps'], ['#stamps .fine', 'stampsNote'],
@@ -692,6 +692,7 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
     renderScene(); updateMap(prev, { camera: !stepped || fitMode === 'all' }); updateTrack(); markVisited(EVENTS[i].id);
     window.__stageScene = EVENTS[i]; // stage.js가 늦게 로드돼도 따라잡도록
     dispatchEvent(new CustomEvent('stage:scene', { detail: { ev: EVENTS[i] } }));
+    bgmFollow(); // 자동 여정이면 도착한 장면의 곡으로 겹쳐 바꾼다
     history.replaceState(null, '', '#' + EVENTS[i].id);
     $('#prev').disabled = idx === 0; $('#next').disabled = $('#skip').disabled = idx === EVENTS.length - 1;
     const p = PLACES[EVENTS[i].place];
@@ -877,7 +878,7 @@ function stopSpeech(keepAuto) {
   speaking = false; $$('.speaking').forEach(x => x.classList.remove('speaking'));
   showCaption(null);
   if (!keepAuto) stopAuto();
-  setListenUI();
+  setListenUI(true);
 }
 function stopAuto() { autoOn = false; clearTimeout(autoTimer); setListenUI(); }
 function startAuto() {
@@ -892,11 +893,86 @@ function startAuto() {
   };
   run();
 }
-function setListenUI() {
+function setListenUI(stopped) {
   const l = $('#listen');
   l.classList.toggle('on', speaking); // 재생 중이면 일시정지 모양
   l.setAttribute('aria-label', speaking ? t('stop') : t('listenScene'));
   $('#auto').checked = autoOn;
+  bgmFollow(stopped);
+}
+
+/* ---------- 배경음악 (낭독 밑에) ---------- */
+// 장면마다 곡 하나(_src/music.json → data의 music, assets/music/<곡>.mp3, 30초 반복 곡). 낭독하는 동안만 낮게 깐다.
+// 곡 끝이 다가오면 같은 곡을 처음부터 겹쳐 틀어 이음매가 들리지 않게 하고, 장면이 바뀌어 곡이 다르면 서로 겹쳐 바꾼다.
+// 낭독이 저절로 끝나면 잠깐 두었다가 천천히 내리고(자동 여정의 장면 사이 쉼에는 이어진다), 멈춤을 누르면 바로 내린다.
+// 소리 크기는 Web Audio 사슬로만 정한다 (아이폰은 audio 요소의 volume을 무시한다). 낭독 소리는 이 사슬에 넣지 않는다
+const BGM = { key: 'theway-music', level: 0.144, fade: 2.5 }; // level: 사용자 요청으로 0.16에서 10% 낮춤
+let bgmCtx = null, bgmPlayers = [], bgmCur = 0, bgmCue = null, bgmLoop = null, bgmHush = 0, bgmGo = 0;
+// 켜고 끈 것은 메모리에 두고 localStorage에는 남겨 두기만 한다 (저장이 막힌 브라우저에서도 이번 방문 동안은 끌 수 있게)
+let bgmPref = (() => { try { return localStorage.getItem(BGM.key) !== 'off'; } catch { return true; } })();
+const bgmOn = () => bgmPref;
+function bgmReady() {
+  if (bgmCtx) return true;
+  const Ctx = window.AudioContext || window.webkitAudioContext;
+  if (!Ctx) return false;
+  bgmCtx = new Ctx();
+  // 곡 안의 큰 대목은 눌러 두고, 말소리 대역(1~4kHz)을 비워 낭독이 그 위로 또렷하게 (리딩북 music.js와 같은 사슬)
+  const squeeze = bgmCtx.createDynamicsCompressor();
+  squeeze.threshold.value = -30; squeeze.knee.value = 10; squeeze.ratio.value = 6; squeeze.attack.value = 0.02; squeeze.release.value = 0.4;
+  const room = bgmCtx.createBiquadFilter(); room.type = 'peaking'; room.frequency.value = 2000; room.Q.value = 0.8; room.gain.value = -8;
+  squeeze.connect(room).connect(bgmCtx.destination);
+  bgmPlayers = [0, 1].map(() => {
+    const el = new Audio(); el.preload = 'auto';
+    const gain = bgmCtx.createGain(); gain.gain.value = 0;
+    bgmCtx.createMediaElementSource(el).connect(gain).connect(squeeze);
+    el.addEventListener('timeupdate', () => {
+      if (bgmPlayers[bgmCur].el !== el || !bgmCue || bgmLoop === el || !(el.duration > BGM.fade * 3)) return;
+      if (el.duration - el.currentTime < BGM.fade) { bgmLoop = el; bgmPlay(bgmCue); }
+    });
+    el.addEventListener('ended', () => { if (bgmPlayers[bgmCur].el === el && bgmCue) bgmPlay(bgmCue); });
+    return { el, gain, fade: null };
+  });
+  return true;
+}
+// 지금 들리는 크기 (gain.value를 제대로 알려 주지 않는 브라우저가 있어 마지막 램프로 셈한다)
+const bgmLevel = p => { const f = p.fade; if (!f) return 0; const k = f.s > 0 ? Math.min(1, (bgmCtx.currentTime - f.at) / f.s) : 1; return f.from + (f.to - f.from) * Math.max(0, k); };
+function bgmRamp(p, to, s) {
+  const now = bgmCtx.currentTime, g = p.gain.gain, from = bgmLevel(p);
+  g.cancelScheduledValues(now); g.setValueAtTime(from, now); g.linearRampToValueAtTime(to, now + s);
+  p.fade = { from, to, at: now, s };
+}
+function bgmPlay(cue) {
+  const from = bgmPlayers[bgmCur], to = bgmPlayers[1 - bgmCur]; ++bgmGo;
+  bgmRamp(from, 0, BGM.fade);
+  setTimeout(() => { if (from !== bgmPlayers[bgmCur]) from.el.pause(); }, BGM.fade * 1000 + 100);
+  bgmCur = 1 - bgmCur; bgmCue = cue; bgmLoop = null;
+  if (!to.el.src.endsWith(`/${cue}.mp3`)) to.el.src = `assets/music/${cue}.mp3`;
+  to.el.currentTime = 0;
+  to.el.play().catch(() => {});
+  bgmRamp(to, BGM.level, BGM.fade);
+}
+function bgmStop(s) {
+  if (!bgmCtx) return;
+  const go = ++bgmGo; bgmCue = null;
+  bgmPlayers.forEach(p => bgmRamp(p, 0, s));
+  setTimeout(() => { if (go === bgmGo) bgmPlayers.forEach(p => p.el.pause()); }, s * 1000 + 100);
+}
+// 낭독 상태가 바뀔 때마다 (setListenUI). stopped: 멈춤을 눌렀을 때
+function bgmFollow(stopped) {
+  $('#music')?.setAttribute('aria-pressed', String(bgmOn()));
+  const cue = bgmOn() && (speaking || autoOn) ? EVENTS?.[idx]?.music : null;
+  clearTimeout(bgmHush);
+  if (!cue) {
+    if (bgmCue) { if (stopped || !bgmOn()) bgmStop(0.4); else bgmHush = setTimeout(() => bgmStop(BGM.fade), 1500); }
+    return;
+  }
+  if (!bgmReady()) return;
+  if (bgmCtx.state === 'suspended') bgmCtx.resume().catch(() => {});
+  if (cue !== bgmCue) { bgmPlay(cue); return; }
+  // 같은 곡이 내려가던 중이면 그 자리에서 다시 올린다
+  const p = bgmPlayers[bgmCur];
+  if (p.el.paused) p.el.play().catch(() => {});
+  if (bgmLevel(p) < BGM.level - 0.01) { ++bgmGo; bgmRamp(p, BGM.level, 0.6); }
 }
 
 /* ---------- 말씀 모음 ---------- */
@@ -1038,7 +1114,10 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   $('#next').onclick = () => go(idx + 1);
   $('#skip').onclick = () => go(idx + 1);
   $('#listen').onclick = () => { if (speaking) stopSpeech(); else { stopAuto(); speakScene(); } };
-  $('#auto').onchange = () => { stopSpeech(); if ($('#auto').checked) startAuto(); };
+  // stopSpeech가 스위치를 autoOn(=false)으로 되돌리므로 켠 상태를 먼저 읽어 둔다
+  $('#auto').onchange = () => { const on = $('#auto').checked; stopSpeech(); if (on) startAuto(); };
+  $('#music').hidden = !EVENTS.some(e => e.music);
+  $('#music').onclick = () => { bgmPref = !bgmPref; try { localStorage.setItem(BGM.key, bgmPref ? 'on' : 'off'); } catch { /* 이번 방문만 */ } bgmFollow(); };
   $('#quizBtn').onclick = openSceneQuiz;
   $('#closeQuiz').onclick = () => $('#quizDlg').close();
   // 설정: 톱니바퀴를 누르면 언어·대조표·발자취

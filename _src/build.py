@@ -9,12 +9,15 @@ for f in sorted(glob.glob(os.path.join(here, 'content-*.json'))):
     for c in json.load(open(f, encoding='utf-8')):
         content[c['id']] = c
 images = load('images.json') if os.path.exists(os.path.join(here, 'images.json')) else {}
+music = load('music.json')['scenes']  # 장면마다 배경음악 곡 — 곡 파일이 만들어진 것만 싣는다
 events = []
 for s in skeleton:
     c = content[s['id']]
     e = {**s, **{k: v for k, v in c.items() if k != 'id'}}
     if s['id'] in images and os.path.exists(os.path.join(here, '..', 'assets', 'img', s['id'] + '.webp')):
         e['img'] = {'src': 'assets/img/%s.webp' % s['id'], **images[s['id']]}
+    if os.path.exists(os.path.join(here, '..', 'assets', 'music', '%s.mp3' % music.get(s['id']))):
+        e['music'] = music[s['id']]
     assert len(e['story']) == 3 and e['words'] and len(e['quiz']['options']) == 4, s['id']
     for w in e['words']:
         w['j'] = 1 if w['who'] == '예수' else 0  # 예수님 말씀 표시 (번역본에서도 이름 대신 이 표로 가른다)
