@@ -344,6 +344,7 @@ function leaveTerrain() {
   Object.values(actors).forEach(a => { a.big = 1; });
 }
 // 지형 위 (무대 좌표) 지점의 땅 높이 — 무대 바닥 중심과의 차이를 무대 단위로
+const skyC = new THREE.Color(), toneH = new THREE.Color(), toneS = new THREE.Color(), WHITE = new THREE.Color('#fff4e4');
 const groundAt = (x, z) => inTerrain ? (window.terrain3d.heightAt(base.x + x * base.k, base.z + z * base.k) - base.y) / base.k : 0;
 let bigNow = 1;
 // 땅에 붙은 소품: 지형과 같은 고정 축척에 둔다. 나머지(사람 곁의 십자가·배·짐승·상·바구니…)는 사람과 함께 커진다
@@ -366,6 +367,12 @@ function placeTerrain(T, dt) {
   bigNow = THREE.MathUtils.clamp(oldUnit(T, T.cam.dist, window.terrainView?.zoom ?? 1) / k, 1, 2);
   // 무대 밑 집·나무를 치울 넓이 (지도 단위)
   window.stageFoot = { r: k * 1.9 * (script.wide || 1), at: script.at || null, xz: [x, z] };
+  // 장면 분위기(밤·폭풍·새벽)는 지형 화면에 색조(CSS 필터)를 거는 대신 지형의 해·하늘빛으로 넘긴다 —
+  // 필터는 사람까지 함께 어둡게 해 밤 장면의 무대가 묻혔다. 따로 그릴 때처럼 사람과 땅이 같은 달빛을 받고, 등잔이 빛난다
+  // 넓은 땅 전체가 받으므로 따로 그릴 때보다 누그러뜨린다: 빛깔은 반만, 어두운 정도는 6~7할만 (해 질 녘 땅이 온통 주황, 밤 무대가 묻힘)
+  const hk = 0.4 + 0.6 * envNow.hemi / ENV.day.hemi[0], sk = 0.3 + 0.7 * envNow.sun / ENV.day.sun[0];
+  window.stageTone = { hemi: hk, sun: sk, hemiC: toneH.copy(hemi.color).lerp(WHITE, 0.5), sunC: toneS.copy(sun.color).lerp(WHITE, 0.5),
+    skyC: skyC.copy(hemi.color).lerp(WHITE, 0.3).multiplyScalar(Math.min(1, hk * 1.05)) };
   // 등잔·불빛: 빛이 닿는 거리는 묶음의 크기를 따라 커지지 않으므로 직접 늘리고, 멀어진 만큼 세기도 올린다
   stageGroup.traverse(o => {
     if (!o.isPointLight) return;
@@ -386,6 +393,7 @@ function frame() {
   const T = window.terrainDrives && window.terrain3d;
   if (!!T !== inTerrain) T ? enterTerrain(T) : leaveTerrain();
   holder.visible = mode !== 'off' && !!curEv;
+  if (!T || mode === 'off') window.stageTone = null;
   if (mode === 'off' || document.hidden || wrap.offsetParent === null) return;
   const dt = Math.min(clock.getDelta(), 0.05), time = clock.elapsedTime;
   if (T) {

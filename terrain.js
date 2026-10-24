@@ -27,7 +27,8 @@ const SINAI = [[31.13, 33.8], [31.15, 33.1], [31.26, 32.3], [31.52, 31.85], [31.
 const BASES = [{ src: 'assets/relief.webp', lat0: 29.15, lat1: 34.6, lng0: 33.0, lng1: 37.4, y: 0 }, { src: 'assets/relief-west.webp', lat0: 29.15, lat1: 31.9, lng0: 29.4, lng1: 33.25, y: -0.05 }];
 
 const wrap = document.querySelector('.mapwrap'), svg = document.getElementById('map');
-let renderer, scene, camera, sun, env, on = false, ready = false, loading = null;
+let renderer, scene, camera, sun, hemi, env, on = false, ready = false, loading = null;
+const SKY = new THREE.Color('#d6dcd6'), LIT = { hemi: new THREE.Color('#fff4dc'), sun: new THREE.Color('#fff0d4') };
 const regions = Object.entries(TREG).map(([name, r]) => {
   const [X0, Z0] = px([r.lat1, r.lng0]), [X1, Z1] = px([r.lat0, r.lng1]);
   return { name, ...r, X0, Z0, X1, Z1, heights: null, hw: 0, hh: 0, load: null, color: null };
@@ -80,7 +81,7 @@ async function build() {
   scene.background = new THREE.Color(sky);
   scene.fog = new THREE.Fog(sky, 260, 900);
   camera = new THREE.PerspectiveCamera(38, 1, 1, 4000);
-  scene.add(new THREE.HemisphereLight('#fff4dc', '#6b5a44', 1.35));
+  hemi = new THREE.HemisphereLight('#fff4dc', '#6b5a44', 1.35); scene.add(hemi);
   sun = new THREE.DirectionalLight('#fff0d4', 2.4); // 북서쪽 해 — 그림자 상자는 카메라를 따라다닌다 (loop)
   sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048); sun.shadow.bias = -0.0005;
   scene.add(sun, sun.target);
@@ -487,7 +488,13 @@ function loop(now) {
   const near = THREE.MathUtils.clamp((cam.dist - 40) / 90, 0.15, 1);
   routes.forEach(l => { const i = l.userData.i; l.material.opacity = (i <= idx ? 0.9 : walking && i === idx + 1 ? 1 : 0.18) * near; });
   clearStageSpot();
-  const tone = svg.style.filter; if (renderer.domElement.style.filter !== tone) renderer.domElement.style.filter = tone; // 장면의 밤·폭풍·새벽 색조를 2D 지도처럼 지형에도
+  // 장면의 밤·폭풍·새벽: 3D 무대가 서 있으면 그 분위기를 해·하늘빛으로(stage.js의 stageTone), 아니면 2D 지도처럼 색조 필터로
+  const tn = window.stageTone;
+  hemi.intensity = 1.35 * (tn ? tn.hemi : 1); hemi.color.copy(tn ? tn.hemiC : LIT.hemi);
+  sun.intensity = 2.4 * (tn ? tn.sun : 1); sun.color.copy(tn ? tn.sunC : LIT.sun);
+  scene.background.copy(SKY); if (tn) scene.background.multiply(tn.skyC);
+  scene.fog.color.copy(scene.background);
+  const tone = tn ? '' : svg.style.filter; if (renderer.domElement.style.filter !== tone) renderer.domElement.style.filter = tone;
   renderer.render(scene, camera);
   placeLabels();
 }
