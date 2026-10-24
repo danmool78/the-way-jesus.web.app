@@ -121,7 +121,7 @@ const GEO = {
   bitter: [[30.45,32.33],[30.4,32.42],[30.28,32.45],[30.32,32.36]],
   suez: [[29.97,32.53],[29.6,32.38],[29.0,32.62],[28.5,32.88],[28.0,33.3],[28.0,33.62],[28.5,33.22],[29.0,32.95],[29.6,32.72],[29.97,32.6]],
   hinnom: [[31.7765,35.2252],[31.7735,35.2258],[31.7705,35.2290],[31.7698,35.2340],[31.7690,35.2362]],
-  // 메소포타미아 (프롤로그의 에덴: 창 2:14의 힛데겔·유브라데가 만나는 남쪽 — 전승의 자리). 지형 음영이 없는 곳이라 강과 바다만 그린다
+  // 메소포타미아 (프롤로그의 에덴: 창 2:14의 힛데겔·유브라데가 만나는 남쪽 — 전승의 자리). 본 지도와 이어지지 않는 따로 떨어진 무대 (EDEN)
   euphrates: [[38.75,38.75],[37.6,38.3],[37.0,38.05],[36.6,38.2],[35.95,39.0],[35.33,40.14],[34.45,40.92],[34.1,42.35],[33.42,43.3],[33.35,43.78],[32.54,44.42],[32.03,44.4],[31.6,44.9],[31.31,45.28],[31.04,46.26],[30.98,46.9],[31.0,47.43]],
   tigris: [[38.0,40.2],[37.5,41.6],[37.32,42.19],[36.34,43.13],[35.47,43.26],[34.6,43.68],[34.2,43.87],[33.32,44.42],[32.9,44.9],[32.5,45.82],[31.84,47.15],[31.3,47.4],[31.0,47.43]],
   shatt: [[31.0,47.43],[30.5,47.81],[30.2,48.2],[29.97,48.53]],
@@ -131,6 +131,8 @@ const GEO = {
 const RELIEF = { lat0: 29.15, lat1: 34.6, lng0: 33.0, lng1: 37.4 };
 // 서쪽 애굽 쪽 바탕(assets/relief-west.webp — 시나이 북부, 나일 삼각주) — _src/relief.py의 WEST와 같게
 const RELIEF_WEST = { lat0: 29.15, lat1: 31.9, lng0: 29.4, lng1: 33.25 };
+// 프롤로그의 에덴 둘레 바탕(assets/relief-east.webp) — _src/relief.py의 EAST와 같게
+const RELIEF_EAST = { lat0: 29.55, lat1: 32.45, lng0: 45.2, lng1: 49.3 };
 // 확대했을 때만 불러오는 정밀 타일(assets/relief-hi/행_열.webp) — _src/relief.py의 HI와 같게
 const RELIEF_HI = { lat0: 30.2, lat1: 34.4, lng0: 33.4, lng1: 37.0, tile: 160, dir: 'relief-hi', below: 1.2 };
 // 애굽 쪽 정밀 타일(assets/relief-hi-w/) — _src/relief.py의 HI_W와 같게
@@ -170,6 +172,7 @@ function buildMap() {
   const lbl = (txt, [x, y], cls) => `<g class="lbl ${cls}" transform="translate(${x},${y})"><text>${esc(txt)}</text></g>`;
   const [rx0, ry0] = px([RELIEF.lat1, RELIEF.lng0]), [rx1, ry1] = px([RELIEF.lat0, RELIEF.lng1]);
   const [wx0, wy0] = px([RELIEF_WEST.lat1, RELIEF_WEST.lng0]), [wx1, wy1] = px([RELIEF_WEST.lat0, RELIEF_WEST.lng1]);
+  const [ex0, ey0] = px([RELIEF_EAST.lat1, RELIEF_EAST.lng0]), [ex1, ey1] = px([RELIEF_EAST.lat0, RELIEF_EAST.lng1]);
   const [cx0, cy0] = px([CITY3D.lat1, CITY3D.lng0]), [cx1, cy1] = px([CITY3D.lat0, CITY3D.lng1]);
   map.setAttribute('viewBox', `0 0 ${W} ${H}`);
   map.innerHTML = `
@@ -180,6 +183,7 @@ function buildMap() {
   </defs>
   <rect x="${-W * 2}" y="${-H * 2}" width="${W * 12}" height="${H * 5}" fill="var(--land)"/>
   <image href="assets/relief-west.webp" class="relief" x="${wx0}" y="${wy0}" width="${wx1 - wx0}" height="${wy1 - wy0}" preserveAspectRatio="none"/>
+  <image href="assets/relief-east.webp" class="relief" x="${ex0}" y="${ey0}" width="${ex1 - ex0}" height="${ey1 - ey0}" preserveAspectRatio="none"/>
   <image href="assets/relief.webp" class="relief" x="${rx0}" y="${ry0}" width="${rx1 - rx0}" height="${ry1 - ry0}" preserveAspectRatio="none"/>
   <g id="reliefHi" class="relief"></g>
   <g id="reliefCity" class="relief"></g>
@@ -214,12 +218,12 @@ function buildMap() {
   ${REFCITIES.map(([n, a, b]) => `<g class="lbl refcity" transform="translate(${px([a, b]).join(',')})"><circle r="2.2"/><text x="5" y="3">${esc(tm(n))}</text></g>`).join('')}
   ${lbl(tm('나일 강'), px([29.7, 31.33]), 'water-lbl river-lbl')}
   ${lbl(tm('수에즈 만'), px([29.55, 32.66]), 'water-lbl river-lbl')}
-  ${lbl(tm('메소포타미아'), px([32.55, 44.35]), 'region')}
-  ${lbl(tm('유프라테스 강'), px([33.62, 42.05]), 'water-lbl river-lbl')}
-  ${lbl(tm('티그리스 강'), px([33.95, 44.6]), 'water-lbl river-lbl')}
-  ${lbl(tm('페르시아 만'), px([29.25, 49.3]), 'water-lbl river-lbl')}
-  ${lbl(tm('아라비아 사막'), px([31.2, 40.8]), 'region')}
-  <path class="offmap" fill-rule="evenodd" d="M${DRAWN.x - 1e5},${DRAWN.y - 1e5}h${DRAWN.w + 2e5}v${DRAWN.h + 2e5}h${-DRAWN.w - 2e5}Z M${DRAWN.x},${DRAWN.y}v${DRAWN.h}h${DRAWN.w}v${-DRAWN.h}Z"/>
+  ${lbl(tm('메소포타미아'), px([32.05, 46.0]), 'region meso')}
+  ${lbl(tm('유프라테스 강'), px([30.88, 45.95]), 'water-lbl river-lbl meso')}
+  ${lbl(tm('티그리스 강'), px([32.3, 46.7]), 'water-lbl river-lbl meso')}
+  ${lbl(tm('페르시아 만'), px([29.88, 48.85]), 'water-lbl river-lbl meso')}
+  ${lbl(tm('아라비아 사막'), px([30.1, 46.4]), 'region meso')}
+  <path class="offmap" fill-rule="evenodd" d="${offmapD(DRAWN)}"/>
   <g id="routes"><path id="nextHint" class="nexthint"/></g>
   <g id="markers"></g>
   <g id="walker" class="walker"><circle class="wglow" r="18"/><g class="wfig"><circle class="wbody" r="8"/><text class="wicon" y="4.5">✦</text></g></g>`;
@@ -259,8 +263,12 @@ function buildMap() {
 
 // 지형 그림(relief·relief-west)이 불투명하게 그려진 범위 — 지도는 이 밖(그림 없는 맨바닥)을 보이지 않는다.
 // 두 그림의 바깥 범위(29.15–34.6, 29.4–37.4)에서 가장자리의 투명하게 흐린 띠(0.16–0.32°)를 뺐다
-// 동쪽은 프롤로그의 에덴(메소포타미아)까지 — 지형 음영이 없는 맨바닥에 강과 바다만 그린 곳
-const DRAWN = (() => { const [x0, y0] = px([34.28, 29.63]), [x1, y1] = px([29.47, 49.6]); return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }; })();
+const DRAWN = (() => { const [x0, y0] = px([34.28, 29.63]), [x1, y1] = px([29.47, 37.14]); return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }; })();
+// 프롤로그의 에덴은 본 지도와 이어지지 않는 따로 떨어진 무대: 화면은 relief-east가 불투명한 이 안에만 머문다
+const EDEN = (() => { const [x0, y0] = px([32.27, 45.45]), [x1, y1] = px([29.73, 49.05]); return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }; })();
+const drawnNow = () => isPro() ? EDEN : DRAWN;
+// 그린 범위 밖을 바탕색으로 덮는 구멍 뚫린 사각형
+const offmapD = D => `M${D.x - 1e5},${D.y - 1e5}h${D.w + 2e5}v${D.h + 2e5}h${-D.w - 2e5}Z M${D.x},${D.y}v${D.h}h${D.w}v${-D.h}Z`;
 function applyView() {
   const r = map.getBoundingClientRect();
   if (!r.width) return;
@@ -273,6 +281,7 @@ function applyView() {
   // 맞춘 값을 view에 되돌려 써서, 끌기·전환이 보이지 않는 바깥에 '걸려' 있지 않게 한다
   const f = freeArea($('#scene')?.classList.contains('peek') ? 'peek' : 'open');
   let q = w / r.width; // 화면 1px 당 지도 단위
+  const DRAWN = drawnNow();
   const k = Math.min(1, DRAWN.w / ((f.r - f.l) * q), DRAWN.h / ((f.b - f.t) * q));
   if (k < 1) { const cx = x + (f.l + f.r) / 2 * q, cy = y + (f.t + f.b) / 2 * q; q *= k; w *= k; h *= k; x = cx - (f.l + f.r) / 2 * q; y = cy - (f.t + f.b) / 2 * q; }
   x = Math.min(DRAWN.x + DRAWN.w - f.r * q, Math.max(DRAWN.x - f.l * q, x));
@@ -390,7 +399,7 @@ function frameStage(i, ms = 1300, mode = 'open') {
   const e = evAt(i), st = window.stageFrame?.(e), r = map.getBoundingClientRect();
   if (!st || !r.width) return false;
   const [cx, cy] = st.at ? px(st.at) : P(PLACES[e.place]);
-  const min = i < 0 ? 620 : PLACES[e.place].jlm || e.place === 'jerusalem' ? 14 : 300; // 프롤로그는 온 땅이 보이게 멀리서
+  const min = i < 0 ? 1500 : PLACES[e.place].jlm || e.place === 'jerusalem' ? 14 : 300; // 프롤로그는 에덴 둘레(두 강과 만)가 다 보이게 멀리서
   const u = reserveCard({ x: 0, y: 0, w: min, h: min }).w / r.width; // 이 확대에서 화면 1px 당 지도 단위
   const f = freeArea(mode), fx = (f.l + f.r) / 2, fy = (f.t + f.b) / 2;
   // 핀 + 무대 어긋남(dx,dy)이 빈 영역의 가운데에 오도록 보기 상자를 놓는다
@@ -439,7 +448,7 @@ function animateTo(target, ms) {
       drag.moved = true; cancelAnimationFrame(anim); followWalk = false; // 걷는 중에 끌면 카메라 따라가기를 멈춘다 map.setPointerCapture(e.pointerId); map.classList.add('dragging');
     }
     const u = map.viewBox.baseVal.width / map.getBoundingClientRect().width;
-    const B = isPro() ? DRAWN : LAND; // 프롤로그(메소포타미아)에서는 그린 범위 안에서
+    const B = isPro() ? EDEN : LAND; // 프롤로그(에덴)에서는 그 따로 떨어진 무대 안에서
     const { w, h } = drag.v, cx = Math.min(B.x + B.w * 1.25, Math.max(B.x - B.w * 0.25, drag.v.x + w / 2 - dx * u));
     const cy = Math.min(B.y + B.h * 1.25, Math.max(B.y - B.h * 0.25, drag.v.y + h / 2 - dy * u));
     view = { x: cx - w / 2, y: cy - h / 2, w, h };
@@ -471,10 +480,14 @@ function setWalker([x, y]) {
   wk.setAttribute('transform', `translate(${x},${y}) scale(${u})`);
   dispatchEvent(new CustomEvent('walker', { detail: { x, y } })); // 3D 지형 모드의 걷는 사람이 따라온다
 }
-function updateMap(prevIdx, { camera = true } = {}) {
+function updateMap(prevIdx, { camera = true, jump = false } = {}) {
   const e = evAt(idx);
   map.classList.toggle('prologue', isPro()); // 프롤로그: 걷는 사람과 다음 길 표시를 숨긴다
   document.body.classList.toggle('prologue-on', isPro());
+  $('.offmap', map).setAttribute('d', offmapD(drawnNow()));
+  // 프롤로그에는 이을 경로가 없어 전체 경로를 끈다 (켜 둔 채 들어오면 장면 보기로 돌린다)
+  $('#fitAll').disabled = isPro();
+  if (isPro() && fitMode === 'all') { fitMode = 'scene'; $('#fitAll').classList.remove('active'); $('#fitNow').classList.add('active'); }
   const seen = new Set(EVENTS.slice(0, idx + 1).map(x => x.place));
   $$('.pin', map).forEach(m => {
     m.classList.toggle('seen', seen.has(m.dataset.place));
@@ -493,8 +506,11 @@ function updateMap(prevIdx, { camera = true } = {}) {
     hint.setAttribute('d', `M${x1},${y1} L${x2},${y2}`); hint.style.display = '';
   } else hint.style.display = 'none';
   if (camera) {
+    // jump: 프롤로그 경계를 넘을 때는 먼 길을 날아가지 않고 그 자리에서 새로 시작한다
+    if (jump) map.animate([{ opacity: 0 }, { opacity: 1 }], { duration: reduced() ? 0 : 500, easing: 'ease-out' });
+    const ms = jump ? 0 : 1300;
     if (fitMode === 'all') fitAll();
-    else if (!frameStage(idx)) frame(nx && nx.place !== e.place ? [e.place, nx.place] : [e.place]);
+    else if (!frameStage(idx, ms)) frame(nx && nx.place !== e.place ? [e.place, nx.place] : [e.place], ms);
   }
   const p = PLACES[e.place];
   $('#placeName').textContent = p.name; // 왼쪽 위 장소 칩 (누르면 이 장소로)
@@ -783,10 +799,12 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
   cancelWalk();
   const prev = idx;
   const prevPlace = $('#scene').innerHTML ? evAt(prev).place : null;
-  const stepped = i === prev + 1 && prevPlace !== null;
+  // 프롤로그와 첫 장면 사이는 이어 걷지 않는다: 다음 장면을 처음 연 것처럼 새로 시작한다 (jump)
+  const jump = prevPlace !== null && (prev < 0) !== (i < 0);
+  const stepped = i === prev + 1 && prevPlace !== null && !jump;
   const arrive = () => {
     idx = i;
-    renderScene(); updateMap(prev, { camera: !stepped || fitMode === 'all' }); updateTrack(); if (i >= 0) markVisited(EVENTS[i].id);
+    renderScene(); updateMap(prev, { camera: !stepped || fitMode === 'all', jump }); updateTrack(); if (i >= 0) markVisited(EVENTS[i].id);
     window.__stageScene = evAt(i); // stage.js가 늦게 로드돼도 따라잡도록
     dispatchEvent(new CustomEvent('stage:scene', { detail: { ev: evAt(i) } }));
     bgmFollow(); // 읽는 중에 장면이 바뀌면 그 장면의 곡으로 겹쳐 바꾼다
@@ -797,16 +815,13 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
     if (stepped) {
       banner(`<span class="wk">📍</span>${esc(evAt(prev).place === EVENTS[i].place ? t('samePlace') : t('arrive'))} · <b>${esc(p.name)}</b><small>${esc(EVENTS[i].when)}</small>`, 2600);
       const nx = EVENTS[i + 1];
-      // 프롤로그(메소포타미아의 에덴)에서는 먼 길이라: 두 곳이 다 보이게 물러났다가 서쪽 나사렛으로 내려앉는다
-      if (prev < 0 && fitMode !== 'all') { frame([evAt(prev).place, EVENTS[i].place], 1400, false); setTimeout(() => { if (idx === i && !frameStage(i, 1700)) frame([EVENTS[i].place], 1700); }, reduced() ? 0 : 1500); }
-      else if (fitMode !== 'all' && !frameStage(i, 1100)) frame(nx && nx.place !== EVENTS[i].place ? [EVENTS[i].place, nx.place] : [EVENTS[i].place], 1100);
+      if (fitMode !== 'all' && !frameStage(i, 1100)) frame(nx && nx.place !== EVENTS[i].place ? [EVENTS[i].place, nx.place] : [EVENTS[i].place], 1100);
       $('#walker', map).classList.remove('arrive'); void $('#walker', map).getBoundingClientRect(); $('#walker', map).classList.add('arrive');
       setTimeout(() => setCard('open'), reduced() ? 0 : 650);
     } else setCard('open');
     onArrive && onArrive();
   };
-  // 프롤로그에서 첫 장면으로는 걷지 않고, 온 땅을 내려다보던 자리에서 나사렛으로 내려앉는다 (arrive의 frameStage)
-  if (stepped && prev >= 0 && prevPlace !== EVENTS[i].place) walkTo(i, arrive);
+  if (stepped && prevPlace !== EVENTS[i].place) walkTo(i, arrive);
   else if (stepped) { setCard('peek'); setTimeout(arrive, reduced() ? 0 : 700); }
   else arrive();
 }

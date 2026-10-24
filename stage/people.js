@@ -30,6 +30,12 @@ const TYPES = {
   king:     { robe: '#6b2a5e', trim: '#d6a93a', mantle: '#b8892f', hair: '#2b1b10', beard: true, crown: true, sash: '#d6a93a' },
   soldier:  { robe: '#9d3328', trim: '#7a2a20', mantle: '#7a2a20', hair: '#2b1b10', helmet: true, spear: true, sash: '#5a3d22' },
   thief:    { robe: '#cbb79a', hair: '#2b1b10', beard: true, bare: true, height: 0.96 }, // 십자가의 두 죄수 (실루엣 전용)
+  // 프롤로그의 아담과 하와: 범죄 전에는 벌거벗었으나 부끄럽지 않았다(창 2:25) — 빛 속의 윤곽으로만.
+  // 범죄 뒤에는 무화과 잎을 엮어 허리에 두른다(창 3:7). 가죽옷은 man·woman (실루엣 전용)
+  adam:     { robe: '#d8b48a', hair: '#3b2616', beard: true, bare: true, nude: true, skin: 1 },
+  eve:      { robe: '#d8b48a', hair: '#3b2616', long: true, soft: true, slim: true, bare: true, nude: true, skin: 1 },
+  adamFig:  { robe: '#d8b48a', hair: '#3b2616', beard: true, bare: true, cloth: '#5d7a3a', skin: 1 },
+  eveFig:   { robe: '#d8b48a', hair: '#3b2616', long: true, soft: true, slim: true, bare: true, cloth: '#5d7a3a', skin: 1 },
   pharisee: { robe: '#d9cfb6', trim: '#3e5470', mantle: '#3e5470', hair: '#2b1b10', beard: true, hood: '#efe8d8', band: '#3e5470', skin: 2 },
   man:      { robe: '#8b6f50', trim: '#6b5438', mantle: '#a99069', hair: '#2e1d12', beard: true, sash: '#5b4630' },
   child:    { robe: '#e6dcc4', trim: '#8f6d4b', mantle: '#8f6d4b', hair: '#4a2e1c', height: 0.66, kid: true },
@@ -247,10 +253,14 @@ function makePerson(type) {
   if (!t.bare) mesh(sphere(rw * 1.03, 24, 12), robe, torso, [0, 0, 0], [1, 0.55, 1]);
   let skirtMesh = null, hemTrim = null;
   if (t.bare) {
-    // 겉옷 없이 허리에 두른 천만 (십자가 위의 예수 — 윤곽으로만 보인다)
-    [-1, 1].forEach(s => mesh(new THREE.CylinderGeometry(0.032, 0.026, 0.4, 12), skin, skirt, [s * 0.042, 0.21, 0]));
-    mesh(folds(lathe([[0.001, 0.33], [0.098, 0.33], [0.094, 0.4], [0.09, 0.47], [0.001, 0.47]], 28), 7, 0.008, 0.47), mat('#e9e1cf', DS), skirt);
-    mesh(lathe([[0.001, 0.46], [0.082, 0.46], [0.086, 0.52], [0.098, 0.59], [0.094, 0.64], [0.06, 0.685], [0.03, 0.705], [0.001, 0.71]], 28), skin, upper);
+    // 겉옷 없이 허리에 두른 천만 (십자가 위의 예수 — 윤곽으로만 보인다). nude: 천 없이 맨몸 (에덴의 아담과 하와, 빛의 윤곽으로만)
+    // 여인(slim)은 좁은 어깨·잘록한 허리·넓은 골반으로
+    const lr = slim ? 0.86 : 1;
+    [-1, 1].forEach(s => mesh(new THREE.CylinderGeometry(0.032 * lr, 0.026 * lr, 0.4, 12), skin, skirt, [s * (slim ? 0.038 : 0.042), 0.21, 0]));
+    if (t.nude) mesh(lathe(slim ? [[0.001, 0.33], [0.084, 0.34], [0.094, 0.39], [0.08, 0.45], [0.066, 0.47], [0.001, 0.47]] : [[0.001, 0.33], [0.082, 0.34], [0.088, 0.4], [0.084, 0.47], [0.001, 0.47]], 28), skin, skirt);
+    else mesh(folds(lathe([[0.001, 0.33], [0.098, 0.33], [0.094, 0.4], [0.09, 0.47], [0.001, 0.47]], 28), 7, 0.008, 0.47), mat(t.cloth || '#e9e1cf', DS), skirt);
+    mesh(lathe(slim ? [[0.001, 0.46], [0.066, 0.46], [0.07, 0.52], [0.084, 0.58], [0.082, 0.63], [0.052, 0.68], [0.028, 0.705], [0.001, 0.71]]
+      : [[0.001, 0.46], [0.082, 0.46], [0.086, 0.52], [0.098, 0.59], [0.094, 0.64], [0.06, 0.685], [0.03, 0.705], [0.001, 0.71]], 28), skin, upper);
   } else {
     // 치마: 서 있는 모양 + 무릎 꿇은 모양(허리에서 바닥으로 매끈하게 퍼지는 낮은 둔덕, 접은 다리가 놓이는 뒤쪽은 더 길게).
     // 두 모양의 점 수를 같게 만들어 모핑으로 사이를 부드럽게 바꾼다 — 눌러서 생기던 각진 턱이 없다

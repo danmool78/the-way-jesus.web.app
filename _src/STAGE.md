@@ -72,7 +72,7 @@ e02: {
 ### 프롤로그 (e00 · 잃어버린 동산)
 
 61개 장면 앞의 창세기 장면. data의 `prologue`로 따로 실리고 앱에서는 장면 번호 -1이다(장면 수·퀴즈·도장·대조표 밖). 장소 `eden`은 `hidden`이라 지도에 핀이 없고, 무대는 대본의 `at`(전통적 추정지인 메소포타미아 남부, 유프라테스·티그리스가 만나는 곳)에 선다. 지도는 그 자리만큼 동쪽으로 강·만을 벡터로 더 그렸고, 프롤로그에서만 그 범위까지 끌 수 있다. 다음 장면(나사렛)으로는 두 번에 나눠 날아간다(둘을 함께 담고 → 무대로).
-아담과 하와는 타락 전에는 빛의 실루엣(cast 옵션 `silhouette: 'light'`), 범죄한 뒤에는 어두운 실루엣, 마지막에 가죽옷 입은 모습 — 세 쌍을 `show`로 바꿔 낀다. 하나님은 모습 없이 빛(`beam`)으로만, 뱀은 가지에 감긴 그림자(`serpent`)로만.
+아담과 하와는 타락 전에는 벌거벗은 빛의 실루엣(인물 `adam`·`eve`의 `nude` — 옷 없는 몸의 윤곽, cast 옵션 `silhouette: 'light'`), 범죄한 뒤에는 무화과 잎을 두른 어두운 실루엣(`adamFig`·`eveFig`, 창 3:7), 마지막에 가죽옷 입은 모습 — 세 쌍을 `show`로 바꿔 낀다. 하나님은 모습 없이 빛(`beam`)으로만, 뱀은 가지에 감긴 그림자(`serpent`)로만.
 
 ### 인물 유형 (TYPES)
 jesus, mary, joseph, angel, woman, woman2, mother, anna, john(젊은 제자, 수염 없음), disciple, peter, man, elder, shepherd, magus, magus2, magus3, king, soldier(창), pharisee, child, boyJesus, baptist, tempter, steward, groom, servant, crossed(십자가 위 예수 — 실루엣 전용), thief(실루엣 전용)

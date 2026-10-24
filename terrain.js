@@ -23,8 +23,8 @@ const LAKES = [['galilee', -210], ['dead', -395], ['hula', 72], ['mareotis'], ['
 const RIVERS = ['jordanN', 'jordanS', 'nile', 'canopic', 'rosetta', 'damietta', 'pelusiac'];
 // 바다 해안선: app.js buildMap의 바다 판과 같게 (남쪽은 시나이 북부 → 나일 삼각주 → 알렉산드리아)
 const SINAI = [[31.13, 33.8], [31.15, 33.1], [31.26, 32.3], [31.52, 31.85], [31.47, 30.4], [31.2, 29.9], [30.9, 28.5], [30.8, 26]];
-// 바탕 그림 두 장: app.js의 RELIEF, RELIEF_WEST와 같게
-const BASES = [{ src: 'assets/relief.webp', lat0: 29.15, lat1: 34.6, lng0: 33.0, lng1: 37.4, y: 0 }, { src: 'assets/relief-west.webp', lat0: 29.15, lat1: 31.9, lng0: 29.4, lng1: 33.25, y: -0.05 }];
+// 바탕 그림 세 장: app.js의 RELIEF, RELIEF_WEST, RELIEF_EAST와 같게
+const BASES = [{ src: 'assets/relief.webp', lat0: 29.15, lat1: 34.6, lng0: 33.0, lng1: 37.4, y: 0 }, { src: 'assets/relief-west.webp', lat0: 29.15, lat1: 31.9, lng0: 29.4, lng1: 33.25, y: -0.05 }, { src: 'assets/relief-east.webp', lat0: 29.55, lat1: 32.45, lng0: 45.2, lng1: 49.3, y: 0 }];
 
 const wrap = document.querySelector('.mapwrap'), svg = document.getElementById('map');
 let renderer, scene, camera, sun, hemi, env, on = false, ready = false, loading = null;
