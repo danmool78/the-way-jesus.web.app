@@ -345,7 +345,7 @@ function reserveCard(t, reserve = true) {
   let { x, y, w, h } = t;
   if (w / h > ar) { const nh = w / ar; y -= (nh - h) / 2; h = nh; } else { const nw = h * ar; x -= (nw - w) / 2; w = nw; }
   if (mobile) {
-    const f = .6; // 하단 시트가 지도 아래쪽 약 60%를 덮는다
+    const f = .48; // 하단 시트가 지도 아래쪽 약 절반을 덮는다 (style.css의 .scene max-height와 같게)
     const nh = h / (1 - f), nw = w * nh / h; return { x: x - (nw - w) / 2, y, w: nw, h: nh };
   }
   const f = Math.min(.5, (Math.min(460, r.width * .42) + 28) / r.width);
@@ -357,8 +357,8 @@ function reserveCard(t, reserve = true) {
 function freeArea(mode) {
   const r = map.getBoundingClientRect(), c = $('#scene'), mobile = innerWidth <= 900;
   if (mobile) {
-    // 펼친 시트는 지도 높이의 66%까지, 접으면 64px (style.css와 같은 값)
-    const h = mode === 'peek' ? 64 : Math.min(c.scrollHeight, r.height * .66);
+    // 펼친 시트는 지도 높이의 48%까지, 접으면 64px (style.css와 같은 값)
+    const h = mode === 'peek' ? 64 : Math.min(c.scrollHeight, r.height * .48);
     return { l: 0, t: 0, r: r.width, b: Math.max(r.height * .25, r.height - h) };
   }
   const cw = Math.min(460, r.width * .42) + 14;
@@ -576,10 +576,13 @@ function cancelWalk() {
   cancelAnimationFrame(walkAnim); walking = false;
   document.body.classList.remove('is-walking'); $('#walker', map).classList.remove('moving');
 }
+// mode: open(펼침) · peek(제목줄만) · full(모바일에서 글을 읽을 때 지도 위로 끝까지 올린 시트 — open도 함께 단다)
 function setCard(mode) {
   const c = $('#scene');
+  if (mode === 'full' && innerWidth > 900) mode = 'open';
   c.classList.toggle('peek', mode === 'peek');
-  c.classList.toggle('open', mode === 'open');
+  c.classList.toggle('open', mode === 'open' || mode === 'full');
+  c.classList.toggle('full', mode === 'full');
   const b = $('#cardToggle'); if (b) { b.classList.toggle('folded', mode !== 'open'); b.setAttribute('aria-label', mode === 'open' ? t('showMap') : t('openScene')); b.setAttribute('aria-expanded', mode === 'open'); }
 }
 
@@ -606,6 +609,7 @@ function renderScene() {
     <div><b>${esc(e.title)}</b><small>${esc(place.name)} · ${esc(e.when)}</small></div>
   </div>
   <button id="cardToggle" class="cardtoggle" aria-controls="scene" aria-label="${esc(t('showMap'))}"><i></i></button>
+  <div class="sheetgrip" aria-hidden="true"><i></i></div>
   <div class="hero">${img}</div>
   <div class="credrow">
     ${e.img ? `<a class="credit" href="${esc(e.img.source)}" target="_blank" rel="noreferrer">${esc(e.img.credit)}</a>` : '<span></span>'}
@@ -642,12 +646,33 @@ function renderScene() {
   $('#scene').scrollTop = 0;
   $('#cardToggle').onclick = () => { setCard($('#scene').classList.contains('open') ? 'peek' : 'open'); window.recenterStage(); };
   $('.cardbar', $('#scene')).ondblclick = () => setCard('open');
+  sheetDrag();
   if (e.img) { $('#heroBtn').onclick = () => openViewer(e); $('#viewBtn').onclick = () => openViewer(e); }
   $$('.say', $('#scene')).forEach(b => b.onclick = ev => { ev.stopPropagation(); speakWord(+b.dataset.say); });
   $$('.ctabs button', $('#scene')).forEach(b => b.onclick = () => showTab(b.dataset.tab));
   $('#toHarmony').onclick = () => setView('harmony');
   showTab('story');
   updateQuizBtn();
+}
+// 모바일 하단 시트: 손잡이(또는 접힌 제목줄)를 위로 끌면 한 단계 올리고(제목줄 → 반 → 끝까지) 아래로 끌면 내린다.
+// 누르기만 하면 반 ↔ 끝까지. 반만 열린 시트에서 글을 위로 밀어 올리면 끝까지 올라온다 (낭독이 문단을 따라 내리는 스크롤은 건드리지 않는다)
+function sheetDrag() {
+  const sc = $('#scene'), mobile = () => innerWidth <= 900;
+  const level = () => sc.classList.contains('peek') ? 0 : sc.classList.contains('full') ? 2 : 1;
+  const to = n => { setCard(['peek', 'open', 'full'][n]); if (n < 2) window.recenterStage(); };
+  let d = null;
+  const down = e => { if (!mobile()) return; d = { id: e.pointerId, y: e.clientY }; e.currentTarget.setPointerCapture(e.pointerId); };
+  const up = e => {
+    if (!d || e.pointerId !== d.id) return;
+    const dy = e.clientY - d.y, n = level(); d = null;
+    if (dy < -30) to(Math.min(2, n + 1));
+    else if (dy > 30) to(Math.max(0, n - 1));
+    else if (Math.abs(dy) < 8) { if (e.currentTarget.classList.contains('sheetgrip')) to(n === 2 ? 1 : 2); else if (!n) to(1); }
+  };
+  [$('.sheetgrip', sc), $('.cardbar', sc)].forEach(el => { el.onpointerdown = down; el.onpointerup = up; el.onpointercancel = () => { d = null; }; });
+  let ty = null;
+  sc.ontouchstart = e => { ty = e.touches[0].clientY; };
+  sc.ontouchmove = e => { if (ty !== null && mobile() && level() === 1 && ty - e.touches[0].clientY > 14) { ty = null; setCard('full'); } };
 }
 // 탭 바꾸기. 아래 금빛 단추는 다음 탭으로 이어 읽게 하고, 마지막 탭에서는 다음 장소로 걷기
 function showTab(k) {
@@ -656,7 +681,7 @@ function showTab(k) {
   $$('.ctabs button', sc).forEach(b => b.classList.toggle('active', b.dataset.tab === k));
   $$('.pane', sc).forEach(p => { p.hidden = p.dataset.pane !== k; });
   const order = ['story', 'text', 'compare'], nx = order[order.indexOf(k) + 1], b = $('#contBtn', sc);
-  if (nx) { b.innerHTML = `${esc(t('continueReading'))} <span aria-hidden="true">→</span>`; b.onclick = () => { showTab(nx); $('.ctabs', sc).scrollIntoView({ block: 'start', behavior: 'smooth' }); }; }
+  if (nx) { b.innerHTML = `${esc(t('continueReading'))} <span aria-hidden="true">→</span>`; b.onclick = () => { if (sc.classList.contains('open')) setCard('full'); showTab(nx); $('.ctabs', sc).scrollIntoView({ block: 'start', behavior: 'smooth' }); }; }
   else if (idx < EVENTS.length - 1) { b.innerHTML = `${esc(t('walkNext'))} <span aria-hidden="true">→</span>`; b.onclick = () => go(idx + 1); }
   else { b.innerHTML = `${esc(t('quizReview'))}`; b.onclick = () => setView('quiz'); }
 }
