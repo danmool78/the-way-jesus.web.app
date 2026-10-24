@@ -17,3 +17,5 @@ jobs:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_THE_WAY_JESUS }}
           projectId: the-way-jesus
+          # 미리보기 채널은 기본 7일 남아 PR이 몰리면 채널 한도(429)에 걸린다 — 사흘이면 확인하기에 넉넉하다
+          expires: 3d
