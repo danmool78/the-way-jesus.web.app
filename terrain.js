@@ -23,8 +23,8 @@ const LAKES = [['galilee', -210], ['dead', -395], ['hula', 72], ['mareotis'], ['
 const RIVERS = ['jordanN', 'jordanS', 'nile', 'canopic', 'rosetta', 'damietta', 'pelusiac'];
 // 바다 해안선: app.js buildMap의 바다 판과 같게 (남쪽은 시나이 북부 → 나일 삼각주 → 알렉산드리아)
 const SINAI = [[31.13, 33.8], [31.15, 33.1], [31.26, 32.3], [31.52, 31.85], [31.47, 30.4], [31.2, 29.9], [30.9, 28.5], [30.8, 26]];
-// 바탕 그림 세 장: app.js의 RELIEF, RELIEF_WEST, RELIEF_EAST와 같게
-const BASES = [{ src: 'assets/relief.webp', lat0: 29.15, lat1: 34.6, lng0: 33.0, lng1: 37.4, y: 0 }, { src: 'assets/relief-west.webp', lat0: 29.15, lat1: 31.9, lng0: 29.4, lng1: 33.25, y: -0.05 }, { src: 'assets/relief-east.webp', lat0: 29.55, lat1: 32.45, lng0: 45.2, lng1: 49.3, y: 0 }];
+// 바탕 그림 두 장: app.js의 RELIEF, RELIEF_WEST와 같게 (프롤로그의 RELIEF_EAST는 3D를 쓰지 않아 빠진다)
+const BASES = [{ src: 'assets/relief.webp', lat0: 29.15, lat1: 34.6, lng0: 33.0, lng1: 37.4, y: 0 }, { src: 'assets/relief-west.webp', lat0: 29.15, lat1: 31.9, lng0: 29.4, lng1: 33.25, y: -0.05 }];
 
 const wrap = document.querySelector('.mapwrap'), svg = document.getElementById('map');
 let renderer, scene, camera, sun, hemi, env, on = false, ready = false, loading = null;
@@ -639,7 +639,10 @@ function start() {
   if (!window.EVENTS_READY) return setTimeout(start, 200);
   controls();
   addEventListener('resize', () => on && ready && resize());
-  addEventListener('stage:scene', e => { if (on) flyToScene(e.detail.ev); });
+  // 프롤로그(에덴)는 본 지도와 떨어진 2D 무대라 3D를 막는다 — 3D로 보던 중에 들어오면 2D로 돌린다
+  const lock = ev => { const pro = !!PLACES[ev.place]?.hidden; $('#mode3d').disabled = pro; if (pro && on) setOn(false); return pro; };
+  lock(curEvent());
+  addEventListener('stage:scene', e => { if (!lock(e.detail.ev) && on) flyToScene(e.detail.ev); });
   // 걷기를 시작하면: 두 장소 사이 거리에 맞춰 물러나 길 전체의 흐름이 보이게
   addEventListener('stage:walk', e => {
     if (!on) return;
