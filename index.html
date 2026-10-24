@@ -158,7 +158,15 @@
   <h2>나의 발자취</h2>
   <div id="stampGrid" class="stampgrid"></div>
   <p class="fine">장면을 열면 발자취가, 퀴즈를 맞히면 별이 기록됩니다. 기록은 이 기기의 브라우저에만 저장됩니다.</p>
+  <p class="favline" id="favLine" hidden></p>
+  <button class="textbtn" id="reopenEnd" hidden>여정을 마친 창 보기</button>
   <button class="textbtn" id="resetProgress">기록 지우기</button>
+</dialog>
+
+<!-- 여정을 마치며: 걸어온 길 요약, 시기 도장, 못 푼 퀴즈, 복음과 축복 (app.js의 openEnd) -->
+<dialog id="journeyEnd" class="end-dlg">
+  <button class="close" id="closeEnd" aria-label="닫기">×</button>
+  <div id="endBody"></div>
 </dialog>
 
 <script src="app.js"></script>
