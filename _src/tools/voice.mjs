@@ -69,6 +69,15 @@ function tidy(pcm) {
   return res;
 }
 const speechSec = pcm => frames(pcm).filter(Boolean).length * W / SR;
+// Gemini 녹음은 Google 음성보다 4dB쯤 크고 최고점이 0dB를 넘어 mp3로 줄이면 재생할 때 지직거렸다.
+// 말소리 구간의 크기를 Google 음성(약 -19dB)에 맞추고, 최고점은 -3dB 아래로 누른다
+function level(pcm) {
+  const loud = frames(pcm); let e = 0, n = 0, peak = 1;
+  loud.forEach((on, w) => { if (!on) return; for (let x = w * W; x < (w + 1) * W; x++) { e += pcm[x] * pcm[x]; n++; } });
+  for (const v of pcm) peak = Math.max(peak, Math.abs(v));
+  const k = Math.min(n ? 32768 * 10 ** (-19 / 20) / Math.sqrt(e / n) : 1, 32768 * 10 ** (-3 / 20) / peak);
+  return pcm.map(v => Math.round(v * k));
+}
 
 // 읽을 때만 바꾸는 말: 영어 글자 BC·AD 앞에서 Chirp가 앞말을 늘이고 멈칫하므로 우리말로 읽힌다 (화면 글과 열쇠는 그대로)
 const spoken = text => text.replace(/\bBC\s*/g, '기원전 ').replace(/\bAD\s*/g, '서기 ');
@@ -138,7 +147,7 @@ for (const e of events) {
     if (g && tooLong(g)) g = null;
     // Gemini가 모두 막히면 그 문장은 Google 음성으로 대신 녹음한다 (고친 말씀이 녹음 없이 남지 않게). 열쇠는 그대로
     if (s.gemini && !g) console.warn(`::warning::Gemini 성우 한도 — Google 음성으로 대신 녹음: ${s.text.slice(0, 30)}`);
-    if (g) pcm = tidy((b = { pcm: g }).pcm);
+    if (g) pcm = level(tidy((b = { pcm: g }).pcm));
     else if (s.split) {
       const parts = [];
       for (const piece of s.text.split(/,\s*/)) parts.push(tidy((b = await record(piece, v)).pcm));
