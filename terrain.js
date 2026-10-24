@@ -410,8 +410,8 @@ function resize() {
 let last = performance.now(), nearT = 0;
 function loop(now) {
   requestAnimationFrame(loop);
-  window.terrainDrives = on && ready; // 무대(stage.js)는 이 루프 안에서 그린다
-  if (!on || !ready) return;
+  window.terrainDrives = on && ready && !!window.terrainOn; // 무대(stage.js)는 이 루프 안에서 그린다 (지형이 준비된 뒤부터)
+  if (!window.terrainDrives) return;
   const dt = Math.min(0.25, (now - last) / 1000); last = now; // 느린 기기에서도 카메라가 제때 닿게 넉넉히
   const walking = document.body.classList.contains('is-walking');
   // 걷는 동안은 카메라가 걷는 사람을 따라간다
@@ -482,23 +482,31 @@ function bindInput(c) {
 const orig = window.geoToClient;
 async function setOn(v) {
   on = v;
-  document.body.classList.toggle('terrain-on', on);
   $('#mode3d').classList.toggle('active', on); $('#mode3d').setAttribute('aria-pressed', on);
   if (on) {
+    // 지형을 다 불러올 때까지는 2D 지도를 두고 '준비 중'만 보인다 — 하늘색 위에 인물만 먼저 뜨지 않게
+    document.body.classList.add('terrain-loading');
     if (!loading) { loading = build().then(() => { bindInput(renderer.domElement); resize(); }); }
     await loading;
     const k = EVENTS[idx].place, p = PLACES[k], [x, z] = px([p.lat, p.lng]);
     await Promise.all(regions.filter(r => regionAt(x, z) === r).map(ensureRegion));
+    if (!on) return; // 불러오는 사이에 다시 눌러 껐다
     window.terrainOn = true;
     window.geoToClient = (lat, lng) => { const s = project(lat, lng); return { x: s.x, y: s.y }; };
     cam.tx = x; cam.tz = z; cam.dist = 420; flyToScene(EVENTS[idx]); // 높은 곳에서 내려앉듯
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))); // 첫 화면을 그린 다음에 보인다
+    if (!on) return;
+    document.body.classList.remove('terrain-loading'); document.body.classList.add('terrain-on');
   } else {
+    document.body.classList.remove('terrain-loading', 'terrain-on');
     window.terrainOn = false; window.geoToClient = orig; window.terrainView = null;
   }
   window.recenterStage?.();
 }
 function controls() {
   const box = document.createElement('div'); box.className = 'mapctl';
+  const spin = document.createElement('div'); spin.className = 'm3load'; spin.setAttribute('aria-hidden', 'true');
+  wrap.appendChild(spin);
   box.innerHTML = `<button id="mode3d" class="m3" aria-pressed="false">3D</button>
     <div class="m3tools">
       <button data-k="tiltUp" title="${t('tiltUp')}">⌃</button><button data-k="tiltDown" title="${t('tiltDown')}">⌄</button>

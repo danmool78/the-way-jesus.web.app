@@ -167,6 +167,14 @@ html:not(:lang(ko)):not(:lang(zh)):not(:lang(ja)) .river-lbl text{writing-mode:h
 .tlabel.region span{font-size:14px;font-weight:600;letter-spacing:.3em;color:#fff8e6}
 .tlabel.place:not(.now) span{font-size:13px}
 /* 지도 조작기: 오른쪽 위가 장면 카드라 왼쪽 가장자리 가운데에 세로로 */
+/* 3D 지형을 불러오는 동안: 지도는 살짝 어둡게, 3D 단추 글자 대신 도는 고리 (어느 화면에서나 보이고 인물을 가리지 않게) */
+.m3load{position:absolute;inset:0;display:none;z-index:2;pointer-events:none;background:rgba(20,16,11,.18)}
+.terrain-loading .m3load{display:block}
+.mapctl .m3{position:relative}
+.terrain-loading #mode3d{color:transparent}
+.terrain-loading #mode3d::after{content:'';position:absolute;inset:10px;border-radius:50%;border:2.5px solid rgba(40,28,12,.22);border-top-color:#2a1d0e;animation:m3spin .9s linear infinite}
+@keyframes m3spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion: reduce){.terrain-loading #mode3d::after{animation-duration:2.4s}}
 .mapctl{position:absolute;left:16px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;z-index:3}
 .mapctl button{width:40px;height:40px;border-radius:12px;border:1px solid rgba(217,180,106,.35);background:rgba(20,16,11,.82);color:var(--gold2);font-size:16px;backdrop-filter:blur(6px);display:grid;place-items:center;padding:0}
 .mapctl .m3{font-family:var(--serif);font-weight:700;font-size:15px;letter-spacing:.04em}
