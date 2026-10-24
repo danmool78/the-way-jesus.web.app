@@ -130,6 +130,13 @@ export function buildJerusalem() {
   boxAt(g, gold, [san[0] + 31 * M, san[1]], 11 * M, 51 * M, 1.8 * V, top + 46 * V);
   boxAt(g, mat('#5a3a22'), [san[0] + 36.2 * M, san[1]], 0.6 * M, 10 * M, 22 * V, top + 3 * V); // 현관 문
   boxAt(g, mat('#cbbd9e'), [san[0] + 52 * M, san[1]], 15 * M, 15 * M, 6 * V, top);           // 번제단
+  // 이방인의 뜰 남쪽, 왕의 주랑 앞: 환전상의 상과 비둘기 장 (기도하는 집 장면의 자리).
+  // 높은 주랑 바로 뒤는 비스듬히 내려다보면 가려지므로 주랑에서 조금 떨어뜨리고, 알아보게 실제보다 크게
+  const tbl = mat('#8a6440', { roughness: 0.9 }), cg = mat('#b49a6a', { roughness: 0.9 });
+  for (let i = 0; i < 14; i++) {
+    const p = [MP[3][0] + (MP[2][0] - MP[3][0]) * (0.15 + i * 0.05), MP[3][1] + (MP[2][1] - MP[3][1]) * (0.15 + i * 0.05) - (60 + (i % 2) * 12) * M];
+    boxAt(g, i % 3 ? tbl : cg, p, (i % 3 ? 9 : 6) * M, (i % 3 ? 4 : 6) * M, (i % 3 ? 1.5 : 2.5) * V, top);
+  }
   // 안토니아 요새: 성전산 북서 모서리, 네 망대 (남동 망대가 가장 높다)
   const ant = L(31.7807, 35.2333), am = mat('#cbb68c', { roughness: 0.9 });
   boxAt(g, am, ant, 100 * M, 60 * M, 20 * V);
@@ -163,8 +170,21 @@ export function buildJerusalem() {
     { step: 19, colors: ['#dccaa4', '#d2bd94', '#e2d2b0'], hmin: 5, hmax: 9, avoid: [hasmon] });
 
   // 못: 실로암(남쪽 끝), 베데스다(성전 북쪽의 두 못)
-  pool(g, [31.7706, 35.2351], 50, 45);
-  pool(g, [31.7816, 35.2351], 45, 50); pool(g, [31.7816, 35.2359], 45, 50);
+  // 실로암: 사방으로 내려가는 돌계단(세 단)으로 둘러싼 못
+  const sil = L(31.7706, 35.2351), stepM = mat(STONE2, { roughness: 0.9 });
+  // (계단은 통짜 상자를 겹쳐 쌓아 만든다: 바깥 상자일수록 낮게, 물은 가장 위에 — 위에서 보면 둘레 계단 띠로 보인다)
+  [70, 62, 54].forEach((w, i) => boxAt(g, i % 2 ? stepM : mat(STONE, { roughness: 0.9 }), sil, w * M, (w - 5) * M, (0.6 + i * 0.4) * V));
+  boxAt(g, mat('#6f9aa6', { roughness: 0.3, metalness: 0.1 }), sil, 46 * M, 41 * M, 1.7 * V);
+  // 베데스다: 두 못과 다섯 줄 행각(네 둘레 + 두 못 사이) — 지붕 덮인 기둥 회랑
+  const bw = 45, bd = 50, b1 = L(31.7816, 35.2351), b2 = L(31.7816, 35.2359);
+  pool(g, [31.7816, 35.2351], bw, bd); pool(g, [31.7816, 35.2359], bw, bd);
+  const bx0 = b1[0] - (bw / 2 + 6) * M, bx1 = b2[0] + (bw / 2 + 6) * M, bz0 = b1[1] - (bd / 2 + 6) * M, bz1 = b1[1] + (bd / 2 + 6) * M, mid = (b1[0] + b2[0]) / 2;
+  const colM = mat('#efe6d2', { roughness: 0.8 });
+  [[[bx0, bz0], [bx1, bz0]], [[bx0, bz1], [bx1, bz1]], [[bx0, bz0], [bx0, bz1]], [[bx1, bz0], [bx1, bz1]], [[mid, bz0], [mid, bz1]]].forEach(([a, b]) => {
+    const len = Math.hypot(b[0] - a[0], b[1] - a[1]), n = Math.max(2, Math.round(len / (7 * M)));
+    for (let i = 0; i <= n; i++) { const f = i / n; boxAt(g, colM, [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f], 1.6 * M, 1.6 * M, 7 * V); }
+    wallSeg(g, roof, a, b, 6 * M, 1.2 * V, 7 * V);
+  });
 
   // 골고다: 둘째 성벽 밖의 바위 언덕과 무덤 동산 (십자가는 그리지 않는다)
   const gol = L(31.7786, 35.2296);
