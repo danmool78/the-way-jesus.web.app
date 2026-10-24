@@ -395,12 +395,30 @@ function flyToScene(ev) {
   ensureNear(x1, z1);
   cam.goal = { tx: (x0 + x1) / 2, tz: (z0 + z1) / 2, dist: Math.max(placeDist(ev.place), sep * 1.6) };
 }
+// 무대 인물의 크기 (stage.js가 terrainView.zoom으로 받는다). 당기면 천천히 커지다가(0.6제곱) 1.5배에 이르는 거리(FIG_D)부터는
+// 땅과 같은 비율로 커진다 — 인물만 멈추면 땅만 계속 커져 인물이 점점 작아 보였다. 도성 안은 그대로 1.5배에서 멈춘다:
+// 처음부터 바짝(42) 다가가 있어 같이 키우면 성벽·성전을 가리고, 당길수록 건물이 드러나는 편이 낫다
+const FIG_MAX = 1.5, FIG_D = 150 / FIG_MAX ** (1 / 0.6);
+function figZoom(dist, city) {
+  if (city) return THREE.MathUtils.clamp((150 / dist) ** 0.6, 0.35, FIG_MAX) * 0.62; // 도성 안에서는 인물을 줄여 건물을 덜 가리게
+  return dist >= FIG_D ? Math.max(0.35, (150 / dist) ** 0.6) : FIG_MAX * FIG_D / dist;
+}
+// 가장 가까이 당길 수 있는 거리: 무대(인물과 함께 커지는 캔버스)가 카드에 가리지 않은 지도 영역을 채우는 데까지.
+// 크기 공식은 stage.js의 resize와 같게 (폭 300·높이 270, 모바일 230·200, 넓은 무대 wide)
+function minDist() {
+  const ev = EVENTS[idx];
+  if (isCity(ev.place)) return 25;
+  const r = wrap.getBoundingClientRect(), mobile = innerWidth <= 900, wide = SCRIPTS[ev.id]?.wide || 1;
+  const fw = mobile ? r.width : r.width - (Math.min(460, r.width * 0.42) + 28), fh = mobile ? r.height * 0.52 : r.height;
+  const zMax = Math.max(FIG_MAX, 0.95 * Math.min(fw / ((mobile ? 230 : 300) * wide), fh / ((mobile ? 200 : 270) * wide)));
+  return Math.max(25, FIG_MAX * FIG_D / zMax);
+}
 // 확대·축소는 늘 지금 장면의 무대를 가운데로 다시 맞추며 한다 — 끌어서 옮겨 둔 곳을 기준으로 당기면 무대가 화면 밖에 남았다
 function zoomToStage(dist) {
   const ev = EVENTS[idx], at = SCRIPTS[ev.id]?.at, p = PLACES[ev.place];
   let [tx, tz] = px([p.lat, p.lng]);
   if (at) { const [x1, z1] = px(at); if (Math.hypot(x1 - tx, z1 - tz) >= 8) { tx = (tx + x1) / 2; tz = (tz + z1) / 2; } }
-  cam.goal = { tx, tz, dist: THREE.MathUtils.clamp(dist, 25, 520) };
+  cam.goal = { tx, tz, dist: THREE.MathUtils.clamp(dist, minDist(), 520) };
 }
 function resize() {
   const r = wrap.getBoundingClientRect();
@@ -431,8 +449,7 @@ function loop(now) {
   if (now - nearT > 500) { nearT = now; ensureNear(cam.tx, cam.tz, 60); } // 둘러보다 다가간 지역도 불러온다
   cam.pitch = damp(cam.pitch, ui.pitch, 4, dt); cam.yaw = damp(cam.yaw, ui.yaw, 4, dt);
   placeCam();
-  // 무대 인물의 크기: 당기면 커지되 천천히 (도성 가까이에서 건물을 다 가리지 않게)
-  window.terrainView = { yaw: cam.yaw, pitch: cam.pitch, zoom: THREE.MathUtils.clamp((150 / cam.dist) ** 0.6, 0.35, 1.5) * (isCity(EVENTS[idx].place) ? 0.62 : 1) }; // 도성 안에서는 인물을 줄여 건물을 덜 가리게
+  window.terrainView = { yaw: cam.yaw, pitch: cam.pitch, zoom: figZoom(cam.dist, isCity(EVENTS[idx].place)) };
   window.stageRender?.(); // 바뀐 시점으로 무대를 붙이고 그린다
   // 안개는 카메라 거리에 맞춰 — 멀리 물러나도 땅의 끝이 하늘과 안개 속으로 녹아든다
   scene.fog.near = cam.dist * 1.1; scene.fog.far = cam.dist * 3.6;
@@ -479,7 +496,7 @@ function bindInput(c) {
     const prev = pts.get(e.pointerId); pts.set(e.pointerId, [e.clientX, e.clientY]);
     if (pts.size === 2) { // 두 손가락: 벌리고 오므려 당기고, 비틀어 돌린다
       const [a, b] = [...pts.values()], d = Math.hypot(a[0] - b[0], a[1] - b[1]), ang = Math.atan2(b[1] - a[1], b[0] - a[0]);
-      if (drag.d) { cam.dist = THREE.MathUtils.clamp(cam.dist * drag.d / d, 25, 520); zoomToStage(cam.dist); }
+      if (drag.d) { cam.dist = THREE.MathUtils.clamp(cam.dist * drag.d / d, minDist(), 520); zoomToStage(cam.dist); }
       if (drag.ang !== undefined) ui.yaw += ang - drag.ang;
       drag.d = d; drag.ang = ang; return;
     }

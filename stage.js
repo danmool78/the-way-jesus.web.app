@@ -221,8 +221,9 @@ function resize() {
   const w = Math.round((mobile ? 230 : 300) * wide), h = Math.round((mobile ? 200 : 270) * wide);
   if (w === size.w && h === size.h) return;
   size = { w, h };
-  // 작은 인물의 윤곽이 매끈하도록 화면 해상도의 2배로 그려 줄여 보인다(슈퍼샘플링)
-  renderer.setPixelRatio(Math.min(devicePixelRatio * 2, 3));
+  // 작은 인물의 윤곽이 매끈하도록 화면 해상도의 2배로 그려 줄여 보인다(슈퍼샘플링). 3D 지형에서 당겨 무대가 커지면
+  // 인물도 커서 덜 필요하므로 그만큼 낮춘다 — 큰 캔버스를 3배로 그리면 휴대폰이 버거웠다
+  renderer.setPixelRatio(Math.max(devicePixelRatio, Math.min(devicePixelRatio * 2, 3) / Math.max(1, wide / 1.5)));
   renderer.setSize(w, h, false);
   canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
   // 3D 지형 모드가 무대 밑의 집·나무를 치울 넓이 (무대 바닥이 차지하는 화면 반지름)
