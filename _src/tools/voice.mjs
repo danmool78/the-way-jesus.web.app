@@ -28,7 +28,8 @@ function script(e) {
   e.story.forEach(s => items.push({ text: s }));
   items.push({ text: (e.words.some(w => w.j) ? ui.hisWords : ui.voicesOfDay) + '.' });
   e.words.forEach(w => { if (!w.j) items.push({ text: `${w.who}.` }); items.push({ text: w.text, jesus: !!w.j }); });
-  return items.flatMap(it => sentences(it.text).map(s => s.trim()).filter(Boolean).map(text => ({ text, jesus: it.jesus })));
+  // 제목 줄의 '장소, 때.'는 쉼표에서 나눠 따로 녹음해 잇는다 — 한 번에 읽히면 장소 이름을 늘이고 멈칫한다
+  return items.flatMap((it, i) => sentences(it.text).map(s => s.trim()).filter(Boolean).map((text, k) => ({ text, jesus: it.jesus, split: i === 0 && k > 0 })));
 }
 
 // 20ms 창의 소리 크기로 무음(-40dB 아래)을 가린다
@@ -54,9 +55,12 @@ function tidy(pcm) {
 }
 const speechSec = pcm => frames(pcm).filter(Boolean).length * W / SR;
 
+// 읽을 때만 바꾸는 말: 영어 글자 BC·AD 앞에서 Chirp가 앞말을 늘이고 멈칫하므로 우리말로 읽힌다 (화면 글과 열쇠는 그대로)
+const spoken = text => text.replace(/\bBC\s*/g, '기원전 ').replace(/\bAD\s*/g, '서기 ');
+
 async function synth(text, v, rate) {
   // 문장 안 쉼: 연결어미 뒤 짧은 무음 표시 (tts-pauses.mjs). Chirp는 SSML 무음을 그대로 따르지 않지만 쉼 자리는 지킨다
-  const ssml = `<speak>${pauses(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/\[pause short\]/g, '<break time="80ms"/>').replace(/\[pause\]/g, '<break time="250ms"/>')}</speak>`;
+  const ssml = `<speak>${pauses(spoken(text)).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/\[pause short\]/g, '<break time="80ms"/>').replace(/\[pause\]/g, '<break time="250ms"/>')}</speak>`;
   const r = await fetch(`https://texttospeech.googleapis.com/v1/text:synthesize?key=${KEY}`, { method: 'POST', headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ input: { ssml }, voice: { languageCode: 'ko-KR', name: `ko-KR-Chirp3-HD-${v.name}` }, audioConfig: { audioEncoding: 'LINEAR16', sampleRateHertz: SR, speakingRate: rate } }) });
   const j = await r.json(); if (!r.ok) throw Error(`${v.name}: ${j.error?.message || r.status}`);
@@ -83,7 +87,15 @@ for (const e of events) {
   for (const s of script(e)) {
     const v = s.jesus ? VOICE.jesus : VOICE.narr, key = voiceKey(v.name, s.text), mp3 = `${OUT}/${key}.mp3`;
     if (existsSync(mp3)) continue;
-    const b = await record(s.text, v), pcm = tidy(b.pcm), raw = `${TMP}/${key}.pcm`;
+    let b, pcm;
+    if (s.split) {
+      const parts = [];
+      for (const piece of s.text.split(/,\s*/)) parts.push(tidy((b = await record(piece, v)).pcm));
+      const gap = new Int16Array(Math.round(0.35 * SR)); // 장소와 때 사이 쉼
+      pcm = new Int16Array(parts.reduce((t, p, i) => t + p.length + (i ? gap.length : 0), 0));
+      let o = 0; parts.forEach((p, i) => { if (i) o += gap.length; pcm.set(p, o); o += p.length; });
+    } else pcm = tidy((b = await record(s.text, v)).pcm);
+    const raw = `${TMP}/${key}.pcm`;
     await writeFile(raw, Buffer.from(pcm.buffer, pcm.byteOffset, pcm.byteLength));
     execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-f', 's16le', '-ar', String(SR), '-ac', '1', '-i', raw, '-c:a', 'libmp3lame', '-b:a', '48k', mp3]);
     console.log(e.id, v.name, key, `${(pcm.length / SR).toFixed(1)}초`, b.cps ? `${b.cps.toFixed(1)}자/초 ×${b.rate.toFixed(2)}` : '', s.text.slice(0, 30));
