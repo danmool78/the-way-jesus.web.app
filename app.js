@@ -644,6 +644,9 @@ function renderScene() {
   </section>
   <div class="cardfoot"><button class="goldbtn" id="contBtn"></button></div>`;
   $('#scene').scrollTop = 0;
+  // 명화가 밀려가는 방향을 장면마다 돌려 가며 (오른쪽 위 → 왼쪽 위 → 왼쪽 아래 → 오른쪽 아래)
+  const kb = [[3, 2], [-3, 2], [-3, -2], [3, -2]][idx % 4];
+  $('#scene').style.setProperty('--kx', kb[0] + '%'); $('#scene').style.setProperty('--ky', kb[1] + '%');
   $('#cardToggle').onclick = () => { setCard($('#scene').classList.contains('open') ? 'peek' : 'open'); window.recenterStage(); };
   $('.cardbar', $('#scene')).ondblclick = () => setCard('open');
   sheetDrag();
