@@ -117,8 +117,36 @@ async function loadRegion(r) {
   scene.add(r.mesh);
   addTrees(r); addVillages(r);
   if (r.name === 'galilee') addBoats();
-  if (r.name === 'judea') addModel(buildJerusalem(), JLM, 1);
+  if (r.name === 'judea') { addModel(buildJerusalem(), JLM, 1); addCityDetail(); }
   if (r.name === 'egypt') Object.values(EGYPT_MODELS).forEach(m => addModel(m.build(), m.extent, 0.6));
+}
+
+// 예루살렘 둘레의 초정밀 색(2D 지도의 도성 타일, 지도 단위당 25.6픽셀)을 지형 위에 덧입힌다 —
+// 도성 장면은 바짝 다가가므로 지역 색 그림(단위당 2.2픽셀)으로는 땅이 뭉개져 보였다. 가장자리는 서서히 투명하게
+const RCITY = { lat0: 31.74, lat1: 31.81, lng0: 35.19, lng1: 35.28 }, RCITY_T = 20, RCITY_N = 4; // _src/relief.py의 CITY와 같게
+async function addCityDetail() {
+  const P = 512, imgs = await Promise.all([...Array(RCITY_N * RCITY_N)].map((_, i) => loadImg(`assets/relief-city/${Math.floor(i / RCITY_N)}_${i % RCITY_N}.webp`).catch(() => null)));
+  const [x0, z0] = px([RCITY.lat1, RCITY.lng0]), [x1, z1] = px([RCITY.lat0, RCITY.lng1]), U = RCITY_T * RCITY_N; // 캔버스가 덮는 단위
+  const cv = document.createElement('canvas'); cv.width = cv.height = 2048;
+  const c = cv.getContext('2d'), k = cv.width / (P * RCITY_N);
+  imgs.forEach((im, i) => im && c.drawImage(im, (i % RCITY_N) * P * k, Math.floor(i / RCITY_N) * P * k, P * k, P * k));
+  // 가장자리 띠(6단위)는 투명하게 — 한 변씩 곱해 나간다
+  const px2 = u => u / U * cv.width, bw = px2(6), ex = px2(x1 - x0), ez = px2(z1 - z0);
+  c.globalCompositeOperation = 'destination-in';
+  [[0, 0, bw, 0], [ex, 0, ex - bw, 0], [0, 0, 0, bw], [0, ez, 0, ez - bw]].forEach(([ax, ay, bx, by]) => {
+    const g = c.createLinearGradient(ax, ay, bx, by); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, '#000');
+    c.fillStyle = g; c.fillRect(0, 0, cv.width, cv.height);
+  });
+  const nx = Math.round(x1 - x0), nz = Math.round(z1 - z0), geo = new THREE.PlaneGeometry(x1 - x0, z1 - z0, nx, nz);
+  geo.rotateX(-Math.PI / 2); geo.translate((x0 + x1) / 2, 0, (z0 + z1) / 2);
+  const pos = geo.attributes.position, uv = geo.attributes.uv;
+  for (let i = 0; i < pos.count; i++) {
+    const x = pos.getX(i), z = pos.getZ(i);
+    pos.setY(i, heightAt(x, z) + 0.08); uv.setXY(i, (x - x0) / U, 1 - (z - z0) / U);
+  }
+  geo.computeVertexNormals();
+  const m = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ map: mapTex(cv), roughness: 0.95, transparent: true, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 }));
+  m.receiveShadow = true; m.renderOrder = 1; scene.add(m);
 }
 
 /* ---------- 바탕 그림·바다·호수·강·길 (지역을 불러올 때마다 다시 짓는다) ---------- */
@@ -200,7 +228,8 @@ function addVillages(r) {
     for (let i = 0; i < n; i++) {
       const a = rnd() * 6.28, d = 1.2 + rnd() * 3.5, x = x0 + Math.cos(a) * d, z = z0 + Math.sin(a) * d, y = heightAt(x, z);
       if (y < lv(-205)) continue; // 호수 위에는 짓지 않는다
-      const b = new THREE.Mesh(geo, m), s = 0.45 + rnd() * 0.4; // 집 한 채 50~90m 남짓 — 멀리서도 보이되 무대 인물보다 크지 않게
+      const dd = Math.hypot(Math.max(CITY.x0 - x, 0, x - CITY.x1), Math.max(CITY.z0 - z, 0, z - CITY.z1)); // 도성 곁(베다니)은 도성 모형의 집과 어울리게 작게
+      const b = new THREE.Mesh(geo, m), s = (0.45 + rnd() * 0.4) * (dd < 14 ? 0.3 + 0.7 * dd / 14 : 1); // 집 한 채 50~90m 남짓 — 멀리서도 보이되 무대 인물보다 크지 않게
       b.scale.set(s, s * 0.7, s * (0.8 + rnd() * 0.5)); b.position.set(x, y + s * 0.35, z); b.rotation.y = rnd() * 3; b.castShadow = b.receiveShadow = true;
       grp.add(b); clutter.meshes.push({ m: b, x, z });
     }
@@ -416,6 +445,7 @@ function loop(now) {
   const near = THREE.MathUtils.clamp((cam.dist - 40) / 90, 0.15, 1);
   routes.forEach(l => { const i = l.userData.i; l.material.opacity = (i <= idx ? 0.9 : walking && i === idx + 1 ? 1 : 0.18) * near; });
   clearStageSpot();
+  const tone = svg.style.filter; if (renderer.domElement.style.filter !== tone) renderer.domElement.style.filter = tone; // 장면의 밤·폭풍·새벽 색조를 2D 지도처럼 지형에도
   renderer.render(scene, camera);
   placeLabels();
 }

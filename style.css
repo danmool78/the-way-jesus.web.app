@@ -151,7 +151,7 @@ html:not(:lang(ko)):not(:lang(zh)):not(:lang(ja)) .river-lbl text{writing-mode:h
 .caption p{margin:0;font-family:var(--serif);font-size:21px;line-height:1.5;color:#fbf2dc;text-shadow:0 2px 12px #000;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 
 /* 3D 지형 모드 (terrain.js) */
-.terrain3d{position:absolute;inset:0;display:none;touch-action:none;cursor:grab}
+.terrain3d{position:absolute;inset:0;display:none;touch-action:none;cursor:grab;transition:filter 1.6s}
 .terrain3d:active{cursor:grabbing}
 .terrain-on .terrain3d{display:block}
 .terrain-on #fitAll{display:none}
