@@ -395,6 +395,13 @@ function flyToScene(ev) {
   ensureNear(x1, z1);
   cam.goal = { tx: (x0 + x1) / 2, tz: (z0 + z1) / 2, dist: Math.max(placeDist(ev.place), sep * 1.6) };
 }
+// 확대·축소는 늘 지금 장면의 무대를 가운데로 다시 맞추며 한다 — 끌어서 옮겨 둔 곳을 기준으로 당기면 무대가 화면 밖에 남았다
+function zoomToStage(dist) {
+  const ev = EVENTS[idx], at = SCRIPTS[ev.id]?.at, p = PLACES[ev.place];
+  let [tx, tz] = px([p.lat, p.lng]);
+  if (at) { const [x1, z1] = px(at); if (Math.hypot(x1 - tx, z1 - tz) >= 8) { tx = (tx + x1) / 2; tz = (tz + z1) / 2; } }
+  cam.goal = { tx, tz, dist: THREE.MathUtils.clamp(dist, 25, 520) };
+}
 function resize() {
   const r = wrap.getBoundingClientRect();
   if (!r.width) return;
@@ -462,10 +469,11 @@ function bindInput(c) {
     const prev = pts.get(e.pointerId); pts.set(e.pointerId, [e.clientX, e.clientY]);
     if (pts.size === 2) { // 두 손가락: 벌리고 오므려 당기고, 비틀어 돌린다
       const [a, b] = [...pts.values()], d = Math.hypot(a[0] - b[0], a[1] - b[1]), ang = Math.atan2(b[1] - a[1], b[0] - a[0]);
-      if (drag.d) cam.dist = THREE.MathUtils.clamp(cam.dist * drag.d / d, 25, 520);
+      if (drag.d) { cam.dist = THREE.MathUtils.clamp(cam.dist * drag.d / d, 25, 520); zoomToStage(cam.dist); }
       if (drag.ang !== undefined) ui.yaw += ang - drag.ang;
       drag.d = d; drag.ang = ang; return;
     }
+    cam.goal = null; // 손가락 하나로 끄는 동안은 무대로 되돌아가지 않는다 (두 손가락 확대 뒤 한 손가락만 남은 경우)
     const dx = e.clientX - prev[0], dy = e.clientY - prev[1], s = cam.dist / wrap.clientHeight * 1.3;
     if (e.shiftKey || e.buttons === 2) { ui.yaw -= dx * 0.005; ui.pitch = THREE.MathUtils.clamp(ui.pitch + dy * 0.004, 0.25, 1.45); return; }
     cam.tx -= (dx * Math.cos(cam.yaw) + dy * Math.sin(cam.yaw)) * s;
@@ -475,7 +483,7 @@ function bindInput(c) {
   const up = e => { pts.delete(e.pointerId); if (!pts.size) drag = null; };
   c.addEventListener('pointerup', up); c.addEventListener('pointercancel', up);
   c.addEventListener('contextmenu', e => e.preventDefault());
-  c.addEventListener('wheel', e => { e.preventDefault(); cam.goal = null; cam.dist = THREE.MathUtils.clamp(cam.dist * Math.exp(e.deltaY * 0.001), 25, 520); }, { passive: false });
+  c.addEventListener('wheel', e => { e.preventDefault(); zoomToStage((cam.goal?.dist ?? cam.dist) * Math.exp(e.deltaY * 0.001)); }, { passive: false });
 }
 
 /* ---------- 켜고 끄기 ---------- */
@@ -536,8 +544,8 @@ function controls() {
     if (k === 'tiltDown') ui.pitch = Math.max(0.25, ui.pitch - 0.15);
     if (k === 'left') ui.yaw += 0.35;
     if (k === 'right') ui.yaw -= 0.35;
-    if (k === 'in') cam.goal = { tx: cam.tx, tz: cam.tz, dist: Math.max(25, cam.dist * 0.7) };
-    if (k === 'out') cam.goal = { tx: cam.tx, tz: cam.tz, dist: Math.min(520, cam.dist * 1.4) };
+    if (k === 'in') zoomToStage(cam.dist * 0.7);
+    if (k === 'out') zoomToStage(cam.dist * 1.4);
     if (k === 'reset') { ui.pitch = 0.62; ui.yaw = 0; flyTo(EVENTS[idx].place); }
   });
 }
