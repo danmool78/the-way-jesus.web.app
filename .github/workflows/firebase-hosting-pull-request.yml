@@ -12,30 +12,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Check data.json is up to date with _src
         run: python3 _src/build.py && git diff --exit-code data.json
-      # 미리보기 채널은 7일 남아 있어 PR이 몰리면 채널 한도에 걸린다 — 닫힌 PR의 채널을 먼저 지운다
-      - name: Remove preview channels of closed PRs
-        continue-on-error: true
-        env:
-          SA: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_THE_WAY_JESUS }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          printf '%s' "$SA" > "$RUNNER_TEMP/sa.json"
-          # Secret이 base64로 저장되어 있으면 풀어 쓴다 (배포 액션도 두 가지를 다 받는다)
-          jq -e .client_email "$RUNNER_TEMP/sa.json" > /dev/null 2>&1 || printf '%s' "$SA" | base64 -d > "$RUNNER_TEMP/sa.json" || true
-          echo "credentials: $(jq -r '.type // "unreadable"' "$RUNNER_TEMP/sa.json" 2>/dev/null || echo unreadable)"
-          export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/sa.json"
-          trap 'rm -f "$RUNNER_TEMP/sa.json"' EXIT
-          npx -y firebase-tools hosting:channel:list --project the-way-jesus --json > "$RUNNER_TEMP/channels.json" || true
-          jq -r '"channel list: \(.status) \(.error // "")"' "$RUNNER_TEMP/channels.json"
-          jq -r '(.result.channels? // .result // [])[] | .name | split("/") | last' "$RUNNER_TEMP/channels.json" | grep -E '^pr[0-9]+-' | while read -r ch; do
-              n=${ch#pr}; n=${n%%-*}
-              st=$(gh pr view "$n" --repo "$GITHUB_REPOSITORY" --json state -q .state) || continue # 조회가 실패하면 지우지 않는다
-              if [ "$st" = CLOSED ] || [ "$st" = MERGED ]; then
-                echo "delete $ch"; npx -y firebase-tools hosting:channel:delete "$ch" --project the-way-jesus --force
-              fi
-            done
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_THE_WAY_JESUS }}
           projectId: the-way-jesus
+          # 미리보기 채널은 기본 7일 남아 PR이 몰리면 채널 한도(429)에 걸린다 — 사흘이면 확인하기에 넉넉하다
+          expires: 3d
