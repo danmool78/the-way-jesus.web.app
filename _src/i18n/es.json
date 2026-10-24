@@ -1,0 +1,2525 @@
+{
+ "periods": {
+  "p1": {
+   "name": "Nacimiento e infancia",
+   "span": "6 a. C. – 8 d. C."
+  },
+  "p2": {
+   "name": "Comienza el ministerio",
+   "span": "26 – 27 d. C."
+  },
+  "p3": {
+   "name": "Judea y Samaria",
+   "span": "27 d. C."
+  },
+  "p4": {
+   "name": "Primavera en Galilea",
+   "span": "28 d. C."
+  },
+  "p5": {
+   "name": "Más allá de Galilea",
+   "span": "29 d. C."
+  },
+  "p6": {
+   "name": "Rumbo a Jerusalén",
+   "span": "29 – 30 d. C."
+  },
+  "p7": {
+   "name": "Semana Santa",
+   "span": "Primavera del 30 d. C."
+  },
+  "p8": {
+   "name": "Resurrección y ascensión",
+   "span": "Primavera del 30 d. C."
+  }
+ },
+ "places": {
+  "nazareth": {
+   "name": "Nazaret",
+   "region": "Galilea"
+  },
+  "bethlehem": {
+   "name": "Belén",
+   "region": "Judea"
+  },
+  "jerusalem": {
+   "name": "Jerusalén",
+   "region": "Judea"
+  },
+  "temple": {
+   "name": "El Templo",
+   "region": "Jerusalén"
+  },
+  "upper_room": {
+   "name": "El aposento alto",
+   "region": "Jerusalén"
+  },
+  "gethsemane": {
+   "name": "Getsemaní",
+   "region": "Jerusalén"
+  },
+  "olives": {
+   "name": "Monte de los Olivos",
+   "region": "Jerusalén"
+  },
+  "golgotha": {
+   "name": "Gólgota · Tumba del Huerto",
+   "region": "Jerusalén"
+  },
+  "siloam": {
+   "name": "Estanque de Siloé",
+   "region": "Jerusalén"
+  },
+  "praetorium": {
+   "name": "El pretorio",
+   "region": "Jerusalén"
+  },
+  "bethany": {
+   "name": "Betania",
+   "region": "Judea"
+  },
+  "egypt": {
+   "name": "Egipto (delta del Nilo)",
+   "region": "Egipto"
+  },
+  "bethany_jordan": {
+   "name": "Betania al otro lado del Jordán",
+   "region": "Perea"
+  },
+  "wilderness": {
+   "name": "Desierto de Judea",
+   "region": "Judea"
+  },
+  "cana": {
+   "name": "Caná",
+   "region": "Galilea"
+  },
+  "capernaum": {
+   "name": "Cafarnaúm",
+   "region": "Galilea"
+  },
+  "sychar": {
+   "name": "Sicar · Pozo de Jacob",
+   "region": "Samaria"
+  },
+  "beatitudes": {
+   "name": "Monte de las Bienaventuranzas",
+   "region": "Galilea"
+  },
+  "nain": {
+   "name": "Naín",
+   "region": "Galilea"
+  },
+  "galilee_town": {
+   "name": "Un pueblo de Galilea",
+   "region": "Galilea"
+  },
+  "sea": {
+   "name": "En medio del mar de Galilea",
+   "region": "Mar de Galilea"
+  },
+  "gerasa": {
+   "name": "Gerasa (Kursi)",
+   "region": "Decápolis"
+  },
+  "bethsaida": {
+   "name": "Campos de Betsaida",
+   "region": "Galilea"
+  },
+  "tyre": {
+   "name": "Tiro",
+   "region": "Fenicia"
+  },
+  "decapolis": {
+   "name": "Decápolis",
+   "region": "Decápolis"
+  },
+  "caesarea_philippi": {
+   "name": "Cesarea de Filipo",
+   "region": "Iturea"
+  },
+  "tabor": {
+   "name": "Monte Tabor (según la tradición)",
+   "region": "Galilea"
+  },
+  "perea": {
+   "name": "Perea, al otro lado del Jordán",
+   "region": "Perea"
+  },
+  "jericho": {
+   "name": "Jericó",
+   "region": "Judea"
+  },
+  "emmaus": {
+   "name": "Emaús (lugar probable)",
+   "region": "Judea"
+  },
+  "tabgha": {
+   "name": "Orilla del mar de Tiberíades",
+   "region": "Galilea"
+  },
+  "galilee_mountain": {
+   "name": "Un monte de Galilea",
+   "region": "Galilea"
+  }
+ },
+ "events": {
+  "e01": {
+   "title": "La Anunciación",
+   "when": "hacia el 6 a. C.",
+   "subtitle": "Una historia que comenzó con el sí de una muchacha",
+   "story": [
+    "Nazaret, una aldea en las colinas de Galilea. En un día cualquiera de aquel pueblo diminuto, cuyo nombre no aparece en ningún lugar del Antiguo Testamento, una luz se detuvo ante María, una muchacha comprometida con José, de la casa de David. Era el ángel Gabriel, enviado por Dios.",
+    "“Alégrate, llena de gracia.” A la joven, que temblaba de miedo, el ángel le trae una noticia difícil de creer. Tendrá un hijo, se llamará Jesús y será rey de un reino que no tendrá fin. Con la voz quebrada, María acepta aquella palabra.",
+    "José, su prometido, pensaba romper el compromiso en secreto, pero en sueños escuchó de un ángel la misma noticia y recibió a María como esposa. Sin que el mundo lo supiera, el cielo empezaba su historia más grande desde el lugar más humilde."
+   ],
+   "words": [
+    {
+     "who": "Gabriel",
+     "text": "No tengas miedo, María. Dios te ha mirado con favor. Para Dios no hay nada imposible."
+    },
+    {
+     "who": "María",
+     "text": "Soy la sierva del Señor. Que se haga en mí tal como has dicho."
+    },
+    {
+     "who": "Ángel del Señor",
+     "text": "José, hijo de David, no temas recibir a María como esposa. Llamarás al niño Jesús, porque él librará a su pueblo de sus pecados."
+    }
+   ],
+   "note": "Se cree que Nazaret era una pequeña aldea campesina de apenas unos cientos de habitantes. Era tan insignificante que, en el Evangelio de Juan, Natanael pregunta: ‘¿Puede salir algo bueno de Nazaret?’",
+   "reflect": "Ante un llamado que no puedo explicar, ¿sería capaz de responder que sí, como María?",
+   "quiz": {
+    "q": "¿Qué nombre le dio el ángel a María para su hijo?",
+    "options": [
+     "Emanuel",
+     "Jesús",
+     "David",
+     "Juan"
+    ],
+    "explain": "‘Jesús’ significa ‘el Señor salva’ (Lc 1:31; Mt 1:21). ‘Emanuel’ es un título de la profecía de Isaías que cita Mateo."
+   },
+   "credit": "James Tissot, La Anunciación (The Annunciation), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e02": {
+   "title": "Noche en Belén",
+   "when": "invierno, hacia el 5 a. C.",
+   "subtitle": "Una noche sin sitio, un canto sobre los campos",
+   "story": [
+    "El emperador romano Augusto ordenó un censo en todo el imperio. José salió de Nazaret con María, que estaba a punto de dar a luz, y recorrió el largo camino hasta Belén, la ciudad de su antepasado David. El pueblo, extraño para ellos, ya estaba lleno de gente.",
+    "No había lugar para ellos. Esa noche María dio a luz a su hijo primogénito, lo envolvió en pañales y lo acostó en un pesebre, el comedero de los animales. En el aire frío, solo el aliento del niño se elevaba como una leve neblina.",
+    "En los campos cercanos, unos pastores velaban de noche junto a sus rebaños cuando, de pronto, la gloria del Señor brilló a su alrededor. Tras el anuncio del ángel, la alabanza de un ejército celestial llenó el cielo nocturno, y los pastores corrieron hasta encontrar al niño en el pesebre. María guardaba todas estas cosas en lo profundo de su corazón."
+   ],
+   "words": [
+    {
+     "who": "El ángel",
+     "text": "No tengan miedo: les traigo una noticia de gran alegría para todo el pueblo. Hoy, en la ciudad de David, les ha nacido un Salvador, Cristo el Señor."
+    },
+    {
+     "who": "El ejército celestial",
+     "text": "Gloria a Dios en lo más alto del cielo, y en la tierra paz a la gente en quien él se complace."
+    },
+    {
+     "who": "Los pastores",
+     "text": "Vamos a Belén a ver con nuestros propios ojos esto que el Señor nos ha dado a conocer."
+    }
+   ],
+   "note": "La palabra griega ‘katályma’, que suele traducirse como ‘posada’, también puede significar el cuarto de huéspedes de una casa familiar. Por eso algunos piensan que Jesús nació en la planta baja de una casa donde se guardaba el ganado, o en una cueva.",
+   "reflect": "Si Dios escogió el más pobre de los pesebres, ¿en qué lugar humilde de mi propia vida podría encontrarlo?",
+   "quiz": {
+    "q": "¿Qué señal les dio el ángel a los pastores?",
+    "options": [
+     "Una estrella detenida sobre una casa",
+     "Un príncipe nacido en un palacio",
+     "Un niño envuelto en pañales y acostado en un pesebre",
+     "Un cordero ofrecido en el Templo"
+    ],
+    "explain": "El ángel dijo que la señal sería ‘un niño envuelto en pañales y acostado en un pesebre’ (Lc 2:12). La estrella pertenece al relato de los magos en Mateo."
+   },
+   "credit": "James Tissot, La adoración de los pastores (The Adoration of the Shepherds), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e03": {
+   "title": "Simeón y Ana en el Templo",
+   "when": "cuarenta días después del nacimiento",
+   "subtitle": "Una luz en los ojos de dos ancianos que esperaron toda la vida",
+   "story": [
+    "Al octavo día, el niño fue circuncidado y recibió el nombre de Jesús, como había dicho el ángel. Cumplidos los días de la purificación, José y María lo llevaron al Templo de Jerusalén y, como mandaba la Ley, ofrecieron un par de tórtolas o dos pichones de paloma.",
+    "En ese momento entró en el Templo, movido por el Espíritu, Simeón, un anciano justo y piadoso. Había vivido con la promesa de que no moriría sin ver antes al Cristo. Tomó al niño en brazos y alabó a Dios, y luego le dijo a María que llegaría un día en que el dolor le atravesaría el corazón como una espada.",
+    "También se acercó Ana, hija de Fanuel, de la tribu de Aser, una viuda de ochenta y cuatro años. Era una profetisa que no se apartaba del Templo, y ayunaba y oraba noche y día. Dio gracias a Dios y habló del niño a todos los que esperaban la liberación de Jerusalén."
+   ],
+   "words": [
+    {
+     "who": "Simeón",
+     "text": "Señor, ahora deja que tu siervo se vaya en paz, como lo prometiste. Mis ojos han visto tu salvación."
+    },
+    {
+     "who": "Simeón",
+     "text": "Este niño hará que muchos caigan y muchos se levanten. Y a ti misma el dolor te atravesará el corazón como una espada."
+    }
+   ],
+   "note": "Levítico 12 permite que una familia de pocos recursos ofrezca dos aves en lugar de un cordero. Que José y María ofrecieran aves muestra que eran una familia pobre.",
+   "reflect": "Como Simeón y Ana, ante una promesa que tarda en llegar, ¿qué mantiene viva mi esperanza?",
+   "quiz": {
+    "q": "¿De qué tribu era la profetisa Ana, que conoció al niño Jesús en el Templo?",
+    "options": [
+     "Aser",
+     "Judá",
+     "Leví",
+     "Benjamín"
+    ],
+    "explain": "Ana era hija de Fanuel, de la tribu de Aser (Lc 2:36)."
+   },
+   "credit": "James Tissot, El anciano Simeón (The Aged Simeon), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e04": {
+   "title": "Los magos siguen la estrella",
+   "when": "hacia el 5 a. C.",
+   "subtitle": "Hombres del lejano oriente que leían las estrellas",
+   "story": [
+    "En tiempos del rey Herodes, unos magos venidos del oriente aparecieron por las calles de Jerusalén preguntando dónde estaba el rey de los judíos que acababa de nacer. Habían visto salir su estrella, decían, y venían a adorarlo. Herodes se inquietó al oírlo, y toda Jerusalén se estremeció con él.",
+    "Herodes reunió a los jefes de los sacerdotes y a los maestros de la Ley y los interrogó sobre el lugar donde había de nacer el Cristo. La respuesta era Belén, según lo escrito por el profeta Miqueas. El rey llamó en secreto a los magos, averiguó con precisión cuándo había aparecido la estrella y les pidió que, cuando encontraran al niño, le avisaran para ir él también a adorarlo.",
+    "Al ponerse en camino, la estrella que habían visto en el oriente iba delante de ellos y se detuvo sobre el lugar donde estaba el niño. Llenos de alegría, los magos entraron en la casa, se postraron ante el niño, que estaba junto a su madre, y le ofrecieron oro, incienso y mirra. Luego, advertidos en sueños, regresaron a su tierra por otro camino."
+   ],
+   "words": [
+    {
+     "who": "Los magos",
+     "text": "¿Dónde está el rey de los judíos que ha nacido? Vimos salir su estrella y hemos venido a adorarlo."
+    },
+    {
+     "who": "Los jefes de los sacerdotes y los maestros de la Ley",
+     "text": "Belén, en tierra de Judá, de ningún modo eres un pueblo pequeño. De ti saldrá un jefe que cuidará como pastor a mi pueblo Israel."
+    },
+    {
+     "who": "Herodes",
+     "text": "Vayan y busquen bien al niño, y cuando lo encuentren, avísenme, para que yo también vaya a adorarlo."
+    }
+   ],
+   "note": "Los ‘magoi’ eran probablemente una clase de sabios que estudiaban las estrellas en Persia o Babilonia. La Escritura no dice cuántos eran; la tradición de que fueron tres nace de los tres regalos.",
+   "reflect": "Los magos se arrodillaron con alegría al final de un largo viaje. ¿Qué busco yo en mi propio camino largo?",
+   "quiz": {
+    "q": "¿Cuál de estos NO fue un regalo de los magos al niño Jesús?",
+    "options": [
+     "Oro",
+     "Incienso",
+     "Mirra",
+     "Treinta monedas de plata"
+    ],
+    "explain": "Los magos ofrecieron oro, incienso y mirra (Mt 2:11). Las treinta monedas de plata fueron el dinero que más tarde recibió Judas."
+   },
+   "credit": "James Tissot, El viaje de los magos (The Magi Journeying), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e05": {
+   "title": "Huida a Egipto",
+   "when": "5–4 a. C.",
+   "subtitle": "Una huida en la noche y un llanto en Ramá",
+   "story": [
+    "Cuando los magos se marcharon, el ángel del Señor se apareció de nuevo a José en sueños. Herodes buscaba al niño para matarlo, así que José debía tomar al niño y a su madre y huir a Egipto. Esa misma noche José se levantó y partió en la oscuridad.",
+    "Atravesando los caminos del desierto hacia el sur, la familia llegó a Egipto y se quedó allí hasta la muerte de Herodes. Mateo escribe que así se cumplió lo dicho por Oseas: ‘De Egipto llamé a mi hijo’.",
+    "Al darse cuenta de que los magos lo habían burlado, Herodes se enfureció. Calculando el tiempo que había averiguado por ellos, mandó matar a todos los niños de dos años para abajo en Belén y en todos sus alrededores. En aquel lamento, Mateo escucha a Raquel que llora por sus hijos y no quiere ser consolada."
+   ],
+   "words": [
+    {
+     "who": "Ángel del Señor",
+     "text": "Levántate, toma al niño y a su madre y huye a Egipto. Quédate allí hasta que yo te avise, porque Herodes busca al niño para acabar con él."
+    },
+    {
+     "who": "La profecía de Jeremías",
+     "text": "Se oye una voz en Ramá, llanto y lamento amargo. Es Raquel que llora por sus hijos y no quiere consuelo, porque ya no existen."
+    }
+   ],
+   "note": "En aquel tiempo Alejandría, en Egipto, tenía una gran comunidad judía, lo que la convertía en un refugio natural. Belén era un pueblo pequeño, de modo que los niños asesinados probablemente fueron unas pocas decenas o menos.",
+   "reflect": "Cuando la violencia del mundo cae sobre los inocentes, ¿soy alguien que se queda junto a su llanto?",
+   "quiz": {
+    "q": "¿Hasta qué edad eran los niños que Herodes mandó matar en Belén?",
+    "options": [
+     "Menores de un año",
+     "De dos años para abajo",
+     "Menores de tres años",
+     "Menores de cinco años"
+    ],
+    "explain": "Según el tiempo que había averiguado por los magos, Herodes mató a todos los niños de dos años para abajo (Mt 2:16)."
+   },
+   "credit": "James Tissot, La huida a Egipto (The Flight into Egypt), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e06": {
+   "title": "Regreso a Nazaret",
+   "when": "después del 4 a. C.",
+   "subtitle": "Un niño que crece en una aldea sin nombre",
+   "story": [
+    "Cuando murió Herodes, el ángel volvió a visitar a José en sueños, allá en Egipto. Los que buscaban la vida del niño habían muerto, así que debía regresar a la tierra de Israel. José tomó al niño y a su madre y emprendió el camino de vuelta.",
+    "Pero llegó la noticia de que Arquelao, hijo de Herodes, reinaba en Judea en lugar de su padre. Lleno de temor, José recibió otro aviso en sueños, se desvió hacia el norte, a Galilea, y se estableció en un pueblo llamado Nazaret.",
+    "En aquella pequeña aldea de la colina, el niño fue creciendo. Lucas apunta brevemente que se hacía fuerte y se llenaba de sabiduría, y que la gracia de Dios estaba sobre él. Pasaron años tranquilos, lejos de la mirada del mundo."
+   ],
+   "words": [
+    {
+     "who": "Ángel del Señor",
+     "text": "Levántate, toma al niño y a su madre y vete a la tierra de Israel. Ya han muerto los que querían quitarle la vida al niño."
+    },
+    {
+     "who": "El relato de Lucas",
+     "text": "El niño crecía y se fortalecía, lleno de sabiduría, y la gracia de Dios estaba sobre él."
+    }
+   ],
+   "note": "Se cree que Herodes el Grande murió hacia el año 4 antes de Cristo; después, Arquelao gobernó Judea y Herodes Antipas, Galilea. Arquelao gobernó con tanta dureza que Roma lo destituyó en el año 6 después de Cristo.",
+   "reflect": "En los días corrientes que nadie nota, ¿cómo estoy creciendo yo?",
+   "quiz": {
+    "q": "José tuvo miedo de ir a Judea por quien gobernaba allí. ¿Quién era?",
+    "options": [
+     "Herodes Antipas",
+     "Poncio Pilato",
+     "Arquelao",
+     "César Augusto"
+    ],
+    "explain": "José tuvo miedo al saber que Arquelao, hijo de Herodes, reinaba en Judea en lugar de su padre (Mt 2:22)."
+   },
+   "credit": "James Tissot, El regreso de Egipto (The Return from Egypt), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e07": {
+   "title": "A los doce años, en la casa de su Padre",
+   "when": "hacia el 8 d. C. · a los doce años",
+   "subtitle": "El muchacho hallado al tercer día, en la casa de su Padre",
+   "story": [
+    "Cada año, por la Pascua, José y María subían a Jerusalén. Cuando Jesús cumplió doce años, hicieron la peregrinación como de costumbre. De regreso, terminada la fiesta, sus padres caminaron una jornada entera creyendo que su hijo iba en algún lugar de la caravana.",
+    "Lo buscaron entre parientes y conocidos, pero el muchacho no aparecía. Volvieron a Jerusalén y, al tercer día, lo encontraron en el Templo. Estaba sentado entre los maestros, escuchándolos y haciéndoles preguntas, y todos los que lo oían se asombraban de su inteligencia y de sus respuestas.",
+    "A la pregunta angustiada de su madre, el muchacho respondió con serenidad, pero sus padres no entendieron lo que quería decir. Bajó con ellos a Nazaret y vivió obedeciéndolos, y crecía en sabiduría y en estatura, y en gracia ante Dios y ante la gente. María guardaba todas estas cosas en su corazón."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "¿Por qué me buscaban? ¿No sabían que yo tenía que estar en la casa de mi Padre?"
+    },
+    {
+     "who": "María",
+     "text": "Hijo, ¿por qué nos has hecho esto? Tu padre y yo te hemos buscado con mucha angustia."
+    }
+   ],
+   "note": "Los galileos peregrinaban en grandes caravanas de aldea, así que la ausencia de un niño podía pasar inadvertida durante un día. De Nazaret a Jerusalén había tres o cuatro días de camino a pie.",
+   "reflect": "¿Dónde me corresponde estar de verdad en este momento? ¿Dónde está, en mi corazón, la casa del Padre?",
+   "quiz": {
+    "q": "¿Después de cuántos días encontraron José y María a Jesús en el Templo?",
+    "options": [
+     "Tres días",
+     "Dos días",
+     "Cinco días",
+     "Siete días"
+    ],
+    "explain": "Al tercer día sus padres encontraron a Jesús en el Templo, sentado entre los maestros (Lc 2:46)."
+   },
+   "credit": "James Tissot, Jesús hallado en el Templo (Jesus Found in the Temple), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e08": {
+   "title": "El bautismo en el Jordán",
+   "when": "otoño del 26 d. C.",
+   "subtitle": "El cielo abierto sobre el río",
+   "story": [
+    "Jesús, que rondaba ya los treinta años, dejó Nazaret de Galilea y llegó a la orilla del Jordán. Entre la multitud que hacía fila ante Juan, quien proclamaba un bautismo de conversión, Juan lo reconoció e intentó impedírselo, diciendo que era él quien necesitaba ser bautizado por Jesús.",
+    "Jesús convenció a Juan de que era justo hacerlo así por ahora. Por fin, las aguas del Jordán cubrieron su cuerpo y se escurrieron. Lucas cuenta que, al salir del agua, mientras oraba, el cielo se abrió.",
+    "El Espíritu de Dios bajó sobre él como una paloma, y resonó una voz desde el cielo: mi Hijo amado, en quien me complazco. El carpintero de Nazaret, que había vivido en silencio, salía ahora al encuentro del mundo."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Deja que así sea por ahora. Es justo que hagamos esto y cumplamos así todo lo que pide la justicia de Dios."
+    },
+    {
+     "who": "Una voz del cielo",
+     "text": "Tú eres mi Hijo, a quien amo. En ti me complazco de verdad."
+    }
+   ],
+   "note": "El Evangelio de Juan llama al lugar donde Juan bautizaba ‘Betania, al otro lado del Jordán’. Se cree que es Al Maghtas, junto al Jordán, al este de Jericó. Lucas dice que Jesús tenía entonces unos treinta años.",
+   "reflect": "Si la voz del cielo también me llama hijo amado, ¿estoy viviendo hoy desde esa identidad?",
+   "quiz": {
+    "q": "Cuando Jesús fue bautizado, ¿en qué forma bajó el Espíritu?",
+    "options": [
+     "Como una llama",
+     "Como una nube",
+     "Como un viento",
+     "Como una paloma"
+    ],
+    "explain": "El Espíritu de Dios descendió como una paloma y se posó sobre él (Mt 3:16; Mc 1:10; Lc 3:22)."
+   },
+   "credit": "James Tissot, El bautismo de Jesús (The Baptism of Jesus), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e09": {
+   "title": "Cuarenta días en el desierto",
+   "when": "otoño e invierno del 26 d. C.",
+   "subtitle": "Tres tentaciones vencidas con el cuerpo hambriento",
+   "story": [
+    "Aún no se había secado el agua del bautismo cuando el Espíritu llevó a Jesús al desierto. Marcos anota que estaba entre las fieras. Después de cuarenta días y cuarenta noches sin comer, cuando por fin sintió hambre, se le acercó el tentador.",
+    "Si eres el Hijo de Dios, le susurró, convierte estas piedras en pan. Después lo puso en lo más alto del Templo y le dijo que se tirara abajo, y desde un monte elevado le mostró todos los reinos del mundo y su esplendor, prometiéndoselos todos si se postraba para adorarlo.",
+    "Cada vez, Jesús respondió con las palabras de la Escritura. Al fin, ante su orden firme de que se marchara, el diablo se fue, y vinieron ángeles a servirle. Lucas añade que el diablo se alejó por un tiempo, esperando otra ocasión."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Está escrito: nadie vive solo de pan, sino de toda palabra que sale de la boca de Dios."
+    },
+    {
+     "who": "Jesús",
+     "text": "¡Vete, Satanás! Está escrito: adora al Señor tu Dios y sírvele solo a él."
+    },
+    {
+     "who": "Jesús",
+     "text": "También está escrito: no pongas a prueba al Señor tu Dios."
+    }
+   ],
+   "note": "El desierto de Judea es una franja seca de colinas de piedra caliza que va desde el este de Jerusalén hasta el mar Muerto. Mateo y Lucas cuentan la segunda y la tercera tentación en distinto orden.",
+   "reflect": "Ante el hambre, el deseo de ser reconocido y la tentación del éxito fácil, ¿qué palabra me mantiene firme?",
+   "quiz": {
+    "q": "En la primera tentación, ¿en qué le pidió el diablo a Jesús que convirtiera las piedras?",
+    "options": [
+     "En vino",
+     "En oro",
+     "En pan",
+     "En agua"
+    ],
+    "explain": "El diablo le dijo que, si era el Hijo de Dios, ordenara que las piedras se convirtieran en pan (Mt 4:3; Lc 4:3)."
+   },
+   "credit": "James Tissot, Jesús tentado en el desierto (Jesus Tempted in the Wilderness), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e10": {
+   "title": "Vengan y vean: los primeros discípulos",
+   "when": "comienzos del 27 d. C.",
+   "subtitle": "Una invitación a las cuatro de la tarde",
+   "story": [
+    "En Betania, al otro lado del Jordán, Juan estaba con dos de sus discípulos cuando vio pasar a Jesús y exclamó: miren, el Cordero de Dios. Al oírlo, los dos discípulos lo siguieron. Jesús se volvió y les preguntó qué buscaban.",
+    "Cuando le preguntaron dónde vivía, les dijo: vengan y lo verán. Eran como las cuatro de la tarde. Uno de los dos que pasaron aquel día con él, Andrés, fue a buscar a su hermano Simón y le dijo que habían encontrado al Mesías, y Jesús le dio a Simón un nombre nuevo, Cefas.",
+    "Al día siguiente, camino de Galilea, Jesús llamó a Felipe, de Betsaida. Felipe corrió a contárselo a Natanael. Natanael se burló, diciendo que de Nazaret no podía salir nada bueno, pero cuando Jesús le dijo que ya lo había visto debajo de la higuera, su duda se derrumbó y confesó su fe."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "¿Qué buscan? Vengan y lo verán."
+    },
+    {
+     "who": "Jesús",
+     "text": "Tú eres Simón, hijo de Juan. De ahora en adelante te llamarás Cefas."
+    },
+    {
+     "who": "Jesús",
+     "text": "Antes de que Felipe te llamara, cuando estabas debajo de la higuera, yo te vi."
+    },
+    {
+     "who": "Natanael",
+     "text": "Maestro, tú eres el Hijo de Dios. ¡Tú eres el Rey de Israel!"
+    }
+   ],
+   "note": "‘La hora décima’ se cuenta desde la salida del sol, a la manera judía, así que equivale a las cuatro de la tarde. ‘Cefas’ significa roca en arameo; en griego es ‘Pedro’.",
+   "reflect": "Cuando alguien me invita a venir y ver, ¿soy capaz de dar el primer paso antes que mis dudas?",
+   "quiz": {
+    "q": "¿Qué nombre nuevo le dio Jesús a Simón, el hermano de Andrés?",
+    "options": [
+     "Boanerges",
+     "Cefas",
+     "Dídimo",
+     "Barjona"
+    ],
+    "explain": "Jesús le dijo a Simón que se llamaría ‘Cefas’, que se traduce ‘Pedro’ (Jn 1:42)."
+   },
+   "credit": "James Tissot, La vocación de san Juan y san Andrés (The Calling of Saint John and Saint Andrew), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e11": {
+   "title": "La boda de Caná",
+   "when": "comienzos del 27 d. C.",
+   "subtitle": "La primera señal: el agua convertida en vino",
+   "story": [
+    "En Caná de Galilea se celebraba una boda. Allí estaba la madre de Jesús, y también Jesús y sus discípulos habían sido invitados. En plena fiesta, entre risas y canciones, se acabó el vino.",
+    "Su madre se acercó y le dijo que ya no tenían vino. Aunque él respondió que aún no había llegado su hora, ella dijo a los sirvientes que hicieran todo lo que él les mandara. Había allí seis grandes tinajas de piedra, de las que se usaban para los ritos judíos de purificación.",
+    "Los sirvientes llenaron de agua todas las tinajas hasta el borde y sacaron un poco, y cuando el encargado del banquete lo probó, llamó al novio. Todos sirven primero el buen vino, le dijo, pero tú has guardado el mejor hasta ahora. Esta fue la primera señal que hizo Jesús, y sus discípulos creyeron en él."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Llenen de agua las tinajas. Ahora saquen un poco y llévenselo al encargado del banquete."
+    },
+    {
+     "who": "Jesús",
+     "text": "Madre, ¿qué tiene que ver eso conmigo? Todavía no ha llegado mi hora."
+    },
+    {
+     "who": "María",
+     "text": "Hagan todo lo que él les diga."
+    }
+   ],
+   "note": "Las fiestas de boda de entonces podían durar hasta una semana, y quedarse sin vino era una gran vergüenza para la familia. Se calcula que cada tinaja contenía dos o tres metretas, es decir, entre ochenta y ciento veinte litros.",
+   "reflect": "Cuando algo en mi vida se queda vacío, ¿puedo llenar las tinajas con la fe que dice: hagan lo que él les diga?",
+   "quiz": {
+    "q": "¿Cuántas tinajas de piedra había en la boda de Caná?",
+    "options": [
+     "Tres",
+     "Cuatro",
+     "Cinco",
+     "Seis"
+    ],
+    "explain": "Había seis tinajas de piedra para los ritos de purificación (Jn 2:6)."
+   },
+   "credit": "James Tissot, Las bodas de Caná (The Marriage at Cana), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e12": {
+   "title": "Las mesas volcadas del Templo",
+   "when": "Pascua del 27 d. C.",
+   "subtitle": "La casa de su Padre convertida en mercado",
+   "story": [
+    "Cuando se acercaba la Pascua, Jesús subió a Jerusalén. Los atrios del Templo estaban repletos de comerciantes que vendían bueyes, ovejas y palomas, y de cambistas sentados ante sus mesas. Los mugidos de los animales y el tintineo de las monedas habían ahogado el lugar de la oración.",
+    "Hizo un látigo con cuerdas y echó fuera a todas las ovejas y los bueyes, desparramó las monedas de los cambistas y volcó sus mesas. A los vendedores de palomas les dijo: no conviertan la casa de mi Padre en un mercado. Sus discípulos recordaron el salmo que dice: el celo por tu casa me consumirá.",
+    "Cuando le preguntaron qué señal les daría, respondió: destruyan este templo, y en tres días lo levantaré. La gente se burló diciendo que el Templo había tardado cuarenta y seis años en construirse, pero el templo del que hablaba era su propio cuerpo. Solo después de la resurrección entendieron sus discípulos estas palabras."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Saquen todo esto de aquí. Dejen de convertir la casa de mi Padre en un lugar de negocios."
+    },
+    {
+     "who": "Jesús",
+     "text": "Derriben este templo, y en tres días lo levantaré de nuevo."
+    },
+    {
+     "who": "Los dirigentes judíos",
+     "text": "Este Templo tardó cuarenta y seis años en construirse, ¿y tú lo vas a levantar en tres días?"
+    }
+   ],
+   "note": "Herodes empezó a reconstruir el Templo hacia el año 20 antes de Cristo. Los cambistas cambiaban monedas de muchas tierras por siclos de Tiro para pagar el impuesto del Templo. Juan sitúa este episodio al comienzo del ministerio de Jesús.",
+   "reflect": "En el templo de mi corazón, ¿qué ha desplazado el lugar de la oración?",
+   "quiz": {
+    "q": "¿Cuántos años dijeron los dirigentes judíos que había llevado construir el Templo?",
+    "options": [
+     "Cuarenta y seis años",
+     "Cuarenta años",
+     "Treinta y ocho años",
+     "Doce años"
+    ],
+    "explain": "Dijeron: ‘Se ha tardado cuarenta y seis años en construir este Templo’ (Jn 2:20)."
+   },
+   "credit": "James Tissot, Los mercaderes expulsados del Templo (The Merchants Chased from the Temple), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e13": {
+   "title": "Nicodemo llega de noche",
+   "when": "primavera del 27 d. C.",
+   "subtitle": "El secreto del viento, escuchado en la oscuridad",
+   "story": [
+    "Nicodemo, fariseo y jefe de los judíos, fue a ver a Jesús de noche. En una habitación iluminada por una sola lámpara temblorosa, habló con cautela. Nadie podría hacer las señales que tú haces, dijo, si Dios no estuviera con él.",
+    "Jesús le respondió que nadie puede ver el reino de Dios si no nace de nuevo. Cuando Nicodemo preguntó cómo puede un hombre viejo volver a nacer, Jesús le habló de nacer del agua y del Espíritu, de la obra del Espíritu que es como el viento, que nadie sabe de dónde viene ni a dónde va.",
+    "Luego vinieron las palabras de que, así como Moisés levantó la serpiente en el desierto, así tiene que ser levantado el Hijo del hombre. La confesión de que Dios amó tanto al mundo que dio a su único Hijo, y las palabras de que la luz había venido al mundo pero la gente amó más la oscuridad, quedaron resonando largo rato en el silencio de la noche."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Te digo la verdad: si alguien no nace de nuevo, de lo alto, no puede ver el reino de Dios."
+    },
+    {
+     "who": "Jesús",
+     "text": "Dios amó tanto al mundo que entregó a su único Hijo, para que todo el que cree en él no se pierda, sino que tenga vida eterna."
+    },
+    {
+     "who": "Jesús",
+     "text": "El viento sopla donde quiere. Oyes su rumor, pero no sabes de dónde viene ni a dónde va. Así es todo el que nace del Espíritu."
+    }
+   ],
+   "note": "La palabra griega ‘ánothen’, que se traduce ‘de nuevo’, significa a la vez ‘otra vez’ y ‘de lo alto’. Nicodemo vuelve a aparecer más tarde, en la sepultura de Jesús, llevando mirra y áloe.",
+   "reflect": "¿Sigo atrapado en una fe que solo se atreve a acercarse a él con cautela, al amparo de la noche?",
+   "quiz": {
+    "q": "Cuando Jesús dijo que el Hijo del hombre debía ser levantado, lo comparó con algo que Moisés levantó en el desierto. ¿Qué era?",
+    "options": [
+     "Su bastón",
+     "Las tablas de piedra",
+     "Una serpiente",
+     "Una vasija de maná"
+    ],
+    "explain": "Dijo que, así como Moisés levantó la serpiente en el desierto, así tiene que ser levantado el Hijo del hombre (Jn 3:14; Nm 21:9)."
+   },
+   "credit": "James Tissot, Entrevista de Jesús y Nicodemo (Interview between Jesus and Nicodemus), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e14": {
+   "title": "El pozo de Sicar",
+   "when": "finales del 27 d. C.",
+   "subtitle": "Mediodía junto al pozo, dos personas con sed",
+   "story": [
+    "Al dejar Judea para volver a Galilea, Jesús atravesó Samaria y llegó a un pueblo llamado Sicar, donde estaba el pozo de Jacob. Cansado del camino, se sentó junto al pozo. Era cerca del mediodía y el sol caía a plomo. Sus discípulos habían ido al pueblo a comprar comida.",
+    "Cuando una mujer samaritana llegó a sacar agua, él le pidió de beber. La conversación empezó con el asombro de ella: ¿cómo un judío le pedía agua a una samaritana? Siguió con el agua viva que quita la sed para siempre, con sus cinco maridos y con la pregunta de dónde se debe adorar a Dios.",
+    "Cuando la mujer dijo que el Mesías iba a venir, él le respondió: yo soy, el que habla contigo. Ella dejó su cántaro y corrió al pueblo a llamar a la gente. Muchos samaritanos vinieron y le rogaron que se quedara, y él se quedó dos días. Este es de verdad el Salvador del mundo, decían."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "El que bebe de esta agua volverá a tener sed. El que beba del agua que yo le daré nunca más tendrá sed; en él será un manantial que brota para vida eterna."
+    },
+    {
+     "who": "Jesús",
+     "text": "Dios es espíritu, y los que lo adoran deben adorarlo en espíritu y en verdad."
+    },
+    {
+     "who": "Jesús",
+     "text": "Mi alimento es hacer la voluntad del que me envió y llevar a término su obra."
+    },
+    {
+     "who": "La mujer samaritana",
+     "text": "¡Vengan a ver! Hay un hombre que me ha dicho todo lo que he hecho. ¿No será este el Cristo?"
+    }
+   ],
+   "note": "Los samaritanos adoraban en el monte Garizín y no en Jerusalén, y entre ellos y los judíos había una profunda hostilidad. El pozo de Jacob, que aún se conserva cerca de la actual Nablus, tiene según se dice unos cuarenta metros de profundidad.",
+   "reflect": "¿He sido alguna vez el primero en hablarle a alguien en el camino que los demás evitan?",
+   "quiz": {
+    "q": "A petición de los samaritanos, ¿cuánto tiempo se quedó Jesús en Sicar?",
+    "options": [
+     "Un día",
+     "Dos días",
+     "Tres días",
+     "Una semana"
+    ],
+    "explain": "Cuando los samaritanos le pidieron que se quedara, Jesús permaneció allí dos días (Jn 4:40)."
+   },
+   "credit": "James Tissot, La samaritana junto al pozo (The Woman of Samaria at the Well), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e15": {
+   "title": "Vida a la distancia",
+   "when": "finales del 27 d. C.",
+   "subtitle": "Un padre que se volvió confiando en una sola palabra",
+   "story": [
+    "Después de dos días en Samaria, Jesús volvió a Galilea. Los galileos, que habían visto lo que hizo durante la fiesta en Jerusalén, lo recibieron bien. Llegó otra vez a Caná, donde había convertido el agua en vino.",
+    "Un funcionario real que vivía en Cafarnaúm oyó la noticia y fue corriendo a verlo. Su hijo se estaba muriendo de fiebre. Aunque Jesús le dijo que la gente no creería si no veía señales y prodigios, el hombre le suplicó que bajara antes de que el niño muriera. Jesús le dijo solamente: vete, tu hijo vivirá.",
+    "El hombre creyó en aquella palabra y se puso en camino. Mientras bajaba, sus criados le salieron al encuentro con la noticia de que el niño vivía. Cuando les preguntó a qué hora había empezado a mejorar, le respondieron que la fiebre se le había ido ayer a la hora séptima. Era la misma hora en que había oído la palabra. Creyeron él y toda su familia."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Vete. Tu hijo vivirá."
+    },
+    {
+     "who": "Jesús",
+     "text": "Si no ven señales y prodigios, no creerán nunca."
+    },
+    {
+     "who": "El funcionario real",
+     "text": "Señor, por favor, baja antes de que muera mi niño."
+    }
+   ],
+   "note": "De Caná a Cafarnaúm hay unos veinticinco kilómetros, por un camino que desciende hasta la orilla del mar de Galilea, por debajo del nivel del mar. La hora séptima es hacia la una de la tarde, y Juan llama a esto la segunda señal que hizo Jesús en Galilea.",
+   "reflect": "Cuando tengo que volverme sin nada más que una palabra, sin pruebas a la vista, ¿soy capaz de recorrer ese camino?",
+   "quiz": {
+    "q": "Según los criados, ¿cuándo se le fue la fiebre al hijo del funcionario?",
+    "options": [
+     "Esa misma madrugada",
+     "Ayer a la hora tercera",
+     "Ayer a la hora sexta",
+     "Ayer a la hora séptima"
+    ],
+    "explain": "Los criados dijeron: ‘Ayer a la hora séptima se le fue la fiebre’, la misma hora en que Jesús había dicho: ‘Tu hijo vivirá’ (Jn 4:52–53)."
+   },
+   "credit": "James Tissot, La curación del hijo del funcionario (The Healing of the Officer's Son), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e16": {
+   "title": "Rechazado en Nazaret",
+   "when": "comienzos del 28 d. C.",
+   "subtitle": "Los más cercanos fueron los primeros en darle la espalda",
+   "story": [
+    "Una mañana de sábado en la sinagoga de Nazaret, el pueblo donde se había criado. Cuando Jesús se puso de pie para leer, como era su costumbre, le entregaron el rollo del profeta Isaías. Lo desenrolló despacio, buscó un pasaje y leyó: buenas noticias para los pobres, libertad para los cautivos.",
+    "Enrolló el rollo, se lo devolvió al ayudante y se sentó, y todos los ojos de la sinagoga quedaron clavados en él. Al oírle decir que aquella palabra se había cumplido hoy, la gente se maravilló, pero pronto empezó a dudar. ¿No es este el hijo de José?",
+    "Cuando Jesús recordó que Elías fue enviado a la viuda de Sarepta, en tierra de Sidón, y Eliseo a Naamán el sirio, la sinagoga hirvió de furia. Lo arrastraron hasta el borde del precipicio del monte sobre el que estaba construido el pueblo. Pero él pasó por en medio de ellos y siguió su camino."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "El Espíritu del Señor está sobre mí. Me ha enviado a llevar buenas noticias a los pobres, libertad a los cautivos y vista a los ciegos."
+    },
+    {
+     "who": "Jesús",
+     "text": "Esta escritura que acaban de oír con sus propios oídos se ha cumplido hoy, aquí."
+    },
+    {
+     "who": "Jesús",
+     "text": "Les digo la verdad: ningún profeta es bien recibido en su propia tierra."
+    }
+   ],
+   "note": "En el culto de la sinagoga se leía la Ley y después los Profetas, y la costumbre era sentarse a enseñar después de la lectura. Por eso todas las miradas estaban puestas en Jesús cuando devolvió el rollo y se sentó.",
+   "reflect": "Por parecerme tan familiar, ¿estoy dejando de reconocer la gracia que ha venido a ponerse justo a mi lado?",
+   "quiz": {
+    "q": "¿El rollo de qué profeta le dieron a Jesús para leer en la sinagoga de Nazaret?",
+    "options": [
+     "Jeremías",
+     "Isaías",
+     "Ezequiel",
+     "Malaquías"
+    ],
+    "explain": "Lucas cuenta que le entregaron a Jesús el rollo del profeta Isaías (Lc 4:17). El pasaje que leyó es el comienzo de Isaías 61."
+   },
+   "credit": "James Tissot, Jesús desenrolla el libro en la sinagoga (Jesus Unrolls the Book in the Synagogue), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e17": {
+   "title": "Pescadores de personas",
+   "when": "28 d. C.",
+   "subtitle": "Una sola palabra sobre las redes vacías",
+   "story": [
+    "La orilla de Genesaret. Unos pescadores que habían bregado toda la noche sin sacar nada habían varado sus barcas y lavaban las redes. Como la multitud se apretujaba para escuchar la palabra, Jesús subió a la barca de Simón, le pidió que la apartara un poco de tierra y, sentado, se puso a enseñar a la gente desde el agua.",
+    "Cuando terminó de hablar, Jesús les dijo que se adentraran en el lago y echaran las redes. Simón respondió que no habían pescado nada en toda la noche, pero aun así las echó como se le dijo. Al instante se llenaron de tantos peces que las redes empezaron a romperse, y llamaron a sus compañeros de la otra barca hasta que las dos estuvieron a punto de hundirse.",
+    "Simón cayó de rodillas ante Jesús. Apártate de mí, le dijo, que soy un hombre pecador. Pero Jesús le dijo que no tuviera miedo. Simón y Andrés, y Santiago y Juan, los hijos de Zebedeo, llevaron las barcas a tierra, lo dejaron todo y lo siguieron."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Vengan, síganme. Yo haré de ustedes pescadores de personas."
+    },
+    {
+     "who": "Jesús",
+     "text": "Lleva la barca mar adentro y echen las redes para pescar."
+    },
+    {
+     "who": "Jesús",
+     "text": "No tengas miedo. Desde ahora serán personas lo que saques del agua."
+    },
+    {
+     "who": "Simón Pedro",
+     "text": "Señor, apártate de mí. Soy un hombre pecador."
+    }
+   ],
+   "note": "En 1986 se encontró en el fango de la orilla del mar de Galilea una barca de pesca de unos ocho metros de largo. Fechada hacia la época de Jesús, da una idea del tamaño de las barcas que usaban entonces los pescadores.",
+   "reflect": "Allí donde todo el trabajo de mi noche solo ha dejado redes vacías, ¿puedo volver a echarlas confiando en su palabra?",
+   "quiz": {
+    "q": "¿Quién era el padre de Santiago y Juan, que fueron llamados mientras arreglaban las redes en su barca?",
+    "options": [
+     "Zebedeo",
+     "Alfeo",
+     "Jonás",
+     "Cleofás"
+    ],
+    "explain": "Santiago y Juan dejaron a su padre Zebedeo en la barca con los jornaleros y siguieron a Jesús (Mc 1:19–20)."
+   },
+   "credit": "James Tissot, La pesca milagrosa (The Miraculous Draught of Fishes), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e18": {
+   "title": "Un largo día en Cafarnaúm",
+   "when": "28 d. C. · sábado",
+   "subtitle": "De la sinagoga a la puerta, y la oración antes del alba",
+   "story": [
+    "Sábado en la sinagoga de Cafarnaúm. Jesús no enseñaba en absoluto como los maestros de la Ley. Sus palabras iban directas al corazón, como las de alguien con autoridad. Entonces un hombre dominado por un espíritu impuro gritó: Jesús de Nazaret, sé quién eres. Eres el Santo de Dios.",
+    "Jesús lo reprendió, y el espíritu sacudió al hombre y salió de él. Al salir de la sinagoga, entraron en casa de Simón y Andrés, donde la suegra de Simón estaba en cama con fiebre. Jesús la tomó de la mano y la levantó, la fiebre la dejó y enseguida ella se puso a atenderlos.",
+    "Cuando se puso el sol y terminó el sábado, todo el pueblo se agolpó a la puerta con sus enfermos, y muchos fueron sanados. A la mañana siguiente, cuando aún estaba oscuro, Jesús oraba a solas en un lugar apartado, y cuando los discípulos lo encontraron, les dijo que seguirían hacia otros pueblos."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Vamos a los pueblos cercanos. También allí tengo que anunciar el mensaje. Para eso he salido."
+    },
+    {
+     "who": "Jesús",
+     "text": "Cállate y sal de él."
+    },
+    {
+     "who": "Simón",
+     "text": "Todos te están buscando."
+    }
+   ],
+   "note": "La sinagoga de piedra caliza blanca que hoy se ve en Cafarnaúm se construyó en los siglos cuarto o quinto. Se cree que los cimientos de basalto negro que hay debajo son restos de la sinagoga de los tiempos de Jesús.",
+   "reflect": "Cuando termina un día agitado, ¿me doy tiempo para estar a solas ante Dios en la quietud del amanecer?",
+   "quiz": {
+    "q": "En la casa que visitaron al salir de la sinagoga, ¿quién fue sanado de la fiebre?",
+    "options": [
+     "La hija de Jairo",
+     "Marta",
+     "El siervo del centurión",
+     "La suegra de Simón"
+    ],
+    "explain": "Jesús tomó de la mano a la suegra de Simón y la levantó; la fiebre la dejó, y ella se levantó y se puso a atenderlos (Mc 1:30–31; Lc 4:38–39)."
+   },
+   "credit": "James Tissot, La curación de la suegra de Pedro (The Healing of Peter's Mother-in-law), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e19": {
+   "title": "El día en que se abrió el techo",
+   "when": "28 d. C.",
+   "subtitle": "La fe de unos amigos abrió el techo",
+   "story": [
+    "Corrió la voz de que Jesús había vuelto a Cafarnaúm, y la casa donde se alojaba se llenó en un instante. No quedaba sitio ni siquiera junto a la puerta. Entre la gente estaban sentados fariseos y maestros de la Ley venidos de todos los rincones de Galilea y de Judea, y también de Jerusalén.",
+    "Entonces llegaron cuatro hombres que traían a un paralítico en una camilla. Al ver bloqueada la entrada, subieron al techo, quitaron la tierra y abrieron un hueco. Entre la luz del sol y el polvo que caía, bajaron al hombre en su camilla justo delante de Jesús.",
+    "Al ver la fe de ellos, Jesús declaró que los pecados de aquel hombre estaban perdonados. Los maestros de la Ley murmuraban por dentro que aquello era una blasfemia. Entonces Jesús le dijo que se levantara y caminara, y delante de todos él tomó su camilla y salió andando. Todos alababan a Dios diciendo que nunca habían visto nada igual."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Hijo, tus pecados quedan perdonados."
+    },
+    {
+     "who": "Jesús",
+     "text": "Para que sepan que el Hijo del hombre tiene autoridad en la tierra para perdonar pecados, te digo: levántate, toma tu camilla y vete a tu casa."
+    },
+    {
+     "who": "Jesús",
+     "text": "¿Qué es más fácil, decir tus pecados quedan perdonados, o decir levántate, toma tu camilla y anda?"
+    }
+   ],
+   "note": "Las casas de Galilea solían tener techos planos de ramas y barro sobre vigas de madera, a los que se subía por una escalera exterior. Lucas cuenta que bajaron al hombre a través de las tejas.",
+   "reflect": "Por alguien cercano que no puede venir por sí mismo, ¿estoy dispuesto a abrir un techo si eso hace falta para llevarlo a Jesús?",
+   "quiz": {
+    "q": "¿Cuántos hombres cargaron al paralítico y abrieron el techo?",
+    "options": [
+     "Dos",
+     "Tres",
+     "Cuatro",
+     "Cinco"
+    ],
+    "explain": "Marcos cuenta que cuatro hombres cargaban al paralítico (Mc 2:3). Destaparon el techo, abrieron un hueco y lo bajaron (Mc 2:4)."
+   },
+   "credit": "James Tissot, El paralítico bajado por el techo (The Palsied Man Let Down through the Roof), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e20": {
+   "title": "Mateo en el puesto de impuestos",
+   "when": "28 d. C.",
+   "subtitle": "Un hombre que se levantó del lugar del desprecio",
+   "story": [
+    "Jesús había salido a la orilla del lago para enseñar a la multitud y, mientras caminaba, llegó al puesto de impuestos. Allí estaba sentado Leví, hijo de Alfeo, llamado también Mateo, un recaudador despreciado por ponerse del lado de los poderosos y cobrar impuestos a su propio pueblo.",
+    "Sígueme. Fue una sola palabra. Leví se levantó, lo dejó todo y lo siguió. Luego ofreció un gran banquete en su casa, y muchos recaudadores de impuestos y pecadores se recostaron a la mesa con Jesús y sus discípulos.",
+    "Los maestros de la Ley del partido de los fariseos increparon a los discípulos. ¿Por qué su maestro come y bebe con gente así? Jesús lo oyó y respondió. Los sanos no necesitan médico, sino los enfermos. Yo he venido a llamar precisamente a estos."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Los sanos no necesitan médico, sino los enfermos. No he venido a llamar a los que se creen justos, sino a los pecadores."
+    },
+    {
+     "who": "Jesús",
+     "text": "Sígueme."
+    },
+    {
+     "who": "Jesús",
+     "text": "Vayan y aprendan lo que significa esto: lo que quiero es misericordia, no sacrificios."
+    }
+   ],
+   "note": "Cafarnaúm estaba en el camino donde la Galilea de Herodes Antipas se encontraba con el territorio de Filipo, así que probablemente tenía un puesto de peaje. Los recaudadores solían cobrar más de lo debido y se los trataba como pecadores.",
+   "reflect": "¿Con quién evito sentarme a la mesa, y a quién invitaría Jesús a ocupar ese lugar?",
+   "quiz": {
+    "q": "¿Qué otro nombre usan Marcos y Lucas para Mateo, el recaudador de impuestos?",
+    "options": [
+     "Leví",
+     "Simón",
+     "Tadeo",
+     "Bartolomé"
+    ],
+    "explain": "El Evangelio de Mateo lo llama Mateo (Mt 9:9), mientras que Marcos y Lucas lo llaman Leví (Mc 2:14; Lc 5:27). Marcos dice que era hijo de Alfeo."
+   },
+   "credit": "James Tissot, La vocación de san Mateo (The Calling of Saint Matthew), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e21": {
+   "title": "El estanque de Betesda",
+   "when": "28 d. C. · una fiesta judía",
+   "subtitle": "El día en que terminaron treinta y ocho años de espera",
+   "story": [
+    "Una fiesta judía, en el estanque de Betesda, junto a la Puerta de las Ovejas de Jerusalén. A la sombra de cinco pórticos yacía una multitud de ciegos, cojos y paralíticos. Entre ellos había un hombre que llevaba enfermo treinta y ocho años.",
+    "Jesús le preguntó: ¿quieres curarte? En lugar de responder, el hombre desahogó su queja. No tenía a nadie que lo metiera en el estanque cuando el agua se agitaba, y mientras él se arrastraba hasta allí, siempre bajaba otro primero. Jesús le dijo que se levantara, tomara su camilla y caminara, y al instante quedó sano y echó a andar.",
+    "Aquel día era sábado. Los dirigentes judíos protestaron porque se cargaba una camilla en sábado y porque se curaba en sábado. Cuando Jesús respondió que su Padre seguía trabajando y por eso él también trabajaba, buscaron con más empeño matarlo, porque se hacía igual a Dios."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "¿Quieres quedar sano?"
+    },
+    {
+     "who": "Jesús",
+     "text": "Levántate. Toma tu camilla y anda."
+    },
+    {
+     "who": "Jesús",
+     "text": "Mi Padre sigue trabajando hasta ahora, y yo también trabajo."
+    },
+    {
+     "who": "Jesús",
+     "text": "Les digo la verdad: el que escucha mi palabra y confía en el que me envió tiene vida eterna, y ya ha pasado de la muerte a la vida."
+    }
+   ],
+   "note": "Las excavaciones junto a la iglesia de Santa Ana, a finales del siglo diecinueve, sacaron a la luz dos grandes depósitos de agua. Algunos piensan que unos pórticos en los cuatro lados y sobre el muro que separaba los estanques coincidirían con los cinco pórticos que describe Juan.",
+   "reflect": "Ante un dolor al que llevo mucho tiempo acostumbrado, ¿puedo responder de verdad que quiero sanar?",
+   "quiz": {
+    "q": "¿Cuántos años llevaba enfermo el hombre que Jesús sanó en el estanque de Betesda?",
+    "options": [
+     "Doce años",
+     "Dieciocho años",
+     "Treinta y ocho años",
+     "Cuarenta años"
+    ],
+    "explain": "Juan cuenta que el hombre llevaba enfermo treinta y ocho años (Jn 5:5)."
+   },
+   "credit": "James Tissot, La piscina probática o estanque de Betesda (The Piscina Probatica or Pool of Bethesda), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e22": {
+   "title": "Jesús elige a los Doce",
+   "when": "verano del 28 d. C.",
+   "subtitle": "Nombres pronunciados después de una noche de oración",
+   "story": [
+    "Por aquellos días, Jesús subió a un monte a orar. Mientras se ponía el sol, salían las estrellas y volvía a despuntar el alba, pasó la noche entera orando a Dios. La ladera que mira al mar de Galilea estaba en calma, y en esa calma iba madurando una decisión importante.",
+    "Cuando se hizo de día, Jesús llamó a sus discípulos y eligió a doce de ellos, a quienes llamó apóstoles. Marcos explica así el propósito: que estuvieran con él, enviarlos a anunciar el mensaje y darles autoridad para expulsar demonios.",
+    "Simón Pedro y su hermano Andrés. Santiago y Juan, llamados los hijos del trueno. Felipe y Bartolomé, Mateo y Tomás, Santiago hijo de Alfeo, Simón el Zelote, Judas hijo de Santiago, y Judas Iscariote, que más tarde sería el traidor. Uno a uno, se fueron pronunciando nombres corrientes."
+   ],
+   "words": [
+    {
+     "who": "Lucas",
+     "text": "Jesús se fue al monte a orar y pasó toda la noche orando a Dios. Cuando se hizo de día, llamó a sus discípulos y escogió a doce de ellos."
+    },
+    {
+     "who": "Marcos",
+     "text": "Jesús llamó a los que él quiso, y ellos fueron a él. Designó a doce para que estuvieran con él y para enviarlos a anunciar el mensaje."
+    }
+   ],
+   "note": "El número doce recuerda a las doce tribus de Israel. En las cuatro listas de apóstoles del Nuevo Testamento, Tadeo y Judas hijo de Santiago se alternan, y muchos piensan que son dos nombres de la misma persona.",
+   "reflect": "Si la primera razón por la que Jesús me llamó es sencillamente estar con él, ¿estoy hoy a su lado?",
+   "quiz": {
+    "q": "¿Qué hizo Jesús en el monte la noche antes de elegir a los doce apóstoles?",
+    "options": [
+     "Ayunó a solas",
+     "Pasó la noche orando a Dios",
+     "Predicó a la multitud",
+     "Sanó a los enfermos"
+    ],
+    "explain": "Lucas cuenta que Jesús fue al monte y pasó toda la noche orando a Dios, y que al hacerse de día eligió a los doce (Lc 6:12–13)."
+   },
+   "credit": "James Tissot, La elección de los doce apóstoles (Ordaining of the Twelve Apostles), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e23": {
+   "title": "La enseñanza en el monte",
+   "when": "verano del 28 d. C.",
+   "subtitle": "Una voz en la colina que dio la vuelta a la sabiduría del mundo",
+   "story": [
+    "Una colina que mira al mar de Galilea. Al ver a la multitud, Jesús subió al monte y se sentó, y sus discípulos se acercaron. En una ladera donde el viento peinaba la hierba, comenzó una enseñanza que puso de cabeza la sabiduría del mundo. Dichosos los pobres en espíritu.",
+    "Ustedes son la sal y la luz del mundo. Amen a sus enemigos y oren por los que los persiguen. Oren a su Padre, que ve en lo secreto. Miren las aves del cielo y los lirios del campo. No se angustien por el mañana; busquen primero el reino de Dios y su justicia.",
+    "La enseñanza terminó con la historia de dos casas. Quien oye estas palabras y las pone en práctica es como una casa construida sobre roca, que no se derrumba aunque caiga la lluvia y la azote el viento. La multitud estaba asombrada, porque les enseñaba como quien tiene autoridad, y no como sus maestros de la Ley."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Dichosos los que saben que no tienen nada propio en qué apoyarse. El reino de los cielos es de ellos."
+    },
+    {
+     "who": "Jesús",
+     "text": "Amen a sus enemigos y oren por los que les hacen daño. Así llegarán a ser hijos de su Padre que está en el cielo."
+    },
+    {
+     "who": "Jesús",
+     "text": "No se angustien de antemano por el mañana. El mañana traerá sus propias preocupaciones. A cada día le basta su propio afán."
+    },
+    {
+     "who": "Jesús",
+     "text": "El que escucha mis palabras y vive conforme a ellas es como el hombre sabio que construyó su casa sobre la roca. Llega la tormenta, y la casa sigue en pie."
+    }
+   ],
+   "note": "Mateo presenta esta enseñanza dada en un monte; Lucas, en un llano. La iglesia de las Bienaventuranzas, en una colina al norte del mar de Galilea, se construyó en 1938 siguiendo la tradición que honraba este lugar como el del sermón.",
+   "reflect": "De las palabras que he escuchado hoy, ¿hay alguna que esté poniendo en práctica como cimiento de mi vida?",
+   "quiz": {
+    "q": "Jesús dijo que quien escucha sus palabras y las pone en práctica es como alguien que construyó su casa ¿dónde?",
+    "options": [
+     "Sobre la arena",
+     "En una colina",
+     "Junto a un río",
+     "Sobre la roca"
+    ],
+    "explain": "Quien escucha y practica estas palabras es como el hombre sabio que construyó su casa sobre la roca, y no cayó en la tormenta (Mt 7:24–25). Quien las oye y no las practica es como una casa construida sobre la arena (Mt 7:26–27)."
+   },
+   "credit": "James Tissot, El sermón de las Bienaventuranzas (The Sermon of the Beatitudes), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e24": {
+   "title": "La fe del centurión",
+   "when": "28 d. C.",
+   "subtitle": "Basta con que digas una palabra",
+   "story": [
+    "En Cafarnaúm había un centurión que tenía un siervo muy querido, enfermo y a punto de morir. Al oír hablar de Jesús, el centurión le envió a unos ancianos judíos para pedirle ayuda. Los ancianos le rogaron con insistencia. Él ama a nuestro pueblo, dijeron, y hasta nos construyó la sinagoga.",
+    "Cuando Jesús ya estaba cerca de la casa, unos amigos enviados por el centurión le transmitieron sus palabras. Señor, no te molestes. No soy digno de que entres bajo mi techo. Basta con que digas una palabra. Yo también soy un hombre que recibe órdenes y las da.",
+    "Jesús se asombró y se volvió hacia la multitud que lo seguía. Ni siquiera en Israel, dijo, había encontrado una fe así. Cuando los enviados regresaron a la casa, encontraron al siervo ya sano. Una sola palabra había cruzado la distancia y había alcanzado una vida."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Les digo que ni siquiera en Israel he encontrado una fe tan grande."
+    },
+    {
+     "who": "Jesús",
+     "text": "Vete. Que se haga contigo tal como has creído."
+    },
+    {
+     "who": "Jesús",
+     "text": "Muchos vendrán del oriente y del occidente y se sentarán al banquete del reino de los cielos con Abraham, Isaac y Jacob."
+    },
+    {
+     "who": "El centurión",
+     "text": "Señor, no merezco que entres en mi casa. Di solo una palabra, y mi siervo quedará sano."
+    }
+   ],
+   "note": "Un centurión mandaba a unos cien soldados. Galilea era entonces territorio de Herodes Antipas, así que este hombre era muy probablemente un oficial no judío al servicio de Antipas.",
+   "reflect": "Sin ninguna prueba a la vista, ¿puedo confiar del todo en él y pedirle solo que diga la palabra?",
+   "quiz": {
+    "q": "Cuando los ancianos judíos recomendaron al centurión, ¿qué dijeron que les había construido?",
+    "options": [
+     "El Templo",
+     "La muralla de la ciudad",
+     "Un pozo",
+     "La sinagoga"
+    ],
+    "explain": "Los ancianos dijeron que el centurión amaba al pueblo judío y les había construido la sinagoga (Lc 7:4–5)."
+   },
+   "credit": "James Tissot, El centurión (The Centurion), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e25": {
+   "title": "El cortejo fúnebre de Naín",
+   "when": "28 d. C.",
+   "subtitle": "Un cortejo fúnebre detenido a la puerta del pueblo",
+   "story": [
+    "Naín, una pequeña aldea al pie de una colina, en el sur de Galilea. Cuando Jesús se acercaba a la puerta del pueblo con sus discípulos y una gran multitud, salía un cortejo fúnebre. El muerto era el único hijo de una viuda, y mucha gente del pueblo caminaba junto a ella llorando.",
+    "Al ver a la madre, el Señor sintió una profunda compasión por ella. No llores. Luego se acercó y tocó el féretro, y los que lo llevaban se detuvieron. Ante la puerta, donde el llanto se había apagado, resonó la voz de Jesús. Joven, a ti te digo, levántate.",
+    "El joven que estaba muerto se incorporó y comenzó a hablar, y Jesús se lo devolvió a su madre. El temor se apoderó de todos, y glorificaban a Dios. Un gran profeta ha surgido entre nosotros. Dios ha venido a visitar a su pueblo."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "No llores."
+    },
+    {
+     "who": "Jesús",
+     "text": "Joven, a ti te digo, levántate."
+    },
+    {
+     "who": "La multitud",
+     "text": "Un gran profeta ha aparecido entre nosotros. Dios ha venido a cuidar de su pueblo."
+    }
+   ],
+   "note": "Naín estaba al pie del monte Moré, y al otro lado de ese monte se encontraba Sunem, donde Eliseo resucitó al hijo de la sunamita. Quizá por ese recuerdo la gente pensó en un gran profeta.",
+   "reflect": "Como Jesús, que se acercó sin que nadie se lo pidiera, ¿me acerco yo primero al dolor de alguien?",
+   "quiz": {
+    "q": "¿Qué tocó Jesús antes de resucitar al joven?",
+    "options": [
+     "La mano del joven",
+     "El hombro de la madre",
+     "El féretro",
+     "La puerta del pueblo"
+    ],
+    "explain": "Jesús se acercó y tocó el féretro, y los que lo llevaban se detuvieron (Lc 7:14)."
+   },
+   "credit": "James Tissot, La resurrección del hijo de la viuda de Naín (The Resurrection of the Widow's Son at Nain), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e26": {
+   "title": "La mujer que mojó sus pies con lágrimas",
+   "when": "28 d. C.",
+   "subtitle": "Quien ha sido muy perdonado ama mucho",
+   "story": [
+    "Un fariseo invitó a Jesús a comer. Los invitados estaban recostados alrededor de la mesa, apoyados de lado, con los pies estirados hacia atrás. Entonces entró una mujer conocida en aquel pueblo como pecadora, con un frasco de alabastro lleno de perfume, y se quedó detrás de él, a sus pies.",
+    "La mujer lloraba. Cuando sus lágrimas cayeron sobre los pies de Jesús, los secó con sus cabellos, los besó y derramó sobre ellos el perfume. Simón, el anfitrión, pensaba para sí: si este hombre fuera profeta, sabría qué clase de mujer es esta. Jesús empezó a contarle la historia de dos deudores.",
+    "Quinientos denarios y cincuenta denarios. Si a los dos se les perdonó la deuda, ¿cuál amará más? Volviéndose hacia la mujer, Jesús le preguntó a Simón: ¿ves a esta mujer? Luego le dijo a ella: tus pecados quedan perdonados. Tu fe te ha salvado. Vete en paz."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Sus muchos pecados le han sido perdonados, y por eso ha amado tanto. Al que poco se le perdona, poco ama."
+    },
+    {
+     "who": "Jesús",
+     "text": "Tu fe te ha salvado. Vete en paz."
+    },
+    {
+     "who": "Jesús",
+     "text": "¿Ves a esta mujer? Cuando entré en tu casa, no me diste agua para los pies, pero ella me los ha mojado con sus lágrimas y secado con sus cabellos."
+    }
+   ],
+   "note": "Lucas no dice el nombre de esta mujer. María Magdalena aparece presentada aparte en la escena siguiente, así que no hay base para considerarlas la misma persona. Esa identificación surgió de una interpretación de la Iglesia de Occidente a finales del siglo sexto.",
+   "reflect": "¿Sé cuán grande es el perdón que he recibido, y ese saber se está convirtiendo en la medida de mi amor?",
+   "quiz": {
+    "q": "En la parábola que Jesús le contó a Simón, ¿cuánto debían los dos deudores?",
+    "options": [
+     "Quinientos denarios y cincuenta denarios",
+     "Cien denarios y diez denarios",
+     "Mil denarios y cien denarios",
+     "Cincuenta denarios y cinco denarios"
+    ],
+    "explain": "Uno debía quinientos denarios y el otro cincuenta, y el prestamista les perdonó la deuda a los dos (Lc 7:41–42)."
+   },
+   "credit": "James Tissot, La comida en casa del fariseo (The Meal in the House of the Pharisee), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e27": {
+   "title": "Parábolas junto al mar",
+   "when": "otoño del 28 d. C.",
+   "subtitle": "El reino de Dios en una semilla diminuta",
+   "story": [
+    "Aquel día, Jesús salió de la casa y se sentó a la orilla del mar. Se reunió tanta gente que subió a una barca y se sentó sobre el agua, mientras la multitud se alineaba en la playa. Su voz se extendía sobre las olas mansas. Escuchen. Un sembrador salió a sembrar.",
+    "La semilla que cayó junto al camino se la comieron los pájaros; la que cayó en terreno pedregoso se secó enseguida, y la que cayó entre espinos quedó ahogada. Pero la que cayó en tierra buena dio fruto, treinta, sesenta y cien veces más. Jesús añadió: el que tenga oídos, que oiga.",
+    "Las historias continuaron. La semilla de mostaza, la más pequeña de todas las que se siembran. La levadura mezclada en la harina. El tesoro escondido en un campo y la perla de gran valor. La red que recoge peces de toda clase. El reino de Dios empieza en lo pequeño y escondido, y al final lo transforma todo."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "La semilla sembrada en tierra buena son los que oyen la palabra y la acogen, y dan fruto, treinta, sesenta y cien veces más."
+    },
+    {
+     "who": "Jesús",
+     "text": "El reino de Dios es como una semilla de mostaza. Al sembrarla es la más pequeña, pero crece más que todas las plantas, y los pájaros anidan a su sombra."
+    },
+    {
+     "who": "Jesús",
+     "text": "El reino de los cielos es como un tesoro escondido en un campo. Quien lo encuentra se va lleno de alegría, vende todo lo que tiene y compra ese campo."
+    },
+    {
+     "who": "Jesús",
+     "text": "¿Acaso se enciende una lámpara para taparla con una vasija o ponerla debajo de la cama? ¿No se pone sobre el candelero?"
+    }
+   ],
+   "note": "Entre Cafarnaúm y Tabgha hay una pequeña ensenada llamada la Bahía del Sembrador. Algunos estudios indican que su orilla en pendiente recoge el sonido como un anfiteatro natural, de modo que una voz desde una barca podía llegar a miles de personas.",
+   "reflect": "¿A qué se parece ahora mi corazón: al camino, al terreno pedregoso, a los espinos o a la tierra buena?",
+   "quiz": {
+    "q": "Jesús comparó el reino de los cielos con algo que una mujer mezcló en tres medidas de harina hasta que fermentó toda la masa. ¿Qué era?",
+    "options": [
+     "Una semilla de mostaza",
+     "Levadura",
+     "Una perla",
+     "Una red"
+    ],
+    "explain": "El reino de los cielos es como la levadura que una mujer tomó y mezcló en tres medidas de harina hasta que fermentó toda la masa (Mt 13:33)."
+   },
+   "credit": "James Tissot, Jesús predica desde una barca (Jesus Preaches in a Ship), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e28": {
+   "title": "Jesús calma el viento y el mar",
+   "when": "otoño del 28 d. C. · al atardecer",
+   "subtitle": "¿Quién es este hombre?",
+   "story": [
+    "Al caer la tarde de aquel día lleno de parábolas, Jesús dijo: pasemos a la otra orilla. Dejando atrás a la multitud, los discípulos lo llevaron en la barca, y otras barcas salieron con ellos. Entonces se levantó una violenta tempestad, y las olas rompían dentro de la barca.",
+    "El agua subía, y Jesús dormía en la popa, con la cabeza sobre un cabezal. Los discípulos lo despertaron. Maestro, ¿no te importa que nos estemos hundiendo? Hasta las voces de aquellos pescadores, criados en el mar, temblaban de miedo.",
+    "Jesús se levantó, reprendió al viento y le dijo al mar: calla, enmudece. El viento cesó, y el mar quedó en calma como un espejo. ¿Por qué tienen tanto miedo? ¿Todavía no tienen fe? Llenos de un temor todavía mayor, los discípulos se preguntaban unos a otros: ¿quién es este?"
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Calla. Enmudece."
+    },
+    {
+     "who": "Jesús",
+     "text": "¿Por qué tienen tanto miedo? ¿Todavía no tienen fe?"
+    },
+    {
+     "who": "Jesús",
+     "text": "Crucemos a la otra orilla del lago."
+    },
+    {
+     "who": "Los discípulos",
+     "text": "¿Quién es este, que hasta el viento y el mar le obedecen?"
+    }
+   ],
+   "note": "El mar de Galilea se encuentra en una cuenca a unos doscientos diez metros por debajo del nivel del mar. Cuando el aire fresco de las tierras altas desciende de golpe por los valles, un lago en calma puede convertirse en segundos en una tormenta violenta.",
+   "reflect": "Cuando Jesús parece dormir en las tormentas de mi vida, ¿a qué me aferro, al miedo o a la fe?",
+   "quiz": {
+    "q": "¿En qué parte de la barca dormía Jesús cuando se desató la tormenta?",
+    "options": [
+     "Sobre las redes, en la proa",
+     "En la popa, sobre un cabezal",
+     "Al pie del mástil",
+     "En la bodega, abajo"
+    ],
+    "explain": "Marcos cuenta que Jesús dormía sobre un cabezal en la popa, en la parte de atrás de la barca (Mc 4:38)."
+   },
+   "credit": "James Tissot, Jesús calma la tempestad (Jesus Stilling the Tempest), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e29": {
+   "title": "El hombre de los sepulcros",
+   "when": "otoño del 28 d. C.",
+   "subtitle": "Una oscuridad más fuerte que las cadenas, y una palabra más fuerte aún",
+   "story": [
+    "Al otro lado del lago, en la región de los gerasenos. Cuando Jesús bajó de la barca, salió corriendo a su encuentro un hombre que vivía entre los sepulcros. Ni siquiera las cadenas de hierro podían sujetarlo. Noche y día, entre los sepulcros y por los montes, gritaba y se hería con piedras.",
+    "Se postró ante Jesús y gritó: Jesús, Hijo del Dios Altísimo, no me atormentes. Cuando le preguntó su nombre, respondió: Legión, porque somos muchos. Los espíritus impuros entraron en una piara de unos dos mil cerdos, que se lanzó barranco abajo hacia el mar.",
+    "La gente acudió corriendo y lo encontró sentado, vestido y en su sano juicio, y tuvieron miedo, y le rogaron a Jesús que se marchara. Cuando el hombre le pidió ir con él, Jesús le dijo que volviera a su casa y contara lo que el Señor había hecho. Y él lo fue anunciando por toda la Decápolis."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Vuelve a tu casa, con los tuyos. Cuéntales todo lo que el Señor ha hecho por ti y cómo ha tenido compasión de ti."
+    },
+    {
+     "who": "Jesús",
+     "text": "Espíritu impuro, sal de este hombre."
+    },
+    {
+     "who": "Jesús",
+     "text": "¿Cómo te llamas?"
+    }
+   ],
+   "note": "Marcos y Lucas hablan de la región de los gerasenos, y Mateo de la de los gadarenos; los manuscritos no coinciden en el nombre. En Kursi, en la orilla oriental, se conservan las ruinas de un monasterio bizantino del siglo quinto que recuerda este episodio.",
+   "reflect": "Si Jesús me enviara a casa, ¿qué les contaría a mis seres más cercanos sobre lo que ha hecho por mí?",
+   "quiz": {
+    "q": "¿Cuántos cerdos, más o menos, había en la piara en la que entraron los espíritus impuros?",
+    "options": [
+     "Unos doscientos",
+     "Unos mil",
+     "Unos dos mil",
+     "Unos cinco mil"
+    ],
+    "explain": "Marcos cuenta que la piara era de unos dos mil cerdos (Mc 5:13). En su relato del mismo episodio, Mateo habla de dos endemoniados (Mt 8:28)."
+   },
+   "credit": "James Tissot, Mi nombre es Legión (My Name is Legion), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e30": {
+   "title": "Talitá kum",
+   "when": "otoño del 28 d. C.",
+   "subtitle": "Más allá de la noticia de que ya era tarde",
+   "story": [
+    "Cuando Jesús volvió a cruzar el lago, Jairo, jefe de la sinagoga, llegó corriendo y se echó a sus pies. Mi hijita se está muriendo. Ven a poner tus manos sobre ella. Mientras Jesús iba con él, una gran multitud lo rodeaba y lo apretujaba. En medio de aquel gentío había una mujer que padecía hemorragias desde hacía doce años.",
+    "Había gastado todo lo que tenía en muchos médicos y solo había empeorado. Convencida de que con tocar aunque fuera su manto quedaría sana, alargó la mano por detrás. En ese instante, la hemorragia se detuvo. ¿Quién ha tocado mi ropa? A la mujer, que se acercó temblando, Jesús le dijo: hija, tu fe te ha sanado.",
+    "En ese momento llegaron unos de casa del jefe de la sinagoga. Tu hija ha muerto. Jesús dijo: no tengas miedo, solamente cree. Y entró en la habitación solo con Pedro, Santiago, Juan y los padres de la niña. La tomó de la mano y le dijo: talitá kum. Y la muchacha de doce años se levantó y echó a andar."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Talitá kum. Niña, a ti te digo, levántate."
+    },
+    {
+     "who": "Jesús",
+     "text": "No tengas miedo. Solamente cree."
+    },
+    {
+     "who": "Jesús",
+     "text": "Hija, tu fe te ha sanado. Vete en paz. Queda libre de tu sufrimiento y sana del todo."
+    },
+    {
+     "who": "Jesús",
+     "text": "¿Por qué tanto alboroto y tanto llanto? La niña no está muerta. Está dormida."
+    }
+   ],
+   "note": "Talitá kum es arameo, la lengua cotidiana que hablaba Jesús. Marcos conserva algunas palabras arameas de Jesús tal como sonaban, como Effetá, Abbá y Eloí, y luego explica su significado.",
+   "reflect": "Cuando llega la noticia de que ya es demasiado tarde, ¿puedo aferrarme a las palabras: no tengas miedo, solamente cree?",
+   "quiz": {
+    "q": "¿Qué significa talitá kum, las palabras que Jesús dijo a la hija de Jairo?",
+    "options": [
+     "Niña, levántate",
+     "Señor, ten piedad",
+     "Ábrete",
+     "Todo está cumplido"
+    ],
+    "explain": "Talitá kum significa en arameo niña, levántate (Mc 5:41). La muchacha tenía doce años (Mc 5:42)."
+   },
+   "credit": "James Tissot, La hija de Jairo (The Daughter of Jairus), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e31": {
+   "title": "Un banquete en despoblado",
+   "when": "primavera del 29 d. C. · cerca de la Pascua",
+   "subtitle": "Cinco panes de cebada y dos peces",
+   "story": [
+    "Los discípulos habían vuelto agotados de su misión. Cruzaron en barca hacia un lugar tranquilo cerca de Betsaida para descansar un poco, pero la gente se enteró y se les adelantó por la orilla. Jesús sintió compasión de ellos, porque eran como ovejas sin pastor, y les estuvo enseñando hasta que el sol se puso bajo.",
+    "“Denles ustedes de comer.” Los discípulos no sabían qué hacer. Felipe calculó que ni con doscientos denarios de pan alcanzaría, y lo único que encontró Andrés fueron los cinco panes de cebada y los dos peces de un muchacho. Era primavera, se acercaba la Pascua, y la gente se sentó en grupos sobre la hierba verde.",
+    "Jesús levantó los ojos al cielo, dio gracias, partió el pan y lo repartió, y la comida pasaba de mano en mano sin acabarse. Cinco mil hombres comieron hasta saciarse, y con los pedazos sobrantes se llenaron doce canastas. Cuando la gente quiso llevárselo a la fuerza para hacerlo rey, Jesús se retiró solo al monte."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Denles ustedes mismos de comer."
+    },
+    {
+     "who": "Jesús",
+     "text": "Vengan aparte, a un lugar tranquilo, y descansen un poco."
+    },
+    {
+     "who": "Jesús",
+     "text": "Recojan todos los pedazos que han sobrado, para que no se pierda nada."
+    }
+   ],
+   "note": "Es el único milagro que recogen los cuatro Evangelios. Lucas sitúa el lugar en Betsaida, que se cree estaba cerca de la desembocadura del Jordán, en la orilla nordeste del mar de Galilea. Juan señala que los panes del muchacho eran de cebada, el alimento de los pobres.",
+   "reflect": "¿Puedo ofrecerle al Señor las cosas pequeñas y humildes que tengo en mis manos?",
+   "quiz": {
+    "q": "Después de que todos comieron, ¿cuántas canastas de pedazos sobraron?",
+    "options": [
+     "Siete canastas",
+     "Cinco canastas",
+     "Doce canastas",
+     "Tres canastas"
+    ],
+    "explain": "Al recoger los pedazos sobrantes, llenaron doce canastas (Mt 14:20; Mc 6:43; Lc 9:17; Jn 6:13). Las siete canastas pertenecen a otro episodio, la alimentación de los cuatro mil."
+   },
+   "credit": "James Tissot, El milagro de los panes y los peces (The Miracle of the Loaves and Fishes), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e32": {
+   "title": "El que viene sobre las aguas",
+   "when": "primavera del 29 d. C. · cuarta vigilia de la noche",
+   "subtitle": "En una noche de viento, llega caminando sobre el agua",
+   "story": [
+    "Después de despedir a la multitud, Jesús hizo que los discípulos subieran a la barca y se le adelantaran a la otra orilla, y él subió solo al monte a orar. A medida que avanzaba la noche, se levantó un viento contrario. Durante horas los discípulos remaron en la oscuridad, pero la barca seguía en medio del lago, sacudida por las olas.",
+    "En la cuarta vigilia, cuando el cielo aún estaba negro, alguien venía hacia ellos caminando sobre el agua. Los discípulos gritaron que era un fantasma, y entonces les llegó una voz conocida. “Ánimo. Soy yo.” Pedro le respondió a gritos: Señor, si eres tú, mándame ir hacia ti sobre el agua. “Ven.”",
+    "Pedro bajó de la barca y dio unos pasos sobre el agua. Pero al ver la fuerza del viento, el miedo lo invadió y empezó a hundirse. Señor, sálvame. Al instante Jesús extendió la mano y lo sujetó. Cuando los dos subieron a la barca, el viento se calmó, y los discípulos se postraron ante él."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Ánimo. Soy yo. No hay nada que temer."
+    },
+    {
+     "who": "Jesús",
+     "text": "Ven."
+    },
+    {
+     "who": "Jesús",
+     "text": "Hombre de poca fe, ¿por qué dudaste?"
+    },
+    {
+     "who": "Los discípulos",
+     "text": "Verdaderamente tú eres el Hijo de Dios."
+    }
+   ],
+   "note": "En la división romana de la noche, la cuarta vigilia iba más o menos de las tres a las seis de la madrugada. Juan escribe que los discípulos vieron a Jesús cuando habían remado veinticinco o treinta estadios, unos cinco o seis kilómetros.",
+   "reflect": "Cuando el viento furioso me roba la mirada, ¿hacia qué mano vuelvo a mirar?",
+   "quiz": {
+    "q": "¿Por qué empezó a hundirse Pedro mientras caminaba sobre el agua?",
+    "options": [
+     "Vio el viento y tuvo miedo",
+     "Miró hacia atrás, a la barca",
+     "Se le resbaló el pie",
+     "Otro discípulo lo llamó"
+    ],
+    "explain": "Al ver el viento, Pedro tuvo miedo y empezó a hundirse (Mt 14:30)."
+   },
+   "credit": "James Tissot, Jesús camina sobre el mar (Jesus Walks on the Sea), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e33": {
+   "title": "Yo soy el pan de vida",
+   "when": "primavera del 29 d. C.",
+   "subtitle": "Un alimento más hondo para quienes buscaban llenar el estómago",
+   "story": [
+    "Al día siguiente, la multitud que había comido el pan cruzó en barca hasta Cafarnaúm buscando a Jesús. Él les leyó el corazón. Ustedes me buscan no porque hayan visto señales, sino porque comieron pan hasta saciarse. No trabajen por el alimento que se echa a perder y se acaba, sino por el que dura para siempre.",
+    "La gente recordó el maná que sus antepasados comieron en el desierto. Jesús respondió que él mismo era el pan verdadero que baja del cielo y da vida al mundo. Un murmullo recorrió la sinagoga de Cafarnaúm. ¿No es este el hijo de José? ¿Cómo puede decirnos que comamos su carne?",
+    "Diciendo que aquella enseñanza era demasiado dura, muchos de sus discípulos se marcharon y ya no andaban con él. Jesús se volvió hacia los Doce que quedaban. ¿También ustedes quieren irse? Tras un momento de silencio, habló Pedro. Tú tienes palabras de vida eterna, Señor. ¿A quién iríamos?"
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Yo soy el pan de vida. El que viene a mí nunca pasará hambre, y el que cree en mí nunca más tendrá sed."
+    },
+    {
+     "who": "Jesús",
+     "text": "No se afanen por la comida que pronto desaparece. Trabajen por el alimento que permanece hasta la vida eterna."
+    },
+    {
+     "who": "Jesús",
+     "text": "¿También ustedes quieren marcharse?"
+    },
+    {
+     "who": "Pedro",
+     "text": "Señor, tú tienes palabras de vida eterna. ¿A quién más podríamos ir?"
+    }
+   ],
+   "note": "Se cree que la sinagoga de piedra caliza blanca que hoy se alza en Cafarnaúm es del siglo cuarto o posterior, pero los cimientos de basalto negro que hay debajo podrían ser un rastro de la sinagoga de los tiempos de Jesús.",
+   "reflect": "¿Le pido al Señor solo pan, o lo busco a él, que es la vida misma?",
+   "quiz": {
+    "q": "¿Dónde enseñó Jesús sobre el pan de vida?",
+    "options": [
+     "En los atrios del Templo de Jerusalén",
+     "En la sinagoga de Nazaret",
+     "En una barca, a orillas del mar de Galilea",
+     "En la sinagoga de Cafarnaúm"
+    ],
+    "explain": "Jesús dijo estas cosas mientras enseñaba en la sinagoga de Cafarnaúm (Jn 6:59)."
+   },
+   "credit": "James Tissot, Me siguen por los milagros (You Follow Me for the Miracles), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e34": {
+   "title": "Una madre de la región de Tiro",
+   "when": "verano del 29 d. C.",
+   "subtitle": "Una fe que se conforma con las migajas",
+   "story": [
+    "Jesús dejó Galilea y se fue al norte, a la región de Tiro, una tierra de gentiles junto al mar. Entró en una casa y no quería que nadie supiera que estaba allí, pero no pudo pasar inadvertido. Una madre cuya hija estaba atormentada por un espíritu maligno se enteró, vino y se echó a sus pies. No era israelita.",
+    "Hijo de David, ten compasión de mí. Seguía gritando, y los discípulos, molestos, le insistían en que la despidiera. La respuesta de Jesús sonó fría. No está bien quitarles el pan a los hijos y echárselo a los perritos de la casa. Pero la madre no se dio por vencida.",
+    "Es verdad, Señor. Pero también los perritos comen las migajas que caen de la mesa de sus amos. El rostro de Jesús se iluminó. Grande es tu fe. Cuando ella volvió a su casa, encontró a la niña acostada tranquila en la cama, y el espíritu que la atormentaba ya se había ido."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Mujer, tu fe es realmente grande. Que se haga como tú quieres."
+    },
+    {
+     "who": "Jesús",
+     "text": "Deja que primero coman los hijos. No está bien quitarles el pan a los hijos y echárselo a los perritos."
+    },
+    {
+     "who": "Jesús",
+     "text": "Por haber respondido así, vuelve a tu casa. El espíritu maligno ya ha salido de tu hija."
+    },
+    {
+     "who": "La madre",
+     "text": "Así es, Señor. Pero hasta los perritos, debajo de la mesa, comen las migajas que dejan caer los niños, ¿no es cierto?"
+    }
+   ],
+   "note": "Tiro era una ciudad portuaria fenicia de la costa mediterránea, tierra de gentiles a los ojos judíos. La palabra que usó Jesús no se refiere a perros callejeros, sino a perritos que se tenían en casa.",
+   "reflect": "Incluso ante un silencio que parece un rechazo, ¿puedo seguir aferrado al Señor hasta el final?",
+   "quiz": {
+    "q": "¿Cómo describe a esta mujer el Evangelio de Marcos?",
+    "options": [
+     "Una mujer samaritana",
+     "Una griega, sirofenicia de nacimiento",
+     "La esposa de un centurión romano",
+     "La esposa de un pescador galileo"
+    ],
+    "explain": "Marcos la describe como una mujer griega, sirofenicia de nacimiento (Mc 7:26), mientras que Mateo la llama mujer cananea (Mt 15:22)."
+   },
+   "credit": "James Tissot, La hija de la cananea (The Canaanite's Daughter), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e35": {
+   "title": "Effetá, ábrete",
+   "when": "verano del 29 d. C.",
+   "subtitle": "El día en que se abrieron unos oídos cerrados y se soltó una lengua atada",
+   "story": [
+    "Jesús dejó Tiro, pasó por Sidón y dio un largo rodeo hasta el mar de Galilea, hacia la región de la Decápolis. Le llevaron a un hombre sordo que apenas podía hablar, y le rogaron que pusiera la mano sobre él. Jesús lo apartó de la multitud y lo llevó a un lugar tranquilo.",
+    "Jesús le metió los dedos en los oídos, escupió y le tocó la lengua. Luego levantó los ojos al cielo, suspiró profundamente y dijo una sola palabra. Effetá. Ábrete. Al instante se le abrieron los oídos cerrados y se le soltó la lengua trabada, y el hombre empezó a hablar con claridad.",
+    "Jesús les pidió que no se lo contaran a nadie, pero cuanto más se lo pedía, más lejos se extendía la noticia. Cuando subió a un monte, le llevaron cojos, ciegos y mudos, y al verlos sanados la multitud glorificaba al Dios de Israel."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Effetá. ¡Ábrete!"
+    },
+    {
+     "who": "La multitud",
+     "text": "Todo lo hace maravillosamente. Hace oír a los sordos y hablar a los mudos."
+    }
+   ],
+   "note": "Effetá es una palabra aramea, la lengua cotidiana de Judea en tiempos de Jesús, y Marcos suele conservar estas expresiones arameas tal como se pronunciaron. La Decápolis era una región de diez ciudades de estilo griego repartidas al este y al sur del mar de Galilea.",
+   "reflect": "¿Qué oídos están cerrados y qué palabras están atadas dentro de mí, y dónde me diría el Señor: ábrete?",
+   "quiz": {
+    "q": "¿Qué significa la palabra Effetá, pronunciada por Jesús?",
+    "options": [
+     "Levántate",
+     "Queda limpio",
+     "Ábrete",
+     "Mira"
+    ],
+    "explain": "Marcos explica que Effetá significa ‘Ábrete’ (Mc 7:34)."
+   },
+   "credit": "James Tissot, Jesús sana a ciegos y cojos en el monte (Jesus Heals the Blind and Lame on the Mountain), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e36": {
+   "title": "¿Quién dicen ustedes que soy yo?",
+   "when": "verano del 29 d. C.",
+   "subtitle": "Una pregunta hecha bajo la roca de donde brota el manantial",
+   "story": [
+    "Al pie del monte Hermón se encuentra Cesarea de Filipo, donde las aguas del Jordán brotan de debajo de la roca. En aquella tierra extraña, llena de hornacinas para dioses extranjeros, Jesús preguntó a sus discípulos mientras caminaban: ¿quién dice la gente que soy yo?",
+    "Unos dicen que Juan el Bautista; otros, que Elías o Jeremías, o alguno de los profetas. Y ustedes, ¿quién dicen que soy yo? Pedro respondió: tú eres el Cristo, el Hijo del Dios vivo. Jesús lo llamó dichoso y volvió a darle el nombre que significa roca.",
+    "Desde entonces, Jesús comenzó a explicarles que tenía que sufrir mucho en Jerusalén, que lo matarían y que resucitaría al tercer día. Cuando Pedro lo tomó aparte y le dijo que eso jamás podía pasar, Jesús lo reprendió con dureza. Y dijo a todos los que querían seguirlo que tomaran su propia cruz."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Pero ustedes, ¿qué dicen ustedes? ¿Quién dicen que soy yo?"
+    },
+    {
+     "who": "Jesús",
+     "text": "El que quiera seguirme, que se olvide de sí mismo, que tome su cruz y venga detrás de mí."
+    },
+    {
+     "who": "Jesús",
+     "text": "¿De qué sirve ganar el mundo entero y perder la propia vida?"
+    },
+    {
+     "who": "Pedro",
+     "text": "Tú eres el Cristo, el Hijo del Dios vivo."
+    }
+   ],
+   "note": "Filipo el tetrarca puso nombre a la ciudad en honor del emperador; hoy es Banias. Aún se conservan la cueva y las ruinas del templo dedicados al dios Pan, y aquí brota una de las principales fuentes del río Jordán.",
+   "reflect": "No lo que dicen los demás, sino ¿quién confieso yo, ahora mismo, que es Jesús?",
+   "quiz": {
+    "q": "¿Qué personaje NO estaba entre las respuestas que dieron los discípulos cuando les preguntó quién decía la gente que era él?",
+    "options": [
+     "Juan el Bautista",
+     "Elías",
+     "Jeremías",
+     "Moisés"
+    ],
+    "explain": "Los discípulos contaron que la gente decía que Jesús era Juan el Bautista, Elías, Jeremías o alguno de los profetas (Mt 16:14). Moisés no se menciona."
+   },
+   "credit": "James Tissot, Apártate de mí, Satanás (Get Thee Behind Me Satan), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e37": {
+   "title": "Transfigurado en el monte",
+   "when": "verano del 29 d. C.",
+   "subtitle": "La gloria vislumbrada un instante en el monte",
+   "story": [
+    "Seis días después, Jesús tomó solo a Pedro, Santiago y Juan y subió a un monte alto. Mientras oraba, su rostro brilló como el sol y su ropa se volvió de un blanco deslumbrante. Cuando los discípulos, vencidos por el sueño, abrieron los ojos, Moisés y Elías conversaban con Jesús.",
+    "Hablaban de su partida, que él iba a cumplir en Jerusalén. Desconcertado, Pedro soltó: Señor, qué bien estamos aquí. Voy a hacer tres tiendas. En ese momento una nube luminosa los cubrió, y de la nube salió una voz. Este es mi Hijo amado. Escúchenlo.",
+    "Los discípulos cayeron rostro en tierra, temblando. Alguien les puso la mano en el hombro. Levántense, no tengan miedo. Al alzar la vista, no vieron a nadie más que a Jesús. Mientras bajaban del monte, Jesús les mandó que no contaran a nadie lo que habían visto hasta que el Hijo del hombre resucitara de entre los muertos."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Levántense. No tengan miedo."
+    },
+    {
+     "who": "Jesús",
+     "text": "No cuenten a nadie lo que han visto hasta que el Hijo del hombre haya resucitado de entre los muertos."
+    },
+    {
+     "who": "Jesús",
+     "text": "Elías ya vino, y no lo reconocieron, sino que hicieron con él lo que quisieron."
+    },
+    {
+     "who": "La voz del cielo",
+     "text": "Este es mi Hijo, a quien amo, mi alegría. Escúchenlo."
+    }
+   ],
+   "note": "Los Evangelios dicen solo ‘un monte alto’. La tradición lo ha identificado desde hace mucho con el monte Tabor, pero muchos estudiosos señalan el monte Hermón, cercano a Cesarea de Filipo, donde transcurre la escena anterior, y mucho más alto.",
+   "reflect": "Cuando pasa el momento deslumbrante y solo queda Jesús, ¿seguiré escuchándolo?",
+   "quiz": {
+    "q": "¿Qué dos hombres aparecieron y conversaron con Jesús transfigurado?",
+    "options": [
+     "Moisés y Elías",
+     "Abraham y David",
+     "Elías y Eliseo",
+     "Moisés e Isaías"
+    ],
+    "explain": "Moisés y Elías aparecieron y conversaban con Jesús (Mt 17:3; Mc 9:4; Lc 9:30)."
+   },
+   "credit": "James Tissot, La Transfiguración (The Transfiguration), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e38": {
+   "title": "¿Quién es el más importante?",
+   "when": "otoño del 29 d. C.",
+   "subtitle": "Pone a un niño en medio de ellos",
+   "story": [
+    "De regreso a Cafarnaúm, los discípulos se quedaban atrás discutiendo en voz baja. Al entrar en la casa, Jesús les preguntó: ¿de qué discutían por el camino? Nadie respondió. Quién era el más importante, esa había sido su disputa.",
+    "Jesús se sentó, llamó a los Doce, tomó a un niño y lo puso en medio de ellos. Luego lo abrazó. El que quiera ser el primero, que sea el último de todos y el servidor de todos. El que recibe en mi nombre a uno de estos niños, a mí me recibe.",
+    "Jesús habló de un pastor que deja las noventa y nueve ovejas para ir a buscar la única que se ha perdido. Pedro le preguntó: si mi hermano me ofende, ¿cuántas veces tengo que perdonarlo? ¿Basta con siete? Jesús le dijo que perdonara hasta setenta y siete veces, y contó la parábola de un siervo al que se le perdonó una deuda enorme y que no quiso perdonar una pequeña."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "El que quiera ser el primero tiene que ponerse detrás de todos y hacerse servidor de todos."
+    },
+    {
+     "who": "Jesús",
+     "text": "Si no cambian y se hacen como niños, nunca entrarán en el reino de los cielos."
+    },
+    {
+     "who": "Jesús",
+     "text": "No solo siete veces. Perdona hasta setenta y siete veces."
+    }
+   ],
+   "note": "En la parábola, al siervo se le perdonaron diez mil talentos, mientras que su compañero le debía cien denarios. Un talento equivalía a unos seis mil días de jornal de un trabajador, un contraste casi inimaginable.",
+   "reflect": "¿Perdono a los demás recordando cuánto se me ha perdonado a mí?",
+   "quiz": {
+    "q": "Cuando Pedro preguntó cuántas veces debía perdonar, ¿qué le respondió Jesús?",
+    "options": [
+     "Siete veces",
+     "Setenta y siete veces",
+     "Doce veces",
+     "Tres veces"
+    ],
+    "explain": "Jesús respondió que no siete veces, sino setenta y siete veces (Mt 18:22). El original también puede traducirse ‘setenta veces siete’, y significa perdonar sin límite."
+   },
+   "credit": "James Tissot, Jesús y el niño (Jesus and the Little Child), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e39": {
+   "title": "Los que soltaron sus piedras",
+   "when": "otoño del 29 d. C. · fiesta de las Tiendas",
+   "subtitle": "La fiesta en que clamó por el agua viva, y lo que escribió en el polvo",
+   "story": [
+    "Era la fiesta otoñal de las Tiendas, y Jerusalén estaba llena de peregrinos y de cabañas tejidas con ramas. En un tiempo en que ni siquiera sus hermanos creían en él, Jesús subió en secreto, y a mitad de la fiesta empezó a enseñar en el Templo. El último día, el más solemne de la fiesta, se puso de pie y exclamó: si alguien tiene sed, que venga a mí y beba.",
+    "Los guardias del Templo enviados a arrestarlo volvieron con las manos vacías y dijeron: nadie ha hablado nunca como ese hombre. A la mañana siguiente, muy temprano, los maestros de la Ley y los fariseos trajeron a rastras a una mujer sorprendida en adulterio y la pusieron en medio. Moisés nos mandó apedrear a mujeres así. ¿Tú qué dices?",
+    "Jesús se inclinó y escribió algo en el suelo con el dedo. Como insistían en preguntarle, se enderezó y dijo: el que de ustedes esté sin pecado, que tire la primera piedra. Uno a uno se fueron retirando, empezando por los más viejos, hasta que solo quedaron Jesús y la mujer. Tampoco yo te condeno. Vete."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Si alguno de ustedes no tiene pecado, que sea el primero en tirarle una piedra."
+    },
+    {
+     "who": "Jesús",
+     "text": "Tampoco yo te condeno. Vete, y desde ahora no peques más."
+    },
+    {
+     "who": "Jesús",
+     "text": "El que tenga sed, que venga a mí y beba. Del que cree en mí brotará agua viva como un río."
+    }
+   ],
+   "note": "La historia de la mujer sorprendida en adulterio, en Juan 7:53 a 8:11, no aparece en los manuscritos más antiguos. Pero se considera una tradición muy antigua y figura en la mayoría de las Biblias, a menudo entre corchetes o con una nota.",
+   "reflect": "¿Puedo soltar la piedra que tengo en la mano y ofrecer palabras de un nuevo comienzo en lugar de condena?",
+   "quiz": {
+    "q": "¿Qué hizo Jesús cuando se inclinó ante los acusadores de la mujer?",
+    "options": [
+     "Tomó la mano de la mujer",
+     "Levantó los ojos al cielo y oró",
+     "Recogió una piedra",
+     "Escribió en el suelo con el dedo"
+    ],
+    "explain": "Jesús se inclinó y escribió en el suelo con el dedo, y después de hablar volvió a inclinarse y a escribir (Jn 8:6, 8)."
+   },
+   "credit": "James Tissot, La mujer adúltera, Cristo escribiendo en el suelo (The Adulterous Woman--Christ Writing upon the Ground), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e40": {
+   "title": "Ojos abiertos en Siloé",
+   "when": "otoño del 29 d. C.",
+   "subtitle": "Unos ojos abiertos con barro y agua del estanque",
+   "story": [
+    "Al pasar por las calles de Jerusalén, Jesús vio a un hombre ciego de nacimiento. Sus discípulos le preguntaron: ¿por culpa de quién nació ciego este hombre, por su pecado o por el de sus padres? Jesús dijo que por ninguno de los dos. Había sucedido para que las obras de Dios se manifestaran en él.",
+    "Jesús escupió en el suelo, hizo barro, se lo untó en los ojos y le dijo que fuera a lavarse al estanque de Siloé. A tientas, el hombre bajó los escalones y se lavó la cara en el agua. Y volvió viendo la luz por primera vez en su vida. Aquel día era sábado.",
+    "Los fariseos lo interrogaron una y otra vez, y hasta sus padres, por miedo, guardaron silencio. Él se mantuvo firme hasta el final. Solo sé una cosa: yo era ciego y ahora veo. Después de que lo expulsaran de la sinagoga, Jesús fue a buscarlo, y él se postró diciendo: Señor, creo."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "No fue por su pecado ni por el de sus padres. Sucedió para que la obra de Dios se muestre en él."
+    },
+    {
+     "who": "Jesús",
+     "text": "Mientras estoy en el mundo, yo soy la luz del mundo."
+    },
+    {
+     "who": "Jesús",
+     "text": "Ve a lavarte al estanque de Siloé."
+    },
+    {
+     "who": "El hombre que fue sanado",
+     "text": "Una cosa sé con certeza. Yo no veía, y ahora veo."
+    }
+   ],
+   "note": "En 2004, durante unas obras de alcantarillado en el sur de Jerusalén, se descubrió un estanque escalonado de la época del Segundo Templo, que se cree es el estanque de Siloé del Evangelio de Juan. Siloé significa ‘enviado’.",
+   "reflect": "Aunque no pueda explicarlo todo, ¿puedo contar con valentía una cosa que el Señor ha hecho por mí?",
+   "quiz": {
+    "q": "Según el Evangelio de Juan, ¿qué significa el nombre Siloé?",
+    "options": [
+     "Manantial de luz",
+     "Estanque de paz",
+     "Enviado",
+     "Purificar"
+    ],
+    "explain": "Juan explica que Siloé significa ‘enviado’ (Jn 9:7)."
+   },
+   "credit": "James Tissot, El ciego se lava en el estanque de Siloé (The Blind Man Washes in the Pool of Siloam), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e41": {
+   "title": "El buen samaritano y dos hermanas",
+   "when": "otoño del 29 d. C.",
+   "subtitle": "Uno que se hace prójimo, una que se sienta a sus pies",
+   "story": [
+    "Un experto en la Ley se levantó para poner a prueba a Jesús. ¿Qué tengo que hacer para heredar la vida eterna? Cuando el propio hombre recitó la ley de amar a Dios y al prójimo, Jesús le dijo que hiciera eso y viviría. Él volvió a preguntar: ¿y quién es mi prójimo?",
+    "Jesús habló del áspero camino que baja de Jerusalén a Jericó. Unos bandidos asaltaron a un hombre y lo dejaron medio muerto, y un sacerdote y un levita pasaron de largo por el otro lado. Pero un samaritano que iba de viaje lo vio, se conmovió profundamente y se acercó. Le echó aceite y vino en las heridas, se las vendó, lo llevó a una posada y lo cuidó.",
+    "Siguiendo su camino, Jesús se detuvo en casa de Marta, en cierta aldea. Marta andaba atareada con todo el servicio, mientras su hermana María, sentada a los pies del Señor, escuchaba su palabra. Cuando Marta se desahogó, Jesús la llamó con ternura dos veces por su nombre. Solo una cosa es de verdad necesaria."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "¿Cuál de estos tres crees que se hizo prójimo del hombre que cayó en manos de los bandidos?"
+    },
+    {
+     "who": "Jesús",
+     "text": "Ve y haz tú lo mismo."
+    },
+    {
+     "who": "Jesús",
+     "text": "Marta, Marta, andas inquieta y preocupada por muchas cosas. Pero solo una es necesaria."
+    },
+    {
+     "who": "Jesús",
+     "text": "María ha escogido la mejor parte, y nadie se la va a quitar."
+    }
+   ],
+   "note": "De Jerusalén a Jericó había unos veintisiete kilómetros, un descenso por el desierto de más de mil metros de desnivel. Lucas dice solo ‘cierta aldea’, pero el Evangelio de Juan identifica la aldea de Marta y María como Betania.",
+   "reflect": "¿Soy alguien que discute quién es su prójimo, o alguien que se hace prójimo primero?",
+   "quiz": {
+    "q": "¿Qué dinero le dio el samaritano al posadero?",
+    "options": [
+     "Dos denarios",
+     "Treinta monedas de plata",
+     "Un talento",
+     "Cinco dracmas"
+    ],
+    "explain": "Al día siguiente, el samaritano le dio dos denarios al posadero y le pidió que cuidara del hombre (Lc 10:35)."
+   },
+   "credit": "James Tissot, El buen samaritano (The Good Samaritan), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e42": {
+   "title": "Yo soy el buen pastor",
+   "when": "invierno del 29 d. C. · fiesta de la Dedicación",
+   "subtitle": "El pastor que llama a sus ovejas por su nombre",
+   "story": [
+    "El pastor entra por la puerta y llama a sus ovejas una por una, por su nombre, y las ovejas reconocen su voz y lo siguen afuera. Jesús tomó esta escena familiar para hablar de sí mismo. Yo soy la puerta de las ovejas. Yo soy el buen pastor. El buen pastor da la vida por las ovejas.",
+    "Unos meses después, en invierno, llegó la fiesta de la Dedicación. Mientras Jesús paseaba por el pórtico de Salomón, en el Templo, la gente lo rodeó. ¿Hasta cuándo nos vas a tener en vilo? Si eres el Cristo, dínoslo claramente. Jesús respondió: mis ovejas escuchan mi voz, y nadie puede arrebatarlas de mi mano.",
+    "El Padre y yo somos uno. Al oír estas palabras, volvieron a tomar piedras. Jesús se escapó de sus manos y se retiró al otro lado del Jordán, al lugar donde Juan había bautizado al principio, y se quedó allí. Y allí muchos creyeron en él."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Yo soy el buen pastor. El buen pastor entrega su vida por las ovejas."
+    },
+    {
+     "who": "Jesús",
+     "text": "Yo he venido para que las ovejas tengan vida, y la tengan en abundancia desbordante."
+    },
+    {
+     "who": "Jesús",
+     "text": "Mis ovejas reconocen mi voz. Yo las conozco, y ellas me siguen."
+    },
+    {
+     "who": "Jesús",
+     "text": "El Padre y yo somos uno."
+    }
+   ],
+   "note": "La fiesta de la Dedicación es una fiesta de invierno que recuerda cómo Judas Macabeo, en el año 164 antes de Cristo, recuperó el Templo profanado por el rey extranjero Antíoco Cuarto y lo consagró de nuevo. Hoy es Janucá.",
+   "reflect": "Entre tantas voces, ¿reconozco la voz del pastor que me llama?",
+   "quiz": {
+    "q": "¿Por qué lugar del Templo paseaba Jesús durante la fiesta de la Dedicación?",
+    "options": [
+     "El atrio de los gentiles",
+     "El pórtico de Salomón",
+     "El atrio de las mujeres",
+     "La Puerta Hermosa"
+    ],
+    "explain": "Era invierno, la fiesta de la Dedicación, y Jesús paseaba por el pórtico de Salomón, en el Templo (Jn 10:22–23)."
+   },
+   "credit": "James Tissot, El buen pastor (The Good Shepherd), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e43": {
+   "title": "La alegría de encontrar lo perdido",
+   "when": "comienzos del 30 d. C.",
+   "subtitle": "Una oveja, una moneda y un hijo",
+   "story": [
+    "Cuando los recaudadores de impuestos y los pecadores se reunían alrededor de Jesús para escucharlo, los fariseos y los maestros de la Ley murmuraban: este recibe a los pecadores y hasta come con ellos. Entonces Jesús les contó tres historias sobre encontrar lo que se había perdido.",
+    "Un pastor que pierde una de sus cien ovejas deja las noventa y nueve y la busca hasta encontrarla. Una mujer que pierde una de sus diez monedas de plata enciende una lámpara y barre toda la casa buscándola. Y cuando las encuentran, los dos llaman a sus vecinos para que se alegren con ellos.",
+    "El hijo menor pidió su herencia antes de tiempo, la despilfarró toda en un país lejano y llegó a desear llenarse el estómago aunque fuera con la comida de los cerdos. Entonces volvió a casa. Cuando todavía estaba lejos, su padre lo reconoció, corrió hacia él y lo abrazó. El padre hizo una fiesta, y cuando el hijo mayor, enojado, se negó a entrar, el padre salió él mismo a suplicarle."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Habrá más alegría en el cielo por un pecador que vuelve que por noventa y nueve justos que no necesitan convertirse."
+    },
+    {
+     "who": "Jesús",
+     "text": "Este hijo mío estaba muerto y ha vuelto a la vida. Se había perdido y lo hemos encontrado. Así que celebremos juntos."
+    },
+    {
+     "who": "Jesús",
+     "text": "Hijo mío, tú siempre estás conmigo, y todo lo mío es tuyo."
+    }
+   ],
+   "note": "Pedir la herencia en vida del padre se consideraba una ofensa grave, y en una cultura que valoraba tanto la dignidad, ver correr a un anciano cabeza de familia resultaba extraño. Los cerdos eran animales impuros para los judíos.",
+   "reflect": "¿Me parezco más al padre que recibe a su hijo que vuelve, o al hijo mayor que se queda fuera de la puerta?",
+   "quiz": {
+    "q": "¿Cuántas monedas de plata tenía al principio la mujer de la parábola?",
+    "options": [
+     "Tres",
+     "Cinco",
+     "Cien",
+     "Diez"
+    ],
+    "explain": "La mujer perdió una de sus diez dracmas, encendió una lámpara y barrió la casa para encontrarla (Lc 15:8)."
+   },
+   "credit": "James Tissot, El regreso del hijo pródigo (The Return of the Prodigal Son), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e44": {
+   "title": "Lázaro, sal fuera",
+   "when": "comienzos del 30 d. C.",
+   "subtitle": "El que lloró ante el sepulcro y mandó a la muerte que cediera",
+   "story": [
+    "Llegó un aviso desde Betania. Señor, el que tú amas, Lázaro, está enfermo. Sin embargo, Jesús se quedó dos días más donde estaba antes de ponerse en camino. Cuando dijo que volverían a Judea, Tomás dijo: vamos también nosotros, para morir con él.",
+    "Cuando llegaron, Lázaro llevaba ya cuatro días en el sepulcro. Marta salió corriendo y le dijo: Señor, si hubieras estado aquí, mi hermano no habría muerto. Yo soy la resurrección y la vida. ¿Crees esto? Después vino María y cayó llorando a sus pies, y Jesús también lloró.",
+    "Ante la tumba excavada en la roca y cerrada con una piedra, Jesús mandó quitar la piedra. Pese al temor de Marta de que ya oliera mal, la piedra fue retirada. Jesús levantó los ojos al cielo y dio gracias, y luego gritó con fuerza: Lázaro, sal fuera. Y el que había muerto salió caminando, con las manos y los pies envueltos en vendas."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Yo soy la resurrección y la vida. El que cree en mí vivirá aunque muera, y el que vive creyendo en mí no morirá jamás. ¿Crees esto?"
+    },
+    {
+     "who": "Jesús",
+     "text": "¡Lázaro, sal fuera!"
+    },
+    {
+     "who": "Jesús",
+     "text": "¿No te dije que, si crees, verás la gloria de Dios?"
+    },
+    {
+     "who": "Marta",
+     "text": "Sí, Señor. Yo creo que tú eres el Cristo, el Hijo de Dios, el que había de venir al mundo."
+    }
+   ],
+   "note": "Juan escribe que Betania estaba a quince estadios de Jerusalén, unos tres kilómetros. Escritos judíos posteriores reflejan la idea de que el alma del difunto permanece cerca del cuerpo durante tres días, así que cuatro días era un tiempo en que ya no quedaba esperanza.",
+   "reflect": "Incluso en el duelo, cuando parece que el Señor ha llegado tarde, ¿creo en él, que es la resurrección y la vida?",
+   "quiz": {
+    "q": "Cuando llegó Jesús, ¿cuántos días llevaba Lázaro en el sepulcro?",
+    "options": [
+     "Tres días",
+     "Dos días",
+     "Cuatro días",
+     "Siete días"
+    ],
+    "explain": "Al llegar, Jesús encontró que Lázaro llevaba ya cuatro días en el sepulcro (Jn 11:17, 39)."
+   },
+   "credit": "James Tissot, La resurrección de Lázaro (The Resurrection of Lazarus), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e45": {
+   "title": "Los niños y el joven rico",
+   "when": "primavera del 30 d. C.",
+   "subtitle": "Un reino que se recibe como un niño, y unas manos que no quisieron soltar",
+   "story": [
+    "En la región de Judea, al otro lado del Jordán, la gente le llevaba niños a Jesús para que les impusiera las manos, y los discípulos los reprendían. Al verlo, Jesús se indignó. Dejen que los niños vengan a mí. Luego los tomó en brazos, les impuso las manos y los bendijo.",
+    "Cuando se ponía en camino, un hombre llegó corriendo y se arrodilló ante él. Maestro bueno, ¿qué tengo que hacer para heredar la vida eterna? El hombre dijo que había cumplido todos los mandamientos desde su juventud, y Jesús lo miró y lo amó. Todavía te falta una cosa. Vende lo que tienes, dáselo a los pobres, y ven, sígueme.",
+    "Al oírlo, el hombre se ensombreció y se fue triste, porque tenía muchos bienes. Jesús dijo que es más fácil que un camello pase por el ojo de una aguja que un rico entre en el reino de Dios. A sus discípulos, asombrados, les dijo: para los hombres es imposible, pero para Dios todo es posible."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Dejen que los niños vengan a mí. No se lo impidan. El reino de Dios es de los que son como ellos."
+    },
+    {
+     "who": "Jesús",
+     "text": "Te falta una cosa. Vende lo que tienes y dáselo a los pobres, y tendrás un tesoro en el cielo. Luego ven y sígueme."
+    },
+    {
+     "who": "Jesús",
+     "text": "Con las fuerzas humanas no se puede. Pero con Dios no es así. Para Dios no hay nada imposible."
+    }
+   ],
+   "note": "Mateo lo llama joven; Lucas, hombre importante; y Marcos, hombre de muchos bienes. Juntando los tres relatos, se le suele llamar el joven rico. El lugar era la región de Judea al otro lado del Jordán.",
+   "reflect": "En el camino de seguir al Señor, ¿a qué me sigo aferrando que no soy capaz de soltar?",
+   "quiz": {
+    "q": "¿Qué animal dijo Jesús que pasaría por el ojo de una aguja más fácilmente que un rico entraría en el reino de Dios?",
+    "options": [
+     "Un camello",
+     "Un asno",
+     "Una oveja",
+     "Un caballo"
+    ],
+    "explain": "Es más fácil que un camello pase por el ojo de una aguja que un rico entre en el reino de Dios (Mt 19:24; Mc 10:25; Lc 18:25)."
+   },
+   "credit": "James Tissot, El joven rico se fue triste (The Rich Young Man Went Away Sorrowful), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e46": {
+   "title": "Dos encuentros en Jericó",
+   "when": "primavera del 30 d. C.",
+   "subtitle": "Un grito desde la orilla del camino y una mirada hacia lo alto de un árbol",
+   "story": [
+    "Jericó, una ciudad oasis poblada de palmeras. Cuando pasaba la caravana de peregrinos que subía a Jerusalén, un ciego llamado Bartimeo, sentado junto al camino pidiendo limosna, gritó: Jesús, Hijo de David, ten compasión de mí. Cuanto más le reñía la gente para que se callara, más fuerte gritaba.",
+    "Jesús se detuvo y mandó llamarlo. Arrojando su manto, el hombre se levantó de un salto y se acercó. ¿Qué quieres que haga por ti? Maestro, quiero volver a ver. Vete, tu fe te ha salvado. Al instante se le abrieron los ojos, y siguió a Jesús por el camino.",
+    "En aquella ciudad vivía Zaqueo, jefe de los recaudadores de impuestos y hombre rico. Era bajo de estatura, y la multitud le tapaba a Jesús, así que se adelantó corriendo y se subió a un sicómoro. Debajo del árbol, Jesús se detuvo, miró hacia arriba y lo llamó por su nombre. Aquel día Zaqueo dijo que daría la mitad de sus bienes a los pobres."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Zaqueo, baja enseguida. Hoy tengo que quedarme en tu casa."
+    },
+    {
+     "who": "Jesús",
+     "text": "El Hijo del hombre ha venido a buscar y a salvar a los que estaban perdidos."
+    },
+    {
+     "who": "Jesús",
+     "text": "¿Qué quieres que haga por ti?"
+    },
+    {
+     "who": "Jesús",
+     "text": "Vete. Tu fe te ha sanado."
+    }
+   ],
+   "note": "Jericó es una ciudad oasis a unos doscientos cincuenta metros por debajo del nivel del mar. Herodes tenía allí un palacio de invierno, y como estaba en la ruta del comercio de dátiles y bálsamo, su aduana era importante. Los Evangelios difieren un poco en el número de ciegos y en el momento.",
+   "reflect": "A pesar de la gente que me cierra el paso y de mi propia pequeñez, ¿tengo el valor de gritarle al Señor y de subirme al árbol?",
+   "quiz": {
+    "q": "¿A qué clase de árbol se subió Zaqueo para ver a Jesús?",
+    "options": [
+     "Un olivo",
+     "Un sicómoro",
+     "Una palmera",
+     "Una vid"
+    ],
+    "explain": "Zaqueo era bajo de estatura, así que se adelantó corriendo y se subió a un sicómoro (Lc 19:4)."
+   },
+   "credit": "James Tissot, Zaqueo en el sicómoro esperando el paso de Jesús (Zacchaeus in the Sycamore Awaiting the Passage of Jesus), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e47": {
+   "title": "El perfume de Betania",
+   "when": "seis días antes de la Pascua",
+   "subtitle": "Un frasco roto y el aroma del amor llenando la casa",
+   "story": [
+    "Es de tarde, seis días antes de la Pascua, en Betania, una aldea en la colina al este de Jerusalén. Lázaro, que ha vuelto de la muerte, está sentado a la mesa con los invitados, y Marta va y viene con la comida. Marcos cuenta que la cena se celebró en casa de Simón, un hombre que había tenido lepra.",
+    "Entonces entra María con un perfume carísimo de nardo puro. Rompe el frasco de alabastro y lo derrama sobre la cabeza de Jesús, lo derrama también sobre sus pies y se los seca con el cabello suelto. Un aroma intenso llena la habitación, y por un momento todos contienen el aliento.",
+    "“Ese perfume podía haberse vendido por trescientos denarios. ¿Por qué no se dio el dinero a los pobres?” La voz cortante de Judas Iscariote rompe el silencio. Pero Jesús protege a la mujer. En aquel aroma ya veía acercarse su propia sepultura."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Déjenla en paz. ¿Por qué la molestan? Ha hecho conmigo algo hermoso."
+    },
+    {
+     "who": "Jesús",
+     "text": "Ha hecho todo lo que podía. Se ha adelantado a ungir mi cuerpo para la sepultura."
+    },
+    {
+     "who": "Jesús",
+     "text": "A los pobres siempre los tendrán con ustedes, pero a mí no siempre me tendrán."
+    },
+    {
+     "who": "Jesús",
+     "text": "Escuchen bien. Dondequiera que se anuncie la buena noticia en todo el mundo, se contará también lo que ella ha hecho, y será recordada."
+    }
+   ],
+   "note": "El nardo era un perfume valiosísimo que se extraía de la raíz de una planta que crece en el Himalaya. El jornal de un día era un denario, así que trescientos denarios eran una fortuna, casi un año entero de trabajo de un jornalero.",
+   "reflect": "Con un amor que no echa cuentas, ¿qué frasco mío podría romper ante el Señor?",
+   "quiz": {
+    "q": "¿Por cuánto dijo Judas que podría haberse vendido el perfume?",
+    "options": [
+     "Treinta denarios",
+     "Treinta monedas de plata",
+     "Trescientos denarios",
+     "Mil denarios"
+    ],
+    "explain": "En Jn 12:5 Judas habla de trescientos denarios. Las treinta monedas de plata fueron el precio que le pagaron a Judas por entregar a Jesús (Mt 26:15)."
+   },
+   "credit": "James Tissot, El ungüento de la Magdalena (The Ointment of the Magdalene), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e48": {
+   "title": "La procesión de las palmas",
+   "when": "Semana Santa · domingo",
+   "subtitle": "Un rey montado en un burrito, llorando por la ciudad",
+   "story": [
+    "Al pie del monte de los Olivos, en el camino cerca de Betfagé y Betania. Jesús envía a dos discípulos a la aldea de enfrente para que le traigan un burrito que nadie ha montado nunca. Cuando ponen sus mantos sobre el lomo del animal, él lo monta en silencio.",
+    "Los peregrinos que han venido para la Pascua tienden sus mantos en el camino y agitan ramas de palmera. “¡Hosanna! ¡Bendito el que viene en nombre del Señor!” El clamor rueda por las laderas del monte de los Olivos hasta las murallas de la ciudad. Los fariseos le exigen que reprenda a sus discípulos.",
+    "Pero cuando el camino empieza a bajar y la ciudad se extiende ante sus ojos, Jesús llora en medio de la procesión. Aquella ciudad que lo aclamaba no había reconocido el camino de la paz, y avanzaba hacia la ruina que se le venía encima."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "¡Si al menos hoy hubieras reconocido el camino que lleva a la paz! Pero ahora está oculto a tus ojos."
+    },
+    {
+     "who": "Jesús",
+     "text": "Les digo que, si estos se callan, gritarán en su lugar las piedras del camino."
+    },
+    {
+     "who": "Jesús",
+     "text": "Porque no reconociste el tiempo en que Dios vino a visitarte."
+    },
+    {
+     "who": "Jesús",
+     "text": "Si alguien les pregunta por qué lo hacen, díganle: el Señor lo necesita."
+    }
+   ],
+   "note": "Zacarías 9:9 anunció que el rey de Sion vendría humildemente, montado en un asno. Mateo y Juan leen esta entrada como el cumplimiento de esa profecía. Las ramas de palmera simbolizaban la victoria y la liberación del pueblo.",
+   "reflect": "¿Recibo a Jesús como el rey que yo quiero que sea, o como el rey que él vino a ser?",
+   "quiz": {
+    "q": "¿En qué entró Jesús montado en Jerusalén?",
+    "options": [
+     "Un burrito",
+     "Un caballo blanco",
+     "Un camello",
+     "Un carro"
+    ],
+    "explain": "Montó el burrito que le trajeron los discípulos, sobre el que habían puesto sus mantos (Mc 11:7; Jn 12:14). Recuerda la profecía de Zacarías 9:9."
+   },
+   "credit": "James Tissot, La procesión en el monte de los Olivos (The Procession on the Mount of Olives), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e49": {
+   "title": "Una casa de oración",
+   "when": "Semana Santa · lunes",
+   "subtitle": "Mesas volcadas y un atrio abierto de nuevo a la oración",
+   "story": [
+    "Lunes por la mañana, en el camino que sube de Betania a Jerusalén. Jesús, que tiene hambre, se detiene ante una higuera llena de hojas. No hay fruto en ninguna rama. Le habla al árbol, y los discípulos toman nota de sus palabras.",
+    "El atrio exterior del Templo parecía un mercado. Monedas que tintinean, palomas que baten las alas, gritos de regateo. Jesús echa fuera a los que compran y venden y vuelca las mesas de los cambistas y los puestos de los vendedores de palomas. No deja que nadie atraviese los atrios del Templo cargando mercancías.",
+    "Cuando el alboroto se calma, los ciegos y los cojos se acercan a él y son sanados. Los niños gritan: “¡Hosanna al Hijo de David!” Los jefes de los sacerdotes buscan la manera de acabar con él, pero el pueblo está pendiente de cada una de sus palabras."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "¿No está escrito: mi casa será llamada casa de oración para todos los pueblos? Pero ustedes la han convertido en una cueva de ladrones."
+    },
+    {
+     "who": "Jesús",
+     "text": "Sí, los oigo. ¿Nunca han leído: de la boca de los niños y de los que maman has hecho brotar la alabanza perfecta?"
+    },
+    {
+     "who": "Jesús",
+     "text": "Que nunca jamás vuelva nadie a comer fruto de ti."
+    }
+   ],
+   "note": "El atrio exterior del Templo era el atrio de los gentiles, abierto incluso a quienes no eran judíos. Allí los peregrinos compraban sus sacrificios, y se sabe que cambiaban dinero por siclos de Tiro para pagar el impuesto del Templo.",
+   "reflect": "¿Es el templo de mi corazón una casa de oración, o un mercado lleno de negocios?",
+   "quiz": {
+    "q": "¿En qué dijo Jesús que habían convertido el Templo?",
+    "options": [
+     "En la casa de un recaudador",
+     "En un altar derribado",
+     "En una tienda del desierto",
+     "En una cueva de ladrones"
+    ],
+    "explain": "Citando Isaías 56:7 y Jeremías 7:11, Jesús les reprochó haber convertido la casa de oración en una cueva de ladrones (Mc 11:17)."
+   },
+   "credit": "James Tissot, La higuera maldita (The Accursed Fig Tree), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e50": {
+   "title": "Preguntas en los atrios del Templo",
+   "when": "Semana Santa · martes",
+   "subtitle": "Preguntas tendidas como trampas, respuestas que volvieron como amor",
+   "story": [
+    "Martes, y los atrios del Templo están tensos de preguntas. Unos fariseos y unos herodianos le muestran un denario. ¿Es justo pagar impuestos al César? Respondiera lo que respondiera, la pregunta era una trampa. En la moneda de plata estaba grabado el rostro del emperador.",
+    "Los saduceos, que no creen en la resurrección, traen la historia de una mujer casada sucesivamente con siete hermanos. Luego un maestro de la Ley pregunta: ¿cuál es el primero de todos los mandamientos? La respuesta de Jesús fue asombrosamente sencilla. Amar a Dios y amar al prójimo.",
+    "Cuando se apagan las discusiones, Jesús se sienta frente al arca de las ofrendas. Después de que los ricos han echado sus pesadas donaciones y se han ido, una viuda pobre deja caer en silencio dos moneditas. Su mirada se detiene largo rato en aquel sonido apenas audible."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Den al César lo que es del César, y a Dios lo que es de Dios."
+    },
+    {
+     "who": "Jesús",
+     "text": "Ama al Señor tu Dios con todo tu corazón, con toda tu alma, con toda tu mente y con todas tus fuerzas. El segundo es este: ama a tu prójimo como a ti mismo."
+    },
+    {
+     "who": "Jesús",
+     "text": "Esta viuda pobre ha dado más que nadie. Los demás dieron un poco de lo que les sobra, pero ella dio todo lo que tenía para vivir."
+    },
+    {
+     "who": "Jesús",
+     "text": "Dios no es Dios de muertos, sino de vivos."
+    }
+   ],
+   "note": "Se cree que el denario de la época llevaba el rostro del emperador Tiberio y una inscripción que lo honraba como hijo de un dios. El leptón que dio la viuda era la moneda más pequeña en circulación.",
+   "reflect": "¿Doy lo que me sobra, o me doy a mí mismo?",
+   "quiz": {
+    "q": "¿Qué echó la viuda pobre en el arca de las ofrendas?",
+    "options": [
+     "Un denario",
+     "Dos leptos",
+     "Un siclo",
+     "Cinco monedas de oro"
+    ],
+    "explain": "La viuda echó dos leptos, que valían un cuadrante (Mc 12:42; Lc 21:2). Jesús dijo que había dado más que nadie."
+   },
+   "credit": "James Tissot, La moneda del tributo (The Tribute Money), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e51": {
+   "title": "Los últimos días, vistos desde el monte de los Olivos",
+   "when": "Semana Santa · martes por la tarde",
+   "subtitle": "Piedras que caerán y palabras que nunca pasarán",
+   "story": [
+    "Al salir del Templo, uno de los discípulos se queda maravillado. Maestro, ¡mira! ¡Qué piedras, qué edificios! Las grandes murallas resplandecían al sol. Pero Jesús dice que llegará un día en que no quedará en pie ni una de esas piedras.",
+    "Al atardecer, mientras Jesús está sentado en el monte de los Olivos, frente al Templo, Pedro, Santiago, Juan y Andrés le preguntan en voz baja. ¿Cuándo sucederá todo esto? Él les habla de guerras, terremotos y hambres, de engaños y persecuciones, y de los que se mantienen firmes hasta el final.",
+    "Nadie sabe el día ni la hora, repite una y otra vez, así que estén despiertos. Las historias de las muchachas con sus lámparas preparadas, de los siervos que hicieron rendir los talentos que se les confiaron y de la gente que cuidó de los más pequeños pasan en voz baja sobre la ciudad que se oscurece."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "El cielo y la tierra pasarán un día. Pero mis palabras permanecerán hasta el final."
+    },
+    {
+     "who": "Jesús",
+     "text": "Estén atentos y permanezcan despiertos. No saben cuándo llegará el momento."
+    },
+    {
+     "who": "Jesús",
+     "text": "Les digo la verdad: todo lo que hicieron por uno de estos hermanos míos más pequeños, por mí lo hicieron."
+    },
+    {
+     "who": "Jesús",
+     "text": "¿Ven estos grandes edificios? No quedará aquí piedra sobre piedra. Todas serán derribadas."
+    }
+   ],
+   "note": "El Templo, ampliado a lo grande por Herodes, fue incendiado y destruido en el año 70 después de Cristo por el ejército romano al mando de Tito. El Muro Occidental de Jerusalén es hoy parte del muro de contención que sostenía la explanada del Templo.",
+   "reflect": "Mientras espero a aquel cuya llegada nadie conoce, ¿cómo me mantengo despierto hoy?",
+   "quiz": {
+    "q": "¿Qué historia NO aparece en Mateo 25?",
+    "options": [
+     "Las diez muchachas",
+     "Los talentos",
+     "El hijo pródigo",
+     "Las ovejas y las cabras"
+    ],
+    "explain": "Mateo 25 cuenta, una tras otra, las historias de las diez muchachas, los talentos y las ovejas y las cabras (Mt 25:1–46). El hijo pródigo es una parábola de Lucas 15."
+   },
+   "credit": "James Tissot, La profecía de la destrucción del Templo (The Prophecy of the Destruction of the Temple), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e52": {
+   "title": "La última cena en el aposento alto",
+   "when": "Semana Santa · jueves por la noche",
+   "subtitle": "La última noche, cuando les lavó los pies y partió el pan",
+   "story": [
+    "Jueves por la tarde. Pedro y Juan siguen a un hombre que lleva un cántaro de agua y preparan la mesa de la Pascua en un amplio aposento alto. Cuando los discípulos se han reunido a la luz de las lámparas, Jesús se quita el manto, se ata una toalla a la cintura, echa agua en una palangana y les lava los pies uno por uno.",
+    "Durante la cena toma el pan, da gracias, lo parte y se lo da, diciendo: esto es mi cuerpo, entregado por ustedes. Al pasarles la copa, dice: esta es la nueva alianza en mi sangre. Ante las palabras uno de ustedes me va a entregar, la sala se queda helada, y Judas se levanta y sale. Era de noche.",
+    "A los discípulos que quedan, Jesús les habla largo rato. Ámense unos a otros, les dice. No se angustien. Yo soy el camino. Luego levanta los ojos al cielo y ora por ellos. Después de cantar un himno, salen a la oscuridad, hacia el monte de los Olivos."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Esto es mi cuerpo, entregado por ustedes. Hagan esto en memoria de mí. Esta copa es la nueva alianza en mi sangre, derramada por ustedes."
+    },
+    {
+     "who": "Jesús",
+     "text": "Les doy un mandamiento nuevo: ámense unos a otros. Como yo los he amado, ámense así. En esto todos sabrán que son mis discípulos."
+    },
+    {
+     "who": "Jesús",
+     "text": "Yo soy el camino, la verdad y la vida. Nadie llega al Padre sino por mí."
+    },
+    {
+     "who": "Jesús",
+     "text": "La paz les dejo. Les doy mi propia paz, no como la da el mundo. Que no se angustie su corazón ni tenga miedo."
+    }
+   ],
+   "note": "Mateo, Marcos y Lucas presentan esta cena como una comida de Pascua, mientras que Juan dice que Jesús fue crucificado el día de la preparación de la Pascua. Los estudiosos todavía discuten cómo encajan los dos relatos.",
+   "reflect": "A la luz de su último encargo de amarnos unos a otros, ¿a quién debería ser yo el primero en lavarle los pies?",
+   "quiz": {
+    "q": "¿Qué dos discípulos fueron enviados a preparar la cena de Pascua?",
+    "options": [
+     "Pedro y Juan",
+     "Santiago y Juan",
+     "Andrés y Felipe",
+     "Tomás y Mateo"
+    ],
+    "explain": "Lc 22:8 dice que Jesús envió a Pedro y a Juan a preparar la cena de Pascua."
+   },
+   "credit": "James Tissot, La última cena (The Last Supper), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e53": {
+   "title": "La noche en Getsemaní",
+   "when": "Semana Santa · jueves, ya muy de noche",
+   "subtitle": "No mi voluntad, sino la tuya",
+   "story": [
+    "Después de la cena, de noche, cruzan el torrente Cedrón y entran en Getsemaní, un huerto al pie del monte de los Olivos. La luz de la luna se filtra entre los olivos. Jesús se adentra un poco más llevando solo a Pedro, Santiago y Juan, y allí empieza a temblar, lleno de angustia.",
+    "Un poco más allá, cae en tierra y ora. Padre, aparta de mí esta copa. Pero que no se haga mi voluntad, sino la tuya. Su sudor cae al suelo como gotas de sangre, y cada vez que vuelve, los discípulos se han dormido otra vez.",
+    "Una turba con antorchas, espadas y palos irrumpe en el huerto. Judas se acerca y lo besa. Pedro blande una espada y le corta la oreja a Malco, el siervo del sumo sacerdote, y Jesús toca la oreja y lo sana. Entonces todos los discípulos lo abandonan y huyen."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Abbá, Padre, para ti todo es posible. Aparta de mí esta copa. Pero que no sea lo que yo quiero, sino lo que quieres tú."
+    },
+    {
+     "who": "Jesús",
+     "text": "Mi alma está abrumada de tristeza, hasta la muerte. Quédense aquí y velen."
+    },
+    {
+     "who": "Jesús",
+     "text": "Velen y oren para no ceder a la tentación. El espíritu está dispuesto, pero el cuerpo es débil."
+    },
+    {
+     "who": "Jesús",
+     "text": "Vuelve a meter la espada en la vaina. ¿No voy a beber la copa que el Padre me ha dado?"
+    }
+   ],
+   "note": "Getsemaní suele explicarse como ‘prensa de aceite’. Era un olivar al pie del monte de los Olivos, y Lucas y Juan dicen que Jesús iba allí a menudo con sus discípulos.",
+   "reflect": "Cuando mi voluntad choca con la de Dios, ¿cómo oro?",
+   "quiz": {
+    "q": "¿Cómo se llamaba el siervo del sumo sacerdote al que Pedro le cortó la oreja?",
+    "options": [
+     "Barrabás",
+     "Nicodemo",
+     "Simón",
+     "Malco"
+    ],
+    "explain": "Jn 18:10 dice que el siervo se llamaba Malco y que perdió la oreja derecha. Lucas cuenta que Jesús le sanó la oreja (Lc 22:51)."
+   },
+   "credit": "James Tissot, Mi alma está triste hasta la muerte (My Soul is Sorrowful unto Death), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e54": {
+   "title": "Silencio en el juicio",
+   "when": "Semana Santa · viernes de madrugada",
+   "subtitle": "Un rey en silencio y una negación dicha tres veces",
+   "story": [
+    "Atado, Jesús es llevado primero ante Anás y después ante Caifás, el sumo sacerdote. Mientras los falsos testimonios se contradicen, él guarda silencio. Pero cuando le preguntan si es el Cristo, responde: yo soy. El sumo sacerdote se rasga las vestiduras, y el consejo pide a gritos su muerte.",
+    "A esa misma hora, calentándose junto a unas brasas en el patio, Pedro niega tres veces conocerlo. Canta un gallo, y el Señor se vuelve y lo mira. Pedro sale afuera y llora amargamente.",
+    "Al amanecer, el consejo entrega a Jesús al gobernador Pilato. Como no encuentra delito, Pilato llega a enviarlo a Herodes, pero la multitud solo grita: crucifícalo. Al final Pilato se lava las manos, suelta a Barrabás, manda azotar a Jesús y lo entrega."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Sí, yo soy. Y verán al Hijo del hombre sentado a la derecha del Todopoderoso, viniendo con las nubes del cielo."
+    },
+    {
+     "who": "Jesús",
+     "text": "Mi reino no pertenece a este mundo. Si así fuera, los míos lucharían para que no me entregaran."
+    },
+    {
+     "who": "Jesús",
+     "text": "Para esto nací y para esto vine al mundo: para dar testimonio de la verdad. Todo el que es de la verdad escucha mi voz."
+    }
+   ],
+   "note": "Poncio Pilato fue el gobernador romano de Judea entre los años 26 y 36 después de Cristo. En 1961 se encontró en Cesarea, en la costa del Mediterráneo, una inscripción en piedra con su nombre.",
+   "reflect": "Ante la verdad, ¿me pongo del lado de Jesús en silencio, o me dejo arrastrar por el griterío de la multitud?",
+   "quiz": {
+    "q": "¿Qué preso soltó Pilato a petición de la multitud?",
+    "options": [
+     "Malco",
+     "Barrabás",
+     "Simón de Cirene",
+     "Caifás"
+    ],
+    "explain": "Según la costumbre de soltar a un preso en la fiesta, Pilato liberó a Barrabás, que estaba encarcelado por rebelión y asesinato (Mc 15:6–15; Lc 23:19, 25)."
+   },
+   "credit": "James Tissot, He aquí el hombre (Behold the Man), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e55": {
+   "title": "El Gólgota",
+   "when": "Semana Santa · viernes",
+   "subtitle": "El día en que todo se cumplió, y el silencio del sepulcro",
+   "story": [
+    "Los soldados lo visten de púrpura, le ciñen una corona de espinas y se burlan de él como rey. Al salir de la ciudad obligan a Simón, un hombre de Cirene que volvía del campo, a cargar con la cruz. El Gólgota, el lugar de la calavera, a las nueve de la mañana. El letrero sobre su cabeza decía: el Rey de los judíos.",
+    "Desde el mediodía hasta las tres de la tarde, la oscuridad cubre toda la tierra. Él perdona a quienes lo clavaron, promete el paraíso al malhechor arrepentido y confía a su madre al discípulo que amaba. Con un fuerte grito exhala el último aliento, y el velo del Templo se rasga de arriba abajo.",
+    "Al caer el sol, cuando se acerca el sábado, José de Arimatea, miembro del consejo y discípulo en secreto, pide a Pilato el cuerpo. Nicodemo trae mirra y áloe, y entre los dos lo envuelven en lienzos de lino y lo depositan en un sepulcro nuevo, excavado en la roca de un huerto. Una gran piedra cierra la entrada."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Padre, perdónalos. No saben lo que hacen."
+    },
+    {
+     "who": "Jesús",
+     "text": "Te lo prometo: hoy mismo estarás conmigo en el paraíso."
+    },
+    {
+     "who": "Jesús",
+     "text": "Mujer, ahí tienes a tu hijo. Y tú, recíbela desde ahora como tu madre."
+    },
+    {
+     "who": "Jesús",
+     "text": "Eloí, Eloí, ¿lemá sabactaní? Dios mío, Dios mío, ¿por qué me has abandonado?"
+    },
+    {
+     "who": "Jesús",
+     "text": "Tengo sed."
+    },
+    {
+     "who": "Jesús",
+     "text": "Todo está cumplido."
+    },
+    {
+     "who": "Jesús",
+     "text": "Padre, en tus manos entrego mi espíritu."
+    }
+   ],
+   "note": "La crucifixión era la muerte más infamante que imponía Roma, reservada a rebeldes y esclavos. La tradición sitúa con más fuerza el Gólgota en el lugar de la iglesia del Santo Sepulcro, y la Tumba del Huerto, propuesta en el siglo diecinueve, es también un conocido lugar de peregrinación.",
+   "reflect": "Ante sus últimas palabras, todo está cumplido, ¿qué puedo dejar yo en sus manos?",
+   "quiz": {
+    "q": "¿A quién obligaron los soldados a cargar con la cruz de Jesús?",
+    "options": [
+     "José de Arimatea",
+     "Nicodemo",
+     "Simón de Cirene",
+     "Barrabás"
+    ],
+    "explain": "Los soldados obligaron a Simón de Cirene, que volvía del campo, a cargar con la cruz (Mc 15:21; Lc 23:26). Marcos dice que era el padre de Alejandro y de Rufo."
+   },
+   "credit": "James Tissot, Lo que vio Nuestro Señor desde la cruz (What Our Lord Saw from the Cross), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e56": {
+   "title": "María",
+   "when": "primer día de la semana · al amanecer",
+   "subtitle": "La voz que la llama por su nombre",
+   "story": [
+    "El primer día de la semana, de madrugada, cuando todavía está oscuro. María Magdalena llega al sepulcro y encuentra la piedra retirada de la entrada. Al oír la noticia, Pedro y el discípulo amado llegan corriendo, sin aliento. Dentro del sepulcro vacío solo están los lienzos y el sudario, doblado aparte.",
+    "Cuando los discípulos vuelven a casa, María se queda fuera del sepulcro, llorando. Al inclinarse para mirar dentro, ve a dos ángeles vestidos de blanco sentados donde había estado el cuerpo, uno a la cabecera y otro a los pies. Se da la vuelta y hay alguien de pie, pero entre lágrimas lo confunde con el hortelano.",
+    "“María.” Una voz conocida pronuncia su nombre. Ella se vuelve y exclama: Rabbuní, que significa Maestro. Corre a donde están los discípulos y les dice que ha visto al Señor. En la mañana de la resurrección, aquella alegría se extendió desde los labios de una mujer."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "María."
+    },
+    {
+     "who": "Jesús",
+     "text": "Mujer, ¿por qué lloras? ¿A quién buscas?"
+    },
+    {
+     "who": "Jesús",
+     "text": "No me retengas; todavía no he subido al Padre. Ve y diles a mis hermanos: subo a mi Padre y Padre de ustedes, a mi Dios y Dios de ustedes."
+    },
+    {
+     "who": "María Magdalena",
+     "text": "¡He visto al Señor!"
+    }
+   ],
+   "note": "Magdala era un pueblo de pescadores en la orilla occidental del mar de Galilea. Lucas cuenta que Jesús expulsó siete demonios de María Magdalena y que ella ayudaba a Jesús y a sus compañeros con sus propios bienes.",
+   "reflect": "Cuando el dolor me impide reconocer al Señor que está a mi lado, ¿estoy atento a la voz que me llama por mi nombre?",
+   "quiz": {
+    "q": "¿Por quién tomó María al principio a Jesús resucitado?",
+    "options": [
+     "Por el hortelano",
+     "Por un ángel",
+     "Por Pedro",
+     "Por un soldado que custodiaba el sepulcro"
+    ],
+    "explain": "María confundió a Jesús con el hortelano y le preguntó dónde había puesto el cuerpo (Jn 20:15). Solo cuando él la llamó por su nombre lo reconoció (Jn 20:16)."
+   },
+   "credit": "James Tissot, Jesús se aparece a María Magdalena (Jesus Appears to Mary Magdalene), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e57": {
+   "title": "El camino de Emaús",
+   "when": "primer día de la semana · por la tarde",
+   "subtitle": "Corazones en llamas y el pan partido",
+   "story": [
+    "Esa tarde, dos discípulos caminan hacia Emaús, a unos sesenta estadios de Jerusalén. Su conversación, que da vueltas a unas esperanzas derrumbadas, es pesada. Un desconocido se les acerca y camina a su lado, pero sus ojos están como velados y no lo reconocen.",
+    "Cleofás dice con tristeza: nosotros esperábamos que él fuera el que iba a liberar a Israel. Comenzando por Moisés y por todos los profetas, el desconocido les explica, pasaje tras pasaje, lo que se decía del Cristo. Cuando el sol empieza a ocultarse, le insisten en que se quede. Ya es casi de noche; quédate con nosotros.",
+    "En la mesa, en el instante en que toma el pan, lo bendice, lo parte y se lo da, se les abren los ojos. Pero enseguida Jesús desaparece de su vista. ¿No ardía nuestro corazón mientras nos explicaba las Escrituras por el camino? Los dos se levantan en ese mismo momento y desandan el camino en plena noche hasta Jerusalén."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "¡Qué torpes son, y qué lentos de corazón para creer todo lo que dijeron los profetas! ¿No tenía que sufrir el Cristo todo esto antes de entrar en su gloria?"
+    },
+    {
+     "who": "Jesús",
+     "text": "¿De qué van hablando entre ustedes por el camino?"
+    },
+    {
+     "who": "Los dos discípulos",
+     "text": "¿No ardía como fuego nuestro corazón mientras nos hablaba en el camino y nos explicaba las Escrituras?"
+    }
+   ],
+   "note": "No se sabe con exactitud dónde estaba Emaús. Para que coincida con la distancia de unos once kilómetros desde Jerusalén, se han propuesto Motza y Qubeibeh, y una tradición señala la más lejana Emaús Nicópolis.",
+   "reflect": "En el camino de mi vida, cuando avanzo desanimado, ¿reconozco al que camina a mi lado?",
+   "quiz": {
+    "q": "¿Cuál de los dos discípulos del camino de Emaús aparece con su nombre?",
+    "options": [
+     "Natanael",
+     "Felipe",
+     "Tomás",
+     "Cleofás"
+    ],
+    "explain": "Lc 24:18 da el nombre de uno de ellos, Cleofás. El nombre del otro no aparece."
+   },
+   "credit": "James Tissot, Los peregrinos de Emaús en el camino (The Pilgrims of Emmaus on the Road), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e58": {
+   "title": "A través de la puerta cerrada",
+   "when": "esa noche y ocho días después",
+   "subtitle": "Una paz que entró por una puerta cerrada",
+   "story": [
+    "En la tarde del día de la resurrección, los discípulos están reunidos tras unas puertas cerradas por miedo. Justo cuando la sala se agita con el relato de los dos que han vuelto de Emaús, Jesús se presenta en medio de ellos. La paz esté con ustedes. Sobresaltados, los discípulos creen ver un fantasma.",
+    "Él les muestra las manos y los pies con las marcas de los clavos, y el costado atravesado por la lanza. Come delante de ellos un trozo de pescado asado y les abre el entendimiento para que comprendan las Escrituras. Luego sopla sobre ellos y dice: reciban el Espíritu Santo.",
+    "Tomás, que no estaba allí, se resiste. Si no lo toca él mismo, no creerá. Ocho días después, de nuevo tras la puerta cerrada, Jesús se presenta y le tiende las manos y el costado. De labios de Tomás brota una confesión. Señor mío y Dios mío."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "La paz esté con ustedes. Como el Padre me envió a mí, así los envío yo ahora a ustedes."
+    },
+    {
+     "who": "Jesús",
+     "text": "Miren mis manos y mis pies. Soy yo mismo. Tóquenme y vean. Un fantasma no tiene carne ni huesos, como ven que yo tengo."
+    },
+    {
+     "who": "Jesús",
+     "text": "Crees porque me has visto. Dichosos de verdad los que no han visto y, sin embargo, creen."
+    },
+    {
+     "who": "Tomás",
+     "text": "¡Señor mío y Dios mío!"
+    }
+   ],
+   "note": "A Tomás lo llamaban Dídimo, que significa el Gemelo. En la manera judía de contar, ocho días después incluye también el primer día, así que se refiere al mismo día de la semana siguiente, cuando volvía el primer día de la semana.",
+   "reflect": "Tras la puerta de mi corazón, que he cerrado por miedo, ¿estoy dejando entrar su paz?",
+   "quiz": {
+    "q": "¿Cuándo volvió a aparecerse Jesús, esta vez estando Tomás presente?",
+    "options": [
+     "Tres días después",
+     "Ocho días después",
+     "Siete días después",
+     "Cuarenta días después"
+    ],
+    "explain": "Jn 20:26 dice que ocho días después, cuando los discípulos estaban reunidos de nuevo y Tomás con ellos, Jesús se presentó estando las puertas cerradas."
+   },
+   "credit": "James Tissot, La incredulidad de santo Tomás (The Disbelief of Saint Thomas), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e59": {
+   "title": "Mañana a orillas del mar de Tiberíades",
+   "when": "una mañana después de la resurrección",
+   "subtitle": "El amor, preguntado tres veces junto a unas brasas",
+   "story": [
+    "De vuelta en Galilea, Pedro dice: me voy a pescar. Tomás y Natanael, los hijos de Zebedeo y otros dos discípulos suben con él a la barca. Toda la noche echan la red y no pescan nada. Al despuntar el día, alguien está de pie en la orilla.",
+    "Cuando hacen lo que él dice y echan la red a la derecha de la barca, se llena de tantos peces que no pueden sacarla. El discípulo amado exclama: ¡es el Señor! Pedro se ciñe el manto y se tira al agua. En la orilla hay pescado y pan sobre unas brasas, y en la red hay ciento cincuenta y tres peces grandes.",
+    "Después del desayuno, Jesús le pregunta a Pedro tres veces: Simón, hijo de Juan, ¿me amas? A la tercera pregunta, Pedro se entristece. Señor, tú lo sabes todo; tú sabes que te amo. Apacienta mis ovejas. Y sígueme."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Simón, hijo de Juan, ¿me amas? Entonces apacienta mi rebaño."
+    },
+    {
+     "who": "Jesús",
+     "text": "Sígueme."
+    },
+    {
+     "who": "Jesús",
+     "text": "Echen la red a la derecha de la barca, y encontrarán peces."
+    },
+    {
+     "who": "Jesús",
+     "text": "Vengan a desayunar."
+    }
+   ],
+   "note": "En el Evangelio de Juan, la palabra que designa unas brasas aparece solo dos veces: en el patio de la casa del sumo sacerdote, donde Pedro negó a Jesús, y en esta mañana. A las tres negaciones les siguen tres confesiones de amor.",
+   "reflect": "Al Señor que vuelve justo al lugar donde caí, ¿qué respuesta le estoy dando?",
+   "quiz": {
+    "q": "¿Cuántos peces grandes había en la red que sacaron los discípulos?",
+    "options": [
+     "Setenta",
+     "Cien",
+     "Ciento cincuenta y tres",
+     "Doscientos"
+    ],
+    "explain": "Jn 21:11 dice que había ciento cincuenta y tres peces grandes, y que, aun siendo tantos, la red no se rompió."
+   },
+   "credit": "James Tissot, Cristo se aparece a orillas del lago de Tiberíades (Christ Appears on the Shore of Lake Tiberias), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e60": {
+   "title": "El último encargo en el monte",
+   "when": "después de la resurrección",
+   "subtitle": "La promesa de estar con ellos hasta el fin del mundo",
+   "story": [
+    "Los once discípulos suben al monte de Galilea adonde Jesús les había dicho que fueran. En el viento que roza la cumbre, cada uno con sus propios fracasos y temores, lo esperan en el lugar señalado. Era tal como decía el mensaje que habían recibido las mujeres en el sepulcro.",
+    "Cuando por fin aparece, los discípulos se postran y lo adoran. Sin embargo, Mateo cuenta con franqueza que algunos todavía dudaban. Jesús se acerca a ellos, tal como están, y les habla.",
+    "Toda autoridad en el cielo y en la tierra le pertenece. Así que vayan y hagan discípulos de todas las naciones, bautícenlos y enséñenles. A un pequeño grupo de dudas y fe entremezcladas se le confía el mundo entero. Y queda una última promesa. Yo estoy con ustedes todos los días."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Vayan y hagan discípulos en todas las naciones. Bautícenlos en el nombre del Padre, del Hijo y del Espíritu Santo, y enséñenles a guardar lo que les mandé."
+    },
+    {
+     "who": "Jesús",
+     "text": "Recuérdenlo: yo estoy con ustedes todos los días, hasta el fin del mundo."
+    },
+    {
+     "who": "Jesús",
+     "text": "Se me ha dado toda autoridad en el cielo y en la tierra."
+    }
+   ],
+   "note": "El Evangelio de Mateo comienza con la profecía de Emanuel, Dios con nosotros, y termina con la promesa: yo estoy con ustedes todos los días. No se dice qué monte era.",
+   "reflect": "Aun con dudas dentro de mí, ¿puedo recorrer el camino que él me ha confiado?",
+   "quiz": {
+    "q": "En Mateo 28, ¿cuántos discípulos fueron al monte de Galilea y se encontraron con Jesús?",
+    "options": [
+     "Once",
+     "Doce",
+     "Siete",
+     "Setenta"
+    ],
+    "explain": "Los once discípulos, sin Judas Iscariote, fueron al monte de Galilea adonde Jesús les había indicado (Mt 28:16)."
+   },
+   "credit": "James Tissot, La exhortación a los apóstoles (The Exhortation to the Apostles), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  },
+  "e61": {
+   "title": "Hacia la nube",
+   "when": "cuarenta días después de la resurrección",
+   "subtitle": "Una bendición y una promesa en la despedida",
+   "story": [
+    "Durante cuarenta días después de la resurrección, Jesús se ha ido apareciendo a los discípulos y les ha hablado del reino de Dios. Ahora los lleva hasta las afueras de Betania. Los discípulos le hacen una última pregunta. Señor, ¿es ahora cuando vas a restablecer el reino de Israel?",
+    "Él responde que los tiempos y los momentos están en manos del Padre, y luego les dice que, cuando el Espíritu Santo venga sobre ellos, serán sus testigos hasta los confines de la tierra. Entonces, levantando las manos para bendecirlos, es elevado al cielo. Una nube lo oculta, y ya no lo ven más.",
+    "Mientras los discípulos se quedan mirando al cielo, dos hombres vestidos de blanco se ponen a su lado y les hablan. Este Jesús, que ha sido llevado al cielo, volverá de la misma manera que lo han visto irse. Llenos de una gran alegría, los discípulos regresan a Jerusalén y alaban a Dios cada día en el Templo."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Cuando el Espíritu Santo venga sobre ustedes, recibirán fuerza. Y serán mis testigos en Jerusalén, en toda Judea y Samaria, y hasta los confines de la tierra."
+    },
+    {
+     "who": "Jesús",
+     "text": "No les toca a ustedes conocer los tiempos ni los momentos que el Padre ha fijado con su propia autoridad."
+    },
+    {
+     "who": "Dos hombres vestidos de blanco",
+     "text": "Hombres de Galilea, ¿por qué se quedan mirando al cielo? Este Jesús, llevado de entre ustedes al cielo, volverá tal como lo han visto irse."
+    }
+   ],
+   "note": "Los Hechos cuentan que, después de la Ascensión, los discípulos volvieron a Jerusalén desde el monte de los Olivos, a la distancia que se podía caminar en sábado. Betania es una aldea en la ladera oriental del monte de los Olivos.",
+   "reflect": "Mirando hacia el día de su regreso, ¿dónde estoy viviendo hoy como su testigo?",
+   "quiz": {
+    "q": "¿Qué ocultó a Jesús de la vista cuando fue elevado al cielo?",
+    "options": [
+     "Una columna de fuego",
+     "Una estrella brillante",
+     "Una paloma blanca",
+     "Una nube"
+    ],
+    "explain": "Hch 1:9 dice que, mientras Jesús era elevado, una nube lo ocultó de la vista de los discípulos."
+   },
+   "credit": "James Tissot, La Ascensión (The Ascension), c. 1886–1894 · Museo de Brooklyn · Dominio público"
+  }
+ }
+}

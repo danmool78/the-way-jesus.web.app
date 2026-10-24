@@ -1,0 +1,2525 @@
+{
+ "periods": {
+  "p1": {
+   "name": "Kelahiran dan Masa Kecil",
+   "span": "6 SM – 8 M"
+  },
+  "p2": {
+   "name": "Pelayanan Dimulai",
+   "span": "26 – 27 M"
+  },
+  "p3": {
+   "name": "Yudea dan Samaria",
+   "span": "27 M"
+  },
+  "p4": {
+   "name": "Musim Semi di Galilea",
+   "span": "28 M"
+  },
+  "p5": {
+   "name": "Melampaui Galilea",
+   "span": "29 M"
+  },
+  "p6": {
+   "name": "Menuju Yerusalem",
+   "span": "29 – 30 M"
+  },
+  "p7": {
+   "name": "Pekan Sengsara",
+   "span": "musim semi 30 M"
+  },
+  "p8": {
+   "name": "Kebangkitan dan Kenaikan",
+   "span": "musim semi 30 M"
+  }
+ },
+ "places": {
+  "nazareth": {
+   "name": "Nazaret",
+   "region": "Galilea"
+  },
+  "bethlehem": {
+   "name": "Betlehem",
+   "region": "Yudea"
+  },
+  "jerusalem": {
+   "name": "Yerusalem",
+   "region": "Yudea"
+  },
+  "temple": {
+   "name": "Bait Allah",
+   "region": "Yerusalem"
+  },
+  "upper_room": {
+   "name": "Ruang Atas",
+   "region": "Yerusalem"
+  },
+  "gethsemane": {
+   "name": "Getsemani",
+   "region": "Yerusalem"
+  },
+  "olives": {
+   "name": "Bukit Zaitun",
+   "region": "Yerusalem"
+  },
+  "golgotha": {
+   "name": "Golgota · Makam Taman",
+   "region": "Yerusalem"
+  },
+  "siloam": {
+   "name": "Kolam Siloam",
+   "region": "Yerusalem"
+  },
+  "praetorium": {
+   "name": "Gedung Pengadilan Gubernur",
+   "region": "Yerusalem"
+  },
+  "bethany": {
+   "name": "Betania",
+   "region": "Yudea"
+  },
+  "egypt": {
+   "name": "Mesir (Delta Nil)",
+   "region": "Mesir"
+  },
+  "bethany_jordan": {
+   "name": "Betania di seberang Yordan",
+   "region": "Perea"
+  },
+  "wilderness": {
+   "name": "Padang Gurun Yudea",
+   "region": "Yudea"
+  },
+  "cana": {
+   "name": "Kana",
+   "region": "Galilea"
+  },
+  "capernaum": {
+   "name": "Kapernaum",
+   "region": "Galilea"
+  },
+  "sychar": {
+   "name": "Sikhar · Sumur Yakub",
+   "region": "Samaria"
+  },
+  "beatitudes": {
+   "name": "Bukit Sabda Bahagia",
+   "region": "Galilea"
+  },
+  "nain": {
+   "name": "Nain",
+   "region": "Galilea"
+  },
+  "galilee_town": {
+   "name": "Sebuah Desa di Galilea",
+   "region": "Galilea"
+  },
+  "sea": {
+   "name": "Di Tengah Danau Galilea",
+   "region": "Danau Galilea"
+  },
+  "gerasa": {
+   "name": "Gerasa (Kursi)",
+   "region": "Dekapolis"
+  },
+  "bethsaida": {
+   "name": "Padang Betsaida",
+   "region": "Galilea"
+  },
+  "tyre": {
+   "name": "Tirus",
+   "region": "Fenisia"
+  },
+  "decapolis": {
+   "name": "Dekapolis",
+   "region": "Dekapolis"
+  },
+  "caesarea_philippi": {
+   "name": "Kaisarea Filipi",
+   "region": "Iturea"
+  },
+  "tabor": {
+   "name": "Gunung Tabor (menurut tradisi)",
+   "region": "Galilea"
+  },
+  "perea": {
+   "name": "Perea di seberang Yordan",
+   "region": "Perea"
+  },
+  "jericho": {
+   "name": "Yerikho",
+   "region": "Yudea"
+  },
+  "emmaus": {
+   "name": "Emaus (perkiraan)",
+   "region": "Yudea"
+  },
+  "tabgha": {
+   "name": "Tepi Danau Tiberias",
+   "region": "Galilea"
+  },
+  "galilee_mountain": {
+   "name": "Sebuah Gunung di Galilea",
+   "region": "Galilea"
+  }
+ },
+ "events": {
+  "e01": {
+   "title": "Kabar dari Malaikat",
+   "when": "sekitar 6 SM",
+   "subtitle": "Kisah yang bermula dari jawaban ya seorang gadis",
+   "story": [
+    "Nazaret, sebuah desa di perbukitan Galilea. Pada suatu hari biasa di kota kecil yang namanya tak pernah muncul dalam Perjanjian Lama, seberkas cahaya berdiri di hadapan Maria, gadis muda yang telah bertunangan dengan Yusuf dari keluarga Daud. Itulah malaikat Gabriel, utusan Allah.",
+    "“Bersukacitalah, engkau yang dikaruniai.” Kepada gadis yang gemetar itu, malaikat menyampaikan kabar yang nyaris mustahil dipercaya. Ia akan mengandung seorang anak, namanya Yesus, dan Ia akan menjadi raja dari kerajaan yang tak berkesudahan. Dengan suara bergetar, Maria menerima kabar itu.",
+    "Yusuf, tunangannya, semula hendak memutuskan pertunangan diam-diam. Namun dalam mimpi ia mendengar kabar yang sama dari malaikat, lalu mengambil Maria sebagai istrinya. Tanpa disadari dunia, surga sedang memulai kisah terbesarnya dari tempat yang paling rendah."
+   ],
+   "words": [
+    {
+     "who": "Gabriel",
+     "text": "Jangan takut, Maria. Allah berkenan kepadamu. Bagi Allah tidak ada yang mustahil."
+    },
+    {
+     "who": "Maria",
+     "text": "Aku ini hamba Tuhan. Biarlah terjadi padaku tepat seperti yang kaukatakan."
+    },
+    {
+     "who": "Malaikat Tuhan",
+     "text": "Yusuf, anak Daud, jangan ragu mengambil Maria sebagai istrimu. Namai anak itu Yesus, sebab Dialah yang akan membebaskan umat-Nya dari dosa mereka."
+    }
+   ],
+   "note": "Nazaret diperkirakan hanyalah desa pertanian kecil berpenduduk beberapa ratus orang. Begitu tak dikenalnya, sampai-sampai dalam Injil Yohanes Natanael bertanya, “Mungkinkah sesuatu yang baik datang dari Nazaret?”",
+   "reflect": "Di hadapan panggilan yang tak bisa kujelaskan, sanggupkah aku menjawab ya seperti Maria?",
+   "quiz": {
+    "q": "Nama apa yang disampaikan malaikat kepada Maria untuk anaknya?",
+    "options": [
+     "Imanuel",
+     "Yesus",
+     "Daud",
+     "Yohanes"
+    ],
+    "explain": "Nama Yesus berarti “Tuhan menyelamatkan” (Luk 1:31; Mat 1:21). Imanuel adalah gelar dari nubuat Yesaya yang dikutip Matius."
+   },
+   "credit": "James Tissot, The Annunciation, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e02": {
+   "title": "Malam di Betlehem",
+   "when": "musim dingin, sekitar 5 SM",
+   "subtitle": "Malam tanpa tempat menginap, nyanyian di atas padang",
+   "story": [
+    "Kaisar Romawi Agustus memerintahkan sensus di seluruh kekaisaran. Yusuf meninggalkan Nazaret bersama Maria yang sedang hamil tua, menempuh jalan panjang ke Betlehem, kota leluhurnya Daud. Kota asing itu sudah penuh sesak oleh orang.",
+    "Tak ada tempat bagi mereka untuk menginap. Malam itu Maria melahirkan anak sulungnya, membungkusnya dengan kain, lalu membaringkannya di palungan, tempat makan ternak. Di udara yang dingin, hanya napas lembut bayi itu yang mengepul seperti kabut.",
+    "Di padang dekat situ, para gembala sedang berjaga menjaga kawanan domba sepanjang malam, ketika tiba-tiba kemuliaan Tuhan bersinar di sekeliling mereka. Kabar malaikat disusul puji-pujian bala tentara surga yang memenuhi langit malam. Para gembala bergegas pergi dan menemukan bayi itu di palungan. Maria menyimpan semua hal itu dalam-dalam di hatinya."
+   ],
+   "words": [
+    {
+     "who": "Malaikat",
+     "text": "Jangan takut. Aku membawa kabar baik yang akan menjadi sukacita besar bagi seluruh bangsa. Hari ini di kota Daud telah lahir bagimu Juru Selamat, yaitu Kristus Tuhan."
+    },
+    {
+     "who": "Bala tentara surga",
+     "text": "Kemuliaan bagi Allah di tempat yang mahatinggi, dan damai di bumi bagi manusia yang berkenan kepada-Nya."
+    },
+    {
+     "who": "Para gembala",
+     "text": "Mari kita ke Betlehem dan melihat sendiri peristiwa yang diberitahukan Tuhan kepada kita."
+    }
+   ],
+   "note": "Kata Yunani katalyma, yang biasa diterjemahkan penginapan, dapat juga berarti kamar tamu di rumah keluarga. Karena itu ada yang menafsirkan Yesus lahir di lantai bawah rumah tempat ternak dipelihara, atau di sebuah gua.",
+   "reflect": "Jika Allah memilih palungan yang paling sederhana, di tempat rendah manakah dalam hidupku aku bisa berjumpa dengan-Nya?",
+   "quiz": {
+    "q": "Tanda apa yang diberikan malaikat kepada para gembala?",
+    "options": [
+     "Bintang yang berhenti di atas sebuah rumah",
+     "Pangeran yang lahir di istana",
+     "Bayi yang dibungkus kain dan berbaring di palungan",
+     "Anak domba yang dipersembahkan di Bait Allah"
+    ],
+    "explain": "Malaikat berkata tandanya adalah “seorang bayi dibungkus kain dan berbaring di palungan” (Luk 2:12). Bintang termasuk dalam kisah orang Majus menurut Matius."
+   },
+   "credit": "James Tissot, The Adoration of the Shepherds, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e03": {
+   "title": "Simeon dan Hana di Bait Allah",
+   "when": "40 hari setelah kelahiran",
+   "subtitle": "Terang di mata dua orang yang menanti seumur hidup",
+   "story": [
+    "Pada hari kedelapan anak itu disunat dan diberi nama Yesus, seperti kata malaikat. Ketika masa pentahiran selesai, Yusuf dan Maria membawa-Nya ke Bait Allah di Yerusalem dan, sesuai hukum Taurat, mempersembahkan sepasang burung tekukur atau dua ekor anak burung merpati.",
+    "Saat itu Simeon, seorang tua yang benar dan saleh, dituntun Roh masuk ke Bait Allah. Ia hidup dengan janji bahwa ia tidak akan mati sebelum melihat Kristus. Ia menggendong anak itu dan memuji Allah, lalu berkata kepada Maria bahwa akan tiba harinya duka menembus hatinya seperti pedang.",
+    "Hana pun datang mendekat, anak Fanuel dari suku Asyer, seorang janda berusia delapan puluh empat tahun. Ia nabiah yang tak pernah meninggalkan Bait Allah, berpuasa dan berdoa siang dan malam. Ia bersyukur kepada Allah dan berbicara tentang anak itu kepada semua orang yang menantikan pembebasan Yerusalem."
+   ],
+   "words": [
+    {
+     "who": "Simeon",
+     "text": "Tuhan, sekarang biarlah hamba-Mu pergi dengan damai, sesuai janji-Mu. Mataku telah melihat keselamatan dari-Mu."
+    },
+    {
+     "who": "Simeon",
+     "text": "Anak ini akan membuat banyak orang jatuh dan banyak orang bangkit. Dan hatimu sendiri akan perih, seakan ditembus pedang."
+    }
+   ],
+   "note": "Imamat 12 mengizinkan keluarga yang kurang mampu mempersembahkan dua ekor burung sebagai ganti seekor anak domba. Persembahan burung dari Yusuf dan Maria menunjukkan bahwa mereka keluarga miskin.",
+   "reflect": "Seperti Simeon dan Hana, ketika janji lama sekali datangnya, apa yang membuat harapanku tetap hidup?",
+   "quiz": {
+    "q": "Dari suku manakah nabiah Hana, yang berjumpa dengan bayi Yesus di Bait Allah?",
+    "options": [
+     "Asyer",
+     "Yehuda",
+     "Lewi",
+     "Benyamin"
+    ],
+    "explain": "Hana adalah anak Fanuel dari suku Asyer (Luk 2:36)."
+   },
+   "credit": "James Tissot, The Aged Simeon, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e04": {
+   "title": "Orang Majus Mengikuti Bintang",
+   "when": "sekitar 5 SM",
+   "subtitle": "Para pembaca bintang dari timur yang jauh",
+   "story": [
+    "Pada zaman Raja Herodes, orang-orang Majus dari timur muncul di jalan-jalan Yerusalem dan bertanya di manakah raja orang Yahudi yang baru lahir. Mereka telah melihat bintang-Nya terbit, kata mereka, dan datang untuk menyembah-Nya. Herodes terguncang mendengarnya, dan seluruh Yerusalem ikut gempar.",
+    "Herodes memanggil para imam kepala dan ahli Taurat, lalu mendesak mereka: di manakah Kristus akan dilahirkan? Jawabannya Betlehem, menurut tulisan nabi Mikha. Raja memanggil orang Majus secara diam-diam, menanyakan dengan teliti kapan bintang itu muncul, lalu meminta mereka melapor bila anak itu ditemukan, supaya ia pun dapat menyembah-Nya.",
+    "Ketika mereka berangkat, bintang yang mereka lihat di timur mendahului mereka dan berhenti di atas tempat anak itu berada. Dengan sukacita yang meluap, orang Majus masuk ke rumah, sujud di hadapan anak itu di sisi ibu-Nya, dan mempersembahkan emas, kemenyan, dan mur. Lalu, karena diperingatkan dalam mimpi, mereka pulang melalui jalan lain."
+   ],
+   "words": [
+    {
+     "who": "Orang Majus",
+     "text": "Di manakah raja orang Yahudi yang baru lahir itu? Kami telah melihat bintang-Nya terbit dan datang untuk menyembah Dia."
+    },
+    {
+     "who": "Para imam kepala dan ahli Taurat",
+     "text": "Engkau Betlehem di tanah Yehuda, sama sekali bukan kota yang kecil. Dari padamu akan muncul seorang pemimpin yang akan menggembalakan umat-Ku Israel."
+    },
+    {
+     "who": "Herodes",
+     "text": "Pergilah, carilah anak itu dengan teliti. Bila kalian menemukan-Nya, kabari aku, supaya aku pun datang menyembah Dia."
+    }
+   ],
+   "note": "Kaum magoi kemungkinan besar adalah golongan cendekiawan pengamat bintang dari Persia atau Babilonia. Alkitab tidak menyebut jumlah mereka; tradisi tiga orang berasal dari tiga macam persembahan.",
+   "reflect": "Orang Majus berlutut dengan sukacita di ujung perjalanan panjang. Apa yang sedang kucari di jalan panjangku sendiri?",
+   "quiz": {
+    "q": "Manakah yang BUKAN persembahan orang Majus kepada anak Yesus?",
+    "options": [
+     "Emas",
+     "Kemenyan",
+     "Mur",
+     "Tiga puluh keping perak"
+    ],
+    "explain": "Orang Majus mempersembahkan emas, kemenyan, dan mur (Mat 2:11). Tiga puluh keping perak adalah uang yang kelak diterima Yudas."
+   },
+   "credit": "James Tissot, The Magi Journeying, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e05": {
+   "title": "Mengungsi ke Mesir",
+   "when": "5–4 SM",
+   "subtitle": "Pelarian di malam hari, dan ratap tangis di Rama",
+   "story": [
+    "Setelah orang Majus pergi, malaikat Tuhan kembali menampakkan diri kepada Yusuf dalam mimpi. Herodes sedang mencari anak itu untuk membunuh-Nya, maka Yusuf harus membawa anak itu dan ibu-Nya mengungsi ke Mesir. Malam itu juga Yusuf bangun dan berangkat menembus gelap.",
+    "Menyeberangi jalan-jalan gurun ke arah selatan, keluarga itu tiba di Mesir dan tinggal di sana sampai Herodes mati. Matius mencatat bahwa dengan itu genaplah perkataan Hosea: dari Mesir Aku memanggil Anak-Ku.",
+    "Ketika Herodes sadar bahwa ia telah dikelabui orang Majus, amarahnya meledak. Berdasarkan waktu yang ia ketahui dari mereka, ia membunuh semua anak laki-laki berumur dua tahun ke bawah di Betlehem dan sekitarnya. Dalam ratapan itu Matius mendengar Rahel menangisi anak-anaknya dan tak mau dihibur."
+   ],
+   "words": [
+    {
+     "who": "Malaikat Tuhan",
+     "text": "Bangunlah, bawalah anak itu dan ibu-Nya, larilah ke Mesir. Tinggallah di sana sampai Aku memberi tahu, sebab Herodes mencari anak itu untuk membinasakan-Nya."
+    },
+    {
+     "who": "Nubuat Yeremia",
+     "text": "Terdengar suara di Rama, tangis dan ratapan pilu. Rahel menangisi anak-anaknya dan tak mau dihibur, sebab mereka sudah tiada."
+    }
+   ],
+   "note": "Aleksandria di Mesir waktu itu memiliki komunitas Yahudi yang besar, sehingga wajar menjadi tempat mengungsi. Betlehem kota kecil, maka jumlah anak yang dibunuh kemungkinan beberapa puluh atau kurang.",
+   "reflect": "Ketika kekerasan dunia menimpa orang yang tak bersalah, apakah aku mau tinggal di samping tangis mereka?",
+   "quiz": {
+    "q": "Herodes memerintahkan pembunuhan anak laki-laki di Betlehem yang berumur berapa?",
+    "options": [
+     "Di bawah satu tahun",
+     "Dua tahun ke bawah",
+     "Di bawah tiga tahun",
+     "Di bawah lima tahun"
+    ],
+    "explain": "Berdasarkan waktu yang ia ketahui dari orang Majus, Herodes membunuh semua anak laki-laki berumur dua tahun ke bawah (Mat 2:16)."
+   },
+   "credit": "James Tissot, The Flight into Egypt, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e06": {
+   "title": "Kembali ke Nazaret",
+   "when": "setelah 4 SM",
+   "subtitle": "Seorang anak tumbuh di desa yang tak dikenal",
+   "story": [
+    "Setelah Herodes mati, malaikat kembali datang kepada Yusuf dalam mimpi di Mesir. Mereka yang hendak mencabut nyawa anak itu sudah mati, maka ia harus kembali ke tanah Israel. Yusuf membawa anak itu dan ibu-Nya, lalu memulai perjalanan pulang.",
+    "Namun terdengar kabar bahwa Arkhelaus, anak Herodes, memerintah Yudea menggantikan ayahnya. Yusuf takut, dan setelah diperingatkan lagi dalam mimpi, ia berbelok ke utara menuju Galilea dan menetap di sebuah kota bernama Nazaret.",
+    "Di desa kecil di atas bukit itulah anak itu bertumbuh. Lukas mencatat singkat bahwa Ia makin kuat dan penuh hikmat, dan kasih karunia Allah ada pada-Nya. Tahun-tahun yang tenang pun berlalu, jauh dari pandangan dunia."
+   ],
+   "words": [
+    {
+     "who": "Malaikat Tuhan",
+     "text": "Bangunlah, bawalah anak itu dan ibu-Nya, pergilah ke tanah Israel. Orang-orang yang menginginkan kematian anak itu sudah tiada."
+    },
+    {
+     "who": "Catatan Lukas",
+     "text": "Anak itu bertumbuh dan menjadi kuat, penuh hikmat, dan kasih karunia Allah menyertai-Nya."
+    }
+   ],
+   "note": "Herodes Agung diperkirakan wafat sekitar 4 SM. Sesudah itu Arkhelaus memerintah Yudea dan Herodes Antipas memerintah Galilea. Arkhelaus begitu kejam sehingga Roma menyingkirkannya pada tahun 6 M.",
+   "reflect": "Di hari-hari biasa yang tak diperhatikan siapa pun, bagaimana aku sedang bertumbuh?",
+   "quiz": {
+    "q": "Yusuf takut pergi ke Yudea karena siapa yang memerintah di sana?",
+    "options": [
+     "Herodes Antipas",
+     "Pontius Pilatus",
+     "Arkhelaus",
+     "Kaisar Agustus"
+    ],
+    "explain": "Yusuf takut ketika mendengar bahwa Arkhelaus, anak Herodes, memerintah Yudea menggantikan ayahnya (Mat 2:22)."
+   },
+   "credit": "James Tissot, The Return from Egypt, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e07": {
+   "title": "Dua Belas Tahun, di Rumah Bapa-Nya",
+   "when": "sekitar 8 M · usia dua belas tahun",
+   "subtitle": "Anak yang ditemukan setelah tiga hari, di rumah Bapa-Nya",
+   "story": [
+    "Setiap tahun pada hari raya Paskah, Yusuf dan Maria pergi ke Yerusalem. Ketika Yesus berumur dua belas tahun, mereka berziarah seperti biasa. Dalam perjalanan pulang seusai perayaan, orang tua-Nya berjalan sehari penuh dengan anggapan bahwa anak mereka ada di tengah rombongan.",
+    "Mereka mencari-Nya di antara sanak saudara dan kenalan, tetapi anak itu tak ditemukan. Mereka kembali ke Yerusalem, dan sesudah tiga hari mereka menemukan-Nya di Bait Allah. Ia duduk di tengah para guru, mendengarkan dan bertanya, dan semua yang mendengar-Nya takjub akan pengertian dan jawaban-Nya.",
+    "Atas pertanyaan ibu-Nya yang cemas, anak itu menjawab dengan tenang, tetapi orang tua-Nya tidak mengerti maksud-Nya. Ia pulang bersama mereka ke Nazaret dan hidup dalam ketaatan kepada mereka, makin bertambah hikmat dan besar-Nya, makin dikasihi Allah dan manusia. Maria menyimpan semua itu di dalam hatinya."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Mengapa kalian mencari Aku? Tidakkah kalian tahu bahwa Aku harus berada di rumah Bapa-Ku?"
+    },
+    {
+     "who": "Maria",
+     "text": "Nak, mengapa Engkau berbuat begini kepada kami? Ayah-Mu dan aku mencari Engkau dengan sangat cemas."
+    }
+   ],
+   "note": "Orang Galilea berziarah dalam rombongan besar sedesa, sehingga ketidakhadiran seorang anak bisa tak disadari selama sehari. Perjalanan kaki dari Nazaret ke Yerusalem memakan tiga atau empat hari.",
+   "reflect": "Di manakah tempat aku sungguh-sungguh berada saat ini? Di manakah rumah Bapa di dalam hatiku?",
+   "quiz": {
+    "q": "Sesudah berapa hari Yusuf dan Maria menemukan Yesus di Bait Allah?",
+    "options": [
+     "Tiga hari",
+     "Dua hari",
+     "Lima hari",
+     "Tujuh hari"
+    ],
+    "explain": "Sesudah tiga hari orang tua-Nya menemukan Yesus di Bait Allah, duduk di tengah para guru (Luk 2:46)."
+   },
+   "credit": "James Tissot, Jesus Found in the Temple, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e08": {
+   "title": "Pembaptisan di Sungai Yordan",
+   "when": "musim gugur 26 M",
+   "subtitle": "Langit terbuka di atas sungai",
+   "story": [
+    "Meninggalkan Nazaret di Galilea, Yesus yang kini berumur sekitar tiga puluh tahun datang ke tepi Sungai Yordan. Di antara orang banyak yang antre di hadapan Yohanes, yang menyerukan baptisan pertobatan, Yohanes mengenali-Nya dan berusaha mencegah-Nya. Akulah yang seharusnya dibaptis oleh-Mu, katanya.",
+    "Yesus meyakinkan Yohanes bahwa memang patutlah hal itu dilakukan sekarang. Akhirnya air Yordan menutupi-Nya lalu mengalir pergi. Lukas menceritakan bahwa ketika Ia keluar dari air dan sedang berdoa, langit terbuka.",
+    "Roh Allah turun ke atas-Nya seperti burung merpati, dan suara bergema dari langit: Anak-Ku yang terkasih, kepada-Nya Aku berkenan. Tukang kayu dari Nazaret yang selama ini hidup begitu tenang, kini melangkah tampil di hadapan dunia."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Biarlah begini untuk sekarang. Memang patut kita melakukannya, supaya genap seluruh kehendak Allah yang benar."
+    },
+    {
+     "who": "Suara dari surga",
+     "text": "Engkaulah Anak-Ku yang Kukasihi. Kepada-Mulah Aku sangat berkenan."
+    }
+   ],
+   "note": "Injil Yohanes menyebut tempat Yohanes membaptis sebagai Betania di seberang Yordan. Tempat itu diperkirakan Al-Maghtas, di Sungai Yordan sebelah timur Yerikho. Lukas mencatat usia Yesus waktu itu sekitar tiga puluh tahun.",
+   "reflect": "Jika suara dari surga juga memanggilku anak yang terkasih, apakah hari ini aku hidup dari jati diri itu?",
+   "quiz": {
+    "q": "Ketika Yesus dibaptis, Roh turun seperti apa?",
+    "options": [
+     "Nyala api",
+     "Awan",
+     "Angin",
+     "Burung merpati"
+    ],
+    "explain": "Roh Allah turun seperti burung merpati dan hinggap di atas-Nya (Mat 3:16; Mrk 1:10; Luk 3:22)."
+   },
+   "credit": "James Tissot, The Baptism of Jesus, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e09": {
+   "title": "Empat Puluh Hari di Padang Gurun",
+   "when": "musim gugur hingga musim dingin 26 M",
+   "subtitle": "Tiga pencobaan dikalahkan dalam tubuh yang kelaparan",
+   "story": [
+    "Belum kering air baptisan, Roh membawa Yesus ke padang gurun. Markus mencatat bahwa Ia tinggal bersama binatang-binatang liar. Sesudah empat puluh hari empat puluh malam tanpa makan, ketika akhirnya Ia merasa lapar, datanglah si pencoba.",
+    "Jika Engkau Anak Allah, bisiknya, ubahlah batu-batu ini menjadi roti. Lalu si pencoba menempatkan-Nya di puncak Bait Allah dan menyuruh-Nya menjatuhkan diri, dan di sebuah gunung yang tinggi ia memperlihatkan semua kerajaan dunia dengan kemegahannya, menjanjikan semuanya jika Yesus mau sujud menyembahnya.",
+    "Setiap kali, Yesus menjawab dengan firman Kitab Suci. Akhirnya, mendengar perintah tegas-Nya untuk pergi, Iblis meninggalkan-Nya, dan malaikat-malaikat datang melayani-Nya. Lukas menambahkan bahwa Iblis mundur untuk sementara, menunggu kesempatan lain."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Ada tertulis: manusia hidup bukan dari roti saja, melainkan dari setiap firman yang keluar dari mulut Allah."
+    },
+    {
+     "who": "Yesus",
+     "text": "Enyahlah, Iblis! Ada tertulis: sembahlah Tuhan, Allahmu, dan hanya kepada Dia saja engkau mengabdi."
+    },
+    {
+     "who": "Yesus",
+     "text": "Ada tertulis pula: jangan mencobai Tuhan, Allahmu."
+    }
+   ],
+   "note": "Padang gurun Yudea adalah hamparan bukit kapur yang gersang, membentang dari sebelah timur Yerusalem hingga Laut Mati. Matius dan Lukas menuturkan pencobaan kedua dan ketiga dalam urutan yang berbeda.",
+   "reflect": "Di hadapan rasa lapar, keinginan untuk diakui, dan godaan sukses yang mudah, firman apa yang menahanku tetap teguh?",
+   "quiz": {
+    "q": "Dalam pencobaan pertama, Iblis menyuruh Yesus mengubah batu menjadi apa?",
+    "options": [
+     "Anggur",
+     "Emas",
+     "Roti",
+     "Air"
+    ],
+    "explain": "Iblis berkata, jika Ia Anak Allah, perintahkanlah batu-batu itu menjadi roti (Mat 4:3; Luk 4:3)."
+   },
+   "credit": "James Tissot, Jesus Tempted in the Wilderness, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e10": {
+   "title": "Mari dan Lihatlah: Murid-Murid Pertama",
+   "when": "awal 27 M",
+   "subtitle": "Sebuah undangan pada pukul empat sore",
+   "story": [
+    "Di Betania di seberang Yordan, Yohanes sedang berdiri bersama dua orang muridnya ketika ia melihat Yesus lewat, lalu berseru: lihatlah Anak Domba Allah. Mendengar itu, kedua murid mengikuti Yesus. Yesus menoleh dan bertanya apa yang mereka cari.",
+    "Ketika mereka bertanya di mana Ia tinggal, Ia berkata, marilah dan kamu akan melihatnya. Saat itu kira-kira pukul empat sore. Salah seorang dari mereka yang melewatkan hari itu bersama-Nya, Andreas, pergi mencari saudaranya Simon dan berkata bahwa mereka telah menemukan Mesias. Yesus memberi Simon nama baru, Kefas.",
+    "Keesokan harinya, dalam perjalanan ke Galilea, Yesus memanggil Filipus dari Betsaida. Filipus berlari memberi tahu Natanael. Natanael mencibir bahwa tak ada yang baik bisa datang dari Nazaret, tetapi ketika Yesus berkata bahwa Ia sudah melihatnya di bawah pohon ara, keraguannya luruh dan ia mengakui imannya."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Apa yang kalian cari? Mari, lihatlah sendiri."
+    },
+    {
+     "who": "Yesus",
+     "text": "Engkau Simon, anak Yohanes. Mulai sekarang engkau akan dinamai Kefas."
+    },
+    {
+     "who": "Yesus",
+     "text": "Sebelum Filipus memanggilmu, ketika engkau di bawah pohon ara, Aku sudah melihatmu."
+    },
+    {
+     "who": "Natanael",
+     "text": "Guru, Engkaulah Anak Allah. Engkaulah Raja Israel!"
+    }
+   ],
+   "note": "Jam kesepuluh dihitung dari matahari terbit menurut cara Yahudi, jadi berarti sekitar pukul empat sore. Kefas adalah kata Aram untuk batu karang; dalam bahasa Yunani disebut Petrus.",
+   "reflect": "Ketika seseorang mengajakku datang dan melihat, sanggupkah aku melangkah lebih dulu sebelum keraguanku?",
+   "quiz": {
+    "q": "Nama baru apa yang diberikan Yesus kepada Simon, saudara Andreas?",
+    "options": [
+     "Boanerges",
+     "Kefas",
+     "Didimus",
+     "Bar-Yona"
+    ],
+    "explain": "Yesus berkata kepada Simon bahwa ia akan dinamai Kefas, yang artinya Petrus (Yoh 1:42)."
+   },
+   "credit": "James Tissot, The Calling of Saint John and Saint Andrew, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e11": {
+   "title": "Pesta Pernikahan di Kana",
+   "when": "awal 27 M",
+   "subtitle": "Tanda pertama, air menjadi anggur",
+   "story": [
+    "Sebuah pesta pernikahan diadakan di Kana, Galilea. Ibu Yesus ada di sana, dan Yesus serta murid-murid-Nya pun diundang. Di tengah perayaan, di antara tawa dan nyanyian, anggur habis.",
+    "Ibu-Nya datang dan berkata bahwa mereka kehabisan anggur. Meskipun Yesus menjawab bahwa saat-Nya belum tiba, ia berkata kepada para pelayan agar melakukan apa saja yang dikatakan-Nya. Di situ ada enam tempayan batu besar, yang biasa dipakai untuk upacara penyucian orang Yahudi.",
+    "Para pelayan mengisi setiap tempayan dengan air sampai penuh, lalu menimba sedikit. Ketika pemimpin pesta mencicipinya, ia memanggil mempelai laki-laki. Semua orang menghidangkan anggur yang baik lebih dulu, katanya, tetapi engkau menyimpan yang terbaik sampai sekarang. Inilah tanda pertama yang dibuat Yesus, dan murid-murid-Nya percaya kepada-Nya."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Isilah tempayan-tempayan itu dengan air. Sekarang timbalah dan bawalah kepada pemimpin pesta."
+    },
+    {
+     "who": "Yesus",
+     "text": "Ibu, apa urusannya dengan Aku? Saat-Ku belum tiba."
+    },
+    {
+     "who": "Maria",
+     "text": "Apa pun yang dikatakan-Nya kepadamu, lakukanlah."
+    }
+   ],
+   "note": "Pesta pernikahan waktu itu bisa berlangsung sampai seminggu, dan kehabisan anggur adalah aib besar bagi keluarga. Setiap tempayan diperkirakan berisi dua atau tiga metretes, kira-kira 80 sampai 120 liter.",
+   "reflect": "Ketika sesuatu dalam hidupku mengering, sanggupkah aku mengisi tempayan dengan iman yang berkata, lakukanlah apa pun yang dikatakan-Nya?",
+   "quiz": {
+    "q": "Berapa banyak tempayan batu yang ada di pesta pernikahan di Kana?",
+    "options": [
+     "Tiga",
+     "Empat",
+     "Lima",
+     "Enam"
+    ],
+    "explain": "Ada enam tempayan batu yang dipakai untuk upacara penyucian (Yoh 2:6)."
+   },
+   "credit": "James Tissot, The Marriage at Cana, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e12": {
+   "title": "Meja-Meja Dijungkirbalikkan di Bait Allah",
+   "when": "Paskah 27 M",
+   "subtitle": "Rumah Bapa-Nya dijadikan pasar",
+   "story": [
+    "Menjelang Paskah, Yesus pergi ke Yerusalem. Pelataran Bait Allah dipenuhi pedagang lembu, domba, dan merpati, juga para penukar uang yang duduk di balik meja mereka. Lenguhan ternak dan dentingan koin telah mendesak habis tempat untuk berdoa.",
+    "Ia membuat cambuk dari tali, lalu mengusir semua domba dan lembu, menghamburkan uang para penukar, dan membalikkan meja-meja mereka. Kepada para penjual merpati Ia berkata, jangan jadikan rumah Bapa-Ku tempat berjualan. Murid-murid-Nya teringat akan mazmur yang berkata, cinta untuk rumah-Mu menghanguskan aku.",
+    "Ketika ditanya tanda apa yang akan Ia tunjukkan, Ia menjawab: rombaklah Bait Allah ini, dan dalam tiga hari Aku akan membangunnya kembali. Orang-orang mencemooh, Bait Allah ini dibangun empat puluh enam tahun lamanya. Tetapi yang Ia maksud adalah tubuh-Nya sendiri. Baru sesudah kebangkitan murid-murid-Nya memahami perkataan itu."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Bawa semua ini keluar dari sini. Jangan jadikan rumah Bapa-Ku tempat berdagang."
+    },
+    {
+     "who": "Yesus",
+     "text": "Robohkan Bait Allah ini, dan dalam tiga hari Aku akan mendirikannya kembali."
+    },
+    {
+     "who": "Para pemimpin Yahudi",
+     "text": "Bait Allah ini dibangun empat puluh enam tahun, dan Engkau mau mendirikannya dalam tiga hari?"
+    }
+   ],
+   "note": "Herodes mulai membangun ulang Bait Allah sekitar tahun 20 SM. Para penukar uang menukar mata uang dari berbagai negeri menjadi syikal Tirus untuk membayar pajak Bait Allah. Yohanes menempatkan peristiwa ini di awal pelayanan Yesus.",
+   "reflect": "Di bait hatiku, apa yang telah mendesak habis tempat untuk berdoa?",
+   "quiz": {
+    "q": "Menurut para pemimpin Yahudi, berapa tahun Bait Allah dibangun?",
+    "options": [
+     "Empat puluh enam tahun",
+     "Empat puluh tahun",
+     "Tiga puluh delapan tahun",
+     "Dua belas tahun"
+    ],
+    "explain": "Mereka berkata, “Empat puluh enam tahun lamanya Bait Allah ini dibangun” (Yoh 2:20)."
+   },
+   "credit": "James Tissot, The Merchants Chased from the Temple, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e13": {
+   "title": "Nikodemus Datang Malam Hari",
+   "when": "musim semi 27 M",
+   "subtitle": "Rahasia angin, didengar dalam gelap",
+   "story": [
+    "Nikodemus, seorang Farisi dan pemimpin orang Yahudi, datang kepada Yesus pada malam hari. Di sebuah ruangan yang diterangi satu pelita yang berkedip, ia berbicara dengan hati-hati. Tak seorang pun dapat membuat tanda-tanda yang Kauperbuat, katanya, jika Allah tidak menyertainya.",
+    "Yesus menjawab bahwa tak seorang pun dapat melihat Kerajaan Allah jika ia tidak dilahirkan kembali. Ketika Nikodemus bertanya bagaimana orang tua dapat dilahirkan lagi, Yesus berbicara tentang lahir dari air dan Roh, tentang karya Roh yang seperti angin, tak seorang pun tahu dari mana datangnya atau ke mana perginya.",
+    "Lalu terucaplah perkataan bahwa seperti Musa meninggikan ular di padang gurun, demikian pula Anak Manusia harus ditinggikan. Pengakuan bahwa Allah begitu mengasihi dunia sehingga Ia memberikan Anak-Nya yang tunggal, dan perkataan bahwa terang telah datang ke dunia tetapi manusia lebih menyukai kegelapan, lama bergema dalam keheningan malam."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Dengarlah kebenaran ini: jika seseorang tidak dilahirkan kembali dari atas, ia tidak dapat melihat Kerajaan Allah."
+    },
+    {
+     "who": "Yesus",
+     "text": "Allah begitu mengasihi dunia, sampai Ia memberikan Anak-Nya yang tunggal, supaya setiap orang yang percaya kepada-Nya tidak binasa, tetapi memiliki hidup kekal."
+    },
+    {
+     "who": "Yesus",
+     "text": "Angin bertiup ke mana ia mau. Kamu mendengar bunyinya, tetapi tidak tahu dari mana datangnya atau ke mana perginya. Begitulah setiap orang yang lahir dari Roh."
+    }
+   ],
+   "note": "Kata Yunani anothen, yang diterjemahkan kembali, berarti sekaligus lagi dan dari atas. Nikodemus muncul lagi kelak pada pemakaman Yesus, membawa campuran mur dan gaharu.",
+   "reflect": "Apakah aku masih terjebak dalam iman yang hanya berani datang kepada-Nya diam-diam, di bawah selubung malam?",
+   "quiz": {
+    "q": "Ketika berkata bahwa Anak Manusia harus ditinggikan, Yesus membandingkannya dengan sesuatu yang ditinggikan Musa di padang gurun. Apakah itu?",
+    "options": [
+     "Tongkatnya",
+     "Loh-loh batu",
+     "Seekor ular",
+     "Buli-buli berisi manna"
+    ],
+    "explain": "Ia berkata bahwa sama seperti Musa meninggikan ular di padang gurun, demikian pula Anak Manusia harus ditinggikan (Yoh 3:14; Bil 21:9)."
+   },
+   "credit": "James Tissot, Interview between Jesus and Nicodemus, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e14": {
+   "title": "Sumur di Sikhar",
+   "when": "akhir 27 M",
+   "subtitle": "Tengah hari di tepi sumur, dua orang yang haus",
+   "story": [
+    "Meninggalkan Yudea menuju Galilea, Yesus melintasi Samaria dan tiba di sebuah kota bernama Sikhar, tempat sumur Yakub berada. Letih karena perjalanan, Ia duduk di tepi sumur. Saat itu kira-kira tengah hari, matahari tepat di atas kepala. Murid-murid-Nya pergi ke kota membeli makanan.",
+    "Ketika seorang perempuan Samaria datang menimba air, Yesus meminta minum kepadanya. Percakapan dimulai dari keheranan perempuan itu: seorang Yahudi meminta air kepada perempuan Samaria? Lalu bergulir ke air hidup yang menghapus dahaga untuk selamanya, ke lima suaminya, dan ke pertanyaan di mana Allah harus disembah.",
+    "Ketika perempuan itu berkata bahwa Mesias akan datang, Yesus berkata kepadanya, Akulah Dia, yang sedang berbicara denganmu. Perempuan itu meninggalkan tempayannya dan berlari ke kota memanggil orang-orang. Banyak orang Samaria datang dan mendesak-Nya untuk tinggal, dan Ia tinggal di sana dua hari. Orang ini, kata mereka, sungguh Juru Selamat dunia."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Siapa minum air ini akan haus lagi. Siapa minum air yang Kuberikan tak akan haus selamanya; air itu menjadi mata air di dalam dirinya yang memancar sampai hidup kekal."
+    },
+    {
+     "who": "Yesus",
+     "text": "Allah itu Roh, maka siapa yang menyembah Dia harus menyembah dalam roh dan kebenaran."
+    },
+    {
+     "who": "Yesus",
+     "text": "Makanan-Ku ialah melakukan kehendak Dia yang mengutus Aku dan menuntaskan pekerjaan-Nya."
+    },
+    {
+     "who": "Perempuan Samaria",
+     "text": "Mari, lihatlah! Ada seorang yang mengatakan kepadaku segala sesuatu yang pernah kulakukan. Mungkinkah Dia Kristus?"
+    }
+   ],
+   "note": "Orang Samaria beribadah di Gunung Gerizim, bukan di Yerusalem, dan ada permusuhan yang dalam antara mereka dan orang Yahudi. Sumur Yakub, yang masih ada di dekat kota Nablus sekarang, konon dalamnya sekitar 40 meter.",
+   "reflect": "Pernahkah aku lebih dulu menyapa seseorang di jalan yang dihindari orang lain?",
+   "quiz": {
+    "q": "Atas permintaan orang Samaria, berapa lama Yesus tinggal di Sikhar?",
+    "options": [
+     "Satu hari",
+     "Dua hari",
+     "Tiga hari",
+     "Satu minggu"
+    ],
+    "explain": "Ketika orang Samaria memintanya tinggal, Yesus tinggal di sana dua hari (Yoh 4:40)."
+   },
+   "credit": "James Tissot, The Woman of Samaria at the Well, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e15": {
+   "title": "Hidup dari Kejauhan",
+   "when": "akhir 27 M",
+   "subtitle": "Seorang ayah yang pulang hanya berpegang pada satu perkataan",
+   "story": [
+    "Sesudah dua hari di Samaria, Yesus kembali ke Galilea. Orang Galilea, yang telah melihat apa yang Ia lakukan pada hari raya di Yerusalem, menyambut-Nya. Ia datang lagi ke Kana, tempat Ia mengubah air menjadi anggur.",
+    "Seorang pegawai istana yang tinggal di Kapernaum mendengar kabar itu dan bergegas datang kepada-Nya. Anaknya sedang sekarat karena demam. Bahkan ketika Yesus berkata bahwa orang tidak akan percaya kalau tidak melihat tanda dan mukjizat, orang itu memohon agar Ia datang sebelum anaknya mati. Yesus hanya berkata: pulanglah, anakmu hidup.",
+    "Orang itu percaya akan perkataan itu dan berangkat. Dalam perjalanan pulang, hamba-hambanya menyongsong dengan kabar bahwa anaknya hidup. Ketika ia bertanya kapan anak itu mulai sembuh, mereka menjawab bahwa demamnya hilang kemarin pada jam ketujuh. Itulah saat ia mendengar perkataan itu. Ia dan seisi rumahnya pun percaya."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Pulanglah. Anakmu hidup."
+    },
+    {
+     "who": "Yesus",
+     "text": "Kalau tidak melihat tanda dan mukjizat, kalian tidak akan pernah percaya."
+    },
+    {
+     "who": "Pegawai istana",
+     "text": "Tuan, datanglah sebelum anakku mati."
+    }
+   ],
+   "note": "Jarak Kana ke Kapernaum sekitar 25 kilometer, jalan yang menurun ke tepi Danau Galilea di bawah permukaan laut. Jam ketujuh kira-kira pukul satu siang, dan Yohanes menyebut ini tanda kedua yang dibuat Yesus di Galilea.",
+   "reflect": "Ketika aku harus berbalik pulang hanya dengan berpegang pada sebuah perkataan, tanpa bukti yang terlihat, sanggupkah aku menempuh jalan itu?",
+   "quiz": {
+    "q": "Menurut para hamba, kapan demam anak pegawai istana itu hilang?",
+    "options": [
+     "Subuh hari itu",
+     "Kemarin pada jam ketiga",
+     "Kemarin pada jam keenam",
+     "Kemarin pada jam ketujuh"
+    ],
+    "explain": "Para hamba berkata, “Kemarin pada jam ketujuh demamnya hilang,” tepat pada saat Yesus berkata, “Anakmu hidup” (Yoh 4:52–53)."
+   },
+   "credit": "James Tissot, The Healing of the Officer's Son, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e16": {
+   "title": "Ditolak di Nazaret",
+   "when": "awal 28 M",
+   "subtitle": "Mereka yang paling dekat justru yang pertama berpaling",
+   "story": [
+    "Pagi hari Sabat di rumah ibadat Nazaret, kampung halaman tempat Ia dibesarkan. Ketika Yesus berdiri untuk membaca seperti biasanya, kepada-Nya diserahkan gulungan kitab nabi Yesaya. Ia membukanya perlahan, menemukan sebuah nas, lalu membaca: kabar baik bagi orang miskin, pembebasan bagi orang tawanan.",
+    "Ia menggulung kitab itu, mengembalikannya kepada pejabat rumah ibadat, lalu duduk, dan semua mata di rumah ibadat tertuju kepada-Nya. Ketika Ia menyatakan bahwa nas itu telah digenapi hari ini, orang-orang takjub, namun segera mulai bertanya-tanya. Bukankah Ia anak Yusuf?",
+    "Ketika Yesus menyebut bagaimana Elia diutus kepada janda di Sarfat di tanah Sidon, dan Elisa kepada Naaman orang Siria, rumah ibadat itu mendidih oleh amarah. Mereka menyeret-Nya ke tepi tebing tempat kota mereka dibangun. Tetapi Ia berjalan lewat di tengah-tengah mereka, lalu pergi."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Roh Tuhan ada pada-Ku. Ia mengutus Aku membawa kabar baik bagi orang miskin, pembebasan bagi tawanan, dan penglihatan bagi orang buta."
+    },
+    {
+     "who": "Yesus",
+     "text": "Nas yang baru saja kalian dengar dengan telinga sendiri, hari ini telah genap di sini."
+    },
+    {
+     "who": "Yesus",
+     "text": "Dengarlah: tidak ada nabi yang diterima di kampung halamannya sendiri."
+    }
+   ],
+   "note": "Ibadah di rumah ibadat mencakup pembacaan kitab Taurat lalu kitab para nabi, dan sudah menjadi kebiasaan untuk duduk mengajar setelah membaca. Karena itulah semua mata tertuju kepada Yesus ketika Ia mengembalikan gulungan dan duduk.",
+   "reflect": "Karena terasa begitu akrab, apakah aku gagal mengenali anugerah yang datang berdiri tepat di sampingku?",
+   "quiz": {
+    "q": "Gulungan kitab nabi siapakah yang diserahkan kepada Yesus untuk dibaca di rumah ibadat Nazaret?",
+    "options": [
+     "Yeremia",
+     "Yesaya",
+     "Yehezkiel",
+     "Maleakhi"
+    ],
+    "explain": "Lukas mencatat bahwa kitab nabi Yesaya diberikan kepada Yesus (Luk 4:17). Nas yang Ia baca adalah awal Yesaya 61."
+   },
+   "credit": "James Tissot, Jesus Unrolls the Book in the Synagogue, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e17": {
+   "title": "Penjala Manusia",
+   "when": "28 M",
+   "subtitle": "Satu perkataan dijatuhkan di atas jala yang kosong",
+   "story": [
+    "Pantai Genesaret. Para nelayan yang semalaman bekerja keras tanpa hasil telah menarik perahu mereka ke darat dan sedang membasuh jala. Ketika orang banyak berdesakan hendak mendengar firman, Yesus naik ke perahu Simon, memintanya menolakkan perahu sedikit dari darat, lalu duduk mengajar orang banyak dari atas air.",
+    "Selesai berbicara, Yesus menyuruh mereka bertolak ke tempat yang dalam dan menebarkan jala. Simon berkata bahwa semalaman mereka tidak menangkap apa-apa, namun ia menurunkan jala seperti yang diperintahkan. Seketika ikan begitu banyak memenuhinya hingga jala mulai koyak. Perahu rekan-rekan mereka dipanggil, sampai kedua perahu hampir tenggelam.",
+    "Simon tersungkur di depan lutut Yesus. Pergilah dariku, katanya, sebab aku orang berdosa. Tetapi Yesus berkata kepadanya, jangan takut. Simon dan Andreas, juga Yakobus dan Yohanes anak-anak Zebedeus, menepikan perahu mereka, meninggalkan segala sesuatu, lalu mengikut Dia."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Mari, ikutlah Aku. Aku akan menjadikan kalian penjala manusia."
+    },
+    {
+     "who": "Yesus",
+     "text": "Bertolaklah ke tempat yang dalam, dan tebarkan jalamu untuk menangkap ikan."
+    },
+    {
+     "who": "Yesus",
+     "text": "Jangan takut. Mulai sekarang engkau akan menjala manusia."
+    },
+    {
+     "who": "Simon Petrus",
+     "text": "Tuhan, pergilah dariku. Aku ini orang berdosa."
+    }
+   ],
+   "note": "Pada tahun 1986 ditemukan sebuah perahu nelayan sepanjang kira-kira delapan meter di lumpur tepi Danau Galilea. Perahu yang berasal dari sekitar zaman Yesus itu memberi gambaran tentang ukuran perahu nelayan waktu itu.",
+   "reflect": "Di tempat semua jerih payah semalaman hanya menyisakan jala kosong, sanggupkah aku sekali lagi menebarkannya atas perkataan-Nya?",
+   "quiz": {
+    "q": "Siapakah ayah Yakobus dan Yohanes, yang dipanggil ketika sedang membereskan jala di perahu?",
+    "options": [
+     "Zebedeus",
+     "Alfeus",
+     "Yunus",
+     "Kleopas"
+    ],
+    "explain": "Yakobus dan Yohanes meninggalkan ayah mereka Zebedeus di perahu bersama orang-orang upahan, lalu mengikut Yesus (Mrk 1:19–20)."
+   },
+   "credit": "James Tissot, The Miraculous Draught of Fishes, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e18": {
+   "title": "Hari Panjang di Kapernaum",
+   "when": "28 M · hari Sabat",
+   "subtitle": "Dari rumah ibadat ke ambang pintu, dan doa sebelum fajar",
+   "story": [
+    "Hari Sabat, di rumah ibadat Kapernaum. Yesus mengajar sama sekali tidak seperti para ahli Taurat. Perkataan-Nya langsung menembus hati, seperti perkataan orang yang berkuasa. Lalu seorang yang dikuasai roh jahat berteriak: Yesus orang Nazaret, aku tahu siapa Engkau. Engkaulah Yang Kudus dari Allah.",
+    "Yesus menghardiknya, dan roh itu mengguncang orang itu lalu keluar darinya. Meninggalkan rumah ibadat, mereka masuk ke rumah Simon dan Andreas, tempat ibu mertua Simon terbaring sakit demam. Yesus memegang tangannya dan membangunkannya, demamnya hilang, dan seketika ia bangun lalu melayani mereka.",
+    "Ketika matahari terbenam dan Sabat berakhir, seluruh kota berkerumun di depan pintu membawa orang-orang sakit, dan banyak yang disembuhkan. Keesokan paginya, selagi hari masih gelap, Yesus berdoa seorang diri di tempat yang sunyi. Ketika murid-murid menemukan-Nya, Ia berkata bahwa mereka akan pergi ke kota-kota lain."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Mari kita pergi ke kota-kota terdekat. Di sana pun Aku harus memberitakan kabar ini. Untuk itulah Aku datang."
+    },
+    {
+     "who": "Yesus",
+     "text": "Diam, keluarlah dari orang ini."
+    },
+    {
+     "who": "Simon",
+     "text": "Semua orang mencari Engkau."
+    }
+   ],
+   "note": "Rumah ibadat dari batu kapur putih yang berdiri di Kapernaum sekarang dibangun pada abad keempat atau kelima. Fondasi batu basal hitam di bawahnya diperkirakan sisa rumah ibadat pada zaman Yesus.",
+   "reflect": "Selepas hari yang sibuk, apakah aku menyediakan waktu untuk berdiri seorang diri di hadapan Allah dalam hening dini hari?",
+   "quiz": {
+    "q": "Di rumah yang mereka kunjungi seusai dari rumah ibadat, siapakah yang disembuhkan dari demam?",
+    "options": [
+     "Anak perempuan Yairus",
+     "Marta",
+     "Hamba perwira",
+     "Ibu mertua Simon"
+    ],
+    "explain": "Yesus memegang tangan ibu mertua Simon dan membangunkannya, demamnya hilang, lalu ia bangun dan melayani mereka (Mrk 1:30–31; Luk 4:38–39)."
+   },
+   "credit": "James Tissot, The Healing of Peter's Mother-in-law, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e19": {
+   "title": "Hari Ketika Atap Terbuka",
+   "when": "28 M",
+   "subtitle": "Iman para sahabat membuka atap",
+   "story": [
+    "Tersiar kabar bahwa Yesus sudah kembali ke Kapernaum, dan rumah tempat Ia tinggal penuh dalam sekejap. Bahkan di depan pintu pun tak ada tempat lagi. Orang-orang Farisi dan ahli Taurat dari segala penjuru Galilea dan Yudea, juga dari Yerusalem, duduk di antara mereka.",
+    "Lalu datanglah empat orang menggotong seorang lumpuh di atas tikar. Mendapati jalan masuk terhalang, mereka naik ke atap, mengeruk tanahnya, dan membuat lubang. Di antara cahaya matahari yang jatuh dan debu yang berhamburan, orang itu diturunkan beserta tikarnya tepat di depan Yesus.",
+    "Melihat iman mereka, Yesus menyatakan bahwa dosa orang itu telah diampuni. Para ahli Taurat bergumam dalam hati bahwa ini hujat. Lalu Yesus menyuruh orang itu bangun dan berjalan, dan di depan semua orang ia mengangkat tikarnya lalu keluar. Mereka semua memuliakan Allah, berkata bahwa mereka belum pernah melihat hal seperti ini."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Anak-Ku, dosamu sudah diampuni."
+    },
+    {
+     "who": "Yesus",
+     "text": "Supaya kalian tahu bahwa di bumi Anak Manusia berkuasa mengampuni dosa, Aku berkata kepadamu: bangunlah, angkat tikarmu, dan pulanglah."
+    },
+    {
+     "who": "Yesus",
+     "text": "Mana lebih mudah: berkata dosamu sudah diampuni, atau berkata bangunlah, angkat tikarmu, dan berjalanlah?"
+    }
+   ],
+   "note": "Rumah-rumah di Galilea biasanya beratap datar dari ranting dan tanah liat yang dibentangkan di atas balok kayu, dengan tangga di luar untuk naik. Lukas menggambarkan orang itu diturunkan melalui genteng.",
+   "reflect": "Bagi orang di dekatku yang tak sanggup datang sendiri, maukah aku membongkar atap, bila memang itu yang diperlukan untuk membawanya kepada Yesus?",
+   "quiz": {
+    "q": "Berapa orang yang menggotong si lumpuh dan membongkar atap?",
+    "options": [
+     "Dua",
+     "Tiga",
+     "Empat",
+     "Lima"
+    ],
+    "explain": "Markus mencatat bahwa empat orang menggotong orang lumpuh itu (Mrk 2:3). Mereka membongkar atap, membuat lubang, dan menurunkannya (Mrk 2:4)."
+   },
+   "credit": "James Tissot, The Palsied Man Let Down through the Roof, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e20": {
+   "title": "Matius di Rumah Cukai",
+   "when": "28 M",
+   "subtitle": "Seorang yang bangkit dari tempat yang dicemooh",
+   "story": [
+    "Yesus keluar ke tepi danau untuk mengajar orang banyak, dan sambil berjalan Ia sampai di rumah cukai. Di sana duduk Lewi anak Alfeus, yang juga disebut Matius, seorang pemungut cukai yang dicemooh karena berpihak kepada penguasa dan menarik pajak dari bangsanya sendiri.",
+    "Ikutlah Aku. Hanya satu kalimat. Lewi berdiri, meninggalkan segala sesuatu, lalu mengikut Dia. Kemudian ia mengadakan perjamuan besar di rumahnya, dan banyak pemungut cukai dan orang berdosa duduk makan bersama Yesus dan murid-murid-Nya.",
+    "Para ahli Taurat dari golongan Farisi menggugat murid-murid. Mengapa gurumu makan dan minum dengan orang-orang semacam itu? Yesus mendengarnya dan menjawab. Orang sehat tidak memerlukan tabib, orang sakitlah yang memerlukannya. Aku datang justru untuk memanggil orang-orang seperti mereka."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Orang sehat tidak perlu tabib, orang sakitlah yang perlu. Aku datang bukan untuk memanggil mereka yang merasa diri benar, melainkan orang berdosa."
+    },
+    {
+     "who": "Yesus",
+     "text": "Ikutlah Aku."
+    },
+    {
+     "who": "Yesus",
+     "text": "Pergi dan pelajarilah maksud perkataan ini: yang Kuinginkan adalah belas kasihan, bukan korban persembahan."
+    }
+   ],
+   "note": "Kapernaum terletak di jalan tempat Galilea milik Herodes Antipas bertemu dengan wilayah Filipus, sehingga kemungkinan besar ada pos cukai di sana. Pemungut cukai kerap menarik lebih dari yang seharusnya dan diperlakukan seperti orang berdosa.",
+   "reflect": "Dengan siapa aku enggan duduk semeja, dan siapa yang akan diundang Yesus ke kursi itu?",
+   "quiz": {
+    "q": "Nama lain apa yang dipakai Markus dan Lukas untuk Matius si pemungut cukai?",
+    "options": [
+     "Lewi",
+     "Simon",
+     "Tadeus",
+     "Bartolomeus"
+    ],
+    "explain": "Injil Matius menyebutnya Matius (Mat 9:9), sedangkan Markus dan Lukas menyebutnya Lewi (Mrk 2:14; Luk 5:27). Markus menyebutnya anak Alfeus."
+   },
+   "credit": "James Tissot, The Calling of Saint Matthew, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e21": {
+   "title": "Kolam Betesda",
+   "when": "28 M · sebuah hari raya Yahudi",
+   "subtitle": "Hari ketika penantian tiga puluh delapan tahun berakhir",
+   "story": [
+    "Sebuah hari raya Yahudi, di kolam Betesda dekat Pintu Gerbang Domba di Yerusalem. Di bawah naungan lima serambi berbaring banyak orang buta, orang timpang, dan orang lumpuh. Di antara mereka ada seorang yang sudah tiga puluh delapan tahun sakit.",
+    "Yesus bertanya kepadanya, maukah engkau sembuh? Bukannya menjawab, orang itu menumpahkan keluhannya. Tak ada orang yang menurunkannya ke kolam ketika airnya bergolak, dan selagi ia berusaha menuju ke sana, orang lain selalu turun lebih dulu. Yesus menyuruhnya bangun, mengangkat tikarnya, dan berjalan, dan seketika ia sembuh lalu berjalan.",
+    "Hari itu hari Sabat. Para pemimpin Yahudi mempersoalkan tikar yang diangkat pada hari Sabat dan penyembuhan pada hari Sabat. Ketika Yesus menjawab bahwa Bapa-Nya masih bekerja sampai sekarang, maka Ia pun bekerja, mereka makin berusaha membunuh-Nya, sebab Ia menyamakan diri-Nya dengan Allah."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Maukah engkau sembuh?"
+    },
+    {
+     "who": "Yesus",
+     "text": "Bangunlah. Angkat tikarmu dan berjalanlah."
+    },
+    {
+     "who": "Yesus",
+     "text": "Bapa-Ku masih bekerja sampai sekarang, maka Aku pun bekerja."
+    },
+    {
+     "who": "Yesus",
+     "text": "Sungguh, siapa mendengar perkataan-Ku dan percaya kepada Dia yang mengutus Aku, ia memiliki hidup kekal; ia sudah berpindah dari maut ke dalam hidup."
+    }
+   ],
+   "note": "Penggalian di dekat Gereja Santa Anna pada akhir abad kesembilan belas menemukan dua waduk besar. Ada yang berpendapat bahwa serambi di keempat sisinya dan di sepanjang tembok di antara kedua kolam cocok dengan lima serambi yang digambarkan Yohanes.",
+   "reflect": "Di hadapan rasa sakit yang sudah lama menjadi kebiasaanku, sanggupkah aku sungguh-sungguh menjawab bahwa aku mau sembuh?",
+   "quiz": {
+    "q": "Sudah berapa tahun orang yang disembuhkan Yesus di kolam Betesda itu sakit?",
+    "options": [
+     "Dua belas tahun",
+     "Delapan belas tahun",
+     "Tiga puluh delapan tahun",
+     "Empat puluh tahun"
+    ],
+    "explain": "Yohanes mencatat bahwa orang itu sudah tiga puluh delapan tahun sakit (Yoh 5:5)."
+   },
+   "credit": "James Tissot, The Piscina Probatica or Pool of Bethesda, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e22": {
+   "title": "Memilih Dua Belas Rasul",
+   "when": "musim panas 28 M",
+   "subtitle": "Nama-nama yang dipanggil sesudah semalam berdoa",
+   "story": [
+    "Pada hari-hari itu Yesus naik ke sebuah gunung untuk berdoa. Selagi matahari terbenam, bintang-bintang muncul, dan fajar kembali menyingsing, Ia berdoa kepada Allah semalam suntuk. Lereng bukit yang menghadap Danau Galilea itu hening, dan dalam keheningan itu sebuah pilihan yang berat sedang matang.",
+    "Ketika hari siang, Yesus memanggil murid-murid-Nya dan memilih dua belas dari mereka, yang disebut-Nya rasul. Markus mencatat maksudnya demikian: supaya mereka menyertai Dia, supaya Ia dapat mengutus mereka memberitakan kabar itu, dan supaya mereka berkuasa mengusir setan.",
+    "Simon Petrus dan saudaranya Andreas. Yakobus dan Yohanes, yang dijuluki anak-anak guruh. Filipus dan Bartolomeus, Matius dan Tomas, Yakobus anak Alfeus, Simon orang Zelot, Yudas anak Yakobus, dan Yudas Iskariot, yang kelak menjadi pengkhianat. Satu demi satu, nama-nama biasa dipanggil."
+   ],
+   "words": [
+    {
+     "who": "Lukas",
+     "text": "Yesus pergi ke gunung untuk berdoa dan semalam-malaman berdoa kepada Allah. Ketika hari siang, Ia memanggil murid-murid-Nya dan memilih dua belas dari mereka."
+    },
+    {
+     "who": "Markus",
+     "text": "Yesus memanggil orang-orang yang Ia kehendaki, dan mereka datang kepada-Nya. Ia menetapkan dua belas orang untuk menyertai Dia dan diutus memberitakan kabar itu."
+    }
+   ],
+   "note": "Angka dua belas mengingatkan pada dua belas suku Israel. Di antara empat daftar rasul dalam Perjanjian Baru, Tadeus dan Yudas anak Yakobus saling bertukar tempat, dan banyak yang menganggap keduanya dua nama untuk orang yang sama.",
+   "reflect": "Jika alasan pertama Yesus memanggilku hanyalah supaya aku bersama Dia, apakah hari ini aku tinggal di sisi-Nya?",
+   "quiz": {
+    "q": "Apa yang dilakukan Yesus di gunung pada malam sebelum memilih dua belas rasul?",
+    "options": [
+     "Berpuasa seorang diri",
+     "Berdoa kepada Allah semalam suntuk",
+     "Berkhotbah kepada orang banyak",
+     "Menyembuhkan orang sakit"
+    ],
+    "explain": "Lukas mencatat bahwa Yesus pergi ke gunung dan semalam-malaman berdoa kepada Allah, dan ketika hari siang Ia memilih kedua belas rasul (Luk 6:12–13)."
+   },
+   "credit": "James Tissot, Ordaining of the Twelve Apostles, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e23": {
+   "title": "Pengajaran di Bukit",
+   "when": "musim panas 28 M",
+   "subtitle": "Suara di lereng bukit yang menjungkirbalikkan hikmat dunia",
+   "story": [
+    "Sebuah lereng bukit yang menghadap Danau Galilea. Melihat orang banyak, Yesus naik ke bukit lalu duduk, dan murid-murid-Nya mendekat. Di lereng tempat angin menyapu rerumputan, dimulailah pengajaran yang menjungkirbalikkan hikmat dunia. Berbahagialah orang yang miskin di hadapan Allah.",
+    "Kamulah garam dan terang dunia. Kasihilah musuhmu dan berdoalah bagi mereka yang menganiaya kamu. Berdoalah kepada Bapamu yang melihat yang tersembunyi. Lihatlah burung-burung di langit dan bunga bakung di padang. Jangan khawatir tentang hari esok, tetapi carilah dahulu Kerajaan Allah dan kebenaran-Nya.",
+    "Pengajaran itu ditutup dengan kisah dua rumah. Siapa mendengar perkataan ini dan melakukannya, ia seperti rumah yang dibangun di atas batu, yang tidak roboh ketika hujan tercurah dan angin menerpa. Orang banyak takjub, sebab Ia mengajar mereka sebagai orang yang berkuasa, tidak seperti ahli-ahli Taurat mereka."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Berbahagialah orang yang sadar tak punya apa pun dalam dirinya untuk bersandar. Merekalah empunya Kerajaan Surga."
+    },
+    {
+     "who": "Yesus",
+     "text": "Kasihilah musuhmu, dan doakan mereka yang menyiksamu. Dengan begitulah kalian menjadi anak-anak Bapamu di surga."
+    },
+    {
+     "who": "Yesus",
+     "text": "Karena itu jangan mencemaskan hari esok dari sekarang. Hari esok membawa kecemasannya sendiri. Kesusahan hari ini cukuplah untuk hari ini."
+    },
+    {
+     "who": "Yesus",
+     "text": "Siapa mendengar perkataan-Ku dan hidup menurutnya, ia seperti orang bijak yang membangun rumahnya di atas batu. Badai datang, rumah itu tetap berdiri."
+    }
+   ],
+   "note": "Matius menyajikan pengajaran ini sebagai pengajaran di atas bukit, Lukas sebagai pengajaran di tempat yang datar. Gereja Sabda Bahagia di bukit sebelah utara Danau Galilea dibangun tahun 1938, mengikuti tradisi yang menghormati tempat itu sebagai lokasi khotbah tersebut.",
+   "reflect": "Dari perkataan yang kudengar hari ini, adakah satu yang sungguh kulakukan sebagai dasar hidupku?",
+   "quiz": {
+    "q": "Yesus berkata bahwa siapa mendengar perkataan-Nya dan melakukannya, ia seperti orang yang membangun rumah di mana?",
+    "options": [
+     "Di atas pasir",
+     "Di atas bukit",
+     "Di tepi sungai",
+     "Di atas batu"
+    ],
+    "explain": "Siapa mendengar dan melakukan perkataan ini seperti orang bijak yang membangun rumahnya di atas batu, dan rumah itu tidak roboh diterpa badai (Mat 7:24–25). Siapa mendengar tetapi tidak melakukannya seperti rumah yang dibangun di atas pasir (Mat 7:26–27)."
+   },
+   "credit": "James Tissot, The Sermon of the Beatitudes, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e24": {
+   "title": "Iman Seorang Perwira",
+   "when": "28 M",
+   "subtitle": "Katakan saja sepatah kata",
+   "story": [
+    "Di Kapernaum ada seorang perwira yang hambanya, yang sangat ia sayangi, sakit keras dan hampir mati. Mendengar tentang Yesus, perwira itu mengutus beberapa tua-tua Yahudi untuk meminta pertolongan. Para tua-tua itu memohon dengan sungguh-sungguh. Ia mengasihi bangsa kami, kata mereka, bahkan ia yang membangun rumah ibadat bagi kami.",
+    "Ketika Yesus sudah dekat rumah itu, sahabat-sahabat yang diutus perwira menyampaikan pesannya. Tuan, jangan bersusah payah. Aku tidak layak menerima Tuan di bawah atapku. Katakan saja sepatah kata. Aku sendiri pun orang yang menerima perintah dan memberi perintah.",
+    "Yesus heran, lalu berpaling kepada orang banyak yang mengikuti-Nya. Bahkan di antara orang Israel, kata-Nya, belum pernah Ia menemukan iman sebesar ini. Ketika para utusan kembali ke rumah, mereka mendapati hamba itu sudah sehat. Satu perkataan telah menyeberangi jarak dan menjangkau sebuah nyawa."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Aku berkata kepada kalian, bahkan di Israel pun belum pernah Aku menemukan iman sebesar ini."
+    },
+    {
+     "who": "Yesus",
+     "text": "Pulanglah. Jadilah bagimu sesuai dengan imanmu."
+    },
+    {
+     "who": "Yesus",
+     "text": "Banyak orang akan datang dari timur dan barat dan duduk dalam perjamuan Kerajaan Surga bersama Abraham, Ishak, dan Yakub."
+    },
+    {
+     "who": "Perwira",
+     "text": "Tuan, aku tidak pantas menerima Tuan di rumahku. Katakan saja sepatah kata, maka hambaku akan sembuh."
+    }
+   ],
+   "note": "Seorang perwira memimpin sekitar seratus prajurit. Galilea waktu itu wilayah Herodes Antipas, sehingga orang ini kemungkinan besar perwira bukan Yahudi yang mengabdi kepada Antipas.",
+   "reflect": "Tanpa bukti yang terlihat, sanggupkah aku memercayai Dia sepenuhnya dan hanya memohon agar Ia mengucapkan sepatah kata?",
+   "quiz": {
+    "q": "Ketika para tua-tua Yahudi merekomendasikan perwira itu, apa yang menurut mereka telah ia bangun bagi mereka?",
+    "options": [
+     "Bait Allah",
+     "Tembok kota",
+     "Sebuah sumur",
+     "Rumah ibadat"
+    ],
+    "explain": "Para tua-tua berkata bahwa perwira itu mengasihi bangsa Yahudi dan telah membangun rumah ibadat bagi mereka (Luk 7:4–5)."
+   },
+   "credit": "James Tissot, The Centurion, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e25": {
+   "title": "Iring-iringan Jenazah di Nain",
+   "when": "28 M",
+   "subtitle": "Iring-iringan jenazah terhenti di gerbang kota",
+   "story": [
+    "Nain, sebuah desa kecil di kaki bukit di Galilea selatan. Ketika Yesus mendekati gerbang kota bersama murid-murid-Nya dan orang banyak, sebuah iring-iringan jenazah sedang keluar. Yang meninggal adalah anak laki-laki tunggal seorang janda, dan banyak penduduk kota berjalan di sampingnya sambil menangis.",
+    "Ketika Tuhan melihat ibu itu, hati-Nya tergerak oleh belas kasihan. Jangan menangis. Lalu Ia maju dan menyentuh usungan, dan para pengusung pun berhenti. Di depan gerbang, tempat ratapan telah mereda, suara Yesus berkumandang. Hai anak muda, Aku berkata kepadamu, bangkitlah.",
+    "Pemuda yang mati itu bangun duduk dan mulai berbicara, dan Yesus menyerahkannya kepada ibunya. Semua orang diliputi ketakutan, lalu memuliakan Allah. Seorang nabi besar telah muncul di tengah kita. Allah telah datang melawat umat-Nya."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Jangan menangis."
+    },
+    {
+     "who": "Yesus",
+     "text": "Hai anak muda, Aku berkata kepadamu, bangkitlah."
+    },
+    {
+     "who": "Orang banyak",
+     "text": "Seorang nabi besar telah muncul di antara kita. Allah datang memperhatikan umat-Nya."
+    }
+   ],
+   "note": "Nain terletak di kaki Bukit More, dan di sisi lain bukit itu terletak Sunem, tempat Elisa membangkitkan anak perempuan Sunem. Ingatan itu mungkin menjadi salah satu sebab orang-orang teringat akan seorang nabi besar.",
+   "reflect": "Seperti Yesus yang datang mendekat padahal tak seorang pun memintanya, apakah aku lebih dulu mendekat pada duka seseorang?",
+   "quiz": {
+    "q": "Apa yang disentuh Yesus sebelum membangkitkan pemuda itu?",
+    "options": [
+     "Tangan pemuda itu",
+     "Bahu ibunya",
+     "Usungan jenazah",
+     "Gerbang kota"
+    ],
+    "explain": "Yesus maju dan menyentuh usungan, dan para pengusung berhenti (Luk 7:14)."
+   },
+   "credit": "James Tissot, The Resurrection of the Widow's Son at Nain, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e26": {
+   "title": "Perempuan yang Membasahi Kaki-Nya dengan Air Mata",
+   "when": "28 M",
+   "subtitle": "Yang banyak diampuni, banyak pula mengasihi",
+   "story": [
+    "Seorang Farisi mengundang Yesus makan. Para tamu berbaring mengelilingi meja, bertumpu pada satu sisi dengan kaki terjulur ke belakang. Lalu masuklah seorang perempuan yang di kota itu dikenal sebagai orang berdosa, membawa sebuah buli-buli pualam berisi minyak wangi, dan berdiri di belakang-Nya dekat kaki-Nya.",
+    "Perempuan itu menangis. Ketika air matanya jatuh membasahi kaki Yesus, ia menyekanya dengan rambutnya, mencium kaki-Nya, dan meminyakinya dengan minyak wangi. Simon, tuan rumah, berkata dalam hati: jika orang ini nabi, tentu Ia tahu perempuan macam apa ini. Yesus mulai menceritakan kepadanya kisah tentang dua orang yang berutang.",
+    "Lima ratus dinar dan lima puluh dinar. Jika keduanya dihapuskan utangnya, siapa yang akan lebih mengasihi? Sambil berpaling kepada perempuan itu, Yesus bertanya kepada Simon, engkau lihat perempuan ini? Lalu Ia berkata kepadanya, dosamu sudah diampuni. Imanmu telah menyelamatkan engkau. Pergilah dengan damai."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Dosanya yang banyak itu sudah diampuni, karena itu ia begitu besar mengasihi. Siapa yang sedikit diampuni, sedikit pula ia mengasihi."
+    },
+    {
+     "who": "Yesus",
+     "text": "Imanmu telah menyelamatkan engkau. Pergilah dengan damai."
+    },
+    {
+     "who": "Yesus",
+     "text": "Kaulihat perempuan ini? Aku masuk ke rumahmu, dan engkau tak memberi-Ku air untuk kaki-Ku, tetapi ia membasahi kaki-Ku dengan air mata dan menyekanya dengan rambutnya."
+    }
+   ],
+   "note": "Lukas tidak menyebut nama perempuan ini. Maria Magdalena diperkenalkan tersendiri tepat di bagian berikutnya, jadi tidak ada dasar untuk menganggap keduanya orang yang sama. Penyamaan itu berasal dari tafsiran gereja Barat pada akhir abad keenam.",
+   "reflect": "Tahukah aku betapa besar pengampunan yang telah kuterima, dan apakah kesadaran itu menjadi ukuran kasihku?",
+   "quiz": {
+    "q": "Dalam perumpamaan yang diceritakan Yesus kepada Simon, berapa utang kedua orang itu?",
+    "options": [
+     "Lima ratus dinar dan lima puluh dinar",
+     "Seratus dinar dan sepuluh dinar",
+     "Seribu dinar dan seratus dinar",
+     "Lima puluh dinar dan lima dinar"
+    ],
+    "explain": "Yang seorang berutang lima ratus dinar dan yang lain lima puluh, dan pemberi pinjaman menghapus utang keduanya (Luk 7:41–42)."
+   },
+   "credit": "James Tissot, The Meal in the House of the Pharisee, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e27": {
+   "title": "Perumpamaan di Tepi Danau",
+   "when": "musim gugur 28 M",
+   "subtitle": "Kerajaan Allah dalam sebutir benih kecil",
+   "story": [
+    "Hari itu Yesus keluar dari rumah dan duduk di tepi danau. Begitu banyak orang berkumpul sehingga Ia naik ke perahu dan duduk di atas air, sementara orang banyak berdiri berjajar di pantai. Suara-Nya terbawa di atas ombak yang tenang. Dengarlah. Seorang penabur keluar untuk menabur.",
+    "Benih yang jatuh di pinggir jalan dimakan burung, yang jatuh di tanah berbatu cepat layu, dan yang jatuh di antara semak duri terimpit. Tetapi benih yang jatuh di tanah yang baik berbuah, tiga puluh, enam puluh, dan seratus kali lipat. Yesus menambahkan: siapa bertelinga, hendaklah ia mendengar.",
+    "Kisah-kisah pun berlanjut. Biji sesawi, yang terkecil dari segala benih yang ditanam di tanah. Ragi yang diaduk ke dalam tepung. Harta yang terpendam di ladang, dan mutiara yang sangat berharga. Pukat yang menjaring segala jenis ikan. Kerajaan Allah bermula dari yang kecil dan tersembunyi, dan pada akhirnya mengubah segalanya."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Benih yang ditabur di tanah yang baik ialah orang yang mendengar firman dan menyambutnya. Mereka berbuah tiga puluh, enam puluh, dan seratus kali lipat."
+    },
+    {
+     "who": "Yesus",
+     "text": "Kerajaan Allah seperti biji sesawi. Ketika ditanam, ia lebih kecil dari segala benih, tetapi tumbuh melampaui semua tanaman, dan burung-burung bersarang di naungannya."
+    },
+    {
+     "who": "Yesus",
+     "text": "Kerajaan Surga seperti harta yang terpendam di ladang. Siapa menemukannya pergi dengan sukacita, menjual seluruh miliknya, lalu membeli ladang itu."
+    },
+    {
+     "who": "Yesus",
+     "text": "Adakah orang menyalakan pelita lalu menutupinya dengan gantang atau menaruhnya di bawah tempat tidur? Bukankah ia menaruhnya di atas kaki pelita?"
+    }
+   ],
+   "note": "Di antara Kapernaum dan Tabgha ada sebuah teluk kecil yang disebut Teluk Penabur. Penelitian menunjukkan bahwa pantainya yang landai mengumpulkan suara seperti amfiteater alami, sehingga suara dari perahu dapat menjangkau ribuan orang.",
+   "reflect": "Saat ini, hatiku lebih mirip pinggir jalan, tanah berbatu, semak duri, atau tanah yang baik?",
+   "quiz": {
+    "q": "Yesus membandingkan Kerajaan Surga dengan sesuatu yang diaduk seorang perempuan ke dalam tiga sukat tepung sampai seluruh adonan mengembang. Apakah itu?",
+    "options": [
+     "Biji sesawi",
+     "Ragi",
+     "Mutiara",
+     "Pukat"
+    ],
+    "explain": "Kerajaan Surga seperti ragi yang diambil seorang perempuan dan diaduk ke dalam tiga sukat tepung sampai seluruhnya mengembang (Mat 13:33)."
+   },
+   "credit": "James Tissot, Jesus Preaches in a Ship, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e28": {
+   "title": "Menghardik Angin dan Danau",
+   "when": "musim gugur 28 M · senja",
+   "subtitle": "Siapakah orang ini?",
+   "story": [
+    "Ketika hari yang penuh perumpamaan itu hampir berakhir, Yesus berkata, mari kita bertolak ke seberang. Meninggalkan orang banyak, murid-murid membawa-Nya serta dalam perahu, dan perahu-perahu lain ikut berlayar bersama mereka. Lalu datanglah angin ribut yang dahsyat, dan ombak menerjang masuk ke dalam perahu.",
+    "Air terus naik, tetapi Yesus tertidur di buritan dengan kepala di atas sebuah bantal. Murid-murid membangunkan-Nya. Guru, Engkau tidak peduli kalau kita binasa? Bahkan suara para nelayan yang dibesarkan di danau ini pun bergetar karena takut.",
+    "Yesus bangun, menghardik angin, dan berkata kepada danau, diam, tenanglah. Angin pun reda, dan danau menjadi tenang seperti cermin. Mengapa kalian begitu takut? Belum jugakah kalian percaya? Diliputi ketakutan yang lebih besar lagi, murid-murid bertanya seorang kepada yang lain, siapakah sebenarnya orang ini?"
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Diam. Tenanglah."
+    },
+    {
+     "who": "Yesus",
+     "text": "Mengapa kalian begitu takut? Belum jugakah kalian percaya?"
+    },
+    {
+     "who": "Yesus",
+     "text": "Mari kita bertolak ke seberang danau."
+    },
+    {
+     "who": "Murid-murid",
+     "text": "Siapakah orang ini, sampai angin dan danau pun taat kepada-Nya?"
+    }
+   ],
+   "note": "Danau Galilea terletak di sebuah cekungan sekitar dua ratus sepuluh meter di bawah permukaan laut. Ketika udara sejuk dari dataran tinggi di sekitarnya tiba-tiba menyerbu turun melalui lembah, danau yang tenang dapat seketika diaduk menjadi badai yang ganas.",
+   "reflect": "Ketika Yesus seakan tertidur di tengah badai hidupku, apa yang kupegang, ketakutan atau iman?",
+   "quiz": {
+    "q": "Di bagian mana dari perahu Yesus tertidur ketika badai datang?",
+    "options": [
+     "Di atas jala di haluan",
+     "Di buritan, di atas bantal",
+     "Di bawah tiang layar",
+     "Di ruang muatan di bawah"
+    ],
+    "explain": "Markus mencatat bahwa Yesus tertidur di atas bantal di buritan, bagian belakang perahu (Mrk 4:38)."
+   },
+   "credit": "James Tissot, Jesus Stilling the Tempest, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e29": {
+   "title": "Orang di Antara Kuburan",
+   "when": "musim gugur 28 M",
+   "subtitle": "Kegelapan yang lebih kuat dari rantai, perkataan yang lebih kuat lagi",
+   "story": [
+    "Di seberang danau, di daerah orang Gerasa. Ketika Yesus turun dari perahu, seorang yang tinggal di antara kuburan datang berlari. Bahkan rantai besi pun tak sanggup mengikatnya. Siang dan malam, di antara kuburan dan di bukit-bukit, ia berteriak-teriak dan memukuli dirinya dengan batu.",
+    "Ia tersungkur di depan Yesus dan berteriak, Yesus, Anak Allah Yang Mahatinggi, jangan siksa aku. Ketika ditanya namanya, ia menjawab, Legion, karena kami banyak. Roh-roh jahat itu masuk ke dalam kawanan babi sekitar dua ribu ekor, yang berlari menuruni tebing curam ke dalam danau.",
+    "Orang-orang datang berlarian dan mendapati orang itu duduk, berpakaian dan waras pikirannya. Mereka takut, lalu memohon agar Yesus pergi. Ketika orang itu meminta ikut, Yesus menyuruhnya pulang dan menceritakan apa yang telah dilakukan Tuhan. Maka ia pun mewartakannya ke seluruh Dekapolis."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Pulanglah kepada keluargamu. Ceritakan kepada mereka betapa besar yang telah dilakukan Tuhan bagimu, dan bagaimana Ia mengasihani engkau."
+    },
+    {
+     "who": "Yesus",
+     "text": "Roh jahat, keluarlah dari orang ini."
+    },
+    {
+     "who": "Yesus",
+     "text": "Siapa namamu?"
+    }
+   ],
+   "note": "Markus dan Lukas menyebutnya daerah orang Gerasa, Matius daerah orang Gadara, dan naskah-naskah kuno berbeda dalam nama itu. Di Kursi, di pantai timur, berdiri reruntuhan biara Bizantium abad kelima yang memperingati peristiwa ini.",
+   "reflect": "Jika Yesus menyuruhku pulang, apa yang akan kuceritakan kepada orang-orang terdekat tentang apa yang telah Ia lakukan bagiku?",
+   "quiz": {
+    "q": "Kira-kira berapa ekor babi dalam kawanan yang dimasuki roh-roh jahat itu?",
+    "options": [
+     "Sekitar dua ratus",
+     "Sekitar seribu",
+     "Sekitar dua ribu",
+     "Sekitar lima ribu"
+    ],
+    "explain": "Markus mencatat bahwa kawanan itu berjumlah sekitar dua ribu ekor (Mrk 5:13). Dalam kisah peristiwa yang sama, Matius menyebut dua orang yang kerasukan (Mat 8:28)."
+   },
+   "credit": "James Tissot, My Name is Legion, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e30": {
+   "title": "Talita Kum",
+   "when": "musim gugur 28 M",
+   "subtitle": "Melampaui kabar bahwa semuanya sudah terlambat",
+   "story": [
+    "Ketika Yesus menyeberangi danau lagi, Yairus, seorang kepala rumah ibadat, datang berlari dan tersungkur di depan kaki-Nya. Anak perempuanku yang kecil hampir mati. Datanglah dan letakkan tangan-Mu atasnya. Selagi Yesus pergi bersamanya, orang banyak mengerumuni dan mendesak-Nya. Di tengah desakan itu ada seorang perempuan yang sudah dua belas tahun menderita pendarahan.",
+    "Ia telah menghabiskan seluruh hartanya untuk banyak tabib, namun keadaannya malah makin buruk. Yakin bahwa jika ia menjamah jubah-Nya saja ia akan sembuh, ia mengulurkan tangan dari belakang. Seketika itu pendarahannya berhenti. Siapa yang menjamah jubah-Ku? Kepada perempuan yang maju dengan gemetar itu Yesus berkata, anak-Ku, imanmu telah menyembuhkan engkau.",
+    "Saat itu datanglah orang-orang dari rumah kepala rumah ibadat. Anakmu sudah mati. Yesus berkata, jangan takut, percaya saja, lalu Ia masuk ke kamar hanya bersama Petrus, Yakobus, Yohanes, dan kedua orang tua anak itu. Ia memegang tangannya dan berkata, talita kum, dan gadis berumur dua belas tahun itu bangun lalu berjalan."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Talita kum. Hai anak kecil, Aku berkata kepadamu, bangunlah."
+    },
+    {
+     "who": "Yesus",
+     "text": "Jangan takut. Percaya saja."
+    },
+    {
+     "who": "Yesus",
+     "text": "Anak-Ku, imanmu telah menyembuhkan engkau. Pergilah dengan damai. Bebaslah dari penderitaanmu dan jadilah utuh."
+    },
+    {
+     "who": "Yesus",
+     "text": "Mengapa ribut dan menangis? Anak ini tidak mati. Ia tidur."
+    }
+   ],
+   "note": "Talita kum adalah bahasa Aram, bahasa sehari-hari yang dipakai Yesus. Markus menyimpan beberapa perkataan Aram Yesus persis seperti bunyinya, seperti Efata, Abba, dan Eloi, lalu menjelaskan artinya.",
+   "reflect": "Ketika datang kabar bahwa semuanya sudah terlambat, sanggupkah aku berpegang pada perkataan, jangan takut, percaya saja?",
+   "quiz": {
+    "q": "Apa arti talita kum, perkataan Yesus kepada anak perempuan Yairus?",
+    "options": [
+     "Hai anak kecil, bangunlah",
+     "Tuhan, kasihanilah",
+     "Terbukalah",
+     "Sudah selesai"
+    ],
+    "explain": "Talita kum dalam bahasa Aram berarti hai anak kecil, bangunlah (Mrk 5:41). Anak itu berumur dua belas tahun (Mrk 5:42)."
+   },
+   "credit": "James Tissot, The Daughter of Jairus, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e31": {
+   "title": "Perjamuan di Padang Sunyi",
+   "when": "musim semi 29 M · menjelang Paskah",
+   "subtitle": "Lima roti jelai dan dua ikan",
+   "story": [
+    "Murid-murid kembali dari tugas perutusan dengan letih. Mereka menyeberang dengan perahu ke tempat sunyi dekat Betsaida untuk beristirahat sejenak, tetapi orang-orang mendengarnya dan bergegas mendahului mereka menyusuri pantai. Yesus tergerak oleh belas kasihan kepada mereka, sebab mereka seperti domba tanpa gembala, dan Ia mengajar mereka sampai matahari condong.",
+    "Kalian harus memberi mereka makan. Murid-murid kebingungan. Filipus menghitung bahwa roti seharga dua ratus dinar pun tak akan cukup, dan yang bisa ditemukan Andreas hanyalah lima roti jelai dan dua ikan milik seorang anak. Saat itu musim semi, Paskah sudah dekat, dan orang banyak duduk berkelompok di atas rumput hijau.",
+    "Yesus menengadah ke langit, mengucap syukur, memecah-mecahkan roti, lalu membagikannya, dan makanan itu berpindah dari tangan ke tangan tanpa habis. Lima ribu laki-laki makan sampai kenyang, dan sisa potongannya memenuhi dua belas bakul. Ketika orang banyak hendak menangkap-Nya dan menjadikan-Nya raja, Yesus menyingkir seorang diri ke gunung."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Kalian sendirilah yang harus memberi mereka makan."
+    },
+    {
+     "who": "Yesus",
+     "text": "Marilah ke tempat yang sunyi, hanya kita saja, dan beristirahatlah sejenak."
+    },
+    {
+     "who": "Yesus",
+     "text": "Kumpulkan semua potongan yang tersisa, supaya tidak ada yang terbuang."
+    }
+   ],
+   "note": "Inilah satu-satunya mukjizat yang dicatat dalam keempat Injil. Lukas menyebut tempatnya Betsaida, yang diperkirakan dekat muara Sungai Yordan di pantai timur laut Danau Galilea. Yohanes mencatat bahwa roti anak itu roti jelai, makanan orang miskin.",
+   "reflect": "Sanggupkah aku menyerahkan kepada Tuhan hal-hal kecil dan sederhana yang ada di tanganku?",
+   "quiz": {
+    "q": "Setelah semua orang makan, berapa bakul sisa potongan yang terkumpul?",
+    "options": [
+     "Tujuh bakul",
+     "Lima bakul",
+     "Dua belas bakul",
+     "Tiga bakul"
+    ],
+    "explain": "Ketika sisa potongan dikumpulkan, terisilah dua belas bakul (Mat 14:20; Mrk 6:43; Luk 9:17; Yoh 6:13). Tujuh bakul termasuk dalam peristiwa lain, ketika empat ribu orang diberi makan."
+   },
+   "credit": "James Tissot, The Miracle of the Loaves and Fishes, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e32": {
+   "title": "Dia yang Datang di Atas Air",
+   "when": "musim semi 29 M · jaga malam keempat",
+   "subtitle": "Pada malam yang berangin, Ia datang berjalan di atas air",
+   "story": [
+    "Sesudah menyuruh orang banyak pulang, Yesus meminta murid-murid naik ke perahu dan mendahului-Nya ke seberang, lalu Ia naik ke bukit seorang diri untuk berdoa. Ketika malam makin larut, angin sakal bertiup. Berjam-jam murid-murid mendayung dalam gelap, tetapi perahu itu masih diombang-ambingkan gelombang di tengah danau.",
+    "Pada jaga malam keempat, selagi langit masih hitam, seseorang berjalan ke arah mereka di atas air. Murid-murid menjerit bahwa itu hantu, lalu sebuah suara yang mereka kenal sampai kepada mereka. “Tenanglah. Aku ini.” Petrus berseru: Tuhan, jika itu Engkau, suruhlah aku datang kepada-Mu di atas air. “Datanglah.”",
+    "Petrus turun dari perahu dan berjalan beberapa langkah di atas air. Tetapi ketika melihat angin yang kencang, ketakutan menyergapnya dan ia mulai tenggelam. Tuhan, tolonglah aku. Seketika Yesus mengulurkan tangan dan memegangnya. Ketika keduanya naik ke perahu, angin pun reda, dan murid-murid sujud menyembah Dia."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Kuatkan hatimu. Aku ini. Tidak ada yang perlu ditakuti."
+    },
+    {
+     "who": "Yesus",
+     "text": "Datanglah."
+    },
+    {
+     "who": "Yesus",
+     "text": "Hai engkau yang kurang percaya, mengapa engkau bimbang?"
+    },
+    {
+     "who": "Murid-murid",
+     "text": "Sungguh, Engkau Anak Allah."
+    }
+   ],
+   "note": "Menurut pembagian malam cara Romawi, jaga malam keempat berlangsung kira-kira pukul tiga sampai enam pagi. Yohanes menulis bahwa murid-murid melihat Yesus setelah mendayung dua puluh lima atau tiga puluh stadia, kira-kira lima atau enam kilometer.",
+   "reflect": "Ketika angin kencang merebut pandanganku, tangan siapakah yang kembali kutatap?",
+   "quiz": {
+    "q": "Mengapa Petrus mulai tenggelam ketika berjalan di atas air?",
+    "options": [
+     "Ia melihat angin lalu menjadi takut",
+     "Ia menoleh ke arah perahu",
+     "Kakinya tergelincir",
+     "Murid lain memanggilnya"
+    ],
+    "explain": "Ketika Petrus melihat angin, ia takut dan mulai tenggelam (Mat 14:30)."
+   },
+   "credit": "James Tissot, Jesus Walks on the Sea, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e33": {
+   "title": "Akulah Roti Hidup",
+   "when": "musim semi 29 M",
+   "subtitle": "Makanan yang lebih dalam bagi mereka yang datang mencari perut kenyang",
+   "story": [
+    "Keesokan harinya, orang banyak yang telah makan roti itu menyeberang dengan perahu ke Kapernaum mencari Yesus. Ia melihat langsung ke dalam hati mereka. Kalian mencari Aku bukan karena melihat tanda, melainkan karena makan roti sampai kenyang. Jangan bekerja untuk makanan yang basi dan lenyap, tetapi untuk makanan yang bertahan selamanya.",
+    "Orang-orang mengungkit manna yang dimakan nenek moyang mereka di padang gurun. Yesus menjawab bahwa Dialah roti sejati yang turun dari surga dan memberi hidup kepada dunia. Bisik-bisik menyebar di rumah ibadat Kapernaum. Bukankah Ia anak Yusuf? Bagaimana Ia menyuruh kita makan daging-Nya?",
+    "Karena merasa ajaran ini terlalu keras, banyak murid-Nya mundur dan tidak lagi berjalan bersama Dia. Yesus berpaling kepada kedua belas murid yang tinggal. Apakah kalian juga mau pergi? Sesudah hening sejenak, Petrus berbicara. Tuhan, Engkau memiliki perkataan hidup kekal. Kepada siapa lagi kami akan pergi?"
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Akulah roti hidup. Siapa datang kepada-Ku tidak akan lapar lagi, dan siapa percaya kepada-Ku tidak akan pernah haus lagi."
+    },
+    {
+     "who": "Yesus",
+     "text": "Jangan bersusah payah untuk makanan yang segera lenyap. Bekerjalah untuk makanan yang bertahan sampai hidup kekal."
+    },
+    {
+     "who": "Yesus",
+     "text": "Apakah kalian juga mau pergi?"
+    },
+    {
+     "who": "Petrus",
+     "text": "Tuhan, Engkau memiliki perkataan hidup kekal. Kepada siapa lagi kami bisa pergi?"
+    }
+   ],
+   "note": "Rumah ibadat dari batu kapur putih yang berdiri di Kapernaum sekarang diperkirakan berasal dari abad keempat atau sesudahnya, tetapi fondasi batu basal hitam di bawahnya mungkin jejak rumah ibadat pada zaman Yesus.",
+   "reflect": "Apakah aku meminta kepada Tuhan hanya roti, atau mencari Dia, yang adalah hidup itu sendiri?",
+   "quiz": {
+    "q": "Di manakah Yesus mengajar tentang roti hidup?",
+    "options": [
+     "Di pelataran Bait Allah di Yerusalem",
+     "Di rumah ibadat Nazaret",
+     "Di perahu di tepi Danau Galilea",
+     "Di rumah ibadat Kapernaum"
+    ],
+    "explain": "Yesus mengatakan semua itu ketika mengajar di rumah ibadat di Kapernaum (Yoh 6:59)."
+   },
+   "credit": "James Tissot, You Follow Me for the Miracles, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e34": {
+   "title": "Seorang Ibu dari Daerah Tirus",
+   "when": "musim panas 29 M",
+   "subtitle": "Iman yang puas dengan remah-remah",
+   "story": [
+    "Yesus meninggalkan Galilea dan pergi ke utara, ke daerah Tirus, negeri bangsa lain di tepi laut. Ia masuk ke sebuah rumah dan tidak ingin seorang pun tahu Ia ada di sana, tetapi Ia tak dapat bersembunyi. Seorang ibu yang anak perempuannya disiksa roh jahat mendengar kabar itu, datang, dan tersungkur di depan kaki-Nya. Ia bukan orang Israel.",
+    "Anak Daud, kasihanilah aku. Ia terus berseru, dan murid-murid yang merasa terganggu mendesak Yesus menyuruhnya pergi. Jawaban Yesus terdengar dingin. Tidak patut mengambil roti anak-anak dan melemparkannya kepada anjing-anjing di rumah. Tetapi ibu itu tidak mundur.",
+    "Benar, Tuhan. Namun anjing-anjing pun makan remah-remah yang jatuh dari meja tuannya. Wajah Yesus menjadi cerah. Besar imanmu. Ketika ia pulang, ia mendapati anaknya berbaring tenang di tempat tidur, dan roh yang menyiksanya sudah pergi."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Ibu, sungguh besar imanmu. Jadilah bagimu seperti yang kauinginkan."
+    },
+    {
+     "who": "Yesus",
+     "text": "Biarlah anak-anak kenyang lebih dulu. Tidak patut mengambil roti anak-anak dan melemparkannya kepada anjing peliharaan."
+    },
+    {
+     "who": "Yesus",
+     "text": "Karena jawabanmu itu, pulanglah sekarang. Roh jahat itu sudah keluar dari anakmu."
+    },
+    {
+     "who": "Ibu itu",
+     "text": "Benar, Tuhan. Tetapi anjing di bawah meja pun makan remah-remah yang dijatuhkan anak-anak, bukan?"
+    }
+   ],
+   "note": "Tirus adalah kota pelabuhan Fenisia di pantai Laut Tengah, wilayah bangsa lain di mata orang Yahudi. Kata yang dipakai Yesus tidak menunjuk anjing liar, melainkan anjing kecil yang dipelihara di dalam rumah.",
+   "reflect": "Bahkan di hadapan keheningan yang terasa seperti penolakan, sanggupkah aku terus berpegang kepada Tuhan sampai akhir?",
+   "quiz": {
+    "q": "Bagaimana Injil Markus menggambarkan perempuan ini?",
+    "options": [
+     "Seorang perempuan Samaria",
+     "Seorang Yunani, kelahiran Siro-Fenisia",
+     "Istri seorang perwira Romawi",
+     "Istri seorang nelayan Galilea"
+    ],
+    "explain": "Markus menggambarkannya sebagai perempuan Yunani, kelahiran Siro-Fenisia (Mrk 7:26), sedangkan Matius menyebutnya perempuan Kanaan (Mat 15:22)."
+   },
+   "credit": "James Tissot, The Canaanite's Daughter, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e35": {
+   "title": "Efata, Terbukalah",
+   "when": "musim panas 29 M",
+   "subtitle": "Hari ketika telinga yang tertutup dan lidah yang terikat dibebaskan",
+   "story": [
+    "Yesus meninggalkan Tirus, melewati Sidon, dan mengambil jalan memutar menuju Danau Galilea, ke arah daerah Dekapolis. Orang-orang membawa kepada-Nya seorang tuli yang hampir tak dapat berbicara, dan memohon agar Ia meletakkan tangan atasnya. Yesus membawanya ke samping, menjauh dari orang banyak, ke tempat yang sunyi.",
+    "Yesus memasukkan jari-Nya ke telinga orang itu, meludah, lalu menyentuh lidahnya. Kemudian Ia menengadah ke langit, menarik napas dalam-dalam, dan mengucapkan satu kata. Efata. Terbukalah. Seketika telinga yang tersumbat itu terbuka dan lidah yang kelu itu terlepas, dan orang itu mulai berbicara dengan jelas.",
+    "Yesus berpesan agar mereka tidak memberi tahu siapa pun, tetapi makin Ia melarang, makin jauh kabar itu tersebar. Ketika Ia naik ke sebuah bukit, orang-orang membawa kepada-Nya orang lumpuh, orang buta, dan orang bisu, dan melihat mereka disembuhkan, orang banyak memuliakan Allah Israel."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Efata. Terbukalah!"
+    },
+    {
+     "who": "Orang banyak",
+     "text": "Segala yang Ia lakukan sungguh menakjubkan. Ia membuat orang tuli mendengar dan orang bisu berbicara."
+    }
+   ],
+   "note": "Efata adalah bahasa Aram, bahasa sehari-hari di Yudea pada zaman Yesus, dan Markus kerap menyimpan ungkapan Aram seperti itu persis seperti yang diucapkan. Dekapolis adalah wilayah sepuluh kota bergaya Yunani yang tersebar di sebelah timur dan selatan Danau Galilea.",
+   "reflect": "Telinga mana yang tertutup dan perkataan apa yang terikat di dalam diriku, dan di manakah Tuhan akan berkata, terbukalah?",
+   "quiz": {
+    "q": "Apa arti kata Efata yang diucapkan Yesus?",
+    "options": [
+     "Bangkitlah",
+     "Jadilah tahir",
+     "Terbukalah",
+     "Lihatlah"
+    ],
+    "explain": "Markus menjelaskan bahwa Efata berarti “Terbukalah” (Mrk 7:34)."
+   },
+   "credit": "James Tissot, Jesus Heals the Blind and Lame on the Mountain, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e36": {
+   "title": "Menurut Kalian, Siapakah Aku?",
+   "when": "musim panas 29 M",
+   "subtitle": "Pertanyaan di bawah batu karang tempat mata air memancar",
+   "story": [
+    "Di kaki Gunung Hermon terletak Kaisarea Filipi, tempat air Sungai Yordan memancar dari bawah batu karang. Di negeri asing ini, yang dipenuhi relung-relung untuk dewa-dewa bangsa lain, Yesus bertanya kepada murid-murid-Nya sambil berjalan: Kata orang, siapakah Aku ini?",
+    "Ada yang bilang Yohanes Pembaptis, ada yang bilang Elia atau Yeremia, atau salah seorang nabi. Lalu menurut kalian, siapakah Aku? Petrus menjawab: Engkaulah Kristus, Anak Allah yang hidup. Yesus menyebutnya berbahagia dan sekali lagi memberinya nama yang berarti batu karang.",
+    "Sejak itu Yesus mulai memberi tahu mereka bahwa Ia harus menanggung banyak penderitaan di Yerusalem, dibunuh, dan bangkit pada hari ketiga. Ketika Petrus menarik-Nya dan berkata hal itu tak boleh terjadi, Yesus menegurnya dengan keras. Lalu Ia berkata kepada semua yang ingin mengikut Dia agar memikul salib mereka sendiri."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Tetapi kalian, bagaimana dengan kalian? Menurut kalian, siapakah Aku?"
+    },
+    {
+     "who": "Yesus",
+     "text": "Siapa mau mengikut Aku harus melepaskan dirinya, memikul salibnya, dan berjalan di belakang-Ku."
+    },
+    {
+     "who": "Yesus",
+     "text": "Apa gunanya memperoleh seluruh dunia tetapi kehilangan nyawamu sendiri?"
+    },
+    {
+     "who": "Petrus",
+     "text": "Engkaulah Kristus, Anak Allah yang hidup."
+    }
+   ],
+   "note": "Filipus, raja wilayah, menamai kota itu untuk menghormati kaisar; sekarang namanya Banias. Gua dan reruntuhan kuil yang dulu dipersembahkan kepada dewa Pan masih ada, dan salah satu sumber utama Sungai Yordan memancar di sini.",
+   "reflect": "Bukan kata orang lain, tetapi siapakah Yesus yang kuakui saat ini?",
+   "quiz": {
+    "q": "Siapakah yang tidak termasuk dalam jawaban murid-murid ketika ditanya siapa Yesus menurut kata orang?",
+    "options": [
+     "Yohanes Pembaptis",
+     "Elia",
+     "Yeremia",
+     "Musa"
+    ],
+    "explain": "Murid-murid melaporkan bahwa orang menyebut Yesus Yohanes Pembaptis, Elia, Yeremia, atau salah seorang nabi (Mat 16:14). Musa tidak disebut."
+   },
+   "credit": "James Tissot, Get Thee Behind Me Satan, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e37": {
+   "title": "Dimuliakan di Atas Gunung",
+   "when": "musim panas 29 M",
+   "subtitle": "Kemuliaan yang terlihat sekejap di atas gunung",
+   "story": [
+    "Enam hari kemudian, Yesus hanya membawa Petrus, Yakobus, dan Yohanes, lalu naik ke sebuah gunung yang tinggi. Selagi Ia berdoa, wajah-Nya bersinar seperti matahari dan pakaian-Nya menjadi putih berkilauan. Ketika murid-murid yang mengantuk membuka mata, Musa dan Elia sedang bercakap-cakap dengan Yesus.",
+    "Mereka berbicara tentang kepergian-Nya, yang akan segera Ia genapi di Yerusalem. Dengan gugup Petrus berseru: Tuhan, betapa baiknya kami berada di sini. Biarlah aku mendirikan tiga kemah. Saat itu awan yang terang menaungi mereka, dan suara bergema dari dalam awan. Inilah Anak-Ku yang terkasih. Dengarkanlah Dia.",
+    "Murid-murid tersungkur dan gemetar. Seseorang menyentuh bahu mereka. Berdirilah, jangan takut. Ketika mereka mengangkat muka, mereka hanya melihat Yesus. Sambil turun dari gunung, Yesus berpesan agar mereka tidak menceritakan apa yang mereka lihat kepada siapa pun sampai Anak Manusia bangkit dari antara orang mati."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Berdirilah. Jangan takut."
+    },
+    {
+     "who": "Yesus",
+     "text": "Jangan ceritakan kepada siapa pun apa yang kalian lihat sampai Anak Manusia bangkit dari antara orang mati."
+    },
+    {
+     "who": "Yesus",
+     "text": "Elia sudah datang, tetapi mereka tidak mengenalinya, malah memperlakukannya sesuka hati."
+    },
+    {
+     "who": "Suara dari surga",
+     "text": "Inilah Anak-Ku, yang Kukasihi, kesukaan-Ku. Dengarkanlah Dia."
+    }
+   ],
+   "note": "Injil hanya menyebut sebuah gunung yang tinggi. Tradisi sejak lama menunjuk Gunung Tabor, tetapi banyak ahli menunjuk Gunung Hermon, yang dekat dengan Kaisarea Filipi dari kisah sebelumnya dan jauh lebih tinggi.",
+   "reflect": "Ketika saat yang gemilang berlalu dan hanya Yesus yang tinggal, apakah aku tetap mendengarkan Dia?",
+   "quiz": {
+    "q": "Siapakah dua orang yang muncul dan bercakap-cakap dengan Yesus yang dimuliakan?",
+    "options": [
+     "Musa dan Elia",
+     "Abraham dan Daud",
+     "Elia dan Elisa",
+     "Musa dan Yesaya"
+    ],
+    "explain": "Musa dan Elia menampakkan diri dan bercakap-cakap dengan Yesus (Mat 17:3; Mrk 9:4; Luk 9:30)."
+   },
+   "credit": "James Tissot, The Transfiguration, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e38": {
+   "title": "Siapakah yang Terbesar?",
+   "when": "musim gugur 29 M",
+   "subtitle": "Ia menempatkan seorang anak di tengah-tengah mereka",
+   "story": [
+    "Dalam perjalanan kembali ke Kapernaum, murid-murid tertinggal di belakang, berdebat dengan suara pelan. Ketika mereka masuk ke rumah, Yesus bertanya: Apa yang kalian perdebatkan di jalan tadi? Tak seorang pun menjawab. Siapa yang terbesar, itulah pertengkaran mereka.",
+    "Yesus duduk, memanggil kedua belas murid, mengambil seorang anak kecil, dan menempatkannya di tengah-tengah mereka. Lalu Ia memeluk anak itu. Siapa ingin menjadi yang pertama harus menjadi yang terakhir dari semuanya dan pelayan bagi semua. Siapa menyambut seorang anak seperti ini dalam nama-Ku, ia menyambut Aku.",
+    "Yesus bercerita tentang gembala yang meninggalkan sembilan puluh sembilan ekor untuk mencari seekor domba yang hilang. Petrus bertanya: Jika saudaraku bersalah kepadaku, berapa kali aku harus mengampuninya? Cukupkah tujuh kali? Yesus menyuruhnya mengampuni bahkan tujuh puluh tujuh kali, lalu menceritakan perumpamaan tentang hamba yang dihapus utangnya yang sangat besar, tetapi tak mau mengampuni utang yang kecil."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Siapa ingin menjadi yang pertama harus berdiri di belakang semua orang dan menjadi pelayan bagi semua."
+    },
+    {
+     "who": "Yesus",
+     "text": "Jika kalian tidak berbalik dan menjadi seperti anak kecil, kalian sama sekali tidak akan masuk Kerajaan Surga."
+    },
+    {
+     "who": "Yesus",
+     "text": "Bukan hanya tujuh kali. Ampunilah bahkan sampai tujuh puluh tujuh kali."
+    }
+   ],
+   "note": "Dalam perumpamaan itu, sang hamba dihapus utangnya sebesar sepuluh ribu talenta, sedangkan kawannya berutang seratus dinar kepadanya. Satu talenta kira-kira setara upah enam ribu hari kerja seorang buruh, perbandingan yang nyaris tak terbayangkan.",
+   "reflect": "Apakah aku mengampuni orang lain sambil mengingat betapa banyak aku sendiri telah diampuni?",
+   "quiz": {
+    "q": "Ketika Petrus bertanya berapa kali ia harus mengampuni, apa jawab Yesus?",
+    "options": [
+     "Tujuh kali",
+     "Tujuh puluh tujuh kali",
+     "Dua belas kali",
+     "Tiga kali"
+    ],
+    "explain": "Yesus menjawab bukan tujuh kali, melainkan tujuh puluh tujuh kali (Mat 18:22). Teks aslinya dapat juga diterjemahkan tujuh puluh kali tujuh, artinya mengampuni tanpa batas."
+   },
+   "credit": "James Tissot, Jesus and the Little Child, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e39": {
+   "title": "Mereka yang Meletakkan Batu",
+   "when": "musim gugur 29 M · Hari Raya Pondok Daun",
+   "subtitle": "Hari raya ketika Ia menyerukan air hidup, dan kata-kata yang Ia tulis di tanah",
+   "story": [
+    "Saat itu Hari Raya Pondok Daun di musim gugur, dan Yerusalem penuh peziarah dan pondok-pondok yang dianyam dari ranting. Ketika saudara-saudara-Nya sendiri pun tidak percaya kepada-Nya, Yesus pergi ke sana diam-diam, dan di pertengahan hari raya Ia mulai mengajar di Bait Allah. Pada hari terakhir, puncak hari raya itu, Ia berdiri dan berseru: Siapa haus, datanglah kepada-Ku dan minumlah.",
+    "Para penjaga Bait Allah yang diutus menangkap-Nya kembali dengan tangan kosong dan berkata: Belum pernah ada orang yang berbicara seperti orang ini. Pagi-pagi benar keesokan harinya, para ahli Taurat dan orang Farisi menyeret seorang perempuan yang tertangkap berzina dan menempatkannya di tengah-tengah. Musa memerintahkan kita merajam perempuan seperti ini. Apa pendapat-Mu?",
+    "Yesus membungkuk dan menulis sesuatu di tanah dengan jari-Nya. Ketika mereka terus mendesak, Ia bangkit berdiri dan berkata: Siapa di antara kalian yang tidak berdosa, biarlah ia yang pertama melemparkan batu. Satu per satu mereka menyelinap pergi, mulai dari yang tertua, sampai hanya tinggal Yesus dan perempuan itu. Aku pun tidak menghukum engkau. Pergilah."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Jika ada di antara kalian yang tidak berdosa, biarlah dia yang pertama melempar batu kepadanya."
+    },
+    {
+     "who": "Yesus",
+     "text": "Aku pun tidak menghukum engkau. Pergilah, dan mulai sekarang jangan berbuat dosa lagi."
+    },
+    {
+     "who": "Yesus",
+     "text": "Siapa haus, datanglah kepada-Ku dan minumlah. Dari dalam diri orang yang percaya kepada-Ku, air hidup akan mengalir seperti sungai."
+    }
+   ],
+   "note": "Kisah perempuan yang tertangkap berzina, Yohanes 7:53 sampai 8:11, tidak terdapat dalam naskah-naskah tertua. Namun kisah ini dianggap tradisi kuno dan dimuat di sebagian besar Alkitab, sering kali diberi tanda kurung atau catatan.",
+   "reflect": "Sanggupkah aku meletakkan batu di tanganku dan menawarkan kata-kata awal yang baru, bukan penghukuman?",
+   "quiz": {
+    "q": "Apa yang dilakukan Yesus ketika Ia membungkuk di hadapan para penuduh perempuan itu?",
+    "options": [
+     "Ia memegang tangan perempuan itu",
+     "Ia menengadah ke langit dan berdoa",
+     "Ia memungut sebuah batu",
+     "Ia menulis di tanah dengan jari-Nya"
+    ],
+    "explain": "Yesus membungkuk dan menulis di tanah dengan jari-Nya, dan sesudah berbicara Ia membungkuk lagi dan menulis (Yoh 8:6, 8)."
+   },
+   "credit": "James Tissot, The Adulterous Woman--Christ Writing upon the Ground, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e40": {
+   "title": "Mata yang Terbuka di Siloam",
+   "when": "musim gugur 29 M",
+   "subtitle": "Mata yang terbuka oleh lumpur dan air kolam",
+   "story": [
+    "Ketika melewati jalan-jalan Yerusalem, Yesus melihat seorang yang buta sejak lahir. Murid-murid-Nya bertanya: Dosa siapakah yang membuat orang ini buta, dosanya sendiri atau dosa orang tuanya? Yesus berkata bukan keduanya. Hal itu terjadi supaya pekerjaan Allah dinyatakan di dalam dirinya.",
+    "Yesus meludah ke tanah, membuat lumpur, mengoleskannya pada mata orang itu, lalu menyuruhnya pergi membasuh diri di kolam Siloam. Sambil meraba-raba, orang itu menuruni tangga dan membasuh mukanya di air. Lalu ia kembali dengan melihat cahaya untuk pertama kali dalam hidupnya. Hari itu hari Sabat.",
+    "Orang-orang Farisi menginterogasinya berulang kali, dan bahkan orang tuanya pun bungkam karena takut. Ia tetap teguh sampai akhir. Satu hal yang aku tahu: dulu aku buta, dan sekarang aku melihat. Sesudah ia diusir dari rumah ibadat, Yesus datang mencarinya, dan ia sujud sambil berkata, Tuhan, aku percaya."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Bukan karena dosanya, bukan pula dosa orang tuanya. Ini terjadi supaya pekerjaan Allah dinyatakan melalui dirinya."
+    },
+    {
+     "who": "Yesus",
+     "text": "Selama Aku ada di dunia, Akulah terang dunia."
+    },
+    {
+     "who": "Yesus",
+     "text": "Pergilah, basuhlah dirimu di kolam Siloam."
+    },
+    {
+     "who": "Orang yang disembuhkan",
+     "text": "Satu hal yang aku tahu pasti. Dulu aku tidak bisa melihat, sekarang aku bisa."
+    }
+   ],
+   "note": "Pada tahun 2004, ketika saluran pembuangan diperbaiki di selatan Yerusalem, ditemukan sebuah kolam bertangga dari zaman Bait Allah Kedua, yang diperkirakan adalah kolam Siloam dalam Injil Yohanes. Siloam berarti diutus.",
+   "reflect": "Meskipun aku tak dapat menjelaskan semuanya, beranikah aku menceritakan satu hal yang telah Tuhan lakukan bagiku?",
+   "quiz": {
+    "q": "Menurut Injil Yohanes, apa arti nama Siloam?",
+    "options": [
+     "Mata air cahaya",
+     "Kolam damai",
+     "Diutus",
+     "Menyucikan"
+    ],
+    "explain": "Yohanes menjelaskan bahwa Siloam berarti “yang diutus” (Yoh 9:7)."
+   },
+   "credit": "James Tissot, The Blind Man Washes in the Pool of Siloam, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e41": {
+   "title": "Orang Samaria yang Baik Hati dan Dua Saudari",
+   "when": "musim gugur 29 M",
+   "subtitle": "Yang menjadi sesama, dan yang duduk di kaki-Nya",
+   "story": [
+    "Seorang ahli Taurat berdiri untuk mencobai Yesus. Apa yang harus kulakukan untuk memperoleh hidup kekal? Ketika orang itu sendiri mengucapkan hukum untuk mengasihi Allah dan sesama, Yesus berkata kepadanya, lakukanlah itu, maka engkau akan hidup. Ia bertanya lagi: Dan siapakah sesamaku?",
+    "Yesus bercerita tentang jalan terjal yang turun dari Yerusalem ke Yerikho. Seorang dirampok penyamun dan ditinggalkan setengah mati, dan seorang imam serta seorang Lewi sama-sama lewat dari seberang jalan. Tetapi seorang Samaria yang sedang dalam perjalanan melihatnya, tergerak oleh belas kasihan, dan mendekatinya. Ia menuangkan minyak dan anggur ke luka-lukanya, membalutnya, membawanya ke penginapan, lalu merawatnya.",
+    "Dalam perjalanan selanjutnya, Yesus singgah di rumah Marta di sebuah desa. Marta sibuk dengan segala pelayanan, sementara saudarinya Maria duduk di kaki Tuhan mendengarkan perkataan-Nya. Ketika Marta menumpahkan kekesalannya, Yesus dengan lembut memanggil namanya dua kali. Hanya satu hal yang sungguh diperlukan."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Menurutmu, siapakah dari ketiga orang ini yang menjadi sesama bagi orang yang jatuh ke tangan penyamun itu?"
+    },
+    {
+     "who": "Yesus",
+     "text": "Pergilah dan lakukanlah hal yang sama."
+    },
+    {
+     "who": "Yesus",
+     "text": "Marta, Marta, engkau cemas dan gelisah karena begitu banyak hal. Padahal hanya satu yang perlu."
+    },
+    {
+     "who": "Yesus",
+     "text": "Maria telah memilih bagian yang terbaik, dan itu tidak akan diambil darinya."
+    }
+   ],
+   "note": "Jarak Yerusalem ke Yerikho sekitar dua puluh tujuh kilometer, jalan menurun melintasi padang gurun lebih dari seribu meter. Lukas hanya menyebut sebuah desa, tetapi Injil Yohanes menyebut desa Marta dan Maria sebagai Betania.",
+   "reflect": "Apakah aku orang yang memperdebatkan siapa sesamaku, atau orang yang lebih dulu menjadi sesama?",
+   "quiz": {
+    "q": "Berapa uang yang diberikan orang Samaria itu kepada pemilik penginapan?",
+    "options": [
+     "Dua dinar",
+     "Tiga puluh keping perak",
+     "Satu talenta",
+     "Lima dirham"
+    ],
+    "explain": "Keesokan harinya orang Samaria itu memberikan dua dinar kepada pemilik penginapan dan memintanya merawat orang itu (Luk 10:35)."
+   },
+   "credit": "James Tissot, The Good Samaritan, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e42": {
+   "title": "Akulah Gembala yang Baik",
+   "when": "musim dingin 29 M · Hari Raya Pentahbisan Bait Allah",
+   "subtitle": "Gembala yang memanggil domba-dombanya menurut nama",
+   "story": [
+    "Gembala masuk melalui pintu dan memanggil domba-dombanya satu per satu menurut namanya, dan domba-domba itu mengenal suaranya lalu mengikutinya keluar. Yesus meminjam pemandangan yang akrab ini untuk berbicara tentang diri-Nya. Akulah pintu bagi domba-domba. Akulah gembala yang baik. Gembala yang baik menyerahkan nyawanya bagi domba-dombanya.",
+    "Beberapa bulan kemudian, di musim dingin, tibalah Hari Raya Pentahbisan Bait Allah. Ketika Yesus berjalan di Serambi Salomo di Bait Allah, orang-orang mengerumuni-Nya. Berapa lama lagi Engkau membiarkan kami bimbang? Jika Engkau Kristus, katakanlah terus terang. Yesus menjawab: Domba-domba-Ku mendengar suara-Ku, dan tak seorang pun dapat merebut mereka dari tangan-Ku.",
+    "Aku dan Bapa adalah satu. Mendengar itu, mereka kembali memungut batu. Yesus meloloskan diri dari genggaman mereka dan menyingkir ke seberang Yordan, ke tempat Yohanes dulu mula-mula membaptis, lalu tinggal di sana. Dan di sana banyak orang percaya kepada-Nya."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Akulah gembala yang baik. Gembala yang baik memberikan nyawanya bagi domba-dombanya."
+    },
+    {
+     "who": "Yesus",
+     "text": "Aku datang supaya domba-domba itu memiliki hidup, dan memilikinya dengan berlimpah-limpah."
+    },
+    {
+     "who": "Yesus",
+     "text": "Domba-domba-Ku mengenal suara-Ku. Aku mengenal mereka, dan mereka mengikut Aku."
+    },
+    {
+     "who": "Yesus",
+     "text": "Aku dan Bapa adalah satu."
+    }
+   ],
+   "note": "Hari Raya Pentahbisan adalah perayaan musim dingin untuk memperingati bagaimana Yudas Makabe, pada tahun 164 SM, merebut kembali Bait Allah yang dinajiskan raja asing Antiokhus Keempat dan menahbiskannya kembali. Sekarang perayaan ini disebut Hanukkah.",
+   "reflect": "Di antara begitu banyak suara, apakah aku mengenali suara gembala yang memanggilku?",
+   "quiz": {
+    "q": "Di bagian mana dari Bait Allah Yesus berjalan pada Hari Raya Pentahbisan?",
+    "options": [
+     "Pelataran bangsa-bangsa lain",
+     "Serambi Salomo",
+     "Pelataran perempuan",
+     "Gerbang Indah"
+    ],
+    "explain": "Saat itu musim dingin, Hari Raya Pentahbisan, dan Yesus berjalan di Serambi Salomo di Bait Allah (Yoh 10:22–23)."
+   },
+   "credit": "James Tissot, The Good Shepherd, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e43": {
+   "title": "Sukacita Menemukan yang Hilang",
+   "when": "awal tahun 30 M",
+   "subtitle": "Seekor domba, sekeping uang, dan seorang anak",
+   "story": [
+    "Ketika para pemungut cukai dan orang berdosa berkumpul di sekitar Yesus untuk mendengarkan-Nya, orang Farisi dan ahli Taurat bersungut-sungut: Orang ini menerima orang berdosa, bahkan makan bersama mereka. Maka Yesus menceritakan kepada mereka tiga kisah tentang menemukan yang hilang.",
+    "Seorang gembala yang kehilangan seekor dari seratus dombanya meninggalkan yang sembilan puluh sembilan dan mencari sampai menemukan yang seekor itu. Seorang perempuan yang kehilangan satu dari sepuluh dirhamnya menyalakan pelita dan menyapu seluruh rumah untuk mencarinya. Dan begitu menemukannya, keduanya memanggil tetangga untuk datang bersukacita bersama mereka.",
+    "Si anak bungsu meminta warisannya lebih awal, menghamburkan semuanya di negeri yang jauh, dan ingin mengisi perutnya bahkan dengan makanan babi. Lalu ia pulang. Ketika ia masih jauh, ayahnya mengenalinya, berlari mendapatkannya, dan memeluknya. Sang ayah mengadakan pesta, dan ketika si sulung dengan marah tak mau masuk, sang ayah sendiri keluar untuk membujuknya."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Di surga akan ada sukacita lebih besar karena satu orang berdosa yang kembali, daripada karena sembilan puluh sembilan orang benar yang tidak perlu bertobat."
+    },
+    {
+     "who": "Yesus",
+     "text": "Anakku ini sudah mati dan kini hidup kembali. Ia hilang dan kini ditemukan. Mari kita bersukacita bersama."
+    },
+    {
+     "who": "Yesus",
+     "text": "Anakku, engkau selalu bersamaku, dan segala milikku adalah milikmu."
+    }
+   ],
+   "note": "Meminta warisan selagi ayah masih hidup dianggap penghinaan besar, dan dalam budaya yang menjunjung martabat, kepala keluarga yang sudah tua berlari adalah pemandangan yang ganjil. Bagi orang Yahudi, babi adalah binatang haram.",
+   "reflect": "Apakah aku lebih mirip sang ayah yang menyambut anaknya pulang, atau si sulung yang berdiri di luar pintu?",
+   "quiz": {
+    "q": "Berapa keping uang perak yang semula dimiliki perempuan dalam perumpamaan itu?",
+    "options": [
+     "Tiga",
+     "Lima",
+     "Seratus",
+     "Sepuluh"
+    ],
+    "explain": "Perempuan itu kehilangan satu dari sepuluh dirhamnya, lalu menyalakan pelita dan menyapu rumah untuk menemukannya (Luk 15:8)."
+   },
+   "credit": "James Tissot, The Return of the Prodigal Son, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e44": {
+   "title": "Lazarus, Keluarlah",
+   "when": "awal tahun 30 M",
+   "subtitle": "Dia yang menangis di depan kubur dan menyuruh maut menyingkir",
+   "story": [
+    "Kabar datang dari Betania. Tuhan, dia yang Engkau kasihi, Lazarus, sakit. Namun Yesus tetap tinggal di tempat-Nya dua hari lagi sebelum berangkat. Ketika Ia berkata bahwa mereka akan kembali ke Yudea, Tomas berkata: Mari kita pergi juga, supaya kita mati bersama Dia.",
+    "Ketika mereka tiba, Lazarus sudah empat hari di dalam kubur. Marta berlari keluar dan berkata: Tuhan, sekiranya Engkau ada di sini, saudaraku tidak akan mati. Akulah kebangkitan dan hidup. Percayakah engkau akan hal ini? Lalu Maria datang dan tersungkur di depan kaki-Nya sambil menangis, dan Yesus pun menangis.",
+    "Di depan kubur gua yang ditutup batu, Yesus menyuruh mereka mengangkat batu itu. Meskipun Marta khawatir akan bau busuk, batu itu digulingkan. Yesus menengadah ke langit dan mengucap syukur, lalu berseru dengan suara nyaring: Lazarus, keluarlah. Dan orang yang telah mati itu berjalan keluar, tangan dan kakinya terbalut kain kafan."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Akulah kebangkitan dan hidup. Siapa percaya kepada-Ku akan hidup walaupun ia mati, dan siapa hidup dan percaya kepada-Ku tidak akan mati selamanya. Percayakah engkau?"
+    },
+    {
+     "who": "Yesus",
+     "text": "Lazarus, keluarlah!"
+    },
+    {
+     "who": "Yesus",
+     "text": "Bukankah sudah Kukatakan, jika engkau percaya, engkau akan melihat kemuliaan Allah?"
+    },
+    {
+     "who": "Marta",
+     "text": "Ya, Tuhan. Aku percaya bahwa Engkaulah Kristus, Anak Allah, Dia yang dijanjikan datang ke dunia."
+    }
+   ],
+   "note": "Yohanes menulis bahwa Betania berjarak lima belas stadia, sekitar tiga kilometer, dari Yerusalem. Tulisan Yahudi yang lebih kemudian mencerminkan anggapan bahwa jiwa orang mati masih berada di dekat jasadnya selama tiga hari, maka empat hari adalah saat harapan sudah habis.",
+   "reflect": "Bahkan dalam duka, ketika Tuhan seakan datang terlambat, apakah aku percaya kepada Dia yang adalah kebangkitan dan hidup?",
+   "quiz": {
+    "q": "Ketika Yesus tiba, sudah berapa hari Lazarus berada di dalam kubur?",
+    "options": [
+     "Tiga hari",
+     "Dua hari",
+     "Empat hari",
+     "Tujuh hari"
+    ],
+    "explain": "Ketika Yesus datang, Ia mendapati Lazarus sudah empat hari berada di dalam kubur (Yoh 11:17, 39)."
+   },
+   "credit": "James Tissot, The Resurrection of Lazarus, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e45": {
+   "title": "Anak-Anak dan Orang Muda yang Kaya",
+   "when": "musim semi 30 M",
+   "subtitle": "Kerajaan yang disambut seperti anak kecil, dan tangan yang tak mau melepaskan",
+   "story": [
+    "Di daerah Yudea di seberang Yordan, orang-orang membawa anak-anak kecil kepada Yesus supaya Ia meletakkan tangan atas mereka, dan murid-murid memarahi mereka. Ketika Yesus melihatnya, Ia marah. Biarkan anak-anak itu datang kepada-Ku. Lalu Ia memeluk mereka, meletakkan tangan atas mereka, dan memberkati mereka.",
+    "Ketika Ia hendak melanjutkan perjalanan, seorang berlari mendapatkan-Nya dan berlutut di hadapan-Nya. Guru yang baik, apa yang harus kulakukan untuk memperoleh hidup kekal? Orang itu berkata bahwa ia telah menaati semua perintah sejak masa mudanya, dan Yesus memandangnya dan mengasihinya. Masih ada satu yang kurang. Juallah milikmu, berikan kepada orang miskin, lalu datanglah, ikutlah Aku.",
+    "Wajah orang itu muram, dan ia pergi dengan sedih, sebab hartanya banyak. Yesus berkata lebih mudah seekor unta melewati lubang jarum daripada orang kaya masuk Kerajaan Allah. Kepada murid-murid-Nya yang tercengang Yesus berkata: Bagi manusia hal ini mustahil, tetapi bagi Allah segala sesuatu mungkin."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Biarkan anak-anak kecil itu datang kepada-Ku. Jangan menghalangi mereka. Kerajaan Allah adalah milik orang-orang seperti mereka."
+    },
+    {
+     "who": "Yesus",
+     "text": "Masih satu yang kurang padamu. Juallah milikmu dan berikan kepada orang miskin, maka engkau akan beroleh harta di surga. Lalu datanglah, ikutlah Aku."
+    },
+    {
+     "who": "Yesus",
+     "text": "Dengan kekuatan manusia, hal itu tak mungkin. Tetapi tidak demikian bagi Allah. Bagi Allah tak ada yang mustahil."
+    }
+   ],
+   "note": "Matius menyebutnya orang muda, Lukas seorang pemimpin, dan Markus orang yang sangat kaya. Dengan menggabungkan ketiga kisah itu, ia sering disebut pemimpin muda yang kaya. Tempatnya daerah Yudea di seberang Yordan.",
+   "reflect": "Di jalan mengikut Tuhan, apa yang masih kugenggam erat dan tak sanggup kulepaskan?",
+   "quiz": {
+    "q": "Binatang apa yang menurut Yesus lebih mudah melewati lubang jarum daripada orang kaya masuk Kerajaan Allah?",
+    "options": [
+     "Unta",
+     "Keledai",
+     "Domba",
+     "Kuda"
+    ],
+    "explain": "Lebih mudah seekor unta melewati lubang jarum daripada orang kaya masuk Kerajaan Allah (Mat 19:24; Mrk 10:25; Luk 18:25)."
+   },
+   "credit": "James Tissot, The Rich Young Man Went Away Sorrowful, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e46": {
+   "title": "Dua Perjumpaan di Yerikho",
+   "when": "musim semi 30 M",
+   "subtitle": "Seruan dari pinggir jalan dan tatapan ke atas pohon",
+   "story": [
+    "Yerikho, kota oasis yang rimbun oleh pohon kurma. Ketika rombongan peziarah yang menuju Yerusalem lewat, seorang buta bernama Bartimeus, yang duduk mengemis di pinggir jalan, berseru: Yesus, Anak Daud, kasihanilah aku. Makin orang menegurnya supaya diam, makin keras ia berteriak.",
+    "Yesus berhenti dan menyuruh memanggilnya. Sambil menanggalkan jubahnya, orang itu melompat berdiri dan datang kepada-Nya. Apa yang kauinginkan Kuperbuat bagimu? Guru, aku ingin dapat melihat lagi. Pergilah, imanmu telah menyelamatkan engkau. Seketika matanya terbuka, dan ia mengikuti Yesus dalam perjalanan-Nya.",
+    "Di kota itu tinggal Zakheus, seorang kepala pemungut cukai dan orang kaya. Badannya pendek, dan orang banyak menghalangi pandangannya ke arah Yesus, maka ia berlari mendahului dan memanjat pohon ara hutan. Di bawah pohon itu Yesus berhenti, menengadah, dan memanggil namanya. Hari itu Zakheus berkata bahwa ia akan memberikan separuh hartanya kepada orang miskin."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Zakheus, segeralah turun. Hari ini Aku harus tinggal di rumahmu."
+    },
+    {
+     "who": "Yesus",
+     "text": "Anak Manusia datang untuk mencari dan menyelamatkan yang hilang."
+    },
+    {
+     "who": "Yesus",
+     "text": "Apa yang kauinginkan Kuperbuat bagimu?"
+    },
+    {
+     "who": "Yesus",
+     "text": "Pergilah. Imanmu telah menyembuhkan engkau."
+    }
+   ],
+   "note": "Yerikho adalah kota oasis sekitar 250 meter di bawah permukaan laut. Herodes memiliki istana musim dingin di sana, dan karena terletak di jalur perdagangan kurma dan balsam, kantor cukainya penting. Injil-injil sedikit berbeda tentang jumlah orang buta dan waktu peristiwanya.",
+   "reflect": "Meski ada orang yang menghalangi jalanku dan meski tubuhku kecil, beranikah aku berseru kepada Tuhan dan memanjat pohon itu?",
+   "quiz": {
+    "q": "Pohon apa yang dipanjat Zakheus untuk melihat Yesus?",
+    "options": [
+     "Pohon zaitun",
+     "Pohon ara hutan",
+     "Pohon kurma",
+     "Pokok anggur"
+    ],
+    "explain": "Zakheus bertubuh pendek, maka ia berlari mendahului dan memanjat pohon ara hutan (Luk 19:4)."
+   },
+   "credit": "James Tissot, Zacchaeus in the Sycamore Awaiting the Passage of Jesus, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e47": {
+   "title": "Minyak Wangi di Betania",
+   "when": "enam hari sebelum Paskah",
+   "subtitle": "Buli-buli yang dipecahkan, dan harum kasih memenuhi rumah",
+   "story": [
+    "Senja, enam hari sebelum Paskah, di Betania, sebuah desa di bukit sebelah timur Yerusalem. Lazarus, yang kembali dari kematian, duduk makan bersama para tamu, dan Marta mondar-mandir menghidangkan makanan. Markus menceritakan bahwa perjamuan itu diadakan di rumah Simon, yang dulu sakit kusta.",
+    "Lalu Maria masuk membawa minyak narwastu murni yang mahal. Ia memecahkan buli-buli pualam itu dan menuangkannya ke kepala Yesus, menuangkannya juga ke kaki-Nya, lalu menyekanya dengan rambutnya yang terurai. Harum yang pekat memenuhi ruangan, dan sejenak semua orang menahan napas.",
+    "“Minyak itu bisa dijual tiga ratus dinar. Mengapa uangnya tidak diberikan kepada orang miskin?” Suara tajam Yudas Iskariot memecah keheningan. Tetapi Yesus melindungi perempuan itu. Dalam keharuman itu Ia sudah melihat penguburan-Nya sendiri makin dekat."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Biarkan dia. Mengapa kalian menyusahkannya? Ia telah melakukan sesuatu yang indah bagi-Ku."
+    },
+    {
+     "who": "Yesus",
+     "text": "Ia telah melakukan apa yang ia sanggup. Ia telah meminyaki tubuh-Ku lebih dahulu untuk penguburan-Nya."
+    },
+    {
+     "who": "Yesus",
+     "text": "Orang miskin selalu ada bersama kalian, tetapi Aku tidak akan selalu bersama kalian."
+    },
+    {
+     "who": "Yesus",
+     "text": "Dengarlah baik-baik. Di mana pun kabar baik diberitakan di seluruh dunia, apa yang ia lakukan ini akan diceritakan juga untuk mengenang dia."
+    }
+   ],
+   "note": "Narwastu adalah minyak wangi berharga dari akar tanaman yang tumbuh di Himalaya. Upah sehari adalah satu dinar, maka tiga ratus dinar adalah kekayaan besar, hampir setara kerja setahun penuh seorang buruh.",
+   "reflect": "Dengan kasih yang melampaui hitung-hitungan, buli-buli manakah milikku yang dapat kupecahkan di hadapan Tuhan?",
+   "quiz": {
+    "q": "Menurut Yudas, minyak wangi itu bisa dijual seharga berapa?",
+    "options": [
+     "Tiga puluh dinar",
+     "Tiga puluh keping perak",
+     "Tiga ratus dinar",
+     "Seribu dinar"
+    ],
+    "explain": "Dalam Yoh 12:5 Yudas menyebut tiga ratus dinar. Tiga puluh keping perak adalah harga yang diterima Yudas untuk menyerahkan Yesus (Mat 26:15)."
+   },
+   "credit": "James Tissot, The Ointment of the Magdalene, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e48": {
+   "title": "Arak-arakan Daun Palem",
+   "when": "Pekan Sengsara · hari Minggu",
+   "subtitle": "Raja di atas keledai muda, menangisi kota",
+   "story": [
+    "Di kaki Bukit Zaitun, di jalan dekat Betfage dan Betania. Yesus menyuruh dua murid ke kampung di depan untuk membawa seekor keledai muda yang belum pernah ditunggangi orang. Ketika mereka menghamparkan jubah di punggungnya, Ia dengan tenang menaiki binatang kecil itu.",
+    "Para peziarah yang datang untuk Paskah menghamparkan jubah mereka di jalan dan melambaikan daun palem. “Hosana! Diberkatilah Dia yang datang dalam nama Tuhan!” Sorak-sorai itu bergulung dari lereng Bukit Zaitun sampai ke tembok kota. Orang-orang Farisi mendesak-Nya untuk menegur murid-murid-Nya.",
+    "Tetapi ketika jalan mulai menurun dan kota itu terbentang di hadapan-Nya, Yesus menangis di tengah arak-arakan. Kota yang bersorak-sorai ini tidak mengenali jalan menuju damai, dan sedang melangkah menuju kehancuran yang akan datang."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Seandainya hari ini engkau tahu jalan yang membawa kepada damai! Tetapi sekarang hal itu tersembunyi dari matamu."
+    },
+    {
+     "who": "Yesus",
+     "text": "Aku berkata kepada kalian, jika mereka ini diam, batu-batu di pinggir jalan inilah yang akan berseru."
+    },
+    {
+     "who": "Yesus",
+     "text": "Sebab engkau tidak mengenali saat ketika Allah datang melawat engkau."
+    },
+    {
+     "who": "Yesus",
+     "text": "Jika ada yang bertanya mengapa kalian melakukannya, katakanlah, Tuhan memerlukannya."
+    }
+   ],
+   "note": "Zakharia 9:9 menubuatkan bahwa raja Sion akan datang dengan rendah hati, menunggang seekor keledai. Matius dan Yohanes membaca peristiwa masuknya Yesus ini sebagai penggenapan nubuat itu. Daun palem melambangkan kemenangan dan pembebasan bangsa.",
+   "reflect": "Apakah aku menyambut Yesus sebagai raja yang kuinginkan, atau sebagai raja yang Ia datang untuk menjadi?",
+   "quiz": {
+    "q": "Apa yang ditunggangi Yesus ketika memasuki Yerusalem?",
+    "options": [
+     "Seekor keledai muda",
+     "Seekor kuda putih",
+     "Seekor unta",
+     "Sebuah kereta"
+    ],
+    "explain": "Ia menunggang keledai muda yang dibawa murid-murid, yang dialasi jubah mereka (Mrk 11:7; Yoh 12:14). Peristiwa ini mengingatkan pada nubuat Zakharia 9:9."
+   },
+   "credit": "James Tissot, The Procession on the Mount of Olives, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e49": {
+   "title": "Rumah Doa",
+   "when": "Pekan Sengsara · hari Senin",
+   "subtitle": "Meja-meja dibalikkan, pelataran dibuka kembali untuk doa",
+   "story": [
+    "Senin pagi, di jalan yang mendaki dari Betania ke Yerusalem. Karena lapar, Yesus berhenti di depan sebatang pohon ara yang rimbun daunnya. Tak ada buah di satu ranting pun. Ia berbicara kepada pohon itu, dan murid-murid mencatat perkataan-Nya.",
+    "Pelataran luar Bait Allah seperti pasar. Gemerincing koin, kepak sayap merpati, teriakan tawar-menawar. Yesus mengusir para pembeli dan penjual, membalikkan meja para penukar uang dan bangku para penjual merpati. Ia tidak membiarkan siapa pun membawa barang melintasi pelataran Bait Allah.",
+    "Di tempat keributan mereda, orang buta dan orang timpang datang kepada-Nya dan disembuhkan. Anak-anak berseru, “Hosana bagi Anak Daud!” Para imam kepala mencari cara untuk menyingkirkan-Nya, tetapi orang banyak tak mau melewatkan satu pun perkataan-Nya."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Bukankah ada tertulis, Rumah-Ku akan disebut rumah doa bagi segala bangsa? Tetapi kalian telah menjadikannya sarang penyamun."
+    },
+    {
+     "who": "Yesus",
+     "text": "Ya, Aku mendengarnya. Belum pernahkah kalian membaca, Dari mulut anak-anak dan bayi Engkau telah menyempurnakan puji-pujian?"
+    },
+    {
+     "who": "Yesus",
+     "text": "Mulai sekarang dan untuk selamanya, jangan ada lagi orang yang makan buah darimu."
+    }
+   ],
+   "note": "Pelataran luar Bait Allah adalah pelataran bangsa-bangsa lain, yang terbuka bahkan bagi orang bukan Yahudi. Di sinilah para peziarah membeli hewan kurban, dan diketahui bahwa mereka menukar uang menjadi syikal Tirus untuk membayar pajak Bait Allah.",
+   "reflect": "Apakah bait hatiku sebuah rumah doa, atau pasar yang sibuk penuh jual beli?",
+   "quiz": {
+    "q": "Menurut Yesus, Bait Allah telah dijadikan apa oleh orang-orang itu?",
+    "options": [
+     "Rumah pemungut cukai",
+     "Mezbah yang runtuh",
+     "Kemah di padang gurun",
+     "Sarang penyamun"
+    ],
+    "explain": "Mengutip Yesaya 56:7 dan Yeremia 7:11, Yesus menegur mereka karena menjadikan rumah doa sarang penyamun (Mrk 11:17)."
+   },
+   "credit": "James Tissot, The Accursed Fig Tree, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e50": {
+   "title": "Pertanyaan di Pelataran Bait Allah",
+   "when": "Pekan Sengsara · hari Selasa",
+   "subtitle": "Pertanyaan yang dipasang sebagai jerat, jawaban yang kembali sebagai kasih",
+   "story": [
+    "Selasa, dan pelataran Bait Allah tegang oleh pertanyaan. Orang Farisi dan orang Herodian menyodorkan sekeping dinar. Bolehkah membayar pajak kepada Kaisar? Ke mana pun Ia menjawab, pertanyaan itu adalah jerat. Pada keping perak itu terukir wajah kaisar.",
+    "Orang Saduki, yang tidak percaya akan kebangkitan, membawa kisah seorang perempuan yang berturut-turut menikah dengan tujuh bersaudara. Lalu seorang ahli Taurat bertanya, perintah manakah yang paling utama? Jawaban Yesus begitu sederhana hingga mengejutkan. Kasihilah Allah, dan kasihilah sesamamu.",
+    "Ketika perdebatan mereda, Yesus duduk menghadap peti persembahan. Sesudah orang-orang kaya memasukkan persembahan mereka yang berat lalu berlalu, seorang janda miskin diam-diam menjatuhkan dua keping uang kecil. Tatapan-Nya lama tertahan pada bunyi yang samar itu."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Berikanlah kepada Kaisar apa yang menjadi milik Kaisar, dan kepada Allah apa yang menjadi milik Allah."
+    },
+    {
+     "who": "Yesus",
+     "text": "Kasihilah Tuhan, Allahmu, dengan segenap hati, jiwa, akal budi, dan kekuatanmu. Yang kedua: kasihilah sesamamu seperti dirimu sendiri."
+    },
+    {
+     "who": "Yesus",
+     "text": "Janda miskin ini memberi lebih banyak dari siapa pun. Mereka memberi sedikit dari kelimpahannya, tetapi ia memberi seluruh nafkahnya."
+    },
+    {
+     "who": "Yesus",
+     "text": "Allah bukanlah Allah orang mati, melainkan Allah orang hidup."
+    }
+   ],
+   "note": "Keping dinar waktu itu diperkirakan memuat wajah Kaisar Tiberius dan tulisan yang memujinya sebagai anak dewa. Uang lepton yang diberikan janda itu adalah mata uang terkecil yang beredar.",
+   "reflect": "Apakah aku memberi dari sisa, atau memberikan diriku sendiri?",
+   "quiz": {
+    "q": "Apa yang dimasukkan janda miskin itu ke dalam peti persembahan?",
+    "options": [
+     "Satu dinar",
+     "Dua lepton",
+     "Satu syikal",
+     "Lima keping emas"
+    ],
+    "explain": "Janda itu memasukkan dua lepton, senilai satu kodrantes (Mrk 12:42; Luk 21:2). Yesus berkata ia telah memberi lebih banyak dari siapa pun."
+   },
+   "credit": "James Tissot, The Tribute Money, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e51": {
+   "title": "Akhir Zaman, Dilihat dari Bukit Zaitun",
+   "when": "Pekan Sengsara · Selasa malam",
+   "subtitle": "Batu-batu yang akan runtuh, dan perkataan yang tak akan berlalu",
+   "story": [
+    "Ketika mereka keluar dari Bait Allah, seorang murid berdecak kagum. Guru, lihatlah! Batu-batu yang luar biasa, bangunan-bangunan yang megah! Tembok-tembok besar itu berkilau di bawah sinar matahari. Tetapi Yesus berkata bahwa akan datang harinya tak satu pun batu di sini dibiarkan tegak.",
+    "Menjelang malam, ketika Yesus duduk di Bukit Zaitun menghadap Bait Allah, Petrus, Yakobus, Yohanes, dan Andreas bertanya kepada-Nya dengan pelan. Kapan semua itu akan terjadi? Ia bercerita tentang perang, gempa bumi, dan kelaparan, tentang penyesatan dan penganiayaan, dan tentang mereka yang bertahan sampai akhir.",
+    "Tak seorang pun tahu hari dan saatnya, kata-Nya berulang kali, maka berjaga-jagalah. Kisah tentang gadis-gadis yang menyiapkan pelita, para hamba yang mengembangkan talenta yang dipercayakan kepada mereka, dan orang-orang yang memedulikan yang paling hina, mengalun rendah di atas kota yang mulai gelap."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Langit dan bumi suatu hari akan berlalu. Tetapi perkataan-Ku akan tetap sampai akhir."
+    },
+    {
+     "who": "Yesus",
+     "text": "Waspadalah dan berjaga-jagalah. Kalian tidak tahu kapan waktunya tiba."
+    },
+    {
+     "who": "Yesus",
+     "text": "Dengarlah kebenaran ini: apa pun yang kalian lakukan bagi salah seorang dari saudara-saudari-Ku yang paling hina ini, kalian lakukan bagi-Ku."
+    },
+    {
+     "who": "Yesus",
+     "text": "Kaulihat bangunan-bangunan megah ini? Tak satu batu pun di sini akan dibiarkan bertumpuk di atas batu yang lain. Semuanya akan diruntuhkan."
+    }
+   ],
+   "note": "Bait Allah, yang diperluas besar-besaran oleh Herodes, dibakar dan dihancurkan pada tahun 70 M oleh tentara Romawi di bawah pimpinan Titus. Tembok Barat di Yerusalem sekarang adalah bagian dari tembok penahan yang menopang Bukit Bait Allah.",
+   "reflect": "Sambil menantikan Dia yang kedatangan-Nya tak diketahui siapa pun, bagaimana aku berjaga-jaga hari ini?",
+   "quiz": {
+    "q": "Kisah manakah yang tidak terdapat dalam Matius 25?",
+    "options": [
+     "Sepuluh gadis",
+     "Talenta",
+     "Anak yang hilang",
+     "Domba dan kambing"
+    ],
+    "explain": "Matius 25 berturut-turut menceritakan sepuluh gadis, talenta, serta domba dan kambing (Mat 25:1–46). Anak yang hilang adalah perumpamaan dalam Lukas 15."
+   },
+   "credit": "James Tissot, The Prophecy of the Destruction of the Temple, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e52": {
+   "title": "Perjamuan Terakhir di Ruang Atas",
+   "when": "Pekan Sengsara · Kamis malam",
+   "subtitle": "Malam terakhir, ketika Ia membasuh kaki mereka dan memecah roti",
+   "story": [
+    "Kamis petang. Petrus dan Yohanes mengikuti seorang laki-laki yang membawa kendi air, lalu menyiapkan perjamuan Paskah di sebuah ruang atas yang besar. Ketika murid-murid berkumpul dalam cahaya pelita, Yesus menanggalkan jubah luar-Nya, mengikatkan kain lenan di pinggang-Nya, menuangkan air ke dalam baskom, dan membasuh kaki mereka satu per satu.",
+    "Ketika mereka sedang makan, Ia mengambil roti, mengucap syukur, memecah-mecahkannya, dan memberikannya kepada mereka, sambil berkata, inilah tubuh-Ku yang diserahkan bagimu. Sambil mengedarkan cawan, Ia berkata, inilah perjanjian baru dalam darah-Ku. Mendengar perkataan, salah seorang dari kalian akan menyerahkan Aku, ruangan itu membeku, dan Yudas bangkit lalu keluar. Hari sudah malam.",
+    "Kepada murid-murid yang tinggal, Yesus berbicara panjang. Kasihilah seorang akan yang lain, kata-Nya. Jangan gelisah hatimu. Akulah jalan. Lalu Ia menengadah ke langit dan berdoa bagi mereka. Sesudah menyanyikan kidung pujian, mereka keluar ke dalam gelap menuju Bukit Zaitun."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Inilah tubuh-Ku, diserahkan bagimu. Lakukanlah ini untuk mengenang Aku. Cawan ini perjanjian baru dalam darah-Ku, yang dicurahkan bagimu."
+    },
+    {
+     "who": "Yesus",
+     "text": "Perintah baru Kuberikan kepadamu: saling mengasihilah. Seperti Aku mengasihi kalian, begitulah kalian saling mengasihi. Dengan itu semua orang tahu kalian murid-Ku."
+    },
+    {
+     "who": "Yesus",
+     "text": "Akulah jalan, kebenaran, dan hidup. Tak seorang pun datang kepada Bapa kecuali melalui Aku."
+    },
+    {
+     "who": "Yesus",
+     "text": "Damai Kutinggalkan bagimu. Damai-Ku sendiri Kuberikan kepadamu, bukan seperti yang diberikan dunia. Jangan gelisah hatimu, dan jangan takut."
+    }
+   ],
+   "note": "Matius, Markus, dan Lukas menyajikan perjamuan ini sebagai perjamuan Paskah, sedangkan Yohanes mengatakan Yesus disalibkan pada hari persiapan Paskah. Para ahli masih membahas bagaimana kedua kisah itu dapat dipadukan.",
+   "reflect": "Dalam terang permintaan terakhir-Nya agar kami saling mengasihi, kaki siapakah yang harus lebih dulu kubasuh?",
+   "quiz": {
+    "q": "Dua murid manakah yang diutus untuk menyiapkan perjamuan Paskah?",
+    "options": [
+     "Petrus dan Yohanes",
+     "Yakobus dan Yohanes",
+     "Andreas dan Filipus",
+     "Tomas dan Matius"
+    ],
+    "explain": "Luk 22:8 mencatat bahwa Yesus mengutus Petrus dan Yohanes untuk menyiapkan perjamuan Paskah."
+   },
+   "credit": "James Tissot, The Last Supper, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e53": {
+   "title": "Malam di Getsemani",
+   "when": "Pekan Sengsara · Kamis larut malam",
+   "subtitle": "Bukan kehendak-Ku, melainkan kehendak-Mu",
+   "story": [
+    "Sesudah perjamuan, pada malam hari, mereka menyeberangi Lembah Kidron dan masuk ke Getsemani, sebuah taman di kaki Bukit Zaitun. Cahaya bulan menembus sela-sela pohon zaitun. Yesus hanya membawa Petrus, Yakobus, dan Yohanes masuk lebih jauh, dan di sana Ia mulai gemetar dalam kesedihan yang dalam.",
+    "Sedikit menjauh, Ia rebah ke tanah dan berdoa. Bapa, ambillah cawan ini dari-Ku. Tetapi jangan kehendak-Ku, melainkan kehendak-Mulah yang terjadi. Peluh-Nya jatuh ke tanah seperti titik-titik darah, dan setiap kali Ia kembali, murid-murid sudah tertidur lagi.",
+    "Segerombolan orang dengan obor, pedang, dan pentung menyerbu masuk ke taman. Yudas mendekat dan mencium-Nya. Petrus mengayunkan pedang dan memotong telinga Malkhus, hamba Imam Besar, dan Yesus menyentuh telinga itu lalu menyembuhkannya. Kemudian semua murid meninggalkan-Nya dan melarikan diri."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Abba, Bapa, bagi-Mu segala sesuatu mungkin. Ambillah cawan ini dari-Ku. Tetapi jangan apa yang Aku mau, melainkan apa yang Engkau mau."
+    },
+    {
+     "who": "Yesus",
+     "text": "Jiwa-Ku remuk oleh duka, seperti mau mati rasanya. Tinggallah di sini dan berjaga-jagalah."
+    },
+    {
+     "who": "Yesus",
+     "text": "Berjaga-jagalah dan berdoalah, supaya kalian tidak jatuh ke dalam pencobaan. Roh memang penurut, tetapi tubuh lemah."
+    },
+    {
+     "who": "Yesus",
+     "text": "Sarungkan pedangmu. Bukankah Aku harus meminum cawan yang diberikan Bapa kepada-Ku?"
+    }
+   ],
+   "note": "Getsemani biasanya dijelaskan berarti pemerasan minyak zaitun. Tempat itu kebun zaitun di kaki Bukit Zaitun, dan Lukas serta Yohanes mengatakan Yesus sering pergi ke sana bersama murid-murid-Nya.",
+   "reflect": "Ketika kehendakku berbenturan dengan kehendak Allah, bagaimana aku berdoa?",
+   "quiz": {
+    "q": "Siapakah nama hamba Imam Besar yang telinganya dipotong Petrus?",
+    "options": [
+     "Barabas",
+     "Nikodemus",
+     "Simon",
+     "Malkhus"
+    ],
+    "explain": "Yoh 18:10 menyebut nama hamba itu Malkhus dan mengatakan telinga kanannya terpotong. Lukas mencatat bahwa Yesus menyembuhkan telinga itu (Luk 22:51)."
+   },
+   "credit": "James Tissot, My Soul is Sorrowful unto Death, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e54": {
+   "title": "Diam di Hadapan Pengadilan",
+   "when": "Pekan Sengsara · Jumat dini hari",
+   "subtitle": "Raja yang diam, dan penyangkalan yang diucapkan tiga kali",
+   "story": [
+    "Dalam keadaan terikat, Yesus dibawa lebih dulu kepada Hanas, lalu kepada Kayafas, Imam Besar. Sementara kesaksian palsu saling bertentangan, Ia tetap diam. Tetapi ketika ditanya, apakah Engkau Kristus, Ia menjawab, Akulah Dia. Imam Besar mengoyakkan jubahnya, dan Mahkamah Agama berseru menuntut hukuman mati.",
+    "Pada saat yang sama, sambil berdiang di dekat api arang di halaman, Petrus tiga kali menyangkal bahwa ia mengenal-Nya. Ayam berkokok, dan Tuhan berpaling memandangnya. Petrus keluar dan menangis dengan pedih.",
+    "Saat fajar, Mahkamah Agama menyerahkan Yesus kepada Gubernur Pilatus. Karena tidak menemukan kesalahan, Pilatus bahkan mengirim-Nya kepada Herodes, tetapi orang banyak hanya berteriak, salibkan Dia. Akhirnya Pilatus mencuci tangannya, membebaskan Barabas, menyuruh Yesus dicambuk, lalu menyerahkan-Nya."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Ya, Akulah Dia. Dan kalian akan melihat Anak Manusia duduk di sebelah kanan Yang Mahakuasa, datang di atas awan-awan di langit."
+    },
+    {
+     "who": "Yesus",
+     "text": "Kerajaan-Ku bukan dari dunia ini. Jika demikian, orang-orang-Ku pasti berjuang supaya Aku tidak diserahkan."
+    },
+    {
+     "who": "Yesus",
+     "text": "Untuk inilah Aku lahir dan datang ke dunia: untuk bersaksi tentang kebenaran. Setiap orang yang berasal dari kebenaran mendengarkan suara-Ku."
+    }
+   ],
+   "note": "Pontius Pilatus adalah gubernur Romawi atas Yudea dari tahun 26 sampai 36 M. Pada tahun 1961 sebuah prasasti batu yang memuat namanya ditemukan di Kaisarea, di pantai Laut Tengah.",
+   "reflect": "Di hadapan kebenaran, apakah aku berdiri bersama Yesus yang diam, atau membiarkan diriku terbawa arus orang banyak yang berteriak?",
+   "quiz": {
+    "q": "Tahanan manakah yang dibebaskan Pilatus atas tuntutan orang banyak?",
+    "options": [
+     "Malkhus",
+     "Barabas",
+     "Simon dari Kirene",
+     "Kayafas"
+    ],
+    "explain": "Mengikuti kebiasaan membebaskan seorang tahanan pada hari raya, Pilatus membebaskan Barabas, yang dipenjara karena pemberontakan dan pembunuhan (Mrk 15:6–15; Luk 23:19, 25)."
+   },
+   "credit": "James Tissot, Behold the Man, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e55": {
+   "title": "Golgota",
+   "when": "Pekan Sengsara · hari Jumat",
+   "subtitle": "Hari ketika semuanya selesai, dan keheningan kubur",
+   "story": [
+    "Para prajurit mengenakan jubah ungu kepada-Nya, menekankan mahkota duri di kepala-Nya, dan mengolok-olok-Nya sebagai raja. Dalam perjalanan keluar kota, mereka memaksa Simon, seorang dari Kirene yang baru datang dari luar kota, memikul salib itu. Golgota, tempat tengkorak, pukul sembilan pagi. Tulisan di atas kepala-Nya berbunyi, Raja orang Yahudi.",
+    "Dari tengah hari sampai pukul tiga petang, kegelapan meliputi seluruh negeri. Ia mengampuni mereka yang memaku-Nya, menjanjikan firdaus kepada penjahat yang bertobat, dan menitipkan ibu-Nya kepada murid yang dikasihi-Nya. Dengan seruan nyaring Ia menyerahkan nyawa-Nya, dan tirai Bait Allah terbelah dua dari atas sampai ke bawah.",
+    "Menjelang matahari terbenam, ketika Sabat hampir tiba, Yusuf dari Arimatea, anggota Mahkamah Agama dan murid yang sembunyi-sembunyi, meminta jenazah-Nya kepada Pilatus. Nikodemus membawa mur dan gaharu, dan keduanya mengafani Dia dengan kain lenan halus lalu membaringkan-Nya di kubur baru yang dipahat di bukit batu sebuah taman. Sebuah batu besar menutup pintunya."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Bapa, ampunilah mereka. Mereka tidak tahu apa yang mereka perbuat."
+    },
+    {
+     "who": "Yesus",
+     "text": "Aku berjanji kepadamu, hari ini juga engkau akan bersama Aku di firdaus."
+    },
+    {
+     "who": "Yesus",
+     "text": "Ibu, inilah anakmu. Dan engkau, terimalah dia sekarang sebagai ibumu."
+    },
+    {
+     "who": "Yesus",
+     "text": "Eloi, Eloi, lama sabakhtani? Allah-Ku, Allah-Ku, mengapa Engkau meninggalkan Aku?"
+    },
+    {
+     "who": "Yesus",
+     "text": "Aku haus."
+    },
+    {
+     "who": "Yesus",
+     "text": "Sudah selesai."
+    },
+    {
+     "who": "Yesus",
+     "text": "Bapa, ke dalam tangan-Mu Kuserahkan roh-Ku."
+    }
+   ],
+   "note": "Penyaliban adalah hukuman mati paling hina yang dijatuhkan Roma, khusus bagi pemberontak dan budak. Tradisi paling kuat menempatkan Golgota di lokasi Gereja Makam Kudus, dan Makam Taman, yang diusulkan pada abad kesembilan belas, juga dikenal sebagai tempat ziarah.",
+   "reflect": "Di hadapan kata-kata terakhir-Nya, sudah selesai, apa yang dapat kuletakkan?",
+   "quiz": {
+    "q": "Siapakah yang dipaksa para prajurit memikul salib Yesus?",
+    "options": [
+     "Yusuf dari Arimatea",
+     "Nikodemus",
+     "Simon dari Kirene",
+     "Barabas"
+    ],
+    "explain": "Para prajurit memaksa Simon dari Kirene, yang baru datang dari luar kota, memikul salib itu (Mrk 15:21; Luk 23:26). Markus menyebutnya ayah Aleksander dan Rufus."
+   },
+   "credit": "James Tissot, What Our Lord Saw from the Cross, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e56": {
+   "title": "Maria",
+   "when": "hari pertama minggu itu · fajar",
+   "subtitle": "Suara yang memanggil namanya",
+   "story": [
+    "Hari pertama minggu itu, pagi-pagi benar, ketika hari masih gelap. Maria Magdalena datang ke kubur dan mendapati batu sudah terguling dari pintunya. Mendengar kabarnya, Petrus dan murid yang dikasihi datang berlari dengan napas terengah-engah. Di dalam kubur yang kosong itu hanya tergeletak kain kafan, dan kain peluh yang terlipat tersendiri.",
+    "Sesudah murid-murid pulang, Maria tetap berdiri di luar kubur sambil menangis. Ketika ia menjenguk ke dalam, ia melihat dua malaikat berpakaian putih duduk di tempat jenazah itu terbaring, seorang di sebelah kepala dan seorang di sebelah kaki. Ia berpaling, dan seseorang berdiri di sana, tetapi melalui air matanya ia mengira orang itu penunggu taman.",
+    "“Maria.” Suara yang akrab menyebut namanya. Ia berbalik dan berseru, Rabuni, artinya Guru. Ia berlari kepada murid-murid dan memberi tahu mereka bahwa ia telah melihat Tuhan. Pada pagi kebangkitan itu, sukacita mengalir keluar dari bibir seorang perempuan."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Maria."
+    },
+    {
+     "who": "Yesus",
+     "text": "Ibu, mengapa engkau menangis? Siapa yang kaucari?"
+    },
+    {
+     "who": "Yesus",
+     "text": "Jangan menahan Aku; Aku belum naik kepada Bapa. Pergilah, katakan kepada saudara-saudara-Ku: Aku naik kepada Bapa-Ku dan Bapamu, kepada Allah-Ku dan Allahmu."
+    },
+    {
+     "who": "Maria Magdalena",
+     "text": "Aku telah melihat Tuhan!"
+    }
+   ],
+   "note": "Magdala adalah kota nelayan di pantai barat Danau Galilea. Lukas mengatakan Yesus mengusir tujuh setan dari Maria Magdalena, dan bahwa ia melayani Yesus dan rombongan-Nya dengan hartanya sendiri.",
+   "reflect": "Ketika duka membuatku tak mengenali Tuhan di sampingku, apakah aku mendengarkan suara yang memanggil namaku?",
+   "quiz": {
+    "q": "Semula Maria mengira Yesus yang bangkit itu siapa?",
+    "options": [
+     "Penunggu taman",
+     "Seorang malaikat",
+     "Petrus",
+     "Prajurit penjaga kubur"
+    ],
+    "explain": "Maria mengira Yesus penunggu taman dan bertanya di mana jenazah itu diletakkan (Yoh 20:15). Baru ketika Ia memanggil namanya, Maria mengenali-Nya (Yoh 20:16)."
+   },
+   "credit": "James Tissot, Jesus Appears to Mary Magdalene, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e57": {
+   "title": "Jalan ke Emaus",
+   "when": "hari pertama minggu itu · siang hari",
+   "subtitle": "Hati yang berkobar, dan roti yang dipecahkan",
+   "story": [
+    "Siang itu, dua murid berjalan ke Emaus, kira-kira enam puluh stadia dari Yerusalem. Percakapan mereka, yang membolak-balik harapan yang telah runtuh, terasa berat. Seorang asing datang dan berjalan di samping mereka, tetapi mata mereka terhalang sehingga tidak mengenali-Nya.",
+    "Kleopas berkata dengan sedih, kami dulu berharap Dialah yang akan membebaskan Israel. Mulai dari Musa dan semua nabi, orang asing itu menjelaskan kepada mereka, nas demi nas, apa yang tertulis tentang Kristus. Ketika matahari mulai terbenam, mereka mendesak-Nya untuk tinggal. Hari sudah menjelang malam; tinggallah bersama kami.",
+    "Di meja makan, ketika Ia mengambil roti, mengucap berkat, memecah-mecahkannya, dan memberikannya kepada mereka, terbukalah mata mereka. Tetapi seketika itu juga Yesus lenyap dari pandangan mereka. Bukankah hati kita berkobar-kobar ketika Ia membukakan Kitab Suci kepada kita di jalan? Keduanya segera bangkit dan menempuh kembali jalan itu menembus malam ke Yerusalem."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Betapa bodoh kalian, betapa lambat hati kalian memercayai perkataan para nabi! Bukankah Kristus harus menderita semua itu lalu masuk ke dalam kemuliaan-Nya?"
+    },
+    {
+     "who": "Yesus",
+     "text": "Apa yang sedang kalian bicarakan sambil berjalan?"
+    },
+    {
+     "who": "Kedua murid",
+     "text": "Bukankah hati kita berkobar seperti api ketika Ia bercakap-cakap dengan kita di jalan dan membukakan Kitab Suci kepada kita?"
+    }
+   ],
+   "note": "Letak pasti Emaus tidak diketahui. Agar sesuai dengan catatan sekitar sebelas kilometer dari Yerusalem, Motza dan Qubeibeh pernah diusulkan, dan satu tradisi menunjuk Emaus Nikopolis yang lebih jauh.",
+   "reflect": "Di jalan hidupku, selagi aku berjalan dengan patah semangat, apakah aku mengenali Dia yang berjalan di sampingku?",
+   "quiz": {
+    "q": "Siapakah nama salah seorang dari dua murid dalam perjalanan ke Emaus?",
+    "options": [
+     "Natanael",
+     "Filipus",
+     "Tomas",
+     "Kleopas"
+    ],
+    "explain": "Luk 24:18 menyebut nama salah seorang dari mereka, Kleopas. Yang lain tidak disebut namanya."
+   },
+   "credit": "James Tissot, The Pilgrims of Emmaus on the Road, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e58": {
+   "title": "Menembus Pintu yang Terkunci",
+   "when": "malam itu, dan delapan hari kemudian",
+   "subtitle": "Damai yang datang menembus pintu yang terkunci",
+   "story": [
+    "Pada malam hari kebangkitan, murid-murid berkumpul di balik pintu yang terkunci karena takut. Tepat ketika ruangan itu riuh oleh cerita dua orang yang baru kembali dari Emaus, Yesus berdiri di tengah-tengah mereka. Damai sejahtera bagi kalian. Terkejut, murid-murid mengira mereka melihat hantu.",
+    "Ia menunjukkan tangan dan kaki-Nya yang berbekas paku, dan lambung-Nya yang ditikam tombak. Ia makan sepotong ikan goreng di depan mereka, dan membuka pikiran mereka untuk memahami Kitab Suci. Lalu Ia mengembusi mereka dan berkata, terimalah Roh Kudus.",
+    "Tomas, yang tidak ada di sana, bersikeras. Kalau ia tidak menyentuh sendiri, ia tidak akan percaya. Delapan hari kemudian, lagi-lagi di balik pintu yang terkunci, Yesus berdiri dan mengulurkan tangan dan lambung-Nya kepadanya. Sebuah pengakuan meledak dari mulut Tomas. Tuhanku dan Allahku."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Damai sejahtera bagi kalian. Seperti Bapa mengutus Aku, demikian pula sekarang Aku mengutus kalian."
+    },
+    {
+     "who": "Yesus",
+     "text": "Lihatlah tangan dan kaki-Ku. Sungguh, ini Aku. Rabalah dan lihatlah. Hantu tidak punya daging dan tulang, seperti yang kalian lihat ada pada-Ku."
+    },
+    {
+     "who": "Yesus",
+     "text": "Engkau percaya karena engkau melihat Aku. Sungguh berbahagialah mereka yang tidak melihat, namun percaya."
+    },
+    {
+     "who": "Tomas",
+     "text": "Tuhanku dan Allahku!"
+    }
+   ],
+   "note": "Tomas disebut Didimus, artinya si Kembar. Menurut cara hitung Yahudi, delapan hari kemudian ikut menghitung hari pertama, jadi menunjuk hari yang sama pada minggu berikutnya, hari pertama minggu itu yang datang kembali.",
+   "reflect": "Di balik pintu hatiku yang kukunci karena takut, apakah aku membiarkan damai-Nya masuk?",
+   "quiz": {
+    "q": "Kapan Yesus menampakkan diri lagi, kali ini ketika Tomas hadir?",
+    "options": [
+     "Tiga hari kemudian",
+     "Delapan hari kemudian",
+     "Tujuh hari kemudian",
+     "Empat puluh hari kemudian"
+    ],
+    "explain": "Yoh 20:26 mencatat bahwa delapan hari kemudian, ketika murid-murid berkumpul lagi dan Tomas ada bersama mereka, Yesus berdiri di tengah mereka padahal pintu terkunci."
+   },
+   "credit": "James Tissot, The Disbelief of Saint Thomas, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e59": {
+   "title": "Pagi di Tepi Danau Tiberias",
+   "when": "suatu pagi sesudah kebangkitan",
+   "subtitle": "Kasih yang ditanyakan tiga kali di samping api arang",
+   "story": [
+    "Kembali di Galilea, Petrus berkata, aku pergi menangkap ikan. Tomas dan Natanael, anak-anak Zebedeus, dan dua murid lain naik ke perahu bersamanya. Sepanjang malam mereka menebarkan jala dan tidak menangkap apa-apa. Ketika hari mulai terang, seseorang berdiri di pantai.",
+    "Ketika mereka menuruti kata-Nya dan menebarkan jala di sebelah kanan perahu, ikan begitu banyak memenuhinya sehingga mereka tak sanggup menariknya. Murid yang dikasihi berseru, itu Tuhan! Petrus mengenakan jubahnya dan terjun ke air. Di pantai, ikan dan roti terletak di atas api arang, dan di dalam jala ada seratus lima puluh tiga ekor ikan besar.",
+    "Sesudah sarapan, Yesus bertanya kepada Petrus tiga kali, Simon anak Yohanes, apakah engkau mengasihi Aku? Pada pertanyaan ketiga Petrus sedih hatinya. Tuhan, Engkau tahu segala sesuatu; Engkau tahu aku mengasihi Engkau. Gembalakanlah domba-domba-Ku. Dan ikutlah Aku."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Simon anak Yohanes, apakah engkau mengasihi Aku? Kalau begitu, gembalakanlah kawanan domba-Ku."
+    },
+    {
+     "who": "Yesus",
+     "text": "Ikutlah Aku."
+    },
+    {
+     "who": "Yesus",
+     "text": "Tebarkan jala di sebelah kanan perahu, maka kalian akan mendapat ikan."
+    },
+    {
+     "who": "Yesus",
+     "text": "Mari, sarapanlah."
+    }
+   ],
+   "note": "Dalam Injil Yohanes, kata untuk api arang hanya muncul dua kali: di halaman rumah Imam Besar tempat Petrus menyangkal Yesus, dan pada pagi ini. Tiga kali penyangkalan disusul tiga kali pengakuan kasih.",
+   "reflect": "Kepada Tuhan yang datang kembali ke tempat aku pernah jatuh, jawaban apa yang kuberikan?",
+   "quiz": {
+    "q": "Berapa ekor ikan besar di dalam jala yang ditarik murid-murid?",
+    "options": [
+     "Tujuh puluh",
+     "Seratus",
+     "Seratus lima puluh tiga",
+     "Dua ratus"
+    ],
+    "explain": "Yoh 21:11 mencatat ada seratus lima puluh tiga ekor ikan besar, dan meskipun begitu banyak, jala itu tidak koyak."
+   },
+   "credit": "James Tissot, Christ Appears on the Shore of Lake Tiberias, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e60": {
+   "title": "Amanat Terakhir di Atas Bukit",
+   "when": "sesudah kebangkitan",
+   "subtitle": "Janji untuk menyertai mereka sampai akhir zaman",
+   "story": [
+    "Kesebelas murid mendaki bukit di Galilea yang ditunjukkan Yesus kepada mereka. Di tengah angin yang menyapu punggung bukit, masing-masing membawa kegagalan dan ketakutannya sendiri, mereka menanti-Nya di tempat yang telah ditentukan. Persis seperti pesan yang disampaikan kepada para perempuan di kubur.",
+    "Ketika akhirnya Ia menampakkan diri, murid-murid sujud menyembah. Namun Matius dengan jujur mencatat bahwa beberapa dari mereka masih ragu. Yesus mendekati mereka, apa adanya mereka, dan berbicara.",
+    "Segala kuasa di surga dan di bumi adalah milik-Nya. Karena itu pergilah, jadikanlah segala bangsa murid, baptislah mereka, dan ajarlah mereka. Kepada sekelompok kecil yang bercampur ragu dan iman, seluruh dunia dipercayakan. Dan masih ada satu janji terakhir. Aku menyertai kalian senantiasa."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Karena itu pergilah, jadikan segala bangsa murid-Ku. Baptislah mereka dalam nama Bapa, Anak, dan Roh Kudus, dan ajarlah mereka melakukan segala yang Kuperintahkan."
+    },
+    {
+     "who": "Yesus",
+     "text": "Ingatlah ini: Aku menyertai kalian senantiasa, sampai akhir zaman."
+    },
+    {
+     "who": "Yesus",
+     "text": "Segala kuasa di surga dan di bumi telah diberikan kepada-Ku."
+    }
+   ],
+   "note": "Injil Matius dibuka dengan nubuat Imanuel, Allah menyertai kita, dan ditutup dengan janji, Aku menyertai kalian senantiasa. Bukit mana yang dimaksud tidak dicatat.",
+   "reflect": "Meski keraguan masih ada dalam diriku, sanggupkah aku menempuh jalan yang telah Ia percayakan kepadaku?",
+   "quiz": {
+    "q": "Dalam Matius 28, berapa murid yang pergi ke bukit di Galilea dan berjumpa dengan Yesus?",
+    "options": [
+     "Sebelas",
+     "Dua belas",
+     "Tujuh",
+     "Tujuh puluh"
+    ],
+    "explain": "Kesebelas murid, tanpa Yudas Iskariot, pergi ke bukit di Galilea yang ditunjukkan Yesus kepada mereka (Mat 28:16)."
+   },
+   "credit": "James Tissot, The Exhortation to the Apostles, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  },
+  "e61": {
+   "title": "Ke dalam Awan",
+   "when": "empat puluh hari sesudah kebangkitan",
+   "subtitle": "Berkat dan janji yang Ia tinggalkan saat berpisah",
+   "story": [
+    "Selama empat puluh hari sesudah kebangkitan, Yesus menampakkan diri kepada murid-murid dan berbicara tentang Kerajaan Allah. Kini Ia membawa mereka keluar sampai ke dekat Betania. Murid-murid mengajukan satu pertanyaan terakhir. Tuhan, inikah saatnya Engkau memulihkan kerajaan bagi Israel?",
+    "Ia menjawab bahwa masa dan waktu ada dalam kuasa Bapa, lalu berkata bahwa bila Roh Kudus turun ke atas mereka, mereka akan menjadi saksi-Nya sampai ke ujung bumi. Kemudian, sambil mengangkat tangan memberkati mereka, Ia terangkat ke surga. Awan menutupi-Nya, dan mereka tidak melihat-Nya lagi.",
+    "Ketika murid-murid berdiri menatap ke langit, dua orang berpakaian putih berdiri di dekat mereka dan berkata. Yesus ini, yang terangkat ke surga meninggalkan kalian, akan datang kembali dengan cara yang sama seperti kalian melihat-Nya pergi. Dengan sukacita yang besar, murid-murid kembali ke Yerusalem dan setiap hari memuji Allah di Bait Allah."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Bila Roh Kudus turun ke atasmu, kalian akan menerima kuasa. Kalian akan menjadi saksi-Ku di Yerusalem, di seluruh Yudea dan Samaria, sampai ke ujung bumi."
+    },
+    {
+     "who": "Yesus",
+     "text": "Bukan bagian kalian untuk mengetahui masa dan waktu yang ditetapkan Bapa menurut kuasa-Nya sendiri."
+    },
+    {
+     "who": "Dua orang berpakaian putih",
+     "text": "Hai orang-orang Galilea, mengapa kalian berdiri menatap ke langit? Yesus ini, yang terangkat ke surga, akan datang kembali seperti kalian melihat-Nya pergi."
+    }
+   ],
+   "note": "Kisah Para Rasul mengatakan bahwa sesudah kenaikan, murid-murid kembali dari Bukit Zaitun ke Yerusalem, sejauh perjalanan hari Sabat. Betania adalah desa di lereng timur Bukit Zaitun.",
+   "reflect": "Sambil menantikan hari kedatangan-Nya kembali, di manakah aku hidup sebagai saksi-Nya hari ini?",
+   "quiz": {
+    "q": "Apa yang menutupi Yesus dari pandangan ketika Ia terangkat ke surga?",
+    "options": [
+     "Tiang api",
+     "Bintang yang terang",
+     "Burung merpati putih",
+     "Awan"
+    ],
+    "explain": "Kis 1:9 mencatat bahwa ketika Yesus terangkat, awan menutupi-Nya dari pandangan murid-murid."
+   },
+   "credit": "James Tissot, The Ascension, sekitar 1886–1894 · Museum Brooklyn · Domain publik"
+  }
+ }
+}
