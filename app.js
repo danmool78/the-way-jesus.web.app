@@ -905,8 +905,42 @@ function showCaption(it) {
   if (!it || !it.text) { c.classList.remove('show'); return; }
   $('small', c).textContent = it.who || '';
   c.classList.toggle('who', !!it.who);
-  $('p', c).textContent = it.text;
   c.classList.add('show');
+  captionLines($('p', c), it.text);
+}
+// 자막 줄바꿈: 한 줄에 다 들어가지 않으면 쉼표 같은 쉼 자리에서 줄을 나눈다. 실제 글자 폭을 재서 줄 수가 가장 적고
+// 줄 길이가 고른 자리를 고른다. 쉼표에서 나누면 오히려 줄이 늘어날 때는 나누지 않고 브라우저에 맡긴다
+// (style.css: 한국어는 낱말 안에서 끊지 않고, 줄 길이를 고르게 해 끝에 '니다.'만 남지 않게)
+const capCtx = document.createElement('canvas').getContext('2d');
+function captionLines(p, text) {
+  p.textContent = text;
+  // 자막 상자는 글 길이만큼 넓어지므로, 잠깐 최대 폭으로 펴서 한 줄에 쓸 수 있는 폭을 잰다
+  const box = p.parentElement;
+  box.style.width = '100%'; const max = p.clientWidth * .97; box.style.width = '';
+  const cs = getComputedStyle(p);
+  capCtx.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+  const wd = s => capCtx.measureText(s.trim()).width;
+  if (!max || wd(text) <= max) return;
+  // 나눌 수 있는 자리: 쉼표·가운뎃점·줄표·쌍점 뒤 (중·일의 、，도)
+  const cuts = [0];
+  text.replace(/[,，、;；:·—]\s*/g, (m, i) => { const k = i + m.length; if (k < text.length - 1) cuts.push(k); return m; });
+  cuts.push(text.length);
+  // 한 덩이의 값: 줄 수가 먼저(줄마다 1000), 한 줄이면 남는 폭이 적을수록, 저절로 다시 꺾이면 덤으로 500, 너무 짧은 덩이는 300.
+  // 통째로 두면 줄이 어디서 꺾일지 모르므로 150을 더 얹는다 — 줄 수가 같으면 쉼표에서 나누는 쪽을 고른다
+  const cost = (a, b, many) => {
+    const w = wd(text.slice(a, b)), n = Math.ceil(w / max);
+    return n * 1000 + (n > 1 ? 500 + (many ? 0 : 150) : ((max - w) / max) ** 2 * 100) + (many && w < max * .3 ? 300 : 0);
+  };
+  const best = cuts.map(() => Infinity), from = cuts.map(() => -1);
+  best[0] = 0;
+  for (let j = 1; j < cuts.length; j++) for (let i = 0; i < j; i++) {
+    const v = best[i] + cost(cuts[i], cuts[j], i > 0 || j < cuts.length - 1);
+    if (v < best[j]) { best[j] = v; from[j] = i; }
+  }
+  const parts = [];
+  for (let j = cuts.length - 1; j > 0; j = from[j]) parts.unshift(text.slice(cuts[from[j]], cuts[j]).trim());
+  if (parts.length < 2) return; // 나누지 않는 편이 낫다
+  p.innerHTML = parts.map(x => `<span>${esc(x)}</span>`).join(''); // 덩이마다 따로 줄 길이를 고르게 (style.css)
 }
 function scrollToEl(el) {
   // 낭독 중인 문단이 보이도록 해당 스크롤 영역만 움직인다 (창 전체가 밀리지 않게)
