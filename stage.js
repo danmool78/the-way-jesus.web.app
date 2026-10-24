@@ -92,7 +92,7 @@ function clearCast() {
   actors = {}; props = {};
 }
 /* 동작 명령: [이름, 자세(또는 소품 상태), 옵션]
-   이름이 '@env'면 분위기 전환. 옵션: x, z, y, look, show, item, board('배 이름' 또는 null), delay(ms) */
+   이름이 '@env'면 분위기 전환. 옵션: x, z, y, look, show, item, board('배 이름' 또는 null), delay(ms), to(말을 건네는 상대) */
 function apply(cmds, instant = false) {
   (cmds || []).forEach(cmd => {
     const [name, pose, o = {}] = cmd;
@@ -100,7 +100,7 @@ function apply(cmds, instant = false) {
     if (name === '@env') { setEnv(pose, instant); return; }
     const a = actors[name], p = props[name];
     if (a) {
-      if (pose) a.set(pose);
+      if (pose) { a.set(pose); a.talkTo = o.to ? actors[o.to] : null; }
       if ('board' in o) (o.board ? props[o.board].deck : stageGroup).add(a.p.root);
       if (o.x !== undefined || o.z !== undefined) a.moveTo(o.x ?? a.goal.x, o.z ?? a.goal.y);
       if ('board' in o) a.pos.copy(a.goal); // 타고 내릴 때는 그 자리로 바로 (좌표 기준이 바뀌므로 걸어가지 않는다)
@@ -163,13 +163,13 @@ function beat(key) {
   apply(script.beats[key]);
   gaze();
 }
-// 누군가 말하면(speak) 다른 이들은 말하는 이를 보고, 말하는 이는 가장 가까운 사람을 본다
+// 누군가 말하면(speak) 다른 이들은 말하는 이를 보고, 말하는 이는 to로 정한 상대나 가장 가까운 사람을 본다
 function gaze() {
   const all = Object.values(actors), speaker = all.find(a => a.pose === 'speak' && a.showT > 0);
   if (!speaker) return;
   const others = all.filter(a => a !== speaker && a.showT > 0 && !a.noGaze && a.p.root.parent === speaker.p.root.parent);
   others.forEach(a => { a.target = speaker; });
-  speaker.target = others.sort((a, b) => a.goal.distanceTo(speaker.goal) - b.goal.distanceTo(speaker.goal))[0] || null;
+  speaker.target = (speaker.talkTo?.showT > 0 && speaker.talkTo) || others.sort((a, b) => a.goal.distanceTo(speaker.goal) - b.goal.distanceTo(speaker.goal))[0] || null;
 }
 
 /* ---------- 화면 배치: 장소 핀에 무대 바닥을 맞춘다 ---------- */
