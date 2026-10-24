@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#16120e">
+<meta name="description" content="El Camino — preguntas y respuestas: por qué se hizo, para qué sirve la aplicación, por qué el escenario en 3D se ve así y cómo sacarle el mejor partido">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<title>Preguntas y respuestas — El Camino</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* Preguntas y respuestas — same look as the intro screen (.intro): dark background, gold, serif headings */
+  body{overflow:auto;background:radial-gradient(ellipse at 50% 0%,rgba(217,180,106,.13),transparent 50%),var(--bg)}
+  .qna{max-width:760px;margin:0 auto;padding:28px 20px 64px}
+  .qna-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .qna-top a{color:var(--gold2);text-decoration:none;display:inline-flex;align-items:center;gap:8px;font-size:14px}
+  .qna-top img{width:28px;height:28px}
+  .qna-top .back{border:1px solid #4a3c2c;border-radius:999px;padding:7px 14px}
+  .qna-top .back:hover{border-color:var(--gold)}
+  .qna h1{font-family:var(--serif);font-size:34px;margin:34px 0 8px;color:#f6ead0}
+  .qna .lead{color:var(--muted);line-height:1.8;margin:0 0 10px}
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 8px;padding:0;list-style:none}
+  .toc a{display:block;border:1px solid #4a3c2c;border-radius:999px;padding:6px 13px;font-size:13px;color:var(--ink);text-decoration:none;background:rgba(255,255,255,.02)}
+  .toc a:hover{border-color:var(--gold);color:var(--gold2)}
+  .qna h2{font-family:var(--serif);font-size:22px;color:var(--gold2);margin:44px 0 12px;padding-top:8px;border-top:1px solid #3a3026;scroll-margin-top:16px}
+  details{border:1px solid #3a3026;border-radius:14px;background:rgba(29,24,19,.7);margin:10px 0;overflow:hidden}
+  details[open]{border-color:#5a4830}
+  summary{list-style:none;cursor:pointer;padding:15px 48px 15px 18px;font-weight:700;font-size:16px;line-height:1.5;position:relative}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:'Q';font-family:var(--serif);color:var(--gold);margin-right:10px}
+  summary::after{content:'';position:absolute;right:20px;top:22px;width:9px;height:9px;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(45deg);transition:transform .25s}
+  details[open] summary::after{transform:translateY(4px) rotate(-135deg)}
+  summary:hover{color:var(--gold2)}
+  .a{padding:0 20px 18px 40px;color:#e2d7c3;line-height:1.85;font-size:15px}
+  .a p{margin:0 0 10px}
+  .a ul,.a ol{margin:4px 0 12px;padding-left:20px}
+  .a li{margin:4px 0}
+  .a b{color:var(--gold2);font-weight:700}
+  .a .tip{display:block;border-left:2px solid var(--gold);padding:8px 12px;margin:10px 0;background:rgba(217,180,106,.07);border-radius:0 8px 8px 0;font-size:14px;color:var(--muted)}
+  .end{text-align:center;margin-top:56px}
+  .end a{display:inline-block;padding:14px 28px;border-radius:999px;background:linear-gradient(180deg,#e9c97f,#b88a3e);color:#24180a;font-weight:700;text-decoration:none}
+  .foot{text-align:center;margin-top:28px;font-size:12px;color:var(--faint)}
+  .foot a{color:var(--faint)}
+  @media (max-width:600px){.qna h1{font-size:28px}.a{padding-left:18px}summary{font-size:15px}}
+</style>
+</head>
+<body>
+<main class="qna">
+  <nav class="qna-top">
+    <a href="./?lang=es"><img src="assets/logo.svg" alt=""><b style="font-family:var(--serif);font-size:20px">El Camino</b></a>
+    <a class="back" href="./?lang=es">Volver al viaje →</a>
+  </nav>
+
+  <h1>Preguntas y respuestas</h1>
+  <p class="lead">Por qué hicimos «El Camino», para qué sirve, por qué el escenario en 3D sobre el mapa se ve como se ve y cómo sacarle el mejor partido: aquí lo reunimos todo en forma de preguntas y respuestas.</p>
+  <ul class="toc">
+    <li><a href="#why">Por qué hace falta</a></li>
+    <li><a href="#purpose">Propósito</a></li>
+    <li><a href="#stage">Escenario en 3D</a></li>
+    <li><a href="#benefit">Qué se gana</a></li>
+    <li><a href="#howto">Cómo usarla</a></li>
+    <li><a href="#more">Otras preguntas</a></li>
+  </ul>
+
+  <h2 id="why">¿Por qué hace falta esta aplicación?</h2>
+  <details open>
+    <summary>Ya tenemos cuatro Evangelios. ¿Por qué entrelazarlos?</summary>
+    <div class="a">
+      <p>Mateo, Marcos, Lucas y Juan escribieron sobre el mismo Jesús, pero cada uno con sus propios ojos. Algunos hechos aparecen en los cuatro; otros, en uno solo. El orden y los acentos también cambian un poco de uno a otro.</p>
+      <p>Por eso, al leerlos uno por uno se gana en profundidad, pero hay que reconstruir mentalmente <b>«en qué orden y en qué lugares se desarrolló su vida»</b>. Esta aplicación entrelaza los cuatro relatos según cuándo y dónde sucedieron, y une 61 escenas, desde el nacimiento hasta la ascensión, en un solo camino.</p>
+    </div>
+  </details>
+  <details>
+    <summary>¿Por qué es tan importante el mapa?</summary>
+    <div class="a">
+      <p>Al leer la Biblia solemos pasar de largo los nombres de lugares. Pero cuando sabes cuántos días de camino hay de Nazaret a Belén, qué distancia separa el mar de Galilea de Jerusalén o por qué a Jerusalén siempre se «sube», la historia se lee de otra manera.</p>
+      <p>En esta aplicación, cada vez que pasas a otra escena caminas sobre el terreno real. Verás también la distancia, los días de viaje y todo lo que llevas recorrido. La idea es que sientas, casi en el cuerpo, cuánto caminó Jesús.</p>
+    </div>
+  </details>
+  <details>
+    <summary>¿En qué se diferencia de una app de la Biblia o de un comentario?</summary>
+    <div class="a">
+      <p>Las apps de la Biblia son excelentes para leer el texto, y los comentarios para explicar su sentido. «El Camino» se sitúa un paso antes: es <b>un mapa y una guía que muestran el cuadro completo</b>. En cada escena reúne el mapa, una pintura, el escenario en 3D, la narración, sus palabras, la comparación de los cuatro Evangelios, el contexto, preguntas para reflexionar y preguntas de repaso.</p>
+    </div>
+  </details>
+
+  <h2 id="purpose">¿Cuál es el propósito de esta aplicación?</h2>
+  <details open>
+    <summary>En pocas palabras, ¿para qué se hizo?</summary>
+    <div class="a">
+      <p><b>Para encontrarse con la vida de Jesús como un solo camino continuo.</b> No como fragmentos sueltos, sino como la ruta que una persona recorrió de verdad, y para dejar que las palabras pronunciadas en ese camino iluminen hoy nuestra propia vida.</p>
+    </div>
+  </details>
+  <details>
+    <summary>¿Sustituye a la Biblia?</summary>
+    <div class="a">
+      <p>No. Esta aplicación es <b>una puerta de entrada a la Biblia</b>. En cada escena indicamos el capítulo y el versículo (pestaña «Comparar»). Si una escena te toca el corazón, abre la Biblia y lee ese pasaje por ti mismo.</p>
+      <p>Los relatos se mantienen fieles al texto y no inventan hechos que no estén en él. Solo añaden ambiente: el paisaje, la luz y los sonidos de aquel día.</p>
+    </div>
+  </details>
+  <details>
+    <summary>¿Qué traducción se usa para sus palabras?</summary>
+    <div class="a">
+      <p>No copiamos frases de ninguna traducción existente de la Biblia. Son <b>traducciones nuevas que recogen el sentido original en el lenguaje de hoy</b>, así que algunas palabras pueden diferir de la versión que conoces. Para el texto exacto, consulta en tu Biblia el capítulo y versículo indicados.</p>
+    </div>
+  </details>
+  <details>
+    <summary>¿Cómo se decidieron el orden y los lugares de las escenas?</summary>
+    <div class="a">
+      <p>El orden se basa en la tradicional «concordancia de los Evangelios», que pone los cuatro relatos lado a lado. Aun así, en algunos hechos los especialistas no se ponen de acuerdo sobre qué ocurrió antes y qué después.</p>
+      <p>Con los lugares pasa lo mismo. De los 32 lugares, unos pocos cuya ubicación exacta se desconoce (por ejemplo, Emaús) se colocan en el sitio más probable y se marcan como <b>«aprox.»</b>. Las fechas se dan de forma aproximada, como «hacia el año…».</p>
+    </div>
+  </details>
+
+  <h2 id="stage">¿Por qué el escenario en 3D se ve así?</h2>
+  <details open>
+    <summary>¿Qué son esas figuritas sobre el mapa?</summary>
+    <div class="a">
+      <p>Son un <b>escenario en miniatura</b> levantado sobre el lugar donde ocurrió la escena. Como en el diorama de un museo, colocamos sobre el marcador del lugar a las personas de aquel día, para que se vea de un vistazo dónde estamos y qué está pasando.</p>
+      <p>El escenario se mueve al ritmo de la narración. Con cada frase, los personajes entran caminando, hablan, se arrodillan o levantan la mirada. Cuando alguien habla, los demás se vuelven hacia él. En las escenas nocturnas todo el mapa se tiñe de azul oscuro; en las de tormenta pasan sombras de nubes; y el amanecer de la resurrección lo baña de oro.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Las figuras y el escenario parecen mucho más grandes que en la realidad. ¿Por qué?</summary>
+    <div class="a">
+      <p>Es a propósito. El mapa muestra cientos de kilómetros en una sola pantalla. A tamaño real, una persona sería más pequeña que un punto y no se vería.</p>
+      <p>Por eso el escenario <b>no sigue la escala del mapa, sino que se dibuja siempre con un tamaño parecido en la pantalla</b>: unos 300 píxeles de ancho en el ordenador y unos 230 píxeles en el móvil. Aunque acerques o alejes el mapa, las figuras se siguen distinguiendo, y la base del escenario permanece pegada al marcador del lugar. A cambio, vista de lejos, la escena parece más grande que el pueblo o la ciudad. Piensa en ella como una señal sobre el mapa que dice: «aquí ocurrió esto».</p>
+      <span class="tip">En las escenas con mucha gente, el escenario se dibuja un poco más ancho y las figuras un poco más pequeñas, para que todo quepa en la pantalla.</span>
+    </div>
+  </details>
+  <details>
+    <summary>Si se agranda el tamaño, ¿cómo se respeta la geografía?</summary>
+    <div class="a">
+      <p>Como el escenario es más grande, lo hemos ajustado para que no quede sobre un sitio que no le corresponde.</p>
+      <ul>
+        <li>Lo que debe coincidir con el terreno real, como <b>la orilla del agua y los campos</b>, se coloca en su latitud y longitud reales. Así la barca queda en el agua y la gente en tierra firme.</li>
+        <li>En <b>los pueblos cuyo marcador está junto al agua</b> (como Cafarnaúm), el escenario se ha desplazado un poco hacia tierra.</li>
+        <li>En <b>Jerusalén</b>, al acercarte hasta la ciudad aparece una ilustración en 3D de la ciudad. Por eso el escenario no levanta un templo propio, y en lugares pegados a la muralla, como el Gólgota, se ha desplazado un poco hacia el campo abierto fuera de la ciudad.</li>
+        <li>La orientación también sigue al mapa: arriba es el norte y a la derecha el este. En las escenas del Monte de los Olivos, la ciudad queda al oeste (a la izquierda).</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>¿Por qué la escena de la cruz se ve de lejos y solo en silueta?</summary>
+    <div class="a">
+      <p>Al crear los escenarios nos pusimos un principio: <b>no mostrar el sufrimiento ni la violencia</b>. El Gólgota se representa solo con la silueta lejana de las cruces, personas arrodilladas mirando hacia allí y una luz que se oscurece. Los momentos dolorosos, como las burlas o los azotes, solo se escuchan en la narración; el escenario queda vacío o con personas que lloran. Así se puede ver con niños, y las palabras del texto van por delante de la imaginación.</p>
+      <p>Hay otros principios también:</p>
+      <ul>
+        <li><b>El mal, solo como figura:</b> el tentador en el desierto aparece únicamente como una silueta oscura y encapuchada.</li>
+        <li><b>Fieles al texto:</b> no inventamos nada importante que no esté en la Biblia. El escenario solo acompaña a la narración.</li>
+        <li><b>Nada aparece de golpe:</b> las personas surgen poco a poco o entran caminando.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>¿Qué es el relieve que aparece al pulsar el botón 3D?</summary>
+    <div class="a">
+      <p>Es el relieve del terreno, hecho con datos reales de altitud (mediciones topográficas por satélite). Las zonas de Galilea, Judea y Egipto se cargan al acercarte a sus lugares. La altura está algo exagerada, <b>1,8 veces</b>: a escala real las colinas parecerían casi planas, y así se aprecian mejor los valles y las crestas.</p>
+      <p>En el relieve puedes arrastrar para moverte, acercar con la rueda del ratón o con dos dedos y, en el ordenador, girar la vista con los botones de la izquierda. Comprueba tú mismo por qué a Jerusalén se «sube» y lo empinado que es el camino de Jericó a Jerusalén.</p>
+    </div>
+  </details>
+
+  <h2 id="benefit">¿Qué beneficios puedo obtener?</h2>
+  <details open>
+    <summary>¿Qué me aporta esta aplicación?</summary>
+    <div class="a">
+      <ul>
+        <li><b>El cuadro completo:</b> la vida de Jesús, del nacimiento a la ascensión, se ordena como un solo hilo. Cada hecho encuentra su lugar: cuándo y dónde ocurrió.</li>
+        <li><b>El sentido de la tierra:</b> al ver distancias y terreno, expresiones como «subió», «pasó al otro lado» o «se fue al desierto» cobran vida.</li>
+        <li><b>La voz de cuatro testigos:</b> al comparar cómo recoge cada Evangelio un mismo hecho, descubres sus distintos acentos.</li>
+        <li><b>Guardar sus palabras:</b> cada escena reúne sus palabras clave, y las preguntas para reflexionar las acercan a tu vida de hoy.</li>
+        <li><b>Recordar:</b> pinturas, escenario, sonido y preguntas se unen para que una escena vista una vez se quede contigo mucho tiempo.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>¿Para quién es especialmente útil?</summary>
+    <div class="a">
+      <ul>
+        <li><b>Quien lee los Evangelios por primera vez:</b> puede captar la línea general antes de entrar en el texto.</li>
+        <li><b>Quien lleva años leyendo la Biblia:</b> verá historias conocidas con ojos nuevos, sobre el mapa y en su orden.</li>
+        <li><b>Familias y grupos pequeños:</b> es ideal para escuchar juntos una escena y conversar a partir de las preguntas para reflexionar.</li>
+        <li><b>Catequesis, escuela dominical y jóvenes:</b> el escenario y las preguntas hacen que aprender no resulte aburrido. Como no muestra escenas de sufrimiento, también es adecuada para verla con niños.</li>
+      </ul>
+    </div>
+  </details>
+
+  <h2 id="howto">¿Cómo aprovechar cada función?</h2>
+  <details open>
+    <summary>¿Cómo empiezo?</summary>
+    <div class="a">
+      <ol>
+        <li>En la pantalla inicial, pulsa <b>«Comenzar el viaje»</b>. Cuando vuelvas, podrás seguir caminando desde la última escena que viste.</li>
+        <li>En la tarjeta de la derecha (abajo en el móvil), lee el relato o escúchalo con el <b>botón ▶</b>.</li>
+        <li>Cuando termines, pulsa <b>«Caminar al siguiente lugar»</b>. Caminarás sobre el mapa hasta la siguiente escena.</li>
+      </ol>
+      <span class="tip">Con una o dos escenas al día, en uno o dos meses habrás recorrido toda la vida de Jesús.</span>
+    </div>
+  </details>
+  <details>
+    <summary>¿Cómo funcionan «Escuchar» y el «Viaje guiado»?</summary>
+    <div class="a">
+      <ul>
+        <li><b>▶ Escuchar:</b> lee en orden el título de la escena, el relato y sus palabras. En coreano se usa una voz grabada, y las palabras de Jesús se oyen con otra voz; en los demás idiomas, incluido el español, se lee con la voz de tu dispositivo. En el ordenador aparecen subtítulos debajo del mapa (en el móvil solo se escucha, sin subtítulos), y el escenario se mueve al ritmo de cada frase.</li>
+        <li><b>Viaje guiado:</b> si lo activas, al terminar una escena se camina sola al siguiente lugar y sigue leyendo. Puedes dejarlo sonando como un audiolibro.</li>
+        <li><b>Velocidad:</b> puedes elegir entre 0,85× y 1,3×.</li>
+        <li><b>♫ Música de fondo:</b> bajo la narración suena una música suave acorde con la escena. Si prefieres quitarla, pulsa el botón de la nota musical.</li>
+      </ul>
+      <span class="tip">En la pestaña «Texto», el botón 🔊 junto a cada dicho te permite escuchar solo ese dicho.</span>
+    </div>
+  </details>
+  <details>
+    <summary>¿Qué diferencia hay entre las pestañas de la tarjeta?</summary>
+    <div class="a">
+      <ul>
+        <li><b>Relato:</b> la escena contada en prosa. Más abajo, <b>«Contexto»</b> ofrece el trasfondo histórico y geográfico, y <b>«Detente y reflexiona»</b> trae preguntas para mirar tu vida de hoy.</li>
+        <li><b>Texto:</b> reúne las palabras clave de la escena, con su capítulo y versículo.</li>
+        <li><b>Comparar:</b> muestra cuáles de los cuatro Evangelios recogen la escena, con capítulos y versículos lado a lado.</li>
+      </ul>
+      <p>La pintura de la parte superior de la tarjeta (de la serie sobre los Evangelios de James Tissot) puede verse en grande con <b>«Ver la pintura»</b>.</p>
+    </div>
+  </details>
+  <details>
+    <summary>¿Cómo se maneja el mapa?</summary>
+    <div class="a">
+      <ul>
+        <li><b>Arrastrar:</b> arrastra el mapa para mirar alrededor. El acercamiento se ajusta solo a cada escena. En las escenas de Jerusalén se entra hasta la ciudad y aparece su ilustración en 3D.</li>
+        <li><b>Etiqueta del lugar</b> (el nombre arriba a la izquierda): al pulsarla vuelves al lugar de la escena actual.</li>
+        <li><b>Todo el recorrido:</b> muestra de un vistazo todo el camino hecho hasta ahora. Al pulsarlo de nuevo vuelves a la escena actual.</li>
+        <li><b>Pulsar un marcador:</b> al tocar un lugar del mapa vas a la escena que ocurrió allí.</li>
+        <li><b>Botón 3D:</b> muestra el relieve del terreno. En 3D puedes acercar con la rueda o con dos dedos y, en el ordenador, girar o acercar también con los botones de la izquierda.</li>
+        <li><b>Línea del tiempo de abajo:</b> cada etapa tiene su color y su imagen. Pulsa un punto para ir directamente a esa escena. Los puntos rellenos y brillantes son escenas que ya visitaste.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>¿Cómo se ve en el móvil?</summary>
+    <div class="a">
+      <p>La tarjeta de la escena es una hoja que sube desde la parte inferior de la pantalla. Al principio solo sube hasta la mitad, para que el mapa y el escenario se vean grandes.</p>
+      <ul>
+        <li>Si <b>arrastras hacia arriba el asa</b> de la hoja o deslizas el texto hacia arriba, sube del todo y es más cómodo leer.</li>
+        <li>Si <b>la arrastras hacia abajo</b>, baja un nivel cada vez hasta dejar solo la línea del título, y puedes ver el mapa a lo ancho.</li>
+        <li>Si la añades a la pantalla de inicio, podrás abrirla al instante, como una aplicación.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>¿Dónde están «Palabras», la concordancia y las preguntas?</summary>
+    <div class="a">
+      <ul>
+        <li><b>Pestaña «Palabras»</b> (arriba): reúne las palabras de Jesús recogidas en los cuatro Evangelios, en el orden del viaje. Puedes buscar por términos como «amor», «pan» o «paz».</li>
+        <li><b>Concordancia de los Evangelios</b> (⚙ Ajustes, arriba a la derecha): una tabla que muestra dónde recoge cada uno de los cuatro Evangelios cada una de las 61 escenas. Puedes filtrar, por ejemplo, por «Los cuatro Evangelios» o «Solo Juan». Al pulsar una fila vas a esa escena.</li>
+        <li><b>Pestaña «Preguntas»</b> y <b>la pregunta de cada escena</b> (botón «Preguntas» abajo a la derecha): repasa con preguntas las escenas que has recorrido.</li>
+        <li><b>Mis huellas</b> (la barra de progreso de arriba o Ajustes): cada escena que abres deja una huella, y cada respuesta correcta, una estrella.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>¿Alguna idea para usarla con otros?</summary>
+    <div class="a">
+      <ul>
+        <li><b>Meditación personal:</b> escucha una escena al día y llévate una de sus preguntas para reflexionar durante la jornada. Mejor aún si lees el pasaje directamente en tu Biblia.</li>
+        <li><b>En familia:</b> mirad juntos la pantalla, escuchad la narración y responded las preguntas con los niños.</li>
+        <li><b>Grupos pequeños y estudio bíblico:</b> con la pestaña «Comparar» y la concordancia, comparad cómo recoge cada Evangelio un mismo hecho y conversad sobre ello.</li>
+        <li><b>Catequesis y escuela dominical:</b> proyectadla en una pantalla grande y seguid el camino juntos con «Caminar al siguiente lugar». Adivinar la distancia recorrida también es divertido.</li>
+        <li><b>De camino al trabajo:</b> activa el Viaje guiado y escúchalo como un audiolibro.</li>
+      </ul>
+    </div>
+  </details>
+
+  <h2 id="more">Otras preguntas</h2>
+  <details>
+    <summary>¿Hace falta registrarse? ¿Dónde se guarda mi registro?</summary>
+    <div class="a">
+      <p>No hace falta registrarse ni iniciar sesión. Las escenas visitadas y los resultados de las preguntas se guardan <b>solo en el navegador del dispositivo que estás usando</b> y no se envían a ningún sitio. Por eso tu registro no continúa en otro dispositivo ni en otro navegador. Puedes borrarlo desde «Mis huellas».</p>
+    </div>
+  </details>
+  <details>
+    <summary>¿Puedo verla en otros idiomas?</summary>
+    <div class="a">
+      <p>Puedes cambiar el idioma en ⚙ Ajustes, arriba a la derecha. Está disponible en coreano, inglés, español, portugués, francés, chino, indonesio y japonés. Por ahora la narración grabada solo existe en coreano; en los demás idiomas se lee con la voz de tu dispositivo.</p>
+    </div>
+  </details>
+  <details>
+    <summary>¿De dónde vienen las pinturas?</summary>
+    <div class="a">
+      <p>Las imágenes de las tarjetas pertenecen a la serie sobre la vida de Cristo del pintor francés del siglo XIX <b>James Tissot</b>. Para esta serie viajó varias veces a Tierra Santa y pintó del natural sus paisajes y sus gentes. Cada pintura lleva indicada su procedencia.</p>
+    </div>
+  </details>
+
+  <div class="end"><a href="./?lang=es">Comenzar el viaje →</a></div>
+  <p class="foot"><a href="https://sssoft-idea.web.app/" target="_blank" rel="noopener">© SSSOFT</a></p>
+</main>
+</body>
+</html>
