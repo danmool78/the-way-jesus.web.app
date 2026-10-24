@@ -51,14 +51,33 @@ const GEO = {
   jordanS: [[32.708,35.572],[32.65,35.578],[32.58,35.566],[32.50,35.562],[32.42,35.552],[32.34,35.552],[32.26,35.536],[32.17,35.532],[32.08,35.538],[31.99,35.536],[31.91,35.546],[31.84,35.548],[31.775,35.556]],
   jwall: [[31.7810,35.2280],[31.7815,35.2365],[31.7790,35.2368],[31.7760,35.2365],[31.7735,35.2355],[31.7712,35.2320],[31.7715,35.2283],[31.7745,35.2270],[31.7780,35.2268]],
   kidron: [[31.787,35.2392],[31.781,35.2385],[31.776,35.2378],[31.771,35.2364],[31.766,35.2360]],
+  // 애굽: 나일(카이로 남쪽 골짜기 → 삼각주 꼭짓점)과 1세기의 큰 지류들. 동쪽 끝 펠루시움 지류가 시나이 바닷길과 만나는 관문
+  nile: [[29.15,31.18],[29.5,31.22],[29.85,31.26],[30.06,31.23],[30.18,31.13]],
+  canopic: [[30.18,31.13],[30.5,30.85],[30.8,30.55],[31.1,30.25],[31.32,30.07]],
+  rosetta: [[30.18,31.13],[30.6,30.95],[30.95,30.78],[31.2,30.55],[31.46,30.37]],
+  damietta: [[30.18,31.13],[30.5,31.2],[30.8,31.25],[31.05,31.42],[31.3,31.65],[31.52,31.84]],
+  pelusiac: [[30.18,31.13],[30.45,31.4],[30.57,31.51],[30.75,31.75],[30.9,32.1],[31.04,32.55]],
+  mareotis: [[31.12,29.75],[31.18,29.95],[31.15,30.12],[31.05,30.08],[31.03,29.85]],
+  manzala: [[31.42,31.85],[31.35,32.12],[31.2,32.25],[31.1,32.05],[31.18,31.85]],
+  sirbonis: [[31.17,32.75],[31.2,33.15],[31.13,33.45],[31.06,33.2],[31.08,32.85]],
+  bitter: [[30.45,32.33],[30.4,32.42],[30.28,32.45],[30.32,32.36]],
+  suez: [[29.97,32.53],[29.6,32.38],[29.0,32.62],[28.5,32.88],[28.0,33.3],[28.0,33.62],[28.5,33.22],[29.0,32.95],[29.6,32.72],[29.97,32.6]],
   hinnom: [[31.7765,35.2252],[31.7735,35.2258],[31.7705,35.2290],[31.7698,35.2340],[31.7690,35.2362]]
 };
 // 음영 기복도(assets/relief.webp)가 덮는 범위 — _src/relief.py의 EXTENT와 같게
-const RELIEF = { lat0: 29.9, lat1: 34.6, lng0: 33.0, lng1: 37.4 };
+const RELIEF = { lat0: 29.15, lat1: 34.6, lng0: 33.0, lng1: 37.4 };
 // 서쪽 애굽 쪽 바탕(assets/relief-west.webp — 시나이 북부, 나일 삼각주) — _src/relief.py의 WEST와 같게
 const RELIEF_WEST = { lat0: 29.9, lat1: 31.9, lng0: 30.6, lng1: 33.25 };
 // 확대했을 때만 불러오는 정밀 타일(assets/relief-hi/행_열.webp) — _src/relief.py의 HI와 같게
 const RELIEF_HI = { lat0: 30.2, lat1: 34.4, lng0: 33.4, lng1: 37.0, tile: 160, dir: 'relief-hi', below: 1.2 };
+// 애굽 쪽 정밀 타일(assets/relief-hi-w/) — _src/relief.py의 HI_W와 같게
+const RELIEF_HI_W = { lat0: 29.3, lat1: 31.7, lng0: 29.7, lng1: 33.4, tile: 160, dir: 'relief-hi-w', below: 1.2 };
+// 애굽의 이름난 자리 3D 표지 그림(assets/egypt-*.webp) — stage/egypt.js의 각 틀과 같게
+const LANDMARKS = [
+  { id: 'giza', lat0: 29.965, lat1: 29.989, lng0: 31.11425, lng1: 31.14975, top: 9 },
+  { id: 'pharos', lat0: 31.195, lat1: 31.215, lng0: 29.87962, lng1: 29.91038, top: 13 },
+  { id: 'helio', lat0: 30.121, lat1: 30.137, lng0: 31.29399, lng1: 31.32001, top: 8 },
+];
 // 도성까지 확대했을 때 얹는 초정밀 타일(assets/relief-city/) — _src/relief.py의 CITY와 같게
 const RELIEF_CITY = { lat0: 31.74, lat1: 31.81, lng0: 35.19, lng1: 35.28, tile: 20, dir: 'relief-city', below: .15 };
 // 예루살렘 3D 도성 그림(assets/jerusalem.webp) — stage/jerusalem.js의 EXTENT와 같게.
@@ -68,9 +87,12 @@ const CITY3D = { lat0: 31.7685, lat1: 31.7840, lng0: 35.2235, lng1: 35.2480, top
 const OASES = [[31.855, 35.455, 22], [31.462, 35.388, 9], [32.865, 35.525, 18]]; // 여리고, 엔게디, 게네사렛 평야
 const REGIONS = [
   ['갈릴리', 32.80, 35.30], ['사마리아', 32.27, 35.12], ['유대', 31.52, 35.02], ['베레아', 31.98, 35.78],
-  ['데가볼리', 32.52, 35.86], ['빌립의 영지', 33.02, 35.86], ['페니키아', 33.42, 35.42], ['이두매', 31.12, 34.86]
+  ['데가볼리', 32.52, 35.86], ['빌립의 영지', 33.02, 35.86], ['페니키아', 33.42, 35.42], ['이두매', 31.12, 34.86],
+  ['애 굽', 30.72, 30.95], ['시 나 이', 30.55, 33.55]
 ];
-const REFCITIES = [['디베랴', 32.79, 35.535], ['가이사랴', 32.50, 34.905], ['욥바', 32.05, 34.765], ['세바스테', 32.276, 35.19], ['마케루스', 31.565, 35.63]];
+const REFCITIES = [['디베랴', 32.79, 35.535], ['가이사랴', 32.50, 34.905], ['욥바', 32.05, 34.765], ['세바스테', 32.276, 35.19], ['마케루스', 31.565, 35.63],
+  ['가사', 31.50, 34.46], ['라피아', 31.28, 34.25], ['리노코루라', 31.13, 33.80], ['펠루시움', 31.04, 32.55], ['부바스티스', 30.57, 31.51],
+  ['레온토폴리스', 30.29, 31.33], ['헬리오폴리스 (온)', 30.13, 31.29], ['멤피스', 29.85, 31.25], ['알렉산드리아', 31.20, 29.92]];
 
 const svgNS = 'http://www.w3.org/2000/svg';
 const map = $('#map');
@@ -98,6 +120,7 @@ function buildMap() {
   <image href="assets/relief.webp" class="relief" x="${rx0}" y="${ry0}" width="${rx1 - rx0}" height="${ry1 - ry0}" preserveAspectRatio="none"/>
   <g id="reliefHi" class="relief"></g>
   <g id="reliefCity" class="relief"></g>
+  ${['nile', 'canopic', 'rosetta', 'damietta', 'pelusiac'].map(k => `<path d="${smooth(GEO[k])}" class="riverbank nilebank"/>`).join('')}
   <path d="${smooth(GEO.jordanN)}" class="riverbank"/>
   <path d="${smooth(GEO.jordanS)}" class="riverbank"/>
   ${OASES.map(([a, b, r]) => `<circle cx="${px([a, b])[0]}" cy="${px([a, b])[1]}" r="${r}" fill="url(#oasis)"/>`).join('')}
@@ -106,12 +129,16 @@ function buildMap() {
   <path d="${smooth(GEO.galilee, true)}" class="lake" filter="url(#waterEdge)"/>
   <path d="${smooth(GEO.dead, true)}" class="lake dead" filter="url(#waterEdge)"/>
   <path d="${smooth(GEO.hula, true)}" class="lake"/>
+  ${['mareotis', 'manzala', 'sirbonis', 'bitter'].map(k => `<path d="${smooth(GEO[k], true)}" class="lake"/>`).join('')}
+  <path d="${smooth(GEO.suez, true)}" fill="url(#seaGrad)" class="sea"/>
+  ${['nile', 'canopic', 'rosetta', 'damietta', 'pelusiac'].map(k => `<path d="${smooth(GEO[k])}" class="river nile"/>`).join('')}
   <path d="${smooth(GEO.jordanN)}" class="river"/>
   <path d="${smooth(GEO.jordanS)}" class="river"/>
   <g class="jlm-detail">
     <path d="${smooth(GEO.kidron)}" class="valley"/>
     <path d="${smooth(GEO.hinnom)}" class="valley"/>
   </g>
+ ${LANDMARKS.map(L => { const [a, b] = px([L.lat1, L.lng0]), [c, d] = px([L.lat0, L.lng1]); return `<g class="lmk" data-cx="${(a + c) / 2}" data-cy="${(b + d) / 2}" data-w="${c - a}"><image class="landmark" data-src="assets/egypt-${L.id}.webp" x="${a}" y="${b - L.top}" width="${c - a}" height="${d - b + L.top}" preserveAspectRatio="none"/></g>`; }).join('')}
   <image id="city3d" class="city3d" x="${cx0}" y="${cy0 - CITY3D.top}" width="${cx1 - cx0}" height="${cy1 - cy0 + CITY3D.top}" preserveAspectRatio="none"/>
   ${t('지 중 해', px([32.35, 34.48]), 'sea-lbl')}
   ${t('갈릴리 바다', px([32.80, 35.60]), 'water-lbl')}
@@ -119,7 +146,8 @@ function buildMap() {
   ${t('요단 강', px([32.40, 35.585]), 'water-lbl river-lbl')}
   ${REGIONS.map(([n, a, b]) => t(n, px([a, b]), 'region')).join('')}
   ${REFCITIES.map(([n, a, b]) => `<g class="lbl refcity" transform="translate(${px([a, b]).join(',')})"><circle r="2.2"/><text x="5" y="3">${n}</text></g>`).join('')}
-  <g id="egyptArrow" class="egypt" transform="translate(${px([31.08, 34.40]).join(',')})"><path d="M0,0 L-34,26 M-34,26 l12,-2 M-34,26 l2,-12"/><text x="-4" y="-8">애굽으로 · 약 500km</text></g>
+  ${t('나일 강', px([29.7, 31.33]), 'water-lbl river-lbl')}
+  ${t('수에즈 만', px([29.55, 32.66]), 'water-lbl river-lbl')}
   <g id="routes"><path id="nextHint" class="nexthint"/></g>
   <g id="markers"></g>
   <g id="walker" class="walker"><circle class="wglow" r="18"/><g class="wfig"><circle class="wbody" r="8"/><text class="wicon" y="4.5">✦</text></g></g>`;
@@ -128,7 +156,7 @@ function buildMap() {
   Object.entries(PLACES).forEach(([id, p]) => {
     const [x, y] = P(p);
     const m = document.createElementNS(svgNS, 'g');
-    m.setAttribute('class', 'pin' + (p.jlm ? ' jlm' : '') + (p.offmap ? ' offmap' : ''));
+    m.setAttribute('class', 'pin' + (p.jlm ? ' jlm' : ''));
     m.dataset.place = id; m.dataset.x = x; m.dataset.y = y;
     m.innerHTML = `<circle class="halo" r="15"/><circle class="dot" r="5.5"/><text x="9" y="4">${esc(p.name)}</text>`;
     m.addEventListener('click', () => { const i = EVENTS.findIndex((e, j) => e.place === id && j > idx) ; go(i >= 0 ? i : EVENTS.findIndex(e => e.place === id)); });
@@ -144,7 +172,9 @@ function buildMap() {
     const bend = (i % 2 ? 1 : -1) * 0.18;
     const cx = (x1 + x2) / 2 - dy * bend, cy = (y1 + y2) / 2 + dx * bend;
     const path = document.createElementNS(svgNS, 'path');
-    path.setAttribute('d', `M${x1},${y1} Q${cx},${cy} ${x2},${y2}`);
+    const via = routeVia(a, b);
+    // 경유지가 있는 길(애굽으로 가는 해안 길)은 그 지점들을 잇는 곡선으로
+    path.setAttribute('d', via ? smooth([[a.lat, a.lng], ...via, [b.lat, b.lng]]) : `M${x1},${y1} Q${cx},${cy} ${x2},${y2}`);
     path.setAttribute('pathLength', '1');
     path.setAttribute('class', 'route');
     path.style.setProperty('--c', PERIODS[e.p].color);
@@ -176,9 +206,16 @@ function applyView() {
   });
   const wk = $('#walker', map);
   if (wk.dataset.x) wk.setAttribute('transform', `translate(${wk.dataset.x},${wk.dataset.y}) scale(${u})`);
-  const eg = $('#egyptArrow', map);
-  eg.dataset.t ||= eg.getAttribute('transform');
-  eg.setAttribute('transform', `${eg.dataset.t} scale(${Math.max(u, .25)})`);
+  // 애굽 표지 그림: 멀리서도 핀처럼 화면에서 일정한 크기(약 70px)로 보이게 키우고, 가까이서는 제 크기로.
+  // 화면 안에 들어올 때 처음 받아서 서서히 보인다
+  $$('.lmk', map).forEach(gm => {
+    const cx = +gm.dataset.cx, cy = +gm.dataset.cy, k = Math.max(1, u * 70 / +gm.dataset.w), im = gm.firstChild;
+    gm.setAttribute('transform', `translate(${cx},${cy}) scale(${k}) translate(${-cx},${-cy})`);
+    const r = +gm.dataset.w * k;
+    if (im.getAttribute('href') || cx + r < x || cx - r > x + w || cy + r < y || cy - r > y + h) return;
+    im.addEventListener('load', () => im.classList.add('ready'), { once: true });
+    im.setAttribute('href', im.dataset.src);
+  });
 }
 
 // 바탕 지형은 지도 단위당 0.8픽셀이라 확대하면 뭉개진다. 화면 1px이 지도 1단위보다 작아지면
@@ -208,7 +245,7 @@ function reliefTiles(L, x, y, w, h, u, show) {
   return keys;
 }
 function showHiRelief(x, y, w, h, u) {
-  const want = new Set([RELIEF_HI, RELIEF_CITY].flatMap(L => reliefTiles(L, x, y, w, h, u, true)));
+  const want = new Set([RELIEF_HI, RELIEF_HI_W, RELIEF_CITY].flatMap(L => reliefTiles(L, x, y, w, h, u, true)));
   hiTiles.forEach((im, k) => { im.style.display = want.has(k) ? '' : 'none'; });
 }
 // 확대가 시작될 때 도착할 화면의 타일을 미리 받아 둔다 — 다 들어왔을 때 이미 준비되어 있게
@@ -218,7 +255,7 @@ function preloadRelief(t) {
   let { x, y, w, h } = t;
   const ar = r.width / r.height;
   if (w / h > ar) { const nh = w / ar; y -= (nh - h) / 2; h = nh; } else { const nw = h * ar; x -= (nw - w) / 2; w = nw; }
-  [RELIEF_HI, RELIEF_CITY].forEach(L => reliefTiles(L, x, y, w, h, w / r.width, false));
+  [RELIEF_HI, RELIEF_HI_W, RELIEF_CITY].forEach(L => reliefTiles(L, x, y, w, h, w / r.width, false));
 }
 
 function frame(ids, ms = 1300, reserve = true) {
@@ -276,8 +313,8 @@ window.recenterStage = () => { if (fitMode !== 'all' && EVENTS) frameStage(idx, 
 // 화면을 돌리거나 창 크기를 바꾸면 빈 영역도 바뀌므로 다시 맞춘다
 let recenterT; addEventListener('resize', () => { clearTimeout(recenterT); recenterT = setTimeout(() => window.recenterStage(), 250); });
 // 전체 경로: 지도 틀 전체가 아니라 장소들이 모인 땅을 카드에 가리지 않는 영역에 꽉 차게.
-// 남서쪽 '애굽으로' 화살표(애굽 피난)까지 들어오게 남쪽·서쪽을 넉넉히
-const LAND = (() => { const [x0, y0] = px([33.36, 34.2]), [x1, y1] = px([30.98, 35.82]); return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }; })();
+// 애굽 피난길(나일 삼각주의 헬리오폴리스·부바스티스)까지 들어오게 남쪽·서쪽을 넉넉히
+const LAND = (() => { const [x0, y0] = px([33.36, 31.0]), [x1, y1] = px([29.95, 35.82]); return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }; })();
 function fitAll() { animateTo(reserveCard({ ...LAND }), 1100); }
 function animateTo(target, ms) {
   cancelAnimationFrame(anim);
@@ -323,7 +360,6 @@ function updateMap(prevIdx, { camera = true } = {}) {
     r.classList.toggle('last', +r.dataset.i === idx);
     r.classList.remove('walking'); r.style.strokeDashoffset = '';
   });
-  $('#egyptArrow', map).classList.toggle('show', e.place === 'egypt' || seen.has('egypt'));
   setWalker(P(PLACES[e.place]));
   // 다음 목적지를 잇는 점선 힌트
   const nx = EVENTS[idx + 1], hint = $('#nextHint', map);
@@ -341,11 +377,22 @@ function updateMap(prevIdx, { camera = true } = {}) {
 
 /* ---------- 걷기 ---------- */
 const toRad = d => d * Math.PI / 180;
+// 두 장소 사이의 경유지: 애굽 쪽(via를 가진 장소)에서 가까운 순서가 길의 끝 쪽에 오게
+function routeVia(a, b) {
+  if (b.via) return b.via;
+  if (a.via) return [...a.via].reverse();
+  return null;
+}
 function km(a, b) {
-  if (a.offmap || b.offmap) return 500; // 애굽(나일 삼각주)까지의 대략 거리
+  const via = routeVia(a, b);
+  // 해안 길(경유지가 있는 길)은 경유지를 이어 잰다 — 거의 곧은 길이라 덜 가산한다
+  if (via) { const pts = [a, ...via.map(([lat, lng]) => ({ lat, lng })), b]; return pts.slice(1).reduce((s, p, i) => s + arc(pts[i], p) * 1.1, 0); }
+  return arc(a, b) * 1.25; // 길은 직선보다 굽어 있으므로 25% 가산
+}
+function arc(a, b) {
   const dLat = toRad(b.lat - a.lat), dLng = toRad(b.lng - a.lng);
   const h = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(a.lat)) * Math.cos(toRad(b.lat)) * Math.sin(dLng / 2) ** 2;
-  return 6371 * 2 * Math.asin(Math.sqrt(h)) * 1.25; // 길은 직선보다 굽어 있으므로 25% 가산
+  return 6371 * 2 * Math.asin(Math.sqrt(h));
 }
 function travelText(a, b) {
   const d = km(a, b);

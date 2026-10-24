@@ -98,10 +98,10 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .refcity circle{fill:#8f7c5c}
 .refcity text{font-size:10px;fill:#6f6048;text-anchor:start;stroke:var(--land-hi);stroke-width:2.5px}
 .zoom-city .region,.zoom-city .refcity,.zoom-city .sea-lbl{opacity:0}
-.egypt{opacity:0;transition:opacity .6s}
-.egypt.show{opacity:1}
-.egypt path{fill:none;stroke:var(--period);stroke-width:3;stroke-linecap:round;vector-effect:non-scaling-stroke}
-.egypt text{font-family:var(--serif);font-size:12px;fill:#5a3d1a;text-anchor:start;paint-order:stroke;stroke:var(--land-hi);stroke-width:3px}
+.landmark{opacity:0;transition:opacity .8s;pointer-events:none}
+.landmark.ready{opacity:1}
+.nilebank{stroke-width:9;opacity:.6}
+.river.nile{stroke-width:2.6}
 .route{fill:none;stroke:var(--c);stroke-width:calc(var(--u,1) * 2.6px);stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;transition:opacity .4s}
 .route.done{opacity:.38;stroke-dashoffset:0}
 .route.last{opacity:.95}
@@ -116,8 +116,6 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .zoom-city .pin.jlm.seen text{opacity:1}
 .pin.jlm:not(.seen) .dot{opacity:0}
 .zoom-city .pin.jlm .dot{opacity:.6}
-.pin.offmap .dot{opacity:0}
-.pin.offmap text{opacity:0}
 .pin.now .dot{fill:var(--period);stroke:#fff;stroke-width:2;opacity:1}
 .pin.now text{opacity:1;font-size:15px;fill:#24170a}
 .pin.now .halo{fill:var(--period);opacity:.35;animation:pulse 2.2s ease-out infinite;transform-box:fill-box;transform-origin:center}
