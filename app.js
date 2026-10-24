@@ -662,6 +662,25 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
   else arrive();
 }
 
+/* ---------- 첫 시작 화면 ---------- */
+// resume: 이어서 걸을 장면 번호(없으면 -1). 다녀간 사람에게는 '이어서 걷기'와 '처음부터 걷기'를 함께 준다
+function showIntro(resume) {
+  const box = $('#intro'), start = $('#introStart'), again = $('#introRestart');
+  $('#introLead').textContent = t('introLead', { n: EVENTS.length });
+  start.textContent = resume > 0 ? t('introContinue', { n: resume + 1, title: EVENTS[resume].title }) : t('introStart');
+  again.hidden = !(resume > 0);
+  const close = i => {
+    box.classList.add('out'); removeEventListener('keydown', esc);
+    setTimeout(() => { box.hidden = true; box.classList.remove('out'); }, 500);
+    if (i !== idx) go(i);
+  };
+  const esc = ev => { if (ev.key === 'Escape') close(idx); };
+  start.onclick = () => close(resume > 0 ? resume : 0);
+  again.onclick = () => close(0);
+  addEventListener('keydown', esc);
+  box.hidden = false; start.focus({ preventScroll: true });
+}
+
 /* ---------- 낭독 (Web Speech API) ---------- */
 const synth = window.speechSynthesis;
 let voices = [], speaking = false, autoOn = false, autoTimer = null, speechToken = 0;
@@ -951,6 +970,9 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   view = { x: 0, y: 0, w: W, h: H }; applyView();
   const start = idx; idx = -1; go(start);
   updateProgress();
+  // 첫 시작 화면: 장면 주소로 바로 들어온 때(#e05)와 연출 확인(?beat=)은 건너뛴다
+  if (fromHash < 0 && !new URLSearchParams(location.search).has('beat')) showIntro(fromLast > 0 ? fromLast : -1);
+  $('.brand').onclick = ev => { ev.preventDefault(); showIntro(idx > 0 ? idx : -1); };
 
   $('#prev').onclick = () => go(idx - 1);
   $('#next').onclick = () => go(idx + 1);

@@ -168,5 +168,18 @@
  "rotate": "Girar",
  "resetView": "Vista inicial",
  "only3dGalilee": "Por ahora, el relieve en 3D de prueba solo cubre los alrededores de Galilea.",
- "mtHermon": "Monte Hermón"
+ "mtHermon": "Monte Hermón",
+ "introTag": "Las huellas de Jesús a través de los cuatro Evangelios",
+ "introLead": "Los relatos de Mateo, Marcos, Lucas y Juan, entrelazados en el orden en que sucedieron y en los lugares donde ocurrieron. Recorre el mapa y conoce la vida de Jesús en {n} escenas.",
+ "introF1h": "Un viaje sobre el mapa",
+ "introF1": "Sigue los lugares, de Belén a Galilea y hasta Jerusalén",
+ "introF2h": "La escena del día",
+ "introF2": "Contempla cada momento con pinturas clásicas y un escenario en 3D",
+ "introF3h": "Escuchar y comparar",
+ "introF3": "Escucha la historia en voz alta y pon lado a lado los cuatro Evangelios",
+ "introF4h": "Preguntas para recordar",
+ "introF4": "Recuerda las escenas que has recorrido",
+ "introStart": "Comenzar el viaje",
+ "introContinue": "Continuar · {n}. {title}",
+ "introRestart": "Empezar desde el principio"
 }

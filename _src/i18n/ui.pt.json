@@ -168,5 +168,18 @@
  "rotate": "Girar",
  "resetView": "Vista inicial",
  "only3dGalilee": "Por enquanto, o relevo 3D de teste cobre só os arredores da Galileia.",
- "mtHermon": "Monte Hermom"
+ "mtHermon": "Monte Hermom",
+ "introTag": "Os passos de Jesus pelos quatro Evangelhos",
+ "introLead": "Os relatos de Mateus, Marcos, Lucas e João, entrelaçados na ordem em que aconteceram e nos lugares onde se deram. Percorra o mapa e conheça a vida de Jesus em {n} cenas.",
+ "introF1h": "Uma jornada pelo mapa",
+ "introF1": "Siga os lugares, de Belém à Galileia e até Jerusalém",
+ "introF2h": "A cena do dia",
+ "introF2": "Veja cada momento em pinturas clássicas e num palco em 3D",
+ "introF3h": "Ouvir e comparar",
+ "introF3": "Ouça a história em voz alta e compare lado a lado os quatro Evangelhos",
+ "introF4h": "Perguntas para lembrar",
+ "introF4": "Relembre as cenas que você percorreu",
+ "introStart": "Começar a jornada",
+ "introContinue": "Continuar · {n}. {title}",
+ "introRestart": "Começar do início"
 }
