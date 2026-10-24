@@ -22,8 +22,9 @@ jobs:
           printf '%s' "$SA" > "$RUNNER_TEMP/sa.json"
           export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/sa.json"
           trap 'rm -f "$RUNNER_TEMP/sa.json"' EXIT
-          npx -y firebase-tools hosting:channel:list --project the-way-jesus --json \
-            | jq -r '(.result.channels? // .result // [])[] | .name | split("/") | last' | grep -E '^pr[0-9]+-' | while read -r ch; do
+          npx -y firebase-tools hosting:channel:list --project the-way-jesus --json > "$RUNNER_TEMP/channels.json" || true
+          jq -r '"channel list: \(.status) \(.error // "")"' "$RUNNER_TEMP/channels.json"
+          jq -r '(.result.channels? // .result // [])[] | .name | split("/") | last' "$RUNNER_TEMP/channels.json" | grep -E '^pr[0-9]+-' | while read -r ch; do
               n=${ch#pr}; n=${n%%-*}
               if [ "$(gh pr view "$n" --repo "$GITHUB_REPOSITORY" --json state -q .state)" != OPEN ]; then
                 echo "delete $ch"; npx -y firebase-tools hosting:channel:delete "$ch" --project the-way-jesus --force
