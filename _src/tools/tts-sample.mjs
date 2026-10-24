@@ -2,6 +2,7 @@
 // 쓰는 법: GOOGLE_TTS_KEY=... node _src/tools/tts-sample.mjs [장면 id=e17] [출력 폴더=_src/tts-samples]
 // 키는 Text-to-Speech API로만 제한한 API 키. 저장소에 두지 않는다
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { pauses } from './tts-pauses.mjs';
 
 const KEY = process.env.GOOGLE_TTS_KEY;
 if (!KEY) { console.error('GOOGLE_TTS_KEY 환경변수가 없습니다'); process.exit(1); }
@@ -12,12 +13,8 @@ const e = d.events.find(x => x.id === id), place = d.places[e.place].name;
 const narration = `${e.title}. ${place.replace(/[()·]/g, ' ')}, ${e.when.replace(/·/g, ',')}. ${e.story[0]}`;
 const jesus = (e.words.find(w => w.who === '예수') || e.words[0]).text;
 
-// 띄어 읽기: 문장 끝·쉼표·연결어미(-자 -고 -서 -며 -면 -니 -는데 -지만) 뒤에 쉼을 넣는다.
-// Chirp 3 HD는 SSML 대신 markup의 [pause] 표시를 받는다. '에서·께서'는 조사라 빼고, '-고 있다' 같은 보조용언 앞은 붙여 읽는다
-const pauses = t => t
-  .replace(/([.?!])\s+/g, '$1 [pause] ')
-  .replace(/,\s*/g, ', [pause short] ')
-  .replace(/(\S+(?:자|고|서|며|면|니|는데|지만)(?<!에서|께서))\s(?!\[|있|싶|계|말았|나서)/g, '$1 [pause short] ');
+// 띄어 읽기 규칙은 tts-pauses.mjs
+
 
 // 해설은 차분한 목소리 위주로. 예수 말씀은 첫 시안이 가볍다 하여 남은 남성 목소리를 천천히,
 // 그리고 음높이를 낮출 수 있는 Neural2·Wavenet 남성 목소리도 함께 (Chirp 3 HD는 pitch를 받지 않는다)
