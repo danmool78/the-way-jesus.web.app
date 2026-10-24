@@ -387,6 +387,38 @@ function animateTo(target, ms) {
   anim = requestAnimationFrame(step);
 }
 
+// 2D 지도 끌기: 손가락·마우스로 끌어 둘러본다 (3D 모드에서는 terrain.js가 맡는다).
+// 6px 넘게 움직여야 끌기로 보고, 그때는 뒤따르는 클릭(핀 누르기)을 삼킨다. 가운데가 전체 경로 땅 밖으로 너무 멀리 나가지 않게 잡는다
+(() => {
+  let drag = null;
+  map.addEventListener('pointerdown', e => {
+    if (window.terrainOn || e.button > 0 || drag) return;
+    drag = { id: e.pointerId, x: e.clientX, y: e.clientY, v: { ...view }, moved: false };
+  });
+  map.addEventListener('pointermove', e => {
+    if (!drag || e.pointerId !== drag.id) return;
+    const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+    if (!drag.moved) {
+      if (Math.hypot(dx, dy) < 6) return;
+      drag.moved = true; cancelAnimationFrame(anim); map.setPointerCapture(e.pointerId); map.classList.add('dragging');
+    }
+    const u = map.viewBox.baseVal.width / map.getBoundingClientRect().width;
+    const { w, h } = drag.v, cx = Math.min(LAND.x + LAND.w * 1.25, Math.max(LAND.x - LAND.w * 0.25, drag.v.x + w / 2 - dx * u));
+    const cy = Math.min(LAND.y + LAND.h * 1.25, Math.max(LAND.y - LAND.h * 0.25, drag.v.y + h / 2 - dy * u));
+    view = { x: cx - w / 2, y: cy - h / 2, w, h };
+    applyView();
+  });
+  const end = e => {
+    if (!drag || e.pointerId !== drag.id) return;
+    if (drag.moved) { map.classList.remove('dragging'); quietUntil = performance.now() + 250; }
+    drag = null;
+  };
+  // 끌기를 끝낸 바로 뒤의 클릭만 막는다 (브라우저에 따라 끌기 뒤 클릭이 오지 않기도 해서 '한 번 삼키기'로는 다음 진짜 클릭을 먹었다)
+  let quietUntil = 0;
+  map.addEventListener('click', ev => { if (performance.now() < quietUntil) { ev.stopPropagation(); ev.preventDefault(); } }, { capture: true });
+  map.addEventListener('pointerup', end); map.addEventListener('pointercancel', end);
+})();
+
 // 위경도 → 화면(client) 좌표. 3D 무대(stage.js)가 물가·들판 같은 실제 지점에 소품을 세울 때 쓴다
 window.geoToClient = (lat, lng) => {
   const [x, y] = px([lat, lng]), pt = map.createSVGPoint();

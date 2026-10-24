@@ -42,7 +42,8 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 /* journey layout — 지도가 화면 전체, 장면은 지도 위 카드 */
 .journey{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto;height:calc(100dvh - 56px)}
 .mapwrap{position:relative;min-height:0;overflow:hidden;background:var(--land)}
-#map{width:100%;height:100%;display:block;touch-action:manipulation;transition:filter 1.6s}
+#map{width:100%;height:100%;display:block;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none;transition:filter 1.6s} /* 끌어서 둘러보기 — 브라우저가 화면을 밀지 않게 */
+#map.dragging{cursor:grabbing}
 .stage3d{position:absolute;left:0;top:0;pointer-events:none;opacity:0;transition:opacity .5s;will-change:transform}
 .stage-on .pin.now text{opacity:0}
 .dock{border-top:1px solid #2b241b;background:linear-gradient(#16120d,#100c09);padding:10px 20px calc(10px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:22px}
