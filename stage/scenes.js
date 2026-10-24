@@ -81,7 +81,6 @@ export const SCRIPTS = {
   e03: {
     wide: 1.3,
     props: {
-      temple: ['temple', 0, -1.05, { scale: 0.8 }],
       folk: ['crowd', 1.35, -0.15, { spots: [[0, 0], [0.22, 0.14], [-0.16, 0.2], [0.12, -0.2]], faceCenter: true, face: 0 }],
     },
     cast: {
@@ -226,7 +225,6 @@ export const SCRIPTS = {
   e07: {
     wide: 1.3,
     props: {
-      temple: ['temple', 0, -1.05, { scale: 0.8 }],
     },
     cast: {
       boy: ['boyJesus', 0, 0.05, 0],
@@ -402,7 +400,6 @@ export const SCRIPTS = {
   e12: {
     wide: 1.35,
     props: {
-      temple: ['temple', 0, -1.1, { scale: 0.8 }],
       table1: ['table', 0.25, 0.05],
       table2: ['table', 0.75, -0.2],
       cage: ['cage', 1.15, 0.3],
@@ -768,9 +765,10 @@ export const SCRIPTS = {
 
   /* 21. 베데스다 연못 — 회랑 아래 못가에 누운 병자들, 서른여덟 해 앓은 사람이 일어나 걷는다. 오른쪽에서 따지는 지도자들 */
   e21: {
-    wide: 1.4,
+    // 무대는 성전 북쪽 베데스다 못가(실제 위경도), 못 소품은 지도 3D 도성의 베데스다 못 자리에 고정 — 지도의 못과 겹쳐 맞는다
+    wide: 1.4, at: [31.7814, 35.2355],
     props: {
-      pool: ['pool', 0, -0.45, { w: 1.5, d: 0.4 }],
+      pool: ['pool', 0, -0.45, { w: 1.5, d: 0.4, geo: [31.7816, 35.2355] }],
       sick: ['crowd', 0, -0.05, { state: 'sit', spots: [[-1.0, -0.1], [-0.75, 0.05], [0.75, -0.05], [1.0, 0.08], [1.2, -0.18]], faceCenter: true }],
     },
     cast: {
@@ -1476,7 +1474,6 @@ export const SCRIPTS = {
   e39: {
     wide: 1.35,
     props: {
-      temple: ['temple', 0, -1.1, { scale: 0.8 }],
       booth1: ['sukkah', -1.35, -0.45], booth2: ['sukkah', 1.4, -0.5, { rot: 0.4 }],
       folk: ['crowd', 0, 0, { spots: [[-1.0, 0.25], [-1.2, 0.0], [1.05, 0.3], [1.25, 0.05], [-0.8, 0.48], [0.85, 0.5]], faceCenter: true }],
     },
@@ -1516,9 +1513,10 @@ export const SCRIPTS = {
   /* 40. 실로암에서 눈을 뜨다 — 예루살렘 거리와 오른쪽 실로암 못. 진흙을 바르는 대목은 손을 얹는 몸짓으로만.
      더듬어 못에 가서 씻고 돌아온다. 바리새인들의 심문, 두려워하는 부모, 마지막에 엎드려 믿는 사람 */
   e40: {
-    wide: 1.4,
+    // 무대 가운데는 아랫도시 거리, 오른쪽 못 소품은 지도 3D 도성의 실로암 못 자리에 고정
+    wide: 1.4, at: [31.7704, 35.2326],
     props: {
-      pool: ['pool', 1.25, -0.45, { w: 0.8, d: 0.32 }],
+      pool: ['pool', 1.25, -0.45, { w: 0.8, d: 0.32, geo: [31.7706, 35.2351] }],
     },
     cast: {
       jesus: ['jesus', -1.7, 0.1, 1.2],
@@ -1605,7 +1603,6 @@ export const SCRIPTS = {
   e42: {
     wide: 1.35,
     props: {
-      temple: ['temple', 0, -1.1, { scale: 0.8 }],
       sheep1: ['sheep', 1.2, 0.2, { speed: 0.35, rot: 2.6 }], sheep2: ['sheep', 1.45, 0.35, { speed: 0.35, rot: 2.8 }], sheep3: ['sheep', 1.35, 0.0, { speed: 0.35, rot: 2.9 }],
       folk: ['crowd', 0, 0, { spots: [[-1.1, 0.2], [-1.3, -0.05], [1.15, 0.35], [-0.9, 0.45]], faceCenter: true }],
     },
@@ -1848,39 +1845,39 @@ export const SCRIPTS = {
     },
   },
 
-  /* 48. 종려가지의 행렬 — 감람산 비탈. 나귀 새끼를 타신 예수, 길에 편 겉옷, 종려가지를 흔드는 사람들. 내리막에서 도성(성벽)이 보이자 우신다 */
+  /* 48. 종려가지의 행렬 — 감람산 비탈. 나귀 새끼를 타신 예수, 길에 편 겉옷, 종려가지를 흔드는 사람들. 내리막에서 도성이 보이자 우신다.
+     감람산은 도성의 동쪽이라 행렬은 화면 오른쪽(동)에서 왼쪽(서, 지도 위 3D 도성 쪽)으로 내려간다. 성벽은 지도의 도성이 대신한다 */
   e48: {
     wide: 1.5,
     props: {
-      walls: ['walls', 0.35, -1.05, { w: 2.4 }],
-      donkey: ['donkey', -1.7, 0.15, { speed: 0.28, scale: 0.85 }],
-      cloaks: ['cloaks', 0.1, 0.18, { n: 8 }],
-      crowd: ['crowd', 0, 0, { spots: [[-1.2, -0.3], [-0.75, -0.42], [0.75, -0.42], [1.2, -0.3], [-1.35, 0.4], [1.4, 0.4]], faceCenter: true }],
+      donkey: ['donkey', 1.7, 0.15, { speed: 0.28, scale: 0.85, rot: Math.PI }],
+      cloaks: ['cloaks', -0.1, 0.18, { n: 8 }],
+      crowd: ['crowd', 0, 0, { spots: [[1.2, -0.3], [0.75, -0.42], [-0.75, -0.42], [-1.2, -0.3], [1.35, 0.4], [-1.4, 0.4]], faceCenter: true }],
     },
     cast: {
-      jesus: ['jesus', -1.5, -0.1, 1.0],
-      d1: ['peter', -1.95, 0.35, 1.2], d2: ['john', -2.1, 0.1, 1.2],
-      p1: ['man', 0.95, 0.38, -1.0], p2: ['woman', -0.95, 0.4, 0.8], p3: ['child', 0.65, 0.5, -0.6],
-      phar: ['pharisee', 1.65, -0.05, -1.0],
+      jesus: ['jesus', 1.5, -0.1, -1.0],
+      d1: ['peter', 1.95, 0.35, -1.2], d2: ['john', 2.1, 0.1, -1.2],
+      p1: ['man', -0.95, 0.38, 1.0], p2: ['woman', 0.95, 0.4, -0.8], p3: ['child', -0.65, 0.5, 0.6],
+      phar: ['pharisee', -1.65, -0.05, 1.0],
     },
     beats: {
-      enter: [['cloaks', null, { show: 1 }], ['crowd', null, { show: 1 }], ['donkey', null, { x: 0.0, z: 0.15 }], ['jesus', 'ride', { board: 'donkey', x: 0, z: 0, look: 0.2 }],
-        ['d1', 'idle', { x: -0.55, z: -0.05, look: 1.0 }], ['d2', 'idle', { x: -0.75, z: 0.15, look: 1.0 }], ['p1', 'raise', { show: 1, item: 'palm' }], ['p2', 'raise', { show: 1, item: 'palm' }], ['p3', 'raise', { show: 1, item: 'palm' }], ['phar', 'idle', { show: 0 }]],
-      intro: [['cloaks', null, { show: 0 }], ['crowd', null, { show: 0 }], ['donkey', null, { show: 0, x: -1.7, z: 0.15 }], ['jesus', 'idle', { board: null, x: -1.5, z: -0.1, look: 1.0 }],
-        ['d1', 'idle', { x: -1.95, z: 0.35, look: 1.2 }], ['d2', 'idle', { x: -2.1, z: 0.1, look: 1.2 }], ['p1', 'idle', { show: 0, item: null }], ['p2', 'idle', { show: 0, item: null }], ['p3', 'idle', { show: 0, item: null }], ['phar', 'idle', { show: 0 }]],
-      'p0.1': [['jesus', 'speak', { look: 1.0 }], ['d1', 'idle', { x: -0.6, z: 0.3 }], ['d2', 'idle', { x: -0.8, z: 0.05 }], ['d1', 'idle', { x: -1.35, z: 0.35, delay: 5000 }], ['d2', 'idle', { x: -1.5, z: 0.32, delay: 5000 }], ['donkey', null, { show: 1, delay: 5500 }]],
-      'p0.2': [['jesus', 'ride', { board: 'donkey', x: 0, z: 0, look: 0.2, delay: 1500 }]],
-      'p1.0': [['donkey', null, { x: 0.0, z: 0.15 }], ['d1', 'idle', { x: -0.55, z: -0.05, look: 1.0 }], ['d2', 'idle', { x: -0.75, z: 0.15, look: 1.0 }], ['cloaks', null, { show: 1 }], ['crowd', null, { show: 1 }],
-        ['p1', 'raise', { show: 1, x: 0.95, z: 0.38, item: 'palm' }], ['p2', 'raise', { show: 1, x: -0.95, z: 0.4, item: 'palm' }], ['p3', 'raise', { show: 1, x: 0.65, z: 0.5, item: 'palm' }]],
-      'p1.4': [['phar', 'idle', { show: 1, x: 1.15, z: -0.05, look: -1.0 }], ['phar', 'speak', { delay: 2000 }]],
-      'p2.0': [['donkey', null, { x: 0.55, z: 0.05 }], ['phar', 'idle', { show: 0 }], ['p1', 'idle'], ['p2', 'idle'], ['p3', 'idle'], ['d1', 'pray', { look: 0.8 }]],
-      'p2.1': [['d2', 'idle', { look: 0.8 }]],
-      w0: [['donkey', null, { x: 0.55, z: 0.05 }], ['jesus', 'ride', { board: 'donkey', x: 0, z: 0, look: -0.3 }], ['phar', 'idle', { show: 0 }]],
-      w1: [['phar', 'listen', { show: 1, x: 1.15, z: -0.05, look: -1.0 }]],
+      enter: [['cloaks', null, { show: 1 }], ['crowd', null, { show: 1 }], ['donkey', null, { x: 0.0, z: 0.15 }], ['jesus', 'ride', { board: 'donkey', x: 0, z: 0, look: -3.34 }],
+        ['d1', 'idle', { x: 0.55, z: -0.05, look: -1.0 }], ['d2', 'idle', { x: 0.75, z: 0.15, look: -1.0 }], ['p1', 'raise', { show: 1, item: 'palm' }], ['p2', 'raise', { show: 1, item: 'palm' }], ['p3', 'raise', { show: 1, item: 'palm' }], ['phar', 'idle', { show: 0 }]],
+      intro: [['cloaks', null, { show: 0 }], ['crowd', null, { show: 0 }], ['donkey', null, { show: 0, x: 1.7, z: 0.15 }], ['jesus', 'idle', { board: null, x: 1.5, z: -0.1, look: -1.0 }],
+        ['d1', 'idle', { x: 1.95, z: 0.35, look: -1.2 }], ['d2', 'idle', { x: 2.1, z: 0.1, look: -1.2 }], ['p1', 'idle', { show: 0, item: null }], ['p2', 'idle', { show: 0, item: null }], ['p3', 'idle', { show: 0, item: null }], ['phar', 'idle', { show: 0 }]],
+      'p0.1': [['jesus', 'speak', { look: -1.0 }], ['d1', 'idle', { x: 0.6, z: 0.3 }], ['d2', 'idle', { x: 0.8, z: 0.05 }], ['d1', 'idle', { x: 1.35, z: 0.35, delay: 5000 }], ['d2', 'idle', { x: 1.5, z: 0.32, delay: 5000 }], ['donkey', null, { show: 1, delay: 5500 }]],
+      'p0.2': [['jesus', 'ride', { board: 'donkey', x: 0, z: 0, look: -3.34, delay: 1500 }]],
+      'p1.0': [['donkey', null, { x: 0.0, z: 0.15 }], ['d1', 'idle', { x: 0.55, z: -0.05, look: -1.0 }], ['d2', 'idle', { x: 0.75, z: 0.15, look: -1.0 }], ['cloaks', null, { show: 1 }], ['crowd', null, { show: 1 }],
+        ['p1', 'raise', { show: 1, x: -0.95, z: 0.38, item: 'palm' }], ['p2', 'raise', { show: 1, x: 0.95, z: 0.4, item: 'palm' }], ['p3', 'raise', { show: 1, x: -0.65, z: 0.5, item: 'palm' }]],
+      'p1.4': [['phar', 'idle', { show: 1, x: -1.15, z: -0.05, look: 1.0 }], ['phar', 'speak', { delay: 2000 }]],
+      'p2.0': [['donkey', null, { x: -0.55, z: 0.05 }], ['phar', 'idle', { show: 0 }], ['p1', 'idle'], ['p2', 'idle'], ['p3', 'idle'], ['d1', 'pray', { look: -0.8 }]],
+      'p2.1': [['d2', 'idle', { look: -0.8 }]],
+      w0: [['donkey', null, { x: -0.55, z: 0.05 }], ['jesus', 'ride', { board: 'donkey', x: 0, z: 0, look: -2.84 }], ['phar', 'idle', { show: 0 }]],
+      w1: [['phar', 'listen', { show: 1, x: -1.15, z: -0.05, look: 1.0 }]],
       w2: [['phar', 'idle', { show: 0 }]],
-      w3: [['donkey', null, { show: 0 }], ['jesus', 'speak', { board: null, x: -1.0, z: -0.1, look: 1.0 }], ['d1', 'listen', { x: -0.6, z: 0.3, look: -1.0 }], ['d2', 'listen', { x: -0.8, z: 0.05, look: -1.0 }]],
-      end: [['cloaks', null, { show: 1 }], ['crowd', null, { show: 1 }], ['donkey', null, { show: 1, x: 0.0, z: 0.15 }], ['jesus', 'ride', { board: 'donkey', x: 0, z: 0, look: 0.2 }],
-        ['d1', 'idle', { x: -0.55, z: -0.05, look: 1.0 }], ['d2', 'idle', { x: -0.75, z: 0.15, look: 1.0 }], ['p1', 'raise', { show: 1, x: 0.95, z: 0.38, item: 'palm' }], ['p2', 'raise', { show: 1, x: -0.95, z: 0.4, item: 'palm' }], ['p3', 'raise', { show: 1, x: 0.65, z: 0.5, item: 'palm' }], ['phar', 'idle', { show: 0 }]],
+      w3: [['donkey', null, { show: 0 }], ['jesus', 'speak', { board: null, x: 1.0, z: -0.1, look: -1.0 }], ['d1', 'listen', { x: 0.6, z: 0.3, look: 1.0 }], ['d2', 'listen', { x: 0.8, z: 0.05, look: 1.0 }]],
+      end: [['cloaks', null, { show: 1 }], ['crowd', null, { show: 1 }], ['donkey', null, { show: 1, x: 0.0, z: 0.15 }], ['jesus', 'ride', { board: 'donkey', x: 0, z: 0, look: -3.34 }],
+        ['d1', 'idle', { x: 0.55, z: -0.05, look: -1.0 }], ['d2', 'idle', { x: 0.75, z: 0.15, look: -1.0 }], ['p1', 'raise', { show: 1, x: -0.95, z: 0.38, item: 'palm' }], ['p2', 'raise', { show: 1, x: 0.95, z: 0.4, item: 'palm' }], ['p3', 'raise', { show: 1, x: -0.65, z: 0.5, item: 'palm' }], ['phar', 'idle', { show: 0 }]],
     },
   },
 
@@ -1890,7 +1887,6 @@ export const SCRIPTS = {
     wide: 1.5,
     props: {
       fig: ['figtree', -1.6, -0.35],
-      temple: ['temple', 0.6, -1.1, { scale: 0.8 }],
       table1: ['table', 0.6, 0.0], table2: ['table', 1.05, -0.25], cage: ['cage', 1.45, 0.25],
     },
     cast: {
@@ -1929,7 +1925,6 @@ export const SCRIPTS = {
   e50: {
     wide: 1.4,
     props: {
-      temple: ['temple', 0, -1.1, { scale: 0.8 }],
       box: ['treasury', 1.1, -0.35],
       folk: ['crowd', 0, 0, { spots: [[-1.25, 0.1], [-1.4, -0.15], [1.45, 0.35], [-1.1, 0.4]], faceCenter: true }],
     },
@@ -1966,11 +1961,11 @@ export const SCRIPTS = {
     },
   },
 
-  /* 51. 감람산에서 바라본 마지막 날 — 골짜기 건너 성전과 성벽을 바라보는 감람산 비탈. 해 질 녘 앉으신 예수와 네 제자 */
+  /* 51. 감람산에서 바라본 마지막 날 — 골짜기 건너 성전과 성벽을 바라보는 감람산 비탈. 해 질 녘 앉으신 예수와 네 제자.
+     성전과 성벽은 지도의 3D 도성(화면 왼쪽 = 서쪽)이 대신한다 */
   e51: {
     wide: 1.4,
     props: {
-      walls: ['walls', 0, -1.15, { w: 2.6 }],
       lamp: ['lamp', 0.55, 0.35],
     },
     cast: {
@@ -2081,7 +2076,7 @@ export const SCRIPTS = {
   e54: {
     env: 'night', wide: 1.5, solemn: true,
     props: {
-      hall: ['synagogue', 0.85, -0.5, { scale: 0.8 }],
+      // 관저 건물은 지도 3D 도성의 헤롯 궁전이 대신한다 (무대에 따로 세우면 어긋나 겹친다)
       seat: ['throne', 1.15, -0.25, { scale: 0.85 }],
       fire: ['fire', -1.2, 0.15],
       basin: ['basin', 0.75, 0.1],
