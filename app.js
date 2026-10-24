@@ -48,6 +48,7 @@ function applyStatic() {
     ['#resetProgress', 'resetProgress']
   ].forEach(([sel, k, attr]) => { const el = $(sel); if (!el) return; if (attr) el.setAttribute(attr, t(k)); else el.textContent = t(k); });
   $$('[data-i]').forEach(el => { el.textContent = t(el.dataset.i); }); // 글씨 키를 단 요소들
+  $$('.qna-link').forEach(a => { a.hidden = LANG !== 'ko'; }); // 묻고 답하기(qna.html)는 아직 한국어로만 있다
   document.body.style.setProperty('--walking', `'👣 ${t('walking')} · '`);
   // 언어 고르기
   const sel = $('#langPick');
