@@ -269,6 +269,10 @@ html:not(:lang(ko)):not(:lang(zh)):not(:lang(ja)) .river-lbl text{writing-mode:h
 .ibtn{width:36px;height:36px;border:0;background:none;color:var(--gold);padding:6px}
 .ibtn svg{width:100%;height:100%}
 .ibtn:disabled{opacity:.3}
+.ibtn.music{padding:8px}
+.ibtn.music[aria-pressed="true"] .slash{display:none}
+.ibtn.music[aria-pressed="false"]{opacity:.55}
+.ibtn[hidden]{display:none}
 .play{width:58px;height:58px;border-radius:50%;border:1.5px solid var(--gold);background:radial-gradient(circle at 40% 35%,#2c2318,#120e0a);color:var(--gold2);display:grid;place-items:center;padding:0;box-shadow:0 0 18px rgba(217,180,106,.18)}
 .play svg{width:24px;height:24px;grid-area:1/1}
 .play .i-pause,.play.on .i-play{display:none}

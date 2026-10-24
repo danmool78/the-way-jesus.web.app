@@ -1,0 +1,33 @@
+{
+  "_comment": "낭독 밑에 깔리는 배경음악. 곡(cue)마다 30초 반복 곡 하나 — assets/music/<곡>.mp3 (node _src/tools/music.mjs가 Lyria로 만든다). scenes는 장면마다 곡 하나. 곡 설명(sound)을 고치면 그 mp3를 지우고 다시 만든다",
+  "setting": "First-century Galilee and Judea, the Gospel story told on a map: an ancient Near-Eastern acoustic ensemble of oud, kinnor lyre, ney and shepherd's reed flute, soft frame drum and a low string drone, modal (Dorian, Phrygian, Aeolian), reverent and timeless; never cinematic-epic, never modern pop",
+  "cues": {
+    "wonder": { "sound": "Hushed wonder at a quiet visitation: a sustained warm drone, slow lyre arpeggios like light falling, a far ney phrase now and then; tender, luminous, expectant." },
+    "nativity": { "sound": "A starlit night lullaby in the fields: gentle plucked lyre in a slow rocking 6/8, a soft shepherd's flute melody, a hush of night air; peaceful, humble, glowing." },
+    "flight": { "sound": "A hurried flight by night: low pulsing frame drum like footsteps, a dark string drone, a few uneasy oud notes in Phrygian; restrained urgency and grief, never loud." },
+    "village": { "sound": "Ordinary days in a hill village and by the lake: unhurried oud melody over a light lyre, a soft hand drum heartbeat; warm, pastoral, content, sunlight on stone." },
+    "river": { "sound": "Heaven opening over a river: a broad shimmering drone, slow rising lyre figures, a long held ney note floating above; still, vast, holy." },
+    "wilderness": { "sound": "The bare desert under heat: a dry low drone, wind-like breathy ney, a single sparse oud note left to ring; austere, lonely, steadfast." },
+    "joy": { "sound": "A village celebration of gladness: lively but gentle oud and lyre dance in a light 6/8, clapping-soft frame drum, a bright flute; joyful and warm, kept light under a voice." },
+    "zeal": { "sound": "Rising conflict in the temple courts: a tense repeating low oud ostinato, firm frame drum, a darker string drone; resolute and charged, controlled, not aggressive." },
+    "night": { "sound": "A quiet conversation at night, a deep mystery: very sparse lyre notes over a soft low drone, a breath of wind, long silences between phrases; intimate, searching, still." },
+    "healing": { "sound": "Mercy and hope breaking in: a warm drone opening into a major-leaning modal lyre melody, a gentle ney answering; compassion and quiet release, tender and growing brighter." },
+    "storm": { "sound": "Wind and waves on the lake at night: a restless rolling frame drum, a swelling dark drone, hurried low oud figures; tense and stormy yet kept beneath a speaking voice." },
+    "teaching": { "sound": "Words spoken on a hillside to a listening crowd: a calm open drone, a simple lyre pattern, an occasional oud phrase; thoughtful, clear, gently uplifting, plenty of space." },
+    "tender": { "sound": "Love and forgiveness given to one person: a soft solo oud, slow and expressive, over a faint warm drone; intimate, aching, deeply kind." },
+    "passion": { "sound": "Sorrow and the suffering of the last night and the cross: a slow heavy drone, a grieving ney lament in Phrygian, a rare low drum stroke like a heartbeat; solemn, desolate, restrained." },
+    "dawn": { "sound": "Resurrection morning, first light at an empty tomb: a soft drone slowly brightening, lyre figures rising like sunrise, a hopeful ney melody; wonder turning to quiet joy." },
+    "glory": { "sound": "Glory and blessing on a mountain, rising into the clouds: a radiant layered drone, slow ascending lyre and flute lines, a gentle swell; majestic yet peaceful, full of promise." }
+  },
+  "scenes": {
+    "e01": "wonder", "e02": "nativity", "e03": "wonder", "e04": "nativity", "e05": "flight", "e06": "village", "e07": "village",
+    "e08": "river", "e09": "wilderness", "e10": "village", "e11": "joy",
+    "e12": "zeal", "e13": "night", "e14": "wilderness", "e15": "healing",
+    "e16": "zeal", "e17": "village", "e18": "healing", "e19": "healing", "e20": "village", "e21": "healing", "e22": "night",
+    "e23": "teaching", "e24": "healing", "e25": "healing", "e26": "tender", "e27": "teaching", "e28": "storm", "e29": "storm", "e30": "healing",
+    "e31": "joy", "e32": "storm", "e33": "teaching", "e34": "tender", "e35": "healing", "e36": "teaching", "e37": "glory", "e38": "teaching",
+    "e39": "tender", "e40": "healing", "e41": "teaching", "e42": "teaching", "e43": "joy", "e44": "tender", "e45": "teaching", "e46": "joy", "e47": "tender",
+    "e48": "joy", "e49": "zeal", "e50": "zeal", "e51": "night", "e52": "tender", "e53": "passion", "e54": "passion", "e55": "passion",
+    "e56": "dawn", "e57": "dawn", "e58": "dawn", "e59": "dawn", "e60": "glory", "e61": "glory"
+  }
+}
