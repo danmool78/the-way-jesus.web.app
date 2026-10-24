@@ -397,6 +397,7 @@ function animateTo(target, ms) {
   });
   map.addEventListener('pointermove', e => {
     if (!drag || e.pointerId !== drag.id) return;
+    if (e.pointerType === 'mouse' && !e.buttons) { drag = null; map.classList.remove('dragging'); return; } // 지도 밖에서 놓아 pointerup을 놓친 경우
     const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
     if (!drag.moved) {
       if (Math.hypot(dx, dy) < 6) return;
@@ -416,7 +417,7 @@ function animateTo(target, ms) {
   // 끌기를 끝낸 바로 뒤의 클릭만 막는다 (브라우저에 따라 끌기 뒤 클릭이 오지 않기도 해서 '한 번 삼키기'로는 다음 진짜 클릭을 먹었다)
   let quietUntil = 0;
   map.addEventListener('click', ev => { if (performance.now() < quietUntil) { ev.stopPropagation(); ev.preventDefault(); } }, { capture: true });
-  map.addEventListener('pointerup', end); map.addEventListener('pointercancel', end);
+  addEventListener('pointerup', end); addEventListener('pointercancel', end); // 지도 밖에서 놓아도 끝나게 (끌기 문턱을 넘기 전엔 포인터를 붙잡지 않았다)
 })();
 
 // 위경도 → 화면(client) 좌표. 3D 무대(stage.js)가 물가·들판 같은 실제 지점에 소품을 세울 때 쓴다
