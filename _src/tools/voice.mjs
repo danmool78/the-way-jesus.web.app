@@ -135,6 +135,7 @@ async function record(text, v) {
 
 await mkdir(OUT, { recursive: true }); await mkdir(TMP, { recursive: true });
 let made = 0;
+const fresh = new Set(); // 이번에 새로 만든 녹음 — 예전 목록의 길이를 쓰지 않고 다시 잰다
 for (const e of events) {
   for (const s of script(e)) {
     const v = voiceOf(s), key = keyOf(s), mp3 = `${OUT}/${key}.mp3`;
@@ -159,7 +160,7 @@ for (const e of events) {
     await writeFile(raw, Buffer.from(pcm.buffer, pcm.byteOffset, pcm.byteLength));
     execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-f', 's16le', '-ar', String(SR), '-ac', '1', '-i', raw, '-c:a', 'libmp3lame', '-b:a', '48k', mp3]);
     console.log(e.id, (s.gemini ? 'Gemini ' : '') + v.name, key, `${(pcm.length / SR).toFixed(1)}초`, b.cps ? `${b.cps.toFixed(1)}자/초 ×${b.rate.toFixed(2)}` : '', s.text.slice(0, 30));
-    made++;
+    made++; fresh.add(key);
   }
 }
 
@@ -169,7 +170,7 @@ const known = existsSync(`${OUT}/index.json`) ? JSON.parse(await readFile(`${OUT
 const index = {};
 for (const f of (await readdir(OUT)).filter(f => f.endsWith('.mp3')).sort()) {
   const k = f.slice(0, -4);
-  index[k] = known[k] ?? Math.round(1000 * +execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', `${OUT}/${f}`]).toString().trim());
+  index[k] = (!fresh.has(k) && known[k]) || Math.round(1000 * +execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', `${OUT}/${f}`]).toString().trim());
 }
 await writeFile(`${OUT}/index.json`, JSON.stringify(index) + '\n');
 console.log(`새로 ${made}개, 모두 ${Object.keys(index).length}개`);
