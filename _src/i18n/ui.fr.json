@@ -181,5 +181,20 @@
  "introF4": "Revenez sur les scènes que vous avez parcourues",
  "introStart": "Commencer le voyage",
  "introContinue": "Continuer · {n}. {title}",
- "introRestart": "Recommencer depuis le début"
+ "introRestart": "Recommencer depuis le début",
+ "landGuide": "Comment ça marche",
+ "landWhat": "Ce que vous découvrirez",
+ "landHowTo": "Comment suivre le chemin",
+ "statScenes": "scènes",
+ "statPlaces": "lieux",
+ "statGospels": "Évangiles",
+ "landStep1h": "Choisissez une scène",
+ "landStep1": "Choisissez une scène sur la frise en bas, ou suivez la route avec « {walk} »",
+ "landStep2h": "Lisez et écoutez",
+ "landStep2": "Lisez le récit, les textes et la comparaison des Évangiles sur la carte, puis appuyez sur ▶ pour l’écouter",
+ "landStep3h": "Explorez la carte",
+ "landStep3": "Faites glisser la carte pour regarder autour, et appuyez sur 3D pour voir le relief",
+ "landStep4h": "Ses paroles et les quiz",
+ "landStep4": "Rassemblez les paroles de Jésus dans l’onglet « {words} » et revisitez les scènes avec « {quiz} »",
+ "landEnd": "Prêt à partir ?"
 }
