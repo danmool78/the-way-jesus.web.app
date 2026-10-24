@@ -10,7 +10,7 @@
   "siloam":            {"name":"실로암 못",         "lat":31.7706,"lng":35.2353,"region":"예루살렘", "jlm":true},
   "praetorium":        {"name":"총독 관저",         "lat":31.7762,"lng":35.2282,"region":"예루살렘", "jlm":true},
   "bethany":           {"name":"베다니",            "lat":31.7712,"lng":35.2610,"region":"유대", "jlm":true},
-  "egypt":             {"name":"애굽 방면",         "lat":31.02,  "lng":34.32, "region":"애굽", "offmap":true},
+  "egypt":             {"name":"애굽 (나일 삼각주)", "lat":30.45,  "lng":31.45, "region":"애굽", "approx":true, "via":[[31.50,34.46],[31.13,33.80],[31.04,32.55]]},
   "bethany_jordan":    {"name":"요단 강 건너 베다니","lat":31.837, "lng":35.550,"region":"베레아"},
   "wilderness":        {"name":"유대 광야",         "lat":31.70,  "lng":35.39, "region":"유대"},
   "cana":              {"name":"가나",              "lat":32.747, "lng":35.339,"region":"갈릴리"},
