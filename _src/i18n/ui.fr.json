@@ -169,5 +169,18 @@
  "rotate": "Pivoter",
  "resetView": "Vue initiale",
  "only3dGalilee": "Pour l’instant, la version d’essai du relief 3D ne couvre que les environs de la Galilée.",
- "mtHermon": "Mont Hermon"
+ "mtHermon": "Mont Hermon",
+ "introTag": "Sur les pas de Jésus à travers les quatre Évangiles",
+ "introLead": "Les récits de Matthieu, Marc, Luc et Jean, tissés ensemble selon l’ordre des temps et des lieux. Parcourez la carte et découvrez la vie de Jésus en {n} scènes.",
+ "introF1h": "Un voyage sur la carte",
+ "introF1": "Suivez les lieux, de Bethléem à la Galilée jusqu’à Jérusalem",
+ "introF2h": "La scène du jour",
+ "introF2": "Voyez chaque moment à travers des tableaux et une scène en 3D",
+ "introF3h": "Écouter et comparer",
+ "introF3": "Écoutez le récit lu à voix haute et comparez côte à côte les quatre Évangiles",
+ "introF4h": "Des quiz pour se souvenir",
+ "introF4": "Revenez sur les scènes que vous avez parcourues",
+ "introStart": "Commencer le voyage",
+ "introContinue": "Continuer · {n}. {title}",
+ "introRestart": "Recommencer depuis le début"
 }

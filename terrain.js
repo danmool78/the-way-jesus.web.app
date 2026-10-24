@@ -410,8 +410,8 @@ function resize() {
 let last = performance.now(), nearT = 0;
 function loop(now) {
   requestAnimationFrame(loop);
-  window.terrainDrives = on && ready; // 무대(stage.js)는 이 루프 안에서 그린다
-  if (!on || !ready) return;
+  window.terrainDrives = on && ready && !!window.terrainOn; // 무대(stage.js)는 이 루프 안에서 그린다 (지형이 준비된 뒤부터)
+  if (!window.terrainDrives) return;
   const dt = Math.min(0.25, (now - last) / 1000); last = now; // 느린 기기에서도 카메라가 제때 닿게 넉넉히
   const walking = document.body.classList.contains('is-walking');
   // 걷는 동안은 카메라가 걷는 사람을 따라간다
@@ -482,32 +482,53 @@ function bindInput(c) {
 const orig = window.geoToClient;
 async function setOn(v) {
   on = v;
-  document.body.classList.toggle('terrain-on', on);
   $('#mode3d').classList.toggle('active', on); $('#mode3d').setAttribute('aria-pressed', on);
   if (on) {
+    // 지형을 다 불러올 때까지는 2D 지도를 두고 '준비 중'만 보인다 — 하늘색 위에 인물만 먼저 뜨지 않게
+    document.body.classList.add('terrain-loading');
     if (!loading) { loading = build().then(() => { bindInput(renderer.domElement); resize(); }); }
     await loading;
     const k = EVENTS[idx].place, p = PLACES[k], [x, z] = px([p.lat, p.lng]);
     await Promise.all(regions.filter(r => regionAt(x, z) === r).map(ensureRegion));
+    if (!on) return; // 불러오는 사이에 다시 눌러 껐다
     window.terrainOn = true;
     window.geoToClient = (lat, lng) => { const s = project(lat, lng); return { x: s.x, y: s.y }; };
     cam.tx = x; cam.tz = z; cam.dist = 420; flyToScene(EVENTS[idx]); // 높은 곳에서 내려앉듯
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))); // 첫 화면을 그린 다음에 보인다
+    if (!on) return;
+    document.body.classList.remove('terrain-loading'); document.body.classList.add('terrain-on');
   } else {
+    document.body.classList.remove('terrain-loading', 'terrain-on');
     window.terrainOn = false; window.geoToClient = orig; window.terrainView = null;
   }
   window.recenterStage?.();
 }
 function controls() {
   const box = document.createElement('div'); box.className = 'mapctl';
-  box.innerHTML = `<button id="mode3d" class="m3" aria-pressed="false">3D</button>
+  const spin = document.createElement('div'); spin.className = 'm3load'; spin.setAttribute('aria-hidden', 'true');
+  wrap.appendChild(spin);
+  // 아이콘은 모두 24칸 SVG 선 그림 — 글자 기호(⌃↺⌖)는 글꼴마다 크기·굵기가 달라 어설퍼 보였다
+  const I = d => `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
+  const ICON = {
+    m3: '<path d="M12 3 20 7.5v9L12 21l-8-4.5v-9Z"/><path d="M4 7.5 12 12l8-4.5M12 12v9"/>', // 입체 상자
+    tiltUp: '<path d="M3.5 19h17l-3.5-5h-10Z"/><path d="m8.5 9 3.5-3.5L15.5 9"/>', // 땅을 내려다보게
+    tiltDown: '<path d="M3.5 19h17l-3.5-5h-10Z"/><path d="m8.5 6 3.5 3.5L15.5 6"/>', // 지평선 쪽으로
+    left: '<path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3"/><path d="M4.5 4v4h4"/>',
+    right: '<path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.5 4v4h-4"/>',
+    in: '<path d="M12 5.5v13M5.5 12h13"/>',
+    out: '<path d="M5.5 12h13"/>',
+    reset: '<circle cx="12" cy="12" r="6.5"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3"/>',
+  };
+  const tool = (k, title) => `<button data-k="${k}" title="${title}" aria-label="${title}">${I(ICON[k])}</button>`;
+  box.innerHTML = `<button id="mode3d" class="m3" aria-pressed="false">${I(ICON.m3)}</button>
     <div class="m3tools">
-      <button data-k="tiltUp" title="${t('tiltUp')}">⌃</button><button data-k="tiltDown" title="${t('tiltDown')}">⌄</button>
-      <button data-k="left" title="${t('rotate')}">↺</button><button data-k="right" title="${t('rotate')}">↻</button>
-      <button data-k="in" title="+">+</button><button data-k="out" title="−">−</button>
-      <button data-k="reset" title="${t('resetView')}">⌖</button>
+      ${tool('tiltUp', t('tiltUp'))}${tool('tiltDown', t('tiltDown'))}
+      ${tool('left', t('rotate'))}${tool('right', t('rotate'))}
+      ${tool('in', '+')}${tool('out', '−')}
+      ${tool('reset', t('resetView'))}
     </div>`;
   wrap.appendChild(box);
-  $('#mode3d').title = t('map3d');
+  $('#mode3d').title = t('map3d'); $('#mode3d').setAttribute('aria-label', t('map3d'));
   $('#mode3d').onclick = () => setOn(!on);
   box.querySelectorAll('.m3tools button').forEach(b => b.onclick = () => {
     const k = b.dataset.k;

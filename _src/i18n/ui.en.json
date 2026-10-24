@@ -169,5 +169,18 @@
  "rotate": "Rotate",
  "resetView": "Reset view",
  "only3dGalilee": "The 3D terrain preview covers only the area around Galilee for now.",
- "mtHermon": "Mount Hermon"
+ "mtHermon": "Mount Hermon",
+ "introTag": "Footsteps of Jesus through the four Gospels",
+ "introLead": "The accounts of Matthew, Mark, Luke and John, woven together in the order of when and where things happened. Walk the map and meet the life of Jesus in {n} scenes.",
+ "introF1h": "A journey on the map",
+ "introF1": "Follow the places, from Bethlehem through Galilee to Jerusalem",
+ "introF2h": "The scene of the day",
+ "introF2": "See each moment through classic paintings and a 3D stage",
+ "introF3h": "Listen and compare",
+ "introF3": "Hear the story read aloud and set the four Gospel accounts side by side",
+ "introF4h": "Quizzes to remember",
+ "introF4": "Recall the scenes you have walked through",
+ "introStart": "Begin the journey",
+ "introContinue": "Continue · {n}. {title}",
+ "introRestart": "Start from the beginning"
 }

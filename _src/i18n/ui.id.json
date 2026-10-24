@@ -169,5 +169,18 @@
  "rotate": "Putar",
  "resetView": "Tampilan awal",
  "only3dGalilee": "Untuk sementara, uji coba medan 3D baru mencakup sekitar Galilea.",
- "mtHermon": "Gunung Hermon"
+ "mtHermon": "Gunung Hermon",
+ "introTag": "Jejak Yesus melalui keempat Injil",
+ "introLead": "Kisah Matius, Markus, Lukas, dan Yohanes dirangkai menurut urutan waktu dan tempat terjadinya. Jelajahi peta dan kenali kehidupan Yesus dalam {n} adegan.",
+ "introF1h": "Perjalanan di atas peta",
+ "introF1": "Ikuti tempat-tempatnya, dari Betlehem ke Galilea hingga Yerusalem",
+ "introF2h": "Panggung hari itu",
+ "introF2": "Lihat setiap momen lewat lukisan klasik dan panggung 3D",
+ "introF3h": "Dengar dan bandingkan",
+ "introF3": "Dengarkan kisahnya dibacakan dan sandingkan keempat Injil",
+ "introF4h": "Kuis untuk mengingat",
+ "introF4": "Ingat kembali adegan yang telah kamu lalui",
+ "introStart": "Mulai perjalanan",
+ "introContinue": "Lanjutkan · {n}. {title}",
+ "introRestart": "Mulai dari awal"
 }
