@@ -17,22 +17,28 @@ const CROWD = [...ring(1.2, 11, Math.PI + 0.3, Math.PI * 2 - 0.3, 0.62), ...ring
 export const SCRIPTS = {
   /* 1. 수태고지 */
   e01: {
+    props: {
+      house: ['house', 1.0, -1.13], // 나사렛의 작은 집
+      olive: ['olive', -1.5, -0.8],
+      pot: ['pot', 0.42, -0.42], // 물동이 — 평범한 하루
+      beam: ['beam', -0.75, -0.1, { r: 0.35 }], // 천사와 함께 선 빛
+    },
     cast: { mary: ['mary', 0.25, 0, -0.5], gabriel: ['angel', -0.75, -0.1, 0.9], joseph: ['joseph', 1.0, 0.05, -1] },
     beats: {
-      enter: [['gabriel', 'bless', { show: 1, y: 0 }], ['mary', 'kneel', { look: -1 }], ['joseph', 'idle', { show: 0 }]],
-      intro: [['gabriel', 'idle', { show: 0, y: 2.2 }], ['mary', 'idle', { look: 0.4 }], ['joseph', 'idle', { show: 0 }]],
+      enter: [['beam', null, { show: 1 }], ['gabriel', 'bless', { show: 1, y: 0 }], ['mary', 'kneel', { look: -1 }], ['joseph', 'idle', { show: 0 }]],
+      intro: [['@env', 'day'], ['beam', null, { show: 0 }], ['gabriel', 'idle', { show: 0, y: 2.2 }], ['mary', 'idle', { look: 0.4 }], ['joseph', 'idle', { show: 0 }]],
       'p0.1': [['mary', 'idle', { look: 0 }]],
-      'p0.2': [['gabriel', 'idle', { show: 1, y: 0 }], ['mary', 'look-up', { look: -1 }]],
+      'p0.2': [['beam', null, { show: 1 }], ['gabriel', 'idle', { show: 1, y: 0 }], ['mary', 'look-up', { look: -1 }]],
       'p1.0': [['gabriel', 'speak'], ['mary', 'afraid', { x: 0.45 }]],
       'p1.2': [['gabriel', 'bless']],
       'p1.3': [['mary', 'kneel']],
-      'p2.0': [['joseph', 'sleep', { show: 1, x: 1.05, z: -0.3 }], ['gabriel', 'idle', { x: 0.62, z: -0.7, look: 1.2 }], ['mary', 'pray', { x: -0.2, look: -0.3 }]],
+      'p2.0': [['@env', 'night'], ['beam', null, { show: 0 }], ['joseph', 'sleep', { show: 1, x: 1.05, z: -0.3 }], ['gabriel', 'idle', { x: 0.62, z: -0.7, look: 1.2 }], ['mary', 'pray', { x: -0.2, look: -0.3 }]],
       'p2.1': [['gabriel', 'speak']],
-      'p2.2': [['joseph', 'idle', { x: 0.75, z: 0.05, look: -1 }], ['gabriel', 'bless', { x: -0.7, z: -0.1, look: 0.9 }], ['mary', 'idle', { x: 0.25, look: -0.8 }]],
-      w0: [['gabriel', 'speak', { x: -0.6, look: 1 }], ['mary', 'listen', { look: -1 }], ['joseph', 'idle', { show: 0 }]],
+      'p2.2': [['@env', 'day'], ['joseph', 'idle', { x: 0.75, z: 0.05, look: -1 }], ['gabriel', 'bless', { x: -0.7, z: -0.1, look: 0.9 }], ['mary', 'idle', { x: 0.25, look: -0.8 }]],
+      w0: [['@env', 'day'], ['beam', null, { show: 1 }], ['gabriel', 'speak', { x: -0.6, look: 1 }], ['mary', 'listen', { look: -1 }], ['joseph', 'idle', { show: 0 }]],
       w1: [['mary', 'kneel'], ['gabriel', 'bless']],
-      w2: [['joseph', 'sleep', { show: 1, x: 1.05, z: -0.3 }], ['gabriel', 'speak', { x: 0.62, z: -0.7, look: 1.2 }], ['mary', 'pray', { x: -0.2, look: -0.3 }]],
-      end: [['joseph', 'idle', { x: 0.7, z: 0.05, look: -1 }], ['mary', 'idle', { x: 0.2, look: -0.8 }], ['gabriel', 'raise', { y: 0.3, x: -0.7, look: 0.8 }]],
+      w2: [['@env', 'night'], ['joseph', 'sleep', { show: 1, x: 1.05, z: -0.3 }], ['gabriel', 'speak', { x: 0.62, z: -0.7, look: 1.2 }], ['mary', 'pray', { x: -0.2, look: -0.3 }]],
+      end: [['@env', 'day'], ['joseph', 'idle', { x: 0.7, z: 0.05, look: -1 }], ['mary', 'idle', { x: 0.2, look: -0.8 }], ['gabriel', 'raise', { y: 0.3, x: -0.7, look: 0.8 }]],
     },
   },
 
@@ -41,6 +47,8 @@ export const SCRIPTS = {
     env: 'night', wide: 1.45,
     props: {
       manger: ['manger', 0.05, 0.08],
+      inn: ['house', -1.3, -1.32, { scale: 0.95 }], // 방이 없던 붐비는 여관
+      ox: ['ox', 0.55, -0.7, { rot: 2.5 }], donkey: ['donkey', -0.72, -0.62, { rot: 0.5 }], // 구유 곁의 짐승들
       star: ['star', 0.05, -0.3, { y: 1.6 }],
       beam: ['beam', 1.95, -0.45, { r: 0.6 }],
       host: ['host', 1.8, -0.95, { y: 1.3, n: 7, span: 1.7 }],
@@ -112,7 +120,7 @@ export const SCRIPTS = {
     wide: 1.5,
     props: {
       throne: ['throne', -1.35, -0.3],
-      house: ['house', 0.95, -0.4],
+      house: ['house', 1.0, -0.8],
       star: ['star', -0.95, -0.45, { y: 1.5, speed: 0.4 }],
       camel: ['camel', 2.4, 0.15, { speed: 0.42, rot: Math.PI }],
     },
@@ -191,7 +199,8 @@ export const SCRIPTS = {
   e06: {
     wide: 1.3,
     props: {
-      house: ['house', 0.75, -0.42],
+      house: ['house', 0.75, -0.75],
+      olive: ['olive', 1.75, -0.6, { scale: 0.9 }], // 나사렛 집 곁의 올리브나무
       donkey: ['donkey', -1.3, -0.1, { speed: 0.32 }],
     },
     cast: {
@@ -235,13 +244,13 @@ export const SCRIPTS = {
       joseph: ['joseph', -1.0, 0.2, 1.0],
     },
     beats: {
-      enter: [['boy', 'sit-ground', { show: 1, x: 0, z: 0.05, look: 0 }], ['t1', 'sit-ground', { show: 1, look: 0.9 }], ['t2', 'sit-ground', { show: 1, look: -0.9 }], ['t3', 'sit-ground', { show: 1, look: 0.1 }],
+      enter: [['boy', 'sit-ground', { show: 1, x: 0, z: 0.05, look: 0 }], ['t1', 'sit-ground', { show: 1, look: 0.9, item: 'scroll' }], ['t2', 'sit-ground', { show: 1, look: -0.9, item: 'scroll' }], ['t3', 'sit-ground', { show: 1, look: 0.1 }],
         ['mary', 'idle', { show: 1, x: -0.78, z: 0.38, look: 1.0 }], ['joseph', 'idle', { show: 1, x: -1.0, z: 0.2, look: 1.0 }]],
       intro: [['boy', 'idle', { show: 1, x: -0.6, z: 0.42, look: 0.3 }], ['t1', 'sit-ground', { show: 0 }], ['t2', 'sit-ground', { show: 0 }], ['t3', 'sit-ground', { show: 0 }],
         ['mary', 'idle', { show: 1, x: -0.9, z: 0.35, look: 0.6 }], ['joseph', 'idle', { show: 1, x: -1.12, z: 0.18, look: 0.6 }]],
       'p0.2': [['mary', 'idle', { x: -2.3, z: 0.4 }], ['joseph', 'idle', { x: -2.5, z: 0.25 }], ['mary', 'idle', { show: 0, delay: 3800 }], ['joseph', 'idle', { show: 0, delay: 3800 }],
         ['boy', 'idle', { x: 0, z: 0.05, look: 0, delay: 1200 }]],
-      'p1.0': [['t1', 'sit-ground', { show: 1 }], ['t2', 'sit-ground', { show: 1 }], ['t3', 'sit-ground', { show: 1 }], ['boy', 'sit-ground']],
+      'p1.0': [['t1', 'sit-ground', { show: 1, item: 'scroll' }], ['t2', 'sit-ground', { show: 1, item: 'scroll' }], ['t3', 'sit-ground', { show: 1 }], ['boy', 'sit-ground']],
       'p1.1': [['mary', 'idle', { show: 1, x: -2.0, z: 0.4 }], ['joseph', 'idle', { show: 1, x: -2.2, z: 0.25 }],
         ['mary', 'idle', { x: -0.78, z: 0.38, look: 1.0, delay: 400 }], ['joseph', 'idle', { x: -1.0, z: 0.2, look: 1.0, delay: 400 }]],
       'p1.2': [['boy', 'speak'], ['t1', 'listen'], ['t2', 'listen'], ['t3', 'listen'], ['t2', 'speak', { delay: 3500 }], ['boy', 'speak', { delay: 6000 }]],
@@ -337,7 +346,7 @@ export const SCRIPTS = {
     beats: {
       enter: [['baptist', 'idle', { show: 0 }], ['jesus', 'speak', { x: 1.6, z: 0.0, look: 1.0 }], ['nathanael', 'kneel', { show: 1, x: 2.15, z: 0.05, look: -1.1 }],
         ['andrew', 'listen', { x: 1.25, z: 0.25, look: 0.9 }], ['johnD', 'listen', { x: 1.05, z: 0.05, look: 0.9 }], ['simon', 'listen', { x: 1.35, z: -0.25, look: 0.8 }], ['philip', 'listen', { x: 1.9, z: 0.4, look: 0.5 }]],
-      intro: [['baptist', 'idle', { show: 1, x: 0.4, z: 0.05, look: 1.0 }], ['andrew', 'idle', { x: 0.6, z: 0.3, look: 1.0 }], ['johnD', 'idle', { x: 0.2, z: 0.3, look: 1.0 }],
+      intro: [['@env', 'day'], ['baptist', 'idle', { show: 1, x: 0.4, z: 0.05, look: 1.0 }], ['andrew', 'idle', { x: 0.6, z: 0.3, look: 1.0 }], ['johnD', 'idle', { x: 0.2, z: 0.3, look: 1.0 }],
         ['jesus', 'idle', { x: 2.55, z: -0.2, look: -1.2 }], ['simon', 'idle', { show: 0, x: -0.85, z: 0.2 }], ['philip', 'idle', { show: 0, x: 2.05, z: 0.45 }], ['nathanael', 'sit-ground', { show: 1, x: 2.9, z: 0.0, look: -0.8 }]],
       'p0.0': [['jesus', 'idle', { x: 1.45, z: -0.25 }], ['baptist', 'point', { look: 1.1 }]],
       'p0.1': [['baptist', 'speak']],
@@ -345,14 +354,15 @@ export const SCRIPTS = {
       'p0.3': [['jesus', 'speak', { look: -1.1 }]],
       'p1.0': [['jesus', 'idle', { x: 1.7, z: -0.2 }], ['andrew', 'idle', { x: 1.4, z: 0.05 }], ['johnD', 'idle', { x: 1.15, z: 0.15 }], ['baptist', 'idle', { show: 0, delay: 2000 }]],
       'p1.2': [['simon', 'idle', { show: 1 }], ['andrew', 'idle', { x: -0.15, z: 0.25 }], ['andrew', 'idle', { x: 1.25, z: 0.25, delay: 2800 }], ['simon', 'idle', { x: 1.4, z: -0.15, delay: 3000 }], ['jesus', 'speak', { delay: 5500 }]],
-      'p2.0': [['philip', 'idle', { show: 1 }], ['jesus', 'speak', { look: 1.0 }]],
+      'p1.1': [['@env', 'calm']], // 오후 네 시쯤
+      'p2.0': [['@env', 'day'], ['philip', 'idle', { show: 1 }], ['jesus', 'speak', { look: 1.0 }]],
       'p2.1': [['philip', 'idle', { x: 2.6, z: 0.25 }], ['nathanael', 'idle', { delay: 2600 }]],
       'p2.2': [['philip', 'idle', { x: 2.3, z: 0.4 }], ['nathanael', 'shrug', { x: 2.4, z: 0.05, look: -1.0 }], ['nathanael', 'idle', { x: 2.1, z: 0.05, delay: 2500 }], ['jesus', 'speak', { look: 1.1, delay: 3500 }], ['nathanael', 'kneel', { delay: 6000 }]],
       w0: [['jesus', 'speak', { look: -1.0 }]],
       w1: [['jesus', 'speak', { look: -0.6 }], ['simon', 'listen']],
       w2: [['jesus', 'speak', { look: 1.1 }]],
       w3: [['nathanael', 'speak', { look: -1.1 }]],
-      end: [['baptist', 'idle', { show: 0 }], ['jesus', 'speak', { show: 1, x: 1.6, z: 0.0, look: 1.0 }], ['nathanael', 'kneel', { show: 1, x: 2.15, z: 0.05, look: -1.1 }],
+      end: [['@env', 'day'], ['baptist', 'idle', { show: 0 }], ['jesus', 'speak', { show: 1, x: 1.6, z: 0.0, look: 1.0 }], ['nathanael', 'kneel', { show: 1, x: 2.15, z: 0.05, look: -1.1 }],
         ['andrew', 'listen', { x: 1.25, z: 0.25, look: 0.9 }], ['johnD', 'listen', { x: 1.05, z: 0.05, look: 0.9 }], ['simon', 'listen', { show: 1, x: 1.35, z: -0.25, look: 0.8 }], ['philip', 'listen', { show: 1, x: 1.9, z: 0.4, look: 0.5 }]],
     },
   },
@@ -447,7 +457,7 @@ export const SCRIPTS = {
   e13: {
     env: 'night', wide: 1.2,
     props: {
-      house: ['house', -0.75, -0.6, { scale: 0.9 }],
+      house: ['house', -0.75, -0.76, { scale: 0.9 }],
       lamp: ['lamp', 0, 0.12],
     },
     cast: {
@@ -476,7 +486,7 @@ export const SCRIPTS = {
     wide: 1.4,
     props: {
       well: ['well', 0, -0.05],
-      house: ['house', 1.65, -0.55, { scale: 0.8 }],
+      house: ['house', 1.65, -0.69, { scale: 0.8 }],
       pot: ['pot', 0.3, 0.2],
       folk: ['crowd', 1.0, 0.1, { spots: [[0, -0.15], [0.22, 0.02], [-0.05, 0.25], [0.3, 0.3]], faceCenter: true, face: 0 }],
     },
@@ -515,8 +525,9 @@ export const SCRIPTS = {
   e15: {
     wide: 1.5,
     props: {
-      house: ['house', -0.95, -0.5, { scale: 0.85 }],
+      house: ['house', -0.95, -0.65, { scale: 0.85 }],
       folk: ['crowd', -1.3, 0.3, { spots: [[0, 0], [0.22, -0.12], [-0.2, -0.15], [0.05, 0.22]], face: Math.PI / 2 }],
+      home: ['house', 3.15, -1.76, { scale: 0.6, wall: '#d9c9a8' }], // 가버나움의 신하 집 — 멀리 뒤쪽
     },
     cast: {
       jesus: ['jesus', -2.1, 0.2, 1.2],
@@ -524,28 +535,33 @@ export const SCRIPTS = {
       official: ['official', 2.4, 0.2, -1.2, { speed: 0.75 }],
       servant1: ['servant', 2.9, 0.1, -1.2],
       servant2: ['servant', 3.05, 0.32, -1.2],
+      son: ['child', 2.75, -1.25, -1.2, { gaze: false }], // 열병으로 누운 아들 — 예수께서 말씀하신 그 시각에 일어난다
+      mother: ['woman', 3.2, -1.15, -1.2, { gaze: false }],
     },
     beats: {
-      enter: [['folk', null, { show: 0 }], ['jesus', 'bless', { x: -0.55, z: 0.1, look: 1.0 }], ['johnD', 'idle', { x: -0.85, z: -0.08, look: 0.9 }],
-        ['official', 'kneel', { x: 0.0, z: 0.15, look: -1.0 }], ['servant1', 'idle', { show: 0 }], ['servant2', 'idle', { show: 0 }]],
+      enter: [['folk', null, { show: 0 }], ['jesus', 'bless', { x: -0.55, z: 0.1, look: 1.45 }], ['johnD', 'idle', { x: -0.85, z: -0.08, look: 0.9 }],
+        ['official', 'kneel', { x: 0.0, z: 0.15, look: -1.0 }], ['servant1', 'idle', { show: 0 }], ['servant2', 'idle', { show: 0 }],
+        ['son', 'sleep', { show: 1 }], ['mother', 'kneel', { show: 1, look: -1.4 }]],
       intro: [['folk', null, { show: 0 }], ['jesus', 'idle', { x: -2.1, z: 0.2, look: 1.2 }], ['johnD', 'idle', { x: -2.35, z: 0.0, look: 1.2 }],
-        ['official', 'idle', { show: 0, x: 2.4, z: 0.2 }], ['servant1', 'idle', { show: 0, x: 2.9, z: 0.1 }], ['servant2', 'idle', { show: 0, x: 3.05, z: 0.32 }]],
+        ['official', 'idle', { show: 0, x: 2.4, z: 0.2 }], ['servant1', 'idle', { show: 0, x: 2.9, z: 0.1 }], ['servant2', 'idle', { show: 0, x: 3.05, z: 0.32 }],
+        ['son', 'idle', { show: 0 }], ['mother', 'idle', { show: 0 }]],
       'p0.0': [['jesus', 'idle', { x: -0.55, z: 0.1, look: 0.5 }], ['johnD', 'idle', { x: -0.85, z: -0.08, look: 0.6 }]],
       'p0.1': [['folk', null, { show: 1 }]],
-      'p1.0': [['official', 'idle', { show: 1, x: 0.05, z: 0.15, look: -1.0 }], ['jesus', 'idle', { look: 1.0 }]],
-      'p1.1': [['official', 'shrug']],
-      'p1.2': [['jesus', 'speak', { look: 1.0 }], ['official', 'kneel', { delay: 3500 }], ['official', 'speak', { delay: 6500 }]],
-      'p1.3': [['jesus', 'bless'], ['official', 'kneel']],
+      'p1.0': [['official', 'idle', { show: 1, x: 0.05, z: 0.15, look: -1.0 }], ['jesus', 'idle', { look: 1.45 }], ['johnD', 'idle', { look: 1.2 }]],
+      'p1.1': [['official', 'shrug'], ['son', 'sleep', { show: 1 }], ['mother', 'kneel', { show: 1, look: -1.4, delay: 600 }]],
+      'p1.2': [['jesus', 'speak', { look: 1.45, to: 'official' }], ['official', 'kneel', { delay: 2500 }]], // 늦게 거는 명령은 다음 문장(가거라)까지 새어 들어가 신하를 일으켜 세웠다
+      'p1.3': [['jesus', 'bless', { look: 1.45 }], ['official', 'kneel'], ['son', 'sit-ground', { delay: 4000 }], ['mother', 'look-up', { delay: 4600 }]],
       'p2.0': [['official', 'idle', { x: 1.25, z: 0.25, look: 1.0 }], ['folk', null, { show: 0, delay: 1500 }]],
-      'p2.1': [['servant1', 'idle', { show: 1, x: 1.75, z: 0.12, look: -1.0 }], ['servant2', 'idle', { show: 1, x: 1.9, z: 0.34, look: -1.0 }], ['servant1', 'speak', { delay: 3500 }]],
+      'p2.1': [['son', 'idle', { look: -1.0 }], ['mother', 'raise', { look: -1.0 }], ['servant1', 'idle', { show: 1, x: 1.75, z: 0.12, look: -1.0 }], ['servant2', 'idle', { show: 1, x: 1.9, z: 0.34, look: -1.0 }], ['servant1', 'speak', { delay: 3500 }]],
       'p2.2': [['official', 'speak', { look: 1.0 }], ['servant2', 'speak', { delay: 3000 }]],
       'p2.3': [['official', 'look-up'], ['servant1', 'listen'], ['servant2', 'listen']],
-      'p2.4': [['official', 'pray'], ['servant1', 'pray', { delay: 500 }], ['servant2', 'pray', { delay: 900 }]],
-      w0: [['official', 'kneel', { show: 1, x: 0.05, z: 0.15, look: -1.0 }], ['servant1', 'idle', { show: 0 }], ['servant2', 'idle', { show: 0 }], ['jesus', 'speak', { look: 1.0 }]],
+      'p2.4': [['son', 'pray'], ['mother', 'pray'], ['official', 'pray'], ['servant1', 'pray', { delay: 500 }], ['servant2', 'pray', { delay: 900 }]],
+      w0: [['official', 'kneel', { show: 1, x: 0.05, z: 0.15, look: -1.0 }], ['servant1', 'idle', { show: 0 }], ['servant2', 'idle', { show: 0 }], ['jesus', 'speak', { look: 1.45, to: 'official' }], ['son', 'sleep', { show: 1 }], ['mother', 'kneel', { show: 1, look: -1.4 }]],
       w1: [['jesus', 'speak']],
       w2: [['official', 'speak']],
-      end: [['folk', null, { show: 0 }], ['jesus', 'bless', { x: -0.55, z: 0.1, look: 1.0 }], ['johnD', 'idle', { x: -0.85, z: -0.08, look: 0.9 }],
-        ['official', 'kneel', { show: 1, x: 0.0, z: 0.15, look: -1.0 }], ['servant1', 'idle', { show: 0 }], ['servant2', 'idle', { show: 0 }]],
+      end: [['folk', null, { show: 0 }], ['jesus', 'bless', { x: -0.55, z: 0.1, look: 1.45 }], ['johnD', 'idle', { x: -0.85, z: -0.08, look: 0.9 }],
+        ['official', 'kneel', { show: 1, x: 0.0, z: 0.15, look: -1.0 }], ['servant1', 'idle', { show: 0 }], ['servant2', 'idle', { show: 0 }],
+        ['son', 'idle', { show: 1, look: -1.0 }], ['mother', 'idle', { show: 1, look: -1.0 }]],
     },
   },
 
@@ -645,7 +661,7 @@ export const SCRIPTS = {
     props: {
       syn: ['synagogue', -0.95, -0.4, { scale: 0.75 }],
       synFolk: ['crowd', -0.95, -0.4, { y: 0.08, state: 'sit', spots: [[-0.66, -0.15], [-0.66, 0.12], [0.66, -0.15], [0.66, 0.12]] }],
-      house: ['house', 1.15, -0.6],
+      house: ['house', 1.15, -0.78],
       folk: ['crowd', 1.75, 0.15, { spots: [[0, 0], [0.22, -0.15], [-0.05, 0.25], [0.25, 0.22], [0.45, 0.02]], face: -Math.PI / 2 }],
     },
     cast: {
@@ -683,8 +699,8 @@ export const SCRIPTS = {
   e19: {
     wide: 1.4, at: [32.894, 35.573],
     props: {
-      house: ['house', 0, -0.48, { scale: 1.15 }],
-      beam: ['beam', 0, -0.12, { r: 0.4, h: 2.6 }],
+      house: ['house', 0, -0.98, { stair: false }], // 지붕(높이 1.03) 앞 끝에서 친구들이 병자를 앞벽을 따라 내린다
+      beam: ['beam', 0.05, -0.42, { r: 0.4, h: 2.6 }],
       folk: ['crowd', 0, 0, { spots: [[-0.95, 0.15], [-1.15, 0.38], [-0.75, 0.42], [0.95, 0.2], [1.2, 0.4], [0.7, 0.45], [-1.35, 0.1], [1.4, 0.12]], faceCenter: true }],
     },
     cast: {
@@ -697,7 +713,7 @@ export const SCRIPTS = {
     beats: {
       enter: [['beam', null, { show: 1 }], ['folk', null, { show: 1 }], ['jesus', 'bless', { x: 0.55, z: -0.05, look: -1.0 }], ['para', 'idle', { show: 1, x: 0.05, z: -0.05, y: 0, look: 1.0 }],
         ['phar', 'shrug', { x: -0.55, z: 0.0, look: 0.9 }], ['scribe', 'listen', { x: -0.75, z: -0.22, look: 0.9 }],
-        ['f1', 'pray', { show: 1, x: -0.2, z: -0.4, y: 0.57, look: 0.3 }], ['f2', 'pray', { show: 1, x: 0.25, z: -0.42, y: 0.57, look: -0.3 }], ['f3', 'idle', { show: 0 }], ['f4', 'idle', { show: 0 }]],
+        ['f1', 'pray', { show: 1, x: -0.2, z: -0.66, y: 1.03, look: 0.3 }], ['f2', 'pray', { show: 1, x: 0.25, z: -0.66, y: 1.03, look: -0.3 }], ['f3', 'idle', { show: 0 }], ['f4', 'idle', { show: 0 }]],
       intro: [['beam', null, { show: 0 }], ['folk', null, { show: 0 }], ['jesus', 'speak', { x: 0.55, z: -0.05, look: -0.6 }], ['para', 'sleep', { show: 0, x: 1.6, z: 0.35, y: 0, look: 1.0 }],
         ['phar', 'sit-ground', { x: -0.55, z: 0.0, look: 0.9 }], ['scribe', 'sit-ground', { x: -0.75, z: -0.22, look: 0.9 }],
         ['f1', 'idle', { show: 0, x: 1.7, z: 0.2, y: 0 }], ['f2', 'idle', { show: 0, x: 1.95, z: 0.15, y: 0 }], ['f3', 'idle', { show: 0, x: 2.15, z: 0.45, y: 0 }], ['f4', 'idle', { show: 0, x: 2.35, z: 0.3, y: 0 }]],
@@ -705,19 +721,19 @@ export const SCRIPTS = {
       'p0.2': [['phar', 'listen'], ['scribe', 'listen']],
       'p1.0': [['para', 'sleep', { show: 1 }], ['f1', 'idle', { show: 1, x: 1.4, z: 0.15, look: -1.0 }], ['f2', 'idle', { show: 1, x: 1.55, z: 0.5, look: -1.0 }], ['f3', 'idle', { show: 1, x: 2.05, z: 0.15 }], ['f4', 'idle', { show: 1, x: 2.15, z: 0.55 }]],
       'p1.1': [['f1', 'shrug'], ['para', 'sleep', { show: 0, delay: 2000 }], ['f1', 'idle', { show: 0, delay: 2000 }], ['f2', 'idle', { show: 0, delay: 2000 }], ['f3', 'idle', { show: 0, delay: 2000 }], ['f4', 'idle', { show: 0, delay: 2000 }],
-        ['f1', 'bow', { show: 1, x: -0.25, z: -0.42, y: 0.57, look: 0.3, delay: 3500 }], ['f2', 'bow', { show: 1, x: 0.25, z: -0.42, y: 0.57, look: -0.3, delay: 3700 }],
-        ['para', 'sleep', { show: 1, x: 0.05, z: -0.12, y: 0.57, delay: 4200 }]],
+        ['f1', 'bow', { show: 1, x: -0.25, z: -0.66, y: 1.03, look: 0.3, delay: 3500 }], ['f2', 'bow', { show: 1, x: 0.25, z: -0.66, y: 1.03, look: -0.3, delay: 3700 }],
+        ['para', 'sleep', { show: 1, x: 0.05, z: -0.5, y: 1.03, delay: 4200 }]],
       'p1.2': [['beam', null, { show: 1 }], ['para', 'sleep', { y: 0 }], ['jesus', 'idle', { look: -1.0 }]],
       'p2.0': [['jesus', 'bless', { look: -1.0 }]],
       'p2.1': [['phar', 'speak', { look: -0.6 }], ['scribe', 'shrug']],
       'p2.2': [['jesus', 'speak', { look: -1.0 }], ['para', 'idle', { look: 1.0, delay: 2500 }], ['para', 'look-up', { delay: 4000 }], ['para', 'idle', { x: 1.5, z: 0.25, delay: 6000 }], ['para', 'idle', { show: 0, delay: 9500 }]],
       'p2.3': [['f1', 'raise'], ['f2', 'raise'], ['phar', 'look-up'], ['scribe', 'look-up']],
-      w0: [['beam', null, { show: 1 }], ['para', 'sleep', { show: 1, x: 0.05, z: -0.12, y: 0 }], ['jesus', 'bless', { look: -1.0 }], ['f1', 'pray', { show: 1, x: -0.25, z: -0.42, y: 0.57 }], ['f2', 'pray', { show: 1, x: 0.25, z: -0.42, y: 0.57 }]],
+      w0: [['beam', null, { show: 1 }], ['para', 'sleep', { show: 1, x: 0.05, z: -0.5, y: 0 }], ['jesus', 'bless', { look: -1.0 }], ['f1', 'pray', { show: 1, x: -0.25, z: -0.66, y: 1.03 }], ['f2', 'pray', { show: 1, x: 0.25, z: -0.66, y: 1.03 }]],
       w1: [['jesus', 'speak', { look: -1.0 }], ['para', 'idle', { delay: 3500 }]],
       w2: [['jesus', 'speak', { look: -0.9 }], ['phar', 'listen'], ['scribe', 'listen']],
       end: [['beam', null, { show: 1 }], ['folk', null, { show: 1 }], ['jesus', 'bless', { x: 0.55, z: -0.05, look: -1.0 }], ['para', 'idle', { show: 1, x: 0.05, z: -0.05, y: 0, look: 1.0 }],
         ['phar', 'shrug', { x: -0.55, z: 0.0, look: 0.9 }], ['scribe', 'listen', { x: -0.75, z: -0.22, look: 0.9 }],
-        ['f1', 'pray', { show: 1, x: -0.2, z: -0.4, y: 0.57, look: 0.3 }], ['f2', 'pray', { show: 1, x: 0.25, z: -0.42, y: 0.57, look: -0.3 }], ['f3', 'idle', { show: 0 }], ['f4', 'idle', { show: 0 }]],
+        ['f1', 'pray', { show: 1, x: -0.2, z: -0.66, y: 1.03, look: 0.3 }], ['f2', 'pray', { show: 1, x: 0.25, z: -0.66, y: 1.03, look: -0.3 }], ['f3', 'idle', { show: 0 }], ['f4', 'idle', { show: 0 }]],
     },
   },
 
@@ -777,20 +793,20 @@ export const SCRIPTS = {
       lead1: ['pharisee', 2.0, 0.3, -1.2], lead2: ['elder', 2.2, 0.08, -1.2],
     },
     beats: {
-      enter: [['sick', 'sit', { show: 1 }], ['jesus', 'bless', { x: -0.45, z: 0.15, look: 1.0 }], ['man', 'look-up', { x: 0.15, z: 0.15, look: -1.0 }], ['lead1', 'idle', { show: 0 }], ['lead2', 'idle', { show: 0 }]],
-      intro: [['sick', 'sit', { show: 1 }], ['jesus', 'idle', { x: -1.9, z: 0.3, look: 1.2 }], ['man', 'sleep', { x: 0.0, z: 0.12, look: 1 }], ['lead1', 'idle', { show: 0, x: 2.0, z: 0.3 }], ['lead2', 'idle', { show: 0, x: 2.2, z: 0.08 }]],
+      enter: [['sick', 'sit', { show: 1 }], ['jesus', 'bless', { x: -0.45, z: 0.15, look: 1.0 }], ['man', 'look-up', { x: 0.15, z: 0.15, look: -1.0, item: 'mat' }], ['lead1', 'idle', { show: 0 }], ['lead2', 'idle', { show: 0 }]],
+      intro: [['sick', 'sit', { show: 1 }], ['jesus', 'idle', { x: -1.9, z: 0.3, look: 1.2 }], ['man', 'sleep', { x: 0.0, z: 0.12, look: 1, item: null }], ['lead1', 'idle', { show: 0, x: 2.0, z: 0.3 }], ['lead2', 'idle', { show: 0, x: 2.2, z: 0.08 }]],
       'p1.0': [['jesus', 'idle', { x: -0.75, z: 0.2, look: 1.0 }]],
       'p1.1': [['jesus', 'speak', { look: 1.0 }]],
       'p1.2': [['man', 'sit-ground', { x: 0.15, z: 0.15, look: -1.0 }]],
       'p1.3': [['man', 'shrug']],
-      'p1.4': [['jesus', 'bless'], ['man', 'idle', { delay: 2000 }], ['man', 'look-up', { delay: 3500 }]],
+      'p1.4': [['jesus', 'bless'], ['man', 'idle', { delay: 2000 }], ['man', 'look-up', { delay: 3500 }], ['man', 'idle', { item: 'mat', delay: 5000 }]], // 자리를 들고
       'p2.1': [['man', 'idle', { x: 0.85, z: 0.3, look: 1.0 }], ['lead1', 'idle', { show: 1, x: 1.45, z: 0.3, look: -1.0 }], ['lead2', 'idle', { show: 1, x: 1.7, z: 0.1, look: -1.0 }], ['lead1', 'speak', { delay: 3000 }]],
       'p2.2': [['jesus', 'idle', { x: 0.3, z: 0.15, look: 1.0 }], ['man', 'idle', { x: 0.75, z: 0.45, look: -0.6 }], ['jesus', 'speak', { delay: 3000 }], ['lead1', 'point', { delay: 7000 }], ['lead2', 'rebuke', { delay: 7400 }]],
-      w0: [['lead1', 'idle', { show: 0 }], ['lead2', 'idle', { show: 0 }], ['jesus', 'speak', { x: -0.75, z: 0.2, look: 1.0 }], ['man', 'sit-ground', { x: 0.15, z: 0.15, look: -1.0 }]],
-      w1: [['jesus', 'bless'], ['man', 'idle', { delay: 1500 }]],
+      w0: [['lead1', 'idle', { show: 0 }], ['lead2', 'idle', { show: 0 }], ['jesus', 'speak', { x: -0.75, z: 0.2, look: 1.0 }], ['man', 'sit-ground', { x: 0.15, z: 0.15, look: -1.0, item: null }]],
+      w1: [['jesus', 'bless'], ['man', 'idle', { item: 'mat', delay: 1500 }]],
       w2: [['jesus', 'speak', { x: 0.3, z: 0.15, look: 1.0 }], ['man', 'idle', { x: 0.75, z: 0.45, look: -0.6 }], ['lead1', 'listen', { show: 1, x: 1.45, z: 0.3, look: -1.0 }], ['lead2', 'listen', { show: 1, x: 1.7, z: 0.1, look: -1.0 }]],
       w3: [['jesus', 'speak'], ['lead1', 'shrug']],
-      end: [['sick', 'sit', { show: 1 }], ['lead1', 'idle', { show: 0 }], ['lead2', 'idle', { show: 0 }], ['jesus', 'bless', { x: -0.45, z: 0.15, look: 1.0 }], ['man', 'look-up', { x: 0.15, z: 0.15, look: -1.0 }]],
+      end: [['sick', 'sit', { show: 1 }], ['lead1', 'idle', { show: 0 }], ['lead2', 'idle', { show: 0 }], ['jesus', 'bless', { x: -0.45, z: 0.15, look: 1.0 }], ['man', 'look-up', { x: 0.15, z: 0.15, look: -1.0, item: 'mat' }]],
     },
   },
 
@@ -834,7 +850,7 @@ export const SCRIPTS = {
       flowers: ['flowers', -0.9, 0.35, { r: 0.45 }],
       crowd: ['crowd', 0, 0.05, { state: 'sit', spots: [[-1.3, -0.1], [-1.5, 0.15], [-1.15, 0.35], [-0.85, 0.5], [-0.5, 0.58], [0.5, 0.58], [0.85, 0.5], [1.15, 0.35], [1.5, 0.15], [1.3, -0.1], [-1.7, -0.3], [1.7, -0.3]], faceCenter: true }],
       dove1: ['dove', -0.5, -0.2, { y: 1.2 }], dove2: ['dove', 0.6, -0.4, { y: 1.35 }],
-      rockhouse: ['house', 1.75, -0.65, { scale: 0.6 }],
+      rockhouse: ['house', 1.75, -0.76, { scale: 0.6 }],
       rocks: ['rocks', 0, 0, { spots: [[1.6, -0.5, 0.09], [1.95, -0.52, 0.08], [1.75, -0.45, 0.07]] }],
       rain: ['rain', 1.0, -0.4],
     },
@@ -874,7 +890,7 @@ export const SCRIPTS = {
   e24: {
     wide: 1.5, at: [32.9, 35.574],
     props: {
-      house: ['house', 1.45, -0.5],
+      house: ['house', 1.45, -0.68],
       folk: ['crowd', -1.4, 0.05, { spots: [[0, 0], [-0.22, 0.18], [-0.3, -0.12], [0.05, 0.32], [-0.45, 0.1]], face: Math.PI / 2 }],
     },
     cast: {
@@ -1118,7 +1134,7 @@ export const SCRIPTS = {
   e30: {
     wide: 1.5, at: [32.898, 35.574],
     props: {
-      house: ['house', 1.45, -0.55],
+      house: ['house', 1.45, -0.73],
       press: ['crowd', -0.2, 0.05, { spots: [[-0.55, -0.3], [-0.3, -0.38], [0.15, -0.36], [0.4, -0.25], [0.55, 0.1], [-0.65, 0.05], [0.35, 0.38], [-0.15, 0.48]], faceCenter: true }],
       mourners: ['crowd', 1.75, 0.1, { spots: [[0, 0], [0.2, 0.18], [0.22, -0.15]], face: -Math.PI / 2 }],
     },
@@ -1283,8 +1299,8 @@ export const SCRIPTS = {
   e34: {
     wide: 1.5, at: [33.268, 35.33],
     props: {
-      house: ['house', -0.95, -0.5],
-      home: ['house', 1.5, -0.55, { scale: 0.85, wall: '#d9c9a8' }],
+      house: ['house', -0.95, -0.68],
+      home: ['house', 1.5, -0.7, { scale: 0.85, wall: '#d9c9a8' }],
       table: ['table', 0.55, -0.35],
       dog1: ['dog', 0.5, -0.2, { rot: 0.6 }], dog2: ['dog', 0.72, -0.25, { rot: 2.5 }],
     },
@@ -1433,7 +1449,7 @@ export const SCRIPTS = {
   e38: {
     wide: 1.45, at: [32.898, 35.574],
     props: {
-      house: ['house', -0.6, -0.6],
+      house: ['house', -0.6, -0.78],
       sheep: ['sheep', 1.4, -0.35, { rot: 2.4 }],
     },
     cast: {
@@ -1558,7 +1574,7 @@ export const SCRIPTS = {
   e41: {
     wide: 1.5,
     props: {
-      house: ['house', -0.7, -0.55],
+      house: ['house', -0.7, -0.73],
       donkey: ['donkey', 1.75, 0.2, { speed: 0.3, rot: Math.PI }],
       rocks: ['rocks', 0, 0, { spots: [[0.7, -0.35, 0.08], [1.4, -0.45, 0.1], [1.7, -0.3, 0.07]] }],
     },
@@ -1648,7 +1664,7 @@ export const SCRIPTS = {
       sinners: ['crowd', -0.75, 0.15, { state: 'sit', spots: [[0, 0], [-0.25, 0.15], [-0.3, -0.15], [0.05, 0.3], [-0.5, 0.05]], face: Math.PI / 2 * 0.7 }],
       sheep: ['sheep', 1.65, -0.2, { rot: 2.4 }],
       lamp: ['lamp', 1.0, -0.35],
-      house: ['house', 1.55, -0.6, { scale: 0.75 }],
+      house: ['house', 1.55, -0.73, { scale: 0.75 }],
     },
     cast: {
       jesus: ['jesus', -0.2, -0.05, 0.4],
@@ -1688,6 +1704,7 @@ export const SCRIPTS = {
   e44: {
     wide: 1.45,
     props: {
+      olive: ['olive', -0.55, -0.85], olive2: ['olive', 2.0, -0.75, { scale: 0.8 }], // 베다니의 올리브 동산
       tomb: ['tomb', 1.15, -0.5, { scale: 0.9, rot: -0.35 }],
       mourners: ['crowd', 0, 0, { spots: [[-0.2, 0.45], [0.1, 0.5], [0.4, 0.45], [1.75, 0.15], [1.9, -0.1]], faceCenter: true }],
     },
@@ -1771,6 +1788,7 @@ export const SCRIPTS = {
   e46: {
     wide: 1.5,
     props: {
+      cloak: ['cloaks', -0.22, 0.34, { n: 1 }], // 바디매오가 벗어 던진 겉옷
       palm1: ['palm', -1.5, -0.55], palm2: ['palm', -1.15, -0.7, { h: 1.1 }], palm3: ['palm', 1.85, -0.6, { h: 0.8 }],
       sycamore: ['figtree', 1.25, -0.35, { scale: 1.25 }],
       crowd: ['crowd', 0, 0, { spots: [[-0.25, -0.35], [0.05, -0.42], [0.35, -0.35], [-0.5, -0.15], [0.6, -0.12]], face: 0 }],
@@ -1782,14 +1800,14 @@ export const SCRIPTS = {
       zac: ['zacchaeus', 1.7, 0.25, -1.0],
     },
     beats: {
-      enter: [['crowd', null, { show: 1 }], ['jesus', 'speak', { x: 0.95, z: 0.05, look: 0.6 }], ['peter', 'idle', { x: 0.55, z: -0.05, look: 1.0 }], ['bart', 'idle', { x: 0.25, z: 0.3, look: 1.0 }],
+      enter: [['cloak', null, { show: 0 }], ['crowd', null, { show: 1 }], ['jesus', 'speak', { x: 0.95, z: 0.05, look: 0.6 }], ['peter', 'idle', { x: 0.55, z: -0.05, look: 1.0 }], ['bart', 'idle', { x: 0.25, z: 0.3, look: 1.0 }],
         ['zac', 'sit', { x: 1.18, z: -0.12, y: 0.5, look: -0.6 }]],
-      intro: [['crowd', null, { show: 0 }], ['jesus', 'idle', { x: -1.95, z: 0.15, look: 1.2 }], ['peter', 'idle', { x: -2.2, z: -0.05, look: 1.2 }], ['bart', 'sit-ground', { x: -0.35, z: 0.3, look: 0 }], ['zac', 'idle', { show: 0, x: 1.7, z: 0.25, y: 0 }]],
+      intro: [['cloak', null, { show: 0 }], ['crowd', null, { show: 0 }], ['jesus', 'idle', { x: -1.95, z: 0.15, look: 1.2 }], ['peter', 'idle', { x: -2.2, z: -0.05, look: 1.2 }], ['bart', 'sit-ground', { x: -0.35, z: 0.3, look: 0 }], ['zac', 'idle', { show: 0, x: 1.7, z: 0.25, y: 0 }]],
       'p0.1': [['crowd', null, { show: 1 }], ['jesus', 'idle', { x: -0.95, z: 0.1, look: 1.0 }], ['peter', 'idle', { x: -1.2, z: -0.1 }], ['bart', 'sit-ground', { look: -1.0, delay: 2500 }]],
       'p0.2': [['bart', 'raise', { look: -1.0 }]],
       'p0.3': [['peter', 'rebuke', { look: 1.0 }], ['bart', 'raise', { delay: 1500 }]],
       'p1.0': [['jesus', 'idle', { look: 1.0 }], ['peter', 'idle']],
-      'p1.1': [['bart', 'idle', { x: -0.6, z: 0.18, look: -1.0 }]],
+      'p1.1': [['cloak', null, { show: 1 }], ['bart', 'idle', { x: -0.6, z: 0.18, look: -1.0 }]],
       'p1.2': [['jesus', 'speak', { look: 1.0 }]],
       'p1.3': [['bart', 'speak']],
       'p1.4': [['jesus', 'bless']],
@@ -1802,13 +1820,14 @@ export const SCRIPTS = {
       w1: [['zac', 'speak', { show: 1, x: 1.4, z: 0.2, y: 0, look: -1.0 }], ['jesus', 'speak', { look: 1.0 }]],
       w2: [['zac', 'idle', { show: 0 }], ['bart', 'kneel', { x: -0.6, z: 0.18, look: -1.0 }], ['jesus', 'speak', { x: -0.95, z: 0.1, look: 1.0 }]],
       w3: [['jesus', 'bless'], ['bart', 'look-up']],
-      end: [['crowd', null, { show: 1 }], ['jesus', 'speak', { x: 0.95, z: 0.05, look: 0.6 }], ['peter', 'idle', { x: 0.55, z: -0.05, look: 1.0 }], ['bart', 'idle', { x: 0.25, z: 0.3, look: 1.0 }],
+      end: [['cloak', null, { show: 0 }], ['crowd', null, { show: 1 }], ['jesus', 'speak', { x: 0.95, z: 0.05, look: 0.6 }], ['peter', 'idle', { x: 0.55, z: -0.05, look: 1.0 }], ['bart', 'idle', { x: 0.25, z: 0.3, look: 1.0 }],
         ['zac', 'sit', { show: 1, x: 1.18, z: -0.12, y: 0.5, look: -0.6 }]],
     },
   },
 
   /* 47. 베다니의 향유 — 저녁 식탁. 나사로와 손님들, 음식을 나르는 마르다. 마리아가 향유를 머리에 붓고 발치에 무릎 꿇는다. 유다의 날 선 말 */
   e47: {
+    env: 'dusk', // 유월절 엿새 앞의 저녁 식탁
     env: 'dusk', wide: 1.35,
     props: {
       feast: ['feast', 0, -0.42, { len: 1.3 }],
@@ -1850,6 +1869,7 @@ export const SCRIPTS = {
   e48: {
     wide: 1.5,
     props: {
+      olive: ['olive', 0.3, -1.05], olive2: ['olive', -1.9, -0.8, { scale: 0.85 }], // 감람산 비탈
       donkey: ['donkey', 1.7, 0.15, { speed: 0.28, scale: 0.85, rot: Math.PI }],
       cloaks: ['cloaks', -0.1, 0.18, { n: 8 }],
       crowd: ['crowd', 0, 0, { spots: [[1.2, -0.3], [0.75, -0.42], [-0.75, -0.42], [-1.2, -0.3], [1.35, 0.4], [-1.4, 0.4]], faceCenter: true }],
@@ -1967,6 +1987,7 @@ export const SCRIPTS = {
     wide: 1.4,
     props: {
       lamp: ['lamp', 0.55, 0.35],
+      olive: ['olive', -1.2, -0.55], olive2: ['olive', 1.1, -0.7, { scale: 0.85 }], // 감람산의 올리브나무
     },
     cast: {
       jesus: ['jesus', -0.15, 0.05, -0.3],
@@ -2214,7 +2235,9 @@ export const SCRIPTS = {
   e57: {
     wide: 1.5,
     props: {
-      house: ['house', 1.35, -0.55],
+      house: ['house', 1.35, -0.73],
+      olive: ['olive', -0.55, -0.75, { scale: 0.85 }], olive2: ['olive', 0.35, -1.0, { scale: 0.7 }], // 엠마오로 가는 길가
+      rocks: ['rocks', 0, 0, { spots: [[-1.3, -0.45, 0.08], [0.0, 0.62, 0.06]] }],
       feast: ['feast', 1.0, -0.18, { len: 0.6 }],
       lamp: ['lamp', 1.35, -0.2],
     },

@@ -515,11 +515,21 @@ Object.assign(MAKERS, {
 
   // 흙벽돌 집 (평평한 지붕, 어두운 문)
   house(o = {}) {
-    const g = new THREE.Group(), wall = mat(o.wall || '#cdb48e', { roughness: 1 });
-    mesh(new THREE.BoxGeometry(0.62, 0.42, 0.42), wall, g, [0, 0.21, 0]).receiveShadow = true;
-    mesh(new THREE.BoxGeometry(0.68, 0.04, 0.48), mat('#a98f68'), g, [0, 0.44, 0]);
-    mesh(new THREE.BoxGeometry(0.13, 0.24, 0.02), mat('#2a1c10'), g, [0.12, 0.12, 0.215]);
-    mesh(new THREE.BoxGeometry(0.07, 0.06, 0.02), mat('#2a1c10'), g, [-0.16, 0.28, 0.215]);
+    // 흙벽돌 집: 벽이 사람(키 0.88)보다 높고, 평평한 지붕에 낮은 난간, 옆벽을 따라 지붕으로 오르는 바깥 계단, 지붕 들보 끝
+    const g = new THREE.Group(), wall = mat(o.wall || '#cdb48e', { roughness: 1 }), roof = mat('#a98f68', { roughness: 1 }), dark = mat('#2a1c10');
+    const W = 1.05, H = 0.98, D = 0.78;
+    const body = mesh(new THREE.BoxGeometry(W, H, D), wall, g, [0, H / 2, 0]); body.receiveShadow = true;
+    mesh(new THREE.BoxGeometry(W + 0.04, 0.05, D + 0.04), roof, g, [0, H + 0.02, 0]);
+    [[0, D / 2], [0, -D / 2]].forEach(([x, z]) => mesh(new THREE.BoxGeometry(W + 0.04, 0.08, 0.04), wall, g, [x, H + 0.08, z]));
+    [-W / 2, W / 2].forEach(x => mesh(new THREE.BoxGeometry(0.04, 0.08, D + 0.04), wall, g, [x, H + 0.08, 0]));
+    for (let i = 0; i < 5; i++) mesh(new THREE.CylinderGeometry(0.018, 0.018, 0.08, 6), roof, g, [-W / 2 + 0.12 + i * 0.2, H - 0.07, D / 2 + 0.03]).rotation.x = Math.PI / 2; // 들보 끝
+    mesh(new THREE.BoxGeometry(0.24, 0.52, 0.02), dark, g, [0.2, 0.26, D / 2 + 0.006]); // 문
+    mesh(new THREE.BoxGeometry(0.28, 0.035, 0.05), roof, g, [0.2, 0.535, D / 2 + 0.02]); // 문 위 인방
+    mesh(new THREE.BoxGeometry(0.12, 0.1, 0.02), dark, g, [-0.26, 0.66, D / 2 + 0.006]); // 작은 창
+    if (o.stair !== false) for (let i = 0; i < 6; i++) { // 왼쪽 벽을 따라 오르는 계단
+      const h = (i + 1) * H / 6;
+      mesh(new THREE.BoxGeometry(0.16, h, 0.13), wall, g, [-W / 2 - 0.08, h / 2, D / 2 - 0.065 - i * 0.13]).receiveShadow = true;
+    }
     return new Prop(g);
   },
 });

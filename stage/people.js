@@ -230,10 +230,10 @@ function makePerson(type) {
   const B = slim
     ? { robe: [[0.001, 0], [0.152, 0], [0.15, 0.03], [0.132, 0.15], [0.112, 0.29], [0.096, 0.39], [0.084, 0.465], [0.09, 0.52], [0.101, 0.57], [0.098, 0.625], [0.08, 0.665], [0.05, 0.692], [0.033, 0.705], [0.001, 0.71]],
         hem: 0.15, waist: [0.086, 0.465], shoulder: 0.1, sleeve: 0.054, fold: 0.009,
-        mantle: [[0.05, 0.7], [0.096, 0.668], [0.112, 0.6], [0.112, 0.45], [0.124, 0.25], [0.142, 0.05]], mantleLen: Math.PI * 1.05 }
+        mantle: [[0.05, 0.7], [0.1, 0.672], [0.116, 0.635], [0.112, 0.6], [0.112, 0.45], [0.128, 0.25], [0.154, 0.05]], mantleLen: Math.PI * 1.05 }
     : { robe: [[0.001, 0], [0.148, 0], [0.146, 0.03], [0.132, 0.16], [0.118, 0.3], [0.104, 0.44], [0.104, 0.52], [0.114, 0.6], [0.106, 0.65], [0.078, 0.685], [0.042, 0.705], [0.001, 0.71]],
         hem: 0.145, waist: [0.106, 0.45], shoulder: 0.108, sleeve: 0.06, fold: 0.011,
-        mantle: [[0.055, 0.705], [0.104, 0.67], [0.126, 0.6], [0.13, 0.45], [0.14, 0.25], [0.152, 0.06]], mantleLen: Math.PI * 1.25 };
+        mantle: [[0.055, 0.705], [0.11, 0.674], [0.128, 0.635], [0.126, 0.6], [0.13, 0.45], [0.142, 0.25], [0.156, 0.06]], mantleLen: Math.PI * 1.25 };
   // 옷을 허리에서 나눈다: 무릎 꿇으면 치마(skirt)가 낮아지며 바닥에 퍼지고, 상체(upper)는 그만큼 내려앉는다
   const wy = B.waist[1], i = B.robe.findIndex(([, y]) => y > wy);
   const [r0, y0] = B.robe[i - 1], [r1, y1] = B.robe[i], rw = r0 + (r1 - r0) * (wy - y0) / (y1 - y0);
@@ -279,7 +279,7 @@ function makePerson(type) {
     mesh(sphere(slim ? 0.011 : 0.017, 10, 8), s, upper, [0.02, wy, wr - 0.003]);
     [-1, 1].forEach(k => { const e = mesh(new THREE.BoxGeometry(slim ? 0.01 : 0.016, slim ? 0.14 : 0.11, 0.006), s, upper, [0.02 + k * 0.01, wy - (slim ? 0.075 : 0.06), wr]); e.rotation.z = k * 0.1; });
   }
-  // 망토: 등과 어깨를 감싸며 늘어진다 (여인은 몸에 붙게 좁게)
+  // 망토: 등과 어깨를 감싸며 늘어진다 (여인은 몸에 붙게 좁게). 팔은 망토 밖으로 나온다
   // (어깨에 매단 묶음이라, 무릎 꿇을 때 위에서부터 줄여 끝자락이 땅에 묻히지 않게 한다)
   const mantleG = new THREE.Group();
   mantleG.position.y = B.mantle[0][1];
@@ -396,7 +396,7 @@ function makePerson(type) {
     upper.add(p);
     const a = slim ? 0.78 : 0.88; // 팔도 가늘게 (여인은 더)
     const sleeveM = t.bare ? skin : robe; // 옷이 없으면 맨팔
-    mesh(sphere(0.044 * a * (t.bare ? 0.8 : 1), 16, 12), sleeveM, p, [0, -0.005, 0]);
+    mesh(sphere(0.044 * a * (t.bare ? 0.8 : 1), 16, 12), sleeveM, p, [-side * 0.012, -0.005, 0], [0.5, 1, 1]); // 어깨 구슬은 옆으로 납작하게 — 팔을 앞으로 내밀면 망토를 뚫고 혹처럼 드러났다
     mesh(new THREE.CylinderGeometry(0.037 * a * (t.bare ? 0.8 : 1), 0.042 * a * (t.bare ? 0.75 : 1), 0.16, 16), sleeveM, p, [0, -0.075, 0]);
     const elbow = new THREE.Group();
     elbow.position.y = -0.15;
@@ -473,8 +473,13 @@ function makePerson(type) {
   fl.castShadow = false;
   const tl = new THREE.PointLight('#ffa850', 1.2, 1.3, 1.5); tl.position.y = 0.32; torch.add(tl);
   torch.position.set(0.05, 0.5, 0.16);
-  [doves, gift, jar, scroll, alabaster, palm, cup, torch].forEach(g => { g.visible = false; upper.add(g); });
-  const items = { basket, doves, gift, jar, scroll, alabaster, palm, cup, torch };
+  // 말아 든 깔개 (베데스다: 자리를 들고 걸어가라)
+  const mat_ = new THREE.Group();
+  mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.2, 14), mat('#b89a6a', { roughness: 0.95 }), mat_).rotation.z = Math.PI / 2;
+  [-1, 1].forEach(s => mesh(new THREE.TorusGeometry(0.036, 0.004, 6, 16), mat('#6b4a2a'), mat_, [s * 0.06, 0, 0]).rotation.y = Math.PI / 2);
+  mat_.position.set(0, 0.47, 0.15);
+  [doves, gift, jar, scroll, alabaster, palm, cup, torch, mat_].forEach(g => { g.visible = false; upper.add(g); });
+  const items = { basket, doves, gift, jar, scroll, alabaster, palm, cup, torch, mat: mat_ };
 
   // 발: 샌들 위의 맨발이 옷자락 아래로
   const feet = [1, -1].map(s => {
@@ -690,6 +695,7 @@ class Actor {
     }
     p.torso.position.y = p.waist * (1 - 0.58 * kn);
     p.mantleG.scale.y = 1 - (p.waist * 0.58 * kn) / p.mantleSpan;
+    p.mantleG.scale.x = 1 + 0.12 * kn; p.mantleG.scale.z = 1 + 0.3 * kn; // 꿇으면 바닥에 퍼진 치맛단을 덮게 망토 자락도 넓게 (치마가 망토를 뚫고 나왔다)
     p.feet.forEach(f => (f.visible = lie < 0.5 && kn < 0.3 && !this.floating));
     // 아기: 안는 자세이거나, item으로 'baby'를 들고 있을 때(나귀를 타고 가면서 등)
     if (this.item === 'baby') { carry = true; if (!moving) aL = aR = [-0.4, -0.25, -1.3]; }
