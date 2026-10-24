@@ -21,7 +21,7 @@ export const SCRIPTS = {
       house: ['house', 1.0, -1.13], // 나사렛의 작은 집
       olive: ['olive', -1.5, -0.8],
       pot: ['pot', 0.42, -0.42], // 물동이 — 평범한 하루
-      beam: ['beam', -0.75, -0.1, { r: 0.35 }], // 천사와 함께 선 빛
+      beam: ['beam', -0.75, -0.1, { on: 'gabriel', r: 0.35 }], // 천사와 함께 선 빛
     },
     cast: { mary: ['mary', 0.25, 0, -0.5], gabriel: ['angel', -0.75, -0.1, 0.9], joseph: ['joseph', 1.0, 0.05, -1] },
     beats: {
@@ -50,7 +50,7 @@ export const SCRIPTS = {
       inn: ['house', -1.3, -1.32, { scale: 0.95 }], // 방이 없던 붐비는 여관
       ox: ['ox', 0.55, -0.7, { rot: 2.5 }], donkey: ['donkey', -0.72, -0.62, { rot: 0.5 }], // 구유 곁의 짐승들
       star: ['star', 0.05, -0.3, { y: 1.6 }],
-      beam: ['beam', 1.95, -0.45, { r: 0.6 }],
+      beam: ['beam', 1.95, -0.45, { on: 'angel', r: 0.6 }],
       host: ['host', 1.8, -0.95, { y: 1.3, n: 7, span: 1.7 }],
       sheep1: ['sheep', 2.0, -0.75, { rot: 0.4 }],
       sheep2: ['sheep', 2.35, -0.4, { rot: 2.6 }],
@@ -1406,7 +1406,7 @@ export const SCRIPTS = {
     env: 'calm', wide: 1.3,
     props: {
       hill: ['hill', 0, -0.35, { w: 1.1, h: 0.3, d: 0.5 }],
-      beam: ['beam', 0, -0.4, { r: 0.55, h: 3, peak: 0.6 }],
+      beam: ['beam', 0, -0.4, { on: 'jesus', r: 0.55, h: 3, peak: 0.6 }],
       cloud: ['cloud', 0, -0.5],
     },
     cast: {
@@ -2192,7 +2192,7 @@ export const SCRIPTS = {
     env: 'dawn', wide: 1.4,
     props: {
       tomb: ['tomb', 0.9, -0.5, { scale: 0.9, rot: -0.35 }],
-      beam: ['beam', 0.9, -0.3, { r: 0.4, h: 2.4, peak: 0.35 }],
+      beam: ['beam', 0.9, -0.3, { on: 'angel1', r: 0.4, h: 2.4, peak: 0.35 }],
       flowers: ['flowers', -0.6, 0.3, { r: 0.55, n: 34 }],
       flowers2: ['flowers', 1.6, 0.2, { r: 0.35, n: 16 }],
       olive: ['olive', -1.5, -0.5], olive2: ['olive', 1.8, -0.6, { scale: 0.85 }],
@@ -2275,7 +2275,7 @@ export const SCRIPTS = {
     props: {
       feast: ['feast', 0, -0.5, { len: 1.2 }],
       lamp: ['lamp', -0.35, -0.6],
-      beam: ['beam', 0, -0.1, { r: 0.45, h: 2.6, peak: 0.45 }],
+      beam: ['beam', 0, -0.1, { on: 'jesus', r: 0.45, h: 2.6, peak: 0.45 }],
     },
     cast: {
       jesus: ['risen', 0, -0.12, 0],
@@ -2364,7 +2364,7 @@ export const SCRIPTS = {
       hill: ['hill', 0, -0.35, { w: 1.0, h: 0.26, d: 0.45 }],
       grass: ['grass', 0, 0.1, { r: 1.6 }],
       eleven: ['crowd', 0, 0.1, { spots: [[-1.0, 0.1], [-0.8, 0.35], [-0.5, 0.5], [0.5, 0.5], [0.8, 0.35], [1.0, 0.1], [1.15, -0.15]], faceCenter: true }],
-      beam: ['beam', 0, -0.35, { r: 0.45, h: 2.8, peak: 0.4 }],
+      beam: ['beam', 0, -0.35, { on: 'jesus', r: 0.45, h: 2.8, peak: 0.4 }],
     },
     cast: {
       jesus: ['risen', 0, -0.35, 0],
@@ -2397,7 +2397,7 @@ export const SCRIPTS = {
     props: {
       grass: ['grass', 0, 0.05, { r: 1.7 }],
       flowers: ['flowers', 0.9, 0.35, { r: 0.4, n: 18 }],
-      beam: ['beam', 0, -0.25, { r: 0.6, h: 3.2, peak: 0.55 }],
+      beam: ['beam', 0, -0.25, { on: 'jesus', r: 0.6, h: 3.2, peak: 0.55 }],
       cloud: ['cloud', 0, -0.3, { }],
       olive: ['olive', -1.55, -0.55], olive2: ['olive', 1.6, -0.6, { scale: 0.9 }],
     },
