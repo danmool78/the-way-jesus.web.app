@@ -507,15 +507,28 @@ function controls() {
   const box = document.createElement('div'); box.className = 'mapctl';
   const spin = document.createElement('div'); spin.className = 'm3load'; spin.setAttribute('aria-hidden', 'true');
   wrap.appendChild(spin);
-  box.innerHTML = `<button id="mode3d" class="m3" aria-pressed="false">3D</button>
+  // 아이콘은 모두 24칸 SVG 선 그림 — 글자 기호(⌃↺⌖)는 글꼴마다 크기·굵기가 달라 어설퍼 보였다
+  const I = d => `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
+  const ICON = {
+    m3: '<path d="M12 3 20 7.5v9L12 21l-8-4.5v-9Z"/><path d="M4 7.5 12 12l8-4.5M12 12v9"/>', // 입체 상자
+    tiltUp: '<path d="M3.5 19h17l-3.5-5h-10Z"/><path d="m8.5 9 3.5-3.5L15.5 9"/>', // 땅을 내려다보게
+    tiltDown: '<path d="M3.5 19h17l-3.5-5h-10Z"/><path d="m8.5 6 3.5 3.5L15.5 6"/>', // 지평선 쪽으로
+    left: '<path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3"/><path d="M4.5 4v4h4"/>',
+    right: '<path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.5 4v4h-4"/>',
+    in: '<path d="M12 5.5v13M5.5 12h13"/>',
+    out: '<path d="M5.5 12h13"/>',
+    reset: '<circle cx="12" cy="12" r="6.5"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3"/>',
+  };
+  const tool = (k, title) => `<button data-k="${k}" title="${title}" aria-label="${title}">${I(ICON[k])}</button>`;
+  box.innerHTML = `<button id="mode3d" class="m3" aria-pressed="false">${I(ICON.m3)}</button>
     <div class="m3tools">
-      <button data-k="tiltUp" title="${t('tiltUp')}">⌃</button><button data-k="tiltDown" title="${t('tiltDown')}">⌄</button>
-      <button data-k="left" title="${t('rotate')}">↺</button><button data-k="right" title="${t('rotate')}">↻</button>
-      <button data-k="in" title="+">+</button><button data-k="out" title="−">−</button>
-      <button data-k="reset" title="${t('resetView')}">⌖</button>
+      ${tool('tiltUp', t('tiltUp'))}${tool('tiltDown', t('tiltDown'))}
+      ${tool('left', t('rotate'))}${tool('right', t('rotate'))}
+      ${tool('in', '+')}${tool('out', '−')}
+      ${tool('reset', t('resetView'))}
     </div>`;
   wrap.appendChild(box);
-  $('#mode3d').title = t('map3d');
+  $('#mode3d').title = t('map3d'); $('#mode3d').setAttribute('aria-label', t('map3d'));
   $('#mode3d').onclick = () => setOn(!on);
   box.querySelectorAll('.m3tools button').forEach(b => b.onclick = () => {
     const k = b.dataset.k;
