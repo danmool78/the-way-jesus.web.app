@@ -415,7 +415,7 @@ function animateTo(target, ms) {
     const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
     if (!drag.moved) {
       if (Math.hypot(dx, dy) < 6) return;
-      drag.moved = true; cancelAnimationFrame(anim); map.setPointerCapture(e.pointerId); map.classList.add('dragging');
+      drag.moved = true; cancelAnimationFrame(anim); followWalk = false; // 걷는 중에 끌면 카메라 따라가기를 멈춘다 map.setPointerCapture(e.pointerId); map.classList.add('dragging');
     }
     const u = map.viewBox.baseVal.width / map.getBoundingClientRect().width;
     const { w, h } = drag.v, cx = Math.min(LAND.x + LAND.w * 1.25, Math.max(LAND.x - LAND.w * 0.25, drag.v.x + w / 2 - dx * u));
@@ -528,8 +528,16 @@ function walkTo(i, done) {
   $('#nextHint', map).style.display = 'none';
   banner(`<span class="wk">👣</span><b>${esc(A.name)}</b> → <b>${esc(B.name)}</b><small>${travelText(A, B)}</small>`);
   if (autoOn) speakQueue([{ text: t('walkSpeak', { a: A.name.replace(/[()·]/g, ' '), b: B.name.replace(/[()·]/g, ' ') }) }]);
-  frame([from.place, to.place], 900, innerWidth > 900);
   const total = path.getTotalLength(), dur = reduced() ? 0 : Math.min(6500, Math.max(2200, km(A, B) * 30));
+  // 카메라가 걷는 사람을 따라간다: 장면에서 물러나 길이 넉넉히 보이는 높이로 올라간 뒤 걷는 사람을 화면 가운데 두고 함께 옮겨 간다.
+  // 도착하면 go()의 frameStage가 지금 화면에서 이어 무대로 내려간다. 전체 경로 보기·3D 지형·움직임 줄이기에서는 예전처럼 두 곳을 한 화면에
+  followWalk = fitMode !== 'all' && !window.terrainOn && !!dur;
+  if (!followWalk) frame([from.place, to.place], 900, innerWidth > 900);
+  else cancelAnimationFrame(anim);
+  const [ax, ay] = P(A), [bx, by] = P(B), from0 = { ...view }, t0 = performance.now();
+  // 걷는 동안 화면 가로에 담는 지도 폭: 길이에 맞추되, 도착해 무대를 볼 때(frameStage)보다 가깝지는 않게 — 다가갔다 다시 물러나지 않게
+  const near = B.jlm || to.place === 'jerusalem' ? 14 : 300, stageW = reserveCard({ x: 0, y: 0, w: near, h: near }).w;
+  const span = Math.min(1400, Math.max(stageW, Math.hypot(bx - ax, by - ay) * .9));
   path.classList.add('walking'); path.style.strokeDashoffset = 1;
   $('#walker', map).classList.add('moving');
   const start = performance.now() + (reduced() ? 0 : 700);
@@ -538,6 +546,7 @@ function walkTo(i, done) {
     const e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
     const pt = path.getPointAtLength(e * total);
     setWalker([pt.x, pt.y]);
+    if (followWalk) followCam(pt, span, from0, Math.min(1, (now - t0) / 1400));
     path.style.strokeDashoffset = 1 - e;
     setOdo(odoAt(idx) + (odoAt(i) - odoAt(idx)) * e);
     if (k < 1) { walkAnim = requestAnimationFrame(step); return; }
@@ -546,6 +555,21 @@ function walkTo(i, done) {
     done();
   };
   walkAnim = requestAnimationFrame(step);
+}
+let followWalk = false;
+// 걷는 사람을 보이는 지도(펼친 카드·하단 시트에 가리지 않는 곳)의 가운데에 둔다. j: 처음 화면에서 따라가는 화면으로 넘어가는 정도(0→1)
+function followCam(pt, span, from0, j) {
+  const r = map.getBoundingClientRect();
+  if (!r.width) return;
+  // 걷는 동안 카드는 접혀 있다 — 데스크톱은 지도 전체, 모바일은 접힌 시트 위
+  const f = innerWidth <= 900 ? freeArea('peek') : { l: 0, t: 0, r: r.width, b: r.height };
+  const u = span / r.width, fx = (f.l + f.r) / 2, fy = (f.t + f.b) / 2;
+  const to = { x: pt.x - fx * u, y: pt.y - fy * u, w: r.width * u, h: r.height * u };
+  const q = j < .5 ? 4 * j * j * j : 1 - Math.pow(-2 * j + 2, 3) / 2, lerp = (a, b) => a + (b - a) * q;
+  const w = Math.exp(lerp(Math.log(from0.w), Math.log(to.w))), h = w * r.height / r.width;
+  const cx = lerp(from0.x + from0.w / 2, to.x + to.w / 2), cy = lerp(from0.y + from0.h / 2, to.y + to.h / 2);
+  view = { x: cx - w / 2, y: cy - h / 2, w, h };
+  applyView();
 }
 function cancelWalk() {
   if (!walking) return;

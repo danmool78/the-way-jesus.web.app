@@ -433,7 +433,7 @@ function loop(now) {
   placeCam();
   // 무대 인물의 크기: 당기면 커지되 천천히 (도성 가까이에서 건물을 다 가리지 않게)
   window.terrainView = { yaw: cam.yaw, pitch: cam.pitch, zoom: THREE.MathUtils.clamp((150 / cam.dist) ** 0.6, 0.35, 1.5) * (isCity(EVENTS[idx].place) ? 0.62 : 1) }; // 도성 안에서는 인물을 줄여 건물을 덜 가리게
-  window.stageFrame?.(); // 바뀐 시점으로 무대를 붙이고 그린다
+  window.stageRender?.(); // 바뀐 시점으로 무대를 붙이고 그린다
   // 안개는 카메라 거리에 맞춰 — 멀리 물러나도 땅의 끝이 하늘과 안개 속으로 녹아든다
   scene.fog.near = cam.dist * 1.1; scene.fog.far = cam.dist * 3.6;
   boats.forEach((b, i) => { b.position.y = lv(-210) + 0.3 + Math.sin(now / 900 + b.userData.phase) * 0.1; b.rotation.z = Math.sin(now / 1300 + i) * 0.04; });

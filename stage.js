@@ -318,7 +318,7 @@ function loop() {
   requestAnimationFrame(loop);
   if (!window.terrainDrives) frame(); // 3D 지형 모드에서는 terrain.js가 카메라를 옮긴 직후에 부른다 — 따로 돌면 무대가 한 박자 늦게 따라와 핀에서 벗어나 보였다
 }
-window.stageFrame = frame;
+window.stageRender = frame; // 3D 지형 루프가 부른다 (stageFrame은 app.js가 쓰는 무대 위치 계산 — 이름이 겹쳐 덮어쓰던 것을 나눔)
 function frame() {
   if (!canvas || mode === 'off' || document.hidden || wrap.offsetParent === null) return;
   const dt = Math.min(clock.getDelta(), 0.05), time = clock.elapsedTime;
