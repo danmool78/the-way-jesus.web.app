@@ -21,6 +21,7 @@
 - `assets/jerusalem.webp` — 예루살렘 3D 도성 그림. 모형은 `stage/jerusalem.js`, 다시 그리기는 `node _src/tools/jerusalem.mjs`
 - `assets/egypt-*.webp` — 애굽 표지 그림(기자·파로스 등대·헬리오폴리스). 모형은 `stage/egypt.js`, 다시 그리기는 `node _src/tools/jerusalem.mjs <url> giza`
 - `terrain.js`, `assets/terrain/` — 3D 지형 모드. 지역별(갈릴리·유대·애굽) 높이·색 그림을 장소 가까이 갈 때 불러온다. 지역 밖은 2D 음영을 평면으로 깐다. 자료는 `python3 _src/terrain.py <고도 캐시>`로 만든다
+- `assets/voice/ko/` — 한국어 녹음 낭독(문장별 mp3 + index.json). `GOOGLE_TTS_KEY=… node _src/tools/voice.mjs e01 …`로 만든다. 녹음이 없는 장면은 브라우저 음성으로 읽는다
 - `assets/vendor/three.module.min.js` — three.js 0.160.0 (오프라인용으로 저장소에 포함)
 - `_src/` — 원본 데이터와 도구 (배포 제외). `_src/tools/` — 캡처·문장 나누기 도구
 

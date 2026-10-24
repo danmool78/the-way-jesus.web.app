@@ -672,6 +672,16 @@ function pickVoices() {
 if (synth) { pickVoices(); synth.onvoiceschanged = pickVoices; }
 const sentences = text => text.match(/[^.?!…。！？]+[.?!…。！？]*["”’」』]?\s*/g) || [text];
 
+// 녹음 낭독 (한국어만): _src/tools/voice.mjs가 만든 문장별 mp3. 열쇠는 목소리|문장의 FNV-1a (voice.mjs와 같은 계산)
+// 한 번 듣기에 쓸 문장이 모두 녹음돼 있을 때만 녹음으로 읽고, 하나라도 없으면 지금처럼 브라우저 음성으로 읽는다
+const VOICE_NAME = { narr: 'Aoede', jesus: 'Algenib' };
+const voiceKey = (voice, text) => { let h = 0x811c9dc5; for (const c of `${voice}|${text}`) { h ^= c.codePointAt(0); h = Math.imul(h, 0x01000193) >>> 0; } return h.toString(36); };
+let voiceIndex = {};
+if (LANG === 'ko') fetch('assets/voice/ko/index.json').then(r => r.ok ? r.json() : {}).then(j => { voiceIndex = j; }).catch(() => {});
+const voiceAudio = new Audio();
+// 문장 사이 쉼(ms, 1배속 기준). 녹음은 앞뒤 무음을 덜어 냈으므로 여기서 준다 — 문장 끝은 본디 쉼의 0.9배쯤, 제목 뒤는 넉넉히
+const VOICE_GAP = { sentence: 800, item: 850, intro: 1700 };
+
 let warnedNoVoice = false;
 function speakQueue(items, onDone) {
   // items: [{text, el, jesus, pause}] — 문장 단위로 읽으며 해당 문단을 강조한다
@@ -679,16 +689,23 @@ function speakQueue(items, onDone) {
   const rate = +$('#rate').value;
   pickVoices();
   const useVoice = !!synth && voices.length > 0;
-  if (!useVoice && !warnedNoVoice) {
-    warnedNoVoice = true;
-    toast(synth ? t('noVoiceLang') : t('noVoice'));
-  }
   if (synth) synth.cancel();
+  voiceAudio.pause();
   // 낭독자와 예수님 목소리는 서로 다른 음성으로 (이름에 성별이 드러나는 음성을 먼저 고른다)
   const narrator = voices.find(v => /female|여|yuna|sun-?hi|heami|samantha|zira|aria|jenny|google/i.test(v.name) && !/\bmale/i.test(v.name)) || voices[0];
   const other = voices.find(v => v !== narrator && /\bmale|남|injoon|hyunsu|minsu|daniel|david|guy|thomas|jorge|diego|kenji|keita/i.test(v.name)) || voices.find(v => v !== narrator);
   const queue = [];
-  items.forEach(it => sentences(it.text).forEach((s, k) => s.trim() && queue.push({ ...it, text: s.trim(), s: k })));
+  items.forEach(it => {
+    const ss = sentences(it.text).map(s => s.trim()).filter(Boolean);
+    ss.forEach((s, k) => queue.push({ ...it, text: s, s: k, last: k === ss.length - 1 }));
+  });
+  queue.forEach(it => { it.clip = voiceKey(it.jesus ? VOICE_NAME.jesus : VOICE_NAME.narr, it.text); });
+  const recorded = LANG === 'ko' && queue.length > 0 && queue.every(it => voiceIndex[it.clip]);
+  // 녹음으로 읽는 장면이면 브라우저 음성이 없어도 안내하지 않는다
+  if (!recorded && !useVoice && !warnedNoVoice) {
+    warnedNoVoice = true;
+    toast(synth ? t('noVoiceLang') : t('noVoice'));
+  }
   const staged = items.some(it => it.beat);
   const readMs = it => (600 + it.text.length * 140) / rate; // 눈으로 읽는 속도
   let n = 0;
@@ -705,6 +722,23 @@ function speakQueue(items, onDone) {
     if (it.beat) stageBeat(it.beat, it.s);
     let done = false, guard;
     const advance = d => { if (done) return; done = true; clearTimeout(guard); autoTimer = setTimeout(next, d); };
+    if (recorded) {
+      const gap = (!it.last ? VOICE_GAP.sentence : it.beat === 'intro' ? VOICE_GAP.intro : VOICE_GAP.item) / rate;
+      // 감시 타이머는 실제로 소리가 나기 시작할 때부터 남은 길이로 잰다 (받는 중·버퍼링 시간은 빼고).
+      // 15초가 지나도 시작하지 못하면 그 문장은 건너뛴다
+      guard = setTimeout(() => advance(0), 15000);
+      voiceAudio.src = `assets/voice/ko/${it.clip}.mp3`;
+      voiceAudio.playbackRate = rate;
+      voiceAudio.onplaying = () => { clearTimeout(guard); guard = setTimeout(() => advance(0), (voiceIndex[it.clip] - voiceAudio.currentTime * 1000) / rate + 3000); };
+      voiceAudio.onwaiting = () => { clearTimeout(guard); guard = setTimeout(() => advance(0), 15000); };
+      voiceAudio.onended = () => advance(gap);
+      // 파일을 못 불러오면 그 문장은 눈으로 읽는 속도만큼 기다린다
+      voiceAudio.onerror = () => { clearTimeout(guard); guard = setTimeout(() => advance(0), readMs(it)); };
+      voiceAudio.play().catch(err => { if (err.name !== 'AbortError') voiceAudio.onerror(); });
+      // 다음 문장 파일을 미리 받아 두어 문장 사이에 불러오는 시간이 끼지 않게
+      if (queue[n]) fetch(`assets/voice/ko/${queue[n].clip}.mp3`).catch(() => {});
+      return;
+    }
     if (!useVoice) { guard = setTimeout(() => advance(it.pause || 0), readMs(it)); return; }
     const u = new SpeechSynthesisUtterance(it.text);
     u.lang = DATA.ui.lang; u.rate = rate;
@@ -760,6 +794,7 @@ function stopSpeech(keepAuto) {
   if (speaking) dispatchEvent(new CustomEvent('stage:stop'));
   speechToken++; clearTimeout(autoTimer);
   if (synth) synth.cancel();
+  voiceAudio.pause(); voiceAudio.onended = voiceAudio.onerror = voiceAudio.onplaying = voiceAudio.onwaiting = null;
   speaking = false; $$('.speaking').forEach(x => x.classList.remove('speaking'));
   showCaption(null);
   if (!keepAuto) stopAuto();
