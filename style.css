@@ -46,6 +46,42 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 #map{width:100%;height:100%;display:block;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none;transition:filter 1.6s} /* 끌어서 둘러보기 — 브라우저가 화면을 밀지 않게 */
 #map.dragging{cursor:grabbing}
 .stage3d{position:absolute;left:0;top:0;pointer-events:none;opacity:0;transition:opacity .5s;will-change:transform}
+/* 장면 분위기의 빛 (stage.js가 .mapwrap에 data-env를 단다). 층마다 opacity만 바꿔 서서히 겹쳐 바뀐다.
+   서쪽(왼쪽)은 해 지는 쪽, 동쪽(오른쪽)은 해 뜨는 쪽 — 지도 방위와 맞춘다 */
+.atmos{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.atmos i{position:absolute;inset:0;opacity:0;transition:opacity 1.8s ease}
+.a-vig{background:radial-gradient(ellipse 75% 70% at 45% 48%,transparent 40%,rgba(8,6,4,.55) 100%)}
+.a-cool{background:linear-gradient(170deg,#24386e,#16234a);mix-blend-mode:multiply}
+.a-moon{background:radial-gradient(ellipse 55% 50% at 12% 6%,rgba(196,214,255,.32),transparent 70%);mix-blend-mode:screen}
+.a-stars{background-image:radial-gradient(1.6px 1.6px at 23px 31px,#fff,transparent),radial-gradient(1.2px 1.2px at 97px 78px,#e8eeff,transparent),radial-gradient(2px 2px at 151px 19px,#fff,transparent),radial-gradient(1.2px 1.2px at 61px 133px,#dfe7ff,transparent),radial-gradient(1.5px 1.5px at 183px 117px,#fff,transparent),radial-gradient(1.1px 1.1px at 131px 171px,#e8eeff,transparent);background-size:200px 190px;-webkit-mask-image:linear-gradient(#000,rgba(0,0,0,.35) 45%,transparent 75%);mask-image:linear-gradient(#000,rgba(0,0,0,.35) 45%,transparent 75%)}
+.a-warm{background:linear-gradient(95deg,rgba(255,138,64,.5),rgba(255,170,90,.18) 45%,transparent 75%);mix-blend-mode:soft-light}
+/* 새벽빛은 동쪽 위에서 — 오른쪽 끝은 장면 카드에 가리므로 보이는 지도의 오른쪽 위에 둔다 */
+.a-dawn{background:radial-gradient(ellipse 65% 60% at 62% -8%,rgba(255,168,140,.62),rgba(255,200,160,.24) 50%,transparent 80%),linear-gradient(rgba(255,190,170,.12),transparent 60%);mix-blend-mode:screen}
+.a-glory{background:radial-gradient(ellipse 60% 55% at 45% 0%,rgba(255,246,214,.6),transparent 70%),repeating-conic-gradient(from 0deg at 45% -10%,rgba(255,240,200,.09) 0 3deg,transparent 3deg 9deg);mix-blend-mode:screen;-webkit-mask-image:linear-gradient(#000,transparent 85%);mask-image:linear-gradient(#000,transparent 85%)}
+.a-cloud{inset:-30%!important;background:radial-gradient(ellipse 22% 16% at 30% 35%,rgba(14,20,26,.8),transparent),radial-gradient(ellipse 30% 20% at 68% 55%,rgba(14,20,26,.7),transparent),radial-gradient(ellipse 22% 16% at 45% 82%,rgba(14,20,26,.65),transparent),radial-gradient(ellipse 24% 17% at 82% 18%,rgba(14,20,26,.65),transparent),radial-gradient(ellipse 18% 13% at 12% 70%,rgba(14,20,26,.6),transparent);animation:clouds 40s linear infinite}
+.a-flash{background:radial-gradient(ellipse at 60% 20%,rgba(235,240,255,.55),transparent 70%);mix-blend-mode:screen}
+@keyframes clouds{from{transform:translate(-6%,-2%)}to{transform:translate(6%,3%)}}
+@keyframes twinkle{0%,100%{opacity:.85}50%{opacity:.45}}
+@keyframes lightning{0%,88%,92%,96%,100%{opacity:0}89%,94%{opacity:1}}
+[data-env=day] .a-vig{opacity:.25}
+[data-env=dusk] .a-vig,[data-env=calm] .a-vig{opacity:.45}
+[data-env=dusk] .a-warm{opacity:1}
+[data-env=calm] .a-warm{opacity:.6}
+[data-env=night] .a-vig{opacity:.8}
+[data-env=night] .a-cool{opacity:.7}
+[data-env=night] .a-moon{opacity:1}
+[data-env=night] .a-stars{opacity:.85;animation:twinkle 5s ease-in-out infinite;transition:none}
+[data-env=storm] .a-vig{opacity:.7}
+[data-env=storm] .a-cool{opacity:.45}
+[data-env=storm] .a-cloud{opacity:1}
+[data-env=storm] .a-flash{animation:lightning 11s 2s infinite;transition:none}
+[data-env=overcast] .a-vig{opacity:.4}
+[data-env=overcast] .a-cloud{opacity:.45}
+[data-env=dark] .a-vig{opacity:1}
+[data-env=dark] .a-cool{opacity:.3}
+[data-env=dawn] .a-vig{opacity:.3}
+[data-env=dawn] .a-dawn{opacity:1}
+[data-env=glory] .a-glory{opacity:1}
 .stage-on .pin.now text{opacity:0}
 .dock{border-top:1px solid #2b241b;background:linear-gradient(#16120d,#100c09);padding:10px 20px calc(10px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:22px}
 

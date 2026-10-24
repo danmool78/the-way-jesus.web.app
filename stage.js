@@ -46,7 +46,8 @@ scene.add(occluder);
 const ENV = {
   day:      { hemi: [1.6, '#fff4dc'], sun: [2.2, '#fff0d0'], shadow: 0.28, map: '' },
   dusk:     { hemi: [1.15, '#ffdcb8'], sun: [1.6, '#ffb878'], shadow: 0.32, map: 'sepia(.3) saturate(1.1) brightness(.88)' },
-  night:    { hemi: [0.7, '#a9bcff'], sun: [0.55, '#b8c8ff'], shadow: 0.18, map: 'brightness(.5) saturate(.55) hue-rotate(-12deg)' },
+  // 밤의 남빛은 .atmos가 덮으므로 지도는 조금 덜 어둡게
+  night:    { hemi: [0.7, '#a9bcff'], sun: [0.55, '#b8c8ff'], shadow: 0.18, map: 'brightness(.62) saturate(.6) hue-rotate(-12deg)' },
   storm:    { hemi: [0.95, '#b9c6cf'], sun: [0.7, '#c9d4dc'], shadow: 0.12, map: 'brightness(.62) saturate(.45) contrast(1.05)', wave: 1, rain: 1 },
   calm:     { hemi: [1.25, '#ffe2c2'], sun: [1.7, '#ffc58e'], shadow: 0.3, map: 'sepia(.22) brightness(.92)', wave: 0 },
   overcast: { hemi: [1.15, '#e8e2d6'], sun: [1.0, '#e9e4da'], shadow: 0.16, map: 'saturate(.6) brightness(.85)' },
@@ -62,6 +63,7 @@ const hemiCol = new THREE.Color('#fff4dc'), sunCol = new THREE.Color('#fff0d0');
 function setEnv(name, instant = false) {
   env = { ...ENV[name], name };
   map.style.filter = env.map;
+  wrap.dataset.env = name; // 지도 전체에 덮는 빛 (.atmos)
   if (instant) {
     envNow.hemi = env.hemi[0]; envNow.sun = env.sun[0];
     envNow.waveNow = env.wave || 0; envNow.rainNow = env.rain || 0;
@@ -139,7 +141,7 @@ function setScene(ev) {
   script = SCRIPTS[ev.id] || null;
   mode = script ? 'scene' : 'off';
   document.body.classList.toggle('stage-on', !!script);
-  if (!script) { canvas.style.opacity = 0; map.style.filter = ''; window.stageFoot = null; return; }
+  if (!script) { canvas.style.opacity = 0; map.style.filter = ''; delete wrap.dataset.env; window.stageFoot = null; return; }
   stageGroup.scale.setScalar(script.scale || 1);
   size = { w: 0, h: 0 }; // 넓은 무대(wide)가 바뀌었을 수 있으니 다시 잰다
   Object.entries(script.props || {}).forEach(([name, [kind, x, z, o]]) => {
@@ -198,6 +200,12 @@ if (canvas) {
   canvas.className = 'stage3d';
   canvas.setAttribute('aria-hidden', 'true');
   map.after(canvas);
+  // 장면 분위기의 빛: 밤의 남빛과 별, 서쪽 노을, 동쪽 새벽빛, 폭풍의 구름 그림자를 지도 전체에 덮는다 (style.css의 .atmos).
+  // 지형(2D·3D) 위, 무대 인물 아래에 깔린다. 층마다 따로 서서히 나타나 분위기가 바뀔 때 겹쳐 바뀐다
+  const atmos = document.createElement('div');
+  atmos.className = 'atmos'; atmos.setAttribute('aria-hidden', 'true');
+  atmos.innerHTML = ['vig', 'cool', 'moon', 'stars', 'warm', 'dawn', 'glory', 'cloud', 'flash'].map(k => `<i class="a-${k}"></i>`).join('');
+  canvas.before(atmos);
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -338,7 +346,7 @@ function frame() {
 /* ---------- app.js와 연결 ---------- */
 if (canvas) {
   addEventListener('stage:scene', e => setScene(e.detail.ev));
-  addEventListener('stage:walk', () => { mode = 'off'; canvas.style.opacity = 0; map.style.filter = ''; document.body.classList.remove('stage-on'); });
+  addEventListener('stage:walk', () => { mode = 'off'; canvas.style.opacity = 0; map.style.filter = ''; delete wrap.dataset.env; document.body.classList.remove('stage-on'); });
   addEventListener('stage:beat', e => {
     const { beat: b, s } = e.detail;
     if (!script) return;
