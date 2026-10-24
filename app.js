@@ -351,6 +351,7 @@ function freeArea(mode) {
   return { l: 0, t: 0, r: r.width - cw, b: r.height };
 }
 function frameStage(i, ms = 1300, mode = 'open') {
+  if (window.terrainOn) return true; // 3D 지형 모드에서는 terrain.js가 카메라를 맡는다
   const e = EVENTS[i], st = window.stageFrame?.(e), r = map.getBoundingClientRect();
   if (!st || !r.width) return false;
   const [cx, cy] = st.at ? px(st.at) : P(PLACES[e.place]);
@@ -905,6 +906,7 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
 (LANG === 'ko' ? getData('data.json') : getData(`data.${LANG}.json`).catch(() => getData('data.json'))).then(d => {
   DATA = d; EVENTS = d.events; PLACES = d.places;
   applyStatic();
+  window.EVENTS_READY = true; // 3D 지형 모드(terrain.js)가 이것을 기다렸다가 조작기를 단다
   PERIODS = Object.fromEntries(d.periods.map(p => [p.id, p]));
   buildMap(); renderTrack();
   const fromHash = EVENTS.findIndex(e => '#' + e.id === location.hash);

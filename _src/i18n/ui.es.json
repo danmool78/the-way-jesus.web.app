@@ -161,5 +161,12 @@
  "settings": "Ajustes",
  "nextScene": "Escena siguiente",
  "compareNote": "Qué Evangelios recogen esta escena, con capítulo y versículo: el mismo hecho visto por distintos testigos.",
- "fullHarmony": "Ver la concordancia completa"
+ "fullHarmony": "Ver la concordancia completa",
+ "map3d": "Ver relieve en 3D",
+ "tiltUp": "Inclinar hacia el horizonte",
+ "tiltDown": "Mirar más desde arriba",
+ "rotate": "Girar",
+ "resetView": "Vista inicial",
+ "only3dGalilee": "Por ahora, el relieve en 3D de prueba solo cubre los alrededores de Galilea.",
+ "mtHermon": "Monte Hermón"
 }

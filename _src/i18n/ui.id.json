@@ -161,5 +161,12 @@
  "settings": "Pengaturan",
  "nextScene": "Adegan berikutnya",
  "compareNote": "Injil mana yang mencatat adegan ini, lengkap dengan pasal dan ayat — peristiwa yang sama dilihat oleh saksi yang berbeda.",
- "fullHarmony": "Lihat tabel perbandingan lengkap"
+ "fullHarmony": "Lihat tabel perbandingan lengkap",
+ "map3d": "Tampilan medan 3D",
+ "tiltUp": "Miringkan ke cakrawala",
+ "tiltDown": "Lihat lebih dari atas",
+ "rotate": "Putar",
+ "resetView": "Tampilan awal",
+ "only3dGalilee": "Untuk sementara, uji coba medan 3D baru mencakup sekitar Galilea.",
+ "mtHermon": "Gunung Hermon"
 }

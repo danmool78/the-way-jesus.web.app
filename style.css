@@ -150,6 +150,28 @@ html:not(:lang(ko)):not(:lang(zh)):not(:lang(ja)) .river-lbl text{writing-mode:h
 .caption.who .cline{display:block}
 .caption p{margin:0;font-family:var(--serif);font-size:21px;line-height:1.5;color:#fbf2dc;text-shadow:0 2px 12px #000;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 
+/* 3D 지형 모드 (terrain.js) */
+.terrain3d{position:absolute;inset:0;display:none;touch-action:none;cursor:grab}
+.terrain3d:active{cursor:grabbing}
+.terrain-on .terrain3d{display:block}
+.terrain-on #fitAll{display:none}
+.tlabels{position:absolute;inset:0;pointer-events:none;display:none;overflow:hidden}
+.terrain-on .tlabels{display:block}
+.tlabel{position:absolute;left:0;top:0;display:flex;flex-direction:column;align-items:center;transition:opacity .3s;white-space:nowrap}
+.tlabel i{width:9px;height:9px;border-radius:50%;background:#fff6dc;border:2px solid #8a6b3a;margin-top:-5px}
+.tlabel span{margin-top:4px;transform:translateX(0);font-family:var(--serif);font-size:13.5px;font-weight:700;color:#fff8e6;text-shadow:0 1px 4px #000,0 0 10px rgba(0,0,0,.6)}
+.tlabel.now i{width:14px;height:14px;background:var(--gold2);border-color:#fff;box-shadow:0 0 14px var(--gold)}
+.tlabel.now span{font-size:18px;color:var(--gold2)}
+.tlabel.feature span{font-size:12.5px;font-weight:400;color:#eef4f6;letter-spacing:.15em}
+/* 지도 조작기: 오른쪽 위가 장면 카드라 왼쪽 가장자리 가운데에 세로로 */
+.mapctl{position:absolute;left:16px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;z-index:3}
+.mapctl button{width:40px;height:40px;border-radius:12px;border:1px solid rgba(217,180,106,.35);background:rgba(20,16,11,.82);color:var(--gold2);font-size:16px;backdrop-filter:blur(6px);display:grid;place-items:center;padding:0}
+.mapctl .m3{font-family:var(--serif);font-weight:700;font-size:15px;letter-spacing:.04em}
+.mapctl .m3.active{background:linear-gradient(180deg,#e9c97f,#b88a3e);color:#24180a;border-color:transparent}
+.m3tools{display:none;flex-direction:column;gap:6px}
+.terrain-on .m3tools{display:flex}
+.m3tools button{width:34px;height:34px;font-size:15px}
+
 /* scene */
 .hero{position:relative;margin:18px 18px 0;height:230px;border-radius:12px;overflow:hidden;border:1px solid #4a3c2c}
 .hero-img{position:absolute;inset:0;border:0;padding:0;margin:0;background:#000;display:block;width:100%}
@@ -367,6 +389,9 @@ dialog{position:fixed}
   .mapbtn{padding:6px 10px;font-size:11px}
   .walkbanner{top:56px;font-size:12.5px;padding:7px 14px;max-width:94vw}
   .walkbanner small{display:none}
+  .mapctl{left:auto;right:10px;top:10px;transform:none}
+  /* 모바일은 손가락으로 끌고 벌려 보므로 단추는 3D 켜기만 */
+  .terrain-on .m3tools{display:none}
   /* 모바일 자막은 지도 위쪽, 칩 아래에 */
   .caption{left:10px;right:10px;bottom:auto;top:58px;max-width:none;padding:8px 14px}
   .caption p{font-size:16px}

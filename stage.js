@@ -215,6 +215,11 @@ window.stageFrame = ev => {
   return { dx: w / 2 - (v.x + 1) / 2 * w, dy: h / 2 - (1 - v.y) / 2 * h, at: s.at || null };
 };
 function anchor() {
+  // 3D 지형 모드: 지형 위에 투영한 장소(또는 at 지점)에 무대를 붙인다 (terrain.js가 geoToClient를 바꿔 끼운다)
+  if (window.terrainOn && curEv) {
+    const ll = script?.at || [PLACES[curEv.place].lat, PLACES[curEv.place].lng], c = window.geoToClient(...ll), w = wrap.getBoundingClientRect();
+    return { x: c.x - w.left, y: c.y - w.top };
+  }
   // 무대 바닥을 실제 지점(at)으로 옮긴 장면은 캔버스도 그 지점에 붙인다 — 핀에 붙여 두면 옮겨 간 인물·집이 캔버스 가장자리에서 잘렸다
   if (script?.at && window.geoToClient) {
     const c = window.geoToClient(...script.at), w = wrap.getBoundingClientRect();

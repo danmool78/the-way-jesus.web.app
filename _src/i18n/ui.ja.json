@@ -161,5 +161,12 @@
  "settings": "設定",
  "nextScene": "次の場面",
  "compareNote": "この場面を記した福音書を章節とともに示す。同じ出来事を異なる証人の目で見た記録である。",
- "fullHarmony": "四福音書対照表をすべて見る"
+ "fullHarmony": "四福音書対照表をすべて見る",
+ "map3d": "3D地形を見る",
+ "tiltUp": "地平線へ傾ける",
+ "tiltDown": "もっと上から見る",
+ "rotate": "回す",
+ "resetView": "最初の視点",
+ "only3dGalilee": "3D地形の試作版は、今はガリラヤ周辺だけを見ることができる。",
+ "mtHermon": "ヘルモン山"
 }

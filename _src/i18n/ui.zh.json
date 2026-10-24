@@ -161,5 +161,12 @@
  "settings": "设置",
  "nextScene": "下一幕",
  "compareNote": "哪几卷福音书记载了这一幕，连同章节一并列出——同一件事，不同见证人的眼光。",
- "fullHarmony": "查看完整的四福音对照表"
+ "fullHarmony": "查看完整的四福音对照表",
+ "map3d": "3D地形",
+ "tiltUp": "向地平线倾斜",
+ "tiltDown": "更多俯视",
+ "rotate": "旋转",
+ "resetView": "初始视角",
+ "only3dGalilee": "3D地形试用版目前只覆盖加利利一带。",
+ "mtHermon": "黑门山"
 }
