@@ -906,7 +906,7 @@ function setListenUI(stopped) {
 // 곡 끝이 다가오면 같은 곡을 처음부터 겹쳐 틀어 이음매가 들리지 않게 하고, 장면이 바뀌어 곡이 다르면 서로 겹쳐 바꾼다.
 // 낭독이 저절로 끝나면 잠깐 두었다가 천천히 내리고(자동 여정의 장면 사이 쉼에는 이어진다), 멈춤을 누르면 바로 내린다.
 // 소리 크기는 Web Audio 사슬로만 정한다 (아이폰은 audio 요소의 volume을 무시한다). 낭독 소리는 이 사슬에 넣지 않는다
-const BGM = { key: 'theway-music', level: 0.16, fade: 2.5 };
+const BGM = { key: 'theway-music', level: 0.144, fade: 2.5 }; // level: 사용자 요청으로 0.16에서 10% 낮춤
 let bgmCtx = null, bgmPlayers = [], bgmCur = 0, bgmCue = null, bgmLoop = null, bgmHush = 0, bgmGo = 0;
 // 켜고 끈 것은 메모리에 두고 localStorage에는 남겨 두기만 한다 (저장이 막힌 브라우저에서도 이번 방문 동안은 끌 수 있게)
 let bgmPref = (() => { try { return localStorage.getItem(BGM.key) !== 'off'; } catch { return true; } })();
