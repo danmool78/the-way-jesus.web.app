@@ -144,6 +144,7 @@ html:not(:lang(ko)):not(:lang(zh)):not(:lang(ja)) .river-lbl text{writing-mode:h
 .placechip b{font-family:var(--serif);font-size:19px;letter-spacing:.04em;white-space:nowrap}
 .placechip .chev{font-size:20px;color:var(--muted);margin-left:4px}
 .mapbtn{border:1px solid rgba(60,45,25,.25);background:rgba(250,244,228,.86);color:#3b2a14;border-radius:999px;padding:7px 13px;font-size:12px;backdrop-filter:blur(4px)}
+.odo{position:absolute;top:66px;left:16px;z-index:2;background:rgba(21,17,13,.78);color:#f3e3bf;border:1px solid rgba(217,180,106,.35);border-radius:999px;padding:5px 12px;font-size:12px;font-variant-numeric:tabular-nums;letter-spacing:.01em;backdrop-filter:blur(4px);pointer-events:auto;white-space:nowrap}
 .mapbtn.active{background:#3b2a14;color:#f6e7c4}
 /* 자막: 지금 읽는 문장을 지도 아래쪽 가운데에 (장면 카드에 가리지 않는 영역) */
 .caption{position:absolute;left:0;right:calc(min(460px,42%) + 28px);bottom:18px;margin:0 auto;width:fit-content;max-width:min(680px,calc(100% - min(460px,42%) - 60px));text-align:center;padding:12px 30px 14px;border-radius:12px;background:linear-gradient(90deg,rgba(14,11,8,0),rgba(14,11,8,.78) 18%,rgba(14,11,8,.78) 82%,rgba(14,11,8,0));opacity:0;transform:translateY(8px);transition:opacity .35s,transform .35s;pointer-events:none;z-index:3}
@@ -410,7 +411,8 @@ dialog{position:fixed}
   .placechip{padding:7px 12px 7px 9px}
   .placechip b{font-size:16px}
   .mapbtn{padding:6px 10px;font-size:11px}
-  .walkbanner{top:56px;font-size:12.5px;padding:7px 14px;max-width:94vw}
+  .odo{top:56px;left:10px;font-size:11px;padding:4px 10px}
+  .walkbanner{top:88px;font-size:12.5px;padding:7px 14px;max-width:94vw}
   .walkbanner small{display:none}
   .mapctl{left:auto;right:10px;top:10px;transform:none}
   /* 모바일은 손가락으로 끌고 벌려 보므로 단추는 3D 켜기만 */
