@@ -55,6 +55,8 @@
  "odo": "Walked {d} km · {s} steps",
  "odoTitle": "Distance Jesus has walked up to this scene (estimated road distance between places; steps at a 75 cm stride)",
  "walkSpeak": "From {a} to {b}.",
+ "sayPlace": "Place",
+ "sayWhen": "Time",
  "arrive": "Arrived",
  "samePlace": "Same place, a new day",
  "showMap": "Show map ▾",

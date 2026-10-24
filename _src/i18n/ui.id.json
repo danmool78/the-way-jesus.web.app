@@ -55,6 +55,8 @@
  "odo": "Ditempuh {d} km · {s} langkah",
  "odoTitle": "Jarak yang ditempuh Yesus sampai adegan ini (perkiraan jalan antartempat; langkah 75 cm)",
  "walkSpeak": "Dari {a} ke {b}.",
+ "sayPlace": "Tempat",
+ "sayWhen": "Waktu",
  "arrive": "Tiba",
  "samePlace": "Tempat yang sama, hari yang baru",
  "showMap": "Tampilkan peta ▾",

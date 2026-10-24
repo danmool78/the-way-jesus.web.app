@@ -55,6 +55,8 @@
  "odo": "已走 {d} 公里 · {s} 步",
  "odoTitle": "耶稣走到这一幕的路程（按地点之间的道路估算，步数以步长75厘米计）",
  "walkSpeak": "从{a}到{b}。",
+ "sayPlace": "地点",
+ "sayWhen": "时间",
  "arrive": "抵达",
  "samePlace": "同一个地方，新的事",
  "showMap": "查看地图 ▾",
