@@ -6,7 +6,7 @@
    좌표는 2D 지도와 같은 지도 단위(app.js의 px, 1단위 = 1/1000도 ≈ 111m). 높이는 EXAG배로 과장한다.
    켜져 있는 동안 window.geoToClient를 3D 투영으로 바꿔 끼워, 3D 무대(stage.js)가 지형 위의 같은 자리에 선다 */
 import { THREE, damp, glowTexture } from './stage/kit.js';
-import { buildJerusalem, EXTENT as JLM } from './stage/jerusalem.js';
+import { buildJerusalem, EXTENT as JLM, DECKS } from './stage/jerusalem.js';
 import { MODELS as EGYPT_MODELS } from './stage/egypt.js';
 import { SCRIPTS } from './stage/scenes.js';
 
@@ -27,7 +27,8 @@ const SINAI = [[31.13, 33.8], [31.15, 33.1], [31.26, 32.3], [31.52, 31.85], [31.
 const BASES = [{ src: 'assets/relief.webp', lat0: 29.15, lat1: 34.6, lng0: 33.0, lng1: 37.4, y: 0 }, { src: 'assets/relief-west.webp', lat0: 29.15, lat1: 31.9, lng0: 29.4, lng1: 33.25, y: -0.05 }];
 
 const wrap = document.querySelector('.mapwrap'), svg = document.getElementById('map');
-let renderer, scene, camera, sun, env, on = false, ready = false, loading = null;
+let renderer, scene, camera, sun, hemi, env, on = false, ready = false, loading = null;
+const SKY = new THREE.Color('#d6dcd6'), LIT = { hemi: new THREE.Color('#fff4dc'), sun: new THREE.Color('#fff0d4') };
 const regions = Object.entries(TREG).map(([name, r]) => {
   const [X0, Z0] = px([r.lat1, r.lng0]), [X1, Z1] = px([r.lat0, r.lng1]);
   return { name, ...r, X0, Z0, X1, Z1, heights: null, hw: 0, hh: 0, load: null, color: null };
@@ -48,6 +49,20 @@ function heightAt(x, z) { // 지도 단위 좌표의 지형 높이 (불러온 �
   const i = Math.min(r.hw - 2, Math.floor(u)), j = Math.min(r.hh - 2, Math.floor(v)), fu = u - i, fv = v - j, H = r.heights, w = r.hw;
   return (H[j * w + i] * (1 - fu) + H[j * w + i + 1] * fu) * (1 - fv) + (H[(j + 1) * w + i] * (1 - fu) + H[(j + 1) * w + i + 1] * fu) * fv;
 }
+// 무대 인물·소품이 서는 높이: 땅, 호수면(배는 물 위에), 도성 모형의 성전 단 윗면 가운데 높은 것
+const inPoly = ([x, z], P) => { let c = false; for (let i = 0, j = P.length - 1; i < P.length; j = i++) if ((P[i][1] > z) !== (P[j][1] > z) && x < (P[j][0] - P[i][0]) * (z - P[i][1]) / (P[j][1] - P[i][1]) + P[i][0]) c = !c; return c; };
+let pools = null, decks = null;
+function standAt(x, z) {
+  let h = heightAt(x, z);
+  pools ??= LAKES.filter(([, m]) => m !== undefined).map(([k, m]) => ({ P: GEO[k].map(p => px(p)), top: lv(m) + 0.25 }));
+  pools.forEach(L => { if (h < L.top && inPoly([x, z], L.P)) h = L.top; });
+  if (city) {
+    decks ??= DECKS.map(d => { const P = d.ll.map(p => px(p)), xs = P.map(p => p[0]), zs = P.map(p => p[1]); // 모형 조각은 가운데 땅 높이만큼 올렸다 (addModel)
+      return { P, top: heightAt((Math.min(...xs) + Math.max(...xs)) / 2, (Math.min(...zs) + Math.max(...zs)) / 2) + d.top }; });
+    decks.forEach(d => { if (h < d.top && inPoly([x, z], d.P)) h = d.top; });
+  }
+  return h;
+}
 const loadImg = src => new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = rej; im.src = src; });
 const mapTex = img => { const t = new THREE.Texture(img); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = renderer.capabilities.getMaxAnisotropy(); t.needsUpdate = true; return t; };
 
@@ -66,7 +81,7 @@ async function build() {
   scene.background = new THREE.Color(sky);
   scene.fog = new THREE.Fog(sky, 260, 900);
   camera = new THREE.PerspectiveCamera(38, 1, 1, 4000);
-  scene.add(new THREE.HemisphereLight('#fff4dc', '#6b5a44', 1.35));
+  hemi = new THREE.HemisphereLight('#fff4dc', '#6b5a44', 1.35); scene.add(hemi);
   sun = new THREE.DirectionalLight('#fff0d4', 2.4); // 북서쪽 해 — 그림자 상자는 카메라를 따라다닌다 (loop)
   sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048); sun.shadow.bias = -0.0005;
   scene.add(sun, sun.target);
@@ -82,12 +97,23 @@ async function build() {
   await Promise.all(BASES.map(async b => { b.tex = mapTex(await loadImg(b.src)); }));
   addWalker(); addLabels();
   decorate();
+  // 3D 무대(stage.js)가 이 장면 안에 서도록 여는 창구: 같은 카메라·깊이로 그리고, 땅 높이에 발을 붙인다
+  window.terrain3d = { scene, camera, cam, heightAt: standAt, zoomAt, sceneDist };
   ready = true;
 }
 
 /* ---------- 지역 불러오기 ---------- */
 function ensureRegion(r) {
-  if (!r.load) r.load = loadRegion(r).then(() => { decorate(); window.recenterStage?.(); });
+  if (!r.load) {
+    r.load = loadRegion(r).then(() => { decorate(); window.recenterStage?.(); });
+    // 높이를 풀지 않은 변(맞닿은 지역 쪽)은 그 이웃도 함께 불러온다 — 한쪽만 있으면 경계에 가짜 낭떠러지(턱)가 섰다 (갈릴리·유대 32.55°)
+    const near = (a, b) => Math.abs(a - b) < 0.01, overlapX = o => o.X0 < r.X1 && o.X1 > r.X0, overlapZ = o => o.Z0 < r.Z1 && o.Z1 > r.Z0;
+    regions.forEach(o => {
+      if (o === r) return;
+      if ((!r.fade.includes('s') && near(o.Z0, r.Z1) && overlapX(o)) || (!r.fade.includes('n') && near(o.Z1, r.Z0) && overlapX(o)) ||
+        (!r.fade.includes('e') && near(o.X0, r.X1) && overlapZ(o)) || (!r.fade.includes('w') && near(o.X1, r.X0) && overlapZ(o))) ensureRegion(o);
+    });
+  }
   return r.load;
 }
 function ensureNear(x, z, margin = 120) { // 이 점 둘레의 지역을 미리 불러온다
@@ -238,13 +264,21 @@ function addVillages(r) {
   });
 }
 const boats = [];
+// 배의 높이: 뱃전(원점) 아래로 몸통이 1.2 내려가므로 수면(lv(-210)+0.25)보다 0.5 올려 몸통 절반 남짓이 물 위에 — 전에는 뱃전이 수면에 겨우 걸쳤다
+const BOAT_Y = lv(-210) + 0.75;
 function addBoats() {
-  const hull = new THREE.MeshStandardMaterial({ color: '#6e4a2c', roughness: 0.9 }), sail = new THREE.MeshStandardMaterial({ color: '#efe6d2', side: THREE.DoubleSide });
+  // 몸통은 위가 뚫린 반구라 안쪽 면도 그린다(DoubleSide) — 한쪽만 그리면 위에서 볼 때 물속 테두리와 돛만 보여 잠긴 배 같았다
+  const hull = new THREE.MeshStandardMaterial({ color: '#6e4a2c', roughness: 0.9, side: THREE.DoubleSide }), dark = new THREE.MeshStandardMaterial({ color: '#4a301c', roughness: 0.9 });
+  const deck = new THREE.MeshStandardMaterial({ color: '#8a6440', roughness: 0.9 }), sail = new THREE.MeshStandardMaterial({ color: '#efe6d2', side: THREE.DoubleSide });
   [[32.83, 35.57], [32.86, 35.6], [32.79, 35.6]].forEach(([a, b], i) => {
     const g = new THREE.Group(), [x, z] = px([a, b]);
-    const h = new THREE.Mesh(new THREE.SphereGeometry(2.4, 12, 6, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2), hull); h.scale.set(1.6, 0.5, 0.6); g.add(h);
-    const s = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 3.4), sail); s.position.y = 2.2; s.rotation.y = 1.2; g.add(s);
-    g.position.set(x, lv(-210) + 0.3, z); g.rotation.y = i * 1.7; g.userData.phase = i * 2;
+    const h = new THREE.Mesh(new THREE.SphereGeometry(2.4, 16, 6, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2), hull); h.scale.set(1.6, 0.5, 0.6); g.add(h);
+    const rim = new THREE.Mesh(new THREE.TorusGeometry(2.4, 0.09, 6, 32), dark); rim.scale.set(1.6, 0.6, 1); rim.rotation.x = Math.PI / 2; g.add(rim); // 뱃전
+    const d = new THREE.Mesh(new THREE.BoxGeometry(5.6, 0.08, 1.9), deck); d.position.y = -0.3; g.add(d); // 갑판
+    const mast = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.08, 4.2, 6), dark); mast.position.set(0.6, 1.8, 0); g.add(mast);
+    const s = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 3.0), sail); s.position.set(0.6, 2.2, 0); s.rotation.y = 1.2; g.add(s);
+    g.traverse(o => { if (o.isMesh) o.castShadow = o.receiveShadow = true; });
+    g.position.set(x, BOAT_Y, z); g.rotation.y = i * 1.7; g.userData.phase = i * 2;
     scene.add(g); boats.push(g);
   });
 }
@@ -283,9 +317,9 @@ function clearStageSpot() {
   let cx = 1e9, cz = 1e9, r = 0;
   if (stageOn) {
     const p = PLACES[curEvent().place];
-    [cx, cz] = px(f.at || [p.lat, p.lng]);
+    [cx, cz] = f.xz || px(f.at || [p.lat, p.lng]); // xz: 지형 안 무대가 알려 주는 지금의 바닥 중심 (@at으로 옮겨 갈 때)
     const D = camera.position.distanceTo(v3.set(cx, heightAt(cx, cz), cz)), H = wrap.clientHeight || 1;
-    r = f.rpx * 2 * D * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) / H;
+    r = f.r ?? f.rpx * 2 * D * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) / H; // r: 지형 안에 선 무대가 알려 주는 지도 단위 반지름
   }
   if (cleared && Math.abs(cleared.cx - cx) < 0.01 && Math.abs(cleared.cz - cz) < 0.01 && Math.abs(cleared.r - r) <= cleared.r * 0.08) return;
   cleared = { cx, cz, r };
@@ -393,8 +427,17 @@ function flyToScene(ev) {
   const p = PLACES[ev.place], [x0, z0] = px([p.lat, p.lng]), [x1, z1] = px(at), sep = Math.hypot(x1 - x0, z1 - z0);
   if (sep < 8) return flyTo(ev.place);
   ensureNear(x1, z1);
-  cam.goal = { tx: (x0 + x1) / 2, tz: (z0 + z1) / 2, dist: Math.max(placeDist(ev.place), sep * 1.6) };
+  cam.goal = { tx: (x0 + x1) / 2, tz: (z0 + z1) / 2, dist: sceneDist(ev) };
 }
+// 장면에 날아가 내려앉는 거리 (무대 축척의 기준이 된다)
+function sceneDist(ev) {
+  const at = SCRIPTS[ev.id]?.at, p = PLACES[ev.place];
+  if (!at) return placeDist(ev.place);
+  const [x0, z0] = px([p.lat, p.lng]), [x1, z1] = px(at), sep = Math.hypot(x1 - x0, z1 - z0);
+  return sep < 8 ? placeDist(ev.place) : Math.max(placeDist(ev.place), sep * 1.6);
+}
+// 장소 k에서 dist 거리일 때 예전 무대의 인물 크기 (stage.js가 무대 축척을 정할 때 쓴다)
+const zoomAt = (dist, k) => figZoom(dist, isCity(k));
 // 무대 인물의 크기 (stage.js가 terrainView.zoom으로 받는다). 당기면 천천히 커지다가(0.6제곱) 1.5배에 이르는 거리(FIG_D)부터는
 // 땅과 같은 비율로 커진다 — 인물만 멈추면 땅만 계속 커져 인물이 점점 작아 보였다. 도성 안은 그대로 1.5배에서 멈춘다:
 // 처음부터 바짝(42) 다가가 있어 같이 키우면 성벽·성전을 가리고, 당길수록 건물이 드러나는 편이 낫다
@@ -449,11 +492,11 @@ function loop(now) {
   if (now - nearT > 500) { nearT = now; ensureNear(cam.tx, cam.tz, 60); } // 둘러보다 다가간 지역도 불러온다
   cam.pitch = damp(cam.pitch, ui.pitch, 4, dt); cam.yaw = damp(cam.yaw, ui.yaw, 4, dt);
   placeCam();
-  window.terrainView = { yaw: cam.yaw, pitch: cam.pitch, zoom: figZoom(cam.dist, isCity(curEvent().place)) };
+  window.terrainView = { yaw: cam.yaw, pitch: cam.pitch, zoom: zoomAt(cam.dist, curEvent().place) };
   window.stageRender?.(); // 바뀐 시점으로 무대를 붙이고 그린다
   // 안개는 카메라 거리에 맞춰 — 멀리 물러나도 땅의 끝이 하늘과 안개 속으로 녹아든다
   scene.fog.near = cam.dist * 1.1; scene.fog.far = cam.dist * 3.6;
-  boats.forEach((b, i) => { b.position.y = lv(-210) + 0.3 + Math.sin(now / 900 + b.userData.phase) * 0.1; b.rotation.z = Math.sin(now / 1300 + i) * 0.04; });
+  boats.forEach((b, i) => { b.position.y = BOAT_Y + Math.sin(now / 900 + b.userData.phase) * 0.1; b.rotation.z = Math.sin(now / 1300 + i) * 0.04; });
   // 걷는 사람: 화면에서 늘 알아보게 거리에 맞춰 크기를 바꾼다. 서 있을 때는 고리만 은은하게
   if (walker.has) {
     const W = walker, s = Math.max(0.6, cam.dist / 150);
@@ -471,7 +514,13 @@ function loop(now) {
   const near = THREE.MathUtils.clamp((cam.dist - 40) / 90, 0.15, 1);
   routes.forEach(l => { const i = l.userData.i; l.material.opacity = (i <= idx ? 0.9 : walking && i === idx + 1 ? 1 : 0.18) * near; });
   clearStageSpot();
-  const tone = svg.style.filter; if (renderer.domElement.style.filter !== tone) renderer.domElement.style.filter = tone; // 장면의 밤·폭풍·새벽 색조를 2D 지도처럼 지형에도
+  // 장면의 밤·폭풍·새벽: 3D 무대가 서 있으면 그 분위기를 해·하늘빛으로(stage.js의 stageTone), 아니면 2D 지도처럼 색조 필터로
+  const tn = window.stageTone;
+  hemi.intensity = 1.35 * (tn ? tn.hemi : 1); hemi.color.copy(tn ? tn.hemiC : LIT.hemi);
+  sun.intensity = 2.4 * (tn ? tn.sun : 1); sun.color.copy(tn ? tn.sunC : LIT.sun);
+  scene.background.copy(SKY); if (tn) scene.background.multiply(tn.skyC);
+  scene.fog.color.copy(scene.background);
+  const tone = tn ? '' : svg.style.filter; if (renderer.domElement.style.filter !== tone) renderer.domElement.style.filter = tone;
   renderer.render(scene, camera);
   placeLabels();
 }

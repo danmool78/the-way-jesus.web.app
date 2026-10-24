@@ -41,7 +41,8 @@ const keyOf = s => voiceKey(`${s.gemini ? 'gemini-' : ''}${voiceOf(s).name}`, s.
 if (old) {
   const said = e => script(e).map(keyOf).join('\n');
   const recorded = e => script(e).some(x => existsSync(`${OUT}/${keyOf(x)}.mp3`));
-  events = d.events.filter(e => { const o = old.events.find(x => x.id === e.id); return o && said(o) !== said(e) && recorded(o); });
+  const oldScenes = [...(old.prologue ? [old.prologue] : []), ...old.events]; // 프롤로그도 함께 견준다
+  events = scenes.filter(e => { const o = oldScenes.find(x => x.id === e.id); return o && said(o) !== said(e) && recorded(o); });
   console.log('다시 녹음할 장면:', events.map(e => e.id).join(' ') || '없음');
   if (!events.length) process.exit(0);
 }

@@ -513,7 +513,7 @@
    "when": "início de 27 d.C.",
    "subtitle": "Um convite às quatro da tarde",
    "story": [
-    "Em Betânia, além do Jordão, João estava com dois dos seus discípulos quando viu Jesus passar e exclamou: vejam, o Cordeiro de Deus. Ao ouvir isso, os dois discípulos foram atrás dele. Jesus se voltou e perguntou o que eles procuravam.",
+    "Em Betânia, além do Jordão, João, que na véspera tinha apontado Jesus como o Cordeiro de Deus que carrega o pecado do mundo, estava com dois dos seus discípulos quando o viu passar e exclamou de novo: vejam, o Cordeiro de Deus. Ao ouvir isso, os dois discípulos foram atrás dele. Jesus se voltou e perguntou o que eles procuravam.",
     "Quando lhe perguntaram onde morava, ele respondeu: venham e vejam. Eram cerca de quatro horas da tarde. André, um dos dois que passaram aquele dia com ele, foi procurar o irmão, Simão, e lhe contou que tinha encontrado o Messias. Jesus deu a Simão um nome novo: Cefas.",
     "No dia seguinte, a caminho da Galileia, chamou Filipe, de Betsaida. Filipe correu até Natanael para lhe dar a notícia. Desconfiado, Natanael perguntou se de Nazaré podia sair algo bom, mas, ao ouvir que Jesus já o tinha visto debaixo da figueira, desmoronou numa confissão."
    ],
@@ -533,6 +533,10 @@
     {
      "who": "Natanael",
      "text": "Mestre, tu és o Filho de Deus! Tu és o Rei de Israel!"
+    },
+    {
+     "who": "João Batista",
+     "text": "Vejam! Este é o Cordeiro de Deus, aquele que carrega o pecado do mundo."
     }
    ],
    "note": "A hora décima, na contagem judaica a partir do nascer do sol, corresponde a cerca de quatro da tarde. Cefas significa pedra em aramaico. Em grego, é Pedro.",
@@ -1833,7 +1837,7 @@
    "story": [
     "Chegou um recado de Betânia. Senhor, aquele que tu amas está doente. Mas Jesus ainda ficou dois dias onde estava antes de se pôr a caminho. Quando disse que voltariam à Judeia, Tomé falou: vamos nós também, para morrer com ele.",
     "Quando chegaram, Lázaro já estava no túmulo havia quatro dias. Marta saiu correndo e disse: Senhor, se estivesses aqui, o meu irmão não teria morrido. Eu sou a ressurreição e a vida. Você crê nisso? Em seguida veio Maria, caiu aos seus pés e chorou, e Jesus também chorou.",
-    "Diante do túmulo, uma gruta fechada com uma pedra, Jesus mandou tirar a pedra. Mesmo com Marta preocupada com o mau cheiro, a pedra foi removida. Jesus ergueu os olhos ao céu, deu graças e gritou com voz forte: Lázaro, venha para fora. Com as mãos e os pés envoltos em faixas, o homem que estava morto saiu andando."
+    "Diante do túmulo, uma gruta fechada com uma pedra, Jesus mandou tirar a pedra. Mesmo com Marta preocupada com o mau cheiro, a pedra foi removida. Jesus ergueu os olhos ao céu, deu graças e gritou com voz forte: Lázaro, venha para fora. Com as mãos e os pés envoltos em faixas, o homem que estava morto saiu andando. Depois disso, o sumo sacerdote Caifás disse ao conselho que era melhor um só homem morrer pelo povo. João registrou essas palavras como uma profecia de que Jesus morreria pela nação e para reunir em um só os filhos de Deus dispersos."
    ],
    "words": [
     {
@@ -1851,6 +1855,10 @@
     {
      "who": "Marta",
      "text": "Sim, Senhor. Eu creio que tu és o Cristo, o Filho de Deus, aquele que havia de vir ao mundo."
+    },
+    {
+     "who": "Caifás",
+     "text": "Vocês não veem que é melhor para vocês que morra um homem em lugar do povo, do que a nação inteira se perder?"
     }
    ],
    "note": "João escreve que Betânia ficava a quinze estádios de Jerusalém, uns três quilômetros. Em textos judaicos posteriores aparece a ideia de que a alma do morto permanecia três dias junto do corpo. Quatro dias eram o tempo em que a esperança já se tinha apagado.",
@@ -1890,7 +1898,7 @@
      "text": "Pelas forças humanas, é impossível. Mas não para Deus. Para Deus nada é impossível."
     }
    ],
-   "note": "Mateus o apresenta como um jovem, Lucas como um homem de posição, e Marcos como alguém que tinha muitos bens. Juntando os três relatos, costuma-se chamá-lo de jovem rico e importante. O lugar era a região da Judeia além do Jordão.",
+   "note": "Depois do que aconteceu com Lázaro, Jesus ficou um tempo em Efraim, perto do deserto, e depois foi para a região da Judeia além do Jordão. Mateus o chama de jovem, Lucas de homem de posição e Marcos de alguém com muitos bens; por isso costuma ser chamado de jovem rico.",
    "reflect": "No caminho de seguir o Senhor, o que ainda seguro nas mãos sem conseguir largar?",
    "quiz": {
     "q": "Que animal, segundo Jesus, passaria mais facilmente pelo buraco de uma agulha do que um rico entraria no Reino de Deus?",
@@ -1911,7 +1919,7 @@
    "story": [
     "Jericó, cidade-oásis cheia de palmeiras. Quando passava o cortejo de peregrinos que subia para Jerusalém, Bartimeu, um cego que pedia esmola sentado à beira do caminho, gritou: Jesus, Filho de Davi, tem piedade de mim. Quanto mais o mandavam ficar quieto, mais alto ele gritava.",
     "Jesus parou e mandou chamá-lo. Ele jogou o manto de lado, deu um salto e foi até Jesus. O que você quer que eu faça por você? Mestre, quero voltar a ver. Vá, a sua fé o salvou. No mesmo instante os seus olhos se abriram, e ele seguiu Jesus pelo caminho.",
-    "Naquela cidade vivia Zaqueu, chefe dos cobradores de impostos e homem rico. Como era baixo e a multidão o impedia de ver Jesus, correu na frente e subiu num sicômoro. Jesus parou debaixo da árvore, olhou para cima e o chamou pelo nome. Naquele dia, Zaqueu disse que daria aos pobres metade dos seus bens."
+    "Naquela cidade vivia Zaqueu, chefe dos cobradores de impostos e homem rico. Como era baixo e a multidão o impedia de ver Jesus, correu na frente e subiu num sicômoro. Jesus parou debaixo da árvore, olhou para cima e o chamou pelo nome. Naquele dia, Zaqueu disse que daria aos pobres metade dos seus bens. Neste caminho de subida a Jerusalém, Jesus já tinha dito aos discípulos que o Filho do Homem veio para servir e entregar a sua vida como resgate por muitos."
    ],
    "words": [
     {
@@ -1929,6 +1937,10 @@
     {
      "who": "Jesus",
      "text": "Vá. A sua fé o curou."
+    },
+    {
+     "who": "Jesus",
+     "text": "O Filho do Homem não veio para ser atendido, mas para servir aos outros e entregar a sua vida como resgate por muitos."
     }
    ],
    "note": "Jericó, um oásis cerca de duzentos e cinquenta metros abaixo do nível do mar, tinha o palácio de inverno de Herodes e ficava na rota do comércio de tâmaras e bálsamo, por isso a sua coletoria era importante. Os Evangelhos registram com pequenas diferenças o número de cegos e o momento do encontro.",
@@ -2152,13 +2164,13 @@
    "subtitle": "A última noite, em que lavou os pés e partiu o pão",
    "story": [
     "Quinta-feira à tarde, Pedro e João seguem um homem que carrega um cântaro de água e preparam a mesa da Páscoa numa grande sala no andar de cima. Quando os discípulos se reúnem à luz das lamparinas, Jesus tira o manto, prende uma toalha à cintura, põe água numa bacia e lava os pés deles um por um.",
-    "Durante a refeição, toma o pão, dá graças, parte-o e o entrega, dizendo que é o seu corpo dado por eles. Passa o cálice e diz que é a nova aliança no seu sangue. Quando diz que um deles vai entregá-lo, a sala gela, e Judas se levanta e sai. Era noite.",
+    "Durante a refeição, toma o pão, dá graças, parte-o e o entrega, dizendo que é o seu corpo dado por eles. Passa o cálice e diz que é o seu sangue que sela a aliança, derramado para que os pecados de muitos sejam perdoados. Quando diz que um deles vai entregá-lo, a sala gela, e Judas se levanta e sai. Era noite.",
     "Aos discípulos que ficaram, Jesus fala longamente. Que se amem uns aos outros, que o coração deles não se perturbe, que ele é o caminho. Depois ergue os olhos ao céu e ora por eles. Cantado o hino, saem na escuridão rumo ao monte das Oliveiras."
    ],
    "words": [
     {
      "who": "Jesus",
-     "text": "Isto é o meu corpo, entregue por vocês. Façam isto em memória de mim. Este cálice é a nova aliança no meu sangue, derramado por vocês."
+     "text": "Isto é o meu corpo, entregue por vocês. Façam isto em memória de mim. Este cálice é o meu sangue, o sangue da aliança de Deus, derramado para que os pecados de muitos sejam perdoados."
     },
     {
      "who": "Jesus",
@@ -2305,7 +2317,7 @@
     }
    ],
    "note": "A crucificação era a mais vergonhosa das execuções, aplicada por Roma a rebeldes e escravos. A tradição mais aceita situa o Gólgota no lugar da Basílica do Santo Sepulcro, e o Túmulo do Jardim, proposto no século dezenove, também é conhecido como lugar de peregrinação.",
-   "reflect": "Diante das suas últimas palavras, tudo está cumprido, o que eu posso deixar nas mãos dele?",
+   "reflect": "Será que eu sei que o meu nome também está entre os motivos pelos quais ele não fugiu deste caminho?",
    "quiz": {
     "q": "Quem os soldados obrigaram a carregar a cruz de Jesus?",
     "options": [
@@ -2402,7 +2414,7 @@
    "subtitle": "Uma paz que atravessou a porta trancada",
    "story": [
     "Na tarde do dia da ressurreição, os discípulos estão reunidos com as portas trancadas por medo. Enquanto ainda se agitam com o relato dos dois que voltaram de Emaús, Jesus aparece de pé no meio deles. A paz esteja com vocês. Assustados, os discípulos pensam estar vendo um fantasma.",
-    "Ele lhes mostra as mãos e os pés marcados pelos cravos e o lado ferido pela lança. Come diante deles um pedaço de peixe assado e abre a mente deles para entenderem as Escrituras. Depois sopra sobre eles e diz: recebam o Espírito Santo.",
+    "Ele lhes mostra as mãos e os pés marcados pelos cravos e o lado ferido pela lança. Come diante deles um pedaço de peixe assado, abre a mente deles para entenderem as Escrituras e diz que o Cristo devia sofrer e ressuscitar, e que a notícia do perdão chegaria a todas as nações. Depois sopra sobre eles e diz: recebam o Espírito Santo.",
     "Tomé, que não estava presente, insiste que não vai crer enquanto não tocar com as próprias mãos. Oito dias depois, de novo com as portas trancadas, Jesus está de pé ali e lhe oferece as mãos e o lado. Da boca de Tomé irrompe a confissão. Meu Senhor e meu Deus."
    ],
    "words": [
@@ -2421,6 +2433,10 @@
     {
      "who": "Tomé",
      "text": "Meu Senhor e meu Deus!"
+    },
+    {
+     "who": "Jesus",
+     "text": "O Cristo precisava sofrer e voltar à vida no terceiro dia. Agora, em seu nome, o chamado para voltar a Deus e ser perdoado se espalhará de Jerusalém a todas as nações."
     }
    ],
    "note": "Tomé era chamado Dídimo, que quer dizer gêmeo. Na contagem judaica, oito dias depois inclui o primeiro dia, e por isso indica o mesmo dia da semana seguinte, isto é, de novo o primeiro dia da semana.",

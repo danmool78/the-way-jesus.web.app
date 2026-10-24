@@ -49,7 +49,7 @@ function applyStatic() {
     ['#rate', 'speedLabel', 'aria-label'], ['#music', 'music', 'aria-label'], ['#music', 'music', 'title'],
     ['#words h2', 'wordsHead'], ['#words .list-head p', 'wordsIntro'], ['#wordSearch', 'wordsSearch', 'placeholder'], ['#wordSearch', 'wordsSearchLabel', 'aria-label'],
     ['#harmony h2', 'harmonyHead'], ['#harmony .list-head p', 'harmonyIntro'], ['#quiz h2', 'quizHead'], ['#quiz .list-head p', 'quizIntro'],
-    ['#closeViewer', 'close', 'aria-label'], ['#closeStamps', 'close', 'aria-label'], ['#closeQuiz', 'close', 'aria-label'], ['#stamps h2', 'myFootsteps'], ['#stamps .fine', 'stampsNote'],
+    ['#closeViewer', 'close', 'aria-label'], ['#closeStamps', 'close', 'aria-label'], ['#closeQuiz', 'close', 'aria-label'], ['#closeEnd', 'close', 'aria-label'], ['#reopenEnd', 'endReopen'], ['#stamps h2', 'myFootsteps'], ['#stamps .fine', 'stampsNote'],
     ['#resetProgress', 'resetProgress']
   ].forEach(([sel, k, attr]) => { const el = $(sel); if (!el) return; if (attr) el.setAttribute(attr, t(k)); else el.textContent = t(k); });
   $$('[data-i]').forEach(el => { el.textContent = t(el.dataset.i); }); // 글씨 키를 단 요소들
@@ -148,7 +148,7 @@ const REGIONS = [
   ['데가볼리', 32.52, 35.86], ['빌립의 영지', 33.02, 35.86], ['페니키아', 33.42, 35.42], ['이두매', 31.12, 34.86],
   ['애 굽', 30.72, 30.95], ['시 나 이', 30.55, 33.55]
 ];
-const REFCITIES = [['디베랴', 32.79, 35.535], ['가이사랴', 32.50, 34.905], ['욥바', 32.05, 34.765], ['세바스테', 32.276, 35.19], ['마케루스', 31.565, 35.63],
+const REFCITIES = [['디베랴', 32.79, 35.535], ['가이사랴', 32.50, 34.905], ['욥바', 32.05, 34.765], ['세바스테', 32.276, 35.19], ['에브라임', 31.953, 35.30], ['마케루스', 31.565, 35.63],
   ['가사', 31.50, 34.46], ['라피아', 31.28, 34.25], ['리노코루라', 31.13, 33.80], ['펠루시움', 31.04, 32.55], ['부바스티스', 30.57, 31.51],
   ['레온토폴리스', 30.29, 31.33], ['헬리오폴리스 (온)', 30.13, 31.29], ['멤피스', 29.85, 31.25], ['알렉산드리아', 31.20, 29.92]];
 
@@ -232,7 +232,7 @@ function buildMap() {
     const bend = (i % 2 ? 1 : -1) * 0.18;
     const cx = (x1 + x2) / 2 - dy * bend, cy = (y1 + y2) / 2 + dx * bend;
     const path = document.createElementNS(svgNS, 'path');
-    const via = routeVia(a, b);
+    const via = routeVia(a, b, e);
     // 경유지가 있는 길(애굽으로 가는 해안 길)은 그 지점들을 잇는 곡선으로
     path.setAttribute('d', via ? smooth([[a.lat, a.lng], ...via, [b.lat, b.lng]]) : `M${x1},${y1} Q${cx},${cy} ${x2},${y2}`);
     path.setAttribute('pathLength', '1');
@@ -489,13 +489,14 @@ function updateMap(prevIdx, { camera = true } = {}) {
 /* ---------- 걷기 ---------- */
 const toRad = d => d * Math.PI / 180;
 // 두 장소 사이의 경유지: 애굽 쪽(via를 가진 장소)에서 가까운 순서가 길의 끝 쪽에 오게
-function routeVia(a, b) {
+function routeVia(a, b, e) {
+  if (e?.via) return e.via; // 장면에 적힌 경유지 (예: 나사로 일 뒤 에브라임을 거쳐 베레아로)
   if (b.via) return b.via;
   if (a.via) return [...a.via].reverse();
   return null;
 }
-function km(a, b) {
-  const via = routeVia(a, b);
+function km(a, b, e) {
+  const via = routeVia(a, b, e);
   // 해안 길(경유지가 있는 길)은 경유지를 이어 잰다 — 거의 곧은 길이라 덜 가산한다
   if (via) { const pts = [a, ...via.map(([lat, lng]) => ({ lat, lng })), b]; return pts.slice(1).reduce((s, p, i) => s + arc(pts[i], p) * 1.1, 0); }
   return arc(a, b) * 1.25; // 길은 직선보다 굽어 있으므로 25% 가산
@@ -505,8 +506,8 @@ function arc(a, b) {
   const h = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(a.lat)) * Math.cos(toRad(b.lat)) * Math.sin(dLng / 2) ** 2;
   return 6371 * 2 * Math.asin(Math.sqrt(h));
 }
-function travelText(a, b) {
-  const d = km(a, b);
+function travelText(a, b, e) {
+  const d = km(a, b, e);
   const w = d < 22 ? t('walkHours', { n: Math.max(1, Math.round(d / 4.5)) }) : t('walkDays', { n: Math.round(d / 25) });
   return t('distance', { d: d < 10 ? d.toFixed(1) : Math.round(d), t: w });
 }
@@ -514,12 +515,12 @@ function travelText(a, b) {
 // 배로 호수를 건너 닿은 장면(풍랑·거라사·다시 건너옴·벳새다 들·물 위·가버나움)은 걸은 길에 더하지 않는다
 const STRIDE_M = 0.75, BY_BOAT = new Set(['e28', 'e29', 'e30', 'e31', 'e32', 'e33']);
 let odoCum = null;
-const legKm = (a, e) => a === e.place || BY_BOAT.has(e.id) ? 0 : km(PLACES[a], PLACES[e.place]);
+const legKm = (a, e) => a === e.place || BY_BOAT.has(e.id) ? 0 : km(PLACES[a], PLACES[e.place], e);
 const odoAt = i => (odoCum ||= EVENTS.reduce((c, e, k) => (c.push(k ? c[k - 1] + legKm(EVENTS[k - 1].place, e) : 0), c), []))[i];
+const stepsText = km => { const s = Math.round(km * 1000 / STRIDE_M); return s >= 1e4 ? new Intl.NumberFormat(LANG, { notation: 'compact', maximumFractionDigits: 1 }).format(s) : s.toLocaleString(LANG); };
 function setOdo(d) {
   const el = $('#odo'); if (!el) return;
-  const steps = Math.round(d * 1000 / STRIDE_M);
-  el.textContent = t('odo', { d: Math.round(d).toLocaleString(LANG), s: steps >= 1e4 ? new Intl.NumberFormat(LANG, { notation: 'compact', maximumFractionDigits: 1 }).format(steps) : steps.toLocaleString(LANG) });
+  el.textContent = t('odo', { d: Math.round(d).toLocaleString(LANG), s: stepsText(d) });
   el.title = t('odoTitle');
 }
 let walking = false, walkAnim = null;
@@ -535,9 +536,9 @@ function walkTo(i, done) {
   dispatchEvent(new CustomEvent('stage:walk', { detail: { ev: to } }));
   setCard('peek');
   $('#nextHint', map).style.display = 'none';
-  banner(`<span class="wk">👣</span><b>${esc(A.name)}</b> → <b>${esc(B.name)}</b><small>${travelText(A, B)}</small>`);
+  banner(`<span class="wk">👣</span><b>${esc(A.name)}</b> → <b>${esc(B.name)}</b><small>${travelText(A, B, to)}</small>`);
   if (autoOn) speakQueue([{ text: t('walkSpeak', { a: A.name.replace(/[()·]/g, ' '), b: B.name.replace(/[()·]/g, ' ') }) }]);
-  const total = path.getTotalLength(), dur = reduced() ? 0 : Math.min(6500, Math.max(2200, km(A, B) * 30));
+  const total = path.getTotalLength(), dur = reduced() ? 0 : Math.min(6500, Math.max(2200, km(A, B, to) * 30));
   // 카메라가 걷는 사람을 따라간다: 장면에서 물러나 길이 넉넉히 보이는 높이로 올라간 뒤 걷는 사람을 화면 가운데 두고 함께 옮겨 간다.
   // 도착하면 go()의 frameStage가 지금 화면에서 이어 무대로 내려간다. 전체 경로 보기·3D 지형·움직임 줄이기에서는 예전처럼 두 곳을 한 화면에
   followWalk = fitMode !== 'all' && !window.terrainOn && !!dur;
@@ -697,7 +698,7 @@ function showTab(k) {
   const order = isPro() ? ['story', 'text'] : ['story', 'text', 'compare'], nx = order[order.indexOf(k) + 1], b = $('#contBtn', sc);
   if (nx) { b.innerHTML = `${esc(t('continueReading'))} <span aria-hidden="true">→</span>`; b.onclick = () => { if (sc.classList.contains('open')) setCard('full'); showTab(nx); $('.ctabs', sc).scrollIntoView({ block: 'start', behavior: 'smooth' }); }; }
   else if (idx < EVENTS.length - 1) { b.innerHTML = `${esc(t('walkNext'))} <span aria-hidden="true">→</span>`; b.onclick = () => go(idx + 1); }
-  else { b.innerHTML = `${esc(t('quizReview'))}`; b.onclick = () => setView('quiz'); }
+  else { b.innerHTML = esc(t('finishJourney')); b.onclick = () => endJourney(); }
 }
 // 지금 장면의 퀴즈: 아래 조작부의 카드에서 창으로 연다
 function updateQuizBtn() {
@@ -1008,7 +1009,7 @@ function startAuto() {
     if (!autoOn) return;
     speakScene(() => {
       if (!autoOn) return;
-      if (idx >= EVENTS.length - 1) { stopAuto(); toast(t('journeyEnd')); return; }
+      if (idx >= EVENTS.length - 1) { stopAuto(); if (!endJourney(true)) toast(t('journeyEnd')); return; }
       autoTimer = setTimeout(() => { if (!autoOn) return; go(idx + 1, { keepSpeech: true, onArrive: () => { autoTimer = setTimeout(run, 1400); } }); }, 1200);
     });
   };
@@ -1159,8 +1160,13 @@ function renderQuizStep() {
     const pct = r.score / r.list.length;
     $('#quizBody').innerHTML = `<div class="qresult"><div class="big">${r.score} / ${r.list.length}</div>
       <p>${esc(pct === 1 ? t('quizPerfect') : pct >= .7 ? t('quizGood') : t('quizOk'))}</p>
-      <button class="bigbtn" id="qBack">${esc(t('backToPeriods'))}</button></div>`;
-    $('#qBack').onclick = renderQuizHome; return;
+      <button class="bigbtn" id="qBack">${esc(t('backToPeriods'))}</button>${r.missed ? `<button class="textbtn" id="qEnd">${esc(t('endReopen'))}</button>` : ''}</div>`;
+    $('#qBack').onclick = renderQuizHome;
+    if (r.missed) {
+      $('#qEnd').onclick = openEnd;
+      if (!missedQuiz().length) setTimeout(openEnd, 900); // 남은 퀴즈를 다 맞혔으면 금빛 인장이 찍힌 완료 창을 다시 보여 준다
+    }
+    return;
   }
   const e = r.list[r.i], gi = EVENTS.indexOf(e);
   $('#quizBody').innerHTML = `<div class="qrun quizcard" style="--c:${PERIODS[e.p].color}">
@@ -1182,12 +1188,69 @@ function updateProgress() {
   $('#progressText').textContent = `${n} / ${total}`;
   $('#ring').style.width = `${n / total * 100}%`;
 }
+// 시기마다 도장: 그 시기의 장면을 다 열면 시기 색으로 찍힌다
+const sealCells = () => Object.values(PERIODS).map(p => {
+  const evs = EVENTS.filter(e => e.p === p.id), seen = evs.filter(e => visited.has(e.id)).length, stars = evs.filter(e => state.quiz[e.id] === true).length;
+  const done = seen === evs.length;
+  return `<div class="stampcell ${done ? 'done' : ''}" style="--c:${p.color}"><div class="seal">${done ? '✦' : `${seen}/${evs.length}`}</div><b>${esc(p.name)}</b><small>${esc(t('footsteps', { s: seen, n: evs.length, r: stars }))}</small></div>`;
+}).join('');
 function renderStamps() {
-  $('#stampGrid').innerHTML = Object.values(PERIODS).map(p => {
-    const evs = EVENTS.filter(e => e.p === p.id), seen = evs.filter(e => visited.has(e.id)).length, stars = evs.filter(e => state.quiz[e.id] === true).length;
-    const done = seen === evs.length;
-    return `<div class="stampcell ${done ? 'done' : ''}" style="--c:${p.color}"><div class="seal">${done ? '✦' : `${seen}/${evs.length}`}</div><b>${esc(p.name)}</b><small>${esc(t('footsteps', { s: seen, n: evs.length, r: stars }))}</small></div>`;
-  }).join('');
+  $('#stampGrid').innerHTML = sealCells();
+  const fav = EVENTS.find(e => e.id === state.fav);
+  $('#favLine').hidden = !fav; if (fav) $('#favLine').textContent = t('favLine', { t: fav.title });
+  $('#reopenEnd').hidden = !state.ended;
+}
+
+/* ---------- 여정을 마치며 ----------
+   마지막 장면을 다 듣거나 마지막 카드의 '여정 마치기'를 누르면 띄운다. 저절로 뜨는 것은 처음 마칠 때 한 번뿐이고,
+   그 뒤에는 '나의 발자취'에서 다시 연다. 못 푼 퀴즈는 강제하지 않고 권한다 — 다 맞히면 금빛 인장이 찍힌다.
+   끝은 복음과, 믿는 이에게는 축복·처음 만난 이에게는 교회로 초대하는 말로 맺는다 */
+const missedQuiz = () => EVENTS.filter(e => state.quiz[e.id] !== true);
+// auto: 듣기·자동 여정이 끝나서 부른 것이면 이미 마친 적이 있을 때 띄우지 않는다. 띄웠으면 true
+function endJourney(auto) {
+  if (auto && state.ended) return false;
+  if (!state.ended) { state.ended = Date.now(); store.save(); }
+  openEnd();
+  return true;
+}
+function openEnd() {
+  const last = EVENTS[EVENTS.length - 1], w = last.words.find(x => x.j) || last.words[0];
+  const miss = missedQuiz(), unseen = EVENTS.filter(e => !visited.has(e.id)), km = odoAt(EVENTS.length - 1);
+  const places = new Set(EVENTS.filter(e => visited.has(e.id)).map(e => e.place)).size, allPlaces = new Set(EVENTS.map(e => e.place)).size;
+  // 여러 문단 글: 줄마다 한 문단, 끝의 (장:절)은 작게 (중·일은 전각 괄호)
+  const paras = s => s.split('\n').map(p => `<p>${esc(p).replace(/\s*([(（][^()（）]*\d[^()（）]*[)）])$/, ' <cite>$1</cite>')}</p>`).join('');
+  $('#endBody').innerHTML = `
+    <div class="eyebrow">${esc(t('endEyebrow'))}</div>
+    <h2>${esc(t('endTitle'))}</h2>
+    <p class="endlead">${esc(t('endLead'))}</p>
+    <blockquote class="endword"><p>${esc(w.text)}</p><cite>${esc(w.ref)}</cite></blockquote>
+    <div class="endstats">
+      <div><b>${visited.size}<small>/${EVENTS.length}</small></b><span>${esc(t('endScenes'))}</span></div>
+      <div><b>${places}<small>/${allPlaces}</small></b><span>${esc(t('endPlaces'))}</span></div>
+      <div><b>${Math.round(km).toLocaleString(LANG)}<small>km</small></b><span>${esc(t('endWalked'))} · ${esc(t('endSteps', { s: stepsText(km) }))}</span></div>
+    </div>
+    <div class="stampgrid endstamps">${sealCells()}</div>
+    <div class="endquiz ${miss.length ? '' : 'sealed'}">
+      ${miss.length ? `<span>${esc(t('endStars', { r: EVENTS.length - miss.length, n: EVENTS.length }))}</span><button class="goldbtn" id="endMissed">${esc(t('endMissedQuiz', { n: miss.length }))}</button>`
+        : `<i aria-hidden="true">✦</i><span>${esc(t('endAllStars'))}</span>`}
+      ${unseen.length ? `<button class="textbtn" id="endUnseen">${esc(t('endUnvisited', { n: unseen.length }))}</button>` : ''}
+    </div>
+    <label class="endfav"><span>${esc(t('endFavQ'))}</span>
+      <select id="endFav"><option value="">${esc(t('endFavPick'))}</option>${EVENTS.map((e, i) => `<option value="${e.id}" ${state.fav === e.id ? 'selected' : ''}>${i + 1}. ${esc(e.title)}</option>`).join('')}</select></label>
+    <section class="gospel"><h3>${esc(t('gospelHead'))}</h3>${paras(t('gospel'))}</section>
+    <section class="invite"><h3>${esc(t('seekerHead'))}</h3>${paras(t('invite'))}
+      <div class="prayer"><h4>${esc(t('prayerHead'))}</h4><p>${esc(t('prayer'))}</p></div></section>
+    <section class="blessing"><h3>${esc(t('believerHead'))}</h3>${paras(t('blessing'))}</section>
+    <div class="endbtns"><button class="goldbtn" id="endRestart">${esc(t('endRestart'))}</button><button class="textbtn" id="endWords">${esc(t('endWords'))}</button></div>`;
+  const dlg = $('#journeyEnd'), close = () => dlg.close();
+  if (miss.length) $('#endMissed').onclick = () => { close(); setView('quiz'); startQuiz(miss, t('missedQuizName')); quizRun.missed = true; };
+  if (unseen.length) $('#endUnseen').onclick = () => { close(); setView('journey'); go(EVENTS.indexOf(unseen[0])); };
+  $('#endFav').onchange = ev => { state.fav = ev.target.value || undefined; store.save(); };
+  $('#endRestart').onclick = () => { close(); setView('journey'); go(0); };
+  $('#endWords').onclick = () => { close(); setView('words'); };
+  if ($('#stamps').open) $('#stamps').close();
+  if (!dlg.open) dlg.showModal();
+  dlg.scrollTop = 0;
 }
 
 /* ---------- 보기 전환 · 기타 ---------- */
@@ -1234,7 +1297,7 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   $('#prev').onclick = () => go(idx - 1);
   $('#next').onclick = () => go(idx + 1);
   $('#skip').onclick = () => go(idx + 1);
-  $('#listen').onclick = () => { if (speaking) stopSpeech(); else { stopAuto(); speakScene(); } };
+  $('#listen').onclick = () => { if (speaking) stopSpeech(); else { stopAuto(); speakScene(() => { if (idx === EVENTS.length - 1) endJourney(true); }); } };
   // stopSpeech가 스위치를 autoOn(=false)으로 되돌리므로 켠 상태를 먼저 읽어 둔다
   $('#auto').onchange = () => { const on = $('#auto').checked; stopSpeech(); if (on) startAuto(); };
   $('#music').hidden = !EVENTS.some(e => e.music);
@@ -1260,9 +1323,11 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   $('#viewer').onclick = ev => { if (ev.target.id === 'viewer') $('#viewer').close(); };
   $('#progressPill').onclick = () => { renderStamps(); $('#stamps').showModal(); };
   $('#closeStamps').onclick = () => $('#stamps').close();
+  $('#reopenEnd').onclick = openEnd;
+  $('#closeEnd').onclick = () => $('#journeyEnd').close();
   $('#resetProgress').onclick = () => {
     if (!confirm(t('resetConfirm'))) return;
-    visited.clear(); state.visited = []; state.quiz = {}; store.save(); if (idx >= 0) markVisited(EVENTS[idx].id); renderStamps(); renderTrack(); updateTrack();
+    visited.clear(); state.visited = []; state.quiz = {}; delete state.ended; delete state.fav; store.save(); if (idx >= 0) markVisited(EVENTS[idx].id); renderStamps(); renderTrack(); updateTrack();
   };
   addEventListener('keydown', ev => {
     if ($('#journey').hidden || ev.target.matches('input, select, textarea') || document.querySelector('dialog[open]') || !$('#intro').hidden) return; // 시작 화면이 떠 있으면 뒤 여정을 움직이지 않는다

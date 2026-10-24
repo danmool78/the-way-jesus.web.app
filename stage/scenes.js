@@ -635,8 +635,9 @@ export const SCRIPTS = {
     props: {
       syn: ['synagogue', -0.15, -0.3],
       folk: ['crowd', -0.15, -0.3, { y: 0.1, state: 'sit', spots: [[-0.88, -0.25], [-0.88, 0.05], [-0.88, 0.32], [0.88, -0.25], [0.88, 0.05], [0.88, 0.32]] }],
-      cliff: ['hill', 1.9, -0.25, { w: 0.6, h: 0.3, d: 0.5 }],
-      rocks: ['rocks', 0, 0, { spots: [[2.3, -0.05, 0.1], [2.15, -0.5, 0.13], [1.55, -0.55, 0.08]] }],
+      // 2D 무대의 벼랑. 3D 지형에서는 실제 낭떠러지 산(나사렛 남쪽 약 2km)으로 무대를 옮기므로(@at) 숨긴다
+      cliff: ['hill', 1.9, -0.25, { w: 0.6, h: 0.3, d: 0.5, terrain: false }],
+      rocks: ['rocks', 0, 0, { terrain: false, spots: [[2.3, -0.05, 0.1], [2.15, -0.5, 0.13], [1.55, -0.55, 0.08]] }],
     },
     cast: {
       jesus: ['jesus', -1.75, 0.35, 1.2],
@@ -646,9 +647,9 @@ export const SCRIPTS = {
       phar: ['pharisee', -0.85, 0.05, 0.9],
     },
     beats: {
-      enter: [['cliff', null, { show: 0 }], ['rocks', null, { show: 0 }], ['folk', 'sit', { show: 1 }], ['jesus', 'idle', { x: -0.12, z: 0.02, look: 0, item: 'scroll' }],
+      enter: [['@at', null], ['cliff', null, { show: 0 }], ['rocks', null, { show: 0 }], ['folk', 'sit', { show: 1 }], ['jesus', 'idle', { x: -0.12, z: 0.02, look: 0, item: 'scroll' }],
         ['attendant', 'idle', { x: 0.22, z: -0.12, look: -0.8, item: null }], ['elder', 'sit-ground', { x: -0.6, z: 0.38, look: 0.8 }], ['man', 'sit-ground', { x: 0.45, z: 0.4, look: -0.8 }], ['phar', 'sit-ground', { x: -0.85, z: 0.05, look: 0.9 }]],
-      intro: [['cliff', null, { show: 0 }], ['rocks', null, { show: 0 }], ['folk', 'sit', { show: 1 }], ['jesus', 'idle', { show: 1, x: -1.75, z: 0.35, look: 1.2, item: null }],
+      intro: [['@at', null], ['cliff', null, { show: 0 }], ['rocks', null, { show: 0 }], ['folk', 'sit', { show: 1 }], ['jesus', 'idle', { show: 1, x: -1.75, z: 0.35, look: 1.2, item: null }],
         ['attendant', 'idle', { x: 0.22, z: -0.12, look: -0.6, item: 'scroll' }], ['elder', 'sit-ground', { x: -0.6, z: 0.38, look: 0.8 }], ['man', 'sit-ground', { x: 0.45, z: 0.4, look: -0.8 }], ['phar', 'sit-ground', { x: -0.85, z: 0.05, look: 0.9 }]],
       'p0.1': [['jesus', 'idle', { x: -0.12, z: 0.02, look: 0.6 }], ['attendant', 'idle', { item: null, delay: 2600 }], ['jesus', 'idle', { item: 'scroll', look: 0, delay: 2600 }]],
       'p0.3': [['jesus', 'speak', { look: 0 }]],
@@ -657,15 +658,16 @@ export const SCRIPTS = {
       'p1.1': [['jesus', 'speak'], ['man', 'shrug', { delay: 3500 }]],
       'p1.2': [['phar', 'speak', { look: 1.0 }]],
       'p2.0': [['jesus', 'speak'], ['phar', 'point', { delay: 3000 }], ['man', 'point', { delay: 3400 }], ['elder', 'shrug', { delay: 3800 }]],
-      'p2.1': [['cliff', null, { show: 1 }], ['rocks', null, { show: 1 }], ['folk', null, { show: 0 }],
+      // 낭떠러지 산(Mount Precipice): 꼭대기 동쪽 가장자리가 이스르엘 평야 쪽으로 200m 가까이 떨어진다 — 예수가 선 자리(1.85, -0.22)를 그 가장자리에
+      'p2.1': [['@at', [32.682, 35.302], { x: 1.85, z: -0.22 }], ['cliff', null, { show: 1 }], ['rocks', null, { show: 1 }], ['folk', null, { show: 0 }],
         ['jesus', 'idle', { x: 1.85, z: -0.22, look: 1.2 }], ['phar', 'idle', { x: 1.45, z: -0.05, look: 1.0 }], ['man', 'idle', { x: 1.6, z: 0.18, look: 0.8 }], ['elder', 'idle', { x: 1.25, z: 0.22, look: 1.0 }]],
       'p2.2': [['jesus', 'idle', { x: 1.5, z: 0.1, delay: 800 }], ['jesus', 'idle', { x: -1.7, z: 0.4, delay: 2200 }], ['jesus', 'idle', { show: 0, delay: 7500 }],
         ['phar', 'shrug', { look: -1.0, delay: 2500 }], ['man', 'idle', { look: -1.0, delay: 2600 }], ['elder', 'idle', { look: -1.0, delay: 2800 }]],
-      w0: [['cliff', null, { show: 0 }], ['rocks', null, { show: 0 }], ['folk', 'sit', { show: 1 }], ['jesus', 'speak', { show: 1, x: -0.12, z: 0.02, look: 0, item: 'scroll' }], ['attendant', 'idle', { item: null }],
+      w0: [['@at', null], ['cliff', null, { show: 0 }], ['rocks', null, { show: 0 }], ['folk', 'sit', { show: 1 }], ['jesus', 'speak', { show: 1, x: -0.12, z: 0.02, look: 0, item: 'scroll' }], ['attendant', 'idle', { item: null }],
         ['elder', 'sit-ground', { x: -0.6, z: 0.38, look: 0.8 }], ['man', 'sit-ground', { x: 0.45, z: 0.4, look: -0.8 }], ['phar', 'sit-ground', { x: -0.85, z: 0.05, look: 0.9 }]],
       w1: [['jesus', 'speak', { item: null }]],
       w2: [['jesus', 'speak', { look: 0.6 }], ['phar', 'shrug']],
-      end: [['cliff', null, { show: 0 }], ['rocks', null, { show: 0 }], ['folk', 'sit', { show: 1 }], ['jesus', 'idle', { show: 1, x: -0.12, z: 0.02, look: 0, item: 'scroll' }], ['attendant', 'idle', { item: null }],
+      end: [['@at', null], ['cliff', null, { show: 0 }], ['rocks', null, { show: 0 }], ['folk', 'sit', { show: 1 }], ['jesus', 'idle', { show: 1, x: -0.12, z: 0.02, look: 0, item: 'scroll' }], ['attendant', 'idle', { item: null }],
         ['elder', 'sit-ground', { x: -0.6, z: 0.38, look: 0.8 }], ['man', 'sit-ground', { x: 0.45, z: 0.4, look: -0.8 }], ['phar', 'sit-ground', { x: -0.85, z: 0.05, look: 0.9 }]],
     },
   },
@@ -718,7 +720,8 @@ export const SCRIPTS = {
     },
   },
 
-  /* 18. 가버나움의 긴 하루 — 왼쪽 회당, 오른쪽 시몬의 집. 더러운 영은 떨다 잠잠해지는 것으로만, 해 질 녘 문 앞의 병자들, 새벽의 홀로 기도 */
+  /* 18. 가버나움의 긴 하루 — 왼쪽 회당, 오른쪽 시몬의 집. 더러운 영은 떨다 잠잠해지는 것으로만, 해 질 녘 문 앞의 병자들, 새벽의 홀로 기도.
+     대표 그림(enter·end)은 해 질 녘 문 앞에서 병자를 고치시는 장면으로 맺는다 */
   e18: {
     wide: 1.5, at: [32.894, 35.572],
     props: {
@@ -733,28 +736,41 @@ export const SCRIPTS = {
       andrew: ['man', -1.65, 0.05, 0.8],
       possessed: ['servant', -0.45, 0.28, -1.0],
       mil: ['anna', 1.2, 0.05, -1.0],
+      // 해 질 녘 문 앞에 데려온 병자들: 누운 사람 둘, 앉은 사람 하나 — 손을 얹으시면 일어나 기뻐한다
+      sick1: ['man', 0.5, 0.36, 0.3],
+      sick2: ['woman2', 0.98, 0.44, -0.4],
+      sick3: ['elder', 1.42, 0.36, -0.3],
     },
     beats: {
+      // 대표 그림: 해 질 녘 문 앞 — 먼저 고침받은 이들은 일어나 기뻐하고, 예수께서 아직 누운 이에게 손을 얹으신다
       enter: [['@env', 'dusk'], ['synFolk', null, { show: 0 }], ['folk', null, { show: 1 }], ['possessed', 'idle', { show: 0 }],
-        ['jesus', 'bless', { x: 0.95, z: 0.15, look: 1.0 }], ['mil', 'hold-basket', { show: 1, x: 0.75, z: -0.15, look: 0.6 }], ['peter', 'listen', { x: 0.45, z: 0.05, look: 1.0 }], ['andrew', 'listen', { x: 0.3, z: 0.3, look: 1.0 }]],
+        ['sick1', 'raise', { show: 1, x: 0.5, z: 0.36, look: 0.3 }], ['sick2', 'look-up', { show: 1, x: 0.98, z: 0.44, look: -0.4 }], ['sick3', 'sleep', { show: 1, x: 1.42, z: 0.36, look: -0.3 }],
+        ['jesus', 'bless', { x: 1.28, z: 0.18, look: 0.6 }], ['mil', 'hold-basket', { show: 1, x: 0.75, z: -0.2, look: 0.6 }], ['peter', 'listen', { x: 0.2, z: 0.05, look: 1.0 }], ['andrew', 'listen', { x: 0.05, z: 0.3, look: 1.0 }]],
       intro: [['@env', 'day'], ['synFolk', 'sit', { show: 1 }], ['folk', null, { show: 0 }], ['possessed', 'idle', { show: 1, x: -0.45, z: 0.28, look: -1.0 }],
-        ['jesus', 'speak', { show: 1, x: -0.95, z: -0.05, look: 0.3 }], ['mil', 'sleep', { show: 1, x: 1.25, z: -0.22, look: 1 }], ['peter', 'listen', { x: -1.45, z: 0.25, look: 0.8 }], ['andrew', 'listen', { x: -1.65, z: 0.05, look: 0.8 }]],
+        ['jesus', 'speak', { show: 1, x: -0.95, z: -0.05, look: 0.3 }], ['mil', 'sleep', { show: 1, x: 1.25, z: -0.22, look: 1 }], ['sick1', 'sleep', { show: 0 }], ['sick2', 'sit-ground', { show: 0 }], ['sick3', 'sleep', { show: 0 }], ['peter', 'listen', { x: -1.45, z: 0.25, look: 0.8 }], ['andrew', 'listen', { x: -1.65, z: 0.05, look: 0.8 }]],
       'p0.3': [['possessed', 'afraid', { look: -1.0 }]],
       'p0.4': [['possessed', 'speak']],
       'p1.0': [['jesus', 'rebuke', { look: 1.0 }], ['possessed', 'cower', { delay: 800 }], ['possessed', 'kneel', { delay: 3000 }]],
       'p1.1': [['possessed', 'idle', { show: 0, delay: 1500 }], ['synFolk', null, { show: 0, delay: 1500 }],
         ['jesus', 'idle', { x: 0.7, z: 0.15, look: 1.0 }], ['peter', 'idle', { x: 0.4, z: 0.0, look: 1.0 }], ['andrew', 'idle', { x: 0.3, z: 0.3, look: 1.0 }]],
       'p1.2': [['jesus', 'bless', { look: 1.0 }], ['mil', 'idle', { x: 1.15, z: -0.2, look: -1.0, delay: 2200 }], ['mil', 'hold-basket', { x: 0.95, z: -0.1, delay: 4500 }]],
-      'p2.0': [['@env', 'dusk'], ['folk', null, { show: 1 }], ['mil', 'idle', { x: 1.25, z: -0.15, look: 0.8 }], ['jesus', 'idle', { x: 0.95, z: 0.15, look: 1.0 }], ['jesus', 'bless', { delay: 2500 }]],
-      'p2.1': [['@env', 'night'], ['folk', null, { show: 0 }], ['mil', 'idle', { show: 0 }], ['jesus', 'idle', { x: -1.5, z: -0.35, look: 0 }], ['jesus', 'pray', { delay: 5000 }],
+      // 문 앞으로 몰려든 병자들 — 한 사람씩 손을 얹으시면 일어난다 (문장이 길어 차례로 늦춰 둔다)
+      'p2.0': [['@env', 'dusk'], ['folk', null, { show: 1 }], ['mil', 'idle', { x: 0.75, z: -0.2, look: 0.6 }],
+        ['sick1', 'sleep', { show: 1, x: 0.5, z: 0.36, look: 0.3 }], ['sick2', 'sit-ground', { show: 1, x: 0.98, z: 0.44, look: -0.4 }], ['sick3', 'sleep', { show: 1, x: 1.42, z: 0.36, look: -0.3 }],
+        ['peter', 'idle', { x: 0.2, z: 0.05, look: 1.0 }], ['andrew', 'idle', { x: 0.05, z: 0.3, look: 1.0 }],
+        ['jesus', 'idle', { x: 0.5, z: 0.14, look: 0.2 }], ['jesus', 'bless', { delay: 1800 }], ['sick1', 'idle', { delay: 3200 }], ['sick1', 'raise', { delay: 4200 }],
+        ['jesus', 'idle', { x: 0.9, z: 0.22, look: 0.4, delay: 4600 }], ['jesus', 'bless', { delay: 6000 }], ['sick2', 'idle', { delay: 7200 }], ['sick2', 'look-up', { delay: 8000 }],
+        ['jesus', 'idle', { x: 1.28, z: 0.18, look: 0.6, delay: 8400 }], ['jesus', 'bless', { delay: 9600 }], ['sick3', 'idle', { delay: 10800 }], ['sick3', 'raise', { delay: 11800 }]],
+      'p2.1': [['@env', 'night'], ['folk', null, { show: 0 }], ['mil', 'idle', { show: 0 }], ['sick1', 'idle', { show: 0 }], ['sick2', 'idle', { show: 0 }], ['sick3', 'idle', { show: 0 }], ['jesus', 'idle', { x: -1.5, z: -0.35, look: 0 }], ['jesus', 'pray', { delay: 5000 }],
         ['peter', 'idle', { x: -1.05, z: -0.15, look: -1.0, delay: 6000 }], ['andrew', 'idle', { x: -0.85, z: 0.05, look: -1.0, delay: 6200 }], ['peter', 'speak', { delay: 9000 }], ['jesus', 'speak', { look: 1.0, delay: 12000 }]],
-      w0: [['@env', 'calm'], ['folk', null, { show: 0 }], ['synFolk', null, { show: 0 }], ['possessed', 'idle', { show: 0 }], ['mil', 'idle', { show: 0 }],
+      w0: [['@env', 'calm'], ['sick1', 'idle', { show: 0 }], ['sick2', 'idle', { show: 0 }], ['sick3', 'idle', { show: 0 }], ['folk', null, { show: 0 }], ['synFolk', null, { show: 0 }], ['possessed', 'idle', { show: 0 }], ['mil', 'idle', { show: 0 }],
         ['jesus', 'speak', { x: -1.5, z: -0.35, look: 1.0 }], ['peter', 'listen', { x: -1.05, z: -0.15, look: -1.0 }], ['andrew', 'listen', { x: -0.85, z: 0.05, look: -1.0 }]],
-      w1: [['@env', 'day'], ['synFolk', 'sit', { show: 1 }], ['possessed', 'afraid', { show: 1, x: -0.45, z: 0.28, look: -1.0 }], ['jesus', 'rebuke', { x: -0.95, z: -0.05, look: 1.0 }],
+      w1: [['@env', 'day'], ['sick1', 'idle', { show: 0 }], ['sick2', 'idle', { show: 0 }], ['sick3', 'idle', { show: 0 }], ['synFolk', 'sit', { show: 1 }], ['possessed', 'afraid', { show: 1, x: -0.45, z: 0.28, look: -1.0 }], ['jesus', 'rebuke', { x: -0.95, z: -0.05, look: 1.0 }],
         ['peter', 'idle', { x: -1.45, z: 0.25, look: 0.8 }], ['andrew', 'idle', { x: -1.65, z: 0.05, look: 0.8 }]],
-      w2: [['@env', 'calm'], ['synFolk', null, { show: 0 }], ['possessed', 'idle', { show: 0 }], ['jesus', 'pray', { x: -1.5, z: -0.35, look: 0 }], ['peter', 'speak', { x: -1.05, z: -0.15, look: -1.0 }], ['andrew', 'listen', { x: -0.85, z: 0.05 }]],
+      w2: [['@env', 'calm'], ['sick1', 'idle', { show: 0 }], ['sick2', 'idle', { show: 0 }], ['sick3', 'idle', { show: 0 }], ['synFolk', null, { show: 0 }], ['possessed', 'idle', { show: 0 }], ['jesus', 'pray', { x: -1.5, z: -0.35, look: 0 }], ['peter', 'speak', { x: -1.05, z: -0.15, look: -1.0 }], ['andrew', 'listen', { x: -0.85, z: 0.05 }]],
       end: [['@env', 'dusk'], ['synFolk', null, { show: 0 }], ['folk', null, { show: 1 }], ['possessed', 'idle', { show: 0 }],
-        ['jesus', 'bless', { x: 0.95, z: 0.15, look: 1.0 }], ['mil', 'hold-basket', { show: 1, x: 0.75, z: -0.15, look: 0.6 }], ['peter', 'listen', { x: 0.45, z: 0.05, look: 1.0 }], ['andrew', 'listen', { x: 0.3, z: 0.3, look: 1.0 }]],
+        ['sick1', 'raise', { show: 1, x: 0.5, z: 0.36, look: 0.3 }], ['sick2', 'look-up', { show: 1, x: 0.98, z: 0.44, look: -0.4 }], ['sick3', 'sleep', { show: 1, x: 1.42, z: 0.36, look: -0.3 }],
+        ['jesus', 'bless', { x: 1.28, z: 0.18, look: 0.6 }], ['mil', 'hold-basket', { show: 1, x: 0.75, z: -0.2, look: 0.6 }], ['peter', 'listen', { x: 0.2, z: 0.05, look: 1.0 }], ['andrew', 'listen', { x: 0.05, z: 0.3, look: 1.0 }]],
     },
   },
 

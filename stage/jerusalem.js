@@ -103,12 +103,16 @@ function pool(parent, [lat, lng], w, d) {
   boxAt(parent, mat('#6f9aa6', { roughness: 0.3, metalness: 0.1 }), p, w * M, d * M, 2.3 * V);
 }
 
+// 성전산 돌 단의 네 모서리와 높이 — 3D 지형(terrain.js)이 무대 인물을 단 위에 세울 때도 쓴다
+const MOUNT = [[31.7802, 35.2341], [31.7798, 35.2368], [31.7757, 35.2367], [31.7760, 35.2342]];
+export const DECKS = [{ ll: MOUNT, top: 10 * V }];
+
 export function buildJerusalem() {
   seed = 7;
   const g = new THREE.Group();
 
   // 성전산: 헤롯이 넓힌 돌 단 (네 모서리)
-  const mount = [[31.7802, 35.2341], [31.7798, 35.2368], [31.7757, 35.2367], [31.7760, 35.2342]];
+  const mount = MOUNT;
   const shape = new THREE.Shape(mount.map(p => new THREE.Vector2(...L(...p))));
   const plat = new THREE.Mesh(new THREE.ExtrudeGeometry(shape, { depth: 10 * V, bevelEnabled: false }), mat('#e8dfca', { roughness: 0.85 }));
   plat.rotation.x = Math.PI / 2; plat.position.y = 10 * V; plat.castShadow = plat.receiveShadow = true;
