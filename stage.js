@@ -82,11 +82,20 @@ function updateEnv(dt) {
 
 /* ---------- 무대 상태 ---------- */
 let actors = {}, props = {}, script = null, curEv = null, mode = 'off', token = 0; // mode: off | scene
+const pending = new Set(); // 늦게 걸어 둔 동작 (delay)
+// 다음 문장이 시작되면 아직 남은 늦은 동작을 먼저 끝낸다 — 낭독이 빠르면 앞 문장의 동작이 다음 문장 도중에 끼어들어
+// (e15: 무릎 꿇은 신하가 '가거라' 대목에서 뒤늦게 일어나 말했다) 새 문장의 자세를 덮어썼다
+function cancelPending() { token++; pending.forEach(j => clearTimeout(j.id)); pending.clear(); }
+function flushPending() {
+  const jobs = [...pending].sort((a, b) => a.at - b.at);
+  pending.clear();
+  jobs.forEach(j => { clearTimeout(j.id); apply([j.cmd]); });
+}
 const stageGroup = new THREE.Group();
 scene.add(stageGroup);
 
 function clearCast() {
-  token++;
+  cancelPending();
   Object.values(actors).forEach(a => a.p.root.removeFromParent());
   Object.values(props).forEach(p => p.obj.removeFromParent());
   actors = {}; props = {};
@@ -96,7 +105,11 @@ function clearCast() {
 function apply(cmds, instant = false) {
   (cmds || []).forEach(cmd => {
     const [name, pose, o = {}] = cmd;
-    if (o.delay && !instant) { const tk = token; setTimeout(() => tk === token && apply([[name, pose, { ...o, delay: 0 }]]), o.delay); return; }
+    if (o.delay && !instant) {
+      const tk = token, job = { at: performance.now() + o.delay, cmd: [name, pose, { ...o, delay: 0 }] };
+      job.id = setTimeout(() => { pending.delete(job); if (tk === token) apply([job.cmd]); }, o.delay);
+      pending.add(job); return;
+    }
     if (name === '@env') { setEnv(pose, instant); return; }
     const a = actors[name], p = props[name];
     if (a) {
@@ -155,11 +168,12 @@ function updateEnvInstant() { for (let i = 0; i < 200; i++) updateEnv(0.05); }
 function beat(key) {
   if (!script || mode !== 'scene') return;
   if (key === 'intro') {
-    token++; // 예약된 동작 취소
+    cancelPending(); // 예약된 동작 취소
     apply(script.beats.intro || script.beats.enter, true);
     Object.values(actors).forEach(a => { if (a.showT) a.show = 0.0001; a.settle(); });
     return;
   }
+  flushPending();
   apply(script.beats[key]);
   gaze();
 }
@@ -169,7 +183,10 @@ function gaze() {
   if (!speaker) return;
   const others = all.filter(a => a !== speaker && a.showT > 0 && !a.noGaze && a.p.root.parent === speaker.p.root.parent);
   others.forEach(a => { a.target = speaker; });
-  speaker.target = (speaker.talkTo?.showT > 0 && speaker.talkTo) || others.sort((a, b) => a.goal.distanceTo(speaker.goal) - b.goal.distanceTo(speaker.goal))[0] || null;
+  // 몸을 돌린 쪽(look)에 있는 사람 가운데 가장 가까운 이 — 곁에 선 제자보다 앞에서 무릎 꿇은 사람에게 말씀하시게
+  const near = (a, b) => a.goal.distanceTo(speaker.goal) - b.goal.distanceTo(speaker.goal);
+  const facing = others.filter(a => { const ang = Math.atan2(a.goal.x - speaker.goal.x, a.goal.y - speaker.goal.y); return Math.abs(Math.atan2(Math.sin(ang - speaker.faceT), Math.cos(ang - speaker.faceT))) < 1.0; });
+  speaker.target = (speaker.talkTo?.showT > 0 && speaker.talkTo) || facing.sort(near)[0] || others.sort(near)[0] || null;
 }
 
 /* ---------- 화면 배치: 장소 핀에 무대 바닥을 맞춘다 ---------- */
@@ -323,7 +340,7 @@ if (canvas) {
     if (s !== undefined && script.beats[`${b}.${s}`]) beat(`${b}.${s}`);
     else if (!s) beat(b);
   });
-  addEventListener('stage:stop', () => { if (!script) return; token++; setEnv(script.env || 'day'); apply(script.beats.enter); });
+  addEventListener('stage:stop', () => { if (!script) return; cancelPending(); setEnv(script.env || 'day'); apply(script.beats.enter); });
   loop();
   // app.js가 먼저 장면을 열었으면 따라잡는다
   if (window.__stageScene) { setScene(window.__stageScene); window.recenterStage?.(); } // 늦게 로드됐으면 무대 쪽으로 다시 맞춘다

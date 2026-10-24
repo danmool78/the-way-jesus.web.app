@@ -33,9 +33,10 @@ ws.addEventListener('message', ev => {
 const send = (method, params = {}) => new Promise(r => { const i = ++id; pending.set(i, r); ws.send(JSON.stringify({ id: i, method, params })); });
 await send('Runtime.enable'); await send('Page.enable');
 await send('Emulation.setDeviceMetricsOverride', { width: W, height: H, deviceScaleFactor: DPR, mobile: W < 600 });
-for (const s of shots) {
+for (const [n, s] of shots.entries()) {
   const [ev, beat] = s.split(':');
-  await send('Page.navigate', { url: `${base}/?beat=${beat}#${ev}` });
+  // n: 주소가 #만 바뀌면 같은 문서 안의 이동이 되어 앞 장면에서 걸어오는 모습이 찍혔다 — 매번 새로 연다
+  await send('Page.navigate', { url: `${base}/?beat=${beat}&n=${n}#${ev}` });
   // 지도 카메라 이동이 끝나고 무대가 자리를 잡을 때까지 기다린다 (캔버스가 보일 때까지, 최대 8초)
   let rect = null;
   for (let i = 0; i < 32; i++) {

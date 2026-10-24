@@ -1,0 +1,30 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>자세 확인</title>
+<!-- 사람 모형의 자세를 여러 방향에서 보는 도구. /_src/tools/poses.html?t=official&pose=kneel
+     &yaw=각도들(쉼표, 기본 0,1.57,3.14 — 앞·옆·뒤) -->
+<style>body{margin:0;background:#2a241c}canvas{display:block}</style>
+<script type="module">
+import { THREE } from '../../stage/kit.js';
+const { Actor } = await import('../../stage/people.js');
+const q = new URLSearchParams(location.search);
+const type = q.get('t') || 'official', pose = q.get('pose') || 'kneel';
+const yaws = (q.get('yaw') || '0,1.57,3.14').split(',').map(Number);
+const W = innerWidth, H = innerHeight;
+const r = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+r.setPixelRatio(devicePixelRatio); r.setSize(W, H); r.outputColorSpace = THREE.SRGBColorSpace;
+document.body.appendChild(r.domElement);
+const s = new THREE.Scene();
+s.add(new THREE.HemisphereLight('#fff6e6', '#6b5a44', 1.6));
+const d = new THREE.DirectionalLight('#fff1d8', 2.2); d.position.set(-1.5, 3, 2.5); s.add(d);
+const gap = 0.55;
+yaws.forEach((y, i) => {
+  const a = new Actor(type, (i - (yaws.length - 1) / 2) * gap, 0, y);
+  a.set(pose); for (let k = 0; k < 120; k++) a.update(k * 0.05, 0.05);
+  s.add(a.p.root);
+});
+const cam = new THREE.PerspectiveCamera(24, W / H, 0.01, 50);
+cam.position.set(0, 0.9, yaws.length * gap * 1.7); cam.lookAt(0, 0.42, 0);
+r.render(s, cam);
+document.title = 'ready';
+</script>
