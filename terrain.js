@@ -444,6 +444,7 @@ function loop(now) {
     const t = now / 1000;
     W.beam.visible = W.orb.visible = W.halo.visible = walking;
     W.orb.position.y = W.halo.position.y = 3.2 + Math.sin(t * 6) * 0.35;
+    W.ring.visible = walking || !document.body.classList.contains('is-reading'); // 연극 중에는 물결 고리를 끈다
     W.ring.scale.setScalar(walking ? 1 + (t * 1.4 % 1) * 1.6 : 1 + (t * 0.6 % 1) * 1.2);
     W.ring.material.opacity = walking ? 1 - (t * 1.4 % 1) : 0.7 * (1 - (t * 0.6 % 1));
     if (walking) ensureNear(W.x, W.z);

@@ -910,6 +910,7 @@ function startAuto() {
 function setListenUI() {
   const l = $('#listen');
   l.classList.toggle('on', speaking); // 재생 중이면 일시정지 모양
+  document.body.classList.toggle('is-reading', speaking); // 연극이 도는 동안 지도의 현재 위치 물결을 끈다 (무대를 가린다)
   l.setAttribute('aria-label', speaking ? t('stop') : t('listenScene'));
   $('#auto').checked = autoOn;
   bgmFollow();
