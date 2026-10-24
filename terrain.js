@@ -6,7 +6,7 @@
    좌표는 2D 지도와 같은 지도 단위(app.js의 px, 1단위 = 1/1000도 ≈ 111m). 높이는 EXAG배로 과장한다.
    켜져 있는 동안 window.geoToClient를 3D 투영으로 바꿔 끼워, 3D 무대(stage.js)가 지형 위의 같은 자리에 선다 */
 import { THREE, damp, glowTexture } from './stage/kit.js';
-import { buildJerusalem, EXTENT as JLM } from './stage/jerusalem.js';
+import { buildJerusalem, EXTENT as JLM, DECKS } from './stage/jerusalem.js';
 import { MODELS as EGYPT_MODELS } from './stage/egypt.js';
 import { SCRIPTS } from './stage/scenes.js';
 
@@ -48,6 +48,20 @@ function heightAt(x, z) { // 지도 단위 좌표의 지형 높이 (불러온 �
   const i = Math.min(r.hw - 2, Math.floor(u)), j = Math.min(r.hh - 2, Math.floor(v)), fu = u - i, fv = v - j, H = r.heights, w = r.hw;
   return (H[j * w + i] * (1 - fu) + H[j * w + i + 1] * fu) * (1 - fv) + (H[(j + 1) * w + i] * (1 - fu) + H[(j + 1) * w + i + 1] * fu) * fv;
 }
+// 무대 인물·소품이 서는 높이: 땅, 호수면(배는 물 위에), 도성 모형의 성전 단 윗면 가운데 높은 것
+const inPoly = ([x, z], P) => { let c = false; for (let i = 0, j = P.length - 1; i < P.length; j = i++) if ((P[i][1] > z) !== (P[j][1] > z) && x < (P[j][0] - P[i][0]) * (z - P[i][1]) / (P[j][1] - P[i][1]) + P[i][0]) c = !c; return c; };
+let pools = null, decks = null;
+function standAt(x, z) {
+  let h = heightAt(x, z);
+  pools ??= LAKES.filter(([, m]) => m !== undefined).map(([k, m]) => ({ P: GEO[k].map(p => px(p)), top: lv(m) + 0.25 }));
+  pools.forEach(L => { if (h < L.top && inPoly([x, z], L.P)) h = L.top; });
+  if (city) {
+    decks ??= DECKS.map(d => { const P = d.ll.map(p => px(p)), xs = P.map(p => p[0]), zs = P.map(p => p[1]); // 모형 조각은 가운데 땅 높이만큼 올렸다 (addModel)
+      return { P, top: heightAt((Math.min(...xs) + Math.max(...xs)) / 2, (Math.min(...zs) + Math.max(...zs)) / 2) + d.top }; });
+    decks.forEach(d => { if (h < d.top && inPoly([x, z], d.P)) h = d.top; });
+  }
+  return h;
+}
 const loadImg = src => new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = rej; im.src = src; });
 const mapTex = img => { const t = new THREE.Texture(img); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = renderer.capabilities.getMaxAnisotropy(); t.needsUpdate = true; return t; };
 
@@ -82,6 +96,8 @@ async function build() {
   await Promise.all(BASES.map(async b => { b.tex = mapTex(await loadImg(b.src)); }));
   addWalker(); addLabels();
   decorate();
+  // 3D 무대(stage.js)가 이 장면 안에 서도록 여는 창구: 같은 카메라·깊이로 그리고, 땅 높이에 발을 붙인다
+  window.terrain3d = { scene, camera, cam, heightAt: standAt, zoomAt, sceneDist };
   ready = true;
 }
 
@@ -285,7 +301,7 @@ function clearStageSpot() {
     const p = PLACES[EVENTS[idx].place];
     [cx, cz] = px(f.at || [p.lat, p.lng]);
     const D = camera.position.distanceTo(v3.set(cx, heightAt(cx, cz), cz)), H = wrap.clientHeight || 1;
-    r = f.rpx * 2 * D * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) / H;
+    r = f.r ?? f.rpx * 2 * D * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) / H; // r: 지형 안에 선 무대가 알려 주는 지도 단위 반지름
   }
   if (cleared && Math.abs(cleared.cx - cx) < 0.01 && Math.abs(cleared.cz - cz) < 0.01 && Math.abs(cleared.r - r) <= cleared.r * 0.08) return;
   cleared = { cx, cz, r };
@@ -393,8 +409,17 @@ function flyToScene(ev) {
   const p = PLACES[ev.place], [x0, z0] = px([p.lat, p.lng]), [x1, z1] = px(at), sep = Math.hypot(x1 - x0, z1 - z0);
   if (sep < 8) return flyTo(ev.place);
   ensureNear(x1, z1);
-  cam.goal = { tx: (x0 + x1) / 2, tz: (z0 + z1) / 2, dist: Math.max(placeDist(ev.place), sep * 1.6) };
+  cam.goal = { tx: (x0 + x1) / 2, tz: (z0 + z1) / 2, dist: sceneDist(ev) };
 }
+// 장면에 날아가 내려앉는 거리 (무대 축척의 기준이 된다)
+function sceneDist(ev) {
+  const at = SCRIPTS[ev.id]?.at, p = PLACES[ev.place];
+  if (!at) return placeDist(ev.place);
+  const [x0, z0] = px([p.lat, p.lng]), [x1, z1] = px(at), sep = Math.hypot(x1 - x0, z1 - z0);
+  return sep < 8 ? placeDist(ev.place) : Math.max(placeDist(ev.place), sep * 1.6);
+}
+// 무대 인물의 크기: 당기면 커지되 천천히 (도성 가까이에서 건물을 다 가리지 않게). 도성 안에서는 인물을 줄여 건물을 덜 가리게
+const zoomAt = (dist, k) => THREE.MathUtils.clamp((150 / dist) ** 0.6, 0.35, 1.5) * (isCity(k) ? 0.62 : 1);
 // 확대·축소는 늘 지금 장면의 무대를 가운데로 다시 맞추며 한다 — 끌어서 옮겨 둔 곳을 기준으로 당기면 무대가 화면 밖에 남았다
 function zoomToStage(dist) {
   const ev = EVENTS[idx], at = SCRIPTS[ev.id]?.at, p = PLACES[ev.place];
@@ -431,8 +456,7 @@ function loop(now) {
   if (now - nearT > 500) { nearT = now; ensureNear(cam.tx, cam.tz, 60); } // 둘러보다 다가간 지역도 불러온다
   cam.pitch = damp(cam.pitch, ui.pitch, 4, dt); cam.yaw = damp(cam.yaw, ui.yaw, 4, dt);
   placeCam();
-  // 무대 인물의 크기: 당기면 커지되 천천히 (도성 가까이에서 건물을 다 가리지 않게)
-  window.terrainView = { yaw: cam.yaw, pitch: cam.pitch, zoom: THREE.MathUtils.clamp((150 / cam.dist) ** 0.6, 0.35, 1.5) * (isCity(EVENTS[idx].place) ? 0.62 : 1) }; // 도성 안에서는 인물을 줄여 건물을 덜 가리게
+  window.terrainView = { yaw: cam.yaw, pitch: cam.pitch, zoom: zoomAt(cam.dist, EVENTS[idx].place) };
   window.stageFrame?.(); // 바뀐 시점으로 무대를 붙이고 그린다
   // 안개는 카메라 거리에 맞춰 — 멀리 물러나도 땅의 끝이 하늘과 안개 속으로 녹아든다
   scene.fog.near = cam.dist * 1.1; scene.fog.far = cam.dist * 3.6;

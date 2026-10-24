@@ -97,7 +97,7 @@ scene.add(stageGroup);
 function clearCast() {
   cancelPending();
   Object.values(actors).forEach(a => a.p.root.removeFromParent());
-  Object.values(props).forEach(p => p.obj.removeFromParent());
+  Object.values(props).forEach(p => p.lift.removeFromParent());
   actors = {}; props = {};
 }
 /* 동작 명령: [이름, 자세(또는 소품 상태), 옵션]
@@ -145,7 +145,9 @@ function setScene(ev) {
   Object.entries(script.props || {}).forEach(([name, [kind, x, z, o]]) => {
     const p = makeProp(kind, x, z, o);
     p.terrainHide = o?.terrain === false; // 3D 지형의 도성 모형에 이미 있는 건물 — 무대에 또 세우면 모형 위에 걸쳐 떠 보인다
-    props[name] = p; stageGroup.add(p.obj);
+    // lift: 3D 지형 안에서 소품을 그 자리의 땅 높이로 올리고 내리는 받침 (2D 무대에서는 늘 0)
+    p.lift = new THREE.Group(); p.lift.add(p.obj); p.kind = kind;
+    props[name] = p; stageGroup.add(p.lift);
   });
   Object.entries(script.cast).forEach(([name, [type, x, z, face, o = {}]]) => {
     const a = new Actor(type, x, z, face, { solemn: script.solemn, ...o });
@@ -266,6 +268,7 @@ function geoToWorld([lat, lng]) {
   return ray.ray.intersectPlane(floor, hit) ? hit : null;
 }
 function geoToStage(ll) {
+  if (inTerrain) { const [x, z] = px(ll); return new THREE.Vector2((x - base.x) / base.k, (z - base.z) / base.k); } // 지형 안: 지도 좌표에서 바로
   const w = geoToWorld(ll); if (!w) return null;
   const s = stageGroup.scale.x;
   return new THREE.Vector2((w.x - stageGroup.position.x) / s, (w.z - stageGroup.position.z) / s);
@@ -305,6 +308,52 @@ function followTerrain() {
   groundPx = { x: (v.x + 1) / 2 * size.w, y: (1 - v.y) / 2 * size.h };
 }
 
+/* ---------- 3D 지형 안에 세우기 ----------
+   지형 모드에서는 무대를 따로 그린 그림으로 겹치지 않고, 지형 장면(terrain.js) 안의 장소 지점에 붙여 같은 카메라·깊이로 그린다 —
+   따로 그리면 확대할 때 지도와 다른 비율로 커지고 줄어 소품이 성벽·도성 위로 올라가고, 평평한 바닥이 땅 위에 떠 보였다.
+   소품과 자리는 확대와 상관없는 고정 축척(무대 1단위 = 지도 k단위)으로 세우고, 소품마다 그 자리의 땅 높이에 앉힌다.
+   k는 장면에 내려앉는 거리에서 예전 무대와 같은 크기로 보이게 정한다. 사람만 물러날수록 조금씩 키워(최대 2배) 멀리서도 알아보게 한다 */
+const holder = new THREE.Group();
+let inTerrain = false;
+const base = { x: 0, z: 0, y: 0, k: 1 }; // 무대 바닥 중심의 지도 좌표·높이, 지도 단위/무대(stageGroup) 단위
+// 예전 무대(따로 그린 캔버스)에서 무대 1단위가 지도 몇 단위로 보였나: 무대 화면의 단위당 px ÷ 지형 화면의 지도 단위당 px
+function oldUnit(T, dist, zoom) {
+  const pxPer = (innerWidth <= 900 ? 200 : 270) / (2 * CAM0.d * Math.tan(THREE.MathUtils.degToRad(FOV / 2))) * zoom;
+  return pxPer * 2 * dist * Math.tan(THREE.MathUtils.degToRad(T.camera.fov / 2)) / (wrap.clientHeight || 1);
+}
+function enterTerrain(T) {
+  inTerrain = true;
+  T.scene.add(holder); holder.add(stageGroup);
+  canvas.style.opacity = 0;
+}
+function leaveTerrain() {
+  inTerrain = false;
+  scene.add(stageGroup); holder.removeFromParent();
+  stageGroup.traverse(o => { if (o.isPointLight && o.userData.d0 !== undefined) { o.distance = o.userData.d0; o.intensity = o.userData.i0; delete o.userData.d0; } });
+  Object.values(props).forEach(p => { p.lift.position.y = 0; if (p.fade !== 'scale') p.obj.scale.copy(p.base); });
+  Object.values(actors).forEach(a => { a.big = 1; });
+}
+// 지형 위 (무대 좌표) 지점의 땅 높이 — 무대 바닥 중심과의 차이를 무대 단위로
+const groundAt = (x, z) => inTerrain ? (window.terrain3d.heightAt(base.x + x * base.k, base.z + z * base.k) - base.y) / base.k : 0;
+let bigNow = 1;
+// 땅에 붙은 소품: 지형과 같은 고정 축척에 둔다. 나머지(사람 곁의 십자가·배·짐승·상·바구니…)는 사람과 함께 커진다
+const FIXED = new Set(['water', 'grass', 'hill', 'tomb', 'temple', 'house', 'rocks', 'figtree', 'synagogue', 'well', 'pool', 'flowers', 'gate', 'field', 'cliffshrine', 'palm', 'walls', 'olive', 'star', 'host', 'rain']);
+function placeTerrain(T) {
+  const ll = script.at || [PLACES[curEv.place].lat, PLACES[curEv.place].lng], [x, z] = px(ll), d0 = T.sceneDist(curEv);
+  const s = stageGroup.scale.x, k = oldUnit(T, d0, T.zoomAt(d0, curEv.place));
+  holder.position.set(x, T.heightAt(x, z) + 0.08, z); holder.scale.setScalar(k);
+  Object.assign(base, { x, z, y: holder.position.y, k: k * s });
+  bigNow = THREE.MathUtils.clamp(oldUnit(T, T.cam.dist, window.terrainView?.zoom ?? 1) / k, 1, 2);
+  // 무대 밑 집·나무를 치울 넓이 (지도 단위)
+  window.stageFoot = { r: k * 1.9 * (script.wide || 1), at: script.at || null };
+  // 등잔·불빛: 빛이 닿는 거리는 묶음의 크기를 따라 커지지 않으므로 직접 늘리고, 멀어진 만큼 세기도 올린다
+  stageGroup.traverse(o => {
+    if (!o.isPointLight) return;
+    if (o.userData.d0 === undefined) { o.userData.d0 = o.distance; o.userData.i0 = o.intensity; }
+    o.distance = o.userData.d0 * base.k; o.intensity = o.userData.i0 * base.k ** o.decay;
+  });
+}
+
 /* ---------- 루프 ---------- */
 const clock = new THREE.Clock();
 function loop() {
@@ -313,28 +362,47 @@ function loop() {
 }
 window.stageFrame = frame;
 function frame() {
-  if (!canvas || mode === 'off' || document.hidden || wrap.offsetParent === null) return;
+  if (!canvas) return;
+  const T = window.terrainDrives && window.terrain3d;
+  if (!!T !== inTerrain) T ? enterTerrain(T) : leaveTerrain();
+  holder.visible = mode !== 'off' && !!curEv;
+  if (mode === 'off' || document.hidden || wrap.offsetParent === null) return;
   const dt = Math.min(clock.getDelta(), 0.05), time = clock.elapsedTime;
-  resize();
-  const a = anchor();
-  if (!a) { canvas.style.opacity = 0; return; }
-  followTerrain();
-  canvas.style.opacity = 1;
-  canvas.style.transform = `translate(${Math.round(a.x - groundPx.x)}px, ${Math.round(a.y - groundPx.y)}px)`;
+  if (T) {
+    canvas.style.opacity = 0;
+    placeTerrain(T);
+  } else {
+    resize();
+    const a = anchor();
+    if (!a) { canvas.style.opacity = 0; return; }
+    followTerrain();
+    canvas.style.opacity = 1;
+    canvas.style.transform = `translate(${Math.round(a.x - groundPx.x)}px, ${Math.round(a.y - groundPx.y)}px)`;
+  }
   updateEnv(dt);
   placeGeo();
   Object.values(props).forEach(p => {
     if (p.follow) { p.goal.copy(p.follow.pos); p.obj.position.x = p.follow.pos.x; p.obj.position.z = p.follow.pos.y; }
     p.update(time, dt, envNow);
-    if (p.terrainHide && window.terrainOn) p.obj.visible = false;
+    if (p.terrainHide && inTerrain) p.obj.visible = false;
+    if (inTerrain) {
+      p.lift.position.y = groundAt(p.obj.position.x, p.obj.position.z);
+      if (!FIXED.has(p.kind)) { // 사람과 함께 키운다: 크기는 제자리에서, 높이(십자가가 선 언덕 위, 나는 비둘기)는 바닥에서부터
+        if (p.fade === 'scale') p.obj.scale.multiplyScalar(bigNow); else p.obj.scale.copy(p.base).multiplyScalar(bigNow);
+        p.lift.position.y += p.obj.position.y * (bigNow - 1);
+      }
+    }
   });
   // 지면 높이: 언덕 같은 소품 위에 선 사람은 그 표면에 올라선다 (배에 탄 사람, 높이를 직접 정한 사람은 제외)
+  // 3D 지형 안에서는 그 자리의 땅 높이를 따른다. 높이를 정한 사람(십자가 위)은 땅만 따르고, 사람만 키우는 배율도 받지 않는다(십자가와 어긋나지 않게)
   const grounds = Object.values(props).filter(p => p.heightAt);
   Object.values(actors).forEach(ac => {
-    ac.ground = ac.fixedY || ac.p.root.parent !== stageGroup ? 0 : Math.max(0, ...grounds.map(p => p.heightAt(ac.pos.x, ac.pos.y)));
+    const onDeck = ac.p.root.parent !== stageGroup, g0 = onDeck ? 0 : groundAt(ac.pos.x, ac.pos.y);
+    ac.ground = ac.fixedY || onDeck ? g0 + (ac.fixedY && inTerrain ? ac.y * (bigNow - 1) : 0) : Math.max(g0, ...grounds.map(p => { const h = p.heightAt(ac.pos.x, ac.pos.y); return h > 0 ? p.lift.position.y + h : -Infinity; }));
+    ac.big = inTerrain && !onDeck ? bigNow : 1; // 배·나귀에 탄 사람은 그 소품과 함께 커진다
     ac.update(time, dt);
   });
-  renderer.render(scene, camera);
+  if (!T) renderer.render(scene, camera);
 }
 
 /* ---------- app.js와 연결 ---------- */
