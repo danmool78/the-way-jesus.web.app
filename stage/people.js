@@ -2,6 +2,7 @@
 import { THREE, mat, DS, lathe, folds, mesh, BACK, SBACK, sphere, glowTexture, damp } from './kit.js';
 
 const SKIN = ['#c99a74', '#b9845d', '#d6ad89', '#a87451'];
+// 예수님만 밝은 흰 속옷에 붉은 겉옷을 입는다. 다른 사람(특히 제자들)은 이 짝을 쓰지 않는다
 const TYPES = {
   jesus:    { robe: '#efe7d6', trim: '#a8843f', mantle: '#9b3b2a', hair: '#4a2e1c', beard: true, long: true, sash: '#b08a4e' },
   mary:     { robe: '#a3554a', trim: '#c9a24a', mantle: '#3c5d96', veil: true, inner: '#f3ece0', skin: 2, soft: true, slim: true, sash: '#c9a24a' },
@@ -9,7 +10,7 @@ const TYPES = {
   angel:    { robe: '#fbf7ee', trim: '#d9b46a', hair: '#d8b56a', curls: true, wings: true, glow: true, halo: true, sash: '#d9b46a', skin: 2, soft: true },
   baptist:  { robe: '#7a5a32', trim: '#5a4024', hair: '#2b1b10', beard: true, long: true, sash: '#3e2a18', skin: 1 }, // 낙타털 옷, 가죽 띠
   tempter:  { robe: '#2c2533', mantle: '#1e1824', hood: '#1e1824', hair: '#120c10' }, // 시험하는 자 (실루엣으로만)
-  steward:  { robe: '#e3d6b8', trim: '#8a3c1c', mantle: '#8a3c1c', hair: '#4a3a2a', beard: true, sash: '#8a3c1c' }, // 잔치를 맡은 이
+  steward:  { robe: '#c9b48c', trim: '#3e5a3a', mantle: '#3e5a3a', hair: '#4a3a2a', beard: true, sash: '#8a3c1c' }, // 잔치를 맡은 이
   groom:    { robe: '#f1e7cf', trim: '#d6a93a', mantle: '#3c5d96', hair: '#2b1b10', beard: true, sash: '#d6a93a' },
   servant:  { robe: '#b9a07a', trim: '#8b6f50', hair: '#2e1d12', sash: '#6b5438' },
   anna:     { robe: '#4f4a5e', trim: '#3a3646', mantle: '#8a8172', hair: '#cfc8bb', veil: true, inner: '#ddd6c8', skin: 1, soft: true, slim: true, sash: '#3a3646', height: 0.93 }, // 여든 넷의 과부 예언자
@@ -18,7 +19,7 @@ const TYPES = {
   boyJesus: { robe: '#d8c49c', trim: '#8a6a44', hair: '#4a2e1c', sash: '#7a5a38', height: 0.78, kid: true }, // 열두 살 소년: 어른 예수의 흰 옷·붉은 망토 대신 거친 무명 속옷에 끈 띠만
   mother:   { robe: '#7a5a48', trim: '#5a3e30', mantle: '#4a4a52', veil: true, inner: '#e7dfd0', skin: 1, soft: true, slim: true, sash: '#5a3e30' },
   crossed:  { robe: '#efe7d6', hair: '#4a2e1c', beard: true, long: true, bare: true }, // 십자가 위의 예수 (실루엣 전용)
-  john:     { robe: '#cdb994', trim: '#7a3b2e', mantle: '#7a3b2e', hair: '#5a3a22', sash: '#7a3b2e' }, // 젊은 제자: 수염 없음
+  john:     { robe: '#76855e', trim: '#4f5a3c', mantle: '#c9a86a', hair: '#5a3a22', sash: '#4f5a3c' }, // 젊은 제자: 수염 없음. 밝은 속옷에 붉은 겉옷이던 것을 올리브 옷에 황토 겉옷으로 — 예수님과 헷갈리지 않게
   woman2:   { robe: '#6e5a7a', trim: '#4d3f57', mantle: '#d8c9a6', veil: true, inner: '#f1e9da', skin: 3, soft: true, slim: true, sash: '#4d3f57' },
   woman:    { robe: '#8e6d4e', trim: '#6e5232', mantle: '#c8b48c', veil: true, inner: '#efe6d4', skin: 1, soft: true, slim: true, sash: '#6e5232' },
   disciple: { robe: '#8a7350', trim: '#6b5638', mantle: '#5d6b4a', hair: '#2e1d12', beard: true, sash: '#5b4630' },
