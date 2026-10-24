@@ -357,7 +357,7 @@ dialog{position:fixed}
   .journey{height:calc(100dvh - 92px)}
   .scene{top:auto;left:0;right:0;bottom:0;width:auto;max-height:66%;border-radius:20px 20px 0 0;border-bottom:0}
   .scene.peek{bottom:0;top:auto;max-height:64px}
-  .hero{height:170px;margin:14px 14px 0}
+  .hero{height:130px;margin:12px 14px 0}
   .hero-text{padding:10px 16px 0}
   .hero-text h1{font-size:24px}
   .ctabs{margin:12px 14px 0}
@@ -377,7 +377,7 @@ dialog{position:fixed}
   .dock{flex-direction:column;align-items:stretch;gap:6px;padding:6px 10px calc(8px + env(safe-area-inset-bottom))}
   .tseg{min-width:30px}
   .tname{font-size:10.5px}
-  #skip{display:none}
+  #skip,#prev{display:none}
   .qcard b{display:none}
   .controls{justify-content:space-between;gap:6px}
   .switch .lbl,.rate,.qcard small,.qcard .chev{display:none}
