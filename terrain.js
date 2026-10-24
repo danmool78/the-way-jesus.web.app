@@ -473,6 +473,7 @@ function bindInput(c) {
       if (drag.ang !== undefined) ui.yaw += ang - drag.ang;
       drag.d = d; drag.ang = ang; return;
     }
+    cam.goal = null; // 손가락 하나로 끄는 동안은 무대로 되돌아가지 않는다 (두 손가락 확대 뒤 한 손가락만 남은 경우)
     const dx = e.clientX - prev[0], dy = e.clientY - prev[1], s = cam.dist / wrap.clientHeight * 1.3;
     if (e.shiftKey || e.buttons === 2) { ui.yaw -= dx * 0.005; ui.pitch = THREE.MathUtils.clamp(ui.pitch + dy * 0.004, 0.25, 1.45); return; }
     cam.tx -= (dx * Math.cos(cam.yaw) + dy * Math.sin(cam.yaw)) * s;
