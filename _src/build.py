@@ -21,6 +21,7 @@ for s in skeleton:
     assert len(e['story']) == 3 and e['words'] and (s['id'] == 'e00' or len(e['quiz']['options']) == 4), s['id']  # 프롤로그는 퀴즈 없음
     for w in e['words']:
         w['j'] = 1 if w['who'] == '예수' else 0  # 예수님 말씀 표시 (번역본에서도 이름 대신 이 표로 가른다)
+        if w['who'] == '하나님': w['g'] = 1  # 하나님 말씀 (프롤로그): 따로 남성 목소리로 읽는다
     events.append(e)
 # 프롤로그(e00, 창세기의 첫 아담)는 61개 장면 목록 밖에 따로 싣는다 — 장면 수·퀴즈·도장·대조표에 들지 않게
 prologue = events.pop(0) if events and events[0]['id'] == 'e00' else None

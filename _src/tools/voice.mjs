@@ -11,7 +11,7 @@ import { pauses } from './tts-pauses.mjs';
 const KEY = process.env.GOOGLE_TTS_KEY;
 if (!KEY) { console.error('GOOGLE_TTS_KEY 환경변수가 없습니다'); process.exit(1); }
 const OUT = 'assets/voice/ko', TMP = '/tmp/voice-ko';
-const VOICE = { narr: { name: 'Aoede', rate: 0.95, cps: 6.8 }, jesus: { name: 'Algenib', rate: 1, cps: 7.5 } };
+const VOICE = { narr: { name: 'Aoede', rate: 0.95, cps: 6.8 }, jesus: { name: 'Algenib', rate: 1, cps: 7.5 }, god: { name: 'Charon', rate: 0.95, cps: 6.8 } }; // god: 프롤로그의 하나님 말씀 (남성, 예수님과 다른 목소리)
 const INNER = 0.93, SR = 24000;
 
 const d = JSON.parse(await readFile('data.json', 'utf8'));
@@ -30,12 +30,13 @@ function script(e) {
   const items = [{ text: `${e.title}. ${ui.sayPlace}, ${d.places[e.place].name.replace(/[()·]/g, ' ')}. ${ui.sayWhen}, ${e.when.replace(/\s*·\s*/g, ', ')}.` }];
   e.story.forEach((s, i) => items.push({ text: s, gemini: (e.storyTts || []).includes(i) }));
   items.push({ text: (e.words.some(w => w.j) ? ui.hisWords : ui.voicesOfDay) + '.' });
-  e.words.forEach(w => { if (!w.j) items.push({ text: `${w.who}.` }); items.push({ text: w.text, jesus: !!w.j, gemini: w.tts === 'gemini' }); });
+  e.words.forEach(w => { if (!w.j) items.push({ text: `${w.who}.` }); items.push({ text: w.text, jesus: !!w.j, god: !!w.g, gemini: w.tts === 'gemini' }); });
   // 제목 줄의 '장소, 나사렛.'·'시기, 때.'는 쉼표에서 나눠 따로 녹음해 잇는다 — 한 번에 읽히면 장소 이름을 늘이고 멈칫한다
-  return items.flatMap((it, i) => sentences(it.text).map(s => s.trim()).filter(Boolean).map((text, k) => ({ text, jesus: it.jesus, gemini: it.gemini, split: i === 0 && k > 0 })));
+  return items.flatMap((it, i) => sentences(it.text).map(s => s.trim()).filter(Boolean).map((text, k) => ({ text, jesus: it.jesus, god: it.god, gemini: it.gemini, split: i === 0 && k > 0 })));
 }
 // Gemini 성우로 읽는 말씀(관리자 페이지에서 고른 것, words의 tts: 'gemini')은 열쇠에 'gemini-'를 붙여 따로 둔다 (app.js와 같은 계산)
-const keyOf = s => voiceKey(`${s.gemini ? 'gemini-' : ''}${s.jesus ? VOICE.jesus.name : VOICE.narr.name}`, s.text);
+const voiceOf = s => s.jesus ? VOICE.jesus : s.god ? VOICE.god : VOICE.narr;
+const keyOf = s => voiceKey(`${s.gemini ? 'gemini-' : ''}${voiceOf(s).name}`, s.text);
 
 if (old) {
   const said = e => script(e).map(keyOf).join('\n');
@@ -126,7 +127,7 @@ await mkdir(OUT, { recursive: true }); await mkdir(TMP, { recursive: true });
 let made = 0;
 for (const e of events) {
   for (const s of script(e)) {
-    const v = s.jesus ? VOICE.jesus : VOICE.narr, key = keyOf(s), mp3 = `${OUT}/${key}.mp3`;
+    const v = voiceOf(s), key = keyOf(s), mp3 = `${OUT}/${key}.mp3`;
     if (existsSync(mp3)) continue;
     let b, pcm;
     const g = s.gemini && await geminiSynth(s.text, v);

@@ -838,7 +838,7 @@ const sentences = text => text.match(/[^.?!…。！？]+[.?!…。！？]*["”
 
 // 녹음 낭독 (한국어만): _src/tools/voice.mjs가 만든 문장별 mp3. 열쇠는 목소리|문장의 FNV-1a (voice.mjs와 같은 계산)
 // 한 번 듣기에 쓸 문장이 모두 녹음돼 있을 때만 녹음으로 읽고, 하나라도 없으면 지금처럼 브라우저 음성으로 읽는다
-const VOICE_NAME = { narr: 'Aoede', jesus: 'Algenib' };
+const VOICE_NAME = { narr: 'Aoede', jesus: 'Algenib', god: 'Charon' }; // god: 프롤로그의 하나님 말씀 (예수님과 다른 남성 목소리)
 const voiceKey = (voice, text) => { let h = 0x811c9dc5; for (const c of `${voice}|${text}`) { h ^= c.codePointAt(0); h = Math.imul(h, 0x01000193) >>> 0; } return h.toString(36); };
 let voiceIndex = {};
 if (LANG === 'ko') fetch('assets/voice/ko/index.json').then(r => r.ok ? r.json() : {}).then(j => { voiceIndex = j; }).catch(() => {});
@@ -864,7 +864,7 @@ function speakQueue(items, onDone) {
     ss.forEach((s, k) => queue.push({ ...it, text: s, s: k, last: k === ss.length - 1 }));
   });
   // Gemini 성우로 녹음한 말씀(관리자 페이지에서 고른 것)은 열쇠에 'gemini-'가 붙는다 (voice.mjs의 keyOf)
-  queue.forEach(it => { it.clip = voiceKey(`${it.gemini ? 'gemini-' : ''}${it.jesus ? VOICE_NAME.jesus : VOICE_NAME.narr}`, it.text); });
+  queue.forEach(it => { it.clip = voiceKey(`${it.gemini ? 'gemini-' : ''}${it.jesus ? VOICE_NAME.jesus : it.god ? VOICE_NAME.god : VOICE_NAME.narr}`, it.text); });
   const recorded = LANG === 'ko' && queue.length > 0 && queue.every(it => voiceIndex[it.clip]);
   // 녹음으로 읽는 장면이면 브라우저 음성이 없어도 안내하지 않는다
   if (!recorded && !useVoice && !warnedNoVoice) {
@@ -907,7 +907,7 @@ function speakQueue(items, onDone) {
     if (!useVoice) { guard = setTimeout(() => advance(it.pause || 0), readMs(it)); return; }
     const u = new SpeechSynthesisUtterance(it.text);
     u.lang = DATA.ui.lang; u.rate = rate;
-    const v = it.jesus ? other || narrator : narrator;
+    const v = it.jesus || it.god ? other || narrator : narrator; // 브라우저 음성으로 읽을 때도 하나님 말씀은 남성 목소리 쪽으로
     if (v) u.voice = v;
     u.pitch = it.jesus && !other ? 0.8 : 1;
     // 일부 브라우저는 onend를 빠뜨리므로 감시 타이머로 다음 문장을 보장한다
@@ -980,7 +980,7 @@ function sceneScript() {
   e.words.forEach((w, i) => {
     const who = w.j ? t('jesus') : w.who;
     if (!w.j) items.push({ text: `${w.who}.`, el: $(`blockquote[data-say="${i}"]`, sc), beat: 'w' + i });
-    items.push({ text: w.text, who, el: $(`blockquote[data-say="${i}"]`, sc), jesus: !!w.j, gemini: w.tts === 'gemini', pause: 500, beat: 'w' + i });
+    items.push({ text: w.text, who, el: $(`blockquote[data-say="${i}"]`, sc), jesus: !!w.j, god: !!w.g, gemini: w.tts === 'gemini', pause: 500, beat: 'w' + i });
   });
   return items;
 }
@@ -988,7 +988,7 @@ function speakScene(onDone) { speakQueue(sceneScript(), onDone); }
 function speakWord(i) {
   stopAuto();
   const w = evAt(idx).words[i];
-  speakQueue([{ text: w.text, who: w.j ? t('jesus') : w.who, el: $(`blockquote[data-say="${i}"]`, $('#scene')), jesus: !!w.j, gemini: w.tts === 'gemini' }]);
+  speakQueue([{ text: w.text, who: w.j ? t('jesus') : w.who, el: $(`blockquote[data-say="${i}"]`, $('#scene')), jesus: !!w.j, god: !!w.g, gemini: w.tts === 'gemini' }]);
 }
 const stageBeat = (beat, s) => dispatchEvent(new CustomEvent('stage:beat', { detail: { beat, s } }));
 function stopSpeech(keepAuto) {
