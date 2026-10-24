@@ -482,7 +482,7 @@
    "when": "Early AD 27",
    "subtitle": "An invitation at four in the afternoon",
    "story": [
-    "At Bethany beyond the Jordan, John was standing with two of his disciples when he saw Jesus passing by and cried out: look, the Lamb of God. At those words the two disciples followed him. Jesus turned and asked them what they were looking for.",
+    "At Bethany beyond the Jordan, John, who the day before had pointed to Jesus as the Lamb of God who carries away the sin of the world, was standing with two of his disciples when he saw him passing by and cried out again: look, the Lamb of God. At those words the two disciples followed him. Jesus turned and asked them what they were looking for.",
     "When they asked where he was staying, he said, come and see. It was about four in the afternoon. One of the two who spent that day with him, Andrew, went to find his brother Simon and told him they had found the Messiah, and Jesus gave Simon a new name, Cephas.",
     "The next day, on his way to Galilee, Jesus called Philip of Bethsaida. Philip ran to tell Nathanael. Nathanael scoffed that nothing good could come from Nazareth, but when Jesus said he had already seen him under the fig tree, his doubt gave way and he confessed his faith."
    ],
@@ -502,6 +502,10 @@
     {
      "who": "Nathanael",
      "text": "Teacher, you are the Son of God. You are the King of Israel!"
+    },
+    {
+     "who": "John the Baptist",
+     "text": "Look! Here is God’s Lamb, who carries away the sin of the world."
     }
    ],
    "note": "'The tenth hour' counts from sunrise in the Jewish way, so it means about four in the afternoon. 'Cephas' is Aramaic for rock; in Greek it is 'Peter'.",
@@ -1802,7 +1806,7 @@
    "story": [
     "Word came from Bethany. Lord, the one you love, Lazarus, is sick. Yet Jesus stayed where he was two more days before setting out. When he said they would go back to Judea, Thomas said: Let us also go, that we may die with him.",
     "By the time they arrived, Lazarus had already been in the tomb four days. Martha ran out and said: Lord, if you had been here, my brother would not have died. I am the resurrection and the life. Do you believe this? Then Mary came and fell at his feet weeping, and Jesus wept too.",
-    "Before the cave tomb sealed with a stone, Jesus told them to take the stone away. Despite Martha's worry that there would be a smell, the stone was rolled aside. Jesus looked up to heaven and gave thanks, then cried out in a loud voice: Lazarus, come out. And the man who had died walked out, his hands and feet wrapped in grave cloths."
+    "Before the cave tomb sealed with a stone, Jesus told them to take the stone away. Despite Martha's worry that there would be a smell, the stone was rolled aside. Jesus looked up to heaven and gave thanks, then cried out in a loud voice: Lazarus, come out. And the man who had died walked out, his hands and feet wrapped in grave cloths. After this, the high priest Caiaphas told the council it was better for one man to die for the people. John recorded those words as a prophecy that Jesus would die for the nation, and to gather into one the scattered children of God."
    ],
    "words": [
     {
@@ -1820,6 +1824,10 @@
     {
      "who": "Martha",
      "text": "Yes, Lord. I believe that you are the Christ, the Son of God, the one promised to come into the world."
+    },
+    {
+     "who": "Caiaphas",
+     "text": "Can’t you see it is to your advantage that one man should die in place of the people, so the whole nation is not destroyed?"
     }
    ],
    "note": "John writes that Bethany was fifteen stadia, about three kilometers, from Jerusalem. Later Jewish writings reflect the idea that the soul of the dead lingers near the body for three days, so four days was a time when hope had run out.",
@@ -1880,7 +1888,7 @@
    "story": [
     "Jericho, an oasis city thick with palm trees. As the pilgrim procession going up to Jerusalem passed by, a blind man named Bartimaeus, sitting by the road begging, cried out: Jesus, Son of David, have mercy on me. The more the people scolded him to be quiet, the louder he shouted.",
     "Jesus stopped and called for him. Throwing off his cloak, the man sprang up and came to him. What do you want me to do for you? Teacher, I want to see again. Go, your faith has saved you. At once his eyes were opened, and he followed Jesus along the road.",
-    "In that city lived Zacchaeus, a chief tax collector and a rich man. He was short, and the crowd hid Jesus from his view, so he ran on ahead and climbed a sycamore fig tree. Beneath it Jesus stopped, looked up, and called him by name. That day Zacchaeus said he would give half of his possessions to the poor."
+    "In that city lived Zacchaeus, a chief tax collector and a rich man. He was short, and the crowd hid Jesus from his view, so he ran on ahead and climbed a sycamore fig tree. Beneath it Jesus stopped, looked up, and called him by name. That day Zacchaeus said he would give half of his possessions to the poor. On this road up to Jerusalem, Jesus had already told his disciples that the Son of Man came to serve and to give up his life as a ransom for many."
    ],
    "words": [
     {
@@ -1898,6 +1906,10 @@
     {
      "who": "Jesus",
      "text": "Go. Your faith has made you well."
+    },
+    {
+     "who": "Jesus",
+     "text": "The Son of Man came not to be waited on but to serve others, and to give up his life as a ransom for many."
     }
    ],
    "note": "Jericho is an oasis city about 250 meters below sea level. Herod had a winter palace there, and because it stood on the route of the date palm and balsam trade, its customs office was important. The Gospels differ slightly in the number of blind men and the timing.",
@@ -2121,13 +2133,13 @@
    "subtitle": "The last night, when he washed their feet and broke the bread",
    "story": [
     "Thursday evening. Peter and John follow a man carrying a water jar and prepare the Passover table in a large upper room. When the disciples have gathered in the lamplight, Jesus takes off his outer robe, ties a towel around his waist, pours water into a basin, and washes their feet one by one.",
-    "During the meal he takes bread, gives thanks, breaks it, and gives it to them, saying, This is my body, given for you. Passing the cup, he says, This is the new covenant in my blood. At the words, One of you will betray me, the room goes cold, and Judas gets up and goes out. It was night.",
+    "During the meal he takes bread, gives thanks, breaks it, and gives it to them, saying, This is my body, given for you. Passing the cup, he says, This is my covenant blood, poured out so that the sins of many may be forgiven. At the words, One of you will betray me, the room goes cold, and Judas gets up and goes out. It was night.",
     "To the disciples who remain, Jesus speaks for a long time. Love one another, he says. Do not let your hearts be troubled. I am the way. Then he looks up to heaven and prays for them. After singing a hymn, they go out into the dark toward the Mount of Olives."
    ],
    "words": [
     {
      "who": "Jesus",
-     "text": "This is my body, given for you. Do this to remember me. This cup is the new covenant in my blood, poured out for you."
+     "text": "This is my body, given for you. Do this to remember me. This cup is my blood, the blood of God’s covenant, poured out so that the sins of many may be forgiven."
     },
     {
      "who": "Jesus",
@@ -2274,7 +2286,7 @@
     }
    ],
    "note": "Crucifixion was the most shameful death Rome dealt out, reserved for rebels and slaves. Tradition most strongly places Golgotha at the site of the Church of the Holy Sepulchre, and the Garden Tomb, proposed in the nineteenth century, is also known as a place of pilgrimage.",
-   "reflect": "Before his last words, It is finished, what can I lay down?",
+   "reflect": "Do I know that my own name is among the reasons he did not turn away from this road?",
    "quiz": {
     "q": "Whom did the soldiers force to carry the cross of Jesus?",
     "options": [
@@ -2371,7 +2383,7 @@
    "subtitle": "Peace that came through a locked door",
    "story": [
     "On the evening of the resurrection, the disciples are gathered behind doors locked for fear. Just as the room is stirring with the story of the two who came back from Emmaus, Jesus stands among them. Peace be with you. Startled, the disciples think they are seeing a ghost.",
-    "He shows them his hands and feet with the marks of the nails, and his side pierced by the spear. He eats a piece of broiled fish in front of them, and opens their minds to understand the scriptures. Then he breathes on them and says, Receive the Holy Spirit.",
+    "He shows them his hands and feet with the marks of the nails, and his side pierced by the spear. He eats a piece of broiled fish in front of them, opens their minds to understand the scriptures, and tells them that the Christ had to suffer and rise, and that the news of forgiveness would go out to every nation. Then he breathes on them and says, Receive the Holy Spirit.",
     "Thomas, who was not there, holds out. Unless he touches for himself, he will not believe. Eight days later, behind the locked door again, Jesus stands and holds out his hands and side to him. A confession bursts from Thomas. My Lord and my God."
    ],
    "words": [
@@ -2390,6 +2402,10 @@
     {
      "who": "Thomas",
      "text": "My Lord and my God!"
+    },
+    {
+     "who": "Jesus",
+     "text": "The Christ had to suffer and rise from death on the third day. Now, in his name, the call to turn back and be forgiven will spread from Jerusalem to every nation."
     }
    ],
    "note": "Thomas was called Didymus, meaning the Twin. In Jewish reckoning, eight days later counts the first day too, so it points to the same day of the following week, the first day of the week come round again.",
