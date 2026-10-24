@@ -1030,7 +1030,8 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   $('#next').onclick = () => go(idx + 1);
   $('#skip').onclick = () => go(idx + 1);
   $('#listen').onclick = () => { if (speaking) stopSpeech(); else { stopAuto(); speakScene(); } };
-  $('#auto').onchange = () => { stopSpeech(); if ($('#auto').checked) startAuto(); };
+  // stopSpeech가 스위치를 autoOn(=false)으로 되돌리므로 켠 상태를 먼저 읽어 둔다
+  $('#auto').onchange = () => { const on = $('#auto').checked; stopSpeech(); if (on) startAuto(); };
   $('#music').hidden = !EVENTS.some(e => e.music);
   $('#music').onclick = () => { try { localStorage.setItem(BGM.key, bgmOn() ? 'off' : 'on'); } catch { /* 이번 방문만 */ } bgmFollow(); };
   $('#quizBtn').onclick = openSceneQuiz;
