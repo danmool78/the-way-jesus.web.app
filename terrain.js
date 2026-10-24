@@ -103,7 +103,16 @@ async function build() {
 
 /* ---------- 지역 불러오기 ---------- */
 function ensureRegion(r) {
-  if (!r.load) r.load = loadRegion(r).then(() => { decorate(); window.recenterStage?.(); });
+  if (!r.load) {
+    r.load = loadRegion(r).then(() => { decorate(); window.recenterStage?.(); });
+    // 높이를 풀지 않은 변(맞닿은 지역 쪽)은 그 이웃도 함께 불러온다 — 한쪽만 있으면 경계에 가짜 낭떠러지(턱)가 섰다 (갈릴리·유대 32.55°)
+    const near = (a, b) => Math.abs(a - b) < 0.01, overlapX = o => o.X0 < r.X1 && o.X1 > r.X0, overlapZ = o => o.Z0 < r.Z1 && o.Z1 > r.Z0;
+    regions.forEach(o => {
+      if (o === r) return;
+      if ((!r.fade.includes('s') && near(o.Z0, r.Z1) && overlapX(o)) || (!r.fade.includes('n') && near(o.Z1, r.Z0) && overlapX(o)) ||
+        (!r.fade.includes('e') && near(o.X0, r.X1) && overlapZ(o)) || (!r.fade.includes('w') && near(o.X1, r.X0) && overlapZ(o))) ensureRegion(o);
+    });
+  }
   return r.load;
 }
 function ensureNear(x, z, margin = 120) { // 이 점 둘레의 지역을 미리 불러온다
@@ -299,7 +308,7 @@ function clearStageSpot() {
   let cx = 1e9, cz = 1e9, r = 0;
   if (stageOn) {
     const p = PLACES[EVENTS[idx].place];
-    [cx, cz] = px(f.at || [p.lat, p.lng]);
+    [cx, cz] = f.xz || px(f.at || [p.lat, p.lng]); // xz: 지형 안 무대가 알려 주는 지금의 바닥 중심 (@at으로 옮겨 갈 때)
     const D = camera.position.distanceTo(v3.set(cx, heightAt(cx, cz), cz)), H = wrap.clientHeight || 1;
     r = f.r ?? f.rpx * 2 * D * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) / H; // r: 지형 안에 선 무대가 알려 주는 지도 단위 반지름
   }

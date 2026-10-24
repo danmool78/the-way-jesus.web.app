@@ -113,6 +113,7 @@ function apply(cmds, instant = false) {
       pending.add(job); return;
     }
     if (name === '@env') { setEnv(pose, instant); return; }
+    if (name === '@at') { moveAt = pose ? { ll: pose, x: o.x || 0, z: o.z || 0 } : null; if (instant) atSnap = true; return; }
     const a = actors[name], p = props[name];
     if (a) {
       if (pose) { a.set(pose); a.talkTo = o.to ? actors[o.to] : null; }
@@ -138,6 +139,7 @@ function apply(cmds, instant = false) {
 function setScene(ev) {
   curEv = ev;
   clearCast();
+  moveAt = null; atSnap = true;
   script = SCRIPTS[ev.id] || null;
   mode = script ? 'scene' : 'off';
   document.body.classList.toggle('stage-on', !!script);
@@ -338,7 +340,7 @@ function leaveTerrain() {
   inTerrain = false;
   scene.add(stageGroup); holder.removeFromParent();
   stageGroup.traverse(o => { if (o.isPointLight && o.userData.d0 !== undefined) { o.distance = o.userData.d0; o.intensity = o.userData.i0; delete o.userData.d0; } });
-  Object.values(props).forEach(p => { p.lift.position.y = 0; if (p.fade !== 'scale') p.obj.scale.copy(p.base); });
+  Object.values(props).forEach(p => { p.lift.position.set(0, 0, 0); if (p.fade !== 'scale') p.obj.scale.copy(p.base); });
   Object.values(actors).forEach(a => { a.big = 1; });
 }
 // 지형 위 (무대 좌표) 지점의 땅 높이 — 무대 바닥 중심과의 차이를 무대 단위로
@@ -346,14 +348,24 @@ const groundAt = (x, z) => inTerrain ? (window.terrain3d.heightAt(base.x + x * b
 let bigNow = 1;
 // 땅에 붙은 소품: 지형과 같은 고정 축척에 둔다. 나머지(사람 곁의 십자가·배·짐승·상·바구니…)는 사람과 함께 커진다
 const FIXED = new Set(['water', 'grass', 'hill', 'tomb', 'temple', 'house', 'rocks', 'figtree', 'synagogue', 'well', 'pool', 'flowers', 'gate', 'field', 'cliffshrine', 'palm', 'walls', 'olive', 'star', 'host', 'rain']);
-function placeTerrain(T) {
-  const ll = script.at || [PLACES[curEv.place].lat, PLACES[curEv.place].lng], [x, z] = px(ll), d0 = T.sceneDist(curEv);
+// '@at' 명령: 3D 지형에서만 무대 바닥을 다른 실제 지점으로 옮긴다 — 무대 (x, z) 자리가 그 위경도에 오도록.
+// 나사렛 회당에서 낭떠러지로 끌고 가는 대목처럼, 이야기가 근처의 실제 지형으로 옮겨 갈 때. 2D 무대는 그대로 둔다
+let moveAt = null, atSnap = true;
+const center = { x: 0, z: 0 }, home = { x: 0, z: 0 };
+function placeTerrain(T, dt) {
+  const ll = script.at || [PLACES[curEv.place].lat, PLACES[curEv.place].lng], d0 = T.sceneDist(curEv);
   const s = stageGroup.scale.x, k = oldUnit(T, d0, T.zoomAt(d0, curEv.place));
+  [home.x, home.z] = px(ll);
+  let [x, z] = [home.x, home.z];
+  if (moveAt) { const [mx, mz] = px(moveAt.ll); x = mx - moveAt.x * k * s; z = mz - moveAt.z * k * s; }
+  if (atSnap) { center.x = x; center.z = z; atSnap = false; } // 장면을 열 때나 즉시 적용할 때는 바로, 낭독 중에는 무리가 걸어가는 동안 천천히
+  else { center.x = damp(center.x, x, 0.7, dt); center.z = damp(center.z, z, 0.7, dt); }
+  ({ x, z } = center);
   holder.position.set(x, T.heightAt(x, z) + 0.08, z); holder.scale.setScalar(k);
   Object.assign(base, { x, z, y: holder.position.y, k: k * s });
   bigNow = THREE.MathUtils.clamp(oldUnit(T, T.cam.dist, window.terrainView?.zoom ?? 1) / k, 1, 2);
   // 무대 밑 집·나무를 치울 넓이 (지도 단위)
-  window.stageFoot = { r: k * 1.9 * (script.wide || 1), at: script.at || null };
+  window.stageFoot = { r: k * 1.9 * (script.wide || 1), at: script.at || null, xz: [x, z] };
   // 등잔·불빛: 빛이 닿는 거리는 묶음의 크기를 따라 커지지 않으므로 직접 늘리고, 멀어진 만큼 세기도 올린다
   stageGroup.traverse(o => {
     if (!o.isPointLight) return;
@@ -378,7 +390,7 @@ function frame() {
   const dt = Math.min(clock.getDelta(), 0.05), time = clock.elapsedTime;
   if (T) {
     canvas.style.opacity = 0;
-    placeTerrain(T);
+    placeTerrain(T, dt);
   } else {
     resize();
     const a = anchor();
@@ -394,7 +406,10 @@ function frame() {
     p.update(time, dt, envNow);
     if (p.terrainHide && inTerrain) p.obj.visible = false;
     if (inTerrain) {
-      p.lift.position.y = groundAt(p.obj.position.x, p.obj.position.z);
+      // 땅에 붙은 소품은 무대를 옮겨도(@at) 제자리에 남는다
+      const stay = FIXED.has(p.kind);
+      p.lift.position.x = stay ? (home.x - base.x) / base.k : 0; p.lift.position.z = stay ? (home.z - base.z) / base.k : 0;
+      p.lift.position.y = groundAt(p.obj.position.x + p.lift.position.x, p.obj.position.z + p.lift.position.z);
       if (!FIXED.has(p.kind)) { // 사람과 함께 키운다: 크기는 제자리에서, 높이(십자가가 선 언덕 위, 나는 비둘기)는 바닥에서부터
         if (p.fade === 'scale') p.obj.scale.multiplyScalar(bigNow); else p.obj.scale.copy(p.base).multiplyScalar(bigNow);
         p.lift.position.y += p.obj.position.y * (bigNow - 1);

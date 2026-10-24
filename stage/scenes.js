@@ -572,8 +572,9 @@ export const SCRIPTS = {
     props: {
       syn: ['synagogue', -0.15, -0.3],
       folk: ['crowd', -0.15, -0.3, { y: 0.1, state: 'sit', spots: [[-0.88, -0.25], [-0.88, 0.05], [-0.88, 0.32], [0.88, -0.25], [0.88, 0.05], [0.88, 0.32]] }],
-      cliff: ['hill', 1.9, -0.25, { w: 0.6, h: 0.3, d: 0.5 }],
-      rocks: ['rocks', 0, 0, { spots: [[2.3, -0.05, 0.1], [2.15, -0.5, 0.13], [1.55, -0.55, 0.08]] }],
+      // 2D 무대의 벼랑. 3D 지형에서는 실제 낭떠러지 산(나사렛 남쪽 약 2km)으로 무대를 옮기므로(@at) 숨긴다
+      cliff: ['hill', 1.9, -0.25, { w: 0.6, h: 0.3, d: 0.5, terrain: false }],
+      rocks: ['rocks', 0, 0, { terrain: false, spots: [[2.3, -0.05, 0.1], [2.15, -0.5, 0.13], [1.55, -0.55, 0.08]] }],
     },
     cast: {
       jesus: ['jesus', -1.75, 0.35, 1.2],
@@ -583,9 +584,9 @@ export const SCRIPTS = {
       phar: ['pharisee', -0.85, 0.05, 0.9],
     },
     beats: {
-      enter: [['cliff', null, { show: 0 }], ['rocks', null, { show: 0 }], ['folk', 'sit', { show: 1 }], ['jesus', 'idle', { x: -0.12, z: 0.02, look: 0, item: 'scroll' }],
+      enter: [['@at', null], ['cliff', null, { show: 0 }], ['rocks', null, { show: 0 }], ['folk', 'sit', { show: 1 }], ['jesus', 'idle', { x: -0.12, z: 0.02, look: 0, item: 'scroll' }],
         ['attendant', 'idle', { x: 0.22, z: -0.12, look: -0.8, item: null }], ['elder', 'sit-ground', { x: -0.6, z: 0.38, look: 0.8 }], ['man', 'sit-ground', { x: 0.45, z: 0.4, look: -0.8 }], ['phar', 'sit-ground', { x: -0.85, z: 0.05, look: 0.9 }]],
-      intro: [['cliff', null, { show: 0 }], ['rocks', null, { show: 0 }], ['folk', 'sit', { show: 1 }], ['jesus', 'idle', { show: 1, x: -1.75, z: 0.35, look: 1.2, item: null }],
+      intro: [['@at', null], ['cliff', null, { show: 0 }], ['rocks', null, { show: 0 }], ['folk', 'sit', { show: 1 }], ['jesus', 'idle', { show: 1, x: -1.75, z: 0.35, look: 1.2, item: null }],
         ['attendant', 'idle', { x: 0.22, z: -0.12, look: -0.6, item: 'scroll' }], ['elder', 'sit-ground', { x: -0.6, z: 0.38, look: 0.8 }], ['man', 'sit-ground', { x: 0.45, z: 0.4, look: -0.8 }], ['phar', 'sit-ground', { x: -0.85, z: 0.05, look: 0.9 }]],
       'p0.1': [['jesus', 'idle', { x: -0.12, z: 0.02, look: 0.6 }], ['attendant', 'idle', { item: null, delay: 2600 }], ['jesus', 'idle', { item: 'scroll', look: 0, delay: 2600 }]],
       'p0.3': [['jesus', 'speak', { look: 0 }]],
@@ -594,15 +595,16 @@ export const SCRIPTS = {
       'p1.1': [['jesus', 'speak'], ['man', 'shrug', { delay: 3500 }]],
       'p1.2': [['phar', 'speak', { look: 1.0 }]],
       'p2.0': [['jesus', 'speak'], ['phar', 'point', { delay: 3000 }], ['man', 'point', { delay: 3400 }], ['elder', 'shrug', { delay: 3800 }]],
-      'p2.1': [['cliff', null, { show: 1 }], ['rocks', null, { show: 1 }], ['folk', null, { show: 0 }],
+      // 낭떠러지 산(Mount Precipice): 꼭대기 동쪽 가장자리가 이스르엘 평야 쪽으로 200m 가까이 떨어진다 — 예수가 선 자리(1.85, -0.22)를 그 가장자리에
+      'p2.1': [['@at', [32.682, 35.302], { x: 1.85, z: -0.22 }], ['cliff', null, { show: 1 }], ['rocks', null, { show: 1 }], ['folk', null, { show: 0 }],
         ['jesus', 'idle', { x: 1.85, z: -0.22, look: 1.2 }], ['phar', 'idle', { x: 1.45, z: -0.05, look: 1.0 }], ['man', 'idle', { x: 1.6, z: 0.18, look: 0.8 }], ['elder', 'idle', { x: 1.25, z: 0.22, look: 1.0 }]],
       'p2.2': [['jesus', 'idle', { x: 1.5, z: 0.1, delay: 800 }], ['jesus', 'idle', { x: -1.7, z: 0.4, delay: 2200 }], ['jesus', 'idle', { show: 0, delay: 7500 }],
         ['phar', 'shrug', { look: -1.0, delay: 2500 }], ['man', 'idle', { look: -1.0, delay: 2600 }], ['elder', 'idle', { look: -1.0, delay: 2800 }]],
-      w0: [['cliff', null, { show: 0 }], ['rocks', null, { show: 0 }], ['folk', 'sit', { show: 1 }], ['jesus', 'speak', { show: 1, x: -0.12, z: 0.02, look: 0, item: 'scroll' }], ['attendant', 'idle', { item: null }],
+      w0: [['@at', null], ['cliff', null, { show: 0 }], ['rocks', null, { show: 0 }], ['folk', 'sit', { show: 1 }], ['jesus', 'speak', { show: 1, x: -0.12, z: 0.02, look: 0, item: 'scroll' }], ['attendant', 'idle', { item: null }],
         ['elder', 'sit-ground', { x: -0.6, z: 0.38, look: 0.8 }], ['man', 'sit-ground', { x: 0.45, z: 0.4, look: -0.8 }], ['phar', 'sit-ground', { x: -0.85, z: 0.05, look: 0.9 }]],
       w1: [['jesus', 'speak', { item: null }]],
       w2: [['jesus', 'speak', { look: 0.6 }], ['phar', 'shrug']],
-      end: [['cliff', null, { show: 0 }], ['rocks', null, { show: 0 }], ['folk', 'sit', { show: 1 }], ['jesus', 'idle', { show: 1, x: -0.12, z: 0.02, look: 0, item: 'scroll' }], ['attendant', 'idle', { item: null }],
+      end: [['@at', null], ['cliff', null, { show: 0 }], ['rocks', null, { show: 0 }], ['folk', 'sit', { show: 1 }], ['jesus', 'idle', { show: 1, x: -0.12, z: 0.02, look: 0, item: 'scroll' }], ['attendant', 'idle', { item: null }],
         ['elder', 'sit-ground', { x: -0.6, z: 0.38, look: 0.8 }], ['man', 'sit-ground', { x: 0.45, z: 0.4, look: -0.8 }], ['phar', 'sit-ground', { x: -0.85, z: 0.05, look: 0.9 }]],
     },
   },
