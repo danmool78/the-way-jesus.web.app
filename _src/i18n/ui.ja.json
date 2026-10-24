@@ -169,6 +169,7 @@
  "fullHarmony": "四福音書対照表をすべて見る",
  "map3d": "3D地形を見る",
  "tiltUp": "地平線へ傾ける",
+ "plainTerrain": "地形の色を消す（道を見やすく）",
  "tiltDown": "もっと上から見る",
  "rotate": "回す",
  "resetView": "最初の視点",

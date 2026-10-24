@@ -169,6 +169,7 @@
  "fullHarmony": "See the full Gospel harmony",
  "map3d": "3D terrain view",
  "tiltUp": "Tilt toward the horizon",
+ "plainTerrain": "Plain terrain (make routes stand out)",
  "tiltDown": "Look more from above",
  "rotate": "Rotate",
  "resetView": "Reset view",

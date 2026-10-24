@@ -169,6 +169,7 @@
  "fullHarmony": "Voir la synopse complète",
  "map3d": "Relief en 3D",
  "tiltUp": "Incliner vers l’horizon",
+ "plainTerrain": "Relief sans couleur (itinéraires plus visibles)",
  "tiltDown": "Regarder davantage d’en haut",
  "rotate": "Pivoter",
  "resetView": "Vue initiale",

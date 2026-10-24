@@ -169,6 +169,7 @@
  "fullHarmony": "查看完整的四福音对照表",
  "map3d": "3D地形",
  "tiltUp": "向地平线倾斜",
+ "plainTerrain": "关闭地形颜色（路线更清楚）",
  "tiltDown": "更多俯视",
  "rotate": "旋转",
  "resetView": "初始视角",
