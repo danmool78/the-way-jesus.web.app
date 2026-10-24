@@ -331,7 +331,7 @@ function makePerson(type) {
     const hair = mat(t.hair, { roughness: 0.75 });
     // 정수리 덮개는 뒤로 젖혀 이마의 머리선을 올린다 (앞머리가 바가지처럼 일자로 내려오지 않게)
     const cap = mesh(headShape(sphere(0.0835, 32, 16, 0, Math.PI * 2, 0, Math.PI * 0.36), [0, 0.004, -0.004]), hair, head, [0, 0.004, -0.004]);
-    cap.rotation.x = -0.22;
+    cap.rotation.x = t.curls ? -0.08 : -0.22; // 곱슬머리(천사)는 덜 젖힌다 — 이마가 반 대머리처럼 넓어 보이지 않게
     mesh(headShape(sphere(0.085, 32, 18, ...SBACK(Math.PI * 1.3), 0, Math.PI * 0.66), [0, 0.002, -0.006]), mat(t.hair, { ...DS, roughness: 0.75 }), head, [0, 0.002, -0.006]);
     if (t.long) {
       mesh(lathe([[0.083, 0.0], [0.088, -0.05], [0.09, -0.12], [0.082, -0.18]], 24, ...BACK(Math.PI * 1.3)), mat(t.hair, { ...DS, roughness: 0.75 }), head);
@@ -340,6 +340,11 @@ function makePerson(type) {
     if (t.curls) for (let i = 0; i < 11; i++) {
       const a = (i / 10) * Math.PI * 1.25 - Math.PI * 0.125;
       mesh(sphere(0.026, 10, 8), hair, head, [Math.cos(a) * 0.072, 0.03 + Math.sin(a) * 0.05, -0.02 - Math.sin(a) * 0.02]);
+    }
+    // 앞머리 곱슬: 이마 위를 따라 작은 곱슬을 한 줄 — 가운데는 조금 높게, 관자놀이 쪽은 낮게
+    if (t.curls) for (let i = 0; i < 7; i++) {
+      const b = (i / 6 - 0.5) * 2.0;
+      mesh(sphere(0.019, 10, 8), hair, head, [Math.sin(b) * 0.066, 0.058 - Math.abs(b) * 0.012, Math.cos(b) * 0.05]);
     }
   }
   if (t.beard) {
