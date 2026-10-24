@@ -689,10 +689,6 @@ function speakQueue(items, onDone) {
   const rate = +$('#rate').value;
   pickVoices();
   const useVoice = !!synth && voices.length > 0;
-  if (!useVoice && !warnedNoVoice && !(LANG === 'ko' && Object.keys(voiceIndex).length)) {
-    warnedNoVoice = true;
-    toast(synth ? t('noVoiceLang') : t('noVoice'));
-  }
   if (synth) synth.cancel();
   voiceAudio.pause();
   // 낭독자와 예수님 목소리는 서로 다른 음성으로 (이름에 성별이 드러나는 음성을 먼저 고른다)
@@ -705,6 +701,11 @@ function speakQueue(items, onDone) {
   });
   queue.forEach(it => { it.clip = voiceKey(it.jesus ? VOICE_NAME.jesus : VOICE_NAME.narr, it.text); });
   const recorded = LANG === 'ko' && queue.length > 0 && queue.every(it => voiceIndex[it.clip]);
+  // 녹음으로 읽는 장면이면 브라우저 음성이 없어도 안내하지 않는다
+  if (!recorded && !useVoice && !warnedNoVoice) {
+    warnedNoVoice = true;
+    toast(synth ? t('noVoiceLang') : t('noVoice'));
+  }
   const staged = items.some(it => it.beat);
   const readMs = it => (600 + it.text.length * 140) / rate; // 눈으로 읽는 속도
   let n = 0;
@@ -723,9 +724,13 @@ function speakQueue(items, onDone) {
     const advance = d => { if (done) return; done = true; clearTimeout(guard); autoTimer = setTimeout(next, d); };
     if (recorded) {
       const gap = (!it.last ? VOICE_GAP.sentence : it.beat === 'intro' ? VOICE_GAP.intro : VOICE_GAP.item) / rate;
-      guard = setTimeout(() => advance(0), voiceIndex[it.clip] / rate + 3000);
+      // 감시 타이머는 실제로 소리가 나기 시작할 때부터 남은 길이로 잰다 (받는 중·버퍼링 시간은 빼고).
+      // 15초가 지나도 시작하지 못하면 그 문장은 건너뛴다
+      guard = setTimeout(() => advance(0), 15000);
       voiceAudio.src = `assets/voice/ko/${it.clip}.mp3`;
       voiceAudio.playbackRate = rate;
+      voiceAudio.onplaying = () => { clearTimeout(guard); guard = setTimeout(() => advance(0), (voiceIndex[it.clip] - voiceAudio.currentTime * 1000) / rate + 3000); };
+      voiceAudio.onwaiting = () => { clearTimeout(guard); guard = setTimeout(() => advance(0), 15000); };
       voiceAudio.onended = () => advance(gap);
       // 파일을 못 불러오면 그 문장은 눈으로 읽는 속도만큼 기다린다
       voiceAudio.onerror = () => { clearTimeout(guard); guard = setTimeout(() => advance(0), readMs(it)); };
@@ -789,7 +794,7 @@ function stopSpeech(keepAuto) {
   if (speaking) dispatchEvent(new CustomEvent('stage:stop'));
   speechToken++; clearTimeout(autoTimer);
   if (synth) synth.cancel();
-  voiceAudio.pause(); voiceAudio.onended = voiceAudio.onerror = null;
+  voiceAudio.pause(); voiceAudio.onended = voiceAudio.onerror = voiceAudio.onplaying = voiceAudio.onwaiting = null;
   speaking = false; $$('.speaking').forEach(x => x.classList.remove('speaking'));
   showCaption(null);
   if (!keepAuto) stopAuto();
