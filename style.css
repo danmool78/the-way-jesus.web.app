@@ -448,7 +448,7 @@ dialog{position:fixed}
 .intro h1{margin:14px 0 4px;font-family:var(--serif);font-size:44px;font-weight:700;letter-spacing:.24em;color:var(--gold2);text-indent:.24em}
 .intro-tag{margin:0 0 22px;font-family:var(--serif);font-size:16px;color:var(--gold);letter-spacing:.06em}
 .intro-lead{margin:0 auto 28px;max-width:480px;font-size:15.5px;line-height:1.85;color:var(--ink)}
-.intro-go{display:flex;flex-direction:column;align-items:center;gap:12px}
+.intro-go{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%} /* 단추 max-width:100%가 화면 폭을 기준으로 잡히게 — 긴 장면 제목이 넘치지 않고 말줄임 */
 .intro-btn{min-width:260px;max-width:100%;padding:15px 28px;border:0;border-radius:999px;background:linear-gradient(180deg,#e9c97f,#b88a3e);color:#24180a;font-family:var(--serif);font-size:17px;font-weight:700;cursor:pointer;box-shadow:0 8px 28px rgba(185,138,62,.3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .intro-btn:hover{filter:brightness(1.06)}
 .intro-link{border:0;background:none;color:var(--muted);font-size:14px;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:6px}
