@@ -20,6 +20,9 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           printf '%s' "$SA" > "$RUNNER_TEMP/sa.json"
+          # Secret이 base64로 저장되어 있으면 풀어 쓴다 (배포 액션도 두 가지를 다 받는다)
+          jq -e .client_email "$RUNNER_TEMP/sa.json" > /dev/null 2>&1 || printf '%s' "$SA" | base64 -d > "$RUNNER_TEMP/sa.json" || true
+          echo "credentials: $(jq -r '.type // "unreadable"' "$RUNNER_TEMP/sa.json" 2>/dev/null || echo unreadable)"
           export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/sa.json"
           trap 'rm -f "$RUNNER_TEMP/sa.json"' EXIT
           npx -y firebase-tools hosting:channel:list --project the-way-jesus --json > "$RUNNER_TEMP/channels.json" || true
