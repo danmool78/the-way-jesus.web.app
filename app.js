@@ -861,6 +861,8 @@ function showIntro(resume) {
 /* ---------- 낭독 (Web Speech API) ---------- */
 const synth = window.speechSynthesis;
 let voices = [], speaking = false, autoOn = false, autoTimer = null, speechToken = 0;
+// 지금 낭독이 끝나면 부를 일과, 그 낭독이 장면 전체 읽기인지 — 읽는 중에 자동 여정을 켜면 끝난 뒤의 일만 바꿔 끼운다
+let speechDone = null, sceneReading = false;
 function pickVoices() {
   if (!synth) return;
   voices = synth.getVoices().filter(v => v.lang.toLowerCase().replace('_', '-').split('-')[0] === LANG);
@@ -884,6 +886,7 @@ let warnedNoVoice = false;
 function speakQueue(items, onDone) {
   // items: [{text, el, jesus, pause}] — 문장 단위로 읽으며 해당 문단을 강조한다
   const token = ++speechToken;
+  speechDone = onDone; sceneReading = false;
   const rate = +$('#rate').value;
   pickVoices();
   const useVoice = !!synth && voices.length > 0;
@@ -912,7 +915,7 @@ function speakQueue(items, onDone) {
   const next = () => {
     if (token !== speechToken) return;
     $$('.speaking').forEach(x => x.classList.remove('speaking'));
-    if (n >= queue.length) { speaking = false; setListenUI(); showCaption(null); if (staged) stageBeat('end'); onDone && onDone(); return; }
+    if (n >= queue.length) { speaking = false; setListenUI(); showCaption(null); if (staged) stageBeat('end'); speechDone && speechDone(); return; }
     const it = queue[n++];
     const pane = it.el && it.el.closest('.pane');
     if (pane && pane.hidden) showTab(pane.dataset.pane);
@@ -1018,7 +1021,7 @@ function sceneScript() {
   });
   return items;
 }
-function speakScene(onDone) { speakQueue(sceneScript(), onDone); }
+function speakScene(onDone) { speakQueue(sceneScript(), onDone); sceneReading = true; }
 function speakWord(i) {
   stopAuto();
   const w = evAt(idx).words[i];
@@ -1038,15 +1041,14 @@ function stopSpeech(keepAuto) {
 function stopAuto() { autoOn = false; clearTimeout(autoTimer); setListenUI(); }
 function startAuto() {
   autoOn = true; setListenUI();
-  const run = () => {
+  const after = () => {
     if (!autoOn) return;
-    speakScene(() => {
-      if (!autoOn) return;
-      if (idx >= EVENTS.length - 1) { stopAuto(); if (!endJourney(true)) toast(t('journeyEnd')); return; }
-      autoTimer = setTimeout(() => { if (!autoOn) return; go(idx + 1, { keepSpeech: true, onArrive: () => { autoTimer = setTimeout(run, 1400); } }); }, 1200);
-    });
+    if (idx >= EVENTS.length - 1) { stopAuto(); if (!endJourney(true)) toast(t('journeyEnd')); return; }
+    autoTimer = setTimeout(() => { if (!autoOn) return; go(idx + 1, { keepSpeech: true, onArrive: () => { autoTimer = setTimeout(run, 1400); } }); }, 1200);
   };
-  run();
+  const run = () => { if (autoOn) speakScene(after); };
+  // 이야기를 읽는 중에 켜면 처음부터 다시 읽지 않는다: 읽던 데서 이어 읽고, 끝나면 다음 장소로
+  if (speaking && sceneReading) speechDone = after; else run();
 }
 function setListenUI() {
   const l = $('#listen');
@@ -1331,8 +1333,9 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   $('#next').onclick = () => go(idx + 1);
   $('#skip').onclick = () => go(idx + 1);
   $('#listen').onclick = () => { if (speaking) stopSpeech(); else { stopAuto(); speakScene(() => { if (idx === EVENTS.length - 1) endJourney(true); }); } };
-  // stopSpeech가 스위치를 autoOn(=false)으로 되돌리므로 켠 상태를 먼저 읽어 둔다
-  $('#auto').onchange = () => { const on = $('#auto').checked; stopSpeech(); if (on) startAuto(); };
+  // stopSpeech가 스위치를 autoOn(=false)으로 되돌리므로 켠 상태를 먼저 읽어 둔다.
+  // 이야기를 읽는 중에 켜면 낭독을 끊지 않고 그대로 이어 간다 (startAuto)
+  $('#auto').onchange = () => { const on = $('#auto').checked; if (on && speaking && sceneReading) startAuto(); else { stopSpeech(); if (on) startAuto(); } };
   $('#music').hidden = !EVENTS.some(e => e.music);
   $('#music').onclick = () => { bgmPref = !bgmPref; try { localStorage.setItem(BGM.key, bgmPref ? 'on' : 'off'); } catch { /* 이번 방문만 */ } bgmFollow(); };
   $('#quizBtn').onclick = openSceneQuiz;
