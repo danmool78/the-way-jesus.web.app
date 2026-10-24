@@ -584,7 +584,8 @@ function setCard(mode) {
   c.classList.toggle('peek', mode === 'peek');
   c.classList.toggle('open', mode === 'open' || mode === 'full');
   c.classList.toggle('full', mode === 'full');
-  const b = $('#cardToggle'); if (b) { b.classList.toggle('folded', mode !== 'open'); b.setAttribute('aria-label', mode === 'open' ? t('showMap') : t('openScene')); b.setAttribute('aria-expanded', mode === 'open'); }
+  // 끝까지 펼친 시트(full)도 펼친 것이다 — 접기(−) 모양으로 두어야 닫는 단추로 읽힌다
+  const b = $('#cardToggle'); if (b) { const shut = mode === 'peek'; b.classList.toggle('folded', shut); b.setAttribute('aria-label', shut ? t('openScene') : t('showMap')); b.setAttribute('aria-expanded', !shut); }
 }
 
 /* ---------- 장면 ---------- */
