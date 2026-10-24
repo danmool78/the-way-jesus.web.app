@@ -1,6 +1,7 @@
 /* 그 길 — 3D 지형 모드 (시험판: 갈릴리 호수 둘레).
    실제 고도 자료(assets/terrain/*-height.png)로 땅을 솟게 하고 2D 지도와 같은 색(-color.webp)을 입혀 비스듬히 내려다본다.
-   지도 한켠의 조작기: 3D 켜고 끄기, 기울이기, 돌리기, 처음 시점. 끌어서 옮기고 바퀴·두 손가락으로 당겨 본다.
+   지도 한켠의 조작기: 3D 켜고 끄기, 기울이기, 돌리기, 처음 시점.
+   마우스: 끌면 옮기고, 오른쪽 버튼(또는 Shift)으로 끌면 돌리고 기울이고, 바퀴로 당긴다. 손가락: 하나로 옮기고, 둘로 벌려 당기고 비틀어 돌린다.
    좌표는 2D 지도와 같은 지도 단위(app.js의 px, 1단위 = 1/1000도 ≈ 111m — 갈릴리 둘레가 약 680×900단위). 높이는 EXAG배로 과장한다.
    켜져 있는 동안 window.geoToClient를 3D 투영으로 바꿔 끼워, 3D 무대(stage.js)가 지형 위의 같은 자리에 선다 */
 import { THREE, damp } from './stage/kit.js';
@@ -39,7 +40,7 @@ async function build() {
   svg.after(c);
   scene = new THREE.Scene();
   // 하늘과 먼 안개: 위는 맑은 하늘색, 지평선은 옅은 우윳빛
-  const sky = '#cfd9dc';
+  const sky = '#d6dcd6'; // 땅색이 살짝 섞인 옅은 하늘 — 지평선에서 땅과 하늘이 부드럽게 만난다
   scene.background = new THREE.Color(sky);
   scene.fog = new THREE.Fog(sky, 260, 900); // 먼 곳은 옅은 안개 속으로
   camera = new THREE.PerspectiveCamera(38, 1, 1, 3000);
@@ -64,6 +65,12 @@ async function build() {
   const px8 = cx.getImageData(0, 0, hw, hh).data;
   heights = new Float32Array(hw * hh);
   for (let i = 0; i < hw * hh; i++) heights[i] = ((px8[i * 4] * 256 + px8[i * 4 + 1]) / 10 - 500) * M * EXAG;
+  // 가장자리 띠(폭의 7%)에서는 높이를 서서히 0으로 — 바깥의 평평한 2D 지도와 턱 없이 이어진다 (호수 쪽 낮은 땅은 그대로)
+  const band = 0.07, ease = v => v * v * (3 - 2 * v);
+  for (let j = 0; j < hh; j++) for (let i = 0; i < hw; i++) {
+    const e = Math.min(i / (hw - 1), 1 - i / (hw - 1), j / (hh - 1), 1 - j / (hh - 1)), k = ease(Math.min(1, e / band));
+    heights[j * hw + i] *= k;
+  }
 
   // 땅: 고도 격자를 그대로 꼭짓점으로
   const geo = new THREE.PlaneGeometry(X1 - X0, Z1 - Z0, hw - 1, hh - 1);
@@ -77,12 +84,30 @@ async function build() {
   ground.receiveShadow = true; ground.castShadow = true;
   scene.add(ground);
   // 가장자리 치마: 지형 판의 옆면을 땅색으로 내려 덮어 떠 있는 판처럼 보이지 않게
-  const skirt = new THREE.Mesh(new THREE.PlaneGeometry(4000, 4000), new THREE.MeshStandardMaterial({ color: '#b9a47c', roughness: 1 }));
-  skirt.rotation.x = -Math.PI / 2; skirt.position.set((X0 + X1) / 2, -6, (Z0 + Z1) / 2); // 가장 낮은 땅(해수면 아래 약 280m)보다 아래 scene.add(skirt);
+  // 지형 판 바깥: 2D 지도와 같은 바탕 그림(assets/relief.webp)을 평평하게 깔아 이어 보이게 한다.
+  // 그 바깥과 그림의 투명한 가장자리 아래는 땅색 큰 판
+  const land = new THREE.Mesh(new THREE.PlaneGeometry(6000, 6000), new THREE.MeshStandardMaterial({ color: '#e3d5b4', roughness: 1 }));
+  land.rotation.x = -Math.PI / 2; land.position.set((X0 + X1) / 2, -8, (Z0 + Z1) / 2); land.receiveShadow = true; scene.add(land); // 가장 낮은 땅보다 아래
+  const RB = { lat0: 29.15, lat1: 34.6, lng0: 33.0, lng1: 37.4 }; // app.js RELIEF와 같게
+  const [bx0, bz0] = px([RB.lat1, RB.lng0]), [bx1, bz1] = px([RB.lat0, RB.lng1]);
+  const bTex = new THREE.Texture(await loadImg('assets/relief.webp')); bTex.colorSpace = THREE.SRGBColorSpace; bTex.anisotropy = 8; bTex.needsUpdate = true;
+  // 지형 판 자리는 구멍을 낸다 — 덮으면 해수면 아래의 호수·요단 골짜기가 바탕 판 밑에 묻힌다
+  const outer = new THREE.Shape([[bx0, bz0], [bx1, bz0], [bx1, bz1], [bx0, bz1]].map(([x, z]) => new THREE.Vector2(x, z)));
+  outer.holes.push(new THREE.Path([[X0, Z0], [X0, Z1], [X1, Z1], [X1, Z0]].map(([x, z]) => new THREE.Vector2(x, z))));
+  const bGeo = new THREE.ShapeGeometry(outer), bp = bGeo.attributes.position, buv = bGeo.attributes.uv;
+  for (let i = 0; i < bp.count; i++) buv.setXY(i, (bp.getX(i) - bx0) / (bx1 - bx0), 1 - (bp.getY(i) - bz0) / (bz1 - bz0));
+  const base = new THREE.Mesh(bGeo, new THREE.MeshStandardMaterial({ map: bTex, transparent: true, roughness: 1, side: THREE.DoubleSide }));
+  base.rotation.x = Math.PI / 2; base.position.y = 0; base.receiveShadow = true; scene.add(base);
+  // 지중해: 해안선 서쪽 (2D 지도의 바다 판과 같은 해안선)
+  const seaPts = [[34.6, 35.6], ...GEO.coast, [31.0, 33.6], [31.0, 31.0], [34.6, 31.0]].map(p => { const [x, z] = px(p); return new THREE.Vector2(x, z); });
+  const sea = new THREE.Mesh(new THREE.ShapeGeometry(new THREE.Shape(seaPts), 12), new THREE.MeshStandardMaterial({ color: '#7ea6ad', roughness: 0.15, metalness: 0.3, envMap: env, side: THREE.DoubleSide }));
+  sea.rotation.x = Math.PI / 2; sea.position.y = -0.1; scene.add(sea);
 
   // 갈릴리 호수: 2D 지도와 같은 물가 선, 수면은 하늘을 비춘다
-  const shape = new THREE.Shape(GEO.galilee.map(p => { const [x, z] = px(p); return new THREE.Vector2(x, z); }));
-  const lake = new THREE.Mesh(new THREE.ShapeGeometry(shape, 24), new THREE.MeshStandardMaterial({ color: '#4f8798', roughness: 0.08, metalness: 0.35, envMap: env, envMapIntensity: 1.2, transparent: true, opacity: 0.94, side: THREE.DoubleSide }));
+  // 2D 지도처럼 물가 점들을 매끄러운 곡선으로 이어 모난 데가 없게
+  const shore = new THREE.CatmullRomCurve3(GEO.galilee.map(p => { const [x, z] = px(p); return new THREE.Vector3(x, z, 0); }), true, 'centripetal');
+  const shape = new THREE.Shape(shore.getPoints(160).map(v => new THREE.Vector2(v.x, v.y)));
+  const lake = new THREE.Mesh(new THREE.ShapeGeometry(shape, 24), new THREE.MeshStandardMaterial({ color: '#4f8798', roughness: 0.55, metalness: 0.05, envMap: env, envMapIntensity: 0.6, transparent: true, opacity: 0.94, side: THREE.DoubleSide })); // 물: 너무 매끈하면 해가 하얀 얼룩으로 번진다
   lake.rotation.x = Math.PI / 2; lake.position.y = LAKE_Y + 0.25; // (모양의 y가 지도 z로 가게 눕힌다 — 그러면 면이 아래를 보므로 양면) lake.receiveShadow = true;
   scene.add(lake);
   // 요단 강: 물빛 띠
@@ -208,6 +233,9 @@ function loop(now) {
   }
   cam.pitch = damp(cam.pitch, ui.pitch, 4, dt); cam.yaw = damp(cam.yaw, ui.yaw, 4, dt);
   placeCam();
+  window.terrainView = { yaw: cam.yaw, pitch: cam.pitch, zoom: THREE.MathUtils.clamp(150 / cam.dist, 0.35, 2.4) };
+  // 안개는 카메라 거리에 맞춰 — 멀리 물러나도 지형 판과 바탕의 끝이 하늘과 안개 속으로 녹아든다
+  scene.fog.near = cam.dist * 1.1; scene.fog.far = cam.dist * 3.6;
   boats.forEach((b, i) => { b.position.y = LAKE_Y + 0.3 + Math.sin(now / 900 + b.userData.phase) * 0.1; b.rotation.z = Math.sin(now / 1300 + i) * 0.04; });
   // 지나온 길만 밝게, 아직 가지 않은 길은 흐리게
   routes.children.forEach(l => { l.material.opacity = l.userData.i <= idx ? 0.9 : 0.18; });
@@ -231,9 +259,10 @@ function bindInput(c) {
     if (!pts.has(e.pointerId)) return;
     const prev = pts.get(e.pointerId); pts.set(e.pointerId, [e.clientX, e.clientY]);
     if (pts.size === 2) { // 두 손가락: 벌리고 오므려 당기기
-      const [a, b] = [...pts.values()], d = Math.hypot(a[0] - b[0], a[1] - b[1]);
-      if (drag.d) cam.dist = THREE.MathUtils.clamp(cam.dist * drag.d / d, 25, 800);
-      drag.d = d; return;
+      const [a, b] = [...pts.values()], d = Math.hypot(a[0] - b[0], a[1] - b[1]), ang = Math.atan2(b[1] - a[1], b[0] - a[0]);
+      if (drag.d) cam.dist = THREE.MathUtils.clamp(cam.dist * drag.d / d, 25, 520);
+      if (drag.ang !== undefined) ui.yaw += ang - drag.ang; // 두 손가락을 비틀면 돌린다
+      drag.d = d; drag.ang = ang; return;
     }
     const dx = e.clientX - prev[0], dy = e.clientY - prev[1], s = cam.dist / wrap.clientHeight * 1.3;
     if (e.shiftKey || e.buttons === 2) { ui.yaw -= dx * 0.005; ui.pitch = THREE.MathUtils.clamp(ui.pitch + dy * 0.004, 0.25, 1.45); return; }
@@ -244,7 +273,7 @@ function bindInput(c) {
   const up = e => { pts.delete(e.pointerId); if (!pts.size) drag = null; };
   c.addEventListener('pointerup', up); c.addEventListener('pointercancel', up);
   c.addEventListener('contextmenu', e => e.preventDefault());
-  c.addEventListener('wheel', e => { e.preventDefault(); cam.goal = null; cam.dist = THREE.MathUtils.clamp(cam.dist * Math.exp(e.deltaY * 0.001), 25, 800); }, { passive: false });
+  c.addEventListener('wheel', e => { e.preventDefault(); cam.goal = null; cam.dist = THREE.MathUtils.clamp(cam.dist * Math.exp(e.deltaY * 0.001), 25, 520); }, { passive: false });
 }
 
 /* ---------- 켜고 끄기 ---------- */
@@ -262,7 +291,7 @@ async function setOn(v) {
     window.geoToClient = (lat, lng) => { const s = project(lat, lng); return { x: s.x, y: s.y }; };
     const [x, z] = px([here.lat, here.lng]); cam.tx = x; cam.tz = z; cam.dist = 420; flyTo(here); // 높은 곳에서 내려앉듯
   } else {
-    window.terrainOn = false; window.geoToClient = orig;
+    window.terrainOn = false; window.geoToClient = orig; window.terrainView = null;
   }
   window.recenterStage?.();
 }
@@ -285,7 +314,7 @@ function controls() {
     if (k === 'left') ui.yaw += 0.35;
     if (k === 'right') ui.yaw -= 0.35;
     if (k === 'in') cam.goal = { tx: cam.tx, tz: cam.tz, dist: Math.max(25, cam.dist * 0.7) };
-    if (k === 'out') cam.goal = { tx: cam.tx, tz: cam.tz, dist: Math.min(800, cam.dist * 1.4) };
+    if (k === 'out') cam.goal = { tx: cam.tx, tz: cam.tz, dist: Math.min(520, cam.dist * 1.4) };
     if (k === 'reset') { ui.pitch = 0.62; ui.yaw = 0; flyTo(PLACES[EVENTS[idx].place]); }
   });
 }

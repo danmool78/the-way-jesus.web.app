@@ -187,7 +187,9 @@ if (canvas) {
   document.body.classList.add('has-stage');
 }
 function resize() {
-  const mobile = innerWidth <= 900, wide = script?.wide || 1;
+  const tv = window.terrainOn && window.terrainView;
+  // 3D 지형에서 당겨 보면 인물도 커지므로 그만큼 화면(캔버스)도 넓힌다
+  const mobile = innerWidth <= 900, wide = (script?.wide || 1) * (tv ? Math.max(1, tv.zoom) : 1);
   const w = Math.round((mobile ? 230 : 300) * wide), h = Math.round((mobile ? 200 : 270) * wide);
   if (w === size.w && h === size.h) return;
   size = { w, h };
@@ -264,6 +266,23 @@ function placeGeo() {
   });
 }
 
+/* ---------- 3D 지형을 따라 돌고 커지기 ----------
+   지형 모드(terrain.js)가 알려 주는 시점(방위·기울기·당긴 정도)에 무대 카메라를 맞춘다.
+   기울기는 지형의 처음 기울기(0.62)에서 달라진 만큼만 더해, 평소 무대의 낮은 시선을 지킨다 */
+const CAM0 = { d: Math.hypot(2.05, 8.7), pitch: Math.atan2(2.05, 8.7) };
+function followTerrain() {
+  const tv = window.terrainOn && window.terrainView;
+  const yaw = tv ? tv.yaw : 0, pitch = THREE.MathUtils.clamp(CAM0.pitch + (tv ? tv.pitch - 0.62 : 0), 0.05, 1.3);
+  camera.position.set(Math.sin(yaw) * Math.cos(pitch) * CAM0.d, 0.5 + Math.sin(pitch) * CAM0.d, Math.cos(yaw) * Math.cos(pitch) * CAM0.d);
+  camera.lookAt(0, 0.5, 0);
+  const z = tv ? tv.zoom : 1;
+  scene.scale.setScalar(z);
+  camera.updateMatrixWorld();
+  // 무대 바닥 원점이 화면 어디에 오는지 다시 잰다 (돌리면 바뀐다)
+  const v = new THREE.Vector3(0, 0, 0).project(camera);
+  groundPx = { x: (v.x + 1) / 2 * size.w, y: (1 - v.y) / 2 * size.h };
+}
+
 /* ---------- 루프 ---------- */
 const clock = new THREE.Clock();
 function loop() {
@@ -273,6 +292,7 @@ function loop() {
   resize();
   const a = anchor();
   if (!a) { canvas.style.opacity = 0; return; }
+  followTerrain();
   canvas.style.opacity = 1;
   canvas.style.transform = `translate(${Math.round(a.x - groundPx.x)}px, ${Math.round(a.y - groundPx.y)}px)`;
   updateEnv(dt);
