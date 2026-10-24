@@ -966,7 +966,11 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   document.addEventListener('click', ev => { if (!panel.hidden && !panel.contains(ev.target)) closePanel(); });
   $('#openHarmony').onclick = () => { closePanel(); setView('harmony'); };
   $('#openStamps').onclick = () => { closePanel(); renderStamps(); $('#stamps').showModal(); };
-  $('#fitAll').onclick = () => { fitMode = 'all'; fitAll(); $('#fitAll').classList.add('active'); $('#fitNow').classList.remove('active'); };
+  // 전체 경로는 켜고 끄는 단추: 다시 누르면 지금 장면으로 돌아온다
+  $('#fitAll').onclick = () => {
+    if (fitMode === 'all') { $('#fitNow').onclick(); return; }
+    fitMode = 'all'; fitAll(); $('#fitAll').classList.add('active'); $('#fitNow').classList.remove('active');
+  };
   $('#fitNow').onclick = () => { fitMode = 'scene'; if (!frameStage(idx, 900)) frame([EVENTS[idx].place], 900); $('#fitNow').classList.add('active'); $('#fitAll').classList.remove('active'); };
   $$('.tabs button').forEach(b => b.onclick = () => setView(b.dataset.view));
   $('#wordSearch').oninput = renderWords;
