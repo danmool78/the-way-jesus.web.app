@@ -12,14 +12,28 @@ const e = d.events.find(x => x.id === id), place = d.places[e.place].name;
 const narration = `${e.title}. ${place.replace(/[()·]/g, ' ')}, ${e.when.replace(/·/g, ',')}. ${e.story[0]}`;
 const jesus = (e.words.find(w => w.who === '예수') || e.words[0]).text;
 
-// 해설은 차분한 목소리 위주로, 예수 말씀은 낮고 따뜻한 남성 목소리 후보로
-const NARRATORS = ['Kore', 'Aoede', 'Leda', 'Sulafat', 'Charon', 'Orus', 'Iapetus', 'Algieba'];
-const JESUS = ['Charon', 'Iapetus', 'Enceladus', 'Umbriel', 'Algieba'];
+// 띄어 읽기: 문장 끝·쉼표·연결어미(-자 -고 -서 -며 -면 -니 -는데 -지만) 뒤에 쉼을 넣는다.
+// Chirp 3 HD는 SSML 대신 markup의 [pause] 표시를 받는다. '에서'는 조사라 빼고, '-고 있다' 같은 보조용언 앞은 붙여 읽는다
+const pauses = t => t
+  .replace(/([.?!])\s+/g, '$1 [pause] ')
+  .replace(/,\s*/g, ', [pause short] ')
+  .replace(/(\S+(?:자|고|서|며|면|니|는데|지만)(?<!에서))\s(?!\[|있|싶|계|말|나서)/g, '$1 [pause short] ');
 
-async function say(text, voice, file) {
+// 해설은 차분한 목소리 위주로. 예수 말씀은 첫 시안이 가볍다 하여 남은 남성 목소리를 천천히,
+// 그리고 음높이를 낮출 수 있는 Neural2·Wavenet 남성 목소리도 함께 (Chirp 3 HD는 pitch를 받지 않는다)
+const NARRATORS = ['Kore', 'Aoede', 'Leda', 'Sulafat', 'Charon', 'Orus', 'Iapetus', 'Algieba'];
+const JESUS = ['Achird', 'Algenib', 'Alnilam', 'Fenrir', 'Rasalgethi', 'Sadachbia', 'Sadaltager', 'Schedar', 'Zubenelgenubi', 'Charon',
+  { name: 'Neural2-C', pitch: -4 }, { name: 'Wavenet-D', pitch: -4 }];
+
+async function say(text, voice, file, rate = 1) {
+  const v = typeof voice === 'string' ? { name: `Chirp3-HD-${voice}` } : voice;
+  // pitch를 받는 목소리는 SSML로, Chirp는 markup으로 쉼을 준다
+  const input = v.pitch == null ? { markup: pauses(text) }
+    : { ssml: `<speak>${pauses(text).replace(/\[pause short\]/g, '<break time="250ms"/>').replace(/\[pause\]/g, '<break time="600ms"/>')}</speak>` };
+  const audioConfig = { audioEncoding: 'MP3', speakingRate: rate, ...(v.pitch != null && { pitch: v.pitch }) };
   const res = await fetch(`https://texttospeech.googleapis.com/v1/text:synthesize?key=${KEY}`, {
     method: 'POST', headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ input: { text }, voice: { languageCode: 'ko-KR', name: `ko-KR-Chirp3-HD-${voice}` }, audioConfig: { audioEncoding: 'MP3' } })
+    body: JSON.stringify({ input, voice: { languageCode: 'ko-KR', name: `ko-KR-${v.name}` }, audioConfig })
   });
   const j = await res.json();
   if (!res.ok) throw Error(`${voice}: ${j.error?.message || res.status}`);
@@ -28,5 +42,6 @@ async function say(text, voice, file) {
 }
 
 await mkdir(out, { recursive: true });
-for (const v of NARRATORS) await say(narration, v, `${out}/${id}-해설-${v}.mp3`);
-for (const v of JESUS) await say(jesus, v, `${out}/${id}-예수-${v}.mp3`);
+console.log(pauses(narration)); console.log(pauses(jesus));
+for (const v of NARRATORS) await say(narration, v, `${out}/${id}-해설-${v}.mp3`, 0.95);
+for (const v of JESUS) await say(jesus, v, `${out}/${id}-예수-${v.name || v}.mp3`, 0.85);
