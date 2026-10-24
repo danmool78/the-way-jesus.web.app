@@ -187,6 +187,9 @@ html:not(:lang(ko)):not(:lang(zh)):not(:lang(ja)) .river-lbl text{writing-mode:h
 /* 자막: 지금 읽는 문장을 지도 아래쪽 가운데에 (장면 카드에 가리지 않는 영역) */
 .caption{position:absolute;left:0;right:calc(min(460px,42%) + 28px);bottom:18px;margin:0 auto;width:fit-content;max-width:min(680px,calc(100% - min(460px,42%) - 60px));text-align:center;padding:12px 30px 14px;border-radius:12px;background:linear-gradient(90deg,rgba(14,11,8,0),rgba(14,11,8,.78) 18%,rgba(14,11,8,.78) 82%,rgba(14,11,8,0));opacity:0;transform:translateY(8px);transition:opacity .35s,transform .35s;pointer-events:none;z-index:3}
 .caption.show{opacity:1;transform:none}
+.caption p,.caption p span{text-wrap:balance}
+.caption p span{display:block}
+:lang(ko) .caption p{word-break:keep-all} /* 한국어는 낱말 안에서 끊지 않는다 (중·일은 띄어쓰기가 없어 그대로) */
 .caption small{display:block;font-size:12.5px;color:var(--gold2);letter-spacing:.08em}
 .caption .cline{display:none;width:28px;height:1px;margin:5px auto 6px;background:var(--gold)}
 .caption.who .cline{display:block}
@@ -469,7 +472,7 @@ dialog{position:fixed}
   .terrain-on .m3tools{display:none}
   /* 모바일 자막은 지도 위쪽, 칩 아래에 */
   .caption{left:10px;right:10px;bottom:auto;top:58px;max-width:none;padding:8px 14px}
-  .caption p{font-size:16px}
+  .caption p{font-size:16px;-webkit-line-clamp:4} /* 좁은 화면은 긴 문장이 4줄까지 */
   .credit,.meta,.gospels,.story,.words-sec{padding-left:16px;padding-right:16px}
   .note,.reflect,.pad{margin-left:16px;margin-right:16px}
   .story{font-size:17px;line-height:1.9}
