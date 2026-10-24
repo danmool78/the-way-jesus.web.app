@@ -93,6 +93,7 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .riverbank{fill:none;stroke:var(--oasis);stroke-width:11;stroke-linecap:round;stroke-linejoin:round;opacity:.55}
 .relief .tile{opacity:0;transition:opacity .7s}
 .relief .tile.ready{opacity:1}
+.offmap{fill:var(--bg)} /* 지형 그림이 없는 바깥 — 카드 둘레 틈으로 보여도 맨바닥 대신 바탕색 */
 .sea{opacity:1} /* 덜 덮으면 밑의 지형 그림 가장자리가 비쳐 밤에 바다에 세로줄이 보였다 */
 .coast{fill:none;stroke:#f6efdc;stroke-width:1.6;vector-effect:non-scaling-stroke;opacity:.7}
 .lake{fill:var(--sea);stroke:#5f8a92;stroke-width:1;vector-effect:non-scaling-stroke}

@@ -200,6 +200,7 @@ function buildMap() {
   ${REFCITIES.map(([n, a, b]) => `<g class="lbl refcity" transform="translate(${px([a, b]).join(',')})"><circle r="2.2"/><text x="5" y="3">${esc(tm(n))}</text></g>`).join('')}
   ${lbl(tm('나일 강'), px([29.7, 31.33]), 'water-lbl river-lbl')}
   ${lbl(tm('수에즈 만'), px([29.55, 32.66]), 'water-lbl river-lbl')}
+  <path class="offmap" fill-rule="evenodd" d="M${DRAWN.x - 1e5},${DRAWN.y - 1e5}h${DRAWN.w + 2e5}v${DRAWN.h + 2e5}h${-DRAWN.w - 2e5}Z M${DRAWN.x},${DRAWN.y}v${DRAWN.h}h${DRAWN.w}v${-DRAWN.h}Z"/>
   <g id="routes"><path id="nextHint" class="nexthint"/></g>
   <g id="markers"></g>
   <g id="walker" class="walker"><circle class="wglow" r="18"/><g class="wfig"><circle class="wbody" r="8"/><text class="wicon" y="4.5">✦</text></g></g>`;
@@ -236,6 +237,9 @@ function buildMap() {
   new ResizeObserver(() => applyView()).observe(map);
 }
 
+// 지형 그림(relief·relief-west)이 불투명하게 그려진 범위 — 지도는 이 밖(그림 없는 맨바닥)을 보이지 않는다.
+// 두 그림의 바깥 범위(29.15–34.6, 29.4–37.4)에서 가장자리의 투명하게 흐린 띠(0.16–0.32°)를 뺐다
+const DRAWN = (() => { const [x0, y0] = px([34.28, 29.63]), [x1, y1] = px([29.47, 37.14]); return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }; })();
 function applyView() {
   const r = map.getBoundingClientRect();
   if (!r.width) return;
@@ -243,6 +247,16 @@ function applyView() {
   let { x, y, w, h } = view;
   const ar = r.width / r.height;
   if (w / h > ar) { const nh = w / ar; y -= (nh - h) / 2; h = nh; } else { const nw = h * ar; x -= (nw - w) / 2; w = nw; }
+  // 카드에 가리지 않고 실제로 보이는 영역(freeArea)이 그려진 범위 안에 있게 한다: 그보다 넓으면 그만큼 당겨 맞추고,
+  // 가장자리 밖으로 나가면 안으로 붙인다. 카드 밑으로 들어가는 쪽은 바깥이어도 보이지 않는다 (틈은 .offmap이 바탕색으로 덮는다).
+  // 맞춘 값을 view에 되돌려 써서, 끌기·전환이 보이지 않는 바깥에 '걸려' 있지 않게 한다
+  const f = freeArea($('#scene')?.classList.contains('peek') ? 'peek' : 'open');
+  let q = w / r.width; // 화면 1px 당 지도 단위
+  const k = Math.min(1, DRAWN.w / ((f.r - f.l) * q), DRAWN.h / ((f.b - f.t) * q));
+  if (k < 1) { const cx = x + (f.l + f.r) / 2 * q, cy = y + (f.t + f.b) / 2 * q; q *= k; w *= k; h *= k; x = cx - (f.l + f.r) / 2 * q; y = cy - (f.t + f.b) / 2 * q; }
+  x = Math.min(DRAWN.x + DRAWN.w - f.r * q, Math.max(DRAWN.x - f.l * q, x));
+  y = Math.min(DRAWN.y + DRAWN.h - f.b * q, Math.max(DRAWN.y - f.t * q, y));
+  view = { x, y, w, h };
   map.setAttribute('viewBox', `${x} ${y} ${w} ${h}`);
   const u = w / r.width; // 화면 1px 당 지도 단위
   map.style.setProperty('--u', u);
