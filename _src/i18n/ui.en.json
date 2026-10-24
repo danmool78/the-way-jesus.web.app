@@ -52,6 +52,8 @@
  "walkHours": "about {n} h on foot",
  "walkDays": "about {n} days on foot",
  "distance": "about {d} km · {t}",
+ "odo": "Walked {d} km · {s} steps",
+ "odoTitle": "Distance Jesus has walked up to this scene (estimated road distance between places; steps at a 75 cm stride)",
  "walkSpeak": "From {a} to {b}.",
  "sayPlace": "Place",
  "sayWhen": "Time",

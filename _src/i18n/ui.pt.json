@@ -52,6 +52,8 @@
  "walkHours": "cerca de {n} h a pé",
  "walkDays": "cerca de {n} dias a pé",
  "distance": "cerca de {d} km · {t}",
+ "odo": "Percorrido {d} km · {s} passos",
+ "odoTitle": "Distância que Jesus caminhou até esta cena (caminho estimado entre os lugares; passos de 75 cm)",
  "walkSpeak": "De {a} a {b}.",
  "sayPlace": "Lugar",
  "sayWhen": "Época",

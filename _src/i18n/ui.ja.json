@@ -52,6 +52,8 @@
  "walkHours": "徒歩で約{n}時間",
  "walkDays": "徒歩で約{n}日",
  "distance": "約{d}km・{t}",
+ "odo": "歩いた道 {d}km・{s}歩",
+ "odoTitle": "この場面までにイエスが歩いた距離（場所の間の道のりを概算、歩数は歩幅75cmで計算）",
  "walkSpeak": "{a}から{b}へ。",
  "sayPlace": "場所",
  "sayWhen": "時期",
