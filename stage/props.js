@@ -165,7 +165,7 @@ const MAKERS = {
     const geo = new THREE.PlaneGeometry(R * 2, R * 2, seg, seg);
     geo.rotateX(-Math.PI / 2);
     const base = geo.attributes.position.array.slice();
-    const m = new THREE.MeshStandardMaterial({ color: '#6f97a0', roughness: 0.25, metalness: 0.1, transparent: true, alphaMap: radialTex('#ffffff', '#000000'), flatShading: false });
+    const m = new THREE.MeshStandardMaterial({ color: '#6f97a0', roughness: 0.25, metalness: 0.1, transparent: true, depthWrite: false, alphaMap: radialTex('#ffffff', '#000000'), flatShading: false }); // depthWrite: 3D 지형에서 밑의 호수를 가려 투명한 가장자리로 호수 바닥이 비쳤다
     const w = new THREE.Mesh(geo, m);
     w.receiveShadow = true;
     const g = new THREE.Group();
@@ -327,7 +327,7 @@ const MAKERS = {
     let m = mat(o.color || '#857664', { roughness: 1 });
     if (o.soft) { // 밑동을 서서히 투명하게 — 무대는 지도 위에 겹쳐 그리는 그림이라 언덕 테두리가 또렷하면 땅 위에 얹힌 접시처럼 떠 보인다
       const p = geo.attributes.position, c = [];
-      for (let i = 0; i < p.count; i++) { const a = THREE.MathUtils.smoothstep(p.getY(i), 0, 0.55); c.push(1, 1, 1, a); }
+      for (let i = 0; i < p.count; i++) { const a = THREE.MathUtils.smoothstep(p.getY(i), 0, 0.22); c.push(1, 1, 1, a); }
       geo.setAttribute('color', new THREE.Float32BufferAttribute(c, 4));
       m = new THREE.MeshStandardMaterial({ color: o.color || '#857664', roughness: 1, vertexColors: true, transparent: true, depthWrite: false });
     }

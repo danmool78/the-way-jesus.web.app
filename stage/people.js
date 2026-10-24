@@ -563,6 +563,7 @@ class Actor {
     if (o.speed) this.speed = o.speed;
     if (o.y) { this.y = this.yT = o.y; this.fixedY = true; } // 높이를 직접 정한 사람(십자가 위)은 지면을 따르지 않는다
     this.ground = 0;
+    this.big = 1; // 3D 지형 안에서 멀리 물러날 때 사람만 키우는 배율 (stage.js)
     this.p.root.position.set(x, this.y, z);
     // 나타나고 사라질 때 크기 대신 투명도로 — 재질을 인물마다 따로 둔다
     this.mats = [];
@@ -616,7 +617,7 @@ class Actor {
     this.show = damp(this.show, this.showT, 4, dt);
     p.root.position.set(this.pos.x, this.y + this.ground, this.pos.y);
     p.root.rotation.y = this.face;
-    p.root.scale.setScalar(0.94 + 0.06 * this.show);
+    p.root.scale.setScalar((0.94 + 0.06 * this.show) * this.big);
     p.root.visible = this.show > 0.01;
     this.fadeTo(Math.min(1, this.show));
 
