@@ -1354,6 +1354,13 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   document.addEventListener('click', ev => { if (!panel.hidden && !panel.contains(ev.target)) closePanel(); });
   $('#openHarmony').onclick = () => { closePanel(); setView('harmony'); };
   $('#openStamps').onclick = () => { closePanel(); renderStamps(); $('#stamps').showModal(); };
+  // 이 앱 공유하기: 휴대폰은 기기의 공유 창(카톡·문자 등), 공유 창이 없는 컴퓨터는 주소를 복사해 알린다
+  $('#shareApp').onclick = async () => {
+    closePanel();
+    const url = location.origin + '/', title = t('appName'), text = t('introTag');
+    if (navigator.share) { try { await navigator.share({ title, text, url }); } catch { /* 공유 창을 닫음 */ } return; }
+    try { await navigator.clipboard.writeText(url); toast(t('linkCopied')); } catch { prompt(t('shareApp'), url); }
+  };
   // 전체 경로는 켜고 끄는 단추: 다시 누르면 지금 장면으로 돌아온다
   $('#fitAll').onclick = () => {
     if (fitMode === 'all') { $('#fitNow').onclick(); return; }
