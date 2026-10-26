@@ -864,7 +864,7 @@ function showIntro(resume) {
   // 떠 있는 동안 뒤의 지도·3D 무대는 돌리지 않는다 (stage.js·terrain.js가 이 표시를 보고 그리기를 건너뛴다)
   // 걷는 도중·자동 여정 중에 로고로 들어와도 모두 세운다 (걷던 사람은 떠난 자리로 되돌린다)
   stopAuto(); stopSpeech();
-  if (walking) { cancelWalk(); updateMap(idx); setCard('open'); }
+  if (walking) { cancelWalk(); updateMap(idx); setOdo(odoAt(Math.max(0, idx))); setCard('open'); }
   document.body.classList.add('intro-open');
   box.scrollTop = 0; box.hidden = false; starts[0].focus({ preventScroll: true });
 }
