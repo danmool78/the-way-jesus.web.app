@@ -406,7 +406,7 @@ function frame() {
   if (!!T !== inTerrain) T ? enterTerrain(T) : leaveTerrain();
   holder.visible = mode !== 'off' && !!curEv;
   if (!T || mode === 'off') window.stageTone = null;
-  if (mode === 'off' || document.hidden || wrap.offsetParent === null) return;
+  if (mode === 'off' || document.hidden || wrap.offsetParent === null || document.body.classList.contains('intro-open')) return;
   const dt = Math.min(clock.getDelta(), 0.05), time = clock.elapsedTime;
   if (T) {
     canvas.style.opacity = 0;
