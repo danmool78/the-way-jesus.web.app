@@ -839,7 +839,8 @@ function showIntro(resume) {
   starts.forEach(b => { b.textContent = label; });
   agains.forEach(b => { b.hidden = !(resume > 0); });
   // 떠 있는 동안 뒤 화면은 inert — Tab 초점·클릭이 가려진 단추로 가지 않게 (방향키 단축키는 아래 keydown에서 막는다)
-  const behind = [...document.body.children].filter(el => el !== box && el.tagName !== 'SCRIPT');
+  // 창(dialog)은 빼 둔다 — 랜딩에서 연 뮤직비디오 창의 닫기 단추가 눌려야 하므로
+  const behind = [...document.body.children].filter(el => el !== box && el.tagName !== 'SCRIPT' && el.tagName !== 'DIALOG');
   // walk: 여정으로 가는 단추(이어서·처음부터)는 다른 탭에서 열었어도 여정 화면으로 돌아간다. Esc는 있던 화면 그대로
   const close = (i, walk) => {
     box.classList.add('out'); removeEventListener('keydown', esc);
@@ -848,7 +849,7 @@ function showIntro(resume) {
     if (walk && $('#journey').hidden) setView('journey');
     if (i !== idx) go(i);
   };
-  const esc = ev => { if (ev.key === 'Escape') close(idx); };
+  const esc = ev => { if (ev.key === 'Escape' && !$('dialog[open]')) close(idx); }; // Esc로 영상 창을 닫을 때는 랜딩은 그대로
   // 처음 걷는 사람과 '처음부터 다시'는 프롤로그(첫 아담)부터
   starts.forEach(b => { b.onclick = () => close(resume > 0 ? resume : firstIdx(), true); });
   agains.forEach(b => { b.onclick = () => close(firstIdx(), true); });
