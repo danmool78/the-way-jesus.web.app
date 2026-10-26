@@ -21,7 +21,9 @@ const args = process.argv.slice(2);
 const old = args[0] === 'changed' && JSON.parse(await readFile(args[1], 'utf8'));
 const scenes = [...(d.prologue ? [d.prologue] : []), ...d.events]; // 프롤로그(e00, data의 prologue)도 같은 방식으로
 let events = args.includes('all') ? scenes : scenes.filter(e => args.includes(e.id));
-if (!events.length && !old) { console.error('장면 id를 주세요 (예: e01, 또는 all, 또는 changed <예전 data.json>)'); process.exit(1); }
+// walks: 다음 장소로 걸어갈 때 읽는 안내("나사렛에서 베들레헴으로.") — 장소가 바뀌는 이웃 장면마다 (app.js의 walkTo와 같은 글)
+const walks = args.includes('walks');
+if (!events.length && !old && !walks) { console.error('장면 id를 주세요 (예: e01, 또는 all, 또는 walks, 또는 changed <예전 data.json>)'); process.exit(1); }
 
 // app.js의 sentences·sceneScript와 같은 규칙
 const sentences = text => text.match(/[^.?!…。！？]+[.?!…。！？]*["”’」』]?\s*/g) || [text];
@@ -35,6 +37,13 @@ function script(e) {
   return items.flatMap((it, i) => sentences(it.text).map(s => s.trim()).filter(Boolean).map((text, k) => ({ text, jesus: it.jesus, god: it.god, gemini: it.gemini, split: i === 0 && k > 0 })));
 }
 // Gemini 성우로 읽는 말씀(관리자 페이지에서 고른 것, words의 tts: 'gemini')은 열쇠에 'gemini-'를 붙여 따로 둔다 (app.js와 같은 계산)
+const placeName = k => d.places[k].name.replace(/\s*\([^)]*\)/g, '').replace(/·/g, ' ').replace(/\s+/g, ' ').trim(); // app.js의 placeSay와 같게
+const ro = w => { const c = w.charCodeAt(w.length - 1) - 0xac00; return c >= 0 && c < 11172 && c % 28 && c % 28 !== 8 ? '으로' : '로'; }; // app.js와 같게
+function walkLines() {
+  const out = [];
+  d.events.forEach((e, i) => { const p = d.events[i - 1]; if (p && p.place !== e.place) out.push({ text: ui.walkSpeak.replace('{a}', placeName(p.place)).replace('{b}', placeName(e.place)).replace('{ro}', ro(placeName(e.place))) }); });
+  return out.flatMap(it => sentences(it.text).map(s => s.trim()).filter(Boolean).map(text => ({ text })));
+}
 const voiceOf = s => s.jesus ? VOICE.jesus : s.god ? VOICE.god : VOICE.narr;
 const keyOf = s => voiceKey(`${s.gemini ? 'gemini-' : ''}${voiceOf(s).name}`, s.text);
 
@@ -150,8 +159,9 @@ async function record(text, v) {
 await mkdir(OUT, { recursive: true }); await mkdir(TMP, { recursive: true });
 let made = 0;
 const fresh = new Set(); // 이번에 새로 만든 녹음 — 예전 목록의 길이를 쓰지 않고 다시 잰다
-for (const e of events) {
-  for (const s of script(e)) {
+const jobs = [...events.map(e => [e.id, script(e)]), ...(walks ? [['walk', walkLines()]] : [])];
+for (const [id, lines] of jobs) {
+  for (const s of lines) {
     const v = voiceOf(s), key = keyOf(s), mp3 = `${OUT}/${key}.mp3`;
     if (existsSync(mp3)) continue;
     let b, pcm;
@@ -173,7 +183,7 @@ for (const e of events) {
     const raw = `${TMP}/${key}.pcm`;
     await writeFile(raw, Buffer.from(pcm.buffer, pcm.byteOffset, pcm.byteLength));
     execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-f', 's16le', '-ar', String(SR), '-ac', '1', '-i', raw, '-c:a', 'libmp3lame', '-b:a', '48k', mp3]);
-    console.log(e.id, (s.gemini ? 'Gemini ' : '') + v.name, key, `${(pcm.length / SR).toFixed(1)}초`, b.cps ? `${b.cps.toFixed(1)}자/초 ×${b.rate.toFixed(2)}` : '', s.text.slice(0, 30));
+    console.log(id, (s.gemini ? 'Gemini ' : '') + v.name, key, `${(pcm.length / SR).toFixed(1)}초`, b.cps ? `${b.cps.toFixed(1)}자/초 ×${b.rate.toFixed(2)}` : '', s.text.slice(0, 30));
     made++; fresh.add(key);
   }
 }

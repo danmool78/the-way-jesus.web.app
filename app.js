@@ -559,6 +559,9 @@ function banner(html, ms) {
   const b = $('#walkBanner'); b.innerHTML = html; b.classList.add('show');
   clearTimeout(banner.t); if (ms) banner.t = setTimeout(() => b.classList.remove('show'), ms);
 }
+// 걸어갈 때 읽는 장소 이름과, 그 뒤에 붙는 '로/으로'(받침이 없거나 ㄹ이면 '로' — 한국어 안내 "{a}에서 {b}{ro}.")
+const placeSay = p => p.name.replace(/\s*\([^)]*\)/g, '').replace(/·/g, ' ').replace(/\s+/g, ' ').trim(); // 괄호 속 말(추정·나일 삼각주)은 읽지 않는다
+const ro = w => { const c = w.charCodeAt(w.length - 1) - 0xac00; return c >= 0 && c < 11172 && c % 28 && c % 28 !== 8 ? '으로' : '로'; };
 function walkTo(i, done) {
   const from = EVENTS[idx], to = EVENTS[i], A = PLACES[from.place], B = PLACES[to.place];
   const path = $(`.route[data-i="${i}"]`, map);
@@ -567,7 +570,7 @@ function walkTo(i, done) {
   setCard('peek');
   $('#nextHint', map).style.display = 'none';
   banner(`<span class="wk">👣</span><b>${esc(A.name)}</b> → <b>${esc(B.name)}</b><small>${travelText(A, B, to)}</small>`);
-  if (autoOn) speakQueue([{ text: t('walkSpeak', { a: A.name.replace(/[()·]/g, ' '), b: B.name.replace(/[()·]/g, ' ') }) }]);
+  if (autoOn) speakQueue([{ text: t('walkSpeak', { a: placeSay(A), b: placeSay(B), ro: ro(placeSay(B)) }) }]); // 녹음(voice.mjs walks)과 같은 글이어야 녹음이 나온다
   const total = path.getTotalLength(), dur = reduced() ? 0 : Math.min(6500, Math.max(2200, km(A, B, to) * 30));
   // 카메라가 걷는 사람을 따라간다: 장면에서 물러나 길이 넉넉히 보이는 높이로 올라간 뒤 걷는 사람을 화면 가운데 두고 함께 옮겨 간다.
   // 도착하면 go()의 frameStage가 지금 화면에서 이어 무대로 내려간다. 전체 경로 보기·3D 지형·움직임 줄이기에서는 예전처럼 두 곳을 한 화면에
