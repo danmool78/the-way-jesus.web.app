@@ -23,6 +23,8 @@
     <p class="intro-lead" id="introLead"></p>
     <div class="intro-go"><button class="intro-btn go-start" type="button"></button><button class="intro-link go-again" type="button" data-i="introRestart" hidden></button></div>
     <!-- 묻고 답하기: 첫 화면에서 바로 보이게 시작 단추 밑에 (언어마다 qna.<언어>.html로) -->
+    <!-- 주제가 뮤직비디오: 시작 단추 밑, 누르면 Vimeo 창 (app.js의 openMv) -->
+    <button class="land-mv mv-open" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5Z"/></svg><span data-i="mvGo">주제가 「그 길」 뮤직비디오</span></button>
     <a class="land-qna qna-link" href="qna.html"><span data-i="qnaLead">왜 만들었는지, 3D 무대는 왜 이렇게 그렸는지, 어떻게 쓰면 좋은지</span><b data-i="qnaGo">묻고 답하기 →</b></a>
     <ul class="land-stats">
       <li><b id="statScenes"></b><span data-i="statScenes"></span></li>
@@ -76,6 +78,7 @@
       <label><span data-i="language">언어</span><select id="langPick" class="langpick" aria-label="언어"><option>한국어</option></select></label>
       <button class="sbtn" id="openHarmony" data-i="harmonyHead">사복음서 대조표</button>
       <button class="sbtn" id="openStamps" data-i="myFootsteps">나의 발자취</button>
+      <button class="sbtn mv-open" data-i="mvHelp">주제가 뮤직비디오</button>
       <a class="sbtn qna-link" href="qna.html" data-i="qnaHelp">도움말 · 묻고 답하기</a>
     </div>
   </div>
@@ -161,6 +164,13 @@
   <p class="favline" id="favLine" hidden></p>
   <button class="textbtn" id="reopenEnd" hidden>여정을 마친 창 보기</button>
   <button class="textbtn" id="resetProgress">기록 지우기</button>
+</dialog>
+
+<!-- 주제가 뮤직비디오(Vimeo): 열 때 주소를 넣고 닫을 때 비워 소리를 멈춘다 -->
+<dialog id="mvDlg" class="mv-dlg">
+  <button class="close" id="closeMv" aria-label="닫기">×</button>
+  <div class="mv-frame"><iframe id="mvFrame" title="그 길" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
+  <p class="mv-note" data-i="mvNote">그림·음악: AI로 만들고 사람이 다듬었습니다</p>
 </dialog>
 
 <!-- 여정을 마치며: 걸어온 길 요약, 시기 도장, 못 푼 퀴즈, 복음과 축복 (app.js의 openEnd) -->
