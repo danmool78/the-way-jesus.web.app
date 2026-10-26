@@ -49,7 +49,7 @@ function applyStatic() {
     ['#rate', 'speedLabel', 'aria-label'], ['#music', 'music', 'aria-label'], ['#music', 'music', 'title'],
     ['#words h2', 'wordsHead'], ['#words .list-head p', 'wordsIntro'], ['#wordSearch', 'wordsSearch', 'placeholder'], ['#wordSearch', 'wordsSearchLabel', 'aria-label'],
     ['#harmony h2', 'harmonyHead'], ['#harmony .list-head p', 'harmonyIntro'], ['#quiz h2', 'quizHead'], ['#quiz .list-head p', 'quizIntro'],
-    ['#closeViewer', 'close', 'aria-label'], ['#closeStamps', 'close', 'aria-label'], ['#closeQuiz', 'close', 'aria-label'], ['#closeEnd', 'close', 'aria-label'], ['#reopenEnd', 'endReopen'], ['#stamps h2', 'myFootsteps'], ['#stamps .fine', 'stampsNote'],
+    ['#closeViewer', 'close', 'aria-label'], ['#closeStamps', 'close', 'aria-label'], ['#closeQuiz', 'close', 'aria-label'], ['#closeEnd', 'close', 'aria-label'], ['#closeMv', 'close', 'aria-label'], ['#reopenEnd', 'endReopen'], ['#stamps h2', 'myFootsteps'], ['#stamps .fine', 'stampsNote'],
     ['#resetProgress', 'resetProgress']
   ].forEach(([sel, k, attr]) => { const el = $(sel); if (!el) return; if (attr) el.setAttribute(attr, t(k)); else el.textContent = t(k); });
   $$('[data-i]').forEach(el => { el.textContent = t(el.dataset.i); }); // 글씨 키를 단 요소들
@@ -839,7 +839,8 @@ function showIntro(resume) {
   starts.forEach(b => { b.textContent = label; });
   agains.forEach(b => { b.hidden = !(resume > 0); });
   // 떠 있는 동안 뒤 화면은 inert — Tab 초점·클릭이 가려진 단추로 가지 않게 (방향키 단축키는 아래 keydown에서 막는다)
-  const behind = [...document.body.children].filter(el => el !== box && el.tagName !== 'SCRIPT');
+  // 창(dialog)은 빼 둔다 — 랜딩에서 연 뮤직비디오 창의 닫기 단추가 눌려야 하므로
+  const behind = [...document.body.children].filter(el => el !== box && el.tagName !== 'SCRIPT' && el.tagName !== 'DIALOG');
   // walk: 여정으로 가는 단추(이어서·처음부터)는 다른 탭에서 열었어도 여정 화면으로 돌아간다. Esc는 있던 화면 그대로
   const close = (i, walk) => {
     box.classList.add('out'); removeEventListener('keydown', esc);
@@ -848,7 +849,7 @@ function showIntro(resume) {
     if (walk && $('#journey').hidden) setView('journey');
     if (i !== idx) go(i);
   };
-  const esc = ev => { if (ev.key === 'Escape') close(idx); };
+  const esc = ev => { if (ev.key === 'Escape' && !$('dialog[open]')) close(idx); }; // Esc로 영상 창을 닫을 때는 랜딩은 그대로
   // 처음 걷는 사람과 '처음부터 다시'는 프롤로그(첫 아담)부터
   starts.forEach(b => { b.onclick = () => close(resume > 0 ? resume : firstIdx(), true); });
   agains.forEach(b => { b.onclick = () => close(firstIdx(), true); });
@@ -1367,6 +1368,16 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   $('#closeStamps').onclick = () => $('#stamps').close();
   $('#reopenEnd').onclick = openEnd;
   $('#closeEnd').onclick = () => $('#journeyEnd').close();
+  // 주제가 뮤직비디오: 낭독·배경음악을 멈추고 연다. 닫으면 주소를 비워 영상 소리도 끊는다
+  const mv = $('#mvDlg');
+  $$('.mv-open').forEach(b => b.onclick = () => {
+    closePanel(); stopSpeech();
+    $('#mvFrame').src = 'https://player.vimeo.com/video/1239409890?autoplay=1&title=0&byline=0&portrait=0&dnt=1';
+    mv.showModal();
+  });
+  $('#closeMv').onclick = () => mv.close();
+  mv.onclick = ev => { if (ev.target === mv) mv.close(); };
+  mv.onclose = () => { $('#mvFrame').src = 'about:blank'; };
   $('#resetProgress').onclick = () => {
     if (!confirm(t('resetConfirm'))) return;
     visited.clear(); state.visited = []; state.quiz = {}; delete state.ended; delete state.fav; store.save(); if (idx >= 0) markVisited(EVENTS[idx].id); renderStamps(); renderTrack(); updateTrack();
