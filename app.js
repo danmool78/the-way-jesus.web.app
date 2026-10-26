@@ -1081,7 +1081,7 @@ function setListenUI() {
 // 곡 끝이 다가오면 같은 곡을 처음부터 겹쳐 틀어 이음매가 들리지 않게 하고, 장면이 바뀌어 곡이 다르면 서로 겹쳐 바꾼다.
 // 낭독과 함께 켜지고 함께 멈춘다 (자동 여정의 장면 사이에도 낭독이 없으면 쉰다). 딸깍 소리가 나지 않게 0.3초만 오르내린다.
 // 소리 크기는 Web Audio 사슬로만 정한다 (아이폰은 audio 요소의 volume을 무시한다). 낭독 소리는 이 사슬에 넣지 않는다
-const BGM = { key: 'theway-music', level: 0.144, fade: 2.5 }; // level: 사용자 요청으로 0.16에서 10% 낮춤
+const BGM = { key: 'theway-music', level: 0.144, fade: 2.5, out: 3, rest: 3 }; // out: 반복할 때 내리고 올리는 시간, rest: 그 사이 쉬는 시간(초) // level: 사용자 요청으로 0.16에서 10% 낮춤
 let bgmCtx = null, bgmPlayers = [], bgmCur = 0, bgmCue = null, bgmLoop = null, bgmGo = 0;
 // 켜고 끈 것은 메모리에 두고 localStorage에는 남겨 두기만 한다 (저장이 막힌 브라우저에서도 이번 방문 동안은 끌 수 있게)
 let bgmPref = (() => { try { return localStorage.getItem(BGM.key) !== 'off'; } catch { return true; } })();
@@ -1100,12 +1100,22 @@ function bgmReady() {
     const el = new Audio(); el.preload = 'auto';
     const gain = bgmCtx.createGain(); gain.gain.value = 0;
     bgmCtx.createMediaElementSource(el).connect(gain).connect(squeeze);
+    // 반복: 겹쳐 이으면 이음매가 어긋나 들리는 곡이 많아, 끝에서 서서히 0으로 내리고 잠깐 쉰 다음 처음부터 서서히 올린다
     el.addEventListener('timeupdate', () => {
-      if (bgmPlayers[bgmCur].el !== el || !bgmCue || bgmLoop === el || !(el.duration > BGM.fade * 3)) return;
-      if (el.duration - el.currentTime < BGM.fade) { bgmLoop = el; bgmPlay(bgmCue); }
+      if (bgmPlayers[bgmCur].el !== el || !bgmCue || bgmLoop === el || !(el.duration > BGM.out * 3)) return;
+      const left = el.duration - el.currentTime;
+      if (left < BGM.out) { bgmLoop = el; bgmRamp(p, 0, left); }
     });
-    el.addEventListener('ended', () => { if (bgmPlayers[bgmCur].el === el && bgmCue) bgmPlay(bgmCue); });
-    return { el, gain, fade: null };
+    el.addEventListener('ended', () => {
+      if (bgmPlayers[bgmCur].el !== el || !bgmCue) return;
+      const go = bgmGo; // 쉬는 사이에 곡이 바뀌거나 꺼지면(bgmGo가 바뀐다) 다시 틀지 않는다
+      setTimeout(() => {
+        if (go !== bgmGo || bgmPlayers[bgmCur].el !== el || !bgmCue) return;
+        bgmLoop = null; el.currentTime = 0; el.play().catch(() => {}); bgmRamp(p, BGM.level, BGM.out);
+      }, BGM.rest * 1000);
+    });
+    const p = { el, gain, fade: null };
+    return p;
   });
   return true;
 }
