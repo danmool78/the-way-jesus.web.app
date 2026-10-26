@@ -653,7 +653,7 @@ function renderScene() {
     <span class="pdot"></span>
     <div><b>${esc(e.title)}</b><small>${esc(place.name)} · ${esc(e.when)}</small></div>
   </div>
-  <button id="cardToggle" class="cardtoggle" aria-controls="scene" aria-label="${esc(t('showMap'))}"><i></i></button>
+  <button id="cardToggle" class="cardtoggle" aria-controls="scene" aria-label="${esc(t('showMap'))}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
   <div class="sheetgrip" aria-hidden="true"><i></i></div>
   <div class="hero">${img}</div>
   <div class="credrow">
