@@ -49,7 +49,7 @@ function applyStatic() {
     ['#rate', 'speedLabel', 'aria-label'], ['#music', 'music', 'aria-label'], ['#music', 'music', 'title'],
     ['#words h2', 'wordsHead'], ['#words .list-head p', 'wordsIntro'], ['#wordSearch', 'wordsSearch', 'placeholder'], ['#wordSearch', 'wordsSearchLabel', 'aria-label'],
     ['#harmony h2', 'harmonyHead'], ['#harmony .list-head p', 'harmonyIntro'], ['#quiz h2', 'quizHead'], ['#quiz .list-head p', 'quizIntro'],
-    ['#closeViewer', 'close', 'aria-label'], ['#closeStamps', 'close', 'aria-label'], ['#closeQuiz', 'close', 'aria-label'], ['#closeEnd', 'close', 'aria-label'], ['#reopenEnd', 'endReopen'], ['#stamps h2', 'myFootsteps'], ['#stamps .fine', 'stampsNote'],
+    ['#closeViewer', 'close', 'aria-label'], ['#closeStamps', 'close', 'aria-label'], ['#closeQuiz', 'close', 'aria-label'], ['#closeEnd', 'close', 'aria-label'], ['#closeMv', 'close', 'aria-label'], ['#reopenEnd', 'endReopen'], ['#stamps h2', 'myFootsteps'], ['#stamps .fine', 'stampsNote'],
     ['#resetProgress', 'resetProgress']
   ].forEach(([sel, k, attr]) => { const el = $(sel); if (!el) return; if (attr) el.setAttribute(attr, t(k)); else el.textContent = t(k); });
   $$('[data-i]').forEach(el => { el.textContent = t(el.dataset.i); }); // 글씨 키를 단 요소들
@@ -1367,6 +1367,16 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   $('#closeStamps').onclick = () => $('#stamps').close();
   $('#reopenEnd').onclick = openEnd;
   $('#closeEnd').onclick = () => $('#journeyEnd').close();
+  // 주제가 뮤직비디오: 낭독·배경음악을 멈추고 연다. 닫으면 주소를 비워 영상 소리도 끊는다
+  const mv = $('#mvDlg');
+  $$('.mv-open').forEach(b => b.onclick = () => {
+    closePanel(); stopSpeech();
+    $('#mvFrame').src = 'https://player.vimeo.com/video/1239409890?autoplay=1&title=0&byline=0&portrait=0&dnt=1';
+    mv.showModal();
+  });
+  $('#closeMv').onclick = () => mv.close();
+  mv.onclick = ev => { if (ev.target === mv) mv.close(); };
+  mv.onclose = () => { $('#mvFrame').src = 'about:blank'; };
   $('#resetProgress').onclick = () => {
     if (!confirm(t('resetConfirm'))) return;
     visited.clear(); state.visited = []; state.quiz = {}; delete state.ended; delete state.fav; store.save(); if (idx >= 0) markVisited(EVENTS[idx].id); renderStamps(); renderTrack(); updateTrack();
