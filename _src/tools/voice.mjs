@@ -2,7 +2,7 @@
 // 쓰는 법: GOOGLE_TTS_KEY=... node _src/tools/voice.mjs e01 [e02 …|all]
 // 결과: assets/voice/ko/<열쇠>.mp3 + assets/voice/ko/index.json(열쇠 → 길이 ms). 열쇠는 목소리|문장의 FNV-1a라
 // 글을 고치면 그 문장만 새로 만들어진다 (app.js의 voiceKey와 같은 계산). 키는 저장소에 두지 않는다
-// 사용자와 맞춘 설정: 해설 Aoede 0.95배속, 예수 Algenib 1배속, 문장 안 쉼 0.93배, 말 빠르기 고르게. Gemini 성우는 예수 Schedar(Gemini가 고름), 열두 살 소년 예수 Leda
+// 사용자와 맞춘 설정: 해설 Aoede 0.95배속, 예수 Algenib 1배속, 문장 안 쉼 0.93배, 말 빠르기 고르게. Gemini 성우는 같은 이름의 목소리, 열두 살 소년 예수만 Leda
 import { readFile, writeFile, mkdir, readdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -11,7 +11,7 @@ import { pauses } from './tts-pauses.mjs';
 const KEY = process.env.GOOGLE_TTS_KEY;
 if (!KEY) { console.error('GOOGLE_TTS_KEY 환경변수가 없습니다'); process.exit(1); }
 const OUT = 'assets/voice/ko', TMP = '/tmp/voice-ko';
-const VOICE = { narr: { name: 'Aoede', rate: 0.95, cps: 6.8 }, jesus: { name: 'Algenib', gemini: 'Schedar', rate: 1, cps: 7.5 }, god: { name: 'Charon', rate: 0.95, cps: 6.8 }, child: { name: 'Leda', rate: 1, cps: 7.5 } }; // god: 프롤로그의 하나님 말씀 (남성, 예수님과 다른 목소리), child: 열두 살 소년 예수(words의 voice: 'child')
+const VOICE = { narr: { name: 'Aoede', rate: 0.95, cps: 6.8 }, jesus: { name: 'Algenib', rate: 1, cps: 7.5 }, god: { name: 'Charon', rate: 0.95, cps: 6.8 }, child: { name: 'Leda', rate: 1, cps: 7.5 } }; // god: 프롤로그의 하나님 말씀 (남성, 예수님과 다른 목소리), child: 열두 살 소년 예수(words의 voice: 'child')
 const INNER = 0.93, SR = 24000;
 
 const d = JSON.parse(await readFile('data.json', 'utf8'));
@@ -36,9 +36,7 @@ function script(e) {
 }
 // Gemini 성우로 읽는 말씀(관리자 페이지에서 고른 것, words의 tts: 'gemini')은 열쇠에 'gemini-'를 붙여 따로 둔다 (app.js와 같은 계산)
 const voiceOf = s => s.child ? VOICE.child : s.jesus ? VOICE.jesus : s.god ? VOICE.god : VOICE.narr;
-// Gemini 성우는 Chirp 목소리에 맞추지 않고 Gemini에게 고르게 한 목소리를 쓴다(gemini) — 예수님은 Schedar
-const gName = v => v.gemini || v.name;
-const keyOf = s => voiceKey(s.gemini ? `gemini-${gName(voiceOf(s))}` : voiceOf(s).name, s.text);
+const keyOf = s => voiceKey(`${s.gemini ? 'gemini-' : ''}${voiceOf(s).name}`, s.text);
 
 if (old) {
   const said = e => script(e).map(keyOf).join('\n');
@@ -117,7 +115,7 @@ async function geminiSynth(text, v) {
   for (const model of GEMINI_TTS.filter(m => !spent.has(m))) {
     for (let tries = 0; tries < 4; tries++) {
       const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, { method: 'POST', headers: { 'x-goog-api-key': GEMINI_KEY, 'content-type': 'application/json' },
-        body: JSON.stringify({ contents: [{ parts: [{ text: spoken(text) }] }], generationConfig: { temperature: 0.6, responseModalities: ['AUDIO'], speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: gName(v) } } } } }) });
+        body: JSON.stringify({ contents: [{ parts: [{ text: spoken(text) }] }], generationConfig: { temperature: 0.6, responseModalities: ['AUDIO'], speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: v.name } } } } }) });
       const j = await r.json().catch(() => ({}));
       const inline = j.candidates?.[0]?.content?.parts?.find(x => x.inlineData?.data)?.inlineData;
       if (r.ok && inline) {
@@ -175,7 +173,7 @@ for (const e of events) {
     const raw = `${TMP}/${key}.pcm`;
     await writeFile(raw, Buffer.from(pcm.buffer, pcm.byteOffset, pcm.byteLength));
     execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-f', 's16le', '-ar', String(SR), '-ac', '1', '-i', raw, '-c:a', 'libmp3lame', '-b:a', '48k', mp3]);
-    console.log(e.id, s.gemini ? 'Gemini ' + gName(v) : v.name, key, `${(pcm.length / SR).toFixed(1)}초`, b.cps ? `${b.cps.toFixed(1)}자/초 ×${b.rate.toFixed(2)}` : '', s.text.slice(0, 30));
+    console.log(e.id, (s.gemini ? 'Gemini ' : '') + v.name, key, `${(pcm.length / SR).toFixed(1)}초`, b.cps ? `${b.cps.toFixed(1)}자/초 ×${b.rate.toFixed(2)}` : '', s.text.slice(0, 30));
     made++; fresh.add(key);
   }
 }

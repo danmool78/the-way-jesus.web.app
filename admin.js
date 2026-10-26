@@ -69,8 +69,7 @@ let voiceIndex = {};
 const loadVoices = () => fetch('assets/voice/ko/index.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : {}).then(j => { voiceIndex = j; }).catch(() => {});
 // 해설 문단(story)은 말하는 이가 없어 늘 해설 목소리(Aoede)
 const clipsOf = w => sentences(w.text).map(t => t.trim()).filter(Boolean)
-  .map(t => voiceKey(w.tts === 'gemini' ? `gemini-${w.voice === 'child' ? 'Leda' : w.who === '예수' ? 'Schedar' : w.who === '하나님' ? 'Charon' : 'Aoede'}`
-    : w.who === '예수' ? 'Algenib' : w.who === '하나님' ? 'Charon' : 'Aoede', t)); // 하나님(프롤로그)은 Charon. Gemini 성우는 예수 Schedar, 열두 살 소년 예수(voice: 'child') Leda
+  .map(t => voiceKey(`${w.tts === 'gemini' ? 'gemini-' : ''}${w.voice === 'child' ? 'Leda' : w.who === '예수' ? 'Algenib' : w.who === '하나님' ? 'Charon' : 'Aoede'}`, t)); // 하나님(프롤로그)은 Charon, 열두 살 소년 예수(voice: 'child')는 Leda
 const player = new Audio();
 let playing = null; // 지금 트는 말씀 칸
 function stopPlay() {
