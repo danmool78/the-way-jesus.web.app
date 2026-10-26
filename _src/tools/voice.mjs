@@ -2,7 +2,7 @@
 // 쓰는 법: GOOGLE_TTS_KEY=... node _src/tools/voice.mjs e01 [e02 …|all]
 // 결과: assets/voice/ko/<열쇠>.mp3 + assets/voice/ko/index.json(열쇠 → 길이 ms). 열쇠는 목소리|문장의 FNV-1a라
 // 글을 고치면 그 문장만 새로 만들어진다 (app.js의 voiceKey와 같은 계산). 키는 저장소에 두지 않는다
-// 사용자와 맞춘 설정: 해설 Aoede 0.95배속, 예수 Algenib 1배속, 문장 안 쉼 0.93배, 말 빠르기 고르게
+// 사용자와 맞춘 설정: 해설 Aoede 0.95배속, 예수 Algenib 1배속, 문장 안 쉼 0.93배, 말 빠르기 고르게. Gemini 성우는 같은 이름의 목소리, 열두 살 소년 예수만 Leda
 import { readFile, writeFile, mkdir, readdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -11,7 +11,7 @@ import { pauses } from './tts-pauses.mjs';
 const KEY = process.env.GOOGLE_TTS_KEY;
 if (!KEY) { console.error('GOOGLE_TTS_KEY 환경변수가 없습니다'); process.exit(1); }
 const OUT = 'assets/voice/ko', TMP = '/tmp/voice-ko';
-const VOICE = { narr: { name: 'Aoede', rate: 0.95, cps: 6.8 }, jesus: { name: 'Algenib', rate: 1, cps: 7.5 }, god: { name: 'Charon', rate: 0.95, cps: 6.8 } }; // god: 프롤로그의 하나님 말씀 (남성, 예수님과 다른 목소리)
+const VOICE = { narr: { name: 'Aoede', rate: 0.95, cps: 6.8 }, jesus: { name: 'Algenib', rate: 1, cps: 7.5, style: '따뜻하고 차분하게, 보통 빠르기로 말하세요: ' }, god: { name: 'Charon', rate: 0.95, cps: 6.8 }, child: { name: 'Leda', rate: 1, cps: 7.5 } }; // god: 프롤로그의 하나님 말씀 (남성, 예수님과 다른 목소리), child: 열두 살 소년 예수(words의 voice: 'child')
 const INNER = 0.93, SR = 24000;
 
 const d = JSON.parse(await readFile('data.json', 'utf8'));
@@ -30,12 +30,12 @@ function script(e) {
   const items = [{ text: `${e.title}. ${ui.sayPlace}, ${d.places[e.place].name.replace(/[()·]/g, ' ')}. ${ui.sayWhen}, ${e.when.replace(/\s*·\s*/g, ', ')}.` }];
   e.story.forEach((s, i) => items.push({ text: s, gemini: (e.storyTts || []).includes(i) }));
   items.push({ text: (e.words.some(w => w.j) ? ui.hisWords : ui.voicesOfDay) + '.' });
-  e.words.forEach(w => { if (!w.j) items.push({ text: `${w.who}.` }); items.push({ text: w.text, jesus: !!w.j, god: !!w.g, gemini: w.tts === 'gemini' }); });
+  e.words.forEach(w => { if (!w.j) items.push({ text: `${w.who}.` }); items.push({ text: w.text, jesus: !!w.j, god: !!w.g, child: w.voice === 'child', gemini: w.tts === 'gemini' }); });
   // 제목 줄의 '장소, 나사렛.'·'시기, 때.'는 쉼표에서 나눠 따로 녹음해 잇는다 — 한 번에 읽히면 장소 이름을 늘이고 멈칫한다
-  return items.flatMap((it, i) => sentences(it.text).map(s => s.trim()).filter(Boolean).map((text, k) => ({ text, jesus: it.jesus, god: it.god, gemini: it.gemini, split: i === 0 && k > 0 })));
+  return items.flatMap((it, i) => sentences(it.text).map(s => s.trim()).filter(Boolean).map((text, k) => ({ text, jesus: it.jesus, god: it.god, child: it.child, gemini: it.gemini, split: i === 0 && k > 0 })));
 }
 // Gemini 성우로 읽는 말씀(관리자 페이지에서 고른 것, words의 tts: 'gemini')은 열쇠에 'gemini-'를 붙여 따로 둔다 (app.js와 같은 계산)
-const voiceOf = s => s.jesus ? VOICE.jesus : s.god ? VOICE.god : VOICE.narr;
+const voiceOf = s => s.child ? VOICE.child : s.jesus ? VOICE.jesus : s.god ? VOICE.god : VOICE.narr;
 const keyOf = s => voiceKey(`${s.gemini ? 'gemini-' : ''}${voiceOf(s).name}`, s.text);
 
 if (old) {
@@ -110,25 +110,48 @@ async function synth(text, v, rate) {
 // 같은 키를 리딩북도 쓴다). 답은 WAV(24kHz 16비트 모노)라 data 덩이만 꺼낸다. 모두 막히면 null
 const GEMINI_KEY = process.env.GEMINI_API_KEY, GEMINI_TTS = ['gemini-3.8-flash-lite-tts', 'gemini-3.8-flash-tts', 'gemini-3.1-flash-tts-preview', 'gemini-2.5-flash-preview-tts'];
 const spent = new Set();
+// 말투 지시(style): 예수님 말씀은 '따뜻하고 차분하게' 읽게 한다. 지시문을 앞에 붙여도 읽지 않는 모델은 3.1 미리보기뿐이라
+// (3.8은 지시문까지 소리 내어 읽었고, 지시 칸(systemInstruction)은 받지 않는다) 그 모델로만 하고, 받아 적어 지시문을 읽지 않았는지 본다
+const STYLE_TTS = 'gemini-3.1-flash-tts-preview';
+async function readsStyle(pcm) {
+  const wav = Buffer.alloc(44 + pcm.byteLength); wav.write('RIFF', 0); wav.writeUInt32LE(36 + pcm.byteLength, 4); wav.write('WAVEfmt ', 8);
+  wav.writeUInt32LE(16, 16); wav.writeUInt16LE(1, 20); wav.writeUInt16LE(1, 22); wav.writeUInt32LE(SR, 24); wav.writeUInt32LE(SR * 2, 28); wav.writeUInt16LE(2, 32); wav.writeUInt16LE(16, 34);
+  wav.write('data', 36); wav.writeUInt32LE(pcm.byteLength, 40); Buffer.from(pcm.buffer, pcm.byteOffset, pcm.byteLength).copy(wav, 44);
+  const r = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent', { method: 'POST', headers: { 'x-goog-api-key': GEMINI_KEY, 'content-type': 'application/json' },
+    body: JSON.stringify({ contents: [{ parts: [{ inlineData: { mimeType: 'audio/wav', data: wav.toString('base64') } }, { text: '이 한국어 녹음을 받아 적어라. 받아 적은 글만 답하라.' }] }] }) });
+  const said = (await r.json().catch(() => ({}))).candidates?.[0]?.content?.parts?.map(p => p.text).join('') || '';
+  return /말하세요|빠르기|차분하게/.test(said);
+}
 async function geminiSynth(text, v) {
   if (!GEMINI_KEY) { console.warn('GEMINI_API_KEY가 없습니다'); return null; }
-  for (const model of GEMINI_TTS.filter(m => !spent.has(m))) {
-    for (let tries = 0; tries < 4; tries++) {
-      const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, { method: 'POST', headers: { 'x-goog-api-key': GEMINI_KEY, 'content-type': 'application/json' },
-        body: JSON.stringify({ contents: [{ parts: [{ text: spoken(text) }] }], generationConfig: { temperature: 0.6, responseModalities: ['AUDIO'], speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: v.name } } } } }) });
-      const j = await r.json().catch(() => ({}));
-      const inline = j.candidates?.[0]?.content?.parts?.find(x => x.inlineData?.data)?.inlineData;
-      if (r.ok && inline) {
-        const buf = Buffer.from(inline.data, 'base64');
-        if (buf.toString('latin1', 0, 4) !== 'RIFF') return new Int16Array(buf.buffer.slice(buf.byteOffset, buf.byteOffset + (buf.length & ~1)));
-        if (buf.readUInt32LE(24) === SR) return pcmOf(buf);
-        break; // 다른 표본율 — 다음 모델로
-      }
-      const msg = j.error?.message || String(r.status);
-      if (r.status === 429 && /per_?day|PerDay/i.test(msg)) { spent.add(model); console.warn(`${model}: 하루 한도`); break; }
-      if (r.ok || (r.status !== 429 && r.status < 500)) { console.warn(`${model}: ${msg.slice(0, 120)}`); break; }
-      await new Promise(res => setTimeout(res, 20000));
+  if (v.style && !spent.has(STYLE_TTS)) {
+    for (let k = 0; k < 3; k++) {
+      const pcm = await geminiCall(STYLE_TTS, v.style + spoken(text), v);
+      if (pcm === null) break;
+      if (!(await readsStyle(pcm))) return pcm;
+      console.warn(`지시문까지 읽음 — 다시: ${text.slice(0, 20)}`);
     }
+  }
+  for (const model of GEMINI_TTS.filter(m => !spent.has(m))) { const pcm = await geminiCall(model, spoken(text), v); if (pcm) return pcm; }
+  return null;
+}
+// 모델 하나로 한 번 녹음 (분당 한도·일시 오류는 기다렸다 다시). 하루 한도면 그 모델을 건너뛰게 표시하고 null
+async function geminiCall(model, said, v) {
+  for (let tries = 0; tries < 4; tries++) {
+    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, { method: 'POST', headers: { 'x-goog-api-key': GEMINI_KEY, 'content-type': 'application/json' },
+      body: JSON.stringify({ contents: [{ parts: [{ text: said }] }], generationConfig: { temperature: 0.6, responseModalities: ['AUDIO'], speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: v.name } } } } }) });
+    const j = await r.json().catch(() => ({}));
+    const inline = j.candidates?.[0]?.content?.parts?.find(x => x.inlineData?.data)?.inlineData;
+    if (r.ok && inline) {
+      const buf = Buffer.from(inline.data, 'base64');
+      if (buf.toString('latin1', 0, 4) !== 'RIFF') return new Int16Array(buf.buffer.slice(buf.byteOffset, buf.byteOffset + (buf.length & ~1)));
+      if (buf.readUInt32LE(24) === SR) return pcmOf(buf);
+      break; // 다른 표본율 — 다음 모델로
+    }
+    const msg = j.error?.message || String(r.status);
+    if (r.status === 429 && /per_?day|PerDay/i.test(msg)) { spent.add(model); console.warn(`${model}: 하루 한도`); break; }
+    if (r.ok || (r.status !== 429 && r.status < 500)) { console.warn(`${model}: ${msg.slice(0, 120)}`); break; }
+    await new Promise(res => setTimeout(res, 20000));
   }
   return null;
 }
