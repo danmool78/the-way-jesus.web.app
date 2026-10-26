@@ -584,6 +584,9 @@ dialog{position:fixed}
 .land-qna span{word-break:keep-all;text-wrap:balance}
 .land-qna b{color:var(--gold2);font-size:15px}
 .land-qna[hidden]{display:none}
+.land-share{display:inline-flex;align-items:center;gap:7px;margin-top:12px;border:0;background:none;color:var(--gold2);font-size:14px;padding:6px 10px;border-radius:999px}
+.land-share svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+.land-share:hover{background:rgba(217,180,106,.1)}
 .land-qna:hover{color:var(--ink);border-color:var(--gold);background:rgba(217,180,106,.12)}
 .land-mv{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:7px 16px 7px 12px;border:0;border-radius:999px;background:none;color:var(--gold2);font-family:var(--serif);font-size:15px;cursor:pointer}
 .land-mv svg{width:22px;height:22px;padding:5px;border-radius:50%;fill:#24180a;background:linear-gradient(180deg,#e9c97f,#b88a3e)}
