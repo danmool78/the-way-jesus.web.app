@@ -1126,16 +1126,18 @@ function bgmRamp(p, to, s) {
   g.cancelScheduledValues(now); g.setValueAtTime(from, now); g.linearRampToValueAtTime(to, now + s);
   p.fade = { from, to, at: now, s };
 }
-// s: 올리는 시간. 반복·곡 바꿈은 겹쳐 잇고, 낭독이 시작될 때는 곧바로 올린다
+// s: 올리는 시간. 곡을 바꿀 때는 겹치지 않는다 — 앞 곡을 끝까지 내린 다음 새 곡을 서서히 올린다 (겹치면 조가 안 맞아 어색하다)
+// 낭독이 시작될 때(앞 곡이 없을 때)는 곧바로 올린다
 function bgmPlay(cue, s = BGM.fade) {
-  const from = bgmPlayers[bgmCur], to = bgmPlayers[1 - bgmCur]; ++bgmGo;
-  bgmRamp(from, 0, s);
-  setTimeout(() => { if (from !== bgmPlayers[bgmCur]) from.el.pause(); }, s * 1000 + 100);
+  const from = bgmPlayers[bgmCur], to = bgmPlayers[1 - bgmCur], go = ++bgmGo;
+  const wait = bgmLevel(from) > 0.005 ? BGM.out : 0;
+  bgmRamp(from, 0, wait || s);
+  setTimeout(() => { if (from !== bgmPlayers[bgmCur]) from.el.pause(); }, (wait || s) * 1000 + 100);
   bgmCur = 1 - bgmCur; bgmCue = cue; bgmLoop = null;
   if (!to.el.src.endsWith(`/${cue}.mp3`)) to.el.src = `assets/music/${cue}.mp3`;
-  to.el.currentTime = 0;
-  to.el.play().catch(() => {});
-  bgmRamp(to, BGM.level, s);
+  to.el.pause(); to.el.currentTime = 0; to.wait = !!wait;
+  const start = () => { to.wait = false; if (go !== bgmGo) return; to.el.play().catch(() => {}); bgmRamp(to, BGM.level, wait ? BGM.out : s); };
+  if (wait) setTimeout(start, wait * 1000 + 200); else start();
 }
 function bgmStop(s) {
   if (!bgmCtx) return;
@@ -1151,8 +1153,9 @@ function bgmFollow() {
   if (!bgmReady()) return;
   if (bgmCtx.state === 'suspended') bgmCtx.resume().catch(() => {});
   if (cue !== bgmCue) { bgmPlay(cue, bgmCue ? BGM.fade : 0.3); return; }
-  // 같은 곡이 내려가던 중이면 그 자리에서 다시 올린다
+  // 같은 곡이 내려가던 중이면 그 자리에서 다시 올린다 (앞 곡이 다 내려가기를 기다리는 중이면 그대로 둔다)
   const p = bgmPlayers[bgmCur];
+  if (p.wait) return;
   if (p.el.paused) p.el.play().catch(() => {});
   if (bgmLevel(p) < BGM.level - 0.01) { ++bgmGo; bgmRamp(p, BGM.level, 0.3); }
 }
