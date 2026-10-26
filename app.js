@@ -1081,7 +1081,7 @@ function setListenUI() {
 // 곡 끝이 다가오면 같은 곡을 처음부터 겹쳐 틀어 이음매가 들리지 않게 하고, 장면이 바뀌어 곡이 다르면 서로 겹쳐 바꾼다.
 // 낭독과 함께 켜지고 함께 멈춘다 (자동 여정의 장면 사이에도 낭독이 없으면 쉰다). 딸깍 소리가 나지 않게 0.3초만 오르내린다.
 // 소리 크기는 Web Audio 사슬로만 정한다 (아이폰은 audio 요소의 volume을 무시한다). 낭독 소리는 이 사슬에 넣지 않는다
-const BGM = { key: 'theway-music', level: 0.144, fade: 2.5 }; // level: 사용자 요청으로 0.16에서 10% 낮춤
+const BGM = { key: 'theway-music', level: 0.144, fade: 2.5, out: 3, rest: 3 }; // out: 반복할 때 내리고 올리는 시간, rest: 그 사이 쉬는 시간(초) // level: 사용자 요청으로 0.16에서 10% 낮춤
 let bgmCtx = null, bgmPlayers = [], bgmCur = 0, bgmCue = null, bgmLoop = null, bgmGo = 0;
 // 켜고 끈 것은 메모리에 두고 localStorage에는 남겨 두기만 한다 (저장이 막힌 브라우저에서도 이번 방문 동안은 끌 수 있게)
 let bgmPref = (() => { try { return localStorage.getItem(BGM.key) !== 'off'; } catch { return true; } })();
@@ -1100,12 +1100,22 @@ function bgmReady() {
     const el = new Audio(); el.preload = 'auto';
     const gain = bgmCtx.createGain(); gain.gain.value = 0;
     bgmCtx.createMediaElementSource(el).connect(gain).connect(squeeze);
+    // 반복: 겹쳐 이으면 이음매가 어긋나 들리는 곡이 많아, 끝에서 서서히 0으로 내리고 잠깐 쉰 다음 처음부터 서서히 올린다
     el.addEventListener('timeupdate', () => {
-      if (bgmPlayers[bgmCur].el !== el || !bgmCue || bgmLoop === el || !(el.duration > BGM.fade * 3)) return;
-      if (el.duration - el.currentTime < BGM.fade) { bgmLoop = el; bgmPlay(bgmCue); }
+      if (bgmPlayers[bgmCur].el !== el || !bgmCue || bgmLoop === el || !(el.duration > BGM.out * 3)) return;
+      const left = el.duration - el.currentTime;
+      if (left < BGM.out) { bgmLoop = el; bgmRamp(p, 0, left); }
     });
-    el.addEventListener('ended', () => { if (bgmPlayers[bgmCur].el === el && bgmCue) bgmPlay(bgmCue); });
-    return { el, gain, fade: null };
+    el.addEventListener('ended', () => {
+      if (bgmPlayers[bgmCur].el !== el || !bgmCue) return;
+      const go = bgmGo; // 쉬는 사이에 곡이 바뀌거나 꺼지면(bgmGo가 바뀐다) 다시 틀지 않는다
+      setTimeout(() => {
+        if (go !== bgmGo || bgmPlayers[bgmCur].el !== el || !bgmCue) return;
+        bgmLoop = null; el.currentTime = 0; el.play().catch(() => {}); bgmRamp(p, BGM.level, BGM.out);
+      }, BGM.rest * 1000);
+    });
+    const p = { el, gain, fade: null };
+    return p;
   });
   return true;
 }
@@ -1116,16 +1126,18 @@ function bgmRamp(p, to, s) {
   g.cancelScheduledValues(now); g.setValueAtTime(from, now); g.linearRampToValueAtTime(to, now + s);
   p.fade = { from, to, at: now, s };
 }
-// s: 올리는 시간. 반복·곡 바꿈은 겹쳐 잇고, 낭독이 시작될 때는 곧바로 올린다
+// s: 올리는 시간. 곡을 바꿀 때는 겹치지 않는다 — 앞 곡을 끝까지 내린 다음 새 곡을 서서히 올린다 (겹치면 조가 안 맞아 어색하다)
+// 낭독이 시작될 때(앞 곡이 없을 때)는 곧바로 올린다
 function bgmPlay(cue, s = BGM.fade) {
-  const from = bgmPlayers[bgmCur], to = bgmPlayers[1 - bgmCur]; ++bgmGo;
-  bgmRamp(from, 0, s);
-  setTimeout(() => { if (from !== bgmPlayers[bgmCur]) from.el.pause(); }, s * 1000 + 100);
+  const from = bgmPlayers[bgmCur], to = bgmPlayers[1 - bgmCur], go = ++bgmGo;
+  const wait = bgmLevel(from) > 0.005 ? BGM.out : 0;
+  bgmRamp(from, 0, wait || s);
+  setTimeout(() => { if (from !== bgmPlayers[bgmCur]) from.el.pause(); }, (wait || s) * 1000 + 100);
   bgmCur = 1 - bgmCur; bgmCue = cue; bgmLoop = null;
   if (!to.el.src.endsWith(`/${cue}.mp3`)) to.el.src = `assets/music/${cue}.mp3`;
-  to.el.currentTime = 0;
-  to.el.play().catch(() => {});
-  bgmRamp(to, BGM.level, s);
+  to.el.pause(); to.el.currentTime = 0; to.wait = !!wait;
+  const start = () => { to.wait = false; if (go !== bgmGo) return; to.el.play().catch(() => {}); bgmRamp(to, BGM.level, wait ? BGM.out : s); };
+  if (wait) setTimeout(start, wait * 1000 + 200); else start();
 }
 function bgmStop(s) {
   if (!bgmCtx) return;
@@ -1141,8 +1153,9 @@ function bgmFollow() {
   if (!bgmReady()) return;
   if (bgmCtx.state === 'suspended') bgmCtx.resume().catch(() => {});
   if (cue !== bgmCue) { bgmPlay(cue, bgmCue ? BGM.fade : 0.3); return; }
-  // 같은 곡이 내려가던 중이면 그 자리에서 다시 올린다
+  // 같은 곡이 내려가던 중이면 그 자리에서 다시 올린다 (앞 곡이 다 내려가기를 기다리는 중이면 그대로 둔다)
   const p = bgmPlayers[bgmCur];
+  if (p.wait) return;
   if (p.el.paused) p.el.play().catch(() => {});
   if (bgmLevel(p) < BGM.level - 0.01) { ++bgmGo; bgmRamp(p, BGM.level, 0.3); }
 }
