@@ -479,7 +479,7 @@ let last = performance.now(), nearT = 0;
 function loop(now) {
   requestAnimationFrame(loop);
   window.terrainDrives = on && ready && !!window.terrainOn; // 무대(stage.js)는 이 루프 안에서 그린다 (지형이 준비된 뒤부터)
-  if (!window.terrainDrives) return;
+  if (!window.terrainDrives || document.body.classList.contains('intro-open')) return; // 랜딩이 떠 있으면 뒤에서 돌지 않게
   const dt = Math.min(0.25, (now - last) / 1000); last = now; // 느린 기기에서도 카메라가 제때 닿게 넉넉히
   const walking = document.body.classList.contains('is-walking');
   // 걷는 동안은 카메라가 걷는 사람을 따라간다

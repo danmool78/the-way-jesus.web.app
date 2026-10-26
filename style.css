@@ -551,6 +551,10 @@ dialog{position:fixed}
   background:radial-gradient(ellipse at 50% 18%,rgba(217,180,106,.16),transparent 55%),linear-gradient(180deg,rgba(21,17,13,.86),rgba(21,17,13,.97) 60%),url(assets/relief.webp) center top/cover fixed;
   transition:opacity .5s,visibility .5s}
 .intro.out{opacity:0;visibility:hidden}
+/* 랜딩이 떠 있는 동안 뒤 화면은 그리지도 움직이지도 않는다 (창은 랜딩에서 연 영상이라 남긴다) */
+body.intro-open>:not(.intro):not(dialog):not(script):not(.toast){visibility:hidden}
+body.intro-open *{animation-play-state:paused}
+body.intro-open .intro,body.intro-open .intro *{animation-play-state:running}
 :lang(ko) .intro{word-break:keep-all} /* 한국어는 낱말 중간에서 줄을 바꾸지 않게 (중·일은 띄어쓰기가 없어 그대로) */
 .intro section{max-width:640px;margin:0 auto;padding:0 20px;text-align:center}
 .land-hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-top:32px!important;padding-bottom:24px!important;animation:introIn .9s ease-out both}

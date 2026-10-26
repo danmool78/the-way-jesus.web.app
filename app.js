@@ -850,7 +850,9 @@ function showIntro(resume) {
     behind.forEach(el => { el.inert = false; });
     setTimeout(() => { box.hidden = true; box.classList.remove('out'); }, 500);
     if (walk && $('#journey').hidden) setView('journey');
-    if (i !== idx) go(i);
+    document.body.classList.remove('intro-open');
+    // 랜딩이 떠 있는 동안 멈춰 둔 무대를 이 장면의 처음부터 다시 연다 (뒤에서 이미 끝난 등장 연출을 보게)
+    if (i !== idx) go(i); else dispatchEvent(new CustomEvent('stage:scene', { detail: { ev: evAt(idx) } }));
   };
   const esc = ev => { if (ev.key === 'Escape' && !$('dialog[open]')) close(idx); }; // Esc로 영상 창을 닫을 때는 랜딩은 그대로
   // 처음 걷는 사람과 '처음부터 다시'는 프롤로그(첫 아담)부터
@@ -859,8 +861,18 @@ function showIntro(resume) {
   $('.land-down', box).onclick = ev => { ev.preventDefault(); $('#landHow').scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth' }); };
   addEventListener('keydown', esc);
   behind.forEach(el => { el.inert = true; });
+  // 떠 있는 동안 뒤의 지도·3D 무대는 돌리지 않는다 (stage.js·terrain.js가 이 표시를 보고 그리기를 건너뛴다)
+  // 걷는 도중·자동 여정 중에 로고로 들어와도 모두 세운다 (걷던 사람은 떠난 자리로 되돌린다)
+  stopAuto(); stopSpeech();
+  if (walking) { cancelWalk(); updateMap(idx); setOdo(odoAt(Math.max(0, idx))); setCard('open'); }
+  document.body.classList.add('intro-open');
   box.scrollTop = 0; box.hidden = false; starts[0].focus({ preventScroll: true });
 }
+
+// 카톡 같은 앱 안 브라우저는 다른 화면에 다녀오면 멈췄던 소리를 되살리기도 한다 — 랜딩이 떠 있으면 다시 세운다
+const introReset = () => { if (!$('#intro').hidden && !$('#intro').classList.contains('out')) { stopAuto(); stopSpeech(); voiceAudio.pause(); } };
+addEventListener('pageshow', introReset);
+document.addEventListener('visibilitychange', introReset);
 
 /* ---------- 낭독 (Web Speech API) ---------- */
 const synth = window.speechSynthesis;
@@ -889,6 +901,7 @@ const VOICE_GAP = { sentence: 800, item: 850, intro: 1700 };
 let warnedNoVoice = false;
 function speakQueue(items, onDone) {
   // items: [{text, el, jesus, pause}] — 문장 단위로 읽으며 해당 문단을 강조한다
+  if (document.body.classList.contains('intro-open')) return; // 랜딩 뒤에서는 읽지 않는다
   const token = ++speechToken;
   speechDone = onDone; sceneReading = false;
   const rate = +$('#rate').value;
