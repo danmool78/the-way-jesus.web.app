@@ -832,7 +832,10 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
 // resume: 이어서 걸을 장면 번호(없으면 -1). 다녀간 사람에게는 '이어서 걷기'와 '처음부터 걷기'를 함께 준다
 function showIntro(resume) {
   const box = $('#intro'), starts = $$('.go-start', box), agains = $$('.go-again', box);
-  $('#introLead').textContent = t('introLead', { n: EVENTS.length, p: new Set(EVENTS.map(e => e.place)).size });
+  // 소개 글은 어절마다 살며시 떠오르게 (띄어쓰기 단위 — 한국어는 어절이 끊기지 않는다)
+  const lead = $('#introLead'), words = t('introLead', { n: EVENTS.length, p: new Set(EVENTS.map(e => e.place)).size }).split(/(\s+)/);
+  lead.setAttribute('aria-label', words.join(''));
+  lead.innerHTML = words.map((w, i) => /\s/.test(w) ? w : `<span aria-hidden="true" style="--d:${(0.4 + i * 0.07).toFixed(2)}s">${esc(w)}</span>`).join('');
   // 안내 글의 단추 이름은 실제 화면 글씨를 그대로 끌어 쓴다 (언어마다 맞게)
   const names = { walk: t('walkNext'), words: t('tabWords'), quiz: t('tabQuiz') };
   [1, 2, 3, 4].forEach(k => { $('#landStep' + k).textContent = t('landStep' + k, names); });
@@ -844,7 +847,7 @@ function showIntro(resume) {
   const behind = [...document.body.children].filter(el => el !== box && el.tagName !== 'SCRIPT' && el.tagName !== 'DIALOG');
   // walk: 여정으로 가는 단추(이어서·처음부터)는 다른 탭에서 열었어도 여정 화면으로 돌아간다. Esc는 있던 화면 그대로
   const close = (i, walk) => {
-    box.classList.add('out'); removeEventListener('keydown', esc);
+    box.classList.add('out'); removeEventListener('keydown', onEsc);
     behind.forEach(el => { el.inert = false; });
     setTimeout(() => { box.hidden = true; box.classList.remove('out'); }, 500);
     if (walk && $('#journey').hidden) setView('journey');
@@ -852,12 +855,12 @@ function showIntro(resume) {
     // 랜딩이 떠 있는 동안 멈춰 둔 무대를 이 장면의 처음부터 다시 연다 (뒤에서 이미 끝난 등장 연출을 보게)
     if (i !== idx) go(i); else dispatchEvent(new CustomEvent('stage:scene', { detail: { ev: evAt(idx) } }));
   };
-  const esc = ev => { if (ev.key === 'Escape' && !$('dialog[open]')) close(idx); }; // Esc로 영상 창을 닫을 때는 랜딩은 그대로
+  const onEsc = ev => { if (ev.key === 'Escape' && !$('dialog[open]')) close(idx); }; // Esc로 영상 창을 닫을 때는 랜딩은 그대로
   // 처음 걷는 사람과 '처음부터 다시'는 프롤로그(첫 아담)부터
   starts.forEach(b => { b.onclick = () => close(resume > 0 ? resume : firstIdx(), true); });
   agains.forEach(b => { b.onclick = () => close(firstIdx(), true); });
   $('.land-down', box).onclick = ev => { ev.preventDefault(); $('#landHow').scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth' }); };
-  addEventListener('keydown', esc);
+  addEventListener('keydown', onEsc);
   behind.forEach(el => { el.inert = true; });
   // 떠 있는 동안 뒤의 지도·3D 무대는 돌리지 않는다 (stage.js·terrain.js가 이 표시를 보고 그리기를 건너뛴다)
   // 걷는 도중·자동 여정 중에 로고로 들어와도 모두 세운다 (걷던 사람은 떠난 자리로 되돌린다)
