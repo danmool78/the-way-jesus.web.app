@@ -1358,7 +1358,7 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   updateProgress();
   // 첫 시작 화면: 장면 주소로 바로 들어온 때(#e05)와 연출 확인(?beat=)은 건너뛴다
   if (!hashOk && !new URLSearchParams(location.search).has('beat')) showIntro(fromLast > 0 ? fromLast : -1);
-  $('.brand').onclick = ev => { ev.preventDefault(); showIntro(idx > 0 ? idx : -1); };
+  $('.brand').onclick = ev => { ev.preventDefault(); showIntro(state.last && idx > 0 ? idx : -1); }; // 기록을 지운 뒤에는 처음 온 사람처럼
 
   $('#prev').onclick = () => go(idx - 1);
   $('#next').onclick = () => go(idx + 1);
@@ -1417,7 +1417,7 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   mv.onclose = () => { $('#mvFrame').src = 'about:blank'; };
   $('#resetProgress').onclick = () => {
     if (!confirm(t('resetConfirm'))) return;
-    visited.clear(); state.visited = []; state.quiz = {}; delete state.ended; delete state.fav; store.save(); if (idx >= 0) markVisited(EVENTS[idx].id); renderStamps(); renderTrack(); updateTrack();
+    visited.clear(); state.visited = []; state.quiz = {}; state.last = null; delete state.ended; delete state.fav; store.save(); renderStamps(); renderTrack(); updateTrack(); // 마지막 장면(last)도 지워야 랜딩에 '이어서 걷기'가 다시 뜨지 않는다
   };
   addEventListener('keydown', ev => {
     if ($('#journey').hidden || ev.target.matches('input, select, textarea') || document.querySelector('dialog[open]') || !$('#intro').hidden) return; // 시작 화면이 떠 있으면 뒤 여정을 움직이지 않는다
