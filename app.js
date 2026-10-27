@@ -1387,9 +1387,9 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   // 이 앱 공유하기 (설정 메뉴와 첫 화면): 휴대폰은 기기의 공유 창(카톡·문자 등), 공유 창이 없는 컴퓨터는 주소를 복사해 알린다
   $$('.share-app').forEach(b => b.onclick = async () => {
     closePanel();
-    // 주소만 넘긴다 — 제목·글을 함께 넘기면 iOS가 링크 미리보기(아이콘·og 그림)를 만들지 않고 나침반만 보였다
-    const url = location.origin + '/';
-    if (navigator.share) { try { await navigator.share({ url }); } catch { /* 공유 창을 닫음 */ } return; }
+    // 제목과 주소만 넘긴다 (소개 글은 빼고) — 받는 쪽(카톡·메시지)은 주소로 og 미리보기 카드를 만든다
+    const url = location.origin + '/', title = t('appName');
+    if (navigator.share) { try { await navigator.share({ title, url }); } catch { /* 공유 창을 닫음 */ } return; }
     try { await navigator.clipboard.writeText(url); toast(t('linkCopied')); } catch { prompt(t('shareApp'), url); }
   });
   // 전체 경로는 켜고 끄는 단추: 다시 누르면 지금 장면으로 돌아온다
