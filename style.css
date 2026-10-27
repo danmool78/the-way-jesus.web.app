@@ -545,7 +545,7 @@ dialog{position:fixed}
 
 /* ---------- 랜딩페이지 (첫 시작 화면) ---------- */
 .intro{position:fixed;inset:0;z-index:50;overflow-y:auto;overscroll-behavior:contain;
-  background:radial-gradient(ellipse at 50% 18%,rgba(217,180,106,.16),transparent 55%),linear-gradient(180deg,rgba(21,17,13,.8),rgba(21,17,13,.94) 60%),url(assets/relief.webp) center top/cover fixed;
+  background:radial-gradient(ellipse at 50% 18%,rgba(217,180,106,.16),transparent 55%),linear-gradient(180deg,rgba(21,17,13,.62),rgba(21,17,13,.97) 75%),url(assets/relief.webp) center top/cover fixed;
   transition:opacity .5s,visibility .5s}
 .intro.out{opacity:0;visibility:hidden}
 /* 랜딩이 떠 있는 동안 뒤 화면은 그리지도 움직이지도 않는다 (창은 랜딩에서 연 영상이라 남긴다) */
