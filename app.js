@@ -1399,7 +1399,7 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   $$('.tabs button').forEach(b => b.onclick = () => setView(b.dataset.view));
   $('#wordSearch').oninput = renderWords;
   $('#closeViewer').onclick = () => $('#viewer').close();
-  $('#viewer').onclick = ev => { if (ev.target.id === 'viewer') $('#viewer').close(); };
+  $('#viewer').onclick = ev => { if (ev.target.id === 'viewer' || ev.target.id === 'viewerImg') $('#viewer').close(); }; // 바깥이나 그림을 한 번 더 누르면 닫는다
   $('#progressPill').onclick = () => { renderStamps(); $('#stamps').showModal(); };
   $('#closeStamps').onclick = () => $('#stamps').close();
   $('#reopenEnd').onclick = openEnd;
