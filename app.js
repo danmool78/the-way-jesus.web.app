@@ -1413,9 +1413,19 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
     phone: ico('<rect x="6.5" y="2.5" width="11" height="19" rx="2.2"/><path d="M12 7.5v7m-3-3 3 3 3-3"/>'),
   };
   const steps = list => `<ol class="install-steps">${list.map(([k, i]) => `<li><span>${esc(t(k))}</span>${ICO[i]}</li>`).join('')}</ol>`;
-  installBtn.onclick = () => {
-    const body = $('#installBody');
-    if (installEv) {
+  // 앱 안 브라우저에서 바깥 브라우저로 넘기는 주소: 카카오톡은 자체 주소(iOS는 Safari, 안드로이드는 기본 브라우저로),
+  // 그 밖의 안드로이드 앱 안 브라우저는 크롬 intent. ?install이 붙어 열리면 곧바로 이 안내 창을 다시 띄운다
+  const outUrl = () => {
+    const to = `${location.origin}/?install`;
+    if (/KAKAOTALK/i.test(navigator.userAgent)) return `kakaotalk://web/openExternal?url=${encodeURIComponent(to)}`;
+    if (inApp && /android/i.test(navigator.userAgent)) return `intent://${location.host}/?install#Intent;scheme=https;package=com.android.chrome;end`;
+    return null;
+  };
+  const renderInstall = () => {
+    const body = $('#installBody'), out = inApp && outUrl();
+    if (out) {
+      body.innerHTML = `<p class="install-note">${esc(t('installOutNote'))}</p><a class="goldbtn install-out" href="${esc(out)}">${esc(t(ios ? 'installOpenSafari' : 'installOpenBrowser'))}</a>`;
+    } else if (installEv) {
       body.innerHTML = `<button class="goldbtn" id="installNow">${esc(t('installNow'))}</button><p class="fine">${esc(t('installNowNote'))}</p>`;
       $('#installNow').onclick = async () => {
         const ev = installEv; installEv = null;
@@ -1427,8 +1437,15 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
         : steps([['installAnd1', 'menu'], ['installAnd2', 'phone'], ['installAnd3', 'add']]))
         + (inApp ? `<p class="install-note">${esc(t('installInApp'))}</p>` : '');
     }
-    installDlg.showModal();
   };
+  installBtn.onclick = () => { renderInstall(); if (!installDlg.open) installDlg.showModal(); };
+  // 설치 창 이벤트가 안내 창을 연 뒤에 오면(바깥 브라우저로 막 넘어온 때) '지금 설치하기'로 바꿔 그린다
+  addEventListener('beforeinstallprompt', () => { if (installDlg.open) renderInstall(); });
+  // 앱 안 브라우저에서 넘어와 열렸으면 주소의 ?install을 지우고(홈 화면에 추가할 주소에 남지 않게) 안내 창을 바로 띄운다
+  if (new URLSearchParams(location.search).has('install')) {
+    history.replaceState(null, '', location.pathname + location.hash);
+    if (!standalone) installBtn.onclick();
+  }
   $('#closeInstall').onclick = () => installDlg.close();
   installDlg.onclick = ev => { if (ev.target === installDlg) installDlg.close(); };
   // 전체 경로는 켜고 끄는 단추: 다시 누르면 지금 장면으로 돌아온다
