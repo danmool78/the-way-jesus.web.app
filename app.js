@@ -874,6 +874,9 @@ function showIntro(resume) {
 const introReset = () => { if (!$('#intro').hidden && !$('#intro').classList.contains('out')) { stopAuto(); stopSpeech(); voiceAudio.pause(); } };
 addEventListener('pageshow', introReset);
 document.addEventListener('visibilitychange', introReset);
+// 설치 창 이벤트는 페이지를 연 직후에 올 수 있어 일찍 받아 둔다 (첫 화면의 '앱으로 설치하기'가 쓴다)
+let installEv = null;
+addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEv = e; });
 // 화면을 내리면(다른 앱·홈 화면) 낭독도 멈춘다 — 배경음악(Web Audio)은 iOS가 저절로 멈추는데 녹음 낭독(<audio>)만 혼자 계속 읽기 때문
 document.addEventListener('visibilitychange', () => { if (document.hidden && speaking) stopSpeech(); });
 
@@ -1394,6 +1397,17 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
     if (navigator.share) { try { await navigator.share({ title, url }); } catch { /* 공유 창을 닫음 */ } return; }
     try { await navigator.clipboard.writeText(url); toast(t('linkCopied')); } catch { prompt(t('shareApp'), url); }
   });
+  // 앱으로 설치하기 (첫 화면): 브라우저가 설치 창을 줄 수 있으면(beforeinstallprompt) 그 창을, iOS는 Safari의 '홈 화면에 추가' 방법을 펼친다
+  const installBtn = $('.install-app'), installHint = $('#installHint');
+  const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+  const ios = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  installBtn.hidden = !!standalone;
+  addEventListener('appinstalled', () => { installBtn.hidden = installHint.hidden = true; });
+  installBtn.onclick = async () => {
+    if (installEv) { installEv.prompt(); try { await installEv.userChoice; } catch { /* 닫음 */ } installEv = null; return; }
+    installHint.textContent = t(ios ? 'installIos' : 'installOther');
+    installHint.hidden = !installHint.hidden;
+  };
   // 전체 경로는 켜고 끄는 단추: 다시 누르면 지금 장면으로 돌아온다
   $('#fitAll').onclick = () => {
     if (fitMode === 'all') { $('#fitNow').onclick(); return; }
