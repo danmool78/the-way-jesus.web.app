@@ -97,4 +97,3 @@ export const MODELS = {
   pharos: { extent: PHAROS, build: pharos },
   helio: { extent: HELIO, build: helio },
 };
-export const sizeOf = E => ({ w: (E.lng1 - E.lng0) * COS * K, h: (E.lat1 - E.lat0) * K });

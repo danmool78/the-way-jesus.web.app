@@ -206,4 +206,3 @@ export function buildJerusalem() {
   g.traverse(o => { if (o.isMesh) o.castShadow = true; });
   return g;
 }
-export const SIZE = { w: (EXTENT.lng1 - EXTENT.lng0) * COS * K, h: (EXTENT.lat1 - EXTENT.lat0) * K };
