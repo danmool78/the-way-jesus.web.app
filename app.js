@@ -49,7 +49,7 @@ function applyStatic() {
     ['#rate', 'speedLabel', 'aria-label'], ['#music', 'music', 'aria-label'], ['#music', 'music', 'title'],
     ['#words h2', 'wordsHead'], ['#words .list-head p', 'wordsIntro'], ['#wordSearch', 'wordsSearch', 'placeholder'], ['#wordSearch', 'wordsSearchLabel', 'aria-label'],
     ['#harmony h2', 'harmonyHead'], ['#harmony .list-head p', 'harmonyIntro'], ['#quiz h2', 'quizHead'], ['#quiz .list-head p', 'quizIntro'],
-    ['#closeViewer', 'close', 'aria-label'], ['#closeStamps', 'close', 'aria-label'], ['#closeQuiz', 'close', 'aria-label'], ['#closeEnd', 'close', 'aria-label'], ['#closeMv', 'close', 'aria-label'], ['#reopenEnd', 'endReopen'], ['#stamps h2', 'myFootsteps'], ['#stamps .fine', 'stampsNote'],
+    ['#closeViewer', 'close', 'aria-label'], ['#closeStamps', 'close', 'aria-label'], ['#closeQuiz', 'close', 'aria-label'], ['#closeEnd', 'close', 'aria-label'], ['#closeMv', 'close', 'aria-label'], ['#closeInstall', 'close', 'aria-label'], ['#reopenEnd', 'endReopen'], ['#stamps h2', 'myFootsteps'], ['#stamps .fine', 'stampsNote'],
     ['#resetProgress', 'resetProgress']
   ].forEach(([sel, k, attr]) => { const el = $(sel); if (!el) return; if (attr) el.setAttribute(attr, t(k)); else el.textContent = t(k); });
   $$('[data-i]').forEach(el => { el.textContent = t(el.dataset.i); }); // 글씨 키를 단 요소들
@@ -1397,17 +1397,40 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
     if (navigator.share) { try { await navigator.share({ title, url }); } catch { /* 공유 창을 닫음 */ } return; }
     try { await navigator.clipboard.writeText(url); toast(t('linkCopied')); } catch { prompt(t('shareApp'), url); }
   });
-  // 앱으로 설치하기 (첫 화면): 브라우저가 설치 창을 줄 수 있으면(beforeinstallprompt) 그 창을, iOS는 Safari의 '홈 화면에 추가' 방법을 펼친다
-  const installBtn = $('.install-app'), installHint = $('#installHint');
+  // 앱으로 설치하기 (첫 화면): 안내 창을 연다. 브라우저가 설치 창을 줄 수 있으면(안드로이드 크롬 등, beforeinstallprompt)
+  // '지금 설치하기' 단추 하나로 끝내고, 아이폰은 Safari의 '홈 화면에 추가' 순서를, 그 밖은 브라우저 메뉴 순서를 그림과 함께 보인다
+  const installBtn = $('.install-app'), installDlg = $('#installDlg');
   const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
   const ios = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const inApp = /KAKAOTALK|NAVER|Instagram|FBAN|FBAV|Line\/|DaumApps|everytimeApp|; wv\)/i.test(navigator.userAgent); // 메신저 등 앱 안 브라우저는 설치를 못 한다
   installBtn.hidden = !!standalone;
-  addEventListener('appinstalled', () => { installBtn.hidden = installHint.hidden = true; });
-  installBtn.onclick = async () => {
-    if (installEv) { installEv.prompt(); try { await installEv.userChoice; } catch { /* 닫음 */ } installEv = null; return; }
-    installHint.textContent = t(ios ? 'installIos' : 'installOther');
-    installHint.hidden = !installHint.hidden;
+  addEventListener('appinstalled', () => { installBtn.hidden = true; installDlg.close(); });
+  const ico = d => `<svg viewBox="0 0 24 24" aria-hidden="true">${d}</svg>`;
+  const ICO = {
+    share: ico('<path d="M12 3v12M8 7l4-4 4 4"/><path d="M7 10H5.5v10.5h13V10H17"/>'),
+    add: ico('<rect x="4" y="4" width="16" height="16" rx="3.5"/><path d="M12 8.5v7M8.5 12h7"/>'),
+    menu: ico('<circle cx="12" cy="5.5" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="12" cy="18.5" r="1.3"/>'),
+    phone: ico('<rect x="6.5" y="2.5" width="11" height="19" rx="2.2"/><path d="M12 7.5v7m-3-3 3 3 3-3"/>'),
   };
+  const steps = list => `<ol class="install-steps">${list.map(([k, i]) => `<li><span>${esc(t(k))}</span>${ICO[i]}</li>`).join('')}</ol>`;
+  installBtn.onclick = () => {
+    const body = $('#installBody');
+    if (installEv) {
+      body.innerHTML = `<button class="goldbtn" id="installNow">${esc(t('installNow'))}</button><p class="fine">${esc(t('installNowNote'))}</p>`;
+      $('#installNow').onclick = async () => {
+        const ev = installEv; installEv = null;
+        ev.prompt(); try { await ev.userChoice; } catch { /* 닫음 */ }
+        installDlg.close();
+      };
+    } else {
+      body.innerHTML = (ios ? steps([['installIos1', 'share'], ['installIos2', 'add'], ['installIos3', 'phone']])
+        : steps([['installAnd1', 'menu'], ['installAnd2', 'phone'], ['installAnd3', 'add']]))
+        + (inApp ? `<p class="install-note">${esc(t('installInApp'))}</p>` : '');
+    }
+    installDlg.showModal();
+  };
+  $('#closeInstall').onclick = () => installDlg.close();
+  installDlg.onclick = ev => { if (ev.target === installDlg) installDlg.close(); };
   // 전체 경로는 켜고 끄는 단추: 다시 누르면 지금 장면으로 돌아온다
   $('#fitAll').onclick = () => {
     if (fitMode === 'all') { $('#fitNow').onclick(); return; }
