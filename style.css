@@ -304,12 +304,6 @@ html:not(:lang(ko)):not(:lang(zh)):not(:lang(ja)) .river-lbl text{writing-mode:h
 .opts button.wrong{border-color:#c4675b;background:rgba(196,103,91,.16);opacity:1}
 .explain{margin:12px 0 0;font-size:13.5px;line-height:1.7;color:#d8ccb5}
 .explain b{color:var(--gold2);display:block;margin-bottom:2px}
-.scene-nav{display:grid;grid-template-columns:1fr;gap:10px;margin:22px 22px 0}
-.sn{border:1px solid var(--line);background:none;border-radius:14px;padding:13px 16px;text-align:left;font-family:var(--serif);font-size:16px;color:var(--ink)}
-.sn small{display:block;font-family:var(--sans);font-size:11px;color:var(--muted);margin-bottom:3px}
-.sn.prev{display:none}
-.sn.next{text-align:right;border-color:color-mix(in srgb,var(--period) 55%,var(--line));background:color-mix(in srgb,var(--period) 10%,transparent)}
-.sn:hover{border-color:var(--gold)}
 
 /* dock — 왼쪽 시기 시간선, 가운데 재생, 오른쪽 걷기와 퀴즈 */
 .track{flex:1;min-width:0;display:flex;align-items:flex-end;gap:0;overflow-x:auto;scrollbar-width:none;padding:2px 0}
