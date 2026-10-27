@@ -874,6 +874,8 @@ function showIntro(resume) {
 const introReset = () => { if (!$('#intro').hidden && !$('#intro').classList.contains('out')) { stopAuto(); stopSpeech(); voiceAudio.pause(); } };
 addEventListener('pageshow', introReset);
 document.addEventListener('visibilitychange', introReset);
+// 화면을 내리면(다른 앱·홈 화면) 낭독도 멈춘다 — 배경음악(Web Audio)은 iOS가 저절로 멈추는데 녹음 낭독(<audio>)만 혼자 계속 읽기 때문
+document.addEventListener('visibilitychange', () => { if (document.hidden && speaking) stopSpeech(); });
 
 /* ---------- 낭독 (Web Speech API) ---------- */
 const synth = window.speechSynthesis;
