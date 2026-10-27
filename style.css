@@ -100,8 +100,8 @@ a.sbtn{display:block;text-decoration:none;color:inherit}
 .cardbar small{display:block;font-size:11.5px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 /* 접기 / 펼치기 단추: 카드 오른쪽 위에 늘 떠 있다. 화살표가 카드가 움직일 쪽을 가리킨다 */
 .sheetgrip{display:none}
-.cardtoggle{position:absolute;top:10px;right:12px;z-index:6;width:30px;height:30px;border:0;border-radius:8px;background:rgba(0,0,0,.25);display:grid;place-items:center} /* 모바일 시트 손잡이(z 5)보다 위 — 손잡이가 단추를 덮어 눌리지 않았다 */
-.scene.peek .cardtoggle{top:17px;background:var(--panel2)}
+.cardtoggle{position:sticky;top:10px;margin:10px 12px -40px auto;z-index:6;width:30px;height:30px;border:0;border-radius:8px;background:rgba(0,0,0,.25);display:grid;place-items:center} /* 카드를 내려 읽어도 늘 보이게 sticky (자리는 차지하지 않게 아래 여백을 뺀다). 모바일 시트 손잡이(z 5)보다 위 — 손잡이가 단추를 덮어 눌리지 않았다 */
+.scene.peek .cardtoggle{position:absolute;top:17px;right:12px;margin:0;background:var(--panel2)}
 .scene.peek .cardbar{padding-right:54px}
 .cardtoggle svg{width:20px;height:20px;fill:none;stroke:var(--gold2);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;transform:rotate(180deg);transition:transform .3s} /* 넓은 화면: 펼친 카드는 위로 접힌다(▲), 접힌 카드는 아래로 펼친다(▼) */
 .cardtoggle.folded svg{transform:none}
