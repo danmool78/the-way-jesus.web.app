@@ -832,9 +832,7 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
 // resume: 이어서 걸을 장면 번호(없으면 -1). 다녀간 사람에게는 '이어서 걷기'와 '처음부터 걷기'를 함께 준다
 function showIntro(resume) {
   const box = $('#intro'), starts = $$('.go-start', box), agains = $$('.go-again', box);
-  $('#introLead').textContent = t('introLead', { n: EVENTS.length });
-  $('#statScenes').textContent = EVENTS.length;
-  $('#statPlaces').textContent = new Set(EVENTS.map(e => e.place)).size;
+  $('#introLead').textContent = t('introLead', { n: EVENTS.length, p: new Set(EVENTS.map(e => e.place)).size });
   // 안내 글의 단추 이름은 실제 화면 글씨를 그대로 끌어 쓴다 (언어마다 맞게)
   const names = { walk: t('walkNext'), words: t('tabWords'), quiz: t('tabQuiz') };
   [1, 2, 3, 4].forEach(k => { $('#landStep' + k).textContent = t('landStep' + k, names); });
