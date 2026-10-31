@@ -62,8 +62,8 @@ def load(lang):
 def fname(base, lang):  # 한국어는 꼬리 없이, 다른 언어는 .<언어> (qna.html과 같은 방식)
     return '%s.html' % base if lang == 'ko' else '%s.%s.html' % (base, lang)
 
-def app_url(lang, eid=''):  # 앱으로: 한국어 말고는 ?lang=을 붙여 그 언어로 열리게
-    return '/' + ('' if lang == 'ko' else '?lang=' + lang) + ('#' + eid if eid else '')
+def app_url(lang, eid=''):  # 앱으로: 늘 ?lang=을 붙인다 — 한국어 페이지도 안 붙이면 저장된 언어·브라우저 언어로 열린다
+    return '/?lang=' + lang + ('#' + eid if eid else '')
 
 def head(lang, langs, base, title, desc, image, ld):
     alts = ''.join('<link rel="alternate" hreflang="%s" href="%s/s/%s">' % (l, SITE, fname(base, l)) for l in langs)
