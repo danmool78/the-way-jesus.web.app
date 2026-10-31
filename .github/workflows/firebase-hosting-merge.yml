@@ -35,7 +35,7 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A data*.json assets/voice
+          git add -A data*.json assets/voice s sitemap.xml
           git commit -m "Rebuild data and narration after an admin edit"
           git pull --rebase -q origin main && git push origin HEAD:main
       - uses: FirebaseExtended/action-hosting-deploy@v0

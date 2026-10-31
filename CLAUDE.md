@@ -17,6 +17,7 @@
 - `qna.html` — 묻고 답하기(왜 만들었는지, 3D 무대를 왜 이렇게 그렸는지, 기능 활용법). 번역본은 `qna.<언어>.html`(같은 마크업, 화면 글씨는 `ui.<언어>.json`의 말 그대로), 링크(랜딩 첫 화면·설정 패널의 `.qna-link`)는 app.js가 언어에 맞춰 바꾼다. 기능이나 연출 원칙이 바뀌면 모든 언어를 함께 고친다
 - 프롤로그 `e00`(잃어버린 동산, 창 2–3장): 61개 장면 앞에 따로 둔 장면. `_src/content-0.json`과 skeleton 맨 앞, build.py가 data의 `prologue`로 뺀다. 앱에서는 장면 번호 -1(`evAt`, `isPro`), 장면 수·퀴즈·도장·대조표에 들지 않는다. 처음 걷는 사람은 여기서 시작한다
 - `data.json` — `_src/`의 원본으로 `python3 _src/build.py`가 만든다. 직접 고치지 말 것 (작성 규칙 `_src/STYLE.md`)
+- `s/`, `sitemap.xml` — 검색엔진용 장면 페이지(`s/e05.html`, 번역은 `s/e05.<언어>.html`, 목록 `s/index.html`)와 사이트맵. 앱은 `#e05` 주소라 검색에 장면이 따로 잡히지 않아, 글을 미리 써 둔 정적 페이지를 두고 앱으로 잇는다. build.py 끝에서 `_src/pages.py`가 만든다(직접 고치지 말 것). `robots.txt`가 사이트맵을 알린다
 - 다국어: `data.<언어>.json`도 build.py가 만든다. 번역 원본은 `_src/i18n/` — `ko.json`(뽑기: `python3 _src/i18n/extract.py`)을 옮긴 `<언어>.json`과 화면 글씨 `ui.<언어>.json`. 새 언어는 app.js의 `LANGS`에도 더한다. 말씀은 기존 성경 번역을 베끼지 않고 새로 옮긴다
 - `stage.js`, `stage/` — 3D 무대. **연출 가이드: `_src/STAGE.md`** (합의한 연출 원칙 포함 — 반드시 읽을 것)
 - `assets/relief.webp`, `assets/relief-west.webp`(애굽 쪽), `assets/relief-hi/`, `assets/relief-hi-w/`(애굽 쪽), `assets/relief-city/` — 지형 음영과 확대용 정밀·도성 타일 (`_src/relief.py`로 생성)

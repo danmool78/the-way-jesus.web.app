@@ -54,6 +54,7 @@ function applyStatic() {
   ].forEach(([sel, k, attr]) => { const el = $(sel); if (!el) return; if (attr) el.setAttribute(attr, t(k)); else el.textContent = t(k); });
   $$('[data-i]').forEach(el => { el.textContent = t(el.dataset.i); }); // 글씨 키를 단 요소들
   $$('.qna-link').forEach(a => { a.href = LANG === 'ko' ? 'qna.html' : `qna.${LANG}.html`; }); // 묻고 답하기: 한국어는 qna.html, 다른 언어는 qna.<언어>.html
+  $$('.scene-list').forEach(a => { a.href = LANG === 'ko' ? 's/index.html' : `s/index.${LANG}.html`; a.textContent = t('sceneList', { n: DATA.events.length }); }); // 장면 목록(정적 페이지 s/)도 같은 방식
   document.body.style.setProperty('--walking', `'👣 ${t('walking')} · '`);
   // 언어 고르기
   const sel = $('#langPick');
