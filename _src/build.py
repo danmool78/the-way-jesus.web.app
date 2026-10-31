@@ -67,3 +67,6 @@ for lang in LANGS[1:]:
             e['img']['credit'] = t['credit']
     json.dump(o, open(os.path.join(here, '..', 'data.%s.json' % lang), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
     print('data.%s.json' % lang, 'missing:', (miss[:12] + ['…'] if len(miss) > 12 else miss) or 'none')
+
+# 검색엔진용 장면 페이지(s/)와 sitemap.xml도 새 data로 다시 만든다
+exec(open(os.path.join(here, 'pages.py'), encoding='utf-8').read(), {'__file__': os.path.join(here, 'pages.py')})
