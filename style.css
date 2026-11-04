@@ -474,6 +474,21 @@ dialog{position:fixed}
 .prayer h4{margin:0 0 6px;font-size:12px;letter-spacing:.08em;color:var(--gold)}
 .prayer p{font-family:var(--serif);font-size:14.5px;line-height:1.8;margin:0;color:#f1e3c3}
 .endbtns{display:flex;flex-direction:column;align-items:center;gap:8px}
+/* 다음 여정 후원 — 홈페이지와 같은 점선 상자. 여정을 마치며 창에서는 축복 뒤, 맨 아래 단추 위에 차분하게 */
+.next-dlg{width:min(560px,94vw);max-height:92vh;overflow-y:auto;word-break:keep-all}
+.nextbox{text-align:left;padding:20px 20px 18px;border:1.5px dashed rgba(217,180,106,.45);border-radius:16px;background:rgba(217,180,106,.04);margin:0 0 26px}
+.next-dlg .nextbox{margin:0;padding:0;border:0;background:none} /* 창 안에서는 창이 테두리 — 점선 상자를 겹쳐 그리지 않고 × 자리를 비운다 */
+.next-dlg .nextbox h3{padding-right:30px}
+.nextbox h3{font-family:var(--serif);font-size:19px;color:var(--gold2);margin:0 0 8px;text-align:left}
+.nextbox>p{font-size:14px;line-height:1.75;color:var(--muted);margin:0 0 14px}
+.nextgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 14px}
+.nextgrid div{border:1px solid #3a3026;border-radius:12px;padding:10px 12px;background:rgba(255,255,255,.02)}
+.nextgrid b{display:block;font-family:var(--serif);color:var(--gold2);font-size:15px}
+.nextgrid span{font-size:12.5px;line-height:1.55;color:var(--muted)}
+.nextbtns{display:flex;flex-wrap:wrap;gap:8px}
+.nextbtns a{flex:1 1 auto;text-align:center;text-decoration:none;border-radius:999px;padding:10px 16px;font-size:14px;border:1px solid var(--gold);color:var(--gold2)}
+.nextbtns a.kakao{background:linear-gradient(180deg,#e9c97f,#b88a3e);color:#24180a;border-color:transparent;font-weight:700}
+@media (max-width:420px){.nextgrid{grid-template-columns:1fr}}
 .endbtns .goldbtn{width:auto;padding:13px 26px}
 @media (max-width:600px){.end-dlg{padding:30px 18px 24px}.end-dlg h2{font-size:25px}.endstats b{font-size:21px}}
 .toast{position:fixed;left:50%;top:70px;transform:translate(-50%,-12px);background:#2b2218;border:1px solid var(--gold);color:var(--gold2);padding:11px 18px;border-radius:999px;font-size:13px;opacity:0;transition:.35s;pointer-events:none;z-index:50;max-width:90vw;text-align:center}
@@ -616,6 +631,10 @@ body.intro-open .intro,body.intro-open .intro *{animation-play-state:running}
 @keyframes mvNoteOut{to{opacity:0;visibility:hidden}}
 .land-end{padding-top:48px!important;padding-bottom:28px!important}
 .land-end .land-qna{margin:0 0 28px} /* 묻고 답하기는 '준비되셨나요?' 바로 위 */
+.land-next{margin:40px auto 0;font-size:13px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:4px}
+.land-next button{border:0;background:none;color:var(--gold2);font-family:var(--serif);font-size:15px;padding:4px 8px;cursor:pointer}
+.land-next button:hover{color:#fff3d6}
+.land-next+.land-foot{margin-top:24px}
 .land-foot{margin-top:44px;font-size:11.5px;letter-spacing:.06em}
 .land-foot a{color:var(--faint);text-decoration:none}
 .land-foot a:hover{color:var(--muted);text-decoration:underline}
