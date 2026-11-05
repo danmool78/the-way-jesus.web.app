@@ -17,5 +17,6 @@ jobs:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_THE_WAY_JESUS }}
           projectId: the-way-jesus
-          # 미리보기 채널은 기본 7일 남아 PR이 몰리면 채널 한도(429)에 걸린다 — 사흘이면 확인하기에 넉넉하다
-          expires: 3d
+          # 미리보기 채널은 기본 7일 남아 PR이 몰리면 한도(429)에 걸린다. 버전 하나가 약 185MB라 채널마다 쌓이면
+          # 무료 저장 공간(10GB)도 넘친다(2026-11) — 하루면 확인하기에 충분하고, 병합 뒤 남은 채널도 빨리 사라진다
+          expires: 1d
