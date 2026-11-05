@@ -15,6 +15,9 @@ const TREG = {
   galilee: { lat0: 32.55, lat1: 33.45, lng0: 35.0, lng1: 35.95, fade: 'nwe' },
   judea: { lat0: 31.35, lat1: 32.55, lng0: 35.0, lng1: 35.95, fade: 'swe' },
   egypt: { lat0: 29.8, lat1: 31.35, lng0: 30.95, lng1: 32.65, fade: 'nswe' },
+  // 모세 여정만(south): 시내 반도와 그 북쪽 광야(가데스·호르산)는 29.8°에서 맞닿는다. 광야라 나무·마을을 두지 않는다(wild) — 진영은 무대가 세운다
+  sinai: { lat0: 28.2, lat1: 29.8, lng0: 32.65, lng1: 35.6, fade: 'swe', south: 1, wild: 1 },
+  negev: { lat0: 29.8, lat1: 30.95, lng0: 32.65, lng1: 35.6, fade: 'nwe', south: 1, wild: 1 },
 };
 const EXAG = 1.8, M = 1 / 111; // 높이 과장 배율, 1m = 1/111 지도 단위
 const lv = m => m * M * EXAG;  // 고도(m) → 높이
@@ -107,6 +110,7 @@ async function build() {
 
 /* ---------- 지역 불러오기 ---------- */
 function ensureRegion(r) {
+  if (r.south && !window.journeyMap?.south) return Promise.resolve(); // 다른 여정에서는 불러오지 않는다
   if (!r.load) {
     r.load = loadRegion(r).then(() => { decorate(); window.recenterStage?.(); });
     // 높이를 풀지 않은 변(맞닿은 지역 쪽)은 그 이웃도 함께 불러온다 — 한쪽만 있으면 경계에 가짜 낭떠러지(턱)가 섰다 (갈릴리·유대 32.55°)
@@ -145,7 +149,7 @@ async function loadRegion(r) {
   r.mesh = new THREE.Mesh(geo, greyable(new THREE.MeshStandardMaterial({ map: mapTex(cImg), roughness: 0.95 })));
   r.mesh.receiveShadow = r.mesh.castShadow = true;
   scene.add(r.mesh);
-  addTrees(r); addVillages(r);
+  if (!r.wild) { addTrees(r); addVillages(r); } // 광야에는 나무·마을이 없다 (색 그림의 바닷가 물빛을 풀빛으로 읽어 나무가 줄지어 섰다)
   if (r.name === 'galilee') addBoats();
   if (r.name === 'judea') { addModel(buildJerusalem(), JLM, 1); addCityDetail(); }
   if (r.name === 'egypt') Object.values(EGYPT_MODELS).forEach(m => addModel(m.build(), m.extent, 0.6));
@@ -190,8 +194,11 @@ function decorate() {
   BASES.forEach(b => {
     const [bx0, bz0] = px([b.lat1, b.lng0]), [bx1, bz1] = px([b.lat0, b.lng1]), cz = b.cut ? px([b.cut, b.lng0])[1] : bz0; // 그림은 그대로, 판만 잘라 낸다
     const sh = new THREE.Shape([[bx0, cz], [bx1, cz], [bx1, bz1], [bx0, bz1]].map(([x, z]) => new THREE.Vector2(x, z)));
-    regions.filter(r => r.heights && r.X0 >= bx0 && r.X1 <= bx1 && r.Z0 >= bz0 && r.Z1 <= bz1)
-      .forEach(r => sh.holes.push(new THREE.Path([[r.X0, r.Z0], [r.X0, r.Z1], [r.X1, r.Z1], [r.X1, r.Z0]].map(([x, z]) => new THREE.Vector2(x, z)))));
+    // 바탕 판과 겹치는 만큼만 뚫는다 — 시내·네게브 지역은 여러 바탕에 걸쳐 있다
+    regions.filter(r => r.heights).forEach(r => {
+      const e = 0.05, x0 = Math.max(r.X0, bx0 + e), x1 = Math.min(r.X1, bx1 - e), z0 = Math.max(r.Z0, cz + e), z1 = Math.min(r.Z1, bz1 - e); // 구멍이 판 가장자리에 닿으면 삼각형 나누기가 깨져 살짝 안쪽으로
+      if (x1 - x0 > 0.01 && z1 - z0 > 0.01) sh.holes.push(new THREE.Path([[x0, z0], [x0, z1], [x1, z1], [x1, z0]].map(([x, z]) => new THREE.Vector2(x, z))));
+    });
     const m = flat(sh, greyable(new THREE.MeshStandardMaterial({ map: b.tex, transparent: true, roughness: 1, side: THREE.DoubleSide })), b.y);
     const p = m.geometry.attributes.position, uv = m.geometry.attributes.uv;
     for (let i = 0; i < p.count; i++) uv.setXY(i, (p.getX(i) - bx0) / (bx1 - bx0), 1 - (p.getY(i) - bz0) / (bz1 - bz0));
