@@ -654,7 +654,7 @@ class Actor {
     this.pos = new THREE.Vector2(x, z);
     this.goal = this.pos.clone();
     this.face = face; this.faceT = face;
-    this.pose = 'idle'; this.t0 = 0;
+    this.pose = o.pose || 'idle'; this.t0 = 0; // 배역의 기본 자세 (언약궤를 멘 제사장은 처음부터 carry-pole)
     this.y = 0; this.yT = 0;
     this.show = 1; this.showT = 1;
     this.floating = !!this.p.t.wings;
