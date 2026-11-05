@@ -255,7 +255,7 @@ function buildMap() {
   const r = $('#routes', map);
   EVENTS.forEach((e, i) => {
     if (!i) return;
-    const a = PLACES[EVENTS[i - 1].place], b = PLACES[e.from || e.place];
+    const a = PLACES[EVENTS[i - 1].place], b = PLACES[startOf(e)];
     if (a === b) return;
     const [x1, y1] = P(a), [x2, y2] = P(b), dx = x2 - x1, dy = y2 - y1;
     const bend = (i % 2 ? 1 : -1) * 0.18;
@@ -413,7 +413,7 @@ function frameStage(i, ms = 1300, mode = 'open') {
   const e = evAt(i), st = window.stageFrame?.(e), r = map.getBoundingClientRect();
   if (!st || !r.width) return false;
   const [cx, cy] = st.at ? px(st.at) : P(PLACES[here(e)]);
-  const min = i < 0 ? 1500 : PLACES[e.place].jlm || e.place === 'jerusalem' ? 14 : 300; // 프롤로그는 에덴 둘레(두 강과 만)가 다 보이게 멀리서
+  const min = i < 0 ? 1500 : PLACES[here(e)].jlm || here(e) === 'jerusalem' ? 14 : 300; // 프롤로그는 에덴 둘레(두 강과 만)가 다 보이게 멀리서
   const u = reserveCard({ x: 0, y: 0, w: min, h: min }).w / r.width; // 이 확대에서 화면 1px 당 지도 단위
   const f = freeArea(mode), fx = (f.l + f.r) / 2, fy = (f.t + f.b) / 2;
   // 핀 + 무대 어긋남(dx,dy)이 빈 영역의 가운데에 오도록 보기 상자를 놓는다
@@ -578,7 +578,7 @@ function banner(html, ms) {
 const placeSay = p => p.name.replace(/\s*\([^)]*\)/g, '').replace(/·/g, ' ').replace(/\s+/g, ' ').trim(); // 괄호 속 말(추정·나일 삼각주)은 읽지 않는다
 const ro = w => { const c = w.charCodeAt(w.length - 1) - 0xac00; return c >= 0 && c < 11172 && c % 28 && c % 28 !== 8 ? '으로' : '로'; };
 function walkTo(i, done) {
-  const from = EVENTS[idx], to = EVENTS[i], A = PLACES[from.place], B = PLACES[to.from || to.place]; // from이 있는 장면은 그곳으로 걸어 들어간다
+  const from = EVENTS[idx], to = EVENTS[i], A = PLACES[from.place], B = PLACES[startOf(to)]; // 다른 곳에서 시작하는 장면(start)은 그곳으로 걸어 들어간다
   const path = $(`.route[data-i="${i}"]`, map);
   walking = true; document.body.classList.add('is-walking');
   dispatchEvent(new CustomEvent('stage:walk', { detail: { ev: to } }));
@@ -814,15 +814,24 @@ function updateTrack() {
   if (now) tr.scrollTo({ left: now.offsetLeft - tr.clientWidth / 2, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
 }
 
-// 장면 안의 이동 (장면의 from·moveAt): 이야기가 다른 곳에서 시작해 장면의 장소로 옮겨 가는 장면 — 모세가 애굽에서 일을 겪고 미디안으로 달아나는 m03.
-// 그 장면에 닿으면 from에서 시작하고(무대·걷는 사람·카메라), 낭독이 moveAt 문장에 이르면 장소까지 걸어간다
-let atFrom = false;
-const here = e => (atFrom && e === evAt(idx) && e.from) || e.place;
+// 장면 안의 이동 (장면의 start·stops): 이야기가 장면의 장소 아닌 곳에서 시작하거나, 낭독 중에 다른 곳으로 옮겨 가는 장면.
+// start: 장면을 시작하는 곳(걸어 들어오는 곳). stops: [{ at: 문장 키(p1.3 등), to: 장소, walk: 걸어가면 true — 아니면 그곳으로 장면만 바꾼다 }].
+// 낭독이 끝나면(end) 장면의 장소로 돌아온다. 예: m03 애굽 → 미디안, e05 베들레헴 → 애굽 → (학살) 베들레헴, e06 애굽 → 나사렛
+let hereAt = null; // 지금 무대·걷는 사람·카메라가 선 곳 (null이면 장면의 장소)
+const startOf = e => e.start || e.place;
+const here = e => (e === evAt(idx) && hereAt) || e.place;
 window.stagePlaceOf = here; // stage.js·terrain.js가 무대를 붙일 장소
-function moveWithin(e) {
-  const A = PLACES[e.from], B = PLACES[e.place], [ax, ay] = P(A), [bx, by] = P(B), dur = reduced() ? 0 : 3200;
+const setHere = (e, k) => { hereAt = k === e.place ? null : k; dispatchEvent(new CustomEvent('stage:here', { detail: { to: here(e) } })); }; // 3D 지형 카메라도 따라간다
+function goStop(e, to, walk) {
+  cancelAnimationFrame(walkAnim); window.stageHide = false;
+  if (walk) return moveWithin(e, here(e), to);
+  setHere(e, to); updateMap(idx);
+}
+function moveWithin(e, a, b) {
+  const A = PLACES[a], B = PLACES[b], [ax, ay] = P(A), [bx, by] = P(B), dur = reduced() ? 0 : 3200;
   window.stageHide = true; // 걷는 동안 무대는 잠시 숨긴다 (도착하면 그 자리에서 이어 보인다)
   setCard('peek');
+  dispatchEvent(new CustomEvent('stage:here', { detail: { to: b, walk: true } })); // 3D에서는 카메라가 걸어가는 곳으로 미리 날아간다
   banner(`<span class="wk">👣</span><b>${esc(A.name)}</b> → <b>${esc(B.name)}</b>`, dur + 1200);
   const from0 = { ...view }, span = Math.min(1400, Math.max(300, Math.hypot(bx - ax, by - ay) * .9)), t0 = performance.now();
   $('#walker', map).classList.add('moving');
@@ -833,7 +842,7 @@ function moveWithin(e) {
     if (fitMode !== 'all' && !window.terrainOn && dur) followCam(pt, span, from0, Math.min(1, k * 2));
     if (k < 1) { walkAnim = requestAnimationFrame(step); return; }
     $('#walker', map).classList.remove('moving');
-    atFrom = false; window.stageHide = false;
+    setHere(e, b); window.stageHide = false;
     updateMap(idx); setCard('open');
   };
   walkAnim = requestAnimationFrame(step);
@@ -849,7 +858,7 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
   const jump = prevPlace !== null && (prev < 0) !== (i < 0);
   const stepped = i === prev + 1 && prevPlace !== null && !jump;
   const arrive = () => {
-    idx = i; atFrom = !!evAt(i).from; window.stageHide = false;
+    idx = i; setHere(evAt(i), startOf(evAt(i))); window.stageHide = false;
     renderScene(); updateMap(prev, { camera: !stepped || fitMode === 'all', jump }); updateTrack(); if (i >= 0) markVisited(EVENTS[i].id);
     window.__stageScene = evAt(i); // stage.js가 늦게 로드돼도 따라잡도록
     dispatchEvent(new CustomEvent('stage:scene', { detail: { ev: evAt(i) } }));
@@ -857,9 +866,9 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
     setOdo(odoAt(Math.max(0, i)));
     history.replaceState(null, '', '#' + evAt(i).id);
     $('#prev').disabled = idx === firstIdx(); $('#next').disabled = $('#skip').disabled = idx === EVENTS.length - 1;
-    const p = PLACES[evAt(i).place];
+    const p = PLACES[startOf(evAt(i))]; // 도착 안내는 걸어 닿은 곳 (장면 안에서 옮겨 가는 장면은 시작하는 곳)
     if (stepped) {
-      banner(`<span class="wk">📍</span>${esc(evAt(prev).place === EVENTS[i].place ? t('samePlace') : t('arrive'))} · <b>${esc(p.name)}</b><small>${esc(EVENTS[i].when)}</small>`, 2600);
+      banner(`<span class="wk">📍</span>${esc(evAt(prev).place === startOf(EVENTS[i]) ? t('samePlace') : t('arrive'))} · <b>${esc(p.name)}</b><small>${esc(EVENTS[i].when)}</small>`, 2600);
       const nx = EVENTS[i + 1];
       if (fitMode !== 'all' && !frameStage(i, 1100)) frame(nx && nx.place !== EVENTS[i].place ? [EVENTS[i].place, nx.place] : [EVENTS[i].place], 1100);
       $('#walker', map).classList.remove('arrive'); void $('#walker', map).getBoundingClientRect(); $('#walker', map).classList.add('arrive');
@@ -867,7 +876,7 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
     } else setCard('open');
     onArrive && onArrive();
   };
-  if (stepped && prevPlace !== EVENTS[i].place) walkTo(i, arrive);
+  if (stepped && prevPlace !== startOf(EVENTS[i])) walkTo(i, arrive); // 다른 곳에서 시작하는 장면(start)은 그곳까지만 걷는다
   else if (stepped) { setCard('peek'); setTimeout(arrive, reduced() ? 0 : 700); }
   else arrive();
 }
@@ -1087,17 +1096,19 @@ function sceneScript() {
 function speakScene(onDone) { speakQueue(sceneScript(), onDone); sceneReading = true; }
 const stageBeat = (beat, s) => {
   const e = evAt(idx);
-  if (e?.from) {
-    if (beat === 'intro' && !atFrom) { cancelAnimationFrame(walkAnim); atFrom = true; window.stageHide = false; updateMap(idx); } // 다시 들으면 처음 자리로
-    else if (atFrom && (e.moveAt === beat || e.moveAt === `${beat}.${s}`)) moveWithin(e);
+  if (e?.stops || e?.start) {
+    if (beat === 'intro' && here(e) !== startOf(e)) goStop(e, startOf(e)); // 다시 들으면 처음 자리로
+    const st = e.stops?.find(x => x.at === beat || x.at === `${beat}.${s}`);
+    if (st && here(e) !== st.to) goStop(e, st.to, st.walk);
+    if (beat === 'end' && here(e) !== e.place) goStop(e, e.place);
   }
   dispatchEvent(new CustomEvent('stage:beat', { detail: { beat, s } }));
 };
 function stopSpeech(keepAuto) {
   if (speaking) dispatchEvent(new CustomEvent('stage:stop'));
-  // 장면 안에서 옮겨 간 뒤에 멈추면, 무대가 처음 모습(enter)으로 돌아가므로 처음 자리(from)로 함께 돌린다
+  // 장면 안에서 옮겨 간 뒤에 멈추면, 무대가 처음 모습(enter)으로 돌아가므로 처음 자리(start)로 함께 돌린다
   const e = speaking && evAt(idx);
-  if (e?.from && !atFrom) { cancelAnimationFrame(walkAnim); atFrom = true; window.stageHide = false; updateMap(idx); }
+  if (e && here(e) !== startOf(e)) goStop(e, startOf(e));
   speechToken++; clearTimeout(autoTimer);
   if (synth) synth.cancel();
   voiceAudio.pause(); voiceAudio.onended = voiceAudio.onerror = voiceAudio.onplaying = voiceAudio.onwaiting = null;
