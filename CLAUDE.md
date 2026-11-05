@@ -16,6 +16,11 @@
 - `index.html`, `style.css`, `app.js` — 앱 (지도 SVG, 장면 카드, 낭독, 말씀·대조표·퀴즈)
 - `qna.html` — 묻고 답하기(왜 만들었는지, 3D 무대를 왜 이렇게 그렸는지, 기능 활용법). 번역본은 `qna.<언어>.html`(같은 마크업, 화면 글씨는 `ui.<언어>.json`의 말 그대로), 링크(랜딩 첫 화면·설정 패널의 `.qna-link`)는 app.js가 언어에 맞춰 바꾼다. 기능이나 연출 원칙이 바뀌면 모든 언어를 함께 고친다
 - 프롤로그 `e00`(잃어버린 동산, 창 2–3장): 61개 장면 앞에 따로 둔 장면. `_src/content-0.json`과 skeleton 맨 앞, build.py가 data의 `prologue`로 뺀다. 앱에서는 장면 번호 -1(`evAt`, `isPro`), 장면 수·퀴즈·도장·대조표에 들지 않는다. 처음 걷는 사람은 여기서 시작한다
+- **시리즈(그 길 시리즈)**: 예수 여정 다음으로 모세와 여호수아·다윗·열왕기·바울을 같은 엔진으로 만든다. 목록과 준비 여부는 `_src/series.json`(첫 화면 '그 길 시리즈'가 이것으로 그려지고, 준비 중인 여정을 누르면 후원 안내). 앱은 주소의 `?j=<여정>`으로 여정을 고른다(없으면 예수)
+  - 예수 여정: 원본은 `_src/` 바로 아래, 결과는 맨 위의 `data*.json` (예전 그대로)
+  - 다른 여정: 원본은 `_src/journeys/<여정>/`(같은 모양 — skeleton·places·periods·content-*.json, `journey.json`에 주인공 이름 `main`·대조표 `harmony`·녹음 `voice`, 여정 화면 글씨는 `i18n/ui.<언어>.json`으로 공통 글씨 위에 덧씌움, 책 이름표 `gospels`도 여기서), 결과는 `j/<여정>/data*.json`. 장면 id는 여정마다 겹치지 않게(모세 `m01`…)
+  - 다른 여정은 녹음 없이 기기 음성(구글 음성 먼저)으로 읽는다. 진행 기록도 여정마다 따로(`theway-progress-<여정>`)
+  - 관리자 페이지도 `admin.html?j=<여정>`으로 나뉜다(위쪽 고르기)
 - `data.json` — `_src/`의 원본으로 `python3 _src/build.py`가 만든다. 직접 고치지 말 것 (작성 규칙 `_src/STYLE.md`)
 - `s/`, `sitemap.xml` — 검색엔진용 장면 페이지(`s/e05.html`, 번역은 `s/e05.<언어>.html`, 목록 `s/index.html`)와 사이트맵. 앱은 `#e05` 주소라 검색에 장면이 따로 잡히지 않아, 글을 미리 써 둔 정적 페이지를 두고 앱으로 잇는다. build.py 끝에서 `_src/pages.py`가 만든다(직접 고치지 말 것). `robots.txt`가 사이트맵을 알린다
 - 다국어: `data.<언어>.json`도 build.py가 만든다. 번역 원본은 `_src/i18n/` — `ko.json`(뽑기: `python3 _src/i18n/extract.py`)을 옮긴 `<언어>.json`과 화면 글씨 `ui.<언어>.json`. 새 언어는 app.js의 `LANGS`에도 더한다. 말씀은 기존 성경 번역을 베끼지 않고 새로 옮긴다
