@@ -880,6 +880,438 @@ export const MOSES = {
       end: [['@env', 'night'], ['cloud', 'fire', { show: 1 }], ['tab', null, { show: 1 }]],
     },
   },
+  /* m22. 탐욕의 무덤 — 진영 끝의 불은 모세의 기도로 꺼지고, 장막 문마다 우는 백성. 칠십 장로에게 영이 내리고(빛),
+     바다 쪽 바람에 메추라기 떼가 진을 덮는다. 재앙은 그리지 않는다 — 어둑해지는 빛과 엎드린 사람들로만 */
+  m22: {
+    wide: 1.4,
+    props: {
+      sand: ['sand', 0, 0, { r: 1.9, color: '#cdb68a' }],
+      tent: ['tent', -1.0, -0.5, { w: 0.75 }], tent2: ['tent', 0.15, -0.7, { w: 0.7, color: '#4a3c30' }], tent3: ['tent', 1.15, -0.45, { w: 0.65 }],
+      fire: ['fire', 1.35, 0.1, { scale: 1.6 }],
+      elders: ['crowd', -0.35, -0.15, { spots: [[-0.5, 0], [-0.3, 0.1], [-0.1, 0.05], [0.1, 0.1], [0.3, 0.02], [0.5, 0.08]], face: 0 }],
+      spirit: ['beam', -0.35, -0.15, { r: 0.75, h: 2.6, peak: 0.45 }],
+      quail: ['swarm', 0.3, 0.0, { color: '#7a6448', dot: 0.045, n: 140 }],
+    },
+    cast: {
+      moses: ['mosesE', 0.2, 0.15, 0.6],
+      man: ['hebrew', 0.85, 0.3, -0.8],
+      wom: ['woman', -0.85, 0.3, 0.6],
+      kid: ['child', -0.6, 0.45, 0.6],
+      joshua: ['joshua', 0.45, 0.0, -0.4],
+    },
+    beats: {
+      enter: [['fire', null, { show: 0 }], ['spirit', null, { show: 0 }], ['quail', null, { show: 1 }], ['man', 'bow', { item: 'basket' }], ['wom', 'bow', { item: 'basket' }], ['kid', 'look-up'], ['moses', 'idle', { look: 0.4 }]],
+      intro: [['fire', null, { show: 0 }], ['elders', null, { show: 0 }], ['spirit', null, { show: 0 }], ['quail', null, { show: 0 }], ['man', 'idle', { item: null }], ['wom', 'idle', { item: null }], ['kid', 'idle'], ['joshua', 'idle', { show: 0 }]],
+      // 진영 끝자락의 원망 — 불이 일었다가 모세의 기도로 꺼진다
+      'p0.0': [['man', 'rebuke', { look: -0.6 }]],
+      'p0.1': [['fire', null, { show: 1 }], ['man', 'afraid', { look: 1.3 }], ['moses', 'pray', { delay: 1500 }], ['fire', null, { show: 0, delay: 4500 }]],
+      'p0.3': [['moses', 'idle'], ['man', 'idle']],
+      // 장막 문마다 운다
+      'p1.1': [['wom', 'mourn'], ['kid', 'mourn'], ['man', 'mourn']],
+      'p1.2': [['moses', 'kneel', { look: -0.2 }]],
+      // 칠십 장로에게 영을 나누신다
+      'p1.4': [['moses', 'idle', { look: -1 }], ['elders', null, { show: 1 }], ['spirit', null, { show: 1, delay: 1500 }], ['spirit', null, { show: 0, delay: 6000 }], ['joshua', 'idle', { show: 1 }]],
+      // 바다 쪽 바람과 메추라기 떼
+      'p2.0': [['elders', null, { show: 0 }], ['quail', null, { show: 1 }], ['wom', 'look-up'], ['kid', 'look-up'], ['man', 'look-up']],
+      'p2.1': [['man', 'bow', { item: 'basket' }], ['wom', 'bow', { item: 'basket' }], ['kid', 'kneel'], ['@env', 'dusk'], ['@env', 'night', { delay: 5000 }]],
+      // 큰 재앙 — 빛이 어두워지고 사람들은 엎드린다
+      'p2.2': [['@env', 'overcast'], ['quail', null, { show: 0 }], ['man', 'mourn', { item: null }], ['wom', 'kneel', { item: null }], ['kid', 'mourn']],
+      'p2.3': [['moses', 'mourn']],
+      w0: [['moses', 'listen', { look: 0.3 }]],
+      w1: [['moses', 'listen', { look: 0.3 }]],
+      w2: [['joshua', 'idle', { show: 1 }], ['moses', 'speak', { to: 'joshua' }]],
+      end: [['@env', 'overcast']],
+    },
+  },
+
+  /* m23. 열두 정탐꾼 — 가데스의 진영. 두 사람이 막대에 꿴 포도송이를 메고 돌아오고, 열 사람은 고개를 젓고 갈렙과 여호수아만 올라가자 한다.
+     밤의 울음, 돌을 들려는 무리 — 회막 위에 영광이 나타난다 */
+  m23: {
+    wide: 1.4,
+    props: {
+      sand: ['sand', 0, 0, { r: 1.9, color: '#cdb68a' }],
+      tab: ['tabernacle', -0.95, -0.6, { scale: 0.85 }],
+      glory: ['pillar', -1.05, -0.65, { h: 1.3 }],
+      grapes: ['grapepole', 1.15, 0.2, { speed: 0.4 }],
+      spies: ['crowd', 0.45, -0.2, { spots: flock(8, 0.3, 0.18, 20), face: 0 }],
+      folk: ['crowd', -1.2, 0.3, { spots: flock(10, 0.3, 0.25, 21), face: Math.PI / 2 }],
+    },
+    cast: {
+      moses: ['mosesE', -0.45, -0.05, 0.8],
+      aaron: ['aaron', -0.7, 0.1, 0.8],
+      joshua: ['joshua', 0.0, 0.15, -0.8],
+      caleb: ['caleb', 0.25, 0.3, -0.8],
+      sp1: ['hebrew', 0.95, 0.2, -1, { speed: 0.4 }],
+      sp2: ['hebrew2', 1.4, 0.2, -1, { speed: 0.4 }],
+    },
+    beats: {
+      enter: [['glory', 'cloud', { show: 0 }], ['grapes', null, { x: 0.68, z: 0.2 }], ['sp1', 'idle', { x: 0.45, z: 0.2 }], ['sp2', 'idle', { x: 0.9, z: 0.2 }], ['caleb', 'raise', { to: 'moses' }], ['joshua', 'idle']],
+      intro: [['glory', 'cloud', { show: 0 }], ['grapes', null, { show: 0, x: 1.9, z: 0.2 }], ['sp1', 'idle', { show: 0, x: 1.7, z: 0.2 }], ['sp2', 'idle', { show: 0, x: 2.15, z: 0.2 }], ['spies', null, { show: 1 }], ['folk', null, { show: 0 }],
+        ['joshua', 'idle', { x: 0.0, z: 0.15 }], ['caleb', 'idle', { x: 0.25, z: 0.3 }]],
+      'p0.0': [['moses', 'speak', { to: 'joshua' }]],
+      'p0.1': [['moses', 'bless', { to: 'joshua' }], ['joshua', 'bow']],
+      // 사십 일 동안 그 땅을 살핀다 (무대를 떠났다가)
+      'p0.2': [['moses', 'idle'], ['joshua', 'idle', { x: 1.8, z: 0.1 }], ['caleb', 'idle', { x: 1.9, z: 0.3 }], ['spies', null, { x: 1.9, show: 0 }], ['joshua', 'idle', { show: 0, delay: 3200 }], ['caleb', 'idle', { show: 0, delay: 3200 }]],
+      // 두 사람이 막대에 꿴 포도송이를 메고 돌아온다
+      'p1.0': [['grapes', null, { show: 1, x: 0.68, z: 0.2 }], ['sp1', 'idle', { show: 1, x: 0.45, z: 0.2 }], ['sp2', 'idle', { show: 1, x: 0.9, z: 0.2 }], ['folk', null, { show: 1 }],
+        ['joshua', 'idle', { show: 1, x: 0.0, z: 0.15, look: -0.8 }], ['caleb', 'idle', { show: 1, x: 0.25, z: 0.35, look: -0.8 }]],
+      'p1.2': [['moses', 'raise', { look: 1 }]],
+      // 열 사람은 메뚜기 같았다고 — 갈렙만이 올라가자
+      'p1.3': [['moses', 'idle'], ['sp1', 'shrug', { look: -1 }], ['sp2', 'afraid', { look: -1 }]],
+      'p1.4': [['caleb', 'raise', { to: 'moses' }]],
+      // 밤새 운다
+      'p2.0': [['@env', 'night'], ['sp1', 'mourn'], ['sp2', 'mourn'], ['caleb', 'idle']],
+      'p2.1': [['sp1', 'rebuke', { to: 'moses' }]],
+      'p2.2': [['joshua', 'mourn'], ['caleb', 'mourn'], ['sp2', 'rebuke', { to: 'caleb' }]],
+      // 회막 위의 영광
+      'p2.3': [['@env', 'dusk'], ['glory', 'cloud', { show: 1 }], ['sp1', 'cower'], ['sp2', 'cower'], ['moses', 'bow', { look: -1.5 }]],
+      w0: [['caleb', 'idle', { look: -0.8 }]],
+      w1: [['moses', 'listen', { look: -1.5 }]],
+      w2: [['caleb', 'speak', { to: 'moses' }]],
+      end: [],
+    },
+  },
+
+  /* m24. 싹 난 지팡이 — 고라의 무리가 모세와 아론 앞에 맞선다. 땅이 갈라지고 불이 사른 일은 그리지 않는다(무리가 사라질 뿐).
+     아론이 향로를 들고 산 자와 죽은 자 사이에 선다. 이튿날 아침 증거궤 앞의 열두 지팡이 가운데 아론의 것에 꽃이 핀다 */
+  m24: {
+    wide: 1.35,
+    props: {
+      sand: ['sand', 0, 0, { r: 1.9, color: '#cdb68a' }],
+      tab: ['tabernacle', -0.85, -0.55, { scale: 0.9 }],
+      ark: ['arkc', 0.15, -0.35],
+      rods: ['rods', 0.15, -0.2],
+      rebels: ['crowd', 0.95, 0.15, { spots: flock(10, 0.35, 0.25, 22), face: -Math.PI / 2 }],
+      censer: ['fire', -0.2, 0.3, { scale: 0.5 }],
+    },
+    cast: {
+      moses: ['mosesE', -0.3, 0.05, 1],
+      aaron: ['aaronP', -0.55, 0.2, 1],
+      korah: ['levi', 0.55, 0.1, -1],
+      dathan: ['hebrew2', 0.75, 0.3, -1],
+    },
+    beats: {
+      enter: [['rods', 'bloom'], ['rebels', null, { show: 0 }], ['censer', null, { show: 0 }], ['korah', 'idle', { show: 0 }], ['dathan', 'idle', { show: 0 }], ['moses', 'raise', { x: -0.05, z: -0.05, look: 0.6 }], ['aaron', 'pray', { x: 0.35, z: 0.0, look: -0.6 }]],
+      intro: [['rods', 'dry', { show: 0 }], ['ark', null, { show: 0 }], ['censer', null, { show: 0 }], ['rebels', null, { show: 1 }], ['korah', 'idle', { show: 1 }], ['dathan', 'idle', { show: 1 }]],
+      'p0.0': [['korah', 'rebuke', { to: 'moses' }]],
+      'p0.1': [['dathan', 'rebuke', { to: 'aaron' }], ['moses', 'kneel', { look: 0.6 }]],
+      'p0.2': [['dathan', 'idle', { x: 1.2, z: 0.4, look: 1 }]],
+      // 땅이 갈라지고 불이 — 무리가 사라진다 (그리지 않는다)
+      'p1.0': [['@env', 'dark'], ['moses', 'idle'], ['korah', 'idle', { show: 0, delay: 1500 }], ['dathan', 'idle', { show: 0, delay: 1500 }]],
+      'p1.1': [['rebels', null, { show: 0, delay: 800 }]],
+      // 향로를 들고 산 자와 죽은 자 사이에 선 아론
+      'p1.2': [['@env', 'overcast'], ['aaron', 'idle', { x: 0.35, z: 0.3, look: 1 }], ['censer', null, { show: 1, x: 0.35, z: 0.42, delay: 1500 }], ['aaron', 'pray', { delay: 2000 }]],
+      // 열두 지팡이를 증거궤 앞에
+      'p2.0': [['@env', 'night'], ['censer', null, { show: 0 }], ['ark', null, { show: 1 }], ['rods', 'dry', { show: 1 }], ['aaron', 'idle', { x: -0.55, z: 0.2, look: 0.6 }], ['moses', 'idle', { x: -0.3, z: 0.05, look: 0.8 }]],
+      // 이튿날 아침 — 싹이 돋고 꽃이 피고 아몬드가
+      'p2.2': [['@env', 'dawn'], ['moses', 'idle', { x: -0.05, z: -0.05, look: 0.6 }], ['rods', 'bloom', { delay: 1500 }], ['moses', 'raise', { delay: 2500 }]],
+      'p2.3': [['aaron', 'pray', { x: 0.35, z: 0.0, look: -0.6 }]],
+      w0: [['moses', 'listen', { look: 0.6 }]],
+      w1: [['moses', 'listen', { look: 0.6 }]],
+      w2: [['moses', 'speak', { look: 0.8 }]],
+      end: [['@env', 'dawn']],
+    },
+  },
+
+  /* m25. 므리바의 물 — 미리암을 묻은 가데스(작은 돌무더기 무덤에 우는 사람들). 물이 떨어져 백성이 몰려오고,
+     모세는 바위에 말하는 대신 두 번 내리친다. 물은 콸콸 쏟아지지만 무대는 무거운 빛으로 저문다 */
+  m25: {
+    wide: 1.35,
+    props: {
+      sand: ['sand', 0, 0, { r: 1.9, color: '#c2a27e', stones: 24 }],
+      rock: ['rockspring', 0.6, -0.4, { scale: 1.25 }],
+      grave: ['rocks', -1.0, -0.35, { spots: [[0, 0, 0.09], [0.1, 0.05, 0.07], [-0.08, 0.06, 0.07], [0.02, 0.12, 0.06], [0.0, 0.05, 0.05]] }],
+      tab: ['tabernacle', -0.2, -0.75, { scale: 0.75 }],
+      glory: ['beam', -0.2, -0.65, { r: 0.55, h: 2.4, peak: 0.5 }],
+      folk: ['crowd', 1.25, 0.25, { spots: flock(10, 0.3, 0.25, 23), face: -Math.PI / 2 }],
+    },
+    cast: {
+      moses: ['mosesE', -0.35, 0.05, -1],
+      aaron: ['aaronP', -0.6, 0.2, -1],
+      wom: ['woman', -0.9, 0.0, -2.6],
+      man: ['hebrew', 0.25, 0.25, -0.8],
+    },
+    beats: {
+      enter: [['rock', 'flow'], ['glory', null, { show: 0 }], ['moses', 'raise', { x: 0.2, z: -0.15, look: 0.8 }], ['aaron', 'idle', { x: -0.05, z: 0.0 }], ['man', 'kneel', { x: 0.75, z: 0.05, look: -0.3 }]],
+      intro: [['rock', 'dry'], ['glory', null, { show: 0 }], ['folk', null, { show: 0 }], ['moses', 'mourn', { x: -0.6, z: -0.1, look: -1.2 }], ['aaron', 'mourn', { x: -0.75, z: 0.1, look: -1.2 }], ['wom', 'mourn'], ['man', 'idle', { show: 0 }]],
+      // 미리암이 숨을 거두어 묻혔다
+      'p0.1': [['wom', 'kneel', { look: -2.6 }]],
+      // 물이 떨어지고, 백성이 몰려와 다툰다
+      'p0.3': [['wom', 'idle', { show: 0 }], ['moses', 'idle', { x: -0.35, z: 0.05, look: 0.6 }], ['aaron', 'idle', { x: -0.6, z: 0.2, look: 0.6 }]],
+      'p1.0': [['folk', null, { show: 1 }], ['man', 'rebuke', { show: 1, to: 'moses' }]],
+      // 회막 문에 엎드리자 영광이 나타난다
+      'p1.2': [['moses', 'kneel', { x: -0.3, z: -0.4, look: 3 }], ['aaron', 'kneel', { x: -0.5, z: -0.35, look: 3 }], ['glory', null, { show: 1, delay: 1200 }]],
+      // 거역하는 자들아 — 바위를 두 번 내리친다
+      'p2.0': [['glory', null, { show: 0 }], ['moses', 'rebuke', { x: 0.2, z: -0.15, look: -0.6, to: 'man' }], ['aaron', 'idle', { x: -0.05, z: 0.0, look: 0.6 }]],
+      'p2.1': [['moses', 'raise', { look: 0.8 }], ['moses', 'idle', { delay: 900 }], ['moses', 'raise', { delay: 1800 }], ['rock', 'flow', { delay: 2600 }]],
+      'p2.2': [['man', 'kneel', { x: 0.75, z: 0.05, look: -0.3 }], ['moses', 'idle']],
+      // 그 땅에 들어가지 못하리라
+      'p2.3': [['@env', 'dusk'], ['moses', 'mourn', { look: -0.4 }], ['aaron', 'mourn']],
+      w0: [['moses', 'listen', { look: 3 }]],
+      w1: [['moses', 'listen', { look: 3 }]],
+      w2: [['moses', 'rebuke', { to: 'man' }]],
+      end: [['@env', 'dusk']],
+    },
+  },
+
+  /* m26. 호르산의 아론 — 붉은 바위산 꼭대기로 세 사람이 오르고, 아론의 대제사장 옷이 엘르아살에게 옮겨 간다.
+     아론은 산 위에서 빛 속으로 사라지고(죽음은 그리지 않는다), 아래 진영은 삼십 일을 운다 */
+  m26: {
+    env: 'dusk', wide: 1.4,
+    props: {
+      sand: ['sand', 0, 0.2, { r: 1.9, color: '#c2a888' }],
+      hill: ['hill', 0.55, -0.45, { w: 1.1, h: 0.55, d: 0.6, color: '#a0624a', soft: true }],
+      light: ['beam', 0.55, -0.45, { r: 0.4, h: 2.4, peak: 0.45 }],
+      folk: ['crowd', -0.85, 0.35, { spots: flock(12, 0.5, 0.2, 24), face: -0.5 }],
+    },
+    cast: {
+      moses: ['mosesE', 0.35, -0.42, 0.4],
+      aaron: ['aaronP', 0.55, -0.5, 0],
+      aaronP2: ['aaron', 0.55, -0.5, 0],
+      eleazar: ['hebrew2', 0.78, -0.42, -0.4],
+      eleazarP: ['eleazar', 0.78, -0.42, -0.4],
+    },
+    beats: {
+      enter: [['light', null, { show: 1 }], ['aaron', 'idle', { show: 0 }], ['aaronP2', 'idle', { show: 0 }], ['eleazar', 'idle', { show: 0 }], ['eleazarP', 'idle', { show: 1, x: -0.3, z: 0.25, look: 0 }], ['moses', 'mourn', { x: 0.0, z: 0.15 }], ['folk', null, { show: 1 }]],
+      intro: [['light', null, { show: 0 }], ['aaron', 'idle', { show: 1, x: -0.2, z: 0.25 }], ['aaronP2', 'idle', { show: 0 }], ['eleazar', 'idle', { show: 1, x: 0.05, z: 0.3 }], ['eleazarP', 'idle', { show: 0 }], ['moses', 'idle', { x: -0.45, z: 0.2, look: 0.6 }]],
+      'p0.1': [['@env', 'dusk']],
+      'p0.3': [['aaron', 'bow', { look: -0.8 }], ['moses', 'mourn']],
+      // 온 회중이 지켜보는 가운데 산을 오른다
+      'p1.0': [['moses', 'idle', { x: 0.35, z: -0.42, look: 0.4 }], ['aaron', 'idle', { x: 0.55, z: -0.5, look: 0 }], ['eleazar', 'idle', { x: 0.78, z: -0.42, look: -0.4 }]],
+      // 형의 옷을 벗겨 엘르아살에게
+      'p1.2': [['aaron', 'idle', { show: 0 }], ['aaronP2', 'idle', { show: 1, x: 0.55, z: -0.5 }], ['eleazar', 'idle', { show: 0 }], ['eleazarP', 'idle', { show: 1, x: 0.78, z: -0.42, look: -0.6 }], ['moses', 'bless', { to: 'eleazarP' }]],
+      // 아론은 산꼭대기에서 — 빛 속으로
+      'p2.0': [['@env', 'dark'], ['light', null, { show: 1 }], ['aaronP2', 'pray'], ['aaronP2', 'idle', { show: 0, delay: 3000 }], ['moses', 'mourn', { delay: 1000 }], ['eleazarP', 'mourn', { delay: 1000 }]],
+      'p2.1': [['@env', 'dusk'], ['light', null, { show: 0 }], ['moses', 'idle', { x: 0.0, z: 0.15, look: -0.6 }], ['eleazarP', 'idle', { x: -0.3, z: 0.25, look: 0 }]],
+      'p2.2': [['moses', 'mourn']],
+      'p2.3': [['eleazarP', 'idle', { look: 0 }]],
+      w0: [['moses', 'listen', { look: 0.6 }], ['aaron', 'listen', { look: 0.4 }]],
+      w1: [['moses', 'listen', { look: 0.4 }]],
+      end: [['@env', 'dusk']],
+    },
+  },
+
+  /* m27. 장대 위의 놋뱀 — 아라바의 뜨거운 바람. 원망하던 진영에 불뱀이 나타나고(무는 모습은 없이) 사람들이 엎드려 빈다.
+     모세가 놋뱀을 장대 끝에 높이 세우자, 쓰러진 이들이 고개를 들어 쳐다보고 일어난다 */
+  m27: {
+    wide: 1.35,
+    props: {
+      sand: ['sand', 0, 0, { r: 1.9, color: '#d0a87a' }],
+      pole: ['brasspole', 0.1, -0.35],
+      snakes: ['snakes', 0, 0.15, { n: 11, r: 1.0 }],
+      tent: ['tent', -1.15, -0.45, { w: 0.65 }], tent2: ['tent', 1.15, -0.5, { w: 0.65, color: '#4a3c30' }],
+      folk: ['crowd', 0.95, 0.3, { spots: flock(9, 0.35, 0.2, 25), face: -Math.PI / 2 }],
+    },
+    cast: {
+      moses: ['mosesE', -0.15, -0.15, 0.6],
+      man: ['hebrew', 0.45, 0.25, -0.8],
+      wom: ['woman', -0.6, 0.3, 0.6],
+      kid: ['child', -0.35, 0.45, 0.4],
+      old: ['elder', 0.75, 0.05, -1],
+    },
+    beats: {
+      enter: [['snakes', null, { show: 0 }], ['moses', 'raise', { look: 0.6 }], ['man', 'look-up', { look: -0.6 }], ['wom', 'look-up', { look: 0.6 }], ['kid', 'look-up'], ['old', 'kneel', { look: -1 }]],
+      intro: [['pole', null, { show: 0 }], ['snakes', null, { show: 0 }], ['man', 'idle'], ['wom', 'idle'], ['kid', 'idle'], ['old', 'idle']],
+      'p0.2': [['@env', 'overcast']],
+      // 하나님과 모세를 향해 쏟아 낸다
+      'p1.0': [['man', 'rebuke', { to: 'moses' }], ['old', 'rebuke', { to: 'moses' }]],
+      // 불뱀들이 진영에 — 사람들이 쓰러진다
+      'p1.2': [['snakes', null, { show: 1 }], ['man', 'afraid'], ['wom', 'cower'], ['kid', 'cower'], ['old', 'kneel'], ['@env', 'dusk']],
+      'p1.3': [['man', 'kneel', { x: 0.2, z: 0.1, look: -1 }], ['old', 'pray', { look: -1 }]],
+      // 기도하자 — 놋뱀을 만들어 장대 끝에 높이
+      'p2.0': [['moses', 'pray', { look: 0.4 }]],
+      'p2.2': [['@env', 'day'], ['pole', null, { show: 1 }], ['moses', 'raise', { look: 0.6 }]],
+      // 고개를 들어 쳐다보면 산다
+      'p2.3': [['snakes', null, { show: 0 }], ['man', 'look-up', { x: 0.45, z: 0.25, look: -0.6 }], ['wom', 'look-up', { look: 0.6 }], ['kid', 'look-up'], ['old', 'look-up']],
+      w0: [['moses', 'listen', { look: 0.4 }]],
+      w1: [['old', 'speak', { to: 'moses' }], ['man', 'kneel']],
+      end: [],
+    },
+  },
+
+  /* m28. 요단 동쪽을 얻다 — 왕의 큰길 앞. 사신이 정중히 청하지만 시혼은 길을 막는다. 싸움은 두 무리가 밀고 밀리는 것으로만 (연출 원칙 1).
+     헤스본 성(오른쪽)에 이스라엘이 들어가고, 바산 왕 옥과의 싸움도 같은 흐름으로 */
+  m28: {
+    wide: 1.45,
+    props: {
+      sand: ['sand', 0, 0, { r: 1.9, color: '#c8b07e' }],
+      city: ['walls', 1.0, -0.6, { w: 1.4 }],
+      israel: ['crowd', -0.85, 0.15, { spots: flock(10, 0.32, 0.25, 26), face: Math.PI / 2 }],
+      amorite: ['crowd', 0.75, 0.15, { spots: flock(10, 0.32, 0.25, 27), face: -Math.PI / 2 }],
+    },
+    cast: {
+      moses: ['mosesE', -1.2, -0.15, 1],
+      joshua: ['joshua', -0.45, 0.0, 1],
+      envoy: ['traveler', -0.1, 0.1, 1],
+      sihon: ['sihon', 0.55, -0.15, -1],
+    },
+    beats: {
+      enter: [['amorite', null, { show: 0 }], ['sihon', 'idle', { show: 0 }], ['israel', null, { x: 0.6, z: -0.05 }], ['joshua', 'raise', { x: 0.2, z: 0.15, look: 1 }], ['envoy', 'idle', { show: 0 }], ['moses', 'idle', { x: -0.4, z: -0.1 }]],
+      intro: [['amorite', null, { show: 0 }], ['sihon', 'idle', { show: 1 }], ['envoy', 'idle', { show: 0, x: -0.6, z: 0.1 }]],
+      // 사신을 보내 정중히 청한다
+      'p0.1': [['envoy', 'idle', { show: 1, x: 0.2, z: 0.05, look: 1 }], ['envoy', 'bow', { delay: 3000 }]],
+      'p0.2': [['envoy', 'speak', { to: 'sihon' }]],
+      'p0.3': [['sihon', 'rebuke', { to: 'envoy' }], ['envoy', 'idle', { x: -0.3, z: 0.25, delay: 2000 }]],
+      // 야하스에서 맞붙는다 — 두 무리가 밀고 밀린다
+      'p1.0': [['amorite', null, { show: 1 }], ['envoy', 'idle', { show: 0 }], ['sihon', 'point', { look: -1 }], ['israel', null, { x: -0.55 }], ['amorite', null, { x: 0.45 }]],
+      'p1.1': [['israel', null, { x: -0.25 }], ['amorite', null, { x: 1.4, show: 0 }], ['sihon', 'idle', { show: 0 }], ['joshua', 'raise', { look: 1 }]],
+      // 헤스본에 들어가 산다
+      'p1.2': [['israel', null, { x: 0.6, z: -0.05 }], ['joshua', 'idle', { x: 0.2, z: 0.15 }], ['moses', 'idle', { x: -0.4, z: -0.1 }]],
+      // 바산 왕 옥
+      'p2.1': [['amorite', null, { show: 1, x: 1.0, z: 0.3 }], ['@env', 'overcast']],
+      'p2.2': [['moses', 'listen', { look: 0.4 }], ['amorite', null, { show: 0, x: 1.6, delay: 3000 }], ['@env', 'day', { delay: 3000 }]],
+      'p2.3': [['moses', 'raise', { look: 0.6 }]],
+      w0: [['moses', 'listen', { look: 0.4 }]],
+      w1: [['envoy', 'speak', { show: 1, to: 'sihon' }]],
+      end: [],
+    },
+  },
+
+  /* m29. 발람과 나귀 — 발람이 나귀를 타고 가다 칼을 든 천사(빛나는 칼)에게 길이 막힌다. 나귀가 주저앉고 말을 한다.
+     발락이 높은 곳의 제단으로 데려가지만, 발람의 입에서는 축복이 나온다 — 멀리 보이는 이스라엘의 장막들 */
+  m29: {
+    wide: 1.45,
+    props: {
+      sand: ['sand', 0, 0, { r: 1.9, color: '#c8b07e' }],
+      wall: ['brickwall', -0.6, -0.45, { w: 1.0, h: 0.32 }],
+      donkey: ['donkey', -1.3, 0.15, { speed: 0.35 }],
+      sword: ['flamesword', 0.0, 0.1],
+      altar1: ['altar', 0.75, -0.4], altar2: ['altar', 1.05, -0.25], altar3: ['altar', 1.3, -0.45],
+      camp: ['tent', -0.2, -0.85, { w: 0.5 }], camp2: ['tent', 0.4, -0.95, { w: 0.5, color: '#4a3c30' }],
+    },
+    cast: {
+      balaam: ['balaam', -1.3, 0.15, 1, { board: 'donkey' }],
+      angel: ['angel', 0.0, 0.0, -1],
+      balak: ['balak', 1.0, 0.1, -1],
+      prince: ['official', 1.25, 0.25, -1],
+    },
+    beats: {
+      enter: [['donkey', null, { x: -0.55, z: 0.15 }], ['balaam', 'kneel', { board: null, x: -0.3, z: 0.25, look: 1 }], ['angel', 'idle', { show: 1 }], ['sword', null, { show: 1 }], ['balak', 'idle', { show: 0 }], ['prince', 'idle', { show: 0 }], ['altar1', 'idle', { show: 0 }], ['altar2', 'idle', { show: 0 }], ['altar3', 'idle', { show: 0 }]],
+      intro: [['donkey', null, { x: -1.3, z: 0.15 }], ['balaam', 'ride', { board: 'donkey', x: 0, z: 0 }], ['angel', 'idle', { show: 0 }], ['sword', null, { show: 0 }], ['balak', 'idle', { show: 1, x: 1.0, z: 0.1 }], ['prince', 'idle', { show: 1, x: -0.6, z: 0.25, look: -1 }],
+        ['altar1', 'idle', { show: 0 }], ['altar2', 'idle', { show: 0 }], ['altar3', 'idle', { show: 0 }], ['camp', null, { show: 1 }], ['camp2', null, { show: 1 }]],
+      // 발락이 사신을 보내 저주를 청한다
+      'p0.2': [['prince', 'speak', { to: 'balaam' }]],
+      // 나귀에 안장을 얹고 길을 나선다
+      'p1.0': [['prince', 'idle', { x: 1.25, z: 0.25, look: -1 }], ['donkey', null, { x: -0.55, z: 0.15 }]],
+      // 칼을 든 천사가 길을 막는다 — 나귀가 주저앉는다
+      'p1.1': [['angel', 'idle', { show: 1 }], ['sword', null, { show: 1 }], ['donkey', null, { x: -0.65, z: 0.25 }]],
+      'p1.2': [['balaam', 'rebuke', { look: 1 }]],
+      'p1.3': [['balaam', 'afraid', { board: null, x: -0.3, z: 0.3, look: 1 }], ['balaam', 'kneel', { delay: 2500 }]],
+      // 높은 곳의 일곱 제단
+      'p2.0': [['angel', 'idle', { show: 0 }], ['sword', null, { show: 0 }], ['altar1', 'fire', { show: 1 }], ['altar2', 'fire', { show: 1 }], ['altar3', 'fire', { show: 1 }], ['balaam', 'idle', { x: 0.35, z: 0.05, look: -1.6 }], ['balak', 'idle', { x: 0.75, z: 0.15, look: -0.8 }]],
+      // 저주 대신 축복
+      'p2.1': [['balaam', 'raise', { look: -1.6 }]],
+      'p2.2': [['balaam', 'raise', { look: -1.6 }]],
+      'p2.3': [['@env', 'night'], ['balaam', 'look-up', { look: -1.2 }]],
+      'p2.4': [['balak', 'rebuke', { to: 'balaam' }], ['balaam', 'idle', { x: -1.6, z: 0.3, delay: 2500 }], ['balaam', 'idle', { show: 0, delay: 5500 }]],
+      w0: [['balaam', 'listen', { look: 0.4 }]],
+      w1: [['balaam', 'listen', { look: 0.4 }]],
+      w2: [['balaam', 'speak', { show: 1, x: 0.35, z: 0.05, look: -1.6 }]],
+      end: [['@env', 'night']],
+    },
+  },
+
+  /* m30. 들으라 이스라엘아 — 모압 평지 (요단과 그 건너 여리고는 지도의 서쪽, 무대 왼쪽 바깥). 광야에서 자란 새 세대가 늙은 모세 앞에 앉아 듣는다 */
+  m30: {
+    wide: 1.4,
+    props: {
+      sand: ['sand', 0, 0.1, { r: 1.9, color: '#c8b07e' }],
+      folk: ['crowd', 0, 0.45, { spots: flock(18, 1.1, 0.18, 28), state: 'sit', face: Math.PI }],
+    },
+    cast: {
+      moses: ['mosesE', 0.0, -0.15, 0],
+      joshua: ['joshua', 0.4, -0.05, -0.6],
+      kid: ['child', -0.35, 0.2, 2.8],
+      wom: ['woman', 0.75, 0.25, 3.3],
+    },
+    beats: {
+      enter: [['folk', 'sit'], ['moses', 'speak', { to: 'kid' }], ['kid', 'sit-ground'], ['wom', 'sit-ground']],
+      intro: [['folk', 'stand'], ['moses', 'idle'], ['kid', 'idle'], ['wom', 'idle']],
+      'p0.1': [['moses', 'point', { look: -1.6 }]],
+      // 새 세대가 모여 앉는다
+      'p0.2': [['folk', 'sit'], ['kid', 'sit-ground'], ['wom', 'sit-ground'], ['moses', 'idle', { look: 0 }]],
+      'p0.3': [['moses', 'speak', { to: 'kid' }]],
+      'p1.0': [['moses', 'raise']],
+      'p1.2': [['moses', 'speak', { to: 'wom' }]],
+      // 집에 앉아 있을 때나 길을 걸을 때나 — 자녀에게
+      'p1.3': [['wom', 'idle', { x: 0.55, z: 0.3 }], ['wom', 'speak', { to: 'kid', delay: 2000 }], ['kid', 'listen']],
+      'p2.0': [['moses', 'rebuke', { to: 'kid' }], ['wom', 'sit-ground', { x: 0.75, z: 0.25 }]],
+      'p2.2': [['moses', 'point', { look: -1.6 }], ['kid', 'listen']],
+      w0: [['moses', 'speak', { to: 'kid' }]],
+      w1: [['moses', 'bless', { to: 'kid' }]],
+      w2: [['moses', 'speak', { to: 'wom' }]],
+      end: [],
+    },
+  },
+
+  /* m31. 느보산에서 바라본 땅 — 비스가 꼭대기에 홀로 선 모세가 서쪽(왼쪽)의 약속의 땅을 바라본다.
+     죽음은 그리지 않는다 — 빛 속으로 사라지고, 아래 진영은 운다. 여호수아가 뒤를 잇는다 */
+  m31: {
+    env: 'dusk', wide: 1.35,
+    props: {
+      sand: ['sand', 0.2, 0.1, { r: 1.7, color: '#b8a07a' }],
+      hill: ['hill', 0.35, -0.2, { w: 1.2, h: 0.5, d: 0.7, color: '#a08a6a', soft: true }],
+      light: ['beam', 0.3, -0.2, { r: 0.45, h: 2.6, peak: 0.5 }],
+      folk: ['crowd', 0.95, 0.5, { spots: flock(9, 0.4, 0.15, 29), face: -2.5 }],
+    },
+    cast: {
+      moses: ['mosesE', 0.3, -0.2, -1.4],
+      joshua: ['joshua', 0.55, 0.45, -0.6],
+    },
+    beats: {
+      enter: [['moses', 'idle', { look: -1.4 }], ['light', null, { show: 0 }], ['joshua', 'idle', { show: 0 }], ['folk', null, { show: 0 }]],
+      intro: [['moses', 'idle', { x: 1.0, z: 0.35, look: -1 }], ['light', null, { show: 0 }], ['joshua', 'idle', { show: 0 }], ['folk', null, { show: 0 }]],
+      // 홀로 느보산에 오른다
+      'p0.0': [['moses', 'idle', { x: 0.3, z: -0.2, look: -1.4 }]],
+      // 온 땅을 보여 주신다 — 서쪽을 향해
+      'p1.0': [['moses', 'point', { look: -1.5 }]],
+      'p1.1': [['moses', 'idle', { look: -1.2 }], ['moses', 'idle', { look: -1.6, delay: 4000 }]],
+      'p1.2': [['moses', 'look-up', { look: -1.4 }]],
+      // 주의 말씀대로 숨을 거두었다 — 빛 속으로
+      'p2.0': [['@env', 'dark'], ['light', null, { show: 1 }], ['moses', 'pray'], ['moses', 'idle', { show: 0, delay: 3500 }]],
+      'p2.1': [['light', null, { show: 0, delay: 2000 }]],
+      // 삼십 일의 울음, 여호수아가 뒤를 잇는다
+      'p2.2': [['@env', 'dusk'], ['folk', null, { show: 1 }], ['joshua', 'mourn', { show: 1 }], ['joshua', 'idle', { look: -1.4, delay: 4000 }]],
+      w0: [['moses', 'listen', { look: -1.4 }]],
+      w1: [],
+      end: [['@env', 'dusk'], ['moses', 'idle', { show: 0 }], ['joshua', 'idle', { show: 1, look: -1.4 }], ['folk', null, { show: 1 }]],
+    },
+  },
+
+  /* m32. 강하고 담대하라 — 싯딤, 아카시아 그늘 아래의 장막. 여호수아가 홀로 말씀을 듣고, 지휘관들에게 명령하고, 백성이 답한다 */
+  m32: {
+    wide: 1.35,
+    props: {
+      sand: ['sand', 0, 0, { r: 1.9, color: '#c8b07e' }],
+      tree1: ['olive', -1.1, -0.5, { scale: 0.95 }], tree2: ['olive', 0.95, -0.65, { scale: 0.85 }],
+      tent: ['tent', -0.45, -0.7, { w: 0.7 }], tent2: ['tent', 0.35, -0.85, { w: 0.65, color: '#4a3c30' }],
+      light: ['beam', -0.1, -0.05, { r: 0.5, h: 2.6, peak: 0.4 }],
+      folk: ['crowd', 0.85, 0.3, { spots: flock(12, 0.4, 0.22, 30), face: -Math.PI / 2 }],
+    },
+    cast: {
+      joshua: ['joshua', -0.1, -0.05, 0],
+      cap1: ['caleb', 0.45, 0.05, -1],
+      cap2: ['man', 0.55, 0.3, -1.1],
+      cap3: ['hebrew2', 0.3, 0.35, -0.9],
+    },
+    beats: {
+      enter: [['light', null, { show: 0 }], ['joshua', 'speak', { look: 1, to: 'cap1' }], ['folk', null, { show: 1 }]],
+      intro: [['light', null, { show: 0 }], ['folk', null, { show: 0 }], ['cap1', 'idle', { show: 0 }], ['cap2', 'idle', { show: 0 }], ['cap3', 'idle', { show: 0 }], ['joshua', 'mourn']],
+      // 주께서 여호수아에게 말씀하신다
+      'p0.2': [['joshua', 'idle', { look: 0 }], ['light', null, { show: 1 }]],
+      'p0.3': [['joshua', 'look-up']],
+      'p1.1': [['joshua', 'kneel']],
+      // 지휘관들에게 사흘 안에 요단을 건넌다고
+      'p2.0': [['light', null, { show: 0 }], ['joshua', 'speak', { look: 1, to: 'cap1' }], ['cap1', 'idle', { show: 1 }], ['cap2', 'idle', { show: 1 }], ['cap3', 'idle', { show: 1 }]],
+      'p2.1': [['folk', null, { show: 1 }], ['cap1', 'speak', { to: 'joshua' }]],
+      'p2.2': [['cap1', 'raise'], ['cap2', 'raise'], ['cap3', 'raise']],
+      w0: [['joshua', 'listen']],
+      w1: [['joshua', 'listen']],
+      w2: [['joshua', 'listen']],
+      w3: [['cap1', 'raise', { to: 'joshua' }], ['cap2', 'raise']],
+      end: [],
+    },
+  },
 };
 
 // intro 앞에 처음 자리로 되돌리는 명령을 붙인다: 다시 들을 때(끝난 상태에서)나 처음 들을 때(enter 장면 뒤에서)나

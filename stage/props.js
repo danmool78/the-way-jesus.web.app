@@ -1338,6 +1338,50 @@ Object.assign(MAKERS, {
   },
 });
 
+// ---- 모세와 여호수아 (광야) ----
+Object.assign(MAKERS, {
+  // 에스골의 포도송이: 두 사람이 어깨에 멘 막대에 매달린 큰 송이 (막대 길이 0.6 — 두 정탐꾼 사이)
+  grapepole() {
+    const g = new THREE.Group(), w = wood(), grape = mat('#5a2a5a', { roughness: 0.45 });
+    mesh(new THREE.CylinderGeometry(0.008, 0.008, 0.62, 6), w, g, [0, 0.66, 0]).rotation.z = Math.PI / 2;
+    for (let i = 0; i < 26; i++) { const y = 0.6 - (i / 26) * 0.26, r = 0.07 * (1 - i / 30); const a = i * 2.4; mesh(sphere(0.022, 8, 6), grape, g, [Math.cos(a) * r * Math.random(), y, Math.sin(a) * r * Math.random()]); }
+    mesh(new THREE.BoxGeometry(0.08, 0.004, 0.06), mat('#5f8a3a', DS), g, [0.02, 0.62, 0]);
+    return new Prop(g);
+  },
+  // 열두 지팡이: 증거궤 앞에 세운 지팡이들. state 'bloom'이면 가운데(아론의 것)에 잎·흰 꽃·아몬드가 돋는다
+  rods() {
+    const g = new THREE.Group(), w = wood();
+    for (let i = 0; i < 12; i++) mesh(new THREE.CylinderGeometry(0.006, 0.007, 0.5, 5), w, g, [(i - 5.5) * 0.045, 0.25, (i % 2) * 0.03]).rotation.z = (i - 5.5) * 0.012;
+    const bud = new THREE.Group(); bud.position.set(0.022, 0.42, 0); g.add(bud);
+    for (let i = 0; i < 9; i++) { const a = i * 2.3, y = (i / 9) * 0.16; mesh(sphere(0.014, 8, 6), mat(i % 3 ? '#f6eef0' : '#7a9a4a'), bud, [Math.cos(a) * 0.022, y - 0.06, Math.sin(a) * 0.022]); }
+    const halo = glowSprite(0.45, 0.6); halo.position.y = 0.42; g.add(halo);
+    let k = 0;
+    return new Prop(g, (P, t, dt) => { k = damp(k, P.state === 'bloom' ? 1 : 0, 1, dt); bud.scale.setScalar(Math.max(1e-4, k)); bud.visible = k > 0.02; halo.material.opacity = k * 0.6 * P.show; }, { state: 'dry' });
+  },
+  // 장대 위의 놋뱀: 높은 장대 끝에 감긴 놋빛 뱀
+  brasspole() {
+    const g = new THREE.Group(), brass = mat('#c08a3a', { metalness: 0.65, roughness: 0.35 });
+    mesh(new THREE.CylinderGeometry(0.012, 0.015, 1.35, 8), wood(), g, [0, 0.675, 0]);
+    mesh(new THREE.CylinderGeometry(0.008, 0.008, 0.22, 6), wood(), g, [0, 1.25, 0]).rotation.z = Math.PI / 2;
+    const pts = []; for (let i = 0; i <= 40; i++) { const a = i / 40 * Math.PI * 4.5; pts.push(new THREE.Vector3(Math.cos(a) * 0.03, 1.0 + i * 0.008, Math.sin(a) * 0.03)); }
+    mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 80, 0.011, 8), brass, g);
+    mesh(sphere(0.02, 10, 8), brass, g, [0.03, 1.33, 0], [1.4, 0.8, 1]);
+    const halo = glowSprite(0.6, 0.4); halo.position.y = 1.2; g.add(halo);
+    return new Prop(g, (P, t) => { halo.material.opacity = (0.3 + Math.sin(t * 1.7) * 0.08) * P.show; });
+  },
+  // 불뱀: 땅 위를 기는 작은 어두운 뱀들 (무는 모습은 그리지 않는다 — 나타나고 사라질 뿐)
+  snakes(o = {}) {
+    const g = new THREE.Group(), m = mat('#5a3a22', { roughness: 0.7 }), list = [];
+    for (let i = 0; i < (o.n || 9); i++) {
+      const pts = []; for (let k = 0; k <= 16; k++) pts.push(new THREE.Vector3(k * 0.012, 0.008, Math.sin(k * 0.8) * 0.012));
+      const sn = mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 24, 0.006, 6), m, g);
+      const a = Math.random() * Math.PI * 2, r = 0.3 + Math.random() * (o.r || 1.0);
+      sn.position.set(Math.cos(a) * r, 0, Math.sin(a) * r * 0.6); sn.rotation.y = Math.random() * 6; sn.userData.s = Math.random() * 6; list.push(sn);
+    }
+    return new Prop(g, (P, t) => list.forEach(sn => { sn.rotation.y += Math.sin(t + sn.userData.s) * 0.004; }));
+  },
+});
+
 export function makeProp(kind, x = 0, z = 0, o = {}) {
   const P = MAKERS[kind](o);
   P.obj.position.set(x, o.y || 0, z);
