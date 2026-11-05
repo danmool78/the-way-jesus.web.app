@@ -33,6 +33,7 @@ const SOUTH = { src: 'assets/relief-south.webp', lat0: 27.2, lat1: 30.15, lng0: 
 
 const wrap = document.querySelector('.mapwrap'), svg = document.getElementById('map');
 let renderer, scene, camera, sun, hemi, env, on = false, ready = false, loading = null;
+const NIGHT_SKY = new THREE.Color('#121a30'), MOON_H = new THREE.Color('#5c6fae'), MOON_S = new THREE.Color('#b4c4f0'); let nightK = 0;
 const SKY = new THREE.Color('#d6dcd6'), LIT = { hemi: new THREE.Color('#fff4dc'), sun: new THREE.Color('#fff0d4') };
 const regions = Object.entries(TREG).map(([name, r]) => {
   const [X0, Z0] = px([r.lat1, r.lng0]), [X1, Z1] = px([r.lat0, r.lng1]);
@@ -608,7 +609,9 @@ function loop(now) {
   window.terrainView = { yaw: cam.yaw, pitch: cam.pitch, zoom: zoomAt(cam.dist, placeOf(curEvent())) };
   window.stageRender?.(); // 바뀐 시점으로 무대를 붙이고 그린다
   // 안개는 카메라 거리에 맞춰 — 멀리 물러나도 땅의 끝이 하늘과 안개 속으로 녹아든다
-  scene.fog.near = cam.dist * 1.1; scene.fog.far = cam.dist * 3.6;
+  // 밤에는 안개를 멀리 민다 — 밤하늘빛 안개가 가까이 깔리면 어두운 땅 위에 회색 막이 낀 것처럼 보였다
+  nightK = damp(nightK, wrap.dataset.env === 'night' ? 1 : 0, 1.5, dt);
+  scene.fog.near = cam.dist * (1.1 + 1.4 * nightK); scene.fog.far = cam.dist * (3.6 + 3 * nightK);
   updateStars(dt);
   boats.forEach((b, i) => { b.position.y = BOAT_Y + Math.sin(now / 900 + b.userData.phase) * 0.1; b.rotation.z = Math.sin(now / 1300 + i) * 0.04; });
   // 걷는 사람: 화면에서 늘 알아보게 거리에 맞춰 크기를 바꾼다. 서 있을 때는 고리만 은은하게
@@ -632,7 +635,12 @@ function loop(now) {
   const tn = window.stageTone;
   hemi.intensity = 1.35 * (tn ? tn.hemi : 1); hemi.color.copy(tn ? tn.hemiC : LIT.hemi);
   sun.intensity = 2.4 * (tn ? tn.sun : 1); sun.color.copy(tn ? tn.sunC : LIT.sun);
+  // 밤: 땅 자체를 어둡게 하고(고르게 비추는 하늘빛을 줄이고) 달빛 한 줄기로 산등성이를 살린다.
+  // 예전엔 낮처럼 밝은 땅 위에 2D용 푸른 막(.a-cool)을 곱해 덮어, 굴곡이 죽고 회색 안개가 낀 것처럼 보였다
+  hemi.intensity *= 1 - 0.7 * nightK; hemi.color.lerp(MOON_H, 0.75 * nightK);
+  sun.intensity *= 1 + 0.1 * nightK; sun.color.lerp(MOON_S, 0.8 * nightK);
   scene.background.copy(SKY); if (tn) scene.background.multiply(tn.skyC);
+  scene.background.lerp(NIGHT_SKY, 0.85 * nightK); // 밤하늘은 짙은 남색 — 안개도 이 색이라 먼 땅이 밝은 회색으로 뜨지 않고 어둠 속으로 잠긴다
   scene.fog.color.copy(scene.background);
   const tone = tn ? '' : svg.style.filter; if (renderer.domElement.style.filter !== tone) renderer.domElement.style.filter = tone;
   renderer.render(scene, camera);
@@ -660,11 +668,26 @@ function bindInput(c) {
   c.addEventListener('pointermove', e => {
     if (!pts.has(e.pointerId)) return;
     const prev = pts.get(e.pointerId); pts.set(e.pointerId, [e.clientX, e.clientY]);
-    if (pts.size === 2) { // 두 손가락: 벌리고 오므려 당기고, 비틀어 돌린다
+    if (pts.size === 2) {
+      // 두 손가락 (지도 앱처럼): 나란히 위아래로 밀면 지도를 눕히고 세운다. 벌리고 오므리면 당기고, 비틀면 돌리고, 함께 옮기면 끈다.
+      // 처음 조금 움직인 모양으로 둘 중 하나를 정해 끝까지 간다 — 섞이면 눕히려다 확대·회전이 같이 흔들린다
       const [a, b] = [...pts.values()], d = Math.hypot(a[0] - b[0], a[1] - b[1]), ang = Math.atan2(b[1] - a[1], b[0] - a[0]);
-      if (drag.d) { cam.dist = THREE.MathUtils.clamp(cam.dist * drag.d / d, minDist(), 520); zoomToStage(cam.dist); }
-      if (drag.ang !== undefined) ui.yaw += ang - drag.ang;
-      drag.d = d; drag.ang = ang; return;
+      const mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2;
+      if (!drag.d) { Object.assign(drag, { d, ang, mx, my, d0: d, ang0: ang, mx0: mx, my0: my, mode: null }); return; }
+      if (!drag.mode) {
+        const vx = mx - drag.mx0, vy = my - drag.my0, sp = Math.abs(d - drag.d0), tw = Math.abs(Math.atan2(Math.sin(ang - drag.ang0), Math.cos(ang - drag.ang0)));
+        if (Math.hypot(vx, vy) + sp > 12) drag.mode = Math.abs(vy) > 2 * Math.abs(vx) && Math.abs(vy) > 1.5 * sp && tw < 0.15 ? 'tilt' : 'pinch';
+      }
+      if (drag.mode === 'tilt') ui.pitch = THREE.MathUtils.clamp(ui.pitch + (my - drag.my) * 0.005, 0.25, 1.45); // 위로 밀면 지평선 쪽으로 눕는다
+      else if (drag.mode === 'pinch') {
+        cam.dist = THREE.MathUtils.clamp(cam.dist * drag.d / d, minDist(), 520); zoomToStage(cam.dist);
+        ui.yaw += Math.atan2(Math.sin(ang - drag.ang), Math.cos(ang - drag.ang)); // -π/π 경계를 넘을 때 한 바퀴 튀지 않게
+        const dx = mx - drag.mx, dy = my - drag.my, s = cam.dist / wrap.clientHeight * 1.3;
+        cam.tx -= (dx * Math.cos(cam.yaw) + dy * Math.sin(cam.yaw)) * s;
+        cam.tz -= (-dx * Math.sin(cam.yaw) + dy * Math.cos(cam.yaw)) * s;
+        const W = WORLD(); cam.tx = THREE.MathUtils.clamp(cam.tx, W.x0, W.x1); cam.tz = THREE.MathUtils.clamp(cam.tz, W.z0, W.z1);
+      }
+      Object.assign(drag, { d, ang, mx, my }); return;
     }
     cam.goal = null; // 손가락 하나로 끄는 동안은 무대로 되돌아가지 않는다 (두 손가락 확대 뒤 한 손가락만 남은 경우)
     const dx = e.clientX - prev[0], dy = e.clientY - prev[1], s = cam.dist / wrap.clientHeight * 1.3;
@@ -673,7 +696,7 @@ function bindInput(c) {
     cam.tz -= (-dx * Math.sin(cam.yaw) + dy * Math.cos(cam.yaw)) * s;
     const W = WORLD(); cam.tx = THREE.MathUtils.clamp(cam.tx, W.x0, W.x1); cam.tz = THREE.MathUtils.clamp(cam.tz, W.z0, W.z1);
   });
-  const up = e => { pts.delete(e.pointerId); if (!pts.size) drag = null; };
+  const up = e => { pts.delete(e.pointerId); if (!pts.size) drag = null; else if (drag) drag = { d: null }; }; // 두 손가락 몸짓은 손가락 수가 바뀌면 처음부터 다시
   c.addEventListener('pointerup', up); c.addEventListener('pointercancel', up);
   c.addEventListener('contextmenu', e => e.preventDefault());
   c.addEventListener('wheel', e => { e.preventDefault(); zoomToStage((cam.goal?.dist ?? cam.dist) * Math.exp(e.deltaY * 0.001)); }, { passive: false });
