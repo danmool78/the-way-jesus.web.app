@@ -1,0 +1,160 @@
+{
+ "rameses": {
+  "name": "라암셋 (고센 땅)",
+  "lat": 30.8,
+  "lng": 31.83,
+  "region": "애굽"
+ },
+ "nile": {
+  "name": "나일 강가",
+  "lat": 30.7,
+  "lng": 31.55,
+  "region": "애굽",
+  "approx": true
+ },
+ "midian": {
+  "name": "미디안",
+  "lat": 28.48,
+  "lng": 35.0,
+  "region": "미디안",
+  "approx": true
+ },
+ "horeb": {
+  "name": "호렙산 (시내산)",
+  "lat": 28.54,
+  "lng": 33.97,
+  "region": "시내 반도",
+  "approx": true
+ },
+ "succoth": {
+  "name": "숙곳",
+  "lat": 30.55,
+  "lng": 32.1,
+  "region": "애굽"
+ },
+ "redsea": {
+  "name": "갈대 바다",
+  "lat": 30.1,
+  "lng": 32.55,
+  "region": "애굽 동쪽 경계",
+  "approx": true
+ },
+ "marah": {
+  "name": "마라와 엘림",
+  "lat": 29.3,
+  "lng": 32.95,
+  "region": "수르 광야",
+  "approx": true
+ },
+ "sin": {
+  "name": "신 광야",
+  "lat": 28.95,
+  "lng": 33.3,
+  "region": "시내 반도",
+  "approx": true
+ },
+ "rephidim": {
+  "name": "르비딤",
+  "lat": 28.7,
+  "lng": 33.65,
+  "region": "시내 반도",
+  "approx": true
+ },
+ "sinai": {
+  "name": "시내산",
+  "lat": 28.54,
+  "lng": 33.97,
+  "region": "시내 반도",
+  "approx": true
+ },
+ "kibroth": {
+  "name": "기브롯 핫다아와",
+  "lat": 28.9,
+  "lng": 34.35,
+  "region": "바란 광야",
+  "approx": true
+ },
+ "kadesh": {
+  "name": "가데스 바네아",
+  "lat": 30.65,
+  "lng": 34.42,
+  "region": "신 광야 (북쪽)"
+ },
+ "hor": {
+  "name": "호르산",
+  "lat": 30.32,
+  "lng": 35.4,
+  "region": "에돔 경계",
+  "approx": true
+ },
+ "punon": {
+  "name": "부논 (아라바)",
+  "lat": 30.62,
+  "lng": 35.43,
+  "region": "아라바",
+  "approx": true
+ },
+ "heshbon": {
+  "name": "헤스본",
+  "lat": 31.8,
+  "lng": 35.8,
+  "region": "아모리 땅"
+ },
+ "moab": {
+  "name": "모압 평지",
+  "lat": 31.83,
+  "lng": 35.62,
+  "region": "모압"
+ },
+ "nebo": {
+  "name": "느보산 (비스가)",
+  "lat": 31.77,
+  "lng": 35.72,
+  "region": "모압"
+ },
+ "shittim": {
+  "name": "싯딤",
+  "lat": 31.84,
+  "lng": 35.66,
+  "region": "모압",
+  "approx": true
+ },
+ "jericho": {
+  "name": "여리고",
+  "lat": 31.87,
+  "lng": 35.44,
+  "region": "가나안"
+ },
+ "gilgal": {
+  "name": "길갈",
+  "lat": 31.86,
+  "lng": 35.5,
+  "region": "가나안",
+  "approx": true
+ },
+ "ai": {
+  "name": "아이",
+  "lat": 31.92,
+  "lng": 35.26,
+  "region": "가나안",
+  "approx": true
+ },
+ "shechem": {
+  "name": "세겜 (에발산과 그리심산)",
+  "lat": 32.21,
+  "lng": 35.28,
+  "region": "가나안"
+ },
+ "gibeon": {
+  "name": "기브온",
+  "lat": 31.85,
+  "lng": 35.18,
+  "region": "가나안"
+ },
+ "shiloh": {
+  "name": "실로",
+  "lat": 32.06,
+  "lng": 35.29,
+  "region": "가나안"
+ }
+}

@@ -138,6 +138,8 @@ const GEO = {
 const RELIEF = { lat0: 29.15, lat1: 34.6, lng0: 33.0, lng1: 37.4 };
 // 서쪽 애굽 쪽 바탕(assets/relief-west.webp — 시나이 북부, 나일 삼각주) — _src/relief.py의 WEST와 같게
 const RELIEF_WEST = { lat0: 29.15, lat1: 31.9, lng0: 29.4, lng1: 33.25 };
+// 시내 반도·미디안 바탕(assets/relief-south.webp, 모세 여정에서만 깐다) — _src/relief.py의 SOUTH와 같게. 홍해의 두 만은 그림에 바다로 칠해져 있다
+const RELIEF_SOUTH = { lat0: 27.2, lat1: 29.45, lng0: 31.25, lng1: 37.4 };
 // 프롤로그의 에덴 둘레 바탕(assets/relief-east.webp) — _src/relief.py의 EAST와 같게
 const RELIEF_EAST = { lat0: 29.2, lat1: 32.8, lng0: 44.6, lng1: 49.9 };
 // 확대했을 때만 불러오는 정밀 타일(assets/relief-hi/행_열.webp) — _src/relief.py의 HI와 같게
@@ -157,12 +159,12 @@ const RELIEF_CITY = { lat0: 31.74, lat1: 31.81, lng0: 35.19, lng1: 35.28, tile: 
 const CITY3D = { lat0: 31.7685, lat1: 31.7840, lng0: 35.2235, lng1: 35.2480, top: 1.6 };
 // 비가 아니라 샘·강 덕분에 푸르렀던 곳: [위도, 경도, 반지름(지도 단위≈1/1000도)]
 const OASES = [[31.855, 35.455, 22], [31.462, 35.388, 9], [32.865, 35.525, 18]]; // 여리고, 엔게디, 게네사렛 평야
-const REGIONS = [
+let REGIONS = [
   ['갈릴리', 32.80, 35.30], ['사마리아', 32.27, 35.12], ['유대', 31.52, 35.02], ['베레아', 31.98, 35.78],
   ['데가볼리', 32.52, 35.86], ['빌립의 영지', 33.02, 35.86], ['페니키아', 33.42, 35.42], ['이두매', 31.12, 34.86],
   ['애 굽', 30.72, 30.95], ['시 나 이', 30.55, 33.55]
 ];
-const REFCITIES = [['디베랴', 32.79, 35.535], ['가이사랴', 32.50, 34.905], ['욥바', 32.05, 34.765], ['세바스테', 32.276, 35.19], ['에브라임', 31.953, 35.30], ['마케루스', 31.565, 35.63],
+let REFCITIES = [['디베랴', 32.79, 35.535], ['가이사랴', 32.50, 34.905], ['욥바', 32.05, 34.765], ['세바스테', 32.276, 35.19], ['에브라임', 31.953, 35.30], ['마케루스', 31.565, 35.63],
   ['가사', 31.50, 34.46], ['라피아', 31.28, 34.25], ['리노코루라', 31.13, 33.80], ['펠루시움', 31.04, 32.55], ['부바스티스', 30.57, 31.51],
   ['레온토폴리스', 30.29, 31.33], ['헬리오폴리스 (온)', 30.13, 31.29], ['멤피스', 29.85, 31.25], ['알렉산드리아', 31.20, 29.92]];
 
@@ -181,6 +183,7 @@ function buildMap() {
   const [wx0, wy0] = px([RELIEF_WEST.lat1, RELIEF_WEST.lng0]), [wx1, wy1] = px([RELIEF_WEST.lat0, RELIEF_WEST.lng1]);
   const [ex0, ey0] = px([RELIEF_EAST.lat1, RELIEF_EAST.lng0]), [ex1, ey1] = px([RELIEF_EAST.lat0, RELIEF_EAST.lng1]);
   const [cx0, cy0] = px([CITY3D.lat1, CITY3D.lng0]), [cx1, cy1] = px([CITY3D.lat0, CITY3D.lng1]);
+  const [sx0, sy0] = px([RELIEF_SOUTH.lat1, RELIEF_SOUTH.lng0]), [sx1, sy1] = px([RELIEF_SOUTH.lat0, RELIEF_SOUTH.lng1]);
   map.setAttribute('viewBox', `0 0 ${W} ${H}`);
   map.innerHTML = `
   <defs>
@@ -189,6 +192,7 @@ function buildMap() {
     <filter id="waterEdge" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur in="SourceAlpha" stdDeviation="4" result="b"/><feComposite in="SourceAlpha" in2="b" operator="arithmetic" k2="1" k3="-1" result="edge"/><feFlood flood-color="#21474f" flood-opacity=".5"/><feComposite in2="edge" operator="in"/><feComposite in2="SourceGraphic" operator="over"/></filter>
   </defs>
   <rect x="${-W * 2}" y="${-H * 2}" width="${W * 12}" height="${H * 5}" fill="var(--land)"/>
+  ${DATA.journey?.map?.south ? `<image href="assets/relief-south.webp" class="relief" x="${sx0}" y="${sy0}" width="${sx1 - sx0}" height="${sy1 - sy0}" preserveAspectRatio="none"/>` : ''}
   <image href="assets/relief-west.webp" class="relief" x="${wx0}" y="${wy0}" width="${wx1 - wx0}" height="${wy1 - wy0}" preserveAspectRatio="none"/>
   <image href="assets/relief-east.webp" class="relief" x="${ex0}" y="${ey0}" width="${ex1 - ex0}" height="${ey1 - ey0}" preserveAspectRatio="none"/>
   <image href="assets/relief.webp" class="relief" x="${rx0}" y="${ry0}" width="${rx1 - rx0}" height="${ry1 - ry0}" preserveAspectRatio="none"/>
@@ -222,6 +226,7 @@ function buildMap() {
   ${lbl(tm('사해'), px([31.42, 35.49]), 'water-lbl')}
   ${lbl(tm('요단 강'), px([32.40, 35.585]), 'water-lbl river-lbl')}
   ${REGIONS.map(([n, a, b]) => lbl(tm(n), px([a, b]), 'region')).join('')}
+  ${(DATA.journey?.map?.labels || []).map(([n, a, b, c]) => lbl(tm(n), px([a, b]), c || 'region')).join('')}
   ${REFCITIES.map(([n, a, b]) => `<g class="lbl refcity" transform="translate(${px([a, b]).join(',')})"><circle r="2.2"/><text x="5" y="3">${esc(tm(n))}</text></g>`).join('')}
   ${lbl(tm('나일 강'), px([29.7, 31.33]), 'water-lbl river-lbl')}
   ${lbl(tm('수에즈 만'), px([29.55, 32.66]), 'water-lbl river-lbl')}
@@ -269,7 +274,9 @@ function buildMap() {
 
 // 지형 그림(relief·relief-west)이 불투명하게 그려진 범위 — 지도는 이 밖(그림 없는 맨바닥)을 보이지 않는다.
 // 두 그림의 바깥 범위(29.15–34.6, 29.4–37.4)에서 가장자리의 투명하게 흐린 띠(0.16–0.32°)를 뺐다
-const DRAWN = (() => { const [x0, y0] = px([34.28, 29.63]), [x1, y1] = px([29.47, 37.14]); return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }; })();
+// [북쪽 위도, 서쪽 경도, 남쪽 위도, 동쪽 경도] 상자를 지도 좌표로
+const box = (lat1, lng0, lat0, lng1) => { const [x0, y0] = px([lat1, lng0]), [x1, y1] = px([lat0, lng1]); return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }; };
+let DRAWN = box(34.28, 29.63, 29.47, 37.14); // 여정마다 바뀐다 (journey.map.drawn — 모세 여정은 시내 반도까지)
 // 프롤로그의 에덴은 본 지도와 이어지지 않는 따로 떨어진 무대: 화면은 relief-east가 불투명한 이 안에만 머문다
 const EDEN = (() => { const [x0, y0] = px([32.58, 44.92]), [x1, y1] = px([29.42, 49.58]); return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }; })();
 const drawnNow = () => isPro() ? EDEN : DRAWN;
@@ -417,7 +424,7 @@ window.recenterStage = () => { if (fitMode !== 'all' && EVENTS) frameStage(idx, 
 let recenterT; addEventListener('resize', () => { clearTimeout(recenterT); recenterT = setTimeout(() => window.recenterStage(), 250); });
 // 전체 경로: 지도 틀 전체가 아니라 장소들이 모인 땅을 카드에 가리지 않는 영역에 꽉 차게.
 // 애굽 피난길(나일 삼각주의 헬리오폴리스·부바스티스)까지 들어오게 남쪽·서쪽을 넉넉히
-const LAND = (() => { const [x0, y0] = px([33.36, 31.0]), [x1, y1] = px([29.95, 35.82]); return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }; })();
+let LAND = box(33.36, 31.0, 29.95, 35.82); // 여정마다 바뀐다 (journey.map.land)
 function fitAll() { animateTo(reserveCard({ ...LAND }), 1100); }
 function animateTo(target, ms) {
   cancelAnimationFrame(anim);
@@ -1369,6 +1376,13 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   applyStatic();
   window.EVENTS_READY = true; // 3D 지형 모드(terrain.js)가 이것을 기다렸다가 조작기를 단다
   PERIODS = Object.fromEntries(d.periods.map(p => [p.id, p]));
+  const jm = d.journey?.map; // 여정마다 다른 지도 (예수 여정은 없음 — 위의 기본값 그대로)
+  if (jm) {
+    if (jm.drawn) DRAWN = box(...jm.drawn);
+    if (jm.land) LAND = box(...jm.land);
+    if (jm.regions) REGIONS = jm.regions;
+    if (jm.refcities) REFCITIES = jm.refcities;
+  }
   buildMap(); renderTrack();
   // 장면 주소(#e05, 프롤로그는 #e00)가 있으면 그 장면, 없으면 지난번 장면, 처음 온 사람은 프롤로그부터
   const hashIdx = () => d.prologue && location.hash === '#' + d.prologue.id ? -1 : EVENTS.findIndex(e => '#' + e.id === location.hash);

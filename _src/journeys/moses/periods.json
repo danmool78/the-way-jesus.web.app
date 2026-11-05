@@ -1,0 +1,37 @@
+[
+ {
+  "id": "q1",
+  "name": "애굽에서 부르시다",
+  "en": "OUT OF EGYPT",
+  "span": "BC 1526 – 1446",
+  "color": "#c8963e"
+ },
+ {
+  "id": "q2",
+  "name": "바다를 건너 광야로",
+  "en": "THROUGH THE SEA",
+  "span": "BC 1446",
+  "color": "#3f8fa0"
+ },
+ {
+  "id": "q3",
+  "name": "시내산의 언약",
+  "en": "THE MOUNTAIN",
+  "span": "BC 1446 – 1445",
+  "color": "#8a6bb0"
+ },
+ {
+  "id": "q4",
+  "name": "광야 사십 년",
+  "en": "FORTY YEARS",
+  "span": "BC 1445 – 1406",
+  "color": "#b5763a"
+ },
+ {
+  "id": "q5",
+  "name": "약속의 땅으로",
+  "en": "INTO THE LAND",
+  "span": "BC 1406 – 1380",
+  "color": "#5f9a4e"
+ }
+]
