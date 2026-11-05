@@ -32,7 +32,7 @@ if (!events.length && !old && !walks) { console.error('장면 id를 주세요 (�
 const sentences = text => text.match(/[^.?!…。！？]+[.?!…。！？]*["”’」』]?\s*/g) || [text];
 export const voiceKey = (voice, text) => { let h = 0x811c9dc5; for (const c of `${voice}|${text}`) { h ^= c.codePointAt(0); h = Math.imul(h, 0x01000193) >>> 0; } return h.toString(36); };
 function script(e) {
-  const items = [{ text: `${e.title}. ${ui.sayPlace}, ${d.places[e.place].name.replace(/[()·]/g, ' ')}. ${ui.sayWhen}, ${e.when.replace(/\s*·\s*/g, ', ')}.` }];
+  const items = [{ text: d.journey?.where === false ? `${e.title}.` : `${e.title}. ${ui.sayPlace}, ${d.places[e.place].name.replace(/[()·]/g, ' ')}. ${ui.sayWhen}, ${e.when.replace(/\s*·\s*/g, ', ')}.` }];
   e.story.forEach((s, i) => items.push({ text: s, gemini: (e.storyTts || []).includes(i) }));
   // 제목 줄의 '장소, 나사렛.'·'시기, 때.'는 쉼표에서 나눠 따로 녹음해 잇는다 — 한 번에 읽히면 장소 이름을 늘이고 멈칫한다
   return items.flatMap((it, i) => sentences(it.text).map(s => s.trim()).filter(Boolean).map((text, k) => ({ text, jesus: it.jesus, god: it.god, child: it.child, gemini: it.gemini, split: i === 0 && k > 0 })));
@@ -42,6 +42,7 @@ const placeName = k => d.places[k].name.replace(/\s*\([^)]*\)/g, '').replace(/·
 const ro = w => { const c = w.charCodeAt(w.length - 1) - 0xac00; return c >= 0 && c < 11172 && c % 28 && c % 28 !== 8 ? '으로' : '로'; }; // app.js와 같게
 function walkLines() {
   const out = [];
+  if (d.journey?.where === false) return out; // 장소를 읽지 않는 여정(GoodNews)
   d.events.forEach((e, i) => { const p = d.events[i - 1]; if (p && p.place !== e.place) out.push({ text: ui.walkSpeak.replace('{a}', placeName(p.place)).replace('{b}', placeName(e.place)).replace('{ro}', ro(placeName(e.place))) }); });
   return out.flatMap(it => sentences(it.text).map(s => s.trim()).filter(Boolean).map(text => ({ text })));
 }

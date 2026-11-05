@@ -594,7 +594,7 @@ function walkTo(i, done) {
   setCard('peek');
   $('#nextHint', map).style.display = 'none';
   banner(`<span class="wk">👣</span><b>${esc(A.name)}</b> → <b>${esc(B.name)}</b><small>${travelText(A, B, to)}</small>`);
-  if (autoOn) speakQueue([{ text: t('walkSpeak', { a: placeSay(A), b: placeSay(B), ro: ro(placeSay(B)) }) }]); // 녹음(voice.mjs walks)과 같은 글이어야 녹음이 나온다
+  if (autoOn && DATA.journey?.where !== false) speakQueue([{ text: t('walkSpeak', { a: placeSay(A), b: placeSay(B), ro: ro(placeSay(B)) }) }]); // 녹음(voice.mjs walks)과 같은 글이어야 녹음이 나온다
   const total = path.getTotalLength(), dur = reduced() ? 0 : Math.min(6500, Math.max(2200, km(A, B, to) * 30));
   // 카메라가 걷는 사람을 따라간다: 장면에서 물러나 길이 넉넉히 보이는 높이로 올라간 뒤 걷는 사람을 화면 가운데 두고 함께 옮겨 간다.
   // 도착하면 go()의 frameStage가 지금 화면에서 이어 무대로 내려간다. 전체 경로 보기·3D 지형·움직임 줄이기에서는 예전처럼 두 곳을 한 화면에
@@ -1103,7 +1103,8 @@ function sceneScript() {
   const e = evAt(idx), sc = $('#scene');
   // beat: 3D 무대(stage.js)가 연출을 맞추는 표지 — intro, p0…(문단). 낭독은 이야기만 — 말씀(본문)은 읽지 않고 글로만 둔다
   // 제목 줄은 '수태고지. 장소, 나사렛. 시기, BC 6년경.'으로 읽는다 (장소와 때를 이름 붙여 알려 준다)
-  const items = [{ text: `${e.title}. ${t('sayPlace')}, ${PLACES[e.place].name.replace(/[()·]/g, ' ')}. ${t('sayWhen')}, ${e.when.replace(/\s*·\s*/g, ', ')}.`, el: $('.hero-text', sc), pause: 500, beat: 'intro' }];
+  // where: false(GoodNews)면 제목만 — 장소·때는 이야기에 필요 없다
+  const items = [{ text: DATA.journey?.where === false ? `${e.title}.` : `${e.title}. ${t('sayPlace')}, ${PLACES[e.place].name.replace(/[()·]/g, ' ')}. ${t('sayWhen')}, ${e.when.replace(/\s*·\s*/g, ', ')}.`, el: $('.hero-text', sc), pause: 500, beat: 'intro' }];
   // storyTts: 관리자 페이지에서 Gemini 성우로 고른 해설 문단 번호들
   e.story.forEach((s, i) => items.push({ text: s, el: $(`[data-para="${i}"]`, sc), gemini: (e.storyTts || []).includes(i), pause: 350, beat: 'p' + i, sn: e.sn?.[i] }));
   return items;

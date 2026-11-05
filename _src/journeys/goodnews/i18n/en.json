@@ -1,14 +1,35 @@
 {
  "periods": {
-  "l1": {"name": "First · God's Love", "span": "In the beginning"},
-  "l2": {"name": "Second · Sin and Separation", "span": "In the beginning"},
-  "l3": {"name": "Third · Jesus Christ", "span": "AD 30"},
-  "l4": {"name": "Fourth · The Response of Faith", "span": "Today"}
+  "l1": {
+   "name": "First · God's Love",
+   "span": "In the beginning"
+  },
+  "l2": {
+   "name": "Second · Sin and Separation",
+   "span": "In the beginning"
+  },
+  "l3": {
+   "name": "Third · Jesus Christ",
+   "span": "AD 30"
+  },
+  "l4": {
+   "name": "Fourth · The Response of Faith",
+   "span": "Today"
+  }
  },
  "places": {
-  "eden": {"name": "Garden of Eden", "region": "Mesopotamia"},
-  "golgotha": {"name": "Golgotha · Garden Tomb", "region": "Jerusalem"},
-  "olives": {"name": "Mount of Olives", "region": "Jerusalem"}
+  "eden": {
+   "name": "Garden of Eden",
+   "region": "Mesopotamia"
+  },
+  "golgotha": {
+   "name": "Golgotha · Garden Tomb",
+   "region": "Jerusalem"
+  },
+  "olives": {
+   "name": "Mount of Olives",
+   "region": "Jerusalem"
+  }
  },
  "events": {
   "g01": {
@@ -21,9 +42,18 @@
     "Jesus said, I came so that people may have life, and have it overflowing. So why do so many people never come to know this love and this full life?"
    ],
    "words": [
-    {"who": "Jesus", "text": "God loved the world so much that he gave his only Son, so that everyone who trusts in him will not be lost but will have life that never ends."},
-    {"who": "God", "text": "I have loved you with a love that lasts forever. That is why I have kept drawing you to me with faithful love."},
-    {"who": "Jesus", "text": "I came so that people may have life, and have it overflowing."}
+    {
+     "who": "Jesus",
+     "text": "God loved the world so much that he gave his only Son, so that everyone who trusts in him will not be lost but will have life that never ends."
+    },
+    {
+     "who": "God",
+     "text": "I have loved you with a love that lasts forever. That is why I have kept drawing you to me with faithful love."
+    },
+    {
+     "who": "Jesus",
+     "text": "I came so that people may have life, and have it overflowing."
+    }
    ],
    "note": "Genesis says that people were made in the image of God (Gen 1:27). The whole Bible runs as one story: God loves people and calls them into a life lived together with him.",
    "reflect": "Can I believe that I am someone God loves?",
@@ -36,7 +66,8 @@
      "Out of starlight"
     ],
     "explain": "God made people in his own image (Gen 1:27), and breathed the breath of life into the one he had shaped from the dust (Gen 2:7)."
-   }
+   },
+   "credit": "Illustration: made with AI, refined by hand"
   },
   "g02": {
    "title": "Sin and Separation",
@@ -48,9 +79,18 @@
     "People try to cross that gap by being good, by working hard at spiritual discipline, by searching through religion. But no one can reach God by their own strength. So is there no way at all?"
    ],
    "words": [
-    {"who": "Paul", "text": "Everyone has sinned, and no one reaches the glory of God."},
-    {"who": "Paul", "text": "The wages of sin is death, but the gift God gives freely is eternal life in Christ Jesus our Lord."},
-    {"who": "Isaiah", "text": "It is your sins that have come between you and your God."}
+    {
+     "who": "Paul",
+     "text": "Everyone has sinned, and no one reaches the glory of God."
+    },
+    {
+     "who": "Paul",
+     "text": "The wages of sin is death, but the gift God gives freely is eternal life in Christ Jesus our Lord."
+    },
+    {
+     "who": "Isaiah",
+     "text": "It is your sins that have come between you and your God."
+    }
    ],
    "note": "The cherubim and the flaming sword that turned every way, guarding the east of Eden, show that people cannot find their own way back to the tree of life (Gen 3:24). The story of how this closed road is opened again runs through the whole Bible.",
    "reflect": "Who have I put in charge of my life?",
@@ -63,7 +103,8 @@
      "Death"
     ],
     "explain": "The wages of sin is death, but God's gift is eternal life in Christ Jesus (Rom 6:23)."
-   }
+   },
+   "credit": "Illustration: made with AI, refined by hand"
   },
   "g03": {
    "title": "Jesus, the Only Way",
@@ -75,9 +116,18 @@
     "At dawn on the third day, the tomb was empty. Jesus had beaten death and risen to life again, and he appeared to many people. Now he has become the one and only bridge between God and us."
    ],
    "words": [
-    {"who": "Jesus", "text": "I am the way, the truth, and the life. No one comes to the Father except through me."},
-    {"who": "Paul", "text": "While we were still sinners, Christ died for us. This is how God showed his love for us."},
-    {"who": "Paul", "text": "Christ died for our sins, just as the Scriptures said, he was buried, and on the third day he was raised to life."}
+    {
+     "who": "Jesus",
+     "text": "I am the way, the truth, and the life. No one comes to the Father except through me."
+    },
+    {
+     "who": "Paul",
+     "text": "While we were still sinners, Christ died for us. This is how God showed his love for us."
+    },
+    {
+     "who": "Paul",
+     "text": "Christ died for our sins, just as the Scriptures said, he was buried, and on the third day he was raised to life."
+    }
    ],
    "note": "Paul reports that the risen Jesus appeared to Peter, to the Twelve, and then to more than five hundred people at one time, and he adds that many of them are still alive (1 Cor 15:5–6).",
    "reflect": "When I hear that Jesus carried the cross for me, what stirs in my heart?",
@@ -90,7 +140,8 @@
      "To the armies of heaven"
     ],
     "explain": "I am the way, the truth, and the life. No one comes to the Father except through me (Jn 14:6)."
-   }
+   },
+   "credit": "Illustration: made with AI, refined by hand"
   },
   "g04": {
    "title": "The Response of Faith",
@@ -102,9 +153,18 @@
     "If this prayer is what your heart wants to say, pray it with me now. Jesus, I am a sinner. I have turned away from God and lived my own way. I believe that you died on the cross for me and rose to life again. Right now I open the door of my heart. Please come in, forgive my sins, and be the Lord of my life. Thank you for taking me in as a child of God. I pray in your name, Jesus. Amen."
    ],
    "words": [
-    {"who": "Jesus", "text": "Look, I am standing at the door and knocking. If anyone hears my voice and opens the door, I will come in to them and eat with them, and they will eat with me."},
-    {"who": "John", "text": "To all who welcomed him, to those who believed in his name, he gave the right to become children of God."},
-    {"who": "Paul", "text": "You have been saved by grace, through faith. This does not come from you. It is the gift of God."}
+    {
+     "who": "Jesus",
+     "text": "Look, I am standing at the door and knocking. If anyone hears my voice and opens the door, I will come in to them and eat with them, and they will eat with me."
+    },
+    {
+     "who": "John",
+     "text": "To all who welcomed him, to those who believed in his name, he gave the right to become children of God."
+    },
+    {
+     "who": "Paul",
+     "text": "You have been saved by grace, through faith. This does not come from you. It is the gift of God."
+    }
    ],
    "note": "Prayer is not reciting fixed words. It is the answer of your heart to God. If you have prayed this prayer sincerely, we encourage you to find a church near you and meet people who will walk this road with you.",
    "reflect": "If Jesus is knocking at the door of my heart right now, how will I answer him?",
@@ -117,7 +177,8 @@
      "A long life"
     ],
     "explain": "To all who welcomed him, to those who believed in his name, was given the right to become children of God (Jn 1:12)."
-   }
+   },
+   "credit": "Illustration: made with AI, refined by hand"
   }
  }
 }
