@@ -255,7 +255,7 @@ function buildMap() {
   const r = $('#routes', map);
   EVENTS.forEach((e, i) => {
     if (!i) return;
-    const a = PLACES[EVENTS[i - 1].place], b = PLACES[e.from || e.place];
+    const a = PLACES[EVENTS[i - 1].place], b = PLACES[startOf(e)];
     if (a === b) return;
     const [x1, y1] = P(a), [x2, y2] = P(b), dx = x2 - x1, dy = y2 - y1;
     const bend = (i % 2 ? 1 : -1) * 0.18;
@@ -413,7 +413,7 @@ function frameStage(i, ms = 1300, mode = 'open') {
   const e = evAt(i), st = window.stageFrame?.(e), r = map.getBoundingClientRect();
   if (!st || !r.width) return false;
   const [cx, cy] = st.at ? px(st.at) : P(PLACES[here(e)]);
-  const min = i < 0 ? 1500 : PLACES[e.place].jlm || e.place === 'jerusalem' ? 14 : 300; // 프롤로그는 에덴 둘레(두 강과 만)가 다 보이게 멀리서
+  const min = i < 0 ? 1500 : PLACES[here(e)].jlm || here(e) === 'jerusalem' ? 14 : 300; // 프롤로그는 에덴 둘레(두 강과 만)가 다 보이게 멀리서
   const u = reserveCard({ x: 0, y: 0, w: min, h: min }).w / r.width; // 이 확대에서 화면 1px 당 지도 단위
   const f = freeArea(mode), fx = (f.l + f.r) / 2, fy = (f.t + f.b) / 2;
   // 핀 + 무대 어긋남(dx,dy)이 빈 영역의 가운데에 오도록 보기 상자를 놓는다
@@ -578,7 +578,7 @@ function banner(html, ms) {
 const placeSay = p => p.name.replace(/\s*\([^)]*\)/g, '').replace(/·/g, ' ').replace(/\s+/g, ' ').trim(); // 괄호 속 말(추정·나일 삼각주)은 읽지 않는다
 const ro = w => { const c = w.charCodeAt(w.length - 1) - 0xac00; return c >= 0 && c < 11172 && c % 28 && c % 28 !== 8 ? '으로' : '로'; };
 function walkTo(i, done) {
-  const from = EVENTS[idx], to = EVENTS[i], A = PLACES[from.place], B = PLACES[to.from || to.place]; // from이 있는 장면은 그곳으로 걸어 들어간다
+  const from = EVENTS[idx], to = EVENTS[i], A = PLACES[from.place], B = PLACES[startOf(to)]; // 다른 곳에서 시작하는 장면(start)은 그곳으로 걸어 들어간다
   const path = $(`.route[data-i="${i}"]`, map);
   walking = true; document.body.classList.add('is-walking');
   dispatchEvent(new CustomEvent('stage:walk', { detail: { ev: to } }));
@@ -659,7 +659,7 @@ function renderScene() {
   const jesus = e.words.filter(w => w.j);
   const word = (w, i) => `<blockquote class="word ${w.j ? 'jesus' : 'other'}" data-say="${i}">
       <p>${esc(w.text)}</p>
-      <footer><span>${w.j ? esc(t('jesus')) : esc(w.who)}</span><cite>${esc(w.ref)}</cite><button class="say" data-say="${i}" aria-label="${esc(t('listenWord'))}">🔊</button></footer>
+      <footer><span>${w.j ? esc(t('jesus')) : esc(w.who)}</span><cite>${esc(w.ref)}</cite></footer>
     </blockquote>`;
   const tabs = [['story', t('tabStory')], ['text', t('tabText')], ['compare', t('tabCompare')]].filter(([k]) => !((isPro() || !DATA.journey?.harmony) && k === 'compare')); // 프롤로그와 대조표 없는 여정은 복음서 비교가 없다
   cardTab = 'story';
@@ -711,7 +711,6 @@ function renderScene() {
   $('.cardbar', $('#scene')).ondblclick = () => setCard('open');
   sheetDrag();
   if (e.img) { $('#heroBtn').onclick = () => openViewer(e); $('#viewBtn').onclick = () => openViewer(e); }
-  $$('.say', $('#scene')).forEach(b => b.onclick = ev => { ev.stopPropagation(); speakWord(+b.dataset.say); });
   $$('.ctabs button', $('#scene')).forEach(b => b.onclick = () => showTab(b.dataset.tab));
   $('#toHarmony')?.addEventListener('click', () => setView('harmony'));
   showTab('story');
@@ -790,6 +789,12 @@ const PICONS = {
   p6: '<path d="M3 20V10h3V7h3v3h2V6h2v4h2V7h3v3h3v10Z M10 20v-4h4v4"/>',
   p7: '<path d="M12 3v14 M8 7h8 M3 21c3-4 6-5 9-5s6 1 9 5"/>',
   p8: '<path d="M3 18h18 M6 18a6 6 0 0 1 12 0 M12 6V3 M5 9 3 7 M19 9l2-2"/>',
+  // 모세와 여호수아: 애굽(피라미드), 갈라진 바다, 두 돌판, 광야의 장막, 약속의 땅(포도송이)
+  q1: '<path d="M2 20h20 M3 20l6-10 6 10 M12 15l3.5-6 6 11"/><circle cx="18" cy="5" r="1.6"/>',
+  q2: '<path d="M3 7c1.5-1.5 3-1.5 4.5 0S10.5 8.5 12 7 M3 12c1.5-1.5 3-1.5 4.5 0 M3 17c1.5-1.5 3-1.5 4.5 0 M16.5 12c1.5-1.5 3-1.5 4.5 0 M16.5 17c1.5-1.5 3-1.5 4.5 0 M12 7c1.5-1.5 3-1.5 4.5 0S19.5 8.5 21 7 M10 21l1-9 M14 21l-1-9"/>',
+  q3: '<path d="M4 20V8a3 3 0 0 1 6.5 0v12Z M13.5 20V8a3 3 0 0 1 6.5 0v12Z M6 11h2.5 M6 14h2.5 M15.5 11h2.5 M15.5 14h2.5"/>',
+  q4: '<path d="M2 20h20 M4 20l8-14 8 14 M12 6v14 M9 20l3-6 3 6 M12 6l2-3"/>',
+  q5: '<path d="M12 3v3 M12 4c2-1 4-1 5 1"/><circle cx="9" cy="9" r="2"/><circle cx="15" cy="9" r="2"/><circle cx="12" cy="12.5" r="2"/><circle cx="9" cy="16" r="2"/><circle cx="15" cy="16" r="2"/><circle cx="12" cy="19.5" r="2"/>',
 };
 function renderTrack() {
   const groups = Object.values(PERIODS).map(per => ({ per, evs: EVENTS.map((e, i) => [e, i]).filter(([e]) => e.p === per.id) }));
@@ -809,15 +814,24 @@ function updateTrack() {
   if (now) tr.scrollTo({ left: now.offsetLeft - tr.clientWidth / 2, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
 }
 
-// 장면 안의 이동 (장면의 from·moveAt): 이야기가 다른 곳에서 시작해 장면의 장소로 옮겨 가는 장면 — 모세가 애굽에서 일을 겪고 미디안으로 달아나는 m03.
-// 그 장면에 닿으면 from에서 시작하고(무대·걷는 사람·카메라), 낭독이 moveAt 문장에 이르면 장소까지 걸어간다
-let atFrom = false;
-const here = e => (atFrom && e === evAt(idx) && e.from) || e.place;
+// 장면 안의 이동 (장면의 start·stops): 이야기가 장면의 장소 아닌 곳에서 시작하거나, 낭독 중에 다른 곳으로 옮겨 가는 장면.
+// start: 장면을 시작하는 곳(걸어 들어오는 곳). stops: [{ at: 문장 키(p1.3 등), to: 장소, walk: 걸어가면 true — 아니면 그곳으로 장면만 바꾼다 }].
+// 낭독이 끝나면(end) 장면의 장소로 돌아온다. 예: m03 애굽 → 미디안, e05 베들레헴 → 애굽 → (학살) 베들레헴, e06 애굽 → 나사렛
+let hereAt = null; // 지금 무대·걷는 사람·카메라가 선 곳 (null이면 장면의 장소)
+const startOf = e => e.start || e.place;
+const here = e => (e === evAt(idx) && hereAt) || e.place;
 window.stagePlaceOf = here; // stage.js·terrain.js가 무대를 붙일 장소
-function moveWithin(e) {
-  const A = PLACES[e.from], B = PLACES[e.place], [ax, ay] = P(A), [bx, by] = P(B), dur = reduced() ? 0 : 3200;
+const setHere = (e, k) => { hereAt = k === e.place ? null : k; dispatchEvent(new CustomEvent('stage:here', { detail: { to: here(e) } })); }; // 3D 지형 카메라도 따라간다
+function goStop(e, to, walk) {
+  cancelAnimationFrame(walkAnim); window.stageHide = false;
+  if (walk) return moveWithin(e, here(e), to);
+  setHere(e, to); updateMap(idx);
+}
+function moveWithin(e, a, b) {
+  const A = PLACES[a], B = PLACES[b], [ax, ay] = P(A), [bx, by] = P(B), dur = reduced() ? 0 : 3200;
   window.stageHide = true; // 걷는 동안 무대는 잠시 숨긴다 (도착하면 그 자리에서 이어 보인다)
   setCard('peek');
+  dispatchEvent(new CustomEvent('stage:here', { detail: { to: b, walk: true } })); // 3D에서는 카메라가 걸어가는 곳으로 미리 날아간다
   banner(`<span class="wk">👣</span><b>${esc(A.name)}</b> → <b>${esc(B.name)}</b>`, dur + 1200);
   const from0 = { ...view }, span = Math.min(1400, Math.max(300, Math.hypot(bx - ax, by - ay) * .9)), t0 = performance.now();
   $('#walker', map).classList.add('moving');
@@ -828,7 +842,7 @@ function moveWithin(e) {
     if (fitMode !== 'all' && !window.terrainOn && dur) followCam(pt, span, from0, Math.min(1, k * 2));
     if (k < 1) { walkAnim = requestAnimationFrame(step); return; }
     $('#walker', map).classList.remove('moving');
-    atFrom = false; window.stageHide = false;
+    setHere(e, b); window.stageHide = false;
     updateMap(idx); setCard('open');
   };
   walkAnim = requestAnimationFrame(step);
@@ -844,7 +858,7 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
   const jump = prevPlace !== null && (prev < 0) !== (i < 0);
   const stepped = i === prev + 1 && prevPlace !== null && !jump;
   const arrive = () => {
-    idx = i; atFrom = !!evAt(i).from; window.stageHide = false;
+    idx = i; setHere(evAt(i), startOf(evAt(i))); window.stageHide = false;
     renderScene(); updateMap(prev, { camera: !stepped || fitMode === 'all', jump }); updateTrack(); if (i >= 0) markVisited(EVENTS[i].id);
     window.__stageScene = evAt(i); // stage.js가 늦게 로드돼도 따라잡도록
     dispatchEvent(new CustomEvent('stage:scene', { detail: { ev: evAt(i) } }));
@@ -852,9 +866,9 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
     setOdo(odoAt(Math.max(0, i)));
     history.replaceState(null, '', '#' + evAt(i).id);
     $('#prev').disabled = idx === firstIdx(); $('#next').disabled = $('#skip').disabled = idx === EVENTS.length - 1;
-    const p = PLACES[evAt(i).place];
+    const p = PLACES[startOf(evAt(i))]; // 도착 안내는 걸어 닿은 곳 (장면 안에서 옮겨 가는 장면은 시작하는 곳)
     if (stepped) {
-      banner(`<span class="wk">📍</span>${esc(evAt(prev).place === EVENTS[i].place ? t('samePlace') : t('arrive'))} · <b>${esc(p.name)}</b><small>${esc(EVENTS[i].when)}</small>`, 2600);
+      banner(`<span class="wk">📍</span>${esc(evAt(prev).place === startOf(EVENTS[i]) ? t('samePlace') : t('arrive'))} · <b>${esc(p.name)}</b><small>${esc(EVENTS[i].when)}</small>`, 2600);
       const nx = EVENTS[i + 1];
       if (fitMode !== 'all' && !frameStage(i, 1100)) frame(nx && nx.place !== EVENTS[i].place ? [EVENTS[i].place, nx.place] : [EVENTS[i].place], 1100);
       $('#walker', map).classList.remove('arrive'); void $('#walker', map).getBoundingClientRect(); $('#walker', map).classList.add('arrive');
@@ -862,7 +876,7 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
     } else setCard('open');
     onArrive && onArrive();
   };
-  if (stepped && prevPlace !== EVENTS[i].place) walkTo(i, arrive);
+  if (stepped && prevPlace !== startOf(EVENTS[i])) walkTo(i, arrive); // 다른 곳에서 시작하는 장면(start)은 그곳까지만 걷는다
   else if (stepped) { setCard('peek'); setTimeout(arrive, reduced() ? 0 : 700); }
   else arrive();
 }
@@ -1072,39 +1086,29 @@ function scrollToEl(el) {
 
 function sceneScript() {
   const e = evAt(idx), sc = $('#scene');
-  // beat: 3D 무대(stage.js)가 연출을 맞추는 표지 — intro, p0…(문단), w0…(말씀)
+  // beat: 3D 무대(stage.js)가 연출을 맞추는 표지 — intro, p0…(문단). 낭독은 이야기만 — 말씀(본문)은 읽지 않고 글로만 둔다
   // 제목 줄은 '수태고지. 장소, 나사렛. 시기, BC 6년경.'으로 읽는다 (장소와 때를 이름 붙여 알려 준다)
   const items = [{ text: `${e.title}. ${t('sayPlace')}, ${PLACES[e.place].name.replace(/[()·]/g, ' ')}. ${t('sayWhen')}, ${e.when.replace(/\s*·\s*/g, ', ')}.`, el: $('.hero-text', sc), pause: 500, beat: 'intro' }];
   // storyTts: 관리자 페이지에서 Gemini 성우로 고른 해설 문단 번호들
   e.story.forEach((s, i) => items.push({ text: s, el: $(`[data-para="${i}"]`, sc), gemini: (e.storyTts || []).includes(i), pause: 350, beat: 'p' + i }));
-  const jesus = e.words.some(w => w.j);
-  items.push({ text: (jesus ? t('hisWords') : t('voicesOfDay')) + '.', el: $('.words-sec h3', sc), pause: 400 });
-  e.words.forEach((w, i) => {
-    const who = w.j ? t('jesus') : w.who;
-    if (!w.j) items.push({ text: `${w.who}.`, el: $(`blockquote[data-say="${i}"]`, sc), beat: 'w' + i });
-    items.push({ text: w.text, who, el: $(`blockquote[data-say="${i}"]`, sc), jesus: !!w.j, god: !!w.g, child: w.voice === 'child', gemini: w.tts === 'gemini', pause: 500, beat: 'w' + i });
-  });
   return items;
 }
 function speakScene(onDone) { speakQueue(sceneScript(), onDone); sceneReading = true; }
-function speakWord(i) {
-  stopAuto();
-  const w = evAt(idx).words[i];
-  speakQueue([{ text: w.text, who: w.j ? t('jesus') : w.who, el: $(`blockquote[data-say="${i}"]`, $('#scene')), jesus: !!w.j, god: !!w.g, child: w.voice === 'child', gemini: w.tts === 'gemini' }]);
-}
 const stageBeat = (beat, s) => {
   const e = evAt(idx);
-  if (e?.from) {
-    if (beat === 'intro' && !atFrom) { cancelAnimationFrame(walkAnim); atFrom = true; window.stageHide = false; updateMap(idx); } // 다시 들으면 처음 자리로
-    else if (atFrom && (e.moveAt === beat || e.moveAt === `${beat}.${s}`)) moveWithin(e);
+  if (e?.stops || e?.start) {
+    if (beat === 'intro' && here(e) !== startOf(e)) goStop(e, startOf(e)); // 다시 들으면 처음 자리로
+    const st = e.stops?.find(x => x.at === beat || x.at === `${beat}.${s}`);
+    if (st && here(e) !== st.to) goStop(e, st.to, st.walk);
+    if (beat === 'end' && here(e) !== e.place) goStop(e, e.place);
   }
   dispatchEvent(new CustomEvent('stage:beat', { detail: { beat, s } }));
 };
 function stopSpeech(keepAuto) {
   if (speaking) dispatchEvent(new CustomEvent('stage:stop'));
-  // 장면 안에서 옮겨 간 뒤에 멈추면, 무대가 처음 모습(enter)으로 돌아가므로 처음 자리(from)로 함께 돌린다
+  // 장면 안에서 옮겨 간 뒤에 멈추면, 무대가 처음 모습(enter)으로 돌아가므로 처음 자리(start)로 함께 돌린다
   const e = speaking && evAt(idx);
-  if (e?.from && !atFrom) { cancelAnimationFrame(walkAnim); atFrom = true; window.stageHide = false; updateMap(idx); }
+  if (e && here(e) !== startOf(e)) goStop(e, startOf(e));
   speechToken++; clearTimeout(autoTimer);
   if (synth) synth.cancel();
   voiceAudio.pause(); voiceAudio.onended = voiceAudio.onerror = voiceAudio.onplaying = voiceAudio.onwaiting = null;
@@ -1230,11 +1234,10 @@ function renderWords() {
     html += `<div class="wcard" style="--c:${PERIODS[e.p].color}">
       <p>${q ? esc(w.text).replace(new RegExp(esc(q).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'), m => `<mark>${m}</mark>`) : esc(w.text)}</p>
       <footer><cite>${esc(w.ref)}</cite><span>${esc(e.title)} · ${esc(PLACES[e.place].name)}</span>
-      <button class="say" data-e="${i}" data-w="${j}" aria-label="${esc(t('listen'))}">🔊</button><button class="goto" data-e="${i}">${esc(t('gotoScene'))}</button></footer></div>`;
+      <button class="goto" data-e="${i}">${esc(t('gotoScene'))}</button></footer></div>`;
   }));
   $('#wordList').innerHTML = (count ? `<p class="count">${esc(t('wordCount', { n: count }))}</p>` : `<p class="empty">${esc(t('noWords'))}</p>`) + html;
   $$('#wordList .goto').forEach(b => b.onclick = () => { setView('journey'); go(+b.dataset.e); });
-  $$('#wordList .say').forEach(b => b.onclick = () => { const w = EVENTS[+b.dataset.e].words[+b.dataset.w]; speakQueue([{ text: w.text, el: b.closest('.wcard'), jesus: true, child: w.voice === 'child', gemini: w.tts === 'gemini' }]); });
 }
 
 /* ---------- 대조표 ---------- */
@@ -1379,9 +1382,9 @@ function openEnd() {
 
 // 다음 여정 후원 안내 (여정을 마치며 창 맨 아래, 설정 메뉴·랜딩 끝의 #nextDlg): 홈페이지(sssoft)와 같은 글과 문의 길
 const NEXT_KAKAO = 'https://open.kakao.com/o/ssPDUnSi', NEXT_MAIL = 'sssoft1004@gmail.com';
-function nextHtml() {
+function nextHtml() {  // 후원 안내에는 아직 준비 중인 여정만 (series.json의 ready)
   return `<section class="nextbox"><h3>${esc(t('nextHead'))}</h3><p>${esc(t('nextBody'))}</p>
-    <div class="nextgrid">${[1, 2, 3, 4].map(n => `<div><b>${esc(t('nextJ' + n + 'h'))}</b><span>${esc(t('nextJ' + n))}</span></div>`).join('')}</div>
+    <div class="nextgrid">${(DATA.journey?.series || []).filter(j => !j.ready).map(j => `<div><b>${esc(t(j.title))}</b><span>${esc(t(j.desc))}</span></div>`).join('')}</div>
     <div class="nextbtns"><a class="kakao" href="${NEXT_KAKAO}" target="_blank" rel="noopener">${esc(t('nextKakao'))}</a><a href="mailto:${NEXT_MAIL}?subject=${encodeURIComponent(t('nextMailSubject'))}">${esc(t('nextMail'))}</a></div></section>`;
 }
 

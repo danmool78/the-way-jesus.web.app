@@ -41,7 +41,10 @@ const regions = Object.entries(TREG).map(([name, r]) => {
 const regionAt = (x, z) => regions.find(r => x >= r.X0 && x <= r.X1 && z >= r.Z0 && z <= r.Z1);
 // 카메라: 바라보는 점(tx, tz), 거리, 기울기(내려다보는 각), 방위
 const cam = { tx: 0, tz: 0, dist: 150, pitch: 0.62, yaw: 0, goal: null };
-const placeDist = k => (isCity(k) ? 42 : 150); // 도성 안 장소는 바짝 다가가 3D 도성이 보이게
+const placeDist = k => (isCity(k) ? 42 : 150);
+// 장면의 무대가 선 곳: 장면 안에서 옮겨 가는 장면(app.js의 start·stops)은 지금 있는 곳. 무대의 at(핀에서 떨어진 지점)은 장면의 장소에 있을 때만
+const placeOf = ev => window.stagePlaceOf?.(ev) || ev.place;
+const atOf = ev => (placeOf(ev) === ev.place ? SCRIPTS[ev.id]?.at : null); // 도성 안 장소는 바짝 다가가 3D 도성이 보이게
 const CITY = (() => { const [x0, z0] = px([JLM.lat1 + 0.003, JLM.lng0 - 0.004]), [x1, z1] = px([JLM.lat0 - 0.003, JLM.lng1 + 0.004]); return { x0, z0, x1, z1 }; })();
 // 3D 도성 모형 안의 장소 (베다니처럼 성 밖 마을은 아니다 — 거기는 보통 거리에서 집을 둔다)
 const isCity = k => { const [x, z] = px([PLACES[k].lat, PLACES[k].lng]); return x > CITY.x0 && x < CITY.x1 && z > CITY.z0 && z < CITY.z1; };
@@ -393,7 +396,7 @@ function clearStageSpot() {
   const f = window.stageFoot, stageOn = document.body.classList.contains('stage-on') && f;
   let cx = 1e9, cz = 1e9, r = 0;
   if (stageOn) {
-    const p = PLACES[window.stagePlaceOf?.(curEvent()) || curEvent().place];
+    const p = PLACES[placeOf(curEvent())];
     [cx, cz] = f.xz || px(f.at || [p.lat, p.lng]); // xz: 지형 안 무대가 알려 주는 지금의 바닥 중심 (@at으로 옮겨 갈 때)
     const D = camera.position.distanceTo(v3.set(cx, heightAt(cx, cz), cz)), H = wrap.clientHeight || 1;
     r = f.r ?? f.rpx * 2 * D * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) / H; // r: 지형 안에 선 무대가 알려 주는 지도 단위 반지름
@@ -462,7 +465,7 @@ function project(lat, lng, lift = 0) {
 }
 // 겹치는 이름은 덜 중요한 쪽을 숨긴다: 지금 장소 → 장소(도성 안은 뒤로) → 산·바다 → 도시 → 지역
 function placeLabels() {
-  const cur = curEvent().place, nx = EVENTS[idx + 1]?.place, r = wrap.getBoundingClientRect(), taken = [];
+  const cur = placeOf(curEvent()), nx = EVENTS[idx + 1]?.place, r = wrap.getBoundingClientRect(), taken = [];
   const fogFar = scene.fog.far * 0.85;
   const list = labels.map(L => {
     const s = project(L.lat, L.lng, L.kind === 'place' ? 1.5 : 0.5);
@@ -504,8 +507,8 @@ function flyTo(k, dist = placeDist(k)) {
 // 장면으로 날아가기: 무대를 핀에서 떨어진 실제 지점(at)에 세운 장면(두로는 핀이 바닷가, 무대는 뭍 안쪽)은
 // 핀과 무대 사이를 가운데에 두고, 둘 다 들어오게 물러선다
 function flyToScene(ev) {
-  const at = SCRIPTS[ev.id]?.at;
-  if (!at) return flyTo(ev.place);
+  const at = atOf(ev);
+  if (!at) return flyTo(placeOf(ev));
   const p = PLACES[ev.place], [x0, z0] = px([p.lat, p.lng]), [x1, z1] = px(at), sep = Math.hypot(x1 - x0, z1 - z0);
   if (sep < 8) return flyTo(ev.place);
   ensureNear(x1, z1);
@@ -513,8 +516,8 @@ function flyToScene(ev) {
 }
 // 장면에 날아가 내려앉는 거리 (무대 축척의 기준이 된다)
 function sceneDist(ev) {
-  const at = SCRIPTS[ev.id]?.at, p = PLACES[ev.place];
-  if (!at) return placeDist(ev.place);
+  const at = atOf(ev), p = PLACES[ev.place];
+  if (!at) return placeDist(placeOf(ev));
   const [x0, z0] = px([p.lat, p.lng]), [x1, z1] = px(at), sep = Math.hypot(x1 - x0, z1 - z0);
   return sep < 8 ? placeDist(ev.place) : Math.max(placeDist(ev.place), sep * 1.6);
 }
@@ -532,7 +535,7 @@ function figZoom(dist, city) {
 // 크기 공식은 stage.js의 resize와 같게 (폭 300·높이 270, 모바일 230·200, 넓은 무대 wide)
 function minDist() {
   const ev = curEvent();
-  if (isCity(ev.place)) return 25;
+  if (isCity(placeOf(ev))) return 25;
   const r = wrap.getBoundingClientRect(), mobile = innerWidth <= 900, wide = SCRIPTS[ev.id]?.wide || 1;
   const fw = mobile ? r.width : r.width - (Math.min(460, r.width * 0.42) + 28), fh = mobile ? r.height * 0.52 : r.height;
   const zMax = Math.max(FIG_MAX, 0.95 * Math.min(fw / ((mobile ? 230 : 300) * wide), fh / ((mobile ? 200 : 270) * wide)));
@@ -540,7 +543,7 @@ function minDist() {
 }
 // 확대·축소는 늘 지금 장면의 무대를 가운데로 다시 맞추며 한다 — 끌어서 옮겨 둔 곳을 기준으로 당기면 무대가 화면 밖에 남았다
 function zoomToStage(dist) {
-  const ev = curEvent(), at = SCRIPTS[ev.id]?.at, p = PLACES[ev.place];
+  const ev = curEvent(), at = atOf(ev), p = PLACES[placeOf(ev)];
   let [tx, tz] = px([p.lat, p.lng]);
   if (at) { const [x1, z1] = px(at); if (Math.hypot(x1 - tx, z1 - tz) >= 8) { tx = (tx + x1) / 2; tz = (tz + z1) / 2; } }
   cam.goal = { tx, tz, dist: THREE.MathUtils.clamp(dist, minDist(), 520) };
@@ -574,7 +577,7 @@ function loop(now) {
   if (now - nearT > 500) { nearT = now; ensureNear(cam.tx, cam.tz, 60); } // 둘러보다 다가간 지역도 불러온다
   cam.pitch = damp(cam.pitch, ui.pitch, 4, dt); cam.yaw = damp(cam.yaw, ui.yaw, 4, dt);
   placeCam();
-  window.terrainView = { yaw: cam.yaw, pitch: cam.pitch, zoom: zoomAt(cam.dist, curEvent().place) };
+  window.terrainView = { yaw: cam.yaw, pitch: cam.pitch, zoom: zoomAt(cam.dist, placeOf(curEvent())) };
   window.stageRender?.(); // 바뀐 시점으로 무대를 붙이고 그린다
   // 안개는 카메라 거리에 맞춰 — 멀리 물러나도 땅의 끝이 하늘과 안개 속으로 녹아든다
   scene.fog.near = cam.dist * 1.1; scene.fog.far = cam.dist * 3.6;
@@ -657,7 +660,7 @@ async function setOn(v) {
     document.body.classList.add('terrain-loading');
     if (!loading) { loading = build().then(() => { bindInput(renderer.domElement); resize(); }); }
     await loading;
-    const k = curEvent().place, p = PLACES[k], [x, z] = px([p.lat, p.lng]);
+    const k = placeOf(curEvent()), p = PLACES[k], [x, z] = px([p.lat, p.lng]);
     await Promise.all(regions.filter(r => regionAt(x, z) === r).map(ensureRegion));
     if (!on) return; // 불러오는 사이에 다시 눌러 껐다
     window.terrainOn = true;
@@ -715,7 +718,7 @@ function controls() {
     if (k === 'right') ui.yaw -= 0.35;
     if (k === 'in') zoomToStage(cam.dist * 0.7);
     if (k === 'out') zoomToStage(cam.dist * 1.4);
-    if (k === 'reset') { ui.pitch = 0.62; ui.yaw = 0; flyTo(curEvent().place); }
+    if (k === 'reset') { ui.pitch = 0.62; ui.yaw = 0; flyTo(placeOf(curEvent())); }
   });
 }
 
@@ -728,10 +731,12 @@ function start() {
   const lock = ev => { const pro = !!PLACES[ev.place]?.hidden; $('#mode3d').disabled = pro; if (pro && on) setOn(false); return pro; };
   lock(curEvent());
   addEventListener('stage:scene', e => { if (!lock(e.detail.ev) && on) flyToScene(e.detail.ev); });
+  // 장면 안에서 옮겨 갈 때: 걸어가면 그곳으로 미리 날아가고, 장면만 바뀌면 그 자리의 무대로
+  addEventListener('stage:here', e => { if (on) e.detail.walk ? flyTo(e.detail.to) : flyToScene(curEvent()); });
   // 걷기를 시작하면: 두 장소 사이 거리에 맞춰 물러나 길 전체의 흐름이 보이게
   addEventListener('stage:walk', e => {
     if (!on) return;
-    const a = PLACES[curEvent().place], b = PLACES[e.detail.ev.place], [x1, z1] = px([a.lat, a.lng]), [x2, z2] = px([b.lat, b.lng]);
+    const a = PLACES[placeOf(curEvent())], b = PLACES[e.detail.ev.start || e.detail.ev.place], [x1, z1] = px([a.lat, a.lng]), [x2, z2] = px([b.lat, b.lng]);
     walkDist = THREE.MathUtils.clamp(Math.hypot(x2 - x1, z2 - z1) * 0.9, 90, 480);
     ensureNear(x2, z2);
   });
