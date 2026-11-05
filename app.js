@@ -659,7 +659,7 @@ function renderScene() {
   const jesus = e.words.filter(w => w.j);
   const word = (w, i) => `<blockquote class="word ${w.j ? 'jesus' : 'other'}" data-say="${i}">
       <p>${esc(w.text)}</p>
-      <footer><span>${w.j ? esc(t('jesus')) : esc(w.who)}</span><cite>${esc(w.ref)}</cite><button class="say" data-say="${i}" aria-label="${esc(t('listenWord'))}">🔊</button></footer>
+      <footer><span>${w.j ? esc(t('jesus')) : esc(w.who)}</span><cite>${esc(w.ref)}</cite></footer>
     </blockquote>`;
   const tabs = [['story', t('tabStory')], ['text', t('tabText')], ['compare', t('tabCompare')]].filter(([k]) => !((isPro() || !DATA.journey?.harmony) && k === 'compare')); // 프롤로그와 대조표 없는 여정은 복음서 비교가 없다
   cardTab = 'story';
@@ -711,7 +711,6 @@ function renderScene() {
   $('.cardbar', $('#scene')).ondblclick = () => setCard('open');
   sheetDrag();
   if (e.img) { $('#heroBtn').onclick = () => openViewer(e); $('#viewBtn').onclick = () => openViewer(e); }
-  $$('.say', $('#scene')).forEach(b => b.onclick = ev => { ev.stopPropagation(); speakWord(+b.dataset.say); });
   $$('.ctabs button', $('#scene')).forEach(b => b.onclick = () => showTab(b.dataset.tab));
   $('#toHarmony')?.addEventListener('click', () => setView('harmony'));
   showTab('story');
@@ -790,6 +789,12 @@ const PICONS = {
   p6: '<path d="M3 20V10h3V7h3v3h2V6h2v4h2V7h3v3h3v10Z M10 20v-4h4v4"/>',
   p7: '<path d="M12 3v14 M8 7h8 M3 21c3-4 6-5 9-5s6 1 9 5"/>',
   p8: '<path d="M3 18h18 M6 18a6 6 0 0 1 12 0 M12 6V3 M5 9 3 7 M19 9l2-2"/>',
+  // 모세와 여호수아: 애굽(피라미드), 갈라진 바다, 두 돌판, 광야의 장막, 약속의 땅(포도송이)
+  q1: '<path d="M2 20h20 M3 20l6-10 6 10 M12 15l3.5-6 6 11"/><circle cx="18" cy="5" r="1.6"/>',
+  q2: '<path d="M3 7c1.5-1.5 3-1.5 4.5 0S10.5 8.5 12 7 M3 12c1.5-1.5 3-1.5 4.5 0 M3 17c1.5-1.5 3-1.5 4.5 0 M16.5 12c1.5-1.5 3-1.5 4.5 0 M16.5 17c1.5-1.5 3-1.5 4.5 0 M12 7c1.5-1.5 3-1.5 4.5 0S19.5 8.5 21 7 M10 21l1-9 M14 21l-1-9"/>',
+  q3: '<path d="M4 20V8a3 3 0 0 1 6.5 0v12Z M13.5 20V8a3 3 0 0 1 6.5 0v12Z M6 11h2.5 M6 14h2.5 M15.5 11h2.5 M15.5 14h2.5"/>',
+  q4: '<path d="M2 20h20 M4 20l8-14 8 14 M12 6v14 M9 20l3-6 3 6 M12 6l2-3"/>',
+  q5: '<path d="M12 3v3 M12 4c2-1 4-1 5 1"/><circle cx="9" cy="9" r="2"/><circle cx="15" cy="9" r="2"/><circle cx="12" cy="12.5" r="2"/><circle cx="9" cy="16" r="2"/><circle cx="15" cy="16" r="2"/><circle cx="12" cy="19.5" r="2"/>',
 };
 function renderTrack() {
   const groups = Object.values(PERIODS).map(per => ({ per, evs: EVENTS.map((e, i) => [e, i]).filter(([e]) => e.p === per.id) }));
@@ -1072,26 +1077,14 @@ function scrollToEl(el) {
 
 function sceneScript() {
   const e = evAt(idx), sc = $('#scene');
-  // beat: 3D 무대(stage.js)가 연출을 맞추는 표지 — intro, p0…(문단), w0…(말씀)
+  // beat: 3D 무대(stage.js)가 연출을 맞추는 표지 — intro, p0…(문단). 낭독은 이야기만 — 말씀(본문)은 읽지 않고 글로만 둔다
   // 제목 줄은 '수태고지. 장소, 나사렛. 시기, BC 6년경.'으로 읽는다 (장소와 때를 이름 붙여 알려 준다)
   const items = [{ text: `${e.title}. ${t('sayPlace')}, ${PLACES[e.place].name.replace(/[()·]/g, ' ')}. ${t('sayWhen')}, ${e.when.replace(/\s*·\s*/g, ', ')}.`, el: $('.hero-text', sc), pause: 500, beat: 'intro' }];
   // storyTts: 관리자 페이지에서 Gemini 성우로 고른 해설 문단 번호들
   e.story.forEach((s, i) => items.push({ text: s, el: $(`[data-para="${i}"]`, sc), gemini: (e.storyTts || []).includes(i), pause: 350, beat: 'p' + i }));
-  const jesus = e.words.some(w => w.j);
-  items.push({ text: (jesus ? t('hisWords') : t('voicesOfDay')) + '.', el: $('.words-sec h3', sc), pause: 400 });
-  e.words.forEach((w, i) => {
-    const who = w.j ? t('jesus') : w.who;
-    if (!w.j) items.push({ text: `${w.who}.`, el: $(`blockquote[data-say="${i}"]`, sc), beat: 'w' + i });
-    items.push({ text: w.text, who, el: $(`blockquote[data-say="${i}"]`, sc), jesus: !!w.j, god: !!w.g, child: w.voice === 'child', gemini: w.tts === 'gemini', pause: 500, beat: 'w' + i });
-  });
   return items;
 }
 function speakScene(onDone) { speakQueue(sceneScript(), onDone); sceneReading = true; }
-function speakWord(i) {
-  stopAuto();
-  const w = evAt(idx).words[i];
-  speakQueue([{ text: w.text, who: w.j ? t('jesus') : w.who, el: $(`blockquote[data-say="${i}"]`, $('#scene')), jesus: !!w.j, god: !!w.g, child: w.voice === 'child', gemini: w.tts === 'gemini' }]);
-}
 const stageBeat = (beat, s) => {
   const e = evAt(idx);
   if (e?.from) {
@@ -1230,11 +1223,10 @@ function renderWords() {
     html += `<div class="wcard" style="--c:${PERIODS[e.p].color}">
       <p>${q ? esc(w.text).replace(new RegExp(esc(q).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'), m => `<mark>${m}</mark>`) : esc(w.text)}</p>
       <footer><cite>${esc(w.ref)}</cite><span>${esc(e.title)} · ${esc(PLACES[e.place].name)}</span>
-      <button class="say" data-e="${i}" data-w="${j}" aria-label="${esc(t('listen'))}">🔊</button><button class="goto" data-e="${i}">${esc(t('gotoScene'))}</button></footer></div>`;
+      <button class="goto" data-e="${i}">${esc(t('gotoScene'))}</button></footer></div>`;
   }));
   $('#wordList').innerHTML = (count ? `<p class="count">${esc(t('wordCount', { n: count }))}</p>` : `<p class="empty">${esc(t('noWords'))}</p>`) + html;
   $$('#wordList .goto').forEach(b => b.onclick = () => { setView('journey'); go(+b.dataset.e); });
-  $$('#wordList .say').forEach(b => b.onclick = () => { const w = EVENTS[+b.dataset.e].words[+b.dataset.w]; speakQueue([{ text: w.text, el: b.closest('.wcard'), jesus: true, child: w.voice === 'child', gemini: w.tts === 'gemini' }]); });
 }
 
 /* ---------- 대조표 ---------- */
