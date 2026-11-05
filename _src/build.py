@@ -117,5 +117,16 @@ for j in series:
     if j['built']:  # 아직 원본이 없는 여정(준비 중)은 건너뛴다
         build(j['id'], src_of(j['id']), root if j['id'] == 'jesus' else os.path.join(root, 'j', j['id']))
 
+# 첫 주소의 랜딩(index.html)이 읽는 land.json: 여정 카드(시리즈 + 마지막에 4영리)와 랜딩 글씨만 언어마다 — 앱의 data.json은 크다
+LAND_KEYS = ['appName', 'hubTag', 'hubLead', 'seriesHead', 'seriesGo', 'seriesScenes', 'shareShort', 'shareApp', 'linkCopied', 'soon',
+             'mvGo', 'mvLead', 'mvNote', 'qnaHelp', 'language', 'close', 'goodnewsGo']
+land = {'langs': LANGS, 'cards': [{'id': j['id'], 'title': j['title'], 'desc': j['desc'], 'ready': j['ready'], **({'n': j['n']} if j.get('n') else {})} for j in series]
+        + [{'id': 'goodnews', 'title': 'goodnewsH', 'desc': 'goodnews', 'ready': True, 'href': '/goodnews/', 'go': 'goodnewsGo'}], 'ui': {}}  # 4영리는 따로 만든 페이지(/goodnews/)로
+for lang in LANGS:
+    u = {**ui_ko, **(loadf(os.path.join(here, 'i18n', 'ui.%s.json' % lang)) if lang != 'ko' else {})}
+    keys = LAND_KEYS + sorted({c['title'] for c in land['cards']} | {c['desc'] for c in land['cards']})
+    land['ui'][lang] = {k: u[k] for k in keys if k in u}
+json.dump(land, open(os.path.join(root, 'land.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
+
 # 검색엔진용 장면 페이지(s/)와 sitemap.xml도 새 data로 다시 만든다
 exec(open(os.path.join(here, 'pages.py'), encoding='utf-8').read(), {'__file__': os.path.join(here, 'pages.py')})
