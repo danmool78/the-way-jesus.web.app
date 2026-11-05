@@ -1,5 +1,9 @@
 name: Deploy to Firebase Hosting preview on PR
-on: pull_request
+# 데이터 검사는 PR마다 돌고, 미리보기 배포는 PR에 'preview' 표가 붙었을 때만 한다(사용자가 해 달라고 할 때만, 2026-11)
+# — 버전 하나가 약 185MB라 PR마다 올리면 Hosting 저장 공간이 차서 운영 배포까지 막혔다
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled]
 permissions:
   checks: write
   contents: read
@@ -12,7 +16,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Check data.json is up to date with _src
         run: python3 _src/build.py && git diff --exit-code data.json
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - if: ${{ contains(github.event.pull_request.labels.*.name, 'preview') }}
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_THE_WAY_JESUS }}
