@@ -86,7 +86,7 @@ e02: {
 
 ### 인물 유형 (TYPES)
 jesus, mary, joseph, angel, woman, woman2, mother, anna, john(젊은 제자, 수염 없음), disciple, peter, man, elder, shepherd, magus, magus2, magus3, king, soldier(창), pharisee, child, boyJesus, baptist, tempter, steward, groom, servant, crossed(십자가 위 예수 — 실루엣 전용), thief(실루엣 전용)
-모세 여정: pharaoh, egyptian, taskmaster(막대), egysoldier(창), princess, egywoman, magician, mosesP(궁의 모세, 애굽 옷), mosesS(미디안의 목자), mosesE(여든의 모세, 흰 수염·지팡이), aaron, hebrew, hebrew2, miriam, sister(모세의 누이), joshua(창), hur, jethro, zipporah, aaronP(대제사장: 흰 옷·청색 에봇·관·흉패 `breast`), caleb, eleazar(대제사장 옷을 이은 아론의 아들), balaam, balak, sihon
+모세 여정: pharaoh, egyptian, taskmaster(막대), egysoldier(창), princess, egywoman, magician, mosesP(궁의 모세, 애굽 옷), mosesS(미디안의 목자), mosesE(여든의 모세, 흰 수염·지팡이), aaron, hebrew, hebrew2, miriam, sister(모세의 누이), joshua(창), hur, jethro, zipporah, aaronP(대제사장: 흰 옷·청색 에봇·관·흉패 `breast`), caleb, eleazar(대제사장 옷을 이은 아론의 아들), balaam, balak, sihon, rahab, priest(언약궤를 멘 레위 제사장)
 
 새 인물은 TYPES에 옷 색(robe/trim/mantle), 머리(hair, long, curls), 수염(beard), 베일(veil+inner)·머릿수건(hood+band), slim, height 등을 조합해 추가한다.
 
@@ -96,7 +96,7 @@ idle, walk(자동), speak, listen, afraid, kneel, pray, bless, raise, bow, look-
 
 ### 소품 (MAKERS)
 manger, sheep, star, beam(내려오는 빛), fruittree(fruit/taken), lifetree(open/closed), serpent(rest/hiss), flamesword, host(하늘 군대), water(호수·강 — size로 길게), boat(deck), rain, grass, crowd(spots, state stand/sit, face, faceCenter), baskets, hill(지면 높이 제공), crosses, tomb(open/closed), temple, throne, house, donkey(deck), camel(deck), jackal, ox, dove(fly/rest, y), rocks, figtree, jars(empty/water/wine), feast, table(over), cage
-모세 여정: sand(모래 바닥, color), bricks, brickwall, reeds(파피루스), ark(갈대 상자 closed/open), bush(떨기나무 plain/fire), pillar(구름·불 기둥 cloud/fire), sea(갈라지는 바다 calm/part/return), chariot(병거, 말), tent(장막), swarm(파리·메뚜기 떼), egcolumns(애굽 궁 기둥), frogs, mountain(시내산 calm/smoke/cloud — 봉우리 셋의 산괴), manna, rockspring(반석 dry/flow), altar(돌 제단 idle/fire), pillars12(열두 돌기둥), calf(금송아지), arkc(언약궤), tabernacle(성막 — show 0→1에 받침·널판·덮개·뜰 차례로). grapepole(에스골 포도송이), rods(열두 지팡이 dry/bloom), brasspole(장대 위의 놋뱀), snakes(불뱀). swarm은 `dot`으로 점 크기(메추라기). house는 state 'blood'(문설주의 피), water는 'blood'(붉어진 나일)
+모세 여정: sand(모래 바닥, color), bricks, brickwall, reeds(파피루스), ark(갈대 상자 closed/open), bush(떨기나무 plain/fire), pillar(구름·불 기둥 cloud/fire), sea(갈라지는 바다 calm/part/return), chariot(병거, 말), tent(장막), swarm(파리·메뚜기 떼), egcolumns(애굽 궁 기둥), frogs, mountain(시내산 calm/smoke/cloud — 봉우리 셋의 산괴), manna, rockspring(반석 dry/flow), altar(돌 제단 idle/fire), pillars12(열두 돌기둥), calf(금송아지), arkc(언약궤), tabernacle(성막 — show 0→1에 받침·널판·덮개·뜰 차례로). grapepole(에스골 포도송이), rods(열두 지팡이 dry/bloom), brasspole(장대 위의 놋뱀), snakes(불뱀). citywall(성벽 도성 stand/cord/fall — `rahab: false`면 라합의 집 없이), sunmoon(해와 달, still), standing(증거의 선돌). arkc의 `lift`는 멘 높이(제사장이 메고 가는 궤). item: horn(숫양 뿔나팔). swarm은 `dot`으로 점 크기(메추라기). house는 state 'blood'(문설주의 피), water는 'blood'(붉어진 나일)
 
 새 소품은 `MAKERS`에 추가하고, 움직이는 것은 `new Prop(group, update)`의 update에서 처리한다. 사람이 올라설 수 있는 지형은 `P.heightAt(x, z)`를 제공하면 자동으로 그 위에 선다.
 

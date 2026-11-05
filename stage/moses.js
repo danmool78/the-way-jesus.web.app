@@ -1312,4 +1312,330 @@ export const MOSES = {
       end: [],
     },
   },
+  /* m33. 라합의 붉은 줄 — 뒤로 여리고 성벽, 성벽에 붙은 라합의 집. 왕의 사람들이 문을 두드리고, 라합이 정탐꾼을 숨겼다가
+     밤에 성 밖으로 내려보낸다. 창에 붉은 줄 */
+  m33: {
+    env: 'dusk', wide: 1.4,
+    props: {
+      sand: ['sand', 0, 0.1, { r: 1.9, color: '#c8b07e' }],
+      city: ['citywall', -0.1, -0.6, { w: 2.2, h: 0.95 }],
+      palm1: ['palm', -1.35, -0.1, { h: 0.95 }], palm2: ['palm', 1.4, 0.1, { h: 0.85 }],
+    },
+    cast: {
+      rahab: ['rahab', 0.55, -0.25, 0],
+      sp1: ['hebrew', 0.3, -0.15, 0.6],
+      sp2: ['hebrew2', 0.75, -0.1, -0.6],
+      g1: ['soldier', -0.6, 0.1, 1],
+      g2: ['guard', -0.85, 0.25, 1],
+    },
+    beats: {
+      enter: [['city', 'cord'], ['rahab', 'speak', { to: 'sp1' }], ['sp1', 'listen', { x: 0.25, z: 0.2 }], ['sp2', 'listen', { x: 0.85, z: 0.25 }], ['g1', 'idle', { show: 0 }], ['g2', 'idle', { show: 0 }]],
+      intro: [['@env', 'day'], ['city', 'stand'], ['rahab', 'idle', { show: 0 }], ['sp1', 'idle', { x: 1.6, z: 0.35 }], ['sp2', 'idle', { x: 1.85, z: 0.5 }], ['g1', 'idle', { show: 0 }], ['g2', 'idle', { show: 0 }]],
+      // 두 정탐꾼이 숨어들어 라합의 집에
+      'p0.0': [['sp1', 'idle', { x: 0.3, z: -0.15, look: -0.6 }], ['sp2', 'idle', { x: 0.75, z: -0.1, look: -0.6 }]],
+      'p0.1': [['rahab', 'idle', { show: 1, look: 0.6 }]],
+      // 해 질 녘 왕의 사람들이 문을 두드린다
+      'p0.3': [['@env', 'dusk'], ['g1', 'idle', { show: 1, x: -0.2, z: 0.1 }], ['g2', 'idle', { show: 1, x: -0.45, z: 0.25 }], ['sp1', 'idle', { show: 0 }], ['sp2', 'idle', { show: 0 }], ['g1', 'rebuke', { to: 'rahab', delay: 2500 }]],
+      // 지붕의 삼대 밑에 숨기고 둘러댄다 — 추격자들은 요단 쪽(오른쪽)으로
+      'p1.0': [['rahab', 'point', { look: 1.3 }], ['g1', 'idle', { x: 1.8, z: 0.4, delay: 2500 }], ['g2', 'idle', { x: 1.9, z: 0.5, delay: 2600 }], ['g1', 'idle', { show: 0, delay: 6000 }], ['g2', 'idle', { show: 0, delay: 6000 }]],
+      'p1.1': [['@env', 'night'], ['sp1', 'idle', { show: 1, x: 0.25, z: 0.2 }], ['sp2', 'idle', { show: 1, x: 0.85, z: 0.25 }], ['rahab', 'speak', { to: 'sp1' }]],
+      // 창문으로 밧줄을 내려 성 밖으로
+      'p2.0': [['sp1', 'idle', { x: 0.6, z: 0.45, look: -1 }], ['sp2', 'idle', { x: 0.85, z: 0.5, look: -1 }]],
+      'p2.2': [['city', 'cord'], ['sp1', 'point', { look: 3 }]],
+      // 사흘을 산에 숨었다가 돌아간다
+      'p2.3': [['sp1', 'idle', { x: -1.7, z: 0.45 }], ['sp2', 'idle', { x: -1.8, z: 0.55 }], ['sp1', 'idle', { show: 0, delay: 5000 }], ['sp2', 'idle', { show: 0, delay: 5000 }]],
+      w0: [['rahab', 'speak', { to: 'sp1' }]],
+      w1: [['rahab', 'bow', { look: 0 }]],
+      w2: [['sp1', 'speak', { to: 'rahab' }]],
+      end: [['@env', 'night'], ['city', 'cord']],
+    },
+  },
+
+  /* m34. 요단을 건너다 — 오른쪽(동쪽)의 불어난 요단. 언약궤를 멘 제사장들의 발이 물에 닿자 물이 끊기고(멀리 위쪽에 쌓였다),
+     제사장들이 강바닥 한가운데 서 있는 동안 백성이 서쪽(왼쪽) 길갈로 건넌다. 열두 돌을 세운다 */
+  m34: {
+    wide: 1.45,
+    props: {
+      sand: ['sand', -0.3, 0.05, { r: 1.6, color: '#c8b07e' }],
+      bank: ['sand', 1.45, 0.05, { r: 0.6, color: '#b8a07a', stones: 6 }],
+      bed: ['sand', 0.85, 0, { r: 0.6, color: '#a8936a', stones: 18 }],
+      river: ['water', 0.85, 0, { r: 1.0, y: 0.05, size: [0.32, 1, 1.2] }],
+      ark: ['arkc', 1.5, -0.05, { lift: 0.45, speed: 0.3 }],
+      folk: ['crowd', 1.65, 0.3, { spots: flock(12, 0.3, 0.25, 31), face: -Math.PI / 2 }],
+      stones: ['pillars12', -0.85, -0.35, { r: 0.45 }],
+    },
+    cast: {
+      joshua: ['joshua', 1.3, 0.25, -1],
+      p1: ['priest', 1.38, -0.05, -1.35, { speed: 0.3 }],
+      p2: ['priest', 1.62, -0.05, -1.35, { speed: 0.3 }],
+      man: ['hebrew', 1.6, 0.45, -1],
+      kid: ['child', 1.45, 0.55, -1],
+    },
+    beats: {
+      enter: [['river', null, { show: 0 }], ['ark', null, { x: 0.85, z: -0.05 }], ['p1', 'idle', { x: 0.73, z: -0.05 }], ['p2', 'idle', { x: 0.97, z: -0.05 }], ['folk', null, { x: 0.1 }], ['joshua', 'raise', { x: -0.2, z: 0.25, look: 1 }], ['man', 'idle', { x: 0.5, z: 0.35 }], ['kid', 'idle', { x: 0.35, z: 0.45 }], ['stones', null, { show: 0 }]],
+      intro: [['river', null, { show: 1 }], ['stones', null, { show: 0 }], ['ark', null, { x: 1.5, z: -0.05 }], ['folk', null, { x: 1.65 }]],
+      'p0.1': [['man', 'idle', { look: -1.6 }]],
+      'p0.2': [['joshua', 'speak', { to: 'man' }]],
+      // 언약궤를 멘 제사장들의 발이 물가에 — 물이 끊긴다
+      'p1.0': [['joshua', 'idle'], ['ark', null, { x: 0.85 }], ['p1', 'idle', { x: 0.73, z: -0.05 }], ['p2', 'idle', { x: 0.97, z: -0.05 }], ['river', null, { show: 0, delay: 2500 }]],
+      // 제사장들이 한가운데 서 있는 동안 온 백성이 건넌다
+      'p1.1': [['folk', null, { x: 0.1 }], ['joshua', 'idle', { x: -0.2, z: 0.25, look: 1 }], ['man', 'idle', { x: 0.5, z: 0.35, delay: 800 }], ['kid', 'idle', { x: 0.35, z: 0.45, delay: 1200 }]],
+      // 열두 돌을 길갈에
+      'p2.0': [['stones', null, { show: 1 }], ['man', 'idle', { x: -0.6, z: -0.15, look: -0.8 }], ['kid', 'idle', { x: -0.4, z: 0.0 }]],
+      'p2.1': [['@env', 'dusk']],
+      'p2.2': [['@env', 'day'], ['ark', null, { x: 0.1, z: -0.15 }], ['p1', 'idle', { x: -0.02, z: -0.15 }], ['p2', 'idle', { x: 0.22, z: -0.15 }], ['river', null, { show: 1, delay: 4000 }]],
+      w0: [['joshua', 'listen', { look: 1 }]],
+      w1: [['joshua', 'listen']],
+      w2: [['joshua', 'speak', { to: 'kid' }], ['kid', 'listen']],
+      end: [],
+    },
+  },
+
+  /* m35. 무너진 성벽 — 굳게 닫힌 여리고. 뿔나팔 든 일곱 제사장과 언약궤가 말없이 성을 돈다. 일곱째 날의 큰 소리에 성벽이 무너지고,
+     붉은 줄 걸린 라합의 집만 남는다. 성 안의 진멸은 그리지 않는다 — 무거운 빛과 고요로만 */
+  m35: {
+    wide: 1.45,
+    props: {
+      sand: ['sand', 0, 0.15, { r: 1.9, color: '#c8b07e' }],
+      city: ['citywall', 0, -0.62, { w: 2.4, h: 0.95, state: 'cord' }],
+      ark: ['arkc', 0.9, 0.2, { lift: 0.45, speed: 0.35 }],
+      folk: ['crowd', 1.5, 0.45, { spots: flock(10, 0.3, 0.18, 32), face: -Math.PI / 2, speed: 0.35 }],
+    },
+    cast: {
+      joshua: ['joshua', -1.1, 0.4, 0.6],
+      h1: ['priest', 0.0, 0.2, -1.35, { speed: 0.35 }], h2: ['priest', 0.22, 0.25, -1.35, { speed: 0.35 }], h3: ['priest', 0.44, 0.2, -1.35, { speed: 0.35 }],
+      p1: ['priest', 0.78, 0.2, -1.35, { speed: 0.35 }], p2: ['priest', 1.02, 0.2, -1.35, { speed: 0.35 }],
+      rahab: ['rahab', 0.75, -0.35, 0.4],
+      kin: ['mother', 0.95, -0.3, 0.2],
+    },
+    beats: {
+      enter: [['city', 'fall'], ['joshua', 'raise', { look: 0.8 }], ['h1', 'idle', { item: 'horn' }], ['h2', 'idle', { item: 'horn' }], ['h3', 'idle', { item: 'horn' }], ['rahab', 'idle', { x: -0.55, z: 0.35, look: 0.6 }], ['kin', 'idle', { x: -0.75, z: 0.45, look: 0.6 }]],
+      intro: [['city', 'cord'], ['rahab', 'idle', { show: 0 }], ['kin', 'idle', { show: 0 }], ['h1', 'idle', { item: 'horn' }], ['h2', 'idle', { item: 'horn' }], ['h3', 'idle', { item: 'horn' }]],
+      'p0.1': [['@env', 'dawn']],
+      'p0.2': [['@env', 'day'], ['joshua', 'listen', { look: 0.8 }]],
+      // 엿새 동안 날마다 한 번 — 뿔나팔을 불며 성을 돈다 (오른쪽에서 왼쪽으로 지나간다)
+      'p1.0': [['h1', 'idle', { x: -1.0 }], ['h2', 'idle', { x: -0.78 }], ['h3', 'idle', { x: -0.56 }], ['ark', null, { x: -0.1 }], ['p1', 'idle', { x: -0.22 }], ['p2', 'idle', { x: 0.02 }], ['folk', null, { x: 0.5 }]],
+      // 일곱째 날 새벽, 일곱 번 — 그리고 큰 소리
+      'p1.2': [['@env', 'dawn'], ['h1', 'look-up', { look: -2.6 }], ['h2', 'look-up', { look: -2.6 }], ['h3', 'look-up', { look: -2.6 }], ['joshua', 'raise', { delay: 2500 }]],
+      // 성벽이 무너져 내린다
+      'p1.3': [['city', 'fall'], ['joshua', 'raise']],
+      // 진멸 — 무겁게
+      'p2.0': [['@env', 'overcast'], ['joshua', 'idle', { look: 0.8 }], ['h1', 'idle'], ['h2', 'idle'], ['h3', 'idle']],
+      // 붉은 줄이 걸린 집 — 라합과 가족이 나온다
+      'p2.1': [['@env', 'day'], ['rahab', 'idle', { show: 1 }], ['kin', 'idle', { show: 1 }]],
+      'p2.2': [['rahab', 'idle', { x: -0.55, z: 0.35, look: 0.6 }], ['kin', 'idle', { x: -0.75, z: 0.45, look: 0.6 }], ['joshua', 'bless', { to: 'rahab', delay: 3500 }]],
+      w0: [['joshua', 'listen', { look: 0.8 }]],
+      w1: [['joshua', 'listen', { look: 0.8 }]],
+      w2: [['joshua', 'raise', { look: 0.8 }]],
+      end: [['city', 'fall']],
+    },
+  },
+
+  /* m36. 아간의 죄와 아이 성 — 언덕 위의 작은 성 아이. 올라간 무리가 쫓겨 내려오고, 여호수아는 언약궤 앞에 엎드린다.
+     제비가 아간에게 이르고 그가 고백한다. 아골 골짜기의 일은 그리지 않는다 — 큰 돌무더기만. 아이는 연기 속에 사라진다 */
+  m36: {
+    wide: 1.45,
+    props: {
+      sand: ['sand', -0.2, 0.15, { r: 1.7, color: '#c2a888' }],
+      hill: ['hill', 0.95, -0.55, { w: 0.9, h: 0.32, d: 0.55, color: '#a08a6a', soft: true }],
+      city: ['citywall', 0.95, -0.6, { w: 0.85, h: 0.32, rahab: false, y: 0.3 }],
+      smoke: ['fire', 0.95, -0.5, { scale: 2.2, y: 0.32 }],
+      ark: ['arkc', -0.75, -0.25],
+      folk: ['crowd', 0.45, 0.1, { spots: flock(8, 0.25, 0.2, 33), face: Math.PI / 2 }],
+      heap: ['rocks', -1.3, 0.3, { spots: [[0, 0, 0.08], [0.1, 0.04, 0.07], [-0.09, 0.05, 0.07], [0.02, 0.1, 0.06], [0.05, 0.02, 0.07], [-0.03, -0.04, 0.06]] }],
+    },
+    cast: {
+      joshua: ['joshua', -0.45, 0.05, -0.8],
+      elder: ['elder', -0.2, 0.25, -1],
+      achan: ['hebrew2', 0.15, 0.4, -1],
+    },
+    beats: {
+      enter: [['heap', null, { show: 0 }], ['smoke', null, { show: 0 }], ['joshua', 'kneel', { x: -0.5, z: -0.1, look: -0.8 }], ['elder', 'mourn'], ['achan', 'bow', { look: -1 }], ['folk', null, { x: -0.2, z: 0.35 }]],
+      intro: [['heap', null, { show: 0 }], ['smoke', null, { show: 0 }], ['city', 'stand', { show: 1 }], ['folk', null, { x: 0.45, z: 0.1 }], ['achan', 'idle', { show: 0 }]],
+      // 삼천 명이 올라간다
+      'p0.0': [['folk', null, { x: 0.65, z: -0.15 }]],
+      // 성문 앞에서 쫓겨 비탈길로
+      'p0.1': [['folk', null, { x: -0.15, z: 0.35 }]],
+      'p0.2': [['elder', 'mourn']],
+      // 옷을 찢고 언약궤 앞에 저물도록 엎드린다
+      'p0.3': [['@env', 'dusk'], ['joshua', 'kneel', { x: -0.5, z: -0.1, look: -0.8 }], ['joshua', 'bow', { delay: 2500 }]],
+      'p1.1': [['joshua', 'kneel', { look: -0.8 }]],
+      // 제비가 아간에게 이른다
+      'p1.2': [['@env', 'day'], ['joshua', 'idle', { x: -0.45, z: 0.05, look: 1 }], ['achan', 'idle', { show: 1, x: 0.15, z: 0.4 }]],
+      'p1.3': [['achan', 'bow', { look: -1 }]],
+      // 큰 돌무더기만 남는다
+      'p2.0': [['@env', 'overcast'], ['achan', 'idle', { show: 0 }], ['heap', null, { show: 1, delay: 1500 }]],
+      // 아이를 점령하고 성은 불탄다
+      'p2.1': [['@env', 'day'], ['joshua', 'raise', { look: 1 }]],
+      'p2.2': [['folk', null, { x: 0.95, z: -0.2 }], ['smoke', null, { show: 1, delay: 2500 }], ['city', 'fall', { delay: 3000 }]],
+      w0: [['joshua', 'listen', { look: -0.8 }]],
+      w1: [['joshua', 'listen', { look: 0.6 }]],
+      w2: [['achan', 'speak', { to: 'joshua' }]],
+      end: [['heap', null, { show: 1 }], ['city', 'fall']],
+    },
+  },
+
+  /* m37. 두 산 사이의 언약 — 북쪽(뒤)에 에발산, 남쪽(앞 오른쪽)에 그리심산. 에발산 기슭의 자연석 제단, 가운데 언약궤와 제사장들,
+     양쪽으로 갈라 선 백성. 여호수아가 율법의 말씀을 남김없이 읽는다 */
+  m37: {
+    wide: 1.45,
+    props: {
+      sand: ['sand', 0, 0.1, { r: 1.9, color: '#b8b08a' }],
+      ebal: ['mountain', -0.3, -1.3, { h: 1.2, r: 1.0, color: '#8a8a6a' }],
+      gerizim: ['hill', 1.2, 0.75, { w: 0.9, h: 0.3, d: 0.4, color: '#7a8a5a', soft: true }],
+      altar: ['altar', -0.35, -0.5],
+      ark: ['arkc', 0.1, -0.1],
+      half1: ['crowd', -1.3, 0.15, { spots: flock(9, 0.3, 0.3, 34), face: Math.PI / 2 }],
+      half2: ['crowd', 1.35, 0.1, { spots: flock(9, 0.3, 0.3, 35), face: -Math.PI / 2 }],
+    },
+    cast: {
+      joshua: ['joshua', 0.1, 0.25, 0],
+      p1: ['priest', -0.15, -0.15, 0.4],
+      p2: ['priest', 0.35, -0.15, -0.4],
+      wom: ['woman', -0.55, 0.45, 0.5],
+      kid: ['child', -0.4, 0.55, 0.4],
+      stranger: ['traveler', 0.6, 0.45, -0.5],
+    },
+    beats: {
+      enter: [['joshua', 'speak', { item: 'scroll', look: 0 }], ['half1', null, { show: 1 }], ['half2', null, { show: 1 }]],
+      intro: [['altar', 'idle'], ['ark', null, { show: 0 }], ['p1', 'idle', { show: 0 }], ['p2', 'idle', { show: 0 }], ['half1', null, { show: 0 }], ['half2', null, { show: 0 }], ['wom', 'idle', { show: 0 }], ['kid', 'idle', { show: 0 }], ['stranger', 'idle', { show: 0 }], ['joshua', 'idle', { x: 0.1, z: 0.25, item: null }]],
+      'p0.1': [['joshua', 'point', { look: 3 }]],
+      // 에발산에 자연석 제단
+      'p0.2': [['joshua', 'idle', { x: -0.2, z: -0.3, look: 3 }], ['altar', 'fire', { delay: 2500 }]],
+      'p1.0': [['joshua', 'kneel', { look: 3 }]],
+      // 언약궤를 멘 제사장들이 가운데, 백성은 반씩
+      'p1.1': [['ark', null, { show: 1 }], ['p1', 'idle', { show: 1 }], ['p2', 'idle', { show: 1 }], ['half1', null, { show: 1 }], ['half2', null, { show: 1 }], ['joshua', 'idle', { x: 0.1, z: 0.25, look: 0 }]],
+      'p1.2': [['wom', 'idle', { show: 1 }], ['kid', 'idle', { show: 1 }], ['stranger', 'idle', { show: 1 }]],
+      // 율법의 말씀을 남김없이 읽는다
+      'p2.0': [['joshua', 'speak', { item: 'scroll', look: 0 }]],
+      'p2.1': [['joshua', 'speak', { look: -0.8 }], ['joshua', 'speak', { look: 0.8, delay: 3500 }]],
+      'p2.2': [['kid', 'listen'], ['wom', 'listen'], ['stranger', 'listen']],
+      w0: [['joshua', 'listen', { look: 3 }]],
+      w1: [['joshua', 'speak', { item: 'scroll' }]],
+      w2: [],
+      end: [],
+    },
+  },
+
+  /* m38. 해야 머물라 — 언덕 위의 기브온 성. 다섯 왕의 군대가 에워싸고, 밤새 올라온 여호수아가 새벽에 덮친다(두 무리가 밀고 밀리는 것으로만).
+     벧호론 비탈로 우박이 쏟아지고, 여호수아가 두 팔을 들자 해가 하늘 한가운데 멈춰 선다 */
+  m38: {
+    wide: 1.45,
+    props: {
+      sand: ['sand', 0, 0.1, { r: 1.9, color: '#bfae86' }],
+      hill: ['hill', -0.1, -0.6, { w: 1.0, h: 0.35, d: 0.5, color: '#a0906e', soft: true }],
+      city: ['citywall', -0.1, -0.65, { w: 0.95, h: 0.32, rahab: false, y: 0.32 }],
+      kings: ['crowd', 0.3, -0.1, { spots: flock(10, 0.45, 0.2, 36), face: Math.PI }],
+      israel: ['crowd', 1.7, 0.3, { spots: flock(9, 0.3, 0.22, 37), face: -Math.PI / 2 }],
+      sky: ['sunmoon', 0, 0],
+      hail: ['rain', -0.6, 0],
+    },
+    cast: {
+      joshua: ['joshua', 1.7, 0.1, -1],
+      runner: ['traveler', -0.2, 0.3, 1],
+      king: ['king', 0.55, -0.25, 3],
+    },
+    beats: {
+      enter: [['sky', 'still', { show: 1 }], ['kings', null, { show: 0 }], ['king', 'idle', { show: 0 }], ['runner', 'idle', { show: 0 }], ['israel', null, { x: 0.65, z: 0.3 }], ['joshua', 'raise', { x: 0.2, z: 0.3, look: -0.8 }]],
+      intro: [['sky', null, { show: 0 }], ['kings', null, { show: 0 }], ['king', 'idle', { show: 0 }], ['israel', null, { show: 0, x: 1.7 }], ['joshua', 'idle', { show: 0, x: 1.7, z: 0.1 }], ['runner', 'idle', { show: 0 }]],
+      // 다섯 왕의 군대가 기브온을 에워싼다
+      'p0.0': [['king', 'point', { show: 1, look: 3 }]],
+      'p0.1': [['kings', null, { show: 1 }]],
+      // 길갈의 여호수아에게 급히 사람을 보낸다
+      'p0.2': [['runner', 'idle', { show: 1, x: -0.2, z: 0.35 }], ['runner', 'idle', { x: 1.3, z: 0.35, delay: 1200 }], ['joshua', 'idle', { show: 1 }]],
+      'p0.3': [['runner', 'speak', { to: 'joshua' }]],
+      // 밤새 산길을 올라 새벽에 덮친다
+      'p1.0': [['@env', 'night'], ['runner', 'idle', { show: 0 }], ['israel', null, { show: 1, x: 0.95 }], ['joshua', 'idle', { x: 0.75, z: 0.15, look: -1 }], ['@env', 'dawn', { delay: 4000 }]],
+      // 혼란에 빠져 비탈로 달아나고 — 우박
+      'p1.1': [['@env', 'storm'], ['kings', null, { x: -1.4 }], ['king', 'afraid', { x: -1.1, z: 0.0 }], ['israel', null, { x: 0.3 }]],
+      'p1.2': [['kings', null, { show: 0 }], ['king', 'idle', { show: 0 }]],
+      // 해야, 기브온 위에 머물러라
+      'p2.0': [['@env', 'day'], ['joshua', 'idle', { x: 0.2, z: 0.3, look: -0.8 }]],
+      'p2.1': [['sky', 'still', { show: 1 }], ['joshua', 'raise', { look: -0.8 }]],
+      'p2.2': [['joshua', 'raise', { look: 0.6 }]],
+      'p2.3': [['joshua', 'look-up', { look: -0.6 }]],
+      w0: [['joshua', 'listen', { look: -0.6 }]],
+      w1: [['joshua', 'raise', { look: -0.8 }], ['sky', 'still', { show: 1 }]],
+      w2: [['runner', 'speak', { show: 1, to: 'joshua' }]],
+      end: [['sky', 'still', { show: 1 }]],
+    },
+  },
+
+  /* m39. 실로에서 나눈 땅 — 에브라임 산지의 조용한 언덕에 회막. 일곱 지파의 사람들이 땅을 두루 다니며 적은 두루마리를 들고 돌아오고,
+     여호수아가 주 앞에서 제비를 뽑아 나눈다 */
+  m39: {
+    wide: 1.4,
+    props: {
+      sand: ['sand', 0, 0.1, { r: 1.9, color: '#b8b08a' }],
+      tab: ['tabernacle', -0.2, -0.5, { scale: 0.95 }],
+      tree1: ['olive', 1.2, -0.45, { scale: 0.9 }], tree2: ['olive', -1.35, 0.1, { scale: 0.8 }],
+      folk: ['crowd', 1.0, 0.35, { spots: flock(9, 0.35, 0.22, 38), face: -Math.PI / 2 }],
+    },
+    cast: {
+      joshua: ['joshua', -0.1, 0.15, 0.4],
+      eleazar: ['eleazar', -0.4, 0.05, 0.4],
+      m1: ['hebrew', 0.45, 0.2, -0.8, { speed: 0.4 }],
+      m2: ['hebrew2', 0.65, 0.35, -0.9, { speed: 0.4 }],
+      m3: ['man', 0.35, 0.45, -0.7, { speed: 0.4 }],
+    },
+    beats: {
+      enter: [['joshua', 'speak', { to: 'm1' }], ['m1', 'idle', { item: 'scroll' }], ['m2', 'idle', { item: 'scroll' }], ['m3', 'listen']],
+      intro: [['tab', null, { show: 0 }], ['m1', 'idle', { item: null }], ['m2', 'idle', { item: null }]],
+      'p0.1': [['tab', null, { show: 1 }]],
+      'p0.2': [['m1', 'shrug'], ['m2', 'idle', { look: -1.5 }]],
+      'p1.1': [['joshua', 'rebuke', { to: 'm1' }]],
+      // 지파마다 세 사람씩 뽑아 땅을 두루 다니게 한다
+      'p1.2': [['joshua', 'point', { look: 1.3 }], ['m1', 'idle', { x: 1.8, z: 0.2, delay: 1500 }], ['m2', 'idle', { x: 1.9, z: 0.4, delay: 1700 }], ['m3', 'idle', { x: 1.75, z: 0.55, delay: 1900 }],
+        ['m1', 'idle', { show: 0, delay: 5500 }], ['m2', 'idle', { show: 0, delay: 5500 }], ['m3', 'idle', { show: 0, delay: 5500 }]],
+      'p1.3': [['joshua', 'idle', { look: -0.6 }], ['eleazar', 'bow']],
+      // 두루마리를 들고 돌아온다
+      'p2.1': [['m1', 'idle', { show: 1, x: 0.45, z: 0.2, item: 'scroll' }], ['m2', 'idle', { show: 1, x: 0.65, z: 0.35, item: 'scroll' }], ['m3', 'idle', { show: 1, x: 0.35, z: 0.45 }], ['eleazar', 'idle'], ['joshua', 'kneel', { look: -2.6, delay: 3500 }]],
+      'p2.2': [['joshua', 'raise', { look: 0.6 }], ['m1', 'raise'], ['m2', 'raise']],
+      w0: [['joshua', 'speak', { to: 'm1' }]],
+      w1: [['joshua', 'speak', { to: 'm2' }]],
+      w2: [['joshua', 'speak', { to: 'm3' }]],
+      end: [],
+    },
+  },
+
+  /* m40. 나와 내 집은 — 세겜, 상수리나무 아래. 늙은 여호수아가 온 지파 앞에서 묻고, 백성이 거듭 답한다. 증인이 될 큰 돌을 세운다.
+     그의 죽음은 빛 속으로 사라지는 것으로만 */
+  m40: {
+    wide: 1.45,
+    props: {
+      sand: ['sand', 0, 0.1, { r: 1.9, color: '#b8b08a' }],
+      ebal: ['mountain', -0.6, -1.35, { h: 1.1, r: 0.95, color: '#8a8a6a' }],
+      oak: ['olive', 0.75, -0.45, { scale: 1.3 }],
+      stone: ['standing', 0.55, -0.25],
+      light: ['beam', 0.0, 0.0, { r: 0.45, h: 2.5, peak: 0.45 }],
+      folk: ['crowd', 0, 0.5, { spots: [...flock(8, 0.35, 0.18, 39).map(([x, z]) => [x - 0.95, z]), ...flock(8, 0.35, 0.18, 40).map(([x, z]) => [x + 0.95, z])], face: Math.PI }],
+    },
+    cast: {
+      joshua: ['joshua', 0.0, 0.0, 0],
+      elder: ['elder', -0.45, 0.25, 2.8],
+      wife: ['woman', 0.3, 0.1, 0.3],
+      son: ['hebrew2', 0.45, 0.2, 0.2],
+    },
+    beats: {
+      enter: [['light', null, { show: 0 }], ['joshua', 'raise', { look: 0 }], ['elder', 'raise'], ['stone', null, { show: 1 }]],
+      intro: [['light', null, { show: 0 }], ['stone', null, { show: 0 }], ['folk', null, { show: 0 }], ['joshua', 'idle', { show: 1 }]],
+      'p0.0': [['folk', null, { show: 1 }]],
+      'p0.1': [['elder', 'bow']],
+      'p0.2': [['joshua', 'speak', { to: 'elder' }]],
+      // 이제 누구를 섬길지 오늘 택하라 — 나와 내 집은
+      'p1.1': [['joshua', 'idle', { look: 0 }]],
+      'p1.2': [['joshua', 'point', { look: 0 }]],
+      'p1.3': [['joshua', 'raise'], ['wife', 'idle', { look: 0 }], ['son', 'idle', { look: 0 }]],
+      'p1.5': [['elder', 'raise']],
+      // 언약을 세우고 큰 돌을 세운다
+      'p2.0': [['joshua', 'idle', { x: 0.35, z: -0.1, look: 0.6 }], ['stone', null, { show: 1, delay: 1500 }], ['elder', 'idle']],
+      'p2.1': [['joshua', 'point', { look: 0.6 }]],
+      // 백열 살에 숨을 거두어 — 빛 속으로
+      'p2.2': [['@env', 'dusk'], ['light', null, { show: 1, x: 0.35, z: -0.1 }], ['joshua', 'pray'], ['joshua', 'idle', { show: 0, delay: 3500 }], ['elder', 'mourn', { delay: 2000 }], ['wife', 'mourn', { delay: 2000 }], ['son', 'mourn', { delay: 2000 }]],
+      w0: [['joshua', 'listen', { look: 0 }]],
+      w1: [['joshua', 'raise', { look: 0 }]],
+      w2: [['elder', 'raise', { to: 'joshua' }]],
+      end: [['@env', 'dusk']],
+    },
+  },
 };
