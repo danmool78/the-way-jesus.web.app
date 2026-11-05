@@ -1360,30 +1360,30 @@ export const MOSES = {
       bank: ['sand', 1.45, 0.05, { r: 0.6, color: '#b8a07a', stones: 6 }],
       bed: ['sand', 0.85, 0, { r: 0.6, color: '#a8936a', stones: 18 }],
       river: ['water', 0.85, 0, { r: 1.0, y: 0.05, size: [0.32, 1, 1.2] }],
-      ark: ['arkc', 1.5, -0.05, { lift: 0.45, speed: 0.3 }],
+      ark: ['arkc', 1.35, -0.05, { lift: 0.33, on: ['p1', 'p2'] }], // 앞뒤 두 제사장의 한가운데
       folk: ['crowd', 1.65, 0.3, { spots: flock(12, 0.3, 0.25, 31), face: -Math.PI / 2 }],
       stones: ['pillars12', -0.85, -0.35, { r: 0.45 }],
     },
     cast: {
       joshua: ['joshua', 1.3, 0.25, -1],
-      p1: ['priest', 1.38, -0.05, -1.35, { speed: 0.3 }],
-      p2: ['priest', 1.62, -0.05, -1.35, { speed: 0.3 }],
+      p1: ['priest', 0.93, -0.05, -1.57, { speed: 0.3, pose: 'carry-pole' }],
+      p2: ['priest', 1.77, -0.05, -1.57, { speed: 0.3, pose: 'carry-pole' }],
       man: ['hebrew', 1.6, 0.45, -1],
       kid: ['child', 1.45, 0.55, -1],
     },
     beats: {
-      enter: [['river', null, { show: 0 }], ['ark', null, { x: 0.85, z: -0.05 }], ['p1', 'idle', { x: 0.73, z: -0.05 }], ['p2', 'idle', { x: 0.97, z: -0.05 }], ['folk', null, { x: 0.1 }], ['joshua', 'raise', { x: -0.2, z: 0.25, look: 1 }], ['man', 'idle', { x: 0.5, z: 0.35 }], ['kid', 'idle', { x: 0.35, z: 0.45 }], ['stones', null, { show: 0 }]],
-      intro: [['river', null, { show: 1 }], ['stones', null, { show: 0 }], ['ark', null, { x: 1.5, z: -0.05 }], ['folk', null, { x: 1.65 }]],
+      enter: [['river', null, { show: 0 }], ['p1', 'carry-pole', { x: 0.43, z: -0.05 }], ['p2', 'carry-pole', { x: 1.27, z: -0.05 }], ['folk', null, { x: 0.1 }], ['joshua', 'raise', { x: -0.2, z: 0.25, look: 1 }], ['man', 'idle', { x: 0.5, z: 0.35 }], ['kid', 'idle', { x: 0.35, z: 0.45 }], ['stones', null, { show: 0 }]],
+      intro: [['river', null, { show: 1 }], ['stones', null, { show: 0 }], ['folk', null, { x: 1.65 }]],
       'p0.1': [['man', 'idle', { look: -1.6 }]],
       'p0.2': [['joshua', 'speak', { to: 'man' }]],
       // 언약궤를 멘 제사장들의 발이 물가에 — 물이 끊긴다
-      'p1.0': [['joshua', 'idle'], ['ark', null, { x: 0.85 }], ['p1', 'idle', { x: 0.73, z: -0.05 }], ['p2', 'idle', { x: 0.97, z: -0.05 }], ['river', null, { show: 0, delay: 2500 }]],
+      'p1.0': [['joshua', 'idle'], ['p1', 'carry-pole', { x: 0.43, z: -0.05 }], ['p2', 'carry-pole', { x: 1.27, z: -0.05 }], ['river', null, { show: 0, delay: 2500 }]],
       // 제사장들이 한가운데 서 있는 동안 온 백성이 건넌다
       'p1.1': [['folk', null, { x: 0.1 }], ['joshua', 'idle', { x: -0.2, z: 0.25, look: 1 }], ['man', 'idle', { x: 0.5, z: 0.35, delay: 800 }], ['kid', 'idle', { x: 0.35, z: 0.45, delay: 1200 }]],
       // 열두 돌을 길갈에
       'p2.0': [['stones', null, { show: 1 }], ['man', 'idle', { x: -0.6, z: -0.15, look: -0.8 }], ['kid', 'idle', { x: -0.4, z: 0.0 }]],
       'p2.1': [['@env', 'dusk']],
-      'p2.2': [['@env', 'day'], ['ark', null, { x: 0.1, z: -0.15 }], ['p1', 'idle', { x: -0.02, z: -0.15 }], ['p2', 'idle', { x: 0.22, z: -0.15 }], ['river', null, { show: 1, delay: 4000 }]],
+      'p2.2': [['@env', 'day'], ['p1', 'carry-pole', { x: -0.32, z: -0.15 }], ['p2', 'carry-pole', { x: 0.52, z: -0.15 }], ['river', null, { show: 1, delay: 4000 }]],
       w0: [['joshua', 'listen', { look: 1 }]],
       w1: [['joshua', 'listen']],
       w2: [['joshua', 'speak', { to: 'kid' }], ['kid', 'listen']],
@@ -1398,13 +1398,13 @@ export const MOSES = {
     props: {
       sand: ['sand', 0, 0.15, { r: 1.9, color: '#c8b07e' }],
       city: ['citywall', 0, -0.62, { w: 2.4, h: 0.95, state: 'cord' }],
-      ark: ['arkc', 0.9, 0.2, { lift: 0.45, speed: 0.35 }],
+      ark: ['arkc', 0.9, 0.2, { lift: 0.33, on: ['p1', 'p2'] }],
       folk: ['crowd', 1.5, 0.45, { spots: flock(10, 0.3, 0.18, 32), face: -Math.PI / 2, speed: 0.35 }],
     },
     cast: {
       joshua: ['joshua', -1.1, 0.4, 0.6],
-      h1: ['priest', 0.0, 0.2, -1.35, { speed: 0.35 }], h2: ['priest', 0.22, 0.25, -1.35, { speed: 0.35 }], h3: ['priest', 0.44, 0.2, -1.35, { speed: 0.35 }],
-      p1: ['priest', 0.78, 0.2, -1.35, { speed: 0.35 }], p2: ['priest', 1.02, 0.2, -1.35, { speed: 0.35 }],
+      h1: ['priest', -0.3, 0.2, -1.35, { speed: 0.35 }], h2: ['priest', -0.08, 0.25, -1.35, { speed: 0.35 }], h3: ['priest', 0.14, 0.2, -1.35, { speed: 0.35 }],
+      p1: ['priest', 0.48, 0.2, -1.57, { speed: 0.35, pose: 'carry-pole' }], p2: ['priest', 1.32, 0.2, -1.57, { speed: 0.35, pose: 'carry-pole' }],
       rahab: ['rahab', 0.75, -0.35, 0.4],
       kin: ['mother', 0.95, -0.3, 0.2],
     },
@@ -1414,7 +1414,7 @@ export const MOSES = {
       'p0.1': [['@env', 'dawn']],
       'p0.2': [['@env', 'day'], ['joshua', 'listen', { look: 0.8 }]],
       // 엿새 동안 날마다 한 번 — 뿔나팔을 불며 성을 돈다 (오른쪽에서 왼쪽으로 지나간다)
-      'p1.0': [['h1', 'idle', { x: -1.0 }], ['h2', 'idle', { x: -0.78 }], ['h3', 'idle', { x: -0.56 }], ['ark', null, { x: -0.1 }], ['p1', 'idle', { x: -0.22 }], ['p2', 'idle', { x: 0.02 }], ['folk', null, { x: 0.5 }]],
+      'p1.0': [['h1', 'idle', { x: -1.3 }], ['h2', 'idle', { x: -1.08 }], ['h3', 'idle', { x: -0.86 }], ['p1', 'carry-pole', { x: -0.52 }], ['p2', 'carry-pole', { x: 0.32 }], ['folk', null, { x: 0.5 }]],
       // 일곱째 날 새벽, 일곱 번 — 그리고 큰 소리
       'p1.2': [['@env', 'dawn'], ['h1', 'look-up', { look: -2.6 }], ['h2', 'look-up', { look: -2.6 }], ['h3', 'look-up', { look: -2.6 }], ['joshua', 'raise', { delay: 2500 }]],
       // 성벽이 무너져 내린다
@@ -1642,10 +1642,10 @@ export const MOSES = {
 
 // intro 앞에 처음 자리로 되돌리는 명령을 붙인다: 다시 들을 때(끝난 상태에서)나 처음 들을 때(enter 장면 뒤에서)나
 // 똑같이 대본의 처음 자리(cast·props)에서 시작하게 — 대본마다 모든 배역을 일일이 되돌리지 않아도 되게
-// (탄 사람(board)은 탈것 위의 자리라 건드리지 않는다. 확인: node _src/tools/stagecheck.mjs)
+// (탄 사람(board)은 탈것 위의 자리라 건드리지 않는다. 배역 옵션 pose는 그 사람의 기본 자세 — 언약궤를 멘 제사장의 carry-pole. 확인: node _src/tools/stagecheck.mjs)
 Object.values(MOSES).forEach(s => {
   const reset = [
-    ...Object.entries(s.cast).map(([n, [, x, z, look, o = {}]]) => [n, 'idle', o.board ? { show: 1, item: null, look } : { show: 1, x, z, look, item: null, y: o.y || 0 }]),
+    ...Object.entries(s.cast).map(([n, [, x, z, look, o = {}]]) => [n, o.pose || 'idle', o.board ? { show: 1, item: null, look } : { show: 1, x, z, look, item: null, y: o.y || 0 }]),
     ...Object.entries(s.props || {}).map(([n, [, x, z]]) => [n, null, { show: 1, x, z }]),
   ];
   s.beats.intro = [...reset, ...(s.beats.intro || s.beats.enter)];

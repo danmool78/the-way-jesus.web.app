@@ -163,7 +163,8 @@ function setScene(ev) {
     a.show = 0; a.showT = 1;
   });
   // 사람을 비추는 빛(on: 배역 이름)은 그 사람을 따라다닌다 — 빛 아래 서 있다가 옮겨 가도 빛만 남지 않게
-  Object.entries(script.props || {}).forEach(([name, [, , , o]]) => { if (o?.on) props[name].follow = actors[o.on]; });
+  // on이 둘이면 두 사람의 한가운데를 따른다 — 앞뒤의 두 제사장이 멘 언약궤
+  Object.entries(script.props || {}).forEach(([name, [, , , o]]) => { if (o?.on) props[name].follow = [].concat(o.on).map(n => actors[n]); });
   setEnv(script.env || 'day', true);
   apply(script.beats.enter, true);
   Object.values(actors).forEach(a => { a.show = 0; a.settle(); }); // 처음부터 정해진 자세로 놓고 서서히 나타난다
@@ -423,7 +424,10 @@ function frame() {
   if (inTerrain) unscaleLights();
   placeGeo();
   Object.values(props).forEach(p => {
-    if (p.follow) { p.goal.copy(p.follow.pos); p.obj.position.x = p.follow.pos.x; p.obj.position.z = p.follow.pos.y; }
+    if (p.follow) {
+      const f = p.follow, x = f.reduce((s, a) => s + a.pos.x, 0) / f.length, z = f.reduce((s, a) => s + a.pos.y, 0) / f.length;
+      p.goal.set(x, z); p.obj.position.x = x; p.obj.position.z = z;
+    }
     p.update(time, dt, envNow);
     if (p.terrainHide && inTerrain) p.obj.visible = false;
     if (inTerrain) {

@@ -654,7 +654,7 @@ class Actor {
     this.pos = new THREE.Vector2(x, z);
     this.goal = this.pos.clone();
     this.face = face; this.faceT = face;
-    this.pose = 'idle'; this.t0 = 0;
+    this.pose = o.pose || 'idle'; this.t0 = 0; // 배역의 기본 자세 (언약궤를 멘 제사장은 처음부터 carry-pole)
     this.y = 0; this.yT = 0;
     this.show = 1; this.showT = 1;
     this.floating = !!this.p.t.wings;
@@ -727,6 +727,7 @@ class Actor {
     let aL = [0.05, 0.07, -0.15], aR = [0.05, 0.07, -0.15], lean = 0, nod = 0, sink = 0, lie = 0, kneel = 0, carry = false;
     const squash = 1 + Math.sin(t * 1.8) * 0.008;
     const chest = [-0.3, -0.22, -1.55]; // 두 손을 가슴 앞에 모음
+    const POLE = [-0.35, 0.12, -0.9]; // 채를 쥔 손: 허리 높이(약 0.44), 몸 옆(약 0.13), 조금 앞(약 0.2) — stage/props.js arkc의 채와 같게
     switch (moving && !this.floating ? 'walk' : this.pose) {
       case 'walk': {
         this.walkPhase += dt * 7.5;
@@ -736,6 +737,7 @@ class Actor {
         lean = 0.06;
         p.feet[0].position.z = 0.09 + s * 0.07; p.feet[1].position.z = 0.09 - s * 0.07;
         if (this.pose === 'carry') { carry = true; aL = aR = [-0.4, -0.25, -1.3]; }
+        if (this.pose === 'carry-pole') aL = aR = POLE; // 언약궤의 채를 쥔 채 걷는다
         break;
       }
       case 'speak':
@@ -770,6 +772,7 @@ class Actor {
       case 'crucified': aL = aR = [0, 1.5, 0]; nod = 0.3; break;
       case 'crucified-dead': aL = aR = [0, 1.42, 0]; nod = 0.62; break;
       case 'sit-ground': kneel = 0.9; aL = aR = [-0.3, -0.2, -1.0]; nod = 0.05; break;
+      case 'carry-pole': aL = aR = POLE; break; // 두 손으로 허리 옆의 채를 쥐고 멘다 (언약궤)
       case 'hold-basket': aL = aR = [-0.45, -0.3, -1.25]; nod = 0.12; break;
     }
     // 엄숙한 장면: 숨쉬기 외의 작은 몸짓을 멈춘다

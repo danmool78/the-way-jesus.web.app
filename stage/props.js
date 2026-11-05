@@ -1306,7 +1306,12 @@ Object.assign(MAKERS, {
     mesh(new THREE.BoxGeometry(0.26, 0.15, 0.16), gold, g, [0, 0.12 + (o.lift || 0), 0]);
     mesh(new THREE.BoxGeometry(0.28, 0.02, 0.18), gold, g, [0, 0.205 + (o.lift || 0), 0]);
     [-1, 1].forEach(s => { const w = mesh(new THREE.BoxGeometry(0.1, 0.09, 0.01), gold, g, [s * 0.07, 0.26 + (o.lift || 0), 0]); w.rotation.z = s * 0.5; });
-    [-1, 1].forEach(s => mesh(new THREE.CylinderGeometry(0.007, 0.007, 0.62, 6), gold, g, [0, 0.11 + (o.lift || 0), s * 0.095]).rotation.z = Math.PI / 2);
+    // 채: 궤 양옆의 금고리에 끼운 긴 막대. 멘 궤(lift)는 앞뒤 두 제사장(궤 가운데에서 ±0.42)이 몸 옆(±0.13)에서 손으로 쥔다
+    const PL = o.lift ? 1.36 : 0.62, PZ = o.lift ? 0.13 : 0.095;
+    [-1, 1].forEach(s => {
+      mesh(new THREE.CylinderGeometry(0.007, 0.007, PL, 6), gold, g, [0, 0.11 + (o.lift || 0), s * PZ]).rotation.z = Math.PI / 2;
+      [-1, 1].forEach(e => mesh(new THREE.BoxGeometry(0.012, 0.012, PZ - 0.08), gold, g, [e * 0.09, 0.11 + (o.lift || 0), s * (PZ + 0.08) / 2])); // 고리와 궤를 잇는 쇠
+    });
     const halo = glowSprite(0.7, 0.35); halo.position.y = 0.25; g.add(halo);
     return new Prop(g, (P, t) => { halo.material.opacity = (0.25 + Math.sin(t * 1.4) * 0.06) * P.show; });
   },
