@@ -53,7 +53,8 @@ def build(jid, src, out_dir):
     # 프롤로그(예수 여정의 e00, 창세기의 첫 아담)는 장면 목록 밖에 따로 싣는다 — 장면 수·퀴즈·도장·대조표에 들지 않게
     prologue = events.pop(0) if meta.get('prologue', jid == 'jesus') and events and events[0]['id'].endswith('00') else None
     # 여정 정보: 시리즈 목록(고르기)과 이 여정의 설정. 화면 글씨는 공통 ui 위에 여정의 ui를 덧씌운다
-    journey = {'id': jid, 'harmony': meta.get('harmony', jid == 'jesus'), 'voice': meta.get('voice', jid == 'jesus'), 'series': series}
+    journey = {'id': jid, 'harmony': meta.get('harmony', jid == 'jesus'), 'voice': meta.get('voice', jid == 'jesus'), 'series': series,
+               **({'map': meta['map']} if 'map' in meta else {})}  # 여정의 지도 설정(그린 범위·지역 이름 등)
     def ui_for(lang):
         u = {**ui_ko, **(loadf(os.path.join(here, 'i18n', 'ui.%s.json' % lang)) if lang != 'ko' else {})}
         u['map'] = {**ui_ko['map'], **u.get('map', {})}

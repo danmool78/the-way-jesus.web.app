@@ -137,6 +137,9 @@ a.sbtn{display:block;text-decoration:none;color:inherit}
 .lake{fill:var(--sea);stroke:#5f8a92;stroke-width:1;vector-effect:non-scaling-stroke}
 .lake.dead{fill:#9cb6ad}
 .river{fill:none;stroke:#6f9aa2;stroke-width:2.2;vector-effect:non-scaling-stroke;stroke-linecap:round}
+/* 모세 여정의 옛 물: 갈대 늪은 옅게, 요단은 봄 추수 때 둑까지 넘친 굵은 물줄기로 (수 3:15) */
+.lake.marsh{opacity:.55;stroke-dasharray:3 3}
+#map.jflood .river.jordan{stroke-width:4.5;stroke:#5f93a0}
 .jlm-detail{opacity:0;transition:opacity .5s}
 .city3d{opacity:0;transition:opacity .8s;pointer-events:none}
 .zoom-near .city3d.ready{opacity:1}

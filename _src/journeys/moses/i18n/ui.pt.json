@@ -1,0 +1,52 @@
+{
+ "appTag": "Moisés e Josué · Do Êxodo à terra prometida",
+ "docTitle": "O Caminho — Moisés e Josué | O Êxodo e Canaã num mapa",
+ "metaDesc": "Da escravidão no Egito, pelo mar Vermelho e pelo monte Sinai, através de quarenta anos no deserto, até atravessar o Jordão e chegar à terra prometida. Percorra no mapa bíblico as 40 cenas de Moisés e Josué.",
+ "mapAria": "O caminho do Êxodo num mapa do Egito, da Península do Sinai e de Canaã",
+ "introTag": "Do Êxodo à terra prometida, o caminho de Moisés e Josué",
+ "introLead": "Percorra o mapa e conheça o caminho que vai da escravidão à liberdade e do deserto à terra prometida.",
+ "introF1": "Siga os lugares, do Egito ao mar Vermelho, ao monte Sinai e ao deserto, até Canaã",
+ "introF3": "Ouça a história em voz alta e leia as palavras trocadas entre Deus e as pessoas",
+ "landStep2": "Leia a história e os textos no cartão e toque em ▶ para ouvir",
+ "landStep4": "Reúna as palavras de Deus na aba “{words}” e relembre as cenas com “{quiz}”",
+ "jesus": "Deus",
+ "hisWords": "As palavras de Deus",
+ "wordsHead": "As palavras de Deus",
+ "wordsIntro": "As palavras que Deus disse no caminho de Moisés e Josué, reunidas na ordem da jornada. Cada uma é uma nova tradução do sentido original para a linguagem de hoje.",
+ "odoTitle": "Distância que Israel caminhou até esta cena (caminho estimado entre os lugares; passos de 75 cm)",
+ "gospels": {
+  "ex": [
+   "Êxodo",
+   "Êx"
+  ],
+  "num": [
+   "Números",
+   "Nm"
+  ],
+  "deut": [
+   "Deuteronômio",
+   "Dt"
+  ],
+  "josh": [
+   "Josué",
+   "Js"
+  ]
+ },
+ "endLead": "Dos fornos de tijolos do Egito à aliança em Siquém — obrigado por caminhar conosco.",
+ "blessing": "Que o Senhor abençoe você e o guarde.\nQue o Senhor faça brilhar o seu rosto sobre você e lhe mostre a sua graça.\nQue o Senhor volte o seu rosto para você e lhe dê paz. (Nm 6:24–26)\nAquele que fazia cair o maná todos os dias no deserto alimente o seu hoje, e aquele que ia à frente na coluna de nuvem conduza o seu caminho.",
+ "map": {
+  "애 굽": "EGITO",
+  "고 센": "GÓSEN",
+  "시 나 이": "SINAI",
+  "미 디 안": "MIDIÃ",
+  "에 돔": "EDOM",
+  "모 압": "MOABE",
+  "가 나 안": "CANAÃ",
+  "바 란 광 야": "DESERTO DE PARÃ",
+  "온 (헬리오폴리스)": "Om (Heliópolis)",
+  "멤피스": "Mênfis",
+  "비돔": "Pitom",
+  "홍 해": "MAR VERMELHO",
+  "아카바 만": "Golfo de Ácaba"
+ }
+}

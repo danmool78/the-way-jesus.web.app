@@ -40,6 +40,9 @@ WADI_TUMILAT = [(30.52, 31.6), (30.58, 31.95), (30.6, 32.25), (30.52, 32.25), (3
 EAST = dict(lat0=29.2, lat1=32.8, lng0=44.6, lng1=49.9)
 # 동산의 땅: 화면을 꽉 채우는 푸른 들 (높은 자그로스 산자락만 바위). 들판 조각보 대신 부드러운 풀빛 얼룩으로 (farmland의 meadow)
 MESO_GREEN = [[(32.8, 44.6), (32.8, 49.9), (29.2, 49.9), (29.2, 44.6)]]
+# 시내 반도·미디안 바탕(모세와 여호수아 여정): 본 바탕과 애굽 쪽 바탕의 남쪽에 이어 붙인다. app.js 여정 설정(journey.map)의 RELIEF_SOUTH와 같게.
+# 사막이라 비·풀빛 없이(dry) 바위와 모래로만 칠한다. 홍해의 두 만은 지도에서 벡터로 덮는다
+SOUTH = dict(lat0=27.2, lat1=30.15, lng0=31.25, lng1=37.4)  # 북쪽은 수에즈 만 끝(30.0)까지 — 지도에서 다른 바탕들 위에 깐다
 URL = 'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'
 OUT = Path(__file__).resolve().parent.parent / 'assets' / 'relief.webp'
 
@@ -221,7 +224,7 @@ def paint(dem, rain, land, k, farm=None):
     return np.clip(rgb * k[..., None], 0, 255)
 
 
-def base(cache, e, out, green=None, keep='', lines=NILE, dry=False, meadow=False):
+def base(cache, e, out, green=None, keep='', lines=NILE, dry=False, meadow=False, sea=False):
     """넓은 바탕 한 장. green: 강·관개로 푸른 땅의 (위도, 경도) 다각형들 — 비가 적어도 초록으로 칠한다(나일 삼각주).
     keep: 투명하게 풀지 않을 가장자리('l','r') — 두 장이 맞닿는 쪽을 둘 다 풀면 그 사이로 바탕색 띠가 보인다"""
     w = round((e['lng1'] - e['lng0']) * COS * 1000 * PX_PER_UNIT)
@@ -246,6 +249,11 @@ def base(cache, e, out, green=None, keep='', lines=NILE, dry=False, meadow=False
     if farm is not None and dry:  # 높은 산자락(300m 넘게)은 풀빛을 걷어 바위로
         farm = (farm[0] * np.clip((500 - dem) / 200, 0, 1), farm[1])
     rgb = paint(dem, rain, land, shading(dem, lat, lng, 2.5), farm)
+    if sea:  # 시내 반도: 홍해의 두 만은 고도 자료의 해안선 그대로 바다색으로 (지도의 바다 색 --sea·--sea-deep과 같게, 깊을수록 짙게)
+        raw = sample(mosaic_for(cache, e, Z), Z, lat, lng)
+        deep = np.clip(-raw / 900, 0, 1)[..., None]
+        water = (raw < -6)[..., None]  # 산호초 얕은 곳(-6m 위)은 땅빛으로 두어 점점이 흩어지지 않게
+        rgb = np.where(water, np.array([143, 178, 180]) * (1 - deep) + np.array([111, 151, 160]) * deep, rgb)
 
     # 가장자리는 투명하게 풀어 바탕 땅색으로 자연스럽게 이어지게
     ramp = lambda n, m: np.clip(np.minimum(np.arange(n), np.arange(n)[::-1]) / m, 0, 1)
@@ -264,6 +272,10 @@ def main(cache, only=None):
     cache = Path(cache)
     cache.mkdir(parents=True, exist_ok=True)
     e = EXTENT
+    # 시내 반도·미디안 바탕 (assets/relief-south.webp) — 따로 만들 수 있다 (`... south`)
+    base(cache, SOUTH, OUT.parent / 'relief-south.webp', lines=(), dry=True, sea=True)
+    if only == 'south':
+        return
     # 에덴 둘레 바탕 (assets/relief-east.webp) — 홀로 있어 네 가장자리를 모두 풀고, 따로 만들 수 있다 (`... east`)
     base(cache, EAST, OUT.parent / 'relief-east.webp', green=MESO_GREEN, lines=(), dry=True, meadow=True)  # 강은 지도의 벡터(푸른 선)로
     if only == 'east':

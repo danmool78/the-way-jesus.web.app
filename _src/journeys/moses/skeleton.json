@@ -1,0 +1,442 @@
+[
+ {
+  "id": "m01",
+  "p": "q1",
+  "when": "BC 1526년경",
+  "year": -1526,
+  "place": "rameses",
+  "title": "애굽의 종살이",
+  "refs": {
+   "ex": "1:1–22"
+  }
+ },
+ {
+  "id": "m02",
+  "p": "q1",
+  "when": "BC 1526년경",
+  "year": -1526,
+  "place": "nile",
+  "title": "나일강의 갈대 상자",
+  "refs": {
+   "ex": "2:1–10"
+  }
+ },
+ {
+  "id": "m03",
+  "p": "q1",
+  "when": "BC 1486년경",
+  "year": -1486,
+  "place": "midian",
+  "title": "미디안으로 도망하다",
+  "refs": {
+   "ex": "2:11–25"
+  }
+ },
+ {
+  "id": "m04",
+  "p": "q1",
+  "when": "BC 1446년경",
+  "year": -1446,
+  "place": "horeb",
+  "title": "불붙은 떨기나무",
+  "refs": {
+   "ex": "3:1–4:17"
+  }
+ },
+ {
+  "id": "m05",
+  "p": "q1",
+  "when": "BC 1446년경",
+  "year": -1446,
+  "place": "rameses",
+  "title": "바로 앞에 서다",
+  "refs": {
+   "ex": "5:1–6:13"
+  }
+ },
+ {
+  "id": "m06",
+  "p": "q1",
+  "when": "BC 1446년경",
+  "year": -1446,
+  "place": "rameses",
+  "title": "열 가지 재앙",
+  "refs": {
+   "ex": "7:14–11:10"
+  }
+ },
+ {
+  "id": "m07",
+  "p": "q1",
+  "when": "BC 1446년",
+  "year": -1446,
+  "place": "rameses",
+  "title": "첫 유월절",
+  "refs": {
+   "ex": "12:1–42"
+  }
+ },
+ {
+  "id": "m08",
+  "p": "q2",
+  "when": "BC 1446년",
+  "year": -1446,
+  "place": "succoth",
+  "title": "구름 기둥과 불 기둥",
+  "refs": {
+   "ex": "13:17–14:4"
+  }
+ },
+ {
+  "id": "m09",
+  "p": "q2",
+  "when": "BC 1446년",
+  "year": -1446,
+  "place": "redsea",
+  "title": "바다가 갈라지다",
+  "refs": {
+   "ex": "14:5–31"
+  }
+ },
+ {
+  "id": "m10",
+  "p": "q2",
+  "when": "BC 1446년",
+  "year": -1446,
+  "place": "redsea",
+  "title": "바닷가의 노래",
+  "refs": {
+   "ex": "15:1–21"
+  }
+ },
+ {
+  "id": "m11",
+  "p": "q2",
+  "when": "BC 1446년",
+  "year": -1446,
+  "place": "marah",
+  "title": "쓴 물이 단 물로",
+  "refs": {
+   "ex": "15:22–27"
+  }
+ },
+ {
+  "id": "m12",
+  "p": "q2",
+  "when": "BC 1446년",
+  "year": -1446,
+  "place": "sin",
+  "title": "하늘에서 내린 만나",
+  "refs": {
+   "ex": "16:1–36"
+  }
+ },
+ {
+  "id": "m13",
+  "p": "q2",
+  "when": "BC 1446년",
+  "year": -1446,
+  "place": "rephidim",
+  "title": "반석에서 솟은 물",
+  "refs": {
+   "ex": "17:1–7"
+  }
+ },
+ {
+  "id": "m14",
+  "p": "q2",
+  "when": "BC 1446년",
+  "year": -1446,
+  "place": "rephidim",
+  "title": "들어 올린 두 손",
+  "refs": {
+   "ex": "17:8–16"
+  }
+ },
+ {
+  "id": "m15",
+  "p": "q2",
+  "when": "BC 1446년",
+  "year": -1446,
+  "place": "sinai",
+  "title": "장인 이드로의 조언",
+  "refs": {
+   "ex": "18:1–27"
+  }
+ },
+ {
+  "id": "m16",
+  "p": "q3",
+  "when": "BC 1446년",
+  "year": -1446,
+  "place": "sinai",
+  "title": "산에 내려오신 하나님",
+  "refs": {
+   "ex": "19:1–25"
+  }
+ },
+ {
+  "id": "m17",
+  "p": "q3",
+  "when": "BC 1446년",
+  "year": -1446,
+  "place": "sinai",
+  "title": "열 가지 말씀",
+  "refs": {
+   "ex": "20:1–21"
+  }
+ },
+ {
+  "id": "m18",
+  "p": "q3",
+  "when": "BC 1446년",
+  "year": -1446,
+  "place": "sinai",
+  "title": "언약의 피",
+  "refs": {
+   "ex": "24:1–18"
+  }
+ },
+ {
+  "id": "m19",
+  "p": "q3",
+  "when": "BC 1446년",
+  "year": -1446,
+  "place": "sinai",
+  "title": "금송아지",
+  "refs": {
+   "ex": "32:1–35"
+  }
+ },
+ {
+  "id": "m20",
+  "p": "q3",
+  "when": "BC 1446년",
+  "year": -1446,
+  "place": "sinai",
+  "title": "지나가는 영광",
+  "refs": {
+   "ex": "33:12–34:10"
+  }
+ },
+ {
+  "id": "m21",
+  "p": "q3",
+  "when": "BC 1445년",
+  "year": -1445,
+  "place": "sinai",
+  "title": "성막에 가득한 영광",
+  "refs": {
+   "ex": "40:1–38"
+  }
+ },
+ {
+  "id": "m22",
+  "p": "q4",
+  "when": "BC 1445년",
+  "year": -1445,
+  "place": "kibroth",
+  "title": "탐욕의 무덤",
+  "refs": {
+   "num": "11:1–35"
+  }
+ },
+ {
+  "id": "m23",
+  "p": "q4",
+  "when": "BC 1445년",
+  "year": -1445,
+  "place": "kadesh",
+  "title": "열두 정탐꾼",
+  "refs": {
+   "num": "13:1–14:45"
+  }
+ },
+ {
+  "id": "m24",
+  "p": "q4",
+  "when": "BC 1445년경",
+  "year": -1445,
+  "place": "kadesh",
+  "title": "싹 난 지팡이",
+  "refs": {
+   "num": "16:1–17:13"
+  }
+ },
+ {
+  "id": "m25",
+  "p": "q4",
+  "when": "BC 1407년",
+  "year": -1407,
+  "place": "kadesh",
+  "title": "므리바의 물",
+  "refs": {
+   "num": "20:1–13"
+  }
+ },
+ {
+  "id": "m26",
+  "p": "q4",
+  "when": "BC 1407년",
+  "year": -1407,
+  "place": "hor",
+  "title": "호르산의 아론",
+  "refs": {
+   "num": "20:22–29"
+  }
+ },
+ {
+  "id": "m27",
+  "p": "q4",
+  "when": "BC 1407년",
+  "year": -1407,
+  "place": "punon",
+  "title": "장대 위의 놋뱀",
+  "refs": {
+   "num": "21:4–9"
+  }
+ },
+ {
+  "id": "m28",
+  "p": "q4",
+  "when": "BC 1406년",
+  "year": -1406,
+  "place": "heshbon",
+  "title": "요단 동쪽을 얻다",
+  "refs": {
+   "num": "21:21–35"
+  }
+ },
+ {
+  "id": "m29",
+  "p": "q4",
+  "when": "BC 1406년",
+  "year": -1406,
+  "place": "moab",
+  "title": "발람과 나귀",
+  "refs": {
+   "num": "22:1–24:25"
+  }
+ },
+ {
+  "id": "m30",
+  "p": "q4",
+  "when": "BC 1406년",
+  "year": -1406,
+  "place": "moab",
+  "title": "들으라 이스라엘아",
+  "refs": {
+   "deut": "6:1–25"
+  }
+ },
+ {
+  "id": "m31",
+  "p": "q4",
+  "when": "BC 1406년",
+  "year": -1406,
+  "place": "nebo",
+  "title": "느보산에서 바라본 땅",
+  "refs": {
+   "deut": "34:1–12"
+  }
+ },
+ {
+  "id": "m32",
+  "p": "q5",
+  "when": "BC 1406년",
+  "year": -1406,
+  "place": "shittim",
+  "title": "강하고 담대하라",
+  "refs": {
+   "josh": "1:1–18"
+  }
+ },
+ {
+  "id": "m33",
+  "p": "q5",
+  "when": "BC 1406년",
+  "year": -1406,
+  "place": "jericho",
+  "title": "라합의 붉은 줄",
+  "refs": {
+   "josh": "2:1–24"
+  }
+ },
+ {
+  "id": "m34",
+  "p": "q5",
+  "when": "BC 1406년",
+  "year": -1406,
+  "place": "gilgal",
+  "title": "요단을 건너다",
+  "refs": {
+   "josh": "3:1–5:12"
+  }
+ },
+ {
+  "id": "m35",
+  "p": "q5",
+  "when": "BC 1406년",
+  "year": -1406,
+  "place": "jericho",
+  "title": "무너진 성벽",
+  "refs": {
+   "josh": "6:1–27"
+  }
+ },
+ {
+  "id": "m36",
+  "p": "q5",
+  "when": "BC 1406년",
+  "year": -1406,
+  "place": "ai",
+  "title": "아간의 죄와 아이 성",
+  "refs": {
+   "josh": "7:1–8:29"
+  }
+ },
+ {
+  "id": "m37",
+  "p": "q5",
+  "when": "BC 1406년",
+  "year": -1406,
+  "place": "shechem",
+  "title": "두 산 사이의 언약",
+  "refs": {
+   "josh": "8:30–35"
+  }
+ },
+ {
+  "id": "m38",
+  "p": "q5",
+  "when": "BC 1405년경",
+  "year": -1405,
+  "place": "gibeon",
+  "title": "해야 머물라",
+  "refs": {
+   "josh": "10:1–15"
+  }
+ },
+ {
+  "id": "m39",
+  "p": "q5",
+  "when": "BC 1399년경",
+  "year": -1399,
+  "place": "shiloh",
+  "title": "실로에서 나눈 땅",
+  "refs": {
+   "josh": "18:1–10"
+  }
+ },
+ {
+  "id": "m40",
+  "p": "q5",
+  "when": "BC 1380년경",
+  "year": -1380,
+  "place": "shechem",
+  "title": "나와 내 집은",
+  "refs": {
+   "josh": "24:1–31"
+  }
+ }
+]

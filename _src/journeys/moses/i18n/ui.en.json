@@ -1,0 +1,40 @@
+{
+ "appTag": "Moses and Joshua · From the Exodus to the Promised Land",
+ "docTitle": "The Way — Moses and Joshua | Walk the Exodus and Canaan on a Map",
+ "metaDesc": "From slavery in Egypt through the Red Sea, Mount Sinai and forty years in the wilderness, across the Jordan into the promised land. Walk 40 scenes of Moses and Joshua on a Bible map.",
+ "mapAria": "The route of the Exodus on a map of Egypt, the Sinai Peninsula and Canaan",
+ "introTag": "The way of Moses and Joshua, from the Exodus to the promised land",
+ "introLead": "Walk the map and follow the road from slavery to freedom, from the wilderness to the promised land.",
+ "introF1": "Follow the places, from Egypt through the Red Sea, Mount Sinai and the wilderness to Canaan",
+ "introF3": "Hear the story read aloud, and read the words God and his people spoke",
+ "landStep2": "Read the story and the texts on the card, and press ▶ to hear it read aloud",
+ "landStep4": "Gather God's words in the '{words}' tab and revisit the scenes you have walked with '{quiz}'",
+ "jesus": "God",
+ "hisWords": "God's Words",
+ "wordsHead": "God's Words",
+ "wordsIntro": "The words God spoke along the way of Moses and Joshua, gathered in the order of the journey. Every saying is a fresh rendering of the original meaning in today's language.",
+ "odoTitle": "Distance Israel has walked up to this scene (estimated road distance between places; steps at a 75 cm stride)",
+ "gospels": {
+  "ex": ["Exodus", "Ex"],
+  "num": ["Numbers", "Num"],
+  "deut": ["Deuteronomy", "Deut"],
+  "josh": ["Joshua", "Josh"]
+ },
+ "endLead": "From the brick kilns of Egypt to the covenant at Shechem — thank you for walking with us.",
+ "blessing": "May the Lord bless you and keep you.\nMay the Lord make his face shine on you and be gracious to you.\nMay the Lord turn his face toward you and give you peace. (Num 6:24–26)\nMay the one who sent manna every day in the wilderness feed you today, and the one who went ahead in the pillar of cloud guide your way.",
+ "map": {
+  "애 굽": "EGYPT",
+  "고 센": "GOSHEN",
+  "시 나 이": "SINAI",
+  "미 디 안": "MIDIAN",
+  "에 돔": "EDOM",
+  "모 압": "MOAB",
+  "가 나 안": "CANAAN",
+  "바 란 광 야": "WILDERNESS OF PARAN",
+  "온 (헬리오폴리스)": "On (Heliopolis)",
+  "멤피스": "Memphis",
+  "비돔": "Pithom",
+  "홍 해": "RED SEA",
+  "아카바 만": "Gulf of Aqaba"
+ }
+}

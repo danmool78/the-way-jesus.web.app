@@ -1,0 +1,1588 @@
+{
+ "periods": {
+  "q1": {
+   "name": "O chamado no Egito",
+   "span": "1526 – 1446 a.C."
+  },
+  "q2": {
+   "name": "Pelo mar até o deserto",
+   "span": "1446 a.C."
+  },
+  "q3": {
+   "name": "A aliança do Sinai",
+   "span": "1446 – 1445 a.C."
+  },
+  "q4": {
+   "name": "Quarenta anos no deserto",
+   "span": "1445 – 1406 a.C."
+  },
+  "q5": {
+   "name": "Rumo à terra prometida",
+   "span": "1406 – 1380 a.C."
+  }
+ },
+ "places": {
+  "rameses": {
+   "name": "Ramessés (terra de Gósen)",
+   "region": "Egito"
+  },
+  "nile": {
+   "name": "Margem do Nilo",
+   "region": "Egito"
+  },
+  "midian": {
+   "name": "Midiã",
+   "region": "Midiã"
+  },
+  "horeb": {
+   "name": "Monte Horebe (Sinai)",
+   "region": "Península do Sinai"
+  },
+  "succoth": {
+   "name": "Sucote",
+   "region": "Egito"
+  },
+  "redsea": {
+   "name": "Mar dos Juncos",
+   "region": "Fronteira oriental do Egito"
+  },
+  "marah": {
+   "name": "Mara e Elim",
+   "region": "Deserto de Sur"
+  },
+  "sin": {
+   "name": "Deserto de Sim",
+   "region": "Península do Sinai"
+  },
+  "rephidim": {
+   "name": "Refidim",
+   "region": "Península do Sinai"
+  },
+  "sinai": {
+   "name": "Monte Sinai",
+   "region": "Península do Sinai"
+  },
+  "kibroth": {
+   "name": "Quibrote-Hataavá",
+   "region": "Deserto de Parã"
+  },
+  "kadesh": {
+   "name": "Cades-Barneia",
+   "region": "Deserto de Zim (norte)"
+  },
+  "hor": {
+   "name": "Monte Hor",
+   "region": "Fronteira de Edom"
+  },
+  "punon": {
+   "name": "Punom (Arabá)",
+   "region": "Arabá"
+  },
+  "heshbon": {
+   "name": "Hesbom",
+   "region": "Terra dos amorreus"
+  },
+  "moab": {
+   "name": "Planícies de Moabe",
+   "region": "Moabe"
+  },
+  "nebo": {
+   "name": "Monte Nebo (Pisga)",
+   "region": "Moabe"
+  },
+  "shittim": {
+   "name": "Sitim",
+   "region": "Moabe"
+  },
+  "jericho": {
+   "name": "Jericó",
+   "region": "Canaã"
+  },
+  "gilgal": {
+   "name": "Gilgal",
+   "region": "Canaã"
+  },
+  "ai": {
+   "name": "Ai",
+   "region": "Canaã"
+  },
+  "shechem": {
+   "name": "Siquém (montes Ebal e Gerizim)",
+   "region": "Canaã"
+  },
+  "gibeon": {
+   "name": "Gibeom",
+   "region": "Canaã"
+  },
+  "shiloh": {
+   "name": "Siló",
+   "region": "Canaã"
+  }
+ },
+ "events": {
+  "m01": {
+   "title": "A escravidão no Egito",
+   "when": "c. 1526 a.C.",
+   "subtitle": "Um rei que não conheceu José, meninos lançados ao rio",
+   "story": [
+    "A terra fértil de Gósen, no delta do Nilo. A família de setenta pessoas que descera com Jacó foi crescendo com os anos até encher os campos. Mas quando subiu ao trono um novo rei que não tinha conhecido José, aqueles vizinhos se tornaram, da noite para o dia, um povo a ser vigiado.",
+    "Sob o sol ardente, não cessava o barulho do barro sendo amassado e dos tijolos no forno. O chicote dos feitores os empurrava a construir as cidades-celeiro de Pitom e Ramessés. Mas quanto mais eram oprimidos, mais Israel se multiplicava, e mais crescia o medo dos egípcios.",
+    "O faraó mandou que as parteiras hebreias Sifrá e Puá matassem os meninos, mas elas temiam a Deus e deixaram os bebês viver. Por fim o rei deu uma ordem a todo o povo: todo menino hebreu devia ser lançado ao rio. As águas do Nilo corriam escuras."
+   ],
+   "words": [
+    {
+     "who": "Faraó",
+     "text": "Vejam, o povo de Israel ficou mais numeroso e mais forte do que nós. Se houver uma guerra, podem se unir aos inimigos e lutar contra nós. Vamos agir com esperteza e mantê-los sob controle."
+    },
+    {
+     "who": "As parteiras",
+     "text": "As mulheres hebreias não são como as egípcias. São fortes e dão à luz antes mesmo que a parteira chegue."
+    },
+    {
+     "who": "Faraó",
+     "text": "Todo menino que nascer dos hebreus, joguem no Nilo. As meninas podem deixar viver."
+    }
+   ],
+   "note": "Pitom e Ramessés eram cidades-armazém onde se guardavam grãos e provisões. Por causa do nome Ramessés, há quem situe o Êxodo no século 13 antes de Cristo, no tempo de Ramsés II, mas este caminho segue a data mais antiga de 1 Reis 6:1.",
+   "reflect": "Quando o medo manda oprimir alguém, eu seria capaz de ficar do lado da vida, como Sifrá e Puá?",
+   "quiz": {
+    "q": "Como se chamavam as parteiras que desobedeceram ao faraó e salvaram os bebês hebreus?",
+    "options": [
+     "Miriã e Eliseba",
+     "Anrão e Joquebede",
+     "Sifrá e Puá",
+     "Reuel e Zípora"
+    ],
+    "explain": "As parteiras Sifrá e Puá temeram a Deus, não fizeram o que o rei mandou e deixaram os meninos viver (Êx 1:15–17). Deus lhes deu famílias (Êx 1:21)."
+   },
+   "credit": ""
+  },
+  "m02": {
+   "title": "O cesto de juncos no Nilo",
+   "when": "c. 1526 a.C.",
+   "subtitle": "Um bebê tirado das águas",
+   "story": [
+    "Uma mulher da família de Levi deu à luz um filho. O menino era muito bonito, e a mãe o escondeu durante três meses. Quanto mais forte ficava o choro, menos lugares havia para escondê-lo. Por fim ela trançou um pequeno cesto de talos de papiro e o cobriu de betume e piche.",
+    "Na margem do Nilo, com o sol da manhã brilhando sobre a água, a mãe deitou o bebê no cesto e o deixou entre os juncos. Enquanto os juncos sussurravam ao vento, a irmã do menino ficou de longe, prendendo a respiração, para ver o que aconteceria.",
+    "A filha do faraó, que desceu ao rio para se banhar, encontrou o cesto entre os juncos. Ao abri-lo, viu o bebê chorando, e seu coração se comoveu. Graças à esperteza da irmã, o menino voltou aos braços da própria mãe para ser amamentado. A princesa o adotou como filho e o chamou de Moisés."
+   ],
+   "words": [
+    {
+     "who": "A filha do faraó",
+     "text": "Este é um bebê dos hebreus."
+    },
+    {
+     "who": "A irmã de Moisés",
+     "text": "Quer que eu vá chamar uma das mulheres hebreias para amamentar o bebê para a senhora?"
+    },
+    {
+     "who": "A filha do faraó",
+     "text": "Eu o tirei da água, por isso ele vai se chamar Moisés."
+    }
+   ],
+   "note": "O nome Moisés soa parecido com a palavra hebraica mashá, que quer dizer tirar para fora. Há também quem pense que vem de uma palavra egípcia que significa filho ou nascido, como em Tutmés. Os nomes dos pais de Moisés, Anrão e Joquebede, aparecem em Êxodo 6:20.",
+   "reflect": "Quando preciso entregar o que não consigo proteger com as minhas forças, como quem solta um cesto no rio, em quem eu me apoio?",
+   "quiz": {
+    "q": "Por quanto tempo a mãe de Moisés o escondeu antes de colocá-lo no cesto de juncos?",
+    "options": [
+     "Três meses",
+     "Sete dias",
+     "Um ano",
+     "Quarenta dias"
+    ],
+    "explain": "Vendo que o menino era bonito, a mãe o escondeu por três meses e, quando não pôde mais escondê-lo, fez o cesto de juncos (Êx 2:2–3)."
+   },
+   "credit": ""
+  },
+  "m03": {
+   "title": "A fuga para Midiã",
+   "when": "c. 1486 a.C.",
+   "subtitle": "Deixa as roupas de príncipe e se torna estrangeiro",
+   "story": [
+    "Criado no palácio, Moisés já adulto foi ver seus irmãos no trabalho. Viu um egípcio espancando um hebreu, olhou para um lado e para o outro, matou o egípcio e o enterrou na areia. Achou que ninguém tinha visto.",
+    "No dia seguinte, quando tentou separar dois hebreus que brigavam, o culpado o enfrentou. Já sabia do que tinha acontecido. A notícia chegou ao faraó, que quis matar Moisés. Ele deixou tudo para trás, atravessou o deserto a leste e fugiu para a terra de Midiã.",
+    "Junto a um poço em Midiã, Moisés defendeu sete irmãs que os pastores estavam expulsando e deu água ao rebanho delas. Ficou na casa do pai delas, Reuel, casou-se com Zípora e teve um filho, Gérson. Enquanto isso, no Egito, o gemido de Israel subia ao céu, e Deus o ouviu."
+   ],
+   "words": [
+    {
+     "who": "Um hebreu",
+     "text": "Quem colocou você como chefe e juiz sobre nós? Vai me matar também, como matou aquele egípcio ontem?"
+    },
+    {
+     "who": "Reuel",
+     "text": "E onde está esse homem? Por que o deixaram lá? Vão chamá-lo para comer conosco."
+    },
+    {
+     "who": "Moisés",
+     "text": "Tornei-me um estrangeiro em terra estranha."
+    }
+   ],
+   "note": "Midiã devia ser a terra de um povo nômade que vivia a leste do golfo de Ácaba, no noroeste da Península Arábica. No capítulo 3, Reuel é chamado de Jetro. Estêvão conta que Moisés foi visitar seus irmãos aos quarenta anos.",
+   "reflect": "No lugar onde falhei ao tentar fazer justiça com as minhas próprias forças, como Deus vai me moldar de novo?",
+   "quiz": {
+    "q": "Como se chamava o primeiro filho que Moisés teve em Midiã?",
+    "options": [
+     "Eliézer",
+     "Arão",
+     "Manassés",
+     "Gérson"
+    ],
+    "explain": "Moisés deu ao filho o nome de Gérson, dizendo: “Tornei-me um estrangeiro em terra estranha” (Êx 2:22). Eliézer é o segundo filho, citado mais tarde em 18:4."
+   },
+   "credit": ""
+  },
+  "m04": {
+   "title": "A sarça ardente",
+   "when": "c. 1446 a.C.",
+   "subtitle": "Um fogo que arde e não consome",
+   "story": [
+    "Pastoreando o rebanho do sogro Jetro, Moisés entrou fundo no deserto e chegou a Horebe, o monte de Deus. Numa encosta silenciosa, só de pedras e mato seco, havia uma sarça envolta em chamas. Mas, por estranho que fosse, a sarça não se consumia nem um pouco.",
+    "Quando ele se aproximou, uma voz o chamou do meio do fogo. Moisés, Moisés. Ouvindo a ordem de tirar as sandálias, ficou descalço sobre o chão quente e cobriu o rosto, com medo de olhar para Deus. O Senhor disse que tinha ouvido o clamor do seu povo escravizado.",
+    "Quem sou eu para ir ao faraó? Moisés recuou várias vezes. O Senhor lhe revelou o seu nome e mostrou sinais: a vara que virava serpente e a mão que ficava branca. A ele, que dizia não saber falar bem, deu o irmão Arão como companheiro, e prometeu: eu estarei com você."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "Eu sou o que sou. Diga assim aos israelitas: Aquele que se chama Eu Sou me enviou a vocês."
+    },
+    {
+     "who": "Deus",
+     "text": "Eu vi muito bem a aflição do meu povo no Egito e ouvi o seu clamor. Conheço a dor deles. Agora desci para libertá-los."
+    },
+    {
+     "who": "Deus",
+     "text": "Quem deu a boca ao ser humano? Não fui eu, o Senhor? Agora vá. Quando você falar, eu estarei com a sua boca."
+    },
+    {
+     "who": "Moisés",
+     "text": "Quem sou eu para ir ao faraó e tirar os israelitas do Egito?"
+    }
+   ],
+   "note": "Horebe é considerado outro nome do monte Sinai. Pela tradição, é o Jebel Musa, no sul da Península do Sinai, a cujos pés foi construído o Mosteiro de Santa Catarina, mas há várias outras opiniões, como o norte do Sinai ou a terra de Midiã, no noroeste da Arábia.",
+   "reflect": "Quando enumero os motivos pelos quais não consigo, que peso tem para mim a promessa “eu estarei com você”?",
+   "quiz": {
+    "q": "Diante da sarça, o que Deus mandou Moisés tirar primeiro?",
+    "options": [
+     "O manto",
+     "As sandálias",
+     "O cinto",
+     "O turbante"
+    ],
+    "explain": "Deus disse: “Não se aproxime. Tire as sandálias, pois o lugar onde você está é terra santa” (Êx 3:5)."
+   },
+   "credit": ""
+  },
+  "m05": {
+   "title": "Diante do faraó",
+   "when": "c. 1446 a.C.",
+   "subtitle": "Tijolos sem palha",
+   "story": [
+    "Moisés e Arão se apresentaram no palácio do faraó. Quando disseram que o Deus de Israel mandava deixar o seu povo ir celebrar uma festa no deserto, o rei riu com frieza. Quem é o Senhor para que eu lhe obedeça? Naquele dia, a ordem do rei voltou como um fardo ainda mais pesado.",
+    "De agora em diante não lhes daremos palha para os tijolos. Vão buscar vocês mesmos. Mas a quantidade de tijolos não pode diminuir. O povo vagou por todo o Egito catando restolho no lugar da palha, e os capatazes israelitas que não cumpriam a cota eram espancados.",
+    "Logo as queixas caíram sobre Moisés. De coração partido, ele questionou a Deus. Por que maltratas este povo? O Senhor prometeu de novo que os libertaria e faria deles o seu povo. Mas, esgotado pelo trabalho duro, o povo não tinha forças nem para escutar."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "Eu sou o Senhor. Vou tirar vocês de debaixo das cargas do Egito e libertá-los com braço estendido. Farei de vocês o meu povo, e eu serei o seu Deus."
+    },
+    {
+     "who": "Deus",
+     "text": "Agora você vai ver o que farei ao faraó. Forçado por uma mão poderosa, ele deixará o povo sair."
+    },
+    {
+     "who": "Faraó",
+     "text": "Quem é o Senhor para que eu ouça a sua voz e deixe Israel ir? Não conheço o Senhor, e não vou deixar Israel sair."
+    }
+   ],
+   "note": "Os tijolos egípcios eram feitos de barro do Nilo misturado com palha e secos ao sol. A palha impede que o tijolo rache. Na pintura do túmulo de Rekhmire, em Tebas, ainda se veem trabalhadores estrangeiros moldando tijolos.",
+   "reflect": "Quando obedeço e a situação piora, consigo me agarrar à promessa de Deus mesmo ali?",
+   "quiz": {
+    "q": "O que o faraó disse que não daria mais ao povo de Israel?",
+    "options": [
+     "Água",
+     "Pão",
+     "Palha",
+     "Barro"
+    ],
+    "explain": "O faraó ordenou: “Não deem mais palha ao povo para fazer tijolos, como antes. Que eles mesmos a recolham”, sem diminuir a quantidade de tijolos (Êx 5:7–8)."
+   },
+   "credit": ""
+  },
+  "m06": {
+   "title": "As dez pragas",
+   "when": "c. 1446 a.C.",
+   "subtitle": "Dez sinais sobre um coração endurecido",
+   "story": [
+    "Moisés ergueu a vara e feriu o rio, e o Nilo ficou vermelho, os peixes morreram e o mau cheiro se espalhou. Depois as rãs subiram até os quartos do palácio, e o pó virou piolhos que infestaram pessoas e animais. Os magos que imitavam os sinais acabaram desistindo.",
+    "Vieram nuvens de moscas, mas a terra de Gósen foi poupada. O gado adoeceu e caiu, feridas brotaram no corpo das pessoas, e o granizo castigou os campos com trovões. Os gafanhotos devoraram todo o verde que restava, e por três dias uma escuridão quase palpável cobriu a terra.",
+    "Mesmo nessa escuridão, havia luz onde moravam os israelitas. O faraó cedia, mas quando a praga parava, endurecia o coração outra vez. Por fim Moisés anunciou a última praga. À meia-noite morreriam todos os primogênitos do Egito. Um silêncio pesado caiu sobre a terra."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "Deixe o meu povo ir, para que me sirva no deserto."
+    },
+    {
+     "who": "Deus",
+     "text": "Desta vez mandarei todas as minhas pragas sobre você, sobre os seus servos e sobre o seu povo, para que você saiba que não há ninguém como eu em toda a terra."
+    },
+    {
+     "who": "Os magos",
+     "text": "Isto é o dedo de Deus."
+    }
+   ],
+   "note": "As pragas também são lidas como um juízo contra os deuses que o Egito adorava, como o Nilo e o sol. O próprio Senhor disse que julgaria todos os deuses do Egito. Há tentativas de explicá-las como uma série de fenômenos naturais, mas as opiniões variam.",
+   "reflect": "Como o coração do faraó, que endurecia de novo quando a praga passava, será que eu só procuro Deus nas horas de aperto?",
+   "quiz": {
+    "q": "Qual praga os magos do Egito não conseguiram imitar, confessando que era “o dedo de Deus”?",
+    "options": [
+     "Os piolhos que vieram do pó",
+     "O rio transformado em sangue",
+     "As rãs",
+     "O granizo"
+    ],
+    "explain": "Arão feriu o pó da terra com a vara e ele virou piolhos. Os magos não conseguiram fazer o mesmo e disseram: “Isto é o dedo de Deus” (Êx 8:16–19)."
+   },
+   "credit": ""
+  },
+  "m07": {
+   "title": "A primeira Páscoa",
+   "when": "1446 a.C.",
+   "subtitle": "Sangue nos batentes, a noite em que ele passou",
+   "story": [
+    "O Senhor mandou que aquele mês fosse o primeiro do ano. Cada família escolheu um cordeiro de um ano, sem defeito, e o sacrificou ao entardecer do dia catorze. Molharam um ramo de hissopo no sangue e o passaram nos dois batentes e na verga da porta. A marca vermelha brilhava na luz da tarde.",
+    "Naquela noite comeram às pressas, com o cinto apertado, sandálias nos pés e cajado na mão, a carne assada no fogo, o pão sem fermento e as ervas amargas. À meia-noite, um grande lamento irrompeu em todo o Egito. Do filho mais velho do palácio ao do prisioneiro, não houve casa sem um morto.",
+    "Naquela mesma noite o faraó chamou Moisés e Arão e os apressou a partir. O povo embrulhou nas roupas a massa ainda sem fermentar, nas próprias amassadeiras, pôs nos ombros e saiu de Ramessés. Só de homens a pé eram cerca de seiscentos mil. Era a noite em que terminavam quatrocentos e trinta anos de escravidão."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "O sangue será um sinal nas casas onde vocês estiverem. Quando eu vir o sangue, passarei adiante. Quando eu ferir o Egito, a praga não atingirá vocês."
+    },
+    {
+     "who": "Deus",
+     "text": "Comam depressa, com o cinto na cintura, as sandálias nos pés e o cajado na mão. Esta é a Páscoa do Senhor."
+    },
+    {
+     "who": "Faraó",
+     "text": "Levantem-se e saiam do meio do meu povo, vocês e os israelitas. Vão servir ao Senhor, como pediram. E peçam uma bênção também para mim."
+    }
+   ],
+   "note": "A palavra hebraica para Páscoa, Pessach, está ligada à ideia de passar por cima. Israel até hoje celebra essa noite todos os anos. A última ceia de Jesus com os discípulos também foi uma refeição no tempo da Páscoa.",
+   "reflect": "Que marca há nos batentes da minha vida que, acredito, me guarda em qualquer noite?",
+   "quiz": {
+    "q": "Segundo Êxodo 12, por quanto tempo os israelitas viveram no Egito?",
+    "options": [
+     "Quarenta anos",
+     "Setenta anos",
+     "Quatrocentos anos",
+     "Quatrocentos e trinta anos"
+    ],
+    "explain": "No mesmo dia em que se completaram quatrocentos e trinta anos da estadia dos israelitas no Egito, todos os exércitos do Senhor saíram da terra do Egito (Êx 12:40–41)."
+   },
+   "credit": ""
+  },
+  "m08": {
+   "title": "A coluna de nuvem e a coluna de fogo",
+   "when": "1446 a.C.",
+   "subtitle": "Pelo deserto, em vez do caminho mais curto",
+   "story": [
+    "A multidão que saiu de Ramessés chegou a Sucote. O caminho mais curto era pela costa, até a terra dos filisteus, mas Deus não os levou por ali. Temia que, diante da guerra, o povo mudasse de ideia e voltasse para o Egito.",
+    "Moisés levou os ossos de José. Era a promessa que José, séculos antes, os fizera jurar: levar seus ossos quando subissem. O povo acampou em Etã, na beira do deserto. De dia uma coluna de nuvem lhes dava sombra, e de noite uma coluna de fogo iluminava a escuridão do deserto.",
+    "A coluna não se afastava do povo nem de dia nem de noite. Mas o Senhor os fez dar meia-volta e acampar diante de Pi-Hairote, entre o mar e Migdol. Era uma praia que parecia um beco sem saída. Assim o faraó pensaria que eles estavam presos no deserto."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "Se este povo vir a guerra, pode mudar de ideia e voltar para o Egito."
+    },
+    {
+     "who": "Deus",
+     "text": "Vou endurecer o coração do faraó, e ele vai persegui-los. Então mostrarei a minha glória por meio do faraó e do seu exército, e os egípcios saberão que eu sou o Senhor."
+    },
+    {
+     "who": "José",
+     "text": "Deus certamente virá ao encontro de vocês. Quando isso acontecer, levem daqui os meus ossos."
+    }
+   ],
+   "note": "O caminho da terra dos filisteus era a grande estrada que ia a Canaã pela costa do Mediterrâneo, guardada por fortalezas egípcias. Sucote costuma ser identificada com Tell el-Maskhuta, mas a localização de Etã, Migdol e Pi-Hairote ainda não é certa.",
+   "reflect": "Quando Deus me conduz pelo caminho longo em vez do curto, consigo ver o cuidado escondido nesse desvio?",
+   "quiz": {
+    "q": "O que Moisés levou do Egito na saída?",
+    "options": [
+     "A vara de Arão",
+     "Os ossos de José",
+     "O pote de maná",
+     "As duas tábuas de pedra"
+    ],
+    "explain": "Moisés levou os ossos de José, porque José tinha feito os israelitas jurarem que os levariam consigo (Êx 13:19; Gn 50:25)."
+   },
+   "credit": ""
+  },
+  "m09": {
+   "title": "O mar se abre",
+   "when": "1446 a.C.",
+   "subtitle": "Um caminho seco no meio do mar",
+   "story": [
+    "Arrependido de ter deixado o povo ir, o faraó saiu em perseguição com seiscentos carros de elite e todos os carros do Egito. Acampados à beira-mar, os israelitas ergueram os olhos e ouviram o tropel dos cavalos se aproximando numa nuvem de poeira. À frente, o mar. Atrás, o exército.",
+    "Não havia sepulturas no Egito para nos trazer para morrer no deserto? Diante dos gritos do povo, Moisés clamou que não tivessem medo, que ficassem firmes e vissem a salvação do Senhor. A coluna de nuvem passou para trás do acampamento e dividiu a noite: de um lado escuridão, do outro luz.",
+    "Moisés estendeu a mão sobre o mar, e um forte vento leste soprou a noite inteira, dividindo as águas e secando o fundo. O povo atravessou entre as águas erguidas como muralhas dos dois lados. De madrugada, as rodas dos carros atolaram, e as águas voltaram e cobriram o exército egípcio. O povo temeu o Senhor e creu nele."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "Por que você clama a mim? Diga aos israelitas que sigam em frente. Erga a sua vara, estenda a mão sobre o mar e divida as águas."
+    },
+    {
+     "who": "Moisés",
+     "text": "Não tenham medo. Fiquem firmes e vejam a salvação que o Senhor vai realizar hoje. O Senhor lutará por vocês. Fiquem tranquilos."
+    },
+    {
+     "who": "Os egípcios",
+     "text": "Vamos fugir de Israel! O Senhor está lutando por eles contra nós."
+    }
+   ],
+   "note": "Em hebraico, yam suf quer dizer mar dos juncos. Há várias opiniões sobre o local da travessia. Citam-se os lagos do istmo de Suez, como o Ballah, o Timsah e os Lagos Amargos, além do golfo de Suez e do golfo de Ácaba.",
+   "reflect": "Num lugar com o mar à frente e o exército atrás, que passo a ordem “siga em frente” pede de mim?",
+   "quiz": {
+    "q": "Que meio Deus usou para fazer o mar recuar durante a noite?",
+    "options": [
+     "Um forte vento leste",
+     "Um grande terremoto",
+     "A coluna de fogo",
+     "A espada de um anjo"
+    ],
+    "explain": "Quando Moisés estendeu a mão sobre o mar, o Senhor fez o mar recuar com um forte vento leste a noite toda e o transformou em terra seca (Êx 14:21)."
+   },
+   "credit": ""
+  },
+  "m10": {
+   "title": "O cântico à beira-mar",
+   "when": "1446 a.C.",
+   "subtitle": "O primeiro louvor sobre o som dos tamborins",
+   "story": [
+    "O dia amanheceu na praia. Pedaços de carros quebrados chegavam com as ondas já calmas, e o povo salvo estava de pé sobre a areia molhada. Então Moisés e os israelitas levantaram a voz e começaram a cantar. Era um cântico ao Senhor, que lançou ao mar o cavalo e o cavaleiro.",
+    "O Senhor é a minha força e o meu cântico. A letra lembra o sopro que dividiu o mar e as águas que se ergueram como muralha, e olha para o futuro. Filisteus, edomitas, moabitas e cananeus vão tremer, e o Senhor vai conduzir este povo e plantá-lo no seu monte santo.",
+    "Então a profetisa Miriã, irmã de Arão, pegou um tamborim. Todas as mulheres a seguiram com tamborins, dançando. Sobre o som dos tamborins levado pelo vento do mar, ressoou a voz de Miriã puxando o canto. Cantem ao Senhor, pois ele triunfou gloriosamente."
+   ],
+   "words": [
+    {
+     "who": "Moisés",
+     "text": "O Senhor é a minha força e o meu cântico, ele é quem me salvou. Ele é o meu Deus, e eu o louvarei. É o Deus do meu pai, e eu o exaltarei."
+    },
+    {
+     "who": "Moisés",
+     "text": "Senhor, quem entre os deuses é como tu? Quem é como tu, glorioso em santidade, temível em louvores, que fazes maravilhas?"
+    },
+    {
+     "who": "Miriã",
+     "text": "Cantem ao Senhor, pois ele triunfou gloriosamente. Lançou ao mar o cavalo e o seu cavaleiro."
+    }
+   ],
+   "note": "Este cântico do mar tem muitas expressões de hebraico antigo e é considerado um dos poemas mais antigos da Bíblia. Miriã é a primeira mulher chamada de profetisa na Bíblia, e o Apocalipse também descreve uma cena em que se canta o cântico de Moisés.",
+   "reflect": "Depois de experimentar a salvação, com que cântico guardo essa memória?",
+   "quiz": {
+    "q": "O que a profetisa Miriã segurava enquanto cantava com as mulheres?",
+    "options": [
+     "Uma harpa",
+     "Um tamborim",
+     "Uma trombeta",
+     "Címbalos"
+    ],
+    "explain": "A profetisa Miriã, irmã de Arão, pegou um tamborim, e todas as mulheres a seguiram com tamborins, dançando (Êx 15:20)."
+   },
+   "credit": ""
+  },
+  "m11": {
+   "title": "A água amarga fica doce",
+   "when": "1446 a.C.",
+   "subtitle": "A primeira sede, onde o cântico terminou",
+   "story": [
+    "O cântico à beira-mar foi se apagando, e Moisés conduziu o povo para dentro do deserto de Sur. Caminharam três dias sem ver água. A areia sob os pés ardia, e os odres de couro foram se esvaziando um após o outro.",
+    "Por fim chegaram a Mara e encontraram água, mas era tão amarga que não dava para beber. O povo reclamou contra Moisés, perguntando o que iam beber. Moisés clamou ao Senhor, e o Senhor lhe mostrou um pedaço de madeira. Quando ele o jogou na água, a água amarga ficou doce.",
+    "Ali o Senhor deu ao povo leis e o pôs à prova. Se escutassem a sua palavra, ele não mandaria sobre eles as doenças que mandou sobre o Egito. Depois chegaram a Elim. À sombra de doze fontes e setenta palmeiras, armaram as tendas junto à água."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "Se vocês escutarem com atenção a voz do Senhor, o seu Deus, e fizerem o que é certo aos meus olhos, não mandarei sobre vocês nenhuma das doenças que mandei sobre o Egito. Eu sou o Senhor, que cura vocês."
+    },
+    {
+     "who": "O povo",
+     "text": "E o que é que vamos beber?"
+    }
+   ],
+   "note": "Mara quer dizer amarga em hebraico. Há quem identifique Mara com Ain Hawara, na costa leste do golfo de Suez, e Elim com o Wadi Gharandel, mas a localização exata dos dois lugares é desconhecida e há várias opiniões.",
+   "reflect": "Três dias depois de cantar o milagre, as queixas explodiram. Quanto tempo dura a minha gratidão?",
+   "quiz": {
+    "q": "O que havia em Elim, onde o povo chegou depois de Mara?",
+    "options": [
+     "Doze fontes e setenta palmeiras",
+     "Sete fontes e doze palmeiras",
+     "Um poço e quarenta figueiras",
+     "Três fontes e setenta oliveiras"
+    ],
+    "explain": "Em Elim havia doze fontes e setenta palmeiras, e o povo acampou ali junto à água (Êx 15:27)."
+   },
+   "credit": ""
+  },
+  "m12": {
+   "title": "O maná que caiu do céu",
+   "when": "1446 a.C.",
+   "subtitle": "O pão de cada dia sobre o orvalho de cada manhã",
+   "story": [
+    "Pouco mais de um mês depois de sair do Egito, no dia quinze do segundo mês, o povo entrou no deserto de Sim, entre Elim e o Sinai. Quando a fome apertou, reclamaram contra Moisés e Arão, dizendo que teria sido melhor morrer no Egito, onde se sentavam junto às panelas de carne e comiam à vontade.",
+    "Ao entardecer vieram codornizes e cobriram o acampamento. De manhã, quando o orvalho se dissipou, havia sobre o deserto uma coisa fina e branca como geada. Ao povo que perguntava o que era aquilo, Moisés disse que era o pão que o Senhor lhes dava para comer. Tinha gosto de bolo feito com mel.",
+    "O Senhor mandou recolher um ômer por pessoa, só o suficiente para o dia. O que guardavam até a manhã seguinte criava bichos e cheirava mal. No sexto dia recolhiam o dobro e guardavam o sábado. Israel comeu esse maná por quarenta anos, até chegar à entrada de Canaã, terra habitada."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "Vejam, vou fazer chover pão do céu para vocês. O povo vai sair todos os dias e recolher só o que precisa para aquele dia."
+    },
+    {
+     "who": "Deus",
+     "text": "Ao entardecer vocês comerão carne, e de manhã se fartarão de pão. Então saberão que eu sou o Senhor, o seu Deus."
+    },
+    {
+     "who": "Moisés",
+     "text": "Este é o pão que o Senhor deu a vocês para comer."
+    }
+   ],
+   "note": "O nome maná é explicado a partir da expressão hebraica man hu, que quer dizer o que é isto. O ômer era a décima parte de um efa, calculado em pouco mais de dois litros. Arão guardou um ômer de maná num jarro diante das tábuas do testemunho.",
+   "reflect": "A minha mão que quer acumular também a parte de amanhã confia naquele que me dá o pão de hoje?",
+   "quiz": {
+    "q": "Por quantos anos o povo de Israel comeu maná?",
+    "options": [
+     "Sete anos",
+     "Doze anos",
+     "Quarenta anos",
+     "Setenta anos"
+    ],
+    "explain": "Os israelitas comeram maná durante quarenta anos, até chegarem a uma terra habitada, à entrada da terra de Canaã (Êx 16:35)."
+   },
+   "credit": ""
+  },
+  "m13": {
+   "title": "Água que brota da rocha",
+   "when": "1446 a.C.",
+   "subtitle": "O Senhor está ou não no meio de nós?",
+   "story": [
+    "Saindo do deserto de Sim e passando por vários lugares, acamparam em Refidim, mas ali também não havia água para beber. O sol batia no vale cheio de pedras, e o acampamento se enchia do choro das crianças e dos animais com sede. O povo discutiu com Moisés, exigindo água.",
+    "Moisés clamou ao Senhor. Que faço com este povo? Daqui a pouco vão me apedrejar. O Senhor mandou que ele levasse alguns anciãos e passasse diante do povo com a vara com que tinha ferido o Nilo. Eu estarei diante de você, sobre a rocha de Horebe.",
+    "Diante dos anciãos, Moisés bateu na rocha, e a água jorrou. Ele chamou o lugar de Massá e Meribá, porque o povo tinha discutido e posto o Senhor à prova, dizendo: o Senhor está ou não no meio de nós?"
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "Veja, eu estarei ali diante de você, sobre a rocha de Horebe. Bata na rocha, e dela sairá água para o povo beber."
+    },
+    {
+     "who": "Moisés",
+     "text": "Por que vocês discutem comigo? Por que põem o Senhor à prova?"
+    },
+    {
+     "who": "Moisés",
+     "text": "O que faço com este povo? Mais um pouco e vão me apedrejar."
+    }
+   ],
+   "note": "Refidim é situada perto do Wadi Feiran, no sul da Península do Sinai, mas não com certeza. Massá quer dizer prova, e Meribá quer dizer discussão. O Salmo 95 volta a lembrar esse episódio como exemplo de coração endurecido.",
+   "reflect": "Quando tenho sede, eu duvido se o Senhor está ao meu lado, ou clamo a ele?",
+   "quiz": {
+    "q": "Que nome Moisés deu ao lugar onde saiu água da rocha?",
+    "options": [
+     "Elim e Mara",
+     "Betel e Peniel",
+     "Gilgal e Siló",
+     "Massá e Meribá"
+    ],
+    "explain": "Como o povo discutiu e pôs o Senhor à prova, Moisés chamou aquele lugar de Massá e Meribá (Êx 17:7)."
+   },
+   "credit": ""
+  },
+  "m14": {
+   "title": "As mãos levantadas",
+   "when": "1446 a.C.",
+   "subtitle": "Mãos que não baixaram até o pôr do sol",
+   "story": [
+    "Os amalequitas atacaram em Refidim. Moisés mandou Josué escolher homens e sair para lutar, e ele mesmo subiu ao alto da colina com a vara de Deus na mão. Arão e Hur ficaram ao seu lado. Do vale lá embaixo subia o som de espadas se chocando.",
+    "Quando Moisés levantava as mãos, Israel vencia. Quando as baixava, Amaleque vencia. Com o tempo, os braços de Moisés ficaram pesados, e os dois trouxeram uma pedra para ele se sentar e seguraram suas mãos no alto, um de cada lado. Aquelas mãos ficaram firmes até o pôr do sol.",
+    "Josué derrotou Amaleque ao fio da espada. O Senhor mandou escrever o fato num livro, para ser lembrado, e contá-lo aos ouvidos de Josué. Moisés construiu um altar e o chamou de O Senhor é a minha bandeira."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "Escreva isto num livro como lembrança e conte aos ouvidos de Josué. Eu vou apagar por completo a memória de Amaleque de debaixo do céu."
+    },
+    {
+     "who": "Moisés",
+     "text": "Escolha alguns homens e saia para lutar contra Amaleque. Amanhã eu ficarei no alto da colina com a vara de Deus na mão."
+    }
+   ],
+   "note": "Esta é a primeira vez que Josué aparece na Bíblia. Os amalequitas eram descendentes de Esaú, nômades que vagavam pelo Neguebe, no sul, e pelo deserto do Sinai. Deuteronômio conta que eles atacaram pela retaguarda os que ficavam para trás, cansados.",
+   "reflect": "Estou ao lado de alguém cujos braços caem de cansaço, segurando-os no alto?",
+   "quiz": {
+    "q": "Quem segurou as mãos de Moisés, um de cada lado, quando seus braços se cansaram?",
+    "options": [
+     "Josué e Calebe",
+     "Arão e Hur",
+     "Arão e Miriã",
+     "Eleazar e Itamar"
+    ],
+    "explain": "Arão e Hur trouxeram uma pedra para Moisés se sentar e seguraram suas mãos, um de um lado e o outro do outro (Êx 17:12)."
+   },
+   "credit": ""
+  },
+  "m15": {
+   "title": "O conselho do sogro Jetro",
+   "when": "1446 a.C.",
+   "subtitle": "A sabedoria de um velho sacerdote: não carregue tudo sozinho",
+   "story": [
+    "Jetro, sacerdote de Midiã, ouviu as notícias do genro Moisés. Trouxe Zípora, a mulher de Moisés, e os dois filhos, Gérson e Eliézer, até o acampamento ao pé do monte de Deus. Moisés saiu ao encontro do sogro, inclinou-se, beijou-o e lhe contou tudo o que o Senhor tinha feito.",
+    "Jetro se alegrou e confessou que agora sabia que o Senhor é maior que todos os deuses. Ofereceu a Deus holocaustos e sacrifícios, e Arão e os anciãos de Israel vieram comer pão com ele na presença de Deus.",
+    "No dia seguinte, Jetro viu Moisés ouvindo sozinho as causas do povo, da manhã até a noite. Disse que assim tanto ele quanto o povo iam se esgotar, e que escolhesse homens de confiança para cuidar dos casos menores. Moisés fez como ele disse, e Jetro voltou para a sua terra."
+   ],
+   "words": [
+    {
+     "who": "Jetro",
+     "text": "O que você está fazendo não está bom. Você e o povo que está com você vão acabar esgotados. Este trabalho é pesado demais para você carregar sozinho."
+    },
+    {
+     "who": "Jetro",
+     "text": "Procure no meio do povo homens capazes, que temam a Deus, que sejam verdadeiros e odeiem o suborno, e coloque-os como chefes de mil, de cem, de cinquenta e de dez."
+    },
+    {
+     "who": "Jetro",
+     "text": "Agora sei que o Senhor é maior do que todos os deuses."
+    }
+   ],
+   "note": "O texto diz que Jetro veio ao acampamento junto ao monte de Deus. Por isso há várias opiniões sobre se isso aconteceu em Refidim ou depois da chegada ao Sinai. Midiã devia ser um povo que vivia no noroeste da Arábia, a leste do golfo de Ácaba.",
+   "reflect": "Por teimar em carregar tudo sozinho, será que eu e as pessoas ao meu redor estamos nos esgotando?",
+   "quiz": {
+    "q": "Qual destes chefes Jetro não aconselhou Moisés a nomear?",
+    "options": [
+     "Chefes de mil",
+     "Chefes de cinco mil",
+     "Chefes de cinquenta",
+     "Chefes de dez"
+    ],
+    "explain": "Jetro aconselhou nomear chefes de mil, de cem, de cinquenta e de dez para julgar o povo (Êx 18:21). Não há chefes de cinco mil."
+   },
+   "credit": ""
+  },
+  "m16": {
+   "title": "Deus desce ao monte",
+   "when": "1446 a.C.",
+   "subtitle": "Um povo carregado sobre asas de águia",
+   "story": [
+    "No terceiro mês depois da saída do Egito, o povo entrou no deserto do Sinai e acampou diante do monte. Era uma terra silenciosa, com picos de granito vermelho apontando para o céu. Moisés subiu ao monte, e o Senhor o chamou e lhe deu uma mensagem para Israel.",
+    "Se vocês obedecerem e guardarem a minha aliança, serão o meu tesouro precioso, um reino de sacerdotes e uma nação santa. O povo respondeu a uma só voz que faria tudo o que o Senhor tinha dito. Lavaram as roupas, purificaram-se e esperaram o terceiro dia. Ao redor do monte foi traçado um limite.",
+    "Na manhã do terceiro dia vieram trovões e relâmpagos, uma nuvem espessa cobriu o monte e soou bem alto uma trombeta. Todo o povo no acampamento tremeu. Quando o Senhor desceu no meio do fogo, o monte soltava fumaça como uma fornalha e tremia com força, e o som da trombeta ia ficando cada vez mais forte."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "Vocês viram o que fiz aos egípcios, e como carreguei vocês sobre asas de águia e os trouxe para perto de mim."
+    },
+    {
+     "who": "Deus",
+     "text": "A terra inteira é minha, mas se vocês ouvirem bem a minha voz e guardarem a minha aliança, serão para mim um reino de sacerdotes e uma nação santa."
+    },
+    {
+     "who": "O povo",
+     "text": "Faremos tudo o que o Senhor disse."
+    }
+   ],
+   "note": "Pela tradição, o monte Sinai é o Jebel Musa, o monte de Moisés, no sul da península, com cerca de 2.285 metros de altitude. Mas há várias outras opiniões, como o Jebel Serbal, o norte da península ou um monte no noroeste da Arábia, e o local exato é desconhecido.",
+   "reflect": "Lembro-me da mão que me carregou sobre asas de águia até aqui?",
+   "quiz": {
+    "q": "No Sinai, o que Deus disse que Israel seria se guardasse a aliança?",
+    "options": [
+     "Um exército forte",
+     "Uma grande cidade",
+     "Um reino de sacerdotes e uma nação santa",
+     "Um reino de doze reis"
+    ],
+    "explain": "Se guardasse a aliança, Israel seria o tesouro precioso de Deus, um reino de sacerdotes e uma nação santa (Êx 19:5–6)."
+   },
+   "credit": ""
+  },
+  "m17": {
+   "title": "As dez palavras",
+   "when": "1446 a.C.",
+   "subtitle": "Palavras de quem libertou da escravidão",
+   "story": [
+    "Do monte envolto em fumaça e fogo, o próprio Deus falou. A primeira frase não foi uma ordem, mas uma apresentação. Eu sou o Senhor, o seu Deus, que tirou você da terra do Egito, da casa da escravidão. Sobre essa libertação, as dez palavras foram colocadas uma a uma.",
+    "Não tenha outros deuses além de mim. Não faça ídolos nem se curve diante deles. Não use o meu nome em vão. Lembre-se do sábado para santificá-lo. Honre pai e mãe. Não mate, não cometa adultério, não roube, não dê falso testemunho, não cobice o que é do seu próximo.",
+    "Vendo os trovões e relâmpagos, ouvindo a trombeta e olhando o monte fumegante, o povo tremeu e ficou de longe. Pediram que Moisés falasse no lugar de Deus, porque, se Deus falasse diretamente, achavam que morreriam. O povo ficou longe, e Moisés se aproximou da escuridão espessa onde Deus estava."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "Eu sou o Senhor, o seu Deus, que tirou você da terra do Egito, da casa da escravidão. Não tenha outros deuses diante de mim."
+    },
+    {
+     "who": "Deus",
+     "text": "Honre o seu pai e a sua mãe. Assim você viverá muito tempo na terra que o Senhor, o seu Deus, lhe dá."
+    },
+    {
+     "who": "O povo",
+     "text": "Fale você conosco, e nós ouviremos. Se Deus falar diretamente, achamos que vamos morrer."
+    },
+    {
+     "who": "Moisés",
+     "text": "Não tenham medo. Deus veio para pôr vocês à prova, para que o temor dele esteja em vocês e vocês não pequem."
+    }
+   ],
+   "note": "A Bíblia chama estes mandamentos de dez palavras em Êxodo 34 e Deuteronômio 4. A maneira de dividi-los em dez varia um pouco entre o judaísmo, a tradição católica e luterana e a tradição reformada. As mesmas palavras aparecem de novo em Deuteronômio 5.",
+   "reflect": "Antes dos mandamentos, Deus diz: eu sou o Deus que libertou você. A minha obediência nasce do medo ou da alegria de ter sido salvo?",
+   "quiz": {
+    "q": "Entre as dez palavras, qual mandamento vem com a promessa de viver muito tempo na terra?",
+    "options": [
+     "Honre pai e mãe",
+     "Lembre-se do sábado",
+     "Não roube",
+     "Não cobice"
+    ],
+    "explain": "Junto com o mandamento de honrar pai e mãe veio a promessa de viver muito tempo na terra que o Senhor dá (Êx 20:12)."
+   },
+   "credit": ""
+  },
+  "m18": {
+   "title": "O sangue da aliança",
+   "when": "1446 a.C.",
+   "subtitle": "Uma aliança selada com sangue e uma refeição",
+   "story": [
+    "Moisés transmitiu ao povo todas as palavras do Senhor, e o povo respondeu a uma só voz que faria tudo. Bem cedo no dia seguinte, Moisés construiu um altar ao pé do monte e levantou doze colunas de pedra, uma para cada tribo de Israel. Os jovens ofereceram holocaustos e sacrificaram novilhos como ofertas de paz.",
+    "Moisés pôs metade do sangue em bacias e derramou a outra metade sobre o altar. Leu para o povo o livro da aliança, e o povo disse de novo: faremos tudo o que o Senhor disse e obedeceremos. Moisés aspergiu o sangue das bacias sobre o povo e declarou que aquele era o sangue da aliança.",
+    "Moisés, Arão, Nadabe, Abiú e setenta anciãos subiram ao monte e viram o Deus de Israel. Sob os seus pés havia algo como um piso de safira, claro como o próprio céu. Eles viram a Deus, comeram e beberam. Depois Moisés entrou na nuvem e ficou no monte quarenta dias e quarenta noites."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "Suba ao monte, venha até mim e espere ali. Eu lhe darei as tábuas de pedra com a lei e os mandamentos que escrevi para ensinar o povo."
+    },
+    {
+     "who": "Moisés",
+     "text": "Vejam, este é o sangue da aliança que o Senhor fez com vocês de acordo com todas estas palavras."
+    },
+    {
+     "who": "O povo",
+     "text": "Faremos tudo o que o Senhor disse e obedeceremos."
+    }
+   ],
+   "note": "No antigo Oriente Próximo, as alianças muitas vezes eram seladas com um ritual em que se sacrificavam animais e se comia junto. O sangue aspergido na aliança do Sinai ecoa no sangue da aliança de que Jesus falou ao erguer o cálice na última ceia.",
+   "reflect": "A frase “faremos tudo” que eu disse, como ela está sendo cumprida hoje na minha vida?",
+   "quiz": {
+    "q": "Quantas colunas de pedra Moisés levantou junto ao altar, uma para cada tribo de Israel?",
+    "options": [
+     "Sete",
+     "Dez",
+     "Setenta",
+     "Doze"
+    ],
+    "explain": "Moisés construiu um altar ao pé do monte e levantou doze colunas de pedra, segundo as doze tribos de Israel (Êx 24:4)."
+   },
+   "credit": ""
+  },
+  "m19": {
+   "title": "O bezerro de ouro",
+   "when": "1446 a.C.",
+   "subtitle": "Um deus moldado por mãos que não aguentaram esperar",
+   "story": [
+    "Como Moisés não descia do monte, o povo se juntou em volta de Arão. Diziam que não sabiam o que tinha acontecido com Moisés, que os tirara do Egito, e pediam que ele fizesse um deus para ir à frente deles. Arão recolheu os brincos de ouro, derreteu-os e, com um buril, deu-lhes a forma de um bezerro.",
+    "Israel, este é o deus que tirou vocês do Egito. No dia seguinte o povo ofereceu holocaustos, comeu, bebeu e se levantou para se divertir. No alto do monte, o Senhor se irou, e Moisés se prostrou, pedindo que ele se lembrasse da promessa feita a Abraão, Isaque e Israel. E o Senhor desistiu do castigo.",
+    "Descendo com as duas tábuas de pedra gravadas pelo próprio Deus, Moisés viu as canções e o povo dançando. Furioso, quebrou as tábuas ao pé do monte, queimou o bezerro, moeu-o até virar pó, espalhou-o na água e fez o povo beber. Depois subiu de novo ao Senhor e implorou perdão pelo pecado do povo."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "Desça depressa. O seu povo, que você tirou do Egito, se corrompeu. Tão depressa se desviaram do caminho que eu ordenei. Fizeram um bezerro de metal e se curvaram diante dele."
+    },
+    {
+     "who": "Moisés",
+     "text": "Este povo cometeu um grande pecado. Agora, perdoa o pecado deles. Se não, apaga o meu nome do livro que escreveste."
+    },
+    {
+     "who": "Arão",
+     "text": "Eles me deram o ouro, eu o joguei no fogo, e saiu este bezerro."
+    }
+   ],
+   "note": "O bezerro de ouro talvez tenha relação com Ápis, o deus touro do Egito, ou com as estátuas de touro que em Canaã eram vistas como pedestal de um deus, e há várias opiniões. Mais tarde, as mesmas palavras se repetem diante dos bezerros de ouro que Jeroboão pôs em Betel e em Dã.",
+   "reflect": "Quando Deus parece demorar, com o que eu me apresso a preencher esse vazio?",
+   "quiz": {
+    "q": "O que Moisés fez com o bezerro de ouro que o povo fabricou?",
+    "options": [
+     "Enterrou no alto do monte",
+     "Queimou, moeu até virar pó, espalhou na água e fez o povo beber",
+     "Jogou no mar Vermelho",
+     "Deixou na tenda de Arão"
+    ],
+    "explain": "Moisés queimou o bezerro, moeu-o até virar pó, espalhou-o na água e fez os israelitas beberem (Êx 32:20)."
+   },
+   "credit": ""
+  },
+  "m20": {
+   "title": "A glória que passa",
+   "when": "1446 a.C.",
+   "subtitle": "O nome ouvido na fenda da rocha",
+   "story": [
+    "No acampamento onde a ferida do bezerro de ouro ainda não tinha cicatrizado, Moisés de novo se agarrou ao Senhor. Se tu não fores conosco, não nos faças sair daqui. E pediu algo ainda mais profundo. Mostra-me a tua glória.",
+    "Ninguém pode ver o meu rosto e continuar vivo. Em vez disso, o Senhor disse que poria Moisés numa fenda da rocha, o cobriria com a mão e passaria diante dele. Moisés talhou duas tábuas de pedra como as primeiras e, na penumbra da madrugada, subiu sozinho ao monte Sinai.",
+    "O Senhor desceu na nuvem, ficou ali com ele e, passando à sua frente, proclamou o seu nome. Deus compassivo e bondoso, lento para se irar e cheio de amor e fidelidade. Moisés se prostrou depressa no chão, e o Senhor disse que renovaria a aliança."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "O Senhor, eu sou o Senhor. Deus compassivo e bondoso, lento para se irar, cheio de amor leal e de fidelidade. Mostro amor por mil gerações e perdoo a maldade e o pecado."
+    },
+    {
+     "who": "Deus",
+     "text": "Eu mesmo irei com você e lhe darei descanso."
+    },
+    {
+     "who": "Moisés",
+     "text": "Mostra-me a tua glória."
+    }
+   ],
+   "note": "Esta declaração de Êxodo 34:6–7 é a apresentação que Deus faz de si mesmo que mais ecoa no Antigo Testamento. Ela volta quase com as mesmas palavras em vários lugares, como Números 14, o Salmo 103 e Jonas 4.",
+   "reflect": "O primeiro nome que Deus revelou ao povo que tinha pecado foi compaixão. Por que nome eu chamo a Deus?",
+   "quiz": {
+    "q": "Onde Deus colocou Moisés enquanto a sua glória passava?",
+    "options": [
+     "Junto à sarça",
+     "Na entrada da tenda do encontro",
+     "Numa fenda da rocha",
+     "No altar ao pé do monte"
+    ],
+    "explain": "O Senhor disse que, quando a sua glória passasse, colocaria Moisés numa fenda da rocha e o cobriria com a mão (Êx 33:22)."
+   },
+   "credit": ""
+  },
+  "m21": {
+   "title": "A glória enche o tabernáculo",
+   "when": "1445 a.C.",
+   "subtitle": "A casa de Deus erguida no meio do deserto",
+   "story": [
+    "No primeiro dia do primeiro mês do segundo ano depois da saída do Egito, o acampamento ao pé do Sinai estava agitado desde cedo. As bases de prata foram assentadas na areia, e as tábuas revestidas de ouro, levantadas uma a uma. Penduradas as cortinas e estendidas as coberturas de pelo de cabra, a casa de Deus apareceu no meio da aldeia de tendas que balançava ao vento.",
+    "Moisés colocou as tábuas do testemunho na arca e pôs a tampa da expiação por cima. Pôs no lugar a mesa dos pães, o candelabro e o altar de ouro do incenso, e no pátio, o altar dos holocaustos e a bacia. Até armar as cortinas ao redor do pátio e pendurar a cortina da entrada, ele terminou tudo exatamente como o Senhor tinha mandado.",
+    "Então a nuvem cobriu a tenda do encontro, e a glória do Senhor encheu o tabernáculo. Nem Moisés conseguia entrar. Daquele dia em diante, quando a nuvem se levantava do tabernáculo, o povo partia, e quando a nuvem parava, eles ficavam. De dia a nuvem, e de noite o fogo, estavam diante dos olhos de todo o Israel."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "No primeiro dia do primeiro mês, levante o tabernáculo, a tenda do encontro."
+    },
+    {
+     "who": "Deus",
+     "text": "Vista Arão com as roupas sagradas, unja-o e separe-o, para que me sirva como sacerdote."
+    }
+   ],
+   "note": "O tabernáculo foi levantado no primeiro dia do primeiro mês do segundo ano do Êxodo, quase um ano depois da saída do Egito. O pátio media cem côvados de comprimento por cinquenta de largura, mais ou menos 45 metros por 22.",
+   "reflect": "Como eles, que ficavam quando a nuvem parava e partiam quando ela se levantava, eu acerto os meus passos com o tempo de Deus?",
+   "quiz": {
+    "q": "Quando a nuvem cobriu a tenda e a glória do Senhor encheu o tabernáculo, o que aconteceu com Moisés?",
+    "options": [
+     "Não conseguiu entrar na tenda do encontro",
+     "Seu rosto brilhou",
+     "Subiu ao monte",
+     "Reuniu o povo"
+    ],
+    "explain": "A nuvem ficou sobre a tenda do encontro e a glória do Senhor encheu o tabernáculo, de modo que Moisés não pôde entrar (Êx 40:35)."
+   },
+   "credit": ""
+  },
+  "m22": {
+   "title": "As sepulturas da cobiça",
+   "when": "1445 a.C.",
+   "subtitle": "A boca que pedia carne virou sepultura",
+   "story": [
+    "Pouco depois de deixarem o Sinai e entrarem no deserto, ouviram-se queixas na beira do acampamento. O fogo do Senhor se acendeu, o povo clamou, Moisés orou e o fogo se apagou. Chamaram o lugar de Taberá. Mas, no meio da gente misturada que andava com eles, a cobiça voltou a se espalhar.",
+    "O peixe que comiam de graça no Egito, os pepinos e melões, o alho-poró, a cebola e o alho. Olhando só para o maná, parecido com semente de coentro, o povo chorava na porta de cada tenda. Moisés orou como quem desaba. Este peso é grande demais, sozinho não consigo. O Senhor mandou reunir setenta anciãos e repartiu com eles o espírito que estava sobre Moisés.",
+    "Um vento veio do lado do mar e trouxe codornizes, que se amontoaram ao redor do acampamento, num raio de um dia de caminhada, até dois côvados de altura. O povo recolheu sem parar o dia todo, a noite inteira e o dia seguinte. Mas, com a carne ainda entre os dentes, a ira do Senhor caiu sobre eles numa grande praga. O lugar onde enterraram os cobiçosos foi chamado de Quibrote-Hataavá."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "Por acaso o meu braço ficou curto? Agora você vai ver com os próprios olhos se a minha palavra se cumpre ou não."
+    },
+    {
+     "who": "Deus",
+     "text": "Vou descer e falar com você ali. Tirarei do espírito que está sobre você e o darei também a eles, para que você não carregue sozinho o peso do povo."
+    },
+    {
+     "who": "Moisés",
+     "text": "Você está com ciúme por minha causa? Quem dera todo o povo do Senhor fosse profeta e o Senhor pusesse o seu espírito sobre todos eles!"
+    }
+   ],
+   "note": "Quibrote-Hataavá quer dizer sepulturas da cobiça. O local exato é desconhecido e deve ficar em algum lugar a nordeste do Sinai. As codornizes são aves migratórias que cruzam a Península do Sinai na primavera e no outono, e os bandos cansados da travessia do mar costumam pousar baixo, perto do chão.",
+   "reflect": "Como quem tinha o maná e sentia saudade da mesa do Egito, o que eu desejo mais do que a graça que já recebi?",
+   "quiz": {
+    "q": "Qual destes alimentos do Egito o povo não disse sentir falta?",
+    "options": [
+     "Peixe",
+     "Tâmaras",
+     "Alho",
+     "Alho-poró"
+    ],
+    "explain": "O povo tinha saudade do peixe, dos pepinos, dos melões, do alho-poró, da cebola e do alho que comia no Egito (Nm 11:5)."
+   },
+   "credit": ""
+  },
+  "m23": {
+   "title": "Os doze espias",
+   "when": "1445 a.C.",
+   "subtitle": "Viram a mesma terra e voltaram com corações diferentes",
+   "story": [
+    "No deserto de Parã, Moisés enviou a Canaã doze homens, um líder de cada tribo. A Oseias, filho de Num, deu o nome de Josué. Na época das primeiras uvas, eles passaram pelo Neguebe, ao sul, subiram até Hebrom e examinaram a terra durante quarenta dias.",
+    "O cacho de uvas cortado no vale de Escol era tão grande que dois homens o trouxeram pendurado numa vara. Trouxeram também romãs e figos. Era mesmo uma terra que manava leite e mel. Mas dez deles disseram que as cidades eram altas e os filhos de Anaque, gigantes, e que eles próprios pareciam gafanhotos. Só Calebe gritou que deviam subir imediatamente.",
+    "Naquela noite, toda a comunidade chorou alto. Chegaram a falar em escolher um chefe para voltar ao Egito. Josué e Calebe rasgaram as roupas e disseram que não temessem, pois o Senhor estava com eles, mas o povo quis apedrejá-los. Então a glória do Senhor apareceu sobre a tenda do encontro, e aquela geração passou a andar quarenta anos pelo deserto."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "O meu servo Calebe tem outro espírito e me seguiu de todo o coração. Vou levá-lo à terra em que ele pisou, e os seus descendentes a herdarão."
+    },
+    {
+     "who": "Deus",
+     "text": "Pelos quarenta dias em que vocês examinaram a terra, contando um ano para cada dia, vocês carregarão a culpa dos seus pecados por quarenta anos."
+    },
+    {
+     "who": "Calebe",
+     "text": "Vamos subir agora mesmo e tomar posse da terra. Com certeza venceremos."
+    }
+   ],
+   "note": "Muitos identificam Cades-Barneia com a fonte de Ain el-Qudeirat, ao sul do Neguebe, mas há outros candidatos próximos, como Ain Qadeis, e as opiniões variam. Escol quer dizer cacho, e o vale devia ficar perto de Hebrom.",
+   "reflect": "Olhando a mesma terra, dez viram gigantes e dois viram a Deus. O que os meus olhos enxergam maior hoje?",
+   "quiz": {
+    "q": "Qual era o nome original do homem a quem Moisés deu o nome de Josué?",
+    "options": [
+     "Calebe",
+     "Hur",
+     "Oseias",
+     "Eleazar"
+    ],
+    "explain": "Moisés chamou Oseias, filho de Num, de Josué (Nm 13:16)."
+   },
+   "credit": ""
+  },
+  "m24": {
+   "title": "A vara que floresceu",
+   "when": "c. 1445 a.C.",
+   "subtitle": "Flores de amendoeira num galho seco",
+   "story": [
+    "Coré, da tribo de Levi, com Datã e Abirão, da tribo de Rúben, se apresentaram diante de Moisés e Arão à frente de duzentos e cinquenta líderes conhecidos. Toda a comunidade é santa, por que vocês se colocam acima dos outros? Datã e Abirão chegaram a chamar o Egito de terra que mana leite e mel e se recusaram a atender ao chamado de Moisés.",
+    "Assim que Moisés terminou de falar, o chão onde estavam se abriu, engoliu as tendas e as pessoas e se fechou de novo. Os duzentos e cinquenta que traziam incensários foram queimados por um fogo que saiu do Senhor. No dia seguinte o povo voltou a reclamar e uma praga se espalhou, mas quando Arão correu com o incensário e ficou entre os mortos e os vivos, a praga parou.",
+    "O Senhor mandou colocar diante da arca do testemunho doze varas, uma de cada tribo. Na vara de Levi foi escrito o nome de Arão. Na manhã seguinte, quando Moisés entrou na tenda, a vara de Arão tinha brotado, florescido e dado amêndoas maduras. Um galho seco tinha voltado à vida numa só noite."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "A vara do homem que eu escolher vai brotar. Assim farei parar as queixas dos israelitas contra vocês."
+    },
+    {
+     "who": "Deus",
+     "text": "Ponha de novo a vara de Arão diante da arca do testemunho, como sinal para os rebeldes."
+    },
+    {
+     "who": "Moisés",
+     "text": "Com isto vocês saberão que foi o Senhor quem me enviou para fazer todas estas coisas, e que não as fiz por minha conta."
+    }
+   ],
+   "note": "Na terra de Israel, a amendoeira é a primeira árvore a florescer no fim do inverno, e por isso em hebraico recebeu um nome que quer dizer a árvore que vigia. A Carta aos Hebreus conta que a vara florida de Arão ficava dentro da arca da aliança. O texto não diz em que ano do deserto isso aconteceu.",
+   "reflect": "Onde estou me esforçando para me elevar por conta própria, e onde preciso esperar que Deus faça brotar?",
+   "quiz": {
+    "q": "Que fruto apareceu numa só noite na vara de Arão?",
+    "options": [
+     "Figos",
+     "Romãs",
+     "Azeitonas",
+     "Amêndoas"
+    ],
+    "explain": "A vara de Arão brotou, floresceu e deu amêndoas (Nm 17:8)."
+   },
+   "credit": ""
+  },
+  "m25": {
+   "title": "As águas de Meribá",
+   "when": "1407 a.C.",
+   "subtitle": "A mão que bateu duas vezes na rocha",
+   "story": [
+    "No primeiro mês, os israelitas chegaram ao deserto de Zim e ficaram em Cades. Ali Miriã morreu e foi sepultada. Era a irmã de Moisés e de Arão, a profetisa que, no dia da travessia do mar, cantou com o tamborim à frente das mulheres. Antes que a tristeza passasse, acabou a água no acampamento.",
+    "O povo foi até Moisés e Arão e discutiu com eles. Por que nos trouxeram a este lugar ruim, sem lugar para semear, sem figos, sem uvas, sem romãs e nem água para beber? Os dois se prostraram à entrada da tenda do encontro, a glória do Senhor apareceu, e o Senhor mandou que pegassem a vara e, diante da comunidade, falassem à rocha.",
+    "Mas Moisés se voltou para o povo reunido diante da rocha e gritou: escutem, rebeldes. Então levantou a mão e bateu na rocha duas vezes com a vara. A água jorrou com força, e a comunidade e os animais beberam. Mas naquele dia Moisés e Arão ouviram que não entrariam na terra prometida. Aquela água foi chamada de Meribá."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "Pegue a vara e reúna a comunidade. Diante deles, fale àquela rocha, e ela dará água."
+    },
+    {
+     "who": "Deus",
+     "text": "Vocês não confiaram em mim nem mostraram a minha santidade diante do povo. Por isso não levarão esta comunidade para a terra que eu dei."
+    },
+    {
+     "who": "Moisés",
+     "text": "Escutem, rebeldes. Será que temos de tirar água desta rocha para vocês?"
+    }
+   ],
+   "note": "Meribá quer dizer discussão. O texto diz apenas primeiro mês, mas como Arão morreu no quinto mês do quadragésimo ano no deserto, este episódio é situado naquele mesmo ano. No começo do Êxodo, em Refidim, também saiu água da rocha, e aquele lugar também foi chamado de Meribá.",
+   "reflect": "No momento de cansaço e raiva, será que eu agito a mão do meu jeito de sempre, em vez de seguir o caminho de Deus?",
+   "quiz": {
+    "q": "O que o Senhor mandou Moisés fazer diante da rocha?",
+    "options": [
+     "Falar à rocha",
+     "Bater uma vez na rocha com a vara",
+     "Construir um altar diante da rocha",
+     "Derramar azeite sobre a rocha"
+    ],
+    "explain": "O Senhor mandou falar à rocha diante da comunidade, mas Moisés bateu duas vezes na rocha com a vara (Nm 20:8, 11)."
+   },
+   "credit": ""
+  },
+  "m26": {
+   "title": "Arão no monte Hor",
+   "when": "1407 a.C.",
+   "subtitle": "As vestes do sumo sacerdote passam ao filho",
+   "story": [
+    "Toda a comunidade de Israel saiu de Cades e chegou ao monte Hor, na fronteira da terra de Edom. A montanha de pedra vermelha brilhava como se ardesse sob a luz da tarde. Ali o Senhor falou a Moisés e a Arão. Tinha chegado a hora de Arão se reunir aos seus antepassados, e por causa do que aconteceu nas águas de Meribá, ele não entraria na terra.",
+    "Moisés levou Arão e o filho dele, Eleazar, e subiu o monte à vista de toda a comunidade. As sombras dos três, subindo a encosta de pedra, se estendiam compridas. No alto, Moisés tirou uma a uma as vestes de sumo sacerdote do corpo do irmão e as vestiu em Eleazar. Eram as vestes com que, por quase quarenta anos, ele carregara o pecado do povo diante do altar.",
+    "Arão morreu ali no alto do monte. Só Moisés e Eleazar desceram. Quando souberam que Arão tinha morrido, todos os israelitas choraram por ele trinta dias. O vento do deserto passava pelo acampamento, e o jovem Eleazar, com as vestes de sacerdote, estava de pé no meio daquele choro."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "Arão vai agora se reunir aos seus antepassados. Como vocês desobedeceram à minha ordem nas águas de Meribá, ele não entrará na terra que dei aos israelitas."
+    },
+    {
+     "who": "Deus",
+     "text": "Tire as vestes de Arão e vista-as em Eleazar, filho dele. Arão morrerá ali e se reunirá aos seus antepassados."
+    }
+   ],
+   "note": "Números 33 conta que Arão morreu no primeiro dia do quinto mês do quadragésimo ano do Êxodo, aos cento e vinte e três anos. A tradição identifica o monte Hor com o Jebel Harun, perto de Petra, onde há um santuário do túmulo de Arão, mas há quem pense num monte mais próximo de Cades, e o local não é certo.",
+   "reflect": "Estou disposto a entregar de boa vontade à próxima pessoa o lugar e as vestes que me foram confiados?",
+   "quiz": {
+    "q": "Quem vestiu as roupas sacerdotais de Arão no monte Hor?",
+    "options": [
+     "Fineias",
+     "Eleazar",
+     "Nadabe",
+     "Josué"
+    ],
+    "explain": "Moisés tirou as vestes de Arão e as vestiu em Eleazar, filho dele, e Arão morreu no alto do monte (Nm 20:28)."
+   },
+   "credit": ""
+  },
+  "m27": {
+   "title": "A serpente de bronze na haste",
+   "when": "1407 a.C.",
+   "subtitle": "Olhar e viver",
+   "story": [
+    "Saindo do monte Hor, Israel tomou o caminho do mar Vermelho para contornar a terra de Edom. Era descer de novo para o sul, com a terra prometida logo ali na frente. O vento quente da Arabá levantava areia, e no caminho a paciência do povo foi se esgotando.",
+    "Eles despejaram tudo contra Deus e contra Moisés. Por que nos tiraram do Egito para morrer no deserto? Não há comida nem água, e já estamos enjoados desta comida miserável. Então serpentes venenosas entraram no acampamento e morderam o povo, e muita gente morreu. O povo veio a Moisés, confessou o pecado e implorou que ele orasse.",
+    "Moisés orou, e o Senhor disse: faça uma serpente e coloque-a no alto de uma haste, e quem for mordido e olhar para ela viverá. Moisés fez uma serpente de bronze e a ergueu bem alto na ponta de uma haste. Quando alguém mordido por uma serpente levantava a cabeça e olhava para a serpente de bronze, vivia."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "Faça uma serpente e pendure-a numa haste. Quem for mordido e olhar para ela viverá."
+    },
+    {
+     "who": "O povo",
+     "text": "Pecamos ao falar contra o Senhor e contra você. Ore ao Senhor para que ele afaste de nós estas serpentes."
+    }
+   ],
+   "note": "O texto não diz onde a serpente de bronze foi levantada, mas, pela lista de etapas de Números 33, situa-se o episódio em Punom, na Arabá. Punom deve ser a atual Feinan, na Jordânia, onde havia antigas minas de cobre. Mais tarde, o rei Ezequias destruiu essa serpente porque o povo queimava incenso a ela.",
+   "reflect": "Quando me canso de tentar resolver tudo com as minhas forças, levanto a cabeça para olhar o caminho que Deus preparou?",
+   "quiz": {
+    "q": "O que permitia viver a quem tinha sido mordido pelas serpentes?",
+    "options": [
+     "Receber a imposição de mãos de Moisés",
+     "Oferecer um cordeiro no altar",
+     "Olhar para a serpente de bronze na haste",
+     "Sair do acampamento e se lavar"
+    ],
+    "explain": "Quem fosse mordido e olhasse para a serpente de bronze vivia (Nm 21:9)."
+   },
+   "credit": ""
+  },
+  "m28": {
+   "title": "A conquista a leste do Jordão",
+   "when": "1406 a.C.",
+   "subtitle": "Uma batalha que começou na Estrada do Rei",
+   "story": [
+    "Depois de contornar o deserto, Israel chegou ao norte do vale do Arnom, diante da terra de Seom, rei dos amorreus. Israel mandou mensageiros com um pedido educado: não entrariam nos campos nem nas vinhas, nem beberiam água dos poços, só passariam pela Estrada do Rei. Mas Seom não deixou passar.",
+    "Seom reuniu todo o seu povo, saiu ao deserto e enfrentou Israel em Jaza. Israel o venceu à espada e tomou a terra desde o Arnom até o rio Jaboque. Israel passou a morar também em Hesbom, a capital de Seom, e nos povoados ao redor. Um velho cântico dizia que de Hesbom tinha saído um fogo que devorou Moabe.",
+    "Israel subiu de novo para o norte, rumo a Basã. Ogue, rei de Basã, saiu a Edrei com todo o seu exército. O Senhor disse a Moisés que não tivesse medo, e Israel derrotou Ogue, os filhos dele e todo o seu povo, e tomou a terra. Os altos campos a leste do Jordão foram a primeira terra de Israel."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "Não tenha medo dele. Entreguei nas suas mãos ele, o seu povo e a sua terra. Faça com ele o que você fez com Seom, rei dos amorreus, que vivia em Hesbom."
+    },
+    {
+     "who": "Israel",
+     "text": "Deixe-nos atravessar a sua terra. Não entraremos nos campos nem nas vinhas, nem beberemos água dos poços. Andaremos só pela Estrada do Rei."
+    }
+   ],
+   "note": "Hesbom é identificada com Tell Hisban, ao norte de Madaba, na Jordânia, mas as escavações não mostram com clareza uma cidade dessa época, e há várias opiniões. A fronteira sul, o Arnom, é o atual Wadi Mujib, e a fronteira norte, o Jaboque, é o rio Zarqa.",
+   "reflect": "Quando peço paz primeiro e mesmo assim encontro a porta fechada, em que me apoio, em vez do medo, para dar o próximo passo?",
+   "quiz": {
+    "q": "Ogue, derrotado por Israel em Edrei, era rei de que terra?",
+    "options": [
+     "Edom",
+     "Moabe",
+     "Amom",
+     "Basã"
+    ],
+    "explain": "Ogue, rei de Basã, saiu para lutar em Edrei, e Israel o derrotou e tomou a sua terra (Nm 21:33, 35)."
+   },
+   "credit": ""
+  },
+  "m29": {
+   "title": "Balaão e a jumenta",
+   "when": "1406 a.C.",
+   "subtitle": "A boca que veio amaldiçoar soltou bênçãos",
+   "story": [
+    "Quando Israel acampou nas planícies de Moabe, do outro lado do Jordão, em frente a Jericó, Balaque, rei de Moabe, ficou tomado de medo. Mandou buscar Balaão, filho de Beor, que morava em Petor, junto ao rio Eufrates. Os mensageiros chegaram com o pagamento da adivinhação nas mãos e pediram que ele amaldiçoasse aquele povo.",
+    "Depois que veio a segunda comitiva, Balaão selou a jumenta e partiu. Mas de repente a jumenta saiu do caminho, apertou o pé dele contra um muro e por fim se deitou no chão. O anjo do Senhor, com a espada desembainhada, estava bloqueando o caminho. A jumenta apanhou três vezes, e então o Senhor abriu a boca dela, e ela falou com o dono.",
+    "Balaque levou Balaão a lugares altos e ofereceu touros e carneiros em sete altares. Mas toda vez que Balaão abria a boca, em vez de maldição saíam bênçãos. Como são belas as suas tendas, Jacó! Por fim ele profetizou que de Jacó sairia uma estrela. Balaque bateu palmas de raiva, mas Balaão voltou para a sua terra."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "Não vá com eles. Você também não deve amaldiçoar esse povo, porque é um povo abençoado."
+    },
+    {
+     "who": "Deus",
+     "text": "Já que esses homens vieram chamar você, levante-se e vá com eles. Mas diga somente o que eu lhe disser."
+    },
+    {
+     "who": "Balaão",
+     "text": "Eu o vejo, mas não agora. Eu o contemplo, mas não de perto. Uma estrela sairá de Jacó, e um cetro se levantará de Israel."
+    }
+   ],
+   "note": "Em 1967, numa inscrição em gesso encontrada em Deir Alla, no vale do Jordão, aparece um vidente chamado Balaão, filho de Beor. O texto é de por volta do século 8 antes de Cristo e mostra que Balaão foi lembrado por muito tempo a leste do Jordão. Petor devia ficar perto do alto Eufrates.",
+   "reflect": "Quando Deus bloqueia o meu caminho, em vez de pegar a vara como Balaão, o que eu deveria parar para ver?",
+   "quiz": {
+    "q": "Por que a jumenta de Balaão saiu do caminho e por fim se deitou?",
+    "options": [
+     "Porque o anjo do Senhor, com a espada, bloqueava o caminho",
+     "Porque havia uma serpente na estrada",
+     "Porque os soldados de Balaque se aproximavam",
+     "Porque a carga era pesada demais"
+    ],
+    "explain": "A jumenta viu o anjo do Senhor parado no caminho com a espada desembainhada e saiu do caminho (Nm 22:23)."
+   },
+   "credit": ""
+  },
+  "m30": {
+   "title": "Escute, Israel",
+   "when": "1406 a.C.",
+   "subtitle": "Palavras para gravar no coração e escrever nos batentes",
+   "story": [
+    "Décimo primeiro mês do quadragésimo ano, na terra de Moabe, a leste do Jordão. Do outro lado do rio se via ao longe o palmeiral de Jericó. A nova geração, nascida e criada no deserto, sentou-se diante do velho Moisés. Com as últimas forças, Moisés lhes transmitiu as palavras que deveriam guardar na terra em que iam entrar.",
+    "Escute, Israel. O Senhor, nosso Deus, é o único Senhor. Ame-o de todo o coração, de toda a alma e com todas as forças. Grave estas palavras no coração e repita-as aos filhos, sentado em casa, andando pelo caminho, ao deitar e ao levantar. Amarre-as no pulso, prenda-as na testa e escreva-as nos batentes da casa e nos portões.",
+    "Moisés não esqueceu o alerta. Quando vocês ganharem grandes cidades que não construíram, casas cheias que não encheram, poços que não cavaram e vinhas que não plantaram, e comerem até se fartar, não se esqueçam do Senhor que os tirou da escravidão. E se um dia os filhos perguntarem o sentido destas palavras, comecem contando que fomos escravos do faraó no Egito."
+   ],
+   "words": [
+    {
+     "who": "Moisés",
+     "text": "Escute, Israel. O Senhor, nosso Deus, é o único Senhor. Ame o Senhor, o seu Deus, de todo o coração, de toda a alma e com todas as suas forças."
+    },
+    {
+     "who": "Moisés",
+     "text": "Grave no coração estas palavras que hoje lhe dou. Repita-as aos seus filhos e fale delas quando estiver em casa, quando andar pelo caminho, quando se deitar e quando se levantar."
+    },
+    {
+     "who": "Moisés",
+     "text": "Então tome cuidado. Não se esqueça do Senhor, que tirou você do Egito, da terra da escravidão."
+    }
+   ],
+   "note": "Shemá, a palavra hebraica que quer dizer escute, deu nome a esta confissão. Os judeus ainda hoje a recitam de manhã e à noite e prendem nos batentes uma pequena caixa com estas palavras. Jesus apontou o versículo 6:5 como o maior mandamento e citou este capítulo também nas tentações do deserto.",
+   "reflect": "Para lembrar do Deus que me libertou mesmo nos dias de fartura e conforto, que palavras estou gravando na minha casa e no meu caminho?",
+   "quiz": {
+    "q": "Quando os filhos perguntassem o sentido destes mandamentos, o que deveria ser dito primeiro?",
+    "options": [
+     "Recebemos a lei no monte Sinai",
+     "Fomos escravos do faraó no Egito",
+     "O nosso antepassado é Abraão",
+     "Andamos quarenta anos no deserto"
+    ],
+    "explain": "Quando os filhos perguntassem, deviam responder que foram escravos do faraó no Egito, mas o Senhor os tirou de lá com mão poderosa (Dt 6:20–21)."
+   },
+   "credit": ""
+  },
+  "m31": {
+   "title": "A terra vista do monte Nebo",
+   "when": "1406 a.C.",
+   "subtitle": "O rio que ele não atravessou, a terra que contemplou até o fim",
+   "story": [
+    "Deixando para trás as planícies de Moabe, Moisés subiu sozinho ao monte Nebo. No alto do Pisga, de frente para Jericó, o vento varria o capim seco. Ele tinha cento e vinte anos, mas os olhos não tinham se apagado nem as forças tinham se esgotado.",
+    "O Senhor lhe mostrou a terra inteira. De Gileade, no norte, até Dã, as montanhas de Naftali, de Efraim e de Manassés, a terra de Judá até o mar ocidental, o Neguebe ao sul, o vale de Jericó, a cidade das palmeiras, até Zoar. Além da névoa de calor, a promessa se estendia diante dele.",
+    "Ali, na terra de Moabe, Moisés morreu conforme a palavra do Senhor, e o Senhor o sepultou no vale, em frente a Bete-Peor. Até hoje ninguém sabe onde fica o seu túmulo. O povo chorou trinta dias, e Josué, que tinha recebido a imposição de mãos, o sucedeu cheio do espírito de sabedoria."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "Esta é a terra que jurei dar a Abraão, Isaque e Jacó, aos seus descendentes. Deixei que você a visse com os próprios olhos, mas você não atravessará até lá."
+    },
+    {
+     "who": "O narrador",
+     "text": "Depois disso nunca mais surgiu em Israel um profeta como Moisés, a quem o Senhor conhecia face a face."
+    }
+   ],
+   "note": "O monte Nebo deve ser um pico de pouco mais de 700 metros na Jordânia. Em dias claros, dali se veem o mar Morto, o oásis de Jericó e, ao longe, as serras do lado de Jerusalém. Pisga parece ser o nome do cume daquela cadeia de montes.",
+   "reflect": "Mesmo diante de uma promessa que nunca vou segurar nas mãos, sou capaz de contemplá-la e agradecer?",
+   "quiz": {
+    "q": "Com que idade Moisés morreu?",
+    "options": [
+     "110 anos",
+     "120 anos",
+     "130 anos",
+     "175 anos"
+    ],
+    "explain": "Moisés morreu aos cento e vinte anos, mas seus olhos não se apagaram nem suas forças se esgotaram (Dt 34:7). Cento e dez anos é a idade com que Josué morreu."
+   },
+   "credit": ""
+  },
+  "m32": {
+   "title": "Seja forte e corajoso",
+   "when": "1406 a.C.",
+   "subtitle": "A voz ouvida de novo no lugar que Moisés deixou",
+   "story": [
+    "O acampamento a leste do Jordão, depois do funeral de Moisés. As tendas estavam quietas à sombra das acácias. Então o Senhor falou a Josué, filho de Num, que servia a Moisés. O meu servo Moisés morreu. Agora levante-se e atravesse o Jordão com este povo.",
+    "Do deserto e do Líbano até o grande rio Eufrates, e até o grande mar onde o sol se põe, essa será a terra de vocês. O Senhor prometeu estar com Josué como esteve com Moisés e insistiu que o livro da lei não se afastasse da sua boca e que ele o meditasse dia e noite.",
+    "Josué mandou os comandantes avisarem que em três dias atravessariam o Jordão, e que preparassem provisões. Os guerreiros de Rúben, de Gade e da meia tribo de Manassés, que tinham recebido terra a leste do Jordão, responderam que atravessariam à frente dos irmãos. Só seja forte e corajoso. As vozes deles ecoaram pelo acampamento."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "Não fui eu que lhe ordenei? Seja forte e corajoso. Não tenha medo nem desanime. Aonde quer que você vá, eu, o Senhor, o seu Deus, estou com você."
+    },
+    {
+     "who": "Deus",
+     "text": "Assim como estive com Moisés, estarei com você. Não vou abandonar você, nunca vou deixá-lo."
+    },
+    {
+     "who": "Deus",
+     "text": "Não deixe que as palavras deste livro da lei se afastem da sua boca e medite nelas dia e noite. Então o seu caminho se abrirá e você agirá com sabedoria."
+    },
+    {
+     "who": "O povo",
+     "text": "Faremos tudo o que você mandar e iremos aonde você nos enviar. Só seja forte e corajoso."
+    }
+   ],
+   "note": "O nome Josué quer dizer o Senhor é salvação. Moisés mudou para Josué o seu nome original, Oseias. Em grego, é o mesmo nome que Jesus. Sitim quer dizer acácias, e o local exato é apenas estimado.",
+   "reflect": "Diante do vazio deixado por alguém grande, em que me apoio para me levantar de novo?",
+   "quiz": {
+    "q": "Em quantos dias Josué disse ao povo que atravessariam o Jordão?",
+    "options": [
+     "Um dia",
+     "Sete dias",
+     "Três dias",
+     "Quarenta dias"
+    ],
+    "explain": "Josué ordenou: “Daqui a três dias vocês atravessarão este Jordão. Preparem provisões” (Js 1:11)."
+   },
+   "credit": ""
+  },
+  "m33": {
+   "title": "O cordão vermelho de Raabe",
+   "when": "1406 a.C.",
+   "subtitle": "Um fio de fé pendurado na janela da muralha",
+   "story": [
+    "Os dois espias enviados de Sitim entraram escondidos em Jericó, a cidade das palmeiras. Ficaram na casa de Raabe, construída junto à muralha. A notícia correu depressa. Ao pôr do sol, os homens do rei bateram à porta exigindo que ela entregasse aqueles homens.",
+    "Raabe escondeu os dois debaixo dos talos de linho que estavam secando no terraço e disse que eles tinham ido embora quando o portão da cidade fechava. Depois que os perseguidores correram para os vaus do Jordão, ela subiu ao terraço e confessou. Ouvimos que o Senhor secou o mar Vermelho, e o nosso coração se derreteu.",
+    "Raabe desceu os dois por uma corda pela janela, para fora da cidade. Os espias prometeram: quando entrarmos nesta terra, amarre este cordão vermelho na janela e reúna a sua família dentro de casa. Depois de se esconderem três dias nos montes, voltaram e disseram: o Senhor entregou toda a terra nas nossas mãos."
+   ],
+   "words": [
+    {
+     "who": "Raabe",
+     "text": "O Senhor, o Deus de vocês, é Deus de verdade, lá em cima no céu e aqui embaixo na terra."
+    },
+    {
+     "who": "Raabe",
+     "text": "Eu fui bondosa com vocês. Agora jurem pelo Senhor que também serão bondosos com a família do meu pai e livrarão a nossa vida da morte."
+    },
+    {
+     "who": "Os espias",
+     "text": "Damos a nossa vida pela de vocês. Quando o Senhor nos der esta terra, seremos fiéis a você."
+    }
+   ],
+   "note": "Jericó é uma cidade-oásis no vale do Jordão, cerca de 250 metros abaixo do nível do mar, considerada uma das cidades mais antigas do mundo. O linho secando no terraço lembra a época da colheita da primavera. O nome de Raabe aparece também na genealogia de Jesus, no Evangelho de Mateus.",
+   "reflect": "Quando todos trancam os portões, sou capaz de abrir a janela para o lado de Deus, como Raabe?",
+   "quiz": {
+    "q": "O que Raabe amarrou na janela como sinal de salvação?",
+    "options": [
+     "Um cordão vermelho",
+     "Um pano branco",
+     "Uma lamparina",
+     "Um ramo de oliveira"
+    ],
+    "explain": "Os espias disseram a Raabe que amarrasse um cordão vermelho na janela por onde os tinha descido (Js 2:18, 21)."
+   },
+   "credit": ""
+  },
+  "m34": {
+   "title": "A travessia do Jordão",
+   "when": "1406 a.C.",
+   "subtitle": "A água para, e as pedras viram memória",
+   "story": [
+    "Na colheita da primavera, o rio Jordão estava tão cheio que transbordava das margens. O povo ficou três dias à beira do rio de águas barrentas e fortes. Josué disse: santifiquem-se, porque amanhã o Senhor fará maravilhas no meio de vocês.",
+    "No instante em que os pés dos sacerdotes que carregavam a arca da aliança tocaram a água, a água que descia parou e se amontoou como uma represa, lá longe, junto à cidade de Adã. Enquanto os sacerdotes ficavam em terra seca no meio do rio, todo o povo atravessou para o lado de Jericó. Só se ouvia o barulho dos passos sobre as pedrinhas.",
+    "Doze homens escolhidos, um de cada tribo, carregaram cada um uma pedra do leito do rio e as colocaram em Gilgal. Ali o povo foi circuncidado e celebrou a Páscoa na tarde do dia catorze do primeiro mês. No dia seguinte ao que comeram dos frutos da terra, o maná, que caíra por quarenta anos, parou."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "A partir de hoje vou engrandecer você diante de todo o Israel. Farei que saibam que, assim como estive com Moisés, estou com você."
+    },
+    {
+     "who": "Deus",
+     "text": "Hoje tirei de cima de vocês a vergonha do Egito."
+    },
+    {
+     "who": "Josué",
+     "text": "Quando um dia os seus filhos perguntarem o que significam estas pedras, contem a eles. Israel atravessou este Jordão pisando em terra seca."
+    }
+   ],
+   "note": "O Jordão fica mais cheio na primavera, quando derrete a neve do monte Hermom. A cidade de Adã deve ser Tell ed-Damiyeh, uns 30 quilômetros rio acima, e há registro de que, no terremoto de 1927, as margens ali perto também desabaram e o rio ficou bloqueado por um tempo. A localização de Gilgal tem várias opiniões.",
+   "reflect": "Com que pedras estou registrando os caminhos que Deus abriu na minha vida, para contar à próxima geração?",
+   "quiz": {
+    "q": "O que parou no dia seguinte à Páscoa em Gilgal, quando comeram dos frutos da terra?",
+    "options": [
+     "A coluna de nuvem",
+     "A água da rocha",
+     "As codornizes",
+     "O maná"
+    ],
+    "explain": "No dia seguinte ao que comeram dos frutos da terra, o maná parou, e naquele ano Israel passou a comer da produção de Canaã (Js 5:12)."
+   },
+   "credit": ""
+  },
+  "m35": {
+   "title": "A muralha que caiu",
+   "when": "1406 a.C.",
+   "subtitle": "Sete dias de silêncio antes do grito",
+   "story": [
+    "Jericó estava fechada a sete chaves. O sol da manhã brilhava sobre a muralha, por onde ninguém entrava nem saía. O Senhor disse a Josué: veja, entreguei nas suas mãos Jericó, o seu rei e os seus guerreiros. Mas o meio não seria a espada, e sim os passos.",
+    "Durante seis dias, uma vez por dia, sete sacerdotes com trombetas de chifre de carneiro tocavam à frente da arca e davam a volta na cidade. O povo não dizia uma só palavra. Na madrugada do sétimo dia, deram sete voltas na cidade e, ao som longo das trombetas, todo o povo gritou. A muralha desabou.",
+    "O texto registra, de forma breve e pesada, que as vidas e os bens da cidade foram todos consagrados ao Senhor e destruídos. No meio disso, só a casa com o cordão vermelho ficou de pé. Raabe e a sua família foram salvas, como prometido, e desde aquele dia viveram no meio de Israel."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "Veja, entreguei nas suas mãos Jericó, o seu rei e os seus guerreiros."
+    },
+    {
+     "who": "Deus",
+     "text": "Quando os sacerdotes tocarem longamente as trombetas de chifre de carneiro e vocês ouvirem o som, todo o povo deve gritar bem alto. Então a muralha vai desabar."
+    },
+    {
+     "who": "Josué",
+     "text": "Gritem! O Senhor entregou esta cidade a vocês."
+    }
+   ],
+   "note": "As interpretações dos arqueólogos sobre a muralha caída de Jericó divergem. Nos anos 1930, Garstang defendeu uma destruição por volta de 1400 antes de Cristo. Kenyon concluiu que naquela época não havia cidade murada, e depois surgiram de novo opiniões a favor da data mais antiga.",
+   "reflect": "Quando Deus me faz caminhar em silêncio, sou capaz de suportar essa espera com fé?",
+   "quiz": {
+    "q": "Quantas voltas Israel deu em Jericó no sétimo dia?",
+    "options": [
+     "Uma volta",
+     "Sete voltas",
+     "Doze voltas",
+     "Quarenta voltas"
+    ],
+    "explain": "Durante seis dias deram uma volta por dia, e no sétimo dia deram sete voltas (Js 6:3–4, 15)."
+   },
+   "credit": ""
+  },
+  "m36": {
+   "title": "O pecado de Acã e a cidade de Ai",
+   "when": "1406 a.C.",
+   "subtitle": "Quando uma só coisa escondida derruba o acampamento inteiro",
+   "story": [
+    "Depois da vitória em Jericó, três mil homens subiram contra Ai, uma pequena cidade a leste de Betel. Mas foram rechaçados diante do portão e fugiram pela encosta, e trinta e seis caíram. O coração do povo se derreteu como água. Josué rasgou as roupas e ficou prostrado diante da arca até o anoitecer.",
+    "O Senhor disse: levante-se, Israel pecou. O sorteio foi apertando, da tribo para o clã, do clã para a família, até chegar a Acã, da tribo de Judá. Ele confessou que cobiçou uma bela capa de Sinear, prata e uma barra de ouro, e que os enterrou no chão da sua tenda.",
+    "Acã e tudo o que era dele terminaram apedrejados no vale de Acor, e sobre eles se ergueu um grande monte de pedras. Depois o Senhor disse que não tivessem medo. Soldados emboscados atrás da cidade tomaram Ai, e a cidade foi queimada, e o texto diz que ficou como um monte de ruínas até hoje."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "Levante-se. Por que você está prostrado assim? Israel pecou. Quebraram a aliança que ordenei, roubaram coisas consagradas e as esconderam entre as suas bagagens."
+    },
+    {
+     "who": "Deus",
+     "text": "Não tenha medo nem desanime. Leve todos os soldados e suba contra Ai. Entreguei nas suas mãos o rei de Ai, o seu povo, a sua cidade e a sua terra."
+    },
+    {
+     "who": "Acã",
+     "text": "É verdade, pequei contra o Senhor, o Deus de Israel. Vi aquelas coisas, cobicei e as peguei, e as enterrei no chão da minha tenda."
+    }
+   ],
+   "note": "Ai quer dizer monte de ruínas. Pela tradição era identificada com Et-Tell, mas descobriu-se que o lugar não era habitado no fim da Idade do Bronze, e há quem aponte outros candidatos, como Khirbet el-Maqatir. A localização ainda está em debate.",
+   "reflect": "Será que algo que enterrei escondido na minha tenda está pesando sobre mim e sobre a minha comunidade?",
+   "quiz": {
+    "q": "Onde Acã escondeu as coisas que roubou?",
+    "options": [
+     "Dentro de um poço",
+     "Atrás do tabernáculo",
+     "Numa caverna no monte",
+     "No chão da própria tenda"
+    ],
+    "explain": "Acã confessou que escondeu a capa, a prata e a barra de ouro enterradas no chão, dentro da sua tenda (Js 7:21–22)."
+   },
+   "credit": ""
+  },
+  "m37": {
+   "title": "A aliança entre dois montes",
+   "when": "1406 a.C.",
+   "subtitle": "Palavras ouvidas por dois montes frente a frente",
+   "story": [
+    "O vale de Siquém é fundo, cavado entre dois montes. Ao norte, o monte Ebal. Ao sul, o monte Gerizim. Como Moisés tinha ordenado, Josué construiu no monte Ebal um altar de pedras brutas, em que nenhuma ferramenta de ferro tinha tocado, e ofereceu ao Senhor holocaustos e ofertas de paz.",
+    "Ali ele copiou sobre as pedras a lei de Moisés. Os sacerdotes levitas que carregavam a arca da aliança ficaram no meio, metade do povo diante do monte Gerizim e metade diante do monte Ebal. Os anciãos, os oficiais, os juízes e até os estrangeiros que viviam com eles, todos estavam ali.",
+    "Josué leu todas as palavras da lei, sem deixar nenhuma. As palavras de bênção e de maldição atravessavam o vale, batiam nas encostas dos dois montes e ecoavam. As mulheres, as crianças e os que tinham vindo de outros povos ouviram tudo naquele dia, sem perder uma palavra."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "Se vocês quiserem me construir um altar de pedra, não o façam com pedras lavradas. Se usarem ferramenta na pedra, vocês a profanam."
+    },
+    {
+     "who": "Moisés",
+     "text": "Vejam, hoje coloco diante de vocês a bênção e a maldição. Quando entrarem na terra, proclamem a bênção no monte Gerizim e a maldição no monte Ebal."
+    },
+    {
+     "who": "O narrador",
+     "text": "De tudo o que Moisés tinha ordenado, não houve uma palavra que Josué não lesse diante de toda a assembleia. As mulheres, as crianças e os estrangeiros também ouviram."
+    }
+   ],
+   "note": "Siquém fica na passagem entre o monte Ebal, com cerca de 940 metros, e o monte Gerizim, com pouco mais de 880. Foi também ali que Abraão construiu o seu primeiro altar em Canaã. Há quem veja na estrutura de pedra escavada no monte Ebal nos anos 1980 o altar de Josué, mas o debate continua.",
+   "reflect": "Escuto até o fim não só as promessas de bênção, fáceis de ouvir, mas também os alertas que me fazem parar?",
+   "quiz": {
+    "q": "Em que monte Josué construiu o altar?",
+    "options": [
+     "Monte Ebal",
+     "Monte Gerizim",
+     "Monte Sinai",
+     "Monte Nebo"
+    ],
+    "explain": "Josué construiu ao Senhor, no monte Ebal, um altar de pedras em que não se usou ferramenta de ferro (Js 8:30–31)."
+   },
+   "credit": ""
+  },
+  "m38": {
+   "title": "Sol, pare!",
+   "when": "c. 1405 a.C.",
+   "subtitle": "O dia em que ele escutou a oração de um homem",
+   "story": [
+    "Ao saber que Gibeom tinha feito paz com Israel, Adoni-Zedeque, rei de Jerusalém, reuniu os reis de Hebrom, Jarmute, Laquis e Eglom. Os exércitos dos cinco reis cercaram Gibeom. Os gibeonitas mandaram às pressas um recado a Josué, em Gilgal. Venha depressa e nos salve.",
+    "Josué subiu a serra a noite inteira e caiu sobre eles de madrugada. O Senhor lançou o inimigo em confusão, e sobre os que fugiam pela descida de Bete-Horom caiu do céu um granizo enorme. O texto registra que os que morreram pelo granizo foram mais do que os que morreram pela espada.",
+    "Naquele dia Josué falou ao Senhor diante de todo o Israel. Sol, pare sobre Gibeom. Lua, fique parada sobre o vale de Aijalom. O sol ficou no meio do céu e quase um dia inteiro não se pôs. Nunca houve, nem antes nem depois, um dia em que o Senhor escutasse assim a voz de um homem."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "Não tenha medo deles. Eu os entreguei nas suas mãos, e nenhum deles conseguirá resistir a você."
+    },
+    {
+     "who": "Josué",
+     "text": "Sol, pare sobre Gibeom. Lua, fique parada sobre o vale de Aijalom."
+    },
+    {
+     "who": "Os gibeonitas",
+     "text": "Não abandone os seus servos. Suba depressa, salve-nos e ajude-nos."
+    }
+   ],
+   "note": "Gibeom é El-Jib, uns 9 quilômetros a noroeste de Jerusalém, onde foram encontradas alças de jarro com o nome Gibeom gravado e um grande reservatório de água. Sobre o sol que parou há várias opiniões, desde um milagre literal até uma expressão poética citada do livro de Jasar.",
+   "reflect": "Peço a Deus com ousadia, a ponto de pedir que o sol pare, mas dentro da vontade dele?",
+   "quiz": {
+    "q": "Onde Josué mandou a lua ficar parada?",
+    "options": [
+     "Sobre Gibeom",
+     "Na planície de Jericó",
+     "Sobre o vale de Aijalom",
+     "No vale do Jordão"
+    ],
+    "explain": "Josué gritou: “Sol, pare sobre Gibeom. Lua, fique parada sobre o vale de Aijalom” (Js 10:12)."
+   },
+   "credit": ""
+  },
+  "m39": {
+   "title": "A terra repartida em Siló",
+   "when": "c. 1399 a.C.",
+   "subtitle": "A promessa passada para o mapa",
+   "story": [
+    "Siló, uma colina tranquila na região montanhosa de Efraim. Toda a comunidade de Israel se reuniu ali e levantou a tenda do encontro. A terra já estava submetida diante deles, mas sete tribos ainda hesitavam, sem ter recebido a sua parte.",
+    "Josué perguntou: até quando vocês vão adiar a tomada da terra que o Senhor lhes deu? Mandou escolher três homens de cada tribo para percorrer a terra, dividi-la em sete partes e trazer tudo por escrito. Os levitas não teriam parte, pois a herança deles era o sacerdócio a serviço do Senhor.",
+    "Os homens andaram por colinas e vales e anotaram num livro o nome de cada cidade. Quando voltaram ao acampamento de Siló com o rolo nas mãos, Josué tirou sortes diante do Senhor e repartiu a terra entre as tribos que faltavam. A promessa enfim se tornou uma terra com nome."
+   ],
+   "words": [
+    {
+     "who": "Josué",
+     "text": "Até quando vocês vão adiar a posse da terra que o Senhor, o Deus dos seus antepassados, lhes deu?"
+    },
+    {
+     "who": "Josué",
+     "text": "Dividam a terra em sete partes, escrevam e tragam para mim. Aqui, diante do Senhor, nosso Deus, vou tirar sortes por vocês."
+    },
+    {
+     "who": "Josué",
+     "text": "Os levitas não recebem parte no meio de vocês, porque o sacerdócio do Senhor é a herança deles."
+    }
+   ],
+   "note": "Siló é identificada com Khirbet Seilun, uns 30 quilômetros ao norte de Jerusalém. A tenda do encontro ficou ali durante todo o tempo dos juízes, e a história de Eli e Ana, em 1 Samuel, também se passa em Siló. O ponto exato onde ficava o tabernáculo é desconhecido.",
+   "reflect": "Será que também na minha vida há algo que Deus já me deu e que eu, em vez de desfrutar, estou adiando?",
+   "quiz": {
+    "q": "Em quantas partes Josué mandou dividir e descrever a terra que restava?",
+    "options": [
+     "Cinco partes",
+     "Sete partes",
+     "Dez partes",
+     "Doze partes"
+    ],
+    "explain": "Para as sete tribos que ainda não tinham recebido herança, Josué mandou dividir a terra em sete partes e trazer a descrição (Js 18:2, 6, 9)."
+   },
+   "credit": ""
+  },
+  "m40": {
+   "title": "Eu e a minha casa",
+   "when": "c. 1380 a.C.",
+   "subtitle": "A última pergunta deixada por um velho líder",
+   "story": [
+    "Muitos anos depois, Josué reuniu todas as tribos de Israel em Siquém. Os anciãos, os chefes, os juízes e os oficiais se apresentaram diante de Deus. Ele contou, em ordem, a história que começou na casa de Terá, do outro lado do rio, passando por Abraão, pelo Egito e pelo deserto, até aquele dia.",
+    "Eu lhes dei uma terra em que vocês não trabalharam, cidades que não construíram, vinhas e olivais que não plantaram. Então Josué perguntou: escolham hoje a quem vão servir. Eu e a minha casa serviremos ao Senhor. O povo respondeu repetidas vezes: nós também serviremos ao Senhor.",
+    "Naquele dia Josué fez uma aliança, escreveu-a no livro da lei de Deus e pegou uma grande pedra, que colocou debaixo do carvalho junto ao santuário. Esta pedra será a nossa testemunha. Pouco tempo depois ele morreu, aos cento e dez anos, e foi sepultado em Timnate-Sera, na região montanhosa de Efraim."
+   ],
+   "words": [
+    {
+     "who": "Deus",
+     "text": "Eu lhes dei uma terra em que vocês não trabalharam e cidades que não construíram. Vocês moram nelas e comem os frutos de vinhas e olivais que não plantaram."
+    },
+    {
+     "who": "Josué",
+     "text": "Escolham hoje, vocês mesmos, a quem vão servir. Mas eu e a minha casa serviremos ao Senhor."
+    },
+    {
+     "who": "O povo",
+     "text": "Serviremos ao Senhor, nosso Deus, e escutaremos a sua voz."
+    }
+   ],
+   "note": "Siquém é Tell Balata, perto da atual Nablus, onde também Jacó enterrou os ídolos estrangeiros debaixo do carvalho. Os estudiosos observam que esta cerimônia de aliança, com retrospectiva histórica, exigências, testemunhas e registro escrito, se parece com a forma dos tratados do antigo Oriente Próximo.",
+   "reflect": "Diante da mesma escolha que hoje também está à minha frente, posso dizer a quem eu e a minha casa vamos servir?",
+   "quiz": {
+    "q": "Com que idade Josué morreu?",
+    "options": [
+     "100 anos",
+     "120 anos",
+     "130 anos",
+     "110 anos"
+    ],
+    "explain": "Josué, filho de Num, morreu aos cento e dez anos e foi sepultado em Timnate-Sera (Js 24:29–30). Cento e vinte anos é a idade com que Moisés morreu."
+   },
+   "credit": ""
+  }
+ }
+}
