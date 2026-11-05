@@ -5,6 +5,11 @@ const REPO = 'danmool78/the-way-jesus.web.app', BRANCH = 'main', KEY = 'theway-a
 const $ = (s, el = document) => el.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 let token = '', files = {}, data = null; // files: 경로 → { raw, json }
+// 시리즈의 여정: 주소의 ?j=<여정> (없으면 예수). 예수 여정의 원본은 _src/, 다른 여정은 _src/journeys/<여정>/
+// 배포된 data는 예수가 data.json, 다른 여정이 j/<여정>/data.json. 녹음(음성 교체)은 예수 여정만 — 다른 여정은 기기 음성으로 읽는다
+const JOURNEY = (q => /^[a-z]+$/.test(q || '') ? q : 'jesus')(new URLSearchParams(location.search).get('j'));
+const SRC = JOURNEY === 'jesus' ? '_src' : `_src/journeys/${JOURNEY}`, DATA_URL = JOURNEY === 'jesus' ? 'data.json' : `j/${JOURNEY}/data.json`;
+const VOICED = JOURNEY === 'jesus';
 
 async function gh(path, init = {}) {
   const r = await fetch(`https://api.github.com${path}`, { ...init, cache: 'no-store',
@@ -51,8 +56,13 @@ $('#logout').onclick = () => { try { localStorage.removeItem(KEY); } catch { /* 
 async function load() {
   $('#loginMsg').textContent = '말씀을 불러오는 중…';
   // 장면 제목·장소는 배포된 data.json에서, 말씀은 GitHub의 최신 원본에서 (방금 고친 것도 바로 보이게)
-  const [d, dir] = await Promise.all([fetch('data.json', { cache: 'no-store' }).then(r => r.json()), gh(`/repos/${REPO}/contents/_src?ref=${BRANCH}`)]);
+  const [d, dir] = await Promise.all([fetch(DATA_URL, { cache: 'no-store' }).then(r => r.json()), gh(`/repos/${REPO}/contents/${SRC}?ref=${BRANCH}`)]);
   data = d;
+  // 여정 고르기: 원본이 만들어진 여정(배포된 data의 journey.series 중 data가 있는 것)만
+  const pick = $('#journeyPick'), names = { jesus: '예수', moses: '모세와 여호수아', david: '다윗', kings: '열왕기', paul: '바울' };
+  pick.innerHTML = (d.journey?.series || [{ id: 'jesus' }]).map(j => `<option value="${j.id}"${j.id === JOURNEY ? ' selected' : ''}>${esc(names[j.id] || j.id)}${j.ready ? '' : ' (준비 중)'}</option>`).join('');
+  pick.hidden = false;
+  pick.onchange = () => { location.search = pick.value === 'jesus' ? '' : `?j=${pick.value}`; };
   await loadVoices();
   await Promise.all(dir.filter(f => /^content-.*\.json$/.test(f.name)).map(f => readFile(f.path)));
   $('#login').hidden = true; $('#editor').hidden = $('#search').hidden = $('#logout').hidden = false;
@@ -66,7 +76,7 @@ const sceneOf = id => { for (const [path, f] of Object.entries(files)) { const c
 const sentences = text => text.match(/[^.?!…。！？]+[.?!…。！？]*["”’」』]?\s*/g) || [text];
 const voiceKey = (voice, text) => { let h = 0x811c9dc5; for (const c of `${voice}|${text}`) { h ^= c.codePointAt(0); h = Math.imul(h, 0x01000193) >>> 0; } return h.toString(36); };
 let voiceIndex = {};
-const loadVoices = () => fetch('assets/voice/ko/index.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : {}).then(j => { voiceIndex = j; }).catch(() => {});
+const loadVoices = () => !VOICED ? Promise.resolve() : fetch('assets/voice/ko/index.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : {}).then(j => { voiceIndex = j; }).catch(() => {});
 // 해설 문단(story)은 말하는 이가 없어 늘 해설 목소리(Aoede)
 const clipsOf = w => sentences(w.text).map(t => t.trim()).filter(Boolean)
   .map(t => voiceKey(`${w.tts === 'gemini' ? 'gemini-' : ''}${w.voice === 'child' ? 'Leda' : w.who === '예수' ? 'Algenib' : w.who === '하나님' ? 'Charon' : 'Aoede'}`, t)); // 하나님(프롤로그)은 Charon, 열두 살 소년 예수(voice: 'child')는 Leda
@@ -81,7 +91,7 @@ function play(box) {
   if (playing === box) { stopPlay(); return; }
   stopPlay();
   const clips = clipsOf(original(box));
-  if (!clips.every(k => voiceIndex[k])) { setState(box, '녹음이 아직 없습니다 (앱에서는 브라우저 음성으로 읽힘)', 'bad'); return; }
+  if (!clips.every(k => voiceIndex[k])) { setState(box, VOICED ? '녹음이 아직 없습니다 (앱에서는 브라우저 음성으로 읽힘)' : '이 여정은 녹음 없이 기기 음성으로 읽습니다', 'bad'); return; }
   playing = box; box.classList.add('playing'); $('.play', box).textContent = '■ 멈춤';
   let n = 0;
   const next = () => { if (playing !== box) return; if (n >= clips.length) { stopPlay(); return; } { const k = clips[n++]; player.src = `assets/voice/ko/${k}.mp3?v=${voiceIndex[k]}`; /* 다시 녹음한 파일도 캐시 말고 새것으로 (app.js voiceUrl과 같게) */ } player.play().catch(stopPlay); };
@@ -229,7 +239,7 @@ async function save(box) {
   const raw = story ? patchStory(fresh.raw, id, i, now, to) : patch(fresh.raw, id, i, now, to);
   const title = (data.prologue?.id === id ? data.prologue : data.events.find(e => e.id === id))?.title || id;
   const res = await gh(`/repos/${REPO}/contents/${path}`, { method: 'PUT', body: JSON.stringify({
-    message: `Edit ${story ? 'narration' : 'words'} in ${id} (#${i + 1}) from the admin page\n\n${title}: ${to.text}${to.tts ? ` (voice: ${to.tts})` : ''}`, content: toB64(raw), sha: fresh.sha, branch: BRANCH }) });
+    message: `Edit ${story ? 'narration' : 'words'} in ${JOURNEY === 'jesus' ? '' : JOURNEY + '/'}${id} (#${i + 1}) from the admin page\n\n${title}: ${to.text}${to.tts ? ` (voice: ${to.tts})` : ''}`, content: toB64(raw), sha: fresh.sha, branch: BRANCH }) });
   files[path] = { raw, json: JSON.parse(raw), sha: res.content.sha };
   box.classList.toggle('jesus', to.who === '예수');
   follow(box, res.commit.sha);
@@ -237,7 +247,7 @@ async function save(box) {
 // 저장한 커밋의 배포 작업을 지켜본다 (녹음을 새로 만드느라 몇 분 걸린다)
 async function follow(box, sha) {
   const link = `<a href="https://github.com/${REPO}/commit/${sha}" target="_blank" rel="noopener">${sha.slice(0, 7)}</a>`;
-  setState(box, `저장됨 ${link} · 음성 만들고 배포하는 중…`);
+  setState(box, `저장됨 ${link} · ${VOICED ? '음성 만들고 ' : ''}배포하는 중…`);
   for (let n = 0; n < 60; n++) {
     await new Promise(r => setTimeout(r, 10000));
     let run;
@@ -247,7 +257,7 @@ async function follow(box, sha) {
     if (run.conclusion === 'cancelled') { setState(box, `저장됨 ${link} · 다음 저장의 배포에 함께 반영됩니다`, 'ok'); return; }
     const ok = run.conclusion === 'success';
     if (ok) await loadVoices(); // 새 녹음을 바로 들을 수 있게
-    setState(box, ok ? `저장됨 ${link} · 음성 교체·배포 완료 ✓` : `저장됨 ${link} · <a href="${run.html_url}" target="_blank" rel="noopener">배포 실패 — 기록 보기</a>`, ok ? 'ok' : 'bad');
+    setState(box, ok ? `저장됨 ${link} · ${VOICED ? '음성 교체·' : ''}배포 완료 ✓` : `저장됨 ${link} · <a href="${run.html_url}" target="_blank" rel="noopener">배포 실패 — 기록 보기</a>`, ok ? 'ok' : 'bad');
     return;
   }
   setState(box, `저장됨 ${link} · 배포 상태를 확인하지 못했습니다 (GitHub Actions에서 확인)`);

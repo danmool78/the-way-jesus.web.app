@@ -38,7 +38,7 @@ function applyStatic() {
   }
   document.title = u.docTitle;
   $('meta[name="description"]')?.setAttribute('content', u.metaDesc);
-  GOSPELS = ['mt', 'mk', 'lk', 'jn'].map(k => [k, ...u.gospels[k]]);
+  GOSPELS = ['mt', 'mk', 'lk', 'jn'].filter(k => u.gospels[k]).map(k => [k, ...u.gospels[k]]); // 사복음서가 없는 여정(모세 등)은 빈 목록
   // [선택자, 글씨 키, 속성(없으면 글자)]
   [['.brand', 'home', 'aria-label'], ['.brand b', 'appName'], ['.brand small', 'appTag'], ['.tabs', 'tabsLabel', 'aria-label'],
     ['[data-view="journey"]', 'tabJourney'], ['[data-view="words"]', 'tabWords'], ['[data-view="quiz"]', 'tabQuiz'],
@@ -54,7 +54,8 @@ function applyStatic() {
   ].forEach(([sel, k, attr]) => { const el = $(sel); if (!el) return; if (attr) el.setAttribute(attr, t(k)); else el.textContent = t(k); });
   $$('[data-i]').forEach(el => { el.textContent = t(el.dataset.i); }); // 글씨 키를 단 요소들
   $$('.qna-link').forEach(a => { a.href = LANG === 'ko' ? 'qna.html' : `qna.${LANG}.html`; }); // 묻고 답하기: 한국어는 qna.html, 다른 언어는 qna.<언어>.html
-  $$('.scene-list').forEach(a => { a.href = LANG === 'ko' ? 's/index.html' : `s/index.${LANG}.html`; a.textContent = t('sceneList', { n: DATA.events.length }); }); // 장면 목록(정적 페이지 s/)도 같은 방식
+  $$('.scene-list').forEach(a => { a.hidden = JOURNEY !== 'jesus'; }); // 검색용 장면 목록(s/)은 아직 예수 여정만
+  if (JOURNEY === 'jesus') $$('.scene-list').forEach(a => { a.href = LANG === 'ko' ? 's/index.html' : `s/index.${LANG}.html`; a.textContent = t('sceneList', { n: DATA.events.length }); }); // 장면 목록(정적 페이지 s/)도 같은 방식
   document.body.style.setProperty('--walking', `'👣 ${t('walking')} · '`);
   // 언어 고르기
   const sel = $('#langPick');
@@ -64,12 +65,17 @@ function applyStatic() {
     sel.onchange = () => { try { localStorage.setItem('theway-lang', sel.value); } catch { /* 무시 */ } const q = new URLSearchParams(location.search); q.set('lang', sel.value); location.search = q.toString(); };
   }
 }
+// 시리즈의 여정: 주소의 ?j=<여정> (없으면 예수). 예수 여정은 맨 위의 data.json, 다른 여정은 j/<여정>/data.json
+// (목록과 준비 여부는 data의 journey.series — _src/series.json). 이름은 영문 소문자만 받는다
+const JOURNEY = (q => /^[a-z]+$/.test(q || '') ? q : 'jesus')(new URLSearchParams(location.search).get('j'));
+const JDIR = JOURNEY === 'jesus' ? '' : `j/${JOURNEY}/`;
+const journeyUrl = id => (id === 'jesus' ? '/' : `/?j=${id}`); // 다른 여정으로 가는 주소 (언어는 저장된 것을 따른다)
 // 언어 이름은 그 언어로 적는다 (고르는 사람이 자기 언어를 알아보게)
 const LANG_NAMES = { ko: '한국어', en: 'English', es: 'Español', pt: 'Português', fr: 'Français', zh: '中文', id: 'Bahasa Indonesia', ja: '日本語' };
 
 /* ---------- 저장된 진행 상황 ---------- */
 const store = {
-  key: 'theway-progress-v1',
+  key: JOURNEY === 'jesus' ? 'theway-progress-v1' : `theway-progress-${JOURNEY}`, // 여정마다 따로 (예수 여정은 예전 열쇠 그대로)
   load() { try { return JSON.parse(localStorage.getItem(this.key)) || {}; } catch { return {}; } },
   save() { try { localStorage.setItem(this.key, JSON.stringify(state)); } catch { /* 사생활 보호 모드 등 */ } }
 };
@@ -632,7 +638,7 @@ function setCard(mode) {
 }
 
 /* ---------- 장면 ---------- */
-const refText = e => GOSPELS.filter(([k]) => e.refs[k]).map(([k, , ab]) => `${ab} ${e.refs[k]}`).concat(e.refs.acts ? [`${DATA.ui.gospels.acts[1]} ${e.refs.acts}`] : [], e.refs.gen ? [`${DATA.ui.gospels.gen[1]} ${e.refs.gen}`] : []).join(' · ');
+const refText = e => Object.keys(DATA.ui.gospels).filter(k => e.refs[k]).map(k => `${DATA.ui.gospels[k][1]} ${e.refs[k]}`).join(' · '); // 책 차례는 ui의 책 이름표(gospels) 차례 — 여정마다 책이 다르다
 
 let cardTab = 'story'; // 장면 카드의 탭: story(이야기) · text(본문) · compare(비교)
 function renderScene() {
@@ -647,7 +653,7 @@ function renderScene() {
       <p>${esc(w.text)}</p>
       <footer><span>${w.j ? esc(t('jesus')) : esc(w.who)}</span><cite>${esc(w.ref)}</cite><button class="say" data-say="${i}" aria-label="${esc(t('listenWord'))}">🔊</button></footer>
     </blockquote>`;
-  const tabs = [['story', t('tabStory')], ['text', t('tabText')], ['compare', t('tabCompare')]].filter(([k]) => !(isPro() && k === 'compare')); // 프롤로그는 복음서 비교가 없다
+  const tabs = [['story', t('tabStory')], ['text', t('tabText')], ['compare', t('tabCompare')]].filter(([k]) => !((isPro() || !DATA.journey?.harmony) && k === 'compare')); // 프롤로그와 대조표 없는 여정은 복음서 비교가 없다
   cardTab = 'story';
   $('#scene').innerHTML = `
   <div class="cardbar">
@@ -699,7 +705,7 @@ function renderScene() {
   if (e.img) { $('#heroBtn').onclick = () => openViewer(e); $('#viewBtn').onclick = () => openViewer(e); }
   $$('.say', $('#scene')).forEach(b => b.onclick = ev => { ev.stopPropagation(); speakWord(+b.dataset.say); });
   $$('.ctabs button', $('#scene')).forEach(b => b.onclick = () => showTab(b.dataset.tab));
-  $('#toHarmony').onclick = () => setView('harmony');
+  $('#toHarmony')?.addEventListener('click', () => setView('harmony'));
   showTab('story');
   updateQuizBtn();
 }
@@ -729,7 +735,7 @@ function showTab(k) {
   const sc = $('#scene');
   $$('.ctabs button', sc).forEach(b => b.classList.toggle('active', b.dataset.tab === k));
   $$('.pane', sc).forEach(p => { p.hidden = p.dataset.pane !== k; });
-  const order = isPro() ? ['story', 'text'] : ['story', 'text', 'compare'], nx = order[order.indexOf(k) + 1], b = $('#contBtn', sc);
+  const order = isPro() || !DATA.journey?.harmony ? ['story', 'text'] : ['story', 'text', 'compare'], nx = order[order.indexOf(k) + 1], b = $('#contBtn', sc);
   if (nx) { b.innerHTML = `${esc(t('continueReading'))} <span aria-hidden="true">→</span>`; b.onclick = () => { if (sc.classList.contains('open')) setCard('full'); showTab(nx); $('.ctabs', sc).scrollIntoView({ block: 'start', behavior: 'smooth' }); }; }
   else if (idx < EVENTS.length - 1) { b.innerHTML = `${esc(t('walkNext'))} <span aria-hidden="true">→</span>`; b.onclick = () => go(idx + 1); }
   else { b.innerHTML = esc(t('finishJourney')); b.onclick = () => endJourney(); }
@@ -898,7 +904,7 @@ const sentences = text => text.match(/[^.?!…。！？]+[.?!…。！？]*["”
 const VOICE_NAME = { narr: 'Aoede', jesus: 'Algenib', god: 'Charon', child: 'Leda' }; // god: 프롤로그의 하나님 말씀 (예수님과 다른 남성 목소리), child: 열두 살 소년 예수 (words의 voice: 'child')
 const voiceKey = (voice, text) => { let h = 0x811c9dc5; for (const c of `${voice}|${text}`) { h ^= c.codePointAt(0); h = Math.imul(h, 0x01000193) >>> 0; } return h.toString(36); };
 let voiceIndex = {};
-if (LANG === 'ko') fetch('assets/voice/ko/index.json').then(r => r.ok ? r.json() : {}).then(j => { voiceIndex = j; }).catch(() => {});
+if (LANG === 'ko' && JOURNEY === 'jesus') fetch('assets/voice/ko/index.json').then(r => r.ok ? r.json() : {}).then(j => { voiceIndex = j; }).catch(() => {});
 const voiceAudio = new Audio();
 // 녹음 파일은 오래 캐시한다(immutable). 같은 열쇠로 다시 녹음하면 길이가 달라지므로, 길이를 주소에 붙여 새 파일을 받게 한다
 const voiceUrl = clip => `assets/voice/ko/${clip}.mp3?v=${voiceIndex[clip] || 0}`;
@@ -917,7 +923,8 @@ function speakQueue(items, onDone) {
   if (synth) synth.cancel();
   voiceAudio.pause();
   // 낭독자와 예수님 목소리는 서로 다른 음성으로 (이름에 성별이 드러나는 음성을 먼저 고른다)
-  const narrator = voices.find(v => /female|여|yuna|sun-?hi|heami|samantha|zira|aria|jenny|google/i.test(v.name) && !/\bmale/i.test(v.name)) || voices[0];
+  // 녹음 없는 여정(모세 등)은 기기 음성으로만 읽으므로 구글 음성(크롬·안드로이드의 고급 음성)을 먼저 고른다
+  const narrator = voices.find(v => /google/i.test(v.name) && !/\bmale/i.test(v.name)) || voices.find(v => /female|여|yuna|sun-?hi|heami|samantha|zira|aria|jenny/i.test(v.name) && !/\bmale/i.test(v.name)) || voices[0];
   const other = voices.find(v => v !== narrator && /\bmale|남|injoon|hyunsu|minsu|daniel|david|guy|thomas|jorge|diego|kenji|keita/i.test(v.name)) || voices.find(v => v !== narrator);
   const queue = [];
   items.forEach(it => {
@@ -1357,7 +1364,7 @@ function toast(msg) {
 }
 
 const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); return r.json(); });
-(LANG === 'ko' ? getData('data.json') : getData(`data.${LANG}.json`).catch(() => getData('data.json'))).then(d => {
+(LANG === 'ko' ? getData(`${JDIR}data.json`) : getData(`${JDIR}data.${LANG}.json`).catch(() => getData(`${JDIR}data.json`))).then(d => {
   DATA = d; EVENTS = d.events; PLACES = d.places;
   applyStatic();
   window.EVENTS_READY = true; // 3D 지형 모드(terrain.js)가 이것을 기다렸다가 조작기를 단다
@@ -1398,6 +1405,7 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   gear.onclick = ev => { ev.stopPropagation(); panel.hidden = !panel.hidden; gear.setAttribute('aria-expanded', String(!panel.hidden)); };
   document.addEventListener('click', ev => { if (!panel.hidden && !panel.contains(ev.target)) closePanel(); });
   $('#openHarmony').onclick = () => { closePanel(); setView('harmony'); };
+  $('#openHarmony').hidden = !d.journey?.harmony; // 사복음서 대조표는 예수 여정만
   $('#openStamps').onclick = () => { closePanel(); renderStamps(); $('#stamps').showModal(); };
   // 이 앱 공유하기 (설정 메뉴와 첫 화면): 휴대폰은 기기의 공유 창(카톡·문자 등), 공유 창이 없는 컴퓨터는 주소를 복사해 알린다
   $$('.share-app').forEach(b => b.onclick = async () => {
@@ -1481,6 +1489,9 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   });
   $('#closeMv').onclick = () => mv.close();
   const nx = $('#nextDlg');
+  $('#seriesList').innerHTML = (d.journey?.series || []).map(j => `<li class="${j.id === JOURNEY ? 'now' : j.ready ? 'ready' : 'soon'}">${j.id === JOURNEY ? `<span><b>${esc(t(j.title))}</b><small>${esc(t(j.desc))}</small><em>${esc(t('seriesNow'))}</em></span>` : j.ready
+    ? `<a href="${journeyUrl(j.id)}"><b>${esc(t(j.title))}</b><small>${esc(t(j.desc))}</small><em>${esc(t('seriesGo'))} →</em></a>`
+    : `<button type="button" class="next-open"><b>${esc(t(j.title))}</b><small>${esc(t(j.desc))}</small><em>${esc(t('seriesSoon'))}</em></button>`}</li>`).join('');
   $$('.next-open').forEach(b => b.onclick = () => { closePanel(); $('#nextBody').innerHTML = nextHtml(); nx.showModal(); });
   $('#closeNext').onclick = () => nx.close();
   nx.onclick = ev => { if (ev.target === nx) nx.close(); };

@@ -585,6 +585,17 @@ body.intro-open .intro,body.intro-open .intro *{animation-play-state:running}
 .land-down svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;animation:landBob 1.8s ease-in-out infinite}
 @keyframes landBob{50%{transform:translateY(4px)}}
 .land-sec{padding-top:44px!important;padding-bottom:20px!important}
+/* 그 길 시리즈: 지금 여정은 금빛 테두리, 준비된 여정은 링크, 준비 중인 여정은 흐리게 (누르면 후원 안내) */
+.series{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;text-align:left}
+.series li>*{display:flex;flex-direction:column;gap:3px;width:100%;height:100%;padding:13px 14px;border:1px solid #3a3026;border-radius:14px;background:rgba(255,255,255,.02);color:var(--ink);text-decoration:none;font:inherit;text-align:left}
+.series button{cursor:pointer}
+.series b{font-family:var(--serif);font-size:16px;color:var(--gold2)}
+.series small{font-size:12.5px;line-height:1.5;color:var(--muted)}
+.series em{font-style:normal;font-size:11.5px;letter-spacing:.04em;color:var(--faint);margin-top:auto;padding-top:4px}
+.series .now>*{border-color:var(--gold);background:rgba(217,180,106,.08)}
+.series .now em{color:var(--gold)}
+.series .soon>*{opacity:.72}
+.series a:hover,.series button:hover{border-color:rgba(217,180,106,.6);opacity:1}
 .land-list{display:inline-block;margin-top:18px;color:var(--gold2);font-family:var(--serif);font-size:15px;text-decoration:none;border-bottom:1px solid rgba(217,180,106,.4)}
 .land-list:hover{color:#fff3d6}
 .intro h2{margin:0 0 18px;font-family:var(--serif);font-size:22px;font-weight:700;color:var(--gold2);letter-spacing:.06em}
