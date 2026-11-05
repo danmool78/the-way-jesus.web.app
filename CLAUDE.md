@@ -19,7 +19,7 @@
 - **시리즈(그 길 시리즈)**: 예수 여정 다음으로 모세와 여호수아·다윗·열왕기·바울을 같은 엔진으로 만든다. 목록과 준비 여부는 `_src/series.json`(첫 화면 '그 길 시리즈'가 이것으로 그려지고, 준비 중인 여정을 누르면 후원 안내). 앱은 주소의 `?j=<여정>`으로 여정을 고른다(없으면 예수)
   - 예수 여정: 원본은 `_src/` 바로 아래, 결과는 맨 위의 `data*.json` (예전 그대로)
   - 다른 여정: 원본은 `_src/journeys/<여정>/`(같은 모양 — skeleton·places·periods·content-*.json, `journey.json`에 주인공 이름 `main`·대조표 `harmony`·녹음 `voice`, 여정 화면 글씨는 `i18n/ui.<언어>.json`으로 공통 글씨 위에 덧씌움, 책 이름표 `gospels`도 여기서), 결과는 `j/<여정>/data*.json`. 장면 id는 여정마다 겹치지 않게(모세 `m01`…)
-  - 다른 여정은 해설만 녹음(Chirp 3 HD Aoede, `node _src/tools/voice.mjs --j moses all walks`, 같은 assets/voice/ko)하고 말씀은 기기 음성(구글 음성 먼저)으로 읽는다 — 앱은 녹음이 있는 문장만 녹음으로 튼다. 배경음악은 `_src/journeys/<여정>/music.json`(`node _src/tools/music.mjs --j moses`, 곡 이름 m-…, 모세 여정은 현대 다큐멘터리 영화음악 결). 진행 기록도 여정마다 따로(`theway-progress-<여정>`)
+  - 다른 여정도 같은 방식으로 녹음한다(Chirp 3 HD Aoede, `node _src/tools/voice.mjs --j moses all walks`, 같은 assets/voice/ko) — 앱은 녹음이 있는 문장만 녹음으로 튼다. 배경음악은 `_src/journeys/<여정>/music.json`(`node _src/tools/music.mjs --j moses`, 곡 이름 m-…, 모세 여정은 현대 다큐멘터리 영화음악 결). 진행 기록도 여정마다 따로(`theway-progress-<여정>`)
   - 관리자 페이지도 `admin.html?j=<여정>`으로 나뉜다(위쪽 고르기)
 - `data.json` — `_src/`의 원본으로 `python3 _src/build.py`가 만든다. 직접 고치지 말 것 (작성 규칙 `_src/STYLE.md`)
 - `s/`, `sitemap.xml` — 검색엔진용 장면 페이지(`s/e05.html`, 번역은 `s/e05.<언어>.html`, 목록 `s/index.html`)와 사이트맵. 앱은 `#e05` 주소라 검색에 장면이 따로 잡히지 않아, 글을 미리 써 둔 정적 페이지를 두고 앱으로 잇는다. build.py 끝에서 `_src/pages.py`가 만든다(직접 고치지 말 것). `robots.txt`가 사이트맵을 알린다
@@ -29,7 +29,7 @@
 - `assets/jerusalem.webp` — 예루살렘 3D 도성 그림. 모형은 `stage/jerusalem.js`, 다시 그리기는 `node _src/tools/jerusalem.mjs`
 - `assets/egypt-*.webp` — 애굽 표지 그림(기자·파로스 등대·헬리오폴리스). 모형은 `stage/egypt.js`, 다시 그리기는 `node _src/tools/jerusalem.mjs <url> giza`
 - `terrain.js`, `assets/terrain/` — 3D 지형 모드. 지역별(갈릴리·유대·애굽) 높이·색 그림을 장소 가까이 갈 때 불러온다. 지역 밖은 2D 음영을 평면으로 깐다. 자료는 `python3 _src/terrain.py <고도 캐시>`로 만든다
-- `assets/voice/ko/` — 한국어 녹음 낭독(문장별 mp3 + index.json). `GOOGLE_TTS_KEY=… node _src/tools/voice.mjs e01 …`로 만든다. 녹음이 없는 장면은 브라우저 음성으로 읽는다. 다음 장소로 걸어갈 때의 안내("○○에서 ○○로.")는 `voice.mjs walks`로 만든다. 말씀은 모두 Gemini 성우(words의 `"tts": "gemini"`) — 예수 Algenib("따뜻하고 차분하게" 지시를 붙여 `gemini-3.1-flash-tts-preview`로), 열두 살 소년 예수는 words의 `"voice": "child"`로 Leda
+- `assets/voice/ko/` — 한국어 녹음 낭독(문장별 mp3 + index.json). `GOOGLE_TTS_KEY=… node _src/tools/voice.mjs e01 …`로 만든다. 녹음이 없는 장면은 브라우저 음성으로 읽는다. 다음 장소로 걸어갈 때의 안내("○○에서 ○○로.")는 `voice.mjs walks`로 만든다. **낭독은 제목 줄과 이야기만** — 말씀(본문)은 소리 내어 읽지 않고 참고용 글로만 둔다(2026-11 사용자 결정, 말씀 녹음은 모두 지웠다. 다시 만들지 말 것)
 - `assets/music/<곡>.mp3` — 낭독 밑에 깔리는 배경음악(30초 반복 곡). 장면별 곡 배정과 곡 설명은 `_src/music.json`, 만들기는 `GEMINI_API_KEY=… node _src/tools/music.mjs` (Lyria 3 Clip, 리딩북과 같은 방식)
 - `admin.html`, `admin.js` — 관리자 페이지(해설 문단·말씀 고치기, 녹음 듣기). 이 저장소에 쓰기 권한이 있는 GitHub 토큰으로만 들어간다. 저장하면 `_src/content-*.json`을 main에 바로 커밋하고, `firebase-hosting-merge.yml`이 data를 다시 만들고 바뀐 장면의 녹음(`voice.mjs changed`, GitHub 비밀값 `GOOGLE_TTS_KEY`)을 새로 만들어 배포한다. 글마다 목소리를 Gemini 성우로 고를 수 있다(말씀은 words의 `"tts": "gemini"`, 해설 문단은 장면의 `"storyTts": [문단 번호]`, 녹음 열쇠에 `gemini-`가 붙음, GitHub 비밀값 `GEMINI_API_KEY`, 하루 한도가 찬 모델은 건너뛰고 모두 막히면 Google 음성으로 대신)
 - `assets/vendor/three.module.min.js` — three.js 0.160.0 (오프라인용으로 저장소에 포함)

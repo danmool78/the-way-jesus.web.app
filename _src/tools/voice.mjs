@@ -1,6 +1,7 @@
 // 한국어 낭독 녹음: 장면을 앱과 같은 순서·같은 문장 단위로 나눠 Google Chirp 3 HD로 만든다.
 // 쓰는 법: GOOGLE_TTS_KEY=... node _src/tools/voice.mjs e01 [e02 …|all]
-//   다른 여정: node _src/tools/voice.mjs --j moses all [walks] — 해설만 녹음한다 (말씀은 앱이 기기 음성으로 읽는다)
+//   다른 여정: node _src/tools/voice.mjs --j moses all [walks]
+// 낭독은 이야기만 한다(제목 줄과 이야기 문단) — 말씀(본문)은 읽지 않고 글로만 두므로 녹음하지 않는다 (2026-11 사용자 결정)
 // 결과: assets/voice/ko/<열쇠>.mp3 + assets/voice/ko/index.json(열쇠 → 길이 ms). 열쇠는 목소리|문장의 FNV-1a라
 // 글을 고치면 그 문장만 새로 만들어진다 (app.js의 voiceKey와 같은 계산). 키는 저장소에 두지 않는다
 // 사용자와 맞춘 설정: 해설 Aoede 0.95배속, 예수 Algenib 1배속, 문장 안 쉼 0.93배, 말 빠르기 고르게. Gemini 성우는 같은 이름의 목소리, 열두 살 소년 예수만 Leda
@@ -17,7 +18,6 @@ const INNER = 0.93, SR = 24000;
 
 const argv = process.argv.slice(2), ji = argv.indexOf('--j'), J = ji >= 0 ? argv[ji + 1] : 'jesus';
 const args = ji >= 0 ? argv.filter((_, i) => i !== ji && i !== ji + 1) : argv;
-const NARR_ONLY = J !== 'jesus'; // 다른 여정은 해설(제목 줄·이야기·말하는 이 이름)만 녹음한다
 const d = JSON.parse(await readFile(J === 'jesus' ? 'data.json' : `j/${J}/data.json`, 'utf8'));
 const ui = J === 'jesus' ? JSON.parse(await readFile('_src/i18n/ui.ko.json', 'utf8')) : d.ui; // 여정의 화면 글씨가 덧씌워진 것 (app.js의 t와 같게)
 // changed <예전 data.json>: 관리자 페이지에서 글을 고친 뒤 (GitHub Actions) — 읽을 문장이 바뀐 장면 가운데 녹음이 있던 장면만
@@ -34,8 +34,6 @@ export const voiceKey = (voice, text) => { let h = 0x811c9dc5; for (const c of `
 function script(e) {
   const items = [{ text: `${e.title}. ${ui.sayPlace}, ${d.places[e.place].name.replace(/[()·]/g, ' ')}. ${ui.sayWhen}, ${e.when.replace(/\s*·\s*/g, ', ')}.` }];
   e.story.forEach((s, i) => items.push({ text: s, gemini: (e.storyTts || []).includes(i) }));
-  items.push({ text: (e.words.some(w => w.j) ? ui.hisWords : ui.voicesOfDay) + '.' });
-  e.words.forEach(w => { if (!w.j) items.push({ text: `${w.who}.` }); if (!NARR_ONLY) items.push({ text: w.text, jesus: !!w.j, god: !!w.g, child: w.voice === 'child', gemini: w.tts === 'gemini' }); });
   // 제목 줄의 '장소, 나사렛.'·'시기, 때.'는 쉼표에서 나눠 따로 녹음해 잇는다 — 한 번에 읽히면 장소 이름을 늘이고 멈칫한다
   return items.flatMap((it, i) => sentences(it.text).map(s => s.trim()).filter(Boolean).map((text, k) => ({ text, jesus: it.jesus, god: it.god, child: it.child, gemini: it.gemini, split: i === 0 && k > 0 })));
 }
