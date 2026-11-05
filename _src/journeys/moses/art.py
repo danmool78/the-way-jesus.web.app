@@ -83,12 +83,18 @@ def credit(a, l):
     if l == 'zh': return f'{name}《{title}》{when(y, c, l)} · {MUSEUM[mus][i]} · {PD[i]}'
     if l == 'ja': return f'{name}《{title}》{when(y, c, l)}・{MUSEUM[mus][i]}・{PD[i]}'
     return f'{name}, {title}, {when(y, c, l)} · {MUSEUM[mus][i]} · {PD[i]}'
+# 명화를 찾지 못한 장면은 AI로 그린 그림으로 대신하고, 그렇다고 밝힌다 (출처 주소 없음)
+AI = {'m39': 'Shiloh', 'm40': 'Shechem'}
+AI_CREDIT = ['AI로 그린 그림 · 명화를 찾지 못한 장면이라 대신 그렸습니다', 'AI-generated image · drawn in place of a painting, as none was found for this scene',
+             'Imagen generada con IA · en lugar de una pintura, pues no se halló ninguna para esta escena', 'Imagem gerada por IA · no lugar de uma pintura, pois não se encontrou nenhuma para esta cena',
+             'Image générée par IA · à la place d’un tableau, faute d’en avoir trouvé un pour cette scène', 'AI 生成的图画 · 此场景未找到名画，故以此代替',
+             'Gambar buatan AI · pengganti lukisan karena tidak ditemukan lukisan untuk adegan ini', 'AIで描いた絵・この場面に合う名画が見つからなかったため代わりに描きました']
 src = lambda f: 'https://commons.wikimedia.org/wiki/File:' + f.replace(' ', '_')
-json.dump({k: {'title': a[1], 'credit': credit(a, 'ko'), 'source': src(a[5])} for k, a in ART.items()},
+json.dump({**{k: {'title': a[1], 'credit': credit(a, 'ko'), 'source': src(a[5])} for k, a in ART.items()}, **{k: {'title': v, 'credit': AI_CREDIT[0], 'source': ''} for k, v in AI.items()}},
           open(os.path.join(here, 'images.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 for l in L[1:]:
     p = os.path.join(here, 'i18n', f'{l}.json'); d = json.load(open(p, encoding='utf-8'))
     for k, e in d['events'].items():
-        e['credit'] = credit(ART[k], l) if k in ART else ''
+        e['credit'] = credit(ART[k], l) if k in ART else AI_CREDIT[L.index(l)] if k in AI else ''
     json.dump(d, open(p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-print(len(ART), 'paintings')
+print(len(ART), 'paintings,', len(AI), 'AI images')
