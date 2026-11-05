@@ -672,7 +672,7 @@ function renderScene() {
   <div class="sheetgrip" aria-hidden="true"><i></i></div>
   <div class="hero">${img}</div>
   <div class="credrow">
-    ${e.img ? `<a class="credit" href="${esc(e.img.source)}" target="_blank" rel="noreferrer">${esc(e.img.credit)}</a>` : '<span></span>'}
+    ${e.img ? (e.img.source ? `<a class="credit" href="${esc(e.img.source)}" target="_blank" rel="noreferrer">${esc(e.img.credit)}</a>` : `<span class="credit">${esc(e.img.credit)}</span>`) : '<span></span>'}
     ${e.img ? `<button class="viewbtn" id="viewBtn">${esc(t('viewPainting'))} ↗</button>` : ''}
   </div>
   <div class="hero-text">
