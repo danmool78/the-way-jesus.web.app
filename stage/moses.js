@@ -96,8 +96,8 @@ export const MOSES = {
     },
   },
 
-  /* m03. 미디안으로 도망하다 — 앞 문단은 애굽: 궁에서 자란 모세(애굽 옷)가 동족을 보러 나간다. 애굽 사람을 친 일은 그리지 않는다
-     (감독관이 사라질 뿐). 모세가 동쪽(오른쪽)으로 달아나면 무대가 미디안의 우물가로 바뀐다 — 목자로 다시 나타난다 */
+  /* m03. 미디안으로 도망하다 — 장면이 애굽(skeleton의 from: 라암셋)에서 시작한다: 궁에서 자란 모세(애굽 옷)가 동족을 보러 나간다. 애굽 사람을 친 일은 그리지 않는다
+     (감독관이 사라질 뿐). 낭독이 p1.3(미디안으로 달아났다)에 이르면 지도가 미디안까지 걸어가고(app.js moveWithin), 무대는 그곳 우물가로 — 목자로 다시 나타난다 */
   m03: {
     wide: 1.35,
     props: {
@@ -124,8 +124,10 @@ export const MOSES = {
       reuel: ['elder', 1.0, -0.25, -0.8],
     },
     beats: {
-      enter: [['bricks', null, { show: 0 }], ['prince', 'idle', { show: 0 }], ['slave', 'idle', { show: 0 }], ['boss', 'idle', { show: 0 }], ['slave2', 'idle', { show: 0 }],
-        ['moses', 'idle', { x: -0.05, z: 0.2, look: 0.6 }], ['sh1', 'idle', { show: 0 }], ['sh2', 'idle', { show: 0 }], ['d1', 'idle'], ['d2', 'idle'], ['d3', 'idle'], ['zip', 'idle', { x: 0.25, z: 0.15, look: -1 }], ['reuel', 'idle', { x: 0.85, z: -0.2 }]],
+      // 장면은 애굽(from: 라암셋)에서 시작한다 — 동족이 일하는 곳을 내려다보는 궁의 모세. 미디안의 우물가는 낭독이 p1.3에서 그곳으로 옮겨 간 뒤에
+      enter: [['well', null, { show: 0 }], ['tent', null, { show: 0 }], ['flock', null, { show: 0 }], ['flock2', null, { show: 0 }], ['flock3', null, { show: 0 }], ['bricks', null, { show: 1 }],
+        ['prince', 'idle', { show: 1, x: -0.85, z: 0.05, look: 0.6 }], ['slave', 'bow', { show: 1 }], ['boss', 'point', { show: 1, look: -1 }], ['slave2', 'idle', { show: 0 }],
+        ['moses', 'idle', { show: 0 }], ['sh1', 'idle', { show: 0 }], ['sh2', 'idle', { show: 0 }], ['d1', 'idle', { show: 0 }], ['d2', 'idle', { show: 0 }], ['d3', 'idle', { show: 0 }], ['zip', 'idle', { show: 0 }], ['reuel', 'idle', { show: 0 }]],
       intro: [['well', null, { show: 0 }], ['tent', null, { show: 0 }], ['flock', null, { show: 0 }], ['flock2', null, { show: 0 }], ['flock3', null, { show: 0 }], ['bricks', null, { show: 1 }],
         ['prince', 'idle', { show: 1, x: -1.2, z: 0.0, look: 0.5 }], ['slave', 'bow', { show: 1 }], ['boss', 'idle', { show: 1 }], ['slave2', 'idle', { show: 0 }],
         ['moses', 'idle', { show: 0, x: -1.6, z: 0.15 }], ['sh1', 'idle', { show: 0 }], ['sh2', 'idle', { show: 0 }], ['d1', 'idle', { show: 0 }], ['d2', 'idle', { show: 0 }], ['d3', 'idle', { show: 0 }], ['zip', 'idle', { show: 0 }], ['reuel', 'idle', { show: 0 }]],
