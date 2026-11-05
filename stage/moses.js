@@ -1206,7 +1206,7 @@ export const MOSES = {
       'p2.4': [['balak', 'rebuke', { to: 'balaam' }], ['balaam', 'idle', { x: -1.6, z: 0.3, delay: 2500 }], ['balaam', 'idle', { show: 0, delay: 5500 }]],
       w0: [['balaam', 'listen', { look: 0.4 }]],
       w1: [['balaam', 'listen', { look: 0.4 }]],
-      w2: [['balaam', 'speak', { look: -1.6 }]],
+      w2: [['balaam', 'speak', { show: 1, x: 0.35, z: 0.05, look: -1.6 }]],
       end: [['@env', 'night']],
     },
   },
