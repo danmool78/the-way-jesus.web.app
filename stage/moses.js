@@ -1346,7 +1346,7 @@ export const MOSES = {
       'p2.3': [['sp1', 'idle', { x: -1.7, z: 0.45 }], ['sp2', 'idle', { x: -1.8, z: 0.55 }], ['sp1', 'idle', { show: 0, delay: 5000 }], ['sp2', 'idle', { show: 0, delay: 5000 }]],
       w0: [['rahab', 'speak', { to: 'sp1' }]],
       w1: [['rahab', 'bow', { look: 0 }]],
-      w2: [['sp1', 'speak', { to: 'rahab' }]],
+      w2: [['sp1', 'speak', { show: 1, x: 0.25, z: 0.2, to: 'rahab' }], ['sp2', 'idle', { show: 1, x: 0.85, z: 0.25 }]],
       end: [['@env', 'night'], ['city', 'cord']],
     },
   },
@@ -1470,7 +1470,7 @@ export const MOSES = {
       'p2.2': [['folk', null, { x: 0.95, z: -0.2 }], ['smoke', null, { show: 1, delay: 2500 }], ['city', 'fall', { delay: 3000 }]],
       w0: [['joshua', 'listen', { look: -0.8 }]],
       w1: [['joshua', 'listen', { look: 0.6 }]],
-      w2: [['achan', 'speak', { to: 'joshua' }]],
+      w2: [['heap', null, { show: 0 }], ['achan', 'speak', { show: 1, x: 0.15, z: 0.4, to: 'joshua' }]],
       end: [['heap', null, { show: 1 }], ['city', 'fall']],
     },
   },
@@ -1537,7 +1537,7 @@ export const MOSES = {
     },
     beats: {
       enter: [['sky', 'still', { show: 1 }], ['kings', null, { show: 0 }], ['king', 'idle', { show: 0 }], ['runner', 'idle', { show: 0 }], ['israel', null, { x: 0.65, z: 0.3 }], ['joshua', 'raise', { x: 0.2, z: 0.3, look: -0.8 }]],
-      intro: [['sky', null, { show: 0 }], ['kings', null, { show: 0 }], ['king', 'idle', { show: 0 }], ['israel', null, { show: 0, x: 1.7 }], ['joshua', 'idle', { show: 0, x: 1.7, z: 0.1 }], ['runner', 'idle', { show: 0 }]],
+      intro: [['sky', 'idle', { show: 0 }], ['kings', null, { show: 0 }], ['king', 'idle', { show: 0 }], ['israel', null, { show: 0, x: 1.7 }], ['joshua', 'idle', { show: 0, x: 1.7, z: 0.1 }], ['runner', 'idle', { show: 0 }]],
       // 다섯 왕의 군대가 기브온을 에워싼다
       'p0.0': [['king', 'point', { show: 1, look: 3 }]],
       'p0.1': [['kings', null, { show: 1 }]],
