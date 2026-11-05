@@ -576,7 +576,9 @@ function zoomToStage(dist) {
   let [tx, tz] = px([p.lat, p.lng]);
   if (at) { const [x1, z1] = px(at); if (Math.hypot(x1 - tx, z1 - tz) >= 8) { tx = (tx + x1) / 2; tz = (tz + z1) / 2; } }
   cam.goal = { tx, tz, dist: THREE.MathUtils.clamp(dist, minDist(), 520) };
+  zoomUser = cam.goal.dist / sceneDist(ev); // 당긴 만큼을 기억해 다음 장면에서도 같은 만큼
 }
+let zoomUser = 1;
 function resize() {
   const r = wrap.getBoundingClientRect();
   if (!r.width) return;
@@ -770,7 +772,7 @@ function controls() {
     if (k === 'right') ui.yaw -= 0.35;
     if (k === 'in') zoomToStage(cam.dist * 0.7);
     if (k === 'out') zoomToStage(cam.dist * 1.4);
-    if (k === 'reset') { ui.pitch = 0.62; ui.yaw = 0; flyTo(placeOf(curEvent())); }
+    if (k === 'reset') { ui.pitch = 0.62; ui.yaw = 0; zoomUser = 1; flyTo(placeOf(curEvent())); }
   });
 }
 
@@ -782,7 +784,8 @@ function start() {
   // 프롤로그(에덴)는 본 지도와 떨어진 2D 무대라 3D를 막는다 — 3D로 보던 중에 들어오면 2D로 돌린다
   const lock = ev => { const pro = !!PLACES[ev.place]?.hidden; $('#mode3d').disabled = pro; if (pro && on) setOn(false); return pro; };
   lock(curEvent());
-  addEventListener('stage:scene', e => { if (!lock(e.detail.ev) && on) flyToScene(e.detail.ev); });
+  // 다음 장면으로: 눕히고 돌린 각도는 그대로, 거리는 그 장면의 기본 거리에 사용자가 당긴 비율을 곱해
+  addEventListener('stage:scene', e => { if (!lock(e.detail.ev) && on) { flyToScene(e.detail.ev); if (cam.goal) cam.goal.dist = THREE.MathUtils.clamp(cam.goal.dist * zoomUser, minDist(), 520); } });
   // 장면 안에서 옮겨 갈 때: 걸어가면 그곳으로 미리 날아가고, 장면만 바뀌면 그 자리의 무대로
   addEventListener('stage:here', e => { if (on) e.detail.walk ? flyTo(e.detail.to) : flyToScene(curEvent()); });
   // 걷기를 시작하면: 두 장소 사이 거리에 맞춰 물러나 길 전체의 흐름이 보이게
