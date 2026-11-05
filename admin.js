@@ -58,9 +58,9 @@ async function load() {
   // 장면 제목·장소는 배포된 data.json에서, 말씀은 GitHub의 최신 원본에서 (방금 고친 것도 바로 보이게)
   const [d, dir] = await Promise.all([fetch(DATA_URL, { cache: 'no-store' }).then(r => r.json()), gh(`/repos/${REPO}/contents/${SRC}?ref=${BRANCH}`)]);
   data = d;
-  // 여정 고르기: 원본이 만들어진 여정(배포된 data의 journey.series 중 data가 있는 것)만
+  // 여정 고르기: 원본이 만들어진 여정(built)만 — 원본이 없는 여정을 고르면 불러오지 못해 로그인이 풀린다
   const pick = $('#journeyPick'), names = { jesus: '예수', moses: '모세와 여호수아', david: '다윗', kings: '열왕기', paul: '바울' };
-  pick.innerHTML = (d.journey?.series || [{ id: 'jesus' }]).map(j => `<option value="${j.id}"${j.id === JOURNEY ? ' selected' : ''}>${esc(names[j.id] || j.id)}${j.ready ? '' : ' (준비 중)'}</option>`).join('');
+  pick.innerHTML = (d.journey?.series || [{ id: 'jesus' }]).filter(j => j.built !== false).map(j => `<option value="${j.id}"${j.id === JOURNEY ? ' selected' : ''}>${esc(names[j.id] || j.id)}${j.ready ? '' : ' (준비 중)'}</option>`).join('');
   pick.hidden = false;
   pick.onchange = () => { location.search = pick.value === 'jesus' ? '' : `?j=${pick.value}`; };
   await loadVoices();
