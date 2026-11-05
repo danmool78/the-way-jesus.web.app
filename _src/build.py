@@ -3,6 +3,7 @@
 - 다른 여정(<id>): 원본은 _src/journeys/<id>/ (같은 모양), 결과는 ../j/<id>/data.json·data.<lang>.json
   원본 폴더가 아직 없는 여정(준비 중)은 건너뛴다
 Run: python3 _src/build.py"""
+import hashlib
 import json, os, glob, re, copy
 here = os.path.dirname(os.path.abspath(__file__))
 root = os.path.join(here, '..')
@@ -43,8 +44,10 @@ def build(jid, src, out_dir):
         e = {**s, **{k: v for k, v in c.items() if k != 'id'}}
         if s['id'] in images and os.path.exists(os.path.join(root, 'assets', 'img', s['id'] + '.webp')):
             e['img'] = {'src': 'assets/img/%s.webp' % s['id'], **images[s['id']]}
-        if os.path.exists(os.path.join(root, 'assets', 'music', '%s.mp3' % music.get(s['id']))):
-            e['music'] = music[s['id']]
+        mp = os.path.join(root, 'assets', 'music', '%s.mp3' % music.get(s['id']))
+        if os.path.exists(mp):
+            # 곡 이름 뒤에 파일 내용의 짧은 해시를 붙인다(곡?v=…): 곡을 다시 만들어도 이름이 같아 브라우저가 예전 곡을 7일씩 캐시로 틀었다
+            e['music'] = '%s?v=%s' % (music[s['id']], hashlib.md5(open(mp, 'rb').read()).hexdigest()[:8])
         assert len(e['story']) == 3 and e['words'] and ('quiz' not in e or len(e['quiz']['options']) == 4), s['id']  # 프롤로그는 퀴즈 없음
         # 한국어 이야기의 문단별 문장 수: 무대 대본·장면 안 이동은 한국어 문장 번호(p1.2 등)에 걸려 있다.
         # 번역은 문장 수가 달라, 앱이 번역 문장의 자리를 이 수에 비례해 한국어 문장 번호로 바꿔 무대를 움직인다 (app.js speakQueue)
