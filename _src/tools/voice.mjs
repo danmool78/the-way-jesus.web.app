@@ -19,6 +19,8 @@ const INNER = 0.93, SR = 24000;
 const argv = process.argv.slice(2), ji = argv.indexOf('--j'), J = ji >= 0 ? argv[ji + 1] : 'jesus';
 const args = ji >= 0 ? argv.filter((_, i) => i !== ji && i !== ji + 1) : argv;
 const d = JSON.parse(await readFile(J === 'jesus' ? 'data.json' : `j/${J}/data.json`, 'utf8'));
+// 여정의 해설 성우를 바꿀 때(journey.json의 narrator, 'eleven:<목소리 id>'): 일레븐랩스로 녹음한다. 열쇠도 그 이름으로 — 앱이 같은 이름으로 찾는다
+if (d.journey?.narrator) VOICE.narr = { name: d.journey.narrator, eleven: d.journey.narrator.replace(/^eleven:/, ''), rate: 1, cps: 6.8 };
 const ui = J === 'jesus' ? JSON.parse(await readFile('_src/i18n/ui.ko.json', 'utf8')) : d.ui; // 여정의 화면 글씨가 덧씌워진 것 (app.js의 t와 같게)
 // changed <예전 data.json>: 관리자 페이지에서 글을 고친 뒤 (GitHub Actions) — 읽을 문장이 바뀐 장면 가운데 녹음이 있던 장면만
 const old = args[0] === 'changed' && JSON.parse(await readFile(args[1], 'utf8'));
@@ -170,6 +172,22 @@ async function geminiCall(model, said, v) {
   return null;
 }
 
+// 일레븐랩스 (다정 리딩북과 같은 모델 eleven_v3, 한국어로 알려 준다). 24kHz PCM으로 받아 다른 녹음과 같이 다듬는다.
+// 분당 한도(429)나 일시 오류는 잠깐 쉬었다 다시. 키(ELEVENLABS_API_KEY)가 없거나 막히면 null
+const ELEVEN_KEY = process.env.ELEVENLABS_API_KEY, ELEVEN_MODEL = process.env.ELEVEN_MODEL || 'eleven_v3';
+async function elevenSynth(text, v) {
+  if (!ELEVEN_KEY) { console.warn('ELEVENLABS_API_KEY가 없어 건너뜀:', text.slice(0, 20)); return null; }
+  for (let tries = 0; tries < 5; tries++) {
+    const r = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${v.eleven}?output_format=pcm_${SR}`, { method: 'POST', headers: { 'xi-api-key': ELEVEN_KEY, 'content-type': 'application/json' },
+      body: JSON.stringify({ text: spoken(text), model_id: ELEVEN_MODEL, language_code: 'ko', voice_settings: { stability: 0.5, similarity_boost: 0.75, speed: 0.95 } }) });
+    if (r.ok) { const buf = Buffer.from(await r.arrayBuffer()); return new Int16Array(buf.buffer.slice(buf.byteOffset, buf.byteOffset + (buf.length & ~1))); }
+    const msg = (await r.text()).slice(0, 160);
+    if (r.status !== 429 && r.status < 500) { console.warn(`ElevenLabs ${r.status}: ${msg}`); return null; }
+    await new Promise(res => setTimeout(res, 10000 * (tries + 1)));
+  }
+  return null;
+}
+
 // 같은 배속이어도 Chirp는 가끔 짧은 말을 빨리 읽는다. 말소리만의 초당 글자 수가 기준에서 5% 넘게 벗어나면
 // 배속을 고쳐 다시 만들고, 다섯 번 안에 못 맞추면 가장 가까운 판을 쓴다. 숫자는 글자 수로 잴 수 없어 그대로
 async function record(text, v) {
@@ -193,6 +211,11 @@ for (const [id, lines] of jobs) {
     const v = voiceOf(s), key = keyOf(s), mp3 = `${OUT}/${key}.mp3`;
     if (existsSync(mp3)) continue;
     let b, pcm;
+    if (v.eleven) { // 일레븐랩스 성우: 문장 하나씩, 앞뒤 무음을 다듬고 소리 크기를 맞춘다 (키가 없으면 건너뛰고 앱은 그 문장을 브라우저 음성으로 읽는다)
+      const e = await elevenSynth(s.text, v);
+      if (!e) continue;
+      pcm = level(tidy(trimNoise(e))); b = {};
+    } else {
     let g = s.gemini && await geminiSynth(s.text, v);
     // 글에 없는 말까지 읽어 지나치게 길어진 판은 버리고 두 번까지 다시 (글 앞에 지시를 붙이면 Gemini가 그 지시까지 읽었다)
     const tooLong = pcm => { const n = s.text.replace(/[\s.,?!'"“”‘’…·:;()\-–—]/g, '').length; return n >= 4 && speechSec(pcm) > n / v.cps * 2.5; }; // 지시문을 읽으면 7배쯤 길어졌다
@@ -208,6 +231,7 @@ for (const [id, lines] of jobs) {
       pcm = new Int16Array(parts.reduce((t, p, i) => t + p.length + (i ? gap.length : 0), 0));
       let o = 0; parts.forEach((p, i) => { if (i) o += gap.length; pcm.set(p, o); o += p.length; });
     } else pcm = tidy((b = await record(s.text, v)).pcm);
+    }
     const raw = `${TMP}/${key}.pcm`;
     await writeFile(raw, Buffer.from(pcm.buffer, pcm.byteOffset, pcm.byteLength));
     execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-f', 's16le', '-ar', String(SR), '-ac', '1', '-i', raw, '-c:a', 'libmp3lame', '-b:a', '48k', mp3]);

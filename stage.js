@@ -223,11 +223,20 @@ if (canvas) {
   renderer.toneMappingExposure = 1.05;
   document.body.classList.add('has-stage');
 }
+// 무대 캔버스의 크기(px): 데스크톱 300×270. 휴대폰은 화면이 작아 인물이 너무 작게 보여 1.3배(300×260)로 당겨 보이되,
+// 넓은 무대(wide)가 화면 폭을 넘지 않게 줄인다. terrain.js의 minDist도 이것을 쓴다
+const MOB_K = 1.3;
+const stageBox = (wide = 1) => {
+  if (innerWidth > 900) return { w: Math.round(300 * wide), h: Math.round(270 * wide) };
+  const k = Math.max(1, Math.min(MOB_K, (innerWidth - 16) / (230 * wide)));
+  return { w: Math.round(230 * k * wide), h: Math.round(200 * k * wide) };
+};
+window.stageBox = stageBox;
 function resize() {
   const tv = window.terrainOn && window.terrainView;
   // 3D 지형에서 당겨 보면 인물도 커지므로 그만큼 화면(캔버스)도 넓힌다
-  const mobile = innerWidth <= 900, wide = (script?.wide || 1) * (tv ? Math.max(1, tv.zoom) : 1);
-  const w = Math.round((mobile ? 230 : 300) * wide), h = Math.round((mobile ? 200 : 270) * wide);
+  const wide = (script?.wide || 1) * (tv ? Math.max(1, tv.zoom) : 1);
+  const { w, h } = stageBox(wide);
   if (w === size.w && h === size.h) return;
   size = { w, h };
   // 작은 인물의 윤곽이 매끈하도록 화면 해상도의 2배로 그려 줄여 보인다(슈퍼샘플링). 3D 지형에서 당겨 무대가 커지면
@@ -248,8 +257,7 @@ function resize() {
 window.stageFrame = ev => {
   const s = ev && SCRIPTS[ev.id];
   if (!s || !canvas) return null;
-  const mobile = innerWidth <= 900, wide = s.wide || 1;
-  const w = Math.round((mobile ? 230 : 300) * wide), h = Math.round((mobile ? 200 : 270) * wide);
+  const wide = s.wide || 1, { w, h } = stageBox(wide);
   const cam = camera.clone();
   cam.fov = THREE.MathUtils.radToDeg(2 * Math.atan(wide * Math.tan(THREE.MathUtils.degToRad(FOV / 2))));
   cam.aspect = w / h; cam.updateProjectionMatrix(); cam.updateMatrixWorld();
@@ -336,7 +344,7 @@ let inTerrain = false;
 const base = { x: 0, z: 0, y: 0, k: 1 }; // 무대 바닥 중심의 지도 좌표·높이, 지도 단위/무대(stageGroup) 단위
 // 예전 무대(따로 그린 캔버스)에서 무대 1단위가 지도 몇 단위로 보였나: 무대 화면의 단위당 px ÷ 지형 화면의 지도 단위당 px
 function oldUnit(T, dist, zoom) {
-  const pxPer = (innerWidth <= 900 ? 200 : 270) / (2 * CAM0.d * Math.tan(THREE.MathUtils.degToRad(FOV / 2))) * zoom;
+  const pxPer = (innerWidth <= 900 ? 200 * MOB_K : 270) / (2 * CAM0.d * Math.tan(THREE.MathUtils.degToRad(FOV / 2))) * zoom;
   return pxPer * 2 * dist * Math.tan(THREE.MathUtils.degToRad(T.camera.fov / 2)) / (wrap.clientHeight || 1);
 }
 function enterTerrain(T) {

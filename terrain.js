@@ -561,13 +561,13 @@ function figZoom(dist, city) {
   return dist >= FIG_D ? Math.max(0.35, (150 / dist) ** 0.6) : FIG_MAX * FIG_D / dist;
 }
 // 가장 가까이 당길 수 있는 거리: 무대(인물과 함께 커지는 캔버스)가 카드에 가리지 않은 지도 영역을 채우는 데까지.
-// 크기 공식은 stage.js의 resize와 같게 (폭 300·높이 270, 모바일 230·200, 넓은 무대 wide)
+// 크기는 stage.js의 stageBox (폭 300·높이 270, 모바일은 그 1.3배까지, 넓은 무대 wide)
 function minDist() {
   const ev = curEvent();
   if (isCity(placeOf(ev))) return 25;
   const r = wrap.getBoundingClientRect(), mobile = innerWidth <= 900, wide = SCRIPTS[ev.id]?.wide || 1;
   const fw = mobile ? r.width : r.width - (Math.min(460, r.width * 0.42) + 28), fh = mobile ? r.height * 0.52 : r.height;
-  const zMax = Math.max(FIG_MAX, 0.95 * Math.min(fw / ((mobile ? 230 : 300) * wide), fh / ((mobile ? 200 : 270) * wide)));
+  const b = window.stageBox(wide), zMax = Math.max(FIG_MAX, 0.95 * Math.min(fw / b.w, fh / b.h));
   return Math.max(25, FIG_MAX * FIG_D / zMax);
 }
 // 확대·축소는 늘 지금 장면의 무대를 가운데로 다시 맞추며 한다 — 끌어서 옮겨 둔 곳을 기준으로 당기면 무대가 화면 밖에 남았다

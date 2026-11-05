@@ -993,7 +993,7 @@ function speakQueue(items, onDone) {
     ss.forEach((s, k) => queue.push({ ...it, text: s, s: k, ks: ks(k), last: k === ss.length - 1 }));
   });
   // Gemini 성우로 녹음한 말씀(관리자 페이지에서 고른 것)은 열쇠에 'gemini-'가 붙는다 (voice.mjs의 keyOf)
-  queue.forEach(it => { it.clip = voiceKey(`${it.gemini ? 'gemini-' : ''}${it.child ? VOICE_NAME.child : it.jesus ? VOICE_NAME.jesus : it.god ? VOICE_NAME.god : VOICE_NAME.narr}`, it.text); });
+  queue.forEach(it => { it.clip = voiceKey(`${it.gemini ? 'gemini-' : ''}${it.child ? VOICE_NAME.child : it.jesus ? VOICE_NAME.jesus : it.god ? VOICE_NAME.god : DATA.journey?.narrator || VOICE_NAME.narr}`, it.text); }); // narrator: 여정마다 다른 해설 성우(GoodNews는 일레븐랩스)
   // 녹음이 있는 문장은 녹음으로, 없는 문장은 브라우저 음성으로 (다른 여정은 해설만 녹음 — 말씀은 기기 음성)
   const hasClip = it => LANG === 'ko' && !!voiceIndex[it.clip];
   const recorded = queue.length > 0 && queue.every(hasClip);
@@ -1159,8 +1159,8 @@ function setListenUI() {
 // 곡 끝이 다가오면 같은 곡을 처음부터 겹쳐 틀어 이음매가 들리지 않게 하고, 장면이 바뀌어 곡이 다르면 서로 겹쳐 바꾼다.
 // 낭독과 함께 켜지고 함께 멈춘다 (자동 여정의 장면 사이에도 낭독이 없으면 쉰다). 딸깍 소리가 나지 않게 0.3초만 오르내린다.
 // 소리 크기는 Web Audio 사슬로만 정한다 (아이폰은 audio 요소의 volume을 무시한다). 낭독 소리는 이 사슬에 넣지 않는다
-const BGM = { key: 'theway-music', level: 0.144, fade: 2.5, out: 3, rest: 3 }; // out: 반복할 때 내리고 올리는 시간, rest: 그 사이 쉬는 시간(초) // level: 사용자 요청으로 0.16에서 10% 낮춤
-let bgmCtx = null, bgmPlayers = [], bgmCur = 0, bgmCue = null, bgmLoop = null, bgmGo = 0;
+const BGM = { key: 'theway-music', level: 0.144, fade: 2.5, out: 5, rest: 3, stop: 4.5 }; // out: 반복·곡 바꿈에 내리고 올리는 시간, rest: 그 사이 쉬는 시간, stop: 낭독이 멈춘 뒤 내려가는 시간(초) — 사용자 요청으로 더 천천히(3·0.3에서) // level: 사용자 요청으로 0.16에서 10% 낮춤
+let bgmCtx = null, bgmPlayers = [], bgmCur = 0, bgmCue = null, bgmLast = null, bgmLoop = null, bgmGo = 0;
 // 켜고 끈 것은 메모리에 두고 localStorage에는 남겨 두기만 한다 (저장이 막힌 브라우저에서도 이번 방문 동안은 끌 수 있게)
 let bgmPref = (() => { try { return localStorage.getItem(BGM.key) !== 'off'; } catch { return true; } })();
 const bgmOn = () => bgmPref;
@@ -1221,7 +1221,7 @@ function bgmPlay(cue, s = BGM.fade) {
 }
 function bgmStop(s) {
   if (!bgmCtx) return;
-  const go = ++bgmGo; bgmCue = null;
+  const go = ++bgmGo; bgmLast = bgmCue; bgmCue = null;
   bgmPlayers.forEach(p => bgmRamp(p, 0, s));
   setTimeout(() => { if (go === bgmGo) bgmPlayers.forEach(p => p.el.pause()); }, s * 1000 + 100);
 }
@@ -1229,9 +1229,11 @@ function bgmStop(s) {
 function bgmFollow() {
   $('#music')?.setAttribute('aria-pressed', String(bgmOn()));
   const cue = bgmOn() && speaking && EVENTS ? evAt(idx)?.music : null;
-  if (!cue) { if (bgmCue) bgmStop(0.3); return; }
+  if (!cue) { if (bgmCue) bgmStop(bgmOn() ? BGM.stop : 1); return; } // 음악 단추로 끈 때는 빨리
   if (!bgmReady()) return;
   if (bgmCtx.state === 'suspended') bgmCtx.resume().catch(() => {});
+  // 천천히 내려가던 같은 곡이면 이어서 다시 올린다 (낭독을 잠깐 멈췄다 다시 들을 때 곡이 끊겼다 처음부터 나오지 않게)
+  if (!bgmCue && cue === bgmLast && bgmLevel(bgmPlayers[bgmCur]) > 0.005) bgmCue = cue;
   if (cue !== bgmCue) { bgmPlay(cue, bgmCue ? BGM.fade : 0.3); return; }
   // 같은 곡이 내려가던 중이면 그 자리에서 다시 올린다 (앞 곡이 다 내려가기를 기다리는 중이면 그대로 둔다)
   const p = bgmPlayers[bgmCur];
