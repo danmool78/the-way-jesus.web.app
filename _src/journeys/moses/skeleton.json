@@ -31,8 +31,14 @@
   "refs": {
    "ex": "2:11–25"
   },
-  "from": "rameses",
-  "moveAt": "p1.3"
+  "start": "rameses",
+  "stops": [
+   {
+    "at": "p1.3",
+    "to": "midian",
+    "walk": true
+   }
+  ]
  },
  {
   "id": "m04",
