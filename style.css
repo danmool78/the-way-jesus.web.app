@@ -594,16 +594,23 @@ body.intro-open .intro,body.intro-open .intro *{animation-play-state:running}
 @keyframes landBob{50%{transform:translateY(4px)}}
 .land-sec{padding-top:44px!important;padding-bottom:20px!important}
 /* 그 길 시리즈: 지금 여정은 금빛 테두리, 준비된 여정은 링크, 준비 중인 여정은 흐리게 (누르면 후원 안내) */
-.series{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;text-align:left}
-.series li>*{display:flex;flex-direction:column;gap:3px;width:100%;height:100%;padding:13px 14px;border:1px solid #3a3026;border-radius:14px;background:rgba(255,255,255,.02);color:var(--ink);text-decoration:none;font:inherit;text-align:left}
-.series button{cursor:pointer}
-.series b{font-family:var(--serif);font-size:16px;color:var(--gold2)}
-.series small{font-size:12.5px;line-height:1.5;color:var(--muted)}
-.series em{font-style:normal;font-size:11.5px;letter-spacing:.04em;color:var(--faint);margin-top:auto;padding-top:4px}
-.series .now>*{border-color:var(--gold);background:rgba(var(--gold-rgb),.08)}
-.series .now em{color:var(--gold)}
-.series .soon>*{opacity:.72}
-.series a:hover,.series button:hover{border-color:rgba(var(--gold-rgb),.6);opacity:1}
+/* 여정 카드 (그 길 시리즈): 여정의 색(li의 data-journey가 --gold를 바꾼다) 아이콘·이름·소개·장면 수, 아래에 들어가기와 공유 */
+.series{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;text-align:left}
+.jcard{display:grid;grid-template-columns:56px 1fr;grid-template-rows:auto auto;gap:12px 14px;padding:16px;border:1px solid #3a3026;border-radius:16px;background:linear-gradient(160deg,rgba(var(--gold-rgb),.09),rgba(255,255,255,.015) 60%)}
+.jcard.now{border-color:var(--gold)}
+.jcard.soon{opacity:.7;background:rgba(255,255,255,.02)}
+.jicon{width:56px;height:56px;border-radius:14px;box-shadow:0 0 22px rgba(var(--gold-rgb),.25)}
+.jtext{display:flex;flex-direction:column;gap:3px;min-width:0}
+.jtext b{font-family:var(--serif);font-size:18px;color:var(--gold2)}
+.jtext small{font-size:13px;line-height:1.5;color:var(--muted)}
+.jtext em{font-style:normal;font-size:11.5px;letter-spacing:.04em;color:var(--gold);margin-top:2px}
+.jbtns{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.jgo{flex:1;min-width:0;display:inline-flex;justify-content:center;align-items:center;padding:10px 14px;border-radius:999px;border:0;background:linear-gradient(180deg,var(--gold2),var(--gold));color:#1b140c;font:600 14px var(--sans);text-decoration:none;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.jcard.soon .jgo{background:transparent;border:1px solid #4a3e30;color:var(--muted)}
+.jagain{flex-basis:100%;order:3;background:none;border:0;color:var(--muted);font:13px var(--sans);text-decoration:underline;cursor:pointer;padding:2px 0}
+.jshare{display:inline-flex;align-items:center;gap:6px;padding:9px 13px;border-radius:999px;border:1px solid rgba(var(--gold-rgb),.45);background:transparent;color:var(--gold2);font:13px var(--sans);cursor:pointer}
+.jshare svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8}
+.jgo:hover{filter:brightness(1.08)}.jshare:hover{background:rgba(var(--gold-rgb),.1)}
 .land-list{display:inline-block;margin-top:18px;color:var(--gold2);font-family:var(--serif);font-size:15px;text-decoration:none;border-bottom:1px solid rgba(var(--gold-rgb),.4)}
 .land-list:hover{color:#fff3d6}
 .intro h2{margin:0 0 18px;font-family:var(--serif);font-size:22px;font-weight:700;color:var(--gold2);letter-spacing:.06em}
@@ -667,8 +674,9 @@ body.intro-open .intro,body.intro-open .intro *{animation-play-state:running}
 
 /* 여정마다 테마색 (그 길 시리즈): 금빛 강조색을 여정의 색으로 바꾼다. <html data-journey>(app.js)와 시리즈 목록의 카드(li data-journey)에 걸린다
    예수 — 금빛, 출애굽(모세와 여호수아) — 광야의 구릿빛, 다윗 — 올리브 초록, 열왕기 — 왕의 자줏빛, 바울 — 지중해의 푸른빛 */
+[data-journey=jesus]{--gold:#d9b46a;--gold2:#f0d79a;--gold-rgb:217,180,106;--gold-hi:#e9c97f;--gold-deep:#b88a3e;--gold-deep-rgb:184,138,62}
 [data-journey=moses]{--gold:#dc8f5f;--gold2:#f3c29c;--gold-rgb:220,143,95;--gold-hi:#eaa679;--gold-deep:#a65a33;--gold-deep-rgb:166,90,51}
 [data-journey=david]{--gold:#a9bf6a;--gold2:#d6e3a8;--gold-rgb:169,191,106;--gold-hi:#bccf82;--gold-deep:#6f8638;--gold-deep-rgb:111,134,56}
 [data-journey=kings]{--gold:#b99ade;--gold2:#ddcdf3;--gold-rgb:185,154,222;--gold-hi:#cab0ea;--gold-deep:#7c58a8;--gold-deep-rgb:124,88,168}
-[data-journey=goodnews]{--gold:#e0877a;--gold2:#f6c7bd;--gold-rgb:224,135,122;--gold-hi:#eb9d92;--gold-deep:#a84a3f;--gold-deep-rgb:168,74,63}
+[data-journey=goodnews]{--gold:#e58a7f;--gold2:#f4c3bb;--gold-rgb:229,138,127;--gold-hi:#eda197;--gold-deep:#a8473f;--gold-deep-rgb:168,71,63}
 [data-journey=paul]{--gold:#70b5da;--gold2:#bbdff3;--gold-rgb:112,181,218;--gold-hi:#8fc8e7;--gold-deep:#3e7fa8;--gold-deep-rgb:62,127,168}

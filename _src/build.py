@@ -111,9 +111,23 @@ def build(jid, src, out_dir):
 src_of = lambda jid: here if jid == 'jesus' else os.path.join(here, 'journeys', jid)
 for j in series:  # 원본이 있어 data가 만들어지는 여정 표시 (관리자의 여정 고르기는 이것만 보인다)
     j['built'] = os.path.exists(os.path.join(src_of(j['id']), 'skeleton.json'))
+    if j['built']:  # 장면 수(프롤로그 빼고): 첫 화면의 여정 카드에 쓴다
+        sk = loadf(os.path.join(src_of(j['id']), 'skeleton.json'))
+        j['n'] = len(sk) - (1 if sk and sk[0]['id'].endswith('00') else 0)
 for j in series:
     if j['built']:  # 아직 원본이 없는 여정(준비 중)은 건너뛴다
         build(j['id'], src_of(j['id']), root if j['id'] == 'jesus' else os.path.join(root, 'j', j['id']))
+
+# 첫 주소의 랜딩(index.html)이 읽는 land.json: 여정 카드(시리즈 + 마지막에 4영리)와 랜딩 글씨만 언어마다 — 앱의 data.json은 크다
+LAND_KEYS = ['appName', 'hubTag', 'hubLead', 'seriesHead', 'seriesGo', 'seriesScenes', 'shareShort', 'shareApp', 'linkCopied', 'soon',
+             'mvGo', 'mvLead', 'mvNote', 'qnaHelp', 'language', 'close', 'goodnewsGo']
+land = {'langs': LANGS, 'cards': [{'id': j['id'], 'title': j['title'], 'desc': j['desc'], 'ready': j['ready'], **({'n': j['n']} if j.get('n') else {})} for j in series if j['id'] != 'goodnews']
+        + [{'id': 'goodnews', 'title': 'goodnewsH', 'desc': 'goodnews', 'ready': True, 'href': '/goodnews/', 'go': 'goodnewsGo'}], 'ui': {}}  # 4영리는 따로 만든 페이지(/goodnews/)로
+for lang in LANGS:
+    u = {**ui_ko, **(loadf(os.path.join(here, 'i18n', 'ui.%s.json' % lang)) if lang != 'ko' else {})}
+    keys = LAND_KEYS + sorted({c['title'] for c in land['cards']} | {c['desc'] for c in land['cards']})
+    land['ui'][lang] = {k: u[k] for k in keys if k in u}
+json.dump(land, open(os.path.join(root, 'land.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
 
 # 검색엔진용 장면 페이지(s/)와 sitemap.xml도 새 data로 다시 만든다
 exec(open(os.path.join(here, 'pages.py'), encoding='utf-8').read(), {'__file__': os.path.join(here, 'pages.py')})

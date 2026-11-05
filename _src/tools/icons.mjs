@@ -12,9 +12,9 @@ const GOLD = ['#fcebbb', '#e6c275', '#b1823a', '#f0d79a'];
 const J = {
   moses: { name: '그 길 — 모세와 여호수아', short: '그 길 · 모세', c: ['#fbe0c8', '#dc8f5f', '#a65a33', '#f3c29c'] },
   david: { name: '그 길 — 다윗', short: '그 길 · 다윗', c: ['#eef3d2', '#a9bf6a', '#6f8638', '#d6e3a8'] },
-  goodnews: { name: '그 길 — GoodNews (복음)', short: '그 길 · GoodNews', c: ['#fbe1db', '#e0877a', '#a84a3f', '#f6c7bd'] },
   kings: { name: '그 길 — 열왕기', short: '그 길 · 열왕기', c: ['#efe6fb', '#b99ade', '#7c58a8', '#ddcdf3'] },
   paul: { name: '그 길 — 바울', short: '그 길 · 바울', c: ['#e1f1fb', '#70b5da', '#3e7fa8', '#bbdff3'] },
+  goodnews: { name: 'GoodNews', short: 'GoodNews', c: ['#fde6e2', '#e58a7f', '#a8473f', '#f4c3bb'] },
 };
 const base = readFileSync('assets/icon.svg', 'utf8'), man = JSON.parse(readFileSync('manifest.webmanifest', 'utf8'));
 const ids = process.argv.slice(2).length ? process.argv.slice(2) : Object.keys(J);
@@ -32,7 +32,7 @@ for (const id of ids) {
     await p.screenshot({ path: dir + f, omitBackground: true });
   }
   // 같은 사이트 안의 다른 앱: id와 시작 주소를 여정 주소로 — 예수 여정과 따로 설치된다
-  writeFileSync(dir + 'manifest.webmanifest', JSON.stringify({ ...man, id: `/?j=${id}`, name: j.name, short_name: j.short, start_url: `/?j=${id}`, scope: '/',
+  writeFileSync(dir + 'manifest.webmanifest', JSON.stringify({ ...man, id: `/?j=${id}`, name: j.name, short_name: j.short, start_url: `/app.html?j=${id}`, scope: '/',
     icons: [{ src: `/${dir}icon.svg`, sizes: 'any', type: 'image/svg+xml', purpose: 'any' }, { src: `/${dir}icon-192.png`, sizes: '192x192', type: 'image/png' }, { src: `/${dir}icon-512.png`, sizes: '512x512', type: 'image/png' }] }));
   console.log(id, 'ok');
 }
