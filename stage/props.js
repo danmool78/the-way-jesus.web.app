@@ -1382,6 +1382,54 @@ Object.assign(MAKERS, {
   },
 });
 
+// ---- 모세와 여호수아 (가나안) ----
+Object.assign(MAKERS, {
+  // 성벽 도성(여리고·아이·기브온): 탑이 선 흙벽돌 성벽과 성문. rahab: 성벽에 붙여 지은 라합의 집(창).
+  // state 'stand' | 'cord'(라합의 창에 붉은 줄) | 'fall'(성벽이 무너져 내린다 — 라합의 집과 붉은 줄만 남는다)
+  citywall(o = {}) {
+    const g = new THREE.Group(), W = o.w || 2.0, H = o.h || 0.55, segs = [], tx = brickMap().clone();
+    tx.repeat.set(W * 3, H * 3); tx.needsUpdate = true;
+    const brick = new THREE.MeshStandardMaterial({ map: tx, roughness: 1 }), dark = mat('#2a1c10');
+    const n = 7;
+    for (let i = 0; i < n; i++) {
+      const x = -W / 2 + (i + 0.5) * W / n, s2 = new THREE.Group(); s2.position.x = x; g.add(s2);
+      const tower = i % 3 === 0, h = tower ? H * 1.3 : H;
+      mesh(new THREE.BoxGeometry(W / n + 0.004, h, tower ? 0.22 : 0.16), brick, s2, [0, h / 2, 0]).receiveShadow = true;
+      for (let k = 0; k < 3; k++) mesh(new THREE.BoxGeometry(0.05, 0.05, tower ? 0.23 : 0.17), brick, s2, [(k - 1) * W / n / 3, h + 0.025, 0]); // 성가퀴
+      if (i === Math.floor(n / 2)) mesh(new THREE.BoxGeometry(0.14, 0.26, 0.02), dark, s2, [0, 0.13, (tower ? 0.11 : 0.08) + 0.002]); // 성문
+      s2.userData = { seed: i * 1.7, tilt: (i % 2 ? 1 : -1) * (0.3 + (i % 3) * 0.15) };
+      segs.push(s2);
+    }
+    let rahab, cord;
+    if (o.rahab !== false) {
+      rahab = new THREE.Group(); rahab.position.set(W / 2 - W / n * 1.5, 0, 0.09); g.add(rahab); // 성벽 앞에 붙은 집
+      mesh(new THREE.BoxGeometry(0.3, H * 0.95, 0.06), mat('#cdb48e', { roughness: 1 }), rahab, [0, H * 0.475, 0.0]);
+      mesh(new THREE.BoxGeometry(0.07, 0.07, 0.01), dark, rahab, [0.03, H * 0.75, 0.031]);
+      cord = mesh(new THREE.BoxGeometry(0.008, H * 0.7, 0.008), mat('#c0201a', { emissive: '#5a0806', emissiveIntensity: 0.6 }), rahab, [0.05, H * 0.37, 0.04]);
+    }
+    let f = 0;
+    return new Prop(g, (P, t, dt) => {
+      f = damp(f, P.state === 'fall' ? 1 : 0, 1.4, dt);
+      segs.forEach(s2 => { s2.position.y = -f * 0.25; s2.rotation.z = f * s2.userData.tilt; s2.scale.y = 1 - f * 0.55; });
+      if (cord) cord.visible = P.state === 'cord' || P.state === 'fall';
+    }, { state: o.state || 'stand' });
+  },
+  // 해와 달: 기브온 위의 해, 아얄론 골짜기의 달 (state 'still'이면 해가 더 밝게 멈춰 선다)
+  sunmoon() {
+    const g = new THREE.Group();
+    const sun = glowSprite(1.1, 0.9); sun.position.set(-0.8, 1.7, -0.6); g.add(sun);
+    mesh(sphere(0.09, 16, 12), new THREE.MeshBasicMaterial({ color: '#fff1c0' }), g, [-0.8, 1.7, -0.6]).castShadow = false;
+    const moon = mesh(sphere(0.06, 16, 12), new THREE.MeshBasicMaterial({ color: '#e8eef4', transparent: true, opacity: 0.8 }), g, [0.9, 1.45, -0.6]); moon.castShadow = false;
+    return new Prop(g, (P, t) => { const k = P.state === 'still' ? 1.3 : 0.9; sun.material.opacity = k * P.show * (0.9 + Math.sin(t * 2) * 0.05); sun.scale.setScalar(1.1 * k); moon.material.opacity = 0.8 * P.show; }, { fade: 'opacity' });
+  },
+  // 증거의 큰 돌: 상수리나무 아래 세운 선돌
+  standing() {
+    const g = new THREE.Group();
+    mesh(new THREE.BoxGeometry(0.16, 0.42, 0.1), mat('#b0a48c', { roughness: 1, flatShading: true }), g, [0, 0.21, 0]).rotation.y = 0.2;
+    return new Prop(g);
+  },
+});
+
 export function makeProp(kind, x = 0, z = 0, o = {}) {
   const P = MAKERS[kind](o);
   P.obj.position.set(x, o.y || 0, z);

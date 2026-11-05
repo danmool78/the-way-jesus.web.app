@@ -91,6 +91,8 @@ const TYPES = {
   balaam:   { robe: '#5a3a5e', trim: '#c9a24a', mantle: '#8a6a3a', hair: '#cfc8bb', beard: true, turban: '#d8c49a', skin: 3, sash: '#c9a24a' }, // 브올의 아들 발람 (유브라데 강가의 점술가)
   balak:    { robe: '#7a2a20', trim: '#d6a93a', mantle: '#3a2a5e', hair: '#1d140c', beard: true, crown: true, skin: 2, sash: '#d6a93a' }, // 모압 왕 발락
   sihon:    { robe: '#4a3a2a', trim: '#b08a4e', mantle: '#7a3b2e', hair: '#1d140c', beard: true, crown: true, spear: true, skin: 2, sash: '#b08a4e' }, // 아모리 왕 시혼
+  rahab:    { robe: '#9a2e2a', trim: '#d6a93a', mantle: '#d8c49a', veil: true, inner: '#efe6d4', skin: 2, soft: true, slim: true, sash: '#d6a93a' }, // 여리고의 라합
+  priest:   { robe: '#f6f2e8', trim: '#2f4f8a', hair: '#2b1b10', beard: true, turban: '#f6f2e8', sash: '#2f4f8a', skin: 1 }, // 언약궤를 멘 레위 제사장 (흰 세마포, 청색 띠)
   official: { robe: '#2f4f6a', trim: '#d6a93a', mantle: '#c8b48c', hair: '#2b1b10', beard: true, sash: '#d6a93a', skin: 2 }, // 왕의 신하
 };
 
@@ -572,8 +574,16 @@ function makePerson(type) {
   const tablets = new THREE.Group();
   [-1, 1].forEach(k => { mesh(new THREE.BoxGeometry(0.07, 0.11, 0.016), mat('#cfc6b4', { roughness: 0.9 }), tablets, [k * 0.038, 0, 0]); mesh(sphere(0.035, 12, 6, 0, Math.PI * 2, 0, Math.PI / 2), mat('#cfc6b4', { roughness: 0.9 }), tablets, [k * 0.038, 0.055, 0], [1, 0.6, 0.23]); });
   tablets.position.set(0, 0.52, 0.16);
-  [doves, gift, jar, scroll, alabaster, palm, cup, torch, mat_, timbrel, tablets].forEach(g => { g.visible = false; upper.add(g); });
-  const items = { basket, doves, gift, jar, scroll, alabaster, palm, cup, torch, mat: mat_, timbrel, tablets };
+  // 숫양 뿔나팔 (여리고를 도는 제사장들): 입에 대고 위로 휘어 오른 뿔
+  const horn = new THREE.Group();
+  const hp = []; for (let i = 0; i <= 12; i++) { const u = i / 12; hp.push(new THREE.Vector3(u * 0.16, Math.sin(u * 2.2) * 0.06 + u * u * 0.08, 0)); }
+  const hornGeo = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(hp), 20, 0.009, 8), hpos = hornGeo.attributes.position;
+  for (let i = 0; i < hpos.count; i++) { const u = hp[0].distanceTo(new THREE.Vector3(hpos.getX(i), 0, 0)) / 0.16; const c = new THREE.CatmullRomCurve3(hp).getPoint(Math.min(1, Math.floor(i / 9) / 20)); const d = new THREE.Vector3(hpos.getX(i), hpos.getY(i), hpos.getZ(i)).sub(c).multiplyScalar(0.6 + Math.floor(i / 9) / 20 * 1.8); hpos.setXYZ(i, c.x + d.x, c.y + d.y, c.z + d.z); }
+  hornGeo.computeVertexNormals();
+  mesh(hornGeo, mat('#d8c49a', { roughness: 0.5 }), horn);
+  horn.position.set(0.0, 0.78, 0.07); horn.rotation.y = -Math.PI / 2; horn.rotation.z = 0.3;
+  [doves, gift, jar, scroll, alabaster, palm, cup, torch, mat_, timbrel, tablets, horn].forEach(g => { g.visible = false; upper.add(g); });
+  const items = { basket, doves, gift, jar, scroll, alabaster, palm, cup, torch, mat: mat_, timbrel, tablets, horn };
 
   // 발: 샌들 위의 맨발이 옷자락 아래로
   const feet = [1, -1].map(s => {
