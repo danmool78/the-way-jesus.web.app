@@ -158,7 +158,9 @@ async function loadRegion(r) {
 // 예루살렘 둘레의 초정밀 색(2D 지도의 도성 타일, 지도 단위당 25.6픽셀)을 지형 위에 덧입힌다 —
 // 도성 장면은 바짝 다가가므로 지역 색 그림(단위당 2.2픽셀)으로는 땅이 뭉개져 보였다. 가장자리는 서서히 투명하게
 const RCITY = { lat0: 31.74, lat1: 31.81, lng0: 35.19, lng1: 35.28 }, RCITY_T = 20, RCITY_N = 4; // _src/relief.py의 CITY와 같게
+let cityDone = false;
 async function addCityDetail() {
+  cityDone = true;
   const P = 512, imgs = await Promise.all([...Array(RCITY_N * RCITY_N)].map((_, i) => loadImg(`assets/relief-city/${Math.floor(i / RCITY_N)}_${i % RCITY_N}.webp`).catch(() => null)));
   const [x0, z0] = px([RCITY.lat1, RCITY.lng0]), [x1, z1] = px([RCITY.lat0, RCITY.lng1]), U = RCITY_T * RCITY_N; // 캔버스가 덮는 단위
   const cv = document.createElement('canvas'); cv.width = cv.height = 2048;
@@ -322,6 +324,40 @@ function clutterInstanced(o) {
   cleared = null; // 새로 생긴 것도 한 번 따져 본다
 }
 let cleared = null;
+// 무대 밑 땅 고르기: 거친 산지(시내산 둘레)에서는 무대 앞 능선이 사람의 다리를 가리고, 비탈에 선 사람이 땅에 묻혀 보였다.
+// 무대 둘레(r의 1.25배)는 가운데 땅 높이로 평평하게, 그 바깥(2.2배까지)은 서서히 원래 땅으로. 무대가 떠나면 원래대로 되돌린다.
+// 도성 안과 그 둘레(도성 모형과 초정밀 색 판이 땅 높이에 맞춰 지어져 있다), 물 위(배 장면)는 손대지 않는다
+let leveled = null;
+function unlevel() {
+  if (!leveled) return;
+  leveled.parts.forEach(({ rg, ks, orig }) => { const pos = rg.mesh.geometry.attributes.position; ks.forEach((k, i) => { rg.heights[k] = orig[i]; pos.setY(k, orig[i]); }); pos.needsUpdate = true; rg.mesh.geometry.computeVertexNormals(); });
+  leveled = null;
+}
+function level(cx, cz, r) {
+  unlevel();
+  leveled = { cx, cz, r, parts: [] };
+  const k0 = window.stagePlaceOf?.(curEvent()) || curEvent().place;
+  if (r <= 0 || isCity(k0)) return;
+  const y0 = heightAt(cx, cz);
+  if (standAt(cx, cz) > y0 + 0.01) return;
+  const R0 = r * 1.25, R1 = r * 2.2, [qx0, qz0] = px([RCITY.lat1, RCITY.lng0]), [qx1, qz1] = px([RCITY.lat0, RCITY.lng1]);
+  if (cityDone && cx + R1 > qx0 && cx - R1 < qx1 && cz + R1 > qz0 && cz - R1 < qz1) return; // 예루살렘 둘레의 초정밀 색 판은 땅 높이를 미리 따라 지었다 (베다니)
+  regions.forEach(rg => {
+    if (!rg.heights || cx + R1 < rg.X0 || cx - R1 > rg.X1 || cz + R1 < rg.Z0 || cz - R1 > rg.Z1) return;
+    const H = rg.heights, w = rg.hw, sx = (rg.X1 - rg.X0) / (w - 1), sz = (rg.Z1 - rg.Z0) / (rg.hh - 1), ks = [], orig = [];
+    const pos = rg.mesh.geometry.attributes.position;
+    for (let j = Math.max(0, Math.floor((cz - R1 - rg.Z0) / sz)); j <= Math.min(rg.hh - 1, Math.ceil((cz + R1 - rg.Z0) / sz)); j++)
+      for (let i = Math.max(0, Math.floor((cx - R1 - rg.X0) / sx)); i <= Math.min(w - 1, Math.ceil((cx + R1 - rg.X0) / sx)); i++) {
+        const d = Math.hypot(rg.X0 + i * sx - cx, rg.Z0 + j * sz - cz), k = j * w + i;
+        if (d >= R1 || H[k] === -1) continue; // 바다 꼭짓점은 그대로
+        const t = d <= R0 ? 1 : 1 - (d - R0) / (R1 - R0), e = t * t * (3 - 2 * t);
+        ks.push(k); orig.push(H[k]); H[k] += (y0 - H[k]) * e; pos.setY(k, H[k]);
+      }
+    if (!ks.length) return;
+    pos.needsUpdate = true; rg.mesh.geometry.computeVertexNormals();
+    leveled.parts.push({ rg, ks, orig });
+  });
+}
 function clearStageSpot() {
   const f = window.stageFoot, stageOn = document.body.classList.contains('stage-on') && f;
   let cx = 1e9, cz = 1e9, r = 0;
@@ -332,6 +368,7 @@ function clearStageSpot() {
     r = f.r ?? f.rpx * 2 * D * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) / H; // r: 지형 안에 선 무대가 알려 주는 지도 단위 반지름
   }
   if (cleared && Math.abs(cleared.cx - cx) < 0.01 && Math.abs(cleared.cz - cz) < 0.01 && Math.abs(cleared.r - r) <= cleared.r * 0.08) return;
+  if (!leveled || Math.hypot(leveled.cx - cx, leveled.cz - cz) > Math.max(r, leveled.r) * 0.25 || Math.abs(leveled.r - r) > leveled.r * 0.08) level(cx, cz, r);
   cleared = { cx, cz, r };
   clutter.meshes.forEach(({ m, x, z }) => { m.visible = Math.hypot(x - cx, z - cz) > r; });
   clutter.inst.forEach(({ o, ms, xz }) => { ms.forEach((m, i) => o.setMatrixAt(i, Math.hypot(xz[i][0] - cx, xz[i][1] - cz) > r ? m : ZERO)); o.instanceMatrix.needsUpdate = true; });
@@ -546,7 +583,10 @@ function greyable(m) {
   };
   return m;
 }
-const WORLD = (() => { const [x0, z0] = px([34.6, 29.4]), [x1, z1] = px([29.15, 37.4]); return { x0, z0, x1, z1 }; })();
+// 끌어 옮길 수 있는 범위: 깔린 바탕 그림 전체 (모세 여정은 시내 반도 바탕까지 — 예전 범위(29.15° 위)로 묶으면 시내에서 끌자마자 북쪽으로 튀었다)
+let world = null;
+const WORLD = () => world ??= BASES.reduce((w, b) => { const [x0, z0] = px([b.lat1, b.lng0]), [x1, z1] = px([b.lat0, b.lng1]);
+  return { x0: Math.min(w.x0, x0), z0: Math.min(w.z0, z0), x1: Math.max(w.x1, x1), z1: Math.max(w.z1, z1) }; }, { x0: Infinity, z0: Infinity, x1: -Infinity, z1: -Infinity });
 function bindInput(c) {
   let drag = null; const pts = new Map();
   c.addEventListener('pointerdown', e => { c.setPointerCapture(e.pointerId); pts.set(e.pointerId, [e.clientX, e.clientY]); drag = { d: null }; cam.goal = null; });
@@ -564,7 +604,7 @@ function bindInput(c) {
     if (e.shiftKey || e.buttons === 2) { ui.yaw -= dx * 0.005; ui.pitch = THREE.MathUtils.clamp(ui.pitch + dy * 0.004, 0.25, 1.45); return; }
     cam.tx -= (dx * Math.cos(cam.yaw) + dy * Math.sin(cam.yaw)) * s;
     cam.tz -= (-dx * Math.sin(cam.yaw) + dy * Math.cos(cam.yaw)) * s;
-    cam.tx = THREE.MathUtils.clamp(cam.tx, WORLD.x0, WORLD.x1); cam.tz = THREE.MathUtils.clamp(cam.tz, WORLD.z0, WORLD.z1);
+    const W = WORLD(); cam.tx = THREE.MathUtils.clamp(cam.tx, W.x0, W.x1); cam.tz = THREE.MathUtils.clamp(cam.tz, W.z0, W.z1);
   });
   const up = e => { pts.delete(e.pointerId); if (!pts.size) drag = null; };
   c.addEventListener('pointerup', up); c.addEventListener('pointercancel', up);
