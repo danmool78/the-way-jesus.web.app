@@ -86,6 +86,11 @@ const TYPES = {
   jethro:   { robe: '#e3dccb', trim: '#7a3b2e', mantle: '#7a3b2e', hair: '#e2ddd2', beard: true, long: true, hood: '#efe6d4', band: '#7a3b2e', staff: true, skin: 1 }, // 미디안의 제사장 이드로
   zipporah: { robe: '#6e3a3a', trim: '#c9a24a', mantle: '#2f4f6a', veil: true, inner: '#efe6d4', skin: 1, soft: true, slim: true, sash: '#c9a24a' }, // 십보라
   aaronP:   { robe: '#f6f2e8', trim: '#d6a93a', mantle: '#2f4f8a', hair: '#bfb7aa', beard: true, turban: '#f6f2e8', breast: true, sash: '#9d3328', skin: 1 }, // 대제사장 아론: 흰 옷, 청색 에봇, 관, 열두 보석의 흉패
+  caleb:    { robe: '#7a5a2e', trim: '#c9a24a', mantle: '#3e5a3a', hair: '#5a3a22', beard: true, sash: '#c9a24a', skin: 1 }, // 갈렙
+  eleazar:  { robe: '#f6f2e8', trim: '#d6a93a', mantle: '#2f4f8a', hair: '#2b1b10', beard: true, turban: '#f6f2e8', breast: true, sash: '#9d3328', skin: 1 }, // 아론의 아들 엘르아살 (대제사장의 옷을 이어 입은 젊은 제사장)
+  balaam:   { robe: '#5a3a5e', trim: '#c9a24a', mantle: '#8a6a3a', hair: '#cfc8bb', beard: true, turban: '#d8c49a', skin: 3, sash: '#c9a24a' }, // 브올의 아들 발람 (유브라데 강가의 점술가)
+  balak:    { robe: '#7a2a20', trim: '#d6a93a', mantle: '#3a2a5e', hair: '#1d140c', beard: true, crown: true, skin: 2, sash: '#d6a93a' }, // 모압 왕 발락
+  sihon:    { robe: '#4a3a2a', trim: '#b08a4e', mantle: '#7a3b2e', hair: '#1d140c', beard: true, crown: true, spear: true, skin: 2, sash: '#b08a4e' }, // 아모리 왕 시혼
   official: { robe: '#2f4f6a', trim: '#d6a93a', mantle: '#c8b48c', hair: '#2b1b10', beard: true, sash: '#d6a93a', skin: 2 }, // 왕의 신하
 };
 
