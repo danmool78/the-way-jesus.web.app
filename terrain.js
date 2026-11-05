@@ -104,7 +104,7 @@ async function build() {
   land.rotation.x = -Math.PI / 2; land.position.y = -8; land.receiveShadow = true; scene.add(land);
   if (window.journeyMap?.south && !BASES.includes(SOUTH)) BASES.push(SOUTH);
   await Promise.all(BASES.map(async b => { b.tex = mapTex(await loadImg(b.src)); }));
-  addWalker(); addLabels();
+  addWalker(); addLabels(); addStars();
   decorate();
   // 3D 무대(stage.js)가 이 장면 안에 서도록 여는 창구: 같은 카메라·깊이로 그리고, 땅 높이에 발을 붙인다
   window.terrain3d = { scene, camera, cam, heightAt: standAt, zoomAt, sceneDist };
@@ -237,6 +237,34 @@ function decorate() {
   });
 }
 let routes = [];
+
+/* ---------- 밤하늘의 별 ---------- */
+// 카메라를 둘러싼 큰 반구에 흩뿌린다 — 지평선 위 하늘이 보일 때만 보이고, 땅에는 가려진다.
+// 밝기·크기를 고르지 않게(어두운 별이 훨씬 많게), 지평선 가까이는 옅게, 은하수 띠를 따라 조금 더 촘촘하게
+let stars = null;
+function addStars() {
+  const N = 6000, pos = [], col = [], c = new THREE.Color(), R = 1500;
+  for (let i = 0; i < N; i++) {
+    let u = rnd(), az = rnd() * 6.283;
+    if (i < N * 0.3) { az = 1.1 + (rnd() - 0.5) * 0.5 + (rnd() - 0.5) * 0.4; u = rnd(); } // 은하수: 한 방향으로 기운 띠
+    const el = Math.asin(0.04 + 0.96 * u), m = Math.pow(rnd(), 3.2); // m: 밝기 — 대부분 어둡게
+    pos.push(Math.cos(el) * Math.cos(az) * R, Math.sin(el) * R, Math.cos(el) * Math.sin(az) * R);
+    const fade = Math.min(1, el / 0.35); // 지평선 가까이는 대기에 묻혀 옅게
+    c.setHSL(0.6 - rnd() * 0.12, 0.25 + rnd() * 0.3, 0.55 + 0.45 * m).multiplyScalar((0.75 + 0.9 * m) * fade);
+    col.push(c.r, c.g, c.b);
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setAttribute('color', new THREE.Float32BufferAttribute(col, 3));
+  stars = new THREE.Points(g, new THREE.PointsMaterial({ size: 2.2 * Math.min(devicePixelRatio, 2) / 2 + 0.6, sizeAttenuation: false, vertexColors: true, transparent: true, opacity: 0, depthWrite: false, fog: false, blending: THREE.AdditiveBlending }));
+  stars.renderOrder = -1; stars.frustumCulled = false; scene.add(stars);
+}
+function updateStars(dt) {
+  if (!stars) return;
+  const env = wrap.dataset.env, goal = env === 'night' ? 1 : env === 'dawn' ? 0.35 : 0; // 무대 분위기(stage.js가 정하는 밤·새벽)를 따른다
+  stars.material.opacity = damp(stars.material.opacity, goal, 3, dt);
+  stars.visible = stars.material.opacity > 0.01;
+  stars.position.copy(camera.position); // 하늘은 카메라와 함께 — 아무리 다가가도 별은 멀리
+}
 
 /* ---------- 나무·마을·배·건물 ---------- */
 let seed = 3; const rnd = () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646;
@@ -581,6 +609,7 @@ function loop(now) {
   window.stageRender?.(); // 바뀐 시점으로 무대를 붙이고 그린다
   // 안개는 카메라 거리에 맞춰 — 멀리 물러나도 땅의 끝이 하늘과 안개 속으로 녹아든다
   scene.fog.near = cam.dist * 1.1; scene.fog.far = cam.dist * 3.6;
+  updateStars(dt);
   boats.forEach((b, i) => { b.position.y = BOAT_Y + Math.sin(now / 900 + b.userData.phase) * 0.1; b.rotation.z = Math.sin(now / 1300 + i) * 0.04; });
   // 걷는 사람: 화면에서 늘 알아보게 거리에 맞춰 크기를 바꾼다. 서 있을 때는 고리만 은은하게
   if (walker.has) {

@@ -71,7 +71,7 @@ a.sbtn{display:block;text-decoration:none;color:inherit}
 [data-env=night] .a-vig{opacity:.8}
 [data-env=night] .a-cool{opacity:.7}
 [data-env=night] .a-moon{opacity:1}
-[data-env=night] .a-stars{opacity:.85;animation:twinkle 5s ease-in-out infinite;transition:none}
+/* 별: 지도는 땅을 내려다보는 그림이라 별을 덮으면 땅 위에 점이 박힌 무늬로 보였다 — 별은 3D 지형의 하늘에만 둔다(terrain.js addStars) */
 [data-env=storm] .a-vig{opacity:.7}
 [data-env=storm] .a-cool{opacity:.45}
 [data-env=storm] .a-cloud{opacity:1}
