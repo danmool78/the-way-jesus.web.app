@@ -42,7 +42,7 @@ EAST = dict(lat0=29.2, lat1=32.8, lng0=44.6, lng1=49.9)
 MESO_GREEN = [[(32.8, 44.6), (32.8, 49.9), (29.2, 49.9), (29.2, 44.6)]]
 # 시내 반도·미디안 바탕(모세와 여호수아 여정): 본 바탕과 애굽 쪽 바탕의 남쪽에 이어 붙인다. app.js 여정 설정(journey.map)의 RELIEF_SOUTH와 같게.
 # 사막이라 비·풀빛 없이(dry) 바위와 모래로만 칠한다. 홍해의 두 만은 지도에서 벡터로 덮는다
-SOUTH = dict(lat0=27.2, lat1=29.45, lng0=31.25, lng1=37.4)
+SOUTH = dict(lat0=27.2, lat1=30.15, lng0=31.25, lng1=37.4)  # 북쪽은 수에즈 만 끝(30.0)까지 — 지도에서 다른 바탕들 위에 깐다
 URL = 'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'
 OUT = Path(__file__).resolve().parent.parent / 'assets' / 'relief.webp'
 

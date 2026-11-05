@@ -138,8 +138,8 @@ const GEO = {
 const RELIEF = { lat0: 29.15, lat1: 34.6, lng0: 33.0, lng1: 37.4 };
 // 서쪽 애굽 쪽 바탕(assets/relief-west.webp — 시나이 북부, 나일 삼각주) — _src/relief.py의 WEST와 같게
 const RELIEF_WEST = { lat0: 29.15, lat1: 31.9, lng0: 29.4, lng1: 33.25 };
-// 시내 반도·미디안 바탕(assets/relief-south.webp, 모세 여정에서만 깐다) — _src/relief.py의 SOUTH와 같게. 홍해의 두 만은 그림에 바다로 칠해져 있다
-const RELIEF_SOUTH = { lat0: 27.2, lat1: 29.45, lng0: 31.25, lng1: 37.4 };
+// 시내 반도·미디안 바탕(assets/relief-south.webp, 모세 여정에서만 깐다) — _src/relief.py의 SOUTH와 같게. 홍해의 두 만은 그림에 바다로 칠해져 있어 이때는 손으로 그린 수에즈 만(GEO.suez)을 덮지 않는다
+const RELIEF_SOUTH = { lat0: 27.2, lat1: 30.15, lng0: 31.25, lng1: 37.4 };
 // 프롤로그의 에덴 둘레 바탕(assets/relief-east.webp) — _src/relief.py의 EAST와 같게
 const RELIEF_EAST = { lat0: 29.2, lat1: 32.8, lng0: 44.6, lng1: 49.9 };
 // 확대했을 때만 불러오는 정밀 타일(assets/relief-hi/행_열.webp) — _src/relief.py의 HI와 같게
@@ -192,10 +192,10 @@ function buildMap() {
     <filter id="waterEdge" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur in="SourceAlpha" stdDeviation="4" result="b"/><feComposite in="SourceAlpha" in2="b" operator="arithmetic" k2="1" k3="-1" result="edge"/><feFlood flood-color="#21474f" flood-opacity=".5"/><feComposite in2="edge" operator="in"/><feComposite in2="SourceGraphic" operator="over"/></filter>
   </defs>
   <rect x="${-W * 2}" y="${-H * 2}" width="${W * 12}" height="${H * 5}" fill="var(--land)"/>
-  ${DATA.journey?.map?.south ? `<image href="assets/relief-south.webp" class="relief" x="${sx0}" y="${sy0}" width="${sx1 - sx0}" height="${sy1 - sy0}" preserveAspectRatio="none"/>` : ''}
   <image href="assets/relief-west.webp" class="relief" x="${wx0}" y="${wy0}" width="${wx1 - wx0}" height="${wy1 - wy0}" preserveAspectRatio="none"/>
   <image href="assets/relief-east.webp" class="relief" x="${ex0}" y="${ey0}" width="${ex1 - ex0}" height="${ey1 - ey0}" preserveAspectRatio="none"/>
   <image href="assets/relief.webp" class="relief" x="${rx0}" y="${ry0}" width="${rx1 - rx0}" height="${ry1 - ry0}" preserveAspectRatio="none"/>
+  ${DATA.journey?.map?.south ? `<image href="assets/relief-south.webp" class="relief" x="${sx0}" y="${sy0}" width="${sx1 - sx0}" height="${sy1 - sy0}" preserveAspectRatio="none"/>` : ''}
   <g id="reliefHi" class="relief"></g>
   <g id="reliefCity" class="relief"></g>
   ${['euphrates', 'tigris', 'shatt'].map(k => `<path d="${smooth(GEO[k])}" class="riverbank"/>`).join('')}
@@ -211,10 +211,11 @@ function buildMap() {
   <path d="${smooth(GEO.dead, true)}" class="lake dead" filter="url(#waterEdge)"/>
   <path d="${smooth(GEO.hula, true)}" class="lake"/>
   ${['mareotis', 'manzala', 'sirbonis', 'bitter'].map(k => `<path d="${smooth(GEO[k], true)}" class="lake"/>`).join('')}
-  <path d="${smooth(GEO.suez, true)}" fill="url(#seaGrad)" class="sea"/>
+  ${(DATA.journey?.map?.waters || []).map(w => `<path d="${smooth(w.d, true)}" class="lake ${w.cls || ''}"/>`).join('')}
+  ${DATA.journey?.map?.south ? '' : `<path d="${smooth(GEO.suez, true)}" fill="url(#seaGrad)" class="sea"/>`}
   ${['nile', 'canopic', 'rosetta', 'damietta', 'pelusiac'].map(k => `<path d="${smooth(GEO[k])}" class="river nile"/>`).join('')}
-  <path d="${smooth(GEO.jordanN)}" class="river"/>
-  <path d="${smooth(GEO.jordanS)}" class="river"/>
+  <path d="${smooth(GEO.jordanN)}" class="river jordan"/>
+  <path d="${smooth(GEO.jordanS)}" class="river jordan"/>
   <g class="jlm-detail">
     <path d="${smooth(GEO.kidron)}" class="valley"/>
     <path d="${smooth(GEO.hinnom)}" class="valley"/>
@@ -1384,6 +1385,7 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
     if (jm.refcities) REFCITIES = jm.refcities;
   }
   buildMap(); renderTrack();
+  map.classList.toggle('jflood', !!jm?.jordanFlood);
   // 장면 주소(#e05, 프롤로그는 #e00)가 있으면 그 장면, 없으면 지난번 장면, 처음 온 사람은 프롤로그부터
   const hashIdx = () => d.prologue && location.hash === '#' + d.prologue.id ? -1 : EVENTS.findIndex(e => '#' + e.id === location.hash);
   const fromHash = hashIdx(), hashOk = fromHash >= 0 || (fromHash === -1 && !!d.prologue && location.hash === '#' + d.prologue.id);
