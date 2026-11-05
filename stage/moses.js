@@ -47,9 +47,9 @@ export const MOSES = {
       'p2.1': [['pharaoh', 'rebuke', { to: 'mid1' }]],
       'p2.2': [['@env', 'dusk'], ['mid1', 'mourn'], ['mid2', 'mourn']],
       'p2.3': [['@env', 'dusk'], ['pharaoh', 'idle', { show: 0 }], ['scribe', 'idle', { show: 0 }], ['h1', 'mourn'], ['h2', 'mourn'], ['h3', 'mourn']],
-      w0: [['pharaoh', 'speak', { to: 'scribe' }]],
+      w0: [['pharaoh', 'speak', { show: 1, to: 'scribe' }], ['scribe', 'idle', { show: 1 }]],
       w1: [['mid1', 'speak', { to: 'pharaoh' }]],
-      w2: [['pharaoh', 'speak', { to: 'mid1' }]],
+      w2: [['pharaoh', 'speak', { show: 1, to: 'mid1' }]],
       end: [['@env', 'dusk']],
     },
   },
@@ -150,8 +150,8 @@ export const MOSES = {
         ['d1', 'idle', { x: -0.55, z: 0.3 }], ['d2', 'idle', { x: -0.75, z: 0.45 }], ['d3', 'idle', { x: -0.95, z: 0.3 }]],
       // 그 사이 애굽에서는 탄식이 하늘에 닿았다
       'p2.2': [['@env', 'dusk'], ['moses', 'look-up', { look: -0.8 }]],
-      w0: [['slave', 'speak', { to: 'prince' }]],
-      w1: [['reuel', 'speak', { to: 'd2' }]],
+      w0: [['slave', 'speak', { show: 1, x: -0.5, z: 0.35, to: 'moses' }]],
+      w1: [['slave', 'idle', { show: 0 }], ['reuel', 'speak', { to: 'd2' }]],
       w2: [['moses', 'speak', { to: 'zip' }]],
       end: [['@env', 'dusk']],
     },
@@ -327,7 +327,7 @@ export const MOSES = {
       'p2.3': [['@env', 'dawn']],
       w0: [['father', 'listen', { look: 2.8 }]],
       w1: [['father', 'break'], ['mom', 'listen'], ['kid', 'listen']],
-      w2: [['pharaoh', 'speak', { to: 'moses' }]],
+      w2: [['pharaoh', 'speak', { show: 1, to: 'moses' }]],
       end: [['@env', 'dawn']],
     },
   },
@@ -590,7 +590,7 @@ export const MOSES = {
     },
     beats: {
       enter: [['moses', 'raise', { look: -0.8 }], ['aaron', 'raise', { look: -0.6 }], ['hur', 'raise', { look: -0.9 }], ['israel', null, { x: -0.75 }], ['amalek', null, { x: -1.6 }], ['altar', null, { show: 0 }]],
-      intro: [['moses', 'idle', { x: 0.2, z: 0.1 }], ['aaron', 'idle', { x: 0.0, z: 0.25 }], ['hur', 'idle', { x: 0.4, z: 0.25 }], ['joshua', 'idle', { x: -0.2, z: 0.25, look: 1 }], ['israel', null, { x: -0.55 }], ['amalek', null, { x: -1.9, show: 0 }], ['altar', null, { show: 0 }]],
+      intro: [['moses', 'idle', { x: 0.2, z: 0.1 }], ['aaron', 'idle', { x: 0.0, z: 0.25 }], ['hur', 'idle', { x: 0.4, z: 0.25 }], ['joshua', 'idle', { x: -0.2, z: 0.25, look: 1 }], ['israel', null, { x: -0.55 }], ['amalek', null, { x: -1.9, show: 0 }], ['altar', 'idle', { show: 0 }]],
       'p0.0': [['amalek', null, { show: 1, x: -1.45 }]],
       // 여호수아는 싸우러 나가고, 모세는 지팡이를 들고 언덕 꼭대기에
       'p0.1': [['joshua', 'idle', { x: -0.8, z: 0.35, look: -1 }], ['moses', 'idle', { x: 0.95, z: -0.35, look: -0.8 }]],
@@ -630,7 +630,7 @@ export const MOSES = {
     },
     beats: {
       enter: [['moses', 'sit', { x: -0.4, z: 0.1, look: 1 }], ['jethro', 'speak', { x: -0.85, z: 0.25, to: 'moses' }], ['folk', null, { show: 1 }], ['elders', null, { show: 0 }], ['zip', 'idle', { show: 0 }], ['son1', 'idle', { show: 0 }], ['son2', 'idle', { show: 0 }]],
-      intro: [['folk', null, { show: 0 }], ['elders', null, { show: 0 }], ['moses', 'idle', { x: -0.4, z: 0.1 }], ['jethro', 'idle', { show: 0, x: 1.7, z: 0.0 }], ['zip', 'idle', { show: 0, x: 1.9, z: 0.2 }], ['son1', 'idle', { show: 0, x: 2.0, z: -0.1 }], ['son2', 'idle', { show: 0, x: 2.1, z: 0.3 }]],
+      intro: [['altar', 'idle'], ['folk', null, { show: 0 }], ['elders', null, { show: 0 }], ['moses', 'idle', { x: -0.4, z: 0.1 }], ['jethro', 'idle', { show: 0, x: 1.7, z: 0.0 }], ['zip', 'idle', { show: 0, x: 1.9, z: 0.2 }], ['son1', 'idle', { show: 0, x: 2.0, z: -0.1 }], ['son2', 'idle', { show: 0, x: 2.1, z: 0.3 }]],
       // 아내와 두 아들을 데리고 찾아온다
       'p0.1': [['jethro', 'idle', { show: 1, x: 0.45, z: 0.05 }], ['zip', 'idle', { show: 1, x: 0.7, z: 0.25 }], ['son1', 'idle', { show: 1, x: 0.75, z: -0.05 }], ['son2', 'idle', { show: 1, x: 0.95, z: 0.35 }]],
       // 나가서 절하고 입 맞추고, 주께서 하신 일을 들려준다
@@ -644,7 +644,7 @@ export const MOSES = {
       'p2.1': [['jethro', 'speak', { to: 'moses' }]],
       // 그 말대로 하였고, 이드로는 제 땅으로 돌아간다
       'p2.2': [['moses', 'idle', { look: -0.6 }], ['jethro', 'idle', { x: 1.8, z: 0.1 }], ['jethro', 'idle', { show: 0, delay: 5000 }]],
-      w0: [['jethro', 'speak', { to: 'moses' }]],
+      w0: [['jethro', 'speak', { show: 1, x: -0.85, z: 0.25, to: 'moses' }]],
       w1: [['jethro', 'point', { look: 1 }]],
       w2: [['jethro', 'speak', { to: 'moses' }]],
       end: [],
@@ -743,7 +743,7 @@ export const MOSES = {
     },
     beats: {
       enter: [['altar', 'fire'], ['moses', 'bless', { look: 3, to: 'man' }], ['ox', null, { show: 0 }]],
-      intro: [['altar', 'idle'], ['stones', null, { show: 0 }], ['ox', null, { show: 0 }], ['youth', 'idle', { show: 0 }], ['moses', 'idle', { x: 0.25, z: 0.05, look: 3 }]],
+      intro: [['mount', 'calm'], ['altar', 'idle'], ['stones', null, { show: 0 }], ['ox', null, { show: 0 }], ['youth', 'idle', { show: 0 }], ['moses', 'idle', { x: 0.25, z: 0.05, look: 3 }]],
       'p0.0': [['moses', 'speak', { to: 'man' }]],
       'p0.1': [['@env', 'dawn'], ['moses', 'idle', { x: 0.25, z: -0.1, look: -0.4 }], ['stones', null, { show: 1, delay: 1500 }], ['altar', 'idle', { show: 1 }]],
       // 젊은이들이 번제를 드린다
@@ -760,7 +760,7 @@ export const MOSES = {
       'p2.2': [['moses', 'look-up'], ['aaron', 'look-up'], ['elder', 'look-up']],
       'p2.3': [['mount', 'cloud'], ['aaron', 'idle', { x: -0.25, z: -0.1, look: 0 }], ['elder', 'idle', { x: -0.45, z: 0.3 }], ['moses', 'idle', { show: 0, delay: 3000 }]],
       w0: [['moses', 'listen', { look: 3 }]],
-      w1: [['moses', 'speak', { to: 'man' }]],
+      w1: [['moses', 'speak', { show: 1, x: 0.2, z: 0.15, to: 'man' }]],
       w2: [['man', 'speak', { to: 'moses' }]],
       end: [['mount', 'cloud']],
     },
@@ -1313,3 +1313,14 @@ export const MOSES = {
     },
   },
 };
+
+// intro 앞에 처음 자리로 되돌리는 명령을 붙인다: 다시 들을 때(끝난 상태에서)나 처음 들을 때(enter 장면 뒤에서)나
+// 똑같이 대본의 처음 자리(cast·props)에서 시작하게 — 대본마다 모든 배역을 일일이 되돌리지 않아도 되게
+// (탄 사람(board)은 탈것 위의 자리라 건드리지 않는다. 확인: node _src/tools/stagecheck.mjs)
+Object.values(MOSES).forEach(s => {
+  const reset = [
+    ...Object.entries(s.cast).map(([n, [, x, z, look, o = {}]]) => [n, 'idle', o.board ? { show: 1, item: null, look } : { show: 1, x, z, look, item: null, y: o.y || 0 }]),
+    ...Object.entries(s.props || {}).map(([n, [, x, z]]) => [n, null, { show: 1, x, z }]),
+  ];
+  s.beats.intro = [...reset, ...(s.beats.intro || s.beats.enter)];
+});
