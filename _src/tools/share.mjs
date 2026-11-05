@@ -10,7 +10,7 @@ const { chromium } = require('playwright');
 const SITE = 'https://the-way-jesus.web.app';
 // sub: 그림의 둘째 줄, foot: 셋째 줄, title·desc: 미리보기 카드의 제목·설명, c: 테마색(밝은 빛, 해, 짙은 테두리 — icons.mjs와 같게)
 const J = {
-  moses: { title: '그 길 — 모세와 여호수아', sub: '출애굽에서 약속의 땅까지, 모세와 여호수아', foot: '지도 위 40개 장면 · 낭독 · 3D 무대',
+  moses: { title: '그 길 — 모세와 여호수아', sub: '출애굽에서 약속의 땅까지', foot: '지도 위 40개 장면 · 낭독 · 3D 무대',
     desc: '지도 위를 걸으며 출애굽에서 약속의 땅까지, 모세와 여호수아의 길을 만나 보세요.', c: ['#fbe0c8', '#dc8f5f', '#a65a33'] },
 };
 const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
@@ -24,9 +24,9 @@ for (const id of ids) {
   await p.setContent(`<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400&display=swap" rel="stylesheet">
   <style>html,body{margin:0;width:1200px;height:630px;overflow:hidden}
   body{background:radial-gradient(ellipse 60% 75% at 26% 45%,#3a2a1c,#1e1712 60%,#14100c);display:flex;align-items:center;gap:66px;padding-left:224px;box-sizing:border-box;font-family:'Gowun Batang',serif}
-  .sun{width:182px;height:182px;border-radius:50%;box-shadow:0 0 70px 14px ${j.c[1]}55;flex:none;overflow:hidden}.sun svg{width:182px;height:182px;transform:scale(1.32)}
+  .sun{width:182px;height:182px;border-radius:50%;box-shadow:0 0 70px 14px ${j.c[1]}55;flex:none;overflow:hidden}.sun svg{width:182px;height:182px;transform:scale(1.48)}
   h1{margin:0;font-size:104px;letter-spacing:.38em;color:${j.c[0]};font-weight:700;line-height:1.1}
-  h2{margin:26px 0 0;font-size:38px;color:${j.c[1]};font-weight:400}
+  h2{margin:26px 0 0;font-size:36px;color:${j.c[1]};font-weight:400}
   p{margin:30px 0 0;font:400 24px 'Noto Sans KR',sans-serif;color:#cfc3b2;letter-spacing:.02em}</style>
   <div class="sun">${icon}</div><div><h1>그 길</h1><h2>${esc(j.sub)}</h2><p>${esc(j.foot)}</p></div>`);
   await p.evaluate(() => document.fonts.ready); await p.waitForTimeout(800);

@@ -1473,7 +1473,9 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   $$('.share-app').forEach(b => b.onclick = async () => {
     closePanel();
     // 제목과 주소만 넘긴다 (소개 글은 빼고) — 받는 쪽(카톡·메시지)은 주소로 og 미리보기 카드를 만든다
-    const url = location.origin + '/', title = t('appName');
+    // 여정마다 따로: 예수 여정은 첫 주소, 다른 여정은 짧은 공유 주소(/moses — 여정의 미리보기 카드를 담은 페이지, _src/tools/share.mjs)
+    const sj = JOURNEY === 'jesus' ? null : DATA.journey?.series?.find(s => s.id === JOURNEY);
+    const url = location.origin + (sj ? `/${JOURNEY}` : '/'), title = sj ? `${t('appName')} — ${t(sj.title)}` : t('appName');
     if (navigator.share) { try { await navigator.share({ title, url }); } catch { /* 공유 창을 닫음 */ } return; }
     try { await navigator.clipboard.writeText(url); toast(t('linkCopied')); } catch { prompt(t('shareApp'), url); }
   });

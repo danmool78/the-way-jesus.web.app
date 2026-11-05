@@ -22,6 +22,7 @@
   - 다른 여정도 같은 방식으로 녹음한다(Chirp 3 HD Aoede, `node _src/tools/voice.mjs --j moses all walks`, 같은 assets/voice/ko) — 앱은 녹음이 있는 문장만 녹음으로 튼다. 배경음악은 `_src/journeys/<여정>/music.json`(`node _src/tools/music.mjs --j moses`, 곡 이름 m-…, 모세 여정은 현대 다큐멘터리 영화음악 결). 진행 기록도 여정마다 따로(`theway-progress-<여정>`)
   - 관리자 페이지도 `admin.html?j=<여정>`으로 나뉜다(위쪽 고르기)
   - 설치 아이콘·앱 이름도 여정마다 따로(테마색): `j/<여정>/icon*.png·apple-touch-icon.png·manifest.webmanifest`, `node _src/tools/icons.mjs [여정…]`로 만든다(색 표는 그 안에). index.html 머리의 스크립트가 `?j=`에 맞춰 링크를 바꾼다
+  - 공유 주소도 여정마다: `the-way-jesus.web.app/<여정>`(예: /moses)은 그 여정의 미리보기 카드(og, 그림 `j/<여정>/og.jpg`)만 담은 `<여정>/index.html`로, 열면 `/?j=<여정>`으로 넘긴다. `node _src/tools/share.mjs [여정…]`로 만든다(직접 고치지 말 것). 앱의 공유 단추도 이 주소를 보낸다. 새 여정을 열 때 share.mjs의 표에 더한다
 - `data.json` — `_src/`의 원본으로 `python3 _src/build.py`가 만든다. 직접 고치지 말 것 (작성 규칙 `_src/STYLE.md`)
 - `s/`, `sitemap.xml` — 검색엔진용 장면 페이지(`s/e05.html`, 번역은 `s/e05.<언어>.html`, 목록 `s/index.html`)와 사이트맵. 앱은 `#e05` 주소라 검색에 장면이 따로 잡히지 않아, 글을 미리 써 둔 정적 페이지를 두고 앱으로 잇는다. build.py 끝에서 `_src/pages.py`가 만든다(직접 고치지 말 것). `robots.txt`가 사이트맵을 알린다
 - 다국어: `data.<언어>.json`도 build.py가 만든다. 번역 원본은 `_src/i18n/` — `ko.json`(뽑기: `python3 _src/i18n/extract.py`)을 옮긴 `<언어>.json`과 화면 글씨 `ui.<언어>.json`. 새 언어는 app.js의 `LANGS`에도 더한다. 말씀은 기존 성경 번역을 베끼지 않고 새로 옮긴다
