@@ -1,0 +1,40 @@
+{
+ "appTag": "Musa dan Yosua · Dari keluaran sampai ke tanah perjanjian",
+ "docTitle": "Sang Jalan — Musa dan Yosua | Menyusuri keluaran dan Kanaan di atas peta",
+ "metaDesc": "Dari perbudakan di Mesir melalui Laut Teberau dan Gunung Sinai, empat puluh tahun di padang gurun, menyeberangi Yordan sampai ke tanah perjanjian. Telusuri 40 adegan Musa dan Yosua di atas peta Alkitab.",
+ "mapAria": "Rute keluaran pada peta Mesir, Semenanjung Sinai, dan Kanaan",
+ "introTag": "Dari keluaran sampai ke tanah perjanjian, jalan Musa dan Yosua",
+ "introLead": "Jelajahi peta dan temui jalan dari perbudakan menuju kebebasan, dari padang gurun menuju tanah perjanjian.",
+ "introF1": "Ikuti tempat-tempatnya, dari Mesir melalui Laut Teberau, Gunung Sinai, dan padang gurun sampai ke Kanaan",
+ "introF3": "Dengarkan kisahnya dibacakan dan baca percakapan antara Allah dan manusia",
+ "landStep2": "Baca kisah dan teks di kartu, lalu tekan ▶ untuk mendengarkannya",
+ "landStep4": "Kumpulkan firman Allah di tab '{words}' dan ingat kembali adegan yang telah dilalui dengan '{quiz}'",
+ "jesus": "Allah",
+ "hisWords": "Firman Allah",
+ "wordsHead": "Firman Allah",
+ "wordsIntro": "Firman yang diucapkan Allah di sepanjang jalan Musa dan Yosua, dihimpun menurut urutan perjalanan. Setiap firman adalah terjemahan baru yang menghidupkan makna aslinya dalam bahasa masa kini.",
+ "odoTitle": "Jarak yang ditempuh Israel sampai adegan ini (perkiraan jalan antartempat; langkah 75 cm)",
+ "gospels": {
+  "ex": ["Keluaran", "Kel"],
+  "num": ["Bilangan", "Bil"],
+  "deut": ["Ulangan", "Ul"],
+  "josh": ["Yosua", "Yos"]
+ },
+ "endLead": "Dari tungku batu bata di Mesir sampai perjanjian di Sikhem — terima kasih telah berjalan bersama kami.",
+ "blessing": "TUHAN memberkati Anda dan melindungi Anda.\nTUHAN menyinari Anda dengan wajah-Nya dan memberi Anda kasih karunia.\nTUHAN menghadapkan wajah-Nya kepada Anda dan memberi Anda damai sejahtera. (Bil 6:24–26)\nKiranya Dia yang setiap hari menurunkan manna di padang gurun memberi makan hari ini Anda, dan Dia yang berjalan di depan dalam tiang awan menuntun jalan Anda.",
+ "map": {
+  "애 굽": "MESIR",
+  "고 센": "GOSYEN",
+  "시 나 이": "SINAI",
+  "미 디 안": "MIDIAN",
+  "에 돔": "EDOM",
+  "모 압": "MOAB",
+  "가 나 안": "KANAAN",
+  "바 란 광 야": "PADANG GURUN PARAN",
+  "온 (헬리오폴리스)": "On (Heliopolis)",
+  "멤피스": "Memfis",
+  "비돔": "Pitom",
+  "홍 해": "LAUT MERAH",
+  "아카바 만": "Teluk Aqaba"
+ }
+}
