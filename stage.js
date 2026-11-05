@@ -6,6 +6,7 @@ import { makeProp } from './stage/props.js';
 import { SCRIPTS } from './stage/scenes.js';
 
 const wrap = document.querySelector('.mapwrap');
+const placeOf = ev => window.stagePlaceOf?.(ev) || ev.place; // 무대를 붙일 장소 (장면 안에서 옮겨 가는 장면은 지금 있는 곳 — app.js의 here)
 const map = document.getElementById('map');
 
 /* ---------- 렌더러 · 카메라 · 빛 ---------- */
@@ -258,18 +259,18 @@ window.stageFrame = ev => {
 function anchor() {
   // 3D 지형 모드: 지형 위에 투영한 장소(또는 at 지점)에 무대를 붙인다 (terrain.js가 geoToClient를 바꿔 끼운다)
   if (window.terrainOn && curEv) {
-    const ll = script?.at || [PLACES[curEv.place].lat, PLACES[curEv.place].lng], c = window.geoToClient(...ll), w = wrap.getBoundingClientRect();
+    const ll = script?.at || [PLACES[placeOf(curEv)].lat, PLACES[placeOf(curEv)].lng], c = window.geoToClient(...ll), w = wrap.getBoundingClientRect();
     return { x: c.x - w.left, y: c.y - w.top };
   }
   // 무대 바닥을 실제 지점(at)으로 옮긴 장면은 캔버스도 그 지점에 붙인다 — 핀에 붙여 두면 옮겨 간 인물·집이 캔버스 가장자리에서 잘렸다
   if (script?.at && window.geoToClient) {
     const c = window.geoToClient(...script.at), w = wrap.getBoundingClientRect();
     // 핀이 아직 그려지지 않았으면 기다린다 (핀이 없는 장소 — 프롤로그의 에덴 — 는 그 지점에 바로)
-    const pin = map.querySelector(`.pin[data-place="${curEv.place}"] .dot`);
+    const pin = map.querySelector(`.pin[data-place="${placeOf(curEv)}"] .dot`);
     if (pin && !pin.getBoundingClientRect().width) return null;
     return { x: c.x - w.left, y: c.y - w.top };
   }
-  const el = curEv && map.querySelector(`.pin[data-place="${curEv.place}"] .dot`);
+  const el = curEv && map.querySelector(`.pin[data-place="${placeOf(curEv)}"] .dot`);
   if (!el) return null;
   const r = el.getBoundingClientRect(), w = wrap.getBoundingClientRect();
   if (!r.width && !r.height) return null;
@@ -373,8 +374,8 @@ const FIXED = new Set(['water', 'grass', 'hill', 'tomb', 'temple', 'house', 'roc
 let moveAt = null, atSnap = true;
 const center = { x: 0, z: 0 }, home = { x: 0, z: 0 };
 function placeTerrain(T, dt) {
-  const ll = script.at || [PLACES[curEv.place].lat, PLACES[curEv.place].lng], d0 = T.sceneDist(curEv);
-  const s = stageGroup.scale.x, k = oldUnit(T, d0, T.zoomAt(d0, curEv.place));
+  const ll = script.at || [PLACES[placeOf(curEv)].lat, PLACES[placeOf(curEv)].lng], d0 = T.sceneDist(curEv);
+  const s = stageGroup.scale.x, k = oldUnit(T, d0, T.zoomAt(d0, placeOf(curEv)));
   [home.x, home.z] = px(ll);
   let [x, z] = [home.x, home.z];
   if (moveAt) { const [mx, mz] = px(moveAt.ll); x = mx - moveAt.x * k * s; z = mz - moveAt.z * k * s; }
@@ -417,7 +418,7 @@ function frame() {
     const a = anchor();
     if (!a) { canvas.style.opacity = 0; return; }
     followTerrain();
-    canvas.style.opacity = 1;
+    canvas.style.opacity = window.stageHide ? 0 : 1; // 장면 안에서 걸어가는 동안(app.js moveWithin)은 숨긴다
     canvas.style.transform = `translate(${Math.round(a.x - groundPx.x)}px, ${Math.round(a.y - groundPx.y)}px)`;
   }
   updateEnv(dt);

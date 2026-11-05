@@ -319,7 +319,7 @@ function clearStageSpot() {
   const f = window.stageFoot, stageOn = document.body.classList.contains('stage-on') && f;
   let cx = 1e9, cz = 1e9, r = 0;
   if (stageOn) {
-    const p = PLACES[curEvent().place];
+    const p = PLACES[window.stagePlaceOf?.(curEvent()) || curEvent().place];
     [cx, cz] = f.xz || px(f.at || [p.lat, p.lng]); // xz: 지형 안 무대가 알려 주는 지금의 바닥 중심 (@at으로 옮겨 갈 때)
     const D = camera.position.distanceTo(v3.set(cx, heightAt(cx, cz), cz)), H = wrap.clientHeight || 1;
     r = f.r ?? f.rpx * 2 * D * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) / H; // r: 지형 안에 선 무대가 알려 주는 지도 단위 반지름

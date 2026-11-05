@@ -1,0 +1,107 @@
+{
+ "_comment": "모세와 여호수아 여정의 배경음악 (node _src/tools/music.mjs --j moses). 예수 여정의 옛 악기 합주보다 현대적으로 — 펠트 피아노·신시사이저 패드·첼로의 현대 다큐멘터리 영화음악 결. 곡 설명에 성경·광야·중동을 쓰거나 '민속 악기 금지'라고 써도 Lyria가 옛 동양 악기 곡으로 기울어, 무대 설명 대신 음악의 결만 적는다 (frame도 'narrated documentary'). 곡 이름은 예수 여정과 겹치지 않게 m- 로 시작한다",
+ "setting": "A contemporary minimalist film score in the style of modern documentary underscore: felt piano, warm analog synthesizer pads, sustained cello and string ensemble, soft electronic pulses and airy ambient textures. Western modern instrumentation only",
+ "tail": "Clean, modern, high-quality studio production with soft reverb, like a contemporary film soundtrack.",
+ "cues": {
+  "m-bondage": {
+   "sound": "Weary, heavy labor that never ends: a slow, heavy low synth pulse, muted felt piano in a minor key, a sighing cello line above; oppressive yet with a faint thread of endurance."
+  },
+  "m-nile": {
+   "sound": "A mother lets go by the river: flowing, rippling felt piano arpeggios like water, soft warm pad, a tender high cello melody; fragile, tender, quietly trusting."
+  },
+  "m-exile": {
+   "sound": "A lonely flight into emptiness: wide empty synth pad like wind, sparse felt piano notes far apart, a distant soft cello phrase; solitude and long waiting."
+  },
+  "m-presence": {
+   "sound": "Holy ground before a fire that does not consume: a glowing, shimmering synth drone that slowly swells, high bowed-glass textures, a deep soft sub tone; awe, stillness, the nearness of the holy."
+  },
+  "m-plagues": {
+   "sound": "A hard heart and gathering judgments: tense pulsing low synth ostinato, dark cello stabs held back, ticking muted electronic percussion; ominous and restrained, never loud."
+  },
+  "m-passover": {
+   "sound": "A hushed night of waiting behind closed doors: very quiet low synth drone, slow solemn felt piano chords, a soft heartbeat-like sub pulse; reverent dread and protected stillness."
+  },
+  "m-exodus": {
+   "sound": "A people set out on the road, led by a pillar: steady hopeful pulse of plucked synth and soft drums, rising string pad, a warm forward-moving piano motif; courage and movement."
+  },
+  "m-song": {
+   "sound": "A song of deliverance on the far shore at morning: bright, open, joyful piano and string pad, light hand percussion, a lifting melodic line; celebration kept gentle and luminous."
+  },
+  "m-wilderness": {
+   "sound": "Long days in a dry, empty land, thirst and quiet provision: spacious ambient synth pad, a simple searching felt piano motif, faint airy texture, a small warm resolution each phrase; patience and quiet dependence."
+  },
+  "m-struggle": {
+   "sound": "A long struggle while hands are lifted in prayer: a steady, resolute low synth pulse and sustained cello and strings building slowly, a held hopeful piano chord on top; perseverance and determination."
+  },
+  "m-counsel": {
+   "sound": "Words spoken among elders and families in the camp: warm grounded piano, soft cello, gentle major-minor harmony; wisdom, care and calm attentiveness."
+  },
+  "m-sinai": {
+   "sound": "The mountain wrapped in cloud and fire: vast low swelling synth and orchestral pad, deep rumbling sub textures like distant thunder, a high trembling string harmonic; overwhelming awe and holy fear, held under control."
+  },
+  "m-fall": {
+   "sound": "Failure and grief in the camp: slow descending piano line, mournful cello, thinning pad; sorrow, guilt and a quiet longing for mercy."
+  },
+  "m-glory": {
+   "sound": "Glory that fills and passes by: radiant, shimmering synth pad slowly blooming, bell-like high piano, soft choir-like texture without words; mercy, light and wonder."
+  },
+  "m-farewell": {
+   "sound": "A last ascent and a farewell at dusk: tender, slow elegiac felt piano, a long cello line, warm fading synth pad; gratitude, loss and peaceful release. Slow and calm, no beat."
+  },
+  "m-mystery": {
+   "sound": "A strange journey and a road blocked by an unseen messenger: curious, slightly mysterious pizzicato strings and soft synth arpeggios, airy pad, an unusual harmony that resolves into warmth; wonder with a light touch."
+  },
+  "m-jordan": {
+   "sound": "Crossing a river into a promised land: flowing felt piano arpeggios over a rising warm synth pad and strings, a gentle steady pulse; hope, threshold, quiet triumph."
+  },
+  "m-jericho": {
+   "sound": "A silent march around the walls: a steady ritual pulse of low drums and a long sustained horn-like synth tone, patient repetition building tension; reverent, solemn, expectant."
+  },
+  "m-covenant": {
+   "sound": "A covenant renewed before the whole people: warm, resolute piano and strings with a steady heartbeat pulse, open fifths, a hopeful anthem-like line kept restrained; commitment, faithfulness and home."
+  }
+ },
+ "scenes": {
+  "m01": "m-bondage",
+  "m02": "m-nile",
+  "m03": "m-exile",
+  "m04": "m-presence",
+  "m05": "m-bondage",
+  "m06": "m-plagues",
+  "m07": "m-passover",
+  "m08": "m-exodus",
+  "m09": "m-exodus",
+  "m10": "m-song",
+  "m11": "m-wilderness",
+  "m12": "m-wilderness",
+  "m13": "m-wilderness",
+  "m14": "m-struggle",
+  "m15": "m-counsel",
+  "m16": "m-sinai",
+  "m17": "m-sinai",
+  "m18": "m-sinai",
+  "m19": "m-fall",
+  "m20": "m-glory",
+  "m21": "m-glory",
+  "m22": "m-fall",
+  "m23": "m-wilderness",
+  "m24": "m-fall",
+  "m25": "m-wilderness",
+  "m26": "m-farewell",
+  "m27": "m-wilderness",
+  "m28": "m-struggle",
+  "m29": "m-mystery",
+  "m30": "m-counsel",
+  "m31": "m-farewell",
+  "m32": "m-counsel",
+  "m33": "m-passover",
+  "m34": "m-jordan",
+  "m35": "m-jericho",
+  "m36": "m-fall",
+  "m37": "m-covenant",
+  "m38": "m-struggle",
+  "m39": "m-counsel",
+  "m40": "m-covenant"
+ },
+ "frame": "a narrated documentary"
+}
