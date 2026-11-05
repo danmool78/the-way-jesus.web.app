@@ -1,0 +1,5 @@
+{
+ "_comment": "기쁜 소식 여정의 배경음악 — 새 곡을 만들지 않고 예수 여정의 곡(assets/music/<곡>.mp3, _src/music.json의 cues)을 장면에 맞게 다시 쓴다",
+ "cues": {},
+ "scenes": {"g01": "eden", "g02": "wilderness", "g03": "passion", "g04": "tender"}
+}

@@ -1,0 +1,5 @@
+{
+ "eden": {"name": "에덴동산", "lat": 31.0, "lng": 47.43, "region": "메소포타미아", "approx": true, "hidden": true},
+ "golgotha": {"name": "골고다 · 동산 무덤", "lat": 31.7786, "lng": 35.2296, "region": "예루살렘", "jlm": true},
+ "olives": {"name": "감람산", "lat": 31.7783, "lng": 35.2445, "region": "예루살렘", "jlm": true}
+}

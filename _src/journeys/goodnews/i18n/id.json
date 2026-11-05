@@ -1,0 +1,180 @@
+{
+ "periods": {
+  "l1": {
+   "name": "Pertama · Kasih Allah",
+   "span": "Pada mulanya"
+  },
+  "l2": {
+   "name": "Kedua · Dosa dan keterpisahan",
+   "span": "Pada mulanya"
+  },
+  "l3": {
+   "name": "Ketiga · Yesus Kristus",
+   "span": "30 M"
+  },
+  "l4": {
+   "name": "Keempat · Jawaban iman",
+   "span": "Hari ini"
+  }
+ },
+ "places": {
+  "eden": {
+   "name": "Taman Eden",
+   "region": "Mesopotamia"
+  },
+  "golgotha": {
+   "name": "Golgota · Makam Taman",
+   "region": "Yerusalem"
+  },
+  "olives": {
+   "name": "Bukit Zaitun",
+   "region": "Yerusalem"
+  }
+ },
+ "events": {
+  "g01": {
+   "title": "Kasih Allah",
+   "when": "Pada mulanya",
+   "subtitle": "Allah mengasihi Anda",
+   "story": [
+    "Pertama, Allah mengasihi Anda dan mempunyai rencana yang baik bagi hidup Anda. Alkitab berkata begini. Allah begitu mengasihi dunia, sampai Ia memberikan Anak-Nya yang satu-satunya. Siapa pun yang percaya kepada-Nya tidak akan binasa, tetapi mendapat hidup yang kekal.",
+    "Pada mulanya Allah menciptakan terang, langit, dan bumi. Lalu Ia membentuk manusia dari debu tanah dan mengembuskan napas hidup ke dalamnya. Manusia tidak muncul secara kebetulan. Kita diciptakan untuk berjalan bersama Allah dan hidup di dalam kasih-Nya.",
+    "Yesus berkata, Aku datang supaya orang memperoleh hidup, bahkan hidup yang melimpah sampai meluap. Tetapi mengapa begitu banyak orang tidak mengalami kasih ini dan hidup yang berlimpah itu?"
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Allah begitu mengasihi dunia, sampai Ia memberikan Anak-Nya yang satu-satunya. Siapa pun yang percaya kepada-Nya tidak akan binasa, tetapi mendapat hidup yang kekal."
+    },
+    {
+     "who": "Allah",
+     "text": "Aku telah mencintaimu dengan cinta yang abadi. Karena itu Aku terus menuntunmu dengan kasih yang tidak pernah berubah."
+    },
+    {
+     "who": "Yesus",
+     "text": "Aku datang supaya orang memperoleh hidup, bahkan hidup yang melimpah sampai meluap."
+    }
+   ],
+   "note": "Kitab Kejadian berkata bahwa manusia diciptakan menurut gambar Allah (Kej. 1:27). Seluruh Alkitab adalah satu kisah yang utuh: Allah mengasihi manusia dan memanggilnya untuk hidup bersama Dia.",
+   "reflect": "Dapatkah saya percaya bahwa saya adalah orang yang dikasihi Allah?",
+   "quiz": {
+    "q": "Menurut Alkitab, bagaimana Allah menciptakan manusia?",
+    "options": [
+     "Dengan mencampur tanah dan air secara kebetulan",
+     "Menurut gambar Allah",
+     "Meniru rupa malaikat",
+     "Dari cahaya bintang"
+    ],
+    "explain": "Allah menciptakan manusia menurut gambar-Nya (Kej. 1:27), dan mengembuskan napas hidup ke dalam hidung manusia yang dibentuk dari debu tanah (Kej. 2:7)."
+   }
+  },
+  "g02": {
+   "title": "Dosa dan keterpisahan",
+   "when": "Pada mulanya",
+   "subtitle": "Dosa telah memisahkan kita dari Allah",
+   "story": [
+    "Kedua, manusia terpisah dari Allah karena dosa. Karena itu ia tidak dapat mengenal dan mengalami kasih Allah. Alkitab berkata, Semua orang sudah berbuat dosa, sehingga tidak sampai kepada kemuliaan Allah.",
+    "Manusia di Eden lebih mengikuti pikirannya sendiri daripada firman Allah, lalu makan buah yang dilarang. Dosa bukan hanya soal beberapa kesalahan. Dosa berarti meninggalkan Allah dan menjadikan diri sendiri tuan atas hidup kita. Alkitab berkata, bayaran dosa adalah kematian.",
+    "Manusia berusaha menyeberangi jurang itu dengan berbuat baik, berlatih rohani dengan keras, dan mencari agama. Tetapi tidak seorang pun dapat mencapai Allah dengan kekuatannya sendiri. Jadi, apakah memang tidak ada jalan?"
+   ],
+   "words": [
+    {
+     "who": "Paulus",
+     "text": "Semua orang sudah berbuat dosa, sehingga tidak sampai kepada kemuliaan Allah."
+    },
+    {
+     "who": "Paulus",
+     "text": "Bayaran dosa adalah kematian, tetapi pemberian cuma-cuma dari Allah adalah hidup kekal di dalam Kristus Yesus, Tuhan kita."
+    },
+    {
+     "who": "Yesaya",
+     "text": "Dosa-dosamulah yang memisahkan kamu dari Allahmu."
+    }
+   ],
+   "note": "Kerub-kerub dan pedang bernyala yang menyambar-nyambar di sebelah timur Eden menunjukkan bahwa manusia tidak dapat kembali sendiri ke pohon kehidupan (Kej. 3:24). Kisah tentang jalan yang tertutup ini dibuka kembali menjadi benang merah seluruh Alkitab.",
+   "reflect": "Siapa yang saya dudukkan di takhta hidup saya?",
+   "quiz": {
+    "q": "Menurut Alkitab, apa bayaran dosa?",
+    "options": [
+     "Kemiskinan",
+     "Penyakit",
+     "Rasa malu",
+     "Kematian"
+    ],
+    "explain": "Bayaran dosa adalah kematian, tetapi pemberian Allah adalah hidup kekal di dalam Kristus Yesus (Rm. 6:23)."
+   }
+  },
+  "g03": {
+   "title": "Satu-satunya jalan, Yesus",
+   "when": "Sekitar tahun 30 M",
+   "subtitle": "Hanya Yesus Kristus jalannya",
+   "story": [
+    "Ketiga, Yesus Kristus adalah satu-satunya jalan yang Allah sediakan untuk mengatasi dosa manusia. Hanya melalui Dia kita dapat mengenal dan mengalami kasih Allah. Yesus berkata, Akulah jalan, kebenaran, dan hidup. Tanpa melalui Aku, tidak seorang pun dapat sampai kepada Bapa.",
+    "Yesus, Anak Allah, datang menjadi manusia. Di kayu salib di bukit Golgota, Dia yang tidak berdosa menanggung hukuman atas dosa kita sebagai ganti kita. Alkitab berkata, Ketika kita masih orang berdosa, Kristus mati untuk kita.",
+    "Pada dini hari di hari ketiga, kubur itu kosong. Yesus mengalahkan maut, bangkit kembali, dan menampakkan diri kepada banyak orang. Sekarang Dialah satu-satunya jembatan yang menghubungkan Allah dengan kita."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Akulah jalan, kebenaran, dan hidup. Tanpa melalui Aku, tidak seorang pun dapat sampai kepada Bapa."
+    },
+    {
+     "who": "Paulus",
+     "text": "Ketika kita masih orang berdosa, Kristus mati untuk kita. Dengan cara inilah Allah menunjukkan kasih-Nya kepada kita."
+    },
+    {
+     "who": "Paulus",
+     "text": "Kristus mati karena dosa-dosa kita, sesuai dengan Kitab Suci. Ia dikuburkan, lalu bangkit kembali pada hari ketiga."
+    }
+   ],
+   "note": "Paulus menuturkan bahwa Yesus yang bangkit menampakkan diri kepada Petrus, kepada kedua belas murid, lalu kepada lebih dari lima ratus orang sekaligus, dan ia menambahkan bahwa sebagian besar dari mereka masih hidup (1Kor. 15:5–6).",
+   "reflect": "Ketika mendengar bahwa Yesus memikul salib untuk saya, apa yang bergerak di dalam hati saya?",
+   "quiz": {
+    "q": "Yesus berkata tidak seorang pun dapat sampai ke mana tanpa melalui Dia?",
+    "options": [
+     "Ke Bait Allah",
+     "Ke Yerusalem",
+     "Kepada Bapa",
+     "Kepada bala tentara surga"
+    ],
+    "explain": "Akulah jalan, kebenaran, dan hidup. Tanpa melalui Aku, tidak seorang pun dapat sampai kepada Bapa. (Yoh. 14:6)"
+   }
+  },
+  "g04": {
+   "title": "Jawaban iman",
+   "when": "Dan hari ini",
+   "subtitle": "Sambutlah Dia dengan iman",
+   "story": [
+    "Keempat, setiap kita perlu menyambut Yesus Kristus sebagai Juruselamat dan Tuhan atas hidup kita. Saat itulah kita mengenal dan mengalami kasih Allah. Alkitab berkata, Kepada semua orang yang menyambut Dia, yaitu mereka yang percaya kepada nama-Nya, Ia memberi hak untuk menjadi anak-anak Allah.",
+    "Menyambut Dia bukan sesuatu yang didapat dengan perbuatan baik, melainkan pemberian Allah yang diterima dengan iman. Artinya berbalik dari hidup yang saya kuasai sendiri, lalu menyerahkan hidup saya kepada Yesus. Yesus berkata, perhatikan, Aku berdiri di luar pintu dan mengetuk. Siapa pun yang mendengar suara-Ku lalu membuka pintu, Aku akan masuk kepadanya. Saat ini, siapa yang duduk di takhta hidup Anda?",
+    "Jika doa ini mengungkapkan isi hati Anda, berdoalah bersama sekarang. Tuhan Yesus, saya orang berdosa yang telah hidup menurut kemauan saya sendiri dan jauh dari Allah. Saya percaya Engkau mati di kayu salib untuk saya dan bangkit kembali. Sekarang saya membuka pintu hati saya. Masuklah, ampunilah dosa saya, dan jadilah Tuhan atas hidup saya. Terima kasih karena Engkau menerima saya sebagai anak Allah. Dalam nama Yesus saya berdoa. Amin."
+   ],
+   "words": [
+    {
+     "who": "Yesus",
+     "text": "Perhatikan, Aku berdiri di luar pintu dan mengetuk. Siapa pun yang mendengar suara-Ku lalu membuka pintu, Aku akan masuk kepadanya. Aku akan makan bersamanya, dan ia bersama Aku."
+    },
+    {
+     "who": "Yohanes",
+     "text": "Kepada semua orang yang menyambut Dia, yaitu mereka yang percaya kepada nama-Nya, Ia memberi hak untuk menjadi anak-anak Allah."
+    },
+    {
+     "who": "Paulus",
+     "text": "Kalian diselamatkan oleh anugerah, melalui iman. Itu bukan berasal dari diri kalian sendiri, melainkan pemberian Allah."
+    }
+   ],
+   "note": "Doa bukanlah menghafal kata-kata tertentu, melainkan jawaban hati kepada Allah. Jika Anda sungguh-sungguh telah berdoa seperti ini, kami mengajak Anda mencari gereja terdekat dan bertemu dengan orang-orang yang akan berjalan bersama Anda di jalan ini.",
+   "reflect": "Jika Yesus sedang mengetuk pintu hati saya sekarang, apa jawaban saya?",
+   "quiz": {
+    "q": "Menurut Yohanes 1:12, apa yang diberikan kepada orang yang menyambut Yesus?",
+    "options": [
+     "Hak untuk menjadi anak-anak Allah",
+     "Tanah dan harta",
+     "Nama yang besar",
+     "Umur yang panjang"
+    ],
+    "explain": "Kepada mereka yang menyambut Dia, yaitu yang percaya kepada nama-Nya, diberikan hak untuk menjadi anak-anak Allah (Yoh. 1:12)."
+   }
+  }
+ }
+}

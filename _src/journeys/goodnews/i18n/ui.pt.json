@@ -1,0 +1,32 @@
+{
+ "_comment": "Textos de tela da jornada GoodNews (o Evangelho) — sobrepostos ao ui.pt.json comum",
+ "appTag": "GoodNews · O Evangelho em quatro cenas",
+ "docTitle": "O Caminho — GoodNews (o Evangelho) | O Evangelho em quatro cenas",
+ "metaDesc": "O amor de Deus, o pecado e a separação, Jesus Cristo, a resposta da fé. Conheça no mapa, em quatro cenas, o Evangelho que vai do Éden ao Gólgota e chega até você.",
+ "mapAria": "O caminho do Evangelho, do Éden até Jerusalém",
+ "introTag": "Do Éden ao Gólgota, e até você",
+ "introLead": "Do amor de Deus até a resposta da fé, conheça o Evangelho em {n} cenas no mapa.",
+ "hisWords": "Palavras",
+ "voicesOfDay": "Palavras",
+ "wordsHead": "Palavras do Evangelho",
+ "wordsIntro": "Reunimos as palavras das quatro cenas do Evangelho. Todas foram traduzidas de novo para a linguagem de hoje, seguindo o sentido do texto original.",
+ "gospels": {
+  "gen": [
+   "Gênesis",
+   "Gn"
+  ],
+  "jn": [
+   "João",
+   "Jo"
+  ],
+  "acts": [
+   "Atos",
+   "At"
+  ]
+ },
+ "endEyebrow": "THE GOOD NEWS · O EVANGELHO",
+ "endTitle": "O Evangelho chegou até você",
+ "endLead": "Obrigado por caminhar conosco do Éden ao Gólgota, até o lugar onde você está agora.",
+ "seekerHead": "Se você fez esta oração",
+ "invite": "Onde Jesus está agora? Como prometeu, ele entrou na sua vida. Ele disse que entraria se você abrisse a porta. (Ap 3:20)\nAgora você é filho de Deus. A prova disso não é o que você sente, mas a promessa dele. (Jo 1:12)\nDeus nos deu a vida eterna, e essa vida está no seu Filho. Quem tem o Filho tem a vida. (1Jo 5:11–12)\nAgora procure uma igreja perto de você, conheça pessoas para caminhar junto neste caminho e abra a Bíblia todos os dias para ouvir a palavra dele. Percorrer o caminho de Jesus desde o início também é um bom começo."
+}

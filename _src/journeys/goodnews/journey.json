@@ -1,0 +1,10 @@
+{
+ "_comment": "GoodNews(복음) — 4영리의 네 흐름을 이 앱의 말로 새로 쓴 전도용 여정. 짧게(네 장면), /goodnews로 들어오면 첫 화면 없이 바로 시작(quick), 끝에서 예수 여정(next)으로 잇는다. 에덴에서 예루살렘으로 건너뛰므로 걸은 거리(odo)와 후원 안내(sponsor)는 숨긴다",
+ "main": "예수",
+ "harmony": false,
+ "prologue": false,
+ "quick": true,
+ "next": "jesus",
+ "odo": false,
+ "sponsor": false
+}

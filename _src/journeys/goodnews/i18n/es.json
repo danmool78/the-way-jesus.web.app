@@ -1,0 +1,180 @@
+{
+ "periods": {
+  "l1": {
+   "name": "Primero · El amor de Dios",
+   "span": "En el principio"
+  },
+  "l2": {
+   "name": "Segundo · El pecado nos separa",
+   "span": "En el principio"
+  },
+  "l3": {
+   "name": "Tercero · Jesucristo",
+   "span": "30 d. C."
+  },
+  "l4": {
+   "name": "Cuarto · La respuesta de fe",
+   "span": "Hoy"
+  }
+ },
+ "places": {
+  "eden": {
+   "name": "Jardín del Edén",
+   "region": "Mesopotamia"
+  },
+  "golgotha": {
+   "name": "Gólgota · Tumba del Huerto",
+   "region": "Jerusalén"
+  },
+  "olives": {
+   "name": "Monte de los Olivos",
+   "region": "Jerusalén"
+  }
+ },
+ "events": {
+  "g01": {
+   "title": "El amor de Dios",
+   "when": "En el principio",
+   "subtitle": "Dios te ama",
+   "story": [
+    "Primero, Dios te ama y tiene un propósito bueno para tu vida. La Biblia lo dice así. Dios amó tanto al mundo que entregó a su único Hijo, para que todo el que crea en él no se pierda, sino que tenga vida eterna.",
+    "Al principio, Dios hizo la luz, el cielo y la tierra. Luego formó al ser humano del polvo y sopló en él aliento de vida. No estás aquí por casualidad. Fuiste creado para caminar con Dios y vivir dentro de su amor.",
+    "Jesús dijo. Yo he venido para que tengan vida, y vida en abundancia. Entonces, ¿por qué tantas personas no conocen este amor ni viven esa vida plena?"
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Dios amó tanto al mundo que entregó a su único Hijo, para que todo el que crea en él no se pierda, sino que tenga vida eterna."
+    },
+    {
+     "who": "Dios",
+     "text": "Con amor eterno te he amado; por eso te he seguido guiando con un amor que no cambia."
+    },
+    {
+     "who": "Jesús",
+     "text": "Yo he venido para que tengan vida, y vida en abundancia."
+    }
+   ],
+   "note": "El Génesis dice que el ser humano fue creado a imagen de Dios (Gn 1:27). Toda la Biblia cuenta una sola historia: Dios ama a las personas y las llama a vivir con él.",
+   "reflect": "¿Puedo creer que soy alguien a quien Dios ama?",
+   "quiz": {
+    "q": "Según la Biblia, ¿cómo creó Dios al ser humano?",
+    "options": [
+     "Mezclando por casualidad tierra y agua",
+     "A imagen de Dios",
+     "Copiando la forma de los ángeles",
+     "Con la luz de las estrellas"
+    ],
+    "explain": "Dios creó al ser humano a su imagen (Gn 1:27) y sopló aliento de vida en la nariz del hombre que había formado del polvo (Gn 2:7)."
+   }
+  },
+  "g02": {
+   "title": "El pecado nos separa",
+   "when": "En el principio",
+   "subtitle": "El pecado nos ha separado de Dios",
+   "story": [
+    "Segundo, el ser humano está separado de Dios por causa del pecado. Por eso no puede conocer su amor ni disfrutarlo. La Biblia dice. Todos han pecado y no alcanzan la gloria de Dios.",
+    "En el Edén, el hombre siguió su propia idea en lugar de la palabra de Dios y comió del fruto que Dios le había prohibido. El pecado no es solo cometer algunas faltas. Es apartarse de Dios y vivir como dueño de la propia vida. La Biblia dice. La paga del pecado es la muerte.",
+    "Las personas intentan cruzar esa distancia portándose bien, esforzándose en disciplinas espirituales o buscando una religión. Pero nadie puede llegar a Dios con sus propias fuerzas. ¿Será que no hay ningún camino?"
+   ],
+   "words": [
+    {
+     "who": "Pablo",
+     "text": "Todos han pecado y no alcanzan la gloria de Dios."
+    },
+    {
+     "who": "Pablo",
+     "text": "La paga del pecado es la muerte, pero el regalo que Dios da gratuitamente es la vida eterna en Cristo Jesús, nuestro Señor."
+    },
+    {
+     "who": "Isaías",
+     "text": "Son sus pecados los que han abierto una separación entre ustedes y su Dios."
+    }
+   ],
+   "note": "Los querubines y la espada de fuego que giraba al oriente del Edén muestran que el ser humano no puede volver por sí mismo al árbol de la vida (Gn 3:24). La historia de cómo se vuelve a abrir ese camino cerrado atraviesa toda la Biblia.",
+   "reflect": "¿A quién tengo sentado en el lugar de dueño de mi vida?",
+   "quiz": {
+    "q": "Según la Biblia, ¿cuál es la paga del pecado?",
+    "options": [
+     "La pobreza",
+     "La enfermedad",
+     "La vergüenza",
+     "La muerte"
+    ],
+    "explain": "La paga del pecado es la muerte, pero el regalo de Dios es la vida eterna en Cristo Jesús (Ro 6:23)."
+   }
+  },
+  "g03": {
+   "title": "Jesús, el único camino",
+   "when": "Hacia el año 30 d. C.",
+   "subtitle": "Solo Jesucristo es el camino",
+   "story": [
+    "Tercero, Jesucristo es el único camino que Dios ha preparado para resolver nuestro pecado. Solo por medio de él podemos conocer y disfrutar el amor de Dios. Jesús dijo. Yo soy el camino, la verdad y la vida. Nadie llega al Padre si no es por mí.",
+    "Jesús, el Hijo de Dios, se hizo hombre y vino a nosotros. Y en la cruz, sobre la colina del Gólgota, el que no tenía pecado pagó en nuestro lugar el precio de nuestros pecados. La Biblia dice. Cuando todavía éramos pecadores, Cristo murió por nosotros.",
+    "Al amanecer del tercer día, la tumba estaba vacía. Jesús venció a la muerte, resucitó y se apareció a muchas personas. Ahora él es el único puente que une a Dios con nosotros."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Yo soy el camino, la verdad y la vida. Nadie llega al Padre si no es por mí."
+    },
+    {
+     "who": "Pablo",
+     "text": "Cuando todavía éramos pecadores, Cristo murió por nosotros. Así nos mostró Dios el amor que nos tiene."
+    },
+    {
+     "who": "Pablo",
+     "text": "Cristo murió por nuestros pecados, como dicen las Escrituras; fue sepultado y resucitó al tercer día."
+    }
+   ],
+   "note": "Pablo cuenta que Jesús resucitado se apareció a Pedro, a los Doce y luego a más de quinientas personas a la vez, y añade que muchas de ellas todavía vivían (1 Co 15:5–6).",
+   "reflect": "Ante la noticia de que Jesús cargó la cruz por mí, ¿qué se mueve en mi corazón?",
+   "quiz": {
+    "q": "Según Jesús, ¿adónde nadie puede llegar si no es por él?",
+    "options": [
+     "Al Templo",
+     "A Jerusalén",
+     "Al Padre",
+     "Al ejército del cielo"
+    ],
+    "explain": "Yo soy el camino, la verdad y la vida. Nadie llega al Padre si no es por mí (Jn 14:6)."
+   }
+  },
+  "g04": {
+   "title": "La respuesta de fe",
+   "when": "Y hoy",
+   "subtitle": "Recíbelo por la fe",
+   "story": [
+    "Cuarto, cada uno de nosotros necesita recibir a Jesucristo como Salvador y Señor de su vida. Entonces conocemos y disfrutamos el amor de Dios. La Biblia dice. A todos los que lo recibieron, a los que creen en su nombre, les dio el derecho de llegar a ser hijos de Dios.",
+    "Recibirlo no es algo que se gana con buenas obras. Es un regalo de Dios que se recibe por la fe. Es dar la vuelta, dejar el lugar donde tú mandabas y confiarle tu vida a Jesús. Jesús dijo. Mira, estoy a la puerta y llamo. Si alguno oye mi voz y abre la puerta, entraré a su casa. Ahora mismo, ¿quién ocupa el lugar de dueño en tu vida?",
+    "Si esta oración expresa lo que hay en tu corazón, ora conmigo ahora. Señor Jesús, soy un pecador que se apartó de Dios y vivió a su manera. Creo que moriste en la cruz por mí y que resucitaste. Ahora abro la puerta de mi corazón. Entra, perdona mis pecados y sé el dueño de mi vida. Gracias por recibirme como hijo de Dios. Te lo pido en el nombre de Jesús. Amén."
+   ],
+   "words": [
+    {
+     "who": "Jesús",
+     "text": "Mira, estoy a la puerta y llamo. Si alguno oye mi voz y abre la puerta, entraré a su casa y comeré con él, y él conmigo."
+    },
+    {
+     "who": "Juan",
+     "text": "A todos los que lo recibieron, a los que creen en su nombre, les dio el derecho de llegar a ser hijos de Dios."
+    },
+    {
+     "who": "Pablo",
+     "text": "Ustedes han sido salvados por la gracia, por medio de la fe. Esto no viene de ustedes; es un regalo de Dios."
+    }
+   ],
+   "note": "Orar no es repetir palabras aprendidas, sino responderle a Dios con el corazón. Si hiciste esta oración de verdad, te animamos a buscar una iglesia cercana y conocer a personas con quienes recorrer juntos este camino.",
+   "reflect": "Si Jesús está llamando ahora a la puerta de mi corazón, ¿qué le voy a responder?",
+   "quiz": {
+    "q": "Según Juan 1:12, ¿qué reciben los que aceptan a Jesús?",
+    "options": [
+     "El derecho de llegar a ser hijos de Dios",
+     "Tierras y riquezas",
+     "Un gran nombre",
+     "Una vida larga"
+    ],
+    "explain": "A todos los que lo recibieron, a los que creen en su nombre, se les da el derecho de llegar a ser hijos de Dios (Jn 1:12)."
+   }
+  }
+ }
+}

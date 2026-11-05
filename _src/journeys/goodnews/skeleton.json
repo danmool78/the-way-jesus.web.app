@@ -1,0 +1,6 @@
+[
+ {"id": "g01", "p": "l1", "when": "태초", "year": -9999, "place": "eden", "title": "하나님의 사랑", "refs": {"gen": "1:26–2:8"}},
+ {"id": "g02", "p": "l2", "when": "태초", "year": -9998, "place": "eden", "title": "죄와 단절", "refs": {"gen": "3:1–24"}},
+ {"id": "g03", "p": "l3", "when": "AD 30년경", "year": 30, "place": "golgotha", "title": "유일한 길, 예수", "refs": {"jn": "19:16–20:18"}},
+ {"id": "g04", "p": "l4", "when": "그리고 오늘", "year": 31, "place": "olives", "title": "믿음의 응답", "refs": {"acts": "1:6–11"}, "prayer": 2}
+]

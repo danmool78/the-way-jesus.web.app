@@ -1,0 +1,180 @@
+{
+ "periods": {
+  "l1": {
+   "name": "Premièrement · L’amour de Dieu",
+   "span": "Au commencement"
+  },
+  "l2": {
+   "name": "Deuxièmement · Le péché et la séparation",
+   "span": "Au commencement"
+  },
+  "l3": {
+   "name": "Troisièmement · Jésus-Christ",
+   "span": "Vers 30 apr. J.-C."
+  },
+  "l4": {
+   "name": "Quatrièmement · La réponse de la foi",
+   "span": "Aujourd’hui"
+  }
+ },
+ "places": {
+  "eden": {
+   "name": "Jardin d’Éden",
+   "region": "Mésopotamie"
+  },
+  "golgotha": {
+   "name": "Golgotha · Tombeau du jardin",
+   "region": "Jérusalem"
+  },
+  "olives": {
+   "name": "Mont des Oliviers",
+   "region": "Jérusalem"
+  }
+ },
+ "events": {
+  "g01": {
+   "title": "L’amour de Dieu",
+   "when": "Au commencement",
+   "subtitle": "Dieu vous aime",
+   "story": [
+    "Premièrement, Dieu vous aime, et il a pour votre vie un projet plein de bonté. La Bible le dit ainsi. Dieu a tellement aimé le monde qu’il a donné son Fils unique. Celui qui croit en lui ne se perdra pas, mais il aura la vie éternelle.",
+    "Au commencement, Dieu a créé la lumière, le ciel et la terre. Il a façonné l’homme avec la poussière du sol et lui a insufflé le souffle de vie. Vous n’êtes pas le fruit du hasard. Vous avez été créé pour marcher avec Dieu et vivre dans son amour.",
+    "Jésus a dit. Je suis venu pour que les hommes aient la vie, et qu’ils l’aient en abondance. Alors pourquoi tant de personnes passent-elles à côté de cet amour et de cette vie pleine ?"
+   ],
+   "words": [
+    {
+     "who": "Jésus",
+     "text": "Dieu a tellement aimé le monde qu’il a donné son Fils unique. Celui qui croit en lui ne se perdra pas, mais il aura la vie éternelle."
+    },
+    {
+     "who": "Dieu",
+     "text": "Je t’aime d’un amour éternel. C’est pourquoi je t’ai attiré à moi avec un amour fidèle."
+    },
+    {
+     "who": "Jésus",
+     "text": "Je suis venu pour que les hommes aient la vie, et qu’ils l’aient en abondance."
+    }
+   ],
+   "note": "La Genèse dit que l’être humain a été créé à l’image de Dieu (Gn 1:27). Toute la Bible raconte une seule et même histoire : Dieu aime les hommes et les appelle à vivre avec lui.",
+   "reflect": "Est-ce que je peux croire que je suis aimé de Dieu ?",
+   "quiz": {
+    "q": "Selon la Bible, comment Dieu a-t-il créé l’être humain ?",
+    "options": [
+     "En mêlant par hasard de la terre et de l’eau",
+     "À l’image de Dieu",
+     "Sur le modèle des anges",
+     "À partir de la lumière des étoiles"
+    ],
+    "explain": "Dieu a créé l’être humain à son image (Gn 1:27), et il a insufflé le souffle de vie dans les narines de l’homme façonné avec la poussière (Gn 2:7)."
+   }
+  },
+  "g02": {
+   "title": "Le péché et la séparation",
+   "when": "Au commencement",
+   "subtitle": "Le péché nous a séparés de Dieu",
+   "story": [
+    "Deuxièmement, l’être humain est séparé de Dieu à cause du péché. C’est pourquoi il ne peut ni connaître ni vivre l’amour de Dieu. La Bible le dit. Tous ont péché et sont privés de la gloire de Dieu.",
+    "En Éden, l’homme a suivi sa propre idée plutôt que la parole de Dieu, et il a mangé le fruit défendu. Le péché, ce n’est pas seulement quelques fautes. C’est se détourner de Dieu pour devenir soi-même le maître de sa vie. La Bible le dit. Le salaire du péché, c’est la mort.",
+    "Les hommes essaient de franchir ce fossé en étant gentils, en faisant des efforts, en cherchant une religion. Mais personne ne peut atteindre Dieu par ses propres forces. N’y aurait-il donc aucun chemin ?"
+   ],
+   "words": [
+    {
+     "who": "Paul",
+     "text": "Tous ont péché et sont privés de la gloire de Dieu."
+    },
+    {
+     "who": "Paul",
+     "text": "Le salaire du péché, c’est la mort, mais le cadeau que Dieu donne gratuitement, c’est la vie éternelle dans le Christ Jésus notre Seigneur."
+    },
+    {
+     "who": "Ésaïe",
+     "text": "Ce sont vos fautes qui ont creusé un fossé entre vous et votre Dieu."
+    }
+   ],
+   "note": "Les chérubins et l’épée de feu tournoyante qui gardaient l’orient d’Éden montrent que l’homme ne peut pas revenir de lui-même à l’arbre de vie (Gn 3:24). L’histoire de ce chemin fermé qui s’ouvre de nouveau traverse toute la Bible.",
+   "reflect": "Qui ai-je installé à la place de maître de ma vie ?",
+   "quiz": {
+    "q": "Selon la Bible, quel est le salaire du péché ?",
+    "options": [
+     "La pauvreté",
+     "La maladie",
+     "La honte",
+     "La mort"
+    ],
+    "explain": "Le salaire du péché, c’est la mort, mais le cadeau de Dieu, c’est la vie éternelle dans le Christ Jésus (Rm 6:23)."
+   }
+  },
+  "g03": {
+   "title": "Le seul chemin, Jésus",
+   "when": "Vers l’an 30",
+   "subtitle": "Jésus-Christ est le seul chemin",
+   "story": [
+    "Troisièmement, Jésus-Christ est le seul chemin que Dieu a préparé pour régler le problème du péché. C’est par lui seul que nous pouvons connaître et vivre l’amour de Dieu. Jésus a dit. Je suis le chemin, la vérité et la vie. Personne ne va au Père sans passer par moi.",
+    "Jésus, le Fils de Dieu, est venu en devenant homme. Sur la croix, au Golgotha, lui qui était sans péché a payé à notre place le prix de nos péchés. La Bible le dit. Alors que nous étions encore pécheurs, le Christ est mort pour nous.",
+    "À l’aube du troisième jour, le tombeau était vide. Jésus a vaincu la mort, il est ressuscité, et il est apparu à beaucoup de personnes. Désormais, il est le seul pont qui relie Dieu et nous."
+   ],
+   "words": [
+    {
+     "who": "Jésus",
+     "text": "Je suis le chemin, la vérité et la vie. Personne ne va au Père sans passer par moi."
+    },
+    {
+     "who": "Paul",
+     "text": "Alors que nous étions encore pécheurs, le Christ est mort pour nous. C’est ainsi que Dieu nous a montré son amour."
+    },
+    {
+     "who": "Paul",
+     "text": "Le Christ est mort pour nos péchés, comme l’annonçaient les Écritures. Il a été enseveli, et il est ressuscité le troisième jour."
+    }
+   ],
+   "note": "Paul rapporte que Jésus ressuscité est apparu à Pierre, aux Douze, puis à plus de cinq cents personnes à la fois, et il ajoute que la plupart sont encore en vie (1 Co 15:5–6).",
+   "reflect": "Quand j’entends que Jésus a porté la croix pour moi, qu’est-ce qui se passe dans mon cœur ?",
+   "quiz": {
+    "q": "Selon Jésus, où personne ne peut-il aller sans passer par lui ?",
+    "options": [
+     "Au Temple",
+     "À Jérusalem",
+     "Au Père",
+     "Dans l’armée céleste"
+    ],
+    "explain": "Je suis le chemin, la vérité et la vie. Personne ne va au Père sans passer par moi (Jn 14:6)."
+   }
+  },
+  "g04": {
+   "title": "La réponse de la foi",
+   "when": "Et aujourd’hui",
+   "subtitle": "Accueillez-le par la foi",
+   "story": [
+    "Quatrièmement, chacun de nous doit accueillir Jésus-Christ comme son Sauveur et le Seigneur de sa vie. C’est alors que nous connaissons et vivons l’amour de Dieu. La Bible le dit. À tous ceux qui l’ont accueilli, à ceux qui croient en son nom, il a donné le droit de devenir enfants de Dieu.",
+    "L’accueillir, ce n’est pas une récompense que l’on gagne par de bonnes actions. C’est un cadeau de Dieu que l’on reçoit par la foi. C’est quitter la place de maître de sa vie pour confier sa vie à Jésus. Jésus a dit. Voici, je me tiens à la porte et je frappe. Si quelqu’un entend ma voix et ouvre la porte, j’entrerai chez lui. Aujourd’hui, qui occupe la place de maître dans votre vie ?",
+    "Si cette prière exprime ce que vous avez sur le cœur, priez-la maintenant. Seigneur Jésus, je suis un pécheur, j’ai vécu loin de Dieu, à ma manière. Je crois que tu es mort sur la croix pour moi et que tu es ressuscité. Maintenant, j’ouvre la porte de mon cœur. Entre, pardonne mes péchés et deviens le maître de ma vie. Merci de m’accueillir comme enfant de Dieu. Je te prie au nom de Jésus. Amen."
+   ],
+   "words": [
+    {
+     "who": "Jésus",
+     "text": "Voici, je me tiens à la porte et je frappe. Si quelqu’un entend ma voix et ouvre la porte, j’entrerai chez lui, je mangerai avec lui, et lui avec moi."
+    },
+    {
+     "who": "Jean",
+     "text": "À tous ceux qui l’ont accueilli, à ceux qui croient en son nom, il a donné le droit de devenir enfants de Dieu."
+    },
+    {
+     "who": "Paul",
+     "text": "C’est par la grâce que vous êtes sauvés, au moyen de la foi. Cela ne vient pas de vous, c’est un cadeau de Dieu."
+    }
+   ],
+   "note": "Prier, ce n’est pas réciter des mots fixés d’avance, c’est répondre à Dieu avec son cœur. Si vous avez fait cette prière sincèrement, nous vous encourageons à aller dans une Église près de chez vous, pour rencontrer des personnes avec qui marcher sur ce chemin.",
+   "reflect": "Si Jésus frappe aujourd’hui à la porte de mon cœur, que vais-je lui répondre ?",
+   "quiz": {
+    "q": "Selon Jean 1:12, qu’est-ce qui est donné à ceux qui accueillent Jésus ?",
+    "options": [
+     "Le droit de devenir enfants de Dieu",
+     "Des terres et des richesses",
+     "Un grand nom",
+     "Une longue vie"
+    ],
+    "explain": "À tous ceux qui l’ont accueilli, à ceux qui croient en son nom, est donné le droit de devenir enfants de Dieu (Jn 1:12)."
+   }
+  }
+ }
+}
