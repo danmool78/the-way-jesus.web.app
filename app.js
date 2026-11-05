@@ -1379,9 +1379,9 @@ function openEnd() {
 
 // 다음 여정 후원 안내 (여정을 마치며 창 맨 아래, 설정 메뉴·랜딩 끝의 #nextDlg): 홈페이지(sssoft)와 같은 글과 문의 길
 const NEXT_KAKAO = 'https://open.kakao.com/o/ssPDUnSi', NEXT_MAIL = 'sssoft1004@gmail.com';
-function nextHtml() {
+function nextHtml() {  // 후원 안내에는 아직 준비 중인 여정만 (series.json의 ready)
   return `<section class="nextbox"><h3>${esc(t('nextHead'))}</h3><p>${esc(t('nextBody'))}</p>
-    <div class="nextgrid">${[1, 2, 3, 4].map(n => `<div><b>${esc(t('nextJ' + n + 'h'))}</b><span>${esc(t('nextJ' + n))}</span></div>`).join('')}</div>
+    <div class="nextgrid">${(DATA.journey?.series || []).filter(j => !j.ready).map(j => `<div><b>${esc(t(j.title))}</b><span>${esc(t(j.desc))}</span></div>`).join('')}</div>
     <div class="nextbtns"><a class="kakao" href="${NEXT_KAKAO}" target="_blank" rel="noopener">${esc(t('nextKakao'))}</a><a href="mailto:${NEXT_MAIL}?subject=${encodeURIComponent(t('nextMailSubject'))}">${esc(t('nextMail'))}</a></div></section>`;
 }
 
