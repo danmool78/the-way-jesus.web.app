@@ -81,6 +81,11 @@ const TYPES = {
   hebrew2:  { robe: '#9a8466', trim: '#6e5a40', hair: '#3a2a1c', beard: true, sash: '#5b4630', skin: 3 },
   miriam:   { robe: '#7a4a5a', trim: '#c9a24a', mantle: '#c8b48c', veil: true, inner: '#efe6d4', skin: 1, soft: true, slim: true, sash: '#c9a24a' }, // 예언자 미리암
   sister:   { robe: '#8e6d4e', trim: '#c0607a', hair: '#3b2616', long: true, soft: true, slim: true, sash: '#c0607a', height: 0.76, kid: true }, // 모세의 어린 누이
+  joshua:   { robe: '#6b5a3a', trim: '#9d3328', mantle: '#8a3a2a', hair: '#2b1b10', beard: true, sash: '#9d3328', spear: true, skin: 1 }, // 젊은 여호수아 (모세의 부하, 싸우는 사람)
+  hur:      { robe: '#7a6a8a', trim: '#4d3f57', mantle: '#c8b48c', hair: '#cfc8bb', beard: true, sash: '#4d3f57', skin: 1 }, // 훌
+  jethro:   { robe: '#e3dccb', trim: '#7a3b2e', mantle: '#7a3b2e', hair: '#e2ddd2', beard: true, long: true, hood: '#efe6d4', band: '#7a3b2e', staff: true, skin: 1 }, // 미디안의 제사장 이드로
+  zipporah: { robe: '#6e3a3a', trim: '#c9a24a', mantle: '#2f4f6a', veil: true, inner: '#efe6d4', skin: 1, soft: true, slim: true, sash: '#c9a24a' }, // 십보라
+  aaronP:   { robe: '#f6f2e8', trim: '#d6a93a', mantle: '#2f4f8a', hair: '#bfb7aa', beard: true, turban: '#f6f2e8', breast: true, sash: '#9d3328', skin: 1 }, // 대제사장 아론: 흰 옷, 청색 에봇, 관, 열두 보석의 흉패
   official: { robe: '#2f4f6a', trim: '#d6a93a', mantle: '#c8b48c', hair: '#2b1b10', beard: true, sash: '#d6a93a', skin: 2 }, // 왕의 신하
 };
 
@@ -319,6 +324,12 @@ function makePerson(type) {
   upper.add(mantleG);
   if (t.mantle && !t.wings && !t.bare) mesh(folds(lathe(B.mantle, 32, ...BACK(B.mantleLen)), 11, slim ? 0.006 : 0.01, 0.62), mat(t.mantle, DS), mantleG, [0, -B.mantle[0][1], 0]);
   mesh(new THREE.CylinderGeometry(0.029, 0.033, 0.07, 14), skin, upper, [0, 0.72, 0]);
+  // 대제사장의 흉패: 가슴에 금테 두른 네 줄 세 개의 보석 (열두 지파)
+  if (t.breast) {
+    mesh(new THREE.BoxGeometry(0.075, 0.085, 0.006), mat('#d6a93a', { metalness: 0.6, roughness: 0.35 }), upper, [0, 0.6, 0.11]).rotation.x = -0.12;
+    const gems = ['#9d3328', '#2f6a8a', '#3e7a3a', '#c99a3a', '#6b2a5e', '#2f4f8a'];
+    for (let r = 0; r < 4; r++) for (let c = 0; c < 3; c++) mesh(new THREE.BoxGeometry(0.016, 0.014, 0.006), mat(gems[(r * 3 + c) % 6], { roughness: 0.3, metalness: 0.2 }), upper, [(c - 1) * 0.022, 0.63 - r * 0.019, 0.115 - r * 0.0023]);
+  }
   // 애굽의 넓은 목걸이(우세크): 어깨를 덮는 둥근 판에 금·청·적색 띠
   if (t.collar) {
     const c = document.createElement('canvas'); c.width = 4; c.height = 64;

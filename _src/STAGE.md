@@ -79,11 +79,12 @@ e02: {
 - **애굽 사람과 히브리 사람을 한눈에 가른다.** 애굽 사람은 맨 윗몸에 흰 아마포 허리치마(`kilt`), 검은 단발 가발(`wig`, 여인은 `wigLong`), 넓은 목걸이(`collar: [색…]`), 바로는 줄무늬 네메스 두건(`nemes: [바탕, 줄]`). 히브리 사람은 긴 옷·수염·머릿수건.
 - 하나님은 모습 없이 불꽃(`bush`)·빛(`beam`)·기둥(`pillar`)으로만. 애굽 사람을 친 일, 맏아들의 죽음, 바다에 잠긴 병거는 그리지 않는다(사라지게 하거나 어둠·기도로).
 - 시내 반도·미디안은 3D 지형 지역이 없어, 3D 모드에서는 2D 바탕(`assets/relief-south.webp`)을 평평하게 깐다(`terrain.js`의 SOUTH, 여정 지도에 `south`가 있을 때만).
+- 산 아래 무리(crowd)는 가운데를 비우고 양옆에 둔다 — 낮은 시점이라 앞의 무리가 산·제단·성막을 다 가렸다.
 - 장면 확인: `sheet.mjs`는 m으로 시작하는 장면이면 `?j=moses`로 연다. `beats.mjs`도 여정 데이터를 함께 읽는다.
 
 ### 인물 유형 (TYPES)
 jesus, mary, joseph, angel, woman, woman2, mother, anna, john(젊은 제자, 수염 없음), disciple, peter, man, elder, shepherd, magus, magus2, magus3, king, soldier(창), pharisee, child, boyJesus, baptist, tempter, steward, groom, servant, crossed(십자가 위 예수 — 실루엣 전용), thief(실루엣 전용)
-모세 여정: pharaoh, egyptian, taskmaster(막대), egysoldier(창), princess, egywoman, magician, mosesP(궁의 모세, 애굽 옷), mosesS(미디안의 목자), mosesE(여든의 모세, 흰 수염·지팡이), aaron, hebrew, hebrew2, miriam, sister(모세의 누이)
+모세 여정: pharaoh, egyptian, taskmaster(막대), egysoldier(창), princess, egywoman, magician, mosesP(궁의 모세, 애굽 옷), mosesS(미디안의 목자), mosesE(여든의 모세, 흰 수염·지팡이), aaron, hebrew, hebrew2, miriam, sister(모세의 누이), joshua(창), hur, jethro, zipporah, aaronP(대제사장: 흰 옷·청색 에봇·관·흉패 `breast`)
 
 새 인물은 TYPES에 옷 색(robe/trim/mantle), 머리(hair, long, curls), 수염(beard), 베일(veil+inner)·머릿수건(hood+band), slim, height 등을 조합해 추가한다.
 
@@ -93,7 +94,7 @@ idle, walk(자동), speak, listen, afraid, kneel, pray, bless, raise, bow, look-
 
 ### 소품 (MAKERS)
 manger, sheep, star, beam(내려오는 빛), fruittree(fruit/taken), lifetree(open/closed), serpent(rest/hiss), flamesword, host(하늘 군대), water(호수·강 — size로 길게), boat(deck), rain, grass, crowd(spots, state stand/sit, face, faceCenter), baskets, hill(지면 높이 제공), crosses, tomb(open/closed), temple, throne, house, donkey(deck), camel(deck), jackal, ox, dove(fly/rest, y), rocks, figtree, jars(empty/water/wine), feast, table(over), cage
-모세 여정: sand(모래 바닥, color), bricks, brickwall, reeds(파피루스), ark(갈대 상자 closed/open), bush(떨기나무 plain/fire), pillar(구름·불 기둥 cloud/fire), sea(갈라지는 바다 calm/part/return), chariot(병거, 말), tent(장막), swarm(파리·메뚜기 떼), egcolumns(애굽 궁 기둥), frogs. house는 state 'blood'(문설주의 피), water는 'blood'(붉어진 나일)
+모세 여정: sand(모래 바닥, color), bricks, brickwall, reeds(파피루스), ark(갈대 상자 closed/open), bush(떨기나무 plain/fire), pillar(구름·불 기둥 cloud/fire), sea(갈라지는 바다 calm/part/return), chariot(병거, 말), tent(장막), swarm(파리·메뚜기 떼), egcolumns(애굽 궁 기둥), frogs, mountain(시내산 calm/smoke/cloud — 봉우리 셋의 산괴), manna, rockspring(반석 dry/flow), altar(돌 제단 idle/fire), pillars12(열두 돌기둥), calf(금송아지), arkc(언약궤), tabernacle(성막 — show 0→1에 받침·널판·덮개·뜰 차례로). swarm은 `dot`으로 점 크기(메추라기). house는 state 'blood'(문설주의 피), water는 'blood'(붉어진 나일)
 
 새 소품은 `MAKERS`에 추가하고, 움직이는 것은 `new Prop(group, update)`의 update에서 처리한다. 사람이 올라설 수 있는 지형은 `P.heightAt(x, z)`를 제공하면 자동으로 그 위에 선다.
 

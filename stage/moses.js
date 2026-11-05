@@ -455,4 +455,429 @@ export const MOSES = {
       end: [['miriam', 'raise'], ['w1', 'raise'], ['w2', 'raise']],
     },
   },
+  /* m11. 쓴 물이 단 물로 — 사흘 걷고 이른 마라의 물가. 백성은 원망하고, 모세가 주께 부르짖어 나무를 던지자 물이 달아진다.
+     셋째 문단에서 엘림의 샘과 종려나무 그늘로 바뀐다 */
+  m11: {
+    wide: 1.35,
+    props: {
+      sand: ['sand', 0, 0, { r: 1.9, color: '#d2b98a' }],
+      pool: ['water', 0.35, 0.1, { r: 0.6, y: 0.04, size: [1.1, 1, 0.55] }],
+      tree: ['olive', 0.95, -0.35, { scale: 0.8 }],
+      light: ['beam', 0.35, 0.05, { r: 0.45, h: 2.2, peak: 0.45 }],
+      palm1: ['palm', -0.2, -0.55, { h: 1.0 }], palm2: ['palm', 0.55, -0.7, { h: 0.9 }], palm3: ['palm', 1.15, -0.45, { h: 1.05 }], palm4: ['palm', -0.75, -0.6, { h: 0.85 }],
+      tent: ['tent', -1.15, -0.3, { w: 0.7 }],
+      folk: ['crowd', -1.15, 0.25, { spots: flock(12, 0.4, 0.28, 6), face: Math.PI / 2 }],
+    },
+    cast: {
+      moses: ['mosesE', -0.35, 0.05, 1],
+      aaron: ['aaron', -0.6, 0.25, 1],
+      man: ['hebrew', -0.1, 0.35, 0.8],
+      wom: ['woman', -0.75, 0.05, 0.8],
+    },
+    beats: {
+      enter: [['light', null, { show: 0 }], ['palm1', null, { show: 0 }], ['palm2', null, { show: 0 }], ['palm3', null, { show: 0 }], ['palm4', null, { show: 0 }], ['tent', null, { show: 0 }], ['moses', 'raise', { x: 0.0, z: 0.0, look: 1 }], ['man', 'kneel', { x: 0.15, z: 0.35, look: 0.6 }]],
+      intro: [['light', null, { show: 0 }], ['palm1', null, { show: 0 }], ['palm2', null, { show: 0 }], ['palm3', null, { show: 0 }], ['palm4', null, { show: 0 }], ['tent', null, { show: 0 }],
+        ['folk', null, { x: -1.6 }], ['moses', 'idle', { x: -1.1, z: 0.05 }], ['aaron', 'idle', { x: -1.3, z: 0.25 }], ['man', 'idle', { x: -0.9, z: 0.4 }], ['wom', 'idle', { x: -1.4, z: -0.05 }]],
+      // 사흘 동안 물 없이 — 지친 걸음
+      'p0.1': [['folk', null, { x: -1.15 }], ['moses', 'idle', { x: -0.35, z: 0.05, look: 1 }], ['aaron', 'idle', { x: -0.6, z: 0.25 }], ['man', 'idle', { x: -0.1, z: 0.35 }], ['wom', 'idle', { x: -0.75, z: 0.05 }]],
+      'p0.2': [['man', 'mourn'], ['wom', 'mourn']],
+      // 마라의 물 — 마셔 보지만 쓰다
+      'p1.0': [['man', 'kneel', { x: 0.15, z: 0.35, look: 0.6 }], ['man', 'shrug', { delay: 2600 }]],
+      'p1.1': [['man', 'rebuke', { to: 'moses' }], ['wom', 'rebuke', { to: 'moses' }]],
+      // 주께 부르짖자 나무를 보여 주신다 — 물에 던지니 단 물로
+      'p1.2': [['moses', 'pray', { look: 0.4 }], ['moses', 'idle', { x: 0.0, z: 0.0, look: 1, delay: 2400 }], ['moses', 'raise', { delay: 3800 }], ['light', null, { show: 1, delay: 4200 }], ['light', null, { show: 0, delay: 7500 }],
+        ['man', 'kneel', { delay: 5200 }], ['wom', 'idle', { delay: 5200 }]],
+      'p2.0': [['moses', 'speak', { look: -0.8 }], ['man', 'listen'], ['wom', 'listen']],
+      // 엘림: 샘 열두 곳과 종려나무 일흔 그루
+      'p2.2': [['tree', null, { show: 0 }], ['palm1', null, { show: 1 }], ['palm2', null, { show: 1 }], ['palm3', null, { show: 1 }], ['palm4', null, { show: 1 }]],
+      'p2.3': [['tent', null, { show: 1 }], ['man', 'sit-ground'], ['wom', 'sit-ground'], ['moses', 'idle', { look: -0.6 }]],
+      w0: [['moses', 'listen', { look: 0.3 }]],
+      w1: [['man', 'speak', { to: 'moses' }]],
+      end: [],
+    },
+  },
+
+  /* m12. 하늘에서 내린 만나 — 저녁엔 메추라기 떼가 진을 덮고, 아침엔 서리 같은 만나가 깔린다. 사람들이 허리 굽혀 하루치만 거둔다 */
+  m12: {
+    wide: 1.35,
+    props: {
+      sand: ['sand', 0, 0, { r: 1.9, color: '#d6c29a' }],
+      tent: ['tent', -0.95, -0.55, { w: 0.75 }], tent2: ['tent', 0.25, -0.7, { w: 0.7, color: '#4a3c30' }], tent3: ['tent', 1.15, -0.5, { w: 0.65 }],
+      quail: ['swarm', 0.1, -0.1, { color: '#7a6448', dot: 0.045, n: 90 }],
+      manna: ['manna', 0, 0.2, { r: 1.4 }],
+    },
+    cast: {
+      moses: ['mosesE', -0.2, -0.15, 0.4],
+      aaron: ['aaron', 0.15, -0.25, 0.2],
+      man: ['hebrew', -0.75, 0.25, 0.6],
+      wom: ['woman', 0.55, 0.3, -0.6],
+      wom2: ['woman2', 0.95, 0.05, -0.8],
+      kid: ['child', -0.45, 0.45, 0.4],
+    },
+    beats: {
+      enter: [['@env', 'dawn'], ['quail', null, { show: 0 }], ['manna', null, { show: 1 }], ['man', 'bow', { item: 'basket' }], ['wom', 'bow'], ['wom2', 'bow', { item: 'basket' }], ['kid', 'kneel'], ['moses', 'idle']],
+      intro: [['@env', 'day'], ['quail', null, { show: 0 }], ['manna', null, { show: 0 }], ['man', 'idle', { item: null }], ['wom', 'idle'], ['wom2', 'idle', { item: null }], ['kid', 'idle'], ['moses', 'idle']],
+      // 애굽의 고기 가마를 그리며 원망한다
+      'p0.1': [['man', 'rebuke', { to: 'moses' }], ['wom', 'rebuke', { to: 'aaron' }], ['wom2', 'mourn']],
+      // 저녁의 메추라기
+      'p1.0': [['@env', 'dusk'], ['quail', null, { show: 1 }], ['man', 'look-up'], ['wom', 'look-up'], ['wom2', 'look-up'], ['kid', 'look-up'], ['quail', null, { show: 0, delay: 6000 }]],
+      // 아침, 서리처럼 희고 가는 것
+      'p1.1': [['@env', 'dawn'], ['manna', null, { show: 1 }], ['man', 'idle'], ['wom', 'idle'], ['wom2', 'idle'], ['kid', 'idle']],
+      'p1.2': [['man', 'shrug', { look: 0 }], ['kid', 'kneel']],
+      'p1.3': [['moses', 'speak', { look: -0.6 }]],
+      // 한 사람에 한 오멜씩
+      'p2.0': [['@env', 'day'], ['moses', 'idle'], ['man', 'bow', { item: 'basket' }], ['wom', 'bow'], ['wom2', 'bow', { item: 'basket' }], ['kid', 'kneel']],
+      'p2.2': [['man', 'idle'], ['wom2', 'idle'], ['wom', 'pray'], ['man', 'pray', { delay: 600 }]],
+      'p2.3': [['manna', null, { show: 1 }]],
+      w0: [['moses', 'listen', { look: 0.3 }]],
+      w1: [['moses', 'listen', { look: 0.3 }]],
+      w2: [['moses', 'speak', { look: -0.6 }]],
+      end: [['@env', 'dawn']],
+    },
+  },
+
+  /* m13. 반석에서 솟은 물 — 르비딤의 바위 골짜기. 목마른 백성이 모세와 다투고, 장로들 앞에서 모세가 지팡이로 바위를 치자 물이 솟는다 */
+  m13: {
+    wide: 1.3,
+    props: {
+      sand: ['sand', 0, 0, { r: 1.8, color: '#bfa27e', stones: 26 }],
+      rocks: ['rocks', 0, 0, { spots: [[-1.2, -0.5, 0.2], [-0.9, -0.7, 0.14], [1.3, -0.2, 0.18], [1.1, 0.4, 0.1]] }],
+      rock: ['rockspring', 0.55, -0.45, { scale: 1.2 }],
+      folk: ['crowd', -0.9, 0.2, { spots: flock(10, 0.35, 0.25, 7), face: Math.PI / 2 }],
+    },
+    cast: {
+      moses: ['mosesE', -0.2, 0.0, 0.8],
+      elder1: ['elder', 0.0, -0.35, 0.6],
+      elder2: ['jethro', -0.35, -0.3, 0.6, { gaze: true }],
+      man: ['hebrew', -0.45, 0.3, 0.6],
+      wom: ['mother', -0.65, 0.05, 0.8],
+      kid: ['child', -0.6, 0.4, 0.6],
+    },
+    beats: {
+      enter: [['rock', 'flow'], ['moses', 'idle', { x: 0.3, z: -0.1, look: 0.8 }], ['elder1', 'look-up'], ['man', 'kneel', { x: 0.55, z: 0.15, look: -0.2 }], ['kid', 'kneel', { x: 0.75, z: 0.05, look: -0.3 }], ['wom', 'idle']],
+      intro: [['rock', 'dry'], ['elder1', 'idle', { show: 0 }], ['elder2', 'idle', { show: 0 }], ['moses', 'idle', { x: -0.2, z: 0.0, look: 0.8 }], ['man', 'idle', { x: -0.45, z: 0.3 }], ['kid', 'idle', { x: -0.6, z: 0.4 }], ['wom', 'idle']],
+      'p0.1': [['kid', 'mourn'], ['wom', 'mourn']],
+      'p0.2': [['man', 'rebuke', { to: 'moses' }], ['wom', 'rebuke', { to: 'moses' }], ['moses', 'idle', { look: -1 }]],
+      'p1.0': [['moses', 'pray', { look: 0.6 }]],
+      'p1.2': [['elder1', 'idle', { show: 1 }], ['elder2', 'idle', { show: 1 }], ['moses', 'idle', { x: 0.3, z: -0.1, look: 0.8 }]],
+      // 바위를 치자 물이 솟아 흐른다
+      'p2.0': [['moses', 'raise', { look: 0.8 }], ['rock', 'flow', { delay: 1600 }], ['moses', 'idle', { delay: 3000 }], ['man', 'kneel', { x: 0.55, z: 0.15, look: -0.2, delay: 3200 }], ['kid', 'kneel', { x: 0.75, z: 0.05, look: -0.3, delay: 3500 }], ['wom', 'look-up', { delay: 3000 }], ['elder1', 'look-up', { delay: 2000 }]],
+      'p2.2': [['moses', 'idle', { look: -0.8 }]],
+      w0: [['moses', 'listen', { look: 0.6 }]],
+      w1: [['moses', 'speak', { to: 'man' }]],
+      w2: [['moses', 'pray', { look: 0.6 }]],
+      end: [],
+    },
+  },
+
+  /* m14. 들어 올린 두 손 — 오른쪽 언덕 꼭대기에 모세와 아론·훌, 왼쪽 아래 골짜기에서 여호수아의 무리와 아말렉이 맞선다.
+     싸움은 두 무리가 밀고 밀리는 것으로만 (연출 원칙 1): 손을 들면 이스라엘이 앞으로, 내리면 뒤로 */
+  m14: {
+    wide: 1.45,
+    props: {
+      sand: ['sand', -0.4, 0.1, { r: 1.6, color: '#c2a47e' }],
+      hill: ['hill', 0.95, -0.35, { w: 0.85, h: 0.42, d: 0.55, color: '#9a7e64', soft: true }],
+      seat: ['rocks', 0.95, -0.42, { spots: [[0, 0, 0.07]], y: 0.38 }],
+      israel: ['crowd', -0.55, 0.15, { spots: flock(9, 0.28, 0.22, 8), face: -Math.PI / 2 }],
+      amalek: ['crowd', -1.45, 0.1, { spots: flock(9, 0.28, 0.22, 9), face: Math.PI / 2 }],
+      altar: ['altar', 0.45, 0.35, { state: 'idle' }],
+    },
+    cast: {
+      moses: ['mosesE', 0.95, -0.35, -0.8],
+      aaron: ['aaron', 0.72, -0.25, -0.6],
+      hur: ['hur', 1.18, -0.3, -0.9],
+      joshua: ['joshua', -0.8, 0.35, -1],
+    },
+    beats: {
+      enter: [['moses', 'raise', { look: -0.8 }], ['aaron', 'raise', { look: -0.6 }], ['hur', 'raise', { look: -0.9 }], ['israel', null, { x: -0.75 }], ['amalek', null, { x: -1.6 }], ['altar', null, { show: 0 }]],
+      intro: [['moses', 'idle', { x: 0.2, z: 0.1 }], ['aaron', 'idle', { x: 0.0, z: 0.25 }], ['hur', 'idle', { x: 0.4, z: 0.25 }], ['joshua', 'idle', { x: -0.2, z: 0.25, look: 1 }], ['israel', null, { x: -0.55 }], ['amalek', null, { x: -1.9, show: 0 }], ['altar', null, { show: 0 }]],
+      'p0.0': [['amalek', null, { show: 1, x: -1.45 }]],
+      // 여호수아는 싸우러 나가고, 모세는 지팡이를 들고 언덕 꼭대기에
+      'p0.1': [['joshua', 'idle', { x: -0.8, z: 0.35, look: -1 }], ['moses', 'idle', { x: 0.95, z: -0.35, look: -0.8 }]],
+      'p0.2': [['aaron', 'idle', { x: 0.72, z: -0.25, look: -0.6 }], ['hur', 'idle', { x: 1.18, z: -0.3, look: -0.9 }]],
+      // 손을 들면 이기고, 내리면 진다
+      'p1.0': [['moses', 'raise'], ['israel', null, { x: -0.75 }], ['amalek', null, { x: -1.6 }], ['moses', 'idle', { delay: 3500 }], ['israel', null, { x: -0.4, delay: 3500 }], ['amalek', null, { x: -1.2, delay: 3500 }]],
+      // 두 사람이 돌을 가져다 앉히고 양쪽에서 손을 붙든다
+      'p1.1': [['moses', 'sit', { y: 0.06 }], ['aaron', 'raise', { x: 0.82, z: -0.3 }], ['hur', 'raise', { x: 1.08, z: -0.32 }], ['moses', 'raise', { delay: 2600 }], ['israel', null, { x: -0.75, delay: 2600 }], ['amalek', null, { x: -1.6, delay: 2600 }]],
+      'p1.2': [['@env', 'dusk']],
+      // 아말렉이 물러나고, 모세는 제단을 쌓는다
+      'p2.0': [['amalek', null, { x: -2.2, show: 0 }], ['israel', null, { x: -0.95 }]],
+      'p2.2': [['moses', 'idle', { y: 0, x: 0.45, z: 0.15, look: 0 }], ['aaron', 'idle', { x: 0.2, z: 0.25 }], ['hur', 'idle', { x: 0.7, z: 0.3 }], ['joshua', 'idle', { x: 0.0, z: 0.45, look: 1 }], ['altar', 'fire', { show: 1, delay: 2000 }], ['moses', 'raise', { delay: 3000 }]],
+      w0: [['moses', 'listen', { look: 0 }]],
+      w1: [['moses', 'speak', { to: 'joshua' }]],
+      end: [['@env', 'dusk']],
+    },
+  },
+
+  /* m15. 장인 이드로의 조언 — 산 아래 진영. 이드로가 십보라와 두 아들을 데리고 오고, 이튿날은 아침부터 저녁까지 백성의 송사를 홀로 듣는 모세 */
+  m15: {
+    wide: 1.35,
+    props: {
+      sand: ['sand', 0, 0, { r: 1.9, color: '#c9a882' }],
+      mount: ['mountain', -0.35, -1.25, { h: 1.6, r: 1.0 }],
+      tent: ['tent', -1.15, -0.35, { w: 0.75 }], tent2: ['tent', 0.85, -0.6, { w: 0.7, color: '#4a3c30' }],
+      altar: ['altar', 0.15, -0.45, { state: 'idle' }],
+      folk: ['crowd', 0.9, 0.3, { spots: flock(8, 0.3, 0.2, 10), face: -Math.PI / 2 }],
+      elders: ['crowd', 0.15, -0.15, { spots: [[-0.35, 0], [-0.15, 0.1], [0.15, 0.1], [0.35, 0]], state: 'sit', face: Math.PI }],
+    },
+    cast: {
+      moses: ['mosesE', -0.4, 0.1, 1],
+      jethro: ['jethro', 1.7, 0.0, -1],
+      zip: ['zipporah', 1.9, 0.2, -1],
+      son1: ['child', 2.0, -0.1, -1],
+      son2: ['child', 2.1, 0.3, -1],
+      aaron: ['aaron', -0.7, -0.1, 0.8],
+    },
+    beats: {
+      enter: [['moses', 'sit', { x: -0.4, z: 0.1, look: 1 }], ['jethro', 'speak', { x: -0.85, z: 0.25, to: 'moses' }], ['folk', null, { show: 1 }], ['elders', null, { show: 0 }], ['zip', 'idle', { show: 0 }], ['son1', 'idle', { show: 0 }], ['son2', 'idle', { show: 0 }]],
+      intro: [['folk', null, { show: 0 }], ['elders', null, { show: 0 }], ['moses', 'idle', { x: -0.4, z: 0.1 }], ['jethro', 'idle', { show: 0, x: 1.7, z: 0.0 }], ['zip', 'idle', { show: 0, x: 1.9, z: 0.2 }], ['son1', 'idle', { show: 0, x: 2.0, z: -0.1 }], ['son2', 'idle', { show: 0, x: 2.1, z: 0.3 }]],
+      // 아내와 두 아들을 데리고 찾아온다
+      'p0.1': [['jethro', 'idle', { show: 1, x: 0.45, z: 0.05 }], ['zip', 'idle', { show: 1, x: 0.7, z: 0.25 }], ['son1', 'idle', { show: 1, x: 0.75, z: -0.05 }], ['son2', 'idle', { show: 1, x: 0.95, z: 0.35 }]],
+      // 나가서 절하고 입 맞추고, 주께서 하신 일을 들려준다
+      'p0.2': [['moses', 'idle', { x: 0.15, z: 0.05, look: 1 }], ['moses', 'bow', { delay: 2200 }], ['moses', 'speak', { to: 'jethro', delay: 4200 }]],
+      'p1.0': [['moses', 'idle'], ['jethro', 'raise', { look: -1 }]],
+      // 번제를 드리고, 장로들과 하나님 앞에서 빵을 먹는다
+      'p1.1': [['altar', 'fire'], ['elders', null, { show: 1 }], ['jethro', 'pray', { look: -0.5 }], ['aaron', 'sit-ground']],
+      // 이튿날 — 송사를 홀로 듣는 모세
+      'p2.0': [['altar', 'idle'], ['elders', null, { show: 0 }], ['aaron', 'idle'], ['zip', 'idle', { x: 1.2, z: -0.3 }], ['son1', 'idle', { x: 1.35, z: -0.4 }], ['son2', 'idle', { x: 1.45, z: -0.2 }],
+        ['moses', 'sit', { x: -0.4, z: 0.1, look: 1 }], ['folk', null, { show: 1 }], ['jethro', 'idle', { x: -0.85, z: 0.25, look: 0.6 }]],
+      'p2.1': [['jethro', 'speak', { to: 'moses' }]],
+      // 그 말대로 하였고, 이드로는 제 땅으로 돌아간다
+      'p2.2': [['moses', 'idle', { look: -0.6 }], ['jethro', 'idle', { x: 1.8, z: 0.1 }], ['jethro', 'idle', { show: 0, delay: 5000 }]],
+      w0: [['jethro', 'speak', { to: 'moses' }]],
+      w1: [['jethro', 'point', { look: 1 }]],
+      w2: [['jethro', 'speak', { to: 'moses' }]],
+      end: [],
+    },
+  },
+
+  /* m16. 산에 내려오신 하나님 — 뒤로 시내산, 앞에 진을 친 백성과 경계의 돌. 셋째 날 아침 천둥·번개·짙은 구름이 산을 덮는다.
+     하나님은 산을 덮은 연기와 불빛으로만 */
+  m16: {
+    wide: 1.4,
+    props: {
+      sand: ['sand', 0, 0.2, { r: 1.9, color: '#c9a882' }],
+      mount: ['mountain', 0.1, -1.25, { h: 1.9, r: 1.25 }],
+      bound: ['rocks', 0, 0, { spots: Array.from({ length: 9 }, (_, i) => [-1.2 + i * 0.3, -0.35 + Math.sin(i) * 0.03, 0.05]) }],
+      folk: ['crowd', 0, 0.42, { spots: [...flock(8, 0.35, 0.2, 11).map(([x, z]) => [x - 0.95, z]), ...flock(8, 0.35, 0.2, 12).map(([x, z]) => [x + 0.95, z])], face: Math.PI }],
+      tent: ['tent', -1.25, 0.15, { w: 0.6 }], tent2: ['tent', 1.3, 0.2, { w: 0.6, color: '#4a3c30' }],
+    },
+    cast: {
+      moses: ['mosesE', -0.1, -0.1, 3],
+      man: ['hebrew', -0.45, 0.2, 2.8],
+      wom: ['woman', 0.35, 0.18, 3.2],
+    },
+    beats: {
+      enter: [['@env', 'storm'], ['mount', 'smoke'], ['man', 'afraid', { look: 3 }], ['wom', 'cower', { look: 3 }], ['moses', 'idle', { look: 3 }]],
+      intro: [['@env', 'day'], ['mount', 'calm'], ['folk', null, { show: 0 }], ['bound', null, { show: 0 }], ['moses', 'idle', { x: -0.1, z: 0.35, look: 3 }], ['man', 'idle', { show: 0 }], ['wom', 'idle', { show: 0 }]],
+      'p0.0': [['folk', null, { show: 1 }], ['man', 'idle', { show: 1 }], ['wom', 'idle', { show: 1 }]],
+      // 모세가 산에 오른다 (산기슭으로 걸어가 사라진다)
+      'p0.2': [['moses', 'idle', { x: 0.05, z: -0.6, look: 3 }], ['moses', 'idle', { show: 0, delay: 3200 }]],
+      'p1.1': [['moses', 'speak', { show: 1, x: -0.1, z: -0.1, look: 0, to: 'man' }], ['man', 'raise'], ['wom', 'raise']],
+      // 옷을 빨고 몸을 정결히, 산 둘레에 경계
+      'p1.2': [['man', 'idle'], ['wom', 'pray']],
+      'p1.3': [['bound', null, { show: 1 }], ['moses', 'point', { look: 3 }]],
+      // 셋째 날 아침, 천둥과 번개와 짙은 구름
+      'p2.0': [['@env', 'storm'], ['mount', 'smoke'], ['moses', 'idle', { look: 3 }]],
+      'p2.1': [['man', 'afraid', { look: 3 }], ['wom', 'cower', { look: 3 }]],
+      'p2.2': [['moses', 'look-up', { look: 3 }]],
+      w0: [['moses', 'listen', { look: 3 }]],
+      w1: [['moses', 'listen', { look: 3 }]],
+      w2: [['man', 'speak', { to: 'moses' }], ['wom', 'raise']],
+      end: [['@env', 'storm'], ['mount', 'smoke']],
+    },
+  },
+
+  /* m17. 열 가지 말씀 — 연기와 불에 휩싸인 산. 백성은 떨며 멀찍이 서고, 모세만 짙은 어둠 속으로 다가간다 */
+  m17: {
+    env: 'storm', wide: 1.4,
+    props: {
+      sand: ['sand', 0, 0.2, { r: 1.9, color: '#c2a27e' }],
+      mount: ['mountain', 0.1, -1.25, { h: 1.9, r: 1.25, state: 'smoke' }],
+      bound: ['rocks', 0, 0, { spots: Array.from({ length: 9 }, (_, i) => [-1.2 + i * 0.3, -0.35 + Math.sin(i) * 0.03, 0.05]) }],
+      folk: ['crowd', 0, 0.48, { spots: [...flock(8, 0.35, 0.2, 13).map(([x, z]) => [x - 1.0, z]), ...flock(8, 0.35, 0.2, 14).map(([x, z]) => [x + 1.0, z])], face: Math.PI }],
+    },
+    cast: {
+      moses: ['mosesE', -0.05, -0.15, 3],
+      man: ['hebrew', -0.5, 0.25, 2.8],
+      wom: ['woman', 0.35, 0.22, 3.2],
+      elder: ['elder', 0.75, 0.3, 3],
+    },
+    beats: {
+      enter: [['mount', 'smoke'], ['moses', 'idle', { x: 0.05, z: -0.5, look: 3 }], ['man', 'kneel', { look: 3 }], ['wom', 'kneel', { look: 3 }], ['elder', 'bow', { look: 3 }]],
+      intro: [['@env', 'storm'], ['mount', 'smoke'], ['moses', 'idle', { x: -0.05, z: -0.15, look: 3 }], ['man', 'afraid', { look: 3 }], ['wom', 'cower', { look: 3 }], ['elder', 'afraid', { look: 3 }]],
+      // 자기소개: 너를 종살이하던 집에서 이끌어 낸 주
+      'p0.1': [['moses', 'listen', { look: 3 }]],
+      'p0.3': [['man', 'kneel'], ['wom', 'kneel'], ['elder', 'kneel']],
+      'p1.0': [['@env', 'overcast']],
+      'p1.5': [['elder', 'bow']],
+      // 떨며 멀찍이 서서 — 모세가 대신 말해 달라
+      'p2.0': [['@env', 'storm'], ['man', 'afraid', { z: 0.4 }], ['wom', 'cower', { z: 0.4 }], ['elder', 'afraid', { z: 0.45 }]],
+      'p2.1': [['man', 'speak', { to: 'moses' }], ['moses', 'idle', { look: 0 }]],
+      'p2.2': [['moses', 'idle', { x: 0.05, z: -0.6, look: 3 }], ['moses', 'idle', { show: 0.4, delay: 3000 }]],
+      w0: [['moses', 'listen', { look: 3 }]],
+      w1: [['moses', 'listen', { look: 3 }]],
+      w2: [['man', 'speak', { to: 'moses' }]],
+      w3: [['moses', 'speak', { show: 1, look: 0, to: 'man' }]],
+      end: [['@env', 'storm']],
+    },
+  },
+
+  /* m18. 언약의 피 — 산기슭의 제단과 열두 돌기둥. 소를 바치고, 언약의 책을 읽고, 피를 뿌린다. 장로들이 산에 올라 하나님을 뵙는다(맑은 빛) */
+  m18: {
+    env: 'dawn', wide: 1.4,
+    props: {
+      sand: ['sand', 0, 0.15, { r: 1.9, color: '#c9a882' }],
+      mount: ['mountain', 0.1, -1.3, { h: 1.9, r: 1.25 }],
+      altar: ['altar', 0, -0.45],
+      stones: ['pillars12', 0, -0.2, { r: 0.75 }],
+      ox: ['ox', -0.9, 0.0, { rot: 0.3 }],
+      folk: ['crowd', 0, 0.48, { spots: [...flock(7, 0.32, 0.2, 15).map(([x, z]) => [x - 1.05, z]), ...flock(7, 0.32, 0.2, 16).map(([x, z]) => [x + 1.05, z])], face: Math.PI }],
+    },
+    cast: {
+      moses: ['mosesE', 0.25, -0.1, -0.4],
+      aaron: ['aaron', -0.25, -0.1, 0.4],
+      youth: ['hebrew2', -0.65, 0.05, 0.6],
+      man: ['hebrew', 0.55, 0.25, 2.8],
+      elder: ['elder', -0.45, 0.3, 3],
+    },
+    beats: {
+      enter: [['altar', 'fire'], ['moses', 'bless', { look: 3, to: 'man' }], ['ox', null, { show: 0 }]],
+      intro: [['altar', 'idle'], ['stones', null, { show: 0 }], ['ox', null, { show: 0 }], ['youth', 'idle', { show: 0 }], ['moses', 'idle', { x: 0.25, z: 0.05, look: 3 }]],
+      'p0.0': [['moses', 'speak', { to: 'man' }]],
+      'p0.1': [['@env', 'dawn'], ['moses', 'idle', { x: 0.25, z: -0.1, look: -0.4 }], ['stones', null, { show: 1, delay: 1500 }], ['altar', 'idle', { show: 1 }]],
+      // 젊은이들이 번제를 드린다
+      'p0.2': [['youth', 'idle', { show: 1 }], ['ox', null, { show: 1 }], ['altar', 'fire', { delay: 2500 }], ['ox', null, { show: 0, delay: 5000 }]],
+      'p1.0': [['@env', 'day'], ['moses', 'raise', { look: 0 }]],
+      // 언약의 책을 읽어 들려준다
+      'p1.1': [['moses', 'idle', { x: 0.2, z: 0.15, look: 3, item: 'scroll' }]],
+      'p1.2': [['man', 'raise'], ['elder', 'raise']],
+      // 백성에게 피를 뿌린다
+      'p1.3': [['moses', 'bless', { item: null, to: 'man' }], ['man', 'bow'], ['elder', 'bow']],
+      // 장로들과 산에 올라 하나님을 뵙는다 — 청보석 같은 맑은 하늘
+      'p2.0': [['moses', 'idle', { x: 0.1, z: -0.75, look: 3 }], ['aaron', 'idle', { x: -0.15, z: -0.7, look: 3 }], ['elder', 'idle', { x: -0.4, z: -0.65, look: 3 }]],
+      'p2.1': [['@env', 'glory']],
+      'p2.2': [['moses', 'look-up'], ['aaron', 'look-up'], ['elder', 'look-up']],
+      'p2.3': [['mount', 'cloud'], ['aaron', 'idle', { x: -0.25, z: -0.1, look: 0 }], ['elder', 'idle', { x: -0.45, z: 0.3 }], ['moses', 'idle', { show: 0, delay: 3000 }]],
+      w0: [['moses', 'listen', { look: 3 }]],
+      w1: [['moses', 'speak', { to: 'man' }]],
+      w2: [['man', 'speak', { to: 'moses' }]],
+      end: [['mount', 'cloud']],
+    },
+  },
+
+  /* m19. 금송아지 — 산 아래 진. 아론이 금을 녹여 송아지를 만들고 백성은 먹고 마시며 뛰논다.
+     돌판을 들고 내려온 모세가 그것을 깨뜨리고, 송아지는 불살라 사라진다 */
+  m19: {
+    wide: 1.4,
+    props: {
+      sand: ['sand', 0, 0.15, { r: 1.9, color: '#c9a882' }],
+      mount: ['mountain', -0.9, -1.3, { h: 1.7, r: 1.1, state: 'cloud' }],
+      calf: ['calf', 0.0, -0.3, { scale: 1.5 }],
+      fire: ['fire', -0.3, 0.1],
+      folk: ['crowd', 1.05, -0.1, { spots: flock(12, 0.35, 0.35, 14), face: -Math.PI / 2 }],
+    },
+    cast: {
+      aaron: ['aaron', -0.35, -0.2, 0.6],
+      man: ['hebrew', 0.75, 0.0, -0.8],
+      wom: ['woman', 0.95, 0.25, -1],
+      wom2: ['woman2', 0.45, 0.25, -0.6],
+      moses: ['mosesE', -1.2, -0.55, 1],
+      joshua: ['joshua', -1.4, -0.45, 1],
+    },
+    beats: {
+      enter: [['calf', null, { show: 1 }], ['man', 'raise'], ['wom', 'raise'], ['wom2', 'raise'], ['moses', 'raise', { show: 1, x: -0.85, z: 0.0, look: 1, item: 'tablets' }], ['joshua', 'idle', { x: -1.1, z: -0.1 }]],
+      intro: [['calf', null, { show: 0 }], ['fire', null, { show: 0 }], ['moses', 'idle', { show: 0, x: -1.2, z: -0.55, item: 'tablets' }], ['joshua', 'idle', { show: 0 }], ['man', 'idle'], ['wom', 'idle'], ['wom2', 'idle'], ['aaron', 'idle']],
+      // 앞서 갈 신을 만들어 달라
+      'p0.1': [['man', 'rebuke', { to: 'aaron' }], ['wom', 'point', { look: -1 }]],
+      'p0.2': [['fire', null, { show: 1 }], ['aaron', 'kneel', { look: 0.8 }], ['calf', null, { show: 1, delay: 3000 }], ['aaron', 'idle', { delay: 3500 }]],
+      'p1.0': [['aaron', 'raise', { look: 0.6 }]],
+      // 먹고 마시며 일어나 뛰논다
+      'p1.1': [['man', 'raise', { x: 0.65, z: 0.1 }], ['wom', 'raise', { x: 0.85, z: 0.2, delay: 400 }], ['wom2', 'raise', { x: 0.55, z: 0.3, delay: 800 }],
+        ['man', 'raise', { x: 0.85, z: -0.05, delay: 3000 }], ['wom', 'raise', { x: 1.05, z: 0.25, delay: 3400 }], ['wom2', 'raise', { x: 0.4, z: 0.2, delay: 3800 }]],
+      // 산 위에서 엎드려 비는 모세 (멀리)
+      'p1.2': [['moses', 'pray', { show: 1, look: 0.4 }]],
+      // 돌판을 들고 내려온다
+      'p2.0': [['joshua', 'idle', { show: 1 }], ['moses', 'idle', { x: -0.85, z: 0.0, look: 1 }], ['joshua', 'idle', { x: -1.1, z: -0.1, look: 1 }], ['man', 'idle'], ['wom', 'idle'], ['wom2', 'idle']],
+      // 돌판을 깨뜨리고, 송아지를 불사른다
+      'p2.1': [['moses', 'raise'], ['moses', 'rebuke', { item: null, delay: 2200 }], ['man', 'afraid', { delay: 2200 }], ['wom', 'cower', { delay: 2200 }], ['wom2', 'afraid', { delay: 2200 }], ['aaron', 'bow', { delay: 2600 }],
+        ['calf', null, { show: 0, delay: 4500 }], ['fire', null, { show: 0, delay: 6000 }]],
+      // 다시 주께 올라가 용서를 빈다
+      'p2.2': [['moses', 'idle', { x: -1.1, z: -0.55, look: -2.6 }], ['moses', 'pray', { look: 3, delay: 3500 }]],
+      w0: [['moses', 'listen', { look: 0.4 }]],
+      w1: [['moses', 'pray', { look: 3 }]],
+      w2: [['aaron', 'speak', { to: 'moses' }]],
+      end: [],
+    },
+  },
+
+  /* m20. 지나가는 영광 — 새벽 어스름의 산비탈, 모세는 새로 깎은 돌판 둘을 들고 홀로 오른다. 바위 틈에 선 그의 앞으로 빛이 지나간다 */
+  m20: {
+    env: 'dawn', wide: 1.2,
+    props: {
+      sand: ['sand', 0, 0, { r: 1.6, color: '#b08868', stones: 26 }],
+      mount: ['mountain', 0.6, -1.15, { h: 1.7, r: 1.0 }],
+      cleft: ['rocks', 0, 0, { spots: [[-0.45, -0.2, 0.28], [-0.05, -0.32, 0.24], [0.35, -0.25, 0.2]] }],
+      glory: ['beam', 1.4, 0.1, { r: 0.6, h: 2.8, peak: 0.6, speed: 0.25 }],
+    },
+    cast: {
+      moses: ['mosesE', -0.9, 0.3, 0.8],
+    },
+    beats: {
+      enter: [['moses', 'kneel', { x: -0.22, z: -0.05, look: 1, item: 'tablets' }], ['glory', null, { x: 0.3, z: 0.15 }]],
+      intro: [['@env', 'overcast'], ['glory', null, { show: 0, x: 1.4, z: 0.1 }], ['moses', 'idle', { x: -0.9, z: 0.3, item: null }]],
+      'p0.1': [['moses', 'pray', { look: 0.6 }]],
+      'p0.3': [['moses', 'look-up', { look: 0.6 }]],
+      // 바위 틈에 두고 손으로 덮어 주신다
+      'p1.1': [['moses', 'idle', { x: -0.22, z: -0.05, look: 1 }]],
+      // 새 돌판 둘을 들고 새벽 어스름에 홀로
+      'p1.2': [['@env', 'dawn'], ['moses', 'idle', { item: 'tablets' }]],
+      // 구름 가운데 내려와 그 앞을 지나가신다
+      'p2.0': [['glory', null, { show: 1, x: 1.0 }], ['glory', null, { x: -1.2, delay: 1500 }], ['moses', 'bow', { delay: 1000 }]],
+      'p2.2': [['moses', 'kneel', { look: 1 }], ['glory', null, { show: 0, delay: 4000 }]],
+      w0: [['moses', 'bow']],
+      w1: [['moses', 'listen', { look: 0.8 }]],
+      w2: [['moses', 'speak', { look: 0.6 }]],
+      end: [['@env', 'glory']],
+    },
+  },
+
+  /* m21. 성막에 가득한 영광 — 진영 한복판에 성막이 차례로 세워지고, 증거궤가 들어간다. 구름이 회막을 덮고 영광이 가득하다 */
+  m21: {
+    wide: 1.45,
+    props: {
+      sand: ['sand', 0, 0.1, { r: 2.0, color: '#d2bc90' }],
+      mount: ['mountain', -1.3, -1.35, { h: 1.5, r: 0.9 }],
+      tab: ['tabernacle', 0.0, -0.4, { scale: 1.25 }],
+      ark: ['arkc', 0.9, 0.45],
+      cloud: ['pillar', -0.38, -0.45, { h: 1.3 }],
+      tent: ['tent', -1.25, 0.2, { w: 0.6 }], tent2: ['tent', 1.35, -0.45, { w: 0.6, color: '#4a3c30' }],
+      folk: ['crowd', 0, 0.3, { spots: [...flock(6, 0.25, 0.25, 17).map(([x, z]) => [x - 1.25, z]), ...flock(6, 0.25, 0.25, 18).map(([x, z]) => [x + 1.3, z])], face: Math.PI }],
+    },
+    cast: {
+      moses: ['mosesE', 0.6, 0.35, -0.8],
+      aaron: ['aaronP', 0.85, 0.2, -0.8],
+      man: ['hebrew', -0.75, 0.45, 0.6],
+      wom: ['woman', -0.5, 0.55, 0.6],
+    },
+    beats: {
+      enter: [['tab', null, { show: 1 }], ['ark', null, { show: 0 }], ['cloud', 'cloud', { show: 1 }], ['moses', 'bow', { look: -1 }], ['aaron', 'pray', { look: -1 }]],
+      intro: [['tab', null, { show: 0 }], ['ark', null, { show: 0, x: 0.9, z: 0.35 }], ['cloud', 'cloud', { show: 0 }], ['moses', 'idle'], ['aaron', 'idle', { show: 0 }]],
+      // 은 받침이 놓이고 금 입힌 널판이 세워진다
+      'p0.1': [['tab', null, { show: 0.5 }]],
+      'p0.2': [['tab', null, { show: 0.8 }]],
+      // 증거판을 궤에 넣는다
+      'p1.0': [['ark', null, { show: 1 }], ['moses', 'kneel', { x: 0.75, z: 0.3, look: 0.6 }]],
+      'p1.1': [['moses', 'idle'], ['ark', null, { x: -0.38, z: -0.45 }], ['ark', null, { show: 0, delay: 3500 }], ['moses', 'idle', { x: 0.45, z: 0.15, look: -1 }]],
+      'p1.2': [['tab', null, { show: 1 }], ['aaron', 'idle', { show: 1 }]],
+      // 구름이 회막을 덮고 영광이 가득하다
+      'p2.0': [['cloud', 'cloud', { show: 1 }], ['@env', 'glory']],
+      'p2.1': [['moses', 'bow', { look: -1 }], ['aaron', 'pray', { look: -1 }], ['man', 'kneel'], ['wom', 'kneel']],
+      'p2.2': [['@env', 'day'], ['moses', 'idle'], ['aaron', 'idle'], ['man', 'look-up'], ['wom', 'look-up']],
+      'p2.3': [['@env', 'night'], ['cloud', 'fire']],
+      w0: [['moses', 'listen', { look: -1 }]],
+      w1: [['moses', 'bless', { to: 'aaron' }], ['aaron', 'bow']],
+      end: [['@env', 'night'], ['cloud', 'fire', { show: 1 }], ['tab', null, { show: 1 }]],
+    },
+  },
 };
