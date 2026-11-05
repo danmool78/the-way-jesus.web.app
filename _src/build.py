@@ -15,14 +15,14 @@ ui_ko['langs'] = LANGS
 
 # 말씀 출처(ref)의 책 이름 약자: 한국어 → 언어별. 여정이 늘면 그 책을 더한다 (없는 책은 한국어 약자 그대로)
 BOOKS = {
-    'ko': ['마', '막', '눅', '요', '행', '창', '출', '레', '민', '신', '수'],
-    'en': ['Mt', 'Mk', 'Lk', 'Jn', 'Acts', 'Gen', 'Ex', 'Lev', 'Num', 'Deut', 'Josh'],
-    'es': ['Mt', 'Mc', 'Lc', 'Jn', 'Hch', 'Gn', 'Éx', 'Lv', 'Nm', 'Dt', 'Jos'],
-    'pt': ['Mt', 'Mc', 'Lc', 'Jo', 'At', 'Gn', 'Êx', 'Lv', 'Nm', 'Dt', 'Js'],
-    'fr': ['Mt', 'Mc', 'Lc', 'Jn', 'Ac', 'Gn', 'Ex', 'Lv', 'Nb', 'Dt', 'Jos'],
-    'zh': ['太', '可', '路', '约', '徒', '创', '出', '利', '民', '申', '书'],
-    'id': ['Mat', 'Mrk', 'Luk', 'Yoh', 'Kis', 'Kej', 'Kel', 'Im', 'Bil', 'Ul', 'Yos'],
-    'ja': ['マタ', 'マコ', 'ルカ', 'ヨハ', '使', '創', '出', 'レビ', '民', '申', 'ヨシュ'],
+    'ko': ['마', '막', '눅', '요', '행', '창', '출', '레', '민', '신', '수', '롬', '고전', '엡', '계', '사', '렘'],
+    'en': ['Mt', 'Mk', 'Lk', 'Jn', 'Acts', 'Gen', 'Ex', 'Lev', 'Num', 'Deut', 'Josh', 'Rom', '1 Cor', 'Eph', 'Rev', 'Isa', 'Jer'],
+    'es': ['Mt', 'Mc', 'Lc', 'Jn', 'Hch', 'Gn', 'Éx', 'Lv', 'Nm', 'Dt', 'Jos', 'Ro', '1 Co', 'Ef', 'Ap', 'Is', 'Jer'],
+    'pt': ['Mt', 'Mc', 'Lc', 'Jo', 'At', 'Gn', 'Êx', 'Lv', 'Nm', 'Dt', 'Js', 'Rm', '1 Co', 'Ef', 'Ap', 'Is', 'Jr'],
+    'fr': ['Mt', 'Mc', 'Lc', 'Jn', 'Ac', 'Gn', 'Ex', 'Lv', 'Nb', 'Dt', 'Jos', 'Rm', '1 Co', 'Ep', 'Ap', 'Es', 'Jr'],
+    'zh': ['太', '可', '路', '约', '徒', '创', '出', '利', '民', '申', '书', '罗', '林前', '弗', '启', '赛', '耶'],
+    'id': ['Mat', 'Mrk', 'Luk', 'Yoh', 'Kis', 'Kej', 'Kel', 'Im', 'Bil', 'Ul', 'Yos', 'Rm', '1Kor', 'Ef', 'Why', 'Yes', 'Yer'],
+    'ja': ['マタ', 'マコ', 'ルカ', 'ヨハ', '使', '創', '出', 'レビ', '民', '申', 'ヨシュ', 'ロマ', '一コリ', 'エフェ', '黙', 'イザ', 'エレ'],
 }
 
 def build(jid, src, out_dir):
@@ -60,7 +60,8 @@ def build(jid, src, out_dir):
     prologue = events.pop(0) if meta.get('prologue', jid == 'jesus') and events and events[0]['id'].endswith('00') else None
     # 여정 정보: 시리즈 목록(고르기)과 이 여정의 설정. 화면 글씨는 공통 ui 위에 여정의 ui를 덧씌운다
     journey = {'id': jid, 'harmony': meta.get('harmony', jid == 'jesus'), 'voice': meta.get('voice', jid == 'jesus'), 'series': series,
-               **({'map': meta['map']} if 'map' in meta else {})}  # 여정의 지도 설정(그린 범위·지역 이름 등)
+               **({'map': meta['map']} if 'map' in meta else {}),  # 여정의 지도 설정(그린 범위·지역 이름 등)
+               **{k: meta[k] for k in ('quick', 'next', 'odo', 'sponsor') if k in meta}}  # quick: 첫 화면 없이 첫 장면부터, next: 끝 화면에서 이어 걸을 여정, odo·sponsor: false면 걸은 거리·후원 안내를 숨김 (GoodNews)
     def ui_for(lang):
         u = {**ui_ko, **(loadf(os.path.join(here, 'i18n', 'ui.%s.json' % lang)) if lang != 'ko' else {})}
         u['map'] = {**ui_ko['map'], **u.get('map', {})}

@@ -543,7 +543,15 @@ Object.assign(MAKERS, {
     // 유월절: 문 양쪽 기둥과 위 인방에 바른 어린양의 피 (state 'blood'면 서서히 드러난다)
     const bm = new THREE.MeshStandardMaterial({ color: '#b0241c', emissive: '#5a0a06', emissiveIntensity: 0.6, roughness: 0.6, transparent: true, opacity: 0 }); // 밤에도 보이게 조금 밝게, 굵게
     [[0.2 - 0.145, 0.27, 0.05, 0.52], [0.2 + 0.145, 0.27, 0.05, 0.52], [0.2, 0.55, 0.36, 0.07]].forEach(([x, y, w, h]) => { const b = mesh(new THREE.BoxGeometry(w, h, 0.012), bm, g, [x, y, D / 2 + 0.045]); b.castShadow = false; });
-    return new Prop(g, (P, t, dt) => { bm.opacity = damp(bm.opacity, P.state === 'blood' ? 0.95 : 0, 1.5, dt); });
+    // 열린 문: 문짝 자리에 집 안 등불빛이 번진다 (state 'open' — 기쁜 소식 g04, 문 밖에 서서 두드리시는 분 계 3:20)
+    const lm = new THREE.MeshBasicMaterial({ color: '#ffd38a', transparent: true, opacity: 0 });
+    const glow = mesh(new THREE.BoxGeometry(0.22, 0.5, 0.012), lm, g, [0.2, 0.26, D / 2 + 0.014]); glow.castShadow = false;
+    // 불빛은 열리는 문(door: true)에만 — 집마다 빛을 두면 장면이 무거워진다
+    const halo = o.door ? new THREE.PointLight('#ffc970', 0, 1.6, 1.5) : null; if (halo) { halo.position.set(0.2, 0.32, D / 2 + 0.2); g.add(halo); }
+    return new Prop(g, (P, t, dt) => {
+      bm.opacity = damp(bm.opacity, P.state === 'blood' ? 0.95 : 0, 1.5, dt);
+      lm.opacity = damp(lm.opacity, P.state === 'open' ? 1 : 0, 1.2, dt); if (halo) halo.intensity = lm.opacity * 1.6;
+    });
   },
 });
 

@@ -12,6 +12,8 @@ const SITE = 'https://the-way-jesus.web.app';
 const J = {
   moses: { title: '그 길 — 모세와 여호수아', sub: '출애굽에서 약속의 땅까지', foot: '지도 위 40개 장면 · 낭독 · 3D 무대',
     desc: '지도 위를 걸으며 출애굽에서 약속의 땅까지, 모세와 여호수아의 길을 만나 보세요.', c: ['#fbe0c8', '#dc8f5f', '#a65a33'] },
+  goodnews: { title: '그 길 — GoodNews (복음)', sub: '네 장면으로 듣는 복음', foot: '에덴에서 골고다, 그리고 당신에게까지',
+    desc: '하나님의 사랑, 죄와 단절, 예수 그리스도, 믿음의 응답. 지도 위 네 장면으로 복음을 만나 보세요.', c: ['#fbe1db', '#e0877a', '#a84a3f'] },
 };
 const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
 const ids = process.argv.slice(2).length ? process.argv.slice(2) : Object.keys(J);

@@ -5,7 +5,7 @@ import { readFileSync, readdirSync, existsSync } from 'node:fs';
 
 // 예수 여정(data.json)과 다른 여정(j/<여정>/data.json)을 함께 읽는다 — 장면 id는 여정마다 겹치지 않는다
 const root = new URL('../../', import.meta.url), load = f => JSON.parse(readFileSync(new URL(f, root), 'utf8'));
-const all = [load('data.json'), ...(existsSync(new URL('j/', root)) ? readdirSync(new URL('j/', root)).map(j => load(`j/${j}/data.json`)) : [])];
+const all = [load('data.json'), ...(existsSync(new URL('j/', root)) ? readdirSync(new URL('j/', root)).filter(j => existsSync(new URL(`j/${j}/data.json`, root))).map(j => load(`j/${j}/data.json`)) : [])];
 const sentences = t => (t.match(/[^.?!…]+[.?!…]*["”’]?\s*/g) || [t]).map(s => s.trim()).filter(Boolean);
 for (const id of process.argv.slice(2)) {
   const data = all.find(d => d.events.some(x => x.id === id)) || all[0], e = data.events.find(x => x.id === id);

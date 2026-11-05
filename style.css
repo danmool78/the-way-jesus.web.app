@@ -278,6 +278,9 @@ html:not(:lang(ko)):not(:lang(zh)):not(:lang(ja)) .river-lbl text{writing-mode:h
 .g.on{opacity:1;border-color:color-mix(in srgb,var(--period) 60%,var(--line));background:color-mix(in srgb,var(--period) 12%,transparent)}
 .story{padding:16px 22px 4px;font-family:var(--serif);font-size:17px;line-height:1.95;color:#eadfca}
 .story p{margin:0 0 16px;transition:background .3s,color .3s;border-radius:6px}
+.story .prayer-para{margin:4px 0 16px;padding:14px 16px 4px;border:1px solid rgba(var(--gold-rgb),.35);border-left:3px solid var(--gold);background:rgba(var(--gold-rgb),.07);border-radius:4px 12px 12px 4px} /* 영접 기도 문단 (skeleton의 prayer) */
+.story .prayer-para h4{margin:0 0 6px;font:600 12px var(--sans);letter-spacing:.1em;color:var(--gold)}
+.story .prayer-para p{margin:0 0 12px;color:#f6ead2}
 .story p:first-child::first-letter{font-size:2.6em;float:left;line-height:.9;margin:6px 8px 0 0;color:var(--gold)}
 .speaking{background:rgba(var(--gold-rgb),.13);box-shadow:0 0 0 6px rgba(var(--gold-rgb),.13);color:#fff8e9!important}
 .words-sec{padding:6px 22px 8px}
@@ -332,7 +335,7 @@ html:not(:lang(ko)):not(:lang(zh)):not(:lang(ja)) .river-lbl text{writing-mode:h
 /* 프롤로그: 지도 위에 걷는 사람·다음 길 표시가 없다 */
 #map.prologue .walker,#map.prologue .nexthint{display:none}
 #map:not(.prologue) .lbl.meso{display:none} /* 에덴 둘레 지명은 프롤로그에서만 */
-.prologue-on .odo{display:none} /* 아직 걷기 전 */
+.prologue-on .odo,[data-journey=goodnews] .odo{display:none} /* 아직 걷기 전, 걸은 거리를 세지 않는 여정 */
 /* 시기 이름은 지금 시기만 (여덟 개를 다 쓰면 좁은 칸에서 겹친다 — 나머지는 그림에 마우스를 올리면 보인다) */
 .tname{font-size:11.5px;color:color-mix(in srgb,var(--c) 70%,#fff);font-weight:700;white-space:nowrap;margin-top:5px;visibility:hidden;height:15px}
 .tseg.now .tname{visibility:visible}
@@ -667,4 +670,5 @@ body.intro-open .intro,body.intro-open .intro *{animation-play-state:running}
 [data-journey=moses]{--gold:#dc8f5f;--gold2:#f3c29c;--gold-rgb:220,143,95;--gold-hi:#eaa679;--gold-deep:#a65a33;--gold-deep-rgb:166,90,51}
 [data-journey=david]{--gold:#a9bf6a;--gold2:#d6e3a8;--gold-rgb:169,191,106;--gold-hi:#bccf82;--gold-deep:#6f8638;--gold-deep-rgb:111,134,56}
 [data-journey=kings]{--gold:#b99ade;--gold2:#ddcdf3;--gold-rgb:185,154,222;--gold-hi:#cab0ea;--gold-deep:#7c58a8;--gold-deep-rgb:124,88,168}
+[data-journey=goodnews]{--gold:#e0877a;--gold2:#f6c7bd;--gold-rgb:224,135,122;--gold-hi:#eb9d92;--gold-deep:#a84a3f;--gold-deep-rgb:168,74,63}
 [data-journey=paul]{--gold:#70b5da;--gold2:#bbdff3;--gold-rgb:112,181,218;--gold-hi:#8fc8e7;--gold-deep:#3e7fa8;--gold-deep-rgb:62,127,168}

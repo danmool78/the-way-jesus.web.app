@@ -12,6 +12,7 @@ const GOLD = ['#fcebbb', '#e6c275', '#b1823a', '#f0d79a'];
 const J = {
   moses: { name: '그 길 — 모세와 여호수아', short: '그 길 · 모세', c: ['#fbe0c8', '#dc8f5f', '#a65a33', '#f3c29c'] },
   david: { name: '그 길 — 다윗', short: '그 길 · 다윗', c: ['#eef3d2', '#a9bf6a', '#6f8638', '#d6e3a8'] },
+  goodnews: { name: '그 길 — GoodNews (복음)', short: '그 길 · GoodNews', c: ['#fbe1db', '#e0877a', '#a84a3f', '#f6c7bd'] },
   kings: { name: '그 길 — 열왕기', short: '그 길 · 열왕기', c: ['#efe6fb', '#b99ade', '#7c58a8', '#ddcdf3'] },
   paul: { name: '그 길 — 바울', short: '그 길 · 바울', c: ['#e1f1fb', '#70b5da', '#3e7fa8', '#bbdff3'] },
 };

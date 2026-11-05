@@ -10,7 +10,7 @@
 <!-- iOS 공유 창·홈 화면은 SVG 아이콘을 읽지 않는다 — PNG를 따로 둔다 -->
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <!-- 여정마다 설치 아이콘·이름(테마색): ?j=<여정>이면 j/<여정>/의 것으로 — 홈 화면에 여정마다 따로 설치된다 (_src/tools/icons.mjs) -->
-<script>(j=>{if(!/^(moses|david|kings|paul)$/.test(j||''))return;const d='/j/'+j+'/',l=r=>document.querySelector('link[rel="'+r+'"]');l('manifest').href=d+'manifest.webmanifest';l('icon').href=d+'icon.svg';l('apple-touch-icon').href=d+'apple-touch-icon.png'})(new URLSearchParams(location.search).get('j'))</script>
+<script>(j=>{if(!/^(moses|david|kings|paul|goodnews)$/.test(j||''))return;const d='/j/'+j+'/',l=r=>document.querySelector('link[rel="'+r+'"]');l('manifest').href=d+'manifest.webmanifest';l('icon').href=d+'icon.svg';l('apple-touch-icon').href=d+'apple-touch-icon.png'})(new URLSearchParams(location.search).get('j'))</script>
 <!-- 메신저(카카오톡 등)에 링크를 보낼 때 뜨는 미리보기 -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://the-way-jesus.web.app/">

@@ -12,6 +12,7 @@
 | `stage/props.js` | 소품(MAKERS)과 Prop(나타남·이동·상태) |
 | `stage/scenes.js` | **장면 대본(SCRIPTS)** — 새 장면은 여기에 추가한다 |
 | `stage/moses.js` | 모세와 여호수아 여정의 대본(MOSES) — scenes.js가 SCRIPTS에 합친다. 장면 id(m01…)는 여정마다 겹치지 않게 |
+| `stage/goodnews.js` | 기쁜 소식 여정의 대본(GOODNEWS, g01–g04) |
 | `app.js` | 낭독할 때 `stage:beat` 이벤트를 보낸다 (intro, p0…, w0…, end; 문장마다 s) |
 
 `?beat=p1.2#e03` 처럼 주소에 붙이면 그 순간까지의 동작을 즉시 적용한 화면을 볼 수 있다(확인용).
@@ -85,6 +86,11 @@ e02: {
 - 산 아래 무리(crowd)는 가운데를 비우고 양옆에 둔다 — 낮은 시점이라 앞의 무리가 산·제단·성막을 다 가렸다.
 - 모세 여정의 intro 앞에는 처음 자리로 되돌리는 명령이 자동으로 붙는다(`stage/moses.js` 끝). 말씀(w…)에서 말하는 사람은 앞 문단에서 사라졌어도 `show: 1`로 다시 세운다. `node _src/tools/stagecheck.mjs m01 …`로 낭독 순서를 흉내 내 이 두 가지를 점검한다.
 - 장면 확인: `sheet.mjs`는 m으로 시작하는 장면이면 `?j=moses`로 연다. `beats.mjs`도 여정 데이터를 함께 읽는다.
+
+### 기쁜 소식 여정 (stage/goodnews.js)
+- 네 장면: g01 에덴의 빛(하나님의 사랑) → g02 어두운 실루엣과 닫힌 동산(죄와 단절) → g03 고치시는 예수, 멀리 보이는 십자가 윤곽, 빈 무덤과 부활하신 예수(유일한 길) → g04 저녁의 한 집 문 앞에 서서 두드리시는 예수(계 3:20), 기도의 '문을 엽니다'에서 문이 열려 등불빛이 번지고(house 소품의 state 'open', 옵션 `door: true`일 때만 불빛) 집 안의 사람이 나와 무릎 꿇는다.
+- 에덴 두 장면은 e00과 같은 자리(`at`)·같은 배우. 장소가 `eden`이면 앱이 본 지도 대신 에덴 무대에 세운다(프롤로그와 같다).
+- intro 앞에 처음 자리로 되돌리는 명령이 자동으로 붙는다(moses.js와 같은 방식).
 
 ### 인물 유형 (TYPES)
 jesus, mary, joseph, angel, woman, woman2, mother, anna, john(젊은 제자, 수염 없음), disciple, peter, man, elder, shepherd, magus, magus2, magus3, king, soldier(창), pharisee, child, boyJesus, baptist, tempter, steward, groom, servant, crossed(십자가 위 예수 — 실루엣 전용), thief(실루엣 전용)

@@ -10,6 +10,8 @@ let DATA, EVENTS, PLACES, PERIODS, idx = 0;
 // 프롤로그(창세기의 첫 아담, data의 prologue)는 장면 번호 -1 — 61개 장면 목록·퀴즈·도장·대조표 밖에 있다
 const evAt = i => i < 0 ? DATA.prologue : EVENTS[i];
 const isPro = () => idx < 0;
+// 에덴 장면: 본 지도와 떨어진 에덴 둘레 무대(EDEN)에 선다 — 예수 여정의 프롤로그, 기쁜 소식 여정의 처음 두 장면
+const onEden = (i = idx) => evAt(i)?.place === 'eden';
 const firstIdx = () => DATA?.prologue ? -1 : 0;
 window.curEvent = () => evAt(idx); // 3D 지형(terrain.js)이 지금 장면을 물을 때
 
@@ -281,7 +283,7 @@ const box = (lat1, lng0, lat0, lng1) => { const [x0, y0] = px([lat1, lng0]), [x1
 let DRAWN = box(34.28, 29.63, 29.47, 37.14); // 여정마다 바뀐다 (journey.map.drawn — 모세 여정은 시내 반도까지)
 // 프롤로그의 에덴은 본 지도와 이어지지 않는 따로 떨어진 무대: 화면은 relief-east가 불투명한 이 안에만 머문다
 const EDEN = (() => { const [x0, y0] = px([32.58, 44.92]), [x1, y1] = px([29.42, 49.58]); return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }; })();
-const drawnNow = () => isPro() ? EDEN : DRAWN;
+const drawnNow = () => onEden() ? EDEN : DRAWN;
 // 그린 범위 밖을 바탕색으로 덮는 구멍 뚫린 사각형
 const offmapD = D => `M${D.x - 1e5},${D.y - 1e5}h${D.w + 2e5}v${D.h + 2e5}h${-D.w - 2e5}Z M${D.x},${D.y}v${D.h}h${D.w}v${-D.h}Z`;
 function applyView() {
@@ -463,7 +465,7 @@ function animateTo(target, ms) {
       drag.moved = true; cancelAnimationFrame(anim); followWalk = false; // 걷는 중에 끌면 카메라 따라가기를 멈춘다 map.setPointerCapture(e.pointerId); map.classList.add('dragging');
     }
     const u = map.viewBox.baseVal.width / map.getBoundingClientRect().width;
-    const B = isPro() ? EDEN : LAND; // 프롤로그(에덴)에서는 그 따로 떨어진 무대 안에서
+    const B = onEden() ? EDEN : LAND; // 에덴 장면에서는 그 따로 떨어진 무대 안에서
     const { w, h } = drag.v, cx = Math.min(B.x + B.w * 1.25, Math.max(B.x - B.w * 0.25, drag.v.x + w / 2 - dx * u));
     const cy = Math.min(B.y + B.h * 1.25, Math.max(B.y - B.h * 0.25, drag.v.y + h / 2 - dy * u));
     view = { x: cx - w / 2, y: cy - h / 2, w, h };
@@ -497,12 +499,12 @@ function setWalker([x, y]) {
 }
 function updateMap(prevIdx, { camera = true, jump = false } = {}) {
   const e = evAt(idx);
-  map.classList.toggle('prologue', isPro()); // 프롤로그: 걷는 사람과 다음 길 표시를 숨긴다
-  document.body.classList.toggle('prologue-on', isPro());
+  map.classList.toggle('prologue', onEden()); // 에덴 장면: 걷는 사람과 다음 길 표시를 숨긴다
+  document.body.classList.toggle('prologue-on', onEden());
   $('.offmap', map).setAttribute('d', offmapD(drawnNow()));
   // 프롤로그에는 이을 경로가 없어 전체 경로를 끈다 (켜 둔 채 들어오면 장면 보기로 돌린다)
-  $('#fitAll').disabled = isPro();
-  if (isPro() && fitMode === 'all') { fitMode = 'scene'; $('#fitAll').classList.remove('active'); $('#fitNow').classList.add('active'); }
+  $('#fitAll').disabled = onEden();
+  if (onEden() && fitMode === 'all') { fitMode = 'scene'; $('#fitAll').classList.remove('active'); $('#fitNow').classList.add('active'); }
   const seen = new Set(EVENTS.slice(0, idx + 1).map(x => x.place));
   $$('.pin', map).forEach(m => {
     m.classList.toggle('seen', seen.has(m.dataset.place));
@@ -565,7 +567,7 @@ const legKm = (a, e) => a === e.place || BY_BOAT.has(e.id) ? 0 : km(PLACES[a], P
 const odoAt = i => (odoCum ||= EVENTS.reduce((c, e, k) => (c.push(k ? c[k - 1] + legKm(EVENTS[k - 1].place, e) : 0), c), []))[i];
 const stepsText = km => { const s = Math.round(km * 1000 / STRIDE_M); return s >= 1e4 ? new Intl.NumberFormat(LANG, { notation: 'compact', maximumFractionDigits: 1 }).format(s) : s.toLocaleString(LANG); };
 function setOdo(d) {
-  const el = $('#odo'); if (!el) return;
+  const el = $('#odo'); if (!el || DATA.journey?.odo === false) return; // 걸은 거리를 세지 않는 여정(GoodNews: 에덴에서 예루살렘으로 건너뛴다)
   el.textContent = t('odo', { d: Math.round(d).toLocaleString(LANG), s: stepsText(d) });
   el.title = t('odoTitle');
 }
@@ -686,7 +688,7 @@ function renderScene() {
   </div>
   <div class="ctabs" role="tablist">${tabs.map(([k, n]) => `<button role="tab" data-tab="${k}" class="${k === cardTab ? 'active' : ''}">${esc(n)}</button>`).join('')}</div>
   <section class="pane" data-pane="story" aria-label="${esc(t('storyLabel'))}">
-    <div class="story">${e.story.map((s, i) => `<p data-para="${i}">${esc(s)}</p>`).join('')}</div>
+    <div class="story">${e.story.map((s, i) => i === e.prayer ? `<div class="prayer-para"><h4>${esc(t('prayerOpen'))}</h4><p data-para="${i}">${esc(s)}</p></div>` : `<p data-para="${i}">${esc(s)}</p>`).join('')}</div>
     <aside class="note"><h4>${esc(t('noteHead'))}</h4><p>${esc(e.note)}</p></aside>
     <aside class="reflect"><h4>${esc(t('reflectHead'))}</h4><p>${esc(e.reflect)}</p></aside>
   </section>
@@ -858,8 +860,8 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
   cancelWalk();
   const prev = idx;
   const prevPlace = $('#scene').innerHTML ? evAt(prev).place : null;
-  // 프롤로그와 첫 장면 사이는 이어 걷지 않는다: 다음 장면을 처음 연 것처럼 새로 시작한다 (jump)
-  const jump = prevPlace !== null && (prev < 0) !== (i < 0);
+  // 에덴과 본 지도 사이(프롤로그와 첫 장면 등)는 이어 걷지 않는다: 다음 장면을 처음 연 것처럼 새로 시작한다 (jump)
+  const jump = prevPlace !== null && onEden(prev) !== onEden(i);
   const stepped = i === prev + 1 && prevPlace !== null && !jump;
   const arrive = () => {
     idx = i; setHere(evAt(i), startOf(evAt(i))); window.stageHide = false;
@@ -1352,6 +1354,7 @@ function openEnd() {
   const last = EVENTS[EVENTS.length - 1], w = last.words.find(x => x.j) || last.words[0];
   const miss = missedQuiz(), unseen = EVENTS.filter(e => !visited.has(e.id)), km = odoAt(EVENTS.length - 1);
   const places = new Set(EVENTS.filter(e => visited.has(e.id)).map(e => e.place)).size, allPlaces = new Set(EVENTS.map(e => e.place)).size;
+  const nextJ = DATA.journey?.next && DATA.journey.series?.find(j => j.id === DATA.journey.next); // 이어 걸을 여정 (기쁜 소식 → 예수)
   // 여러 문단 글: 줄마다 한 문단, 끝의 (장:절)은 작게 (중·일은 전각 괄호)
   const paras = s => s.split('\n').map(p => `<p>${esc(p).replace(/\s*([(（][^()（）]*\d[^()（）]*[)）])$/, ' <cite>$1</cite>')}</p>`).join('');
   $('#endBody').innerHTML = `
@@ -1362,7 +1365,7 @@ function openEnd() {
     <div class="endstats">
       <div><b>${visited.size}<small>/${EVENTS.length}</small></b><span>${esc(t('endScenes'))}</span></div>
       <div><b>${places}<small>/${allPlaces}</small></b><span>${esc(t('endPlaces'))}</span></div>
-      <div><b>${Math.round(km).toLocaleString(LANG)}<small>km</small></b><span>${esc(t('endWalked'))} · ${esc(t('endSteps', { s: stepsText(km) }))}</span></div>
+      ${DATA.journey?.odo === false ? '' : `<div><b>${Math.round(km).toLocaleString(LANG)}<small>km</small></b><span>${esc(t('endWalked'))} · ${esc(t('endSteps', { s: stepsText(km) }))}</span></div>`}
     </div>
     <div class="stampgrid endstamps">${sealCells()}</div>
     <div class="endquiz ${miss.length ? '' : 'sealed'}">
@@ -1376,8 +1379,8 @@ function openEnd() {
     <section class="invite"><h3>${esc(t('seekerHead'))}</h3>${paras(t('invite'))}
       <div class="prayer"><h4>${esc(t('prayerHead'))}</h4><p>${esc(t('prayer'))}</p></div></section>
     <section class="blessing"><h3>${esc(t('believerHead'))}</h3>${paras(t('blessing'))}</section>
-    ${nextHtml()}
-    <div class="endbtns"><button class="goldbtn" id="endRestart">${esc(t('endRestart'))}</button><button class="textbtn" id="endWords">${esc(t('endWords'))}</button></div>`;
+    ${DATA.journey?.sponsor === false ? '' : nextHtml()}
+    <div class="endbtns">${nextJ ? `<a class="goldbtn" href="${journeyUrl(nextJ.id)}">${esc(t('endNext', { name: t(nextJ.title) }))}</a>` : ''}<button class="${nextJ ? 'textbtn' : 'goldbtn'}" id="endRestart">${esc(t('endRestart'))}</button><button class="textbtn" id="endWords">${esc(t('endWords'))}</button></div>`;
   const dlg = $('#journeyEnd'), close = () => dlg.close();
   if (miss.length) $('#endMissed').onclick = () => { close(); setView('quiz'); startQuiz(miss, t('missedQuizName')); quizRun.missed = true; };
   if (unseen.length) $('#endUnseen').onclick = () => { close(); setView('journey'); go(EVENTS.indexOf(unseen[0])); };
@@ -1439,12 +1442,13 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   const hashIdx = () => d.prologue && location.hash === '#' + d.prologue.id ? -1 : EVENTS.findIndex(e => '#' + e.id === location.hash);
   const fromHash = hashIdx(), hashOk = fromHash >= 0 || (fromHash === -1 && !!d.prologue && location.hash === '#' + d.prologue.id);
   const fromLast = EVENTS.findIndex(e => e.id === state.last);
-  idx = hashOk ? fromHash : fromLast >= 0 ? fromLast : firstIdx();
+  const quick = !!d.journey?.quick; // 전도용(기쁜 소식): 첫 화면 없이 늘 첫 장면부터 — 건네받은 사람이 곧바로 보게
+  idx = hashOk ? fromHash : fromLast >= 0 && !quick ? fromLast : firstIdx();
   view = { x: 0, y: 0, w: W, h: H }; applyView();
   const start = idx; idx = -2; go(start);
   updateProgress();
   // 첫 시작 화면: 장면 주소로 바로 들어온 때(#e05)와 연출 확인(?beat=)은 건너뛴다
-  if (!hashOk && !new URLSearchParams(location.search).has('beat')) showIntro(fromLast > 0 ? fromLast : -1);
+  if (!hashOk && !quick && !new URLSearchParams(location.search).has('beat')) showIntro(fromLast > 0 ? fromLast : -1);
   $('.brand').onclick = ev => { ev.preventDefault(); showIntro(state.last && idx > 0 ? idx : -1); }; // 기록을 지운 뒤에는 처음 온 사람처럼
 
   $('#prev').onclick = () => go(idx - 1);
