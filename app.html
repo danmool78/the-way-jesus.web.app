@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#16120e">
+<meta name="description" content="마태·마가·누가·요한 사복음서를 시간과 장소 순서로 엮어, 성경 지도 위에서 예수님의 생애 61장면을 걷습니다. 명화·낭독·3D 무대·말씀·퀴즈로 만나는 예수의 발자취.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<!-- iOS 공유 창·홈 화면은 SVG 아이콘을 읽지 않는다 — PNG를 따로 둔다 -->
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<!-- 여정마다 설치 아이콘·이름(테마색): ?j=<여정>이면 j/<여정>/의 것으로 — 홈 화면에 여정마다 따로 설치된다 (_src/tools/icons.mjs) -->
+<script>(j=>{if(!/^(moses|david|kings|paul)$/.test(j||''))return;const d='/j/'+j+'/',l=r=>document.querySelector('link[rel="'+r+'"]');l('manifest').href=d+'manifest.webmanifest';l('icon').href=d+'icon.svg';l('apple-touch-icon').href=d+'apple-touch-icon.png'})(new URLSearchParams(location.search).get('j'))</script>
+<!-- 메신저(카카오톡 등)에 링크를 보낼 때 뜨는 미리보기 -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://the-way-jesus.web.app/jesus">
+<meta property="og:title" content="그 길 — 사복음서로 걷는 예수의 발자취">
+<meta property="og:description" content="지도 위를 걸으며 예수의 생애를 생생한 장면으로 만나 보세요.">
+<meta property="og:image" content="https://the-way-jesus.web.app/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<title>그 길 — 예수의 발자취 | 성경 지도로 걷는 예수님의 생애</title>
+<link rel="canonical" href="https://the-way-jesus.web.app/jesus">
+<!-- 검색엔진에 앱의 정체를 알린다. 장면마다 읽을 수 있는 정적 페이지는 s/ (_src/pages.py가 만든다) -->
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"그 길 — 예수의 발자취","alternateName":"The Way — Footsteps of Jesus","url":"https://the-way-jesus.web.app/","description":"마태·마가·누가·요한 사복음서를 시간과 장소 순서로 엮어, 성경 지도 위에서 예수님의 생애 61장면을 걷습니다. 명화·낭독·3D 무대·말씀·퀴즈로 만나는 예수의 발자취.","applicationCategory":"EducationalApplication","operatingSystem":"Web","inLanguage":["ko","en","es","pt","fr","zh","id","ja"],"image":"https://the-way-jesus.web.app/assets/og.jpg","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"publisher":{"@type":"Organization","name":"SSSOFT","url":"https://sssoft-idea.web.app/"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- 랜딩페이지: 로고·소개·안내, '여정 시작하기'로 들어간다. 장면 주소(#e05)로 바로 들어오면 띄우지 않는다 -->
+<div id="intro" class="intro" hidden role="dialog" aria-modal="true" aria-labelledby="introName">
+  <section class="land-hero">
+    <img class="intro-logo" src="assets/logo.svg" alt="" width="104" height="104">
+    <h1 id="introName" data-i="appName">그 길</h1>
+    <p class="intro-tag" data-i="introTag">사복음서로 걷는 예수의 발자취</p>
+    <p class="intro-lead" id="introLead"></p>
+    <div class="intro-go"><button class="intro-btn go-start" type="button"></button><button class="intro-link go-again" type="button" data-i="introRestart" hidden></button></div>
+    <!-- 주제가 뮤직비디오: 시작 단추 밑, 누르면 Vimeo 창 (app.js의 openMv) -->
+    <button class="land-mv mv-open" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5Z"/></svg><span data-i="mvGo">주제가 「그 길」 뮤직비디오</span></button>
+    <button class="land-share share-app" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="m8.3 10.8 7.4-4.4M8.3 13.2l7.4 4.4"/></svg><span data-i="shareApp">이 앱 공유하기</span></button>
+    <!-- 앱으로 설치하기: 안내 창(#installDlg)을 연다. 이미 앱으로 열었으면 숨긴다 -->
+    <button class="land-share install-app" type="button" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="2.5" width="11" height="19" rx="2.2"/><path d="M12 7.5v7m-3-3 3 3 3-3M10.5 18.5h3"/></svg><span data-i="installApp">앱으로 설치하기</span></button>
+    <a class="land-down" href="#landHow"><span data-i="landGuide"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a>
+  </section>
+  <!-- 그 길 시리즈: 여정 고르기 (app.js가 data의 journey.series로 채운다. 준비 중인 여정은 후원 안내로) -->
+  <section class="land-sec land-series">
+    <h2 data-i="seriesHead">그 길 시리즈</h2>
+    <ul class="series" id="seriesList"></ul>
+  </section>
+  <section class="land-sec">
+    <h2 data-i="landWhat"></h2>
+    <ul class="intro-feat">
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 3.5 6v14L9 18l6 2 5.5-2V4L15 6Z"/><path d="M9 4v14M15 6v14"/></svg><b data-i="introF1h"></b><span data-i="introF1"></span></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 7.5 13h9Z" opacity=".55"/><circle cx="12" cy="13.5" r="2.2"/><path d="M8.5 21c.4-2.9 1.8-4.6 3.5-4.6s3.1 1.7 3.5 4.6"/><path d="M3 21h18"/></svg><b data-i="introF2h"></b><span data-i="introF2"></span></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3l4-3.5v12l-4-3.5H4Z"/><path d="M15 9a4 4 0 0 1 0 6M17.8 6.5a7.5 7.5 0 0 1 0 11"/></svg><b data-i="introF3h"></b><span data-i="introF3"></span></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 20.5C3.6 17.6 2.6 13.2 4.2 8M17 20.5c3.4-2.9 4.4-7.3 2.8-12.5"/><path d="M12 6.5l1.5 3.1 3.4.4-2.5 2.3.7 3.4-3.1-1.8-3.1 1.8.7-3.4-2.5-2.3 3.4-.4Z"/></svg><b data-i="introF4h"></b><span data-i="introF4"></span></li>
+    </ul>
+    <!-- 장면 목록(검색엔진이 읽는 정적 페이지 s/): 언어마다 s/index.<언어>.html로 (app.js) -->
+    <a class="land-list scene-list" href="s/index.html">예수의 생애 61장면 목록 보기 →</a>
+  </section>
+  <section class="land-sec" id="landHow">
+    <h2 data-i="landHowTo"></h2>
+    <ol class="land-steps">
+      <li><i>1</i><b data-i="landStep1h"></b><span id="landStep1"></span></li>
+      <li><i>2</i><b data-i="landStep2h"></b><span id="landStep2"></span></li>
+      <li><i>3</i><b data-i="landStep3h"></b><span id="landStep3"></span></li>
+      <li><i>4</i><b data-i="landStep4h"></b><span id="landStep4"></span></li>
+    </ol>
+  </section>
+  <section class="land-end">
+    <!-- 묻고 답하기: 안내를 다 읽은 끝, '준비되셨나요?' 바로 위에 (언어마다 qna.<언어>.html로) -->
+    <a class="land-qna qna-link" href="qna.html"><span data-i="qnaLead">왜 만들었는지, 3D 무대는 왜 이렇게 그렸는지, 어떻게 쓰면 좋은지</span><b data-i="qnaGo">묻고 답하기 →</b></a>
+    <h2 data-i="landEnd"></h2>
+    <div class="intro-go"><button class="intro-btn go-start" type="button"></button><button class="intro-link go-again" type="button" data-i="introRestart" hidden></button></div>
+    <!-- 다음 여정 후원: 안내를 끝까지 내려 본 사람에게만 보이게 맨 끝에 한 줄로 (누르면 #nextDlg) -->
+    <p class="land-next"><span data-i="nextTeaser">다윗·열왕기·바울, 다음 여정을 준비하고 있습니다</span><button class="next-open" type="button" data-i="nextGo">다음 여정 후원 →</button></p>
+    <footer class="land-foot"><a href="https://sssoft-idea.web.app/" target="_blank" rel="noopener">© SSSOFT</a></footer>
+  </section>
+</div>
+<header class="top">
+  <a class="brand" href="#" aria-label="그 길 처음으로">
+    <img class="logo" src="assets/logo.svg" alt="" width="30" height="30"><b>그 길</b><small>예수의 발자취 · 사복음서로 걷는 여정</small>
+  </a>
+  <nav class="tabs" role="tablist" aria-label="보기 전환">
+    <button role="tab" data-view="journey" class="active">여정</button>
+    <button role="tab" data-view="words">말씀</button>
+    <button role="tab" data-view="quiz">퀴즈</button>
+  </nav>
+  <button class="progress" id="progressPill" title="나의 발자취">
+    <span id="progressText">0 / 61</span>
+    <span class="pbar" aria-hidden="true"><i id="ring"></i></span>
+  </button>
+  <div class="settings">
+    <button class="gear" id="gear" aria-label="설정" aria-expanded="false" aria-controls="settingsPanel">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm8.4 3.5-.1-1.2 2-1.6-2-3.4-2.4.9a8 8 0 0 0-2-1.2L15.5 3h-4l-.4 2.5a8 8 0 0 0-2 1.2l-2.4-.9-2 3.4 2 1.6a8 8 0 0 0 0 2.4l-2 1.6 2 3.4 2.4-.9a8 8 0 0 0 2 1.2l.4 2.5h4l.4-2.5a8 8 0 0 0 2-1.2l2.4.9 2-3.4-2-1.6.1-1.2Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="spanel" id="settingsPanel" hidden>
+      <label><span data-i="language">언어</span><select id="langPick" class="langpick" aria-label="언어"><option>한국어</option></select></label>
+      <button class="sbtn" id="openHarmony" data-i="harmonyHead">사복음서 대조표</button>
+      <button class="sbtn" id="openStamps" data-i="myFootsteps">나의 발자취</button>
+      <button class="sbtn mv-open" data-i="mvHelp">주제가 뮤직비디오</button>
+      <a class="sbtn qna-link" href="qna.html" data-i="qnaHelp">도움말 · 묻고 답하기</a>
+      <button class="sbtn share-app" id="shareApp" data-i="shareApp">이 앱 공유하기</button>
+      <button class="sbtn next-open" data-i="nextMenu">다음 여정 후원</button>
+    </div>
+  </div>
+</header>
+
+<main id="journey" class="view journey">
+  <section class="mapwrap" aria-label="여정 지도">
+    <svg id="map" role="img" aria-label="갈릴리·사마리아·유대 지도 위의 예수의 이동 경로"></svg>
+    <div class="maptools">
+      <button id="fitNow" class="placechip" title="현재 위치로"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.3 7-12a7 7 0 1 0-14 0c0 5.7 7 12 7 12Z" fill="currentColor"/><circle cx="12" cy="10" r="2.6" fill="#1a140e"/></svg><b id="placeName"></b><span class="chev">›</span></button>
+      <button id="fitAll" class="mapbtn" title="전체 경로 보기">전체 경로</button>
+    </div>
+    <div class="odo" id="odo"></div>
+    <div class="walkbanner" id="walkBanner" aria-live="polite"></div>
+    <div class="caption" id="caption" aria-hidden="true"><small></small><span class="cline"></span><p></p></div>
+    <article class="scene" id="scene" tabindex="-1" aria-live="polite"></article>
+  </section>
+
+  <footer class="dock" aria-label="여정 조작">
+    <div class="track" id="track" aria-label="시간 순 장면 목록"></div>
+    <div class="controls">
+      <button id="prev" class="ibtn" aria-label="이전 장면"><svg viewBox="0 0 24 24"><path d="M6 5v14M19 5 9 12l10 7Z" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></button>
+      <button id="listen" class="play" aria-label="이 장면 듣기"><svg class="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7Z" fill="currentColor"/></svg><svg class="i-pause" viewBox="0 0 24 24"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/></svg></button>
+      <button id="skip" class="ibtn" aria-label="다음 장면"><svg viewBox="0 0 24 24"><path d="M18 5v14M5 5l10 7-10 7Z" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></button>
+      <label class="switch" title="자동 여정"><span class="lbl" data-i="auto">자동 여정</span><input type="checkbox" id="auto" role="switch"><i></i></label>
+      <button id="music" class="ibtn music" aria-label="배경음악" aria-pressed="true" hidden><svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor"/><circle cx="16.5" cy="16" r="2.5" fill="currentColor"/><path class="slash" d="M4 4l16 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+      <select id="rate" class="rate" aria-label="낭독 속도">
+        <option value="0.85">0.85×</option><option value="1" selected>1×</option><option value="1.15">1.15×</option><option value="1.3">1.3×</option>
+      </select>
+      <button id="next" class="walk" aria-label="다음 장소로 걷기"><span class="lbl">다음 장소로 걷기</span><span aria-hidden="true">→</span></button>
+      <button id="quizBtn" class="qcard"><svg class="laurel" viewBox="0 0 32 32" aria-hidden="true"><path d="M10 27C5 23 3 17 5 9M22 27c5-4 7-10 5-18" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><g fill="currentColor"><ellipse cx="5.2" cy="12" rx="1.3" ry="2.6" transform="rotate(-25 5.2 12)"/><ellipse cx="5.6" cy="17" rx="1.3" ry="2.6" transform="rotate(-45 5.6 17)"/><ellipse cx="7.6" cy="21.6" rx="1.3" ry="2.6" transform="rotate(-60 7.6 21.6)"/><ellipse cx="26.8" cy="12" rx="1.3" ry="2.6" transform="rotate(25 26.8 12)"/><ellipse cx="26.4" cy="17" rx="1.3" ry="2.6" transform="rotate(45 26.4 17)"/><ellipse cx="24.4" cy="21.6" rx="1.3" ry="2.6" transform="rotate(60 24.4 21.6)"/></g><path d="M16 9l1.6 3.4 3.7.4-2.8 2.5.8 3.7-3.3-1.9-3.3 1.9.8-3.7-2.8-2.5 3.7-.4Z" fill="currentColor" opacity=".8"/></svg><span><small data-i="rememberScene">이 장면, 기억하나요?</small><b data-i="tabQuiz">퀴즈</b></span><span class="chev">›</span></button>
+    </div>
+  </footer>
+</main>
+
+<main id="words" class="view list-view" hidden>
+  <div class="list-head">
+    <div class="eyebrow">THE WORDS</div>
+    <h2>그분의 말씀</h2>
+    <p>사복음서에 기록된 예수의 말씀을 여정의 순서대로 모았습니다. 모든 말씀은 원문의 뜻을 살려 오늘의 말로 새로 옮긴 재구성입니다.</p>
+    <input id="wordSearch" type="search" placeholder="말씀 검색 — 예: 사랑, 빵, 평화" aria-label="말씀 검색">
+  </div>
+  <div id="wordList"></div>
+</main>
+
+<main id="harmony" class="view list-view" hidden>
+  <div class="list-head">
+    <div class="eyebrow">GOSPEL HARMONY</div>
+    <h2>사복음서 대조표</h2>
+    <p>네 복음서가 각 장면을 어디에 기록했는지 한눈에 봅니다. 같은 사건을 서로 다른 눈으로 본 네 증인의 이야기입니다.</p>
+    <div class="chips" id="harmonyFilter"></div>
+  </div>
+  <div id="harmonyStats" class="stats"></div>
+  <div class="tablewrap"><table id="harmonyTable"></table></div>
+</main>
+
+<main id="quiz" class="view list-view" hidden>
+  <div class="list-head">
+    <div class="eyebrow">QUIZ & STAMPS</div>
+    <h2>여정 퀴즈</h2>
+    <p>시기별로 문제를 풀고 발자취 도장을 모아 보세요. 맞힌 문제는 이 기기에 기록됩니다.</p>
+  </div>
+  <div id="quizBody"></div>
+</main>
+
+<dialog id="viewer" class="viewer">
+  <button class="close" id="closeViewer" aria-label="닫기">×</button>
+  <img id="viewerImg" alt="">
+  <p id="viewerCap"></p>
+</dialog>
+
+<dialog id="quizDlg" class="quiz-dlg">
+  <button class="close" id="closeQuiz" aria-label="닫기">×</button>
+  <div id="quizDlgBody"></div>
+</dialog>
+
+<dialog id="stamps" class="stamps-dlg">
+  <button class="close" id="closeStamps" aria-label="닫기">×</button>
+  <div class="eyebrow">MY FOOTSTEPS</div>
+  <h2>나의 발자취</h2>
+  <div id="stampGrid" class="stampgrid"></div>
+  <p class="fine">장면을 열면 발자취가, 퀴즈를 맞히면 별이 기록됩니다. 기록은 이 기기의 브라우저에만 저장됩니다.</p>
+  <p class="favline" id="favLine" hidden></p>
+  <button class="textbtn" id="reopenEnd" hidden>여정을 마친 창 보기</button>
+  <button class="textbtn" id="resetProgress">기록 지우기</button>
+</dialog>
+
+<!-- 주제가 뮤직비디오(Vimeo): 열 때 주소를 넣고 닫을 때 비워 소리를 멈춘다 -->
+<dialog id="mvDlg" class="mv-dlg">
+  <button class="close" id="closeMv" aria-label="닫기">×</button>
+  <div class="mv-frame"><iframe id="mvFrame" title="그 길" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
+  <p class="mv-note" data-i="mvNote">그림·음악: AI로 만들고 사람이 다듬었습니다</p>
+</dialog>
+
+<!-- 앱으로 설치하기 안내: 설치 창을 띄울 수 있으면(안드로이드 크롬 등) '지금 설치하기' 단추를, 아니면 기기별 순서를 보인다 (app.js) -->
+<dialog id="installDlg" class="install-dlg">
+  <button class="close" id="closeInstall" aria-label="닫기">×</button>
+  <img src="assets/icon-192.png" alt="" width="64" height="64" class="install-icon">
+  <h2 data-i="installApp">앱으로 설치하기</h2>
+  <p class="install-lead" data-i="installLead"></p>
+  <div id="installBody"></div>
+</dialog>
+
+<!-- 다음 여정 후원 안내: 설정 메뉴·랜딩 끝에서 연다. 같은 내용이 '여정을 마치며' 창 맨 아래에도 (app.js의 nextHtml) -->
+<dialog id="nextDlg" class="next-dlg">
+  <button class="close" id="closeNext" aria-label="닫기">×</button>
+  <div id="nextBody"></div>
+</dialog>
+
+<!-- 여정을 마치며: 걸어온 길 요약, 시기 도장, 못 푼 퀴즈, 복음과 축복 (app.js의 openEnd) -->
+<dialog id="journeyEnd" class="end-dlg">
+  <button class="close" id="closeEnd" aria-label="닫기">×</button>
+  <div id="endBody"></div>
+</dialog>
+
+<script src="app.js"></script>
+<script type="module" src="stage.js"></script>
+<script type="module" src="terrain.js"></script>
+</body>
+</html>

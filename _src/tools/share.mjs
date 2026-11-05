@@ -1,4 +1,4 @@
-// 여정마다 짧은 공유 주소(/moses)와 미리보기 카드: 카톡·문자는 주소를 받으면 그 페이지의 og 정보로 카드를 만드는데,
+// 여정마다 짧은 공유 주소(/moses)와 미리보기 카드 (첫 주소 /는 여정을 고르는 랜딩 index.html, 앱은 app.html): 카톡·문자는 주소를 받으면 그 페이지의 og 정보로 카드를 만드는데,
 // 앱은 index.html 하나라 ?j=moses를 보내도 예수 여정의 카드가 떴다. 그래서 여정마다 og만 담은 작은 페이지(<여정>/index.html)를 두고,
 // 열면 곧바로 앱(/?j=<여정>)으로 넘긴다. 미리보기 그림 j/<여정>/og.jpg(1200×630)도 예수 여정의 assets/og.jpg와 같은 꼴로 그린다.
 // 사용: node _src/tools/share.mjs [moses …]   (없으면 아래 표의 모든 여정)
@@ -39,7 +39,7 @@ for (const id of ids) {
   const og = j.og || `j/${id}/og.jpg`;
   if (!j.og) { mkdirSync(`j/${id}`, { recursive: true }); await card(j, `j/${id}/icon.svg`, og); } // 여정 색의 해와 길, 오른쪽에 글 (assets/og.jpg와 같은 짜임)
   // 공유 주소의 페이지: og만 담고 곧바로 앱으로 (뒤로 가기에 이 페이지가 남지 않게 replace, #장면은 이어 붙인다)
-  const app = `/?j=${id}`;
+  const app = `/app.html?j=${id}`;
   writeFileSync(`${id}/index.html`, `<!doctype html>
 <html lang="ko">
 <head>

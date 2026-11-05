@@ -70,11 +70,9 @@ function applyStatic() {
 const JOURNEY = (q => /^[a-z]+$/.test(q || '') ? q : 'jesus')(new URLSearchParams(location.search).get('j'));
 const JDIR = JOURNEY === 'jesus' ? '' : `j/${JOURNEY}/`;
 document.documentElement.dataset.journey = JOURNEY; // 여정마다 테마색 (style.css의 [data-journey])
-const journeyUrl = id => `/?j=${id}`; // 다른 여정으로 가는 주소 (언어는 저장된 것을 따른다). 예수 여정도 ?j=jesus — 맨 첫 주소(/)는 여정을 고르는 첫 화면이다
-// 첫 화면(시리즈 고르기): 주소에 ?j가 없을 때. 여정 카드들이 주인공이고, 예수 여정은 그 카드에서 바로 시작한다
-const HUB = !new URLSearchParams(location.search).has('j');
-// 여정의 공유 주소(/moses — 미리보기 카드를 담은 페이지, _src/tools/share.mjs)와 이름. 첫 화면은 맨 첫 주소
-const shareOf = id => id ? { url: `${location.origin}/${id}`, title: `${t('appName')} — ${t(DATA.journey?.series?.find(s => s.id === id)?.title || 'appName')}` } : { url: location.origin + '/', title: t('appName') };
+const journeyUrl = id => `/app.html?j=${id}`; // 다른 여정으로 가는 주소 (언어는 저장된 것을 따른다). 맨 첫 주소(/)는 여정을 고르는 랜딩(index.html)
+// 여정의 공유 주소(/moses — 미리보기 카드를 담은 페이지, _src/tools/share.mjs)와 이름
+const shareOf = id => ({ url: `${location.origin}/${id}`, title: `${t('appName')} — ${t(DATA.journey?.series?.find(s => s.id === id)?.title || 'appName')}` });
 async function shareLink({ url, title }) {
   if (navigator.share) { try { await navigator.share({ title, url }); } catch { /* 공유 창을 닫음 */ } return; }
   try { await navigator.clipboard.writeText(url); toast(t('linkCopied')); } catch { prompt(t('shareApp'), url); }
@@ -898,7 +896,7 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
 function showIntro(resume) {
   const box = $('#intro'), starts = $$('.go-start', box), agains = $$('.go-again', box);
   // 소개 글은 어절마다 살며시 떠오르게 (띄어쓰기 단위 — 한국어는 어절이 끊기지 않는다)
-  const lead = $('#introLead'), words = (HUB ? t('hubLead') : t('introLead', { n: EVENTS.length, p: new Set(EVENTS.map(e => e.place)).size })).split(/(\s+)/);
+  const lead = $('#introLead'), words = t('introLead', { n: EVENTS.length, p: new Set(EVENTS.map(e => e.place)).size }).split(/(\s+)/);
   lead.setAttribute('aria-label', words.join(''));
   lead.innerHTML = words.map((w, i) => /\s/.test(w) ? w : `<span aria-hidden="true" style="--d:${(0.4 + i * 0.07).toFixed(2)}s">${esc(w)}</span>`).join('');
   // 안내 글의 단추 이름은 실제 화면 글씨를 그대로 끌어 쓴다 (언어마다 맞게)
@@ -1455,18 +1453,15 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   // 다른 여정은 그 여정의 주소로, 준비 중인 여정은 후원 안내로
   const share = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="m8.3 10.8 7.4-4.4M8.3 13.2l7.4 4.4"/></svg>';
   $('#seriesList').innerHTML = (d.journey?.series || []).map(j => {
-    const here = j.id === JOURNEY, cls = here && !HUB ? 'now' : j.ready ? 'ready' : 'soon';
+    const here = j.id === JOURNEY, cls = here ? 'now' : j.ready ? 'ready' : 'soon';
     const go = here ? `<button type="button" class="jgo go-start"></button><button type="button" class="jagain go-again" hidden>${esc(t('introRestart'))}</button>`
       : j.ready ? `<a class="jgo" href="${journeyUrl(j.id)}">${esc(t('seriesGo'))} →</a>` : `<button type="button" class="jgo next-open">${esc(t('seriesSoon'))}</button>`;
     return `<li data-journey="${j.id}" class="jcard ${cls}">
       <img class="jicon" src="${j.id === 'jesus' ? 'assets/icon.svg' : `j/${j.id}/icon.svg`}" alt="" width="56" height="56">
-      <div class="jtext"><b>${esc(t(j.title))}</b><small>${esc(t(j.desc))}</small>${here && !HUB ? `<em>${esc(t('seriesNow'))}</em>` : j.n ? `<em>${esc(t('seriesScenes', { n: j.n }))}</em>` : ''}</div>
+      <div class="jtext"><b>${esc(t(j.title))}</b><small>${esc(t(j.desc))}</small>${here ? `<em>${esc(t('seriesNow'))}</em>` : j.n ? `<em>${esc(t('seriesScenes', { n: j.n }))}</em>` : ''}</div>
       <div class="jbtns">${go}${j.ready ? `<button type="button" class="jshare" data-share="${j.id}" aria-label="${esc(t('shareApp'))} — ${esc(t(j.title))}">${share}<span>${esc(t('shareShort'))}</span></button>` : ''}</div></li>`;
   }).join('');
   $$('#seriesList .jshare').forEach(b => b.onclick = () => shareLink(shareOf(b.dataset.share)));
-  // 첫 화면: 여정 하나를 소개하던 머리글을 시리즈 소개로, 시작 단추는 여정 카드로
-  $('#intro').classList.toggle('hub', HUB);
-  if (HUB) $('.intro-tag').textContent = t('hubTag');
   // 첫 시작 화면: 장면 주소로 바로 들어온 때(#e05)와 연출 확인(?beat=)은 건너뛴다
   if (!hashOk && !new URLSearchParams(location.search).has('beat')) showIntro(fromLast > 0 ? fromLast : -1);
   $('.brand').onclick = ev => { ev.preventDefault(); showIntro(state.last && idx > 0 ? idx : -1); }; // 기록을 지운 뒤에는 처음 온 사람처럼
@@ -1500,8 +1495,7 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   $$('.share-app').forEach(b => b.onclick = async () => {
     closePanel();
     // 제목과 주소만 넘긴다 (소개 글은 빼고) — 받는 쪽(카톡·메시지)은 주소로 og 미리보기 카드를 만든다
-    // 첫 화면(시리즈 고르기)이 떠 있으면 시리즈 전체(맨 첫 주소), 여정 안에서는 그 여정의 공유 주소(/jesus, /moses)
-    shareLink(shareOf(HUB && !$('#intro').hidden ? null : JOURNEY));
+    shareLink(shareOf(JOURNEY)); // 그 여정의 공유 주소(/jesus, /moses)
   });
   // 앱으로 설치하기 (첫 화면): 안내 창을 연다. 브라우저가 설치 창을 줄 수 있으면(안드로이드 크롬 등, beforeinstallprompt)
   // '지금 설치하기' 단추 하나로 끝내고, 아이폰은 Safari의 '홈 화면에 추가' 순서를, 그 밖은 브라우저 메뉴 순서를 그림과 함께 보인다
