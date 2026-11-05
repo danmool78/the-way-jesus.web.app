@@ -46,6 +46,9 @@ def build(jid, src, out_dir):
         if os.path.exists(os.path.join(root, 'assets', 'music', '%s.mp3' % music.get(s['id']))):
             e['music'] = music[s['id']]
         assert len(e['story']) == 3 and e['words'] and ('quiz' not in e or len(e['quiz']['options']) == 4), s['id']  # 프롤로그는 퀴즈 없음
+        # 한국어 이야기의 문단별 문장 수: 무대 대본·장면 안 이동은 한국어 문장 번호(p1.2 등)에 걸려 있다.
+        # 번역은 문장 수가 달라, 앱이 번역 문장의 자리를 이 수에 비례해 한국어 문장 번호로 바꿔 무대를 움직인다 (app.js speakQueue)
+        e['sn'] = [len([x for x in re.findall(r'[^.?!…。！？]+[.?!…。！？]*["”’」』]?\s*', p) if x.strip()]) or 1 for p in e['story']]
         for w in e['words']:
             w['j'] = 1 if w['who'] == main else 0  # 주인공 말씀 표시 (번역본에서도 이름 대신 이 표로 가른다)
             if w['who'] == '하나님': w['g'] = 1  # 하나님 말씀: 따로 남성 목소리로 읽는다

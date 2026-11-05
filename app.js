@@ -976,7 +976,10 @@ function speakQueue(items, onDone) {
   const queue = [];
   items.forEach(it => {
     const ss = sentences(it.text).map(s => s.trim()).filter(Boolean);
-    ss.forEach((s, k) => queue.push({ ...it, text: s, s: k, last: k === ss.length - 1 }));
+    // 무대 열쇠(beat.s)는 한국어 문장 번호다. 번역은 문장 수가 달라(it.sn: 한국어 문장 수) 이 문장의 자리를 비례해 한국어 번호들로 바꾼다 —
+    // 문장이 더 많으면 어떤 문장은 열쇠가 없고, 더 적으면 한 문장에서 여러 열쇠가 차례로 나온다. 장면 안 이동(stops)도 같은 번호를 쓴다
+    const n = it.sn, m = ss.length, ks = k => !n || n === m ? [k] : Array.from({ length: Math.ceil((k + 1) * n / m) - Math.ceil(k * n / m) }, (_, i) => Math.ceil(k * n / m) + i);
+    ss.forEach((s, k) => queue.push({ ...it, text: s, s: k, ks: ks(k), last: k === ss.length - 1 }));
   });
   // Gemini 성우로 녹음한 말씀(관리자 페이지에서 고른 것)은 열쇠에 'gemini-'가 붙는다 (voice.mjs의 keyOf)
   queue.forEach(it => { it.clip = voiceKey(`${it.gemini ? 'gemini-' : ''}${it.child ? VOICE_NAME.child : it.jesus ? VOICE_NAME.jesus : it.god ? VOICE_NAME.god : VOICE_NAME.narr}`, it.text); });
@@ -1001,7 +1004,7 @@ function speakQueue(items, onDone) {
     if (pane && pane.hidden) showTab(pane.dataset.pane);
     if (it.el) { it.el.classList.add('speaking'); scrollToEl(it.el); }
     showCaption(it);
-    if (it.beat) stageBeat(it.beat, it.s);
+    if (it.beat) (it.ks || [it.s]).forEach(k => stageBeat(it.beat, k));
     let done = false, guard;
     const advance = d => { if (done) return; done = true; clearTimeout(guard); autoTimer = setTimeout(next, n >= queue.length ? 0 : d); }; // 마지막 문장 뒤에는 쉬지 않고 곧바로 끝낸다 (배경음악이 낭독과 함께 멈추게)
     if (hasClip(it)) {
@@ -1091,7 +1094,7 @@ function sceneScript() {
   // 제목 줄은 '수태고지. 장소, 나사렛. 시기, BC 6년경.'으로 읽는다 (장소와 때를 이름 붙여 알려 준다)
   const items = [{ text: `${e.title}. ${t('sayPlace')}, ${PLACES[e.place].name.replace(/[()·]/g, ' ')}. ${t('sayWhen')}, ${e.when.replace(/\s*·\s*/g, ', ')}.`, el: $('.hero-text', sc), pause: 500, beat: 'intro' }];
   // storyTts: 관리자 페이지에서 Gemini 성우로 고른 해설 문단 번호들
-  e.story.forEach((s, i) => items.push({ text: s, el: $(`[data-para="${i}"]`, sc), gemini: (e.storyTts || []).includes(i), pause: 350, beat: 'p' + i }));
+  e.story.forEach((s, i) => items.push({ text: s, el: $(`[data-para="${i}"]`, sc), gemini: (e.storyTts || []).includes(i), pause: 350, beat: 'p' + i, sn: e.sn?.[i] }));
   return items;
 }
 function speakScene(onDone) { speakQueue(sceneScript(), onDone); sceneReading = true; }
