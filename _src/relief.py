@@ -43,6 +43,26 @@ MESO_GREEN = [[(32.8, 44.6), (32.8, 49.9), (29.2, 49.9), (29.2, 44.6)]]
 # 시내 반도·미디안 바탕(모세와 여호수아 여정): 본 바탕과 애굽 쪽 바탕의 남쪽에 이어 붙인다. app.js 여정 설정(journey.map)의 RELIEF_SOUTH와 같게.
 # 사막이라 비·풀빛 없이(dry) 바위와 모래로만 칠한다. 홍해의 두 만은 지도에서 벡터로 덮는다
 SOUTH = dict(lat0=27.2, lat1=30.15, lng0=31.25, lng1=37.4)  # 북쪽은 수에즈 만 끝(30.0)까지 — 지도에서 다른 바탕들 위에 깐다
+# 시내 광야의 색 (relief-south와 3D 시내·네게브 지역이 함께 쓴다, terrain.js의 OASES와 같게):
+# - 남쪽 시내의 높은 산지와 미디안의 산은 붉은 화강암 — 모래색 대신 붉은 바위빛으로
+# - 오아시스: 샘가의 종려나무 숲 (엘림 와디 가란델, 르비딤 곁 와디 페이란, 가데스 아인 쿠데이랏, 미디안 알바드)
+OASES = [(29.28, 32.97, .02), (28.70, 33.65, .03), (30.65, 34.42, .018), (28.48, 35.0, .02)]
+
+
+def desert_tint(rgb, dem, lat, lng):
+    LA, LO = lat[:, None], lng[None, :]
+    south = np.clip((29.05 - LA) / .2, 0, 1)
+    high = np.clip((dem - 550) / 650, 0, 1)
+    grain = .85 + .3 * vnoise(lat, lng, .05)  # 바위 결: 고르게 칠하지 않는다
+    g = (south * high * grain)[..., None] * .75
+    rgb = rgb * (1 - g) + rgb * np.array([1.0, .74, .64]) * g
+    for a, o, r in OASES:  # 물가는 짙은 종려 초록, 가장자리는 잡음으로 들쭉날쭉
+        d = np.hypot((LA - a) / r, (LO - o) * COS / r) + (vnoise(lat, lng, r / 2) - .5) * .8
+        m = np.clip(1.4 - d, 0, 1)[..., None] * .85
+        rgb = rgb * (1 - m) + np.array([92, 120, 64]) * (rgb / 200) * m
+    return rgb
+
+
 URL = 'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'
 OUT = Path(__file__).resolve().parent.parent / 'assets' / 'relief.webp'
 
@@ -167,6 +187,16 @@ def vnoise(lat, lng, cell):
     return (a * (1 - fx) + b * fx) * (1 - fy) + (c * (1 - fx) + d * fx) * fy
 
 
+def flood(cache, lat, lng):
+    """애굽의 강물 땅이 닿는 높이: 범람원(삼각주 북쪽 약 16m, 남쪽 꼭지로 갈수록 조금 높게)보다 높은 땅은 사막으로 둔다.
+    손으로 찍은 다각형만으로 칠하면 경계가 둥근 덩어리였다 — 이것을 곱하면 경계가 사막 턱을 따라 들쭉날쭉하고,
+    와디 투밀랏은 골짜기 모양대로 가늘어진다. 바탕과 정밀 타일이 같은 값을 갖도록 z10 고도(이미 부드럽다)와 위경도 잡음으로만 정한다"""
+    e = dict(lat0=lat.min() - .01, lat1=lat.max() + .01, lng0=lng.min() - .01, lng1=lng.max() + .01)
+    d = sample(mosaic_for(cache, e, 10), 10, lat, lng)
+    thr = 16 + np.clip(30.9 - lat, 0, None)[:, None] * 18
+    return np.clip((thr - d) / 5 + (vnoise(lat, lng, .01) - .5) * .8, 0, 1)
+
+
 def farmland(lat, lng, polys, lines=NILE, meadow=False):
     """강물로 짓는 밭: (덮는 정도 0~1, 색). 다각형 가장자리는 잡음으로 들쭉날쭉하게, 안은 크고 작은 밭 조각
     (푸른 보리·밀, 누런 밀, 아마, 묵힌 땅)의 조각보, 물줄기에서 1~2km 안은 짙은 초록(대추야자·갈대)"""
@@ -224,7 +254,7 @@ def paint(dem, rain, land, k, farm=None):
     return np.clip(rgb * k[..., None], 0, 255)
 
 
-def base(cache, e, out, green=None, keep='', lines=NILE, dry=False, meadow=False, sea=False):
+def base(cache, e, out, green=None, keep='', lines=NILE, dry=False, meadow=False, sea=False, sinai=False):
     """넓은 바탕 한 장. green: 강·관개로 푸른 땅의 (위도, 경도) 다각형들 — 비가 적어도 초록으로 칠한다(나일 삼각주).
     keep: 투명하게 풀지 않을 가장자리('l','r') — 두 장이 맞닿는 쪽을 둘 다 풀면 그 사이로 바탕색 띠가 보인다"""
     w = round((e['lng1'] - e['lng0']) * COS * 1000 * PX_PER_UNIT)
@@ -246,9 +276,13 @@ def base(cache, e, out, green=None, keep='', lines=NILE, dry=False, meadow=False
         rain = rain_field(np.where(land, dem, 0), lat, np.minimum(first_land, w - 1), w)
     dem = np.where(land, dem, 0)
     farm = farmland(lat, lng, green, lines, meadow) if green else None
+    if green is EGYPT_GREEN:
+        farm = (farm[0] * flood(cache, lat, lng), farm[1])
     if farm is not None and dry:  # 높은 산자락(300m 넘게)은 풀빛을 걷어 바위로
         farm = (farm[0] * np.clip((500 - dem) / 200, 0, 1), farm[1])
-    rgb = paint(dem, rain, land, shading(dem, lat, lng, 2.5), farm)
+    rgb = paint(np.minimum(dem, 1900) if sinai else dem, rain, land, shading(dem, lat, lng, 2.5), farm)  # 시내: 봉우리를 눈빛으로 칠하지 않는다
+    if sinai:
+        rgb = desert_tint(rgb, dem, lat, lng)
     if sea:  # 시내 반도: 홍해의 두 만은 고도 자료의 해안선 그대로 바다색으로 (지도의 바다 색 --sea·--sea-deep과 같게, 깊을수록 짙게)
         raw = sample(mosaic_for(cache, e, Z), Z, lat, lng)
         deep = np.clip(-raw / 900, 0, 1)[..., None]
@@ -272,8 +306,13 @@ def main(cache, only=None):
     cache = Path(cache)
     cache.mkdir(parents=True, exist_ok=True)
     e = EXTENT
+    if only == 'west':  # 애굽 쪽 바탕과 그 정밀 타일만 (`... west`)
+        wlat, wlng, wfirst, wrain, ww, wh = base(cache, WEST, OUT.parent / 'relief-west.webp', green=EGYPT_GREEN, keep='r')
+        wcoast = WEST['lng0'] + (np.minimum(wfirst, ww - 1) + .5) / ww * (WEST['lng1'] - WEST['lng0'])
+        tiles(cache, HI_W, Z_HI, HI_TILE_UNITS, OUT.parent / 'relief-hi-w', 1.8, wlat, wlng, wcoast, wrain, ww, wh, green=EGYPT_GREEN)
+        return
     # 시내 반도·미디안 바탕 (assets/relief-south.webp) — 따로 만들 수 있다 (`... south`)
-    base(cache, SOUTH, OUT.parent / 'relief-south.webp', lines=(), dry=True, sea=True)
+    base(cache, SOUTH, OUT.parent / 'relief-south.webp', lines=(), dry=True, sea=True, sinai=True)
     if only == 'south':
         return
     # 에덴 둘레 바탕 (assets/relief-east.webp) — 홀로 있어 네 가장자리를 모두 풀고, 따로 만들 수 있다 (`... east`)
@@ -316,7 +355,10 @@ def tiles(cache, ext, z, units, out, zf, lat, lng, coast, rain, w, h, green=None
             ix, iy = np.clip(np.floor(FX).astype(int), 0, w - 2), np.clip(np.floor(FY).astype(int), 0, h - 2)
             ax, ay = FX - ix, FY - iy
             train = (rain[iy, ix] * (1 - ax) + rain[iy, ix + 1] * ax) * (1 - ay) + (rain[iy + 1, ix] * (1 - ax) + rain[iy + 1, ix + 1] * ax) * ay
-            trgb = paint(tdem, train, tland, shading(tdem, tlat, tlng, zf), farmland(tlat, tlng, green) if green else None)[1:-1, 1:-1]
+            farm = farmland(tlat, tlng, green) if green else None
+            if green is EGYPT_GREEN:
+                farm = (farm[0] * flood(cache, tlat, tlng), farm[1])
+            trgb = paint(tdem, train, tland, shading(tdem, tlat, tlng, zf), farm)[1:-1, 1:-1]
             f = out / f'{r}_{c}.webp'
             Image.fromarray(trgb.astype(np.uint8), 'RGB').save(f, 'WEBP', quality=70, method=6)
             total += f.stat().st_size
