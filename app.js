@@ -816,7 +816,7 @@ let hereAt = null; // 지금 무대·걷는 사람·카메라가 선 곳 (null�
 const startOf = e => e.start || e.place;
 const here = e => (e === evAt(idx) && hereAt) || e.place;
 window.stagePlaceOf = here; // stage.js·terrain.js가 무대를 붙일 장소
-const setHere = (e, k) => { hereAt = k === e.place ? null : k; };
+const setHere = (e, k) => { hereAt = k === e.place ? null : k; dispatchEvent(new CustomEvent('stage:here', { detail: { to: here(e) } })); }; // 3D 지형 카메라도 따라간다
 function goStop(e, to, walk) {
   cancelAnimationFrame(walkAnim); window.stageHide = false;
   if (walk) return moveWithin(e, here(e), to);
@@ -826,6 +826,7 @@ function moveWithin(e, a, b) {
   const A = PLACES[a], B = PLACES[b], [ax, ay] = P(A), [bx, by] = P(B), dur = reduced() ? 0 : 3200;
   window.stageHide = true; // 걷는 동안 무대는 잠시 숨긴다 (도착하면 그 자리에서 이어 보인다)
   setCard('peek');
+  dispatchEvent(new CustomEvent('stage:here', { detail: { to: b, walk: true } })); // 3D에서는 카메라가 걸어가는 곳으로 미리 날아간다
   banner(`<span class="wk">👣</span><b>${esc(A.name)}</b> → <b>${esc(B.name)}</b>`, dur + 1200);
   const from0 = { ...view }, span = Math.min(1400, Math.max(300, Math.hypot(bx - ax, by - ay) * .9)), t0 = performance.now();
   $('#walker', map).classList.add('moving');

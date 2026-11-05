@@ -371,9 +371,10 @@ const FLAT = new Set(['pool', 'house', 'well', 'synagogue', 'temple', 'gate', 'w
 const FIXED = new Set(['water', 'grass', 'hill', 'tomb', 'temple', 'house', 'rocks', 'figtree', 'synagogue', 'well', 'pool', 'flowers', 'gate', 'field', 'cliffshrine', 'palm', 'walls', 'olive', 'star', 'host', 'rain']);
 // '@at' 명령: 3D 지형에서만 무대 바닥을 다른 실제 지점으로 옮긴다 — 무대 (x, z) 자리가 그 위경도에 오도록.
 // 나사렛 회당에서 낭떠러지로 끌고 가는 대목처럼, 이야기가 근처의 실제 지형으로 옮겨 갈 때. 2D 무대는 그대로 둔다
-let moveAt = null, atSnap = true;
+let moveAt = null, atSnap = true, lastHere = null;
 const center = { x: 0, z: 0 }, home = { x: 0, z: 0 };
 function placeTerrain(T, dt) {
+  if (placeOf(curEv) !== lastHere) { lastHere = placeOf(curEv); atSnap = true; } // 장면 안에서 다른 장소로 옮겨 가면(start·stops) 그 자리로 바로 — 천천히 따라가면 수백 단위를 미끄러졌다
   const ll = script.at || [PLACES[placeOf(curEv)].lat, PLACES[placeOf(curEv)].lng], d0 = T.sceneDist(curEv);
   const s = stageGroup.scale.x, k = oldUnit(T, d0, T.zoomAt(d0, placeOf(curEv)));
   [home.x, home.z] = px(ll);
