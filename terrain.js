@@ -15,7 +15,7 @@ const TREG = {
   galilee: { lat0: 32.55, lat1: 33.45, lng0: 35.0, lng1: 35.95, fade: 'nwe' },
   judea: { lat0: 31.35, lat1: 32.55, lng0: 35.0, lng1: 35.95, fade: 'swe' },
   egypt: { lat0: 29.8, lat1: 31.35, lng0: 30.95, lng1: 32.65, fade: 'nswe' },
-  // 모세 여정만(south): 시내 반도와 그 북쪽 광야(가데스·호르산)는 29.8°에서 맞닿는다. 광야라 나무·마을을 두지 않는다(wild) — 진영은 무대가 세운다
+  // 모세 여정만(south): 시내 반도와 그 북쪽 광야(가데스·호르산)는 29.8°에서 맞닿는다. 광야라 나무·마을을 두지 않고 오아시스에 종려나무만(wild) — 진영은 무대가 세운다
   sinai: { lat0: 28.2, lat1: 29.8, lng0: 32.65, lng1: 35.6, fade: 'swe', south: 1, wild: 1 },
   negev: { lat0: 29.8, lat1: 30.95, lng0: 32.65, lng1: 35.6, fade: 'nwe', south: 1, wild: 1 },
 };
@@ -149,7 +149,7 @@ async function loadRegion(r) {
   r.mesh = new THREE.Mesh(geo, greyable(new THREE.MeshStandardMaterial({ map: mapTex(cImg), roughness: 0.95 })));
   r.mesh.receiveShadow = r.mesh.castShadow = true;
   scene.add(r.mesh);
-  if (!r.wild) { addTrees(r); addVillages(r); } // 광야에는 나무·마을이 없다 (색 그림의 바닷가 물빛을 풀빛으로 읽어 나무가 줄지어 섰다)
+  if (!r.wild) { addTrees(r); addVillages(r); } else addPalms(r); // 광야에는 나무·마을이 없다 (색 그림의 바닷가 물빛을 풀빛으로 읽어 나무가 줄지어 섰다)
   if (r.name === 'galilee') addBoats();
   if (r.name === 'judea') { addModel(buildJerusalem(), JLM, 1); addCityDetail(); }
   if (r.name === 'egypt') Object.values(EGYPT_MODELS).forEach(m => addModel(m.build(), m.extent, 0.6));
@@ -158,7 +158,7 @@ async function loadRegion(r) {
 // 예루살렘 둘레의 초정밀 색(2D 지도의 도성 타일, 지도 단위당 25.6픽셀)을 지형 위에 덧입힌다 —
 // 도성 장면은 바짝 다가가므로 지역 색 그림(단위당 2.2픽셀)으로는 땅이 뭉개져 보였다. 가장자리는 서서히 투명하게
 const RCITY = { lat0: 31.74, lat1: 31.81, lng0: 35.19, lng1: 35.28 }, RCITY_T = 20, RCITY_N = 4; // _src/relief.py의 CITY와 같게
-let cityDone = false;
+let cityDone = false; const models = [];
 async function addCityDetail() {
   cityDone = true;
   const P = 512, imgs = await Promise.all([...Array(RCITY_N * RCITY_N)].map((_, i) => loadImg(`assets/relief-city/${Math.floor(i / RCITY_N)}_${i % RCITY_N}.webp`).catch(() => null)));
@@ -237,6 +237,35 @@ let routes = [];
 
 /* ---------- 나무·마을·배·건물 ---------- */
 let seed = 3; const rnd = () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646;
+// 광야의 오아시스 (위도, 경도, 반지름°): _src/relief.py의 OASES와 같게 — 엘림, 와디 페이란(르비딤), 가데스, 미디안.
+// 샘가에 종려나무 숲. 무대가 서면 그 둘레만 치워져(clearStageSpot) 진영이 숲 가장자리에 선 것처럼 보이게, 숲은 반지름보다 조금 넓게 심는다
+const OASES = [[29.28, 32.97, 0.02], [28.7, 33.65, 0.03], [30.65, 34.42, 0.018], [28.48, 35.0, 0.02]];
+function addPalms(r) {
+  const spots = [];
+  OASES.forEach(([lat, lng, rad]) => {
+    const [ox, oz] = px([lat, lng]), R = rad * 1000 * 1.5;
+    if (!regionAt(ox, oz) || regionAt(ox, oz) !== r) return;
+    for (let g = 0; g < 34; g++) { // 고르게 흩뿌리면 점박이로 보여 숲 덩이(5~12그루)로
+      const a = rnd() * 6.283, d = Math.sqrt(rnd()) * R, gx = ox + Math.cos(a) * d, gz = oz + Math.sin(a) * d;
+      for (let n = 5 + Math.floor(rnd() * 8); n--;) {
+        const x = gx + (rnd() - 0.5) * 4, z = gz + (rnd() - 0.5) * 4;
+        if (heightAt(x, z) >= 0) spots.push([x, z, 0.9 + rnd() * 0.6]); // 바다 위에는 심지 않는다
+      }
+    }
+  });
+  if (!spots.length) return;
+  const trunkM = greyable(new THREE.MeshStandardMaterial({ color: '#7a5f43', roughness: 1 })), crownM = greyable(new THREE.MeshStandardMaterial({ color: '#5f7a3c', roughness: 1, flatShading: true, emissive: '#22301a', emissiveIntensity: 0.6 }));
+  const trunk = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.035, 0.06, 1, 5), trunkM, spots.length), crown = new THREE.InstancedMesh(new THREE.ConeGeometry(0.42, 0.28, 7), crownM, spots.length);
+  const o = new THREE.Object3D(), c = new THREE.Color();
+  spots.forEach(([x, z, s], i) => {
+    const y = heightAt(x, z), h = 1.3 * s;
+    o.position.set(x, y + h / 2, z); o.scale.set(s, h, s); o.rotation.set(0, 0, (rnd() - 0.5) * 0.15); o.updateMatrix(); trunk.setMatrixAt(i, o.matrix);
+    o.position.set(x, y + h, z); o.scale.set(s, s, s); o.rotation.set(Math.PI, rnd() * 6, 0); o.updateMatrix(); crown.setMatrixAt(i, o.matrix); // 뒤집은 원뿔: 아래로 처진 종려 잎
+    crown.setColorAt(i, c.set('#5f7a3c').multiplyScalar(0.85 + rnd() * 0.3));
+  });
+  trunk.castShadow = crown.castShadow = true; scene.add(trunk, crown);
+  clutterInstanced(trunk, true, 0.5); clutterInstanced(crown, true, 0.5); // 진영 바로 곁까지 — 무대 넓이만큼 다 치우면 숲이 고리처럼 남았다
+}
 function addTrees(r) {
   // 초록 기운이 있는 곳(색 그림으로 고른다)에 올리브·떡갈나무 덩이. 넓이에 비례해 심는다
   const img = r.color, cv = document.createElement('canvas'); cv.width = 256; cv.height = Math.round(256 * img.height / img.width);
@@ -270,7 +299,7 @@ function addVillages(r) {
       const dd = Math.hypot(Math.max(CITY.x0 - x, 0, x - CITY.x1), Math.max(CITY.z0 - z, 0, z - CITY.z1)); // 도성 곁(베다니)은 도성 모형의 집과 어울리게 작게
       const b = new THREE.Mesh(geo, m), s = (0.45 + rnd() * 0.4) * (dd < 14 ? 0.3 + 0.7 * dd / 14 : 1); // 집 한 채 50~90m 남짓 — 멀리서도 보이되 무대 인물보다 크지 않게
       b.scale.set(s, s * 0.7, s * (0.8 + rnd() * 0.5)); b.position.set(x, y + s * 0.35, z); b.rotation.y = rnd() * 3; b.castShadow = b.receiveShadow = true;
-      grp.add(b); clutter.meshes.push({ m: b, x, z });
+      grp.add(b); clutter.meshes.push({ m: b, x, z, y0: b.position.y, g0: heightAt(x, z) });
     }
     villages.set(k, grp); scene.add(grp);
   });
@@ -310,17 +339,18 @@ function addModel(group, E, scale) {
   });
   lifts.forEach(([o, h]) => { o.position.y += h; o.castShadow = o.receiveShadow = true; });
   if (E === JLM) city = true;
-  group.traverse(o => { if (o.isInstancedMesh) clutterInstanced(o); }); // 도성의 집·나무, 표지의 대추야자도 무대 자리에서는 비킨다
+  models.push([ox, oz, ex, ez]); // 모형 둘레는 땅을 고르지 않는다 (level)
+  group.traverse(o => { if (o.isInstancedMesh) clutterInstanced(o, false); }); // 도성의 집·나무, 표지의 대추야자도 무대 자리에서는 비킨다
 }
 // 무대가 서는 자리의 집·나무는 잠시 치운다. 무대는 지도 위에 겹쳐 그리는 그림이라, 그 밑의 집·나무가 인물 사이로 삐져나와 보인다.
 // 치우는 넓이는 무대 그림의 크기(화면 px)를 그 자리의 지도 단위로 바꾼 것 — 당기고 물러나면 따라 바뀐다
 let city = false;
-const clutter = { inst: [], meshes: [] }, ZERO = new THREE.Matrix4().makeScale(0, 0, 0);
-function clutterInstanced(o) {
+const clutter = { inst: [], meshes: [] }, ZERO = new THREE.Matrix4().makeScale(0, 0, 0), M4 = new THREE.Matrix4();
+function clutterInstanced(o, follow = true, near = 1) { // follow: 땅을 고를 때 높이를 따라간다 (모형 안의 것은 모형과 함께 제자리)
   o.updateMatrixWorld(true);
   const ms = [], xz = [], m = new THREE.Matrix4(), w = new THREE.Vector3();
   for (let i = 0; i < o.count; i++) { o.getMatrixAt(i, m); ms.push(m.clone()); w.setFromMatrixPosition(m).applyMatrix4(o.matrixWorld); xz.push([w.x, w.z]); }
-  clutter.inst.push({ o, ms, xz });
+  clutter.inst.push({ o, ms, xz, near, g0: follow && xz.map(([x, z]) => heightAt(x, z)) }); // near: 무대 반지름의 몇 배 안을 치우나
   cleared = null; // 새로 생긴 것도 한 번 따져 본다
 }
 let cleared = null;
@@ -341,7 +371,8 @@ function level(cx, cz, r) {
   const y0 = heightAt(cx, cz);
   if (standAt(cx, cz) > y0 + 0.01) return;
   const R0 = r * 1.25, R1 = r * 2.2, [qx0, qz0] = px([RCITY.lat1, RCITY.lng0]), [qx1, qz1] = px([RCITY.lat0, RCITY.lng1]);
-  if (cityDone && cx + R1 > qx0 && cx - R1 < qx1 && cz + R1 > qz0 && cz - R1 < qz1) return; // 예루살렘 둘레의 초정밀 색 판은 땅 높이를 미리 따라 지었다 (베다니)
+  const near = ([x0, z0, x1, z1]) => cx + R1 > x0 && cx - R1 < x1 && cz + R1 > z0 && cz - R1 < z1;
+  if ((cityDone && near([qx0, qz0, qx1, qz1])) || models.some(near)) return; // 예루살렘 둘레의 초정밀 색 판(베다니)과 도성·애굽 표지 모형은 땅 높이를 미리 따라 지었다
   regions.forEach(rg => {
     if (!rg.heights || cx + R1 < rg.X0 || cx - R1 > rg.X1 || cz + R1 < rg.Z0 || cz - R1 > rg.Z1) return;
     const H = rg.heights, w = rg.hw, sx = (rg.X1 - rg.X0) / (w - 1), sz = (rg.Z1 - rg.Z0) / (rg.hh - 1), ks = [], orig = [];
@@ -370,8 +401,12 @@ function clearStageSpot() {
   if (cleared && Math.abs(cleared.cx - cx) < 0.01 && Math.abs(cleared.cz - cz) < 0.01 && Math.abs(cleared.r - r) <= cleared.r * 0.08) return;
   if (!leveled || Math.hypot(leveled.cx - cx, leveled.cz - cz) > Math.max(r, leveled.r) * 0.25 || Math.abs(leveled.r - r) > leveled.r * 0.08) level(cx, cz, r);
   cleared = { cx, cz, r };
-  clutter.meshes.forEach(({ m, x, z }) => { m.visible = Math.hypot(x - cx, z - cz) > r; });
-  clutter.inst.forEach(({ o, ms, xz }) => { ms.forEach((m, i) => o.setMatrixAt(i, Math.hypot(xz[i][0] - cx, xz[i][1] - cz) > r ? m : ZERO)); o.instanceMatrix.needsUpdate = true; });
+  // 무대 밑 땅을 고른 둘레의 나무·집은 고른 땅 높이를 따라 올리고 내린다 (g0: 심을 때의 땅 높이)
+  clutter.meshes.forEach(c => { c.m.visible = Math.hypot(c.x - cx, c.z - cz) > r; c.m.position.y = c.y0 + heightAt(c.x, c.z) - c.g0; });
+  clutter.inst.forEach(({ o, ms, xz, g0, near }) => { ms.forEach((m, i) => { const [x, z] = xz[i];
+    if (Math.hypot(x - cx, z - cz) <= r * near) return o.setMatrixAt(i, ZERO);
+    const dy = g0 ? heightAt(x, z) - g0[i] : 0; o.setMatrixAt(i, dy ? M4.copy(m).setPosition(m.elements[12], m.elements[13] + dy, m.elements[14]) : m); });
+  o.instanceMatrix.needsUpdate = true; });
 }
 
 /* ---------- 걷는 사람 (2D 지도의 걷는 표시를 3D로) ----------

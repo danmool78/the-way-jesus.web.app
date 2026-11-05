@@ -42,7 +42,7 @@ def dry_color(cache, e, size):
     lng = e['lng0'] + (np.arange(w) + .5) / w * (e['lng1'] - e['lng0'])
     lat = e['lat1'] - (np.arange(h) + .5) / h * (e['lat1'] - e['lat0'])
     dem = R.sample(R.mosaic_for(Path(cache), e, 11), 11, lat, lng)
-    rgb = R.paint(np.minimum(dem, 1900), np.zeros_like(dem), np.ones_like(dem), R.shading(dem, lat, lng, 1.8))
+    rgb = R.desert_tint(R.paint(np.minimum(dem, 1900), np.zeros_like(dem), np.ones_like(dem), R.shading(dem, lat, lng, 1.8)), dem, lat, lng)  # 붉은 화강암 산지·오아시스
     sea = gulf(cache, e, lat, lng)
     deep = np.clip(-sea / 900, 0, 1)[..., None]
     rgb = np.where((sea < -6)[..., None], np.array([143, 178, 180]) * (1 - deep) + np.array([111, 151, 160]) * deep, rgb)
