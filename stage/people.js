@@ -622,7 +622,7 @@ function makePerson(type) {
   const baby = new THREE.Group();
   mesh(new THREE.CapsuleGeometry(0.045, 0.1, 6, 12), mat('#f2ead8'), baby).rotation.z = Math.PI / 2;
   mesh(sphere(0.04, 14, 10), mat(SKIN[2]), baby, [0.08, 0.01, 0]);
-  baby.position.set(0, 0.47, 0.12);
+  baby.position.set(0, 0.565, 0.15); // 굽힌 두 팔뚝(높이 약 0.5~0.52) 위에 얹힌다 — 0.47에선 팔 밑에 매달려 보였다
   baby.visible = false;
   upper.add(baby);
   // 잠자리 깔개 (누운 자세에서만)
