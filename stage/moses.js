@@ -184,16 +184,16 @@ export const MOSES = {
       'p1.0': [['moses', 'idle', { x: -0.05, z: 0.08, look: 1 }]],
       'p1.1': [['moses', 'afraid', { look: 1 }]],
       // 신을 벗고, 얼굴을 가린다
-      'p1.5': [['moses', 'kneel', { look: 1 }], ['moses', 'bow', { delay: 2200 }]],
-      'p1.7': [['moses', 'kneel', { look: 1 }]],
+      'p1.7': [['moses', 'kneel', { look: 1 }], ['moses', 'bow', { delay: 2200 }]],
+      'p1.10': [['moses', 'kneel', { look: 1 }]],
       // 이제 가거라, 너를 바로에게 보내겠다
       'p2.0': [['moses', 'listen', { look: 1 }]],
       // 제가 누구라고
-      'p2.3': [['moses', 'shrug', { look: 1 }]],
-      'p2.4': [['moses', 'idle', { x: -0.3, z: 0.12, look: 1 }]],
+      'p2.4': [['moses', 'shrug', { look: 1 }]],
+      'p2.5': [['moses', 'idle', { x: -0.3, z: 0.12, look: 1 }]],
       // 지팡이가 뱀이 되는 표적
-      'p2.9': [['serpent', 'hiss', { show: 1 }], ['moses', 'afraid', { look: 0.3 }], ['serpent', 'rest', { show: 0, delay: 3800 }], ['moses', 'listen', { look: 1, delay: 4200 }]],
-      'p2.11': [['moses', 'bow', { look: 1 }]],
+      'p2.10': [['serpent', 'hiss', { show: 1 }], ['moses', 'afraid', { look: 0.3 }], ['serpent', 'rest', { show: 0, delay: 3800 }], ['moses', 'listen', { look: 1, delay: 4200 }]],
+      'p2.12': [['moses', 'bow', { look: 1 }]],
       w0: [['moses', 'listen', { look: 1 }]],
       w1: [['moses', 'listen', { look: 1 }]],
       w2: [['moses', 'listen', { look: 1 }]],
@@ -313,10 +313,10 @@ export const MOSES = {
         ['father', 'break', { item: null }], ['mom', 'listen'], ['kid', 'listen'], ['h2', 'listen']],
       intro: [['@env', 'dusk'], ['house', 'idle'], ['house2', 'idle'], ['lamb', null, { show: 1 }], ['fire', null, { show: 0 }], ['folk', null, { show: 0 }], ['moses', 'idle', { show: 0 }], ['aaron', 'idle', { show: 0 }], ['pharaoh', 'idle', { show: 0 }],
         ['father', 'idle', { x: -0.6, z: 0.1, look: 0.5 }], ['mom', 'idle', { x: -0.15, z: -0.05, look: -0.6 }], ['kid', 'idle', { x: -0.45, z: -0.15 }], ['h2', 'idle', { show: 0 }]],
-      'p0.2': [['father', 'kneel', { x: -0.3, z: 0.25, look: 0.6 }]],
+      'p0.3': [['father', 'kneel', { x: -0.3, z: 0.25, look: 0.6 }]],
       // 우슬초에 피를 적셔 문설주와 인방에
-      'p0.3': [['lamb', null, { show: 0 }], ['father', 'idle', { x: -0.55, z: -0.08, look: 2.8 }], ['father', 'raise', { delay: 2200 }], ['house', 'blood', { delay: 2600 }], ['house2', 'blood', { delay: 3400 }]],
-      'p0.4': [['father', 'idle', { look: 0.4 }]],
+      'p0.4': [['lamb', null, { show: 0 }], ['father', 'idle', { x: -0.55, z: -0.08, look: 2.8 }], ['father', 'raise', { delay: 2200 }], ['house', 'blood', { delay: 2600 }], ['house2', 'blood', { delay: 3400 }]],
+      'p0.5': [['father', 'idle', { look: 0.4 }]],
       // 그 밤: 허리띠를 매고 지팡이를 쥔 채 서서 먹는다
       'p1.0': [['@env', 'night'], ['fire', null, { show: 1 }], ['h2', 'idle', { show: 1 }], ['father', 'break', { x: -0.6, z: 0.1, look: 0.5 }], ['mom', 'listen'], ['kid', 'listen']],
       // 한밤중의 통곡 — 집 안의 식구들은 엎드려 기도한다
@@ -361,9 +361,9 @@ export const MOSES = {
       'p0.3': [['moses', 'idle', { look: 0.8 }]],
       // 요셉의 유골 상자를 챙긴다
       'p1.0': [['bearer', 'idle', { item: 'gift' }], ['moses', 'listen', { look: -1, to: 'bearer' }]],
-      'p1.4': [['tent', null, { show: 1 }], ['tent2', null, { show: 1 }]],
+      'p1.5': [['tent', null, { show: 1 }], ['tent2', null, { show: 1 }]],
       // 낮에는 구름 기둥, 밤에는 불 기둥
-      'p1.5': [['pillar', 'cloud', { show: 1 }], ['moses', 'look-up', { look: 0.8 }], ['@env', 'night', { delay: 4500 }], ['pillar', 'fire', { delay: 4500 }]],
+      'p1.6': [['pillar', 'cloud', { show: 1 }], ['moses', 'look-up', { look: 0.8 }], ['@env', 'night', { delay: 4500 }], ['pillar', 'fire', { delay: 4500 }]],
       'p2.0': [['folk', null, { x: -0.35 }]],
       // 길을 되돌려 바닷가에 진을 친다
       'p2.2': [['@env', 'day'], ['pillar', 'cloud'], ['moses', 'point', { look: -1.2 }]],
@@ -403,10 +403,10 @@ export const MOSES = {
       'p0.3': [['car1', null, { show: 1, x: -1.85 }], ['car2', null, { show: 1, x: -2.05 }]],
       'p0.4': [['man', 'afraid', { look: -1.2 }], ['wom', 'afraid', { look: -1.2 }]],
       'p0.5': [['aaron', 'afraid', { look: -1 }]],
-      'p1.0': [['man', 'rebuke', { to: 'moses' }]],
-      'p1.1': [['moses', 'raise', { look: -0.8 }]],
+      'p1.1': [['man', 'rebuke', { to: 'moses' }]],
+      'p1.2': [['moses', 'raise', { look: -0.8 }]],
       // 구름 기둥이 진 뒤로 옮겨 가 밤을 가른다
-      'p1.4': [['@env', 'night'], ['pillar', 'fire', { show: 1, x: -1.55, z: -0.15 }], ['car1', null, { x: -1.95 }], ['car2', null, { x: -2.15 }], ['man', 'idle'], ['wom', 'idle'], ['aaron', 'idle', { look: 1 }]],
+      'p1.5': [['@env', 'night'], ['pillar', 'fire', { show: 1, x: -1.55, z: -0.15 }], ['car1', null, { x: -1.95 }], ['car2', null, { x: -2.15 }], ['man', 'idle'], ['wom', 'idle'], ['aaron', 'idle', { look: 1 }]],
       // 손을 내밀자 밤새 동풍 — 물이 갈라진다
       'p2.0': [['moses', 'raise', { look: 1 }], ['sea', 'part', { delay: 1200 }]],
       // 좌우에 벽처럼 선 물 사이로
@@ -487,9 +487,9 @@ export const MOSES = {
       'p0.2': [['man', 'mourn'], ['wom', 'mourn']],
       // 마라의 물 — 마셔 보지만 쓰다
       'p1.1': [['man', 'kneel', { x: 0.15, z: 0.35, look: 0.6 }], ['man', 'shrug', { delay: 2600 }]],
-      'p1.2': [['man', 'rebuke', { to: 'moses' }], ['wom', 'rebuke', { to: 'moses' }]],
+      'p1.3': [['man', 'rebuke', { to: 'moses' }], ['wom', 'rebuke', { to: 'moses' }]],
       // 주께 부르짖자 나무를 보여 주신다 — 물에 던지니 단 물로
-      'p1.3': [['moses', 'pray', { look: 0.4 }], ['moses', 'idle', { x: 0.0, z: 0.0, look: 1, delay: 2400 }], ['moses', 'raise', { delay: 3800 }], ['light', null, { show: 1, delay: 4200 }], ['light', null, { show: 0, delay: 7500 }],
+      'p1.4': [['moses', 'pray', { look: 0.4 }], ['moses', 'idle', { x: 0.0, z: 0.0, look: 1, delay: 2400 }], ['moses', 'raise', { delay: 3800 }], ['light', null, { show: 1, delay: 4200 }], ['light', null, { show: 0, delay: 7500 }],
         ['man', 'kneel', { delay: 5200 }], ['wom', 'idle', { delay: 5200 }]],
       'p2.0': [['moses', 'speak', { look: -0.8 }], ['man', 'listen'], ['wom', 'listen']],
       // 엘림: 샘 열두 곳과 종려나무 일흔 그루
@@ -639,9 +639,9 @@ export const MOSES = {
       'p0.1': [['jethro', 'idle', { show: 1, x: 0.45, z: 0.05 }], ['zip', 'idle', { show: 1, x: 0.7, z: 0.25 }], ['son1', 'idle', { show: 1, x: 0.75, z: -0.05 }], ['son2', 'idle', { show: 1, x: 0.95, z: 0.35 }]],
       // 나가서 절하고 입 맞추고, 주께서 하신 일을 들려준다
       'p0.2': [['moses', 'idle', { x: 0.15, z: 0.05, look: 1 }], ['moses', 'bow', { delay: 2200 }], ['moses', 'speak', { to: 'jethro', delay: 4200 }]],
-      'p1.1': [['moses', 'idle'], ['jethro', 'raise', { look: -1 }]],
+      'p1.2': [['moses', 'idle'], ['jethro', 'raise', { look: -1 }]],
       // 번제를 드리고, 장로들과 하나님 앞에서 빵을 먹는다
-      'p1.4': [['altar', 'fire'], ['elders', null, { show: 1 }], ['jethro', 'pray', { look: -0.5 }], ['aaron', 'sit-ground']],
+      'p1.5': [['altar', 'fire'], ['elders', null, { show: 1 }], ['jethro', 'pray', { look: -0.5 }], ['aaron', 'sit-ground']],
       // 이튿날 — 송사를 홀로 듣는 모세
       'p2.0': [['altar', 'idle'], ['elders', null, { show: 0 }], ['aaron', 'idle'], ['zip', 'idle', { x: 1.2, z: -0.3 }], ['son1', 'idle', { x: 1.35, z: -0.4 }], ['son2', 'idle', { x: 1.45, z: -0.2 }],
         ['moses', 'sit', { x: -0.4, z: 0.1, look: 1 }], ['folk', null, { show: 1 }], ['jethro', 'idle', { x: -0.85, z: 0.25, look: 0.6 }]],
@@ -795,12 +795,12 @@ export const MOSES = {
       // 앞서 갈 신을 만들어 달라
       'p0.3': [['man', 'rebuke', { to: 'aaron' }], ['wom', 'point', { look: -1 }]],
       'p0.5': [['fire', null, { show: 1 }], ['aaron', 'kneel', { look: 0.8 }], ['calf', null, { show: 1, delay: 3000 }], ['aaron', 'idle', { delay: 3500 }]],
-      'p1.0': [['aaron', 'raise', { look: 0.6 }]],
+      'p1.1': [['aaron', 'raise', { look: 0.6 }]],
       // 먹고 마시며 일어나 뛰논다
-      'p1.2': [['man', 'raise', { x: 0.65, z: 0.1 }], ['wom', 'raise', { x: 0.85, z: 0.2, delay: 400 }], ['wom2', 'raise', { x: 0.55, z: 0.3, delay: 800 }],
+      'p1.3': [['man', 'raise', { x: 0.65, z: 0.1 }], ['wom', 'raise', { x: 0.85, z: 0.2, delay: 400 }], ['wom2', 'raise', { x: 0.55, z: 0.3, delay: 800 }],
         ['man', 'raise', { x: 0.85, z: -0.05, delay: 3000 }], ['wom', 'raise', { x: 1.05, z: 0.25, delay: 3400 }], ['wom2', 'raise', { x: 0.4, z: 0.2, delay: 3800 }]],
       // 산 위에서 엎드려 비는 모세 (멀리)
-      'p1.4': [['moses', 'pray', { show: 1, look: 0.4 }]],
+      'p1.5': [['moses', 'pray', { show: 1, look: 0.4 }]],
       // 돌판을 들고 내려온다
       'p2.0': [['joshua', 'idle', { show: 1 }], ['moses', 'idle', { x: -0.85, z: 0.0, look: 1 }], ['joshua', 'idle', { x: -1.1, z: -0.1, look: 1 }], ['man', 'idle'], ['wom', 'idle'], ['wom2', 'idle']],
       // 돌판을 깨뜨리고, 송아지를 불사른다
@@ -833,9 +833,9 @@ export const MOSES = {
       'p0.1': [['moses', 'pray', { look: 0.6 }]],
       'p0.4': [['moses', 'look-up', { look: 0.6 }]],
       // 바위 틈에 두고 손으로 덮어 주신다
-      'p1.2': [['moses', 'idle', { x: -0.22, z: -0.05, look: 1 }]],
+      'p1.3': [['moses', 'idle', { x: -0.22, z: -0.05, look: 1 }]],
       // 새 돌판 둘을 들고 새벽 어스름에 홀로
-      'p1.3': [['@env', 'dawn'], ['moses', 'idle', { item: 'tablets' }]],
+      'p1.4': [['@env', 'dawn'], ['moses', 'idle', { item: 'tablets' }]],
       // 구름 가운데 내려와 그 앞을 지나가신다
       'p2.0': [['glory', null, { show: 1, x: 1.0 }], ['glory', null, { x: -1.2, delay: 1500 }], ['moses', 'bow', { delay: 1000 }]],
       'p2.2': [['moses', 'kneel', { look: 1 }], ['glory', null, { show: 0, delay: 4000 }]],
@@ -955,14 +955,14 @@ export const MOSES = {
       'p0.0': [['moses', 'speak', { to: 'joshua' }]],
       'p0.1': [['moses', 'bless', { to: 'joshua' }], ['joshua', 'bow']],
       // 사십 일 동안 그 땅을 살핀다 (무대를 떠났다가)
-      'p0.3': [['moses', 'idle'], ['joshua', 'idle', { x: 1.8, z: 0.1 }], ['caleb', 'idle', { x: 1.9, z: 0.3 }], ['spies', null, { x: 1.9, show: 0 }], ['joshua', 'idle', { show: 0, delay: 3200 }], ['caleb', 'idle', { show: 0, delay: 3200 }]],
+      'p0.4': [['moses', 'idle'], ['joshua', 'idle', { x: 1.8, z: 0.1 }], ['caleb', 'idle', { x: 1.9, z: 0.3 }], ['spies', null, { x: 1.9, show: 0 }], ['joshua', 'idle', { show: 0, delay: 3200 }], ['caleb', 'idle', { show: 0, delay: 3200 }]],
       // 두 사람이 막대에 꿴 포도송이를 메고 돌아온다
       'p1.0': [['grapes', null, { show: 1, x: 0.68, z: 0.2 }], ['sp1', 'idle', { show: 1, x: 0.45, z: 0.2 }], ['sp2', 'idle', { show: 1, x: 0.9, z: 0.2 }], ['folk', null, { show: 1 }],
         ['joshua', 'idle', { show: 1, x: 0.0, z: 0.15, look: -0.8 }], ['caleb', 'idle', { show: 1, x: 0.25, z: 0.35, look: -0.8 }]],
-      'p1.2': [['moses', 'raise', { look: 1 }]],
+      'p1.3': [['moses', 'raise', { look: 1 }]],
       // 열 사람은 메뚜기 같았다고 — 갈렙만이 올라가자
-      'p1.3': [['moses', 'idle'], ['sp1', 'shrug', { look: -1 }], ['sp2', 'afraid', { look: -1 }]],
-      'p1.4': [['caleb', 'raise', { to: 'moses' }]],
+      'p1.4': [['moses', 'idle'], ['sp1', 'shrug', { look: -1 }], ['sp2', 'afraid', { look: -1 }]],
+      'p1.5': [['caleb', 'raise', { to: 'moses' }]],
       // 밤새 운다
       'p2.0': [['@env', 'night'], ['sp1', 'mourn'], ['sp2', 'mourn'], ['caleb', 'idle']],
       'p2.1': [['sp1', 'rebuke', { to: 'moses' }]],
@@ -1198,9 +1198,9 @@ export const MOSES = {
       // 나귀에 안장을 얹고 길을 나선다
       'p1.0': [['prince', 'idle', { x: 1.25, z: 0.25, look: -1 }], ['donkey', null, { x: -0.55, z: 0.15 }]],
       // 칼을 든 천사가 길을 막는다 — 나귀가 주저앉는다
-      'p1.1': [['angel', 'idle', { show: 1 }], ['sword', null, { show: 1 }], ['donkey', null, { x: -0.65, z: 0.25 }]],
-      'p1.3': [['balaam', 'rebuke', { look: 1 }]],
-      'p1.7': [['balaam', 'afraid', { board: null, x: -0.3, z: 0.3, look: 1 }], ['balaam', 'kneel', { delay: 2500 }]],
+      'p1.2': [['angel', 'idle', { show: 1 }], ['sword', null, { show: 1 }], ['donkey', null, { x: -0.65, z: 0.25 }]],
+      'p1.4': [['balaam', 'rebuke', { look: 1 }]],
+      'p1.8': [['balaam', 'afraid', { board: null, x: -0.3, z: 0.3, look: 1 }], ['balaam', 'kneel', { delay: 2500 }]],
       // 높은 곳의 일곱 제단
       'p2.0': [['angel', 'idle', { show: 0 }], ['sword', null, { show: 0 }], ['altar1', 'fire', { show: 1 }], ['altar2', 'fire', { show: 1 }], ['altar3', 'fire', { show: 1 }], ['balaam', 'idle', { x: 0.35, z: 0.05, look: -1.6 }], ['balak', 'idle', { x: 0.75, z: 0.15, look: -0.8 }]],
       // 저주 대신 축복
@@ -1341,8 +1341,8 @@ export const MOSES = {
       // 해 질 녘 왕의 사람들이 문을 두드린다
       'p0.4': [['@env', 'dusk'], ['g1', 'idle', { show: 1, x: -0.2, z: 0.1 }], ['g2', 'idle', { show: 1, x: -0.45, z: 0.25 }], ['sp1', 'idle', { show: 0 }], ['sp2', 'idle', { show: 0 }], ['g1', 'rebuke', { to: 'rahab', delay: 2500 }]],
       // 지붕의 삼대 밑에 숨기고 둘러댄다 — 추격자들은 요단 쪽(오른쪽)으로
-      'p1.2': [['rahab', 'point', { look: 1.3 }], ['g1', 'idle', { x: 1.8, z: 0.4, delay: 2500 }], ['g2', 'idle', { x: 1.9, z: 0.5, delay: 2600 }], ['g1', 'idle', { show: 0, delay: 6000 }], ['g2', 'idle', { show: 0, delay: 6000 }]],
-      'p1.4': [['@env', 'night'], ['sp1', 'idle', { show: 1, x: 0.25, z: 0.2 }], ['sp2', 'idle', { show: 1, x: 0.85, z: 0.25 }], ['rahab', 'speak', { to: 'sp1' }]],
+      'p1.3': [['rahab', 'point', { look: 1.3 }], ['g1', 'idle', { x: 1.8, z: 0.4, delay: 2500 }], ['g2', 'idle', { x: 1.9, z: 0.5, delay: 2600 }], ['g1', 'idle', { show: 0, delay: 6000 }], ['g2', 'idle', { show: 0, delay: 6000 }]],
+      'p1.5': [['@env', 'night'], ['sp1', 'idle', { show: 1, x: 0.25, z: 0.2 }], ['sp2', 'idle', { show: 1, x: 0.85, z: 0.25 }], ['rahab', 'speak', { to: 'sp1' }]],
       // 창문으로 밧줄을 내려 성 밖으로
       'p2.0': [['sp1', 'idle', { x: 0.6, z: 0.45, look: -1 }], ['sp2', 'idle', { x: 0.85, z: 0.5, look: -1 }]],
       'p2.2': [['city', 'cord'], ['sp1', 'point', { look: 3 }]],
