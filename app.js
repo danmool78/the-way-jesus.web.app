@@ -1200,7 +1200,9 @@ function bgmPlay(cue, s = BGM.fade) {
   bgmRamp(from, 0, wait || s);
   setTimeout(() => { if (from !== bgmPlayers[bgmCur]) from.el.pause(); }, (wait || s) * 1000 + 100);
   bgmCur = 1 - bgmCur; bgmCue = cue; bgmLoop = null;
-  if (!to.el.src.endsWith(`/${cue}.mp3`)) to.el.src = `assets/music/${cue}.mp3`;
+  // cue는 '곡?v=해시'(build.py) — 해시가 바뀌면 다시 받는다
+  const [name, ver] = cue.split('?'), src = `assets/music/${name}.mp3${ver ? '?' + ver : ''}`;
+  if (!to.el.src.endsWith(src)) to.el.src = src;
   to.el.pause(); to.el.currentTime = 0; to.wait = !!wait;
   const start = () => { to.wait = false; if (go !== bgmGo) return; to.el.play().catch(() => {}); bgmRamp(to, BGM.level, wait ? BGM.out : s); };
   if (wait) setTimeout(start, wait * 1000 + 200); else start();
