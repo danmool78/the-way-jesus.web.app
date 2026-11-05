@@ -912,7 +912,7 @@ const sentences = text => text.match(/[^.?!…。！？]+[.?!…。！？]*["”
 const VOICE_NAME = { narr: 'Aoede', jesus: 'Algenib', god: 'Charon', child: 'Leda' }; // god: 프롤로그의 하나님 말씀 (예수님과 다른 남성 목소리), child: 열두 살 소년 예수 (words의 voice: 'child')
 const voiceKey = (voice, text) => { let h = 0x811c9dc5; for (const c of `${voice}|${text}`) { h ^= c.codePointAt(0); h = Math.imul(h, 0x01000193) >>> 0; } return h.toString(36); };
 let voiceIndex = {};
-if (LANG === 'ko' && JOURNEY === 'jesus') fetch('assets/voice/ko/index.json').then(r => r.ok ? r.json() : {}).then(j => { voiceIndex = j; }).catch(() => {});
+if (LANG === 'ko') fetch('assets/voice/ko/index.json').then(r => r.ok ? r.json() : {}).then(j => { voiceIndex = j; }).catch(() => {});
 const voiceAudio = new Audio();
 // 녹음 파일은 오래 캐시한다(immutable). 같은 열쇠로 다시 녹음하면 길이가 달라지므로, 길이를 주소에 붙여 새 파일을 받게 한다
 const voiceUrl = clip => `assets/voice/ko/${clip}.mp3?v=${voiceIndex[clip] || 0}`;
@@ -941,7 +941,9 @@ function speakQueue(items, onDone) {
   });
   // Gemini 성우로 녹음한 말씀(관리자 페이지에서 고른 것)은 열쇠에 'gemini-'가 붙는다 (voice.mjs의 keyOf)
   queue.forEach(it => { it.clip = voiceKey(`${it.gemini ? 'gemini-' : ''}${it.child ? VOICE_NAME.child : it.jesus ? VOICE_NAME.jesus : it.god ? VOICE_NAME.god : VOICE_NAME.narr}`, it.text); });
-  const recorded = LANG === 'ko' && queue.length > 0 && queue.every(it => voiceIndex[it.clip]);
+  // 녹음이 있는 문장은 녹음으로, 없는 문장은 브라우저 음성으로 (다른 여정은 해설만 녹음 — 말씀은 기기 음성)
+  const hasClip = it => LANG === 'ko' && !!voiceIndex[it.clip];
+  const recorded = queue.length > 0 && queue.every(hasClip);
   // 녹음으로 읽는 장면이면 브라우저 음성이 없어도 안내하지 않는다
   if (!recorded && !useVoice && !warnedNoVoice) {
     warnedNoVoice = true;
@@ -963,7 +965,7 @@ function speakQueue(items, onDone) {
     if (it.beat) stageBeat(it.beat, it.s);
     let done = false, guard;
     const advance = d => { if (done) return; done = true; clearTimeout(guard); autoTimer = setTimeout(next, n >= queue.length ? 0 : d); }; // 마지막 문장 뒤에는 쉬지 않고 곧바로 끝낸다 (배경음악이 낭독과 함께 멈추게)
-    if (recorded) {
+    if (hasClip(it)) {
       const gap = (!it.last ? VOICE_GAP.sentence : it.beat === 'intro' ? VOICE_GAP.intro : VOICE_GAP.item) / rate;
       // 감시 타이머는 실제로 소리가 나기 시작할 때부터 남은 길이로 잰다 (받는 중·버퍼링 시간은 빼고).
       // 15초가 지나도 시작하지 못하면 그 문장은 건너뛴다

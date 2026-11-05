@@ -1,5 +1,6 @@
 // 배경음악: _src/music.json의 곡(cue)마다 Lyria 3 Clip으로 30초 반복 곡을 만든다 (리딩북의 makeCue와 같은 방식).
 // 쓰는 법: GEMINI_API_KEY=... node _src/tools/music.mjs [곡 …|all]   (아무것도 안 주면 아직 없는 곡만)
+//   다른 여정: node _src/tools/music.mjs --j moses [곡 …|all] — _src/journeys/<여정>/music.json (곡 이름은 여정끼리 겹치지 않게)
 // 결과: assets/music/<곡>.mp3 — 곡마다 소리 크기를 맞추고(-20 LUFS) 112kbps로 다시 눌러 담는다. 그 뒤 python3 _src/build.py.
 // 한 곡에 약 $0.04. 키는 저장소에 두지 않는다
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
@@ -10,15 +11,16 @@ const KEY = process.env.GEMINI_API_KEY;
 if (!KEY) { console.error('GEMINI_API_KEY 환경변수가 없습니다'); process.exit(1); }
 const MODEL = 'lyria-3-clip-preview', OUT = 'assets/music', TMP = '/tmp/music';
 
-const score = JSON.parse(await readFile('_src/music.json', 'utf8'));
-const args = process.argv.slice(2);
+const argv = process.argv.slice(2), ji = argv.indexOf('--j'), J = ji >= 0 ? argv[ji + 1] : 'jesus';
+const args = ji >= 0 ? argv.filter((_, i) => i !== ji && i !== ji + 1) : argv;
+const score = JSON.parse(await readFile(J === 'jesus' ? '_src/music.json' : `_src/journeys/${J}/music.json`, 'utf8'));
 const cues = Object.keys(score.cues).filter(c => args.includes('all') || args.includes(c) || (!args.length && !existsSync(`${OUT}/${c}.mp3`)));
 const unknown = args.filter(a => a !== 'all' && !score.cues[a]);
 if (unknown.length) { console.error('없는 곡:', unknown.join(' ')); process.exit(1); }
 await mkdir(OUT, { recursive: true }); await mkdir(TMP, { recursive: true });
 
 // 낭독 밑에 깔리므로: 목소리 음역을 비우고, 처음과 끝의 기운을 같게 해 끝이 처음으로 이어지게
-const prompt = cue => `Instrumental, no vocals, a 30-second seamless loop for the background of a narrated Bible story. Setting: ${score.setting}. ${score.cues[cue].sound} It keeps one steady feeling throughout, begins and ends at the same energy so the end flows back into the start, no intro, no fade, no ending flourish, no loud hits; restrained, sparse in the voice range so a narrator is heard clearly above it. Tasteful, high-quality acoustic recording.`;
+const prompt = cue => `Instrumental, no vocals, a 30-second seamless loop for the background of ${score.frame || 'a narrated Bible story'}. Setting: ${score.setting}. ${score.cues[cue].sound} It keeps one steady feeling throughout, begins and ends at the same energy so the end flows back into the start, no intro, no fade, no ending flourish, no loud hits; restrained, sparse in the voice range so a narrator is heard clearly above it. ${score.tail || 'Tasteful, high-quality acoustic recording.'}`; // frame·tail: 여정마다 곡의 결 (모세 여정은 현대 다큐멘터리 영화음악 — 'Bible story'라고 하면 옛 민속 악기 쪽으로 기울었다)
 
 for (const cue of cues) {
   process.stdout.write(`${cue} … `);
