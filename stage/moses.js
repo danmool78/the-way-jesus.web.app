@@ -186,12 +186,14 @@ export const MOSES = {
       // 신을 벗고, 얼굴을 가린다
       'p1.5': [['moses', 'kneel', { look: 1 }], ['moses', 'bow', { delay: 2200 }]],
       'p1.7': [['moses', 'kneel', { look: 1 }]],
+      // 이제 가거라, 너를 바로에게 보내겠다
+      'p2.0': [['moses', 'listen', { look: 1 }]],
       // 제가 누구라고
-      'p2.0': [['moses', 'shrug', { look: 1 }]],
-      'p2.1': [['moses', 'idle', { x: -0.3, z: 0.12, look: 1 }]],
+      'p2.3': [['moses', 'shrug', { look: 1 }]],
+      'p2.4': [['moses', 'idle', { x: -0.3, z: 0.12, look: 1 }]],
       // 지팡이가 뱀이 되는 표적
-      'p2.6': [['serpent', 'hiss', { show: 1 }], ['moses', 'afraid', { look: 0.3 }], ['serpent', 'rest', { show: 0, delay: 3800 }], ['moses', 'listen', { look: 1, delay: 4200 }]],
-      'p2.8': [['moses', 'bow', { look: 1 }]],
+      'p2.9': [['serpent', 'hiss', { show: 1 }], ['moses', 'afraid', { look: 0.3 }], ['serpent', 'rest', { show: 0, delay: 3800 }], ['moses', 'listen', { look: 1, delay: 4200 }]],
+      'p2.11': [['moses', 'bow', { look: 1 }]],
       w0: [['moses', 'listen', { look: 1 }]],
       w1: [['moses', 'listen', { look: 1 }]],
       w2: [['moses', 'listen', { look: 1 }]],
