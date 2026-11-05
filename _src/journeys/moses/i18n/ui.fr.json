@@ -1,0 +1,52 @@
+{
+ "appTag": "Moïse et Josué · De l’Exode à la terre promise",
+ "docTitle": "Le Chemin — Moïse et Josué | L’Exode et Canaan sur la carte",
+ "metaDesc": "De l’esclavage en Égypte à la mer Rouge et au Sinaï, des quarante ans au désert jusqu’au passage du Jourdain et à la terre promise. Parcourez sur une carte biblique les 40 scènes de Moïse et de Josué.",
+ "mapAria": "Le chemin de l’Exode sur une carte de l’Égypte, de la péninsule du Sinaï et de Canaan",
+ "introTag": "De l’Exode à la terre promise, le chemin de Moïse et de Josué",
+ "introLead": "Parcourez la carte et découvrez le chemin qui mène de l’esclavage à la liberté, du désert à la terre promise.",
+ "introF1": "Suivez les lieux, de l’Égypte à la mer Rouge et au Sinaï, puis à travers le désert jusqu’en Canaan",
+ "introF3": "Écoutez le récit lu à voix haute et lisez les paroles échangées entre Dieu et les hommes",
+ "landStep2": "Lisez le récit et les textes sur la carte, puis appuyez sur ▶ pour l’écouter",
+ "landStep4": "Rassemblez les paroles de Dieu dans l’onglet « {words} » et revisitez les scènes parcourues avec « {quiz} »",
+ "jesus": "Dieu",
+ "hisWords": "Paroles de Dieu",
+ "wordsHead": "Paroles de Dieu",
+ "wordsIntro": "Les paroles que Dieu a prononcées sur le chemin de Moïse et de Josué, rassemblées dans l’ordre du voyage. Chacune est une traduction nouvelle du sens original, dans la langue d’aujourd’hui.",
+ "odoTitle": "Distance parcourue par Israël jusqu’à cette scène (route estimée entre les lieux ; pas de 75 cm)",
+ "gospels": {
+  "ex": [
+   "Exode",
+   "Ex"
+  ],
+  "num": [
+   "Nombres",
+   "Nb"
+  ],
+  "deut": [
+   "Deutéronome",
+   "Dt"
+  ],
+  "josh": [
+   "Josué",
+   "Jos"
+  ]
+ },
+ "endLead": "Des fours à briques d’Égypte jusqu’à l’alliance de Sichem : merci d’avoir marché avec nous.",
+ "blessing": "Que le Seigneur vous bénisse et vous garde.\nQue le Seigneur fasse rayonner sur vous son visage et vous accorde sa grâce.\nQue le Seigneur tourne vers vous son visage et vous donne la paix. (Nb 6:24–26)\nQue celui qui faisait tomber la manne chaque jour au désert nourrisse votre aujourd’hui, et que celui qui marchait devant dans la colonne de nuée conduise votre chemin.",
+ "map": {
+  "애 굽": "ÉGYPTE",
+  "고 센": "GOSEN",
+  "시 나 이": "SINAÏ",
+  "미 디 안": "MADIAN",
+  "에 돔": "ÉDOM",
+  "모 압": "MOAB",
+  "가 나 안": "CANAAN",
+  "바 란 광 야": "DÉSERT DE PARAN",
+  "온 (헬리오폴리스)": "On (Héliopolis)",
+  "멤피스": "Memphis",
+  "비돔": "Pitom",
+  "홍 해": "MER ROUGE",
+  "아카바 만": "Golfe d’Aqaba"
+ }
+}
