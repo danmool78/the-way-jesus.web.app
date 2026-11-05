@@ -69,6 +69,7 @@ function applyStatic() {
 // (목록과 준비 여부는 data의 journey.series — _src/series.json). 이름은 영문 소문자만 받는다
 const JOURNEY = (q => /^[a-z]+$/.test(q || '') ? q : 'jesus')(new URLSearchParams(location.search).get('j'));
 const JDIR = JOURNEY === 'jesus' ? '' : `j/${JOURNEY}/`;
+document.documentElement.dataset.journey = JOURNEY; // 여정마다 테마색 (style.css의 [data-journey])
 const journeyUrl = id => (id === 'jesus' ? '/' : `/?j=${id}`); // 다른 여정으로 가는 주소 (언어는 저장된 것을 따른다)
 // 언어 이름은 그 언어로 적는다 (고르는 사람이 자기 언어를 알아보게)
 const LANG_NAMES = { ko: '한국어', en: 'English', es: 'Español', pt: 'Português', fr: 'Français', zh: '中文', id: 'Bahasa Indonesia', ja: '日本語' };
@@ -1545,7 +1546,7 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   });
   $('#closeMv').onclick = () => mv.close();
   const nx = $('#nextDlg');
-  $('#seriesList').innerHTML = (d.journey?.series || []).map(j => `<li class="${j.id === JOURNEY ? 'now' : j.ready ? 'ready' : 'soon'}">${j.id === JOURNEY ? `<span><b>${esc(t(j.title))}</b><small>${esc(t(j.desc))}</small><em>${esc(t('seriesNow'))}</em></span>` : j.ready
+  $('#seriesList').innerHTML = (d.journey?.series || []).map(j => `<li data-journey="${j.id}" class="${j.id === JOURNEY ? 'now' : j.ready ? 'ready' : 'soon'}">${j.id === JOURNEY ? `<span><b>${esc(t(j.title))}</b><small>${esc(t(j.desc))}</small><em>${esc(t('seriesNow'))}</em></span>` : j.ready
     ? `<a href="${journeyUrl(j.id)}"><b>${esc(t(j.title))}</b><small>${esc(t(j.desc))}</small><em>${esc(t('seriesGo'))} →</em></a>`
     : `<button type="button" class="next-open"><b>${esc(t(j.title))}</b><small>${esc(t(j.desc))}</small><em>${esc(t('seriesSoon'))}</em></button>`}</li>`).join('');
   $$('.next-open').forEach(b => b.onclick = () => { closePanel(); $('#nextBody').innerHTML = nextHtml(); nx.showModal(); });
