@@ -198,6 +198,7 @@ function buildMap() {
   <defs>
     <linearGradient id="seaGrad" x1="0" x2="1"><stop offset="0" stop-color="var(--sea-deep)"/><stop offset="1" stop-color="var(--sea)"/></linearGradient>
     <radialGradient id="oasis"><stop offset="0" stop-color="var(--oasis)" stop-opacity=".75"/><stop offset=".6" stop-color="var(--oasis)" stop-opacity=".4"/><stop offset="1" stop-color="var(--oasis)" stop-opacity="0"/></radialGradient>
+    <filter id="lakeSoft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3.2"/></filter>
     <filter id="waterEdge" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur in="SourceAlpha" stdDeviation="4" result="b"/><feComposite in="SourceAlpha" in2="b" operator="arithmetic" k2="1" k3="-1" result="edge"/><feFlood flood-color="#21474f" flood-opacity=".5"/><feComposite in2="edge" operator="in"/><feComposite in2="SourceGraphic" operator="over"/></filter>
   </defs>
   <rect x="${-W * 2}" y="${-H * 2}" width="${W * 12}" height="${H * 5}" fill="var(--land)"/>
@@ -220,7 +221,7 @@ function buildMap() {
   <path d="${smooth(GEO.dead, true)}" class="lake dead" filter="url(#waterEdge)"/>
   <path d="${smooth(GEO.hula, true)}" class="lake"/>
   ${['mareotis', 'manzala', 'sirbonis', 'bitter'].map(k => `<path d="${smooth(GEO[k], true)}" class="lake"/>`).join('')}
-  ${(DATA.journey?.map?.waters || []).map(w => `<path d="${smooth(w.d, true)}" class="lake ${w.cls || ''}"/>`).join('')}
+  ${(DATA.journey?.map?.waters || []).map(w => `<path d="${smooth(w.d, true)}" class="lake old ${w.cls || ''}"/>`).join('')}
   ${DATA.journey?.map?.south ? '' : `<path d="${smooth(GEO.suez, true)}" fill="url(#seaGrad)" class="sea"/>`}
   ${['nile', 'canopic', 'rosetta', 'damietta', 'pelusiac'].map(k => `<path d="${smooth(GEO[k])}" class="river nile"/>`).join('')}
   <path d="${smooth(GEO.jordanN)}" class="river jordan"/>

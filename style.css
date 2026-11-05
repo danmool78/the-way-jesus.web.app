@@ -141,6 +141,9 @@ a.sbtn{display:block;text-decoration:none;color:inherit}
 .river{fill:none;stroke:#6f9aa2;stroke-width:2.2;vector-effect:non-scaling-stroke;stroke-linecap:round}
 /* 모세 여정의 옛 물: 갈대 늪은 옅게, 요단은 봄 추수 때 둑까지 넘친 굵은 물줄기로 (수 3:15) */
 .lake.marsh{opacity:.55;stroke-dasharray:3 3}
+/* 옛 물길(여정 지도의 waters — 지금은 말랐거나 모양이 달라진 호수·늪): 테두리 없이 가장자리를 풀어 지형 그림에 스며들게. 테두리를 그으면 덧대어 붙인 것처럼 보였다 */
+.lake.old{stroke:none;filter:url(#lakeSoft);fill:var(--sea);opacity:.96}
+.lake.old.marsh{opacity:.38}
 #map.jflood .river.jordan{stroke-width:4.5;stroke:#5f93a0}
 .jlm-detail{opacity:0;transition:opacity .5s}
 .city3d{opacity:0;transition:opacity .8s;pointer-events:none}
