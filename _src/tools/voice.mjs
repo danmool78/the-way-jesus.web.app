@@ -106,12 +106,15 @@ function level(pcm) {
 // 읽을 때만 바꾸는 말: 영어 글자 BC·AD 앞에서 Chirp가 앞말을 늘이고 멈칫하므로 우리말로 읽힌다 (화면 글과 열쇠는 그대로)
 const spoken = text => text.replace(/\bBC\s*/g, '기원전 ').replace(/\bAD\s*/g, '서기 ');
 
-async function synth(text, v, rate) {
+async function synth(text, v, rate, tries = 0) {
   // 문장 안 쉼: 연결어미 뒤 짧은 무음 표시 (tts-pauses.mjs). Chirp는 SSML 무음을 그대로 따르지 않지만 쉼 자리는 지킨다
   const ssml = `<speak>${pauses(spoken(text)).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/\[pause short\]/g, '<break time="80ms"/>').replace(/\[pause\]/g, '<break time="250ms"/>')}</speak>`;
   const r = await fetch(`https://texttospeech.googleapis.com/v1/text:synthesize?key=${KEY}`, { method: 'POST', headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ input: { ssml }, voice: { languageCode: 'ko-KR', name: `ko-KR-Chirp3-HD-${v.name}` }, audioConfig: { audioEncoding: 'LINEAR16', sampleRateHertz: SR, speakingRate: rate } }) });
-  const j = await r.json(); if (!r.ok) throw Error(`${v.name}: ${j.error?.message || r.status}`);
+  const j = await r.json();
+  // 분당 한도(429): 잠시 쉬었다 다시 — 여러 장면을 나눠 함께 녹음할 때 걸렸다
+  if (r.status === 429 && tries < 8) { await new Promise(res => setTimeout(res, 15000 * (tries + 1))); return synth(text, v, rate, tries + 1); }
+  if (!r.ok) throw Error(`${v.name}: ${j.error?.message || r.status}`);
   return pcmOf(Buffer.from(j.audioContent, 'base64'));
 }
 
