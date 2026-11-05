@@ -636,8 +636,11 @@ function cancelWalk() {
   document.body.classList.remove('is-walking'); $('#walker', map).classList.remove('moving');
 }
 // mode: open(펼침) · peek(제목줄만) · full(모바일에서 글을 읽을 때 지도 위로 끝까지 올린 시트 — open도 함께 단다)
-function setCard(mode) {
+// 사용자가 고른 카드 모양(접힘·펼침·끝까지). 다음 장면에 닿으면 이 모양으로 — 늘 펼쳐 버려 접어 둔 사람이 매번 다시 접어야 했다
+let cardUser = 'open';
+function setCard(mode, user) {
   const c = $('#scene');
+  if (user) cardUser = mode;
   if (mode === 'full' && innerWidth > 900) mode = 'open';
   c.classList.toggle('peek', mode === 'peek');
   c.classList.toggle('open', mode === 'open' || mode === 'full');
@@ -663,7 +666,7 @@ function renderScene() {
       <footer><span>${w.j ? esc(t('jesus')) : esc(w.who)}</span><cite>${esc(w.ref)}</cite></footer>
     </blockquote>`;
   const tabs = [['story', t('tabStory')], ['text', t('tabText')], ['compare', t('tabCompare')]].filter(([k]) => !((isPro() || !DATA.journey?.harmony) && k === 'compare')); // 프롤로그와 대조표 없는 여정은 복음서 비교가 없다
-  cardTab = 'story';
+  if (!tabs.some(([k]) => k === cardTab)) cardTab = 'story'; // 보던 탭을 다음 장면에서도 (프롤로그처럼 그 탭이 없으면 이야기)
   $('#scene').innerHTML = `
   <div class="cardbar">
     <span class="pdot"></span>
@@ -708,13 +711,13 @@ function renderScene() {
   // 명화가 밀려가는 방향을 장면마다 돌려 가며 (오른쪽 위 → 왼쪽 위 → 왼쪽 아래 → 오른쪽 아래)
   const kb = [[3, 2], [-3, 2], [-3, -2], [3, -2]][(idx % 4 + 4) % 4]; // 프롤로그(-1)도
   $('#scene').style.setProperty('--kx', kb[0] + '%'); $('#scene').style.setProperty('--ky', kb[1] + '%');
-  $('#cardToggle').onclick = () => { setCard($('#scene').classList.contains('open') ? 'peek' : 'open'); window.recenterStage(); };
-  $('.cardbar', $('#scene')).ondblclick = () => setCard('open');
+  $('#cardToggle').onclick = () => { setCard($('#scene').classList.contains('open') ? 'peek' : 'open', true); window.recenterStage(); };
+  $('.cardbar', $('#scene')).ondblclick = () => setCard('open', true);
   sheetDrag();
   if (e.img) { $('#heroBtn').onclick = () => openViewer(e); $('#viewBtn').onclick = () => openViewer(e); }
   $$('.ctabs button', $('#scene')).forEach(b => b.onclick = () => showTab(b.dataset.tab));
   $('#toHarmony')?.addEventListener('click', () => setView('harmony'));
-  showTab('story');
+  showTab(cardTab);
   updateQuizBtn();
 }
 // 모바일 하단 시트: 손잡이(또는 접힌 제목줄)를 위로 끌면 한 단계 올리고(제목줄 → 반 → 끝까지) 아래로 끌면 내린다.
@@ -722,7 +725,7 @@ function renderScene() {
 function sheetDrag() {
   const sc = $('#scene'), mobile = () => innerWidth <= 900;
   const level = () => sc.classList.contains('peek') ? 0 : sc.classList.contains('full') ? 2 : 1;
-  const to = n => { setCard(['peek', 'open', 'full'][n]); if (n < 2) window.recenterStage(); };
+  const to = n => { setCard(['peek', 'open', 'full'][n], true); if (n < 2) window.recenterStage(); };
   let d = null;
   const down = e => { if (!mobile()) return; d = { id: e.pointerId, y: e.clientY }; e.currentTarget.setPointerCapture(e.pointerId); };
   const up = e => {
@@ -735,7 +738,7 @@ function sheetDrag() {
   [$('.sheetgrip', sc), $('.cardbar', sc)].forEach(el => { el.onpointerdown = down; el.onpointerup = up; el.onpointercancel = () => { d = null; }; });
   let ty = null;
   sc.ontouchstart = e => { ty = e.touches[0].clientY; };
-  sc.ontouchmove = e => { if (ty !== null && mobile() && level() === 1 && ty - e.touches[0].clientY > 14) { ty = null; setCard('full'); } };
+  sc.ontouchmove = e => { if (ty !== null && mobile() && level() === 1 && ty - e.touches[0].clientY > 14) { ty = null; setCard('full', true); } };
 }
 // 탭 바꾸기. 아래 금빛 단추는 다음 탭으로 이어 읽게 하고, 마지막 탭에서는 다음 장소로 걷기
 function showTab(k) {
@@ -744,7 +747,7 @@ function showTab(k) {
   $$('.ctabs button', sc).forEach(b => b.classList.toggle('active', b.dataset.tab === k));
   $$('.pane', sc).forEach(p => { p.hidden = p.dataset.pane !== k; });
   const order = isPro() || !DATA.journey?.harmony ? ['story', 'text'] : ['story', 'text', 'compare'], nx = order[order.indexOf(k) + 1], b = $('#contBtn', sc);
-  if (nx) { b.innerHTML = `${esc(t('continueReading'))} <span aria-hidden="true">→</span>`; b.onclick = () => { if (sc.classList.contains('open')) setCard('full'); showTab(nx); $('.ctabs', sc).scrollIntoView({ block: 'start', behavior: 'smooth' }); }; }
+  if (nx) { b.innerHTML = `${esc(t('continueReading'))} <span aria-hidden="true">→</span>`; b.onclick = () => { if (sc.classList.contains('open')) setCard('full', true); showTab(nx); $('.ctabs', sc).scrollIntoView({ block: 'start', behavior: 'smooth' }); }; }
   else if (idx < EVENTS.length - 1) { b.innerHTML = `${esc(t('walkNext'))} <span aria-hidden="true">→</span>`; b.onclick = () => go(idx + 1); }
   else { b.innerHTML = esc(t('finishJourney')); b.onclick = () => endJourney(); }
 }
@@ -844,7 +847,7 @@ function moveWithin(e, a, b) {
     if (k < 1) { walkAnim = requestAnimationFrame(step); return; }
     $('#walker', map).classList.remove('moving');
     setHere(e, b); window.stageHide = false;
-    updateMap(idx); setCard('open');
+    updateMap(idx); setCard(cardUser);
   };
   walkAnim = requestAnimationFrame(step);
 }
@@ -873,8 +876,8 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
       const nx = EVENTS[i + 1];
       if (fitMode !== 'all' && !frameStage(i, 1100)) frame(nx && nx.place !== EVENTS[i].place ? [EVENTS[i].place, nx.place] : [EVENTS[i].place], 1100);
       $('#walker', map).classList.remove('arrive'); void $('#walker', map).getBoundingClientRect(); $('#walker', map).classList.add('arrive');
-      setTimeout(() => setCard('open'), reduced() ? 0 : 650);
-    } else setCard('open');
+      setTimeout(() => setCard(cardUser), reduced() ? 0 : 650);
+    } else setCard(cardUser);
     onArrive && onArrive();
   };
   if (stepped && prevPlace !== startOf(EVENTS[i])) walkTo(i, arrive); // 다른 곳에서 시작하는 장면(start)은 그곳까지만 걷는다
@@ -919,7 +922,7 @@ function showIntro(resume) {
   // 떠 있는 동안 뒤의 지도·3D 무대는 돌리지 않는다 (stage.js·terrain.js가 이 표시를 보고 그리기를 건너뛴다)
   // 걷는 도중·자동 여정 중에 로고로 들어와도 모두 세운다 (걷던 사람은 떠난 자리로 되돌린다)
   stopAuto(); stopSpeech();
-  if (walking) { cancelWalk(); updateMap(idx); setOdo(odoAt(Math.max(0, idx))); setCard('open'); }
+  if (walking) { cancelWalk(); updateMap(idx); setOdo(odoAt(Math.max(0, idx))); setCard(cardUser); }
   document.body.classList.add('intro-open');
   box.scrollTop = 0; box.hidden = false; starts[0].focus({ preventScroll: true });
 }
