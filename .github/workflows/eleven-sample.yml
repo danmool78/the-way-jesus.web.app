@@ -1,0 +1,23 @@
+# 일레븐랩스 성우 고르기 샘플 (_src/tools/eleven-sample.mjs): 이 브랜치에 push하면 녹음해 같은 브랜치에 커밋한다. 운영 배포와 상관없다
+name: ElevenLabs voice samples
+on:
+  push:
+    branches: [claude/goodnews-polish]
+    paths: [_src/voice-samples/run]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  sample:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg
+      - run: node _src/tools/eleven-sample.mjs
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+      - run: |
+          git config user.name "github-actions[bot]"; git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add _src/voice-samples && git commit -m "ElevenLabs voice samples" && git push || echo "nothing to commit"
