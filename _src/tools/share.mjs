@@ -10,17 +10,17 @@ const { chromium } = require('playwright');
 const SITE = 'https://the-way-jesus.web.app';
 // sub: 그림의 둘째 줄, foot: 셋째 줄, title·desc: 미리보기 카드의 제목·설명, c: 테마색(밝은 빛, 해, 짙은 테두리 — icons.mjs와 같게)
 const J = {
+  jesus: { title: '그 길 — 예수의 발자취', desc: '지도 위를 걸으며 예수의 생애를 생생한 장면으로 만나 보세요.', og: 'assets/og.jpg' }, // 그림은 처음 만든 것 그대로
   moses: { title: '그 길 — 모세와 여호수아', sub: '출애굽에서 약속의 땅까지', foot: '지도 위 40개 장면 · 낭독 · 3D 무대',
     desc: '지도 위를 걸으며 출애굽에서 약속의 땅까지, 모세와 여호수아의 길을 만나 보세요.', c: ['#fbe0c8', '#dc8f5f', '#a65a33'] },
 };
 const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
 const ids = process.argv.slice(2).length ? process.argv.slice(2) : Object.keys(J);
 const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: 1200, height: 630 } });
-for (const id of ids) {
-  const j = J[id];
-  mkdirSync(`j/${id}`, { recursive: true }); mkdirSync(id, { recursive: true });
-  // 미리보기 그림: 왼쪽에 여정 색의 해와 길, 오른쪽에 글 (assets/og.jpg와 같은 짜임)
-  const icon = (await import('node:fs')).readFileSync(`j/${id}/icon.svg`, 'utf8').replace(/<rect[^>]*\/>/, '');
+// 첫 화면(시리즈 고르기, 맨 첫 주소)의 미리보기 그림: 금빛 해와 '그 길', 시리즈의 여정들 (index.html의 og)
+const HUB = { sub: '지도 위에서 걷는 성경의 길', foot: '예수 · 모세와 여호수아 · 다윗 · 열왕기 · 바울', c: ['#fcebbb', '#e6c275', '#b1823a'], icon: 'assets/icon.svg', out: 'assets/og-series.jpg' };
+async function card(j, iconFile, out) {
+  const icon = (await import('node:fs')).readFileSync(iconFile, 'utf8').replace(/<rect[^>]*\/>/, '');
   await p.setContent(`<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400&display=swap" rel="stylesheet">
   <style>html,body{margin:0;width:1200px;height:630px;overflow:hidden}
   body{background:radial-gradient(ellipse 60% 75% at 26% 45%,#3a2a1c,#1e1712 60%,#14100c);display:flex;align-items:center;gap:66px;padding-left:224px;box-sizing:border-box;font-family:'Gowun Batang',serif}
@@ -30,7 +30,14 @@ for (const id of ids) {
   p{margin:30px 0 0;font:400 24px 'Noto Sans KR',sans-serif;color:#cfc3b2;letter-spacing:.02em}</style>
   <div class="sun">${icon}</div><div><h1>그 길</h1><h2>${esc(j.sub)}</h2><p>${esc(j.foot)}</p></div>`);
   await p.evaluate(() => document.fonts.ready); await p.waitForTimeout(800);
-  await p.screenshot({ path: `j/${id}/og.jpg`, type: 'jpeg', quality: 88 });
+  await p.screenshot({ path: out, type: 'jpeg', quality: 88 });
+}
+if (!process.argv.slice(2).length) { await card(HUB, HUB.icon, HUB.out); console.log('hub ok'); }
+for (const id of ids) {
+  const j = J[id];
+  mkdirSync(id, { recursive: true });
+  const og = j.og || `j/${id}/og.jpg`;
+  if (!j.og) { mkdirSync(`j/${id}`, { recursive: true }); await card(j, `j/${id}/icon.svg`, og); } // 여정 색의 해와 길, 오른쪽에 글 (assets/og.jpg와 같은 짜임)
   // 공유 주소의 페이지: og만 담고 곧바로 앱으로 (뒤로 가기에 이 페이지가 남지 않게 replace, #장면은 이어 붙인다)
   const app = `/?j=${id}`;
   writeFileSync(`${id}/index.html`, `<!doctype html>
@@ -46,15 +53,15 @@ for (const id of ids) {
 <meta property="og:url" content="${SITE}/${id}">
 <meta property="og:title" content="${esc(j.title)}">
 <meta property="og:description" content="${esc(j.desc)}">
-<meta property="og:image" content="${SITE}/j/${id}/og.jpg">
+<meta property="og:image" content="${SITE}/${og}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="/j/${id}/icon.svg" type="image/svg+xml">
+<link rel="icon" href="/${id === 'jesus' ? 'assets' : `j/${id}`}/icon.svg" type="image/svg+xml">
 <meta http-equiv="refresh" content="0; url=${app}">
 <script>location.replace('${app}' + location.hash)</script>
 </head>
-<body style="background:#16120e;color:#e8dcc8;font-family:sans-serif"><p><a href="${app}" style="color:${j.c[1]}">${esc(j.title)}</a></p></body>
+<body style="background:#16120e;color:#e8dcc8;font-family:sans-serif"><p><a href="${app}" style="color:#e6c275">${esc(j.title)}</a></p></body>
 </html>
 `);
   console.log(id, 'ok');

@@ -110,6 +110,9 @@ def build(jid, src, out_dir):
 src_of = lambda jid: here if jid == 'jesus' else os.path.join(here, 'journeys', jid)
 for j in series:  # 원본이 있어 data가 만들어지는 여정 표시 (관리자의 여정 고르기는 이것만 보인다)
     j['built'] = os.path.exists(os.path.join(src_of(j['id']), 'skeleton.json'))
+    if j['built']:  # 장면 수(프롤로그 빼고): 첫 화면의 여정 카드에 쓴다
+        sk = loadf(os.path.join(src_of(j['id']), 'skeleton.json'))
+        j['n'] = len(sk) - (1 if sk and sk[0]['id'].endswith('00') else 0)
 for j in series:
     if j['built']:  # 아직 원본이 없는 여정(준비 중)은 건너뛴다
         build(j['id'], src_of(j['id']), root if j['id'] == 'jesus' else os.path.join(root, 'j', j['id']))
