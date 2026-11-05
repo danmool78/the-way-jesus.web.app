@@ -34,7 +34,7 @@
   "start": "rameses",
   "stops": [
    {
-    "at": "p1.3",
+    "at": "p1.6",
     "to": "midian",
     "walk": true
    }
