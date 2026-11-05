@@ -1,0 +1,32 @@
+{
+ "_comment": "Textos de pantalla del recorrido GoodNews (el Evangelio) — se superponen a ui.es.json común",
+ "appTag": "GoodNews · El Evangelio en cuatro escenas",
+ "docTitle": "El Camino — GoodNews (el Evangelio) | El Evangelio en cuatro escenas",
+ "metaDesc": "El amor de Dios, el pecado que nos separa, Jesucristo y la respuesta de fe. Descubre en cuatro escenas sobre el mapa la buena noticia que va del Edén al Gólgota y llega hasta ti.",
+ "mapAria": "El camino del Evangelio, del Edén a Jerusalén",
+ "introTag": "Del Edén al Gólgota, y hasta ti",
+ "introLead": "Del amor de Dios a la respuesta de fe: descubre el Evangelio en {n} escenas sobre el mapa.",
+ "hisWords": "Palabras",
+ "voicesOfDay": "Palabras",
+ "wordsHead": "Palabras del Evangelio",
+ "wordsIntro": "Aquí están reunidas las palabras de las cuatro escenas del Evangelio. Todas son una traducción nueva al lenguaje de hoy, fiel al sentido del texto original.",
+ "gospels": {
+  "gen": [
+   "Génesis",
+   "Gn"
+  ],
+  "jn": [
+   "Evangelio de Juan",
+   "Jn"
+  ],
+  "acts": [
+   "Hechos de los Apóstoles",
+   "Hch"
+  ]
+ },
+ "endEyebrow": "THE GOOD NEWS · EL EVANGELIO",
+ "endTitle": "La buena noticia ha llegado hasta ti",
+ "endLead": "Gracias por caminar con nosotros desde el Edén hasta el Gólgota, y hasta el lugar donde estás ahora.",
+ "seekerHead": "Si hiciste esta oración",
+ "invite": "¿Dónde está Jesús ahora? Ha entrado en ti, como prometió, porque dijo que si le abrías la puerta, entraría. (Ap 3:20)\nAhora eres hijo de Dios. La prueba no son tus sentimientos, sino su promesa. (Jn 1:12)\nDios nos ha dado vida eterna, y esa vida está en su Hijo. Quien tiene al Hijo tiene la vida. (1 Jn 5:11–12)\nAhora busca una iglesia cercana, conoce a personas con quienes recorrer este camino y abre cada día la Biblia para escuchar su palabra. Recorrer el camino de Jesús desde el principio también es un buen comienzo."
+}

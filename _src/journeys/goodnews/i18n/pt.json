@@ -1,0 +1,180 @@
+{
+ "periods": {
+  "l1": {
+   "name": "Primeiro · O amor de Deus",
+   "span": "No princípio"
+  },
+  "l2": {
+   "name": "Segundo · O pecado e a separação",
+   "span": "No princípio"
+  },
+  "l3": {
+   "name": "Terceiro · Jesus Cristo",
+   "span": "30 d.C."
+  },
+  "l4": {
+   "name": "Quarto · A resposta da fé",
+   "span": "Hoje"
+  }
+ },
+ "places": {
+  "eden": {
+   "name": "Jardim do Éden",
+   "region": "Mesopotâmia"
+  },
+  "golgotha": {
+   "name": "Gólgota · Túmulo do jardim",
+   "region": "Jerusalém"
+  },
+  "olives": {
+   "name": "Monte das Oliveiras",
+   "region": "Jerusalém"
+  }
+ },
+ "events": {
+  "g01": {
+   "title": "O amor de Deus",
+   "when": "No princípio",
+   "subtitle": "Deus ama você",
+   "story": [
+    "Primeiro, Deus ama você e tem um propósito bom para a sua vida. A Bíblia diz assim: Deus amou tanto o mundo que deu o seu único Filho. Quem crer nele não vai se perder, mas terá a vida eterna.",
+    "No começo, Deus criou a luz, o céu e a terra. Depois formou o ser humano do pó da terra e soprou nele o fôlego da vida. Você não surgiu por acaso. Você foi feito para caminhar com Deus e viver dentro do amor dele.",
+    "Jesus disse: Eu vim para que as pessoas tenham vida, e vida de sobra. Mas então, por que tanta gente não conhece esse amor nem vive essa vida plena?"
+   ],
+   "words": [
+    {
+     "who": "Jesus",
+     "text": "Deus amou tanto o mundo que deu o seu único Filho. Quem crer nele não vai se perder, mas terá a vida eterna."
+    },
+    {
+     "who": "Deus",
+     "text": "Eu amei você com um amor que não tem fim. Por isso continuo atraindo você com bondade fiel."
+    },
+    {
+     "who": "Jesus",
+     "text": "Eu vim para que as pessoas tenham vida, e vida de sobra."
+    }
+   ],
+   "note": "Gênesis diz que o ser humano foi criado à imagem de Deus (Gn 1:27). A Bíblia inteira forma uma só história: Deus ama as pessoas e as chama para viver com ele.",
+   "reflect": "Consigo acreditar que sou alguém amado por Deus?",
+   "quiz": {
+    "q": "Segundo a Bíblia, como Deus criou o ser humano?",
+    "options": [
+     "Misturando terra e água por acaso",
+     "À imagem de Deus",
+     "Copiando a forma dos anjos",
+     "Com a luz das estrelas"
+    ],
+    "explain": "Deus criou o ser humano à sua própria imagem (Gn 1:27) e soprou o fôlego da vida no homem que formou do pó da terra (Gn 2:7)."
+   }
+  },
+  "g02": {
+   "title": "O pecado e a separação",
+   "when": "No princípio",
+   "subtitle": "O pecado nos separou de Deus",
+   "story": [
+    "Segundo, o ser humano está separado de Deus por causa do pecado. Por isso não consegue conhecer nem viver o amor de Deus. A Bíblia diz: Todos pecaram e ficaram longe da glória de Deus.",
+    "No Éden, o ser humano seguiu a própria ideia em vez da palavra de Deus e comeu o fruto que Deus tinha proibido. Pecado não é só uma lista de erros. É se afastar de Deus e viver como se eu fosse o dono da minha vida. A Bíblia diz: O salário do pecado é a morte.",
+    "As pessoas tentam atravessar essa distância sendo boazinhas, fazendo sacrifícios, procurando alguma religião. Mas ninguém consegue chegar até Deus pelas próprias forças. Será, então, que não existe caminho?"
+   ],
+   "words": [
+    {
+     "who": "Paulo",
+     "text": "Todos pecaram e ficaram longe da glória de Deus."
+    },
+    {
+     "who": "Paulo",
+     "text": "O salário do pecado é a morte, mas o presente que Deus dá de graça é a vida eterna em Cristo Jesus, nosso Senhor."
+    },
+    {
+     "who": "Isaías",
+     "text": "Os seus pecados abriram um abismo entre vocês e o seu Deus."
+    }
+   ],
+   "note": "Os querubins e a espada de fogo que girava, guardando o lado leste do Éden, mostram que o ser humano não pode voltar sozinho à árvore da vida (Gn 3:24). A história desse caminho fechado que volta a se abrir atravessa a Bíblia inteira.",
+   "reflect": "Quem eu coloquei no lugar de dono da minha vida?",
+   "quiz": {
+    "q": "Segundo a Bíblia, qual é o salário do pecado?",
+    "options": [
+     "A pobreza",
+     "A doença",
+     "A vergonha",
+     "A morte"
+    ],
+    "explain": "O salário do pecado é a morte, mas o presente de Deus é a vida eterna em Cristo Jesus (Rm 6:23)."
+   }
+  },
+  "g03": {
+   "title": "O único caminho, Jesus",
+   "when": "Por volta de 30 d.C.",
+   "subtitle": "Só Jesus Cristo é o caminho",
+   "story": [
+    "Terceiro, só Jesus Cristo é o caminho que Deus preparou para resolver o pecado do ser humano. Só por meio dele podemos conhecer e viver o amor de Deus. Jesus disse: Eu sou o caminho, a verdade e a vida. Ninguém chega ao Pai a não ser por mim.",
+    "Jesus, o Filho de Deus, veio ao mundo como ser humano. E na cruz, no monte do Gólgota, ele, que não tinha pecado, pagou no nosso lugar o preço dos nossos pecados. A Bíblia diz: Quando ainda éramos pecadores, Cristo morreu por nós.",
+    "Na madrugada do terceiro dia, o túmulo estava vazio. Jesus venceu a morte, ressuscitou e apareceu a muitas pessoas. Agora ele é a única ponte que liga Deus e nós."
+   ],
+   "words": [
+    {
+     "who": "Jesus",
+     "text": "Eu sou o caminho, a verdade e a vida. Ninguém chega ao Pai a não ser por mim."
+    },
+    {
+     "who": "Paulo",
+     "text": "Quando ainda éramos pecadores, Cristo morreu por nós. Foi assim que Deus mostrou o seu amor por nós."
+    },
+    {
+     "who": "Paulo",
+     "text": "Cristo morreu pelos nossos pecados, como dizem as Escrituras, foi sepultado e ressuscitou no terceiro dia."
+    }
+   ],
+   "note": "Paulo conta que Jesus ressuscitado apareceu a Pedro, aos Doze e, de uma só vez, a mais de quinhentas pessoas, e acrescenta que muitas delas ainda estavam vivas (1Co 15:5–6).",
+   "reflect": "Diante da notícia de que Jesus levou a cruz por mim, o que se move no meu coração?",
+   "quiz": {
+    "q": "Aonde Jesus disse que ninguém pode chegar a não ser por meio dele?",
+    "options": [
+     "Ao templo",
+     "A Jerusalém",
+     "Ao Pai",
+     "Aos exércitos do céu"
+    ],
+    "explain": "Eu sou o caminho, a verdade e a vida. Ninguém chega ao Pai a não ser por mim (Jo 14:6)."
+   }
+  },
+  "g04": {
+   "title": "A resposta da fé",
+   "when": "E hoje",
+   "subtitle": "Receba Jesus pela fé",
+   "story": [
+    "Quarto, cada um de nós precisa receber Jesus Cristo como Salvador e Senhor da própria vida. Então vamos conhecer e viver o amor de Deus. A Bíblia diz: A todos os que o receberam, aos que creem no seu nome, ele deu o direito de se tornarem filhos de Deus.",
+    "Receber Jesus não é algo que se ganha com boas ações. É um presente de Deus que se recebe pela fé. É deixar o lugar de dono da própria vida e entregar a vida a Jesus. Jesus disse: Olhe, eu estou à porta e bato. Se alguém ouvir a minha voz e abrir a porta, eu entrarei. E hoje, quem está sentado no lugar de dono da sua vida?",
+    "Se esta oração expressa o que há no seu coração, ore agora comigo. Jesus, eu sou um pecador. Vivi do meu jeito, longe de Deus. Eu creio que o Senhor morreu na cruz por mim e ressuscitou. Agora eu abro a porta do meu coração. Entre, perdoe os meus pecados e seja o Senhor da minha vida. Obrigado por me receber como filho de Deus. Em nome de Jesus eu oro. Amém."
+   ],
+   "words": [
+    {
+     "who": "Jesus",
+     "text": "Olhe, eu estou à porta e bato. Se alguém ouvir a minha voz e abrir a porta, eu entrarei na casa dele, e vamos comer juntos, ele comigo e eu com ele."
+    },
+    {
+     "who": "João",
+     "text": "A todos os que o receberam, aos que creem no seu nome, ele deu o direito de se tornarem filhos de Deus."
+    },
+    {
+     "who": "Paulo",
+     "text": "Vocês foram salvos pela graça, por meio da fé. Isso não vem de vocês: é um presente de Deus."
+    }
+   ],
+   "note": "Orar não é repetir palavras decoradas, mas responder a Deus com o coração. Se você fez esta oração de verdade, procure uma igreja perto de você e conheça pessoas para caminhar junto com você neste caminho.",
+   "reflect": "Se Jesus estivesse batendo agora à porta do meu coração, o que eu responderia?",
+   "quiz": {
+    "q": "Segundo João 1:12, o que é dado a quem recebe Jesus?",
+    "options": [
+     "O direito de se tornar filho de Deus",
+     "Terras e riquezas",
+     "Um grande nome",
+     "Uma vida longa"
+    ],
+    "explain": "A todos os que o receberam, aos que creem no seu nome, foi dado o direito de se tornarem filhos de Deus (Jo 1:12)."
+   }
+  }
+ }
+}
