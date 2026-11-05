@@ -64,6 +64,23 @@ const TYPES = {
   risen:    { robe: '#fbf8f0', trim: '#d9b46a', mantle: '#efe4cc', hair: '#4a2e1c', beard: true, long: true, sash: '#d9b46a', glow: true }, // 부활하신 예수 (밝은 흰옷, 은은한 빛)
   whiteman: { robe: '#fffdf8', trim: '#e8dcc0', hair: '#c9a86a', sash: '#e8dcc0', glow: true, skin: 2 }, // 흰옷 입은 사람 (날개 없는 하늘의 전령)
   levi:     { robe: '#5a3e6e', trim: '#c9a24a', mantle: '#b9935a', hair: '#2b1b10', beard: true, sash: '#c9a24a', skin: 2 }, // 세리 마태 (값진 옷)
+  // ---- 모세와 여호수아 ----
+  // 애굽 사람: 흰 아마포 허리치마, 맨 윗몸, 검은 단발 가발, 넓은 목걸이 (히브리 사람의 긴 옷·망토·수염과 한눈에 갈리게)
+  pharaoh:  { robe: '#efe9da', trim: '#d6a93a', cloth: '#f4efe2', hair: '#1a1210', bare: true, kilt: true, nemes: ['#2f4f8a', '#d6a93a'], collar: ['#d6a93a', '#2f6a8a', '#d6a93a', '#9d3328'], skin: 3, height: 1.02 }, // 바로
+  egyptian: { robe: '#efe9da', trim: '#b08a4e', cloth: '#efe9da', hair: '#1a1210', bare: true, kilt: true, wig: '#1a1210', collar: ['#2f6a8a', '#d6a93a', '#efe9da'], skin: 3 }, // 애굽 신하·감독관
+  taskmaster: { robe: '#efe9da', trim: '#9d3328', cloth: '#efe9da', hair: '#1a1210', bare: true, kilt: true, wig: '#1a1210', staff: true, collar: ['#9d3328', '#efe9da'], skin: 3 }, // 감독관 (막대를 든)
+  egysoldier: { robe: '#efe9da', trim: '#7a5634', cloth: '#e6dcc4', hair: '#1a1210', bare: true, kilt: true, wig: '#1a1210', spear: true, skin: 3 }, // 애굽 병사
+  princess: { robe: '#f6f2e8', trim: '#d6a93a', hair: '#141010', wig: '#141010', wigLong: true, band: '#d6a93a', collar: ['#d6a93a', '#2f6a8a', '#d6a93a', '#c0607a'], skin: 2, soft: true, slim: true, sash: '#d6a93a' }, // 바로의 딸
+  egywoman: { robe: '#f1ece0', trim: '#2f6a8a', hair: '#141010', wig: '#141010', wigLong: true, collar: ['#2f6a8a', '#efe9da'], skin: 3, soft: true, slim: true, sash: '#2f6a8a' }, // 공주의 시녀
+  magician: { robe: '#efe9da', trim: '#d6a93a', mantle: '#d8c49a', hair: '#1a1210', wig: '#1a1210', collar: ['#d6a93a', '#1f5a5a'], skin: 3 }, // 애굽 요술사
+  mosesP:   { robe: '#f1ece0', trim: '#d6a93a', mantle: '#c9b48c', hair: '#1d140c', wig: '#1d140c', collar: ['#d6a93a', '#2f6a8a'], skin: 1, sash: '#d6a93a' }, // 궁에서 자란 모세 (애굽 옷, 수염 없음)
+  mosesS:   { robe: '#8a6f4e', trim: '#5e4a33', mantle: '#b89b6c', hair: '#2e1d12', beard: true, hood: '#d8c9a6', band: '#5e4a33', staff: true, skin: 1, sash: '#5e4a33' }, // 미디안의 목자 모세
+  mosesE:   { robe: '#d9cdb0', trim: '#7a5a32', mantle: '#8a5a32', hair: '#d9d2c4', beard: true, long: true, staff: true, sash: '#7a5a32', skin: 1 }, // 여든의 모세: 흰 머리·수염, 지팡이
+  aaron:    { robe: '#5a6b8a', trim: '#c9a24a', mantle: '#b9a07a', hair: '#bfb7aa', beard: true, long: true, sash: '#c9a24a', skin: 1 }, // 모세의 형 아론
+  hebrew:   { robe: '#b8a07a', trim: '#8b6f50', hair: '#2e1d12', beard: true, sash: '#6b5438', skin: 1 }, // 종살이하는 히브리 사람 (망토 없는 짧은 겉옷)
+  hebrew2:  { robe: '#9a8466', trim: '#6e5a40', hair: '#3a2a1c', beard: true, sash: '#5b4630', skin: 3 },
+  miriam:   { robe: '#7a4a5a', trim: '#c9a24a', mantle: '#c8b48c', veil: true, inner: '#efe6d4', skin: 1, soft: true, slim: true, sash: '#c9a24a' }, // 예언자 미리암
+  sister:   { robe: '#8e6d4e', trim: '#c0607a', hair: '#3b2616', long: true, soft: true, slim: true, sash: '#c0607a', height: 0.76, kid: true }, // 모세의 어린 누이
   official: { robe: '#2f4f6a', trim: '#d6a93a', mantle: '#c8b48c', hair: '#2b1b10', beard: true, sash: '#d6a93a', skin: 2 }, // 왕의 신하
 };
 
@@ -259,6 +276,12 @@ function makePerson(type) {
     [-1, 1].forEach(s => mesh(new THREE.CylinderGeometry(0.032 * lr, 0.026 * lr, 0.4, 12), skin, skirt, [s * (slim ? 0.038 : 0.042), 0.21, 0]));
     if (t.nude) mesh(lathe(slim ? [[0.001, 0.33], [0.084, 0.34], [0.094, 0.39], [0.08, 0.45], [0.066, 0.47], [0.001, 0.47]] : [[0.001, 0.33], [0.082, 0.34], [0.088, 0.4], [0.084, 0.47], [0.001, 0.47]], 28), skin, skirt);
     else mesh(folds(lathe([[0.001, 0.33], [0.098, 0.33], [0.094, 0.4], [0.09, 0.47], [0.001, 0.47]], 28), 7, 0.008, 0.47), mat(t.cloth || '#e9e1cf', DS), skirt);
+    // 애굽 사람의 흰 아마포 허리치마(쉔디트): 무릎까지 내려오는 잔주름 치마와 허리띠
+    if (t.kilt) {
+      mesh(folds(lathe([[0.001, 0.2], [0.112, 0.2], [0.104, 0.28], [0.096, 0.38], [0.09, 0.47], [0.001, 0.47]], 36), 18, 0.004, 0.47), mat(t.cloth || '#efe9da', DS), skirt);
+      mesh(new THREE.TorusGeometry(0.09, 0.009, 6, 28), mat(t.trim || '#c9a24a', { metalness: 0.3, roughness: 0.5 }), skirt, [0, 0.46, 0]).rotation.x = Math.PI / 2;
+      mesh(new THREE.BoxGeometry(0.05, 0.2, 0.006), mat(t.trim || '#c9a24a', { metalness: 0.3, roughness: 0.5 }), skirt, [0, 0.37, 0.094]); // 앞에 늘어뜨린 띠
+    }
     mesh(lathe(slim ? [[0.001, 0.46], [0.066, 0.46], [0.07, 0.52], [0.084, 0.58], [0.082, 0.63], [0.052, 0.68], [0.028, 0.705], [0.001, 0.71]]
       : [[0.001, 0.46], [0.082, 0.46], [0.086, 0.52], [0.098, 0.59], [0.094, 0.64], [0.06, 0.685], [0.03, 0.705], [0.001, 0.71]], 28), skin, upper);
   } else {
@@ -296,6 +319,14 @@ function makePerson(type) {
   upper.add(mantleG);
   if (t.mantle && !t.wings && !t.bare) mesh(folds(lathe(B.mantle, 32, ...BACK(B.mantleLen)), 11, slim ? 0.006 : 0.01, 0.62), mat(t.mantle, DS), mantleG, [0, -B.mantle[0][1], 0]);
   mesh(new THREE.CylinderGeometry(0.029, 0.033, 0.07, 14), skin, upper, [0, 0.72, 0]);
+  // 애굽의 넓은 목걸이(우세크): 어깨를 덮는 둥근 판에 금·청·적색 띠
+  if (t.collar) {
+    const c = document.createElement('canvas'); c.width = 4; c.height = 64;
+    const g = c.getContext('2d'), cols = t.collar;
+    for (let k = 0; k < 8; k++) { g.fillStyle = cols[k % cols.length]; g.fillRect(0, k * 8, 4, 8); }
+    const tx = new THREE.CanvasTexture(c); tx.colorSpace = THREE.SRGBColorSpace;
+    mesh(lathe([[0.034, 0.715], [0.07, 0.705], [0.104, 0.682], [0.124, 0.652]], 32), new THREE.MeshStandardMaterial({ map: tx, roughness: 0.45, metalness: 0.35, side: THREE.DoubleSide }), upper);
+  }
 
   // 머리
   const head = new THREE.Group();
@@ -393,6 +424,28 @@ function makePerson(type) {
     if (t.band) mesh(new THREE.TorusGeometry(0.088, 0.008, 6, 32), mat(t.band), head, [0, 0.045, -0.004], [0.97, 1.02, 1]).rotation.x = Math.PI / 2 - 0.15;
   }
   if (t.turban) mesh(sphere(0.1, 20, 10, 0, Math.PI * 2, 0, Math.PI * 0.5), mat(t.turban), head, [0, 0.025, 0], [1, 1.25, 1]);
+  // 애굽 가발: 귀를 덮고 턱선에서 곧게 자른 검은 단발과 이마의 앞머리 (wigLong: 어깨 아래로 내려오는 여인의 긴 가발)
+  if (t.wig) {
+    const w = mat(t.wig, { ...DS, roughness: 0.7 }), L = t.wigLong ? -0.2 : -0.075;
+    mesh(sphere(0.091, 32, 16, 0, Math.PI * 2, 0, Math.PI * 0.5), w, head, [0, 0.006, -0.004], [1, 1.05, 1.04]);
+    mesh(lathe([[0.091, 0.006], [0.094, -0.03], [0.097, L * 0.6], [0.1, L]], 32, ...BACK(Math.PI * 1.36)), w, head, [0, 0, -0.004]);
+    mesh(sphere(0.0915, 28, 6, Math.PI * 0.2, Math.PI * 0.6, Math.PI * 0.2, Math.PI * 0.13), w, head, [0, 0.008, 0.002]); // 앞머리
+    if (t.band) mesh(new THREE.TorusGeometry(0.093, 0.006, 6, 32), mat(t.band, { metalness: 0.5, roughness: 0.35 }), head, [0, 0.04, -0.002], [1, 1, 1.04]).rotation.x = Math.PI / 2;
+  }
+  // 바로의 네메스 두건: 줄무늬 천이 머리를 감싸고 양쪽 귀 뒤에서 가슴 앞으로 넓게 늘어진다. 이마에 금 코브라(우라에우스)
+  if (t.nemes) {
+    const c = document.createElement('canvas'); c.width = 8; c.height = 64;
+    const g = c.getContext('2d');
+    for (let k = 0; k < 16; k++) { g.fillStyle = t.nemes[k % 2]; g.fillRect(0, k * 4, 8, 4); }
+    const tx = new THREE.CanvasTexture(c); tx.colorSpace = THREE.SRGBColorSpace;
+    const nm = new THREE.MeshStandardMaterial({ map: tx, roughness: 0.5, metalness: 0.25, side: THREE.DoubleSide });
+    mesh(sphere(0.094, 32, 16, 0, Math.PI * 2, 0, Math.PI * 0.52), nm, head, [0, 0.008, -0.004], [1.04, 1.1, 1.06]);
+    mesh(lathe([[0.096, 0.004], [0.112, -0.05], [0.13, -0.11]], 32, ...BACK(Math.PI * 1.2)), nm, head);
+    const tm = tx.clone(); tm.repeat.set(1, 3); tm.wrapT = THREE.RepeatWrapping;
+    [-1, 1].forEach(k => mesh(new THREE.BoxGeometry(0.04, 0.15, 0.01), new THREE.MeshStandardMaterial({ map: tm, roughness: 0.5, metalness: 0.25 }), head, [k * 0.088, -0.13, 0.03]).rotation.z = k * 0.08);
+    mesh(new THREE.TorusGeometry(0.094, 0.006, 6, 32), mat('#d6a93a', { metalness: 0.6, roughness: 0.35 }), head, [0, 0.02, -0.002], [1.04, 1, 1.06]).rotation.x = Math.PI / 2;
+    mesh(new THREE.CapsuleGeometry(0.008, 0.03, 4, 8), mat('#d6a93a', { metalness: 0.6, roughness: 0.35 }), head, [0, 0.055, 0.097]);
+  }
   if (t.crown) mesh(new THREE.CylinderGeometry(0.088, 0.082, 0.05, 20, 1, true), mat('#d6a93a', { metalness: 0.6, roughness: 0.35, ...DS }), head, [0, 0.075, 0]);
   if (t.helmet) {
     mesh(sphere(0.094, 20, 10, 0, Math.PI * 2, 0, Math.PI * 0.55), mat('#a88a4a', { metalness: 0.5, roughness: 0.4 }), head, [0, 0.01, 0]);
@@ -493,8 +546,18 @@ function makePerson(type) {
   mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.2, 14), mat('#b89a6a', { roughness: 0.95 }), mat_).rotation.z = Math.PI / 2;
   [-1, 1].forEach(s => mesh(new THREE.TorusGeometry(0.036, 0.004, 6, 16), mat('#6b4a2a'), mat_, [s * 0.06, 0, 0]).rotation.y = Math.PI / 2);
   mat_.position.set(0, 0.47, 0.15);
-  [doves, gift, jar, scroll, alabaster, palm, cup, torch, mat_].forEach(g => { g.visible = false; upper.add(g); });
-  const items = { basket, doves, gift, jar, scroll, alabaster, palm, cup, torch, mat: mat_ };
+  // 소고 (미리암): 가죽을 메운 둥근 손북과 둘레의 작은 방울
+  const timbrel = new THREE.Group();
+  mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.018, 20, 1, true), mat('#8a5a2a', DS), timbrel).rotation.x = Math.PI / 2;
+  mesh(new THREE.CircleGeometry(0.058, 20), mat('#e8d6b0', DS), timbrel);
+  for (let i = 0; i < 5; i++) { const a = i / 5 * Math.PI * 2; mesh(sphere(0.007, 6, 4), mat('#d6a93a', { metalness: 0.6, roughness: 0.3 }), timbrel, [Math.cos(a) * 0.062, Math.sin(a) * 0.062, 0]); }
+  timbrel.position.set(0, 0.62, 0.16);
+  // 돌판 둘 (시내산의 언약)
+  const tablets = new THREE.Group();
+  [-1, 1].forEach(k => { mesh(new THREE.BoxGeometry(0.07, 0.11, 0.016), mat('#cfc6b4', { roughness: 0.9 }), tablets, [k * 0.038, 0, 0]); mesh(sphere(0.035, 12, 6, 0, Math.PI * 2, 0, Math.PI / 2), mat('#cfc6b4', { roughness: 0.9 }), tablets, [k * 0.038, 0.055, 0], [1, 0.6, 0.23]); });
+  tablets.position.set(0, 0.52, 0.16);
+  [doves, gift, jar, scroll, alabaster, palm, cup, torch, mat_, timbrel, tablets].forEach(g => { g.visible = false; upper.add(g); });
+  const items = { basket, doves, gift, jar, scroll, alabaster, palm, cup, torch, mat: mat_, timbrel, tablets };
 
   // 발: 샌들 위의 맨발이 옷자락 아래로
   const feet = [1, -1].map(s => {

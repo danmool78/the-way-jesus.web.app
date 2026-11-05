@@ -167,11 +167,11 @@ const MAKERS = {
     const base = geo.attributes.position.array.slice();
     const m = new THREE.MeshStandardMaterial({ color: '#6f97a0', roughness: 0.25, metalness: 0.1, transparent: true, depthWrite: false, alphaMap: radialTex('#ffffff', '#000000'), flatShading: false }); // depthWrite: 3D 지형에서 밑의 호수를 가려 투명한 가장자리로 호수 바닥이 비쳤다
     const w = new THREE.Mesh(geo, m);
-    w.receiveShadow = true;
+    w.receiveShadow = true; w.renderOrder = 2; // 모래·풀밭(투명한 바닥)보다 나중에 — 겹치면 바닥이 물을 덮어 물빛이 흐려졌다
     const g = new THREE.Group();
     g.add(w);
-    const calm = new THREE.Color('#7aa3ab'), storm = new THREE.Color('#5f7f87');
-    let amp = 0.01;
+    const calm = new THREE.Color('#7aa3ab'), storm = new THREE.Color('#5f7f87'), red = new THREE.Color('#9a1c14');
+    let amp = 0.01, blood = 0;
     const P = new Prop(g, (P, t, dt, env) => {
       // 폭풍 물결은 배 뱃전(물 위 약 0.15)을 넘지 않게: 넘으면 배가 물에 잠겨 사람만 물 위에 선 것처럼 보였다
       amp = damp(amp, 0.008 + (env.wave || 0) * 0.045, 1.2, dt);
@@ -183,6 +183,7 @@ const MAKERS = {
       pos.needsUpdate = true;
       geo.computeVertexNormals();
       m.color.copy(calm).lerp(storm, Math.min(1, (env.wave || 0)));
+      blood = damp(blood, P.state === 'blood' ? 1 : 0, 0.8, dt); if (blood > 0.01) m.color.lerp(red, blood); // 첫 재앙: 붉게 변한 나일
       m.opacity = P.show * (0.9 - Math.min(1, env.wave || 0) * 0.15);
     }, { fade: 'opacity' });
     P.height = (x, z, t) => amp * (Math.sin(x * 5 + t * 2.2) + Math.sin(z * 6.5 - t * 1.7) * 0.7);
@@ -539,7 +540,10 @@ Object.assign(MAKERS, {
       const h = (i + 1) * H / 6;
       mesh(new THREE.BoxGeometry(0.16, h, 0.13), wall, g, [-W / 2 - 0.08, h / 2, D / 2 - 0.065 - i * 0.13]).receiveShadow = true;
     }
-    return new Prop(g);
+    // 유월절: 문 양쪽 기둥과 위 인방에 바른 어린양의 피 (state 'blood'면 서서히 드러난다)
+    const bm = new THREE.MeshStandardMaterial({ color: '#b0241c', emissive: '#5a0a06', emissiveIntensity: 0.6, roughness: 0.6, transparent: true, opacity: 0 }); // 밤에도 보이게 조금 밝게, 굵게
+    [[0.2 - 0.145, 0.27, 0.05, 0.52], [0.2 + 0.145, 0.27, 0.05, 0.52], [0.2, 0.55, 0.36, 0.07]].forEach(([x, y, w, h]) => { const b = mesh(new THREE.BoxGeometry(w, h, 0.012), bm, g, [x, y, D / 2 + 0.045]); b.castShadow = false; });
+    return new Prop(g, (P, t, dt) => { bm.opacity = damp(bm.opacity, P.state === 'blood' ? 0.95 : 0, 1.5, dt); });
   },
 });
 
@@ -976,6 +980,236 @@ Object.assign(MAKERS, {
     const halo = glowSprite(0.7, 0.8); halo.position.y = 0.14; g.add(halo);
     const light = new THREE.PointLight('#ff9a50', 2, 1.8, 1.4); light.position.y = 0.25; g.add(light);
     return new Prop(g, (P, t) => { const f = 1 + Math.sin(t * 11) * 0.08 + Math.sin(t * 27) * 0.05; light.intensity = 2 * f * P.show; halo.material.opacity = 0.7 * f * P.show; });
+  },
+});
+
+// ---- 모세와 여호수아 ----
+// 흙벽돌 무늬: 줄마다 엇갈려 쌓은 벽돌과 줄눈 (벽·벽돌 더미에 함께 쓴다)
+let brickTex;
+const brickMap = () => {
+  if (brickTex) return brickTex;
+  const c = document.createElement('canvas'); c.width = c.height = 128;
+  const g = c.getContext('2d');
+  g.fillStyle = '#8a7356'; g.fillRect(0, 0, 128, 128);
+  for (let r = 0; r < 8; r++) for (let k = -1; k < 5; k++) {
+    const v = 0.9 + Math.random() * 0.18;
+    g.fillStyle = `rgb(${Math.round(176 * v)},${Math.round(146 * v)},${Math.round(104 * v)})`;
+    g.fillRect(k * 32 + (r % 2) * 16 + 1, r * 16 + 1, 30, 14);
+  }
+  brickTex = new THREE.CanvasTexture(c); brickTex.colorSpace = THREE.SRGBColorSpace;
+  brickTex.wrapS = brickTex.wrapT = THREE.RepeatWrapping;
+  return brickTex;
+};
+Object.assign(MAKERS, {
+  // 마른 모래 바닥 (광야·바닷가): 가장자리가 흐려지는 모래빛 원판과 작은 돌
+  sand(o = {}) {
+    const g = new THREE.Group(), R = o.r || 1.6;
+    const m = new THREE.MeshStandardMaterial({ color: o.color || '#cdb68a', roughness: 1, transparent: true, alphaMap: radialTex('#ffffff', '#000000'), depthWrite: false });
+    const d = new THREE.Mesh(new THREE.CircleGeometry(R, 48), m);
+    d.rotation.x = -Math.PI / 2; d.position.y = 0.003; d.receiveShadow = true; g.add(d);
+    const st = mat('#a08c6e', { roughness: 1, flatShading: true });
+    for (let i = 0; i < (o.stones ?? 14); i++) {
+      const a = Math.random() * Math.PI * 2, r = Math.sqrt(Math.random()) * R * 0.85;
+      mesh(new THREE.DodecahedronGeometry(0.012 + Math.random() * 0.018, 0), st, g, [Math.cos(a) * r, 0.008, Math.sin(a) * r * 0.8]);
+    }
+    return new Prop(g, (P) => { m.opacity = P.show; }, { fade: 'opacity' });
+  },
+  // 흙벽돌 더미: 햇볕에 말리려 줄지어 세운 벽돌 (애굽의 종살이)
+  bricks(o = {}) {
+    const g = new THREE.Group(), m = mat('#b0925f', { roughness: 1 }), n = o.n || 3;
+    for (let k = 0; k < n; k++) for (let r = 0; r < 3; r++) for (let c = 0; c < 4 - r; c++)
+      mesh(new THREE.BoxGeometry(0.07, 0.035, 0.04), m, g, [k * 0.34 + c * 0.075 + r * 0.037 - (n - 1) * 0.17, 0.018 + r * 0.036, (k % 2) * 0.12]).receiveShadow = true;
+    return new Prop(g);
+  },
+  // 쌓다 만 흙벽돌 성벽 (국고성 비돔과 라암셋): 위가 들쭉날쭉하고 앞에 비계 장대
+  brickwall(o = {}) {
+    const g = new THREE.Group(), W = o.w || 1.6, H = o.h || 0.62, tx = brickMap().clone();
+    tx.repeat.set(W * 3, H * 3); tx.needsUpdate = true;
+    const m = new THREE.MeshStandardMaterial({ map: tx, roughness: 1 });
+    const steps = 6;
+    for (let i = 0; i < steps; i++) {
+      const h = H * (0.55 + 0.45 * Math.abs(Math.sin(i * 1.7 + 0.4)));
+      const t2 = tx.clone(); t2.repeat.set(W / steps * 3, h * 3); t2.needsUpdate = true;
+      mesh(new THREE.BoxGeometry(W / steps + 0.002, h, 0.16), new THREE.MeshStandardMaterial({ map: t2, roughness: 1 }), g, [-W / 2 + (i + 0.5) * W / steps, h / 2, 0]).receiveShadow = true;
+    }
+    const w = wood();
+    [-0.45, 0.1, 0.55].forEach(x => mesh(new THREE.CylinderGeometry(0.008, 0.008, H + 0.25, 5), w, g, [x * W / 1.6, (H + 0.25) / 2, 0.14]));
+    mesh(new THREE.BoxGeometry(W * 0.75, 0.012, 0.06), w, g, [0.05, H * 0.6, 0.14]);
+    return new Prop(g);
+  },
+  // 파피루스 갈대 떨기: 세모진 줄기 끝에 우산처럼 퍼진 꽃차례. 바람에 서걱이며 흔들린다
+  reeds(o = {}) {
+    const g = new THREE.Group(), stem = mat('#5f7a34', { roughness: 0.9 }), head = mat('#7f9a44', { ...DS, roughness: 0.9 }), stalks = [];
+    (o.spots || [[0, 0]]).forEach(([cx, cz]) => {
+      for (let i = 0; i < (o.n || 9); i++) {
+        const s = new THREE.Group(), h = 0.45 + Math.random() * 0.35, a = Math.random() * Math.PI * 2, r = Math.random() * 0.1;
+        s.position.set(cx + Math.cos(a) * r, 0, cz + Math.sin(a) * r * 0.7);
+        s.rotation.z = (Math.random() - 0.5) * 0.25; s.rotation.x = (Math.random() - 0.5) * 0.2;
+        mesh(new THREE.CylinderGeometry(0.004, 0.007, h, 3), stem, s, [0, h / 2, 0]);
+        mesh(new THREE.ConeGeometry(0.05, 0.06, 10, 1, true), head, s, [0, h + 0.02, 0]).rotation.x = Math.PI;
+        s.userData.seed = Math.random() * 6; g.add(s); stalks.push(s);
+      }
+    });
+    return new Prop(g, (P, t) => stalks.forEach(s => { s.rotation.z = Math.sin(t * 1.3 + s.userData.seed) * 0.05; }));
+  },
+  // 갈대 상자: 역청을 바른 작은 파피루스 바구니 배. 물 위에서 살짝 흔들리고, state 'open'이면 뚜껑을 연다
+  ark() {
+    const g = new THREE.Group(), bob = new THREE.Group(); g.add(bob);
+    const weave = mat('#8a6a3a', { ...DS, roughness: 0.95 }), pitch = mat('#3a2a1a', { roughness: 0.6 });
+    mesh(sphere(0.1, 20, 8, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2), pitch, bob, [0, 0.06, 0], [1.4, 0.55, 0.85]);
+    mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.05, 20, 1, true), weave, bob, [0, 0.085, 0], [1.4, 1, 0.85]);
+    for (let i = 0; i < 4; i++) mesh(new THREE.TorusGeometry(0.1, 0.004, 4, 24), weave, bob, [0, 0.065 + i * 0.012, 0], [1.4, 0.85, 1]).rotation.x = Math.PI / 2;
+    const babyM = mat('#f2ead8');
+    mesh(new THREE.CapsuleGeometry(0.03, 0.07, 6, 10), babyM, bob, [0, 0.09, 0]).rotation.z = Math.PI / 2;
+    mesh(sphere(0.026, 12, 10), mat('#d6ad89'), bob, [0.07, 0.095, 0]);
+    const lid = new THREE.Group(); lid.position.set(-0.13, 0.11, 0); bob.add(lid);
+    mesh(sphere(0.1, 20, 8, 0, Math.PI * 2, 0, Math.PI / 2), weave, lid, [0.13, 0, 0], [1.4, 0.4, 0.85]);
+    return new Prop(g, (P, t, dt) => {
+      bob.position.y = Math.sin(t * 1.6) * 0.008; bob.rotation.z = Math.sin(t * 1.1) * 0.04;
+      lid.rotation.z = damp(lid.rotation.z, P.state === 'open' ? 1.6 : 0, 2, dt);
+    }, { state: 'closed' });
+  },
+  // 떨기나무: 마른 가시덤불. state 'fire'면 불꽃에 휩싸이지만 가지는 그대로다 (타 없어지지 않는다)
+  bush() {
+    const g = new THREE.Group(), twig = mat('#5a4630', { roughness: 1 }), leaf = mat('#7d7a46', { roughness: 1, flatShading: true });
+    for (let i = 0; i < 9; i++) {
+      const a = i / 9 * Math.PI * 2, l = 0.22 + Math.random() * 0.12, b = mesh(new THREE.CylinderGeometry(0.004, 0.009, l, 4), twig, g, [Math.cos(a) * 0.05, l / 2, Math.sin(a) * 0.05]);
+      b.rotation.set(Math.sin(a) * 0.5, 0, -Math.cos(a) * 0.5);
+    }
+    [[0, 0.22, 0, 0.13], [0.08, 0.16, 0.03, 0.09], [-0.08, 0.15, -0.02, 0.1], [0.02, 0.12, 0.08, 0.08]].forEach(([x, y, z, r]) => mesh(new THREE.IcosahedronGeometry(r, 0), leaf, g, [x, y, z], [1, 0.7, 1]));
+    const fire = new THREE.Group(); g.add(fire);
+    const fm = new THREE.MeshBasicMaterial({ color: '#ffb347', transparent: true, opacity: 0.85, depthWrite: false, blending: THREE.AdditiveBlending });
+    const tongues = Array.from({ length: 9 }, (_, i) => { const a = i / 9 * Math.PI * 2, c = mesh(new THREE.ConeGeometry(0.035, 0.18, 6), fm, fire, [Math.cos(a) * 0.08, 0.28, Math.sin(a) * 0.08]); c.castShadow = false; c.userData.s = Math.random() * 6; return c; });
+    const halo = glowSprite(1.1, 0.9); halo.position.y = 0.3; fire.add(halo);
+    const light = new THREE.PointLight('#ffa040', 0, 2.2, 1.4); light.position.y = 0.35; g.add(light);
+    let k = 0;
+    return new Prop(g, (P, t, dt) => {
+      k = damp(k, P.state === 'fire' ? 1 : 0, 1.5, dt);
+      fire.visible = k > 0.02;
+      tongues.forEach(c => { const f = 0.8 + Math.sin(t * 9 + c.userData.s) * 0.25; c.scale.set(k, k * f, k); c.position.y = 0.2 + 0.1 * f; });
+      halo.material.opacity = k * (0.75 + Math.sin(t * 13) * 0.1) * P.show; light.intensity = k * 2.4 * P.show;
+    }, { state: 'plain' });
+  },
+  // 구름 기둥과 불 기둥: 하늘로 솟은 큰 기둥. state 'cloud'(낮) | 'fire'(밤) — 같은 기둥이 빛깔만 바뀐다
+  pillar(o = {}) {
+    const g = new THREE.Group(), H = o.h || 2.4, puffs = [];
+    const m = new THREE.MeshStandardMaterial({ color: '#ffffff', emissive: '#fff3d8', emissiveIntensity: 0.5, transparent: true, opacity: 0.85, depthWrite: false, roughness: 1 });
+    for (let i = 0; i < 26; i++) {
+      const y = (i / 26) * H, r = 0.16 + 0.06 * Math.sin(i * 1.3) + (y > H * 0.8 ? 0.12 : 0);
+      const p = mesh(sphere(r, 14, 10), m, g, [Math.sin(i * 2.1) * 0.06, y + 0.12, Math.cos(i * 1.7) * 0.05]);
+      p.castShadow = false; p.userData = { y: y + 0.12, s: i }; puffs.push(p);
+    }
+    const halo = glowSprite(2.4, 0.6); halo.position.y = H * 0.5; g.add(halo);
+    const light = new THREE.PointLight('#ffa050', 0, 4, 1.2); light.position.y = H * 0.4; g.add(light);
+    const day = new THREE.Color('#ffffff'), night = new THREE.Color('#ff7a26'), dE = new THREE.Color('#fff3d8'), nE = new THREE.Color('#e04a08');
+    let f = 0;
+    return new Prop(g, (P, t, dt) => {
+      f = damp(f, P.state === 'fire' ? 1 : 0, 1, dt);
+      m.color.copy(day).lerp(night, f); m.emissive.copy(dE).lerp(nE, f); m.emissiveIntensity = 0.5 + f * 0.5; // 너무 밝으면 톤 매핑에 흰빛으로 바랜다 m.opacity = 0.85 * P.show;
+      halo.material.opacity = (0.35 + f * 0.5) * P.show; light.intensity = f * 3 * P.show;
+      puffs.forEach(p => { p.position.y = p.userData.y + Math.sin(t * 0.8 + p.userData.s) * 0.03; p.rotation.y = t * 0.2 + p.userData.s; });
+    }, { state: o.state || 'cloud', fade: 'opacity' });
+  },
+  // 갈라지는 바다: 가로(동서)로 난 마른 길을 사이에 두고 북(뒤)·남(앞)의 물이 벽처럼 선다.
+  // state 'calm'(잔잔한 바다) → 'part'(물벽, 마른 바닥) → 'return'(물이 돌아와 덮는다). 앞쪽 물벽은 낮고 투명하게 — 건너는 사람이 가려지지 않게
+  sea(o = {}) {
+    const g = new THREE.Group(), W = o.w || 3.2, gap = o.gap || 0.42, D = o.d || 1.0;
+    const bed = mesh(new THREE.PlaneGeometry(W, gap * 2 + 0.1), mat('#a8936a', { roughness: 1 }), g, [0, 0.004, 0]); bed.rotation.x = -Math.PI / 2; bed.receiveShadow = true;
+    const wm = () => new THREE.MeshStandardMaterial({ color: '#3f7f95', roughness: 0.15, metalness: 0.15, transparent: true, opacity: 0.82, depthWrite: false, emissive: '#1f4a5a', emissiveIntensity: 0.25 });
+    const mk = (z, d, front) => {
+      const m = wm(), geo = new THREE.BoxGeometry(W, 1, d, 48, 6, 1); geo.translate(0, 0.5, 0);
+      const base = geo.attributes.position.array.slice(), w = new THREE.Mesh(geo, m); w.position.z = z; g.add(w);
+      return { w, m, geo, base, front };
+    };
+    const back = mk(-gap - D / 2, D, false), front = mk(gap + D / 2, D, true);
+    const fill = mk(0, gap * 2 + 0.02, false); // 가운데 길을 덮는 물 (잔잔할 때와 돌아올 때)
+    let rise = 0, close = 1;
+    return new Prop(g, (P, t, dt) => {
+      const st = P.state;
+      rise = damp(rise, st === 'part' ? 1 : 0, 0.7, dt);
+      close = damp(close, st === 'part' ? 0 : 1, st === 'return' ? 0.9 : 0.6, dt);
+      [back, front, fill].forEach(L => {
+        const h = L === fill ? 0.06 * close + 0.001 : 0.06 + rise * (L.front ? 0.3 : 1.0);
+        const p = L.geo.attributes.position;
+        for (let i = 0; i < p.count; i++) {
+          const x = L.base[i * 3], y = L.base[i * 3 + 1];
+          p.array[i * 3 + 1] = y * h + (y > 0.99 ? Math.sin(x * 6 + t * 2.4) * 0.012 * (1 + rise * 2) : 0);
+        }
+        p.needsUpdate = true; L.geo.computeVertexNormals();
+        L.m.opacity = P.show * (L.front ? 0.82 - rise * 0.5 : 0.85);
+        L.w.visible = L !== fill || close > 0.03;
+      });
+    }, { state: o.state || 'calm', fade: 'opacity' });
+  },
+  // 애굽 병거: 바퀴살 여섯의 두 바퀴, 가벼운 수레, 끄는 말 한 필과 서서 모는 사람(윤곽만). 앞이 +x
+  chariot(o = {}) {
+    const g = new THREE.Group(), body = new THREE.Group(); g.add(body);
+    const w = mat('#8a5a2a', { roughness: 0.8 }), gold = mat('#c99a3a', { metalness: 0.5, roughness: 0.4 });
+    [-1, 1].forEach(s => {
+      const wh = new THREE.Group(); wh.position.set(-0.05, 0.19, s * 0.15); body.add(wh);
+      mesh(new THREE.TorusGeometry(0.19, 0.012, 6, 28), w, wh);
+      for (let i = 0; i < 6; i++) mesh(new THREE.BoxGeometry(0.008, 0.37, 0.008), w, wh).rotation.z = i * Math.PI / 6;
+    });
+    mesh(new THREE.BoxGeometry(0.22, 0.015, 0.28), w, body, [-0.03, 0.3, 0]);
+    mesh(new THREE.BoxGeometry(0.015, 0.2, 0.28), gold, body, [0.08, 0.4, 0]);
+    mesh(new THREE.CylinderGeometry(0.008, 0.008, 0.5, 5), w, body, [0.3, 0.33, 0]).rotation.z = Math.PI / 2 - 0.12;
+    const horse = beast({ coat: o.coat || '#6b4a30', dark: '#2a1c12', size: 1.45, mane: true, ears: 0.05, neck: 0.15, neckTilt: 0.45, legs: 1.2, graze: false });
+    horse.obj.position.set(0.58, 0, 0); body.add(horse.obj);
+    // 모는 사람: 흰 허리치마와 검은 가발의 단순한 윤곽
+    const d = new THREE.Group(); d.position.set(-0.05, 0.3, 0); d.scale.setScalar(1.55); body.add(d);
+    mesh(lathe([[0.001, 0], [0.06, 0], [0.055, 0.14], [0.045, 0.3], [0.03, 0.34], [0.001, 0.35]], 12), mat('#efe9da'), d);
+    mesh(sphere(0.045, 12, 10), mat('#a87451'), d, [0, 0.39, 0]);
+    mesh(sphere(0.05, 12, 8, 0, Math.PI * 2, 0, Math.PI * 0.55), mat('#1a1210'), d, [0, 0.4, 0]);
+    const P = new Prop(g, (P2, t, dt) => { horse.moving = P2.moving; horse.upd(horse, t, dt, {}); }); // 말의 다리만 움직인다 (자리는 병거가 옮긴다)
+    P.directional = true;
+    return P;
+  },
+  // 흑염소 털 장막 (광야의 집): 낮게 친 검은 천과 장대·줄
+  tent(o = {}) {
+    const g = new THREE.Group(), cloth = mat(o.color || '#3a2f28', { ...DS, roughness: 1 }), w = wood(), W = o.w || 0.9;
+    const geo = new THREE.PlaneGeometry(W, 0.6, 12, 6), p = geo.attributes.position;
+    for (let i = 0; i < p.count; i++) { const x = p.getX(i), y = p.getY(i); p.setZ(i, -Math.abs(y) * 0.5 + Math.sin(x * 9) * 0.01); }
+    geo.computeVertexNormals();
+    const roof = mesh(geo, cloth, g, [0, 0.42, 0]); roof.rotation.x = -Math.PI / 2; roof.receiveShadow = true;
+    mesh(new THREE.PlaneGeometry(W, 0.4), cloth, g, [0, 0.2, -0.28]);
+    [-1, 0, 1].forEach(k => mesh(new THREE.CylinderGeometry(0.008, 0.008, 0.44, 5), w, g, [k * W * 0.45, 0.22, 0.27]));
+    return new Prop(g);
+  },
+  // 메뚜기·파리 떼: 무대 위를 맴도는 검은 점들 (재앙)
+  swarm(o = {}) {
+    const g = new THREE.Group(), n = o.n || 160, pos = new Float32Array(n * 3), seed = Array.from({ length: n }, () => [Math.random() * 6, 0.4 + Math.random() * 1.2, Math.random()]);
+    const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    const m = new THREE.PointsMaterial({ color: o.color || '#2a2418', size: 0.028, transparent: true, depthWrite: false });
+    g.add(new THREE.Points(geo, m));
+    return new Prop(g, (P, t) => {
+      seed.forEach(([a, r, h], i) => { const ang = a + t * (0.6 + h); pos[i * 3] = Math.cos(ang) * r * 1.2; pos[i * 3 + 1] = 0.2 + h * 0.9 + Math.sin(t * 3 + a) * 0.06; pos[i * 3 + 2] = Math.sin(ang) * r * 0.6; });
+      geo.attributes.position.needsUpdate = true; m.opacity = P.show;
+    }, { fade: 'opacity' });
+  },
+  // 애굽 궁전의 기둥: 파피루스 꽃 모양 기둥머리의 두 기둥과 그 위의 들보 (바로의 궁)
+  egcolumns(o = {}) {
+    const g = new THREE.Group(), stone = mat('#e3d6b8', { roughness: 0.9 }), paint = mat('#2f6a8a'), gold = mat('#c99a3a', { metalness: 0.4, roughness: 0.5 }), W = o.w || 1.1, H = o.h || 1.25;
+    [-1, 1].forEach(s => {
+      mesh(new THREE.CylinderGeometry(0.075, 0.09, H, 16), stone, g, [s * W / 2, H / 2, 0]);
+      mesh(lathe([[0.07, 0], [0.13, 0.08], [0.12, 0.13], [0.001, 0.13]], 16), stone, g, [s * W / 2, H, 0]);
+      [0.25, 0.5, 0.75].forEach(f => mesh(new THREE.TorusGeometry(0.083, 0.008, 6, 20), paint, g, [s * W / 2, H * f, 0]).rotation.x = Math.PI / 2);
+    });
+    mesh(new THREE.BoxGeometry(W + 0.34, 0.12, 0.24), stone, g, [0, H + 0.19, 0]);
+    mesh(new THREE.BoxGeometry(W + 0.34, 0.025, 0.25), paint, g, [0, H + 0.14, 0]);
+    mesh(new THREE.BoxGeometry(0.18, 0.06, 0.02), gold, g, [0, H + 0.19, 0.125]);
+    return new Prop(g);
+  },
+  // 개구리: 땅에 흩어진 작은 초록 덩이들이 이따금 뛴다
+  frogs(o = {}) {
+    const g = new THREE.Group(), m = mat('#5a7a34', { roughness: 0.6 }), list = [];
+    for (let i = 0; i < (o.n || 22); i++) {
+      const f = new THREE.Group(), a = Math.random() * Math.PI * 2, r = Math.sqrt(Math.random()) * (o.r || 1.2);
+      f.position.set(Math.cos(a) * r, 0, Math.sin(a) * r * 0.7);
+      mesh(sphere(0.022, 8, 6), m, f, [0, 0.016, 0], [1.2, 0.7, 1]);
+      mesh(sphere(0.013, 8, 6), m, f, [0.02, 0.026, 0]);
+      f.rotation.y = Math.random() * 6; f.userData.s = Math.random() * 6; g.add(f); list.push(f);
+    }
+    return new Prop(g, (P, t) => list.forEach(f => { f.position.y = Math.max(0, Math.sin(t * 2.2 + f.userData.s)) ** 8 * 0.06; }));
   },
 });
 

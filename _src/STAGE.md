@@ -11,6 +11,7 @@
 | `stage/people.js` | 인물 생성(makePerson, TYPES)과 배우(Actor: 자세·이동·시선·나타남) |
 | `stage/props.js` | 소품(MAKERS)과 Prop(나타남·이동·상태) |
 | `stage/scenes.js` | **장면 대본(SCRIPTS)** — 새 장면은 여기에 추가한다 |
+| `stage/moses.js` | 모세와 여호수아 여정의 대본(MOSES) — scenes.js가 SCRIPTS에 합친다. 장면 id(m01…)는 여정마다 겹치지 않게 |
 | `app.js` | 낭독할 때 `stage:beat` 이벤트를 보낸다 (intro, p0…, w0…, end; 문장마다 s) |
 
 `?beat=p1.2#e03` 처럼 주소에 붙이면 그 순간까지의 동작을 즉시 적용한 화면을 볼 수 있다(확인용).
@@ -74,17 +75,25 @@ e02: {
 61개 장면 앞의 창세기 장면. data의 `prologue`로 따로 실리고 앱에서는 장면 번호 -1이다(장면 수·퀴즈·도장·대조표 밖). 장소 `eden`은 `hidden`이라 지도에 핀이 없고, 무대는 대본의 `at`(전통적 추정지인 메소포타미아 남부, 유프라테스·티그리스가 만나는 곳)에 선다. 본 지도와 이어지지 않는 따로 떨어진 2D 무대다: 바탕은 화면을 꽉 채우는 푸른 들(`assets/relief-east.webp`, `python3 _src/relief.py <캐시> east`)에 두 강과 만을 벡터로 그리고, 화면은 그 안(app.js의 `EDEN`)에만 머문다. 3D 버튼과 전체 경로는 막고, 첫 장면과 오갈 때는 날아가지 않고 새로 시작하듯 바로 바꾼다.
 아담과 하와는 타락 전에는 벌거벗은 빛의 실루엣(인물 `adam`·`eve`의 `nude` — 옷 없는 몸의 윤곽, cast 옵션 `silhouette: 'light'`), 범죄한 뒤에는 무화과 잎을 두른 어두운 실루엣(`adamFig`·`eveFig`, 창 3:7), 마지막에 가죽옷 입은 모습 — 세 쌍을 `show`로 바꿔 낀다. 하나님은 모습 없이 빛(`beam`)으로만, 뱀은 가지에 감긴 그림자(`serpent`)로만.
 
+### 모세와 여호수아 여정
+- **애굽 사람과 히브리 사람을 한눈에 가른다.** 애굽 사람은 맨 윗몸에 흰 아마포 허리치마(`kilt`), 검은 단발 가발(`wig`, 여인은 `wigLong`), 넓은 목걸이(`collar: [색…]`), 바로는 줄무늬 네메스 두건(`nemes: [바탕, 줄]`). 히브리 사람은 긴 옷·수염·머릿수건.
+- 하나님은 모습 없이 불꽃(`bush`)·빛(`beam`)·기둥(`pillar`)으로만. 애굽 사람을 친 일, 맏아들의 죽음, 바다에 잠긴 병거는 그리지 않는다(사라지게 하거나 어둠·기도로).
+- 시내 반도·미디안은 3D 지형 지역이 없어, 3D 모드에서는 2D 바탕(`assets/relief-south.webp`)을 평평하게 깐다(`terrain.js`의 SOUTH, 여정 지도에 `south`가 있을 때만).
+- 장면 확인: `sheet.mjs`는 m으로 시작하는 장면이면 `?j=moses`로 연다. `beats.mjs`도 여정 데이터를 함께 읽는다.
+
 ### 인물 유형 (TYPES)
 jesus, mary, joseph, angel, woman, woman2, mother, anna, john(젊은 제자, 수염 없음), disciple, peter, man, elder, shepherd, magus, magus2, magus3, king, soldier(창), pharisee, child, boyJesus, baptist, tempter, steward, groom, servant, crossed(십자가 위 예수 — 실루엣 전용), thief(실루엣 전용)
+모세 여정: pharaoh, egyptian, taskmaster(막대), egysoldier(창), princess, egywoman, magician, mosesP(궁의 모세, 애굽 옷), mosesS(미디안의 목자), mosesE(여든의 모세, 흰 수염·지팡이), aaron, hebrew, hebrew2, miriam, sister(모세의 누이)
 
 새 인물은 TYPES에 옷 색(robe/trim/mantle), 머리(hair, long, curls), 수염(beard), 베일(veil+inner)·머릿수건(hood+band), slim, height 등을 조합해 추가한다.
 
 ### 자세 (pose)
 idle, walk(자동), speak, listen, afraid, kneel, pray, bless, raise, bow, look-up, sleep, carry(아기), ride(나귀에 걸터앉음), point, sit, sit-ground, rebuke, break(빵 떼기), shrug, cower, mourn, crucified, crucified-dead, hold-basket
-손에 드는 물건(item): basket, doves, gift, baby
+손에 드는 물건(item): basket, doves, gift, baby, timbrel(소고), tablets(돌판 둘)
 
 ### 소품 (MAKERS)
 manger, sheep, star, beam(내려오는 빛), fruittree(fruit/taken), lifetree(open/closed), serpent(rest/hiss), flamesword, host(하늘 군대), water(호수·강 — size로 길게), boat(deck), rain, grass, crowd(spots, state stand/sit, face, faceCenter), baskets, hill(지면 높이 제공), crosses, tomb(open/closed), temple, throne, house, donkey(deck), camel(deck), jackal, ox, dove(fly/rest, y), rocks, figtree, jars(empty/water/wine), feast, table(over), cage
+모세 여정: sand(모래 바닥, color), bricks, brickwall, reeds(파피루스), ark(갈대 상자 closed/open), bush(떨기나무 plain/fire), pillar(구름·불 기둥 cloud/fire), sea(갈라지는 바다 calm/part/return), chariot(병거, 말), tent(장막), swarm(파리·메뚜기 떼), egcolumns(애굽 궁 기둥), frogs. house는 state 'blood'(문설주의 피), water는 'blood'(붉어진 나일)
 
 새 소품은 `MAKERS`에 추가하고, 움직이는 것은 `new Prop(group, update)`의 update에서 처리한다. 사람이 올라설 수 있는 지형은 `P.heightAt(x, z)`를 제공하면 자동으로 그 위에 선다.
 

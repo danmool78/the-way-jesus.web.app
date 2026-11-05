@@ -25,6 +25,8 @@ const RIVERS = ['jordanN', 'jordanS', 'nile', 'canopic', 'rosetta', 'damietta', 
 const SINAI = [[31.13, 33.8], [31.15, 33.1], [31.26, 32.3], [31.52, 31.85], [31.47, 30.4], [31.2, 29.9], [30.9, 28.5], [30.8, 26]];
 // 바탕 그림 두 장: app.js의 RELIEF, RELIEF_WEST와 같게 (프롤로그의 RELIEF_EAST는 3D를 쓰지 않아 빠진다)
 const BASES = [{ src: 'assets/relief.webp', lat0: 29.15, lat1: 34.6, lng0: 33.0, lng1: 37.4, y: 0 }, { src: 'assets/relief-west.webp', lat0: 29.15, lat1: 31.9, lng0: 29.4, lng1: 33.25, y: -0.05 }];
+// 시내 반도·미디안 바탕(모세 여정, app.js의 RELIEF_SOUTH): 다른 바탕 위에. 애굽 지형 지역과 겹치는 북쪽 끝은 잘라(cut) 지형의 높이를 덮지 않게
+const SOUTH = { src: 'assets/relief-south.webp', lat0: 27.2, lat1: 30.15, lng0: 31.25, lng1: 37.4, y: 0.02, cut: 29.8 };
 
 const wrap = document.querySelector('.mapwrap'), svg = document.getElementById('map');
 let renderer, scene, camera, sun, hemi, env, on = false, ready = false, loading = null;
@@ -94,6 +96,7 @@ async function build() {
   // 가장 아래: 땅색 큰 판 (바탕 그림의 투명한 가장자리 밑과 그 바깥)
   const land = new THREE.Mesh(new THREE.PlaneGeometry(30000, 30000), greyable(new THREE.MeshStandardMaterial({ color: '#e3d5b4', roughness: 1 })));
   land.rotation.x = -Math.PI / 2; land.position.y = -8; land.receiveShadow = true; scene.add(land);
+  if (window.journeyMap?.south && !BASES.includes(SOUTH)) BASES.push(SOUTH);
   await Promise.all(BASES.map(async b => { b.tex = mapTex(await loadImg(b.src)); }));
   addWalker(); addLabels();
   decorate();
@@ -185,8 +188,8 @@ function decorate() {
   const flat = (shape, mat, y) => { const m = new THREE.Mesh(new THREE.ShapeGeometry(shape, 16), mat); m.rotation.x = Math.PI / 2; m.position.y = y; m.receiveShadow = true; decor.add(m); return m; };
   // 바탕 그림: 불러온 지역 자리는 구멍 — 덮으면 해수면 아래의 호수·골짜기가 바탕 밑에 묻힌다
   BASES.forEach(b => {
-    const [bx0, bz0] = px([b.lat1, b.lng0]), [bx1, bz1] = px([b.lat0, b.lng1]);
-    const sh = new THREE.Shape([[bx0, bz0], [bx1, bz0], [bx1, bz1], [bx0, bz1]].map(([x, z]) => new THREE.Vector2(x, z)));
+    const [bx0, bz0] = px([b.lat1, b.lng0]), [bx1, bz1] = px([b.lat0, b.lng1]), cz = b.cut ? px([b.cut, b.lng0])[1] : bz0; // 그림은 그대로, 판만 잘라 낸다
+    const sh = new THREE.Shape([[bx0, cz], [bx1, cz], [bx1, bz1], [bx0, bz1]].map(([x, z]) => new THREE.Vector2(x, z)));
     regions.filter(r => r.heights && r.X0 >= bx0 && r.X1 <= bx1 && r.Z0 >= bz0 && r.Z1 <= bz1)
       .forEach(r => sh.holes.push(new THREE.Path([[r.X0, r.Z0], [r.X0, r.Z1], [r.X1, r.Z1], [r.X1, r.Z0]].map(([x, z]) => new THREE.Vector2(x, z)))));
     const m = flat(sh, greyable(new THREE.MeshStandardMaterial({ map: b.tex, transparent: true, roughness: 1, side: THREE.DoubleSide })), b.y);
@@ -196,7 +199,7 @@ function decorate() {
   // 지중해와 수에즈 만 (바탕 그림 위에 — 2D 지도도 바다를 그림 위에 덮는다)
   const seaM = new THREE.MeshStandardMaterial({ color: '#7ea6ad', roughness: 0.4, metalness: 0.1, envMap: env, envMapIntensity: 0.7, side: THREE.DoubleSide });
   flat(new THREE.Shape([[35.2, 36.0], [34.2, 35.65], ...GEO.coast, ...SINAI, [36, 26]].map(V2)), seaM, 0.05);
-  flat(new THREE.Shape(GEO.suez.map(V2)), seaM, 0.05);
+  if (!window.journeyMap?.south) flat(new THREE.Shape(GEO.suez.map(V2)), seaM, 0.05); // 시내 반도 바탕에는 홍해의 두 만이 이미 바다로 칠해져 있다 (2D와 같게)
   // 호수: 2D 지도처럼 물가 점들을 매끄러운 곡선으로. 수면 고도가 정해진 호수는 그 높이에
   const lakeM = new THREE.MeshStandardMaterial({ color: '#4f8798', roughness: 0.55, metalness: 0.05, envMap: env, envMapIntensity: 0.6, transparent: true, opacity: 0.94, side: THREE.DoubleSide }); // 너무 매끈하면 해가 하얀 얼룩으로 번진다
   LAKES.forEach(([k, m]) => {

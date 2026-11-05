@@ -1386,6 +1386,7 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   }
   buildMap(); renderTrack();
   map.classList.toggle('jflood', !!jm?.jordanFlood);
+  window.journeyMap = jm || null; // 3D 지형(terrain.js)도 여정의 바탕(시내 반도)을 깐다
   // 장면 주소(#e05, 프롤로그는 #e00)가 있으면 그 장면, 없으면 지난번 장면, 처음 온 사람은 프롤로그부터
   const hashIdx = () => d.prologue && location.hash === '#' + d.prologue.id ? -1 : EVENTS.findIndex(e => '#' + e.id === location.hash);
   const fromHash = hashIdx(), hashOk = fromHash >= 0 || (fromHash === -1 && !!d.prologue && location.hash === '#' + d.prologue.id);
