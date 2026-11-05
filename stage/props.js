@@ -1105,7 +1105,7 @@ Object.assign(MAKERS, {
     let f = 0;
     return new Prop(g, (P, t, dt) => {
       f = damp(f, P.state === 'fire' ? 1 : 0, 1, dt);
-      m.color.copy(day).lerp(night, f); m.emissive.copy(dE).lerp(nE, f); m.emissiveIntensity = 0.5 + f * 0.5; // 너무 밝으면 톤 매핑에 흰빛으로 바랜다 m.opacity = 0.85 * P.show;
+      m.color.copy(day).lerp(night, f); m.emissive.copy(dE).lerp(nE, f); m.emissiveIntensity = 0.5 + f * 0.5; m.opacity = 0.85 * P.show; // 빛을 너무 세게 하면 톤 매핑에 흰빛으로 바랜다
       halo.material.opacity = (0.35 + f * 0.5) * P.show; light.intensity = f * 3 * P.show;
       puffs.forEach(p => { p.position.y = p.userData.y + Math.sin(t * 0.8 + p.userData.s) * 0.03; p.rotation.y = t * 0.2 + p.userData.s; });
     }, { state: o.state || 'cloud', fade: 'opacity' });
