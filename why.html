@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#16120e">
+<meta name="description" content="왜 기독교인가 — 구원을 위해 무엇을 해야 하는지, 사람이 하는지 신이 하는지를 여러 종교와 같은 잣대로 견주어 봅니다">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<title>왜 기독교인가 — 그 길</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* 왜 기독교인가 — 묻고 답하기(qna.html)와 같은 결. 읽는 글이라 접지 않고 펼쳐 둔다 */
+  body{overflow:auto;word-break:keep-all;background:radial-gradient(ellipse at 50% 0%,rgba(217,180,106,.13),transparent 50%),var(--bg)}
+  .why{max-width:760px;margin:0 auto;padding:28px 20px 64px}
+  .why-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .why-top a{color:var(--gold2);text-decoration:none;display:inline-flex;align-items:center;gap:8px;font-size:14px}
+  .why-top img{width:28px;height:28px}
+  .why-top .back{border:1px solid #4a3c2c;border-radius:999px;padding:7px 14px}
+  .why-top .back:hover{border-color:var(--gold)}
+  .why h1{font-family:var(--serif);font-size:34px;margin:34px 0 8px;color:#f6ead0}
+  .why .lead{color:var(--muted);line-height:1.8;margin:0 0 10px}
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 8px;padding:0;list-style:none}
+  .toc a{display:block;border:1px solid #4a3c2c;border-radius:999px;padding:6px 13px;font-size:13px;color:var(--ink);text-decoration:none;background:rgba(255,255,255,.02)}
+  .toc a:hover{border-color:var(--gold);color:var(--gold2)}
+  .why h2{font-family:var(--serif);font-size:23px;color:var(--gold2);margin:48px 0 14px;padding-top:10px;border-top:1px solid #3a3026;scroll-margin-top:16px}
+  .why h2 small{display:block;font-family:var(--sans);font-size:12px;color:var(--faint);letter-spacing:.08em;margin-bottom:4px}
+  .why h3{font-size:16px;color:#f6ead0;margin:22px 0 8px}
+  .why p,.why li{color:#e2d7c3;line-height:1.85;font-size:15px}
+  .why p{margin:0 0 12px}
+  .why ul,.why ol{margin:4px 0 14px;padding-left:20px}
+  .why li{margin:5px 0}
+  .why b{color:var(--gold2)}
+  /* 말씀 — 새로 옮긴 글, 출처를 끝에 */
+  .verse{margin:14px 0;padding:12px 16px;border-left:2px solid var(--gold);background:rgba(217,180,106,.07);border-radius:0 10px 10px 0;font-family:var(--serif);font-size:16px;line-height:1.8;color:#f1e8d8}
+  .verse cite{display:block;font-family:var(--sans);font-style:normal;font-size:12px;color:var(--muted);margin-top:4px}
+  .note{border:1px dashed #4a3c2c;border-radius:12px;padding:12px 16px;margin:14px 0;font-size:14px;color:var(--muted);line-height:1.8}
+  /* 스펙트럼 — 사람이 다 하는 쪽에서 신이 다 하는 쪽으로. 폰에서도 표가 깨지지 않게 카드로 */
+  .scale{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin:16px 2px 6px}
+  .bar{height:6px;border-radius:3px;background:linear-gradient(90deg,#6b5a44,var(--gold));margin:0 0 14px}
+  .rel{border:1px solid #3a3026;border-radius:14px;background:rgba(29,24,19,.7);padding:14px 16px;margin:10px 0}
+  .rel.me{border-color:var(--gold);background:rgba(217,180,106,.08)}
+  .rel-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:6px}
+  .rel-h b{font-family:var(--serif);font-size:17px;color:#f6ead0}
+  .who{flex:none;font-size:12px;border-radius:999px;padding:3px 10px;border:1px solid #5a4830;color:var(--gold2)}
+  .rel dl{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;margin:0;font-size:14px;line-height:1.7}
+  .rel dt{color:var(--faint)}
+  .rel dd{margin:0;color:#e2d7c3}
+  /* 비교표 — 짧은 두 칸이라 폰에서도 표로 */
+  table{width:100%;border-collapse:collapse;margin:12px 0 16px;font-size:14px;line-height:1.7}
+  th,td{text-align:left;vertical-align:top;padding:9px 10px;border-bottom:1px solid #3a3026}
+  th{color:var(--gold2);font-weight:700;white-space:nowrap}
+  td{color:#e2d7c3}
+  tr.me td,tr.me th{background:rgba(217,180,106,.08)}
+  .three{counter-reset:s;list-style:none;padding:0}
+  .three li{counter-increment:s;position:relative;padding:10px 14px 10px 48px;border:1px solid #3a3026;border-radius:12px;margin:8px 0;background:rgba(29,24,19,.6)}
+  .three li::before{content:counter(s);position:absolute;left:14px;top:10px;width:24px;height:24px;border-radius:50%;background:var(--gold);color:#24180a;font-weight:700;font-size:13px;display:grid;place-items:center}
+  .three li:last-child{border-color:var(--gold)}
+  .why .toc,.why .three{padding-left:0}
+  .end{text-align:center;margin-top:56px}
+  .end p{color:var(--muted)}
+  .end a{display:inline-block;padding:14px 28px;border-radius:999px;background:linear-gradient(180deg,#e9c97f,#b88a3e);color:#24180a;font-weight:700;text-decoration:none;margin:4px}
+  .end a.ghost{background:none;border:1px solid #5a4830;color:var(--gold2)}
+  .foot{text-align:center;margin-top:28px;font-size:12px;color:var(--faint)}
+  .foot a{color:var(--faint)}
+  @media (max-width:600px){.why h1{font-size:28px}.why h2{font-size:21px}th,td{padding:8px 6px}}
+</style>
+</head>
+<body>
+<main class="why">
+  <nav class="why-top">
+    <a href="./"><img src="assets/logo.svg" alt=""><b style="font-family:var(--serif);font-size:20px">그 길</b></a>
+    <a class="back" href="qna.html">묻고 답하기 →</a>
+  </nav>
+
+  <h1>왜 기독교인가</h1>
+  <p class="lead">종교는 많습니다. 그중에 왜 기독교일까요? 이 글은 기독교에 유리한 것만 골라 보지 않습니다. 기독교에 묻는 질문을 다른 종교에도 똑같이 묻고, 각 종교는 그 종교 스스로의 가르침으로 설명합니다. 견줄 것은 하나입니다. <b>구원을 받으려면 무엇을 해야 하는가. 그 일을 사람이 하는가, 신이 하는가.</b></p>
+  <ul class="toc">
+    <li><a href="#who">구원은 누가 하나</a></li>
+    <li><a href="#grace">은혜를 말하는 종교들</a></li>
+    <li><a href="#price">죄의 값은 누가 치르나</a></li>
+    <li><a href="#fake">진짜 옆의 가짜</a></li>
+    <li><a href="#test">감정 기준</a></li>
+    <li><a href="#ask">나올 만한 물음</a></li>
+  </ul>
+
+  <h2 id="who"><small>하나</small>구원은 누가 하는가</h2>
+  <p>여러 종교가 사람의 문제를 무엇으로 보는지, 무엇을 목표로 하는지, 그곳에 가려면 무엇을 해야 하는지를 나란히 놓았습니다. 위에서 아래로 갈수록 <b>사람이 하는 몫</b>이 줄고 <b>신이 하는 몫</b>이 커집니다.</p>
+  <div class="scale"><span>사람이 한다</span><span>신이 한다</span></div>
+  <div class="bar"></div>
+
+  <div class="rel">
+    <div class="rel-h"><b>불교 (상좌부)</b><span class="who">사람</span></div>
+    <dl><dt>문제</dt><dd>집착과 무지에서 오는 괴로움, 끝없는 윤회</dd>
+    <dt>목표</dt><dd>열반, 윤회가 끝남</dd>
+    <dt>할 일</dt><dd>여덟 가지 바른길(팔정도), 계율, 명상. 붓다는 마지막에 "스스로를 등불로 삼으라"고 했습니다</dd></dl>
+  </div>
+  <div class="rel">
+    <div class="rel-h"><b>유교</b><span class="who">사람</span></div>
+    <dl><dt>문제</dt><dd>덕이 모자라고 마음이 바르지 않음</dd>
+    <dt>목표</dt><dd>군자, 성인. 구원보다는 사람됨에 가깝습니다</dd>
+    <dt>할 일</dt><dd>몸과 마음을 닦음(수신), 예를 지킴, 배움</dd></dl>
+  </div>
+  <div class="rel">
+    <div class="rel-h"><b>힌두교</b><span class="who">대체로 사람</span></div>
+    <dl><dt>문제</dt><dd>업(카르마)에 묶여 되풀이되는 윤회, 참 자아를 모름</dd>
+    <dt>목표</dt><dd>해탈(목샤)</dd>
+    <dt>할 일</dt><dd>행위의 길, 지혜의 길, 헌신의 길. 헌신의 길에서는 신의 은총이 함께 말해집니다</dd></dl>
+  </div>
+  <div class="rel">
+    <div class="rel-h"><b>이슬람</b><span class="who">사람 + 신</span></div>
+    <dl><dt>문제</dt><dd>하나님을 잊고 따르지 않음</dd>
+    <dt>목표</dt><dd>심판을 지나 낙원에 들어감</dd>
+    <dt>할 일</dt><dd>신앙 고백, 하루 다섯 번의 기도, 구제, 금식, 순례(다섯 기둥). 심판 날 행위를 저울에 단다고 가르칩니다(꾸란 7:8–9). 마지막은 알라의 자비에 달렸지만, 살아 있는 동안 그 결과를 확신할 수는 없습니다</dd></dl>
+  </div>
+  <div class="rel">
+    <div class="rel-h"><b>유대교</b><span class="who">신 + 사람</span></div>
+    <dl><dt>문제</dt><dd>하나님의 뜻을 따르지 않음</dd>
+    <dt>목표</dt><dd>하나님과 맺은 언약 안에 머묾</dd>
+    <dt>할 일</dt><dd>율법을 지키고, 어겼을 때 돌이킴(테슈바). 언약은 은혜로 주어지고, 그 안에 머무는 것은 순종에 달렸습니다</dd></dl>
+  </div>
+  <div class="rel">
+    <div class="rel-h"><b>정토 불교</b><span class="who">신(부처)</span></div>
+    <dl><dt>문제</dt><dd>말세라 사람의 힘으로는 깨달을 수 없음</dd>
+    <dt>목표</dt><dd>아미타불의 서방 극락에 태어남</dd>
+    <dt>할 일</dt><dd>아미타불의 이름을 부르고 그 서원을 믿음. 남의 힘에 기대는 신앙(타력)입니다</dd></dl>
+  </div>
+  <div class="rel me">
+    <div class="rel-h"><b>기독교</b><span class="who">신</span></div>
+    <dl><dt>문제</dt><dd>죄, 하나님과 끊어짐</dd>
+    <dt>목표</dt><dd>하나님과 다시 이어짐, 영원한 생명</dd>
+    <dt>할 일</dt><dd>하나님이 이미 하신 일을 믿음으로 받음</dd></dl>
+  </div>
+  <div class="verse">여러분은 은혜로, 믿음을 통해 구원을 받았습니다. 이것은 여러분에게서 난 것이 아니라 하나님의 선물입니다. 행위에서 난 것이 아니니, 아무도 자랑할 수 없습니다.<cite>에베소서 2:8–9</cite></div>
+  <p>대부분의 종교에서 구원은 <b>사람이 올라가는 길</b>입니다. 닦고, 지키고, 쌓아서 올라갑니다. 기독교는 거꾸로 <b>하나님이 내려오는 길</b>이라고 말합니다.</p>
+
+  <h2 id="grace"><small>둘</small>은혜를 말하는 종교는 기독교만이 아니다</h2>
+  <p>정직하게 짚어야 할 것이 있습니다. "신이 해 준다"는 가르침은 다른 종교에도 있습니다.</p>
+  <ul>
+    <li><b>정토 불교</b> — 일본 정토진종을 연 신란은 "착한 사람도 극락에 가는데, 하물며 악한 사람이랴"라고 말했습니다(『탄니쇼』). 기독교의 은혜와 무척 닮았습니다.</li>
+    <li><b>힌두교 헌신의 길</b> — 남인도의 한 학파는 '새끼 고양이 학파'로 불립니다. 어미 고양이가 새끼를 물어 옮기듯, 신이 다 한다는 뜻입니다. 맞은편 학파는 '새끼 원숭이 학파'입니다. 새끼가 어미에게 매달리듯 사람도 해야 할 몫이 있다고 봅니다.</li>
+    <li><b>이슬람</b> — 알라는 '자비로우시고 자애로우신 분'으로 불립니다. 행위가 모자라도 알라가 원하시면 용서하신다고 가르칩니다.</li>
+  </ul>
+  <p>그러니 "은혜냐 행위냐"만으로는 기독교가 홀로 서지 않습니다. 한 걸음 더 들어가야 합니다.</p>
+
+  <h2 id="price"><small>셋</small>죄의 값은 누가 치르는가</h2>
+  <p>은혜를 말하는 종교들도 이 물음에는 서로 다르게 답합니다. <b>용서받은 죄의 값은 어디로 가는가?</b></p>
+  <table>
+    <tr><th>힌두교·불교 일반</th><td>업은 <b>스스로 갚습니다</b>. 그러느라 수많은 생을 거칩니다.</td></tr>
+    <tr><th>정토 불교</th><td>아미타불의 서원으로 극락에 납니다. 남은 업은 극락에서 수행하며 마저 풉니다.</td></tr>
+    <tr><th>이슬람</th><td>알라가 원하시면 <b>그냥 용서</b>하십니다. 누가 값을 치르는 것은 아닙니다.</td></tr>
+    <tr class="me"><th>기독교</th><td>하나님이 <b>스스로 값을 치르십니다</b>. 죄를 덮어 두고 넘어가는 것이 아니라, 십자가에서 그 값을 다 지불하십니다.</td></tr>
+  </table>
+  <p>여기에 기독교가 붙드는 물음이 있습니다. 죄를 그냥 봐주면 <b>공의</b>가 무너집니다. 그대로 벌하면 <b>사랑</b>이 설 자리가 없습니다. 기독교의 답은 이렇습니다. <b>벌을 받는 자리에 하나님이 직접 서셨다.</b> 공의와 사랑이 한 사건 안에서 함께 이루어졌다는 것입니다.</p>
+  <div class="verse">죄의 삯은 죽음이지만, 하나님의 선물은 우리 주 그리스도 예수 안에 있는 영원한 생명입니다.<cite>로마서 6:23</cite></div>
+  <div class="verse">하나님은 이렇게 하여 스스로 의로우시면서, 예수를 믿는 사람을 의롭다 하십니다.<cite>로마서 3:26</cite></div>
+
+  <h3>그 일이 역사 속에서 일어났다고 말한다</h3>
+  <p>하나가 더 있습니다. 아미타불의 서원은 아득한 옛날, 시간 밖에서 세운 것으로 이야기됩니다. 십자가는 <b>로마 총독 빌라도 때, 예루살렘 성 밖에서</b> 일어났다고 말합니다. 때와 장소가 있는 사건이니 역사로 따져 볼 수 있습니다. 기독교는 오히려 그 사건에 모든 것을 겁니다.</p>
+  <div class="verse">그리스도께서 살아나지 않으셨다면 여러분의 믿음은 헛되고, 여러분은 아직 죄 가운데 있습니다.<cite>고린도전서 15:17</cite></div>
+  <p>이 앱이 복음서를 지도 위에 펼쳐 놓은 까닭도 여기에 있습니다. 이 이야기는 어느 땅, 어느 길 위에서 일어난 일이기 때문입니다.</p>
+
+  <h2 id="fake"><small>넷</small>진짜 옆에는 가짜가 있다</h2>
+  <p>아무도 길가의 돌멩이는 위조하지 않습니다. 다이아몬드와 진주처럼 값진 것 곁에 모조품이 생깁니다. 기독교 곁에도 그 이름을 쓰는 이단이 많습니다.</p>
+  <p>다만 가짜가 많다는 것만으로는 진짜라는 증명이 되지 않습니다. 이름난 가방에도 가짜는 많지만, 그것이 세상에서 가장 좋은 가방이라는 뜻은 아닙니다. 더 눈여겨볼 것은 <b>가짜들이 하나같이 어디를 고치는가</b>입니다.</p>
+  <table>
+    <tr><th>은혜에 더한다</th><td>특정한 절기, 날, 규례를 지켜야 구원받는다</td></tr>
+    <tr><th>새 중보자를 세운다</th><td>다시 온 주, 보혜사, 이긴 자로 불리는 사람을 거쳐야 한다</td></tr>
+    <tr><th>새 깨달음을 요구한다</th><td>우리만 아는 풀이를 배워야 한다</td></tr>
+    <tr><th>울타리를 친다</th><td>이 단체, 이 숫자 안에 들어야 산다</td></tr>
+    <tr><th>예수를 낮춘다</th><td>예수는 하나님이 아니다, 십자가는 실패였다</td></tr>
+  </table>
+  <p>모두 결국 <b>"은혜만으로는 모자라고, 사람이 무엇을 더 해야 한다"</b>로 돌아갑니다. 기독교를 다시 '사람이 올라가는 종교'로 되돌려 놓는 것입니다. 이것은 오직 은혜가 사람에게 얼마나 받아들이기 어려운지를 보여 줍니다. 사람은 무엇이든 스스로 해야 마음이 놓이기 때문입니다. 첫 교회 때도 그랬습니다. 갈라디아 교회에 들어온 '다른 복음'도 할례라는 행위를 더한 것이었고, 바울은 "다른 복음은 없다"고 잘라 말했습니다(갈 1:6–9).</p>
+
+  <h3>다이아몬드 — 진짜를 알면 가짜가 보인다</h3>
+  <p>위조지폐를 가려내는 사람은 가짜보다 <b>진짜를 더 많이 만져 본다</b>고 합니다. 큐빅은 눈으로는 다이아몬드와 가리기 어렵지만, 단단함과 빛이 꺾이는 모양을 재 보면 갈립니다. 복음도 감정 기준을 대 보면 갈립니다.</p>
+
+  <h3>진주 — 상처에서 나온 보석</h3>
+  <p>진짜 진주는 조개가 몸에 들어온 상처를 감싸며 만든 것입니다. 모조 진주는 유리구슬 겉에 진주 빛을 칠한 것입니다. 감정사는 이로 살짝 긁어 봅니다. <b>진짜는 까끌하고, 가짜는 매끄럽습니다.</b> 진짜 복음도 처음에는 까끌합니다. "당신은 죄인이고 스스로를 구원할 수 없다"는 말부터 하기 때문입니다. 가짜는 매끄럽습니다. "이것만 지키면, 여기에만 들어오면 된다"고 말합니다.</p>
+  <div class="verse">그가 찔린 것은 우리의 허물 때문이요, 그가 상한 것은 우리의 죄 때문이다. 그가 맞은 상처로 우리가 나았다.<cite>이사야 53:5</cite></div>
+
+  <h2 id="test"><small>다섯</small>복음을 감정하는 네 가지 기준</h2>
+  <table>
+    <tr><th>누가 구원하나</th><td>하나님인가, 사람의 행위와 수행인가</td></tr>
+    <tr><th>예수는 누구인가</th><td>하나님이신가, 선지자나 다른 사람 뒤로 가려지는가</td></tr>
+    <tr><th>무엇을 더하나</th><td>믿음 밖에 절기, 숫자, 단체, 새 풀이를 덧붙이는가</td></tr>
+    <tr><th>무엇에 근거하나</th><td>성경과 역사 속 사건인가, 한 사람이 받았다는 새 계시인가</td></tr>
+  </table>
+
+  <h2 id="ask"><small>여섯</small>나올 만한 물음</h2>
+  <h3>믿는 것도 결국 사람이 하는 일 아닌가요?</h3>
+  <p>기독교는 믿음을 공로로 보지 않습니다. <b>선물을 받으려고 손을 내미는 일</b>입니다. 물에 빠진 사람이 던져 준 밧줄을 잡았다고 해서, 자기가 자기를 건졌다고 말하지 않습니다.</p>
+  <h3>기독교 안에서도 생각이 다르지 않나요?</h3>
+  <p>그렇습니다. 가톨릭은 은혜와 함께 사람의 응답과 협력(성사, 선행)을 강조하고, 개신교는 '오직 은혜, 오직 믿음'을 말합니다. 그래도 둘 다 구원의 출발점이 사람이 아니라 하나님의 은혜라는 데에는 뜻을 같이합니다.</p>
+  <h3>다른 종교를 깎아내리는 것 아닌가요?</h3>
+  <p>여러 종교의 가르침에는 배울 만한 지혜와 깊은 윤리가 있습니다. 이 글이 견준 것은 그 종교들이 좋으냐 나쁘냐가 아니라, <b>구원의 길을 누가 내는가</b>라는 한 가지 물음입니다. 각 종교를 더 깊이 알고 싶다면 그 종교의 경전과 신자의 설명을 직접 들어 보시길 권합니다.</p>
+
+  <h2><small>정리</small>세 가지 길</h2>
+  <ol class="three">
+    <li>대부분의 종교 — <b>사람이 올라간다.</b> 수행, 율법, 행위로.</li>
+    <li>은혜를 말하는 몇몇 종교 — <b>신이 봐준다.</b> 서원, 은총, 자비로.</li>
+    <li>기독교 — <b>신이 내려와 값을 치른다.</b> 그리고 그 일이 역사 속 한 때, 한 곳에서 일어났다고 말한다.</li>
+  </ol>
+
+  <div class="end">
+    <p>그 값을 치르신 분의 이야기를 네 장면으로 들어 보세요.</p>
+    <a href="/goodnews/">GoodNews 보기 →</a>
+    <a class="ghost" href="app.html?j=jesus">예수의 발자취 걷기</a>
+  </div>
+  <p class="foot">말씀은 이 앱이 새로 옮긴 글입니다. · <a href="https://sssoft-idea.web.app/" target="_blank" rel="noopener">© SSSOFT</a></p>
+</main>
+</body>
+</html>
