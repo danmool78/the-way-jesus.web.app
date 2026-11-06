@@ -1152,8 +1152,9 @@ function verseFollow(it) {
   box.querySelector('p').textContent = (cont ? box.querySelector('p').textContent + ' ' : '') + it.text.trim();
   verseLast = { p, s: s + (it.ks ? it.ks.length - 1 : 0) };
   box.hidden = false; requestAnimationFrame(() => box.classList.add('on'));
+  document.body.classList.add('verse-on'); // 같은 문장이 아래 자막에도 겹쳐 나오지 않게
 }
-function verseHide() { const box = $('#verseOverlay'); if (!box) return; box.classList.remove('on'); verseLast = null; clearTimeout(verseHide.t); verseHide.t = setTimeout(() => { if (!box.classList.contains('on')) box.hidden = true; }, 600); }
+function verseHide() { const box = $('#verseOverlay'); if (!box) return; box.classList.remove('on'); document.body.classList.remove('verse-on'); verseLast = null; clearTimeout(verseHide.t); verseHide.t = setTimeout(() => { if (!box.classList.contains('on')) box.hidden = true; }, 600); }
 // 보는 사람이 직접 하는 동작: 무대 대본의 '@prompt'가 단추를 띄운다(stage:prompt). 누르면 그 동작이 무대에서 돌고,
 // 자동 여정은 그동안 다음 장면으로 넘어가지 않고 기다렸다가 동작이 끝나면 이어 간다
 let promptThen = null;
@@ -1180,7 +1181,11 @@ function paintShow(name) {
   if (!name || name === paint.cur) return;
   paint.cur = name;
   const imgs = $$('#paint img'), next = imgs[paint.flip = 1 - paint.flip], prev = imgs[1 - paint.flip];
-  const go = () => { next.classList.remove('on'); void next.offsetWidth; next.classList.add('on'); prev.classList.remove('on'); };
+  const go = () => {
+    // 사라지는 그림은 다가가던 크기 그대로 멈춰 둔다 (애니메이션을 떼면 처음 크기로 툭 줄어들어 보인다)
+    prev.style.transform = getComputedStyle(prev).transform; prev.classList.remove('on');
+    next.style.transform = ''; next.classList.remove('on'); void next.offsetWidth; next.classList.add('on');
+  };
   next.dataset.n = name; next.onload = go; next.src = paintSrc(name);
   if (next.complete && next.naturalWidth) go();
 }
@@ -1197,6 +1202,7 @@ function paintScene(e) {
 }
 function paintBeat(beat, s) {
   const e = evAt(idx);
+  if (e?.paints && beat === 'intro' && (paint.acted || paint.cur !== e.paints[0][1])) paintScene(e); // 다 본 뒤 다시 들으면 첫 그림부터 (로고도 걷는다)
   if (!e?.paints || paint.acted) return;
   const key = s === undefined || s === null ? beat : `${beat}.${s}`;
   const hit = beat === 'end' ? e.paints[e.paints.length - 1] : e.paints.find(([k]) => k === key || (k === beat && !s));
