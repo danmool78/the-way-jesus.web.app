@@ -97,10 +97,18 @@
   .when b{display:block;font-family:var(--serif);font-size:18px;color:#2b2620}
   .when span{font-size:13px;color:var(--muted)}
   .when a{margin-left:auto;flex:none;font-size:13px;color:var(--gold2);text-decoration:none;border:1px solid #d6c8b2;border-radius:999px;padding:7px 12px}
-  .tests{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
-  .tests div{border:1px solid #e8dece;border-radius:14px;padding:13px 14px;background:#fffaf2}
-  .tests b{display:block;font-family:var(--serif);color:#2b2620;margin-bottom:4px}
-  .tests span{font-size:13.5px;color:#3d362d;line-height:1.7}
+  /* 진짜(O)·가짜(X) 맞대기 — 기준마다 한 줄, 폰에서도 두 칸 */
+  .ox{margin:16px 0;border:1px solid #e8dece;border-radius:16px;overflow:hidden;background:#fffaf2}
+  .ox-h,.ox-r{display:grid;grid-template-columns:1fr 1fr}
+  .ox-h div{padding:12px 10px;text-align:center;font-family:var(--serif);font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;gap:8px}
+  .ox-h .o{background:#eef3e8;color:#4f6b3f}.ox-h .x{background:#fbe9e5;color:#b8473b}
+  .ox-k{grid-column:1/-1;padding:10px 14px 0;font-size:12.5px;font-weight:700;color:var(--faint);letter-spacing:.04em}
+  .ox-r{border-top:1px solid #efe6d8}
+  .ox-r>div{padding:6px 14px 13px;font-size:14px;line-height:1.65;color:#3d362d}
+  .ox-r>div:nth-child(2){border-right:1px dashed #e8dece;background:rgba(95,129,80,.05)}
+  .ox-r>div:nth-child(3){background:rgba(201,88,75,.04)}
+  .ox-r b{color:#2b2620}
+  .mk{flex:none;width:22px;height:22px}
   .end{text-align:center;margin-top:40px}
   .end a{display:inline-block;padding:14px 28px;border-radius:999px;background:linear-gradient(180deg,#d97a6c,#c0564a);color:#ffffff;font-weight:700;text-decoration:none;margin:4px}
   .end a.ghost{background:none;border:1px solid #d6c8b2;color:var(--gold2)}
@@ -114,7 +122,6 @@
     .spec summary b{font-size:14px}
     .steps{grid-template-columns:1fr}
     .price div{grid-template-columns:92px 1fr}
-    .tests{grid-template-columns:1fr}
     .vs div{padding:12px 8px;font-size:13px}
     .when{flex-wrap:wrap}.when a{margin-left:54px}
   }
@@ -338,16 +345,17 @@
   <h2>진짜는 어떻게 알아볼까?</h2>
   <figure class="art"><img src="assets/img/why/pearl.webp" alt="물가에 열린 조개 속에서 은은히 빛나는 진주" loading="lazy"></figure>
   <p class="cap">진짜 진주는 상처에서 나온 보석입니다</p>
-  <details class="more"><summary><span class="o">가짜를 가려내는 네 가지</span><span class="c">접기</span></summary><div>
+  <div class="ox">
+    <div class="ox-h"><div class="o"><svg class="mk" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="#5f8150" stroke-width="3"/></svg>진짜</div><div class="x"><svg class="mk" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" stroke="#c9584b" stroke-width="3" stroke-linecap="round"/></svg>가짜</div></div>
+    <div class="ox-r"><div class="ox-k">누가 구원하나</div><div><b>하나님이 100%</b> 하신다. 은혜로, 값없이</div><div><b>사람이 자격을 쌓아야</b> 한다. 행위, 규례, 헌신</div></div>
+    <div class="ox-r"><div class="ox-k">예수는 누구인가</div><div><b>사람이 되신 하나님</b>, 오직 한 분 구원자</div><div><b>다른 사람을 세운다.</b> 다시 온 주, 보혜사, 이긴 자</div></div>
+    <div class="ox-r"><div class="ox-k">무엇을 더하나</div><div><b>더할 것이 없다.</b> 믿음으로 받을 뿐</div><div><b>무언가를 더한다.</b> 특정한 날, 숫자, 우리 단체</div></div>
+    <div class="ox-r"><div class="ox-k">무엇에 근거하나</div><div><b>성경 전체</b>와 역사 속 사건</div><div><b>한 사람만 받은</b> 새 계시, 비밀 풀이</div></div>
+    <div class="ox-r"><div class="ox-k">어떤 열매인가</div><div><b>자유와 사랑.</b> 가정과 이웃을 살린다</div><div><b>두려움과 비밀.</b> 가족과 끊게 한다</div></div>
+  </div>
+  <details class="more"><summary><span class="o">가짜는 왜 생길까</span><span class="c">접기</span></summary><div>
   <p>값진 것 곁에는 흉내 내는 것이 생깁니다. 아무도 돌멩이는 흉내 내지 않습니다. 기독교의 이름을 빌린 가르침들은 거의 언제나 <b>"은혜만으로는 모자라다"</b>며 무언가를 덧붙여, 다시 '올라가는 길'로 되돌립니다.</p>
   <p>진짜 진주는 이로 긁으면 까끌합니다. 진짜 복음도 처음엔 까끌합니다. "당신은 스스로를 구원할 수 없다"는 말부터 하기 때문입니다. 그러나 그 속에 <b>대신 상처 입으신 사랑</b>이 있습니다.</p>
-  <div class="tests">
-    <div><b>누가 구원하나</b><span>하나님의 은혜인가, 사람이 쌓는 자격인가</span></div>
-    <div><b>예수는 누구인가</b><span>하나님이신가, 다른 사람 뒤로 가려지는가</span></div>
-    <div><b>무엇을 더하나</b><span>믿음 밖에 날, 숫자, 단체, 비밀 풀이를 덧붙이는가</span></div>
-    <div><b>어떤 열매인가</b><span>사람을 자유롭게 하고 사랑하게 하는가, 두렵게 하고 가두는가</span></div>
-  </div>
-
   </div></details>
   </section>
 
