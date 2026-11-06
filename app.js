@@ -1209,7 +1209,7 @@ function paintBeat(beat, s) {
   if (hit) paintShow(hit[1]);
   if (e.act && (key === e.act.at || beat === 'end') && !promptOpen()) {
     const tk = paint.token;
-    setTimeout(() => { if (tk === paint.token && !paint.acted) dispatchEvent(new CustomEvent('stage:prompt', { detail: { label: e.act.label, beat: 'act', wait: e.act.seq.reduce((a, [, ms]) => a + ms, 0) + 3000 } })); }, 1600);
+    setTimeout(() => { if (tk === paint.token && !paint.acted) dispatchEvent(new CustomEvent('stage:prompt', { detail: { label: e.act.label, beat: 'act', wait: e.act.seq.reduce((a, [, ms]) => a + ms, 0) + 7000 } })); }, 1600);
   }
 }
 addEventListener('stage:beat', ev => {
@@ -1225,7 +1225,7 @@ function startAuto() {
   autoOn = true; setListenUI();
   const after = () => {
     if (!autoOn) return;
-    if (promptOpen()) { promptThen = after; return; } // 보는 사람의 동작을 기다린다
+    if (promptOpen() || (evAt(idx)?.act && !paint.acted)) { promptThen = after; return; } // 보는 사람의 동작을 기다린다 (단추가 막 뜨려는 때도 — 끝 화면이 먼저 뜨지 않게)
     if (idx >= EVENTS.length - 1) { stopAuto(); if (!endJourney(true)) toast(t('journeyEnd')); return; }
     autoTimer = setTimeout(() => { if (!autoOn) return; go(idx + 1, { keepSpeech: true, onArrive: () => { autoTimer = setTimeout(run, 1400); } }); }, 1200);
   };
