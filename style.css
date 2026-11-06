@@ -706,7 +706,17 @@ body.intro-open .intro,body.intro-open .intro *{animation-play-state:running}
 @media (max-width:900px){.stage-only .mapwrap{background:radial-gradient(ellipse 90% 55% at 50% 34%,#2b2219,#120e0a 62%,#0a0806)}}
 
 /* 그림으로 보는 장면(기쁜 소식): 그림이 화면을 가득 채우고 천천히 다가간다. 다음 그림은 겹쳐 넘어간다 (app.js paintShow) */
-.paint{position:absolute;inset:0;z-index:1;overflow:hidden;background:#fdf8ec} /* 그림이 크림색 종이의 펜 선 일러스트라(부록 '왜 기독교인가'와 같은 결) 바탕도 같은 종이색 — 폰에서 그림 가장자리가 종이 속으로 번진다 */
+.paint{position:absolute;inset:0;z-index:1;overflow:hidden;isolation:isolate;background:#f3e6d2} /* 펜 선 그림(크림 종이) 밑에 따뜻한 빛이 천천히 흐르는 바탕 — 그림은 곱하기로 겹쳐 종이의 흰 곳에 빛깔이 스민다 */
+/* 바탕 빛: 살구·장밋빛 두 덩이가 아주 천천히 자리를 바꾼다 (든든하고 부드럽게 — 40초에 한 번 오간다) */
+.paint::before{content:'';position:absolute;inset:-25%;z-index:0;pointer-events:none;
+  background:radial-gradient(40% 45% at 30% 35%,rgba(236,178,132,.55),transparent 70%),radial-gradient(45% 40% at 72% 68%,rgba(214,140,128,.38),transparent 70%),radial-gradient(60% 60% at 50% 50%,#f8eedd,#eedcc4);
+  animation:paintGlow 40s ease-in-out infinite alternate}
+@keyframes paintGlow{from{transform:translate(-4%,-3%) rotate(0deg) scale(1)}to{transform:translate(4%,3%) rotate(6deg) scale(1.08)}}
+/* 위에서 내리는 숨 쉬는 빛 — 그림 위에 살짝 (9초에 한 번 차오르고 가라앉는다) */
+.paint::after{content:'';position:absolute;inset:0;z-index:3;pointer-events:none;background:radial-gradient(70% 55% at 45% 0%,rgba(255,226,180,.38),transparent 70%);mix-blend-mode:soft-light;animation:paintBreath 9s ease-in-out infinite alternate}
+@keyframes paintBreath{from{opacity:.35}to{opacity:1}}
+.paint .pf{z-index:1;mix-blend-mode:multiply}
+@media (prefers-reduced-motion:reduce){.paint::before,.paint::after{animation:none}}
 .pf{position:absolute;inset:0;opacity:0;transition:opacity 1.6s ease}
 .pf.on{opacity:1}
 .pf img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
