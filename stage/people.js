@@ -4,6 +4,7 @@ import { THREE, mat, DS, lathe, folds, mesh, BACK, SBACK, sphere, glowTexture, d
 const SKIN = ['#c99a74', '#b9845d', '#d6ad89', '#a87451'];
 // 예수님만 밝은 흰 속옷에 붉은 겉옷을 입는다. 다른 사람(특히 제자들)은 이 짝을 쓰지 않는다
 const TYPES = {
+  you:      { robe: '#9db6cf', trim: '#9db6cf', modern: '#33445c', hair: '#1e1a18', skin: 1 }, // 기쁜 소식 여정의 '당신' (보는 사람): 오늘의 평상복 — 하늘색 셔츠에 청바지 (복음이 지금의 나에게 오므로)
   jesus:    { robe: '#efe7d6', trim: '#a8843f', mantle: '#9b3b2a', hair: '#4a2e1c', beard: true, long: true, sash: '#b08a4e' },
   mary:     { robe: '#a3554a', trim: '#c9a24a', mantle: '#3c5d96', veil: true, inner: '#f3ece0', skin: 2, soft: true, slim: true, sash: '#c9a24a' },
   joseph:   { robe: '#7b5b3a', trim: '#5a4128', mantle: '#b89b6c', hair: '#3b2616', beard: true, hood: '#d8c9a6', band: '#6e5131', sash: '#5a4128' },
@@ -279,14 +280,17 @@ function makePerson(type) {
   torso.add(upper);
   body.add(skirt, torso);
   // 허리 이음매: 숙이거나 꿇어도 틈이 보이지 않게 상체를 따라다니는 옷 색의 둥근 연결부
-  if (!t.bare) mesh(sphere(rw * 1.03, 24, 12), robe, torso, [0, 0, 0], [1, 0.55, 1]);
+  if (!t.bare) mesh(sphere(t.modern ? 0.088 : rw * 1.03, 24, 12), robe, torso, [0, 0, 0], [1, t.modern ? 0.35 : 0.55, 1]); // 평상복은 얇게 — 둥근 겉옷 허리처럼 부풀지 않게
   let skirtMesh = null, hemTrim = null;
-  if (t.bare) {
+  if (t.bare || t.modern) {
+    // modern: 오늘의 평상복(기쁜 소식의 '당신') — 같은 뼈대에 다리는 바지 색, 허리는 바지, 윗몸은 셔츠(robe 색), 팔은 셔츠 소매
     // 겉옷 없이 허리에 두른 천만 (십자가 위의 예수 — 윤곽으로만 보인다). nude: 천 없이 맨몸 (에덴의 아담과 하와, 빛의 윤곽으로만)
     // 여인(slim)은 좁은 어깨·잘록한 허리·넓은 골반으로
     const lr = slim ? 0.86 : 1;
-    [-1, 1].forEach(s => mesh(new THREE.CylinderGeometry(0.032 * lr, 0.026 * lr, 0.4, 12), skin, skirt, [s * (slim ? 0.038 : 0.042), 0.21, 0]));
-    if (t.nude) mesh(lathe(slim ? [[0.001, 0.33], [0.084, 0.34], [0.094, 0.39], [0.08, 0.45], [0.066, 0.47], [0.001, 0.47]] : [[0.001, 0.33], [0.082, 0.34], [0.088, 0.4], [0.084, 0.47], [0.001, 0.47]], 28), skin, skirt);
+    const pants = t.modern && mat(t.modern, { roughness: 0.9 });
+    [-1, 1].forEach(s => mesh(new THREE.CylinderGeometry(0.032 * lr * (pants ? 1.12 : 1), 0.026 * lr * (pants ? 1.15 : 1), 0.4, 12), pants || skin, skirt, [s * (slim ? 0.038 : 0.042), 0.21, 0]));
+    if (pants) mesh(lathe([[0.001, 0.33], [0.084, 0.34], [0.09, 0.4], [0.092, 0.47], [0.001, 0.47]], 28), pants, skirt); // 바지 허리
+    if (t.modern) { /* 바지 허리를 이미 둘렀다 */ } else if (t.nude) mesh(lathe(slim ? [[0.001, 0.33], [0.084, 0.34], [0.094, 0.39], [0.08, 0.45], [0.066, 0.47], [0.001, 0.47]] : [[0.001, 0.33], [0.082, 0.34], [0.088, 0.4], [0.084, 0.47], [0.001, 0.47]], 28), skin, skirt);
     else mesh(folds(lathe([[0.001, 0.33], [0.098, 0.33], [0.094, 0.4], [0.09, 0.47], [0.001, 0.47]], 28), 7, 0.008, 0.47), mat(t.cloth || '#e9e1cf', DS), skirt);
     // 애굽 사람의 흰 아마포 허리치마(쉔디트): 무릎까지 내려오는 잔주름 치마와 허리띠
     if (t.kilt) {
@@ -295,7 +299,8 @@ function makePerson(type) {
       mesh(new THREE.BoxGeometry(0.05, 0.2, 0.006), mat(t.trim || '#c9a24a', { metalness: 0.3, roughness: 0.5 }), skirt, [0, 0.37, 0.094]); // 앞에 늘어뜨린 띠
     }
     mesh(lathe(slim ? [[0.001, 0.46], [0.066, 0.46], [0.07, 0.52], [0.084, 0.58], [0.082, 0.63], [0.052, 0.68], [0.028, 0.705], [0.001, 0.71]]
-      : [[0.001, 0.46], [0.082, 0.46], [0.086, 0.52], [0.098, 0.59], [0.094, 0.64], [0.06, 0.685], [0.03, 0.705], [0.001, 0.71]], 28), skin, upper);
+      : [[0.001, 0.46], [0.082, 0.46], [0.086, 0.52], [0.098, 0.59], [0.094, 0.64], [0.06, 0.685], [0.03, 0.705], [0.001, 0.71]], 28), t.modern ? robe : skin, upper);
+    if (t.modern) mesh(new THREE.TorusGeometry(0.036, 0.005, 6, 24), robe, upper, [0, 0.7, 0.004]).rotation.x = Math.PI / 2; // 셔츠 깃
   } else {
     // 치마: 서 있는 모양 + 무릎 꿇은 모양(허리에서 바닥으로 매끈하게 퍼지는 낮은 둔덕, 접은 다리가 놓이는 뒤쪽은 더 길게).
     // 두 모양의 점 수를 같게 만들어 모핑으로 사이를 부드럽게 바꾼다 — 눌러서 생기던 각진 턱이 없다
@@ -488,6 +493,7 @@ function makePerson(type) {
     elbow.position.y = -0.15;
     p.add(elbow);
     if (t.bare) mesh(new THREE.CylinderGeometry(0.026, 0.021, 0.15, 14), skin, elbow, [0, -0.07, 0]);
+    else if (t.modern) mesh(new THREE.CylinderGeometry(0.03, 0.025, 0.15, 14), robe, elbow, [0, -0.07, 0]); // 좁은 셔츠 소매
     else {
       mesh(new THREE.CylinderGeometry(0.043 * a, B.sleeve, 0.15, 18, 1, true), mat(t.robe, DS), elbow, [0, -0.07, 0]);
       mesh(new THREE.TorusGeometry(B.sleeve - 0.001, 0.004, 6, 24), trim, elbow, [0, -0.146, 0]).rotation.x = Math.PI / 2;
@@ -590,9 +596,14 @@ function makePerson(type) {
     const f = new THREE.Group();
     f.position.set(s * 0.055, 0, 0.085);
     root.add(f);
-    mesh(new THREE.BoxGeometry(0.052, 0.01, 0.105), mat('#6b4a2a'), f, [0, 0.005, 0.005]);
-    mesh(sphere(0.026, 12, 8), skin, f, [0, 0.018, 0.012], [1, 0.55, 1.7]);
-    mesh(new THREE.TorusGeometry(0.024, 0.004, 4, 12, Math.PI), mat('#5a3d22'), f, [0, 0.012, 0.03]);
+    if (t.modern) { // 운동화: 흰 밑창에 짙은 몸통
+      mesh(new THREE.BoxGeometry(0.056, 0.012, 0.112), mat('#ece8e0'), f, [0, 0.006, 0.006]);
+      mesh(sphere(0.029, 12, 8), mat('#3a3f48'), f, [0, 0.02, 0.008], [1, 0.62, 1.85]);
+    } else {
+      mesh(new THREE.BoxGeometry(0.052, 0.01, 0.105), mat('#6b4a2a'), f, [0, 0.005, 0.005]);
+      mesh(sphere(0.026, 12, 8), skin, f, [0, 0.018, 0.012], [1, 0.55, 1.7]);
+      mesh(new THREE.TorusGeometry(0.024, 0.004, 4, 12, Math.PI), mat('#5a3d22'), f, [0, 0.012, 0.03]);
+    }
     return f;
   });
 
@@ -804,6 +815,7 @@ class Actor {
       p.hemTrim.position.y = 0.028 - 0.012 * kn;
     }
     p.torso.position.y = p.waist * (1 - 0.58 * kn);
+    if (p.t.modern) p.skirt.scale.y = 1 - 0.58 * kn; // 평상복: 다리를 접은 만큼 바지(다리)를 낮춘다
     p.mantleG.scale.y = 1 - (p.waist * 0.58 * kn) / p.mantleSpan;
     p.mantleG.scale.x = 1 + 0.12 * kn; p.mantleG.scale.z = 1 + 0.3 * kn; // 꿇으면 바닥에 퍼진 치맛단을 덮게 망토 자락도 넓게 (치마가 망토를 뚫고 나왔다)
     p.feet.forEach(f => (f.visible = lie < 0.5 && kn < 0.3 && !this.floating));

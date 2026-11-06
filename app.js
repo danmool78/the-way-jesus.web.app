@@ -1018,6 +1018,7 @@ function speakQueue(items, onDone) {
     if (it.el) { it.el.classList.add('speaking'); scrollToEl(it.el); }
     showCaption(it);
     if (it.beat) (it.ks || [it.s]).forEach(k => stageBeat(it.beat, k));
+    verseFollow(it);
     let done = false, guard;
     const advance = d => { if (done) return; done = true; clearTimeout(guard); autoTimer = setTimeout(next, n >= queue.length ? 0 : d); }; // 마지막 문장 뒤에는 쉬지 않고 곧바로 끝낸다 (배경음악이 낭독과 함께 멈추게)
     if (hasClip(it)) {
@@ -1127,7 +1128,7 @@ function stopSpeech(keepAuto) {
   // 장면 안에서 옮겨 간 뒤에 멈추면, 무대가 처음 모습(enter)으로 돌아가므로 처음 자리(start)로 함께 돌린다
   const e = speaking && evAt(idx);
   if (e && here(e) !== startOf(e)) goStop(e, startOf(e));
-  speechToken++; clearTimeout(autoTimer);
+  speechToken++; clearTimeout(autoTimer); verseHide();
   if (synth) synth.cancel();
   voiceAudio.pause(); voiceAudio.onended = voiceAudio.onerror = voiceAudio.onplaying = voiceAudio.onwaiting = null;
   speaking = false; $$('.speaking').forEach(x => x.classList.remove('speaking'));
@@ -1135,11 +1136,43 @@ function stopSpeech(keepAuto) {
   if (!keepAuto) stopAuto();
   setListenUI();
 }
-function stopAuto() { autoOn = false; clearTimeout(autoTimer); setListenUI(); }
+function stopAuto() { autoOn = false; clearTimeout(autoTimer); promptThen = null; setListenUI(); }
+
+/* ---------- 핵심 구절과 보는 사람의 동작 (기쁜 소식 여정) ---------- */
+// 핵심 구절: skeleton의 verse(문장 열쇠 'p0.2' 등)에 든 문장을 낭독하는 동안 무대 위에 큰 글씨로 띄운다. 이어지는 구절 문장은 이어 붙인다.
+// 번역은 문장 수가 달라 낭독과 같은 비례 열쇠(it.ks)로 맞춘다 — 그래서 모든 언어에서 같은 대목이 뜬다
+let verseLast = null;
+function verseFollow(it) {
+  const vs = evAt(idx)?.verse, box = $('#verseOverlay');
+  if (!box || !vs || !it.beat || !/^p\d+$/.test(it.beat)) { if (it.beat) verseHide(); return; }
+  const keys = (it.ks || [it.s]).map(k => `${it.beat}.${k}`), hit = keys.find(k => vs.includes(k));
+  if (!hit) { verseHide(); return; }
+  const [p, s] = hit.slice(1).split('.').map(Number), cont = verseLast && verseLast.p === p && s - verseLast.s <= 1 && !box.hidden;
+  box.querySelector('p').textContent = (cont ? box.querySelector('p').textContent + ' ' : '') + it.text.trim();
+  verseLast = { p, s: s + (it.ks ? it.ks.length - 1 : 0) };
+  box.hidden = false; requestAnimationFrame(() => box.classList.add('on'));
+}
+function verseHide() { const box = $('#verseOverlay'); if (!box) return; box.classList.remove('on'); verseLast = null; clearTimeout(verseHide.t); verseHide.t = setTimeout(() => { if (!box.classList.contains('on')) box.hidden = true; }, 600); }
+// 보는 사람이 직접 하는 동작: 무대 대본의 '@prompt'가 단추를 띄운다(stage:prompt). 누르면 그 동작이 무대에서 돌고,
+// 자동 여정은 그동안 다음 장면으로 넘어가지 않고 기다렸다가 동작이 끝나면 이어 간다
+let promptThen = null;
+const promptOpen = () => { const b = $('#stagePrompt'); return b && !b.hidden; };
+addEventListener('stage:prompt', e => {
+  const b = $('#stagePrompt'); if (!b) return;
+  b.textContent = t(e.detail.label); b.hidden = false; requestAnimationFrame(() => b.classList.add('on'));
+  b.onclick = () => {
+    b.classList.remove('on'); b.hidden = true; verseHide();
+    dispatchEvent(new CustomEvent('stage:beat', { detail: { beat: e.detail.beat } }));
+    setTimeout(() => { const f = promptThen; promptThen = null; f && f(); }, 7500); // 건너가는 동작이 끝날 즈음
+  };
+});
+const promptClose = () => { const b = $('#stagePrompt'); if (b) { b.classList.remove('on'); b.hidden = true; } };
+addEventListener('stage:scene', promptClose); addEventListener('stage:walk', () => { promptClose(); verseHide(); });
 function startAuto() {
   autoOn = true; setListenUI();
   const after = () => {
     if (!autoOn) return;
+    if (promptOpen()) { promptThen = after; return; } // 보는 사람의 동작을 기다린다
     if (idx >= EVENTS.length - 1) { stopAuto(); if (!endJourney(true)) toast(t('journeyEnd')); return; }
     autoTimer = setTimeout(() => { if (!autoOn) return; go(idx + 1, { keepSpeech: true, onArrive: () => { autoTimer = setTimeout(run, 1400); } }); }, 1200);
   };
@@ -1454,6 +1487,7 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   const fromHash = hashIdx(), hashOk = fromHash >= 0 || (fromHash === -1 && !!d.prologue && location.hash === '#' + d.prologue.id);
   const fromLast = EVENTS.findIndex(e => e.id === state.last);
   const quick = !!d.journey?.quick; // 전도용(기쁜 소식): 첫 화면 없이 늘 첫 장면부터 — 건네받은 사람이 곧바로 보게
+  document.body.classList.toggle('stage-only', !!d.journey?.stageOnly); // 지도 없이 무대만 (기쁜 소식 — 지도와 도성 모형이 뒤에 깔리면 시선이 흩어졌다)
   idx = hashOk ? fromHash : fromLast >= 0 && !quick ? fromLast : firstIdx();
   view = { x: 0, y: 0, w: W, h: H }; applyView();
   const start = idx; idx = -2; go(start);

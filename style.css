@@ -683,3 +683,20 @@ body.intro-open .intro,body.intro-open .intro *{animation-play-state:running}
 [data-journey=kings]{--gold:#b99ade;--gold2:#ddcdf3;--gold-rgb:185,154,222;--gold-hi:#cab0ea;--gold-deep:#7c58a8;--gold-deep-rgb:124,88,168}
 [data-journey=goodnews]{--gold:#e58a7f;--gold2:#f4c3bb;--gold-rgb:229,138,127;--gold-hi:#eda197;--gold-deep:#a8473f;--gold-deep-rgb:168,71,63}
 [data-journey=paul]{--gold:#70b5da;--gold2:#bbdff3;--gold-rgb:112,181,218;--gold-hi:#8fc8e7;--gold-deep:#3e7fa8;--gold-deep-rgb:62,127,168}
+
+/* 핵심 구절(기쁜 소식 여정): 무대 위쪽에 큰 글씨로 천천히 떠오른다 (app.js verseFollow) */
+.verse-ov{position:absolute;left:50%;top:9%;transform:translate(-50%,8px);width:min(640px,86%);z-index:6;pointer-events:none;text-align:center;opacity:0;transition:opacity 1.2s ease,transform 1.2s ease}
+.verse-ov.on{opacity:1;transform:translate(-50%,0)}
+.verse-ov p{margin:0;font:600 clamp(19px,2.6vw,27px)/1.55 var(--serif);color:#fbf1d8;text-shadow:0 2px 14px rgba(0,0,0,.85),0 0 30px rgba(0,0,0,.6);word-break:keep-all}
+@media (min-width:901px){.verse-ov{left:calc((100% - min(460px,42%)) / 2);width:min(560px,52%)}} /* 넓은 화면은 오른쪽 장면 카드를 비켜서 */
+/* 보는 사람의 동작 단추: 무대 아래쪽 가운데, 숨 쉬듯 빛난다 */
+.stage-prompt{position:absolute;left:50%;bottom:16%;transform:translateX(-50%) scale(.96);z-index:7;padding:14px 26px;white-space:nowrap;border-radius:999px;border:0;cursor:pointer;
+  background:linear-gradient(180deg,#fbe9c0,#e2b766);color:#1b140c;font:700 17px var(--sans);box-shadow:0 0 0 0 rgba(240,215,154,.6),0 10px 30px rgba(0,0,0,.45);opacity:0;transition:opacity .8s,transform .8s}
+.stage-prompt.on{opacity:1;transform:translateX(-50%) scale(1);animation:promptPulse 2.4s ease-in-out infinite}
+@keyframes promptPulse{0%,100%{box-shadow:0 0 0 0 rgba(240,215,154,.55),0 10px 30px rgba(0,0,0,.45)}50%{box-shadow:0 0 0 14px rgba(240,215,154,0),0 10px 30px rgba(0,0,0,.45)}}
+@media (max-width:900px){.stage-prompt{bottom:auto;top:62%}}
+
+/* 무대만 보는 여정(기쁜 소식, journey.json의 stageOnly): 지도·경로·장소 단추를 숨기고 어두운 바탕에 무대 하나만 — 빛이 무대를 비추는 극장처럼 */
+.stage-only .mapwrap{background:radial-gradient(ellipse 70% 65% at 38% 46%,#2b2219,#120e0a 62%,#0a0806)}
+.stage-only #map,.stage-only .maptools,.stage-only #odo,.stage-only #mode3d,.stage-only .walkbanner{visibility:hidden}
+@media (max-width:900px){.stage-only .mapwrap{background:radial-gradient(ellipse 90% 55% at 50% 34%,#2b2219,#120e0a 62%,#0a0806)}}
