@@ -266,7 +266,7 @@ function buildMap() {
   EVENTS.forEach((e, i) => {
     if (!i) return;
     const a = PLACES[EVENTS[i - 1].place], b = PLACES[startOf(e)];
-    if (a === b) return;
+    if (a === b || a.hidden || b.hidden) return; // 핀 없는 에덴(GoodNews g02 → g03)과는 길을 잇지 않는다 — 걷지 않고 건너뛴다(onEden)
     const [x1, y1] = P(a), [x2, y2] = P(b), dx = x2 - x1, dy = y2 - y1;
     const bend = (i % 2 ? 1 : -1) * 0.18;
     const cx = (x1 + x2) / 2 - dy * bend, cy = (y1 + y2) / 2 + dx * bend;
