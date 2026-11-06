@@ -20,7 +20,11 @@ const argv = process.argv.slice(2), ji = argv.indexOf('--j'), J = ji >= 0 ? argv
 const args = ji >= 0 ? argv.filter((_, i) => i !== ji && i !== ji + 1) : argv;
 const d = JSON.parse(await readFile(J === 'jesus' ? 'data.json' : `j/${J}/data.json`, 'utf8'));
 // 여정의 해설 성우를 바꿀 때(journey.json의 narrator, 'eleven:<목소리 id>'): 일레븐랩스로 녹음한다. 열쇠도 그 이름으로 — 앱이 같은 이름으로 찾는다
-if (d.journey?.narrator) VOICE.narr = { name: d.journey.narrator, eleven: d.journey.narrator.replace(/^eleven:/, ''), rate: 1, cps: 6.8 };
+// 'gemini:<목소리>'면 Gemini 성우에 말투 지시를 붙여 녹음한다 (GoodNews: 마흔쯤 겸손하고 다정한 남자 — 사용자가 샘플을 듣고 고름, 2026-11)
+const NARR_STYLE = 'Read this in Korean, softly and kindly, like a humble, gentle man around forty quietly sharing good news with a friend. Warm and sincere, unhurried, never preachy or lecturing:\n';
+const nar = d.journey?.narrator;
+if (nar?.startsWith('gemini:')) VOICE.narr = { name: nar, gem: nar.slice(7), style: NARR_STYLE, rate: 1, cps: 6.8 };
+else if (nar) VOICE.narr = { name: nar, eleven: nar.replace(/^eleven:/, ''), rate: 1, cps: 6.8 };
 const ui = J === 'jesus' ? JSON.parse(await readFile('_src/i18n/ui.ko.json', 'utf8')) : d.ui; // 여정의 화면 글씨가 덧씌워진 것 (app.js의 t와 같게)
 // changed <예전 data.json>: 관리자 페이지에서 글을 고친 뒤 (GitHub Actions) — 읽을 문장이 바뀐 장면 가운데 녹음이 있던 장면만
 const old = args[0] === 'changed' && JSON.parse(await readFile(args[1], 'utf8'));
@@ -136,7 +140,7 @@ async function readsStyle(pcm) {
   const r = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent', { method: 'POST', headers: { 'x-goog-api-key': GEMINI_KEY, 'content-type': 'application/json' },
     body: JSON.stringify({ contents: [{ parts: [{ inlineData: { mimeType: 'audio/wav', data: wav.toString('base64') } }, { text: '이 한국어 녹음을 받아 적어라. 받아 적은 글만 답하라.' }] }] }) });
   const said = (await r.json().catch(() => ({}))).candidates?.[0]?.content?.parts?.map(p => p.text).join('') || '';
-  return /말하세요|빠르기|차분하게/.test(said);
+  return /말하세요|빠르기|차분하게|softly|humble|friend|preachy/i.test(said);
 }
 async function geminiSynth(text, v) {
   if (!GEMINI_KEY) { console.warn('GEMINI_API_KEY가 없습니다'); return null; }
@@ -155,7 +159,7 @@ async function geminiSynth(text, v) {
 async function geminiCall(model, said, v) {
   for (let tries = 0; tries < 4; tries++) {
     const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, { method: 'POST', headers: { 'x-goog-api-key': GEMINI_KEY, 'content-type': 'application/json' },
-      body: JSON.stringify({ contents: [{ parts: [{ text: said }] }], generationConfig: { temperature: 0.6, responseModalities: ['AUDIO'], speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: v.name } } } } }) });
+      body: JSON.stringify({ contents: [{ parts: [{ text: said }] }], generationConfig: { temperature: 0.6, responseModalities: ['AUDIO'], speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: v.gem || v.name } } } } }) });
     const j = await r.json().catch(() => ({}));
     const inline = j.candidates?.[0]?.content?.parts?.find(x => x.inlineData?.data)?.inlineData;
     if (r.ok && inline) {
@@ -216,11 +220,12 @@ for (const [id, lines] of jobs) {
       if (!e) continue;
       pcm = level(tidy(trimNoise(e))); b = {};
     } else {
-    let g = s.gemini && await geminiSynth(s.text, v);
+    let g = (s.gemini || v.gem) && await geminiSynth(s.text, v);
     // 글에 없는 말까지 읽어 지나치게 길어진 판은 버리고 두 번까지 다시 (글 앞에 지시를 붙이면 Gemini가 그 지시까지 읽었다)
     const tooLong = pcm => { const n = s.text.replace(/[\s.,?!'"“”‘’…·:;()\-–—]/g, '').length; return n >= 4 && speechSec(pcm) > n / v.cps * 2.5; }; // 지시문을 읽으면 7배쯤 길어졌다
     for (let k = 0; g && tooLong(g) && k < 2; k++) { console.warn(`Gemini 녹음이 글보다 너무 김 — 다시: ${s.text.slice(0, 20)}`); g = await geminiSynth(s.text, v); }
     if (g && tooLong(g)) g = null;
+    if (v.gem && !g) { console.warn(`::warning::Gemini 해설 성우 녹음 실패 — 건너뜀: ${s.text.slice(0, 30)}`); continue; } // 성우 이름이 Google 음성에 없어 대신 녹음할 수 없다
     // Gemini가 모두 막히면 그 문장은 Google 음성으로 대신 녹음한다 (고친 말씀이 녹음 없이 남지 않게). 열쇠는 그대로
     if (s.gemini && !g) console.warn(`::warning::Gemini 성우 한도 — Google 음성으로 대신 녹음: ${s.text.slice(0, 30)}`);
     if (g) pcm = level(tidy(trimNoise((b = { pcm: g }).pcm)));

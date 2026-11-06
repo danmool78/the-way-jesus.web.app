@@ -8,5 +8,6 @@
  "odo": false,
  "sponsor": false,
  "where": false,
- "stageOnly": true
+ "stageOnly": true,
+ "narrator": "gemini:Algieba"
 }
