@@ -12,5 +12,12 @@
   "en": "MIDDAY",
   "span": "한낮",
   "color": "#b8a04a"
+ },
+ {
+  "id": "d3",
+  "name": "오후 · 장터",
+  "en": "AFTERNOON",
+  "span": "오후",
+  "color": "#c07a4a"
  }
 ]

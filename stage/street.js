@@ -229,26 +229,46 @@ function stall(g, x, z, rot, cloth, goods = 'jars') {
     const r = (0.13 + rnd() * 0.06) * M, h = (0.4 + rnd() * 0.3) * M;
     mesh(new THREE.CylinderGeometry(r * 0.7, r, h, 10), mat(clay[i % 3]), s, [(-0.85 + i * 0.42) * M, 0.75 * M + h / 2, 0.55 * M]);
   }
-  if (goods === 'grain') for (let i = 0; i < 4; i++) {
-    const sack = mesh(new THREE.SphereGeometry(0.28 * M, 10, 8), mat(['#cdb07a', '#d8c08c', '#bfa06c'][i % 3]), s, [(-0.8 + i * 0.52) * M, 0.95 * M, 0.55 * M]);
-    sack.scale.y = 0.75;
-  }
+  // 곡식 자루는 상의 양 끝과 뒤쪽에 — 가운데 앞은 저울 자리 (자루가 저울을 가렸다)
+  if (goods === 'grain') [[-0.88, 0.32], [-0.5, 0.25], [0.52, 0.25], [0.9, 0.34]].forEach(([u, w], i) => {
+    const sack = mesh(new THREE.SphereGeometry(0.2 * M, 10, 8), mat(['#cdb07a', '#d8c08c', '#bfa06c'][i % 3]), s, [u * M, 0.88 * M, w * M]);
+    sack.scale.y = 0.8;
+  });
   if (goods === 'cloth') ['#8a3a2e', '#2f5a6a', '#c9a24a', '#e8dcc0'].forEach((col, i) =>
     block(s, mat(col), (-0.75 + i * 0.5) * M, 0.55 * M, 0.42 * M, 0.5 * M, 0.12 * M + i * 0.02 * M, 0.75 * M));
   return s;
 }
 // 저울: 기둥에 매단 들보, 두 접시 (잠 11:1 속이는 저울과 바른 추)
-export function scales(g, x, y, z) {
-  const s = new THREE.Group(); s.position.set(x, y, z); g.add(s);
-  const brass = mat('#b8893a', { metalness: 0.55, roughness: 0.4 });
-  mesh(new THREE.CylinderGeometry(0.02 * M, 0.03 * M, 0.7 * M, 8), mat('#5a4330'), s, [0, 0.35 * M, 0]);
-  const beam = new THREE.Group(); beam.position.y = 0.7 * M; s.add(beam);
-  mesh(new THREE.BoxGeometry(0.7 * M, 0.025 * M, 0.025 * M), brass, beam);
-  [-1, 1].forEach(k => {
-    mesh(new THREE.CylinderGeometry(0.005 * M, 0.005 * M, 0.28 * M, 4), brass, beam, [k * 0.33 * M, -0.14 * M, 0]);
-    mesh(new THREE.CylinderGeometry(0.12 * M, 0.08 * M, 0.04 * M, 14), brass, beam, [k * 0.33 * M, -0.29 * M, 0]);
+export function scales(g, x, y, z, rot = 0) {
+  const s = new THREE.Group(); s.position.set(x, y, z); s.rotation.y = rot; g.add(s);
+  const brass = mat('#b8893a', { metalness: 0.55, roughness: 0.4 }), L = 0.45 * M;
+  mesh(new THREE.CylinderGeometry(0.02 * M, 0.035 * M, 0.75 * M, 8), mat('#5a4330'), s, [0, 0.375 * M, 0]);
+  const beam = new THREE.Group(); beam.position.y = 0.75 * M; s.add(beam);
+  mesh(new THREE.BoxGeometry(2 * L + 0.04 * M, 0.03 * M, 0.03 * M), brass, beam);
+  mesh(new THREE.ConeGeometry(0.03 * M, 0.12 * M, 6), brass, beam, [0, 0.07 * M, 0]); // 바늘
+  // 접시는 들보 끝에 매달려 들보가 기울어도 늘 수평 (update에서 되돌려 돌린다)
+  const pans = [-1, 1].map(k => {
+    const h = new THREE.Group(); h.position.x = k * L; beam.add(h);
+    [-1, 1].forEach(q => { const c = mesh(new THREE.CylinderGeometry(0.004 * M, 0.004 * M, 0.34 * M, 4), brass, h, [q * 0.07 * M, -0.17 * M, 0]); c.rotation.z = q * 0.2; });
+    mesh(new THREE.CylinderGeometry(0.14 * M, 0.09 * M, 0.04 * M, 16), brass, h, [0, -0.34 * M, 0]);
+    return h;
   });
-  return { group: s, beam };
+  // 왼쪽 접시엔 곡식 한 줌, 오른쪽엔 돌 추 둘
+  const heap = mesh(new THREE.SphereGeometry(0.11 * M, 12, 6, 0, Math.PI * 2, 0, Math.PI / 2), mat('#d8bd78', { roughness: 1 }), pans[0], [0, -0.32 * M, 0]);
+  heap.scale.y = 0.6;
+  const stone = mat('#4a4440', { roughness: 0.7 });
+  const w1 = mesh(new THREE.CylinderGeometry(0.035 * M, 0.045 * M, 0.06 * M, 10), stone, pans[1], [-0.04 * M, -0.29 * M, 0]);
+  const w2 = mesh(new THREE.CylinderGeometry(0.03 * M, 0.04 * M, 0.05 * M, 10), stone, pans[1], [0.05 * M, -0.295 * M, 0.02 * M]);
+  // tilt: 들보 기울기 (+면 추 쪽이 내려감). 속이는 추(cheat)는 가벼운 추로 곡식 쪽이 덜 내려간다
+  const st = { tilt: 0, goal: 0 };
+  const set = (v, instant) => { st.goal = v; if (instant) st.tilt = v; };
+  const update = (time, dt) => {
+    st.tilt += (st.goal - st.tilt) * (1 - Math.exp(-2.2 * dt));
+    beam.rotation.z = -st.tilt + Math.sin(time * 1.7) * 0.012; // 접시가 살짝 흔들린다
+    pans.forEach(h => { h.rotation.z = -beam.rotation.z; });
+  };
+  update(0, 1);
+  return { group: s, beam, set, update, weights: [w1, w2] };
 }
 // 올리브나무 (광장 귀퉁이 그늘)
 function olive(g, x, z, k = 1) {
@@ -333,13 +353,16 @@ export function gateSquare() {
   stall(g, 8.6 * M, -2.5 * M, -Math.PI / 2, '#a5452f', 'jars');
   stall(g, 8.6 * M, 2.5 * M, -Math.PI / 2, '#d8c49a', 'grain');
   stall(g, -8.4 * M, 6 * M, Math.PI / 2, '#3f6a72', 'cloth');
-  const sc = scales(g, 8.0 * M, 0.75 * M, 2.4 * M);
+  const sc = scales(g, 7.88 * M, 0.75 * M, 2.45 * M, Math.PI / 2); // 들보가 광장 쪽에서 옆으로 보이게 (남북으로)
   olive(g, -8.5 * M, -4 * M, 1.05);
   olive(g, 7 * M, 9 * M, 0.85);
   jarsAt(g, [[7.2 * M, -4.6 * M], [7.6 * M, -4.0 * M, 0.8], [-7.2 * M, 8.4 * M, 0.9], [-6.6 * M, 8.9 * M, 0.7]]);
   farHills(g);
   return {
     group: g, scales: sc, gateZ: GZ,
+    update: (time, dt) => sc.update(time, dt),
+    // 대본의 ['@set', '저울:상태'] — fair 수평, cheat 속이는 추(곡식 쪽이 들림), heavy 무거운 추
+    cmd(what, instant) { const [k, v] = what.split(':'); if (k === 'scales') sc.set({ fair: 0, cheat: 0.22, heavy: -0.18 }[v] ?? 0, instant); },
     // 사람 자리(무대 단위). 의자 높이 0.45m
     seat: 0.45 * M,
   };

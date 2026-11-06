@@ -126,6 +126,58 @@ export const PROVERBS = {
       end: [['@cam', 'wide'], ['father', 'idle', { x: 0.05, z: -5.5, look: 3.14 }], ['son', 'idle', { x: 0.42, z: -5.3, look: 3.14 }]],
     },
   },
+
+  /* p03. 장터의 저울 (잠 11:1, 16:11, 20:10, 22:1) — 오후, 다시 성문 광장의 장터. 동쪽 곡식 좌판의 저울(세트의 scales)을
+     가까이 본다: 속이는 추를 꺼내면 들보가 기울고(['@set', 'scales:cheat']), '정확한 추'에서 수평으로 돌아온다.
+     좌판: 곡식 좌판 x ≈ 4.47, z ≈ 1.3 (상은 그 서쪽), 저울 (4.1, 높이 0.39, 1.27) */
+  p03: {
+    street: 'gate', env: 'calm',
+    cams: {
+      wide: { pos: [-2.2, 1.2, 6.2], at: [3.6, 0.7, 0.5], fov: 64 },   // 광장 남서쪽에서 동쪽 장터를
+      stall: { pos: [2.3, 0.95, 2.9], at: [4.3, 0.55, 1.2], fov: 48 }, // 곡식 좌판과 장수
+      scales: { pos: [3.1, 0.74, 2.45], at: [4.1, 0.5, 1.27], fov: 32 },
+      west: { pos: [3.0, 1.1, 6.8], at: [-3.4, 0.7, 3.4], fov: 60 },   // 해 질 녘 광장 서쪽 (친구의 집 쪽) // 저울 가까이
+      talk: { pos: [1.9, 0.9, 3.7], at: [3.35, 0.7, 1.45], fov: 46 },   // 좌판 앞의 아버지와 아들
+    },
+    cam: 'wide',
+    cast: {
+      father: ['father', 3.45, 1.15, 1.57],
+      son: ['son', 3.3, 1.7, 1.3],
+      seller: ['merchant', 4.62, 1.3, -1.57, { gaze: false }],
+      buyer: ['woman2', 3.6, 0.55, 1.4, { gaze: false }],
+      potter: ['servant', 4.62, -1.3, -1.57, { gaze: false }],
+      weaver: ['woman2', -4.75, 3.1, 1.57, { gaze: false }],
+      elder1: ['elder', -1.66, BENCH, 0.15, { gaze: false, pose: 'sit' }],
+      elder2: ['elder', -1.2, BENCH, 0.3, { gaze: false, pose: 'sit' }],
+      elder3: ['elder', 1.35, BENCH, -0.3, { gaze: false, pose: 'sit' }],
+      passer: ['man', -1.0, -3.0, 0.2, { gaze: false }],
+    },
+    beats: {
+      // 낭독 없이 볼 때: 기운 저울 앞의 장수, 그것을 보는 아버지와 아들
+      enter: [['@env', 'calm'], ['@cam', 'stall'], ['@set', 'scales:cheat'], ['seller', 'point', { look: -1.57 }], ['buyer', 'listen'],
+        ['father', 'point', { x: 3.45, z: 1.15, look: 1.57 }], ['son', 'look-up', { x: 3.3, z: 1.7, look: 1.3 }]],
+      intro: [['@env', 'calm'], ['@cam', 'wide'], ['@set', 'scales:fair'], ['father', 'idle', { x: -1.2, z: 6.5, look: 1.2 }], ['son', 'idle', { x: -0.8, z: 6.8, look: 1.2 }]],
+      // 장터로 돌아가자 — 광장을 가로질러 곡식 좌판 앞으로
+      'p0.0': [['father', 'idle', { x: 3.45, z: 1.15, look: 1.57 }], ['son', 'idle', { x: 3.3, z: 1.7, look: 1.3 }], ['passer', 'idle', { x: -0.6, z: -9, look: 3.14 }]],
+      'p0.1': [['@cam', 'stall'], ['buyer', 'point', { look: 1.4 }]],
+      // 저 곡식 장수의 손을 보아라
+      'p0.2': [['seller', 'point', { look: -1.57 }], ['father', 'point', { look: 1.57 }]],
+      // 가벼운 추를 꺼낸다 — 저울 가까이, 들보가 기운다
+      'p0.3': [['@cam', 'scales'], ['@set', 'scales:cheat', { delay: 1500 }]],
+      'p0.4': [['buyer', 'listen'], ['seller', 'shrug']],
+      // 속이는 저울은 여호와께서 미워하시지만 — 아버지가 아들에게
+      'p1.0': [['@cam', 'talk'], ['father', 'speak', { to: 'son' }], ['son', 'listen']],
+      'p1.1': [['father', 'point', { look: 1.57 }], ['son', 'idle', { look: 1.5 }]],
+      // 공평한 저울과 접시는 여호와의 것 — 저울이 수평으로 돌아온다
+      'p1.2': [['@cam', 'scales'], ['@set', 'scales:fair', { delay: 900 }]],
+      // 아무도 보지 않는 주머니 속까지
+      'p2.0': [['@cam', 'talk'], ['father', 'speak', { look: 0.6, to: 'son' }], ['son', 'listen', { look: -2.0 }]],
+      'p2.1': [['father', 'raise'], ['son', 'look-up']],
+      // 친구의 집으로 — 해 질 녘, 광장 서쪽으로 걸어간다
+      'p2.2': [['@env', 'dusk'], ['@cam', 'west'], ['father', 'idle', { x: -3.6, z: 4.2, look: -1.57 }], ['son', 'idle', { x: -3.3, z: 4.6, look: -1.57, delay: 600 }]],
+      end: [['@env', 'dusk'], ['@cam', 'west'], ['@set', 'scales:fair'], ['father', 'idle', { x: -3.6, z: 4.2, look: -1.57 }], ['son', 'idle', { x: -3.3, z: 4.6, look: -1.57 }]],
+    },
+  },
 };
 
 // intro 앞에 처음 자리로 되돌리는 명령을 붙인다 (stage/moses.js와 같은 방식 — 다시 들을 때도 대본의 처음 자리에서)

@@ -191,6 +191,7 @@ function apply(cmds, instant = false) {
     }
     if (name === '@env') { setEnv(pose, instant); return; }
     if (name === '@cam') { camTo(pose, instant); return; }
+    if (name === '@set') { street?.set.cmd?.(pose, instant); return; } // 세트 안의 것 (장터 저울의 기울기 등)
     if (name === '@at') { moveAt = pose ? { ll: pose, x: o.x || 0, z: o.z || 0 } : null; if (instant) atSnap = true; return; }
     const a = actors[name], p = props[name];
     if (a) {
