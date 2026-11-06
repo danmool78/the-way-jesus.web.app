@@ -93,6 +93,7 @@ const TYPES = {
   sihon:    { robe: '#4a3a2a', trim: '#b08a4e', mantle: '#7a3b2e', hair: '#1d140c', beard: true, crown: true, spear: true, skin: 2, sash: '#b08a4e' }, // 아모리 왕 시혼
   rahab:    { robe: '#9a2e2a', trim: '#d6a93a', mantle: '#d8c49a', veil: true, inner: '#efe6d4', skin: 2, soft: true, slim: true, sash: '#d6a93a' }, // 여리고의 라합
   priest:   { robe: '#f6f2e8', trim: '#2f4f8a', hair: '#2b1b10', beard: true, turban: '#f6f2e8', sash: '#2f4f8a', skin: 1 }, // 언약궤를 멘 레위 제사장 (흰 세마포, 청색 띠)
+  merchant: { robe: '#7a4a2a', trim: '#d6a93a', mantle: '#c9a26a', hair: '#2b1b10', beard: true, hood: '#e8dcc0', band: '#7a4a2a', sash: '#d6a93a', skin: 2 }, // 장터의 곡식 장수 (잠 11:1의 저울)
   father:   { robe: '#8a6a48', trim: '#4a3a28', mantle: '#3e5a70', hair: '#9a948a', beard: true, sash: '#4a3a28', skin: 1 }, // 잠언의 아버지 (희끗한 머리, 푸른 겉옷)
   son:      { robe: '#d8c49c', trim: '#8a6a44', mantle: '#a0503a', hair: '#3a2616', sash: '#8a6a44', skin: 1, height: 0.84 }, // 잠언의 아들 (수염 없는 젊은이, 붉은 겉옷)
   wisdom:   { robe: '#f6f1e4', trim: '#d6a93a', mantle: '#e2c070', veil: true, inner: '#fffaf0', skin: 2, soft: true, slim: true, sash: '#d6a93a', glow: true, height: 0.92 }, // 잠언의 지혜 — 성문에서 외치는 여인(잠 1:20, 8:1–3). 은은한 빛으로 보통 사람과 가른다
@@ -646,6 +647,7 @@ function silhouette(p, light) {
 }
 
 /* ---------- 배우: 자세 목표값을 향해 부드럽게 움직인다 ---------- */
+const wrapA = a => Math.atan2(Math.sin(a), Math.cos(a)); // 각도를 -π…π로
 class Actor {
   // o: { silhouette(true 어두운 윤곽 · 'light' 빛의 윤곽), solemn(입·손짓을 멈추고 느리게), speed, y }
   constructor(type, x = 0, z = 0, face = 0, o = {}) {
@@ -711,10 +713,18 @@ class Actor {
     let want = this.faceT, headY = 0;
     if (this.target && this.target.showT > 0 && this.pose !== 'sleep') {
       const ang = Math.atan2(this.target.pos.x - this.pos.x, this.target.pos.y - this.pos.y);
-      want = THREE.MathUtils.clamp(ang, -1.15, 1.15);
-      headY = THREE.MathUtils.clamp(ang - this.face, -0.45, 0.45);
+      // 거리 무대(realWalk)는 사방에서 보므로 상대 쪽으로 온전히 돈다 — 미니어처처럼 앞쪽(±1.15)에 묶으면 등 뒤의 상대 대신 카메라를 보고 말했다
+      want = this.realWalk ? this.face + wrapA(ang - this.face) : THREE.MathUtils.clamp(ang, -1.15, 1.15);
+      headY = THREE.MathUtils.clamp(wrapA(ang - this.face), -0.45, 0.45);
     }
-    const faceTo = moving && Math.abs(d.x) > 0.01 && !this.floating && this.pose !== 'afraid' ? Math.sign(d.x) * 1.35 : want;
+    // 미니어처 무대는 걸을 때 옆모습(±1.35)으로만 걷는다. 거리 무대(realWalk)는 실제로 가는 쪽을 본다 —
+    // 옆모습 규칙 그대로면 성문 쪽(-z)으로 걸어가는 사람이 옆으로 게걸음 치는 듯 보였다
+    let faceTo = want;
+    if (moving && !this.floating && this.pose !== 'afraid') {
+      if (this.realWalk) faceTo = Math.atan2(d.x, d.y);
+      else if (Math.abs(d.x) > 0.01) faceTo = Math.sign(d.x) * 1.35;
+    }
+    if (this.realWalk) faceTo = this.face + wrapA(faceTo - this.face); // 가까운 쪽으로 돈다 (3 → -3을 한 바퀴 돌지 않게)
     this.face = damp(this.face, faceTo, 6, dt);
     p.head.rotation.y = damp(p.head.rotation.y, moving ? 0 : headY, 5, dt);
     this.y = damp(this.y, this.yT + (this.floating ? 0.22 + Math.sin(t * 1.6) * 0.035 : 0), 2.2, dt);
