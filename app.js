@@ -873,7 +873,7 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
   const stepped = i === prev + 1 && prevPlace !== null && !jump;
   const arrive = () => {
     idx = i; setHere(evAt(i), startOf(evAt(i))); window.stageHide = false;
-    renderScene(); updateMap(prev, { camera: !stepped || fitMode === 'all', jump }); updateTrack(); if (i >= 0) markVisited(EVENTS[i].id);
+    renderScene(); paintScene(evAt(i)); updateMap(prev, { camera: !stepped || fitMode === 'all', jump }); updateTrack(); if (i >= 0) markVisited(EVENTS[i].id);
     window.__stageScene = evAt(i); // stage.js가 늦게 로드돼도 따라잡도록
     dispatchEvent(new CustomEvent('stage:scene', { detail: { ev: evAt(i) } }));
     bgmFollow(); // 읽는 중에 장면이 바뀌면 그 장면의 곡으로 겹쳐 바꾼다
@@ -1122,6 +1122,7 @@ const stageBeat = (beat, s) => {
     if (beat === 'end' && here(e) !== e.place) goStop(e, e.place);
   }
   dispatchEvent(new CustomEvent('stage:beat', { detail: { beat, s } }));
+  paintBeat(beat, s);
 };
 function stopSpeech(keepAuto) {
   if (speaking) dispatchEvent(new CustomEvent('stage:stop'));
@@ -1163,11 +1164,57 @@ addEventListener('stage:prompt', e => {
   b.onclick = () => {
     b.classList.remove('on'); b.hidden = true; verseHide();
     dispatchEvent(new CustomEvent('stage:beat', { detail: { beat: e.detail.beat } }));
-    setTimeout(() => { const f = promptThen; promptThen = null; f && f(); }, 7500); // 건너가는 동작이 끝날 즈음
+    setTimeout(() => { const f = promptThen; promptThen = null; f && f(); }, e.detail.wait || 7500); // 건너가는 동작이 끝날 즈음
   };
 });
 const promptClose = () => { const b = $('#stagePrompt'); if (b) { b.classList.remove('on'); b.hidden = true; } };
 addEventListener('stage:scene', promptClose); addEventListener('stage:walk', () => { promptClose(); verseHide(); });
+
+/* ---------- 그림으로 보는 장면 (기쁜 소식 여정) ---------- */
+// 3D 무대 대신 그림 한 장이 화면을 가득 채우고 천천히 다가가며, 낭독에 맞춰 다음 그림으로 겹쳐 넘어간다.
+// skeleton의 paints: [[열쇠, 그림], …] — 열쇠는 'intro'·'p2.3'(문장)·'p1'(문단 처음) 등, 그림은 assets/img/goodnews/<이름>.webp(대시 없는 이름은 카드 그림 assets/img/<이름>.webp).
+// act: 보는 사람이 직접 하는 동작 — at 문장(또는 낭독 끝)에서 단추를 띄우고, 누르면 seq의 그림들을 차례로 보인 뒤 '그 길' 로고가 겹쳐 남는다
+const paint = { flip: 0, token: 0, acted: false, cur: null };
+const paintSrc = n => n.includes('-') ? `assets/img/goodnews/${n}.webp` : `assets/img/${n}.webp`;
+function paintShow(name) {
+  if (!name || name === paint.cur) return;
+  paint.cur = name;
+  const imgs = $$('#paint img'), next = imgs[paint.flip = 1 - paint.flip], prev = imgs[1 - paint.flip];
+  const go = () => { next.classList.remove('on'); void next.offsetWidth; next.classList.add('on'); prev.classList.remove('on'); };
+  next.onload = go; next.src = paintSrc(name);
+  if (next.complete && next.naturalWidth) go();
+}
+function paintLogo(on) { const l = $('#paintLogo'); if (!l) return; if (on) { l.hidden = false; requestAnimationFrame(() => l.classList.add('on')); } else { l.classList.remove('on'); l.hidden = true; } }
+function paintScene(e) {
+  const box = $('#paint'), on = !!e?.paints;
+  document.body.classList.toggle('painted', on);
+  paint.token++; paint.acted = false; paintLogo(false);
+  if (!box) return;
+  box.hidden = !on;
+  if (!on) { paint.cur = null; return; }
+  e.paints.forEach(([, n]) => { new Image().src = paintSrc(n); }); // 다음 그림을 미리 받아 둔다
+  paintShow(e.paints[0][1]);
+}
+function paintBeat(beat, s) {
+  const e = evAt(idx);
+  if (!e?.paints || paint.acted) return;
+  const key = s === undefined || s === null ? beat : `${beat}.${s}`;
+  const hit = beat === 'end' ? e.paints[e.paints.length - 1] : e.paints.find(([k]) => k === key || (k === beat && !s));
+  if (hit) paintShow(hit[1]);
+  if (e.act && (key === e.act.at || beat === 'end') && !promptOpen()) {
+    const tk = paint.token;
+    setTimeout(() => { if (tk === paint.token && !paint.acted) dispatchEvent(new CustomEvent('stage:prompt', { detail: { label: e.act.label, beat: 'act', wait: e.act.seq.reduce((a, [, ms]) => a + ms, 0) + 3000 } })); }, 1600);
+  }
+}
+addEventListener('stage:beat', ev => {
+  const e = evAt(idx);
+  if (ev.detail.beat !== 'act' || !e?.act || paint.acted) return;
+  paint.acted = true;
+  const tk = paint.token;
+  let t = 0;
+  e.act.seq.forEach(([n, ms]) => { setTimeout(() => { if (tk === paint.token) paintShow(n); }, t); t += ms; });
+  setTimeout(() => { if (tk === paint.token) paintLogo(true); }, t); // 마지막 그림 위로 '그 길' 로고가 떠올라 남는다
+});
 function startAuto() {
   autoOn = true; setListenUI();
   const after = () => {

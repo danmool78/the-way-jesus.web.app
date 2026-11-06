@@ -114,7 +114,6 @@ function apply(cmds, instant = false) {
       pending.add(job); return;
     }
     if (name === '@env') { setEnv(pose, instant); return; }
-    if (name === '@prompt') { if (!acted) dispatchEvent(new CustomEvent('stage:prompt', { detail: { label: pose, beat: o.beat } })); return; }
     if (name === '@at') { moveAt = pose ? { ll: pose, x: o.x || 0, z: o.z || 0 } : null; if (instant) atSnap = true; return; }
     const a = actors[name], p = props[name];
     if (a) {
@@ -138,12 +137,11 @@ function apply(cmds, instant = false) {
     }
   });
 }
-let acted = false; // 이 장면에서 보는 사람이 직접 하는 동작(@prompt)을 이미 했는가
 function setScene(ev) {
-  curEv = ev; acted = false;
+  curEv = ev;
   clearCast();
   moveAt = null; atSnap = true;
-  script = SCRIPTS[ev.id] || null;
+  script = (!ev.paints && SCRIPTS[ev.id]) || null; // 그림으로 보는 장면(기쁜 소식의 paints)은 3D 무대 대신 그림이 화면을 채운다 (app.js paintScene)
   mode = script ? 'scene' : 'off';
   document.body.classList.toggle('stage-on', !!script);
   if (!script) { canvas.style.opacity = 0; map.style.filter = ''; delete wrap.dataset.env; window.stageFoot = null; return; }
@@ -190,8 +188,7 @@ function beat(key) {
     return;
   }
   flushPending();
-  if (key === script.act) acted = true;
-  apply(script.beats[acted && (key === 'end' || key === 'enter') && script.beats.done ? 'done' : key]);
+  apply(script.beats[key]);
   gaze();
 }
 // 누군가 말하면(speak) 다른 이들은 말하는 이를 보고, 말하는 이는 to로 정한 상대나 가장 가까운 사람을 본다
@@ -235,22 +232,16 @@ const stageBox = (wide = 1) => {
   return { w: Math.round(230 * k * wide), h: Math.round(200 * k * wide) };
 };
 window.stageBox = stageBox;
-// 크게 보는 무대(대본의 zoom, 기쁜 소식 여정): 보이는 넓이(시야각)는 그대로 두고 캔버스만 키워 인물·소품을 크게. 휴대폰은 화면 폭까지만
-const zoomBox = s => {
-  const b = stageBox(s?.wide || 1), z = s?.zoom || 1;
-  const k = innerWidth > 900 ? z : Math.max(1, Math.min(z, (innerWidth - 8) / b.w));
-  return { w: Math.round(b.w * k), h: Math.round(b.h * k), k };
-};
 function resize() {
   const tv = window.terrainOn && window.terrainView;
   // 3D 지형에서 당겨 보면 인물도 커지므로 그만큼 화면(캔버스)도 넓힌다
   const wide = (script?.wide || 1) * (tv ? Math.max(1, tv.zoom) : 1);
-  const { w, h, k: zk } = !tv && script?.zoom ? zoomBox(script) : { ...stageBox(wide), k: 1 };
+  const { w, h } = stageBox(wide);
   if (w === size.w && h === size.h) return;
   size = { w, h };
   // 작은 인물의 윤곽이 매끈하도록 화면 해상도의 2배로 그려 줄여 보인다(슈퍼샘플링). 3D 지형에서 당겨 무대가 커지면
   // 인물도 커서 덜 필요하므로 그만큼 낮춘다 — 큰 캔버스를 3배로 그리면 휴대폰이 버거웠다
-  renderer.setPixelRatio(Math.max(devicePixelRatio, Math.min(devicePixelRatio * 2, 3) / Math.max(1, wide * zk / 1.5)));
+  renderer.setPixelRatio(Math.max(devicePixelRatio, Math.min(devicePixelRatio * 2, 3) / Math.max(1, wide / 1.5)));
   renderer.setSize(w, h, false);
   canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
   // 3D 지형 모드가 무대 밑의 집·나무를 치울 넓이 (무대 바닥이 차지하는 화면 반지름)
@@ -266,7 +257,7 @@ function resize() {
 window.stageFrame = ev => {
   const s = ev && SCRIPTS[ev.id];
   if (!s || !canvas) return null;
-  const wide = s.wide || 1, { w, h } = window.terrainOn ? stageBox(wide) : zoomBox(s);
+  const wide = s.wide || 1, { w, h } = stageBox(wide);
   const cam = camera.clone();
   cam.fov = THREE.MathUtils.radToDeg(2 * Math.atan(wide * Math.tan(THREE.MathUtils.degToRad(FOV / 2))));
   cam.aspect = w / h; cam.updateProjectionMatrix(); cam.updateMatrixWorld();
@@ -485,7 +476,7 @@ if (canvas) {
     if (s !== undefined && script.beats[`${b}.${s}`]) beat(`${b}.${s}`);
     else if (!s) beat(b);
   });
-  addEventListener('stage:stop', () => { if (!script) return; cancelPending(); setEnv(script.env || 'day'); apply(script.beats[acted && script.beats.done ? 'done' : 'enter']); });
+  addEventListener('stage:stop', () => { if (!script) return; cancelPending(); setEnv(script.env || 'day'); apply(script.beats.enter); });
   loop();
   // app.js가 먼저 장면을 열었으면 따라잡는다
   if (window.__stageScene) { setScene(window.__stageScene); window.recenterStage?.(); } // 늦게 로드됐으면 무대 쪽으로 다시 맞춘다

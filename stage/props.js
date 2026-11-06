@@ -979,38 +979,6 @@ Object.assign(MAKERS, {
     });
   },
 
-  // 갈라진 틈과 십자가 다리 (기쁜 소식 여정의 4영리 '다리' 그림): 앞뒤(z)로 길게 갈라진 어두운 틈.
-  // state 'open' 틈만 · 'bridge' 위에서 십자가가 내려와 눕혀지며 틈을 가로지르는 다리가 된다(긴 기둥이 x로, 가로대는 빛 쪽 끝에)
-  rift(o = {}) {
-    const g = new THREE.Group(), len = o.len || 1.6, w = o.w || 0.16, bz = o.bz || 0;
-    const shape = (k) => {
-      const s = new THREE.Shape(), n = 14, pts = [];
-      for (let i = 0; i <= n; i++) { const z = -len / 2 + len * i / n, j = (i % 2 ? 0.55 : 1) * (0.7 + 0.3 * Math.sin(i * 2.3)); pts.push([w * k * j, z]); }
-      s.moveTo(pts[0][0], pts[0][1]); pts.forEach(([x, z]) => s.lineTo(x, z));
-      for (let i = n; i >= 0; i--) { const z = -len / 2 + len * i / n, j = (i % 2 ? 1 : 0.6) * (0.7 + 0.3 * Math.cos(i * 1.7)); s.lineTo(-w * k * j, z); }
-      return new THREE.ShapeGeometry(s);
-    };
-    const rimM = new THREE.MeshBasicMaterial({ color: '#7a5a38', transparent: true, depthWrite: false });
-    const pitM = new THREE.MeshBasicMaterial({ color: '#0b0705', transparent: true, depthWrite: false });
-    const rim = new THREE.Mesh(shape(1.45), rimM); rim.rotation.x = -Math.PI / 2; rim.position.y = 0.006; g.add(rim);
-    const pit = new THREE.Mesh(shape(1), pitM); pit.rotation.x = -Math.PI / 2; pit.position.y = 0.008; g.add(pit);
-    // 십자가 다리: 나무 기둥과 가로대, 은은한 금빛
-    const cross = new THREE.Group(); g.add(cross); cross.position.z = bz;
-    const woodM = mat('#8a6440', { roughness: 0.85, emissive: '#5a3a10', emissiveIntensity: 0.35, transparent: true });
-    const span = w * 2 * 1.45 + 0.5;
-    mesh(new THREE.BoxGeometry(span, 0.035, 0.085), woodM, cross, [0, 0.018, 0]);
-    mesh(new THREE.BoxGeometry(0.085, 0.036, 0.34), woodM, cross, [-span / 2 + 0.16, 0.019, 0]);
-    const halo = glowSprite(0.9, 0); halo.position.y = 0.12; cross.add(halo);
-    return new Prop(g, (P, t) => {
-      rimM.opacity = 0.75 * P.show; pitM.opacity = P.show;
-      const on = P.state === 'bridge', k = on ? Math.min(1, (performance.now() / 1000 - P.t0) / 2.4) : 0, e = k * k * (3 - 2 * k); // 내려오는 데 2.4초
-      cross.visible = on && P.show > 0.05;
-      cross.position.y = (1 - e) * 1.1;
-      woodM.opacity = P.show * Math.min(1, e * 1.5 + 0.2);
-      halo.material.opacity = P.show * (on ? 0.35 + 0.25 * Math.sin(t * 1.6) * e : 0);
-    }, { fade: 'opacity' });
-  },
-
   // 숯불: 돌 화로의 불과 일렁이는 빛 (대제사장 집 안뜰)
   fire() {
     const g = new THREE.Group();
