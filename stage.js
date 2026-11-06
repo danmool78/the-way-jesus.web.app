@@ -4,6 +4,7 @@ import { THREE, damp } from './stage/kit.js';
 import { Actor } from './stage/people.js';
 import { makeProp } from './stage/props.js';
 import { SCRIPTS } from './stage/scenes.js';
+import { STREETS, SKIES, skyTexture } from './stage/street.js';
 
 const wrap = document.querySelector('.mapwrap');
 const placeOf = ev => window.stagePlaceOf?.(ev) || ev.place; // 무대를 붙일 장소 (장면 안에서 옮겨 가는 장면은 지금 있는 곳 — app.js의 here)
@@ -63,6 +64,7 @@ const envNow = { hemi: 1.6, sun: 2.2, waveNow: 0, rainNow: 0, wave: 0 };
 const hemiCol = new THREE.Color('#fff4dc'), sunCol = new THREE.Color('#fff0d0');
 function setEnv(name, instant = false) {
   env = { ...ENV[name], name };
+  if (street) streetSky(name, instant);
   map.style.filter = env.map;
   wrap.dataset.env = name; // 지도 전체에 덮는 빛 (.atmos)
   if (instant) {
@@ -81,6 +83,78 @@ function updateEnv(dt) {
   envNow.waveNow = damp(envNow.waveNow, env.wave || 0, 0.9, dt);
   envNow.rainNow = damp(envNow.rainNow, env.rain || 0, 1.5, dt);
   envNow.wave = envNow.waveNow;
+  if (street) sun.position.lerp(sunGoal, 1 - Math.exp(-1.2 * dt));
+}
+
+/* ---------- 거리 무대 (잠언): 사람 눈높이의 실제 크기 세트 ----------
+   지도 핀 위의 미니어처 대신 화면 가득 세트(stage/street.js)를 그리고, 카메라는 대본의 자리(cams)에 선다.
+   대본: street(세트 이름), cams({ 이름: { pos, at, fov(가로 시야각) } }), cam(처음 자리). 동작 명령 ['@cam', 이름]으로 천천히 옮겨 간다 */
+let street = null;
+const sunGoal = new THREE.Vector3(-2.2, 4, -1.6);
+const camGoal = { pos: new THREE.Vector3(0, 1, 8), at: new THREE.Vector3(), fov: 62 }, camNow = { pos: new THREE.Vector3(0, 1, 8), at: new THREE.Vector3(), fov: 62 };
+const SHADOW0 = { left: -3, right: 3, top: 3, bottom: -3, near: 0.5, far: 14 };
+function shadowBox(o, mapSize) {
+  Object.assign(sun.shadow.camera, o); sun.shadow.camera.updateProjectionMatrix();
+  if (sun.shadow.mapSize.x !== mapSize) { sun.shadow.mapSize.set(mapSize, mapSize); sun.shadow.map?.dispose(); sun.shadow.map = null; }
+}
+function setStreet(name) {
+  if ((street?.name || null) === (name || null)) return;
+  street?.set.group.removeFromParent();
+  street = null;
+  ground.visible = occluder.visible = !name; // 세트에는 바닥이 있다
+  size = { w: 0, h: 0 }; // 캔버스 크기를 다시 잰다
+  if (!name) {
+    scene.background = null; scene.fog = null;
+    sun.position.set(-2.2, 4, -1.6); sunGoal.copy(sun.position); sun.shadow.bias = 0; sun.shadow.normalBias = 0;
+    shadowBox(SHADOW0, 1024);
+    camera.clearViewOffset();
+    return;
+  }
+  const set = STREETS[name]();
+  scene.add(set.group);
+  street = { name, set };
+  scene.fog = new THREE.Fog('#c8d2d6', 45, 180); // 멀리 감람산이 아지랑이 속에
+  // 그림자: 광장 전체(성문~집들)를 덮는 넓이. 넓은 만큼 그림자 지도도 크게
+  shadowBox({ left: -16, right: 16, top: 16, bottom: -16, near: 1, far: 140 }, 2048);
+  sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.02;
+}
+function streetSky(name, instant) {
+  const k = SKIES[name] || SKIES.day;
+  scene.background = skyTexture(...k.sky);
+  scene.fog.color.set(k.fog);
+  sunGoal.set(...k.sun);
+  if (instant) sun.position.copy(sunGoal);
+}
+function camTo(name, instant) {
+  const c = script?.cams?.[name]; if (!c) return;
+  camGoal.pos.set(...c.pos); camGoal.at.set(...c.at); camGoal.fov = c.fov || 62;
+  if (instant) { camNow.pos.copy(camGoal.pos); camNow.at.copy(camGoal.at); camNow.fov = camGoal.fov; }
+}
+// 화면 가득 그리고, 장면 카드가 가리는 쪽을 비켜 세트의 가운데를 보이는 곳에 둔다:
+// 넓은 화면은 오른쪽 카드(min(460px, 42%)), 폰은 아래 카드 — 카메라 화면을 그만큼 넓게 잡고 보이는 부분만 그린다(setViewOffset)
+function streetView(dt, time) {
+  const w = wrap.clientWidth, h = wrap.clientHeight;
+  if (w !== size.w || h !== size.h) {
+    size = { w, h };
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); // 화면 가득이라 무대 캔버스처럼 2~3배로 그리면 버겁다
+    renderer.setSize(w, h, false);
+    canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+  }
+  canvas.style.transform = 'none';
+  canvas.style.opacity = window.stageHide ? 0 : 1;
+  const k = 1 - Math.exp(-0.9 * dt);
+  camNow.pos.lerp(camGoal.pos, k); camNow.at.lerp(camGoal.at, k); camNow.fov += (camGoal.fov - camNow.fov) * k;
+  const desk = innerWidth > 900, cw = desk ? Math.min(460, w * 0.42) + 14 : 0, ch = desk ? 0 : h * 0.36;
+  const FW = w + cw, FH = h + ch, aspect = FW / FH;
+  // fov는 가로 시야각: 세로로 긴 폰에서도 광장 폭이 같게 보이도록 세로 시야각을 거기서 구한다
+  const vf = 2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(camNow.fov / 2)) / aspect);
+  camera.fov = THREE.MathUtils.clamp(THREE.MathUtils.radToDeg(vf), 28, 82);
+  camera.aspect = aspect;
+  camera.setViewOffset(FW, FH, cw, ch, w, h);
+  // 숨 쉬듯 아주 조금 흔들리는 시선 — 멈춘 그림처럼 보이지 않게
+  camera.position.set(camNow.pos.x + Math.sin(time * 0.11) * 0.08, camNow.pos.y + Math.sin(time * 0.17) * 0.02, camNow.pos.z);
+  camera.lookAt(camNow.at);
+  camera.updateProjectionMatrix(); camera.updateMatrixWorld();
 }
 
 /* ---------- 무대 상태 ---------- */
@@ -114,6 +188,7 @@ function apply(cmds, instant = false) {
       pending.add(job); return;
     }
     if (name === '@env') { setEnv(pose, instant); return; }
+    if (name === '@cam') { camTo(pose, instant); return; }
     if (name === '@at') { moveAt = pose ? { ll: pose, x: o.x || 0, z: o.z || 0 } : null; if (instant) atSnap = true; return; }
     const a = actors[name], p = props[name];
     if (a) {
@@ -144,7 +219,9 @@ function setScene(ev) {
   script = (!ev.paints && SCRIPTS[ev.id]) || null; // 그림으로 보는 장면(기쁜 소식의 paints)은 3D 무대 대신 그림이 화면을 채운다 (app.js paintScene)
   mode = script ? 'scene' : 'off';
   document.body.classList.toggle('stage-on', !!script);
+  setStreet(script?.street || null);
   if (!script) { canvas.style.opacity = 0; map.style.filter = ''; delete wrap.dataset.env; window.stageFoot = null; return; }
+  if (street) camTo(script.cam || Object.keys(script.cams || {})[0], true);
   stageGroup.scale.setScalar(script.scale || 1);
   size = { w: 0, h: 0 }; // 넓은 무대(wide)가 바뀌었을 수 있으니 다시 잰다
   Object.entries(script.props || {}).forEach(([name, [kind, x, z, o]]) => {
@@ -413,13 +490,14 @@ function loop() {
 window.stageRender = frame; // 3D 지형 루프가 부른다 (stageFrame은 app.js가 쓰는 무대 위치 계산 — 이름이 겹쳐 덮어쓰던 것을 나눔)
 function frame() {
   if (!canvas) return;
-  const T = window.terrainDrives && window.terrain3d;
+  const T = !street && window.terrainDrives && window.terrain3d; // 거리 무대는 3D 지형에 들어가지 않는다
   if (!!T !== inTerrain) T ? enterTerrain(T) : leaveTerrain();
   holder.visible = mode !== 'off' && !!curEv;
   if (!T || mode === 'off') window.stageTone = null;
   if (mode === 'off' || document.hidden || wrap.offsetParent === null || document.body.classList.contains('intro-open')) return;
   const dt = Math.min(clock.getDelta(), 0.05), time = clock.elapsedTime;
-  if (T) {
+  if (street) streetView(dt, time);
+  else if (T) {
     canvas.style.opacity = 0;
     placeTerrain(T, dt);
   } else {

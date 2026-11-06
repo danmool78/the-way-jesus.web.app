@@ -1,0 +1,11 @@
+{
+ "_comment": "잠언 — 지혜를 따라 걷는 하루. 솔로몬 때 예루살렘을 사람 눈높이의 거리 무대(stage/street.js)로 걷는다. 지도 대신 무대만 화면 가득(stageOnly), 낭독은 아버지가 아들에게 들려주는 말로 하고 잠언 구절을 낭독 안에서 직접 읽는다. 걸은 거리(odo)·장소 안내(where)는 숨긴다",
+ "main": "지혜",
+ "harmony": false,
+ "prologue": false,
+ "voice": false,
+ "stageOnly": true,
+ "odo": false,
+ "sponsor": false,
+ "where": false
+}
