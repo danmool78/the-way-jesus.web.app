@@ -1,0 +1,16 @@
+[
+ {
+  "id": "d1",
+  "name": "아침 · 성문",
+  "en": "MORNING",
+  "span": "아침",
+  "color": "#d6a441"
+ },
+ {
+  "id": "d2",
+  "name": "한낮 · 들판",
+  "en": "MIDDAY",
+  "span": "한낮",
+  "color": "#b8a04a"
+ }
+]

@@ -13,6 +13,8 @@
 | `stage/scenes.js` | **장면 대본(SCRIPTS)** — 새 장면은 여기에 추가한다 |
 | `stage/moses.js` | 모세와 여호수아 여정의 대본(MOSES) — scenes.js가 SCRIPTS에 합친다. 장면 id(m01…)는 여정마다 겹치지 않게 |
 | `stage/goodnews.js` | 기쁜 소식 여정의 대본(GOODNEWS, g01–g04) |
+| `stage/proverbs.js` | 잠언 여정의 대본(PROVERBS, p01…) — 거리 무대 |
+| `stage/street.js` | 거리 높이 세트(솔로몬 때 예루살렘): 성문 광장 등, 하늘빛 표(SKIES) |
 | `app.js` | 낭독할 때 `stage:beat` 이벤트를 보낸다 (intro, p0…, w0…, end; 문장마다 s) |
 
 `?beat=p1.2#e03` 처럼 주소에 붙이면 그 순간까지의 동작을 즉시 적용한 화면을 볼 수 있다(확인용).
@@ -91,6 +93,17 @@ e02: {
 - 네 장면: g01 에덴의 빛(하나님의 사랑) → g02 어두운 실루엣과 닫힌 동산(죄와 단절) → g03 고치시는 예수, 멀리 보이는 십자가 윤곽, 빈 무덤과 부활하신 예수(유일한 길) → g04 저녁의 한 집 문 앞에 서서 두드리시는 예수(계 3:20), 기도의 '문을 엽니다'에서 문이 열려 등불빛이 번지고(house 소품의 state 'open', 옵션 `door: true`일 때만 불빛) 집 안의 사람이 나와 무릎 꿇는다.
 - 에덴 두 장면은 e00과 같은 자리(`at`)·같은 배우. 장소가 `eden`이면 앱이 본 지도 대신 에덴 무대에 세운다(프롤로그와 같다).
 - intro 앞에 처음 자리로 되돌리는 명령이 자동으로 붙는다(moses.js와 같은 방식).
+
+### 잠언 여정 — 거리 무대 (stage/street.js, stage/proverbs.js)
+- 지도 핀 위의 미니어처가 아니라 **사람 눈높이의 실제 크기 세트**를 화면 가득 그린다. 대본에 `street: 'gate'`(세트 이름, street.js의 `STREETS`)가 있으면 stage.js가 거리 무대 모드로 바뀐다(3D 지형에 들어가지 않음, 여정은 `stageOnly`).
+- 축척은 사람 키 0.88 ≈ 1.7m, 1m ≈ 0.52단위(`M`). 세트는 다듬은 돌·회벽·포석을 캔버스로 그린 결(texture)을 쓴다 — 상자 그대로는 장난감처럼 보였다.
+- 카메라: 대본의 `cams: { 이름: { pos, at, fov } }`(fov는 **가로** 시야각 — 세로로 긴 폰에서도 광장 폭이 같게), 처음 자리 `cam`, 동작 명령 `['@cam', 이름]`으로 천천히 옮겨 간다. 장면 카드가 가리는 쪽(넓은 화면은 오른쪽, 폰은 아래)을 비켜 보이는 곳 가운데에 오게 그린다(setViewOffset).
+- 하늘빛·안개·해의 자리는 분위기(env)마다 `SKIES`. 아침 해는 동쪽(감람산 쪽)에서.
+- 성문 광장(gate): 여섯 방 성문(안쪽 얼굴 z ≈ -7.28)과 돌 의자, 성벽, 네 방 집, 동쪽 좌판(항아리·곡식·저울)과 서쪽 천 좌판, 올리브나무, 멀리 감람산. 인물: father(아버지), son(아들), wisdom(성문에서 외치는 지혜 — 은은한 빛).
+- 성 밖 들판(field): 성 쪽(-z)으로 뻗은 길, 왼쪽은 거두는 이웃의 밀밭(앞쪽은 그루터기와 밀단), 오른쪽은 가시덤불과 거친 풀에 덮이고 돌담이 무너진 게으른 사람의 밭(올리브나무 그늘에 낮잠 자는 주인 — 그 둘레와 길에서 보이는 틈은 덤불을 비운다), 길가 개미집에서 개미 행렬이 낟알을 나른다(세트의 `update`가 매 프레임 움직인다). 뒤로 계단식 축대가 언덕을 올라 100m 남짓 위에 성벽, 그 너머 성전과 왕궁. 밀·덤불·돌은 InstancedMesh 하나씩으로 그린다.
+- 멀리까지 보이도록 거리 무대에서는 카메라의 far를 400으로 늘린다(미니어처 무대는 50 — 그대로 두면 성벽이 잘렸다).
+- 장면 사이 사람들(장사꾼·장로)은 `gaze: false` — 말하는 사람이 멀리 있어도 모두 돌아보면 어색했다. 말하는 사람(speak)은 한 장면에 한 명만 두어야 시선이 엉키지 않는다.
+- 세트만 따로 보는 도구: `/_src/tools/street.html?view=eye|high|low&env=day|dawn|dusk`.
 
 ### 인물 유형 (TYPES)
 jesus, mary, joseph, angel, woman, woman2, mother, anna, john(젊은 제자, 수염 없음), disciple, peter, man, elder, shepherd, magus, magus2, magus3, king, soldier(창), pharisee, child, boyJesus, baptist, tempter, steward, groom, servant, crossed(십자가 위 예수 — 실루엣 전용), thief(실루엣 전용)

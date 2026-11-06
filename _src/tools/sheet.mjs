@@ -1,7 +1,7 @@
 // 3D 무대 확인용 캡처: 한 브라우저 세션에서 장면 순간마다 무대(캔버스) 주변만 잘라 PNG로 저장한다.
 // 사용: node _src/tools/sheet.mjs <base-url> <out-dir> <장면:순간> [장면:순간 ...]
 //   예) node _src/tools/sheet.mjs http://127.0.0.1:8765 /tmp/shots e02:enter e02:p2.0
-//   다른 여정은 장면 id로 알아서 고른다(m01… → ?j=moses, g01… → ?j=goodnews)
+//   다른 여정은 장면 id로 알아서 고른다(m01… → ?j=moses, g01… → ?j=goodnews, p01… → ?j=proverbs)
 //   순간: enter(낭독 없이 볼 때) | intro | p1.2(문단·문장) | w0(말씀) — 앱 주소의 ?beat= 로 그 순간까지 즉시 적용된다
 // 환경 변수: CHROME(크롬 실행 파일 경로), DPR(배율, 기본 1 — 자세히 보려면 3), W/H(창 크기, 기본 1400x900)
 import { spawn } from 'node:child_process';
@@ -37,7 +37,7 @@ await send('Emulation.setDeviceMetricsOverride', { width: W, height: H, deviceSc
 for (const [n, s] of shots.entries()) {
   const [ev, beat] = s.split(':');
   // n: 주소가 #만 바뀌면 같은 문서 안의 이동이 되어 앞 장면에서 걸어오는 모습이 찍혔다 — 매번 새로 연다
-  const j = /^m\d/.test(ev) ? 'j=moses&' : /^g\d/.test(ev) ? 'j=goodnews&' : '';
+  const j = /^m\d/.test(ev) ? 'j=moses&' : /^g\d/.test(ev) ? 'j=goodnews&' : /^p\d/.test(ev) ? 'j=proverbs&' : '';
   await send('Page.navigate', { url: `${base}/?${j}beat=${beat}&n=${n}#${ev}` });
   // 지도 카메라 이동이 끝나고 무대가 자리를 잡을 때까지 기다린다 (캔버스가 보일 때까지, 최대 8초)
   let rect = null;

@@ -1,0 +1,16 @@
+{
+ "gate": {
+  "name": "성문 광장",
+  "lat": 31.7752,
+  "lng": 35.2357,
+  "region": "예루살렘",
+  "approx": true
+ },
+ "field": {
+  "name": "성 밖 들판",
+  "lat": 31.7705,
+  "lng": 35.2372,
+  "region": "예루살렘",
+  "approx": true
+ }
+}
