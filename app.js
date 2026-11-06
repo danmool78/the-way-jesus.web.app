@@ -1180,7 +1180,7 @@ const paintSrc = n => n.includes('-') ? `assets/img/goodnews/${n}.webp` : `asset
 function paintShow(name) {
   if (!name || name === paint.cur) return;
   paint.cur = name;
-  // 그림 한 장 = 틀(.pf) 하나: 또렷한 그림(.pim)과, 세로 화면에서 위아래 빈자리를 채우는 흐린 같은 그림(.pbg)
+  // 그림 두 장을 번갈아 겹쳐 넘긴다
   const fs = $$('#paint .pf'), next = fs[paint.flip = 1 - paint.flip], prev = fs[1 - paint.flip];
   const im = next.querySelector('.pim'), pim = prev.querySelector('.pim');
   const go = () => {
@@ -1188,7 +1188,7 @@ function paintShow(name) {
     pim.style.transform = getComputedStyle(pim).transform; prev.classList.remove('on');
     im.style.transform = ''; next.classList.remove('on'); void next.offsetWidth; next.classList.add('on');
   };
-  next.dataset.n = name; next.querySelector('.pbg').src = paintSrc(name); im.onload = go; im.src = paintSrc(name);
+  next.dataset.n = name; im.onload = go; im.src = paintSrc(name);
   if (im.complete && im.naturalWidth) go();
 }
 function paintLogo(on) { const l = $('#paintLogo'); if (!l) return; if (on) { l.hidden = false; requestAnimationFrame(() => l.classList.add('on')); } else { l.classList.remove('on'); l.hidden = true; } }
