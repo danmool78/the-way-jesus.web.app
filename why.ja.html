@@ -45,7 +45,7 @@
   .ill .t{font-family:'Noto Serif JP',serif;font-weight:700}
   /* 일러스트 — 기쁜 소식 그림과 같은 화풍(paint.mjs) */
   .art{margin:18px auto 8px;max-width:640px}
-  .art img{display:block;width:100%;border-radius:16px;background:#f7f1e6;border:1px solid #eadfcd;box-shadow:0 6px 18px rgba(90,60,30,.08)}
+  .art img{display:block;width:100%;background:#f7f1e6;-webkit-mask:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent),linear-gradient(transparent,#000 9%,#000 91%,transparent);-webkit-mask-composite:source-in;mask:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent),linear-gradient(transparent,#000 9%,#000 91%,transparent);mask-composite:intersect} /* 그림 종이가 바탕보다 조금 밝아 테두리·그림자와 함께 상자처럼 끊겨 보였다: 테두리 없이 가장자리를 바탕에 녹인다 */
   .pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:640px;margin:18px auto 8px}
   .pair .art{margin:0}
   .pair figcaption{text-align:center;font-family:var(--serif);font-weight:700;color:var(--gold2);font-size:15px;margin-top:8px}
