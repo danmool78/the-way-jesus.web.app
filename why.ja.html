@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f7f1e6">
+<meta name="description" content="その道 付録 · なぜキリスト教なのか — ほかの道は人が神へ上ろうとし、キリスト教は神が低いところへ降りて来られたと語ります。図と絵でわかりやすく比べてみます">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<title>なぜキリスト教なのか — その道</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* 부록은 손그림과 맞춰 밝은 종이 바탕. 앱 공용 색(var)을 이 페이지에서만 덮는다 */
+  :root{--bg:#f7f1e6;--ink:#2b2620;--muted:#7a6f60;--faint:#a39a8a;--gold:#d0685b;--gold2:#c0564a;--line:#e8dece;color-scheme:light}
+  :root{--serif:'Noto Serif JP',serif;--sans:'Noto Sans JP',system-ui,sans-serif}
+  /* 왜 기독교인가 — 묻고 답하기(qna.html)와 같은 결. 글보다 도표와 단순한 그림을 앞세운다(명화는 쓰지 않는다) */
+  body{overflow:auto;word-break:normal;line-break:strict;background:radial-gradient(ellipse at 50% 0%,rgba(208,104,91,.08),transparent 50%),var(--bg)}
+  .why{max-width:760px;margin:0 auto;padding:28px 20px 64px}
+  .why-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .why-top a{color:var(--gold2);text-decoration:none;display:inline-flex;align-items:center;gap:8px;font-size:14px}
+  .why-top img{width:28px;height:28px}
+  .why-top .back{border:1px solid #dccfba;border-radius:999px;padding:7px 14px}
+  .why-top .back:hover{border-color:var(--gold)}
+  .why h1{font-family:var(--serif);font-size:36px;margin:34px 0 6px;color:#2b2620;text-align:center}
+  .why .sub{text-align:center;color:var(--gold2);font-family:var(--serif);font-size:17px;margin:0 0 18px}
+  .why .lead{color:var(--muted);line-height:1.9;margin:0 0 10px;text-align:center}
+  .why h2{font-family:var(--serif);font-size:24px;color:var(--gold2);margin:60px 0 14px;padding-top:12px;border-top:1px solid #e8dece;scroll-margin-top:16px}
+  .why h2 small{display:block;font-family:var(--sans);font-size:12px;color:var(--faint);letter-spacing:.08em;margin-bottom:4px}
+  .why h3{font-size:16px;color:#2b2620;margin:26px 0 8px}
+  .why p{color:#3d362d;line-height:1.9;font-size:15.5px;margin:0 0 12px}
+  .why b{color:var(--gold2)}
+  /* 말씀 — 새로 옮긴 글 */
+  .verse{margin:16px 0;padding:14px 18px;border-left:2px solid var(--gold);background:rgba(208,104,91,.06);border-radius:0 12px 12px 0;font-family:var(--serif);font-size:16.5px;line-height:1.85;color:#2b2620}
+  .verse cite{display:block;font-family:var(--sans);font-style:normal;font-size:12px;color:var(--muted);margin-top:4px}
+  .verse.big{border:0;background:none;text-align:center;font-size:19px;padding:8px 6px}
+  .card{border:1px solid #e8dece;border-radius:16px;background:#fffaf2;padding:16px 18px;margin:14px 0}
+  .card.warm{border-color:#d6c8b2;background:#fff6ef}
+  .card p:last-child{margin-bottom:0}
+  .why .motto{font-family:var(--serif);font-size:19px;line-height:1.7;color:#2b2620;text-align:center}
+  /* 그림 — 손으로 그린 단순한 SVG. 글씨는 폰에서도 읽히게 크게 */
+  .ill{display:block;width:100%;max-width:560px;height:auto;margin:16px auto 6px}
+  .ill text{font-family:'Noto Sans JP',sans-serif}
+  .ill .t{font-family:'Noto Serif JP',serif;font-weight:700}
+  /* 일러스트 — 기쁜 소식 그림과 같은 화풍(paint.mjs) */
+  .art{margin:18px auto 8px;max-width:640px}
+  .art img{display:block;width:100%;border-radius:16px;background:#f7f1e6;border:1px solid #eadfcd;box-shadow:0 6px 18px rgba(90,60,30,.08)}
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:640px;margin:18px auto 8px}
+  .pair .art{margin:0}
+  .pair figcaption{text-align:center;font-family:var(--serif);font-weight:700;color:var(--gold2);font-size:15px;margin-top:8px}
+  .why .cap{text-align:center;font-family:var(--serif);color:var(--gold2);font-size:16.5px;margin:0 0 16px}
+  /* 모든 사람의 세 물음 */
+  .asks{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0 6px}
+  .asks div{border:1px solid #e8dece;border-radius:14px;padding:14px 10px;text-align:center;background:#fffaf2;font-size:14px;line-height:1.6;color:#3d362d}
+  .asks svg{width:30px;height:30px;display:block;margin:0 auto 8px}
+  /* 서로 다른 답 — 물음마다 종교별 칩 */
+  .claims{display:grid;gap:12px;margin:14px 0}
+  .claim{border:1px solid #e8dece;border-radius:16px;background:#fffaf2;padding:14px 16px}
+  .claim h4{margin:0 0 10px;font-family:var(--serif);font-size:16.5px;color:#2b2620}
+  .claim ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .claim li{display:flex;gap:8px;align-items:baseline;font-size:13.5px;line-height:1.55;color:#3d362d;background:rgba(60,40,20,.04);border-radius:10px;padding:7px 10px}
+  .claim li i{flex:none;font-style:normal;font-size:11.5px;font-weight:700;border-radius:999px;padding:1px 7px;color:#fffaf2}
+  .c-c{background:#d97a6c}.c-i{background:#8fb2b4}.c-b{background:#c9a3c9}.c-h{background:#e3a07a}.c-j{background:#a9b98a}
+  /* 하나는 틀린다 — 맞서는 두 주장 */
+  .vs{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch;margin:16px 0}
+  .vs div{border-radius:14px;padding:14px;text-align:center;font-size:14px;line-height:1.6;color:#3d362d;background:#fffaf2;border:1px solid #e8dece}
+  .vs div b{display:block;font-family:var(--serif);font-size:16px;color:#2b2620;margin-bottom:4px}
+  .vs span{align-self:center;font-family:var(--serif);font-size:30px;color:var(--gold)}
+  /* 스펙트럼 — 종교마다 막대 위 한 점. 누르면 풀이가 열린다 */
+  .spec-head{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin:18px 0 6px}
+  .spec details{border-bottom:1px solid #e8dece}
+  .spec summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:96px 1fr 16px;gap:12px;align-items:center;padding:12px 0}
+  .spec summary::-webkit-details-marker{display:none}
+  .spec summary b{font-family:var(--serif);font-size:15px;color:#2b2620;font-weight:700}
+  .spec .track{position:relative;height:8px;border-radius:4px;background:linear-gradient(90deg,#ece3d4,#b9ab95 60%,var(--gold))}
+  .spec .dot{position:absolute;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:#2b2620;border:3px solid #fffaf2;box-shadow:0 0 0 1px #b9ab95}
+  .spec .me .dot{background:var(--gold);box-shadow:0 0 0 1px var(--gold),0 0 14px rgba(208,104,91,.5)}
+  .spec .chev{width:8px;height:8px;border-right:2px solid var(--faint);border-bottom:2px solid var(--faint);transform:rotate(45deg);transition:transform .2s}
+  .spec details[open] .chev{transform:rotate(-135deg)}
+  .spec dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0 0 14px;padding:12px 14px;border-radius:12px;background:#fffaf2;font-size:14px;line-height:1.75}
+  .spec dt{color:var(--faint)}
+  .spec dd{margin:0;color:#3d362d}
+  .why .hint{font-size:12.5px;color:var(--faint);margin:8px 0 0;line-height:1.7}
+  /* 재판관 이야기 세 걸음 */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+  .steps div{border:1px solid #e8dece;border-radius:14px;padding:14px 12px;background:#fffaf2;font-size:14px;line-height:1.7;color:#3d362d}
+  .steps div:last-child{border-color:var(--gold)}
+  .steps i{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--gold);color:#ffffff;font-style:normal;font-weight:700;font-size:13px;margin-bottom:8px}
+  /* 죄의 값 — 네 가지 답 */
+  .price{display:grid;gap:8px;margin:14px 0}
+  .price div{display:grid;grid-template-columns:110px 1fr;gap:12px;align-items:center;border:1px solid #e8dece;border-radius:12px;padding:11px 14px;background:#fffaf2;font-size:14px;line-height:1.7;color:#3d362d}
+  .price div>b{font-family:var(--serif);color:#2b2620}
+  .price .me{border-color:var(--gold);background:rgba(208,104,91,.07)}
+  /* 때와 장소 */
+  .when{display:flex;gap:14px;align-items:center;border:1px solid #d6c8b2;border-radius:16px;padding:16px 18px;margin:16px 0;background:#fffaf2}
+  .when svg{flex:none;width:40px;height:40px}
+  .when b{display:block;font-family:var(--serif);font-size:18px;color:#2b2620}
+  .when span{font-size:13px;color:var(--muted)}
+  .when a{margin-left:auto;flex:none;font-size:13px;color:var(--gold2);text-decoration:none;border:1px solid #d6c8b2;border-radius:999px;padding:7px 12px}
+  /* 진짜(O)·가짜(X) 맞대기 — 머리와 칸이 같은 격자. 바탕색 대신 가는 선과 글씨 색으로 가른다 */
+  .ox{margin:18px 0;border:1px solid #e8dece;border-radius:18px;background:#fffdf9;overflow:hidden;box-shadow:0 4px 16px rgba(90,60,30,.05)}
+  .ox-h,.ox-r{display:grid;grid-template-columns:1fr 1fr}
+  .ox-h div{display:flex;align-items:center;gap:8px;padding:14px 16px 12px;font-family:var(--serif);font-weight:700;font-size:16px;border-bottom:3px solid}
+  .ox-h .o{color:#4f6b3f;border-color:#9dbb8c}.ox-h .x{color:#b8473b;border-color:#e9a79c}
+  .ox-r{border-top:1px solid #efe6d8}
+  .ox-h+.ox-r{border-top:0}
+  .ox-k{grid-column:1/-1;padding:9px 16px;margin-bottom:6px;font-family:var(--serif);font-weight:700;font-size:15px;color:#5a3f22;background:#efe2cc}
+  .ox-r>div:nth-child(n+2){position:relative;padding:6px 16px 14px 38px;font-size:14px;line-height:1.7}
+  .ox-r>div:nth-child(2){color:#3d362d}
+  .ox-r>div:nth-child(3){color:#7a6f60;border-left:1px solid #efe6d8}
+  .ox-r>div:nth-child(2)::before{content:'';position:absolute;left:15px;top:11px;width:10px;height:10px;border:2.5px solid #6f9160;border-radius:50%}
+  .ox-r>div:nth-child(3)::before{content:'✕';position:absolute;left:15px;top:6px;font-size:14px;font-weight:700;color:#d06a5d}
+  .ox-r>div:nth-child(2) b{color:#3f5a31}.ox-r>div:nth-child(3) b{color:#a8443a}
+  .mk{flex:none;width:20px;height:20px}
+  @media (min-width:640px){
+    .ox-h,.ox-r{grid-template-columns:160px 1fr 1fr}
+    .ox-h::before{content:'';align-self:stretch;background:#efe2cc;border-bottom:3px solid #dcc7a5}
+    .ox-k{grid-column:auto;margin:0;padding:14px 16px;align-self:stretch;display:flex;align-items:center;border-right:1px solid #e3d3b8}
+    .ox-r>div:nth-child(n+2){padding:14px 16px 14px 38px}
+    .ox-r>div:nth-child(2)::before{top:19px}.ox-r>div:nth-child(3)::before{top:14px}
+  }
+  /* 믿어야 아는 것들 */
+  .know{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
+  .know div{border:1px solid #e8dece;border-radius:16px;background:#fffaf2;padding:14px 12px;font-size:13.5px;line-height:1.6;color:#3d362d}
+  .know svg{width:34px;height:34px;display:block;margin-bottom:6px}
+  .know b{display:block;font-family:var(--serif);font-size:16px;color:#2b2620;margin-bottom:3px}
+  .flip{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin:16px 0;text-align:center}
+  .flip div{border-radius:16px;padding:14px 10px;font-family:var(--serif);font-size:17px;line-height:1.5}
+  .flip .a{background:#f0ebe2;color:#7a6f60}.flip .b{background:#fbe4df;color:#b8473b;font-weight:700}
+  .flip small{display:block;font-family:var(--sans);font-size:12px;color:var(--muted);font-weight:400;margin-top:2px}
+  .flip span{font-size:22px;color:var(--faint)}
+  @media (max-width:600px){.know{grid-template-columns:1fr 1fr}}
+  .end{text-align:center;margin-top:40px}
+  .end a{display:inline-block;padding:14px 28px;border-radius:999px;background:linear-gradient(180deg,#d97a6c,#c0564a);color:#ffffff;font-weight:700;text-decoration:none;margin:4px}
+  .end a.ghost{background:none;border:1px solid #d6c8b2;color:var(--gold2)}
+  .why .foot{text-align:center;margin-top:36px;font-size:12px;color:var(--faint);line-height:1.8}
+  .foot a{color:var(--faint)}
+  @media (max-width:600px){
+    .why h1{font-size:30px}.why h2{font-size:21px}
+    .asks{gap:8px}.asks div{padding:12px 6px;font-size:13px}
+    .claim ul{grid-template-columns:1fr}
+    .spec summary{grid-template-columns:86px 1fr 14px;gap:10px}
+    .spec summary b{font-size:14px}
+    .steps{grid-template-columns:1fr}
+    .price div{grid-template-columns:92px 1fr}
+    .vs div{padding:12px 8px;font-size:13px}
+    .when{flex-wrap:wrap}.when a{margin-left:54px}
+  }
+  /* 부록 표지와 '펼쳐 보기' — 처음엔 그림과 물음만, 풀이는 접어 둔다 */
+  .tag{display:block;width:max-content;margin:30px auto 0;font-size:12px;letter-spacing:.12em;color:var(--gold2);border:1px solid #d6c8b2;border-radius:999px;padding:4px 12px}
+  .why section{margin:64px 0 0;padding-top:14px;border-top:1px solid #e8dece}
+  .why section>small{display:block;font-size:12px;color:var(--faint);letter-spacing:.08em;text-align:center}
+  .why section>h2{border:0;margin:4px 0 4px;padding:0;text-align:center;font-size:23px}
+  .more{margin:6px 0 0}
+  .more>summary{list-style:none;cursor:pointer;width:max-content;margin:4px auto 0;display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--gold2);border:1px solid #d6c8b2;border-radius:999px;padding:8px 16px;background:rgba(208,104,91,.05);transition:background .2s,border-color .2s}
+  .more>summary::-webkit-details-marker{display:none}
+  .more>summary:hover{border-color:var(--gold);background:rgba(208,104,91,.1)}
+  .more>summary::after{content:'';width:7px;height:7px;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:translateY(-2px) rotate(45deg);transition:transform .2s}
+  .more[open]>summary::after{transform:translateY(2px) rotate(-135deg)}
+  .more[open]>summary .o{display:none}.more>summary .c{display:none}.more[open]>summary .c{display:inline}
+  .more>div{margin-top:14px;animation:open .35s ease}
+  @keyframes open{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+  .why h1{margin-top:12px}
+  /* 그다음 이야기 — 교회 */
+  .part{margin:84px 0 0;text-align:center}
+  .part span{display:inline-block;font-size:12px;letter-spacing:.14em;color:#fff;background:var(--gold);border-radius:999px;padding:5px 14px}
+  .part h2{border:0;margin:12px 0 6px;padding:0;font-size:24px;line-height:1.5}
+  .part p{color:var(--muted);text-align:center}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 6px;position:relative}
+  .tl::before{content:'';position:absolute;left:15px;top:10px;bottom:10px;width:2px;background:#e8dece}
+  .tl li{position:relative;padding:0 0 14px 40px}
+  .tl li::before{content:'';position:absolute;left:3px;top:5px;width:16px;height:16px;border-radius:50%;background:#fffaf2;border:3px solid #d6c8b2}
+  .tl li.on::before{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 5px rgba(208,104,91,.15)}
+  .tl b{display:block;font-family:var(--serif);font-size:16px;color:#2b2620}
+  .tl span{font-size:14px;color:#3d362d;line-height:1.7}
+  .tl a{font-size:12.5px;color:var(--gold2);text-decoration:none;margin-left:4px;white-space:nowrap}
+  .roles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
+  .roles div{border:1px solid #e8dece;border-radius:14px;padding:12px;background:#fffaf2;font-size:13px;line-height:1.6;color:#3d362d}
+  .roles b{display:block;font-family:var(--serif);font-size:15.5px;color:#2b2620;margin-bottom:2px}
+  .roles i{font-style:normal;font-size:11px;font-weight:700;border-radius:999px;padding:1px 7px;margin-left:4px;vertical-align:2px}
+  .r-up{background:#fbe9e5;color:#b8473b}.r-in{background:#f6efe2;color:#8a6a35}.r-out{background:#eef3e8;color:#4f6b3f}
+  .ache{border:1px solid #f0cfc8;border-radius:16px;background:#fff4f0;padding:16px 18px;margin:14px 0}
+  .ache p{margin:0 0 12px}.ache p:last-child{margin:0}
+  .ache .h{font-family:var(--serif);font-size:18px;color:#b8473b;text-align:center;margin-bottom:14px}
+  .fv{list-style:none;counter-reset:w;margin:14px 0;padding:0}
+  .fv li{counter-increment:w;position:relative;padding:11px 14px 11px 50px;margin:8px 0;border:1px solid #e8dece;border-radius:14px;background:#fffaf2;font-size:14.5px;line-height:1.65;color:#3d362d}
+  .fv li::before{content:counter(w);position:absolute;left:14px;top:11px;width:24px;height:24px;border-radius:50%;background:#5f8150;color:#fff;font-weight:700;font-size:13px;display:grid;place-items:center}
+  .fv b{color:#2b2620}
+  @media (max-width:600px){.roles{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<main class="why">
+  <nav class="why-top">
+    <a href="./?lang=ja"><img src="assets/logo.svg" alt=""><b style="font-family:var(--serif);font-size:20px">その道</b></a>
+    <a class="back" href="qna.ja.html">よくある質問 →</a>
+  </nav>
+
+  <span class="tag">その道 · 付録</span>
+  <h1>なぜキリスト教なのか</h1>
+  <p class="sub">上っていく宗教、降りて来られた神</p>
+  <div class="asks">
+    <div><svg viewBox="0 0 32 32" fill="none" stroke="#d0685b" stroke-width="1.8" stroke-linecap="round"><circle cx="16" cy="11" r="5"/><path d="M6 28c1.5-6 5.5-9 10-9s8.5 3 10 9"/></svg>自分は<br>善い人なのか？</div>
+    <div><svg viewBox="0 0 32 32" fill="none" stroke="#d0685b" stroke-width="1.8" stroke-linecap="round"><path d="M16 4c5 6 8 10.5 8 15a8 8 0 0 1-16 0c0-4.5 3-9 8-15z"/></svg>わたしの罪は<br>どう洗われる？</div>
+    <div><svg viewBox="0 0 32 32" fill="none" stroke="#d0685b" stroke-width="1.8" stroke-linecap="round"><path d="M4 24h24"/><path d="M9 24a7 7 0 0 1 14 0"/><path d="M16 9v3M7 13l2 2M25 13l-2 2"/></svg>死の向こうには<br>何があるのか？</div>
+  </div>
+  <p class="lead">だれもが心に抱いて生きている問いです。宗教ごとの答えを同じものさしで、率直に比べてみます。</p>
+
+  <section>
+  <small>その一</small>
+  <h2>すべての宗教は同じことを言っているのでしょうか？</h2>
+  <figure class="art"><img src="assets/img/why/crossroads.webp" alt="二つに分かれる道と、互いに反対の方向を指す古い道しるべ" loading="lazy"></figure>
+  <p class="cap">両方とも間違っていることはあっても、両方とも正しいことはありえません</p>
+  <div class="vs">
+    <div><b>キリスト教</b>イエスは十字架で死に、三日目によみがえった</div>
+    <span>≠</span>
+    <div><b>イスラム教</b>イエスは十字架で死ななかった<br>（クルアーン 4:157）</div>
+  </div>
+  <details class="more"><summary><span class="o">四つの問いで比べてみる</span><span class="c">閉じる</span></summary><div>
+  <div class="claims">
+    <div class="claim"><h4>神はどのような方か？</h4><ul>
+      <li><i class="c-c">キリスト教</i>人格をもつ唯一の神（父・子・聖霊）</li>
+      <li><i class="c-i">イスラム教</i>人格をもつ唯一の神。三位一体ではない</li>
+      <li><i class="c-h">ヒンドゥー教</i>多くの神々と、その奥にある究極の実在ブラフマン</li>
+      <li><i class="c-b">仏教</i>世界を造った創造主を立てない</li></ul></div>
+    <div class="claim"><h4>イエスとはだれか？</h4><ul>
+      <li><i class="c-c">キリスト教</i>人となられた神</li>
+      <li><i class="c-i">イスラム教</i>偉大な預言者。神ではない</li>
+      <li><i class="c-j">ユダヤ教</i>待ち望んだメシアではない</li>
+      <li><i class="c-h">ヒンドゥー教</i>多くの師や化身のうちのひとり</li></ul></div>
+    <div class="claim"><h4>死の後は？</h4><ul>
+      <li><i class="c-c">キリスト教</i>一度死に、復活と審判</li>
+      <li><i class="c-i">イスラム教</i>一度死に、復活と審判</li>
+      <li><i class="c-h">ヒンドゥー教</i>業によって生まれ変わる（輪廻）</li>
+      <li><i class="c-b">仏教</i>輪廻。涅槃に入れば終わる</li></ul></div>
+    <div class="claim"><h4>「わたし」とは何か？</h4><ul>
+      <li><i class="c-c">キリスト教</i>神が造られた、永遠に続く人格</li>
+      <li><i class="c-h">ヒンドゥー教</i>真の自己（アートマン）はすなわちブラフマン</li>
+      <li><i class="c-b">仏教</i>変わらない自己はない（無我）</li>
+      <li><i class="c-i">イスラム教</i>神が造られた被造物。復活のときに再び生きる</li></ul></div>
+  </div>
+  <p>いちばん大切な問いについて、宗教はそれぞれ違う答え、ときには正反対の答えを出します。ですから「すべての宗教は正しい」という言葉は寛容に見えても、実はすべての宗教に向かって<b>「あなたがいちばん大切にしているその言葉は間違っている」</b>と言っていることになります。互いを本当に尊重するなら、違うものを違うと率直に言うところから始めるべきです。</p>
+  </div></details>
+  </section>
+
+  <section>
+  <small>その二</small>
+  <h2>人はどうやって神のもとへ行こうとするのでしょうか？</h2>
+  <div class="pair">
+    <figure class="art"><img src="assets/img/why/scale.webp" alt="大きな天秤にささげ物を載せ、不安そうに見つめる人" loading="lazy"><figcaption>① 神と取引する</figcaption></figure>
+    <figure class="art"><img src="assets/img/why/ladder.webp" alt="雲の中の果てしないはしごをひとりで登る人" loading="lazy"><figcaption>② 自分で登る</figcaption></figure>
+  </div>
+  <p class="cap">方法は違っても、向きは同じです — 上へ</p>
+  <details class="more"><summary><span class="o">二つの道を詳しく · 宗教ごとに見る</span><span class="c">閉じる</span></summary><div>
+  <div class="card">
+    <p><b>① 神と取引する。</b>「これだけ祈り、断食し、ささげ、善く生きれば、神も報いてくださるだろう」。けれども、どれだけ載せれば足りるのか、天秤がどちらに傾くのかは、最後までわかりません。</p>
+    <p><b>② 自分で登る。</b>苦行し、修めに修めて悟り、抜け出そうとする道です。結局は、人が高いところにたどり着こうとすることです。</p>
+  </div>
+  <div class="spec-head"><span>← 人がする</span><span>神がする →</span></div>
+  <div class="spec">
+    <details><summary><b>仏教</b><span class="track"><span class="dot" style="left:6%"></span></span><span class="chev"></span></summary>
+      <dl><dt>問題</dt><dd>執着と無知から来る苦しみ、終わりのない輪廻</dd><dt>目標</dt><dd>涅槃。苦しみと輪廻が終わること</dd><dt>なすこと</dt><dd>八つの正しい道（八正道）、戒律、瞑想。ブッダは最後に「自らを灯火とせよ」と語りました</dd></dl></details>
+    <details><summary><b>儒教</b><span class="track"><span class="dot" style="left:10%"></span></span><span class="chev"></span></summary>
+      <dl><dt>問題</dt><dd>徳が足りず、心が正しくないこと</dd><dt>目標</dt><dd>君子、聖人。救いというより人としての完成に近いものです</dd><dt>なすこと</dt><dd>身と心を修めること（修身）、礼を守ること、学ぶこと</dd></dl></details>
+    <details><summary><b>ヒンドゥー教</b><span class="track"><span class="dot" style="left:30%"></span></span><span class="chev"></span></summary>
+      <dl><dt>問題</dt><dd>業（カルマ）に縛られて繰り返される生</dd><dt>目標</dt><dd>解脱（モークシャ）</dd><dt>なすこと</dt><dd>祭祀と務めを果たす行為の道、知恵の道、苦行、献身（バクティ）の道。献身の道では神の恵みも語られます</dd></dl></details>
+    <details><summary><b>イスラム教</b><span class="track"><span class="dot" style="left:42%"></span></span><span class="chev"></span></summary>
+      <dl><dt>問題</dt><dd>神を忘れ、従わないこと</dd><dt>目標</dt><dd>審判を経て楽園に入ること</dd><dt>なすこと</dt><dd>信仰告白、一日五回の礼拝、喜捨、断食、巡礼（五行）。審判の日に行いを天秤で量ると教えます（クルアーン 7:8–9）</dd></dl></details>
+    <details><summary><b>ユダヤ教</b><span class="track"><span class="dot" style="left:52%"></span></span><span class="chev"></span></summary>
+      <dl><dt>問題</dt><dd>神のみこころに従わないこと</dd><dt>目標</dt><dd>神と結んだ契約の中にとどまること</dd><dt>なすこと</dt><dd>律法を守り、背いたときには立ち返ること（テシュバ）</dd></dl></details>
+    <details><summary><b>浄土仏教</b><span class="track"><span class="dot" style="left:80%"></span></span><span class="chev"></span></summary>
+      <dl><dt>問題</dt><dd>末法の世で、人の力では悟れないこと</dd><dt>目標</dt><dd>阿弥陀仏の極楽浄土に生まれること</dd><dt>なすこと</dt><dd>阿弥陀仏の名を称え、その本願を信じること（他力の信仰）</dd></dl></details>
+    <details class="me" open><summary><b>キリスト教</b><span class="track"><span class="dot" style="left:100%;margin-left:-16px"></span></span><span class="chev"></span></summary>
+      <dl><dt>問題</dt><dd>罪。神との断絶</dd><dt>目標</dt><dd>神とふたたびつながること、永遠のいのち</dd><dt>なすこと</dt><dd><b>救いは100%神がなさいます。</b>人が付け加えるものはなく、神がすでになさったことを信仰によって受け取るだけです。その信仰も手柄ではなく、贈り物を受け取る空っぽの手です</dd></dl></details>
+  </div>
+  <p class="hint">点の位置は、それぞれの宗教の代表的な教えをもとにしたおおよその位置です。</p>
+
+  </div></details>
+  </section>
+
+  <section>
+  <small>その三</small>
+  <h2>ところが、逆さまの物語がひとつあります</h2>
+  <figure class="art"><img src="assets/img/why/mountain.webp" alt="多くの人が山を登る間に、頂から金色の光が谷にいるひとりの人へと流れ降りる" loading="lazy"></figure>
+  <svg class="ill" viewBox="0 0 640 330" role="img" aria-label="神の座から、人、馬小屋、しもべ、十字架へと一段ずつ降りて来る図">
+    <defs><radialGradient id="g2" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fbd9d2"/><stop offset=".4" stop-color="#d97a6c" stop-opacity=".6"/><stop offset="1" stop-color="#d97a6c" stop-opacity="0"/></radialGradient></defs>
+    <path d="M10 70 H130 V120 H250 V170 H370 V220 H490 V270 H630 V310 H10 Z" fill="#fffaf2" stroke="#d6c8b2" stroke-width="1.5"/>
+    <g fill="#d0685b" opacity=".9"><rect x="10" y="66" width="120" height="5" rx="2"/><rect x="130" y="116" width="120" height="5" rx="2"/><rect x="250" y="166" width="120" height="5" rx="2"/><rect x="370" y="216" width="120" height="5" rx="2"/><rect x="490" y="266" width="140" height="5" rx="2"/></g>
+    <circle cx="70" cy="40" r="34" fill="url(#g2)"/>
+    <g font-size="18" fill="#2b2620" text-anchor="middle" font-weight="700">
+      <text x="70" y="100">神の座</text><text x="190" y="150">人となられる</text><text x="310" y="200">馬小屋</text><text x="430" y="250">しもべの姿</text><text x="560" y="300">十字架</text>
+    </g>
+    <path d="M96 52 C150 60 170 90 186 106 M210 112 C260 116 290 140 306 156 M330 162 C380 166 410 190 426 206 M450 212 C500 216 530 240 546 252" fill="none" stroke="#d97a6c" stroke-width="2.5" stroke-dasharray="2 7" stroke-linecap="round"/>
+    <circle cx="560" cy="226" r="26" fill="url(#g2)" opacity=".6"/>
+    <path d="M560 206 V262 M544 222 H576" stroke="#c0564a" stroke-width="6" stroke-linecap="round"/>
+  </svg>
+  <p class="cap">天の座から、いちばん低いところまで</p>
+  <details class="more"><summary><span class="o">降りて来られたとはどういうことか</span><span class="c">閉じる</span></summary><div>
+  <p>人が上っていくのではなく、<b>神が降りて来られました。</b>王宮ではなく馬小屋へ、主人ではなくしもべとして、栄光の座ではなく罪人がかけられる十字架にまで。</p>
+  <div class="verse">この方は神の姿をお持ちでしたが、神と等しくあることにしがみつこうとはなさいませんでした。かえってご自分を空しくし、しもべの姿をとって人となられました。ご自分を低くして、死に至るまで、それも十字架の死に至るまで従われたのです。<cite>フィリピの信徒への手紙 2:6–8</cite></div>
+  <div class="card"><p>ほかの宗教にも、神が地上に降りて来る物語はあります。ヒンドゥー教の化身（アヴァターラ）がそうです。しかしその神々は王子や英雄として来て、悪を打ち倒します。<b>いちばん低いところで、罪人の身代わりに死ぬために来られた神</b>は、キリスト教にしかありません。</p></div>
+  </div></details>
+  <figure class="art"><img src="assets/img/why/father.webp" alt="両腕を広げ、帰って来る息子のもとへ駆け寄る父" loading="lazy"></figure>
+  <p class="cap">「雇い人のひとりとしてでも……」と言い終える前に</p>
+  <details class="more"><summary><span class="o">イエスが語られたたとえ</span><span class="c">閉じる</span></summary><div>
+  <p>財産を使い果たして帰って来る息子は、道すがら言うことばを練習します。<b>「雇い人のひとりとして使ってください」</b>。働いて返そうという、上っていく道です。ところが父は、そのことばを聞く前に遠くから息子を見つけ、<b>自分から駆け寄って</b>抱きしめます。</p>
+  <div class="verse">まだ遠く離れていたのに、父は息子を見つけてかわいそうに思い、走り寄って首を抱き、口づけした。<cite>ルカによる福音書 15:20</cite></div>
+  </div></details>
+  </section>
+
+  <section>
+  <small>その四</small>
+  <h2>ただ赦してくださればいいのでは？</h2>
+  <figure class="art"><img src="assets/img/why/bridge.webp" alt="深い谷の上に橋のように架けられた十字架" loading="lazy"></figure>
+  <p class="cap">人が渡れない裂け目を、神が十字架でつないでくださいました</p>
+  <details class="more"><summary><span class="o">裁判官の話 · 罪の代価はどこへ</span><span class="c">閉じる</span></summary><div>
+  <p>だれかがわたしの家族を傷つけたのに、裁判官が「かまわない」と言って放免したら、それを愛と呼ぶことはできないでしょう。<b>ただ覆い隠せば正義が崩れ、そのまま罰すれば愛の居場所がありません。</b></p>
+  <div class="steps">
+    <div><i>1</i>ある裁判官の前に被告が立ちました。それは裁判官自身の息子でした。</div>
+    <div><i>2</i>裁判官は法のとおりに罰金を言い渡します。息子には到底払えない大金でした。</div>
+    <div><i>3</i>判決を終えた裁判官は法服を脱いで降りて来ると、自分のお金でその罰金を代わりに払います。</div>
+  </div>
+  <p>法は守られ、息子は自由になりました。<b>正義と愛が、ともに成し遂げられたのです。</b>キリスト教は、十字架とはまさにこういうことだと語ります。</p>
+  <div class="verse">わたしたちがまだ罪人であったとき、キリストはわたしたちのために死んでくださいました。こうして神は、わたしたちへのご自分の愛を示されたのです。<cite>ローマの信徒への手紙 5:8</cite></div>
+  <h3>赦された過ちの代価はどこへ行くのか</h3>
+  <div class="price">
+    <div><b>ヒンドゥー教・<br>仏教</b><span>業は<b>自分で償います</b>。そのために幾度もの生を経ます。</span></div>
+    <div><b>浄土仏教</b><span>阿弥陀仏の本願によって極楽に生まれます。残った業は、そこで修行しながら解いていきます。</span></div>
+    <div><b>イスラム教</b><span>アッラーが望まれれば<b>赦し</b>てくださいます。その代価をだれかが代わりに払うことはありません。</span></div>
+    <div class="me"><b>キリスト教</b><span>神が<b>ご自分で代価を払われます</b>。裁判官が法服を脱いで降りて来るように、神が人となって来られました。</span></div>
+  </div>
+
+  <h3>物語ではなく、起きた出来事</h3>
+  <p>キリスト教はこれを神話やたとえとして語りません。時と場所のある出来事なので歴史として確かめることができ、キリスト教はその出来事にすべてを懸けています。</p>
+  <div class="when">
+    <svg viewBox="0 0 40 40" fill="none" stroke="#d0685b" stroke-width="2"><path d="M20 37s-11-11.5-11-20a11 11 0 0 1 22 0c0 8.5-11 20-11 20z"/><circle cx="20" cy="17" r="4"/></svg>
+    <div><b>紀元30年ごろ · エルサレムの城壁の外</b><span>ローマ総督ポンティオ・ピラトのとき</span></div>
+    <a href="app.html?j=jesus&amp;lang=ja#e55">地図で見る →</a>
+  </div>
+  <div class="verse">キリストがよみがえらなかったのなら、あなたがたの信仰はむなしく、あなたがたは今も罪の中にいることになります。<cite>コリントの信徒への手紙一 15:17</cite></div>
+  </div></details>
+  </section>
+
+  <section>
+  <small>その五</small>
+  <h2>キリスト教は排他的なのでしょうか？</h2>
+  <figure class="art"><img src="assets/img/why/doors.webp" alt="急な階段の上の閉ざされた狭い門と、大勢がともに入っていく大きく開かれた門" loading="lazy"></figure>
+  <p class="cap">ただひとつの道、けれどもいちばん広い門</p>
+  <details class="more"><summary><span class="o">なぜいちばん広い門なのか</span><span class="c">閉じる</span></summary><div>
+  <p>まず率直に認めます。排他的だと感じられてきたのには、<b>クリスチャンの冷たいことばや振る舞い</b>も一因でした。それはイエスの姿ではありませんでした。申し訳なく思います。</p>
+  <p>イエスは「わたしは道であり、真理であり、いのちである」（ヨハネ 14:6）と言われました。道がひとつだという言葉は狭く聞こえます。けれども<b>入るための条件</b>を見ると、違って見えてきます。善行や苦行の門では、そのための力と時間のある人が先を行きます。恵みの門は、何の資格も問いません。罪を犯した人も、遅れて来た人も、死を目前にした人も、同じ門から入ります。十字架のかたわらの強盗もそうでした（ルカ 23:43）。</p>
+  </div></details>
+  <svg class="ill" viewBox="0 0 640 340" role="img" aria-label="中央のイエスから、当時の境界線の外にいた人々へと伸びていく矢印">
+    <defs>
+      <radialGradient id="g4" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fbd9d2"/><stop offset=".5" stop-color="#d97a6c" stop-opacity=".5"/><stop offset="1" stop-color="#d97a6c" stop-opacity="0"/></radialGradient>
+      <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#d97a6c"/></marker>
+    </defs>
+    <ellipse cx="320" cy="165" rx="150" ry="95" fill="none" stroke="#8a7f70" stroke-width="2" stroke-dasharray="7 7"/>
+    <text x="470" y="292" text-anchor="middle" font-size="15" fill="#a39a8a">当時の人々が引いた線</text>
+    <circle cx="320" cy="165" r="44" fill="url(#g4)"/>
+    <text class="t" x="320" y="173" text-anchor="middle" font-size="22" fill="#2b2620">イエス</text>
+    <g stroke="#d97a6c" stroke-width="2.5" fill="none" marker-end="url(#ar)">
+      <path d="M290 140 L124 62"/><path d="M350 140 L516 62"/><path d="M362 175 L544 204"/><path d="M278 175 L96 204"/><path d="M320 210 L320 286"/>
+    </g>
+    <g fill="#2b2620"><circle cx="110" cy="55" r="8"/><circle cx="530" cy="55" r="8"/><circle cx="558" cy="207" r="8"/><circle cx="82" cy="207" r="8"/><circle cx="320" cy="298" r="8"/></g>
+    <g font-size="18" fill="#2b2620" font-weight="700">
+      <text x="120" y="34" text-anchor="middle">サマリアの女</text><text x="520" y="34" text-anchor="middle">ローマの百人隊長</text>
+      <text x="558" y="240" text-anchor="middle">カナンの女</text><text x="82" y="240" text-anchor="middle">徴税人マタイ</text>
+      <text x="320" y="332" text-anchor="middle">十字架上の強盗</text>
+    </g>
+  </svg>
+  <p class="cap">線を越えて、自分から訪ねて行かれた方</p>
+  <details class="more"><summary><span class="o">彼らはだれだったのか</span><span class="c">閉じる</span></summary><div>
+  <p>異なる民族、異なる信仰の人、占領軍の将校、民族を売った者と後ろ指をさされた徴税人、死刑囚。イエスは当時の人々が引いた線を越えて、<b>自分から訪ねて行かれました。</b></p>
+  <div class="verse">ユダヤ人もギリシア人も、奴隷も自由人も、男も女もありません。あなたがたは皆、キリスト・イエスにあってひとつなのです。<cite>ガラテヤの信徒への手紙 3:28</cite></div>
+  </div></details>
+  <figure class="art"><img src="assets/img/why/exit.webp" alt="煙の中で光る出口を開け、人々を呼ぶ人" loading="lazy"></figure>
+  <p class="cap">出口がひとつしかないなら、それを知らせるのが愛です</p>
+  <details class="more"><summary><span class="o">なぜ伝えるのか</span><span class="c">閉じる</span></summary><div>
+  <p>非常口を知っている人が「こちらです！」と叫んだら、わたしたちはその人を傲慢だとは言いません。クリスチャンがイエスを伝える心も、<b>勝とうとする心ではなく、ともに生きたいと願う心</b>でなければなりません。</p>
+  </div></details>
+  <figure class="art"><img src="assets/img/why/knock.webp" alt="夕暮れの光の中で、閉ざされた扉をたたかれるイエス" loading="lazy"></figure>
+  <p class="cap">扉は内側から開けるものです</p>
+  <details class="more"><summary><span class="o">無理に開けさせない愛</span><span class="c">閉じる</span></summary><div>
+  <p>イエスは扉を壊して入って来られません。外からたたいて、待っておられます。無理に開けさせるのは愛ではないからです。ですからクリスチャンも、ほかの信仰をもつ隣人に<b>穏やかに、敬意をもって</b>接するべきです（一ペトロ 3:15–16）。</p>
+  <div class="verse">見なさい、わたしは戸口の外に立ってたたいている。だれでもわたしの声を聞いて戸を開けるなら、わたしはその人のところに入り、ともに食事をする。<cite>ヨハネの黙示録 3:20</cite></div>
+  </div></details>
+  </section>
+
+  <section>
+  <small>その六</small>
+  <h2>本物はどう見分けるのでしょうか？</h2>
+  <figure class="art"><img src="assets/img/why/pearl.webp" alt="水辺で開いた貝の中に、やわらかく光る真珠" loading="lazy"></figure>
+  <p class="cap">本物の真珠は、傷から生まれた宝石です</p>
+  <div class="ox">
+    <div class="ox-h"><div class="o"><svg class="mk" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="#5f8150" stroke-width="3"/></svg>本物</div><div class="x"><svg class="mk" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" stroke="#c9584b" stroke-width="3" stroke-linecap="round"/></svg>偽物</div></div>
+    <div class="ox-r"><div class="ox-k">だれが救うのか</div><div><b>神が100%</b>なさる。恵みにより、無償で</div><div><b>人が資格を積まなければ</b>ならない。行い、規則、献身</div></div>
+    <div class="ox-r"><div class="ox-k">イエスはだれか</div><div><b>人となられた神</b>、ただひとりの救い主</div><div><b>イエスは神ではない</b>（神性の否定）。あるいは<b>別の人物を立てる。</b>再び来た主、助け主、勝利者</div></div>
+    <div class="ox-r"><div class="ox-k">何を付け加えるか</div><div><b>付け加えるものはない。</b>信仰によって受け取るだけ</div><div><b>何かを付け加える。</b>特定の日、数字、自分たちの団体</div></div>
+    <div class="ox-r"><div class="ox-k">何に基づくか</div><div><b>聖書全体</b>と歴史の中の出来事</div><div><b>ひとりだけが受けた</b>新しい啓示、秘密の解き明かし</div></div>
+    <div class="ox-r"><div class="ox-k">どんな実を結ぶか</div><div><b>自由と愛。</b>家庭と隣人を生かす</div><div><b>恐れと秘密。</b>家族との縁を切らせる</div></div>
+  </div>
+  <details class="more"><summary><span class="o">偽物はなぜ生まれるのか</span><span class="c">閉じる</span></summary><div>
+  <p>価値あるもののそばには、まねるものが現れます。石ころをまねる人はいません。キリスト教の名を借りた教えは、ほとんど決まって<b>「恵みだけでは足りない」</b>と言って何かを付け加え、ふたたび「上っていく道」へと引き戻します。</p>
+  <p>本物の真珠は、歯でこするとざらりとします。本物の福音も、はじめはざらりとします。「あなたは自分で自分を救うことはできない」という言葉から始まるからです。けれどもその中には、<b>代わりに傷を負ってくださった愛</b>があります。</p>
+  </div></details>
+  </section>
+
+  <section>
+  <small>まとめ</small>
+  <h2>ひとことで言えば</h2>
+  <svg class="ill" viewBox="0 0 640 210" role="img" aria-label="上へ向かういくつもの矢印と、下へ降りて来るひとつの金色の矢印">
+    <g stroke="#8a7f70" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <path d="M70 170 V60 M56 76 L70 60 L84 76"/><path d="M130 170 V80 M116 96 L130 80 L144 96"/><path d="M190 170 V50 M176 66 L190 50 L204 66"/><path d="M250 170 V70 M236 86 L250 70 L264 86"/>
+    </g>
+    <circle cx="460" cy="30" r="30" fill="url(#g2)"/>
+    <path d="M460 30 V150 M438 128 L460 150 L482 128" stroke="#d97a6c" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <circle cx="460" cy="170" r="10" fill="#2b2620"/>
+    <text x="160" y="204" text-anchor="middle" font-size="20" fill="#7a6f60">人が上っていく</text>
+    <text class="t" x="460" y="204" text-anchor="middle" font-size="22" fill="#c0564a">神が降りて来られた</text>
+  </svg>
+  <div class="card warm">
+    <p class="motto" style="margin:4px 0 12px"><span style="font-size:14px;color:var(--muted);font-family:var(--sans)">ほかの道は言います</span><br>「こうすれば神に届く」</p>
+    <p class="motto" style="margin:0 0 4px;color:var(--gold2)"><span style="font-size:14px;color:var(--muted);font-family:var(--sans)">キリスト教は言います</span><br>「神はすでに<br>あなたのもとに来られた」</p>
+  </div>
+  <div class="verse big">神はそれほどまでに世を愛して、ひとり子をお与えになりました。御子を信じる人がだれひとり滅びることなく、永遠のいのちを得るためです。<cite>ヨハネによる福音書 3:16</cite></div>
+  <p style="text-align:center">信じなさいと急き立てはしません。その方が歩まれた道を、ゆっくりたどって歩いてみてください。判断はそのあとでも遅くありません。</p>
+
+  <h3 style="text-align:center;margin-top:40px">信じてはじめてわかること</h3>
+  <p>「まずわかってから信じよう」という言葉は、理にかなっているように聞こえます。けれども実際の生活では、逆のことがたくさんあります。<b>信じて一歩踏み出してはじめてわかること</b>です。</p>
+  <div class="flip">
+    <div class="a">知って → 信じる<small>頭だけで知る道</small></div>
+    <span>⇄</span>
+    <div class="b">信じて → 知る<small>歩いてみて知る道</small></div>
+  </div>
+  <div class="know">
+    <div><svg viewBox="0 0 34 34" fill="none" stroke="#2b2620" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="17" cy="11" r="3.5"/><path d="M8 17c3-3 6-3 9 0s6 3 9 0" stroke="#5f8150"/><path d="M4 23c3-2 6-2 9 0s6 2 9 0 6-2 9 0M4 28c3-2 6-2 9 0s6 2 9 0 6-2 9 0" stroke="#8fb2b4"/></svg><b>水泳</b>水が体を浮かせてくれると信じて力を抜いてこそ、浮くことがわかります。もがけば沈みます。</div>
+    <div><svg viewBox="0 0 34 34" fill="none" stroke="#2b2620" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="23" r="6"/><circle cx="25" cy="23" r="6"/><path d="M9 23l6-10h8l2 10M15 13l-2-4h-3M23 13l-1-4h3" /><path d="M15 23l8-10" stroke="#d0685b"/></svg><b>自転車</b>走っていれば倒れないと信じてペダルをこいでこそわかります。止まれば倒れます。</div>
+    <div><svg viewBox="0 0 34 34" fill="none" stroke="#2b2620" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19l26-9-6 15-6-6-5 6v-8z"/><path d="M18 19l12-9" stroke="#d0685b"/></svg><b>飛行機</b>仕組みをすべて知ってから乗る人はまれです。乗ってみてこそ空を知ります。</div>
+    <div><svg viewBox="0 0 34 34" fill="none" stroke="#2b2620" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="19" r="7"/><circle cx="21" cy="19" r="7" stroke="#d0685b"/><path d="M15 8l2-3 2 3"/></svg><b>結婚</b>すべてを知ってから結婚する人はいません。信じてともに暮らしながら知っていきます。</div>
+    <div><svg viewBox="0 0 34 34" fill="none" stroke="#2b2620" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="12" width="22" height="10" rx="5" transform="rotate(-30 17 17)"/><path d="M14 11.5l6 10.4" stroke="#d0685b"/></svg><b>薬</b>医師を信じて飲んでこそ、治ることがわかります。説明書を読むだけでは治りません。</div>
+    <div><svg viewBox="0 0 34 34" fill="none" stroke="#2b2620" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18h24a12 12 0 0 1-24 0z"/><path d="M12 12c0-3 3-3 3-6M18 12c0-3 3-3 3-6" stroke="#d0685b"/></svg><b>食べ物</b>味は説明ではわかりません。食べてみてこそわかります。</div>
+    <div><svg viewBox="0 0 34 34" fill="none" stroke="#2b2620" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 5h8M14 5v9l-7 13a2 2 0 0 0 2 3h16a2 2 0 0 0 2-3l-7-13V5"/><path d="M9 23h16" stroke="#5f8150"/></svg><b>科学</b>科学者も、仮説が正しいだろうと信じて実験を始めます。結果はそのあとでわかります。</div>
+    <div><svg viewBox="0 0 34 34" fill="none" stroke="#2b2620" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="10" r="4"/><path d="M6 29c0-7 3-12 7-12s7 3 8 6"/><circle cx="22" cy="21" r="3" stroke="#d0685b"/><path d="M19 27c1-2 5-2 6 0" stroke="#d0685b"/></svg><b>赤ちゃん</b>赤ちゃんは母親をすべて知ってから抱かれるのではありません。抱かれて母親を知ります。</div>
+  </div>
+  <details class="more"><summary><span class="o">目をつぶって信じなさいということではありません</span><span class="c">閉じる</span></summary><div>
+  <p>泳ぎを習う人は、どこにでもやみくもに飛び込むわけではありません。そばにコーチがいて、ほかの人が浮くのを見たから、身をゆだねるのです。<b>十分な理由のある信頼</b>です。</p>
+  <p>キリスト教の信仰も同じです。時と場所のある歴史上の出来事、いのちを懸けて証言した人々、ここまで比べてきた物語が、その理由です。その上で一歩踏み出せば、その先は頭ではなく生き方を通してわかっていきます。そして知るほどに、信仰はさらに深まります。</p>
+  <div class="verse">主がどれほど恵み深い方か、味わって確かめなさい。<cite>詩編 34:8</cite></div>
+  <div class="verse">だれでも神のみこころを行おうとするなら、この教えが神から出たものか、わたしが自分の考えで話しているのか、わかるはずだ。<cite>ヨハネによる福音書 7:17</cite></div>
+  </div></details>
+  <p style="text-align:center;margin-top:18px">ですから、すべてわかってからではなく、<b>今日の一歩</b>で十分です。</p>
+  </section>
+
+  <div class="part">
+    <span>その先の物語</span>
+    <h2>降りて来られた神は<br>人々をひとつの家族に集められました</h2>
+    <p>イエスを信じることは、ひとりで歩く道ではありません。その道には教会があります。</p>
+  </div>
+
+  <section>
+  <small>教会 その一</small>
+  <h2>教会はどのように始まったのでしょうか？</h2>
+  <figure class="art"><img src="assets/img/why/pentecost.webp" alt="五旬祭に聖霊が降った弟子たちと、驚くさまざまな国の人々" loading="lazy"></figure>
+  <p class="cap">五旬祭（ペンテコステ）、聖霊が来られた日に教会が生まれました</p>
+  <ol class="tl">
+    <li><b>召し</b><span>ガリラヤで十二人の弟子を呼び、そばに置かれました（マルコ 3:14）</span><a href="app.html?j=jesus&amp;lang=ja#e22">場面 →</a></li>
+    <li><b>約束</b><span>「わたしはこの岩の上にわたしの教会を建てる」（マタイ 16:18）</span></li>
+    <li><b>代価</b><span>十字架で教会のためにご自身をささげ、よみがえられました（エフェソ 5:25）</span><a href="app.html?j=jesus&amp;lang=ja#e55">場面 →</a></li>
+    <li><b>待つこと</b><span>天に昇られるとき「聖霊を待ちなさい」と言われました（使徒 1:4–8）</span><a href="app.html?j=jesus&amp;lang=ja#e61">場面 →</a></li>
+    <li class="on"><b>誕生</b><span>五旬祭に聖霊が来られ、その日三千人が洗礼を受けました。最初の教会です（使徒 2:1–41）</span></li>
+    <li><b>広がり</b><span>エルサレムからユダヤとサマリアへ、そして地の果てまで（使徒 1:8）。その教会が今日、わたしたちの町にまで来ています</span></li>
+  </ol>
+  <details class="more"><summary><span class="o">「教会」という言葉の意味</span><span class="c">閉じる</span></summary><div>
+  <p>新約聖書が使う「教会」（エクレシア）という言葉は、<b>「呼び出されて集まった人々」</b>という意味です。ですから教会は、まず建物ではなく<b>人</b>です。礼拝堂は、その人々が集まる家にすぎません。</p>
+  <p>教会は、人が善意で作った集まりではありません。イエスが「<b>わたしの</b>教会」と呼んでご自身で建て、聖霊が来て息を吹き込まれました。</p>
+  <div class="verse">二人か三人がわたしの名によって集まるところには、わたしもその中にいる。<cite>マタイによる福音書 18:20</cite></div>
+  </div></details>
+  </section>
+
+  <section>
+  <small>教会 その二</small>
+  <h2>教会は何をするのでしょうか？</h2>
+  <figure class="art"><img src="assets/img/why/church.webp" alt="さまざまな人がひとつの食卓を囲んでパンを分け合う様子" loading="lazy"></figure>
+  <p class="cap">教会は建物ではなく人々、イエスのからだです</p>
+  <svg class="ill" viewBox="0 0 640 310" role="img" aria-label="教会は上へ神に、内へ互いに、外へ世界に向かう">
+    <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+    <circle cx="320" cy="180" r="62" fill="#fff4f0" stroke="#d6c8b2" stroke-width="2"/>
+    <g fill="#2b2620"><circle cx="300" cy="166" r="6"/><circle cx="322" cy="160" r="6"/><circle cx="344" cy="168" r="6"/><circle cx="292" cy="192" r="6"/><circle cx="318" cy="198" r="6"/><circle cx="346" cy="194" r="6"/></g>
+    <text class="t" x="320" y="228" text-anchor="middle" font-size="20" fill="#7a6f60">教会</text>
+    <path d="M320 112 V40" stroke="#c9584b" stroke-width="4" stroke-linecap="round" marker-end="url(#ah)"/>
+    <text class="t" x="338" y="62" font-size="27" fill="#b8473b">上へ · 神に</text>
+    <path d="M232 228 C250 262 300 270 300 240" fill="none" stroke="#a88a52" stroke-width="3.5" stroke-linecap="round" marker-end="url(#ah)"/>
+    <path d="M408 228 C390 262 340 270 340 240" fill="none" stroke="#a88a52" stroke-width="3.5" stroke-linecap="round" marker-end="url(#ah)"/>
+    <text class="t" x="320" y="300" text-anchor="middle" font-size="27" fill="#8a6a35">内へ · 互いに</text>
+    <path d="M386 160 H560" stroke="#5f8150" stroke-width="4" stroke-linecap="round" marker-end="url(#ah)"/>
+    <path d="M254 160 H80" stroke="#5f8150" stroke-width="4" stroke-linecap="round" marker-end="url(#ah)"/>
+    <text class="t" x="500" y="138" text-anchor="middle" font-size="27" fill="#4f6b3f">外へ · 世界に</text>
+  </svg>
+  <div class="roles">
+    <div><b>礼拝<i class="r-up">上へ</i></b>ともに神をあがめ、洗礼と聖餐で恵みを覚えます</div>
+    <div><b>祈り<i class="r-up">上へ</i></b>互いのため、世界のために神に願い求めます</div>
+    <div><b>みことば<i class="r-in">内へ</i></b>聖書をともに学び、イエスに似た者となっていきます</div>
+    <div><b>交わり<i class="r-in">内へ</i></b>家族のように食事をし、重荷を分かち合います</div>
+    <div><b>奉仕<i class="r-out">外へ</i></b>貧しい隣人、病む隣人を支えます</div>
+    <div><b>伝道<i class="r-out">外へ</i></b>受けた良い知らせを隣人に伝えます</div>
+  </div>
+  <details class="more"><summary><span class="o">最初の教会はこう生きました</span><span class="c">閉じる</span></summary><div>
+  <div class="verse">彼らは使徒たちの教えを受け、互いに交わり、ともにパンを裂き、祈ることに励んでいた。……信じた人々は皆ともに過ごし、すべてのものを分け合っていた。<cite>使徒言行録 2:42–44</cite></div>
+  <p>教会は<b>イエスのからだ</b>です（一コリント 12:27）。頭であるイエスのみこころに従い、その手足となって、この地でイエスの働きを続けていきます。洗礼はこの家族に加わる入口であり、聖餐はイエスの十字架をともに覚える食卓です。</p>
+  </div></details>
+  </section>
+
+  <section>
+  <small>教会 その三</small>
+  <h2>ひとりでしっかり信じていればいいのでは？</h2>
+  <figure class="art"><img src="assets/img/why/embers.webp" alt="ひとつに集まった炭火と、ひとり離れて冷めてしまった炭をもう一度火の中に戻す手" loading="lazy"></figure>
+  <p class="cap">火から離れた炭は、ひとりで冷えていきます</p>
+  <div class="ache">
+    <p class="h">その言葉に、イエスは心を痛められます</p>
+    <p><b>教会はイエスのからだです。</b>教会を迫害していたサウロに、イエスは「なぜ<b>教会</b>を迫害するのか」ではなく、「サウロ、サウロ、なぜ<b>わたしを</b>迫害するのか」と言われました（使徒 9:4）。教会が痛めば、イエスが痛まれるのです。</p>
+    <p><b>イエスは教会のためにいのちをささげられました</b>（エフェソ 5:25）。いのちを懸けて愛された家族を前に「わたしには必要ありません」と言うなら、そのお心はどれほど痛むでしょうか。</p>
+    <p><b>十字架の前の晩、イエスの祈り</b>はこうでした。「父よ、彼らが皆ひとつになりますように」（ヨハネ 17:21）。</p>
+  </div>
+  <p>からだから離れた指は、どれほど健康でも長くは生きられません。信仰も同じです。ひとりきりの信仰は冷めやすく、道に迷いやすいものです。神はわたしたちが<b>互いを通して</b>成長するように造られました。</p>
+  <div class="verse">互いに気を配り、愛と良い行いへと励まし合いましょう。ある人たちのように集まるのをやめず、互いに力づけ合いましょう。<cite>ヘブライ人への手紙 10:24–25</cite></div>
+  <details class="more"><summary><span class="o">教会で傷ついたことがあるなら</span><span class="c">閉じる</span></summary><div>
+  <p>もしそんなことがあったのなら、本当に申し訳なく思います。教会も人の集まりなので、過ちを犯し、ときには深い傷を負わせてしまいます。</p>
+  <p>けれども教会は、<b>完璧な人の展示場ではなく、癒やされていく人の病院</b>です。イエスは「健康な人に医者はいらない。いるのは病人である」（マルコ 2:17）と言われました。病んだ者どうしが集まって同じ医者に癒やしていただく場所、それが教会です。</p>
+  <p>傷つけた人のために、イエスからまで離れないでください。健やかな教会をもう一度探せばよいのです。その方法を下に書きました。</p>
+  <div class="verse">目が手に向かって「あなたはいらない」とは言えず、頭が足に向かって「あなたはいらない」とも言えません。<cite>コリントの信徒への手紙一 12:21</cite></div>
+  </div></details>
+  </section>
+
+  <section>
+  <small>教会 その四</small>
+  <h2>どんな教会に行けばよいのでしょうか？</h2>
+  <figure class="art"><img src="assets/img/why/visit.webp" alt="扉の開いた町の小さな教会と、そこへ歩いて行く人を迎える案内の人" loading="lazy"></figure>
+  <p class="cap">健やかな教会は近くにあり、その扉は開かれています</p>
+  <div class="ox">
+    <div class="ox-h"><div class="o"><svg class="mk" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="#5f8150" stroke-width="3"/></svg>健やかな教会</div><div class="x"><svg class="mk" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" stroke="#c9584b" stroke-width="3" stroke-linecap="round"/></svg>注意すべきところ</div></div>
+    <div class="ox-r"><div class="ox-k">何を伝えるか</div><div><b>十字架と恵み。</b>イエス・キリストが中心</div><div><b>行い・ご利益・秘密の解き明かし</b>が中心</div></div>
+    <div class="ox-r"><div class="ox-k">だれをあがめるか</div><div><b>イエス</b>をあがめる</div><div><b>牧師や教祖</b>をあがめ、その人を「助け主」と呼ぶ</div></div>
+    <div class="ox-r"><div class="ox-k">素性を明かすか</div><div><b>教会の名前と教団</b>を明かし、使徒信条をともに告白する</div><div><b>名前を隠して</b>アンケート・心理テスト・文化イベントで近づく</div></div>
+    <div class="ox-r"><div class="ox-k">人への接し方</div><div><b>自由に</b>行き来でき、家族を大切にする</div><div>家族に<b>隠すよう</b>言い、離れようとすると恐れを抱かせる</div></div>
+    <div class="ox-r"><div class="ox-k">お金</div><div>会計が<b>透明</b>で、献金は喜んでささげる</div><div>献金を<b>強要</b>し、会計を隠す</div></div>
+  </div>
+  <h3>はじめて行くには</h3>
+  <ol class="fv">
+    <li><b>家の近くの教会を二、三か所</b>探してみてください。名前と教団を確かめます。</li>
+    <li><b>日曜日（主日）の礼拝に、そのまま行ってみてください。</b>後ろの席に座ってもかまいません。だれでもはじめはぎこちないものです。</li>
+    <li><b>初めての方のための案内</b>を受けてみてください。気になることは何でも尋ねてかまいません。</li>
+    <li>何週か通いながら、<b>上の O・X</b>で確かめてみてください。</li>
+    <li><b>小さな集まり（小グループ）</b>に加わって、ともに歩んでください。そこで教会が家族になります。</li>
+  </ol>
+  <details class="more"><summary><span class="o">異端が心配なら</span><span class="c">閉じる</span></summary><div>
+  <p>道で「アンケートにご協力ください」「心理テストをしてみませんか」「良い聖書の勉強会があります」と近づいてきて、どの教会なのかをはっきり明かさないなら、気をつけてください。はじめから教会の名前と教団を明かさないところは、避けるのが賢明です。</p>
+  <p>迷ったときは、近くの教会の牧師や、所属教団の窓口に尋ねてみてください。健やかな教会は、こうした質問を喜んで受けとめます。</p>
+  </div></details>
+  </section>
+
+  <div class="card warm" style="text-align:center;margin-top:48px">
+    <p class="motto" style="margin:0">あなたを待っている家族がいます</p>
+    <p style="margin:6px 0 0;color:var(--muted)">イエスはあなたをひとりで歩かせはなさいません。今度の日曜日、近くの教会の扉をたたいてみてください。</p>
+  </div>
+
+  <div class="end">
+    <a href="/goodnews/">GoodNews 四つの場面を見る →</a>
+    <a class="ghost" href="app.html?j=jesus&amp;lang=ja">イエスの足跡を歩く</a>
+  </div>
+  <p class="foot">絵：AIで作り、人の手で整えました。聖書の言葉はこのアプリが新たに訳したものです。各宗教の紹介はその宗教の代表的な教えを短くまとめたものですので、より深くは、その宗教の経典と信者自身の説明に耳を傾けることをおすすめします。<br><a href="https://sssoft-idea.web.app/" target="_blank" rel="noopener">© SSSOFT</a></p>
+</main>
+</body>
+</html>

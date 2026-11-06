@@ -1558,7 +1558,9 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
       <img class="jicon" src="${j.id === 'jesus' ? 'assets/icon.svg' : `j/${j.id}/icon.svg`}" alt="" width="56" height="56">
       <div class="jtext"><b>${esc(t(j.title))}</b><small>${esc(t(j.desc))}</small>${here ? `<em>${esc(t('seriesNow'))}</em>` : j.n ? `<em>${esc(t('seriesScenes', { n: j.n }))}</em>` : ''}</div>
       <div class="jbtns">${go}${j.ready ? `<button type="button" class="jshare" data-share="${j.id}" aria-label="${esc(t('shareApp'))} — ${esc(t(j.title))}">${share}<span>${esc(t('shareShort'))}</span></button>` : ''}</div></li>`;
-  }).join('');
+  }).join('') + `<li data-journey="why" class="jcard ready"><img class="jicon" src="assets/why-icon.webp" alt="" width="56" height="56">
+      <div class="jtext"><b>${esc(t('whyH'))}</b><small>${esc(t('why'))}</small></div>
+      <div class="jbtns"><a class="jgo" href="${LANG === 'ko' ? 'why.html' : `why.${LANG}.html`}">${esc(t('whyGo'))} →</a></div></li>`; // 부록(왜 기독교인가)은 어느 여정에서 보든 맨 끝에 — 언어마다 why.<언어>.html
   $$('#seriesList .jshare').forEach(b => b.onclick = () => shareLink(shareOf(b.dataset.share)));
   // 첫 시작 화면: 장면 주소로 바로 들어온 때(#e05)와 연출 확인(?beat=)은 건너뛴다
   if (!hashOk && !quick && !new URLSearchParams(location.search).has('beat')) showIntro(fromLast > 0 ? fromLast : -1);

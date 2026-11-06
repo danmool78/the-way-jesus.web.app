@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f7f1e6">
+<meta name="description" content="Apéndice de El Camino · ¿Por qué el cristianismo? — Los demás caminos buscan que el ser humano suba hasta Dios; el cristianismo dice que Dios bajó hasta el lugar más bajo. Una comparación sencilla con esquemas e ilustraciones">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<title>¿Por qué el cristianismo? — El Camino</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* 부록은 손그림과 맞춰 밝은 종이 바탕. 앱 공용 색(var)을 이 페이지에서만 덮는다 */
+  :root{--bg:#f7f1e6;--ink:#2b2620;--muted:#7a6f60;--faint:#a39a8a;--gold:#d0685b;--gold2:#c0564a;--line:#e8dece;color-scheme:light}
+  /* 왜 기독교인가 — 묻고 답하기(qna.html)와 같은 결. 글보다 도표와 단순한 그림을 앞세운다(명화는 쓰지 않는다) */
+  body{overflow:auto;word-break:keep-all;background:radial-gradient(ellipse at 50% 0%,rgba(208,104,91,.08),transparent 50%),var(--bg)}
+  .why{max-width:760px;margin:0 auto;padding:28px 20px 64px}
+  .why-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .why-top a{color:var(--gold2);text-decoration:none;display:inline-flex;align-items:center;gap:8px;font-size:14px}
+  .why-top img{width:28px;height:28px}
+  .why-top .back{border:1px solid #dccfba;border-radius:999px;padding:7px 14px}
+  .why-top .back:hover{border-color:var(--gold)}
+  .why h1{font-family:var(--serif);font-size:36px;margin:34px 0 6px;color:#2b2620;text-align:center}
+  .why .sub{text-align:center;color:var(--gold2);font-family:var(--serif);font-size:17px;margin:0 0 18px}
+  .why .lead{color:var(--muted);line-height:1.9;margin:0 0 10px;text-align:center}
+  .why h2{font-family:var(--serif);font-size:24px;color:var(--gold2);margin:60px 0 14px;padding-top:12px;border-top:1px solid #e8dece;scroll-margin-top:16px}
+  .why h2 small{display:block;font-family:var(--sans);font-size:12px;color:var(--faint);letter-spacing:.08em;margin-bottom:4px}
+  .why h3{font-size:16px;color:#2b2620;margin:26px 0 8px}
+  .why p{color:#3d362d;line-height:1.9;font-size:15.5px;margin:0 0 12px}
+  .why b{color:var(--gold2)}
+  /* 말씀 — 새로 옮긴 글 */
+  .verse{margin:16px 0;padding:14px 18px;border-left:2px solid var(--gold);background:rgba(208,104,91,.06);border-radius:0 12px 12px 0;font-family:var(--serif);font-size:16.5px;line-height:1.85;color:#2b2620}
+  .verse cite{display:block;font-family:var(--sans);font-style:normal;font-size:12px;color:var(--muted);margin-top:4px}
+  .verse.big{border:0;background:none;text-align:center;font-size:19px;padding:8px 6px}
+  .card{border:1px solid #e8dece;border-radius:16px;background:#fffaf2;padding:16px 18px;margin:14px 0}
+  .card.warm{border-color:#d6c8b2;background:#fff6ef}
+  .card p:last-child{margin-bottom:0}
+  .why .motto{font-family:var(--serif);font-size:19px;line-height:1.7;color:#2b2620;text-align:center}
+  /* 그림 — 손으로 그린 단순한 SVG. 글씨는 폰에서도 읽히게 크게 */
+  .ill{display:block;width:100%;max-width:560px;height:auto;margin:16px auto 6px}
+  .ill text{font-family:'Noto Sans KR',sans-serif}
+  .ill .t{font-family:'Gowun Batang',serif;font-weight:700}
+  /* 일러스트 — 기쁜 소식 그림과 같은 화풍(paint.mjs) */
+  .art{margin:18px auto 8px;max-width:640px}
+  .art img{display:block;width:100%;border-radius:16px;background:#f7f1e6;border:1px solid #eadfcd;box-shadow:0 6px 18px rgba(90,60,30,.08)}
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:640px;margin:18px auto 8px}
+  .pair .art{margin:0}
+  .pair figcaption{text-align:center;font-family:var(--serif);font-weight:700;color:var(--gold2);font-size:15px;margin-top:8px}
+  .why .cap{text-align:center;font-family:var(--serif);color:var(--gold2);font-size:16.5px;margin:0 0 16px}
+  /* 모든 사람의 세 물음 */
+  .asks{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0 6px}
+  .asks div{border:1px solid #e8dece;border-radius:14px;padding:14px 10px;text-align:center;background:#fffaf2;font-size:14px;line-height:1.6;color:#3d362d}
+  .asks svg{width:30px;height:30px;display:block;margin:0 auto 8px}
+  /* 서로 다른 답 — 물음마다 종교별 칩 */
+  .claims{display:grid;gap:12px;margin:14px 0}
+  .claim{border:1px solid #e8dece;border-radius:16px;background:#fffaf2;padding:14px 16px}
+  .claim h4{margin:0 0 10px;font-family:var(--serif);font-size:16.5px;color:#2b2620}
+  .claim ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .claim li{display:flex;gap:8px;align-items:baseline;font-size:13.5px;line-height:1.55;color:#3d362d;background:rgba(60,40,20,.04);border-radius:10px;padding:7px 10px}
+  .claim li i{flex:none;font-style:normal;font-size:11.5px;font-weight:700;border-radius:999px;padding:1px 7px;color:#fffaf2}
+  .c-c{background:#d97a6c}.c-i{background:#8fb2b4}.c-b{background:#c9a3c9}.c-h{background:#e3a07a}.c-j{background:#a9b98a}
+  /* 하나는 틀린다 — 맞서는 두 주장 */
+  .vs{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch;margin:16px 0}
+  .vs div{border-radius:14px;padding:14px;text-align:center;font-size:14px;line-height:1.6;color:#3d362d;background:#fffaf2;border:1px solid #e8dece}
+  .vs div b{display:block;font-family:var(--serif);font-size:16px;color:#2b2620;margin-bottom:4px}
+  .vs span{align-self:center;font-family:var(--serif);font-size:30px;color:var(--gold)}
+  /* 스펙트럼 — 종교마다 막대 위 한 점. 누르면 풀이가 열린다 */
+  .spec-head{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin:18px 0 6px}
+  .spec details{border-bottom:1px solid #e8dece}
+  .spec summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:96px 1fr 16px;gap:12px;align-items:center;padding:12px 0}
+  .spec summary::-webkit-details-marker{display:none}
+  .spec summary b{font-family:var(--serif);font-size:15px;color:#2b2620;font-weight:700}
+  .spec .track{position:relative;height:8px;border-radius:4px;background:linear-gradient(90deg,#ece3d4,#b9ab95 60%,var(--gold))}
+  .spec .dot{position:absolute;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:#2b2620;border:3px solid #fffaf2;box-shadow:0 0 0 1px #b9ab95}
+  .spec .me .dot{background:var(--gold);box-shadow:0 0 0 1px var(--gold),0 0 14px rgba(208,104,91,.5)}
+  .spec .chev{width:8px;height:8px;border-right:2px solid var(--faint);border-bottom:2px solid var(--faint);transform:rotate(45deg);transition:transform .2s}
+  .spec details[open] .chev{transform:rotate(-135deg)}
+  .spec dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0 0 14px;padding:12px 14px;border-radius:12px;background:#fffaf2;font-size:14px;line-height:1.75}
+  .spec dt{color:var(--faint)}
+  .spec dd{margin:0;color:#3d362d}
+  .why .hint{font-size:12.5px;color:var(--faint);margin:8px 0 0;line-height:1.7}
+  /* 재판관 이야기 세 걸음 */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+  .steps div{border:1px solid #e8dece;border-radius:14px;padding:14px 12px;background:#fffaf2;font-size:14px;line-height:1.7;color:#3d362d}
+  .steps div:last-child{border-color:var(--gold)}
+  .steps i{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--gold);color:#ffffff;font-style:normal;font-weight:700;font-size:13px;margin-bottom:8px}
+  /* 죄의 값 — 네 가지 답 */
+  .price{display:grid;gap:8px;margin:14px 0}
+  .price div{display:grid;grid-template-columns:110px 1fr;gap:12px;align-items:center;border:1px solid #e8dece;border-radius:12px;padding:11px 14px;background:#fffaf2;font-size:14px;line-height:1.7;color:#3d362d}
+  .price div>b{font-family:var(--serif);color:#2b2620}
+  .price .me{border-color:var(--gold);background:rgba(208,104,91,.07)}
+  /* 때와 장소 */
+  .when{display:flex;gap:14px;align-items:center;border:1px solid #d6c8b2;border-radius:16px;padding:16px 18px;margin:16px 0;background:#fffaf2}
+  .when svg{flex:none;width:40px;height:40px}
+  .when b{display:block;font-family:var(--serif);font-size:18px;color:#2b2620}
+  .when span{font-size:13px;color:var(--muted)}
+  .when a{margin-left:auto;flex:none;font-size:13px;color:var(--gold2);text-decoration:none;border:1px solid #d6c8b2;border-radius:999px;padding:7px 12px}
+  /* 진짜(O)·가짜(X) 맞대기 — 머리와 칸이 같은 격자. 바탕색 대신 가는 선과 글씨 색으로 가른다 */
+  .ox{margin:18px 0;border:1px solid #e8dece;border-radius:18px;background:#fffdf9;overflow:hidden;box-shadow:0 4px 16px rgba(90,60,30,.05)}
+  .ox-h,.ox-r{display:grid;grid-template-columns:1fr 1fr}
+  .ox-h div{display:flex;align-items:center;gap:8px;padding:14px 16px 12px;font-family:var(--serif);font-weight:700;font-size:16px;border-bottom:3px solid}
+  .ox-h .o{color:#4f6b3f;border-color:#9dbb8c}.ox-h .x{color:#b8473b;border-color:#e9a79c}
+  .ox-r{border-top:1px solid #efe6d8}
+  .ox-h+.ox-r{border-top:0}
+  .ox-k{grid-column:1/-1;padding:9px 16px;margin-bottom:6px;font-family:var(--serif);font-weight:700;font-size:15px;color:#5a3f22;background:#efe2cc}
+  .ox-r>div:nth-child(n+2){position:relative;padding:6px 16px 14px 38px;font-size:14px;line-height:1.7}
+  .ox-r>div:nth-child(2){color:#3d362d}
+  .ox-r>div:nth-child(3){color:#7a6f60;border-left:1px solid #efe6d8}
+  .ox-r>div:nth-child(2)::before{content:'';position:absolute;left:15px;top:11px;width:10px;height:10px;border:2.5px solid #6f9160;border-radius:50%}
+  .ox-r>div:nth-child(3)::before{content:'✕';position:absolute;left:15px;top:6px;font-size:14px;font-weight:700;color:#d06a5d}
+  .ox-r>div:nth-child(2) b{color:#3f5a31}.ox-r>div:nth-child(3) b{color:#a8443a}
+  .mk{flex:none;width:20px;height:20px}
+  @media (min-width:640px){
+    .ox-h,.ox-r{grid-template-columns:160px 1fr 1fr}
+    .ox-h::before{content:'';align-self:stretch;background:#efe2cc;border-bottom:3px solid #dcc7a5}
+    .ox-k{grid-column:auto;margin:0;padding:14px 16px;align-self:stretch;display:flex;align-items:center;border-right:1px solid #e3d3b8}
+    .ox-r>div:nth-child(n+2){padding:14px 16px 14px 38px}
+    .ox-r>div:nth-child(2)::before{top:19px}.ox-r>div:nth-child(3)::before{top:14px}
+  }
+  /* 믿어야 아는 것들 */
+  .know{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
+  .know div{border:1px solid #e8dece;border-radius:16px;background:#fffaf2;padding:14px 12px;font-size:13.5px;line-height:1.6;color:#3d362d}
+  .know svg{width:34px;height:34px;display:block;margin-bottom:6px}
+  .know b{display:block;font-family:var(--serif);font-size:16px;color:#2b2620;margin-bottom:3px}
+  .flip{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin:16px 0;text-align:center}
+  .flip div{border-radius:16px;padding:14px 10px;font-family:var(--serif);font-size:17px;line-height:1.5}
+  .flip .a{background:#f0ebe2;color:#7a6f60}.flip .b{background:#fbe4df;color:#b8473b;font-weight:700}
+  .flip small{display:block;font-family:var(--sans);font-size:12px;color:var(--muted);font-weight:400;margin-top:2px}
+  .flip span{font-size:22px;color:var(--faint)}
+  @media (max-width:600px){.know{grid-template-columns:1fr 1fr}}
+  .end{text-align:center;margin-top:40px}
+  .end a{display:inline-block;padding:14px 28px;border-radius:999px;background:linear-gradient(180deg,#d97a6c,#c0564a);color:#ffffff;font-weight:700;text-decoration:none;margin:4px}
+  .end a.ghost{background:none;border:1px solid #d6c8b2;color:var(--gold2)}
+  .why .foot{text-align:center;margin-top:36px;font-size:12px;color:var(--faint);line-height:1.8}
+  .foot a{color:var(--faint)}
+  @media (max-width:600px){
+    .why h1{font-size:30px}.why h2{font-size:21px}
+    .asks{gap:8px}.asks div{padding:12px 6px;font-size:13px}
+    .claim ul{grid-template-columns:1fr}
+    .spec summary{grid-template-columns:78px 1fr 14px;gap:10px}
+    .spec summary b{font-size:14px}
+    .steps{grid-template-columns:1fr}
+    .price div{grid-template-columns:92px 1fr}
+    .vs div{padding:12px 8px;font-size:13px}
+    .when{flex-wrap:wrap}.when a{margin-left:54px}
+  }
+  /* 부록 표지와 '펼쳐 보기' — 처음엔 그림과 물음만, 풀이는 접어 둔다 */
+  .tag{display:block;width:max-content;margin:30px auto 0;font-size:12px;letter-spacing:.12em;color:var(--gold2);border:1px solid #d6c8b2;border-radius:999px;padding:4px 12px}
+  .why section{margin:64px 0 0;padding-top:14px;border-top:1px solid #e8dece}
+  .why section>small{display:block;font-size:12px;color:var(--faint);letter-spacing:.08em;text-align:center}
+  .why section>h2{border:0;margin:4px 0 4px;padding:0;text-align:center;font-size:23px}
+  .more{margin:6px 0 0}
+  .more>summary{list-style:none;cursor:pointer;width:max-content;margin:4px auto 0;display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--gold2);border:1px solid #d6c8b2;border-radius:999px;padding:8px 16px;background:rgba(208,104,91,.05);transition:background .2s,border-color .2s}
+  .more>summary::-webkit-details-marker{display:none}
+  .more>summary:hover{border-color:var(--gold);background:rgba(208,104,91,.1)}
+  .more>summary::after{content:'';width:7px;height:7px;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:translateY(-2px) rotate(45deg);transition:transform .2s}
+  .more[open]>summary::after{transform:translateY(2px) rotate(-135deg)}
+  .more[open]>summary .o{display:none}.more>summary .c{display:none}.more[open]>summary .c{display:inline}
+  .more>div{margin-top:14px;animation:open .35s ease}
+  @keyframes open{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+  .why h1{margin-top:12px}
+  /* 그다음 이야기 — 교회 */
+  .part{margin:84px 0 0;text-align:center}
+  .part span{display:inline-block;font-size:12px;letter-spacing:.14em;color:#fff;background:var(--gold);border-radius:999px;padding:5px 14px}
+  .part h2{border:0;margin:12px 0 6px;padding:0;font-size:24px;line-height:1.5}
+  .part p{color:var(--muted);text-align:center}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 6px;position:relative}
+  .tl::before{content:'';position:absolute;left:15px;top:10px;bottom:10px;width:2px;background:#e8dece}
+  .tl li{position:relative;padding:0 0 14px 40px}
+  .tl li::before{content:'';position:absolute;left:3px;top:5px;width:16px;height:16px;border-radius:50%;background:#fffaf2;border:3px solid #d6c8b2}
+  .tl li.on::before{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 5px rgba(208,104,91,.15)}
+  .tl b{display:block;font-family:var(--serif);font-size:16px;color:#2b2620}
+  .tl span{font-size:14px;color:#3d362d;line-height:1.7}
+  .tl a{font-size:12.5px;color:var(--gold2);text-decoration:none;margin-left:4px;white-space:nowrap}
+  .roles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
+  .roles div{border:1px solid #e8dece;border-radius:14px;padding:12px;background:#fffaf2;font-size:13px;line-height:1.6;color:#3d362d}
+  .roles b{display:block;font-family:var(--serif);font-size:15.5px;color:#2b2620;margin-bottom:2px}
+  .roles i{font-style:normal;font-size:11px;font-weight:700;border-radius:999px;padding:1px 7px;margin-left:4px;vertical-align:2px}
+  .r-up{background:#fbe9e5;color:#b8473b}.r-in{background:#f6efe2;color:#8a6a35}.r-out{background:#eef3e8;color:#4f6b3f}
+  .ache{border:1px solid #f0cfc8;border-radius:16px;background:#fff4f0;padding:16px 18px;margin:14px 0}
+  .ache p{margin:0 0 12px}.ache p:last-child{margin:0}
+  .ache .h{font-family:var(--serif);font-size:18px;color:#b8473b;text-align:center;margin-bottom:14px}
+  .fv{list-style:none;counter-reset:w;margin:14px 0;padding:0}
+  .fv li{counter-increment:w;position:relative;padding:11px 14px 11px 50px;margin:8px 0;border:1px solid #e8dece;border-radius:14px;background:#fffaf2;font-size:14.5px;line-height:1.65;color:#3d362d}
+  .fv li::before{content:counter(w);position:absolute;left:14px;top:11px;width:24px;height:24px;border-radius:50%;background:#5f8150;color:#fff;font-weight:700;font-size:13px;display:grid;place-items:center}
+  .fv b{color:#2b2620}
+  @media (max-width:600px){.roles{grid-template-columns:1fr 1fr}}
+  /* 교단이 결의한 대표 이단 — 이 앱의 판단이 아니라 교단 결의를 옮긴 것(출처를 늘 함께) */
+  .notice{border:1px solid #e3c9a0;background:#fff8e9;border-radius:14px;padding:13px 16px;margin:14px 0;font-size:13.5px;line-height:1.75;color:#5b4a2e}
+  .notice b{color:#7a5a1f}
+  .hg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+  .hg>div{border:1px solid #e8dece;border-radius:16px;background:#fffaf2;padding:14px 15px}
+  .hg h4{margin:0;font-family:var(--serif);font-size:17px;color:#2b2620}
+  .hg .aka{font-size:12.5px;color:var(--muted);margin:2px 0 8px;line-height:1.5}
+  .hg .res{display:flex;flex-wrap:wrap;gap:5px;margin:0 0 9px}
+  .hg .res span{font-size:11.5px;border-radius:999px;padding:2px 8px;background:#f6efe2;color:#6d5a3a;white-space:nowrap}
+  .hg q{display:block;font-size:13px;line-height:1.65;color:#3d362d;quotes:none;border-left:2px solid #e3b5ab;padding-left:9px}
+  .hg q small{display:block;color:var(--faint);font-size:11.5px;margin-top:2px}
+  .src{font-size:12.5px;line-height:1.8;color:var(--muted);margin:12px 0 0;padding-left:18px}
+  .src a{color:var(--gold2)}
+  @media (max-width:640px){.hg{grid-template-columns:1fr}}
+  /* 스페인어 종교 이름이 길어 이름 칸을 넓힌다 */
+  .spec summary{grid-template-columns:124px 1fr 16px}
+  @media (max-width:600px){.spec summary{grid-template-columns:106px 1fr 14px}.spec summary b{font-size:13.5px}}
+</style>
+</head>
+<body>
+<main class="why">
+  <nav class="why-top">
+    <a href="./?lang=es"><img src="assets/logo.svg" alt=""><b style="font-family:var(--serif);font-size:20px">El Camino</b></a>
+    <a class="back" href="qna.es.html">Preguntas y respuestas →</a>
+  </nav>
+
+  <span class="tag">El Camino · Apéndice</span>
+  <h1>¿Por qué el cristianismo?</h1>
+  <p class="sub">Religiones que suben, un Dios que bajó</p>
+  <div class="asks">
+    <div><svg viewBox="0 0 32 32" fill="none" stroke="#d0685b" stroke-width="1.8" stroke-linecap="round"><circle cx="16" cy="11" r="5"/><path d="M6 28c1.5-6 5.5-9 10-9s8.5 3 10 9"/></svg>¿Soy una buena<br>persona?</div>
+    <div><svg viewBox="0 0 32 32" fill="none" stroke="#d0685b" stroke-width="1.8" stroke-linecap="round"><path d="M16 4c5 6 8 10.5 8 15a8 8 0 0 1-16 0c0-4.5 3-9 8-15z"/></svg>¿Cómo se lavan<br>mis faltas?</div>
+    <div><svg viewBox="0 0 32 32" fill="none" stroke="#d0685b" stroke-width="1.8" stroke-linecap="round"><path d="M4 24h24"/><path d="M9 24a7 7 0 0 1 14 0"/><path d="M16 9v3M7 13l2 2M25 13l-2 2"/></svg>¿Qué hay después<br>de la muerte?</div>
+  </div>
+  <p class="lead">Son preguntas que todos llevamos dentro. Comparamos con honestidad, y con la misma vara, lo que responden las religiones.</p>
+
+  <section>
+  <small>UNO</small>
+  <h2>¿Dicen lo mismo todas las religiones?</h2>
+  <figure class="art"><img src="assets/img/why/crossroads.webp" alt="Un camino que se divide en dos y viejos letreros que señalan en direcciones opuestas" loading="lazy"></figure>
+  <p class="cap">Las dos pueden estar equivocadas, pero no pueden tener razón las dos</p>
+  <div class="vs">
+    <div><b>Cristianismo</b>Jesús murió en la cruz y resucitó al tercer día</div>
+    <span>≠</span>
+    <div><b>Islam</b>Jesús no murió en la cruz<br>(Corán 4:157)</div>
+  </div>
+  <details class="more"><summary><span class="o">Comparar con cuatro preguntas</span><span class="c">Cerrar</span></summary><div>
+  <div class="claims">
+    <div class="claim"><h4>¿Cómo es Dios?</h4><ul>
+      <li><i class="c-c">Cristianismo</i>Un solo Dios personal (Padre, Hijo y Espíritu Santo)</li>
+      <li><i class="c-i">Islam</i>Un solo Dios personal, pero no trino</li>
+      <li><i class="c-h">Hinduismo</i>Muchos dioses y, detrás de ellos, la realidad última, Brahman</li>
+      <li><i class="c-b">Budismo</i>No afirma un Creador que haya hecho el mundo</li></ul></div>
+    <div class="claim"><h4>¿Quién es Jesús?</h4><ul>
+      <li><i class="c-c">Cristianismo</i>Dios hecho hombre</li>
+      <li><i class="c-i">Islam</i>Un gran profeta, pero no Dios</li>
+      <li><i class="c-j">Judaísmo</i>No es el Mesías esperado</li>
+      <li><i class="c-h">Hinduismo</i>Uno entre muchos maestros o encarnaciones</li></ul></div>
+    <div class="claim"><h4>¿Y después de la muerte?</h4><ul>
+      <li><i class="c-c">Cristianismo</i>Se muere una sola vez; luego, resurrección y juicio</li>
+      <li><i class="c-i">Islam</i>Se muere una sola vez; luego, resurrección y juicio</li>
+      <li><i class="c-h">Hinduismo</i>Renacer según el karma (reencarnación)</li>
+      <li><i class="c-b">Budismo</i>Ciclo de renacimientos que termina al alcanzar el nirvana</li></ul></div>
+    <div class="claim"><h4>¿Qué es el «yo»?</h4><ul>
+      <li><i class="c-c">Cristianismo</i>Una persona creada por Dios, que permanece para siempre</li>
+      <li><i class="c-h">Hinduismo</i>El verdadero yo (atman) es Brahman</li>
+      <li><i class="c-b">Budismo</i>No hay un yo que no cambie (anatman)</li>
+      <li><i class="c-i">Islam</i>Una criatura de Dios, que volverá a vivir en la resurrección</li></ul></div>
+  </div>
+  <p>En las preguntas más importantes, las religiones responden de forma distinta, a veces opuesta. Por eso, decir que «todas las religiones tienen razón» parece generoso, pero en realidad equivale a decirle a cada una: <b>«Eso que usted considera más importante está equivocado»</b>. Si de verdad nos respetamos, hay que empezar por reconocer con honestidad que lo distinto es distinto.</p>
+  </div></details>
+  </section>
+
+  <section>
+  <small>DOS</small>
+  <h2>¿Cómo intenta el ser humano llegar a Dios?</h2>
+  <div class="pair">
+    <figure class="art"><img src="assets/img/why/scale.webp" alt="Una persona que pone ofrendas en una gran balanza y la mira con inquietud" loading="lazy"><figcaption>① Negociar con Dios</figcaption></figure>
+    <figure class="art"><img src="assets/img/why/ladder.webp" alt="Una persona que sube sola una escalera interminable entre las nubes" loading="lazy"><figcaption>② Subir por uno mismo</figcaption></figure>
+  </div>
+  <p class="cap">Los métodos cambian, pero la dirección es la misma: hacia arriba</p>
+  <details class="more"><summary><span class="o">Los dos caminos en detalle · por religión</span><span class="c">Cerrar</span></summary><div>
+  <div class="card">
+    <p><b>① Negociar con Dios.</b> «Si rezo tanto, ayuno, doy ofrendas y me porto bien, Dios me lo pagará». Pero nunca se llega a saber cuánto es suficiente ni hacia qué lado se inclinará la balanza.</p>
+    <p><b>② Subir por uno mismo.</b> Es el camino de la ascesis, de pulirse una y otra vez hasta despertar y liberarse. Al final, es el ser humano tratando de alcanzar un lugar alto.</p>
+  </div>
+  <div class="spec-head"><span>← Lo hace el ser humano</span><span>Lo hace Dios →</span></div>
+  <div class="spec">
+    <details><summary><b>Budismo</b><span class="track"><span class="dot" style="left:6%"></span></span><span class="chev"></span></summary>
+      <dl><dt>Problema</dt><dd>El sufrimiento que nace del apego y la ignorancia; el ciclo sin fin de renacimientos</dd><dt>Meta</dt><dd>El nirvana, el fin del sufrimiento y de los renacimientos</dd><dt>Qué hacer</dt><dd>El noble óctuple sendero, los preceptos, la meditación. Al final, Buda dijo: «Sean ustedes mismos su propia lámpara»</dd></dl></details>
+    <details><summary><b>Confucianismo</b><span class="track"><span class="dot" style="left:10%"></span></span><span class="chev"></span></summary>
+      <dl><dt>Problema</dt><dd>Falta de virtud; un corazón que no es recto</dd><dt>Meta</dt><dd>Llegar a ser una persona noble, un sabio. Más que salvación, se trata de ser plenamente humano</dd><dt>Qué hacer</dt><dd>Cultivar el cuerpo y la mente, guardar los ritos y las formas, aprender</dd></dl></details>
+    <details><summary><b>Hinduismo</b><span class="track"><span class="dot" style="left:30%"></span></span><span class="chev"></span></summary>
+      <dl><dt>Problema</dt><dd>Una vida que se repite, atada al karma</dd><dt>Meta</dt><dd>La liberación (moksha)</dd><dt>Qué hacer</dt><dd>El camino de las obras (sacrificios y deberes), el del conocimiento, la ascesis y el de la devoción. En el camino de la devoción también se habla de la gracia de los dioses</dd></dl></details>
+    <details><summary><b>Islam</b><span class="track"><span class="dot" style="left:42%"></span></span><span class="chev"></span></summary>
+      <dl><dt>Problema</dt><dd>Olvidar a Dios y no someterse a él</dd><dt>Meta</dt><dd>Pasar el juicio y entrar en el paraíso</dd><dt>Qué hacer</dt><dd>La confesión de fe, la oración cinco veces al día, la limosna, el ayuno y la peregrinación (los cinco pilares). Enseña que el día del juicio las obras se pesarán en una balanza (Corán 7:8–9)</dd></dl></details>
+    <details><summary><b>Judaísmo</b><span class="track"><span class="dot" style="left:52%"></span></span><span class="chev"></span></summary>
+      <dl><dt>Problema</dt><dd>No seguir la voluntad de Dios</dd><dt>Meta</dt><dd>Permanecer en la alianza con Dios</dd><dt>Qué hacer</dt><dd>Guardar la Ley y, cuando se quebranta, volverse a Dios (teshuvá)</dd></dl></details>
+    <details><summary><b>Tierra Pura</b><span class="track"><span class="dot" style="left:80%"></span></span><span class="chev"></span></summary>
+      <dl><dt>Problema</dt><dd>En esta era de decadencia, nadie puede alcanzar la iluminación con sus propias fuerzas</dd><dt>Meta</dt><dd>Renacer en la Tierra Pura del Buda Amida</dd><dt>Qué hacer</dt><dd>Invocar el nombre del Buda Amida y confiar en su voto (fe en un poder ajeno). Es una escuela del budismo</dd></dl></details>
+    <details class="me" open><summary><b>Cristianismo</b><span class="track"><span class="dot" style="left:100%;margin-left:-16px"></span></span><span class="chev"></span></summary>
+      <dl><dt>Problema</dt><dd>El pecado; la separación de Dios</dd><dt>Meta</dt><dd>Volver a estar unidos a Dios; la vida eterna</dd><dt>Qué hacer</dt><dd><b>La salvación la hace Dios al 100%.</b> El ser humano no tiene nada que añadir; solo recibe por la fe lo que Dios ya hizo. Y esa fe tampoco es un mérito: son manos vacías que reciben un regalo</dd></dl></details>
+  </div>
+  <p class="hint">La posición de cada punto es aproximada y se basa en las enseñanzas más representativas de cada religión.</p>
+
+  </div></details>
+  </section>
+
+  <section>
+  <small>TRES</small>
+  <h2>Pero hay una historia al revés</h2>
+  <figure class="art"><img src="assets/img/why/mountain.webp" alt="Mientras mucha gente sube la montaña, una luz dorada baja desde la cumbre hasta una persona en el valle" loading="lazy"></figure>
+  <svg class="ill" viewBox="0 0 640 330" role="img" aria-label="Dibujo que baja peldaño a peldaño desde el lugar de Dios: hacerse hombre, el establo, el siervo, la cruz">
+    <defs><radialGradient id="g2" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fbd9d2"/><stop offset=".4" stop-color="#d97a6c" stop-opacity=".6"/><stop offset="1" stop-color="#d97a6c" stop-opacity="0"/></radialGradient></defs>
+    <path d="M10 70 H130 V120 H250 V170 H370 V220 H490 V270 H630 V310 H10 Z" fill="#fffaf2" stroke="#d6c8b2" stroke-width="1.5"/>
+    <g fill="#d0685b" opacity=".9"><rect x="10" y="66" width="120" height="5" rx="2"/><rect x="130" y="116" width="120" height="5" rx="2"/><rect x="250" y="166" width="120" height="5" rx="2"/><rect x="370" y="216" width="120" height="5" rx="2"/><rect x="490" y="266" width="140" height="5" rx="2"/></g>
+    <circle cx="70" cy="40" r="34" fill="url(#g2)"/>
+    <g font-size="15" fill="#2b2620" text-anchor="middle" font-weight="700">
+      <text x="70" y="100">Junto a Dios</text><text x="190" y="150">Se hizo hombre</text><text x="310" y="200">El establo</text><text x="430" y="250">Como siervo</text><text x="560" y="300">La cruz</text>
+    </g>
+    <path d="M96 52 C150 60 170 90 186 106 M210 112 C260 116 290 140 306 156 M330 162 C380 166 410 190 426 206 M450 212 C500 216 530 240 546 252" fill="none" stroke="#d97a6c" stroke-width="2.5" stroke-dasharray="2 7" stroke-linecap="round"/>
+    <circle cx="560" cy="226" r="26" fill="url(#g2)" opacity=".6"/>
+    <path d="M560 206 V262 M544 222 H576" stroke="#c0564a" stroke-width="6" stroke-linecap="round"/>
+  </svg>
+  <p class="cap">Desde el lugar del cielo hasta el lugar más bajo</p>
+  <details class="more"><summary><span class="o">Qué significa que Dios bajó</span><span class="c">Cerrar</span></summary><div>
+  <p>No es el ser humano quien sube: <b>es Dios quien bajó.</b> No a un palacio, sino a un establo; no como amo, sino como siervo; no a un trono de gloria, sino a la cruz donde colgaban a los criminales.</p>
+  <div class="verse">Él tenía la forma de Dios, pero no quiso aferrarse a ser igual a Dios. Al contrario, se vació de sí mismo, tomó la forma de siervo y se hizo hombre. Se rebajó a sí mismo y obedeció hasta la muerte, y una muerte de cruz.<cite>Filipenses 2:6–8</cite></div>
+  <div class="card"><p>Otras religiones también tienen relatos de dioses que bajan a la tierra, como los avatares del hinduismo. Pero esos dioses llegan como príncipes o héroes para vencer al mal. <b>Un Dios que viene al lugar más bajo para morir en lugar de los culpables</b> solo existe en el cristianismo.</p></div>
+  </div></details>
+  <figure class="art"><img src="assets/img/why/father.webp" alt="Un padre que corre con los brazos abiertos hacia el hijo que vuelve" loading="lazy"></figure>
+  <p class="cap">«Aunque sea como jornalero…» y antes de que termine de hablar</p>
+  <details class="more"><summary><span class="o">La historia que contó Jesús</span><span class="c">Cerrar</span></summary><div>
+  <p>El hijo que despilfarró su herencia ensaya por el camino lo que va a decir: <b>«Tómame aunque sea como uno de tus jornaleros»</b>. Trabajar para pagar: es el camino que sube. Pero el padre, antes de oírlo, lo reconoce de lejos, <b>corre a su encuentro</b> y lo abraza.</p>
+  <div class="verse">Todavía estaba lejos cuando su padre lo vio; se le conmovieron las entrañas, corrió hacia él, se le echó al cuello y lo besó.<cite>Lucas 15:20</cite></div>
+  </div></details>
+  </section>
+
+  <section>
+  <small>CUATRO</small>
+  <h2>¿No podría Dios simplemente perdonar?</h2>
+  <figure class="art"><img src="assets/img/why/bridge.webp" alt="Una cruz tendida como un puente sobre un barranco profundo" loading="lazy"></figure>
+  <p class="cap">El abismo que nadie puede cruzar, Dios lo unió con la cruz</p>
+  <details class="more"><summary><span class="o">La historia del juez · adónde va el precio del pecado</span><span class="c">Cerrar</span></summary><div>
+  <p>Si alguien hiciera daño a su familia y el juez lo dejara libre diciendo «no pasa nada», sería difícil llamar a eso amor. <b>Si se tapa sin más, la justicia se derrumba; si se castiga sin más, el amor no tiene lugar.</b></p>
+  <div class="steps">
+    <div><i>1</i>Ante un juez se presenta un acusado. Es el propio hijo del juez.</div>
+    <div><i>2</i>El juez, conforme a la ley, dicta una multa. Es una suma enorme que el hijo no puede pagar.</div>
+    <div><i>3</i>Terminada la sentencia, el juez se quita la toga, baja del estrado y paga la multa con su propio dinero.</div>
+  </div>
+  <p>La ley se cumplió y el hijo quedó libre. <b>La justicia y el amor se cumplieron a la vez.</b> El cristianismo dice que eso es precisamente la cruz.</p>
+  <div class="verse">Dios nos muestra su amor en esto: cuando todavía éramos pecadores, Cristo murió por nosotros.<cite>Romanos 5:8</cite></div>
+  <h3>¿Adónde va el precio de las faltas perdonadas?</h3>
+  <div class="price">
+    <div><b>Hinduismo y budismo</b><span>El karma <b>lo paga uno mismo</b>, y para eso pasa por muchas vidas.</span></div>
+    <div><b>Budismo de la Tierra Pura</b><span>Por el voto del Buda Amida se renace en la Tierra Pura. El karma que queda se termina de resolver allí, con la práctica.</span></div>
+    <div><b>Islam</b><span>Si Alá quiere, <b>perdona</b>. Pero nadie paga ese precio en lugar de otro.</span></div>
+    <div class="me"><b>Cristianismo</b><span><b>Dios mismo paga el precio</b>. Como el juez que se quita la toga y baja, Dios se hizo hombre y vino.</span></div>
+  </div>
+
+  <h3>No es un cuento: sucedió</h3>
+  <p>El cristianismo no presenta esto como un mito o una parábola. Es un hecho con fecha y lugar, que se puede examinar como historia, y el cristianismo lo apuesta todo a ese hecho.</p>
+  <div class="when">
+    <svg viewBox="0 0 40 40" fill="none" stroke="#d0685b" stroke-width="2"><path d="M20 37s-11-11.5-11-20a11 11 0 0 1 22 0c0 8.5-11 20-11 20z"/><circle cx="20" cy="17" r="4"/></svg>
+    <div><b>Hacia el año 30 d. C. · fuera de las murallas de Jerusalén</b><span>Bajo el gobernador romano Poncio Pilato</span></div>
+    <a href="app.html?j=jesus&amp;lang=es#e55">Ver en el mapa →</a>
+  </div>
+  <div class="verse">Si Cristo no resucitó, la fe de ustedes no sirve de nada y todavía están en sus pecados.<cite>1 Corintios 15:17</cite></div>
+  </div></details>
+  </section>
+
+  <section>
+  <small>CINCO</small>
+  <h2>¿Es excluyente el cristianismo?</h2>
+  <figure class="art"><img src="assets/img/why/doors.webp" alt="Una puerta estrecha y cerrada al final de una escalera empinada, y una puerta abierta de par en par por la que entran muchas personas juntas" loading="lazy"></figure>
+  <p class="cap">Un solo camino, pero la puerta más ancha</p>
+  <details class="more"><summary><span class="o">Por qué es la puerta más ancha</span><span class="c">Cerrar</span></summary><div>
+  <p>Primero, lo reconocemos con honestidad: si el cristianismo le ha parecido excluyente, en parte ha sido por <b>las palabras y actitudes frías de los cristianos</b>. Eso no reflejaba a Jesús. Lo sentimos.</p>
+  <p>Jesús dijo: «Yo soy el camino, la verdad y la vida» (Juan 14:6). Que haya un solo camino suena estrecho. Pero cambia cuando uno mira <b>la condición para entrar</b>. En la puerta de las buenas obras o de la ascesis van delante quienes tienen fuerzas y tiempo. La puerta de la gracia no pide ningún requisito. El delincuente, el que llega tarde y el que está a punto de morir entran por la misma puerta. Así entró el ladrón crucificado junto a Jesús (Lucas 23:43).</p>
+  </div></details>
+  <svg class="ill" viewBox="0 0 640 340" role="img" aria-label="Flechas que salen de Jesús, en el centro, hacia personas que estaban fuera de los límites de su época">
+    <defs>
+      <radialGradient id="g4" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fbd9d2"/><stop offset=".5" stop-color="#d97a6c" stop-opacity=".5"/><stop offset="1" stop-color="#d97a6c" stop-opacity="0"/></radialGradient>
+      <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#d97a6c"/></marker>
+    </defs>
+    <ellipse cx="320" cy="165" rx="150" ry="95" fill="none" stroke="#8a7f70" stroke-width="2" stroke-dasharray="7 7"/>
+    <text x="470" y="292" text-anchor="middle" font-size="15" fill="#a39a8a">La línea que trazó su época</text>
+    <circle cx="320" cy="165" r="44" fill="url(#g4)"/>
+    <text class="t" x="320" y="173" text-anchor="middle" font-size="22" fill="#2b2620">Jesús</text>
+    <g stroke="#d97a6c" stroke-width="2.5" fill="none" marker-end="url(#ar)">
+      <path d="M290 140 L124 62"/><path d="M350 140 L516 62"/><path d="M362 175 L544 204"/><path d="M278 175 L96 204"/><path d="M320 210 L320 286"/>
+    </g>
+    <g fill="#2b2620"><circle cx="110" cy="55" r="8"/><circle cx="530" cy="55" r="8"/><circle cx="558" cy="207" r="8"/><circle cx="82" cy="207" r="8"/><circle cx="320" cy="298" r="8"/></g>
+    <g font-size="17" fill="#2b2620" font-weight="700">
+      <text x="120" y="34" text-anchor="middle">La samaritana</text><text x="520" y="34" text-anchor="middle">El centurión romano</text>
+      <text x="558" y="240" text-anchor="middle">La cananea</text><text x="90" y="240" text-anchor="middle">Mateo, publicano</text>
+      <text x="320" y="332" text-anchor="middle">El ladrón en la cruz</text>
+    </g>
+  </svg>
+  <p class="cap">El que cruzó la línea y fue primero a buscarlos</p>
+  <details class="more"><summary><span class="o">¿Quiénes eran?</span><span class="c">Cerrar</span></summary><div>
+  <p>Gente de otro pueblo y de otra fe, un oficial del ejército de ocupación, un recaudador de impuestos señalado como traidor a su pueblo, un condenado a muerte. Jesús cruzó las líneas que la gente de su tiempo había trazado y <b>fue primero a buscarlos.</b></p>
+  <div class="verse">Ya no hay judío ni griego, esclavo ni libre, hombre ni mujer: todos ustedes son uno en Cristo Jesús.<cite>Gálatas 3:28</cite></div>
+  </div></details>
+  <figure class="art"><img src="assets/img/why/exit.webp" alt="Una persona que abre una salida luminosa entre el humo y llama a los demás" loading="lazy"></figure>
+  <p class="cap">Si solo hay una salida, avisar es un acto de amor</p>
+  <details class="more"><summary><span class="o">Por qué lo anunciamos</span><span class="c">Cerrar</span></summary><div>
+  <p>Si alguien que conoce la salida de emergencia grita «¡Por aquí!», no lo llamamos arrogante. Cuando un cristiano habla de Jesús, también debe hacerlo <b>no con ganas de ganar una discusión, sino con ganas de que vivamos juntos</b>.</p>
+  </div></details>
+  <figure class="art"><img src="assets/img/why/knock.webp" alt="Jesús llamando a una puerta cerrada a la luz del atardecer" loading="lazy"></figure>
+  <p class="cap">La puerta se abre desde dentro</p>
+  <details class="more"><summary><span class="o">Un amor que no fuerza la puerta</span><span class="c">Cerrar</span></summary><div>
+  <p>Jesús no derriba la puerta para entrar. Llama desde fuera y espera, porque obligar a abrir no es amor. Por eso los cristianos también deben tratar a sus vecinos de otras creencias <b>con mansedumbre y respeto</b> (1 Pedro 3:15–16).</p>
+  <div class="verse">Mira, estoy a la puerta y llamo. Si alguien oye mi voz y abre la puerta, entraré a su casa y comeremos juntos.<cite>Apocalipsis 3:20</cite></div>
+  </div></details>
+  </section>
+
+  <section>
+  <small>SEIS</small>
+  <h2>¿Cómo reconocer lo auténtico?</h2>
+  <figure class="art"><img src="assets/img/why/pearl.webp" alt="Una perla que brilla suavemente dentro de una concha abierta junto al agua" loading="lazy"></figure>
+  <p class="cap">La perla auténtica es una joya nacida de una herida</p>
+  <div class="ox">
+    <div class="ox-h"><div class="o"><svg class="mk" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="#5f8150" stroke-width="3"/></svg>Auténtico</div><div class="x"><svg class="mk" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" stroke="#c9584b" stroke-width="3" stroke-linecap="round"/></svg>Falso</div></div>
+    <div class="ox-r"><div class="ox-k">¿Quién salva?</div><div><b>Dios, al 100%.</b> Por gracia, gratuitamente</div><div><b>El ser humano debe ganarse</b> el derecho: obras, normas, entrega</div></div>
+    <div class="ox-r"><div class="ox-k">¿Quién es Jesús?</div><div><b>Dios hecho hombre</b>, el único Salvador</div><div><b>Jesús no es Dios</b> (niega su divinidad). O bien <b>pone a otra persona en su lugar</b>: el Señor que volvió, el Consolador, el vencedor</div></div>
+    <div class="ox-r"><div class="ox-k">¿Qué se añade?</div><div><b>Nada que añadir.</b> Solo se recibe por la fe</div><div><b>Siempre añade algo:</b> un día especial, una cifra, nuestro grupo</div></div>
+    <div class="ox-r"><div class="ox-k">¿En qué se basa?</div><div><b>Toda la Biblia</b> y hechos de la historia</div><div>Una nueva revelación <b>que solo recibió una persona</b>, interpretaciones secretas</div></div>
+    <div class="ox-r"><div class="ox-k">¿Qué frutos da?</div><div><b>Libertad y amor.</b> Da vida a la familia y a los vecinos</div><div><b>Miedo y secreto.</b> Hace romper con la familia</div></div>
+  </div>
+  <details class="more"><summary><span class="o">¿Por qué aparecen las imitaciones?</span><span class="c">Cerrar</span></summary><div>
+  <p>Junto a lo valioso siempre aparecen imitaciones. Nadie imita una piedra cualquiera. Las enseñanzas que toman prestado el nombre del cristianismo casi siempre dicen que <b>«la gracia sola no basta»</b> y añaden algo, devolviéndonos al «camino que sube».</p>
+  <p>Una perla auténtica, al rozarla con los dientes, se siente áspera. El verdadero evangelio también resulta áspero al principio, porque empieza diciendo: «Usted no puede salvarse a sí mismo». Pero dentro de él hay <b>un amor que se dejó herir en nuestro lugar</b>.</p>
+  </div></details>
+  </section>
+
+  <section>
+  <small>EN RESUMEN</small>
+  <h2>Dicho en una frase</h2>
+  <svg class="ill" viewBox="0 0 640 210" role="img" aria-label="Varias flechas que apuntan hacia arriba y una sola flecha dorada que baja">
+    <g stroke="#8a7f70" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <path d="M70 170 V60 M56 76 L70 60 L84 76"/><path d="M130 170 V80 M116 96 L130 80 L144 96"/><path d="M190 170 V50 M176 66 L190 50 L204 66"/><path d="M250 170 V70 M236 86 L250 70 L264 86"/>
+    </g>
+    <circle cx="460" cy="30" r="30" fill="url(#g2)"/>
+    <path d="M460 30 V150 M438 128 L460 150 L482 128" stroke="#d97a6c" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <circle cx="460" cy="170" r="10" fill="#2b2620"/>
+    <text x="160" y="204" text-anchor="middle" font-size="20" fill="#7a6f60">El ser humano sube</text>
+    <text class="t" x="460" y="204" text-anchor="middle" font-size="22" fill="#c0564a">Dios bajó</text>
+  </svg>
+  <div class="card warm">
+    <p class="motto" style="margin:4px 0 12px"><span style="font-size:14px;color:var(--muted);font-family:var(--sans)">Los demás caminos dicen</span><br>«Haga esto y podrá llegar a Dios».</p>
+    <p class="motto" style="margin:0 0 4px;color:var(--gold2)"><span style="font-size:14px;color:var(--muted);font-family:var(--sans)">El cristianismo dice</span><br>«Dios ya vino a usted».</p>
+  </div>
+  <div class="verse big">Dios amó tanto al mundo que dio a su Hijo único, para que todo el que crea en él no se pierda, sino que tenga vida eterna.<cite>Juan 3:16</cite></div>
+  <p style="text-align:center">No vamos a presionarle para que crea. Recorra despacio el camino que él anduvo. Habrá tiempo de sobra para decidir después.</p>
+
+  <h3 style="text-align:center;margin-top:40px">Cosas que solo se conocen creyendo</h3>
+  <p>«Primero quiero saber, y después creeré» suena razonable. Pero en la vida real muchas cosas funcionan al revés: <b>son cosas que solo se llegan a conocer cuando uno confía y da un paso</b>.</p>
+  <div class="flip">
+    <div class="a">Saber → creer<small>el camino que solo pasa por la cabeza</small></div>
+    <span>⇄</span>
+    <div class="b">Creer → saber<small>el camino que se aprende andando</small></div>
+  </div>
+  <div class="know">
+    <div><svg viewBox="0 0 34 34" fill="none" stroke="#2b2620" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="17" cy="11" r="3.5"/><path d="M8 17c3-3 6-3 9 0s6 3 9 0" stroke="#5f8150"/><path d="M4 23c3-2 6-2 9 0s6 2 9 0 6-2 9 0M4 28c3-2 6-2 9 0s6 2 9 0 6-2 9 0" stroke="#8fb2b4"/></svg><b>Nadar</b>Solo cuando confía en que el agua lo sostiene y se relaja, descubre que flota. Si forcejea, se hunde.</div>
+    <div><svg viewBox="0 0 34 34" fill="none" stroke="#2b2620" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="23" r="6"/><circle cx="25" cy="23" r="6"/><path d="M9 23l6-10h8l2 10M15 13l-2-4h-3M23 13l-1-4h3" /><path d="M15 23l8-10" stroke="#d0685b"/></svg><b>Bicicleta</b>Solo al pedalear, confiando en que en marcha no se cae, lo comprueba. Si se detiene, se cae.</div>
+    <div><svg viewBox="0 0 34 34" fill="none" stroke="#2b2620" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19l26-9-6 15-6-6-5 6v-8z"/><path d="M18 19l12-9" stroke="#d0685b"/></svg><b>Avión</b>Pocos suben sabiendo cómo funciona. Hay que subir para conocer el cielo.</div>
+    <div><svg viewBox="0 0 34 34" fill="none" stroke="#2b2620" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="19" r="7"/><circle cx="21" cy="19" r="7" stroke="#d0685b"/><path d="M15 8l2-3 2 3"/></svg><b>Matrimonio</b>Nadie se casa sabiéndolo todo. Se confía, se vive juntos y se va conociendo.</div>
+    <div><svg viewBox="0 0 34 34" fill="none" stroke="#2b2620" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="12" width="22" height="10" rx="5" transform="rotate(-30 17 17)"/><path d="M14 11.5l6 10.4" stroke="#d0685b"/></svg><b>Medicina</b>Hay que confiar en el médico y tomarla para saber que cura. Leer el prospecto no cura.</div>
+    <div><svg viewBox="0 0 34 34" fill="none" stroke="#2b2620" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18h24a12 12 0 0 1-24 0z"/><path d="M12 12c0-3 3-3 3-6M18 12c0-3 3-3 3-6" stroke="#d0685b"/></svg><b>Comida</b>El sabor no se conoce por una explicación. Hay que probarla.</div>
+    <div><svg viewBox="0 0 34 34" fill="none" stroke="#2b2620" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 5h8M14 5v9l-7 13a2 2 0 0 0 2 3h16a2 2 0 0 0 2-3l-7-13V5"/><path d="M9 23h16" stroke="#5f8150"/></svg><b>Ciencia</b>También el científico empieza el experimento confiando en que su hipótesis es correcta. El resultado lo sabe después.</div>
+    <div><svg viewBox="0 0 34 34" fill="none" stroke="#2b2620" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="10" r="4"/><path d="M6 29c0-7 3-12 7-12s7 3 8 6"/><circle cx="22" cy="21" r="3" stroke="#d0685b"/><path d="M19 27c1-2 5-2 6 0" stroke="#d0685b"/></svg><b>Bebé</b>El bebé no se deja abrazar porque conozca bien a su madre. En sus brazos la llega a conocer.</div>
+  </div>
+  <details class="more"><summary><span class="o">No es creer con los ojos cerrados</span><span class="c">Cerrar</span></summary><div>
+  <p>Quien aprende a nadar no se lanza al agua en cualquier sitio. Se confía porque tiene un instructor al lado y ha visto flotar a otros. <b>Es una confianza con buenas razones.</b></p>
+  <p>La fe cristiana es así. Sus razones son un hecho histórico con fecha y lugar, personas que dieron testimonio arriesgando la vida, y las comparaciones que hemos hecho antes. Sobre esa base se da un paso, y lo que sigue ya no se aprende con la cabeza sino con la vida. Y cuanto más se conoce, más hondo se vuelve la fe.</p>
+  <div class="verse">Prueben y vean qué bueno es el Señor.<cite>Salmo 34:8</cite></div>
+  <div class="verse">Si alguien quiere hacer la voluntad de Dios, sabrá si esta enseñanza viene de Dios o si hablo por mi cuenta.<cite>Juan 7:17</cite></div>
+  </div></details>
+  <p style="text-align:center;margin-top:18px">Así que no hace falta saberlo todo primero: <b>basta con un paso hoy</b>.</p>
+  </section>
+
+  <div class="part">
+    <span>LO QUE VIENE DESPUÉS</span>
+    <h2>El Dios que bajó<br>reunió a las personas en una sola familia</h2>
+    <p>Creer en Jesús no es un camino para andar a solas. En ese camino está la iglesia.</p>
+  </div>
+
+  <section>
+  <small>IGLESIA · UNO</small>
+  <h2>¿Cómo empezó la iglesia?</h2>
+  <figure class="art"><img src="assets/img/why/pentecost.webp" alt="Los discípulos sobre los que vino el Espíritu Santo en Pentecostés, y gente de muchas naciones asombrada" loading="lazy"></figure>
+  <p class="cap">En Pentecostés, el día en que vino el Espíritu Santo, nació la iglesia</p>
+  <ol class="tl">
+    <li><b>El llamado</b><span>En Galilea llamó a doce discípulos para que estuvieran con él (Marcos 3:14)</span><a href="app.html?j=jesus&amp;lang=es#e22">Escena →</a></li>
+    <li><b>La promesa</b><span>«Sobre esta roca edificaré mi iglesia» (Mateo 16:18)</span></li>
+    <li><b>El precio</b><span>En la cruz se entregó a sí mismo por la iglesia, y resucitó (Efesios 5:25)</span><a href="app.html?j=jesus&amp;lang=es#e55">Escena →</a></li>
+    <li><b>La espera</b><span>Al subir al cielo dijo: «Esperen al Espíritu Santo» (Hechos 1:4–8)</span><a href="app.html?j=jesus&amp;lang=es#e61">Escena →</a></li>
+    <li class="on"><b>El nacimiento</b><span>En Pentecostés vino el Espíritu Santo, y ese día se bautizaron unas tres mil personas. Es la primera iglesia (Hechos 2:1–41)</span></li>
+    <li><b>La expansión</b><span>De Jerusalén a Judea y Samaria, y hasta los confines de la tierra (Hechos 1:8). Esa iglesia ha llegado hoy hasta nuestro barrio</span></li>
+  </ol>
+  <details class="more"><summary><span class="o">Qué significa la palabra «iglesia»</span><span class="c">Cerrar</span></summary><div>
+  <p>La palabra que usa el Nuevo Testamento para «iglesia» (ekklesía) significa <b>«los llamados y reunidos»</b>. Así que la iglesia no es ante todo un edificio, sino <b>personas</b>. El templo es solo la casa donde esas personas se reúnen.</p>
+  <p>La iglesia no es una asociación que alguien fundó con buena intención. Jesús la llamó «<b>mi</b> iglesia» y la fundó él mismo, y el Espíritu Santo vino a darle aliento de vida.</p>
+  <div class="verse">Donde dos o tres se reúnen en mi nombre, allí estoy yo en medio de ellos.<cite>Mateo 18:20</cite></div>
+  </div></details>
+  </section>
+
+  <section>
+  <small>IGLESIA · DOS</small>
+  <h2>¿Qué hace la iglesia?</h2>
+  <figure class="art"><img src="assets/img/why/church.webp" alt="Personas muy distintas sentadas alrededor de una misma mesa compartiendo el pan" loading="lazy"></figure>
+  <p class="cap">La iglesia no es un edificio, sino personas: el cuerpo de Jesús</p>
+  <svg class="ill" viewBox="0 0 640 310" role="img" aria-label="La iglesia mira hacia arriba, a Dios; hacia dentro, a los unos y los otros; y hacia fuera, al mundo">
+    <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+    <circle cx="320" cy="180" r="62" fill="#fff4f0" stroke="#d6c8b2" stroke-width="2"/>
+    <g fill="#2b2620"><circle cx="300" cy="166" r="6"/><circle cx="322" cy="160" r="6"/><circle cx="344" cy="168" r="6"/><circle cx="292" cy="192" r="6"/><circle cx="318" cy="198" r="6"/><circle cx="346" cy="194" r="6"/></g>
+    <text class="t" x="320" y="228" text-anchor="middle" font-size="20" fill="#7a6f60">Iglesia</text>
+    <path d="M320 112 V40" stroke="#c9584b" stroke-width="4" stroke-linecap="round" marker-end="url(#ah)"/>
+    <text class="t" x="338" y="62" font-size="25" fill="#b8473b">Arriba · hacia Dios</text>
+    <path d="M232 228 C250 262 300 270 300 240" fill="none" stroke="#a88a52" stroke-width="3.5" stroke-linecap="round" marker-end="url(#ah)"/>
+    <path d="M408 228 C390 262 340 270 340 240" fill="none" stroke="#a88a52" stroke-width="3.5" stroke-linecap="round" marker-end="url(#ah)"/>
+    <text class="t" x="320" y="300" text-anchor="middle" font-size="25" fill="#8a6a35">Adentro · unos a otros</text>
+    <path d="M386 160 H560" stroke="#5f8150" stroke-width="4" stroke-linecap="round" marker-end="url(#ah)"/>
+    <path d="M254 160 H80" stroke="#5f8150" stroke-width="4" stroke-linecap="round" marker-end="url(#ah)"/>
+    <text class="t" x="500" y="138" text-anchor="middle" font-size="25" fill="#4f6b3f">Afuera · al mundo</text>
+  </svg>
+  <div class="roles">
+    <div><b>Adoración<i class="r-up">arriba</i></b>Juntos exaltamos a Dios y recordamos su gracia en el bautismo y la Cena del Señor</div>
+    <div><b>Oración<i class="r-up">arriba</i></b>Pedimos a Dios unos por otros y por el mundo</div>
+    <div><b>Palabra<i class="r-in">adentro</i></b>Aprendemos juntos la Biblia y nos vamos pareciendo a Jesús</div>
+    <div><b>Comunión<i class="r-in">adentro</i></b>Comemos juntos como familia y compartimos las cargas</div>
+    <div><b>Servicio<i class="r-out">afuera</i></b>Cuidamos a los vecinos pobres y enfermos</div>
+    <div><b>Anuncio<i class="r-out">afuera</i></b>Compartimos con los vecinos la buena noticia que recibimos</div>
+  </div>
+  <details class="more"><summary><span class="o">Así vivía la primera iglesia</span><span class="c">Cerrar</span></summary><div>
+  <div class="verse">Se dedicaban a la enseñanza de los apóstoles, a la vida en común, a partir el pan y a la oración. … Todos los creyentes estaban unidos y lo compartían todo.<cite>Hechos 2:42–44</cite></div>
+  <p>La iglesia es <b>el cuerpo de Jesús</b> (1 Corintios 12:27). Siguiendo la voluntad de Jesús, que es la cabeza, sus miembros son sus manos y sus pies, y continúan su obra en esta tierra. El bautismo es la puerta para entrar en esta familia, y la Cena del Señor es la mesa donde recordamos juntos la cruz de Jesús.</p>
+  </div></details>
+  </section>
+
+  <section>
+  <small>IGLESIA · TRES</small>
+  <h2>¿No basta con creer bien a solas?</h2>
+  <figure class="art"><img src="assets/img/why/embers.webp" alt="Brasas reunidas y una mano que devuelve al fuego una brasa que se había enfriado sola, apartada" loading="lazy"></figure>
+  <p class="cap">La brasa que se aparta del fuego se enfría sola</p>
+  <div class="ache">
+    <p class="h">Esas palabras le duelen a Jesús</p>
+    <p><b>La iglesia es el cuerpo de Jesús.</b> A Saulo, que perseguía a la iglesia, Jesús no le dijo «¿por qué persigues a <b>la iglesia</b>?», sino «Saulo, ¿por qué <b>me</b> persigues?» (Hechos 9:4). Cuando la iglesia sufre, Jesús sufre.</p>
+    <p><b>Jesús dio su vida por la iglesia</b> (Efesios 5:25). Si ante la familia que él amó hasta dar la vida alguien dice «yo no la necesito», ¡cuánto le dolerá!</p>
+    <p><b>La noche antes de la cruz, Jesús oró</b> así: «Padre, que todos sean uno» (Juan 17:21).</p>
+  </div>
+  <p>Un dedo separado del cuerpo, por sano que esté, no puede vivir mucho. Con la fe pasa lo mismo: la fe a solas se enfría fácilmente y se extravía fácilmente. Dios nos hizo para crecer <b>unos a través de otros</b>.</p>
+  <div class="verse">Pensemos unos en otros para animarnos al amor y a las buenas obras. No dejemos de reunirnos, como hacen algunos, sino animémonos mutuamente.<cite>Hebreos 10:24–25</cite></div>
+  <details class="more"><summary><span class="o">Si alguna vez la iglesia le hirió</span><span class="c">Cerrar</span></summary><div>
+  <p>Si le pasó, lo sentimos de verdad. La iglesia también es un grupo de personas: se equivoca y a veces hiere profundamente.</p>
+  <p>Pero la iglesia <b>no es una vitrina de personas perfectas, sino un hospital de personas que están siendo sanadas</b>. Jesús dijo: «No necesitan médico los sanos, sino los enfermos» (Marcos 2:17). Un lugar donde los enfermos se reúnen para ser sanados por el mismo médico: eso es la iglesia.</p>
+  <p>No deje a Jesús por culpa de quien le hirió. Puede volver a buscar una iglesia sana. Más abajo le explicamos cómo.</p>
+  <div class="verse">El ojo no puede decirle a la mano: «No te necesito»; ni la cabeza a los pies: «No los necesito».<cite>1 Corintios 12:21</cite></div>
+  </div></details>
+  </section>
+
+  <section>
+  <small>IGLESIA · CUATRO</small>
+  <h2>¿A qué iglesia ir?</h2>
+  <figure class="art"><img src="assets/img/why/visit.webp" alt="Una pequeña iglesia de barrio con la puerta abierta y alguien que recibe a la persona que se acerca" loading="lazy"></figure>
+  <p class="cap">Hay iglesias sanas cerca, y sus puertas están abiertas</p>
+  <div class="ox">
+    <div class="ox-h"><div class="o"><svg class="mk" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="#5f8150" stroke-width="3"/></svg>Iglesia sana</div><div class="x"><svg class="mk" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" stroke="#c9584b" stroke-width="3" stroke-linecap="round"/></svg>Tenga cuidado</div></div>
+    <div class="ox-r"><div class="ox-k">¿Qué anuncia?</div><div><b>La cruz y la gracia.</b> Jesucristo en el centro</div><div>En el centro están <b>las obras, las bendiciones o las interpretaciones secretas</b></div></div>
+    <div class="ox-r"><div class="ox-k">¿A quién exalta?</div><div>Exalta a <b>Jesús</b></div><div>Exalta <b>al pastor o al líder</b>, y lo llama «el Consolador»</div></div>
+    <div class="ox-r"><div class="ox-k">¿Dice quién es?</div><div>Dice <b>su nombre y su denominación</b>, y confiesa junto con usted el Credo de los Apóstoles</div><div><b>Oculta su nombre</b> y se acerca con encuestas, test psicológicos o actividades culturales</div></div>
+    <div class="ox-r"><div class="ox-k">¿Cómo trata a las personas?</div><div>Se puede ir y venir <b>libremente</b>, y valora a la familia</div><div>Pide <b>ocultarlo</b> a la familia y, si se va, infunde miedo</div></div>
+    <div class="ox-r"><div class="ox-k">El dinero</div><div>Las finanzas son <b>transparentes</b> y las ofrendas se dan con alegría</div><div><b>Exige</b> ofrendas y esconde sus finanzas</div></div>
+  </div>
+  <h3>Cómo ir por primera vez</h3>
+  <ol class="fv">
+    <li>Busque <b>dos o tres iglesias cerca de su casa</b>. Compruebe su nombre y su denominación.</li>
+    <li><b>Vaya sin más al culto del domingo.</b> Puede sentarse atrás. A todos nos resulta raro la primera vez.</li>
+    <li>Pida <b>la orientación para recién llegados</b>. Puede preguntar lo que quiera.</li>
+    <li>Asista unas semanas y obsérvela con <b>el cuadro de arriba</b>.</li>
+    <li>Únase a <b>un grupo pequeño</b> y camine con otros. Ahí la iglesia se convierte en familia.</li>
+  </ol>
+  <details class="more"><summary><span class="o">Si le preocupan las sectas</span><span class="c">Cerrar</span></summary><div>
+  <p>Si en la calle alguien se le acerca diciendo «¿Puede responder una encuesta?», «Le hacemos un test psicológico» o «Tenemos un estudio bíblico muy bueno», pero no dice con claridad de qué iglesia es, tenga cuidado. Es mejor evitar los lugares que desde el principio no dicen su nombre ni su denominación.</p>
+  <p>Si tiene dudas, pregunte al pastor de una iglesia cercana o a la oficina de su denominación. Una iglesia sana recibe con gusto estas preguntas.</p>
+  </div></details>
+  </section>
+
+  <div class="card warm" style="text-align:center;margin-top:48px">
+    <p class="motto" style="margin:0">Hay una familia que le espera</p>
+    <p style="margin:6px 0 0;color:var(--muted)">Jesús no le deja caminar solo. Este domingo, llame a la puerta de una iglesia cercana.</p>
+  </div>
+
+  <div class="end">
+    <a href="/goodnews/">Ver las cuatro escenas de GoodNews →</a>
+    <a class="ghost" href="app.html?j=jesus&amp;lang=es">Seguir las huellas de Jesús</a>
+  </div>
+  <p class="foot">Ilustraciones: hechas con IA y retocadas por personas. Los pasajes bíblicos son traducciones nuevas de esta app. La presentación de cada religión resume brevemente sus enseñanzas más representativas; para conocerlas a fondo, le recomendamos acudir a sus escrituras y a la explicación de sus propios creyentes.<br><a href="https://sssoft-idea.web.app/" target="_blank" rel="noopener">© SSSOFT</a></p>
+</main>
+</body>
+</html>
