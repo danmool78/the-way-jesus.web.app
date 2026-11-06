@@ -26,6 +26,7 @@ const LAKES = [['galilee', -210], ['dead', -395], ['hula', 72], ['mareotis'], ['
 const RIVERS = ['jordanN', 'jordanS', 'nile', 'canopic', 'rosetta', 'damietta', 'pelusiac'];
 // 넓게 그리는 강의 반폭(지도 단위, 1 = 약 111m): 요단은 그 시대 골짜기의 물길처럼 넓게 — 가는 관은 멀리서 실처럼 보였다
 const RIVER_W = { jordanN: 0.9, jordanS: 1.2 };
+const RIVER_SRC = { jordanN: 0.25 }; // 시작에서 이만큼(전체 길이 비율)을 지나며 제 폭이 된다
 // 바다 해안선: app.js buildMap의 바다 판과 같게 (남쪽은 시나이 북부 → 나일 삼각주 → 알렉산드리아)
 const SINAI = [[31.13, 33.8], [31.15, 33.1], [31.26, 32.3], [31.52, 31.85], [31.47, 30.4], [31.2, 29.9], [30.9, 28.5], [30.8, 26]];
 // 바탕 그림 두 장: app.js의 RELIEF, RELIEF_WEST와 같게 (프롤로그의 RELIEF_EAST는 3D를 쓰지 않아 빠진다)
@@ -237,7 +238,8 @@ function decorate() {
     // 넓은 강(요단): 땅에 붙은 물길 띠. 양쪽 물가 가운데 낮은 쪽 높이에 수면을 둬 비탈을 타고 오르지 않게
     const n = GEO[k].length * 24, pos = [], idx = [];
     for (let i = 0; i <= n; i++) {
-      const t = i / n, c = base.getPointAt(t), d = base.getTangentAt(t), nx = -d.z * half, nz = d.x * half;
+      // 물줄기가 시작하는 골짜기(요단 북쪽 끝)는 가늘게 시작해 넓어진다
+      const t = i / n, c = base.getPointAt(t), d = base.getTangentAt(t), w = half * (RIVER_SRC[k] ? Math.min(1, 0.3 + t / RIVER_SRC[k]) : 1), nx = -d.z * w, nz = d.x * w;
       const y = Math.min(heightAt(c.x + nx, c.z + nz), heightAt(c.x - nx, c.z - nz), heightAt(c.x, c.z)) + 0.3;
       pos.push(c.x + nx, y, c.z + nz, c.x - nx, y, c.z - nz);
       if (i) { const j = 2 * i; idx.push(j - 2, j - 1, j, j - 1, j + 1, j); }
