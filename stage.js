@@ -107,13 +107,14 @@ function setStreet(name) {
     scene.background = null; scene.fog = null;
     sun.position.set(-2.2, 4, -1.6); sunGoal.copy(sun.position); sun.shadow.bias = 0; sun.shadow.normalBias = 0;
     shadowBox(SHADOW0, 1024);
-    camera.clearViewOffset();
+    camera.clearViewOffset(); camera.far = 50;
     return;
   }
   const set = STREETS[name]();
   scene.add(set.group);
   street = { name, set };
   scene.fog = new THREE.Fog('#c8d2d6', 45, 180); // 멀리 감람산이 아지랑이 속에
+  camera.far = 400; // 미니어처 무대의 50으로는 멀리 성벽·산이 잘렸다
   // 그림자: 광장 전체(성문~집들)를 덮는 넓이. 넓은 만큼 그림자 지도도 크게
   shadowBox({ left: -16, right: 16, top: 16, bottom: -16, near: 1, far: 140 }, 2048);
   sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.02;
@@ -155,6 +156,7 @@ function streetView(dt, time) {
   camera.position.set(camNow.pos.x + Math.sin(time * 0.11) * 0.08, camNow.pos.y + Math.sin(time * 0.17) * 0.02, camNow.pos.z);
   camera.lookAt(camNow.at);
   camera.updateProjectionMatrix(); camera.updateMatrixWorld();
+  street.set.update?.(time, dt); // 세트 안에서 움직이는 것 (들판의 개미)
 }
 
 /* ---------- 무대 상태 ---------- */

@@ -77,6 +77,55 @@ export const PROVERBS = {
       end: [['@cam', 'wide'], ['wisdom', 'raise', { show: 1 }], ['father', 'idle', { x: -0.45, z: -2.4, look: 3.14 }], ['son', 'idle', { x: 0.1, z: -2.2, look: 3.14 }]],
     },
   },
+
+  /* p02. 들판의 개미 (잠 6:6–11, 24:30–34) — 성문을 나와 계단식 밭 사이 길로. 왼쪽은 거두는 이웃의 밀밭,
+     오른쪽은 가시덤불에 덮이고 돌담이 무너진 게으른 사람의 밭. 아들은 길가 개미집 곁에 무릎 꿇고 개미 행렬을 본다.
+     밭 주인은 올리브나무 그늘에서 끝까지 깨지 않는다 (좌표는 세트와 같은 무대 단위, 1m ≈ 0.52) */
+  p02: {
+    street: 'field', env: 'day',
+    cams: {
+      wide: { pos: [0.62, 0.99, 7.8], at: [0, 2.2, -40], fov: 66 },   // 길에서 성 쪽을 바라봄 (언덕 위 성벽과 성전)
+      high: { pos: [6.2, 4.2, 9.4], at: [-0.5, 0, -2.1], fov: 64 },      // 두 밭을 함께 내려다봄
+      reap: { pos: [-0.5, 0.88, 3.1], at: [-3.6, 0.31, -0.5], fov: 56 },  // 거두는 이웃의 밀밭
+      ants: { pos: [-0.25, 0.48, 3.75], at: [-0.66, 0.0, 2.15], fov: 34 },   // 길가 개미집 (아들 눈높이 가까이)
+      lazy: { pos: [0.9, 1.05, 1.1], at: [3.3, 0.12, -1.55], fov: 40 },   // 게으른 사람의 밭과 낮잠 자는 주인
+    },
+    cam: 'wide',
+    cast: {
+      father: ['father', 0.1, 3.6, 2.6],
+      son: ['son', 0.45, 3.75, -2.6],
+      reaper1: ['man', -3.1, -0.75, -0.6, { gaze: false, pose: 'bow' }],
+      reaper2: ['servant', -5.2, -0.3, 0.5, { gaze: false, pose: 'bow' }],
+      gleaner: ['woman', -3.7, 1.3, -1.2, { gaze: false }],
+      sluggard: ['man', 3.3, -1.3, -0.4, { gaze: false, pose: 'sleep' }], // 게으른 밭 주인 (6:9–10)
+    },
+    beats: {
+      // 낭독 없이 볼 때: 개미집 곁에 무릎 꿇은 아들, 개미를 가리키는 아버지
+      enter: [['@env', 'day'], ['@cam', 'ants'], ['son', 'kneel', { x: -0.16, z: 2.18, look: -1.4 }], ['father', 'point', { x: 0.15, z: 2.75, look: -2.0 }]],
+      intro: [['@env', 'day'], ['@cam', 'high'], ['father', 'idle', { x: 0.1, z: 8.3, look: 3.14 }], ['son', 'idle', { x: 0.45, z: 8.5, look: 3.14 }]],
+      // 성문을 나와 들판으로 — 길을 따라 걸어 들어온다
+      'p0.0': [['@cam', 'wide'], ['father', 'idle', { x: 0.1, z: 3.6, look: 2.6 }], ['son', 'idle', { x: 0.45, z: 3.75, look: -2.6 }]],
+      // 사람들은 벌써 밭에 나가 곡식을 거둔다
+      'p0.1': [['@cam', 'reap'], ['gleaner', 'hold-basket', { item: 'basket', x: -3.4, z: 1.6, look: -0.8 }]],
+      // 길가에 쪼그려 앉아 이 작은 것들을 보아라 — 개미집 곁으로
+      'p0.2': [['@cam', 'ants'], ['son', 'idle', { x: -0.16, z: 2.18, look: -1.4 }], ['son', 'kneel', { delay: 1800 }], ['father', 'point', { x: 0.15, z: 2.75, look: -2.0 }]],
+      'p0.3': [['father', 'speak', { to: 'son' }]],
+      'p0.4': [['father', 'point', { look: -2.0 }], ['son', 'kneel', { look: -1.4 }]],
+      // 이제 저 밭을 보아라 — 일어나 오른쪽 밭을 본다
+      'p1.0': [['@cam', 'lazy'], ['son', 'idle', { look: 1.3 }], ['father', 'point', { look: 1.5 }]],
+      'p1.1': [['father', 'speak', { look: 1.2, to: 'son' }]],
+      'p1.2': [['father', 'point', { look: 1.4 }], ['son', 'look-up', { look: 1.3 }]],
+      'p1.3': [['father', 'speak', { look: 1.2, to: 'son' }]],
+      // 좀 더 자자 — 다시 두 밭을 함께
+      'p2.0': [['@cam', 'high'], ['son', 'idle', { look: -2.6 }]],
+      'p2.1': [['@cam', 'wide'], ['father', 'speak', { to: 'son' }], ['son', 'listen']],
+      // 부지런함은 작은 개미에게서도 — 개미 행렬을 한 번 더
+      'p2.2': [['@cam', 'ants']],
+      // 장터로 돌아가자 — 성 쪽으로 걸어 올라간다
+      'p2.3': [['@cam', 'wide'], ['father', 'idle', { x: 0.05, z: -5.5, look: 3.14 }], ['son', 'idle', { x: 0.42, z: -5.3, look: 3.14, delay: 600 }]],
+      end: [['@cam', 'wide'], ['father', 'idle', { x: 0.05, z: -5.5, look: 3.14 }], ['son', 'idle', { x: 0.42, z: -5.3, look: 3.14 }]],
+    },
+  },
 };
 
 // intro 앞에 처음 자리로 되돌리는 명령을 붙인다 (stage/moses.js와 같은 방식 — 다시 들을 때도 대본의 처음 자리에서)
