@@ -97,25 +97,27 @@
   .when b{display:block;font-family:var(--serif);font-size:18px;color:#2b2620}
   .when span{font-size:13px;color:var(--muted)}
   .when a{margin-left:auto;flex:none;font-size:13px;color:var(--gold2);text-decoration:none;border:1px solid #d6c8b2;border-radius:999px;padding:7px 12px}
-  /* 진짜(O)·가짜(X) 맞대기 — 기준마다 한 장의 카드. 폰은 기준이 위, 넓은 화면은 기준 | O | X 세 칸 */
-  .ox{margin:18px 0;display:grid;gap:10px}
+  /* 진짜(O)·가짜(X) 맞대기 — 머리와 칸이 같은 격자. 바탕색 대신 가는 선과 글씨 색으로 가른다 */
+  .ox{margin:18px 0;border:1px solid #e8dece;border-radius:18px;background:#fffdf9;overflow:hidden;box-shadow:0 4px 16px rgba(90,60,30,.05)}
   .ox-h,.ox-r{display:grid;grid-template-columns:1fr 1fr}
-  .ox-h{gap:10px}
-  .ox-h div{padding:9px 10px;border-radius:999px;text-align:center;font-family:var(--serif);font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;gap:8px}
-  .ox-h .o{background:#e8f0e1;color:#4f6b3f}.ox-h .x{background:#fbe4df;color:#b8473b}
-  .ox-r{border:1px solid #e8dece;border-radius:16px;overflow:hidden;background:#fffaf2;box-shadow:0 2px 10px rgba(90,60,30,.05)}
-  .ox-k{grid-column:1/-1;padding:9px 14px;font-family:var(--serif);font-weight:700;font-size:15px;color:#2b2620;background:#f6efe2;border-bottom:1px solid #efe6d8}
-  .ox-r>div:nth-child(n+2){position:relative;padding:12px 12px 13px 36px;font-size:14px;line-height:1.65}
-  .ox-r>div:nth-child(2){background:#f3f7ee;color:#3d362d}
-  .ox-r>div:nth-child(3){background:#fdf2ef;color:#6d625a}
-  .ox-r>div:nth-child(2)::before{content:'';position:absolute;left:13px;top:16px;width:11px;height:11px;border:2.5px solid #5f8150;border-radius:50%}
-  .ox-r>div:nth-child(3)::before{content:'✕';position:absolute;left:13px;top:11px;font-size:15px;font-weight:700;color:#c9584b}
+  .ox-h div{display:flex;align-items:center;gap:8px;padding:14px 16px 12px;font-family:var(--serif);font-weight:700;font-size:16px;border-bottom:3px solid}
+  .ox-h .o{color:#4f6b3f;border-color:#9dbb8c}.ox-h .x{color:#b8473b;border-color:#e9a79c}
+  .ox-r{border-top:1px solid #efe6d8}
+  .ox-h+.ox-r{border-top:0}
+  .ox-k{grid-column:1/-1;padding:9px 16px;margin-bottom:6px;font-family:var(--serif);font-weight:700;font-size:15px;color:#5a3f22;background:#efe2cc}
+  .ox-r>div:nth-child(n+2){position:relative;padding:6px 16px 14px 38px;font-size:14px;line-height:1.7}
+  .ox-r>div:nth-child(2){color:#3d362d}
+  .ox-r>div:nth-child(3){color:#7a6f60;border-left:1px solid #efe6d8}
+  .ox-r>div:nth-child(2)::before{content:'';position:absolute;left:15px;top:11px;width:10px;height:10px;border:2.5px solid #6f9160;border-radius:50%}
+  .ox-r>div:nth-child(3)::before{content:'✕';position:absolute;left:15px;top:6px;font-size:14px;font-weight:700;color:#d06a5d}
   .ox-r>div:nth-child(2) b{color:#3f5a31}.ox-r>div:nth-child(3) b{color:#a8443a}
   .mk{flex:none;width:20px;height:20px}
   @media (min-width:640px){
-    .ox-h,.ox-r{grid-template-columns:150px 1fr 1fr}
-    .ox-h::before{content:''}
-    .ox-k{grid-column:auto;border-bottom:0;border-right:1px solid #efe6d8;display:flex;align-items:center}
+    .ox-h,.ox-r{grid-template-columns:160px 1fr 1fr}
+    .ox-h::before{content:'';align-self:stretch;background:#efe2cc;border-bottom:3px solid #dcc7a5}
+    .ox-k{grid-column:auto;margin:0;padding:14px 16px;align-self:stretch;display:flex;align-items:center;border-right:1px solid #e3d3b8}
+    .ox-r>div:nth-child(n+2){padding:14px 16px 14px 38px}
+    .ox-r>div:nth-child(2)::before{top:19px}.ox-r>div:nth-child(3)::before{top:14px}
   }
   /* 믿어야 아는 것들 */
   .know{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
@@ -407,7 +409,7 @@
   <div class="ox">
     <div class="ox-h"><div class="o"><svg class="mk" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="#5f8150" stroke-width="3"/></svg>진짜</div><div class="x"><svg class="mk" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" stroke="#c9584b" stroke-width="3" stroke-linecap="round"/></svg>가짜</div></div>
     <div class="ox-r"><div class="ox-k">누가 구원하나</div><div><b>하나님이 100%</b> 하신다. 은혜로, 값없이</div><div><b>사람이 자격을 쌓아야</b> 한다. 행위, 규례, 헌신</div></div>
-    <div class="ox-r"><div class="ox-k">예수는 누구인가</div><div><b>사람이 되신 하나님</b>, 오직 한 분 구원자</div><div><b>다른 사람을 세운다.</b> 다시 온 주, 보혜사, 이긴 자</div></div>
+    <div class="ox-r"><div class="ox-k">예수는 누구인가</div><div><b>사람이 되신 하나님</b>, 오직 한 분 구원자</div><div><b>예수님은 하나님이 아니다</b>(신성 부인). 또는 <b>다른 사람을 세운다.</b> 다시 온 주, 보혜사, 이긴 자</div></div>
     <div class="ox-r"><div class="ox-k">무엇을 더하나</div><div><b>더할 것이 없다.</b> 믿음으로 받을 뿐</div><div><b>무언가를 더한다.</b> 특정한 날, 숫자, 우리 단체</div></div>
     <div class="ox-r"><div class="ox-k">무엇에 근거하나</div><div><b>성경 전체</b>와 역사 속 사건</div><div><b>한 사람만 받은</b> 새 계시, 비밀 풀이</div></div>
     <div class="ox-r"><div class="ox-k">어떤 열매인가</div><div><b>자유와 사랑.</b> 가정과 이웃을 살린다</div><div><b>두려움과 비밀.</b> 가족과 끊게 한다</div></div>
