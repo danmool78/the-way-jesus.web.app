@@ -1176,7 +1176,7 @@ addEventListener('stage:scene', promptClose); addEventListener('stage:walk', () 
 // skeleton의 paints: [[열쇠, 그림], …] — 열쇠는 'intro'·'p2.3'(문장)·'p1'(문단 처음) 등, 그림은 assets/img/goodnews/<이름>.webp(대시 없는 이름은 카드 그림 assets/img/<이름>.webp).
 // act: 보는 사람이 직접 하는 동작 — at 문장(또는 낭독 끝)에서 단추를 띄우고, 누르면 seq의 그림들을 차례로 보인 뒤 '그 길' 로고가 겹쳐 남는다
 const paint = { flip: 0, token: 0, acted: false, cur: null };
-const paintSrc = n => n.includes('-') ? `assets/img/goodnews/${n}.webp` : `assets/img/${n}.webp`;
+const paintSrc = n => (n.includes('-') ? `assets/img/goodnews/${n}.webp` : `assets/img/${n}.webp`) + (DATA.journey?.pv?.[n] ? `?v=${DATA.journey.pv[n]}` : ''); // ?v=그림 해시(build.py) — 다시 그린 그림을 캐시가 붙잡지 않게
 function paintShow(name) {
   if (!name || name === paint.cur) return;
   paint.cur = name;
@@ -1558,7 +1558,7 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
       <img class="jicon" src="${j.id === 'jesus' ? 'assets/icon.svg' : `j/${j.id}/icon.svg`}" alt="" width="56" height="56">
       <div class="jtext"><b>${esc(t(j.title))}</b><small>${esc(t(j.desc))}</small>${here ? `<em>${esc(t('seriesNow'))}</em>` : j.n ? `<em>${esc(t('seriesScenes', { n: j.n }))}</em>` : ''}</div>
       <div class="jbtns">${go}${j.ready ? `<button type="button" class="jshare" data-share="${j.id}" aria-label="${esc(t('shareApp'))} — ${esc(t(j.title))}">${share}<span>${esc(t('shareShort'))}</span></button>` : ''}</div></li>`;
-  }).join('') + `<li data-journey="why" class="jcard ready"><img class="jicon" src="assets/why-icon.webp" alt="" width="56" height="56">
+  }).join('') + `<li data-journey="why" class="jcard ready"><img class="jicon" src="${DATA.journey?.whyIcon || 'assets/why-icon.webp'}" alt="" width="56" height="56">
       <div class="jtext"><b>${esc(t('whyH'))}</b><small>${esc(t('why'))}</small></div>
       <div class="jbtns"><a class="jgo" href="${LANG === 'ko' ? 'why.html' : `why.${LANG}.html`}">${esc(t('whyGo'))} →</a></div></li>`; // 부록(왜 기독교인가)은 어느 여정에서 보든 맨 끝에 — 언어마다 why.<언어>.html
   $$('#seriesList .jshare').forEach(b => b.onclick = () => shareLink(shareOf(b.dataset.share)));
