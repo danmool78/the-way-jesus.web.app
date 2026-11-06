@@ -185,6 +185,20 @@
   .fv li::before{content:counter(w);position:absolute;left:14px;top:11px;width:24px;height:24px;border-radius:50%;background:#5f8150;color:#fff;font-weight:700;font-size:13px;display:grid;place-items:center}
   .fv b{color:#2b2620}
   @media (max-width:600px){.roles{grid-template-columns:1fr 1fr}}
+  /* 교단이 결의한 대표 이단 — 이 앱의 판단이 아니라 교단 결의를 옮긴 것(출처를 늘 함께) */
+  .notice{border:1px solid #e3c9a0;background:#fff8e9;border-radius:14px;padding:13px 16px;margin:14px 0;font-size:13.5px;line-height:1.75;color:#5b4a2e}
+  .notice b{color:#7a5a1f}
+  .hg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+  .hg>div{border:1px solid #e8dece;border-radius:16px;background:#fffaf2;padding:14px 15px}
+  .hg h4{margin:0;font-family:var(--serif);font-size:17px;color:#2b2620}
+  .hg .aka{font-size:12.5px;color:var(--muted);margin:2px 0 8px;line-height:1.5}
+  .hg .res{display:flex;flex-wrap:wrap;gap:5px;margin:0 0 9px}
+  .hg .res span{font-size:11.5px;border-radius:999px;padding:2px 8px;background:#f6efe2;color:#6d5a3a;white-space:nowrap}
+  .hg q{display:block;font-size:13px;line-height:1.65;color:#3d362d;quotes:none;border-left:2px solid #e3b5ab;padding-left:9px}
+  .hg q small{display:block;color:var(--faint);font-size:11.5px;margin-top:2px}
+  .src{font-size:12.5px;line-height:1.8;color:var(--muted);margin:12px 0 0;padding-left:18px}
+  .src a{color:var(--gold2)}
+  @media (max-width:640px){.hg{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -554,6 +568,27 @@
   <details class="more"><summary><span class="o">이단이 걱정된다면</span><span class="c">접기</span></summary><div>
   <p>길에서 "설문 좀 해 주세요", "심리검사 해 드려요", "좋은 성경공부가 있어요" 하며 다가오는데 어느 교회인지 분명히 밝히지 않는다면 조심하세요. 처음부터 교회 이름과 교단을 밝히지 않는 곳은 피하는 것이 좋습니다.</p>
   <p>헷갈릴 때는 가까운 교회의 목회자나, 각 교단의 이단 대처 기관에 물어보세요. 건강한 교회는 이런 질문을 반가워합니다.</p>
+  </div></details>
+  <h3>교단이 이단으로 결의한 대표 단체</h3>
+  <div class="notice"><b>이 목록은 이 앱의 의견이 아닙니다.</b> 한국 주요 교단의 총회가 공식으로 결의한 내용을, 아래 출처에 정리된 그대로 옮긴 것입니다. 결의 이유의 따옴표 안 글도 결의문의 표현입니다. 해당 단체들은 이 결의에 동의하지 않습니다. 2021년까지의 결의를 모은 자료를 기준으로 했으니, 그 뒤의 변동은 각 교단에 확인해 주세요.</div>
+  <details class="more"><summary><span class="o">대표 단체 8곳과 교단 결의 보기</span><span class="c">접기</span></summary><div>
+  <div class="hg">
+    <div><h4>신천지</h4><p class="aka">신천지예수교 증거장막성전 · 창시자 이만희</p><div class="res"><span>예장통합 1995</span><span>기성 1999</span><span>예장합신 2003</span><span>예장고신 2005</span><span>예장합동 2007</span><span>대신 2008</span><span>기감 2014</span></div><q>"계시론, 신론, 기독론, 구원론, 종말론"<small>결의 이유 — 예장통합 1995</small></q><q style="margin-top:6px">"대표자 이만희 씨가 직통계시자, 보혜사라 주장"<small>결의 이유 — 예장고신 2005</small></q></div>
+    <div><h4>하나님의 교회</h4><p class="aka">하나님의교회 세계복음선교협회(안상홍증인회) · 창시자 안상홍</p><div class="res"><span>기하성 2000</span><span>예장통합 2002·2011</span><span>예장합신 2003</span><span>예장합동 2008</span><span>예장고신 2009</span><span>기감 2014</span></div><q>"교리적 탈선, 성경해석의 오류, 왜곡된 구원관"<small>결의 이유 — 예장통합 2002</small></q></div>
+    <div><h4>JMS</h4><p class="aka">기독교복음선교회 · 창시자 정명석</p><div class="res"><span>예장고신 1991</span><span>예장통합 2002</span><span>예장합동 2008</span><span>기감 2014</span></div><q>"성경관, 부활·재림관, 구원관 등 전 분야에서 반기독교적"<small>결의 이유 — 예장합동 2008</small></q></div>
+    <div><h4>통일교</h4><p class="aka">세계평화통일가정연합(옛 세계기독교통일신령협회) · 창시자 문선명</p><div class="res"><span>예장통합 1971·1979</span><span>대신 2008</span><span>예장고신 2009</span><span>기감 2014</span></div><q>"기독교를 가장한 사이비 종교 집단"<small>결의 이유 — 예장통합 1979</small></q></div>
+    <div><h4>구원파</h4><p class="aka">기독교복음침례회(권신찬·유병언), 박옥수, 대한예수교침례회(이요한) 계열</p><div class="res"><span>기성 1985</span><span>예장고신 1991</span><span>예장통합 1992</span><span>예장합신 1995</span><span>예장합동 2008</span><span>기감 2014</span></div><q>"깨달음에 의한 구원, 회개, 죄인 문제"<small>결의 이유 — 기성 1985</small></q></div>
+    <div><h4>만민중앙교회</h4><p class="aka">창시자 이재록</p><div class="res"><span>예성 1990</span><span>예장통합 1999</span><span>기하성 1999</span><span>예장고신 2009</span></div><q>"신론, 구원론, 인간론, 성령론, 교회론, 종말(내세)론"<small>결의 이유 — 예장통합 1999</small></q></div>
+    <div><h4>여호와의 증인</h4><p class="aka">워치타워 성서책자협회 · 1870년대 미국에서 시작</p><div class="res"><span>기성 1993</span><span>예장고신 2009</span><span>예장통합 2014</span><span>기감 2014</span></div><q>"삼위일체 부인, 그리스도와 성령 하나님의 신성 부인, 지옥 부인, 행위구원 주장"<small>결의 이유 — 예장통합 2014</small></q></div>
+    <div><h4>몰몬교</h4><p class="aka">예수 그리스도 후기성도 교회 · 창시자 조셉 스미스</p><div class="res"><span>예장고신 2009</span><span>예장통합 2014</span><span>기감 2014</span></div><q>"성경의 권위 훼손, 하나님의 신성 부인, 조셉 스미스 신격화"<small>결의 이유 — 예장통합 2014</small></q></div>
+  </div>
+  <p class="hint">교단 약칭 — 예장통합·합동·고신·합신: 대한예수교장로회 각 총회 · 대신: 대한예수교장로회 대신 · 기성: 기독교대한성결교회 · 예성: 예수교대한성결교회 · 기감: 기독교대한감리회 · 기하성: 기독교대한하나님의성회. 연도는 결의한 해입니다.</p>
+  <p>이 목록은 사람을 미워하라는 것이 아닙니다. 그 안에 있는 분들도 하나님이 사랑하시는 이웃입니다. 다만 <b>어디로 가는 길인지 알고 고르시라</b>는 뜻입니다.</p>
+  <p style="margin:12px 0 2px;font-weight:700;color:#2b2620">출처</p>
+  <ol class="src">
+    <li><a href="http://www.kctusa.org/news/articleView.html?idxno=59346" target="_blank" rel="noopener">크리스찬타임스, 「한국교단들의 이단관련 공식결의 (1915–2021)」</a> — 단체별 교단·연도·결의 이유</li>
+    <li><a href="https://www.newsnjoy.or.kr/news/articleView.html?idxno=197826" target="_blank" rel="noopener">뉴스앤조이, 「감리회, 신천지·통일교·안상홍증인회 등 9개 종파 이단 규정」(2014.10.31)</a> — 기독교대한감리회 2014년 결의</li>
+  </ol>
   </div></details>
   </section>
 
