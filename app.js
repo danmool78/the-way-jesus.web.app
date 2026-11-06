@@ -1181,7 +1181,7 @@ function paintShow(name) {
   paint.cur = name;
   const imgs = $$('#paint img'), next = imgs[paint.flip = 1 - paint.flip], prev = imgs[1 - paint.flip];
   const go = () => { next.classList.remove('on'); void next.offsetWidth; next.classList.add('on'); prev.classList.remove('on'); };
-  next.onload = go; next.src = paintSrc(name);
+  next.dataset.n = name; next.onload = go; next.src = paintSrc(name);
   if (next.complete && next.naturalWidth) go();
 }
 function paintLogo(on) { const l = $('#paintLogo'); if (!l) return; if (on) { l.hidden = false; requestAnimationFrame(() => l.classList.add('on')); } else { l.classList.remove('on'); l.hidden = true; } }
