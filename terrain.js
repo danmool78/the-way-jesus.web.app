@@ -24,6 +24,8 @@ const lv = m => m * M * EXAG;  // 고도(m) → 높이
 // 호수: [GEO 이름, 수면 고도(m) — 없으면 평지의 얕은 호수]
 const LAKES = [['galilee', -210], ['dead', -395], ['hula', 72], ['mareotis'], ['manzala'], ['sirbonis'], ['bitter']];
 const RIVERS = ['jordanN', 'jordanS', 'nile', 'canopic', 'rosetta', 'damietta', 'pelusiac'];
+// 넓게 그리는 강의 반폭(지도 단위, 1 = 약 111m): 요단은 그 시대 골짜기의 물길처럼 넓게 — 가는 관은 멀리서 실처럼 보였다
+const RIVER_W = { jordanN: 0.9, jordanS: 1.2 };
 // 바다 해안선: app.js buildMap의 바다 판과 같게 (남쪽은 시나이 북부 → 나일 삼각주 → 알렉산드리아)
 const SINAI = [[31.13, 33.8], [31.15, 33.1], [31.26, 32.3], [31.52, 31.85], [31.47, 30.4], [31.2, 29.9], [30.9, 28.5], [30.8, 26]];
 // 바탕 그림 두 장: app.js의 RELIEF, RELIEF_WEST와 같게 (프롤로그의 RELIEF_EAST는 3D를 쓰지 않아 빠진다)
@@ -223,10 +225,25 @@ function decorate() {
   });
   // 강: 땅을 따라 굽는 물빛 띠
   const riverM = new THREE.MeshStandardMaterial({ color: '#5f93a3', roughness: 0.25, metalness: 0.15, envMap: env });
+  const riverWideM = new THREE.MeshStandardMaterial({ color: '#5a8fa0', roughness: 0.35, metalness: 0.1, envMap: env, side: THREE.DoubleSide });
   RIVERS.forEach(k => {
     const base = new THREE.CatmullRomCurve3(GEO[k].map(p => { const [x, z] = px(p); return new THREE.Vector3(x, 0, z); }));
-    const pts = base.getPoints(GEO[k].length * 24).map(v => new THREE.Vector3(v.x, heightAt(v.x, v.z) + 0.4, v.z));
-    decor.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), pts.length, 0.45, 5), riverM));
+    const half = RIVER_W[k];
+    if (!half) {
+      const pts = base.getPoints(GEO[k].length * 24).map(v => new THREE.Vector3(v.x, heightAt(v.x, v.z) + 0.4, v.z));
+      decor.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), pts.length, 0.45, 5), riverM));
+      return;
+    }
+    // 넓은 강(요단): 땅에 붙은 물길 띠. 양쪽 물가 가운데 낮은 쪽 높이에 수면을 둬 비탈을 타고 오르지 않게
+    const n = GEO[k].length * 24, pos = [], idx = [];
+    for (let i = 0; i <= n; i++) {
+      const t = i / n, c = base.getPointAt(t), d = base.getTangentAt(t), nx = -d.z * half, nz = d.x * half;
+      const y = Math.min(heightAt(c.x + nx, c.z + nz), heightAt(c.x - nx, c.z - nz), heightAt(c.x, c.z)) + 0.3;
+      pos.push(c.x + nx, y, c.z + nz, c.x - nx, y, c.z - nz);
+      if (i) { const j = 2 * i; idx.push(j - 2, j - 1, j, j - 1, j + 1, j); }
+    }
+    const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setIndex(idx); g.computeVertexNormals();
+    decor.add(new THREE.Mesh(g, riverWideM));
   });
   // 길: 2D 지도의 경로 곡선을 그대로 따라 땅 위에
   routes = [];
