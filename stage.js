@@ -90,6 +90,7 @@ function updateEnv(dt) {
    지도 핀 위의 미니어처 대신 화면 가득 세트(stage/street.js)를 그리고, 카메라는 대본의 자리(cams)에 선다.
    대본: street(세트 이름), cams({ 이름: { pos, at, fov(가로 시야각) } }), cam(처음 자리). 동작 명령 ['@cam', 이름]으로 천천히 옮겨 간다 */
 let street = null;
+const STILL = new URLSearchParams(location.search).has('beat');
 const sunGoal = new THREE.Vector3(-2.2, 4, -1.6);
 const camGoal = { pos: new THREE.Vector3(0, 1, 8), at: new THREE.Vector3(), fov: 62 }, camNow = { pos: new THREE.Vector3(0, 1, 8), at: new THREE.Vector3(), fov: 62 };
 const SHADOW0 = { left: -3, right: 3, top: 3, bottom: -3, near: 0.5, far: 14 };
@@ -153,7 +154,8 @@ function streetView(dt, time) {
   camera.aspect = aspect;
   camera.setViewOffset(FW, FH, cw, ch, w, h);
   // 숨 쉬듯 아주 조금 흔들리는 시선 — 멈춘 그림처럼 보이지 않게
-  camera.position.set(camNow.pos.x + Math.sin(time * 0.11) * 0.08, camNow.pos.y + Math.sin(time * 0.17) * 0.02, camNow.pos.z);
+  const sw = STILL ? 0 : 1; // 확인용 캡처(?beat=)는 흔들림 없이 — 프레임끼리 견주어 깜박이는 곳을 찾는다
+  camera.position.set(camNow.pos.x + Math.sin(time * 0.11) * 0.08 * sw, camNow.pos.y + Math.sin(time * 0.17) * 0.02 * sw, camNow.pos.z);
   camera.lookAt(camNow.at);
   camera.updateProjectionMatrix(); camera.updateMatrixWorld();
   street.set.update?.(time, dt); // 세트 안에서 움직이는 것 (들판의 개미)

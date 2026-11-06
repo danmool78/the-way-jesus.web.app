@@ -76,11 +76,12 @@ function paving(base) {
   });
 }
 // 상자 UV를 실제 크기로: 면마다 위치에서 UV를 다시 매겨, 크기가 다른 벽도 돌 크기가 같게 보인다
-function worldUV(geo, tile) {
+// off: 상자의 자리 — 세상 좌표로 매겨야 맞붙은 두 상자(성문 탑과 통로 위)의 돌 줄이 이어진다 (따로 매기면 이음매에 줄이 어긋나 금처럼 보였다)
+function worldUV(geo, tile, [ox, oy, oz] = [0, 0, 0]) {
   const p = geo.attributes.position, n = geo.attributes.normal, uv = geo.attributes.uv;
   for (let i = 0; i < p.count; i++) {
-    const ax = Math.abs(n.getX(i)), ay = Math.abs(n.getY(i));
-    const [u, v] = ax > 0.5 ? [p.getZ(i), p.getY(i)] : ay > 0.5 ? [p.getX(i), p.getZ(i)] : [p.getX(i), p.getY(i)];
+    const ax = Math.abs(n.getX(i)), ay = Math.abs(n.getY(i)), X = p.getX(i) + ox, Y = p.getY(i) + oy, Z = p.getZ(i) + oz;
+    const [u, v] = ax > 0.5 ? [Z, Y] : ay > 0.5 ? [X, Z] : [X, Y];
     uv.setXY(i, u / tile, v / tile);
   }
   return geo;
@@ -91,7 +92,7 @@ const overlay = m => { m.polygonOffset = true; m.polygonOffsetFactor = -2; m.pol
 
 // 상자 하나: 바닥 가운데 (x, z), 높이 y에서 위로
 function block(parent, m, x, z, w, d, h, y = 0, tile = 4 * M) {
-  const o = mesh(worldUV(new THREE.BoxGeometry(w, h, d), tile), m, parent, [x, y + h / 2, z]);
+  const o = mesh(worldUV(new THREE.BoxGeometry(w, h, d), tile, [x, y + h / 2, z]), m, parent, [x, y + h / 2, z]);
   o.receiveShadow = true;
   return o;
 }
@@ -122,8 +123,11 @@ function gate(g, z0) {
   });
   // 통로 위를 건너는 윗부분 (문 높이 5m) — 나무 상인방 위에
   const DH = 5 * M;
-  block(g, S, 0, zc, P, D, H - DH, DH);
+  // 통로 위 덩어리는 양쪽 탑 속으로 조금 넣고, 앞뒷면은 1cm 안으로 — 탑과 맞붙인 이음매가 가는 금으로 벌어져 번쩍였다
+  block(g, S, 0, zc, P + 0.4 * M, D - 0.02 * M, H - DH - 0.01 * M, DH); // (윗면도 1cm 낮게 — 탑 윗면과 겹치지 않게)
   merlons(g, S, -P / 2, P / 2, z0 - 0.35 * M, H, 0.7 * M);
+  // 통로 양옆의 문설주 기둥(벽면에서 조금 내민 돌띠): 탑과 통로 위 덩어리의 이음매를 덮는다 — 이음매가 가는 빛줄로 번쩍였다
+  [-1, 1].forEach(k => block(g, S, k * (P / 2 + 0.3 * M), z0 + 0.12 * M, 0.7 * M, 0.3 * M, H - 0.02 * M, 0, 4 * M));
   const wood = mat('#5d4632', { roughness: 0.9 });
   [z0 - 0.15 * M, z0 - D + 0.15 * M].forEach(z => mesh(new THREE.BoxGeometry(P + 0.6 * M, 0.45 * M, 0.5 * M), wood, g, [0, DH + 0.2 * M, z]));
   // 통로 안: 양옆 방 셋씩 — 기둥벽(피어) 사이로 어두운 방이 열린다
@@ -148,7 +152,7 @@ function gate(g, z0) {
 function cityWall(g, x0, x1, zFace) {
   const S = texMat(ashlar('#c3ad87'));
   const T = 4 * M, H = 7.5 * M;
-  block(g, S, (x0 + x1) / 2, zFace - T / 2, x1 - x0, T, H);
+  block(g, S, (x0 + x1) / 2, zFace - T / 2, Math.abs(x1 - x0), T, H); // 폭이 음수면 상자가 뒤집혀 안쪽 면이 그려졌다(서쪽 성벽)
   merlons(g, S, Math.min(x0, x1), Math.max(x0, x1), zFace - 0.3 * M, H, 0.6 * M);
 }
 
@@ -166,8 +170,8 @@ function house(g, x, z, w, d, floors = 2, face = 1, o = {}) {
   const roof = mat('#a8916c', { roughness: 1 });
   block(g, roof, x, z, w + 0.12 * M, d + 0.12 * M, 0.25 * M, H);
   const par = 0.9 * M, t = 0.22 * M;
-  block(g, P, x, z - d / 2 + t / 2, w, t, par, H + 0.25 * M, 3 * M);
-  block(g, P, x, z + d / 2 - t / 2, w, t, par, H + 0.25 * M, 3 * M);
+  block(g, P, x, z - d / 2 + t / 2, w - 2 * t, t, par, H + 0.25 * M, 3 * M); // 앞뒤 난간은 옆 난간 사이에만 — 모서리가 겹치면 면이 다퉜다
+  block(g, P, x, z + d / 2 - t / 2, w - 2 * t, t, par, H + 0.25 * M, 3 * M);
   block(g, P, x - w / 2 + t / 2, z, t, d, par, H + 0.25 * M, 3 * M);
   block(g, P, x + w / 2 - t / 2, z, t, d, par, H + 0.25 * M, 3 * M);
   // 문이 난 얼굴: 들보 끝, 문, 작은 창
