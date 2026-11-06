@@ -74,7 +74,7 @@ export const GOODNEWS = {
       adamD: ['adamFig', -0.3, 0.12, 0.6, { silhouette: true, gaze: false }],
       eveD: ['eveFig', 0.0, 0.1, 0.8, { silhouette: true, gaze: false }],
       cherub: ['angel', -0.45, -0.05, 0.9, { gaze: false }],
-      you: ['you', 1.3, 0.75, -1.3, { gaze: false }],
+      you: ['you', 1.3, 0.75, -1.3, { gaze: false, silhouette: true }], // 세부 없는 어두운 윤곽 — 누구든 자기로 여기게
     },
     beats: {
       enter: [['@env', 'dusk'], ['tree', 'taken'], ['life', 'closed'], ['serpent', 'rest', { show: 0 }], ['presence', null, { show: 1 }], ['adam', 'idle', { show: 0 }], ['eve', 'idle', { show: 0 }],
@@ -118,7 +118,7 @@ export const GOODNEWS = {
       rift: ['rift', -0.8, 0.42, { len: 1.5, w: 0.24, rot: Math.PI }], // 가로대가 빛(오른쪽) 쪽 끝에 오게 돌려 놓는다
     },
     cast: {
-      you: ['you', -1.45, 0.48, 1.3, { gaze: false }],
+      you: ['you', -1.45, 0.48, 1.3, { gaze: false, silhouette: true }],
       walk: ['jesus', -1.6, 0.3, 1.2],
       sick: ['man', -0.6, 0.35, -1],
       friend: ['woman', -0.85, 0.15, -0.8],
@@ -175,13 +175,14 @@ export const GOODNEWS = {
     },
     cast: {
       jesus: ['risen', -0.9, 0.15, 1.0],
-      you: ['you', 0.64, -0.36, 0, { gaze: false }],
+      you: ['you', 0.64, -0.36, 0, { gaze: false, silhouette: true }],
+      youL: ['you', -0.75, 0.4, -0.3, { gaze: false, silhouette: 'light' }], // 건너편 빛 속에 들어선 '당신' — 어둠의 윤곽이 빛의 윤곽으로
     },
     act: 'cross', // 보는 사람이 직접 하는 동작 — 한 뒤에는 낭독이 끝나도 done 모습으로 둔다 (stage.js)
     beats: {
-      enter: [['@env', 'dawn'], ['house', 'open'], ['beam', null, { show: 1 }],
+      enter: [['@env', 'dawn'], ['house', 'open'], ['beam', null, { show: 1 }], ['youL', 'idle', { show: 0 }],
         ['jesus', 'bless', { show: 1, x: 0.95, z: -0.05, look: -0.9 }], ['you', 'kneel', { show: 1, x: 0.62, z: 0.02, look: 0.9 }]],
-      intro: [['rift', 'open', { show: 0 }], ['far', null, { show: 0 }], ['@env', 'dusk'], ['house', 'closed'], ['beam', null, { show: 0 }], ['jesus', 'idle', { show: 1, x: -0.9, z: 0.15, look: 1.0 }], ['you', 'idle', { show: 0, x: 0.64, z: -0.36, look: 0 }]],
+      intro: [['rift', 'open', { show: 0 }], ['far', null, { show: 0 }], ['youL', 'idle', { show: 0 }], ['@env', 'dusk'], ['house', 'closed'], ['beam', null, { show: 0 }], ['jesus', 'idle', { show: 1, x: -0.9, z: 0.15, look: 1.0 }], ['you', 'idle', { show: 0, x: 0.64, z: -0.36, look: 0 }]],
       // 넷째, 맞아들여야 — 저녁의 한 집으로 걸어가신다
       'p0.0': [['jesus', 'idle', { x: 0.1, z: 0.1, look: 1.0 }]],
       // 문 밖에 서서 두드린다 — 문 앞에 서신다
@@ -199,13 +200,15 @@ export const GOODNEWS = {
       // 아멘 — 일어나 바라보면, 갈라진 틈 위에 십자가 다리가 놓여 있다. 예수님이 앞장서 다리 앞에 서시고, 단추가 뜬다
       'p2.7': [['you', 'look-up', { look: 0.9 }], ['rift', 'open', { show: 1, delay: 1200 }], ['rift', 'bridge', { delay: 2200 }],
         ['jesus', 'idle', { x: 0.42, z: 0.28, look: -1.5, delay: 3000 }], ['you', 'idle', { x: 0.62, z: 0.4, look: -1.4, delay: 3400 }], ['@prompt', 'gnCross', { beat: 'cross', delay: 5200 }]],
-      end: [['@env', 'dawn'], ['house', 'open'], ['beam', null, { show: 1 }], ['rift', 'bridge', { show: 1 }],
+      end: [['@env', 'dawn'], ['house', 'open'], ['beam', null, { show: 1 }], ['rift', 'bridge', { show: 1 }], ['youL', 'idle', { show: 0 }],
         ['jesus', 'idle', { show: 1, x: 0.42, z: 0.28, look: -1.5 }], ['you', 'idle', { show: 1, x: 0.62, z: 0.4, look: -1.4 }], ['@prompt', 'gnCross', { beat: 'cross', delay: 800 }]],
       // 보는 사람이 누르면: 예수님과 함께 십자가 다리를 건너 빛 속으로
       cross: [['jesus', 'idle', { x: -0.95, z: 0.34, look: -1.5 }], ['you', 'idle', { x: -0.75, z: 0.4, look: -1.5, delay: 500 }],
-        ['far', null, { show: 1, delay: 2500 }], ['@env', 'glory', { delay: 3600 }], ['jesus', 'bless', { look: 0.6, delay: 5200 }], ['you', 'raise', { look: -0.3, delay: 5600 }]],
+        ['far', null, { show: 1, delay: 2500 }], ['@env', 'glory', { delay: 3600 }],
+        ['you', 'idle', { show: 0, delay: 3800 }], ['youL', 'idle', { show: 1, x: -0.75, z: 0.4, look: -1.5, delay: 3800 }], // 빛에 들어서며 윤곽이 바뀐다
+        ['jesus', 'bless', { look: 0.6, delay: 5200 }], ['youL', 'raise', { look: -0.3, delay: 5600 }]],
       done: [['@env', 'glory'], ['house', 'open'], ['beam', null, { show: 1 }], ['rift', 'bridge', { show: 1 }], ['far', null, { show: 1 }],
-        ['jesus', 'bless', { show: 1, x: -0.95, z: 0.34, look: 0.6 }], ['you', 'raise', { show: 1, x: -0.75, z: 0.4, look: -0.3 }]],
+        ['jesus', 'bless', { show: 1, x: -0.95, z: 0.34, look: 0.6 }], ['you', 'idle', { show: 0 }], ['youL', 'raise', { show: 1, x: -0.75, z: 0.4, look: -0.3 }]],
     },
   },
 };
