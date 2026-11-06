@@ -14,7 +14,7 @@
 <style>
   :root{--serif:'Noto Serif JP',serif;--sans:'Noto Sans JP',system-ui,sans-serif}
   /* よくある質問 — 最初の画面(.intro)と同じ趣: 暗い地、金色、明朝の見出し */
-  body{overflow:auto;background:radial-gradient(ellipse at 50% 0%,rgba(217,180,106,.13),transparent 50%),var(--bg)}
+  body{overflow:auto;background:radial-gradient(ellipse 90% 100% at 50% 0%,rgba(217,180,106,.13),transparent 70%) 0 0/100% 900px no-repeat local,var(--bg)} /* 바탕이 화면 높이마다 되풀이되며 이음선이 보였다: 맨 위에 한 번만 깔고 부드럽게 녹인다 */
   .qna{max-width:760px;margin:0 auto;padding:28px 20px 64px}
   .qna-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
   .qna-top a{color:var(--gold2);text-decoration:none;display:inline-flex;align-items:center;gap:8px;font-size:14px}
