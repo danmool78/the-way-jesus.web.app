@@ -1180,14 +1180,16 @@ const paintSrc = n => n.includes('-') ? `assets/img/goodnews/${n}.webp` : `asset
 function paintShow(name) {
   if (!name || name === paint.cur) return;
   paint.cur = name;
-  const imgs = $$('#paint img'), next = imgs[paint.flip = 1 - paint.flip], prev = imgs[1 - paint.flip];
+  // 그림 두 장을 번갈아 겹쳐 넘긴다
+  const fs = $$('#paint .pf'), next = fs[paint.flip = 1 - paint.flip], prev = fs[1 - paint.flip];
+  const im = next.querySelector('.pim'), pim = prev.querySelector('.pim');
   const go = () => {
     // 사라지는 그림은 다가가던 크기 그대로 멈춰 둔다 (애니메이션을 떼면 처음 크기로 툭 줄어들어 보인다)
-    prev.style.transform = getComputedStyle(prev).transform; prev.classList.remove('on');
-    next.style.transform = ''; next.classList.remove('on'); void next.offsetWidth; next.classList.add('on');
+    pim.style.transform = getComputedStyle(pim).transform; prev.classList.remove('on');
+    im.style.transform = ''; next.classList.remove('on'); void next.offsetWidth; next.classList.add('on');
   };
-  next.dataset.n = name; next.onload = go; next.src = paintSrc(name);
-  if (next.complete && next.naturalWidth) go();
+  next.dataset.n = name; im.onload = go; im.src = paintSrc(name);
+  if (im.complete && im.naturalWidth) go();
 }
 function paintLogo(on) { const l = $('#paintLogo'); if (!l) return; if (on) { l.hidden = false; requestAnimationFrame(() => l.classList.add('on')); } else { l.classList.remove('on'); l.hidden = true; } }
 function paintScene(e) {

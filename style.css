@@ -704,12 +704,25 @@ body.intro-open .intro,body.intro-open .intro *{animation-play-state:running}
 
 /* 그림으로 보는 장면(기쁜 소식): 그림이 화면을 가득 채우고 천천히 다가간다. 다음 그림은 겹쳐 넘어간다 (app.js paintShow) */
 .paint{position:absolute;inset:0;z-index:1;overflow:hidden;background:#0d0a07}
-.paint img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.6s ease;transform-origin:50% 45%}
-.paint img.on{opacity:1;animation:paintDrift 26s ease-out forwards}
+.pf{position:absolute;inset:0;opacity:0;transition:opacity 1.6s ease}
+.pf.on{opacity:1}
+.pf img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pim{transform-origin:50% 45%}
+.pf.on .pim{animation:paintDrift 26s ease-out forwards}
 @keyframes paintDrift{from{transform:scale(1.02)}to{transform:scale(1.12)}}
-@media (min-width:901px){.paint img{object-position:30% 50%}} /* 넓은 화면은 오른쪽 장면 카드에 가리는 만큼 그림을 왼쪽으로 */
+@media (min-width:901px){.pim{object-position:30% 50%}} /* 넓은 화면은 오른쪽 장면 카드에 가리는 만큼 그림을 왼쪽으로 */
+/* 세로 화면(폰): 가로 그림을 꽉 채우면(cover) 가운데 40%만 남아 사람이 잘린다 — 그림 전체를 폭에 맞춰 보이고, 가장자리는 어둠 속으로 부드럽게 번지게 */
+@media (max-aspect-ratio:1/1){
+  .pf .pim{inset:0;margin:auto;height:auto;transform-origin:50% 50%;
+    -webkit-mask-image:linear-gradient(transparent,#000 16%,#000 84%,transparent),linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);-webkit-mask-composite:source-in;
+    mask-image:linear-gradient(transparent,#000 16%,#000 84%,transparent),linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-composite:intersect}
+  .pf.on .pim{animation-name:paintDriftS}
+}
+@keyframes paintDriftS{from{transform:scale(1)}to{transform:scale(1.04)}}
 .painted .verse-ov{top:7%}
 .painted .verse-ov p{text-shadow:0 2px 16px rgba(0,0,0,.9),0 0 40px rgba(0,0,0,.65)}
+/* 밝은 하늘 위에서도 읽히게 — 말씀 뒤에 반투명한 어두운 판 */
+.painted .verse-ov{padding:12px 18px;border-radius:18px;background:rgba(16,11,7,.55);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 8px 30px rgba(0,0,0,.3)}
 /* 건넌 뒤 남는 '그 길' 로고 */
 .paint-logo{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%) scale(.94);z-index:6;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;transition:opacity 2.6s ease,transform 2.6s ease;pointer-events:none;text-align:center}
 .paint-logo.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
@@ -717,9 +730,6 @@ body.intro-open .intro,body.intro-open .intro *{animation-play-state:running}
 .paint-logo b{font:700 40px var(--serif);letter-spacing:.38em;text-indent:.38em;color:#fff8e6;white-space:nowrap;text-shadow:0 2px 18px rgba(0,0,0,.6)}
 @media (max-width:900px){
   .paint-logo{width:88%}.paint-logo b{font-size:32px;letter-spacing:.24em;text-indent:.24em}
-  /* 좁은 화면은 그림 가운데만 보이니, 사람이 가장자리에 선 그림은 사람 쪽으로 */
-  .paint img[data-n="g03-bridge"],.paint img[data-n="g04-ready"]{object-position:18% 50%}
-  .paint img[data-n="g04-light"]{object-position:74% 50%}
 }
 .paint-logo span{font:600 17px var(--serif);color:#fff8e6;text-shadow:0 2px 14px rgba(0,0,0,.75)}
 @media (min-width:901px){.paint-logo{left:calc((100% - min(460px,42%)) / 2)}}
