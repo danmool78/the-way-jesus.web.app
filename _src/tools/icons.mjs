@@ -14,6 +14,8 @@ const J = {
   david: { name: '그 길 — 다윗', short: '그 길 · 다윗', c: ['#eef3d2', '#a9bf6a', '#6f8638', '#d6e3a8'] },
   kings: { name: '그 길 — 열왕기', short: '그 길 · 열왕기', c: ['#efe6fb', '#b99ade', '#7c58a8', '#ddcdf3'] },
   paul: { name: '그 길 — 바울', short: '그 길 · 바울', c: ['#e1f1fb', '#70b5da', '#3e7fa8', '#bbdff3'] },
+  psalms: { name: '그 길 — 시편', short: '그 길 · 시편', c: ['#e0f4f0', '#5fb3a5', '#2f7d70', '#b5e0d8'] },
+  proverbs: { name: '그 길 — 잠언', short: '그 길 · 잠언', c: ['#fbe6ef', '#d98fb0', '#a2547a', '#f2c8da'] },
   goodnews: { name: 'GoodNews', short: 'GoodNews', c: ['#fde6e2', '#e58a7f', '#a8473f', '#f4c3bb'] },
 };
 const base = readFileSync('assets/icon.svg', 'utf8'), man = JSON.parse(readFileSync('manifest.webmanifest', 'utf8'));
