@@ -123,13 +123,13 @@ LAND_KEYS = ['appName', 'hubTag', 'hubLead', 'seriesHead', 'seriesGo', 'seriesSc
              'mvGo', 'mvLead', 'mvNote', 'qnaHelp', 'language', 'close', 'goodnewsGo']
 land = {'langs': LANGS, 'cards': [{'id': j['id'], 'title': j['title'], 'desc': j['desc'], 'ready': j['ready'], **({'n': j['n']} if j.get('n') else {})} for j in series if j['id'] != 'goodnews']
         + [{'id': 'goodnews', 'title': 'goodnewsH', 'desc': 'goodnews', 'ready': True, 'href': '/goodnews/', 'go': 'goodnewsGo'},  # 4영리는 따로 만든 페이지(/goodnews/)로
-           {'id': 'why', 'title': 'whyH', 'desc': 'why', 'ready': True, 'href': '/why.html', 'go': 'whyGo', 'icon': 'assets/why-icon.svg', 'langs': ['ko']}], 'ui': {}}  # 부록(왜 기독교인가)은 한국어 글만 있어 한국어 화면에만
+           {'id': 'why', 'title': 'whyH', 'desc': 'why', 'ready': True, 'href': '/why.html', 'go': 'whyGo', 'icon': 'assets/why-icon.webp', 'langs': ['ko']}], 'ui': {}}  # 부록(왜 기독교인가)은 한국어 글만 있어 한국어 화면에만
 for lang in LANGS:
     u = {**ui_ko, **(loadf(os.path.join(here, 'i18n', 'ui.%s.json' % lang)) if lang != 'ko' else {})}
     keys = LAND_KEYS + sorted({c['title'] for c in land['cards']} | {c['desc'] for c in land['cards']})
     land['ui'][lang] = {k: u[k] for k in keys if k in u}
 # 부록 카드 글씨는 한국어 랜딩에만 (앱 화면 글씨가 아니라 ui.ko.json에 두지 않는다)
-land['ui']['ko'].update({'whyH': '부록 · 왜 기독교인가', 'why': '올라가는 종교, 내려오신 하나님 — 그림과 도표로 견주어 보기', 'whyGo': '부록 보기'})
+land['ui']['ko'].update({'whyH': '부록 · 왜 기독교인가', 'why': '올라가는 종교, 내려오신 하나님, 그리고 교회 — 그림과 도표로', 'whyGo': '부록 보기'})
 json.dump(land, open(os.path.join(root, 'land.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
 
 # 검색엔진용 장면 페이지(s/)와 sitemap.xml도 새 data로 다시 만든다
