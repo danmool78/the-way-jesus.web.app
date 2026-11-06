@@ -2,7 +2,7 @@
 name: ElevenLabs voice samples
 on:
   push:
-    branches: [claude/goodnews-polish]
+    branches: [claude/goodnews-polish, claude/eleven-samples]
     paths: [_src/voice-samples/run]
   workflow_dispatch:
 permissions:
