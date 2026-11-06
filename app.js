@@ -977,7 +977,7 @@ function speakQueue(items, onDone) {
   if (document.body.classList.contains('intro-open')) return; // 랜딩 뒤에서는 읽지 않는다
   const token = ++speechToken;
   speechDone = onDone; sceneReading = false;
-  const rate = +$('#rate').value;
+  const rate = +$('#rate').value * (DATA.journey?.rate || 1); // 여정마다 낭독 빠르기를 곱한다 (GoodNews는 1.1배 — journey.json의 rate)
   pickVoices();
   const useVoice = !!synth && voices.length > 0;
   if (synth) synth.cancel();
