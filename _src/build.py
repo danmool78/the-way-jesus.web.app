@@ -63,7 +63,7 @@ def build(jid, src, out_dir):
     # 여정 정보: 시리즈 목록(고르기)과 이 여정의 설정. 화면 글씨는 공통 ui 위에 여정의 ui를 덧씌운다
     journey = {'id': jid, 'harmony': meta.get('harmony', jid == 'jesus'), 'voice': meta.get('voice', jid == 'jesus'), 'series': series,
                **({'map': meta['map']} if 'map' in meta else {}),  # 여정의 지도 설정(그린 범위·지역 이름 등)
-               **{k: meta[k] for k in ('quick', 'next', 'odo', 'sponsor', 'where', 'narrator', 'stageOnly') if k in meta}}  # quick: 첫 화면 없이 첫 장면부터, next: 끝 화면에서 이어 걸을 여정, odo·sponsor: false면 걸은 거리·후원 안내를 숨김, where: false면 낭독에서 장소·때와 걸어가는 안내를 읽지 않음, narrator: 해설 성우('eleven:<id>' 일레븐랩스), stageOnly: 지도 없이 어두운 바탕에 무대만 크게 (GoodNews)
+               **{k: meta[k] for k in ('quick', 'next', 'odo', 'sponsor', 'where', 'rate', 'narrator', 'stageOnly') if k in meta}}  # quick: 첫 화면 없이 첫 장면부터, next: 끝 화면에서 이어 걸을 여정, odo·sponsor: false면 걸은 거리·후원 안내를 숨김, where: false면 낭독에서 장소·때와 걸어가는 안내를 읽지 않음, narrator: 해설 성우('eleven:<id>' 일레븐랩스), stageOnly: 지도 없이 어두운 바탕에 무대만 크게 (GoodNews)
     # 그림 장면(paints)의 그림 해시: app.js paintSrc가 주소 뒤에 붙인다. 부록 아이콘도 (앱의 시리즈 목록 맨 끝)
     pv = {}
     for e in events:

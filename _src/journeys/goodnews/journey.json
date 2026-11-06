@@ -9,5 +9,6 @@
  "sponsor": false,
  "where": false,
  "stageOnly": true,
- "narrator": "gemini:Algieba"
+ "narrator": "gemini:Algieba",
+ "rate": 1.1
 }
