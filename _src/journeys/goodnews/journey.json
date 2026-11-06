@@ -7,5 +7,6 @@
  "next": "jesus",
  "odo": false,
  "sponsor": false,
- "where": false
+ "where": false,
+ "stageOnly": true
 }

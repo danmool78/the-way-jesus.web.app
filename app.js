@@ -873,7 +873,7 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
   const stepped = i === prev + 1 && prevPlace !== null && !jump;
   const arrive = () => {
     idx = i; setHere(evAt(i), startOf(evAt(i))); window.stageHide = false;
-    renderScene(); updateMap(prev, { camera: !stepped || fitMode === 'all', jump }); updateTrack(); if (i >= 0) markVisited(EVENTS[i].id);
+    renderScene(); paintScene(evAt(i)); updateMap(prev, { camera: !stepped || fitMode === 'all', jump }); updateTrack(); if (i >= 0) markVisited(EVENTS[i].id);
     window.__stageScene = evAt(i); // stage.js가 늦게 로드돼도 따라잡도록
     dispatchEvent(new CustomEvent('stage:scene', { detail: { ev: evAt(i) } }));
     bgmFollow(); // 읽는 중에 장면이 바뀌면 그 장면의 곡으로 겹쳐 바꾼다
@@ -1018,6 +1018,7 @@ function speakQueue(items, onDone) {
     if (it.el) { it.el.classList.add('speaking'); scrollToEl(it.el); }
     showCaption(it);
     if (it.beat) (it.ks || [it.s]).forEach(k => stageBeat(it.beat, k));
+    verseFollow(it);
     let done = false, guard;
     const advance = d => { if (done) return; done = true; clearTimeout(guard); autoTimer = setTimeout(next, n >= queue.length ? 0 : d); }; // 마지막 문장 뒤에는 쉬지 않고 곧바로 끝낸다 (배경음악이 낭독과 함께 멈추게)
     if (hasClip(it)) {
@@ -1121,13 +1122,14 @@ const stageBeat = (beat, s) => {
     if (beat === 'end' && here(e) !== e.place) goStop(e, e.place);
   }
   dispatchEvent(new CustomEvent('stage:beat', { detail: { beat, s } }));
+  paintBeat(beat, s);
 };
 function stopSpeech(keepAuto) {
   if (speaking) dispatchEvent(new CustomEvent('stage:stop'));
   // 장면 안에서 옮겨 간 뒤에 멈추면, 무대가 처음 모습(enter)으로 돌아가므로 처음 자리(start)로 함께 돌린다
   const e = speaking && evAt(idx);
   if (e && here(e) !== startOf(e)) goStop(e, startOf(e));
-  speechToken++; clearTimeout(autoTimer);
+  speechToken++; clearTimeout(autoTimer); verseHide();
   if (synth) synth.cancel();
   voiceAudio.pause(); voiceAudio.onended = voiceAudio.onerror = voiceAudio.onplaying = voiceAudio.onwaiting = null;
   speaking = false; $$('.speaking').forEach(x => x.classList.remove('speaking'));
@@ -1135,11 +1137,89 @@ function stopSpeech(keepAuto) {
   if (!keepAuto) stopAuto();
   setListenUI();
 }
-function stopAuto() { autoOn = false; clearTimeout(autoTimer); setListenUI(); }
+function stopAuto() { autoOn = false; clearTimeout(autoTimer); promptThen = null; setListenUI(); }
+
+/* ---------- 핵심 구절과 보는 사람의 동작 (기쁜 소식 여정) ---------- */
+// 핵심 구절: skeleton의 verse(문장 열쇠 'p0.2' 등)에 든 문장을 낭독하는 동안 무대 위에 큰 글씨로 띄운다. 이어지는 구절 문장은 이어 붙인다.
+// 번역은 문장 수가 달라 낭독과 같은 비례 열쇠(it.ks)로 맞춘다 — 그래서 모든 언어에서 같은 대목이 뜬다
+let verseLast = null;
+function verseFollow(it) {
+  const vs = evAt(idx)?.verse, box = $('#verseOverlay');
+  if (!box || !vs || !it.beat || !/^p\d+$/.test(it.beat)) { if (it.beat) verseHide(); return; }
+  const keys = (it.ks || [it.s]).map(k => `${it.beat}.${k}`), hit = keys.find(k => vs.includes(k));
+  if (!hit) { verseHide(); return; }
+  const [p, s] = hit.slice(1).split('.').map(Number), cont = verseLast && verseLast.p === p && s - verseLast.s <= 1 && !box.hidden;
+  box.querySelector('p').textContent = (cont ? box.querySelector('p').textContent + ' ' : '') + it.text.trim();
+  verseLast = { p, s: s + (it.ks ? it.ks.length - 1 : 0) };
+  box.hidden = false; requestAnimationFrame(() => box.classList.add('on'));
+}
+function verseHide() { const box = $('#verseOverlay'); if (!box) return; box.classList.remove('on'); verseLast = null; clearTimeout(verseHide.t); verseHide.t = setTimeout(() => { if (!box.classList.contains('on')) box.hidden = true; }, 600); }
+// 보는 사람이 직접 하는 동작: 무대 대본의 '@prompt'가 단추를 띄운다(stage:prompt). 누르면 그 동작이 무대에서 돌고,
+// 자동 여정은 그동안 다음 장면으로 넘어가지 않고 기다렸다가 동작이 끝나면 이어 간다
+let promptThen = null;
+const promptOpen = () => { const b = $('#stagePrompt'); return b && !b.hidden; };
+addEventListener('stage:prompt', e => {
+  const b = $('#stagePrompt'); if (!b) return;
+  b.textContent = t(e.detail.label); b.hidden = false; requestAnimationFrame(() => b.classList.add('on'));
+  b.onclick = () => {
+    b.classList.remove('on'); b.hidden = true; verseHide();
+    dispatchEvent(new CustomEvent('stage:beat', { detail: { beat: e.detail.beat } }));
+    setTimeout(() => { const f = promptThen; promptThen = null; f && f(); }, e.detail.wait || 7500); // 건너가는 동작이 끝날 즈음
+  };
+});
+const promptClose = () => { const b = $('#stagePrompt'); if (b) { b.classList.remove('on'); b.hidden = true; } };
+addEventListener('stage:scene', promptClose); addEventListener('stage:walk', () => { promptClose(); verseHide(); });
+
+/* ---------- 그림으로 보는 장면 (기쁜 소식 여정) ---------- */
+// 3D 무대 대신 그림 한 장이 화면을 가득 채우고 천천히 다가가며, 낭독에 맞춰 다음 그림으로 겹쳐 넘어간다.
+// skeleton의 paints: [[열쇠, 그림], …] — 열쇠는 'intro'·'p2.3'(문장)·'p1'(문단 처음) 등, 그림은 assets/img/goodnews/<이름>.webp(대시 없는 이름은 카드 그림 assets/img/<이름>.webp).
+// act: 보는 사람이 직접 하는 동작 — at 문장(또는 낭독 끝)에서 단추를 띄우고, 누르면 seq의 그림들을 차례로 보인 뒤 '그 길' 로고가 겹쳐 남는다
+const paint = { flip: 0, token: 0, acted: false, cur: null };
+const paintSrc = n => n.includes('-') ? `assets/img/goodnews/${n}.webp` : `assets/img/${n}.webp`;
+function paintShow(name) {
+  if (!name || name === paint.cur) return;
+  paint.cur = name;
+  const imgs = $$('#paint img'), next = imgs[paint.flip = 1 - paint.flip], prev = imgs[1 - paint.flip];
+  const go = () => { next.classList.remove('on'); void next.offsetWidth; next.classList.add('on'); prev.classList.remove('on'); };
+  next.dataset.n = name; next.onload = go; next.src = paintSrc(name);
+  if (next.complete && next.naturalWidth) go();
+}
+function paintLogo(on) { const l = $('#paintLogo'); if (!l) return; if (on) { l.hidden = false; requestAnimationFrame(() => l.classList.add('on')); } else { l.classList.remove('on'); l.hidden = true; } }
+function paintScene(e) {
+  const box = $('#paint'), on = !!e?.paints;
+  document.body.classList.toggle('painted', on);
+  paint.token++; paint.acted = false; paintLogo(false);
+  if (!box) return;
+  box.hidden = !on;
+  if (!on) { paint.cur = null; return; }
+  e.paints.forEach(([, n]) => { new Image().src = paintSrc(n); }); // 다음 그림을 미리 받아 둔다
+  paintShow(e.paints[0][1]);
+}
+function paintBeat(beat, s) {
+  const e = evAt(idx);
+  if (!e?.paints || paint.acted) return;
+  const key = s === undefined || s === null ? beat : `${beat}.${s}`;
+  const hit = beat === 'end' ? e.paints[e.paints.length - 1] : e.paints.find(([k]) => k === key || (k === beat && !s));
+  if (hit) paintShow(hit[1]);
+  if (e.act && (key === e.act.at || beat === 'end') && !promptOpen()) {
+    const tk = paint.token;
+    setTimeout(() => { if (tk === paint.token && !paint.acted) dispatchEvent(new CustomEvent('stage:prompt', { detail: { label: e.act.label, beat: 'act', wait: e.act.seq.reduce((a, [, ms]) => a + ms, 0) + 3000 } })); }, 1600);
+  }
+}
+addEventListener('stage:beat', ev => {
+  const e = evAt(idx);
+  if (ev.detail.beat !== 'act' || !e?.act || paint.acted) return;
+  paint.acted = true;
+  const tk = paint.token;
+  let t = 0;
+  e.act.seq.forEach(([n, ms]) => { setTimeout(() => { if (tk === paint.token) paintShow(n); }, t); t += ms; });
+  setTimeout(() => { if (tk === paint.token) paintLogo(true); }, t); // 마지막 그림 위로 '그 길' 로고가 떠올라 남는다
+});
 function startAuto() {
   autoOn = true; setListenUI();
   const after = () => {
     if (!autoOn) return;
+    if (promptOpen()) { promptThen = after; return; } // 보는 사람의 동작을 기다린다
     if (idx >= EVENTS.length - 1) { stopAuto(); if (!endJourney(true)) toast(t('journeyEnd')); return; }
     autoTimer = setTimeout(() => { if (!autoOn) return; go(idx + 1, { keepSpeech: true, onArrive: () => { autoTimer = setTimeout(run, 1400); } }); }, 1200);
   };
@@ -1454,6 +1534,7 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   const fromHash = hashIdx(), hashOk = fromHash >= 0 || (fromHash === -1 && !!d.prologue && location.hash === '#' + d.prologue.id);
   const fromLast = EVENTS.findIndex(e => e.id === state.last);
   const quick = !!d.journey?.quick; // 전도용(기쁜 소식): 첫 화면 없이 늘 첫 장면부터 — 건네받은 사람이 곧바로 보게
+  document.body.classList.toggle('stage-only', !!d.journey?.stageOnly); // 지도 없이 무대만 (기쁜 소식 — 지도와 도성 모형이 뒤에 깔리면 시선이 흩어졌다)
   idx = hashOk ? fromHash : fromLast >= 0 && !quick ? fromLast : firstIdx();
   view = { x: 0, y: 0, w: W, h: H }; applyView();
   const start = idx; idx = -2; go(start);

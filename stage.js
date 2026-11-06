@@ -141,7 +141,7 @@ function setScene(ev) {
   curEv = ev;
   clearCast();
   moveAt = null; atSnap = true;
-  script = SCRIPTS[ev.id] || null;
+  script = (!ev.paints && SCRIPTS[ev.id]) || null; // 그림으로 보는 장면(기쁜 소식의 paints)은 3D 무대 대신 그림이 화면을 채운다 (app.js paintScene)
   mode = script ? 'scene' : 'off';
   document.body.classList.toggle('stage-on', !!script);
   if (!script) { canvas.style.opacity = 0; map.style.filter = ''; delete wrap.dataset.env; window.stageFoot = null; return; }
