@@ -64,7 +64,7 @@ def build(jid, src, out_dir):
     journey = {'id': jid, 'harmony': meta.get('harmony', jid == 'jesus'), 'voice': meta.get('voice', jid == 'jesus'), 'series': series,
                **({'map': meta['map']} if 'map' in meta else {}),  # 여정의 지도 설정(그린 범위·지역 이름 등)
                **{k: meta[k] for k in ('quick', 'next', 'odo', 'sponsor', 'where', 'rate', 'narrator', 'stageOnly') if k in meta}}  # quick: 첫 화면 없이 첫 장면부터, next: 끝 화면에서 이어 걸을 여정, odo·sponsor: false면 걸은 거리·후원 안내를 숨김, where: false면 낭독에서 장소·때와 걸어가는 안내를 읽지 않음, narrator: 해설 성우('eleven:<id>' 일레븐랩스), stageOnly: 지도 없이 어두운 바탕에 무대만 크게 (GoodNews)
-    # 그림 장면(paints)의 그림 해시: app.js paintSrc가 주소 뒤에 붙인다. 부록 아이콘도 (앱의 시리즈 목록 맨 끝)
+    # 그림 장면(paints)의 그림 해시: app.js paintSrc가 주소 뒤에 붙인다. '왜 기독교인가' 아이콘도 (앱의 시리즈 목록 맨 끝)
     pv = {}
     for e in events:
         for n in [n for _, n in e.get('paints', [])] + [n for n, _ in e.get('act', {}).get('seq', [])]:  # act의 seq는 [그림, ms]
@@ -133,7 +133,7 @@ LAND_KEYS = ['appName', 'hubTag', 'hubLead', 'seriesHead', 'seriesGo', 'seriesSc
              'mvGo', 'mvLead', 'mvNote', 'qnaHelp', 'language', 'close', 'goodnewsGo', 'whyGo']
 land = {'langs': LANGS, 'cards': [{'id': j['id'], 'title': j['title'], 'desc': j['desc'], 'ready': j['ready'], **({'n': j['n']} if j.get('n') else {})} for j in series if j['id'] != 'goodnews']
         + [{'id': 'goodnews', 'title': 'goodnewsH', 'desc': 'goodnews', 'ready': True, 'href': '/goodnews/', 'go': 'goodnewsGo'},  # 4영리는 따로 만든 페이지(/goodnews/)로
-           {'id': 'why', 'title': 'whyH', 'desc': 'why', 'ready': True, 'href': '/why.html', 'langHref': True, 'go': 'whyGo', 'icon': 'assets/why-icon.webp?v=' + hashlib.md5(open(os.path.join(root, 'assets', 'why-icon.webp'), 'rb').read()).hexdigest()[:8]}], 'ui': {}}  # 부록(왜 기독교인가)은 언어마다 why.<언어>.html
+           {'id': 'why', 'title': 'whyH', 'desc': 'why', 'ready': True, 'href': '/why.html', 'langHref': True, 'go': 'whyGo', 'icon': 'assets/why-icon.webp?v=' + hashlib.md5(open(os.path.join(root, 'assets', 'why-icon.webp'), 'rb').read()).hexdigest()[:8]}], 'ui': {}}  # '왜 기독교인가'는 언어마다 why.<언어>.html
 for lang in LANGS:
     u = {**ui_ko, **(loadf(os.path.join(here, 'i18n', 'ui.%s.json' % lang)) if lang != 'ko' else {})}
     keys = LAND_KEYS + sorted({c['title'] for c in land['cards']} | {c['desc'] for c in land['cards']})

@@ -138,7 +138,7 @@ function render(lang) {
   document.documentElement.lang = lang;
   document.querySelectorAll('[data-i]').forEach(el => { el.textContent = t(el.dataset.i); });
   document.getElementById('qna').href = lang === 'ko' ? 'qna.html' : `qna.${lang}.html`;
-  // 언어마다 따로 둔 페이지(부록 why.html → why.en.html …)
+  // 언어마다 따로 둔 페이지('왜 기독교인가' why.html → why.en.html …)
   const hrefOf = c => c.langHref && lang !== 'ko' ? c.href.replace(/\.html$/, `.${lang}.html`) : c.href;
   document.getElementById('cards').innerHTML = L.cards.filter(c => !c.langs || c.langs.includes(lang)).map((c, i) => `<li class="card ${c.ready ? '' : 'soon'}" data-journey="${c.id}" style="animation-delay:${0.1 + i * 0.07}s">
     <img class="icon" src="${c.icon || (c.id === 'jesus' ? 'assets/icon.svg' : `j/${c.id}/icon.svg`)}" alt="" width="60" height="60">
