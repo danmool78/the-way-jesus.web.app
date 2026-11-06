@@ -16,7 +16,7 @@
   :root{--bg:#f7f1e6;--ink:#2b2620;--muted:#7a6f60;--faint:#a39a8a;--gold:#d0685b;--gold2:#c0564a;--line:#e8dece;color-scheme:light}
   :root{--serif:'Noto Serif SC',serif;--sans:'Noto Sans SC',system-ui,sans-serif}
   /* 왜 기독교인가 — 묻고 답하기(qna.html)와 같은 결. 글보다 도표와 단순한 그림을 앞세운다(명화는 쓰지 않는다) */
-  body{overflow:auto;word-break:normal;line-break:strict;background:radial-gradient(ellipse at 50% 0%,rgba(208,104,91,.08),transparent 50%),var(--bg)}
+  body{overflow:auto;word-break:normal;line-break:strict;background:radial-gradient(ellipse 90% 100% at 50% 0%,rgba(208,104,91,.08),transparent 70%) 0 0/100% 900px no-repeat local,var(--bg)} /* 바탕이 화면 높이마다 되풀이되며 이음선이 보였다: 맨 위에 한 번만 깔고 종이색으로 부드럽게 녹인다 */
   .why{max-width:760px;margin:0 auto;padding:28px 20px 64px}
   .why-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
   .why-top a{color:var(--gold2);text-decoration:none;display:inline-flex;align-items:center;gap:8px;font-size:14px}
