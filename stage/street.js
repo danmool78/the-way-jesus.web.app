@@ -86,6 +86,8 @@ function worldUV(geo, tile) {
   return geo;
 }
 const texMat = (tex, color = '#ffffff', o = {}) => mat(color, { map: tex, roughness: 0.95, ...o });
+// 바닥 위에 덧까는 면(길·축대 윗면): 깊이를 조금 앞으로 당겨 아래 면과 다투지 않게
+const overlay = m => { m.polygonOffset = true; m.polygonOffsetFactor = -2; m.polygonOffsetUnits = -2; return m; };
 
 // 상자 하나: 바닥 가운데 (x, z), 높이 y에서 위로
 function block(parent, m, x, z, w, d, h, y = 0, tile = 4 * M) {
@@ -128,7 +130,7 @@ function gate(g, z0) {
   const dark = mat('#3a3024', { roughness: 1 });
   for (let i = 0; i < 4; i++) {
     const z = z0 - 0.9 * M - i * (D - 1.8 * M) / 3;
-    [-1, 1].forEach(s => block(g, S, s * (P / 2 + 0.05 * M), z, 0.1 * M, 1.6 * M, DH, 0));
+    [-1, 1].forEach(s => block(g, S, s * (P / 2 - 0.05 * M), z, 0.1 * M, 1.6 * M, DH, 0)); // 통로 쪽으로 내민 기둥벽 (탑의 면과 겹치면 깜박였다)
   }
   [-1, 1].forEach(s => block(g, dark, s * (P / 2 + 0.25 * M), zc, 0.1 * M, D - 2 * M, DH * 0.98, 0));
   // 바깥쪽 끝의 두 문짝 (활짝 열려 안쪽 벽에 붙어 있다)
@@ -334,7 +336,7 @@ export function gateSquare() {
   const floor = mesh(new THREE.PlaneGeometry(80 * M, 70 * M), texMat(paving('#c2ab84')), g, [0, 0, 0]);
   floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; floor.castShadow = false;
   floor.material.map.repeat.set(80 / 3.2, 70 / 3.2); // 한 장이 약 3.2m — 판돌 하나가 사람 걸음 반쯤
-  const out = mesh(new THREE.PlaneGeometry(260 * M, 120 * M), mat('#b9a47c', { roughness: 1 }), g, [0, -0.01, -90 * M]);
+  const out = mesh(new THREE.PlaneGeometry(260 * M, 115 * M), mat('#b9a47c', { roughness: 1 }), g, [0, -0.01, -92.5 * M]); // 광장 바닥과 겹치지 않게 (성문 통로 끝에서 깜박였다)
   out.rotation.x = -Math.PI / 2; out.receiveShadow = true; out.castShadow = false;
   const G = gate(g, GZ);
   cityWall(g, -G.half, -60 * M, GZ - 3 * M);
@@ -402,7 +404,7 @@ export function fieldSet() {
   const ground = mesh(new THREE.PlaneGeometry(m(300), m(260)), texMat(soil('#a88a62')), g, [0, 0, m(-70)]);
   ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; ground.castShadow = false;
   ground.material.map.repeat.set(55, 48);
-  const path = mesh(new THREE.PlaneGeometry(m(2.6), m(48)), texMat(soil('#cbb48a')), g, [0, 0.004, m(-2)]);
+  const path = mesh(new THREE.PlaneGeometry(m(2.6), m(48)), overlay(texMat(soil('#cbb48a'), '#ffffff', { polygonOffset: true })), g, [0, 0.004, m(-2)]);
   path.rotation.x = -Math.PI / 2; path.receiveShadow = true; path.castShadow = false;
   path.material.map.repeat.set(1, 18);
 
@@ -423,8 +425,8 @@ export function fieldSet() {
   many(g, sheaf, mat('#d2ae62', { roughness: 0.95, flatShading: true }), sheaves);
   // 가지런한 돌담 (길 왼쪽)
   const R = texMat(rubble('#b5a07c'));
-  block(g, R, m(-2.1), m(-9), m(0.6), m(30), m(0.85), 0, m(2));
-  block(g, R, m(-2.1), m(4.6), m(0.6), m(4.6), m(0.85), 0, m(2)); // 밭으로 드는 틈 (z 2.3 무렵)
+  block(g, R, m(-2.1), m(-11.1), m(0.6), m(25.8), m(0.85), 0, m(2));
+  block(g, R, m(-2.1), m(4.85), m(0.6), m(4.1), m(0.85), 0, m(2)); // 밭으로 드는 틈 (z 1.8~2.8) — 두 담이 겹치면 면이 깜박였다
 
   // 오른쪽: 게으른 사람의 밭 — 가시덤불, 거친 풀, 무너진 돌담
   const thornGeo = new THREE.IcosahedronGeometry(m(0.55), 0), tp = thornGeo.attributes.position;
@@ -493,9 +495,9 @@ export function fieldSet() {
   // 성 쪽: 계단식 밭(돌로 쌓은 축대)이 언덕을 오르고, 꼭대기에 성벽과 왕궁·성전
   const terraces = [[-27, 1.0], [-37, 2.4], [-47, 4.0], [-57, 5.8], [-67, 7.8], [-77, 10], [-87, 12.4]];
   terraces.forEach(([z0, h], i) => {
-    const d = 10, top = mat(['#9d8a5c', '#95855a', '#a08c62', '#988660'][i % 4], { roughness: 1 });
+    const d = 10, top = overlay(mat(['#9d8a5c', '#95855a', '#a08c62', '#988660'][i % 4], { roughness: 1, polygonOffset: true }));
     block(g, R, 0, m(z0 - d / 2), m(300), m(d), m(h), 0, m(2));
-    const t = mesh(new THREE.PlaneGeometry(m(300), m(d)), top, g, [0, m(h) + 0.003, m(z0 - d / 2)]);
+    const t = mesh(new THREE.PlaneGeometry(m(300), m(d)), top, g, [0, m(h) + 0.02, m(z0 - d / 2)]); // 축대 윗면과 조금 띄운다 (멀리서 깜박였다)
     t.rotation.x = -Math.PI / 2; t.receiveShadow = true; t.castShadow = false;
     // 축대 위의 올리브·포도나무 (드문드문)
     const dots = [];
@@ -505,7 +507,7 @@ export function fieldSet() {
   // 성벽 (언덕 꼭대기, 망대가 일정하게) — 길에서 100m 남짓, 올려다보이게
   const S = texMat(ashlar('#c8b28a')), WZ = m(-100), WY = m(14.8);
   block(g, S, 0, WZ, m(240), m(4), m(10), WY);
-  block(g, R, 0, m(-97 + 5), m(300), m(10), m(14.8), 0, m(2)); // 성이 선 언덕 (마지막 축대)
+  block(g, R, 0, m(-113.5), m(300), m(33), m(14.8), 0, m(2)); // 성이 선 언덕: 마지막 축대 뒤(-97)부터 성 안까지 — 축대와 앞면이 겹쳐 깜박였고, 성 안 집이 떠 있었다
   merlons(g, S, m(-120), m(120), WZ + m(1.7), WY + m(10), m(0.6));
   for (let x = -110; x <= 110; x += 22) { block(g, S, m(x), WZ + m(0.8), m(6), m(5.6), m(12.5), WY); merlons(g, S, m(x - 3), m(x + 3), WZ + m(3.3), WY + m(12.5), m(0.6)); }
   // 성 안: 높은 곳에 왕궁과 성전 (흰 마름돌, 금빛 테)

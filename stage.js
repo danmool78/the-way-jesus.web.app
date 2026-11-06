@@ -107,14 +107,14 @@ function setStreet(name) {
     scene.background = null; scene.fog = null;
     sun.position.set(-2.2, 4, -1.6); sunGoal.copy(sun.position); sun.shadow.bias = 0; sun.shadow.normalBias = 0;
     shadowBox(SHADOW0, 1024);
-    camera.clearViewOffset(); camera.far = 50;
+    camera.clearViewOffset(); camera.far = 50; camera.near = 0.1;
     return;
   }
   const set = STREETS[name]();
   scene.add(set.group);
   street = { name, set };
   scene.fog = new THREE.Fog('#c8d2d6', 45, 180); // 멀리 감람산이 아지랑이 속에
-  camera.far = 400; // 미니어처 무대의 50으로는 멀리 성벽·산이 잘렸다
+  camera.far = 400; camera.near = 0.15; // 미니어처 무대의 50으로는 멀리 성벽·산이 잘렸다. 멀리 그리는 만큼 near도 띄워 깊이 정밀도를 지킨다(먼 면이 깜박였다)
   // 그림자: 광장 전체(성문~집들)를 덮는 넓이. 넓은 만큼 그림자 지도도 크게
   shadowBox({ left: -16, right: 16, top: 16, bottom: -16, near: 1, far: 140 }, 2048);
   sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.02;
@@ -239,6 +239,7 @@ function setScene(ev) {
   });
   Object.entries(script.cast).forEach(([name, [type, x, z, face, o = {}]]) => {
     const a = new Actor(type, x, z, face, { solemn: script.solemn, ...o });
+    a.realWalk = !!script.street; // 거리 무대: 걷고 돌아보는 방향을 실제대로 (people.js)
     actors[name] = a;
     (o.board ? props[o.board].deck : stageGroup).add(a.p.root);
     a.show = 0; a.showT = 1;
