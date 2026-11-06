@@ -13,7 +13,7 @@ import { SCRIPTS } from './stage/scenes.js';
 // 지역: _src/terrain.py와 같게. fade: 높이를 해수면으로 풀어 내리는 가장자리 (맞닿은 쪽은 풀지 않는다)
 const TREG = {
   galilee: { lat0: 32.55, lat1: 33.45, lng0: 35.0, lng1: 35.95, fade: 'nwe' },
-  judea: { lat0: 31.35, lat1: 32.55, lng0: 35.0, lng1: 35.95, fade: 'swe' },
+  judea: { lat0: 30.96, lat1: 32.55, lng0: 35.0, lng1: 35.95, fade: 'swe' },
   egypt: { lat0: 29.8, lat1: 31.35, lng0: 30.95, lng1: 32.65, fade: 'nswe' },
   // 모세 여정만(south): 시내 반도와 그 북쪽 광야(가데스·호르산)는 29.8°에서 맞닿는다. 광야라 나무·마을을 두지 않고 오아시스에 종려나무만(wild) — 진영은 무대가 세운다
   sinai: { lat0: 28.2, lat1: 29.8, lng0: 32.65, lng1: 35.6, fade: 'swe', south: 1, wild: 1 },

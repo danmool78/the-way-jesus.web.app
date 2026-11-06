@@ -21,7 +21,7 @@ OUT = ROOT / 'assets' / 'terrain'
 # grid: 지도 단위당 꼭짓점 수, color: 지도 단위당 색 그림 픽셀 수, src: 색 정밀 타일
 REGIONS = {
     'galilee': dict(lat0=32.55, lat1=33.45, lng0=35.0, lng1=35.95, grid=0.6, color=2.2, src=('relief-hi', R.HI)),
-    'judea': dict(lat0=31.35, lat1=32.55, lng0=35.0, lng1=35.95, grid=0.6, color=2.2, src=('relief-hi', R.HI)),
+    'judea': dict(lat0=30.96, lat1=32.55, lng0=35.0, lng1=35.95, grid=0.6, color=2.2, src=('relief-hi', R.HI)),
     'egypt': dict(lat0=29.8, lat1=31.35, lng0=30.95, lng1=32.65, grid=0.25, color=1.2, src=('relief-hi-w', R.HI_W)),
     # 모세 여정: 시내 반도 남쪽(마라·신 광야·르비딤·시내산·미디안)과 그 북쪽(가데스·호르산·부논)은 위도 29.8에서 맞닿는다.
     # 정밀 타일이 없는 사막이라 색은 2D 바탕(relief-south)과 같은 방식으로 고도에서 바로 칠한다(src 없음, dry). 바다는 홍해의 두 만
