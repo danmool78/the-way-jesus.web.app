@@ -706,7 +706,7 @@ body.intro-open .intro,body.intro-open .intro *{animation-play-state:running}
 @media (max-width:900px){.stage-only .mapwrap{background:radial-gradient(ellipse 90% 55% at 50% 34%,#2b2219,#120e0a 62%,#0a0806)}}
 
 /* 그림으로 보는 장면(기쁜 소식): 그림이 화면을 가득 채우고 천천히 다가간다. 다음 그림은 겹쳐 넘어간다 (app.js paintShow) */
-.paint{position:absolute;inset:0;z-index:1;overflow:hidden;background:#0d0a07}
+.paint{position:absolute;inset:0;z-index:1;overflow:hidden;background:#fdf8ec} /* 그림이 크림색 종이의 펜 선 일러스트라(부록 '왜 기독교인가'와 같은 결) 바탕도 같은 종이색 — 폰에서 그림 가장자리가 종이 속으로 번진다 */
 .pf{position:absolute;inset:0;opacity:0;transition:opacity 1.6s ease}
 .pf.on{opacity:1}
 .pf img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -729,10 +729,10 @@ body.intro-open .intro,body.intro-open .intro *{animation-play-state:running}
 /* 건넌 뒤 남는 '그 길' 로고 */
 .paint-logo{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%) scale(.94);z-index:6;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;transition:opacity 2.6s ease,transform 2.6s ease;pointer-events:none;text-align:center}
 .paint-logo.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
-.paint-logo img{width:118px;height:118px;filter:drop-shadow(0 0 30px rgba(255,236,190,.85))}
-.paint-logo b{font:700 40px var(--serif);letter-spacing:.38em;text-indent:.38em;color:#fff8e6;white-space:nowrap;text-shadow:0 2px 18px rgba(0,0,0,.6)}
+.paint-logo img{width:118px;height:118px;filter:drop-shadow(0 0 24px rgba(255,214,150,.9))}
+.paint-logo b{font:700 40px var(--serif);letter-spacing:.38em;text-indent:.38em;color:#3b3128;white-space:nowrap;text-shadow:0 0 18px #fdf8ec,0 0 6px #fdf8ec} /* 종이 위의 먹색 글씨 */
 @media (max-width:900px){
   .paint-logo{width:88%}.paint-logo b{font-size:32px;letter-spacing:.24em;text-indent:.24em}
 }
-.paint-logo span{font:600 17px var(--serif);color:#fff8e6;text-shadow:0 2px 14px rgba(0,0,0,.75)}
+.paint-logo span{font:600 17px var(--serif);color:#5a4a3c;text-shadow:0 0 14px #fdf8ec}
 @media (min-width:901px){.paint-logo{left:calc((100% - min(460px,42%)) / 2)}}
