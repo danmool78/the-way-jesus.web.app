@@ -1202,6 +1202,7 @@ function paintScene(e) {
 }
 function paintBeat(beat, s) {
   const e = evAt(idx);
+  if (e?.paints && beat === 'intro' && (paint.acted || paint.cur !== e.paints[0][1])) paintScene(e); // 다 본 뒤 다시 들으면 첫 그림부터 (로고도 걷는다)
   if (!e?.paints || paint.acted) return;
   const key = s === undefined || s === null ? beat : `${beat}.${s}`;
   const hit = beat === 'end' ? e.paints[e.paints.length - 1] : e.paints.find(([k]) => k === key || (k === beat && !s));
