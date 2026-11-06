@@ -40,6 +40,12 @@
   .ill{display:block;width:100%;max-width:560px;height:auto;margin:16px auto 6px}
   .ill text{font-family:'Noto Sans KR',sans-serif}
   .ill .t{font-family:'Gowun Batang',serif;font-weight:700}
+  /* 일러스트 — 기쁜 소식 그림과 같은 화풍(paint.mjs) */
+  .art{margin:18px auto 8px;max-width:640px}
+  .art img{display:block;width:100%;border-radius:16px;background:#221b14;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:640px;margin:18px auto 8px}
+  .pair .art{margin:0}
+  .pair figcaption{text-align:center;font-family:var(--serif);font-weight:700;color:var(--gold2);font-size:15px;margin-top:8px}
   .why .cap{text-align:center;font-family:var(--serif);color:var(--gold2);font-size:16.5px;margin:0 0 16px}
   /* 모든 사람의 세 물음 */
   .asks{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0 6px}
@@ -147,17 +153,7 @@
   <section>
   <small>하나</small>
   <h2>모든 종교는 같은 말을 할까?</h2>
-  <svg class="ill" viewBox="0 0 640 270" role="img" aria-label="두 갈래로 나뉘는 길과 서로 반대쪽을 가리키는 표지판">
-    <defs><linearGradient id="road" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#4a3c2c"/><stop offset="1" stop-color="#2a2219"/></linearGradient></defs>
-    <path d="M250 260 C270 200 230 150 90 90 L130 78 C270 130 310 175 320 210 C330 175 370 130 510 78 L550 90 C410 150 370 200 390 260 Z" fill="url(#road)"/>
-    <path d="M320 258 V232 M311 214 C300 180 250 140 140 100 M329 214 C340 180 390 140 500 100" fill="none" stroke="#7a6a52" stroke-width="2" stroke-dasharray="8 9"/>
-    <rect x="316" y="40" width="8" height="190" rx="3" fill="#8a6f45"/>
-    <path d="M318 52 H200 L176 76 L200 100 H318 Z" fill="#d9b46a"/>
-    <path d="M322 112 H440 L464 136 L440 160 H322 Z" fill="#f0d79a"/>
-    <text x="252" y="84" text-anchor="middle" font-size="22" font-weight="700" fill="#24180a">이 길</text>
-    <text x="388" y="144" text-anchor="middle" font-size="22" font-weight="700" fill="#24180a">저 길</text>
-    <circle cx="320" cy="252" r="7" fill="#f6ead0"/>
-  </svg>
+  <figure class="art"><img src="assets/img/why/crossroads.webp" alt="두 갈래로 나뉘는 길과 서로 반대쪽을 가리키는 오래된 표지판" loading="lazy"></figure>
   <p class="cap">둘 다 틀릴 수는 있어도, 둘 다 맞을 수는 없습니다</p>
   <div class="vs">
     <div><b>기독교</b>예수는 십자가에서 죽고, 사흘 만에 다시 살아났다</div>
@@ -194,24 +190,10 @@
   <section>
   <small>둘</small>
   <h2>사람은 어떻게 신에게 가려 할까?</h2>
-  <svg class="ill" viewBox="0 0 640 300" role="img" aria-label="왼쪽: 기도와 금식을 올려놓은 저울 — 신과 거래하기. 오른쪽: 혼자 오르는 사다리 — 스스로 오르기">
-    <rect x="152" y="70" width="10" height="170" rx="4" fill="#8a6f45"/>
-    <path d="M122 246 H192" stroke="#8a6f45" stroke-width="8" stroke-linecap="round"/>
-    <path d="M60 104 L254 82" stroke="#d9b46a" stroke-width="6" stroke-linecap="round"/>
-    <circle cx="157" cy="93" r="9" fill="#e9c97f"/>
-    <path d="M60 104 L30 170 M60 104 L90 170 M254 82 L224 148 M254 82 L284 148" stroke="#7a6a52" stroke-width="1.5"/>
-    <path d="M22 170 Q60 194 98 170 Z" fill="#d9b46a"/>
-    <path d="M216 148 Q254 172 292 148 Z" fill="#d9b46a"/>
-    <g fill="#3a2f22" stroke="#c8b48e" stroke-width="1.5"><rect x="34" y="150" width="26" height="20" rx="3"/><rect x="62" y="150" width="26" height="20" rx="3"/><rect x="47" y="130" width="26" height="20" rx="3"/></g>
-    <text x="254" y="138" text-anchor="middle" font-size="30" font-weight="700" fill="#f0d79a">?</text>
-    <text x="60" y="122" text-anchor="middle" font-size="15" fill="#b3a58f">기도·금식</text>
-    <text class="t" x="157" y="286" text-anchor="middle" font-size="22" fill="#f0d79a">① 신과 거래하기</text>
-    <path d="M440 250 L470 40 M500 250 L530 40" stroke="#8a6f45" stroke-width="6" stroke-linecap="round"/>
-    <g stroke="#8a6f45" stroke-width="5" stroke-linecap="round"><path d="M443 226 H503"/><path d="M448 192 H508"/><path d="M453 158 H513"/><path d="M458 124 H518"/><path d="M462 90 H522"/><path d="M466 58 H526"/></g>
-    <circle cx="482" cy="140" r="11" fill="#f6ead0"/><path d="M482 152 V178 M482 160 L468 150 M482 160 L494 146 M482 178 L472 194 M482 178 L494 192" stroke="#f6ead0" stroke-width="4" stroke-linecap="round"/>
-    <circle cx="560" cy="30" r="22" fill="url(#glow)"/>
-    <text class="t" x="490" y="286" text-anchor="middle" font-size="22" fill="#f0d79a">② 스스로 오르기</text>
-  </svg>
+  <div class="pair">
+    <figure class="art"><img src="assets/img/why/scale.webp" alt="큰 저울에 제물을 올려놓으며 불안하게 바라보는 사람" loading="lazy"><figcaption>① 신과 거래하기</figcaption></figure>
+    <figure class="art"><img src="assets/img/why/ladder.webp" alt="구름 속 끝없는 사다리를 혼자 오르는 사람" loading="lazy"><figcaption>② 스스로 오르기</figcaption></figure>
+  </div>
   <p class="cap">방법은 달라도 방향은 같습니다 — 위로</p>
   <details class="more"><summary><span class="o">두 길 자세히 · 종교별로 보기</span><span class="c">접기</span></summary><div>
   <div class="card">
@@ -243,25 +225,7 @@
   <section>
   <small>셋</small>
   <h2>그런데, 거꾸로 된 이야기가 하나 있다</h2>
-  <svg class="ill" viewBox="0 0 640 320" role="img" aria-label="사람이 산을 오르는 여러 길과, 꼭대기에서 사람에게로 내려오는 한 길">
-    <defs>
-      <radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#f6e2a8"/><stop offset=".35" stop-color="#d9b46a" stop-opacity=".55"/><stop offset="1" stop-color="#d9b46a" stop-opacity="0"/></radialGradient>
-      <linearGradient id="mt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2f22"/><stop offset="1" stop-color="#211a13"/></linearGradient>
-    </defs>
-    <circle cx="320" cy="56" r="54" fill="url(#glow)"/>
-    <path d="M30 280 L320 52 L610 280 Z" fill="url(#mt)" stroke="#5a4830" stroke-width="1.5"/>
-    <g fill="none" stroke="#9c8a6c" stroke-width="2" stroke-dasharray="5 6" stroke-linecap="round">
-      <path d="M90 280 C130 240 150 230 175 200"/><path d="M170 280 C190 245 215 220 220 175"/>
-      <path d="M250 280 C255 245 250 210 262 150"/><path d="M330 280 C320 240 300 205 300 130"/>
-    </g>
-    <g fill="#c8b48e"><circle cx="175" cy="194" r="5"/><circle cx="220" cy="169" r="5"/><circle cx="262" cy="144" r="5"/><circle cx="300" cy="124" r="5"/></g>
-    <g font-size="20" fill="#b3a58f" text-anchor="end"><text x="150" y="214">선행</text><text x="196" y="174">고행</text><text x="240" y="134">율법</text><text x="282" y="96">깨달음</text></g>
-    <path d="M326 56 C380 110 430 150 500 254" fill="none" stroke="#e9c97f" stroke-width="3.5" stroke-linecap="round"/>
-    <path d="M486 248 L502 258 L503 240" fill="none" stroke="#e9c97f" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <circle cx="520" cy="262" r="6" fill="#f6ead0"/>
-    <text class="t" x="418" y="140" font-size="22" fill="#f0d79a">하나님이 내려오심</text>
-    <text class="t" x="180" y="312" font-size="22" fill="#c8b48e" text-anchor="middle">사람이 오르는 길</text>
-  </svg>
+  <figure class="art"><img src="assets/img/why/mountain.webp" alt="많은 사람이 산을 오르는 동안, 꼭대기에서 금빛이 골짜기의 한 사람에게로 흘러내린다" loading="lazy"></figure>
   <svg class="ill" viewBox="0 0 640 330" role="img" aria-label="하나님의 자리에서 사람, 마구간, 종, 십자가로 한 계단씩 내려오는 그림">
     <defs><radialGradient id="g2" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff3cf"/><stop offset=".4" stop-color="#e9c97f" stop-opacity=".6"/><stop offset="1" stop-color="#e9c97f" stop-opacity="0"/></radialGradient></defs>
     <path d="M10 70 H130 V120 H250 V170 H370 V220 H490 V270 H630 V310 H10 Z" fill="#2a2219" stroke="#5a4830" stroke-width="1.5"/>
@@ -280,21 +244,7 @@
   <div class="verse">그분은 하나님의 모습을 지니셨지만, 하나님과 같음을 붙들고 있으려 하지 않으셨습니다. 오히려 자기를 비워 종의 모습을 입고 사람이 되셨습니다. 자기를 낮추셔서 죽기까지, 십자가에서 죽기까지 순종하셨습니다.<cite>빌립보서 2:6–8</cite></div>
   <div class="card"><p>다른 종교에도 신이 땅에 내려오는 이야기는 있습니다. 힌두교의 화신(아바타)이 그렇습니다. 그러나 그 신들은 왕자나 영웅으로 와서 악을 물리칩니다. <b>가장 낮은 자리에서, 죄인을 대신해 죽으려고 온 하나님</b>은 기독교에만 있습니다.</p></div>
   </div></details>
-  <svg class="ill" viewBox="0 0 640 236" role="img" aria-label="집에서 달려 나온 아버지가 멀리서 돌아오는 아들에게 팔을 벌리고 달려가는 그림">
-    <path d="M0 196 H640" stroke="#4a3c2c" stroke-width="2"/>
-    <path d="M40 196 V120 L90 84 L140 120 V196 Z" fill="#2e251b" stroke="#8a6f45" stroke-width="2"/>
-    <rect x="78" y="146" width="24" height="50" rx="3" fill="#e9c97f" opacity=".85"/>
-    <g stroke="#f6ead0" stroke-width="6" stroke-linecap="round" fill="none">
-      <path d="M262 112 L250 152"/><path d="M258 124 L292 104 M258 124 L294 132"/><path d="M250 152 L276 190 M250 152 L226 184 L214 192"/>
-    </g>
-    <circle cx="268" cy="96" r="13" fill="#f6ead0"/>
-    <path d="M196 110 H222 M190 130 H218 M198 150 H222" stroke="#d9b46a" stroke-width="3" stroke-linecap="round"/>
-    <g stroke="#b3a58f" stroke-width="5" stroke-linecap="round" fill="none"><path d="M520 140 L522 170 M520 148 L508 164 M520 148 L532 162 M522 170 L514 194 M522 170 L530 194"/></g>
-    <circle cx="514" cy="130" r="10" fill="#b3a58f"/>
-    <path d="M310 170 C380 186 440 186 496 176" fill="none" stroke="#e9c97f" stroke-width="2.5" stroke-dasharray="2 8" stroke-linecap="round"/>
-    <text class="t" x="268" y="228" text-anchor="middle" font-size="20" fill="#f0d79a">아버지가 먼저 달려간다</text>
-    <text x="520" y="228" text-anchor="middle" font-size="17" fill="#b3a58f">돌아오는 아들</text>
-  </svg>
+  <figure class="art"><img src="assets/img/why/father.webp" alt="두 팔을 벌리고 돌아오는 아들에게 달려가는 아버지" loading="lazy"></figure>
   <p class="cap">"품꾼으로라도…" 말을 다 하기도 전에</p>
   <details class="more"><summary><span class="o">예수께서 들려주신 이야기</span><span class="c">접기</span></summary><div>
   <p>재산을 탕진하고 돌아오는 아들은 길에서 할 말을 연습합니다. <b>"품꾼으로라도 써 주십시오."</b> 일해서 갚겠다는, 올라가는 길입니다. 그런데 아버지는 그 말을 듣기도 전에 멀리서 알아보고 <b>먼저 달려가</b> 끌어안습니다.</p>
@@ -305,18 +255,7 @@
   <section>
   <small>넷</small>
   <h2>그냥 용서하시면 안 될까?</h2>
-  <svg class="ill" viewBox="0 0 640 250" role="img" aria-label="죄로 끊어진 낭떠러지 사이에 십자가가 다리처럼 놓여 사람이 건너가는 그림">
-    <defs><radialGradient id="g3" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff3cf"/><stop offset=".45" stop-color="#e9c97f" stop-opacity=".5"/><stop offset="1" stop-color="#e9c97f" stop-opacity="0"/></radialGradient></defs>
-    <circle cx="560" cy="70" r="70" fill="url(#g3)"/>
-    <path d="M0 110 H220 L236 250 H0 Z" fill="#3a2f22" stroke="#5a4830"/>
-    <path d="M640 110 H420 L404 250 H640 Z" fill="#3a2f22" stroke="#5a4830"/>
-    <path d="M226 104 H414" stroke="#e9c97f" stroke-width="14" stroke-linecap="round"/>
-    <path d="M320 70 V138" stroke="#e9c97f" stroke-width="12" stroke-linecap="round"/>
-    <circle cx="270" cy="78" r="9" fill="#f6ead0"/><path d="M270 88 V97" stroke="#f6ead0" stroke-width="5" stroke-linecap="round"/>
-    <text x="110" y="160" text-anchor="middle" font-size="20" fill="#b3a58f">사람</text>
-    <text x="530" y="160" text-anchor="middle" font-size="20" fill="#f0d79a" font-weight="700">하나님</text>
-    <text x="320" y="210" text-anchor="middle" font-size="18" fill="#7f735f">죄로 끊어진 틈</text>
-  </svg>
+  <figure class="art"><img src="assets/img/goodnews/g03-bridge.webp" alt="깊은 골짜기 위에 다리처럼 놓인 십자가" loading="lazy"></figure>
   <p class="cap">사람이 건널 수 없는 틈을, 하나님이 십자가로 이으셨습니다</p>
   <details class="more"><summary><span class="o">재판관 이야기 · 죄의 값은 어디로</span><span class="c">접기</span></summary><div>
   <p>누가 내 가족을 해쳤는데 재판관이 "괜찮다" 하고 풀어 준다면, 그것을 사랑이라 부르기는 어렵습니다. <b>그냥 덮으면 정의가 무너지고, 그대로 벌하면 사랑이 설 자리가 없습니다.</b></p>
@@ -349,20 +288,7 @@
   <section>
   <small>다섯</small>
   <h2>기독교는 배타적일까?</h2>
-  <svg class="ill" viewBox="0 0 640 270" role="img" aria-label="자격을 갖춘 사람만 지나는 좁은 문과, 누구에게나 활짝 열린 문">
-    <defs><radialGradient id="lit" cx="50%" cy="60%" r="60%"><stop offset="0" stop-color="#f6e2a8" stop-opacity=".9"/><stop offset="1" stop-color="#d9b46a" stop-opacity="0"/></radialGradient></defs>
-    <path d="M120 220 V90 a40 40 0 0 1 80 0 V220" fill="#221b14" stroke="#7a6a52" stroke-width="2"/>
-    <rect x="132" y="96" width="56" height="124" rx="4" fill="#2e251b" stroke="#5a4830"/>
-    <g font-size="18" fill="#b3a58f"><text x="214" y="110">✓ 선행을 충분히</text><text x="214" y="140">✓ 고행을 오래</text><text x="214" y="170">✓ 율법을 빠짐없이</text><text x="214" y="200">✓ 깨달음을 깊이</text></g>
-    <circle cx="96" cy="206" r="6" fill="#c8b48e"/><path d="M96 213 v7" stroke="#c8b48e" stroke-width="3"/>
-    <text class="t" x="170" y="258" font-size="20" fill="#c8b48e" text-anchor="middle">자격을 갖추면 들어가는 문</text>
-    <ellipse cx="490" cy="170" rx="120" ry="80" fill="url(#lit)"/>
-    <path d="M420 220 V96 a70 70 0 0 1 140 0 V220" fill="rgba(246,226,168,.18)" stroke="#e9c97f" stroke-width="2.5"/>
-    <path d="M420 220 L392 228 V104 L420 96" fill="#2e251b" stroke="#8a6f45"/>
-    <g fill="#f6ead0"><circle cx="458" cy="196" r="6"/><circle cx="484" cy="200" r="4.5"/><circle cx="510" cy="194" r="6.5"/><circle cx="532" cy="200" r="5"/></g>
-    <g stroke="#f6ead0" stroke-width="3"><path d="M458 203v10M484 205v8M510 201v11M532 205v8"/></g>
-    <text class="t" x="490" y="258" font-size="20" fill="#f0d79a" text-anchor="middle">누구든지 들어오는 문</text>
-  </svg>
+  <figure class="art"><img src="assets/img/why/doors.webp" alt="가파른 계단 위의 닫힌 좁은 문과, 여러 사람이 함께 들어가는 활짝 열린 문" loading="lazy"></figure>
   <p class="cap">하나뿐인 길, 그러나 가장 넓은 문</p>
   <details class="more"><summary><span class="o">왜 가장 넓은 문인지</span><span class="c">접기</span></summary><div>
   <p>먼저 솔직하게 인정합니다. 배타적이라고 느껴진 데에는 <b>그리스도인들의 차가운 말과 행동</b>이 한몫했습니다. 그것은 예수의 모습이 아니었습니다. 미안한 일입니다.</p>
@@ -392,29 +318,12 @@
   <p>다른 민족, 다른 신앙, 점령군의 장교, 민족을 판 사람이라 손가락질받던 세리, 사형수. 예수는 당시 사람들이 그어 놓은 선을 넘어 <b>먼저 찾아가셨습니다.</b></p>
   <div class="verse">유대 사람도 그리스 사람도, 종도 자유인도, 남자도 여자도 없습니다. 여러분은 모두 그리스도 예수 안에서 하나입니다.<cite>갈라디아서 3:28</cite></div>
   </div></details>
-  <svg class="ill" viewBox="0 0 640 190" role="img" aria-label="연기 속에서 비상구를 가리키며 이쪽이라고 외치는 사람">
-    <g fill="#5a4f44" opacity=".45"><circle cx="70" cy="50" r="30"/><circle cx="115" cy="38" r="36"/><circle cx="165" cy="52" r="28"/><circle cx="210" cy="40" r="24"/><circle cx="100" cy="72" r="22"/></g>
-    <rect x="440" y="40" width="110" height="140" rx="6" fill="#2e251b" stroke="#a9b98a" stroke-width="2.5"/>
-    <rect x="452" y="54" width="86" height="28" rx="4" fill="#a9b98a"/>
-    <text x="495" y="74" text-anchor="middle" font-size="16" font-weight="700" fill="#15110d">비상구</text>
-    <g stroke="#f6ead0" stroke-width="5" stroke-linecap="round" fill="none"><path d="M330 92 L330 136 M330 102 L392 92 M330 108 L310 124 M330 136 L318 170 M330 136 L344 170"/></g>
-    <circle cx="330" cy="78" r="12" fill="#f6ead0"/>
-    <text class="t" x="290" y="116" text-anchor="end" font-size="22" fill="#f0d79a">"이쪽입니다!"</text>
-  </svg>
+  <figure class="art"><img src="assets/img/why/exit.webp" alt="연기 속에서 빛나는 출구를 열고 사람들을 부르는 사람" loading="lazy"></figure>
   <p class="cap">출구가 하나뿐이라면, 알려 주는 것이 사랑입니다</p>
   <details class="more"><summary><span class="o">왜 전하는가</span><span class="c">접기</span></summary><div>
   <p>비상구를 아는 사람이 "이쪽입니다!" 하고 외친다면, 우리는 그를 오만하다고 하지 않습니다. 그리스도인이 예수를 전하는 마음도 <b>이기려는 마음이 아니라, 함께 살고 싶은 마음</b>이어야 합니다.</p>
   </div></details>
-  <svg class="ill" viewBox="0 0 640 220" role="img" aria-label="닫힌 문 밖에서 두드리며 기다리는 사람">
-    <rect x="300" y="30" width="150" height="180" rx="4" fill="#2a2219" stroke="#8a6f45" stroke-width="2"/>
-    <path d="M318 210 V70 a57 57 0 0 1 114 0 V210" fill="#3a2f22" stroke="#d9b46a" stroke-width="2"/>
-    <circle cx="418" cy="140" r="5" fill="#d9b46a"/>
-    <path d="M492 60 h20 v26 h-20 z" fill="#e9c97f" opacity=".85"/><path d="M502 46 v14" stroke="#8a6f45" stroke-width="2"/>
-    <g stroke="#f6ead0" stroke-width="6" stroke-linecap="round" fill="none"><path d="M236 106 L236 160 M236 116 L290 110 M236 160 L226 204 M236 160 L248 204"/></g>
-    <circle cx="232" cy="90" r="13" fill="#f6ead0"/>
-    <path d="M300 92 a10 10 0 0 1 0 22 M290 86 a18 18 0 0 1 0 34" fill="none" stroke="#e9c97f" stroke-width="2.5" stroke-linecap="round"/>
-    <text class="t" x="130" y="118" text-anchor="middle" font-size="24" fill="#f0d79a">똑똑</text>
-  </svg>
+  <figure class="art"><img src="assets/img/goodnews/g04-door.webp" alt="저녁빛 속에서 닫힌 문을 두드리시는 예수" loading="lazy"></figure>
   <p class="cap">문은 안에서 엽니다</p>
   <details class="more"><summary><span class="o">억지로 열지 않는 사랑</span><span class="c">접기</span></summary><div>
   <p>예수는 문을 부수고 들어오지 않으십니다. 밖에서 두드리고 기다리십니다. 억지로 열게 하는 것은 사랑이 아니기 때문입니다. 그래서 그리스도인도 다른 믿음을 가진 이웃을 <b>온유하고 존중하는 마음으로</b> 대해야 합니다(벧전 3:15–16).</p>
@@ -425,17 +334,7 @@
   <section>
   <small>여섯</small>
   <h2>진짜는 어떻게 알아볼까?</h2>
-  <svg class="ill" viewBox="0 0 640 172" role="img" aria-label="표면이 까끌한 진짜 진주와 매끈한 모조 진주">
-    <defs>
-      <radialGradient id="pr" cx="38%" cy="35%" r="70%"><stop offset="0" stop-color="#fffaf0"/><stop offset=".55" stop-color="#e8dcc6"/><stop offset="1" stop-color="#a99a80"/></radialGradient>
-      <radialGradient id="fk" cx="38%" cy="35%" r="70%"><stop offset="0" stop-color="#ffffff"/><stop offset=".4" stop-color="#f0ece4"/><stop offset="1" stop-color="#c9c2b6"/></radialGradient>
-      <pattern id="nacre" width="6" height="6" patternUnits="userSpaceOnUse"><path d="M0 3 Q1.5 1 3 3 T6 3" fill="none" stroke="#8a7a60" stroke-width=".6" opacity=".55"/></pattern>
-    </defs>
-    <circle cx="190" cy="78" r="52" fill="url(#pr)"/><circle cx="190" cy="78" r="52" fill="url(#nacre)"/>
-    <circle cx="450" cy="78" r="52" fill="url(#fk)"/><ellipse cx="432" cy="58" rx="16" ry="9" fill="#fff" opacity=".85"/>
-    <text class="t" x="190" y="162" text-anchor="middle" font-size="22" fill="#f0d79a">진짜 — 까끌하다</text>
-    <text class="t" x="450" y="162" text-anchor="middle" font-size="22" fill="#b3a58f">모조 — 매끈하다</text>
-  </svg>
+  <figure class="art"><img src="assets/img/why/pearl.webp" alt="물가에 열린 조개 속에서 은은히 빛나는 진주" loading="lazy"></figure>
   <p class="cap">진짜 진주는 상처에서 나온 보석입니다</p>
   <details class="more"><summary><span class="o">가짜를 가려내는 네 가지</span><span class="c">접기</span></summary><div>
   <p>값진 것 곁에는 흉내 내는 것이 생깁니다. 아무도 돌멩이는 흉내 내지 않습니다. 기독교의 이름을 빌린 가르침들은 거의 언제나 <b>"은혜만으로는 모자라다"</b>며 무언가를 덧붙여, 다시 '올라가는 길'로 되돌립니다.</p>
@@ -475,7 +374,7 @@
     <a href="/goodnews/">GoodNews 네 장면 보기 →</a>
     <a class="ghost" href="app.html?j=jesus">예수의 발자취 걷기</a>
   </div>
-  <p class="foot">말씀은 이 앱이 새로 옮긴 글입니다. 각 종교의 소개는 그 종교의 대표적인 가르침을 짧게 줄인 것이니, 더 깊이는 그 종교의 경전과 신자의 설명으로 들어 보시길 권합니다.<br><a href="https://sssoft-idea.web.app/" target="_blank" rel="noopener">© SSSOFT</a></p>
+  <p class="foot">그림: AI로 만들고 사람이 다듬었습니다. 말씀은 이 앱이 새로 옮긴 글입니다. 각 종교의 소개는 그 종교의 대표적인 가르침을 짧게 줄인 것이니, 더 깊이는 그 종교의 경전과 신자의 설명으로 들어 보시길 권합니다.<br><a href="https://sssoft-idea.web.app/" target="_blank" rel="noopener">© SSSOFT</a></p>
 </main>
 </body>
 </html>
