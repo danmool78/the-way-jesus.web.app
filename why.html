@@ -97,18 +97,37 @@
   .when b{display:block;font-family:var(--serif);font-size:18px;color:#2b2620}
   .when span{font-size:13px;color:var(--muted)}
   .when a{margin-left:auto;flex:none;font-size:13px;color:var(--gold2);text-decoration:none;border:1px solid #d6c8b2;border-radius:999px;padding:7px 12px}
-  /* 진짜(O)·가짜(X) 맞대기 — 기준마다 한 줄, 폰에서도 두 칸 */
-  .ox{margin:16px 0;border:1px solid #e8dece;border-radius:16px;overflow:hidden;background:#fffaf2}
+  /* 진짜(O)·가짜(X) 맞대기 — 기준마다 한 장의 카드. 폰은 기준이 위, 넓은 화면은 기준 | O | X 세 칸 */
+  .ox{margin:18px 0;display:grid;gap:10px}
   .ox-h,.ox-r{display:grid;grid-template-columns:1fr 1fr}
-  .ox-h div{padding:12px 10px;text-align:center;font-family:var(--serif);font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;gap:8px}
-  .ox-h .o{background:#eef3e8;color:#4f6b3f}.ox-h .x{background:#fbe9e5;color:#b8473b}
-  .ox-k{grid-column:1/-1;padding:10px 14px 0;font-size:12.5px;font-weight:700;color:var(--faint);letter-spacing:.04em}
-  .ox-r{border-top:1px solid #efe6d8}
-  .ox-r>div{padding:6px 14px 13px;font-size:14px;line-height:1.65;color:#3d362d}
-  .ox-r>div:nth-child(2){border-right:1px dashed #e8dece;background:rgba(95,129,80,.05)}
-  .ox-r>div:nth-child(3){background:rgba(201,88,75,.04)}
-  .ox-r b{color:#2b2620}
-  .mk{flex:none;width:22px;height:22px}
+  .ox-h{gap:10px}
+  .ox-h div{padding:9px 10px;border-radius:999px;text-align:center;font-family:var(--serif);font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;gap:8px}
+  .ox-h .o{background:#e8f0e1;color:#4f6b3f}.ox-h .x{background:#fbe4df;color:#b8473b}
+  .ox-r{border:1px solid #e8dece;border-radius:16px;overflow:hidden;background:#fffaf2;box-shadow:0 2px 10px rgba(90,60,30,.05)}
+  .ox-k{grid-column:1/-1;padding:9px 14px;font-family:var(--serif);font-weight:700;font-size:15px;color:#2b2620;background:#f6efe2;border-bottom:1px solid #efe6d8}
+  .ox-r>div:nth-child(n+2){position:relative;padding:12px 12px 13px 36px;font-size:14px;line-height:1.65}
+  .ox-r>div:nth-child(2){background:#f3f7ee;color:#3d362d}
+  .ox-r>div:nth-child(3){background:#fdf2ef;color:#6d625a}
+  .ox-r>div:nth-child(2)::before{content:'';position:absolute;left:13px;top:16px;width:11px;height:11px;border:2.5px solid #5f8150;border-radius:50%}
+  .ox-r>div:nth-child(3)::before{content:'✕';position:absolute;left:13px;top:11px;font-size:15px;font-weight:700;color:#c9584b}
+  .ox-r>div:nth-child(2) b{color:#3f5a31}.ox-r>div:nth-child(3) b{color:#a8443a}
+  .mk{flex:none;width:20px;height:20px}
+  @media (min-width:640px){
+    .ox-h,.ox-r{grid-template-columns:150px 1fr 1fr}
+    .ox-h::before{content:''}
+    .ox-k{grid-column:auto;border-bottom:0;border-right:1px solid #efe6d8;display:flex;align-items:center}
+  }
+  /* 믿어야 아는 것들 */
+  .know{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
+  .know div{border:1px solid #e8dece;border-radius:16px;background:#fffaf2;padding:14px 12px;font-size:13.5px;line-height:1.6;color:#3d362d}
+  .know svg{width:34px;height:34px;display:block;margin-bottom:6px}
+  .know b{display:block;font-family:var(--serif);font-size:16px;color:#2b2620;margin-bottom:3px}
+  .flip{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin:16px 0;text-align:center}
+  .flip div{border-radius:16px;padding:14px 10px;font-family:var(--serif);font-size:17px;line-height:1.5}
+  .flip .a{background:#f0ebe2;color:#7a6f60}.flip .b{background:#fbe4df;color:#b8473b;font-weight:700}
+  .flip small{display:block;font-family:var(--sans);font-size:12px;color:var(--muted);font-weight:400;margin-top:2px}
+  .flip span{font-size:22px;color:var(--faint)}
+  @media (max-width:600px){.know{grid-template-columns:1fr 1fr}}
   .end{text-align:center;margin-top:40px}
   .end a{display:inline-block;padding:14px 28px;border-radius:999px;background:linear-gradient(180deg,#d97a6c,#c0564a);color:#ffffff;font-weight:700;text-decoration:none;margin:4px}
   .end a.ghost{background:none;border:1px solid #d6c8b2;color:var(--gold2)}
@@ -404,6 +423,31 @@
   </div>
   <div class="verse big">하나님은 세상을 이처럼 사랑하셔서 외아들을 주셨습니다. 그를 믿는 사람은 누구든지 멸망하지 않고 영원한 생명을 얻게 하려는 것입니다.<cite>요한복음 3:16</cite></div>
   <p style="text-align:center">믿으라고 다그치지 않겠습니다. 그분이 걸으신 길을 천천히 따라 걸어 보세요. 판단은 그 뒤에 하셔도 늦지 않습니다.</p>
+
+  <h3 style="text-align:center;margin-top:40px">믿어야 알 수 있는 것들</h3>
+  <p>"먼저 알고 나서 믿겠다"는 말은 합리적으로 들립니다. 그런데 실제 삶에서는 거꾸로인 것이 많습니다. <b>믿고 한 걸음 내디뎌야 비로소 알게 되는 것들</b>입니다.</p>
+  <div class="flip">
+    <div class="a">알고 → 믿는다<small>머리로만 아는 길</small></div>
+    <span>⇄</span>
+    <div class="b">믿고 → 안다<small>걸어 보며 아는 길</small></div>
+  </div>
+  <div class="know">
+    <div><svg viewBox="0 0 34 34" fill="none" stroke="#2b2620" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="17" cy="11" r="3.5"/><path d="M8 17c3-3 6-3 9 0s6 3 9 0" stroke="#5f8150"/><path d="M4 23c3-2 6-2 9 0s6 2 9 0 6-2 9 0M4 28c3-2 6-2 9 0s6 2 9 0 6-2 9 0" stroke="#8fb2b4"/></svg><b>수영</b>물이 나를 띄운다고 믿고 힘을 빼야, 뜬다는 것을 압니다. 버둥대면 가라앉습니다.</div>
+    <div><svg viewBox="0 0 34 34" fill="none" stroke="#2b2620" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="23" r="6"/><circle cx="25" cy="23" r="6"/><path d="M9 23l6-10h8l2 10M15 13l-2-4h-3M23 13l-1-4h3" /><path d="M15 23l8-10" stroke="#d0685b"/></svg><b>자전거</b>달려야 넘어지지 않는다고 믿고 페달을 밟아야 압니다. 멈춰 서면 넘어집니다.</div>
+    <div><svg viewBox="0 0 34 34" fill="none" stroke="#2b2620" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19l26-9-6 15-6-6-5 6v-8z"/><path d="M18 19l12-9" stroke="#d0685b"/></svg><b>비행기</b>원리를 다 알고 타는 사람은 드뭅니다. 타 봐야 하늘을 압니다.</div>
+    <div><svg viewBox="0 0 34 34" fill="none" stroke="#2b2620" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="19" r="7"/><circle cx="21" cy="19" r="7" stroke="#d0685b"/><path d="M15 8l2-3 2 3"/></svg><b>결혼</b>다 알고 결혼하는 사람은 없습니다. 믿고 함께 살며 알아 갑니다.</div>
+    <div><svg viewBox="0 0 34 34" fill="none" stroke="#2b2620" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="12" width="22" height="10" rx="5" transform="rotate(-30 17 17)"/><path d="M14 11.5l6 10.4" stroke="#d0685b"/></svg><b>약</b>의사를 믿고 먹어야 낫는 것을 압니다. 설명서만 읽어서는 낫지 않습니다.</div>
+    <div><svg viewBox="0 0 34 34" fill="none" stroke="#2b2620" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18h24a12 12 0 0 1-24 0z"/><path d="M12 12c0-3 3-3 3-6M18 12c0-3 3-3 3-6" stroke="#d0685b"/></svg><b>음식</b>맛은 설명으로 알 수 없습니다. 먹어 봐야 압니다.</div>
+    <div><svg viewBox="0 0 34 34" fill="none" stroke="#2b2620" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 5h8M14 5v9l-7 13a2 2 0 0 0 2 3h16a2 2 0 0 0 2-3l-7-13V5"/><path d="M9 23h16" stroke="#5f8150"/></svg><b>과학</b>과학자도 가설이 맞으리라 믿고 실험을 시작합니다. 결과는 그 뒤에 압니다.</div>
+    <div><svg viewBox="0 0 34 34" fill="none" stroke="#2b2620" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="10" r="4"/><path d="M6 29c0-7 3-12 7-12s7 3 8 6"/><circle cx="22" cy="21" r="3" stroke="#d0685b"/><path d="M19 27c1-2 5-2 6 0" stroke="#d0685b"/></svg><b>아기</b>아기는 엄마를 다 알고 안기지 않습니다. 안겨서 엄마를 압니다.</div>
+  </div>
+  <details class="more"><summary><span class="o">눈 감고 믿으라는 말은 아닙니다</span><span class="c">접기</span></summary><div>
+  <p>수영을 배우는 사람은 아무 데나 몸을 던지지 않습니다. 곁에 강사가 있고, 다른 사람이 뜨는 것을 보았기에 몸을 맡깁니다. <b>충분한 이유가 있는 믿음</b>입니다.</p>
+  <p>기독교의 믿음도 그렇습니다. 때와 장소가 있는 역사 속 사건, 목숨을 걸고 증언한 사람들, 앞에서 견주어 본 이야기들이 그 이유입니다. 그 위에서 한 걸음 내디디면, 그다음은 머리가 아니라 삶으로 알게 됩니다. 그리고 알수록 믿음은 더 깊어집니다.</p>
+  <div class="verse">주님이 얼마나 좋으신지 맛보아 알아라.<cite>시편 34:8</cite></div>
+  <div class="verse">누구든지 하나님의 뜻을 따르려고 하면, 이 가르침이 하나님에게서 왔는지, 내가 내 생각대로 말하는지 알게 될 것이다.<cite>요한복음 7:17</cite></div>
+  </div></details>
+  <p style="text-align:center;margin-top:18px">그러니 다 알고 나서가 아니라, <b>오늘 한 걸음</b>이면 충분합니다.</p>
   </section>
 
   <div class="part">
