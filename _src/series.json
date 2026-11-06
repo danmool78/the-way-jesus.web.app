@@ -5,6 +5,6 @@
  {"id": "kings", "ready": false, "title": "nextJ3h", "desc": "nextJ3"},
  {"id": "paul", "ready": false, "title": "nextJ4h", "desc": "nextJ4"},
  {"id": "psalms", "ready": false, "title": "nextJ5h", "desc": "nextJ5"},
- {"id": "proverbs", "ready": false, "title": "nextJ6h", "desc": "nextJ6"},
+ {"id": "proverbs", "ready": true, "title": "nextJ6h", "desc": "nextJ6"},
  {"id": "goodnews", "ready": true, "title": "seriesGoodH", "desc": "seriesGood"}
 ]
