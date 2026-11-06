@@ -1,0 +1,72 @@
+[
+ {
+  "name": "George",
+  "id": "JBFqnCBsd6RMkjVDRZzb",
+  "gender": "male",
+  "desc": "기본: warm, captivating storyteller",
+  "file": "eleven-George.mp3"
+ },
+ {
+  "name": "Brian",
+  "id": "nPczCjzI2devNBz1zQrb",
+  "gender": "male",
+  "desc": "기본: deep, resonant, comforting",
+  "file": "eleven-Brian.mp3"
+ },
+ {
+  "name": "Matilda",
+  "id": "XrExE9yKIg1WjnnlVkGX",
+  "gender": "female",
+  "desc": "기본: knowledgable, warm",
+  "file": "eleven-Matilda.mp3"
+ },
+ {
+  "name": "Sarah",
+  "id": "EXAVITQu4vr4xnSDxMaL",
+  "gender": "female",
+  "desc": "기본: mature, reassuring, confident",
+  "file": "eleven-Sarah.mp3"
+ },
+ {
+  "name": "Hyuk_Cold_and_Clear",
+  "id": "ZJCNdZEjYwkOElxugmW2",
+  "gender": "male",
+  "desc": "모음(ko, relaxed, narrative_story): Middle aged Soft and emotional Korean male voice. Great for Narration & Storytelling.",
+  "error": "402 {\"detail\":{\"type\":\"payment_required\",\"code\":\"paid_plan_required\",\"message\":\"Free users cannot use library voices via the API. Please upgrade your subscription to use this voice.\",\"status\":\"payment_req"
+ },
+ {
+  "name": "Chris_Warm_and_Clear",
+  "id": "PDoCXqBQFGsvfO0hNkEs",
+  "gender": "male",
+  "desc": "모음(ko, casual, informative_educational): Young Male Korean with a Bright Voice. Great for Informative content.",
+  "error": "402 {\"detail\":{\"type\":\"payment_required\",\"code\":\"paid_plan_required\",\"message\":\"Free users cannot use library voices via the API. Please upgrade your subscription to use this voice.\",\"status\":\"payment_req"
+ },
+ {
+  "name": "Bin_Measured_and_Serious",
+  "id": "jB1Cifc2UQbq1gR3wnb0",
+  "gender": "male",
+  "desc": "모음(ko, relaxed, narrative_story): Middle aged Korean male with a warm and sweet voice. Great for Narrations.",
+  "error": "402 {\"detail\":{\"type\":\"payment_required\",\"code\":\"paid_plan_required\",\"message\":\"Free users cannot use library voices via the API. Please upgrade your subscription to use this voice.\",\"status\":\"payment_req"
+ },
+ {
+  "name": "Anna_Kim_Tender_Calm_and_Clear",
+  "id": "uyVNoMrnUku1dZyVEXwD",
+  "gender": "female",
+  "desc": "모음(ko, formal, narrative_story): Young Korean female voice. Great for Narrations.",
+  "error": "402 {\"detail\":{\"type\":\"payment_required\",\"code\":\"paid_plan_required\",\"message\":\"Free users cannot use library voices via the API. Please upgrade your subscription to use this voice.\",\"status\":\"payment_req"
+ },
+ {
+  "name": "Jennie_Narrational",
+  "id": "z6Kj0hecH20CdetSElRT",
+  "gender": "female",
+  "desc": "모음(ko, confident, narrative_story): Informative and youthful, exuding professionalism with a friendly, engaging tone that captivates listeners. It’s perfect",
+  "error": "402 {\"detail\":{\"type\":\"payment_required\",\"code\":\"paid_plan_required\",\"message\":\"Free users cannot use library voices via the API. Please upgrade your subscription to use this voice.\",\"status\":\"payment_req"
+ },
+ {
+  "name": "Jiyoung_Warm_and_Clear",
+  "id": "AW5wrnG1jVizOYY7R1Oo",
+  "gender": "female",
+  "desc": "모음(ko, calm, narrative_story): A warm and clear Korean female voice with a friendly and natural tone. Suitable for narration, tutorials, and conversati",
+  "error": "402 {\"detail\":{\"type\":\"payment_required\",\"code\":\"paid_plan_required\",\"message\":\"Free users cannot use library voices via the API. Please upgrade your subscription to use this voice.\",\"status\":\"payment_req"
+ }
+]
