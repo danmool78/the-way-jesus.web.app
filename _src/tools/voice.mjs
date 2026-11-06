@@ -145,13 +145,15 @@ async function readsStyle(pcm) {
 async function geminiSynth(text, v) {
   if (!GEMINI_KEY) { console.warn('GEMINI_API_KEY가 없습니다'); return null; }
   if (v.style && !spent.has(STYLE_TTS)) {
-    for (let k = 0; k < 3; k++) {
+    for (let k = 0; k < (v.gem ? 5 : 3); k++) {
       const pcm = await geminiCall(STYLE_TTS, v.style + spoken(text), v);
       if (pcm === null) break;
       if (!(await readsStyle(pcm))) return pcm;
       console.warn(`지시문까지 읽음 — 다시: ${text.slice(0, 20)}`);
     }
   }
+  // 여정 해설 성우(v.gem)는 말투 지시를 받는 모델로만 — 다른 모델로 넘어가면 같은 이름이어도 목소리 결이 달라졌다(GoodNews g04 첫 문장)
+  if (v.gem) return null;
   for (const model of GEMINI_TTS.filter(m => !spent.has(m))) { const pcm = await geminiCall(model, spoken(text), v); if (pcm) return pcm; }
   return null;
 }
