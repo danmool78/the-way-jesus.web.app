@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#16120e">
-<meta name="description" content="왜 기독교인가 — 사람이 올라가는 길과 하나님이 내려오는 길. 여러 종교를 존중하며 같은 잣대로 견주고, 기독교가 배타적이라는 오해도 함께 풀어 봅니다">
+<meta name="description" content="왜 기독교인가 — 다른 길은 사람이 신에게 올라가려 하고, 기독교는 하나님이 낮은 자리로 내려오셨다고 말합니다. 도표와 그림으로 쉽게 견주어 봅니다">
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
 <title>왜 기독교인가 — 그 길</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,7 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <style>
-  /* 왜 기독교인가 — 묻고 답하기(qna.html)와 같은 결. 따지는 글이 아니라 함께 걷는 글이라 그림과 도해를 앞에 세운다 */
+  /* 왜 기독교인가 — 묻고 답하기(qna.html)와 같은 결. 글보다 도표와 단순한 그림을 앞세운다(명화는 쓰지 않는다) */
   body{overflow:auto;word-break:keep-all;background:radial-gradient(ellipse at 50% 0%,rgba(217,180,106,.13),transparent 50%),var(--bg)}
   .why{max-width:760px;margin:0 auto;padding:28px 20px 64px}
   .why-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
@@ -20,16 +20,13 @@
   .why-top img{width:28px;height:28px}
   .why-top .back{border:1px solid #4a3c2c;border-radius:999px;padding:7px 14px}
   .why-top .back:hover{border-color:var(--gold)}
-  .why h1{font-family:var(--serif);font-size:36px;margin:38px 0 6px;color:#f6ead0;text-align:center}
+  .why h1{font-family:var(--serif);font-size:36px;margin:34px 0 6px;color:#f6ead0;text-align:center}
   .why .sub{text-align:center;color:var(--gold2);font-family:var(--serif);font-size:17px;margin:0 0 18px}
   .why .lead{color:var(--muted);line-height:1.9;margin:0 0 10px;text-align:center}
   .why h2{font-family:var(--serif);font-size:24px;color:var(--gold2);margin:60px 0 14px;padding-top:12px;border-top:1px solid #3a3026;scroll-margin-top:16px}
   .why h2 small{display:block;font-family:var(--sans);font-size:12px;color:var(--faint);letter-spacing:.08em;margin-bottom:4px}
-  .why h3{font-size:16px;color:#f6ead0;margin:24px 0 8px}
-  .why p,.why li{color:#e2d7c3;line-height:1.9;font-size:15.5px}
-  .why p{margin:0 0 12px}
-  .why ul{margin:4px 0 14px;padding-left:20px}
-  .why li{margin:5px 0}
+  .why h3{font-size:16px;color:#f6ead0;margin:26px 0 8px}
+  .why p{color:#e2d7c3;line-height:1.9;font-size:15.5px;margin:0 0 12px}
   .why b{color:var(--gold2)}
   /* 말씀 — 새로 옮긴 글 */
   .verse{margin:16px 0;padding:14px 18px;border-left:2px solid var(--gold);background:rgba(217,180,106,.07);border-radius:0 12px 12px 0;font-family:var(--serif);font-size:16.5px;line-height:1.85;color:#f1e8d8}
@@ -37,17 +34,30 @@
   .verse.big{border:0;background:none;text-align:center;font-size:19px;padding:8px 6px}
   .card{border:1px solid #3a3026;border-radius:16px;background:rgba(29,24,19,.7);padding:16px 18px;margin:14px 0}
   .card.warm{border-color:#5a4830;background:linear-gradient(180deg,rgba(217,180,106,.09),rgba(29,24,19,.6))}
+  .card p:last-child{margin-bottom:0}
+  .why .say{font-family:var(--serif);font-size:19px;line-height:1.7;color:#f6ead0;text-align:center}
+  /* 그림 — 손으로 그린 단순한 SVG. 글씨는 폰에서도 읽히게 크게 */
+  .ill{display:block;width:100%;height:auto;margin:16px 0 6px}
+  .ill text{font-family:'Noto Sans KR',sans-serif}
+  .ill .t{font-family:'Gowun Batang',serif;font-weight:700}
+  .why .cap{text-align:center;font-family:var(--serif);color:var(--gold2);font-size:16.5px;margin:0 0 16px}
   /* 모든 사람의 세 물음 */
   .asks{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0 6px}
   .asks div{border:1px solid #3a3026;border-radius:14px;padding:14px 10px;text-align:center;background:rgba(29,24,19,.6);font-size:14px;line-height:1.6;color:#e2d7c3}
   .asks svg{width:30px;height:30px;display:block;margin:0 auto 8px}
-  /* 그림 */
-  figure{margin:18px 0}
-  figure img{display:block;width:100%;border-radius:14px;background:#221b14}
-  figcaption{font-size:12px;color:var(--faint);margin-top:6px;line-height:1.6}
-  .pic-side{display:grid;grid-template-columns:40% 1fr;gap:18px;align-items:center}
-  .pic-side figure{margin:0}
-  .diagram{display:block;width:100%;height:auto;margin:14px 0 4px}
+  /* 서로 다른 답 — 물음마다 종교별 칩 */
+  .claims{display:grid;gap:12px;margin:14px 0}
+  .claim{border:1px solid #3a3026;border-radius:16px;background:rgba(29,24,19,.7);padding:14px 16px}
+  .claim h4{margin:0 0 10px;font-family:var(--serif);font-size:16.5px;color:#f6ead0}
+  .claim ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .claim li{display:flex;gap:8px;align-items:baseline;font-size:13.5px;line-height:1.55;color:#e2d7c3;background:rgba(255,255,255,.03);border-radius:10px;padding:7px 10px}
+  .claim li i{flex:none;font-style:normal;font-size:11.5px;font-weight:700;border-radius:999px;padding:1px 7px;color:#15110d}
+  .c-c{background:#e9c97f}.c-i{background:#8fb2b4}.c-b{background:#c9a3c9}.c-h{background:#e3a07a}.c-j{background:#a9b98a}
+  /* 하나는 틀린다 — 맞서는 두 주장 */
+  .vs{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch;margin:16px 0}
+  .vs div{border-radius:14px;padding:14px;text-align:center;font-size:14px;line-height:1.6;color:#e2d7c3;background:rgba(29,24,19,.7);border:1px solid #3a3026}
+  .vs div b{display:block;font-family:var(--serif);font-size:16px;color:#f6ead0;margin-bottom:4px}
+  .vs span{align-self:center;font-family:var(--serif);font-size:30px;color:var(--gold)}
   /* 스펙트럼 — 종교마다 막대 위 한 점. 누르면 풀이가 열린다 */
   .spec-head{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin:18px 0 6px}
   .spec details{border-bottom:1px solid #3a3026}
@@ -70,27 +80,20 @@
   .steps i{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--gold);color:#24180a;font-style:normal;font-weight:700;font-size:13px;margin-bottom:8px}
   /* 죄의 값 — 네 가지 답 */
   .price{display:grid;gap:8px;margin:14px 0}
-  .price div{display:grid;grid-template-columns:110px 1fr;gap:12px;align-items:center;border:1px solid #3a3026;border-radius:12px;padding:11px 14px;background:rgba(29,24,19,.6);font-size:14px;line-height:1.7}
-  .price b{font-family:var(--serif);color:#f6ead0}
+  .price div{display:grid;grid-template-columns:110px 1fr;gap:12px;align-items:center;border:1px solid #3a3026;border-radius:12px;padding:11px 14px;background:rgba(29,24,19,.6);font-size:14px;line-height:1.7;color:#e2d7c3}
+  .price div>b{font-family:var(--serif);color:#f6ead0}
   .price .me{border-color:var(--gold);background:rgba(217,180,106,.09)}
-  /* 때와 장소 — 표지판처럼 */
+  /* 때와 장소 */
   .when{display:flex;gap:14px;align-items:center;border:1px solid #5a4830;border-radius:16px;padding:16px 18px;margin:16px 0;background:rgba(29,24,19,.7)}
   .when svg{flex:none;width:40px;height:40px}
   .when b{display:block;font-family:var(--serif);font-size:18px;color:#f6ead0}
   .when span{font-size:13px;color:var(--muted)}
   .when a{margin-left:auto;flex:none;font-size:13px;color:var(--gold2);text-decoration:none;border:1px solid #5a4830;border-radius:999px;padding:7px 12px}
-  /* 경계를 넘어 찾아가신 사람들 */
-  .meet{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
-  .meet a{text-decoration:none;color:inherit}
-  .meet img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:12px;display:block}
-  .meet b{display:block;font-size:13.5px;color:#f6ead0;margin:7px 0 2px}
-  .meet span{display:block;font-size:12px;color:var(--muted);line-height:1.55}
   .tests{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
   .tests div{border:1px solid #3a3026;border-radius:14px;padding:13px 14px;background:rgba(29,24,19,.6)}
   .tests b{display:block;font-family:var(--serif);color:#f6ead0;margin-bottom:4px}
   .tests span{font-size:13.5px;color:#e2d7c3;line-height:1.7}
   .end{text-align:center;margin-top:40px}
-  .end p{color:var(--muted)}
   .end a{display:inline-block;padding:14px 28px;border-radius:999px;background:linear-gradient(180deg,#e9c97f,#b88a3e);color:#24180a;font-weight:700;text-decoration:none;margin:4px}
   .end a.ghost{background:none;border:1px solid #5a4830;color:var(--gold2)}
   .why .foot{text-align:center;margin-top:36px;font-size:12px;color:var(--faint);line-height:1.8}
@@ -98,14 +101,13 @@
   @media (max-width:600px){
     .why h1{font-size:30px}.why h2{font-size:21px}
     .asks{gap:8px}.asks div{padding:12px 6px;font-size:13px}
-    .pic-side{grid-template-columns:1fr}
-    .pic-side figure{max-width:300px;margin:0 auto}
+    .claim ul{grid-template-columns:1fr}
     .spec summary{grid-template-columns:78px 1fr 14px;gap:10px}
     .spec summary b{font-size:14px}
     .steps{grid-template-columns:1fr}
     .price div{grid-template-columns:92px 1fr}
-    .meet{grid-template-columns:1fr 1fr}
     .tests{grid-template-columns:1fr}
+    .vs div{padding:12px 8px;font-size:13px}
     .when{flex-wrap:wrap}.when a{margin-left:54px}
   }
 </style>
@@ -118,95 +120,195 @@
   </nav>
 
   <h1>왜 기독교인가</h1>
-  <p class="sub">이기려는 글이 아니라, 함께 찾아가는 글</p>
-  <p class="lead">종교를 견주는 글은 자칫 다른 사람의 믿음을 깎아내리기 쉽습니다. 이 글은 그러지 않으려 합니다. 다른 종교를 믿는 분들도 저마다 진지하게 길을 찾는 이웃입니다. 그래서 기독교에 묻는 질문을 다른 종교에도 똑같이 묻고, 각 종교는 그 종교가 스스로 하는 말로 소개합니다.</p>
+  <p class="sub">올라가는 종교, 내려오신 하나님</p>
+  <p class="lead">다른 종교를 믿는 분들도 저마다 진지하게 길을 찾는 이웃입니다. 이 글은 그분들을 깎아내리려는 글이 아닙니다. 다만 얼버무리지 않고, 같은 잣대로 솔직하게 견주어 보려 합니다.</p>
 
   <div class="asks">
     <div><svg viewBox="0 0 32 32" fill="none" stroke="#d9b46a" stroke-width="1.8" stroke-linecap="round"><circle cx="16" cy="11" r="5"/><path d="M6 28c1.5-6 5.5-9 10-9s8.5 3 10 9"/></svg>나는 괜찮은<br>사람일까?</div>
     <div><svg viewBox="0 0 32 32" fill="none" stroke="#d9b46a" stroke-width="1.8" stroke-linecap="round"><path d="M16 4c5 6 8 10.5 8 15a8 8 0 0 1-16 0c0-4.5 3-9 8-15z"/></svg>내 잘못은<br>어떻게 씻길까?</div>
     <div><svg viewBox="0 0 32 32" fill="none" stroke="#d9b46a" stroke-width="1.8" stroke-linecap="round"><path d="M4 24h24"/><path d="M9 24a7 7 0 0 1 14 0"/><path d="M16 9v3M7 13l2 2M25 13l-2 2"/></svg>죽음 뒤에는<br>무엇이 있을까?</div>
   </div>
-  <p class="lead">누구나 마음 깊은 곳에 품고 사는 물음입니다. 종교들은 이 물음에 저마다 답해 왔습니다. 그 답들을 한 가지 잣대로 나란히 놓아 보겠습니다. <b>구원은 누가 하는가. 사람이 하는가, 하나님이 하는가.</b></p>
+  <p class="lead">누구나 마음 깊이 품고 사는 물음입니다. 종교들은 이 물음에 답해 왔습니다. 그런데 그 답들은 서로 같을까요?</p>
 
-  <!-- ───────── 하나 ───────── -->
-  <h2 id="two"><small>하나</small>올라가는 길과 내려오는 길</h2>
-  <svg class="diagram" viewBox="0 0 640 320" role="img" aria-label="사람이 산을 오르는 여러 길과, 꼭대기에서 사람에게로 내려오는 한 길">
+  <!-- ───────── 하나: 둘 다 맞을 수는 없다 ───────── -->
+  <h2 id="both"><small>하나</small>이 길도 맞고 저 길도 맞을 수는 없다</h2>
+  <svg class="ill" viewBox="0 0 640 270" role="img" aria-label="두 갈래로 나뉘는 길과 서로 반대쪽을 가리키는 표지판">
+    <defs><linearGradient id="road" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#4a3c2c"/><stop offset="1" stop-color="#2a2219"/></linearGradient></defs>
+    <path d="M250 260 C270 200 230 150 90 90 L130 78 C270 130 310 175 320 210 C330 175 370 130 510 78 L550 90 C410 150 370 200 390 260 Z" fill="url(#road)"/>
+    <path d="M320 258 V232 M311 214 C300 180 250 140 140 100 M329 214 C340 180 390 140 500 100" fill="none" stroke="#7a6a52" stroke-width="2" stroke-dasharray="8 9"/>
+    <rect x="316" y="40" width="8" height="190" rx="3" fill="#8a6f45"/>
+    <path d="M318 52 H200 L176 76 L200 100 H318 Z" fill="#d9b46a"/>
+    <path d="M322 112 H440 L464 136 L440 160 H322 Z" fill="#f0d79a"/>
+    <text x="252" y="84" text-anchor="middle" font-size="22" font-weight="700" fill="#24180a">이 길</text>
+    <text x="388" y="144" text-anchor="middle" font-size="22" font-weight="700" fill="#24180a">저 길</text>
+    <circle cx="320" cy="252" r="7" fill="#f6ead0"/>
+  </svg>
+  <p class="cap">둘 다 틀릴 수는 있어도, 둘 다 맞을 수는 없습니다</p>
+  <p>"종교는 다 같은 말을 한다"는 말을 자주 듣습니다. 듣기에는 너그럽습니다. 그런데 각 종교가 실제로 하는 말을 나란히 놓으면, 가장 중요한 물음에서 서로 <b>정반대</b>로 답합니다.</p>
+
+  <div class="claims">
+    <div class="claim"><h4>신은 어떤 분인가?</h4><ul>
+      <li><i class="c-c">기독교</i>인격이신 한 하나님 (성부·성자·성령)</li>
+      <li><i class="c-i">이슬람</i>인격이신 한 하나님, 삼위일체는 아니다</li>
+      <li><i class="c-h">힌두교</i>많은 신, 그 뒤의 궁극 실재 브라만</li>
+      <li><i class="c-b">불교</i>세상을 지은 창조주를 세우지 않는다</li></ul></div>
+    <div class="claim"><h4>예수는 누구인가?</h4><ul>
+      <li><i class="c-c">기독교</i>사람이 되신 하나님</li>
+      <li><i class="c-i">이슬람</i>위대한 선지자, 하나님은 아니다</li>
+      <li><i class="c-j">유대교</i>기다리던 메시아가 아니다</li>
+      <li><i class="c-h">힌두교</i>여러 스승이나 화신 가운데 하나</li></ul></div>
+    <div class="claim"><h4>죽음 뒤에는?</h4><ul>
+      <li><i class="c-c">기독교</i>한 번 죽고, 부활과 심판</li>
+      <li><i class="c-i">이슬람</i>한 번 죽고, 부활과 심판</li>
+      <li><i class="c-h">힌두교</i>업에 따라 다시 태어남(윤회)</li>
+      <li><i class="c-b">불교</i>윤회, 열반에 들면 끝남</li></ul></div>
+    <div class="claim"><h4>'나'는 무엇인가?</h4><ul>
+      <li><i class="c-c">기독교</i>하나님이 지으신, 영원히 이어지는 인격</li>
+      <li><i class="c-h">힌두교</i>참 자아(아트만)는 곧 브라만</li>
+      <li><i class="c-b">불교</i>변하지 않는 자아는 없다(무아)</li>
+      <li><i class="c-i">이슬람</i>하나님이 지으신 피조물, 부활 때 다시 산다</li></ul></div>
+  </div>
+
+  <h3>가장 분명한 예 하나</h3>
+  <div class="vs">
+    <div><b>기독교</b>예수는 십자가에서 죽고, 사흘 만에 다시 살아났다</div>
+    <span>≠</span>
+    <div><b>이슬람</b>예수는 십자가에서 죽지 않았다<br>(꾸란 4:157)</div>
+  </div>
+  <p>이 둘은 동시에 참일 수 없습니다. 둘 중 하나는 틀렸습니다. 그러니 "모든 종교가 다 맞다"는 말은 너그러워 보여도, 사실은 모든 종교에게 <b>"당신이 가장 중요하게 여기는 그 말은 틀렸다"</b>고 말하는 셈입니다. 서로를 정말 존중한다면, 다른 점을 다르다고 솔직하게 말하는 데서 시작해야 합니다.</p>
+
+  <!-- ───────── 둘: 올라가는 길 ───────── -->
+  <h2 id="up"><small>둘</small>신에게 올라가려는 길</h2>
+  <svg class="ill" viewBox="0 0 640 320" role="img" aria-label="사람이 산을 오르는 여러 길과, 꼭대기에서 사람에게로 내려오는 한 길">
     <defs>
       <radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#f6e2a8"/><stop offset=".35" stop-color="#d9b46a" stop-opacity=".55"/><stop offset="1" stop-color="#d9b46a" stop-opacity="0"/></radialGradient>
       <linearGradient id="mt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2f22"/><stop offset="1" stop-color="#211a13"/></linearGradient>
     </defs>
     <circle cx="320" cy="56" r="54" fill="url(#glow)"/>
     <path d="M30 280 L320 52 L610 280 Z" fill="url(#mt)" stroke="#5a4830" stroke-width="1.5"/>
-    <!-- 사람이 오르는 길: 아래에서 위로, 아직 오르는 중 -->
     <g fill="none" stroke="#9c8a6c" stroke-width="2" stroke-dasharray="5 6" stroke-linecap="round">
-      <path d="M90 280 C130 240 150 230 175 200"/>
-      <path d="M170 280 C190 245 215 220 220 175"/>
-      <path d="M250 280 C255 245 250 210 262 150"/>
-      <path d="M330 280 C320 240 300 205 300 130"/>
+      <path d="M90 280 C130 240 150 230 175 200"/><path d="M170 280 C190 245 215 220 220 175"/>
+      <path d="M250 280 C255 245 250 210 262 150"/><path d="M330 280 C320 240 300 205 300 130"/>
     </g>
     <g fill="#c8b48e"><circle cx="175" cy="194" r="5"/><circle cx="220" cy="169" r="5"/><circle cx="262" cy="144" r="5"/><circle cx="300" cy="124" r="5"/></g>
-    <g font-family="Noto Sans KR, sans-serif" font-size="20" fill="#b3a58f" text-anchor="end">
-      <text x="150" y="214">선행</text><text x="196" y="174">수행</text><text x="240" y="134">율법</text><text x="282" y="96">깨달음</text>
-    </g>
-    <!-- 하나님이 내려오는 길: 위에서 사람에게로 -->
+    <g font-size="20" fill="#b3a58f" text-anchor="end"><text x="150" y="214">선행</text><text x="196" y="174">고행</text><text x="240" y="134">율법</text><text x="282" y="96">깨달음</text></g>
     <path d="M326 56 C380 110 430 150 500 254" fill="none" stroke="#e9c97f" stroke-width="3.5" stroke-linecap="round"/>
     <path d="M486 248 L502 258 L503 240" fill="none" stroke="#e9c97f" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
     <circle cx="520" cy="262" r="6" fill="#f6ead0"/>
-    <text x="418" y="140" font-family="Gowun Batang, serif" font-size="22" fill="#f0d79a" font-weight="700">하나님이 내려오심</text>
-    <text x="180" y="312" font-family="Gowun Batang, serif" font-size="22" fill="#c8b48e" text-anchor="middle">사람이 오르는 길</text>
+    <text class="t" x="418" y="140" font-size="22" fill="#f0d79a">하나님이 내려오심</text>
+    <text class="t" x="180" y="312" font-size="22" fill="#c8b48e" text-anchor="middle">사람이 오르는 길</text>
   </svg>
-  <p>종교를 흔히 "같은 산꼭대기로 오르는 여러 길"에 빗댑니다. 실제로 많은 종교가 사람이 <b>닦고, 지키고, 쌓아서 올라가는 길</b>을 가르칩니다. 그 길에는 진지함과 아름다운 절제가 있습니다.</p>
-  <p>그런데 기독교는 방향이 반대입니다. 사람이 올라가기 전에 <b>하나님이 먼저 내려오셨다</b>고 말합니다. 기독교가 다른 종교와 가장 크게 갈리는 곳이 바로 여기입니다.</p>
+  <p>솔직하게 말해 보겠습니다. 다른 종교들의 길은 크게 두 가지입니다.</p>
+  <svg class="ill" viewBox="0 0 640 300" role="img" aria-label="왼쪽: 기도와 금식을 올려놓은 저울 — 신과 거래하기. 오른쪽: 혼자 오르는 사다리 — 스스로 오르기">
+    <rect x="152" y="70" width="10" height="170" rx="4" fill="#8a6f45"/>
+    <path d="M122 246 H192" stroke="#8a6f45" stroke-width="8" stroke-linecap="round"/>
+    <path d="M60 104 L254 82" stroke="#d9b46a" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="157" cy="93" r="9" fill="#e9c97f"/>
+    <path d="M60 104 L30 170 M60 104 L90 170 M254 82 L224 148 M254 82 L284 148" stroke="#7a6a52" stroke-width="1.5"/>
+    <path d="M22 170 Q60 194 98 170 Z" fill="#d9b46a"/>
+    <path d="M216 148 Q254 172 292 148 Z" fill="#d9b46a"/>
+    <g fill="#3a2f22" stroke="#c8b48e" stroke-width="1.5"><rect x="34" y="150" width="26" height="20" rx="3"/><rect x="62" y="150" width="26" height="20" rx="3"/><rect x="47" y="130" width="26" height="20" rx="3"/></g>
+    <text x="254" y="138" text-anchor="middle" font-size="30" font-weight="700" fill="#f0d79a">?</text>
+    <text x="60" y="122" text-anchor="middle" font-size="15" fill="#b3a58f">기도·금식</text>
+    <text class="t" x="157" y="286" text-anchor="middle" font-size="22" fill="#f0d79a">① 신과 거래하기</text>
+    <path d="M440 250 L470 40 M500 250 L530 40" stroke="#8a6f45" stroke-width="6" stroke-linecap="round"/>
+    <g stroke="#8a6f45" stroke-width="5" stroke-linecap="round"><path d="M443 226 H503"/><path d="M448 192 H508"/><path d="M453 158 H513"/><path d="M458 124 H518"/><path d="M462 90 H522"/><path d="M466 58 H526"/></g>
+    <circle cx="482" cy="140" r="11" fill="#f6ead0"/><path d="M482 152 V178 M482 160 L468 150 M482 160 L494 146 M482 178 L472 194 M482 178 L494 192" stroke="#f6ead0" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="560" cy="30" r="22" fill="url(#glow)"/>
+    <text class="t" x="490" y="286" text-anchor="middle" font-size="22" fill="#f0d79a">② 스스로 오르기</text>
+  </svg>
+  <div class="card">
+    <p><b>① 신과 거래하기.</b> "내가 이만큼 기도하고, 금식하고, 바치고, 착하게 살면 신도 갚아 주시겠지." 저울에 내 정성을 올려놓는 길입니다. 그런데 얼마나 올려야 충분한지, 저울이 어느 쪽으로 기울지는 끝까지 알 수 없습니다.</p>
+    <p><b>② 스스로 오르기.</b> 고행하고, 닦고 또 닦아 깨닫고 벗어나려는 길입니다. 결국 사람이 높은 자리에 이르려는 것입니다.</p>
+  </div>
+  <p>방법은 달라도 <b>방향은 같습니다. 사람이 위로 올라갑니다.</b></p>
 
   <h3>여러 종교를 한 줄 위에 놓으면</h3>
-  <p>왼쪽은 사람이 하는 몫이 큰 쪽, 오른쪽은 하나님(신)이 하는 몫이 큰 쪽입니다. 이름을 누르면 풀이가 열립니다.</p>
+  <p>왼쪽은 사람이 하는 몫이 큰 쪽, 오른쪽은 하나님이 하는 몫이 큰 쪽입니다. 이름을 누르면 풀이가 열립니다.</p>
   <div class="spec-head"><span>← 사람이 한다</span><span>하나님이 한다 →</span></div>
   <div class="spec">
     <details><summary><b>불교</b><span class="track"><span class="dot" style="left:6%"></span></span><span class="chev"></span></summary>
-      <dl><dt>문제</dt><dd>집착과 무지에서 오는 괴로움, 끝없는 윤회</dd><dt>목표</dt><dd>열반, 괴로움과 윤회가 끝남</dd><dt>할 일</dt><dd>여덟 가지 바른길(팔정도), 계율, 명상. 붓다는 마지막에 "스스로를 등불로 삼으라"고 했습니다 (상좌부 불교 기준)</dd></dl></details>
+      <dl><dt>문제</dt><dd>집착과 무지에서 오는 괴로움, 끝없는 윤회</dd><dt>목표</dt><dd>열반, 괴로움과 윤회가 끝남</dd><dt>할 일</dt><dd>여덟 가지 바른길(팔정도), 계율, 명상. 붓다는 마지막에 "스스로를 등불로 삼으라"고 했습니다</dd></dl></details>
     <details><summary><b>유교</b><span class="track"><span class="dot" style="left:10%"></span></span><span class="chev"></span></summary>
       <dl><dt>문제</dt><dd>덕이 모자라고 마음이 바르지 않음</dd><dt>목표</dt><dd>군자, 성인. 구원보다는 사람됨에 가깝습니다</dd><dt>할 일</dt><dd>몸과 마음을 닦음(수신), 예를 지킴, 배움</dd></dl></details>
-    <details><summary><b>힌두교</b><span class="track"><span class="dot" style="left:32%"></span></span><span class="chev"></span></summary>
-      <dl><dt>문제</dt><dd>업(카르마)에 묶여 되풀이되는 삶, 참 자아를 모름</dd><dt>목표</dt><dd>해탈(목샤)</dd><dt>할 일</dt><dd>행위의 길, 지혜의 길, 헌신의 길. 갈래가 넓어서, 헌신의 길로 갈수록 신의 은총을 크게 말합니다</dd></dl></details>
-    <details><summary><b>이슬람</b><span class="track"><span class="dot" style="left:46%"></span></span><span class="chev"></span></summary>
-      <dl><dt>문제</dt><dd>하나님을 잊고 따르지 않음</dd><dt>목표</dt><dd>심판을 지나 낙원에 들어감</dd><dt>할 일</dt><dd>신앙 고백, 하루 다섯 번의 기도, 구제, 금식, 순례(다섯 기둥). 심판 날 행위를 저울에 단다고 가르칩니다(꾸란 7:8–9). 마지막은 알라의 자비에 달렸습니다</dd></dl></details>
-    <details><summary><b>유대교</b><span class="track"><span class="dot" style="left:56%"></span></span><span class="chev"></span></summary>
-      <dl><dt>문제</dt><dd>하나님의 뜻을 따르지 않음</dd><dt>목표</dt><dd>하나님과 맺은 언약 안에 머묾</dd><dt>할 일</dt><dd>율법을 지키고, 어겼을 때 돌이킴(테슈바). 언약은 은혜로 주어지고, 그 안에 머무는 것은 순종에 달렸습니다</dd></dl></details>
-    <details><summary><b>정토 불교</b><span class="track"><span class="dot" style="left:84%"></span></span><span class="chev"></span></summary>
-      <dl><dt>문제</dt><dd>말세라 사람의 힘으로는 깨달을 수 없음</dd><dt>목표</dt><dd>아미타불의 극락에 태어남</dd><dt>할 일</dt><dd>아미타불의 이름을 부르고 그 서원을 믿음. 남의 힘에 기대는 신앙(타력)입니다</dd></dl></details>
+    <details><summary><b>힌두교</b><span class="track"><span class="dot" style="left:30%"></span></span><span class="chev"></span></summary>
+      <dl><dt>문제</dt><dd>업(카르마)에 묶여 되풀이되는 삶</dd><dt>목표</dt><dd>해탈(목샤)</dd><dt>할 일</dt><dd>제사와 의무를 다하는 행위의 길, 지혜의 길, 고행, 헌신의 길. 헌신의 길에서는 신의 은총도 말합니다</dd></dl></details>
+    <details><summary><b>이슬람</b><span class="track"><span class="dot" style="left:42%"></span></span><span class="chev"></span></summary>
+      <dl><dt>문제</dt><dd>하나님을 잊고 따르지 않음</dd><dt>목표</dt><dd>심판을 지나 낙원에 들어감</dd><dt>할 일</dt><dd>신앙 고백, 하루 다섯 번의 기도, 구제, 금식, 순례(다섯 기둥). 심판 날 행위를 저울에 단다고 가르칩니다(꾸란 7:8–9)</dd></dl></details>
+    <details><summary><b>유대교</b><span class="track"><span class="dot" style="left:52%"></span></span><span class="chev"></span></summary>
+      <dl><dt>문제</dt><dd>하나님의 뜻을 따르지 않음</dd><dt>목표</dt><dd>하나님과 맺은 언약 안에 머묾</dd><dt>할 일</dt><dd>율법을 지키고, 어겼을 때 돌이킴(테슈바)</dd></dl></details>
+    <details><summary><b>정토 불교</b><span class="track"><span class="dot" style="left:80%"></span></span><span class="chev"></span></summary>
+      <dl><dt>문제</dt><dd>말세라 사람의 힘으로는 깨달을 수 없음</dd><dt>목표</dt><dd>아미타불의 극락에 태어남</dd><dt>할 일</dt><dd>아미타불의 이름을 부르고 그 서원을 믿음(타력 신앙)</dd></dl></details>
     <details class="me" open><summary><b>기독교</b><span class="track"><span class="dot" style="left:95%"></span></span><span class="chev"></span></summary>
-      <dl><dt>문제</dt><dd>죄, 하나님과 끊어짐</dd><dt>목표</dt><dd>하나님과 다시 이어짐, 영원한 생명</dd><dt>할 일</dt><dd>하나님이 이미 하신 일을 믿음으로 받음. 믿음은 공로가 아니라 선물을 받으려고 내미는 빈손입니다</dd></dl></details>
+      <dl><dt>문제</dt><dd>죄, 하나님과 끊어짐</dd><dt>목표</dt><dd>하나님과 다시 이어짐, 영원한 생명</dd><dt>할 일</dt><dd>하나님이 이미 하신 일을 믿음으로 받음. 믿음은 공로가 아니라 선물을 받는 빈손입니다</dd></dl></details>
   </div>
-  <p class="hint">점의 자리는 각 종교의 대표적인 가르침을 기준으로 한 대략의 위치입니다. 한 종교 안에도 여러 갈래가 있습니다.</p>
-  <div class="verse">여러분은 은혜로, 믿음을 통해 구원을 받았습니다. 이것은 여러분에게서 난 것이 아니라 하나님의 선물입니다.<cite>에베소서 2:8</cite></div>
+  <p class="hint">점의 자리는 각 종교의 대표적인 가르침을 기준으로 한 대략의 위치입니다.</p>
 
-  <!-- ───────── 둘 ───────── -->
-  <h2 id="father"><small>둘</small>달려오는 아버지</h2>
-  <div class="pic-side">
-    <figure><img src="assets/img/e43.webp" alt="돌아온 아들을 끌어안는 아버지" loading="lazy"><figcaption>제임스 티소 〈탕자의 귀향〉 · 브루클린 미술관 · 퍼블릭 도메인</figcaption></figure>
-    <div>
-      <p>예수께서 들려주신 이야기가 있습니다. 아버지의 재산을 미리 받아 떠난 아들이 다 탕진하고 돌아옵니다. 그는 집으로 오는 길에 할 말을 연습합니다. <b>"이제 아들이라 불릴 자격이 없습니다. 품꾼으로라도 써 주십시오."</b> 일해서 갚겠다는 것입니다.</p>
-      <p>그런데 아버지는 그 말을 끝까지 듣지도 않습니다. 멀리서 아들을 알아보고 <b>먼저 달려가</b> 끌어안습니다.</p>
-    </div>
+  <!-- ───────── 셋: 낮은 자리로 오신 하나님 ───────── -->
+  <h2 id="down"><small>셋</small>낮은 자리로 내려오신 하나님</h2>
+  <svg class="ill" viewBox="0 0 640 330" role="img" aria-label="하나님의 자리에서 사람, 마구간, 종, 십자가로 한 계단씩 내려오는 그림">
+    <defs><radialGradient id="g2" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff3cf"/><stop offset=".4" stop-color="#e9c97f" stop-opacity=".6"/><stop offset="1" stop-color="#e9c97f" stop-opacity="0"/></radialGradient></defs>
+    <path d="M10 70 H130 V120 H250 V170 H370 V220 H490 V270 H630 V310 H10 Z" fill="#2a2219" stroke="#5a4830" stroke-width="1.5"/>
+    <g fill="#d9b46a" opacity=".9"><rect x="10" y="66" width="120" height="5" rx="2"/><rect x="130" y="116" width="120" height="5" rx="2"/><rect x="250" y="166" width="120" height="5" rx="2"/><rect x="370" y="216" width="120" height="5" rx="2"/><rect x="490" y="266" width="140" height="5" rx="2"/></g>
+    <circle cx="70" cy="40" r="34" fill="url(#g2)"/>
+    <g font-size="18" fill="#f1e8d8" text-anchor="middle" font-weight="700">
+      <text x="70" y="100">하나님의 자리</text><text x="190" y="150">사람이 되심</text><text x="310" y="200">마구간</text><text x="430" y="250">종의 모습</text><text x="560" y="300">십자가</text>
+    </g>
+    <path d="M96 52 C150 60 170 90 186 106 M210 112 C260 116 290 140 306 156 M330 162 C380 166 410 190 426 206 M450 212 C500 216 530 240 546 252" fill="none" stroke="#e9c97f" stroke-width="2.5" stroke-dasharray="2 7" stroke-linecap="round"/>
+    <circle cx="560" cy="226" r="26" fill="url(#g2)" opacity=".6"/>
+    <path d="M560 206 V262 M544 222 H576" stroke="#f0d79a" stroke-width="6" stroke-linecap="round"/>
+  </svg>
+  <p class="cap">하늘의 자리에서, 가장 낮은 자리까지</p>
+  <p>기독교는 반대 방향을 말합니다. 사람이 올라가는 것이 아니라 <b>하나님이 내려오셨습니다.</b> 그것도 왕궁이 아니라 마구간으로, 주인이 아니라 종으로, 영광의 자리가 아니라 죄인이 달리는 십자가까지 내려오셨습니다.</p>
+  <div class="verse">그분은 하나님의 모습을 지니셨지만, 하나님과 같음을 붙들고 있으려 하지 않으셨습니다. 오히려 자기를 비워 종의 모습을 입고 사람이 되셨습니다. 자기를 낮추셔서 죽기까지, 십자가에서 죽기까지 순종하셨습니다.<cite>빌립보서 2:6–8</cite></div>
+  <div class="card">
+    <p>다른 종교에도 신이 땅에 내려오는 이야기는 있습니다. 힌두교의 화신(아바타)이 그렇습니다. 그러나 그 신들은 왕자나 영웅으로 와서 악을 물리칩니다. <b>가장 낮은 자리에서, 죄인을 대신해 죽으려고 온 하나님</b>은 기독교에만 있습니다.</p>
   </div>
+
+  <h3>달려오는 아버지</h3>
+  <svg class="ill" viewBox="0 0 640 236" role="img" aria-label="집에서 달려 나온 아버지가 멀리서 돌아오는 아들에게 팔을 벌리고 달려가는 그림">
+    <path d="M0 196 H640" stroke="#4a3c2c" stroke-width="2"/>
+    <path d="M40 196 V120 L90 84 L140 120 V196 Z" fill="#2e251b" stroke="#8a6f45" stroke-width="2"/>
+    <rect x="78" y="146" width="24" height="50" rx="3" fill="#e9c97f" opacity=".85"/>
+    <g stroke="#f6ead0" stroke-width="6" stroke-linecap="round" fill="none">
+      <path d="M262 112 L250 152"/><path d="M258 124 L292 104 M258 124 L294 132"/><path d="M250 152 L276 190 M250 152 L226 184 L214 192"/>
+    </g>
+    <circle cx="268" cy="96" r="13" fill="#f6ead0"/>
+    <path d="M196 110 H222 M190 130 H218 M198 150 H222" stroke="#d9b46a" stroke-width="3" stroke-linecap="round"/>
+    <g stroke="#b3a58f" stroke-width="5" stroke-linecap="round" fill="none"><path d="M520 140 L522 170 M520 148 L508 164 M520 148 L532 162 M522 170 L514 194 M522 170 L530 194"/></g>
+    <circle cx="514" cy="130" r="10" fill="#b3a58f"/>
+    <path d="M310 170 C380 186 440 186 496 176" fill="none" stroke="#e9c97f" stroke-width="2.5" stroke-dasharray="2 8" stroke-linecap="round"/>
+    <text class="t" x="268" y="228" text-anchor="middle" font-size="20" fill="#f0d79a">아버지가 먼저 달려간다</text>
+    <text x="520" y="228" text-anchor="middle" font-size="17" fill="#b3a58f">돌아오는 아들</text>
+  </svg>
+  <p>예수께서 들려주신 이야기입니다. 재산을 탕진하고 돌아오는 아들은 길에서 할 말을 연습합니다. <b>"품꾼으로라도 써 주십시오."</b> 일해서 갚겠다는, 올라가는 길입니다. 그런데 아버지는 그 말을 듣기도 전에 멀리서 알아보고 <b>먼저 달려가</b> 끌어안습니다.</p>
   <div class="verse">아직 먼 거리였는데, 아버지가 그를 보고 가엾게 여겨 달려가 목을 끌어안고 입을 맞추었다.<cite>누가복음 15:20</cite></div>
-  <p>아들이 연습한 말은 '올라가는 길'입니다. 아버지가 달려간 것은 '내려오는 길'입니다. 기독교가 말하는 하나님은 사람이 자격을 갖추어 올라오기를 기다리는 분이 아니라, <b>먼저 달려오는 아버지</b>입니다.</p>
 
-  <!-- ───────── 셋 ───────── -->
-  <h2 id="price"><small>셋</small>사랑과 공의가 만나는 곳</h2>
-  <p>"그냥 용서해 주시면 되지 않나요?" 하고 물을 수 있습니다. 하지만 누가 내 가족을 해쳤는데 재판관이 "괜찮다" 하고 그냥 풀어 준다면, 그것을 사랑이라고 부르기는 어렵습니다. <b>잘못을 그냥 덮으면 정의가 무너집니다.</b> 그렇다고 그대로 벌하면 사랑이 설 자리가 없습니다.</p>
-  <p>오래전부터 전해 오는 이야기가 있습니다.</p>
+  <!-- ───────── 넷: 사랑과 공의 ───────── -->
+  <h2 id="price"><small>넷</small>사랑과 공의가 만나는 곳</h2>
+  <p>"그냥 용서해 주시면 되지 않나요?" 하지만 누가 내 가족을 해쳤는데 재판관이 "괜찮다" 하고 풀어 준다면, 그것을 사랑이라고 부르기는 어렵습니다. <b>그냥 덮으면 정의가 무너지고, 그대로 벌하면 사랑이 설 자리가 없습니다.</b> 오래전부터 전해 오는 이야기가 있습니다.</p>
   <div class="steps">
     <div><i>1</i>한 재판관 앞에 피고가 섰습니다. 바로 재판관의 아들이었습니다.</div>
     <div><i>2</i>재판관은 법대로 벌금을 선고합니다. 아들이 감당할 수 없는 큰 돈이었습니다.</div>
     <div><i>3</i>선고를 마친 재판관은 법복을 벗고 내려와, 자기 돈으로 그 벌금을 대신 냅니다.</div>
   </div>
-  <p>법은 지켜졌고, 아들은 풀려났습니다. <b>공의와 사랑이 함께 이루어졌습니다.</b> 기독교는 십자가가 바로 이런 일이라고 말합니다.</p>
-  <figure><img src="assets/img/g03.webp" alt="깊은 골짜기 위에 다리처럼 놓인 십자가, 건너편에 빈 무덤과 떠오르는 해" loading="lazy"><figcaption>〈십자가, 건너는 길〉 · 그림: AI로 만들고 사람이 다듬었습니다</figcaption></figure>
+  <p>법은 지켜졌고 아들은 풀려났습니다. <b>공의와 사랑이 함께 이루어졌습니다.</b> 기독교는 십자가가 바로 이런 일이라고 말합니다.</p>
+  <svg class="ill" viewBox="0 0 640 250" role="img" aria-label="죄로 끊어진 낭떠러지 사이에 십자가가 다리처럼 놓여 사람이 건너가는 그림">
+    <defs><radialGradient id="g3" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff3cf"/><stop offset=".45" stop-color="#e9c97f" stop-opacity=".5"/><stop offset="1" stop-color="#e9c97f" stop-opacity="0"/></radialGradient></defs>
+    <circle cx="560" cy="70" r="70" fill="url(#g3)"/>
+    <path d="M0 110 H220 L236 250 H0 Z" fill="#3a2f22" stroke="#5a4830"/>
+    <path d="M640 110 H420 L404 250 H640 Z" fill="#3a2f22" stroke="#5a4830"/>
+    <path d="M226 104 H414" stroke="#e9c97f" stroke-width="14" stroke-linecap="round"/>
+    <path d="M320 70 V138" stroke="#e9c97f" stroke-width="12" stroke-linecap="round"/>
+    <circle cx="270" cy="78" r="9" fill="#f6ead0"/><path d="M270 88 V97" stroke="#f6ead0" stroke-width="5" stroke-linecap="round"/>
+    <text x="110" y="160" text-anchor="middle" font-size="20" fill="#b3a58f">사람</text>
+    <text x="530" y="160" text-anchor="middle" font-size="20" fill="#f0d79a" font-weight="700">하나님</text>
+    <text x="320" y="210" text-anchor="middle" font-size="18" fill="#7f735f">죄로 끊어진 틈</text>
+  </svg>
+  <p class="cap">사람이 건널 수 없는 틈을, 하나님이 십자가로 이으셨습니다</p>
   <div class="verse">우리가 아직 죄인이었을 때 그리스도께서 우리를 위해 죽으셨습니다. 이로써 하나님은 우리를 향한 당신의 사랑을 보여 주셨습니다.<cite>로마서 5:8</cite></div>
 
   <h3>용서받은 잘못의 값은 어디로 가는가</h3>
-  <p>은혜를 말하는 종교는 기독교만이 아닙니다. 정토 불교, 힌두교 헌신의 길, 이슬람도 신의 자비를 말합니다. 그런데 이 물음에는 서로 다르게 답합니다.</p>
   <div class="price">
     <div><b>힌두교·불교</b><span>업은 <b>스스로 갚습니다</b>. 그러느라 여러 생을 거칩니다.</span></div>
     <div><b>정토 불교</b><span>아미타불의 서원으로 극락에 납니다. 남은 업은 그곳에서 수행하며 마저 풉니다.</span></div>
@@ -215,74 +317,87 @@
   </div>
 
   <h3>이야기가 아니라 일어난 일</h3>
-  <p>하나가 더 있습니다. 기독교는 이것을 아득한 옛날의 신화나 깨달음의 비유로 말하지 않습니다. 때와 장소가 있는 사건이라고 말합니다. 그래서 역사로 따져 볼 수 있고, 기독교는 오히려 그 사건에 모든 것을 겁니다.</p>
+  <p>기독교는 이것을 신화나 깨달음의 비유로 말하지 않습니다. 때와 장소가 있는 사건이라고 말합니다. 그래서 역사로 따져 볼 수 있고, 기독교는 그 사건에 모든 것을 겁니다.</p>
   <div class="when">
     <svg viewBox="0 0 40 40" fill="none" stroke="#d9b46a" stroke-width="2"><path d="M20 37s-11-11.5-11-20a11 11 0 0 1 22 0c0 8.5-11 20-11 20z"/><circle cx="20" cy="17" r="4"/></svg>
     <div><b>주후 30년경 · 예루살렘 성 밖</b><span>로마 총독 본디오 빌라도 때</span></div>
     <a href="app.html?j=jesus#e55">지도에서 보기 →</a>
   </div>
   <div class="verse">그리스도께서 살아나지 않으셨다면 여러분의 믿음은 헛되고, 여러분은 아직 죄 가운데 있습니다.<cite>고린도전서 15:17</cite></div>
-  <p>이 앱이 복음서를 지도 위에 펼쳐 놓은 까닭도 여기에 있습니다. 이 이야기는 실제 땅, 실제 길 위에서 일어난 일이기 때문입니다.</p>
 
-  <!-- ───────── 넷 ───────── -->
-  <h2 id="narrow"><small>넷</small>기독교는 배타적인가요?</h2>
-  <p>기독교에 대해 가장 많이 듣는 말입니다. 먼저 솔직하게 인정할 것이 있습니다. 그렇게 느껴진 데에는 <b>그리스도인들의 차가운 말과 행동</b>이 한몫했습니다. 역사 속에서도, 오늘의 거리에서도 그랬습니다. 그것은 예수의 모습이 아니었습니다. 미안한 일입니다.</p>
-  <p>그러면 예수 자신은 어떠셨을까요? 기독교의 가르침은 정말 문을 닫는 가르침일까요?</p>
+  <!-- ───────── 다섯: 배타적인가 ───────── -->
+  <h2 id="narrow"><small>다섯</small>기독교는 배타적인가요?</h2>
+  <p>먼저 솔직하게 인정합니다. 그렇게 느껴진 데에는 <b>그리스도인들의 차가운 말과 행동</b>이 한몫했습니다. 그것은 예수의 모습이 아니었습니다. 미안한 일입니다. 그러면 예수의 길 자체는 어떨까요?</p>
 
   <h3>하나뿐인 길, 그러나 가장 넓은 문</h3>
-  <svg class="diagram" viewBox="0 0 640 270" role="img" aria-label="자격을 갖춘 사람만 지나는 좁은 문과, 누구에게나 활짝 열린 문">
+  <svg class="ill" viewBox="0 0 640 270" role="img" aria-label="자격을 갖춘 사람만 지나는 좁은 문과, 누구에게나 활짝 열린 문">
     <defs><radialGradient id="lit" cx="50%" cy="60%" r="60%"><stop offset="0" stop-color="#f6e2a8" stop-opacity=".9"/><stop offset="1" stop-color="#d9b46a" stop-opacity="0"/></radialGradient></defs>
-    <!-- 왼쪽: 자격의 문 -->
     <path d="M120 220 V90 a40 40 0 0 1 80 0 V220" fill="#221b14" stroke="#7a6a52" stroke-width="2"/>
     <rect x="132" y="96" width="56" height="124" rx="4" fill="#2e251b" stroke="#5a4830"/>
-    <g font-family="Noto Sans KR, sans-serif" font-size="18" fill="#b3a58f">
-      <text x="214" y="110">✓ 선행을 충분히</text><text x="214" y="140">✓ 수행을 오래</text><text x="214" y="170">✓ 율법을 빠짐없이</text><text x="214" y="200">✓ 깨달음을 깊이</text>
-    </g>
+    <g font-size="18" fill="#b3a58f"><text x="214" y="110">✓ 선행을 충분히</text><text x="214" y="140">✓ 고행을 오래</text><text x="214" y="170">✓ 율법을 빠짐없이</text><text x="214" y="200">✓ 깨달음을 깊이</text></g>
     <circle cx="96" cy="206" r="6" fill="#c8b48e"/><path d="M96 213 v7" stroke="#c8b48e" stroke-width="3"/>
-    <text x="170" y="258" font-family="Gowun Batang, serif" font-size="20" fill="#c8b48e" text-anchor="middle">자격을 갖추면 들어가는 문</text>
-    <!-- 오른쪽: 은혜의 문 -->
+    <text class="t" x="170" y="258" font-size="20" fill="#c8b48e" text-anchor="middle">자격을 갖추면 들어가는 문</text>
     <ellipse cx="490" cy="170" rx="120" ry="80" fill="url(#lit)"/>
     <path d="M420 220 V96 a70 70 0 0 1 140 0 V220" fill="rgba(246,226,168,.18)" stroke="#e9c97f" stroke-width="2.5"/>
     <path d="M420 220 L392 228 V104 L420 96" fill="#2e251b" stroke="#8a6f45"/>
     <g fill="#f6ead0"><circle cx="458" cy="196" r="6"/><circle cx="484" cy="200" r="4.5"/><circle cx="510" cy="194" r="6.5"/><circle cx="532" cy="200" r="5"/></g>
     <g stroke="#f6ead0" stroke-width="3"><path d="M458 203v10M484 205v8M510 201v11M532 205v8"/></g>
-    <text x="490" y="258" font-family="Gowun Batang, serif" font-size="20" fill="#f0d79a" text-anchor="middle" font-weight="700">누구든지 들어오는 문</text>
+    <text class="t" x="490" y="258" font-size="20" fill="#f0d79a" text-anchor="middle">누구든지 들어오는 문</text>
   </svg>
-  <p>예수는 "나는 길이요 진리요 생명이다. 나를 통하지 않고는 아무도 아버지께 갈 수 없다"(요 14:6)고 말씀하셨습니다. 길이 하나라는 말은 좁게 들립니다. 그런데 그 길에 들어가는 <b>조건</b>을 보면 이야기가 달라집니다.</p>
-  <p>선행이나 수행으로 들어가는 길이라면, 착하게 살 여유가 있는 사람, 오래 닦을 시간이 있는 사람이 앞섭니다. 하지만 은혜로 들어가는 길에는 자격이 없습니다. 민족도, 학력도, 지난 삶도 묻지 않습니다. <b>범죄자도, 늦게 온 사람도, 죽음을 앞둔 사람도</b> 같은 문으로 들어갑니다. 예수 곁 십자가에 달린 강도도 그랬습니다(눅 23:43). 길은 하나지만, 문은 누구에게나 열려 있습니다.</p>
-  <div class="verse">유대 사람도 그리스 사람도, 종도 자유인도, 남자도 여자도 없습니다. 여러분은 모두 그리스도 예수 안에서 하나입니다.<cite>갈라디아서 3:28</cite></div>
+  <p>예수는 "나는 길이요 진리요 생명이다. 나를 통하지 않고는 아무도 아버지께 갈 수 없다"(요 14:6)고 하셨습니다. 길이 하나라는 말은 좁게 들립니다. 그런데 <b>들어가는 조건</b>을 보면 달라집니다. 선행이나 고행으로 들어가는 문은 그럴 힘과 시간이 있는 사람이 앞섭니다. 은혜의 문은 아무 자격도 묻지 않습니다. 범죄자도, 늦게 온 사람도, 죽음을 앞둔 사람도 같은 문으로 들어갑니다. 예수 곁 십자가의 강도도 그랬습니다(눅 23:43).</p>
 
   <h3>예수가 먼저 찾아간 사람들</h3>
-  <p>예수는 당시 사람들이 그어 놓은 선을 자주 넘으셨습니다. 다른 민족, 다른 신앙, 손가락질받던 사람에게 먼저 다가가셨습니다.</p>
-  <div class="meet">
-    <a href="app.html?j=jesus#e14"><img src="assets/img/e14.webp" alt="" loading="lazy"><b>사마리아 여인</b><span>서로 상종하지 않던 민족, 다른 예배 처소. 대낮에 홀로 물 길러 온 여인</span></a>
-    <a href="app.html?j=jesus#e24"><img src="assets/img/e24.webp" alt="" loading="lazy"><b>로마 백부장</b><span>나라를 점령한 군대의 장교. 예수는 그의 믿음을 칭찬하셨습니다</span></a>
-    <a href="app.html?j=jesus#e34"><img src="assets/img/e34.webp" alt="" loading="lazy"><b>가나안 여인</b><span>이방 땅의 어머니. 아픈 딸을 위한 간청을 들어주셨습니다</span></a>
-    <a href="app.html?j=jesus#e20"><img src="assets/img/e20.webp" alt="" loading="lazy"><b>세리 마태</b><span>민족을 판 사람이라 불리던 세리. 제자로 부르셨습니다</span></a>
-  </div>
-  <p class="hint">그림: 제임스 티소 · 브루클린 미술관 · 퍼블릭 도메인. 누르면 앱의 그 장면으로 갑니다.</p>
+  <svg class="ill" viewBox="0 0 640 340" role="img" aria-label="가운데의 예수에게서 당시의 경계선 밖에 있던 사람들에게로 뻗어 나가는 화살표">
+    <defs>
+      <radialGradient id="g4" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff3cf"/><stop offset=".5" stop-color="#e9c97f" stop-opacity=".5"/><stop offset="1" stop-color="#e9c97f" stop-opacity="0"/></radialGradient>
+      <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#e9c97f"/></marker>
+    </defs>
+    <ellipse cx="320" cy="165" rx="150" ry="95" fill="none" stroke="#7a6a52" stroke-width="2" stroke-dasharray="7 7"/>
+    <text x="470" y="292" text-anchor="middle" font-size="15" fill="#7f735f">당시 사람들이 그은 선</text>
+    <circle cx="320" cy="165" r="44" fill="url(#g4)"/>
+    <text class="t" x="320" y="173" text-anchor="middle" font-size="22" fill="#24180a">예수</text>
+    <g stroke="#e9c97f" stroke-width="2.5" fill="none" marker-end="url(#ar)">
+      <path d="M290 140 L124 62"/><path d="M350 140 L516 62"/><path d="M362 175 L544 204"/><path d="M278 175 L96 204"/><path d="M320 210 L320 286"/>
+    </g>
+    <g fill="#f6ead0"><circle cx="110" cy="55" r="8"/><circle cx="530" cy="55" r="8"/><circle cx="558" cy="207" r="8"/><circle cx="82" cy="207" r="8"/><circle cx="320" cy="298" r="8"/></g>
+    <g font-size="18" fill="#f1e8d8" font-weight="700">
+      <text x="120" y="34" text-anchor="middle">사마리아 여인</text><text x="520" y="34" text-anchor="middle">로마 백부장</text>
+      <text x="558" y="240" text-anchor="middle">가나안 여인</text><text x="82" y="240" text-anchor="middle">세리 마태</text>
+      <text x="320" y="332" text-anchor="middle">십자가의 강도</text>
+    </g>
+  </svg>
+  <p>다른 민족, 다른 신앙, 점령군의 장교, 민족을 판 사람이라 손가락질받던 세리, 사형수. 예수는 당시 사람들이 그어 놓은 선을 넘어 <b>먼저 찾아가셨습니다.</b></p>
+  <div class="verse">유대 사람도 그리스 사람도, 종도 자유인도, 남자도 여자도 없습니다. 여러분은 모두 그리스도 예수 안에서 하나입니다.<cite>갈라디아서 3:28</cite></div>
 
   <h3>불이 난 건물에서</h3>
-  <div class="card warm">
-    <p style="margin:0">불이 난 건물에서 비상구를 아는 사람이 "이쪽입니다!" 하고 외친다면, 우리는 그를 오만하다고 하지 않습니다. 출구가 하나뿐일수록 더 크게 외치는 것이 사랑입니다. 그리스도인이 예수를 전하는 마음도 이와 같아야 합니다. <b>이기려는 마음이 아니라, 함께 살고 싶은 마음</b>입니다.</p>
-  </div>
+  <svg class="ill" viewBox="0 0 640 190" role="img" aria-label="연기 속에서 비상구를 가리키며 이쪽이라고 외치는 사람">
+    <g fill="#5a4f44" opacity=".45"><circle cx="70" cy="50" r="30"/><circle cx="115" cy="38" r="36"/><circle cx="165" cy="52" r="28"/><circle cx="210" cy="40" r="24"/><circle cx="100" cy="72" r="22"/></g>
+    <rect x="440" y="40" width="110" height="140" rx="6" fill="#2e251b" stroke="#a9b98a" stroke-width="2.5"/>
+    <rect x="452" y="54" width="86" height="28" rx="4" fill="#a9b98a"/>
+    <text x="495" y="74" text-anchor="middle" font-size="16" font-weight="700" fill="#15110d">비상구</text>
+    <g stroke="#f6ead0" stroke-width="5" stroke-linecap="round" fill="none"><path d="M330 92 L330 136 M330 102 L392 92 M330 108 L310 124 M330 136 L318 170 M330 136 L344 170"/></g>
+    <circle cx="330" cy="78" r="12" fill="#f6ead0"/>
+    <text class="t" x="290" y="116" text-anchor="end" font-size="22" fill="#f0d79a">"이쪽입니다!"</text>
+  </svg>
+  <p>비상구를 아는 사람이 "이쪽입니다!" 하고 외친다면, 우리는 그를 오만하다고 하지 않습니다. 출구가 하나뿐일수록 더 크게 외치는 것이 사랑입니다. 그리스도인이 예수를 전하는 마음도 <b>이기려는 마음이 아니라, 함께 살고 싶은 마음</b>이어야 합니다.</p>
 
-  <h3>모든 종교는 무언가를 참이라고 말한다</h3>
-  <p>공정하게 보면 '하나의 진리'를 말하는 것은 기독교만이 아닙니다. 불교는 영원한 자아가 없다고 가르치고, 이슬람은 예수가 십자가에서 죽지 않았다고 가르칩니다(꾸란 4:157). 서로 맞서는 주장이라 모두가 동시에 옳을 수는 없습니다. "모든 종교는 다 같다"는 말도 사실 하나의 주장입니다. 그러니 문제는 진리를 말하느냐가 아니라, <b>어떤 마음으로 말하느냐</b>입니다.</p>
+  <h3>문은 안에서 엽니다</h3>
+  <svg class="ill" viewBox="0 0 640 220" role="img" aria-label="닫힌 문 밖에서 두드리며 기다리는 사람">
+    <rect x="300" y="30" width="150" height="180" rx="4" fill="#2a2219" stroke="#8a6f45" stroke-width="2"/>
+    <path d="M318 210 V70 a57 57 0 0 1 114 0 V210" fill="#3a2f22" stroke="#d9b46a" stroke-width="2"/>
+    <circle cx="418" cy="140" r="5" fill="#d9b46a"/>
+    <path d="M492 60 h20 v26 h-20 z" fill="#e9c97f" opacity=".85"/><path d="M502 46 v14" stroke="#8a6f45" stroke-width="2"/>
+    <g stroke="#f6ead0" stroke-width="6" stroke-linecap="round" fill="none"><path d="M236 106 L236 160 M236 116 L290 110 M236 160 L226 204 M236 160 L248 204"/></g>
+    <circle cx="232" cy="90" r="13" fill="#f6ead0"/>
+    <path d="M300 92 a10 10 0 0 1 0 22 M290 86 a18 18 0 0 1 0 34" fill="none" stroke="#e9c97f" stroke-width="2.5" stroke-linecap="round"/>
+    <text class="t" x="130" y="118" text-anchor="middle" font-size="24" fill="#f0d79a">똑똑</text>
+  </svg>
+  <p>성경이 그리는 예수는 문을 부수고 들어오지 않으십니다. 밖에서 두드리고 기다리십니다. 억지로 열게 하는 것은 사랑이 아니기 때문입니다. 그래서 그리스도인도 다른 믿음을 가진 이웃을 <b>온유하고 존중하는 마음으로</b> 대해야 합니다(벧전 3:15–16).</p>
+  <div class="verse">보라, 내가 문 밖에 서서 두드린다. 누구든지 내 음성을 듣고 문을 열면, 내가 그에게 들어가 함께 먹을 것이다.<cite>요한계시록 3:20</cite></div>
 
-  <h3>문 밖에서 두드리시는 분</h3>
-  <div class="pic-side">
-    <figure><img src="assets/img/g04.webp" alt="저녁빛 속에서 닫힌 문을 두드리는 예수" loading="lazy"><figcaption>〈문 밖에서 두드리시는 분〉 · 그림: AI로 만들고 사람이 다듬었습니다</figcaption></figure>
-    <div>
-      <p>성경이 그리는 예수는 문을 부수고 들어오지 않으십니다. 밖에서 두드리고 기다리십니다. 사랑은 억지로 열게 하지 않기 때문입니다.</p>
-      <div class="verse" style="margin:10px 0 0">보라, 내가 문 밖에 서서 두드린다. 누구든지 내 음성을 듣고 문을 열면, 내가 그에게 들어가 함께 먹을 것이다.<cite>요한계시록 3:20</cite></div>
-    </div>
-  </div>
-  <p>그래서 그리스도인은 다른 믿음을 가진 이웃을 존중해야 합니다. 성경은 신앙을 전할 때에도 <b>"온유하고 존중하는 마음으로"</b> 하라고 가르칩니다(벧전 3:15–16). 원수까지 사랑하라고 하신 분을 따르는 사람이, 다른 길을 걷는 이웃을 미워할 수는 없습니다.</p>
-
-  <!-- ───────── 다섯 ───────── -->
-  <h2 id="pearl"><small>다섯</small>진짜 진주를 알아보는 법</h2>
-  <svg class="diagram" viewBox="0 0 640 172" role="img" aria-label="표면이 까끌한 진짜 진주와 매끈한 모조 진주">
+  <!-- ───────── 여섯: 진주 ───────── -->
+  <h2 id="pearl"><small>여섯</small>진짜 진주를 알아보는 법</h2>
+  <svg class="ill" viewBox="0 0 640 172" role="img" aria-label="표면이 까끌한 진짜 진주와 매끈한 모조 진주">
     <defs>
       <radialGradient id="pr" cx="38%" cy="35%" r="70%"><stop offset="0" stop-color="#fffaf0"/><stop offset=".55" stop-color="#e8dcc6"/><stop offset="1" stop-color="#a99a80"/></radialGradient>
       <radialGradient id="fk" cx="38%" cy="35%" r="70%"><stop offset="0" stop-color="#ffffff"/><stop offset=".4" stop-color="#f0ece4"/><stop offset="1" stop-color="#c9c2b6"/></radialGradient>
@@ -290,14 +405,11 @@
     </defs>
     <circle cx="190" cy="78" r="52" fill="url(#pr)"/><circle cx="190" cy="78" r="52" fill="url(#nacre)"/>
     <circle cx="450" cy="78" r="52" fill="url(#fk)"/><ellipse cx="432" cy="58" rx="16" ry="9" fill="#fff" opacity=".85"/>
-    <g font-family="Gowun Batang, serif" font-size="22" text-anchor="middle">
-      <text x="190" y="162" fill="#f0d79a" font-weight="700">진짜 — 까끌하다</text>
-      <text x="450" y="162" fill="#b3a58f">모조 — 매끈하다</text>
-    </g>
+    <text class="t" x="190" y="162" text-anchor="middle" font-size="22" fill="#f0d79a">진짜 — 까끌하다</text>
+    <text class="t" x="450" y="162" text-anchor="middle" font-size="22" fill="#b3a58f">모조 — 매끈하다</text>
   </svg>
-  <p>값진 것 곁에는 모조품이 생깁니다. 아무도 길가의 돌멩이는 흉내 내지 않습니다. 기독교 곁에도 그 이름을 빌린 가르침이 많습니다. 물론 가짜가 많다는 것만으로 진짜라는 증명이 되지는 않습니다. 하지만 <b>가짜들이 하나같이 어디를 고치는지</b>를 보면 진짜의 핵심이 드러납니다. 그들은 거의 언제나 "은혜만으로는 모자라다"며 무언가를 덧붙입니다.</p>
-  <p>진주 감정사는 이로 살짝 긁어 봅니다. 진짜 진주는 조개가 상처를 감싸며 만든 것이라 까끌하고, 모조 진주는 구슬에 칠을 입힌 것이라 매끈합니다. 진짜 복음도 처음에는 까끌합니다. "당신은 스스로를 구원할 수 없다"는 말부터 하기 때문입니다. 그러나 그 까끌함 속에 상처로 만든 보석, <b>대신 상처 입으신 사랑</b>이 있습니다.</p>
-  <div class="verse">그가 찔린 것은 우리의 허물 때문이요, 그가 상한 것은 우리의 죄 때문이다. 그가 맞은 상처로 우리가 나았다.<cite>이사야 53:5</cite></div>
+  <p>값진 것 곁에는 흉내 내는 것이 생깁니다. 아무도 길가의 돌멩이는 흉내 내지 않습니다. 기독교 곁에도 그 이름을 빌린 가르침이 많은데, 그들은 거의 언제나 <b>"은혜만으로는 모자라다"</b>며 무언가를 덧붙입니다. 다시 '올라가는 길'로 되돌려 놓는 것입니다.</p>
+  <p>진짜 진주는 조개가 상처를 감싸며 만든 것이라 이로 긁으면 까끌합니다. 진짜 복음도 처음엔 까끌합니다. "당신은 스스로를 구원할 수 없다"는 말부터 하기 때문입니다. 그러나 그 속에 <b>대신 상처 입으신 사랑</b>이 있습니다.</p>
   <div class="tests">
     <div><b>누가 구원하나</b><span>하나님의 은혜인가, 사람이 쌓는 자격인가</span></div>
     <div><b>예수는 누구인가</b><span>하나님이신가, 다른 사람 뒤로 가려지는가</span></div>
@@ -307,14 +419,22 @@
 
   <!-- ───────── 끝 ───────── -->
   <h2 id="end"><small>정리</small>한 문장으로 하면</h2>
-  <div class="card warm" style="text-align:center">
-    <p style="margin:0 0 6px;color:var(--muted)">많은 종교는 말합니다.</p>
-    <p style="font-family:var(--serif);font-size:19px;color:#f6ead0;margin:0 0 16px">"이렇게 하면, 신에게 닿을 수 있다."</p>
-    <p style="margin:0 0 6px;color:var(--muted)">기독교는 말합니다.</p>
-    <p style="font-family:var(--serif);font-size:19px;color:var(--gold2);margin:0">"하나님이 이미 당신에게 오셨다."</p>
+  <svg class="ill" viewBox="0 0 640 210" role="img" aria-label="위로 향한 여러 화살표와, 아래로 내려오는 하나의 금빛 화살표">
+    <g stroke="#7a6a52" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <path d="M70 170 V60 M56 76 L70 60 L84 76"/><path d="M130 170 V80 M116 96 L130 80 L144 96"/><path d="M190 170 V50 M176 66 L190 50 L204 66"/><path d="M250 170 V70 M236 86 L250 70 L264 86"/>
+    </g>
+    <circle cx="460" cy="30" r="30" fill="url(#g2)"/>
+    <path d="M460 30 V150 M438 128 L460 150 L482 128" stroke="#e9c97f" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <circle cx="460" cy="170" r="10" fill="#f6ead0"/>
+    <text x="160" y="204" text-anchor="middle" font-size="20" fill="#b3a58f">사람이 올라간다</text>
+    <text class="t" x="460" y="204" text-anchor="middle" font-size="22" fill="#f0d79a">하나님이 내려오셨다</text>
+  </svg>
+  <div class="card warm">
+    <p class="say" style="margin:4px 0 12px"><span style="font-size:14px;color:var(--muted);font-family:var(--sans)">다른 길은 말합니다</span><br>"이렇게 하면 신에게 닿을 수 있다."</p>
+    <p class="say" style="margin:0 0 4px;color:var(--gold2)"><span style="font-size:14px;color:var(--muted);font-family:var(--sans)">기독교는 말합니다</span><br>"하나님이 이미 당신에게 오셨다."</p>
   </div>
   <div class="verse big">하나님은 세상을 이처럼 사랑하셔서 외아들을 주셨습니다. 그를 믿는 사람은 누구든지 멸망하지 않고 영원한 생명을 얻게 하려는 것입니다.<cite>요한복음 3:16</cite></div>
-  <p style="text-align:center">믿으라고 다그치지 않겠습니다. 다만 그분이 실제로 걸으신 길을 천천히 따라 걸어 보시길 바랍니다. 판단은 그 뒤에 하셔도 늦지 않습니다.</p>
+  <p style="text-align:center">믿으라고 다그치지 않겠습니다. 그분이 실제로 걸으신 길을 천천히 따라 걸어 보세요. 판단은 그 뒤에 하셔도 늦지 않습니다.</p>
 
   <div class="end">
     <a href="/goodnews/">GoodNews 네 장면 보기 →</a>
