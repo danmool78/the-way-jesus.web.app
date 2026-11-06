@@ -32,6 +32,7 @@
 [data-journey=kings]{--gold:#b99ade;--gold2:#ddcdf3;--gold-rgb:185,154,222}
 [data-journey=paul]{--gold:#70b5da;--gold2:#bbdff3;--gold-rgb:112,181,218}
 [data-journey=goodnews]{--gold:#e58a7f;--gold2:#f4c3bb;--gold-rgb:229,138,127}
+[data-journey=why]{--gold:#d97a6c;--gold2:#f2c4b8;--gold-rgb:217,122,108}
 *{box-sizing:border-box}
 html{background:var(--bg)}
 body{margin:0;min-height:100svh;color:var(--ink);font:15px/1.6 var(--sans);-webkit-font-smoothing:antialiased;word-break:keep-all;background:transparent}
@@ -126,8 +127,8 @@ function render(lang) {
   document.documentElement.lang = lang;
   document.querySelectorAll('[data-i]').forEach(el => { el.textContent = t(el.dataset.i); });
   document.getElementById('qna').href = lang === 'ko' ? 'qna.html' : `qna.${lang}.html`;
-  document.getElementById('cards').innerHTML = L.cards.map((c, i) => `<li class="card ${c.ready ? '' : 'soon'}" data-journey="${c.id}" style="animation-delay:${0.1 + i * 0.07}s">
-    <img class="icon" src="${c.id === 'jesus' ? 'assets/icon.svg' : `j/${c.id}/icon.svg`}" alt="" width="60" height="60">
+  document.getElementById('cards').innerHTML = L.cards.filter(c => !c.langs || c.langs.includes(lang)).map((c, i) => `<li class="card ${c.ready ? '' : 'soon'}" data-journey="${c.id}" style="animation-delay:${0.1 + i * 0.07}s">
+    <img class="icon" src="${c.icon || (c.id === 'jesus' ? 'assets/icon.svg' : `j/${c.id}/icon.svg`)}" alt="" width="60" height="60">
     <div class="txt"><b>${esc(t(c.title))}</b><small>${esc(t(c.desc))}</small>${c.n ? `<em>${esc(t('seriesScenes', { n: c.n }))}</em>` : ''}</div>
     <div class="btns">${c.ready ? `<a class="go" href="${c.href || `/app.html?j=${c.id}`}">${esc(t(c.go || 'seriesGo'))} →</a><button type="button" class="share" data-id="${c.id}">${SHARE}<span>${esc(t('shareShort'))}</span></button>`
       : `<span class="go off">${esc(t('soon'))}</span>`}</div></li>`).join('');
