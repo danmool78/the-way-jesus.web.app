@@ -1,0 +1,79 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>거리 무대 확인</title>
+<!-- 거리 높이 무대(stage/street.js)를 사람 눈높이에서 보는 도구. 서버를 저장소 루트에서 띄우고
+     /_src/tools/street.html?view=eye  (eye: 광장에서 성문을 바라봄, high: 비스듬히 내려다봄, low: 앉은 장로 눈높이)
+     &env=day|dusk|dawn  — 다 그리면 제목이 ready -->
+<style>body{margin:0;background:#2a241c}canvas{display:block}</style>
+<script type="module">
+import { THREE } from '../../stage/kit.js';
+import { Actor } from '../../stage/people.js';
+import { gateSquare, skyTexture, M } from '../../stage/street.js';
+const q = new URLSearchParams(location.search);
+const W = innerWidth, H = innerHeight;
+const r = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+r.setPixelRatio(devicePixelRatio); r.setSize(W, H);
+r.shadowMap.enabled = true; r.shadowMap.type = THREE.PCFSoftShadowMap;
+r.outputColorSpace = THREE.SRGBColorSpace; r.toneMapping = THREE.ACESFilmicToneMapping; r.toneMappingExposure = 1.05;
+document.body.appendChild(r.domElement);
+const s = new THREE.Scene();
+// 분위기: 아침 해는 동쪽(감람산 위, 화면 오른쪽 앞)에서
+const ENV = {
+  day:  { sky: ['#8fb8da', '#d6e4ec', '#efe4cc'], fog: '#c8d2d6', hemi: ['#fff4e0', '#8a7350', 1.5], sun: ['#fff0d6', 2.6], pos: [30, 40, 18] },
+  dawn: { sky: ['#7d8fb8', '#e8c8b8', '#f6d8b0'], fog: '#e8d4c0', hemi: ['#ffe2cc', '#6a5848', 1.1], sun: ['#ffc896', 2.2], pos: [45, 12, -10] },
+  dusk: { sky: ['#5a6890', '#d89a78', '#f0b880'], fog: '#d8a888', hemi: ['#ffd8b8', '#5a4838', 0.9], sun: ['#ffae70', 2.0], pos: [-45, 10, 8] },
+}[q.get('env') || 'day'];
+s.background = skyTexture(...ENV.sky);
+s.fog = new THREE.Fog(ENV.fog, 45, 180); // 멀리 감람산이 아지랑이 속에 보이게
+s.add(new THREE.HemisphereLight(ENV.hemi[0], ENV.hemi[1], ENV.hemi[2]));
+const sun = new THREE.DirectionalLight(ENV.sun[0], ENV.sun[1]);
+sun.position.set(...ENV.pos); sun.castShadow = true;
+sun.shadow.mapSize.set(4096, 4096);
+Object.assign(sun.shadow.camera, { left: -26, right: 26, top: 26, bottom: -26, near: 1, far: 140 });
+sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.02;
+s.add(sun, sun.target);
+
+const set = gateSquare();
+s.add(set.group);
+
+// 사람들: 의자의 장로들, 광장의 아버지와 아들, 장터
+const SEAT = set.seat, GZ = set.gateZ;
+const cast = [
+  ['elder', -3.2, GZ + 0.5, 0.1, 'sit'],
+  ['elder', -2.4, GZ + 0.5, 0.3, 'sit'],
+  ['man', -1.5, GZ + 1.1, -1.2, 'speak'],
+  ['elder', 2.6, GZ + 0.5, -0.3, 'sit'],
+  ['official', 3.4, GZ + 0.5, -0.1, 'sit'],
+  ['man', 0.4, -3.4, 2.9, 'walk'],                  // 성문으로 들어가는 사람
+  ['woman', 3.6, -0.6, -1.2, 'listen'],             // 좌판 앞 여인
+  ['servant', 4.6, 1.5, -1.6, 'speak'],             // 저울 든 상인
+  ['woman2', -3.6, 3.4, 1.4, 'listen'],             // 천 파는 좌판 앞
+  ['elder', -0.9, 4.2, 0.6, 'speak'],               // 아버지 (잠 1:8 내 아들아)
+  ['john', -0.1, 4.6, -1.4, 'listen'],              // 아들
+  ['child', -4.4, -1.4, 0.8, 'idle'],
+];
+const actors = cast.map(([t, x, z, look, pose, y]) => {
+  const a = new Actor(t, x, z, look, { y });
+  a.set(pose); s.add(a.p.root);
+  return a;
+});
+// 말하는 사람은 곁의 사람을 바라본다 (stage.js의 gaze와 같은 뜻)
+actors[1].target = actors[2]; actors[2].target = actors[1];
+actors[9].target = actors[10]; actors[10].target = actors[9];
+actors[7].target = actors[6]; actors[6].target = actors[7];
+for (let i = 0; i < 80; i++) actors.forEach(a => a.update(i * 0.05, 0.05));
+// 걷는 사람은 걸음 중간 모습으로
+actors[5].goal.set(0.4, GZ - 2); for (let i = 0; i < 6; i++) actors[5].update(4 + i * 0.05, 0.05);
+
+const VIEWS = {
+  eye:  { pos: [0.5, 0.86, GZ + 11], at: [0, 1.45, GZ] },
+  wide: { pos: [0.6, 0.86, 9.4], at: [0, 1.6, GZ] },
+  high: { pos: [7.5, 6.5, 14], at: [-0.5, 0.8, -4] },
+  low:  { pos: [-0.4, 0.62, 6.2], at: [-1.6, 0.9, GZ] },
+};
+const v = VIEWS[q.get('view') || 'eye'];
+const cam = new THREE.PerspectiveCamera(+(q.get('fov') || 42), W / H, 0.05, 200);
+cam.position.set(...v.pos); cam.lookAt(...v.at);
+r.render(s, cam);
+document.title = 'ready';
+</script>
