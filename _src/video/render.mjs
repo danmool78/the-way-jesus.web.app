@@ -16,6 +16,7 @@ const keyOf = t => createHash('sha1').update(VOICE + '|' + t).digest('hex').slic
 const GAP = 0.5 / TEMPO, LEAD = 1.0 / TEMPO, TAIL = 1.2 / TEMPO;
 let t = 1.5; const tl = { scenes: [] }, clips = [];
 for (const s of sc.scenes) {
+  t += s.pause || 0; // 큰 단락 앞의 쉼: 앞 장면이 다 사라진 뒤 조금 비운다
   const S = { ...s, start: t, lines: [] }; t += s.title ? 1.5 : LEAD;
   for (const text of s.say) {
     const f = `${VDIR}/${keyOf(text)}.wav`, pcm = TEMPO === 1 ? (await readFile(f)).subarray(44)
