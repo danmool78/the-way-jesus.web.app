@@ -113,9 +113,10 @@ function level(pcm) {
 }
 
 // 읽을 때만 바꾸는 말: 영어 글자 BC·AD 앞에서 Chirp가 앞말을 늘이고 멈칫하므로 우리말로 읽힌다 (화면 글과 열쇠는 그대로)
-// 녘은 소리 나는 대로 녁으로 넘기고, 앞말과 사이에 아주 짧은 쉼을 둔다 — Chirp 성우가 '해 질 녘'을 '해질년'으로 읽었고,
-// 녁으로만 바꾸면 '질'의 ㄹ에 끌려 '력·련'처럼 읽혔다 (열쇠는 원래 글로 셈하므로 앱은 그대로 찾는다)
-const spoken = text => text.replace(/\bBC\s*/g, '기원전 ').replace(/\bAD\s*/g, '서기 ').replace(/\s+녘/g, '[pause short] 녁').replace(/녘/g, '녁');
+// 녘은 소리 나는 대로 녁으로 넘긴다 — Chirp 성우가 '해 질 녘'을 '해질년'으로 읽었다 (열쇠는 원래 글로 셈하므로 앱은 그대로 찾는다).
+// 앞말에 붙여 읽히면 '질'의 ㄹ에 끌려 '력'이 되므로, 녹음할 때 '녘' 앞에서 나눠 따로 읽혀 잇는다 (아래 NYEOK)
+const spoken = text => text.replace(/\bBC\s*/g, '기원전 ').replace(/\bAD\s*/g, '서기 ').replace(/녘/g, '녁');
+const NYEOK = /\s+(?=녘)/;
 const plain = text => spoken(text).replace(/\[pause[^\]]*\]\s*/g, ' '); // SSML을 받지 않는 성우(Gemini·일레븐랩스)에는 쉼 표시를 빼고
 
 async function synth(text, v, rate, tries = 0) {
@@ -240,6 +241,13 @@ for (const [id, lines] of jobs) {
       const parts = [];
       for (const piece of s.text.split(/,\s*/)) parts.push(tidy((b = await record(piece, v)).pcm));
       const gap = new Int16Array(Math.round(0.35 * SR)); // 장소와 때 사이 쉼
+      pcm = new Int16Array(parts.reduce((t, p, i) => t + p.length + (i ? gap.length : 0), 0));
+      let o = 0; parts.forEach((p, i) => { if (i) o += gap.length; pcm.set(p, o); o += p.length; });
+    } else if (NYEOK.test(s.text) && !v.eleven) {
+      // '해 질 / 녘 골목': 녘 앞에서 나눠 읽혀 아주 짧게 잇는다 — SSML 쉼을 넣었더니 Chirp가 '녁'만 떼어 1초 가까이 멈췄다
+      const parts = [];
+      for (const piece of s.text.split(NYEOK)) parts.push(tidy((b = await record(piece, v)).pcm));
+      const gap = new Int16Array(Math.round(0.06 * SR));
       pcm = new Int16Array(parts.reduce((t, p, i) => t + p.length + (i ? gap.length : 0), 0));
       let o = 0; parts.forEach((p, i) => { if (i) o += gap.length; pcm.set(p, o); o += p.length; });
     } else pcm = tidy((b = await record(s.text, v)).pcm);
