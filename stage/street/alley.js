@@ -67,7 +67,8 @@ export function alleySet() {
     cmd(what, instant) { const [k, v] = what.split(':'); if (k === 'door') { st.goal = v === 'shut' ? 0 : 1; if (instant) st.open = st.goal; } },
     update(time, dt) {
       st.open += (st.goal - st.open) * (1 - Math.exp(-1.8 * dt));
-      leafPivot.rotation.y = -(1 - st.open) * 0 + st.open * 1.35; // 열리면 안쪽(+x)으로 젖혀진다
+      // 열린 문짝은 경첩에서 반 바퀴 돌아 바깥벽에 납작 붙는다 — 1.35만 돌리면 골목으로 비스듬히 튀어나와, 문간에 선 사람이 문짝을 뚫고 나오는 듯 보였다
+      leafPivot.rotation.y = st.open * Math.PI;
       glow.material.color.setRGB(1 * st.open + 0.05, 0.7 * st.open + 0.04, 0.36 * st.open + 0.03);
       inLight.intensity = 1.2 * st.open;
       doorLamp.update(time, st.open);
