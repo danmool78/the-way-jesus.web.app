@@ -82,6 +82,8 @@ window.setup = async (tl, qrSvg) => {
     el.insertAdjacentHTML('beforeend', '<div class="sub"></div>');
     SCENES.push(el);
   });
+  // segno의 QR svg에는 viewBox가 없어 상자에 맞게 커지지 않았다(끝 화면에서 왼쪽 위에 작게) — 크기에서 viewBox를 만든다
+  document.querySelectorAll('.qr svg').forEach(v => { if (!v.getAttribute('viewBox')) v.setAttribute('viewBox', `0 0 ${parseFloat(v.getAttribute('width'))} ${parseFloat(v.getAttribute('height'))}`); v.removeAttribute('width'); v.removeAttribute('height'); });
   await Promise.all([...document.images].map(im => im.decode().catch(() => {})));
   await document.fonts.ready;
   // 도표는 무대 칸에 맞게 키운다
