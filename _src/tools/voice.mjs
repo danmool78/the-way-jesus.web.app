@@ -113,7 +113,8 @@ function level(pcm) {
 }
 
 // 읽을 때만 바꾸는 말: 영어 글자 BC·AD 앞에서 Chirp가 앞말을 늘이고 멈칫하므로 우리말로 읽힌다 (화면 글과 열쇠는 그대로)
-const spoken = text => text.replace(/\bBC\s*/g, '기원전 ').replace(/\bAD\s*/g, '서기 ');
+// 녘은 소리 나는 대로 녁으로 넘긴다 — Chirp 성우가 '해 질 녘'을 '해질년'으로 읽었다 (열쇠는 원래 글로 셈하므로 앱은 그대로 찾는다)
+const spoken = text => text.replace(/\bBC\s*/g, '기원전 ').replace(/\bAD\s*/g, '서기 ').replace(/녘/g, '녁');
 
 async function synth(text, v, rate, tries = 0) {
   // 문장 안 쉼: 연결어미 뒤 짧은 무음 표시 (tts-pauses.mjs). Chirp는 SSML 무음을 그대로 따르지 않지만 쉼 자리는 지킨다
