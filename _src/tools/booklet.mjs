@@ -55,7 +55,7 @@ await p.evaluate(({ t, qrs }) => {
   const colo = document.createElement('div'); colo.className = 'bk-colo';
   colo.innerHTML = `<p class="bk-ct">${h1.textContent}<small>${sub.textContent}</small></p>
     <dl>${t.colo.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl>
-    <p class="bk-note">${foot ? foot.innerHTML.replace('이 앱이', '그 길이').replace(/this app/i, 'The Way') : ''}</p><p class="bk-note">© SSSOFT</p>`; // 책에서는 '앱'이 아니라 '그 길'
+    <p class="bk-note">${foot ? foot.innerHTML.replace('이 앱이 ', '').replace(/ by this app/i, '') : ''}</p><p class="bk-note">© SSSOFT</p>`; // 책에서는 '앱이 옮긴'을 빼고 '새로 옮긴 글'로만
   foot?.remove();
   const talk = document.createElement('div'); talk.className = 'bk-talk';
   talk.innerHTML = `<h2>${t.talkH}</h2><ol>${t.talk.map(q => `<li>${q}<span></span></li>`).join('')}</ol>`;
