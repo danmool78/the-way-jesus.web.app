@@ -14,7 +14,11 @@
 | `stage/moses.js` | 모세와 여호수아 여정의 대본(MOSES) — scenes.js가 SCRIPTS에 합친다. 장면 id(m01…)는 여정마다 겹치지 않게 |
 | `stage/goodnews.js` | 기쁜 소식 여정의 대본(GOODNEWS, g01–g04) |
 | `stage/proverbs.js` | 잠언 여정의 대본(PROVERBS, p01…) — 거리 무대 |
-| `stage/street.js` | 거리 높이 세트(솔로몬 때 예루살렘): 성문 광장 등, 하늘빛 표(SKIES) |
+| `stage/street.js` | 거리 무대의 표: 세트 이름 → 만들기(STREETS), 분위기마다 하늘빛(SKIES) |
+| `stage/street/view.js` | 거리 무대를 화면 가득 그리는 쪽(세트 바꾸기·하늘·카메라 자리·카드 비켜 그리기) — stage.js가 `createStreet`로 만들어 쓴다 |
+| `stage/street/kit.js` | 거리 세트의 공통 도구: 축척 `M`, 캔버스 결(돌·회벽·포석·흙), `block`·`many`(InstancedMesh)·`overlay` |
+| `stage/street/parts.js` | 부품: 여섯 방 성문, 성벽, 네 방 집, 좌판·저울, 올리브나무, 항아리, 먼 산 |
+| `stage/street/gate.js`, `field.js` | 세트 하나에 파일 하나: 성문 광장, 성 밖 들판. 새 세트는 여기에 파일을 더하고 street.js의 STREETS에 적는다 |
 | `app.js` | 낭독할 때 `stage:beat` 이벤트를 보낸다 (intro, p0…, w0…, end; 문장마다 s) |
 
 `?beat=p1.2#e03` 처럼 주소에 붙이면 그 순간까지의 동작을 즉시 적용한 화면을 볼 수 있다(확인용).

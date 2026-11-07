@@ -877,6 +877,7 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
     window.__stageScene = evAt(i); // stage.js가 늦게 로드돼도 따라잡도록
     dispatchEvent(new CustomEvent('stage:scene', { detail: { ev: evAt(i) } }));
     bgmFollow(); // 읽는 중에 장면이 바뀌면 그 장면의 곡으로 겹쳐 바꾼다
+    bgmWarm(i);
     setOdo(odoAt(Math.max(0, i)));
     history.replaceState(null, '', '#' + evAt(i).id);
     $('#prev').disabled = idx === firstIdx(); $('#next').disabled = $('#skip').disabled = idx === EVENTS.length - 1;
@@ -1274,17 +1275,30 @@ function bgmReady() {
       const left = el.duration - el.currentTime;
       if (left < BGM.out) { bgmLoop = el; bgmRamp(p, 0, left); }
     });
+    // 우리가 멈추지 않았는데 멈추면(기기 음성이 말을 시작하며 오디오를 가로챔, 전화·알림 등) 곧 다시 튼다 —
+    // 브라우저 음성으로 읽는 여정(잠언)에서 배경음악이 시작하자마자 멎거나 아예 들리지 않던 원인
+    el.addEventListener('pause', () => {
+      if (p.hold || el.ended || bgmPlayers[bgmCur] !== p || !bgmCue) return;
+      setTimeout(() => { if (!p.hold && bgmPlayers[bgmCur] === p && bgmCue && el.paused) el.play().catch(() => {}); }, 600);
+    });
     el.addEventListener('ended', () => {
       if (bgmPlayers[bgmCur].el !== el || !bgmCue) return;
       const go = bgmGo; // 쉬는 사이에 곡이 바뀌거나 꺼지면(bgmGo가 바뀐다) 다시 틀지 않는다
       setTimeout(() => {
         if (go !== bgmGo || bgmPlayers[bgmCur].el !== el || !bgmCue) return;
-        bgmLoop = null; el.currentTime = 0; el.play().catch(() => {}); bgmRamp(p, BGM.level, BGM.out);
+        bgmLoop = null; el.currentTime = 0; p.hold = false; el.play().catch(() => {}); bgmRamp(p, BGM.level, BGM.out);
       }, BGM.rest * 1000);
     });
-    const p = { el, gain, fade: null };
+    const p = { el, gain, fade: null, hold: false }; // hold: 우리가 일부러 멈춘 것 (다시 틀지 않는다)
     return p;
   });
+  // 오디오가 막히면(기기가 'interrupted'·'suspended'로 바꿈) 다시 깨운다. 저절로 안 되면 다음에 화면을 누를 때
+  bgmCtx.onstatechange = () => { if (bgmCtx.state !== 'running' && bgmCue) bgmCtx.resume().catch(() => {}); };
+  addEventListener('pointerdown', () => {
+    if (!bgmCue) return;
+    if (bgmCtx.state !== 'running') bgmCtx.resume().catch(() => {});
+    const p = bgmPlayers[bgmCur]; if (p.el.paused && !p.hold && !p.wait) p.el.play().catch(() => {});
+  }, { passive: true });
   return true;
 }
 // 지금 들리는 크기 (gain.value를 제대로 알려 주지 않는 브라우저가 있어 마지막 램프로 셈한다)
@@ -1300,20 +1314,20 @@ function bgmPlay(cue, s = BGM.fade) {
   const from = bgmPlayers[bgmCur], to = bgmPlayers[1 - bgmCur], go = ++bgmGo;
   const wait = bgmLevel(from) > 0.005 ? BGM.out : 0;
   bgmRamp(from, 0, wait || s);
-  setTimeout(() => { if (from !== bgmPlayers[bgmCur]) from.el.pause(); }, (wait || s) * 1000 + 100);
+  setTimeout(() => { if (from !== bgmPlayers[bgmCur]) { from.hold = true; from.el.pause(); } }, (wait || s) * 1000 + 100);
   bgmCur = 1 - bgmCur; bgmCue = cue; bgmLoop = null;
   // cue는 '곡?v=해시'(build.py) — 해시가 바뀌면 다시 받는다
   const [name, ver] = cue.split('?'), src = `assets/music/${name}.mp3${ver ? '?' + ver : ''}`;
   if (!to.el.src.endsWith(src)) to.el.src = src;
-  to.el.pause(); to.el.currentTime = 0; to.wait = !!wait;
-  const start = () => { to.wait = false; if (go !== bgmGo) return; to.el.play().catch(() => {}); bgmRamp(to, BGM.level, wait ? BGM.out : s); };
+  to.hold = true; to.el.pause(); to.el.currentTime = 0; to.wait = !!wait;
+  const start = () => { to.wait = false; if (go !== bgmGo) return; to.hold = false; to.el.play().catch(() => {}); bgmRamp(to, BGM.level, wait ? BGM.out : s); };
   if (wait) setTimeout(start, wait * 1000 + 200); else start();
 }
 function bgmStop(s) {
   if (!bgmCtx) return;
   const go = ++bgmGo; bgmLast = bgmCue; bgmCue = null;
   bgmPlayers.forEach(p => bgmRamp(p, 0, s));
-  setTimeout(() => { if (go === bgmGo) bgmPlayers.forEach(p => p.el.pause()); }, s * 1000 + 100);
+  setTimeout(() => { if (go === bgmGo) bgmPlayers.forEach(p => { p.hold = true; p.el.pause(); }); }, s * 1000 + 100);
 }
 // 낭독 상태가 바뀔 때마다 (setListenUI)
 function bgmFollow() {
@@ -1328,8 +1342,20 @@ function bgmFollow() {
   // 같은 곡이 내려가던 중이면 그 자리에서 다시 올린다 (앞 곡이 다 내려가기를 기다리는 중이면 그대로 둔다)
   const p = bgmPlayers[bgmCur];
   if (p.wait) return;
-  if (p.el.paused) p.el.play().catch(() => {});
+  if (p.el.paused) { p.hold = false; p.el.play().catch(() => {}); }
   if (bgmLevel(p) < BGM.level - 0.01) { ++bgmGo; bgmRamp(p, BGM.level, 0.3); }
+}
+
+// 장면을 열 때 이 장면과 다음 장면의 곡을 미리 받아 둔다(브라우저 캐시) — 곡이 2분짜리라 처음 누를 때 받는 동안 몇 초씩 조용했다
+function bgmWarm(i) {
+  if (!bgmOn()) return;
+  const bgmWarmed = bgmWarm.done ||= new Set(); // (함수에 달아 둔다 — 첫 장면을 여는 때가 이 줄이 실행되기 전일 수 있어)
+  [evAt(i), evAt(i + 1)].forEach(e => {
+    if (!e?.music || bgmWarmed.has(e.music)) return;
+    bgmWarmed.add(e.music);
+    const [name, ver] = e.music.split('?');
+    fetch(`assets/music/${name}.mp3${ver ? '?' + ver : ''}`, { priority: 'low' }).catch(() => bgmWarmed.delete(e.music));
+  });
 }
 
 /* ---------- 말씀 모음 ---------- */
