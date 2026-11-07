@@ -49,6 +49,7 @@ for (const s of sc.scenes) {
   t += s.end ? 9 : TAIL; S.stop = t; tl.scenes.push(S);
 }
 const TOTAL = t; console.log('길이', (TOTAL / 60).toFixed(2), '분,', tl.scenes.length, '장면');
+if (argv.includes('--list')) { tl.scenes.forEach(s => console.log(s.start.toFixed(1), s.stop.toFixed(1), s.head || (s.title ? '제목' : '끝'))); process.exit(0); } // 장면 시각표만 보기
 // 낭독 한 줄
 const voice = new Int16Array(Math.ceil(TOTAL * SR));
 for (const c of clips) { const s = new Int16Array(c.pcm.buffer, c.pcm.byteOffset, c.pcm.length >> 1); voice.set(s.subarray(0, Math.max(0, voice.length - Math.round(c.at * SR))), Math.round(c.at * SR)); }

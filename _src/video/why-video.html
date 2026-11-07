@@ -28,6 +28,12 @@
   .vv{text-align:center;font-family:'Gowun Batang',serif;color:#2b2620}
   .vv p{margin:0;font-size:60px;line-height:1.75}
   .vv cite{display:block;margin-top:34px;font-style:normal;font-family:'Noto Sans KR',sans-serif;font-size:30px;color:#7a6f60}
+  /* 이단 결의 목록: 영상에서는 단체 이름과 표기만 크게 (결의 연도·이유는 웹 페이지에) */
+  .vh .vis{top:200px}
+  .vh .hg{grid-template-columns:repeat(4,1fr)!important;gap:14px!important}
+  .vh .hg .res,.vh .hg q{display:none!important}
+  .vh .hg h4{font-size:22px!important}
+  .vnote{position:absolute;left:0;right:0;top:140px;text-align:center;font-family:'Noto Sans KR',sans-serif;font-size:22px;color:#7a6f60}
   .sub{position:absolute;left:160px;right:160px;bottom:46px;min-height:96px;display:flex;align-items:center;justify-content:center;text-align:center;font-family:'Noto Sans KR',sans-serif;font-weight:500;font-size:40px;line-height:1.45;color:#2b2620;word-break:keep-all}
   .sub span{background:rgba(255,250,242,.86);border-radius:14px;padding:8px 22px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
   .end .qr{width:260px;height:260px;background:#fff;border-radius:20px;padding:16px;margin-top:50px}
@@ -51,7 +57,7 @@ window.setup = async (tl, qrSvg) => {
   doc.querySelectorAll('.when a, .tl a').forEach(a => a.remove()); // 앱으로 가는 단추는 영상에서 뺀다
   const stage = $('#stage');
   tl.scenes.forEach((s, i) => {
-    const el = document.createElement('div'); el.className = 'sc' + (s.end ? ' end' : ''); stage.append(el);
+    const el = document.createElement('div'); el.className = 'sc' + (s.end ? ' end' : '') + (s.sel === '.hg' ? ' vh' : ''); stage.append(el);
     if (s.title) {
       // 첫 장면: 왼쪽에 제목, 오른쪽에 산 그림
       el.innerHTML = `<div class="vis" style="left:960px;right:110px;top:150px;bottom:190px"><img class="pic" src="/${s.img}"></div>
@@ -72,6 +78,7 @@ window.setup = async (tl, qrSvg) => {
         el._box = main;
       }
     }
+    if (s.note) el.insertAdjacentHTML('beforeend', `<div class="vnote">${s.note}</div>`); // 출처 같은 작은 안내
     el.insertAdjacentHTML('beforeend', '<div class="sub"></div>');
     SCENES.push(el);
   });
