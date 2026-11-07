@@ -673,7 +673,7 @@ function renderScene() {
   const jesus = e.words.filter(w => w.j);
   const word = (w, i) => `<blockquote class="word ${w.j ? 'jesus' : 'other'}" data-say="${i}">
       <p>${esc(w.text)}</p>
-      <footer><span>${w.j ? esc(t('jesus')) : esc(w.who)}</span><cite>${esc(w.ref)}</cite></footer>
+      <footer><span>${w.j && !Array.isArray(DATA.journey?.main) ? esc(t('jesus')) : esc(w.who)}</span><cite>${esc(w.ref)}</cite></footer>
     </blockquote>`;
   const tabs = [['story', t('tabStory')], ['text', t('tabText')], ['compare', t('tabCompare')]].filter(([k]) => !((isPro() || !DATA.journey?.harmony) && k === 'compare')); // 프롤로그와 대조표 없는 여정은 복음서 비교가 없다
   if (!tabs.some(([k]) => k === cardTab)) cardTab = 'story'; // 보던 탭을 다음 장면에서도 (프롤로그처럼 그 탭이 없으면 이야기)
