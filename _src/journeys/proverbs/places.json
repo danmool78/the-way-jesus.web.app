@@ -26,5 +26,12 @@
   "lng": 35.2342,
   "region": "예루살렘",
   "approx": true
+ },
+ "alley": {
+  "name": "밤 골목",
+  "lat": 31.7731,
+  "lng": 35.2349,
+  "region": "예루살렘",
+  "approx": true
  }
 }
