@@ -276,6 +276,56 @@ export const PROVERBS = {
         ['father', 'idle', { show: 1, x: -0.3, z: -2.0, look: 3.14 }], ['son', 'idle', { show: 1, x: 0.05, z: -1.8, look: 3.14 }]],
     },
   },
+
+  /* p06. 왕궁 앞에서 (잠 21:1, 16:18, 14:31, 30:7–9, 22:9) — 밤, 솔로몬 궁의 앞뜰 문(세트 palace).
+     백향목 기둥 주랑과 잔치 불빛, 파수꾼 사이로 들어가는 귀인들, 문 곁의 가난한 사람. 끝에 아들이 친구가 싸 준 빵을 나눈다.
+     앞뜰 문 z ≈ -1.04 (문기둥 x ±1.35), 궁 앞면 z ≈ -8.3 */
+  p06: {
+    street: 'palace', env: 'night',
+    cams: {
+      wide: { pos: [0.62, 0.99, 8.3], at: [0, 2.0, -7.3], fov: 66 },     // 광장에서 궁을
+      porch: { pos: [1.4, 0.8, 0.9], at: [0, 2.3, -6.8], fov: 60 },     // 문 너머로 올려다본 백향목 기둥
+      gate: { pos: [-0.1, 0.8, 2.6], at: [-1.25, 0.4, -0.4], fov: 52 },  // 파수꾼과 문 곁의 가난한 사람
+      give: { pos: [-2.6, 0.72, 1.5], at: [-1.45, 0.3, -0.05], fov: 48 },  // 빵을 나누는 아들 — 서쪽에서 (아버지 등이 가리지 않게)
+      pair: { pos: [-0.1, 0.8, 3.4], at: [-1.0, 0.62, 1.8], fov: 44 },   // 아버지와 아들
+    },
+    cam: 'wide',
+    cast: {
+      father: ['father', -1.14, 1.77, 2.8],
+      son: ['son', -0.83, 1.98, 3.0],
+      guard1: ['soldier', -0.78, -0.31, 0, { gaze: false }],
+      guard2: ['soldier', 0.78, -0.31, 0, { gaze: false }],
+      beggar: ['beggar', -1.77, -0.2, 0.5, { gaze: false, pose: 'sit-ground' }],
+      noble: ['rich', 1.6, 4.2, 3.14, { gaze: false }],
+      lady: ['princess', 2.0, 4.5, 3.14, { gaze: false }],
+      porter: ['servant', 1.3, 4.8, 3.14, { gaze: false }],
+    },
+    beats: {
+      // 낭독 없이 볼 때: 문 곁의 가난한 사람에게 빵을 내미는 아들
+      enter: [['@env', 'night'], ['@cam', 'give'], ['beggar', 'sit-ground', { item: 'cup' }], ['son', 'kneel', { x: -1.5, z: 0.32, look: -2.6, item: 'bread' }],
+        ['father', 'idle', { x: -0.95, z: 1.15, look: -2.5 }], ['noble', 'idle', { show: 0 }], ['lady', 'idle', { show: 0 }], ['porter', 'idle', { show: 0 }]],
+      intro: [['@env', 'night'], ['@cam', 'wide'], ['beggar', 'sit-ground', { item: 'cup' }],
+        ['father', 'idle', { x: -0.78, z: 6.2, look: 3.14 }], ['son', 'idle', { x: -0.45, z: 6.4, look: 3.14 }]],
+      // 왕궁 앞을 지나는구나 — 광장으로 걸어 들어온다
+      'p0.0': [['father', 'idle', { x: -1.14, z: 1.77, look: 2.8 }], ['son', 'idle', { x: -0.83, z: 1.98, look: 3.0 }]],
+      // 귀인들이 파수꾼 사이로 들어간다 — 등불 든 종을 앞세우고
+      'p0.1': [['@cam', 'porch'], ['porter', 'idle', { item: 'torch', x: 0.1, z: -5.0 }], ['noble', 'idle', { x: 0.25, z: -5.6, delay: 500 }], ['lady', 'idle', { x: 0.55, z: -5.4, delay: 900 }],
+        ['porter', 'idle', { show: 0, delay: 9000 }], ['noble', 'idle', { show: 0, delay: 9500 }], ['lady', 'idle', { show: 0, delay: 9800 }]],
+      // 문 곁의 가난한 사람
+      'p0.2': [['@cam', 'gate'], ['beggar', 'sit-ground', { look: 0.7 }]],
+      // 왕의 마음도 여호와의 손안에 — 궁을 올려다보며
+      'p1.0': [['@cam', 'wide'], ['father', 'point', { look: 3.0 }], ['son', 'look-up', { look: 3.0 }]],
+      'p1.1': [['@cam', 'pair'], ['father', 'speak', { look: 2.6, to: 'son' }], ['son', 'listen', { look: -2.0 }]],
+      'p1.2': [['father', 'point', { look: -2.6 }], ['son', 'idle', { look: -2.7 }]],
+      // 아굴의 기도
+      'p2.0': [['father', 'pray', { look: 2.8 }], ['son', 'pray', { look: 3.0 }]],
+      'p2.3': [['@cam', 'give'], ['father', 'speak', { look: 2.4, to: 'son' }], ['son', 'idle', { item: 'bread', x: -1.5, z: 0.32, look: -2.6 }], ['son', 'kneel', { delay: 2600 }]],
+      // 너그러운 사람은 복을 받는다 — 가난한 사람이 일어나 축복한다
+      'p2.4': [['beggar', 'bless', { look: 0.5, item: 'bread' }], ['son', 'idle', { item: null, look: -2.6, delay: 600 }], ['father', 'idle', { x: -0.95, z: 1.15, look: -2.5 }]],
+      end: [['@cam', 'give'], ['beggar', 'bless', { look: 0.5, item: 'bread' }], ['son', 'idle', { x: -1.5, z: 0.32, look: -2.6, item: null }], ['father', 'idle', { x: -0.95, z: 1.15, look: -2.5 }],
+        ['noble', 'idle', { show: 0 }], ['lady', 'idle', { show: 0 }], ['porter', 'idle', { show: 0 }]],
+    },
+  },
 };
 
 // intro 앞에 처음 자리로 되돌리는 명령을 붙인다 (stage/moses.js와 같은 방식 — 다시 들을 때도 대본의 처음 자리에서)

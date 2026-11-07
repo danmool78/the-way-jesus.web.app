@@ -1,6 +1,6 @@
 /* 거리 무대의 부품: 여섯 방 성문, 성벽, 네 방 집, 좌판·저울, 올리브나무, 항아리, 먼 산.
    세트(gate.js·field.js)가 가져다 늘어놓는다 */
-import { THREE, mat, mesh } from '../kit.js';
+import { THREE, mat, mesh, glowTexture } from '../kit.js';
 import { M, rnd, ashlar, plaster, rubble, texMat, block, merlons } from './kit.js';
 
 /* ---------- 여섯 방 성문 ----------
@@ -233,6 +233,28 @@ export function oilLamp(g, x, y, z, { power = 1.1, reach = 3.2 } = {}) {
       const f = 0.86 + Math.sin(time * 9 + seed) * 0.06 + Math.sin(time * 23 + seed * 2) * 0.05; // 불꽃은 쉬지 않고 흔들린다
       light.intensity = power * f * k;
       flame.scale.set(1, (0.8 + f * 0.3) * Math.max(0.05, k), 1); flame.visible = k > 0.03;
+    },
+  };
+}
+
+/* ---------- 횃불 기둥 ----------
+   돌 받침 위 나무 기둥 끝의 쇠 화로, 일렁이는 불꽃과 빛. 돌려준 update(time)로 흔든다 */
+export function torchPost(g, x, z, { h = 2.4, power = 2.2, reach = 6 } = {}) {
+  const t = new THREE.Group(); t.position.set(x, 0, z); g.add(t);
+  mesh(new THREE.CylinderGeometry(0.22 * M, 0.28 * M, 0.35 * M, 8), mat('#8a7a62', { roughness: 1 }), t, [0, 0.175 * M, 0]);
+  mesh(new THREE.CylinderGeometry(0.06 * M, 0.08 * M, h * M, 7), mat('#4a3626'), t, [0, h * M / 2, 0]);
+  mesh(new THREE.CylinderGeometry(0.22 * M, 0.12 * M, 0.2 * M, 10, 1, true), mat('#2e2620', { metalness: 0.4, side: THREE.DoubleSide }), t, [0, h * M + 0.08 * M, 0]);
+  const fire = mesh(new THREE.ConeGeometry(0.17 * M, 0.5 * M, 9), new THREE.MeshBasicMaterial({ color: '#ff8a2a' }), t, [0, h * M + 0.38 * M, 0]);
+  fire.castShadow = false;
+  // 불꽃 둘레의 번지는 빛 (밝은 벽 앞에서 노란 원뿔만으로는 불이 잘 보이지 않았다)
+  const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexture(), color: '#ffb060', blending: THREE.AdditiveBlending, depthWrite: false, transparent: true }));
+  halo.scale.setScalar(1.1 * M); halo.position.set(0, h * M + 0.4 * M, 0); t.add(halo);
+  const light = new THREE.PointLight('#ff9a48', power, reach * M, 1.5); light.position.set(0, h * M + 0.5 * M, 0); t.add(light);
+  const seed = Math.random() * 10;
+  return {
+    update(time) {
+      const f = 0.85 + Math.sin(time * 8 + seed) * 0.08 + Math.sin(time * 19 + seed * 3) * 0.06;
+      light.intensity = power * f; fire.scale.set(1 + (f - 0.9) * 0.6, f, 1 + (f - 0.9) * 0.6); halo.material.opacity = 0.75 + (f - 0.85) * 1.5;
     },
   };
 }

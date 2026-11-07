@@ -18,7 +18,7 @@
 | `stage/street/view.js` | 거리 무대를 화면 가득 그리는 쪽(세트 바꾸기·하늘·카메라 자리·카드 비켜 그리기) — stage.js가 `createStreet`로 만들어 쓴다 |
 | `stage/street/kit.js` | 거리 세트의 공통 도구: 축척 `M`, 캔버스 결(돌·회벽·포석·흙), `block`·`many`(InstancedMesh)·`overlay` |
 | `stage/street/parts.js` | 부품: 여섯 방 성문, 성벽, 네 방 집, 좌판·저울, 올리브나무, 항아리, 먼 산 |
-| `stage/street/gate.js`, `field.js`, `home.js`, `alley.js` | 세트 하나에 파일 하나: 성문 광장, 성 밖 들판, 친구의 집, 밤 골목. 새 세트는 여기에 파일을 더하고 street.js의 STREETS에 적는다 |
+| `stage/street/gate.js`, `field.js`, `home.js`, `alley.js`, `palace.js` | 세트 하나에 파일 하나: 성문 광장, 성 밖 들판, 친구의 집, 밤 골목, 왕궁 앞. 새 세트는 여기에 파일을 더하고 street.js의 STREETS에 적는다 |
 | `app.js` | 낭독할 때 `stage:beat` 이벤트를 보낸다 (intro, p0…, w0…, end; 문장마다 s) |
 
 `?beat=p1.2#e03` 처럼 주소에 붙이면 그 순간까지의 동작을 즉시 적용한 화면을 볼 수 있다(확인용).
@@ -110,6 +110,7 @@ e02: {
 - **깜박임(z-fighting)**: 세트의 면이 같은 자리에 겹치지 않게 한다(두 담·축대와 언덕·기둥벽과 탑이 겹쳐 번쩍였다). 바닥 위에 덧까는 면은 `overlay`(polygonOffset)로 깐다. 거리 무대의 near는 0.15.
 - 친구의 집(home): 네 방 집의 안마당 — 하늘이 열린 흙 마당, 양옆 돌기둥 방, 뒤쪽 큰방, 앞쪽 거리로 난 문(z ≈ 2.16). 마당 가운데 깔개에 나물과 빵, 진흙 화덕의 불씨. 등잔(parts.js `oilLamp` — 불꽃이 일렁이는 PointLight)은 `['@set', 'lamps:on|dim|off']`로 켠다. 앉은 채 말하기는 자세 `sit-speak`(말하는 사람으로 쳐서 다른 이들이 돌아본다).
 - 밤 골목(alley): 두 층 집 사이의 좁은 골목, z ≈ -6에서 동쪽으로 꺾인다. 모퉁이 오른쪽 '그 여인의 집' 문(등불 — `['@set', 'door:open|shut']`, 닫히면 불빛이 꺼진다), 왼쪽 위층에서 골목 아래쪽으로 내민 나무 살창 상자(7:6 — 카메라 `lattice`가 그 안에서 살 너머로 내려다본다), 창마다 새는 등잔빛, 달. 꾐은 그리지 않는다: 여인은 어두운 윤곽(silhouette), 따라 들어가면 문이 닫힌다.
+- 왕궁 앞(palace): 마름돌 단 위의 긴 궁, 앞에 백향목 기둥 두 줄 주랑(왕상 7:2–6)과 세 줄 창의 잔치 불빛, 앞뜰 담과 가운데 문(z ≈ -1.04)에 파수꾼, 횃불 기둥(parts.js `torchPost` — 불꽃과 번지는 빛). 인물 손에 드는 것에 `bread`(빵 한 덩이)를 더했다.
 - 멀리까지 보이도록 거리 무대에서는 카메라의 far를 400으로 늘린다(미니어처 무대는 50 — 그대로 두면 성벽이 잘렸다).
 - 장면 사이 사람들(장사꾼·장로)은 `gaze: false` — 말하는 사람이 멀리 있어도 모두 돌아보면 어색했다. 말하는 사람(speak)은 한 장면에 한 명만 두어야 시선이 엉키지 않는다.
 - 세트만 따로 보는 도구: `/_src/tools/street.html?view=eye|high|low&env=day|dawn|dusk`.
@@ -122,7 +123,7 @@ jesus, mary, joseph, angel, woman, woman2, mother, anna, john(젊은 제자, 수
 
 ### 자세 (pose)
 idle, walk(자동), speak, sit-speak(앉아서 말하기), listen, afraid, kneel, pray, bless, raise, bow, look-up, sleep, carry(아기), ride(나귀에 걸터앉음), point, sit, sit-ground, rebuke, break(빵 떼기), shrug, cower, mourn, crucified, crucified-dead, hold-basket
-손에 드는 물건(item): basket, doves, gift, baby, timbrel(소고), tablets(돌판 둘)
+손에 드는 물건(item): basket, doves, gift, bread(빵 한 덩이), baby, timbrel(소고), tablets(돌판 둘)
 
 ### 소품 (MAKERS)
 manger, sheep, star, beam(내려오는 빛), fruittree(fruit/taken), lifetree(open/closed), serpent(rest/hiss), flamesword, host(하늘 군대), water(호수·강 — size로 길게), boat(deck), rain, grass, crowd(spots, state stand/sit, face, faceCenter), baskets, hill(지면 높이 제공), crosses, tomb(open/closed), temple, throne, house, donkey(deck), camel(deck), jackal, ox, dove(fly/rest, y), rocks, figtree, jars(empty/water/wine), feast, table(over), cage
