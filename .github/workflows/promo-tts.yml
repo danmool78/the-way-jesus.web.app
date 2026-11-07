@@ -1,0 +1,21 @@
+# 행사 홍보 영상 내레이션 (_src/promo/tts.mjs): claude/ 브랜치에서 _src/promo/run(성우 이름들)을 바꿔 push하면 녹음해 같은 브랜치에 커밋한다. 운영 배포와 상관없다
+name: Promo narration
+on:
+  push:
+    branches: ['claude/**']
+    paths: [_src/promo/run]
+permissions:
+  contents: write
+jobs:
+  tts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: node _src/promo/tts.mjs $(cat _src/promo/run)
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      - run: |
+          git config user.name "github-actions[bot]"; git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add _src/promo/out && git commit -m "Promo narration" && git push || echo "nothing to commit"
