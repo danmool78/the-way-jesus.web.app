@@ -1,4 +1,4 @@
-// '왜 기독교인가' 영상 만들기: 문장 녹음(tts.mjs) 길이로 장면 시각표를 짜고, why-video.html 무대를 한 장씩 찍어 ffmpeg로 묶는다.
+// '왜 기독교인가' 영상 만들기: 장면별 녹음(tts.mjs --scenes) 길이로 장면 시각표를 짜고, why-video.html 무대를 한 장씩 찍어 ffmpeg로 묶는다.
 // 쓰는 법: node _src/video/render.mjs [녹음 폴더] [출력.mp4] [--tempo 1.1] [--fps 30] [--from 초 --to 초(미리보기)]   — 저장소 맨 위를 http://localhost:8765 로 띄워 둔다
 // 소리: 낭독(24kHz)을 한 줄로 이어 붙이고, 배경음악 assets/music/why.mp3(약 3분)를 되풀이해 낮게 깐다(낭독 중엔 더 낮게)
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
@@ -12,20 +12,39 @@ const FPS = +opt('fps', 30), FROM = +opt('from', 0), TO = opt('to', null), TEMPO
 const [VDIR = '/tmp/why-video/voice', OUT = 'why-video.mp4'] = argv;
 const sc = JSON.parse(await readFile('_src/video/why-script.json', 'utf8')), VOICE = sc.voice, SR = 24000;
 const keyOf = t => createHash('sha1').update(VOICE + '|' + t).digest('hex').slice(0, 12);
-// 시각표: 장면 앞 1.0초, 문장 사이 0.5초, 장면 끝 1.2초 (그림만 보며 숨 고르기). 첫 장면은 2초 먼저, 끝 장면은 8초
-const GAP = 0.5 / TEMPO, LEAD = 1.0 / TEMPO, TAIL = 1.2 / TEMPO;
+// 시각표: 장면(단락)마다 한 번에 녹음한 소리를 그대로 쓴다 — 쉼과 억양은 성우가 단락 안에서 정한다
+// (문장을 따로 녹음해 같은 간격으로 붙였더니 부자연스러웠다, 2026-11). 장면 앞 1.0초, 끝 1.2초, 큰 단락 앞은 pause만큼 더
+const LEAD = 1.0 / TEMPO, TAIL = 1.2 / TEMPO;
+const load = f => TEMPO === 1 ? readFile(f).then(b => b.subarray(44))
+  : execFileSync('ffmpeg', ['-v', 'error', '-i', f, '-af', `atempo=${TEMPO}`, '-f', 's16le', '-ac', '1', '-ar', String(SR), '-'], { maxBuffer: 1 << 28 });
+// 자막 시각: 녹음 속 쉼(0.18초 이상 조용한 곳)을 찾아, 글자 수로 어림한 문장 경계에 가장 가까운 쉼을 차례로 고른다
+function pauses(pcm) {
+  const s = new Int16Array(pcm.buffer, pcm.byteOffset, pcm.length >> 1), W = SR / 100, out = []; let q = -1;
+  for (let k = 0; k * W < s.length; k++) { let e = 0; for (let x = k * W; x < Math.min(s.length, (k + 1) * W); x++) e = Math.max(e, Math.abs(s[x]));
+    if (e < 500) { if (q < 0) q = k; } else { if (q >= 0 && k - q >= 18) out.push({ a: q / 100, b: k / 100 }); q = -1; } }
+  return out;
+}
+function cuts(pcm, lines) {
+  const dur = pcm.length / 2 / SR, len = lines.map(l => l.replace(/\s/g, '').length), all = len.reduce((x, y) => x + y, 0), ps = pauses(pcm), at = [0];
+  let acc = 0, from = 0;
+  for (let k = 0; k < lines.length - 1; k++) {
+    acc += len[k]; const want = dur * acc / all;
+    let best = -1; for (let m = from; m < ps.length; m++) if (best < 0 || Math.abs((ps[m].a + ps[m].b) / 2 - want) < Math.abs((ps[best].a + ps[best].b) / 2 - want)) best = m;
+    if (best >= 0 && Math.abs((ps[best].a + ps[best].b) / 2 - want) < dur * 0.2) { at.push(ps[best].b - 0.05); from = best + 1; } else at.push(want);
+  }
+  return at;
+}
 let t = 1.5; const tl = { scenes: [] }, clips = [];
 for (const s of sc.scenes) {
   t += s.pause || 0; // 큰 단락 앞의 쉼: 앞 장면이 다 사라진 뒤 조금 비운다
   const S = { ...s, start: t, lines: [] }; t += s.title ? 1.5 : LEAD;
-  for (const text of s.say) {
-    t += s.breath?.[text] || 0; // 문장 앞에 숨을 더 쉬어야 하는 곳 (예: 결론으로 넘어가는 문장)
-    const f = `${VDIR}/${keyOf(text)}.wav`, pcm = TEMPO === 1 ? (await readFile(f)).subarray(44)
-      : execFileSync('ffmpeg', ['-v', 'error', '-i', f, '-af', `atempo=${TEMPO}`, '-f', 's16le', '-ac', '1', '-ar', String(SR), '-'], { maxBuffer: 1 << 28 }), dur = pcm.length / 2 / SR;
-    clips.push({ at: t, pcm }); S.lines.push({ text, start: t, dur }); t += dur + GAP;
+  if (s.say.length) {
+    const pcm = await load(`${VDIR}/${keyOf(s.say.join('\n'))}.wav`), dur = pcm.length / 2 / SR, at = cuts(pcm, s.say);
+    clips.push({ at: t, pcm });
+    s.say.forEach((text, k) => S.lines.push({ text, start: t + at[k], next: t + (at[k + 1] ?? dur + 0.6) }));
+    t += dur;
   }
-  S.lines.forEach((l, k) => l.next = S.lines[k + 1]?.start ?? l.start + l.dur + 0.6);
-  t += s.end ? 9 : TAIL - GAP; S.stop = t; tl.scenes.push(S);
+  t += s.end ? 9 : TAIL; S.stop = t; tl.scenes.push(S);
 }
 const TOTAL = t; console.log('길이', (TOTAL / 60).toFixed(2), '분,', tl.scenes.length, '장면');
 // 낭독 한 줄
