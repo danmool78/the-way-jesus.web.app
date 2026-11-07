@@ -53,8 +53,12 @@ await p.evaluate(({ t, qrs }) => {
   });
   items.push({ lb: '', h: t.talkH });
   const toc = document.createElement('div'); toc.className = 'bk-toc';
-  toc.innerHTML = `<h2>${t.toc}</h2><ol>${items.map((it, i) => (it.part ? `<li class="pt">${it.part}</li>` : '')
-    + `<li><span class="lb">${it.lb || ''}</span><span class="tt">${it.h}</span><span class="pg" data-i="${i}"></span></li>`).join('')}</ol>`;
+  const row = (it, i, two) => `<li><span class="lb">${two ? it.lb.split(/[·\s]+/).pop() : it.lb}</span><span class="tt">${it.h}</span><span class="pg" data-i="${i}"></span></li>`;
+  const k = items.findIndex(it => it.part), z = items.length - 1;
+  toc.innerHTML = `<p class="bk-tt">${t.toc}</p>
+    <div class="bk-tp"><span>${h1.textContent}</span></div><ol>${items.slice(0, k).map((it, i) => row(it, i)).join('')}</ol>
+    <div class="bk-tp"><span>${items[k].part}</span><em class="pg" data-i="${k}"></em></div><ol>${items.slice(k + 1, z).map((it, i) => row(it, k + 1 + i, true)).join('')}</ol>
+    <ol class="bk-tend"><li><span class="lb">✎</span><span class="tt">${items[z].h}</span><span class="pg" data-i="${z}"></span></li></ol>`;
   cover.after(toc); window.__toc = items.map(it => it.h);
   // 뒤표지: 교회로 초대 + QR 셋 + 출처
   const last = main.querySelector('.card.warm[style*="margin-top:48px"]') || [...main.querySelectorAll('.card.warm')].pop();
@@ -126,12 +130,19 @@ await p.addStyleTag({ content: `
   .bk-blank{display:block;width:70mm;height:9mm;border-bottom:1px solid #b9ab95} /* 펴낸 곳: 비워 둔다 — 나누는 교회·단체가 적거나 도장 */
   .bk-colo dd small{display:block;font-size:7.6pt;color:var(--muted);margin-top:.5mm}
   .bk-colo .bk-note{margin:1.5mm 0!important}
-  .bk-toc{break-before:page;break-after:page;padding-top:4mm}
-  .bk-toc h2{text-align:center;margin:0 0 6mm!important;border:0!important;padding-top:0!important}
+  .bk-toc{break-before:page;break-after:page;padding:10mm 4mm 0}
+  .why .bk-tt{text-align:center;font-family:var(--serif);font-size:19pt!important;letter-spacing:.35em;color:var(--gold2);margin:0 0 2mm!important}
+  .bk-tt::after{content:'';display:block;width:10mm;height:.6mm;border-radius:1mm;background:var(--gold);opacity:.55;margin:4mm auto 0}
+  .bk-tp{display:flex;align-items:baseline;gap:3mm;margin:9mm 0 2.5mm;font-size:8pt;letter-spacing:.18em;color:var(--gold2);font-weight:700}
+  .bk-tp::after{content:'';order:1;flex:1;height:0;border-top:.3mm solid #ecd9cc;align-self:center}
+  .bk-tp em{order:2;font-style:normal;font-weight:400;letter-spacing:0}
   .bk-toc ol{list-style:none;margin:0;padding:0}
-  .bk-toc li{display:grid;grid-template-columns:15mm 1fr auto;align-items:baseline;gap:2mm;padding:1.5mm 0;border-bottom:1px dotted #e3d6c2;font-size:9.4pt;line-height:1.45}
-  .bk-toc li.pt{display:block;border:0;padding:4mm 0 .5mm;font-size:8.4pt;color:var(--gold2);letter-spacing:.1em}
-  .bk-toc .lb{font-size:7.6pt;color:var(--faint)} .bk-toc .tt{color:#2b2620} .bk-toc .pg{font-size:8.4pt;color:var(--muted)}
+  .bk-toc li{display:grid;grid-template-columns:13mm 1fr auto;align-items:baseline;gap:2mm;padding:1.7mm 0}
+  .bk-toc .lb{font-size:7.4pt;color:var(--faint);letter-spacing:.06em}
+  .bk-toc .tt{font-family:var(--serif);font-size:10.4pt;color:#2b2620;line-height:1.45}
+  .bk-toc .pg{font-size:8.6pt;color:var(--gold2);font-variant-numeric:tabular-nums}
+  .bk-tend{margin-top:7mm!important;padding-top:3mm!important;border-top:.3mm solid #ecd9cc!important}
+  .bk-tend .lb{color:var(--gold)}
   .bk-back{break-before:page;text-align:center;padding:${36 + BL}mm ${12 + BL}mm 0}
   .why .bk-bnote{margin:5mm 0 0!important;text-align:left;white-space:nowrap;font-size:6pt!important;line-height:1.55!important;color:#bdb3a3!important} /* 안내는 눈에 띌 필요 없다 — 작고 옅게 (2026-11 사용자) */
   .bk-back .motto{font-size:17pt;margin:0 0 4mm}
