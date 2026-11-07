@@ -113,8 +113,10 @@ function level(pcm) {
 }
 
 // 읽을 때만 바꾸는 말: 영어 글자 BC·AD 앞에서 Chirp가 앞말을 늘이고 멈칫하므로 우리말로 읽힌다 (화면 글과 열쇠는 그대로)
-// 녘은 소리 나는 대로 녁으로 넘긴다 — Chirp 성우가 '해 질 녘'을 '해질년'으로 읽었다 (열쇠는 원래 글로 셈하므로 앱은 그대로 찾는다)
-const spoken = text => text.replace(/\bBC\s*/g, '기원전 ').replace(/\bAD\s*/g, '서기 ').replace(/녘/g, '녁');
+// 녘은 소리 나는 대로 녁으로 넘기고, 앞말과 사이에 아주 짧은 쉼을 둔다 — Chirp 성우가 '해 질 녘'을 '해질년'으로 읽었고,
+// 녁으로만 바꾸면 '질'의 ㄹ에 끌려 '력·련'처럼 읽혔다 (열쇠는 원래 글로 셈하므로 앱은 그대로 찾는다)
+const spoken = text => text.replace(/\bBC\s*/g, '기원전 ').replace(/\bAD\s*/g, '서기 ').replace(/\s+녘/g, '[pause short] 녁').replace(/녘/g, '녁');
+const plain = text => spoken(text).replace(/\[pause[^\]]*\]\s*/g, ' '); // SSML을 받지 않는 성우(Gemini·일레븐랩스)에는 쉼 표시를 빼고
 
 async function synth(text, v, rate, tries = 0) {
   // 문장 안 쉼: 연결어미 뒤 짧은 무음 표시 (tts-pauses.mjs). Chirp는 SSML 무음을 그대로 따르지 않지만 쉼 자리는 지킨다
@@ -149,7 +151,7 @@ async function geminiSynth(text, v) {
   if (!GEMINI_KEY) { console.warn('GEMINI_API_KEY가 없습니다'); return null; }
   if (v.style && !spent.has(STYLE_TTS)) {
     for (let k = 0; k < (v.gem ? 5 : 3); k++) {
-      const pcm = await geminiCall(STYLE_TTS, v.style + spoken(text), v);
+      const pcm = await geminiCall(STYLE_TTS, v.style + plain(text), v);
       if (pcm === null) break;
       if (!(await readsStyle(pcm))) return pcm;
       console.warn(`지시문까지 읽음 — 다시: ${text.slice(0, 20)}`);
@@ -157,7 +159,7 @@ async function geminiSynth(text, v) {
   }
   // 여정 해설 성우(v.gem)는 말투 지시를 받는 모델로만 — 다른 모델로 넘어가면 같은 이름이어도 목소리 결이 달라졌다(GoodNews g04 첫 문장)
   if (v.gem) return null;
-  for (const model of GEMINI_TTS.filter(m => !spent.has(m))) { const pcm = await geminiCall(model, spoken(text), v); if (pcm) return pcm; }
+  for (const model of GEMINI_TTS.filter(m => !spent.has(m))) { const pcm = await geminiCall(model, plain(text), v); if (pcm) return pcm; }
   return null;
 }
 // 모델 하나로 한 번 녹음 (분당 한도·일시 오류는 기다렸다 다시). 하루 한도면 그 모델을 건너뛰게 표시하고 null
@@ -188,7 +190,7 @@ async function elevenSynth(text, v) {
   if (!ELEVEN_KEY) { console.warn('ELEVENLABS_API_KEY가 없어 건너뜀:', text.slice(0, 20)); return null; }
   for (let tries = 0; tries < 5; tries++) {
     const r = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${v.eleven}?output_format=pcm_${SR}`, { method: 'POST', headers: { 'xi-api-key': ELEVEN_KEY, 'content-type': 'application/json' },
-      body: JSON.stringify({ text: spoken(text), model_id: ELEVEN_MODEL, language_code: 'ko', voice_settings: { stability: 0.5, similarity_boost: 0.75, speed: 0.95 } }) });
+      body: JSON.stringify({ text: plain(text), model_id: ELEVEN_MODEL, language_code: 'ko', voice_settings: { stability: 0.5, similarity_boost: 0.75, speed: 0.95 } }) });
     if (r.ok) { const buf = Buffer.from(await r.arrayBuffer()); return new Int16Array(buf.buffer.slice(buf.byteOffset, buf.byteOffset + (buf.length & ~1))); }
     const msg = (await r.text()).slice(0, 160);
     if (r.status !== 429 && r.status < 500) { console.warn(`ElevenLabs ${r.status}: ${msg}`); return null; }
