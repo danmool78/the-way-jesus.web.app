@@ -40,5 +40,12 @@
   "en": "MIDNIGHT",
   "span": "깊은 밤",
   "color": "#3e4a72"
+ },
+ {
+  "id": "d7",
+  "name": "새벽 · 지혜의 집",
+  "en": "DAWN",
+  "span": "새벽",
+  "color": "#e0a070"
  }
 ]

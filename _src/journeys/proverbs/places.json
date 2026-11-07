@@ -47,5 +47,12 @@
   "lng": 35.2353,
   "region": "예루살렘",
   "approx": true
+ },
+ "wisdomhouse": {
+  "name": "성의 높은 곳",
+  "lat": 31.7779,
+  "lng": 35.2352,
+  "region": "예루살렘",
+  "approx": true
  }
 }

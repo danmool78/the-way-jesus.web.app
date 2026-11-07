@@ -365,6 +365,55 @@ export const PROVERBS = {
       end: [['@cam', 'room'], ['@set', 'lamps:dim'], ['mother', 'sit-ground', { item: null, look: 1.2 }], ['son', 'kneel', { x: 0.15, z: -0.22, look: -1.9 }], ['father', 'idle', { x: 0.55, z: -0.75, look: -1.8 }]],
     },
   },
+
+  /* p08. 지혜의 집 (잠 9:1–12, 4:18) — 새벽, 성에서 가장 높은 둔덕(세트 wisdom). 일곱 기둥 주랑 앞에 차린 상, 집 앞에서 부르는 지혜,
+     둔덕 가장자리에서 외치는 여종 둘. 동쪽(+x) 감람산 위로 해가 떠오른다(['@set', 'sun:rise']). 마지막에 하루가 밝아진다(glory).
+     기둥 줄 z ≈ -3.22, 상 z ≈ -1.72 */
+  p08: {
+    street: 'wisdom', env: 'dawn',
+    cams: {
+      path: { pos: [0.62, 0.99, 6.3], at: [0, 1.1, -3.1], fov: 62 },     // 길에서 올려다본 지혜의 집
+      east: { pos: [-2.4, 1.5, 1.6], at: [24, -0.5, -4.5], fov: 72 },   // 동쪽 — 아버지와 아들 너머로, 둔덕 아래 성의 지붕들과 감람산·해
+      portico: { pos: [1.3, 0.88, 1.5], at: [0, 0.85, -3.1], fov: 60 },  // 일곱 기둥과 지혜
+      table: { pos: [0.85, 0.75, -0.25], at: [-0.15, 0.32, -1.8], fov: 50 }, // 차린 상
+      pair: { pos: [-2.0, 0.85, 0.7], at: [-0.1, 0.55, -1.0], fov: 42 },   // 상 앞의 아버지와 아들 (옆에서)
+    },
+    cam: 'path',
+    cast: {
+      wisdom: ['wisdom', 0, -2.3, 0, { gaze: false }],
+      maid1: ['woman', -3.3, 0.9, -1.2, { gaze: false }],
+      maid2: ['woman2', 3.3, 0.9, 1.2, { gaze: false }],
+      father: ['father', -0.47, -0.99, 3.14],
+      son: ['son', 0.16, -0.99, 3.14],
+    },
+    beats: {
+      // 낭독 없이 볼 때: 차린 상 앞에서 부르는 지혜, 상 앞의 아버지와 아들, 동쪽 하늘이 밝다
+      enter: [['@env', 'dawn'], ['@cam', 'portico'], ['@set', 'sun:rise'], ['wisdom', 'bless', { look: 0 }], ['maid1', 'raise'], ['maid2', 'raise']],
+      intro: [['@env', 'dawn'], ['@cam', 'path'], ['@set', 'sun:low'], ['wisdom', 'idle', { look: 0 }],
+        ['father', 'idle', { x: -0.3, z: 6.8, look: 3.14 }], ['son', 'idle', { x: 0.1, z: 7.1, look: 3.14 }]],
+      // 일어나라 — 새벽 길을 올라온다
+      'p0.0': [['father', 'idle', { x: -0.4, z: 1.2, look: 3.14 }], ['son', 'idle', { x: 0.1, z: 1.35, look: 3.14 }]],
+      // 새벽빛이 동쪽 산 위로 번진다 — 해가 오르기 시작한다
+      'p0.1': [['@cam', 'east'], ['@set', 'sun:rise']],
+      // 일곱 기둥 집
+      'p0.2': [['@cam', 'portico']],
+      'p0.3': [['@cam', 'table']],
+      // 여종들을 보내어 외치게 한다
+      'p0.4': [['@cam', 'path'], ['maid1', 'raise'], ['maid2', 'raise']],
+      // 어리석은 사람은 누구든지 이리로 오너라 — 지혜가 부른다
+      'p1.0': [['@cam', 'portico'], ['wisdom', 'raise', { look: 0 }]],
+      'p1.1': [['wisdom', 'bless', { look: 0 }], ['father', 'idle', { x: -0.47, z: -0.99, look: 3.14 }], ['son', 'idle', { x: 0.16, z: -0.99, look: 3.14, delay: 400 }]],
+      'p1.2': [['@cam', 'table'], ['wisdom', 'speak', { to: 'son' }]],
+      'p1.4': [['wisdom', 'bless', { look: 0 }], ['father', 'bow'], ['son', 'bow']],
+      // 아들아 — 상 앞에서
+      'p2.0': [['@cam', 'pair'], ['father', 'speak', { to: 'son' }], ['son', 'listen']],
+      // 의인의 길은 돋는 햇살 같아서 — 동쪽, 하루가 밝아진다
+      'p2.1': [['@cam', 'east'], ['@env', 'glory'], ['father', 'look-up', { x: 2.6, z: -0.3, look: 1.57 }], ['son', 'look-up', { x: 2.9, z: 0.15, look: 1.57, delay: 300 }]],
+      'p2.2': [['@cam', 'path'], ['wisdom', 'bless']],
+      end: [['@env', 'glory'], ['@cam', 'portico'], ['@set', 'sun:rise'], ['wisdom', 'bless', { look: 0 }], ['maid1', 'raise'], ['maid2', 'raise'],
+        ['father', 'idle', { x: -0.47, z: -0.99, look: 3.14 }], ['son', 'idle', { x: 0.16, z: -0.99, look: 3.14 }]],
+    },
+  },
 };
 
 // intro 앞에 처음 자리로 되돌리는 명령을 붙인다 (stage/moses.js와 같은 방식 — 다시 들을 때도 대본의 처음 자리에서)
