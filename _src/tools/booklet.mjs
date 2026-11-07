@@ -20,6 +20,7 @@ const T = {
   en: { app: 'The Way', talkH: 'Questions to talk over', memo: 'Notes', talk: ['Where do I stand now — on the road up, or before the God who came down?', 'What comes to mind when you hear "all religions are the same"?', 'Has anyone ever run to you first, like the father in the story?', 'In the judge story, how does it sound that justice and love meet?', 'Is there something you only came to know after trusting and taking a step?', 'Which church could you visit this week, and who would you like to go with?'], back: ['A family is waiting for you', 'Jesus does not leave you to walk alone. This Sunday, knock on the door of a church near you.'], qr: ['The Way — Bible journeys on the map', 'Read this on your phone', 'The footsteps of Jesus', 'GoodNews — the gospel in four scenes'], coverFoot: 'A comparison in pictures and charts', bnote: 'Pictures made with AI and refined by hand · Scripture newly translated', colo: [['Published', 'November 2026'], ['Publisher', '김성수<small>Serves at 새로남교회, Daejeon (Presbyterian Church in Korea, Hapdong) · CEO of 삼은케미칼 and SSSOFT</small>'], ['Made by', 'SSSOFT'], ['Distributed by', '<span class="bk-blank"></span><small>Churches and groups sharing this may write their name or stamp here</small>']] },
 };
 const t = { ...T.en, ...(T[lang] || {}) };
+t.toc = { ko: '차례', en: 'Contents', es: 'Índice', pt: 'Sumário', fr: 'Sommaire', id: 'Daftar Isi', ja: '目次', zh: '目录' }[lang] || 'Contents';
 // 뒤표지 QR: 그 길 첫 화면 · 이 글 · 예수 여정 · GoodNews
 const qrs = [`${SITE}/?lang=${lang}`, `${SITE}/${page}`, `${SITE}/jesus`, `${SITE}/goodnews/`].map(qr);
 
@@ -44,6 +45,17 @@ await p.evaluate(({ t, qrs }) => {
   cover.innerHTML = `<div class="bk-app"><img src="assets/logo.svg" alt="">${t.app}</div><h1>${h1.textContent}</h1><p class="sub">${sub.textContent}</p>
     <img class="bk-art" src="assets/img/why/mountain.webp" alt=""><p class="bk-cfoot">${t.coverFoot}</p>`;
   main.prepend(cover); h1.remove(); sub.remove();
+  // 차례: 장(작은 이름표 + 제목)과 '그다음 이야기', 나눔 물음. 쪽 번호는 한 번 뽑은 PDF에서 찾아 나중에 채운다 (사용자, 2026-11)
+  const items = [];
+  $$('main.why > section, main.why > .part').forEach(sec => {
+    if (sec.classList.contains('part')) { items.push({ part: sec.querySelector('span')?.textContent || '', h: sec.querySelector('h2').innerText.replace(/\s+/g, ' ') }); return; }
+    const h = sec.querySelector(':scope > h2'), sm = sec.querySelector(':scope > small'); if (h) items.push({ lb: sm?.textContent || '', h: h.textContent });
+  });
+  items.push({ lb: '', h: t.talkH });
+  const toc = document.createElement('div'); toc.className = 'bk-toc';
+  toc.innerHTML = `<h2>${t.toc}</h2><ol>${items.map((it, i) => (it.part ? `<li class="pt">${it.part}</li>` : '')
+    + `<li><span class="lb">${it.lb || ''}</span><span class="tt">${it.h}</span><span class="pg" data-i="${i}"></span></li>`).join('')}</ol>`;
+  cover.after(toc); window.__toc = items.map(it => it.h);
   // 뒤표지: 교회로 초대 + QR 셋 + 출처
   const last = main.querySelector('.card.warm[style*="margin-top:48px"]') || [...main.querySelectorAll('.card.warm')].pop();
   last?.remove();
@@ -114,6 +126,12 @@ await p.addStyleTag({ content: `
   .bk-blank{display:block;width:70mm;height:9mm;border-bottom:1px solid #b9ab95} /* 펴낸 곳: 비워 둔다 — 나누는 교회·단체가 적거나 도장 */
   .bk-colo dd small{display:block;font-size:7.6pt;color:var(--muted);margin-top:.5mm}
   .bk-colo .bk-note{margin:1.5mm 0!important}
+  .bk-toc{break-before:page;break-after:page;padding-top:4mm}
+  .bk-toc h2{text-align:center;margin:0 0 6mm!important;border:0!important;padding-top:0!important}
+  .bk-toc ol{list-style:none;margin:0;padding:0}
+  .bk-toc li{display:grid;grid-template-columns:15mm 1fr auto;align-items:baseline;gap:2mm;padding:1.5mm 0;border-bottom:1px dotted #e3d6c2;font-size:9.4pt;line-height:1.45}
+  .bk-toc li.pt{display:block;border:0;padding:4mm 0 .5mm;font-size:8.4pt;color:var(--gold2);letter-spacing:.1em}
+  .bk-toc .lb{font-size:7.6pt;color:var(--faint)} .bk-toc .tt{color:#2b2620} .bk-toc .pg{font-size:8.4pt;color:var(--muted)}
   .bk-back{break-before:page;text-align:center;padding:${36 + BL}mm ${12 + BL}mm 0}
   .why .bk-bnote{margin:5mm 0 0!important;text-align:left;white-space:nowrap;font-size:6pt!important;line-height:1.55!important;color:#bdb3a3!important} /* 안내는 눈에 띌 필요 없다 — 작고 옅게 (2026-11 사용자) */
   .bk-back .motto{font-size:17pt;margin:0 0 4mm}
@@ -131,6 +149,13 @@ const pages = () => +execFileSync('pdfinfo', [out]).toString().match(/Pages:\s+(
 await pdf();
 for (let n = pages(); n % 4; n = pages()) {
   await p.evaluate(memo => { const m = document.createElement('div'); m.className = 'bk-memo'; m.innerHTML = `<h2>${memo}</h2>` + '<span></span>'.repeat(14); document.querySelector('.bk-colo').before(m); }, t.memo);
+  await pdf();
+}
+{ // 차례 쪽 번호 채우기 — 번호만 바뀌어 쪽 나눔은 그대로다
+  const heads = await p.evaluate(() => window.__toc), norm = x => x.replace(/\s+/g, '');
+  const texts = []; for (let i = 1; i <= pages(); i++) texts.push(norm(execFileSync('pdftotext', ['-f', String(i), '-l', String(i), out, '-']).toString()));
+  const nums = heads.map(h => { const k = texts.findIndex((x, i) => i > 1 && x.includes(norm(h))); return k < 0 ? '' : k + 1; });
+  await p.evaluate(nums => document.querySelectorAll('.bk-toc .pg').forEach(e => { e.textContent = nums[+e.dataset.i]; }), nums);
   await pdf();
 }
 await b.close();
