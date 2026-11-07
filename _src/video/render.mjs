@@ -39,9 +39,11 @@ for (const s of sc.scenes) {
   t += s.pause || 0; // 큰 단락 앞의 쉼: 앞 장면이 다 사라진 뒤 조금 비운다
   const S = { ...s, start: t, lines: [] }; t += s.title ? 1.5 : LEAD;
   if (s.say.length) {
-    const pcm = await load(`${VDIR}/${keyOf(s.say.join('\n'))}.wav`), dur = pcm.length / 2 / SR, at = cuts(pcm, s.say);
+    // 자막은 문장 하나씩 (녹음 한 줄에 문장이 여럿이면 나눠 보여 준다 — 녹음 열쇠는 그대로 say)
+    const subs = s.say.flatMap(x => x.split(/(?<=[.?!])\s+/));
+    const pcm = await load(`${VDIR}/${keyOf(s.say.join('\n'))}.wav`), dur = pcm.length / 2 / SR, at = cuts(pcm, subs);
     clips.push({ at: t, pcm });
-    s.say.forEach((text, k) => S.lines.push({ text, start: t + at[k], next: t + (at[k + 1] ?? dur + 0.6) }));
+    subs.forEach((text, k) => S.lines.push({ text, start: t + at[k], next: t + (at[k + 1] ?? dur + 0.6) }));
     t += dur;
   }
   t += s.end ? 9 : TAIL; S.stop = t; tl.scenes.push(S);
