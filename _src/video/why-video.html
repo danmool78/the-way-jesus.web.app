@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<base href="/"><!-- why.html의 그림 주소(assets/…)가 그대로 맞게 -->
+<title>왜 기독교인가 — 영상 무대</title>
+<!-- 영상의 한 장면 한 장면을 그리는 무대(1920×1080). render.mjs가 열어 window.render(t)로 시각을 넘기며 한 장씩 찍는다.
+     그림·도표는 why.html에서 그대로 가져온다(글과 그림을 고치면 영상도 따라간다) -->
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<style id="v">
+  html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:#f7f1e6}
+  #stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:radial-gradient(ellipse at 50% 0%,rgba(208,104,91,.07),transparent 55%),#f7f1e6}
+  .sc{position:absolute;inset:0;opacity:0}
+  /* 줄바꿈: 마지막 줄에 한두 낱말만 남지 않게 줄 길이를 고르게 (요한복음 3:16의 '것입니다.'만 따로 떨어졌다 — 사용자, 2026-11) */
+  #stage p,#stage div,#stage span,#stage dd,#stage li,#stage h1,#stage figcaption{text-wrap:balance}
+  .sub span{text-wrap:nowrap} /* 자막은 breakSub가 뜻을 보고 직접 나눈다 */
+  .head{position:absolute;left:0;right:0;top:64px;text-align:center;font-family:'Gowun Batang',serif;font-weight:700;font-size:54px;color:#c0564a;letter-spacing:.02em}
+  .vis{position:absolute;left:110px;right:110px;top:170px;bottom:205px;display:flex;align-items:center;justify-content:center}
+  .vis img.pic{max-width:100%;max-height:100%;border-radius:22px;border:1px solid #eadfcd;box-shadow:0 10px 30px rgba(90,60,30,.10);transform-origin:50% 50%}
+  .box{transform-origin:0 0;position:absolute}
+  .title{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+  .title h1{font-family:'Gowun Batang',serif;font-size:120px;color:#2b2620;margin:0 0 22px;letter-spacing:.06em}
+  .title p{font-family:'Gowun Batang',serif;font-size:46px;color:#c0564a;margin:0}
+  .title .logo{display:flex;align-items:center;gap:16px;font-family:'Gowun Batang',serif;color:#c0564a;font-size:36px;letter-spacing:.3em;margin-bottom:70px}
+  .title .logo img{width:56px;height:56px}
+  .title.over{background:linear-gradient(rgba(247,241,230,.0),rgba(247,241,230,.0))}
+  .vv{text-align:center;font-family:'Gowun Batang',serif;color:#2b2620}
+  .vv p{margin:0;font-size:60px;line-height:1.75}
+  .vv cite{display:block;margin-top:34px;font-style:normal;font-family:'Noto Sans KR',sans-serif;font-size:30px;color:#7a6f60}
+  /* 이단 결의 목록: 영상에서는 단체 이름과 표기만 크게 (결의 연도·이유는 웹 페이지에) */
+  .vh .vis{top:200px}
+  .vh .hg{grid-template-columns:repeat(4,1fr)!important;gap:14px!important}
+  .vh .hg .res,.vh .hg q{display:none!important}
+  .vh .hg h4{font-size:22px!important}
+  .vnote{position:absolute;left:0;right:0;top:140px;text-align:center;font-family:'Noto Sans KR',sans-serif;font-size:22px;color:#7a6f60}
+  .sub{position:absolute;left:160px;right:160px;bottom:46px;min-height:96px;display:flex;align-items:center;justify-content:center;text-align:center;font-family:'Noto Sans KR',sans-serif;font-weight:500;font-size:40px;line-height:1.45;color:#2b2620;word-break:keep-all}
+  .sub span{background:rgba(255,250,242,.86);border-radius:14px;padding:8px 22px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+  .end .qr{width:260px;height:260px;background:#fff;border-radius:20px;padding:16px;margin-top:50px}
+  .end .qr svg{width:100%;height:100%}
+  .end small{display:block;font-family:'Noto Sans KR',sans-serif;font-size:28px;color:#7a6f60;margin-top:22px}
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script>
+// 장면 만들기: render.mjs가 window.setup(timeline)을 부른다. 장면마다 머리글·그림(또는 why.html에서 가져온 도표)·자막
+const $ = s => document.querySelector(s);
+let TL, SCENES = [];
+window.setup = async (tl, qrSvg) => {
+  TL = tl;
+  const html = await (await fetch('/why.html')).text();
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  // why.html의 자체 스타일(종이 바탕 색·도표 모양)을 그대로 — 이 무대의 것은 그 뒤에 둬서 이긴다
+  const st = document.createElement('style'); st.textContent = doc.querySelector('style').textContent; document.head.insertBefore(st, $('#v'));
+  doc.querySelectorAll('details').forEach(d => { if (!d.closest('.spec')) d.open = true; });
+  doc.querySelectorAll('.when a, .tl a').forEach(a => a.remove()); // 앱으로 가는 단추는 영상에서 뺀다
+  const stage = $('#stage');
+  tl.scenes.forEach((s, i) => {
+    const el = document.createElement('div'); el.className = 'sc' + (s.end ? ' end' : '') + (s.sel === '.hg' ? ' vh' : ''); stage.append(el);
+    if (s.title) {
+      // 첫 장면: 왼쪽에 제목, 오른쪽에 산 그림
+      el.innerHTML = `<div class="vis" style="left:960px;right:110px;top:150px;bottom:190px"><img class="pic" src="/${s.img}"></div>
+        <div class="title" style="right:960px"><div class="logo"><img src="/assets/logo.svg">그 길</div><h1>${s.title[0]}</h1><p>${s.title[1]}</p></div>`;
+    } else if (s.end) {
+      el.innerHTML = `<div class="title"><div class="logo"><img src="/assets/logo.svg">그 길</div><h1 style="font-size:84px">왜 기독교인가</h1><p>올라가는 종교, 내려오신 하나님</p><div class="qr">${qrSvg}</div><small>휴대폰으로 이 글을 읽고, 소책자도 받아 보세요</small></div>`;
+    } else {
+      el.innerHTML = (s.head ? `<div class="head">${s.head}</div>` : '') + `<div class="vis"></div>`;
+      const vis = el.querySelector('.vis');
+      if (s.img) vis.innerHTML = `<img class="pic" src="/${s.img}">`;
+      else if (s.verse) vis.innerHTML = `<div class="vv">${s.verse.map(l => `<p>${l}</p>`).join('')}<cite>${s.cite}</cite></div>`; // 말씀은 뜻 단위로 줄을 나눈다
+      else {
+        const src = doc.querySelectorAll(s.sel)[s.n || 0];
+        const main = document.createElement('main'); main.className = 'why box';
+        main.style.width = (s.w || (s.sel.startsWith('svg') ? 640 : 700)) + 'px';
+        const c = src.cloneNode(true); if (s.keep) [...c.children].slice(s.keep).forEach(x => x.remove()); // keep: 앞의 몇 칸만 (글씨가 작아지지 않게)
+        main.style.padding = '0'; main.append(c); vis.append(main);
+        el._box = main;
+      }
+    }
+    if (s.note) el.insertAdjacentHTML('beforeend', `<div class="vnote">${s.note}</div>`); // 출처 같은 작은 안내
+    el.insertAdjacentHTML('beforeend', '<div class="sub"></div>');
+    SCENES.push(el);
+  });
+  // segno의 QR svg에는 viewBox가 없어 상자에 맞게 커지지 않았다(끝 화면에서 왼쪽 위에 작게) — 크기에서 viewBox를 만든다
+  document.querySelectorAll('.qr svg').forEach(v => { if (!v.getAttribute('viewBox')) v.setAttribute('viewBox', `0 0 ${parseFloat(v.getAttribute('width'))} ${parseFloat(v.getAttribute('height'))}`); v.removeAttribute('width'); v.removeAttribute('height'); });
+  await Promise.all([...document.images].map(im => im.decode().catch(() => {})));
+  await document.fonts.ready;
+  // 도표는 무대 칸에 맞게 키운다
+  SCENES.forEach(el => { const b = el._box; if (!b) return; const vis = el.querySelector('.vis'), W = vis.clientWidth, H = vis.clientHeight;
+    const w = b.scrollWidth, h = b.scrollHeight, k = Math.min(W / w, H / h, 3.2);
+    b.style.transform = `scale(${k})`; b.style.left = (W - w * k) / 2 + 'px'; b.style.top = (H - h * k) / 2 + 'px';
+    b._items = [...(b.firstElementChild.matches('svg') ? b.firstElementChild.children : b.firstElementChild.children)]; });
+  return true;
+};
+// 자막 줄바꿈: 한 줄(약 34자)에 들어가면 그대로. 길면 뜻이 끊기는 자리에서 나눈다 — 문장 끝 > 쉼표 > 이어지는 말끝(-고·-며·-아/어…) > 주어·장소 조사 뒤 > 띄어쓰기,
+// 목적어 조사(을·를)와 '의' 뒤에서는 되도록 끊지 않는다(목적어와 동사를 떼면 어색하다). 가운데에 가까울수록 좋고, 그래도 긴 쪽은 한 번 더 나눈다
+function breakSub(txt, max = 36) {
+  if (txt.length <= max) return [txt];
+  const mid = txt.length / 2, cands = [];
+  for (let i = 1; i < txt.length - 1; i++) {
+    if (txt[i] !== ' ') continue;
+    const before = txt.slice(0, i);
+    let w = 6;
+    if (/[.?!]$/.test(before)) w = -1;
+    else if (/,$/.test(before)) w = 0;
+    else if (/(고|며|면|서|데|지만|아도|어도|니까|려고|도록|듯|아|어|여|게|면서)$/.test(before)) w = 2;
+    else if (/(은|는|이|가|에서|에게|에는|에|로|도|와|과|까지)$/.test(before)) w = 3;
+    else if (/(을|를|의)$/.test(before)) w = 9;
+    cands.push({ i, score: Math.abs(i - mid) / txt.length * 28 + w });
+  }
+  cands.sort((a, b) => a.score - b.score);
+  const c = cands[0]; if (!c) return [txt];
+  return [...breakSub(txt.slice(0, c.i), max), ...breakSub(txt.slice(c.i + 1), max)];
+}
+// 시각 t(초)의 모습: 장면은 서로 겹쳐 0.8초에 걸쳐 바뀌고, 그림은 천천히 다가가며, 도표의 칸은 하나씩 나타난다
+const ease = x => x < 0 ? 0 : x > 1 ? 1 : x * x * (3 - 2 * x);
+window.render = t => {
+  TL.scenes.forEach((s, i) => {
+    const el = SCENES[i], a = s.start, b = s.stop, X = 0.8;
+    const op = Math.min(ease((t - a) / X), i === TL.scenes.length - 1 ? 1 : 1 - ease((t - b) / X));
+    el.style.opacity = op; el.style.display = op > 0.001 ? '' : 'none';
+    if (op <= 0.001) return;
+    const p = Math.min(1, Math.max(0, (t - a) / (b - a + X)));
+    const pic = el.querySelector('img.pic'); if (pic) pic.style.transform = `scale(${1 + 0.06 * p})`;
+    if (el._box) { const n = el._box._items.length; el._box._items.forEach((c, k) => { const q = ease((t - a - 0.6 - k * Math.min(1.2, (b - a) * 0.55 / Math.max(1, n))) / 0.7); c.style.opacity = q; if (c.style) c.style.transition = 'none'; }); }
+    // 자막: 그 장면에서 지금 읽는 문장
+    const line = s.lines.find(l => t >= l.start && t < l.next);
+    const sub = el.querySelector('.sub'), txt = line && !s.verse ? line.text : ''; // 말씀 장면은 화면 글이 곧 낭독이라 자막을 겹쳐 두지 않는다
+    if (sub._t !== txt) { sub._t = txt; sub.innerHTML = txt ? `<span>${(TL.breaks?.[txt] || breakSub(txt)).join('<br>')}</span>` : ''; } // 직접 정한 줄바꿈(대본의 breaks)이 먼저
+  });
+};
+</script>
+</body>
+</html>
