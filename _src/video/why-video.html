@@ -118,7 +118,7 @@ window.render = t => {
     // 자막: 그 장면에서 지금 읽는 문장
     const line = s.lines.find(l => t >= l.start && t < l.next);
     const sub = el.querySelector('.sub'), txt = line && !s.verse ? line.text : ''; // 말씀 장면은 화면 글이 곧 낭독이라 자막을 겹쳐 두지 않는다
-    if (sub._t !== txt) { sub._t = txt; sub.innerHTML = txt ? `<span>${(TL.breaks?.[txt] || breakSub(txt)).join('<br>')}</span>` : ''; // 직접 정한 줄바꿈(대본의 breaks)이 먼저 }
+    if (sub._t !== txt) { sub._t = txt; sub.innerHTML = txt ? `<span>${(TL.breaks?.[txt] || breakSub(txt)).join('<br>')}</span>` : ''; } // 직접 정한 줄바꿈(대본의 breaks)이 먼저
   });
 };
 </script>
