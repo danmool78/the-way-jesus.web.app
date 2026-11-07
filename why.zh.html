@@ -651,11 +651,13 @@
   const show = () => { btn.classList.toggle('off', !on); btn.setAttribute('aria-pressed', on); btn.lastChild.textContent = on ? lb[1] : lb[0]; };
   // 아이폰은 소리 크기를 페이지가 바꿀 수 없다(volume이 늘 1) — 바뀌지 않으면 서서히 줄이기를 바로 끝낸다
   const ramp = (to, done) => { clearInterval(fade); fade = setInterval(() => { const was = a.volume, v = was + (to > was ? .02 : -.04); if ((to > was) ? v >= to : v <= to) { a.volume = to; clearInterval(fade); done && done(); } else { a.volume = Math.max(0, Math.min(1, v)); if (a.volume === was) { clearInterval(fade); done && done(); } } }, 80); };
-  const play = () => { on = true; show(); a.play().then(() => { if (on) ramp(.35); }).catch(() => { on = false; show(); }); };
-  const stop = () => { on = false; show(); ramp(0, () => { if (!on) a.pause(); }); };
+  const play = () => { on = true; show(); a.muted = false; a.play().then(() => { if (on) ramp(.35); }).catch(() => { on = false; show(); }); };
+  // 끄기는 서서히 줄이지 않고 바로 멈춘다 — 아이폰에서 버튼은 꺼짐으로 바뀌는데 노래가 계속 나왔다(사용자, 2026-11). 줄이기 타이머에 기대지 않는다
+  const stop = () => { on = false; show(); clearInterval(fade); a.muted = true; a.pause(); }; // 소리도 함께 끈다(muted는 아이폰에서도 듣는다)
   btn.onclick = e => { e.stopPropagation(); want = !on; try { localStorage.setItem('theway-why-music', want ? 'on' : 'off'); } catch { /* 무시 */ } want ? play() : stop(); };
   const first = e => { removeEventListener('pointerdown', first, true); removeEventListener('keydown', first, true); if (want && !on && !e.target.closest?.('#bgm')) play(); }; // 단추를 처음 누른 때는 단추가 맡는다
   addEventListener('pointerdown', first, true); addEventListener('keydown', first, true);
+  addEventListener('pagehide', () => a.pause());
   document.addEventListener('visibilitychange', () => { if (document.hidden) { if (!a.paused) { a.pause(); a.dataset.resume = 1; } } else if (a.dataset.resume && on) { delete a.dataset.resume; a.play().catch(() => {}); } });
   show();
 })();
