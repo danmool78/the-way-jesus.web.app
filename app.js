@@ -1401,6 +1401,29 @@ function renderHarmony() {
 
 /* ---------- 퀴즈 ---------- */
 let quizRun = null;
+/* ---------- 하루 한 장 31일 잠언 (journey.daily) ----------
+   오늘 날짜의 장(1–31)을 펴 두고, 고른 구절 셋과 아버지의 한마디를 보인다. 아래 31칸에서 다른 장으로 옮겨 가고,
+   '읽었어요'는 이 기기에만 이 달의 기록으로 남긴다(다음 달이 되면 새로 — 한 달에 잠언을 한 번 걷는다) */
+let dailyPick = 0;
+function renderDaily() {
+  const days = DATA.journey?.daily; if (!days) return;
+  const now = new Date(), today = Math.min(now.getDate(), days.length), month = `${now.getFullYear()}-${now.getMonth() + 1}`;
+  const key = `theway-daily-${JOURNEY}`;
+  let rec = {}; try { rec = JSON.parse(localStorage.getItem(key)) || {}; } catch { /* 사생활 보호 모드: 이번 방문만 */ }
+  if (rec.month !== month) rec = { month, read: [] };
+  const save = () => { try { localStorage.setItem(key, JSON.stringify(rec)); } catch { /* 저장 못 해도 화면은 그대로 */ } };
+  const d = dailyPick || today, day = days[d - 1], read = rec.read.includes(d);
+  $('#dailyBody').innerHTML = `
+    <p class="count">${esc(t(d === today ? 'dailyToday' : 'dailyCh', { d }))} · ${esc(t('dailyCount', { n: rec.read.length }))}</p>
+    <h3 class="psep" style="--c:var(--gold)">${esc(t('dailyCh', { d }))} · ${esc(day.t)}</h3>
+    ${day.v.map(([ref, text]) => `<div class="wcard" style="--c:var(--gold)"><p>${esc(text)}</p><footer><cite>잠 ${esc(ref)}</cite></footer></div>`).join('')}
+    <div class="daily-note"><small>${esc(t('dailyFather'))}</small><p>${esc(day.n)}</p></div>
+    <div class="endbtns"><button class="${read ? 'textbtn' : 'goldbtn'}" id="dailyRead">${esc(t(read ? 'dailyDoneOn' : 'dailyDone'))}</button></div>
+    <div class="daily-grid" role="list">${days.map((x, i) => `<button role="listitem" data-d="${i + 1}" class="${i + 1 === d ? 'on' : ''} ${rec.read.includes(i + 1) ? 'read' : ''} ${i + 1 === today ? 'today' : ''}" title="${esc(x.t)}">${i + 1}</button>`).join('')}</div>`;
+  $('#dailyRead').onclick = () => { rec.read = read ? rec.read.filter(x => x !== d) : [...rec.read, d]; save(); renderDaily(); };
+  $$('#dailyBody .daily-grid button').forEach(b => b.onclick = () => { dailyPick = +b.dataset.d; renderDaily(); scrollTo({ top: 0, behavior: 'smooth' }); });
+}
+
 function renderQuizHome() {
   quizRun = null;
   $('#quizBody').innerHTML = `<div class="pgrid">${Object.values(PERIODS).map(p => {
@@ -1505,10 +1528,12 @@ function openEnd() {
       <div class="prayer"><h4>${esc(t('prayerHead'))}</h4><p>${esc(t('prayer'))}</p></div></section>
     <section class="blessing"><h3>${esc(t('believerHead'))}</h3>${paras(t('blessing'))}</section>
     ${DATA.journey?.sponsor === false ? '' : nextHtml()}
+    ${DATA.journey?.daily ? `<p class="endlead">${esc(t('dailyEnd'))}</p><div class="endbtns"><button class="goldbtn" id="endDaily">${esc(t('dailyGo'))}</button></div>` : ''}
     <div class="endbtns">${nextJ ? `<a class="goldbtn" href="${journeyUrl(nextJ.id)}">${esc(t('endNext', { name: t(nextJ.title) }))}</a>` : ''}<button class="${nextJ ? 'textbtn' : 'goldbtn'}" id="endRestart">${esc(t('endRestart'))}</button><button class="textbtn" id="endWords">${esc(t('endWords'))}</button></div>`;
   const dlg = $('#journeyEnd'), close = () => dlg.close();
   if (miss.length) $('#endMissed').onclick = () => { close(); setView('quiz'); startQuiz(miss, t('missedQuizName')); quizRun.missed = true; };
   if (unseen.length) $('#endUnseen').onclick = () => { close(); setView('journey'); go(EVENTS.indexOf(unseen[0])); };
+  if (DATA.journey?.daily) $('#endDaily').onclick = () => { close(); setView('daily'); };
   $('#endFav').onchange = ev => { state.fav = ev.target.value || undefined; store.save(); };
   $('#endRestart').onclick = () => { close(); setView('journey'); go(0); };
   $('#endWords').onclick = () => { close(); setView('words'); };
@@ -1533,6 +1558,7 @@ function setView(v) {
   if (v === 'words') renderWords();
   if (v === 'harmony') renderHarmony();
   if (v === 'quiz') renderQuizHome();
+  if (v === 'daily') renderDaily();
   if (v === 'journey') requestAnimationFrame(applyView);
   scrollTo(0, 0);
 }
@@ -1606,6 +1632,7 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
     } else { stopSpeech(); if (on) startAuto(); }
   };
   $('#music').hidden = !EVENTS.some(e => e.music);
+  $('.tabs [data-view="daily"]').hidden = !d.journey?.daily; // 하루 한 장 (잠언)
   $('#music').onclick = () => { bgmPref = !bgmPref; try { localStorage.setItem(BGM.key, bgmPref ? 'on' : 'off'); } catch { /* 이번 방문만 */ } bgmFollow(); };
   $('#quizBtn').onclick = openSceneQuiz;
   $('#closeQuiz').onclick = () => $('#quizDlg').close();

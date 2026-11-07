@@ -72,6 +72,7 @@ def build(jid, src, out_dir):
             f = os.path.join(root, 'assets', 'img', ('goodnews/' if '-' in n else '') + n + '.webp')
             if os.path.exists(f): pv[n] = fver(f)
     if pv: journey['pv'] = pv
+    if has('daily.json'): journey['daily'] = load('daily.json')['days']  # 하루 한 장 31일 잠언 (그날 날짜의 장) — app.js renderDaily
     journey['whyIcon'] = 'assets/why-icon.webp?v=' + fver(os.path.join(root, 'assets', 'why-icon.webp'))
     def ui_for(lang):
         u = {**ui_ko, **(loadf(os.path.join(here, 'i18n', 'ui.%s.json' % lang)) if lang != 'ko' else {})}

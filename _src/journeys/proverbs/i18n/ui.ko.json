@@ -18,5 +18,17 @@
  },
  "endEyebrow": "PROVERBS · 잠언",
  "endTitle": "지혜와 함께 하루를 걸었습니다",
- "endLead": "성문에서 집까지, 함께 걸어 주셔서 고맙습니다."
+ "endLead": "성문에서 집까지, 함께 걸어 주셔서 고맙습니다.",
+ "tabDaily": "하루 한 장",
+ "dailyHead": "하루 한 장, 31일 잠언",
+ "dailyLead": "잠언은 31장입니다. 오늘 날짜에 맞는 장을 하루 한 장씩 읽으면 한 달에 잠언 전체를 한 번 걷게 됩니다.",
+ "dailyToday": "오늘은 {d}일 — 잠언 {d}장",
+ "dailyCh": "잠언 {d}장",
+ "dailyDone": "읽었어요",
+ "dailyDoneOn": "읽음 ✓",
+ "dailyCount": "이번 달 {n}장을 읽었습니다",
+ "dailyFather": "아버지의 한마디",
+ "dailyAll": "31장 모두 보기",
+ "dailyGo": "하루 한 장 31일 잠언 →",
+ "dailyEnd": "하루 걷기를 마쳤습니다. 이제 날마다 한 장씩, 지혜를 따라 걸어 보세요."
 }
