@@ -7,5 +7,6 @@
  "stageOnly": true,
  "odo": false,
  "sponsor": false,
- "where": false
+ "where": false,
+ "narrator": "Algieba"
 }

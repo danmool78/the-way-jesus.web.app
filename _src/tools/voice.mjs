@@ -24,6 +24,8 @@ const d = JSON.parse(await readFile(J === 'jesus' ? 'data.json' : `j/${J}/data.j
 const NARR_STYLE = 'Read this in Korean, softly and kindly, like a humble, gentle man around forty quietly sharing good news with a friend. Warm and sincere, unhurried, never preachy or lecturing:\n';
 const nar = d.journey?.narrator;
 if (nar?.startsWith('gemini:')) VOICE.narr = { name: nar, gem: nar.slice(7), style: NARR_STYLE, rate: 1, cps: 6.8 };
+// ':'이 없는 이름(예: 'Algieba')은 Chirp 3 HD 목소리 그대로 — 해설 Aoede와 같은 빠르기로 (잠언: 아버지가 아들에게, 남자 성우 — 사용자, 2026-11)
+else if (nar && !nar.includes(':')) VOICE.narr = { name: nar, rate: 0.95, cps: 6.8 };
 else if (nar) VOICE.narr = { name: nar, eleven: nar.replace(/^eleven:/, ''), rate: 1, cps: 6.8 };
 const ui = J === 'jesus' ? JSON.parse(await readFile('_src/i18n/ui.ko.json', 'utf8')) : d.ui; // 여정의 화면 글씨가 덧씌워진 것 (app.js의 t와 같게)
 // changed <예전 data.json>: 관리자 페이지에서 글을 고친 뒤 (GitHub Actions) — 읽을 문장이 바뀐 장면 가운데 녹음이 있던 장면만
