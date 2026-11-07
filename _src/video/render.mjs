@@ -19,6 +19,7 @@ for (const s of sc.scenes) {
   t += s.pause || 0; // 큰 단락 앞의 쉼: 앞 장면이 다 사라진 뒤 조금 비운다
   const S = { ...s, start: t, lines: [] }; t += s.title ? 1.5 : LEAD;
   for (const text of s.say) {
+    t += s.breath?.[text] || 0; // 문장 앞에 숨을 더 쉬어야 하는 곳 (예: 결론으로 넘어가는 문장)
     const f = `${VDIR}/${keyOf(text)}.wav`, pcm = TEMPO === 1 ? (await readFile(f)).subarray(44)
       : execFileSync('ffmpeg', ['-v', 'error', '-i', f, '-af', `atempo=${TEMPO}`, '-f', 's16le', '-ac', '1', '-ar', String(SR), '-'], { maxBuffer: 1 << 28 }), dur = pcm.length / 2 / SR;
     clips.push({ at: t, pcm }); S.lines.push({ text, start: t, dur }); t += dur + GAP;
