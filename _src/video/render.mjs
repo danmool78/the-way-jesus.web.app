@@ -34,7 +34,7 @@ function cuts(pcm, lines) {
   }
   return at;
 }
-let t = 1.5; const tl = { scenes: [] }, clips = [];
+let t = 1.5; const tl = { scenes: [], breaks: sc.breaks || {} }, clips = [];
 for (const s of sc.scenes) {
   t += s.pause || 0; // 큰 단락 앞의 쉼: 앞 장면이 다 사라진 뒤 조금 비운다
   const S = { ...s, start: t, lines: [] }; t += s.title ? 1.5 : LEAD;

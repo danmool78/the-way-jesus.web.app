@@ -16,7 +16,7 @@
   #stage p,#stage div,#stage span,#stage dd,#stage li,#stage h1,#stage figcaption{text-wrap:balance}
   .sub span{text-wrap:nowrap} /* 자막은 breakSub가 뜻을 보고 직접 나눈다 */
   .head{position:absolute;left:0;right:0;top:64px;text-align:center;font-family:'Gowun Batang',serif;font-weight:700;font-size:54px;color:#c0564a;letter-spacing:.02em}
-  .vis{position:absolute;left:110px;right:110px;top:170px;bottom:170px;display:flex;align-items:center;justify-content:center}
+  .vis{position:absolute;left:110px;right:110px;top:170px;bottom:205px;display:flex;align-items:center;justify-content:center}
   .vis img.pic{max-width:100%;max-height:100%;border-radius:22px;border:1px solid #eadfcd;box-shadow:0 10px 30px rgba(90,60,30,.10);transform-origin:50% 50%}
   .box{transform-origin:0 0;position:absolute}
   .title{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
@@ -98,7 +98,7 @@ function breakSub(txt, max = 36) {
     else if (/(고|며|면|서|데|지만|아도|어도|니까|려고|도록|듯|아|어|여|게|면서)$/.test(before)) w = 2;
     else if (/(은|는|이|가|에서|에게|에는|에|로|도|와|과|까지)$/.test(before)) w = 3;
     else if (/(을|를|의)$/.test(before)) w = 9;
-    cands.push({ i, score: Math.abs(i - mid) / txt.length * 20 + w });
+    cands.push({ i, score: Math.abs(i - mid) / txt.length * 28 + w });
   }
   cands.sort((a, b) => a.score - b.score);
   const c = cands[0]; if (!c) return [txt];
@@ -118,7 +118,7 @@ window.render = t => {
     // 자막: 그 장면에서 지금 읽는 문장
     const line = s.lines.find(l => t >= l.start && t < l.next);
     const sub = el.querySelector('.sub'), txt = line && !s.verse ? line.text : ''; // 말씀 장면은 화면 글이 곧 낭독이라 자막을 겹쳐 두지 않는다
-    if (sub._t !== txt) { sub._t = txt; sub.innerHTML = txt ? `<span>${breakSub(txt).join('<br>')}</span>` : ''; }
+    if (sub._t !== txt) { sub._t = txt; sub.innerHTML = txt ? `<span>${(TL.breaks?.[txt] || breakSub(txt)).join('<br>')}</span>` : ''; // 직접 정한 줄바꿈(대본의 breaks)이 먼저 }
   });
 };
 </script>
