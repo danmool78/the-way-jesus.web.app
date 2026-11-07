@@ -25,7 +25,7 @@ const qrs = [`${SITE}/?lang=${lang}`, `${SITE}/${page}`, `${SITE}/jesus`, `${SIT
 
 const b = await chromium.launch();
 const p = await b.newPage({ viewport: { width: 560, height: 800 } });
-await p.goto(`http://localhost:8765/${page}`, { waitUntil: 'networkidle' });
+await p.goto(`${process.env.SITE_URL || 'http://localhost:8765'}/${page}`, { waitUntil: 'networkidle' }); // SITE_URL: 다른 곳에 띄운 사본(작업 폴더)으로 뽑을 때
 await p.evaluate(({ t, qrs }) => {
   const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
   // 화면에만 있는 것: 위 메뉴, 음악 단추, 끝의 단추·꼬리말, 앱으로 가는 링크
