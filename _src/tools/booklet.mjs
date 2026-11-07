@@ -30,7 +30,7 @@ await p.goto(`${process.env.SITE_URL || 'http://localhost:8765'}/${page}`, { wai
 await p.evaluate(({ t, qrs }) => {
   const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
   // 화면에만 있는 것: 위 메뉴, 음악 단추, 끝의 단추·꼬리말, 앱으로 가는 링크
-  $$('.why-top, #bgm, script, .end, .dl').forEach(e => e.remove());
+  $$('.why-top, #bgm, script, .end, .dl, .vid').forEach(e => e.remove());
   $$('.when a, .tl a').forEach(e => e.remove());
   // 교단 이단 결의 목록(한국어판) — 제목·안내·접힌 목록
   const hh = $$('h3').find(h => h.nextElementSibling?.classList.contains('notice'));
