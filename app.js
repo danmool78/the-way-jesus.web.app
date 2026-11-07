@@ -684,7 +684,7 @@ function renderScene() {
   </div>
   <button id="cardToggle" class="cardtoggle" aria-controls="scene" aria-label="${esc(t('showMap'))}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
   <div class="sheetgrip" aria-hidden="true"><i></i></div>
-  <div class="hero">${img}</div>
+  ${e.img ? `<div class="hero">${img}</div>` : ''}<!-- 그림이 없는 장면(잠언)은 그림 칸을 두지 않는다 — 장소 이름만 적힌 빈 칸이 카드 위를 차지했다 -->
   <div class="credrow">
     ${e.img ? (e.img.source ? `<a class="credit" href="${esc(e.img.source)}" target="_blank" rel="noreferrer">${esc(e.img.credit)}</a>` : `<span class="credit">${esc(e.img.credit)}</span>`) : '<span></span>'}
     ${e.img ? `<button class="viewbtn" id="viewBtn">${esc(t('viewPainting'))} ↗</button>` : ''}
