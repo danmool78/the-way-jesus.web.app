@@ -88,6 +88,7 @@
     <button role="tab" data-view="journey" class="active">여정</button>
     <button role="tab" data-view="words">말씀</button>
     <button role="tab" data-view="quiz">퀴즈</button>
+    <button role="tab" data-view="daily" data-i="tabDaily" hidden>하루 한 장</button>
   </nav>
   <button class="progress" id="progressPill" title="나의 발자취">
     <span id="progressText">0 / 61</span>
@@ -162,6 +163,16 @@
   </div>
   <div id="harmonyStats" class="stats"></div>
   <div class="tablewrap"><table id="harmonyTable"></table></div>
+</main>
+
+<!-- 하루 한 장 (잠언 여정, journey.daily): 오늘 날짜의 장에서 고른 구절과 아버지의 한마디 — app.js renderDaily -->
+<main id="daily" class="view list-view" hidden>
+  <div class="list-head">
+    <div class="eyebrow">ONE CHAPTER A DAY</div>
+    <h2 data-i="dailyHead">하루 한 장, 31일 잠언</h2>
+    <p data-i="dailyLead">잠언은 31장입니다. 날짜에 맞는 장을 하루 한 장씩 읽어 보세요.</p>
+  </div>
+  <div id="dailyBody"></div>
 </main>
 
 <main id="quiz" class="view list-view" hidden>

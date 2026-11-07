@@ -392,6 +392,15 @@ html:not(:lang(ko)):not(:lang(zh)):not(:lang(ja)) .river-lbl text{writing-mode:h
 .wcard cite{font-style:normal;color:var(--gold2)}
 .goto{border:0;background:none;color:var(--gold);font-size:12px}
 .wcard .say{margin-left:auto}
+/* 하루 한 장 (잠언): 아버지의 한마디와 31칸 (읽은 장은 금빛, 오늘은 테두리) */
+.daily-note{margin:18px 0 6px;padding:14px 18px;border-radius:14px;background:rgba(var(--gold-rgb),.08);border:1px solid rgba(var(--gold-rgb),.25)}
+.daily-note small{color:var(--gold2);font-size:12px;letter-spacing:.08em}
+.daily-note p{font-family:var(--serif);font-size:17px;line-height:1.7;margin:6px 0 0;color:#f3e6cc}
+.daily-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:8px;margin-top:26px}
+.daily-grid button{height:44px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--muted);font:600 15px var(--sans);cursor:pointer}
+.daily-grid button.read{background:rgba(var(--gold-rgb),.28);color:#fbefd5}
+.daily-grid button.today{border-color:var(--gold);color:var(--gold2)}
+.daily-grid button.on{outline:2px solid var(--gold);outline-offset:2px}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chips button{border:1px solid var(--line);background:none;border-radius:999px;padding:6px 13px;font-size:13px;color:var(--muted)}
 .chips button.active{background:var(--gold);color:#22180b;border-color:var(--gold);font-weight:700}
