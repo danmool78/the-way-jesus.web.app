@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="style.css">
 <style>
   /* '왜 기독교인가'은 손그림과 맞춰 밝은 종이 바탕. 앱 공용 색(var)을 이 페이지에서만 덮는다 */
-  :root{--bg:#f7f1e6;--ink:#2b2620;--muted:#7a6f60;--faint:#a39a8a;--gold:#d0685b;--gold2:#c0564a;--line:#e8dece;color-scheme:light}
+  :root{--bg:#f3ecdf;--ink:#221d17;--muted:#5f5548;--faint:#857a6a;--gold:#c85a4c;--gold2:#b04537;--line:#e2d6c2;color-scheme:light} /* 희끄무레하다(사용자, 2026-11) — 영상처럼 바탕은 조금 가라앉히고 글씨·강조색은 진하게 */
   /* 왜 기독교인가 — 묻고 답하기(qna.html)와 같은 결. 글보다 도표와 단순한 그림을 앞세운다(명화는 쓰지 않는다) */
   body{overflow:auto;word-break:keep-all;background:radial-gradient(ellipse 90% 100% at 50% 0%,rgba(208,104,91,.08),transparent 70%) 0 0/100% 900px no-repeat local,var(--bg)} /* 바탕이 화면 높이마다 되풀이되며 이음선이 보였다: 맨 위에 한 번만 깔고 종이색으로 부드럽게 녹인다 */
   .why{max-width:760px;margin:0 auto;padding:28px 20px 64px}
@@ -28,7 +28,7 @@
   .why h2{font-family:var(--serif);font-size:24px;color:var(--gold2);margin:60px 0 14px;padding-top:12px;border-top:1px solid #e8dece;scroll-margin-top:16px}
   .why h2 small{display:block;font-family:var(--sans);font-size:12px;color:var(--faint);letter-spacing:.08em;margin-bottom:4px}
   .why h3{font-size:16px;color:#2b2620;margin:26px 0 8px}
-  .why p{color:#3d362d;line-height:1.9;font-size:15.5px;margin:0 0 12px}
+  .why p{color:#2f2922;line-height:1.9;font-size:15.5px;margin:0 0 12px}
   .why b{color:var(--gold2)}
   /* 말씀 — 새로 옮긴 글 */
   .verse{margin:16px 0;padding:14px 18px;border-left:2px solid var(--gold);background:rgba(208,104,91,.06);border-radius:0 12px 12px 0;font-family:var(--serif);font-size:16.5px;line-height:1.85;color:#2b2620}
@@ -44,26 +44,26 @@
   .ill .t{font-family:'Gowun Batang',serif;font-weight:700}
   /* 일러스트 — 기쁜 소식 그림과 같은 화풍(paint.mjs) */
   .art{margin:18px auto 8px;max-width:640px}
-  .art img{display:block;width:100%;border-radius:16px;background:#f7f1e6;border:1px solid #eadfcd;box-shadow:0 6px 18px rgba(90,60,30,.08)}
+  .art img{display:block;width:100%;border-radius:16px;background:#f7f1e6;filter:url(#ink);border:1px solid #eadfcd;box-shadow:0 6px 18px rgba(90,60,30,.08)}
   .pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:640px;margin:18px auto 8px}
   .pair .art{margin:0}
   .pair figcaption{text-align:center;font-family:var(--serif);font-weight:700;color:var(--gold2);font-size:15px;margin-top:8px}
   .why .cap{text-align:center;font-family:var(--serif);color:var(--gold2);font-size:16.5px;margin:0 0 16px}
   /* 모든 사람의 세 물음 */
   .asks{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0 6px}
-  .asks div{border:1px solid #e8dece;border-radius:14px;padding:14px 10px;text-align:center;background:#fffaf2;font-size:14px;line-height:1.6;color:#3d362d}
+  .asks div{border:1px solid #e8dece;border-radius:14px;padding:14px 10px;text-align:center;background:#fffaf2;font-size:14px;line-height:1.6;color:#2f2922}
   .asks svg{width:30px;height:30px;display:block;margin:0 auto 8px}
   /* 서로 다른 답 — 물음마다 종교별 칩 */
   .claims{display:grid;gap:12px;margin:14px 0}
   .claim{border:1px solid #e8dece;border-radius:16px;background:#fffaf2;padding:14px 16px}
   .claim h4{margin:0 0 10px;font-family:var(--serif);font-size:16.5px;color:#2b2620}
   .claim ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px}
-  .claim li{display:flex;gap:8px;align-items:baseline;font-size:13.5px;line-height:1.55;color:#3d362d;background:rgba(60,40,20,.04);border-radius:10px;padding:7px 10px}
+  .claim li{display:flex;gap:8px;align-items:baseline;font-size:13.5px;line-height:1.55;color:#2f2922;background:rgba(60,40,20,.04);border-radius:10px;padding:7px 10px}
   .claim li i{flex:none;font-style:normal;font-size:11.5px;font-weight:700;border-radius:999px;padding:1px 7px;color:#fffaf2}
   .c-c{background:#d97a6c}.c-i{background:#8fb2b4}.c-b{background:#c9a3c9}.c-h{background:#e3a07a}.c-j{background:#a9b98a}
   /* 하나는 틀린다 — 맞서는 두 주장 */
   .vs{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch;margin:16px 0}
-  .vs div{border-radius:14px;padding:14px;text-align:center;font-size:14px;line-height:1.6;color:#3d362d;background:#fffaf2;border:1px solid #e8dece}
+  .vs div{border-radius:14px;padding:14px;text-align:center;font-size:14px;line-height:1.6;color:#2f2922;background:#fffaf2;border:1px solid #e8dece}
   .vs div b{display:block;font-family:var(--serif);font-size:16px;color:#2b2620;margin-bottom:4px}
   .vs span{align-self:center;font-family:var(--serif);font-size:30px;color:var(--gold)}
   /* 스펙트럼 — 종교마다 막대 위 한 점. 누르면 풀이가 열린다 */
@@ -79,16 +79,16 @@
   .spec details[open] .chev{transform:rotate(-135deg)}
   .spec dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0 0 14px;padding:12px 14px;border-radius:12px;background:#fffaf2;font-size:14px;line-height:1.75}
   .spec dt{color:var(--faint)}
-  .spec dd{margin:0;color:#3d362d}
+  .spec dd{margin:0;color:#2f2922}
   .why .hint{font-size:12.5px;color:var(--faint);margin:8px 0 0;line-height:1.7}
   /* 재판관 이야기 세 걸음 */
   .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
-  .steps div{border:1px solid #e8dece;border-radius:14px;padding:14px 12px;background:#fffaf2;font-size:14px;line-height:1.7;color:#3d362d}
+  .steps div{border:1px solid #e8dece;border-radius:14px;padding:14px 12px;background:#fffaf2;font-size:14px;line-height:1.7;color:#2f2922}
   .steps div:last-child{border-color:var(--gold)}
   .steps i{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--gold);color:#ffffff;font-style:normal;font-weight:700;font-size:13px;margin-bottom:8px}
   /* 죄의 값 — 네 가지 답 */
   .price{display:grid;gap:8px;margin:14px 0}
-  .price div{display:grid;grid-template-columns:110px 1fr;gap:12px;align-items:center;border:1px solid #e8dece;border-radius:12px;padding:11px 14px;background:#fffaf2;font-size:14px;line-height:1.7;color:#3d362d}
+  .price div{display:grid;grid-template-columns:110px 1fr;gap:12px;align-items:center;border:1px solid #e8dece;border-radius:12px;padding:11px 14px;background:#fffaf2;font-size:14px;line-height:1.7;color:#2f2922}
   .price div>b{font-family:var(--serif);color:#2b2620}
   .price .me{border-color:var(--gold);background:rgba(208,104,91,.07)}
   /* 때와 장소 */
@@ -106,7 +106,7 @@
   .ox-h+.ox-r{border-top:0}
   .ox-k{grid-column:1/-1;padding:9px 16px;margin-bottom:6px;font-family:var(--serif);font-weight:700;font-size:15px;color:#5a3f22;background:#efe2cc}
   .ox-r>div:nth-child(n+2){position:relative;padding:6px 16px 14px 38px;font-size:14px;line-height:1.7}
-  .ox-r>div:nth-child(2){color:#3d362d}
+  .ox-r>div:nth-child(2){color:#2f2922}
   .ox-r>div:nth-child(3){color:#7a6f60;border-left:1px solid #efe6d8}
   .ox-r>div:nth-child(2)::before{content:'';position:absolute;left:15px;top:11px;width:10px;height:10px;border:2.5px solid #6f9160;border-radius:50%}
   .ox-r>div:nth-child(3)::before{content:'✕';position:absolute;left:15px;top:6px;font-size:14px;font-weight:700;color:#d06a5d}
@@ -121,7 +121,7 @@
   }
   /* 믿어야 아는 것들 */
   .know{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
-  .know div{border:1px solid #e8dece;border-radius:16px;background:#fffaf2;padding:14px 12px;font-size:13.5px;line-height:1.6;color:#3d362d}
+  .know div{border:1px solid #e8dece;border-radius:16px;background:#fffaf2;padding:14px 12px;font-size:13.5px;line-height:1.6;color:#2f2922}
   .know svg{width:34px;height:34px;display:block;margin-bottom:6px}
   .know b{display:block;font-family:var(--serif);font-size:16px;color:#2b2620;margin-bottom:3px}
   .flip{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin:16px 0;text-align:center}
@@ -172,10 +172,10 @@
   .tl li::before{content:'';position:absolute;left:3px;top:5px;width:16px;height:16px;border-radius:50%;background:#fffaf2;border:3px solid #d6c8b2}
   .tl li.on::before{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 5px rgba(208,104,91,.15)}
   .tl b{display:block;font-family:var(--serif);font-size:16px;color:#2b2620}
-  .tl span{font-size:14px;color:#3d362d;line-height:1.7}
+  .tl span{font-size:14px;color:#2f2922;line-height:1.7}
   .tl a{font-size:12.5px;color:var(--gold2);text-decoration:none;margin-left:4px;white-space:nowrap}
   .roles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
-  .roles div{border:1px solid #e8dece;border-radius:14px;padding:12px;background:#fffaf2;font-size:13px;line-height:1.6;color:#3d362d}
+  .roles div{border:1px solid #e8dece;border-radius:14px;padding:12px;background:#fffaf2;font-size:13px;line-height:1.6;color:#2f2922}
   .roles b{display:block;font-family:var(--serif);font-size:15.5px;color:#2b2620;margin-bottom:2px}
   .roles i{font-style:normal;font-size:11px;font-weight:700;border-radius:999px;padding:1px 7px;margin-left:4px;vertical-align:2px}
   .r-up{background:#fbe9e5;color:#b8473b}.r-in{background:#f6efe2;color:#8a6a35}.r-out{background:#eef3e8;color:#4f6b3f}
@@ -183,7 +183,7 @@
   .ache p{margin:0 0 12px}.ache p:last-child{margin:0}
   .ache .h{font-family:var(--serif);font-size:18px;color:#b8473b;text-align:center;margin-bottom:14px}
   .fv{list-style:none;counter-reset:w;margin:14px 0;padding:0}
-  .fv li{counter-increment:w;position:relative;padding:11px 14px 11px 50px;margin:8px 0;border:1px solid #e8dece;border-radius:14px;background:#fffaf2;font-size:14.5px;line-height:1.65;color:#3d362d}
+  .fv li{counter-increment:w;position:relative;padding:11px 14px 11px 50px;margin:8px 0;border:1px solid #e8dece;border-radius:14px;background:#fffaf2;font-size:14.5px;line-height:1.65;color:#2f2922}
   .fv li::before{content:counter(w);position:absolute;left:14px;top:11px;width:24px;height:24px;border-radius:50%;background:#5f8150;color:#fff;font-weight:700;font-size:13px;display:grid;place-items:center}
   .fv b{color:#2b2620}
   @media (max-width:600px){.roles{grid-template-columns:1fr 1fr}}
@@ -196,7 +196,7 @@
   .hg .aka{font-size:12.5px;color:var(--muted);margin:2px 0 8px;line-height:1.5}
   .hg .res{display:flex;flex-wrap:wrap;gap:5px;margin:0 0 9px}
   .hg .res span{font-size:11.5px;border-radius:999px;padding:2px 8px;background:#f6efe2;color:#6d5a3a;white-space:nowrap}
-  .hg q{display:block;font-size:13px;line-height:1.65;color:#3d362d;quotes:none;border-left:2px solid #e3b5ab;padding-left:9px}
+  .hg q{display:block;font-size:13px;line-height:1.65;color:#2f2922;quotes:none;border-left:2px solid #e3b5ab;padding-left:9px}
   .hg q small{display:block;color:var(--faint);font-size:11.5px;margin-top:2px}
   .src{font-size:12.5px;line-height:1.8;color:var(--muted);margin:12px 0 0;padding-left:18px}
   .src a{color:var(--gold2)}
@@ -215,9 +215,11 @@
   .dl a{flex:1;min-width:150px;text-align:center;text-decoration:none;border-radius:999px;padding:11px 14px;font-weight:700;font-size:14px;border:1px solid #d6c8b2;color:var(--gold2);background:#fff}
   .dl a:first-child{background:linear-gradient(180deg,#e08a7d,#c9604f);color:#fff;border-color:transparent}
   .dl small{display:block;font-weight:400;font-size:11.5px;opacity:.85}
+  .why .fakelead{margin:4px 0 16px;padding:14px 18px;border-radius:14px;background:#fff8f1;border:1px solid #ecd8cb;line-height:1.85} /* '가짜'는 다른 종교가 아니라는 것을 먼저 분명히 */
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="ink" color-interpolation-filters="sRGB"><feComponentTransfer><feFuncR type="gamma" exponent="1.45"/><feFuncG type="gamma" exponent="1.45"/><feFuncB type="gamma" exponent="1.5"/></feComponentTransfer><feColorMatrix type="saturate" values="1.3"/></filter></svg><!-- 그림의 펜 선·색을 진하게(영상과 같은 결) — 밝은 종이는 거의 그대로 두고 어두운 곳만 가라앉힌다 -->
 <main class="why">
   <nav class="why-top">
     <a href="./"><img src="assets/logo.svg" alt=""><b style="font-family:var(--serif);font-size:20px">그 길</b></a>
@@ -298,7 +300,7 @@
     <details><summary><b>정토 불교</b><span class="track"><span class="dot" style="left:80%"></span></span><span class="chev"></span></summary>
       <dl><dt>문제</dt><dd>말세라 사람의 힘으로는 깨달을 수 없음</dd><dt>목표</dt><dd>아미타불의 극락에 태어남</dd><dt>할 일</dt><dd>아미타불의 이름을 부르고 그 서원을 믿음(타력 신앙)</dd></dl></details>
     <details class="me" open><summary><b>기독교</b><span class="track"><span class="dot" style="left:100%;margin-left:-16px"></span></span><span class="chev"></span></summary>
-      <dl><dt>문제</dt><dd>죄, 하나님과 끊어짐</dd><dt>목표</dt><dd>하나님과 다시 이어짐, 영원한 생명</dd><dt>할 일</dt><dd><b>구원은 100% 하나님이 하십니다.</b> 사람이 보탤 것은 없고, 하나님이 이미 하신 일을 믿음으로 받을 뿐입니다. 그 믿음도 공로가 아니라 선물을 받는 빈손입니다</dd></dl></details>
+      <dl><dt>문제</dt><dd>죄. 모든 사람이 하나님을 떠나 심판 아래 있음</dd><dt>목표</dt><dd>하나님과 다시 이어짐, 영원한 생명</dd><dt>할 일</dt><dd><b>구원은 100% 하나님이 하십니다.</b> 사람이 보탤 것은 없고, 하나님이 이미 하신 일을 믿음으로 받을 뿐입니다. 그 믿음도 공로가 아니라 선물을 받는 빈손입니다</dd></dl></details>
   </div>
   <p class="hint">점의 자리는 각 종교의 대표적인 가르침을 기준으로 한 대략의 위치입니다. 더 깊이는 그 종교의 경전과 신자의 설명으로 들어 보세요.</p>
 
@@ -341,6 +343,7 @@
   <figure class="art"><img src="assets/img/why/bridge.webp" alt="깊은 골짜기 위에 다리처럼 놓인 십자가" loading="lazy"></figure>
   <p class="cap">사람이 건널 수 없는 틈을, 하나님이 십자가로 이으셨습니다</p>
   <details class="more"><summary><span class="o">재판관 이야기 · 죄의 값은 어디로</span><span class="c">접기</span></summary><div>
+  <p>성경은 <b>모든 사람이 죄를 지었고</b>(롬 3:23), 죄의 값은 죽음이라고 말합니다(롬 6:23). 죄는 몇 가지 실수가 아니라 하나님을 떠난 마음이고, 거룩하신 하나님은 그것을 못 본 척하지 않으십니다.</p>
   <p>누가 내 가족을 해쳤는데 재판관이 "괜찮다" 하고 풀어 준다면, 그것을 사랑이라 부르기는 어렵습니다. <b>그냥 덮으면 정의가 무너지고, 그대로 벌하면 사랑이 설 자리가 없습니다.</b></p>
   <div class="steps">
     <div><i>1</i>한 재판관 앞에 피고가 섰습니다. 바로 재판관의 아들이었습니다.</div>
@@ -407,31 +410,13 @@
   <p>비상구를 아는 사람이 "이쪽입니다!" 하고 외친다면, 우리는 그를 오만하다고 하지 않습니다. 그리스도인이 예수를 전하는 마음도 <b>이기려는 마음이 아니라, 함께 살고 싶은 마음</b>이어야 합니다.</p>
   </div></details>
   <figure class="art"><img src="assets/img/why/knock.webp" alt="저녁빛 속에서 닫힌 문을 두드리시는 예수" loading="lazy"></figure>
-  <p class="cap">문은 안에서 엽니다</p>
-  <details class="more"><summary><span class="o">억지로 열지 않는 사랑</span><span class="c">접기</span></summary><div>
-  <p>예수는 문을 부수고 들어오지 않으십니다. 밖에서 두드리고 기다리십니다. 억지로 열게 하는 것은 사랑이 아니기 때문입니다. 그래서 그리스도인도 다른 믿음을 가진 이웃을 <b>온유하고 존중하는 마음으로</b> 대해야 합니다(벧전 3:15–16).</p>
+  <p class="cap">문을 부수지 않고 두드리시는 분</p>
+  <details class="more"><summary><span class="o">마음을 여시는 분</span><span class="c">접기</span></summary><div>
+  <p>예수는 문을 부수고 들어오지 않으십니다. 칼이나 두려움이 아니라 <b>말씀으로 부르십니다.</b> 그리고 닫힌 마음을 여시는 것도 주님이십니다. 바울의 말을 듣던 루디아에 대해 성경은 "주께서 그 마음을 여셨다"고 말합니다(행 16:14). 그러니 그리스도인은 억지로 믿게 하려 하지 않고, 다른 믿음을 가진 이웃을 <b>온유하고 존중하는 마음으로</b> 대해야 합니다(벧전 3:15–16).</p>
   <div class="verse">보라, 내가 문 밖에 서서 두드린다. 누구든지 내 음성을 듣고 문을 열면, 내가 그에게 들어가 함께 먹을 것이다.<cite>요한계시록 3:20</cite></div>
   </div></details>
   </section>
 
-  <section>
-  <small>여섯</small>
-  <h2>진짜는 어떻게 알아볼까?</h2>
-  <figure class="art"><img src="assets/img/why/pearl.webp" alt="물가에 열린 조개 속에서 은은히 빛나는 진주" loading="lazy"></figure>
-  <p class="cap">진짜 진주는 상처에서 나온 보석입니다</p>
-  <div class="ox">
-    <div class="ox-h"><div class="o"><svg class="mk" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="#5f8150" stroke-width="3"/></svg>진짜</div><div class="x"><svg class="mk" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" stroke="#c9584b" stroke-width="3" stroke-linecap="round"/></svg>가짜</div></div>
-    <div class="ox-r"><div class="ox-k">누가 구원하나</div><div><b>하나님이 100%</b> 하신다. 은혜로, 값없이</div><div><b>사람이 자격을 쌓아야</b> 한다. 행위, 규례, 헌신</div></div>
-    <div class="ox-r"><div class="ox-k">예수는 누구인가</div><div><b>사람이 되신 하나님</b>, 오직 한 분 구원자</div><div><b>예수님은 하나님이 아니다</b>(신성 부인). 또는 <b>다른 사람을 세운다.</b> 다시 온 주, 보혜사, 이긴 자</div></div>
-    <div class="ox-r"><div class="ox-k">무엇을 더하나</div><div><b>더할 것이 없다.</b> 믿음으로 받을 뿐</div><div><b>무언가를 더한다.</b> 특정한 날, 숫자, 우리 단체</div></div>
-    <div class="ox-r"><div class="ox-k">무엇에 근거하나</div><div><b>성경 전체</b>와 역사 속 사건</div><div><b>한 사람만 받은</b> 새 계시, 비밀 풀이</div></div>
-    <div class="ox-r"><div class="ox-k">어떤 열매인가</div><div><b>자유와 사랑.</b> 가정과 이웃을 살린다</div><div><b>두려움과 비밀.</b> 가족과 끊게 한다</div></div>
-  </div>
-  <details class="more"><summary><span class="o">가짜는 왜 생길까</span><span class="c">접기</span></summary><div>
-  <p>값진 것 곁에는 흉내 내는 것이 생깁니다. 아무도 돌멩이는 흉내 내지 않습니다. 기독교의 이름을 빌린 가르침들은 거의 언제나 <b>"은혜만으로는 모자라다"</b>며 무언가를 덧붙여, 다시 '올라가는 길'로 되돌립니다.</p>
-  <p>진짜 진주는 이로 긁으면 까끌합니다. 진짜 복음도 처음엔 까끌합니다. "당신은 스스로를 구원할 수 없다"는 말부터 하기 때문입니다. 그러나 그 속에 <b>대신 상처 입으신 사랑</b>이 있습니다.</p>
-  </div></details>
-  </section>
 
   <section>
   <small>정리</small>
@@ -477,6 +462,17 @@
   <div class="verse">누구든지 하나님의 뜻을 따르려고 하면, 이 가르침이 하나님에게서 왔는지, 내가 내 생각대로 말하는지 알게 될 것이다.<cite>요한복음 7:17</cite></div>
   </div></details>
   <p style="text-align:center;margin-top:18px">그러니 다 알고 나서가 아니라, <b>오늘 한 걸음</b>이면 충분합니다.</p>
+  
+  <h3 style="text-align:center;margin-top:40px">그 한 걸음은 무엇일까?</h3>
+  <p>성경은 그 한 걸음을 이렇게 말합니다. <b>"회개하고 복음을 믿으라"</b>(막 1:15).</p>
+  <div class="steps">
+    <div><i>1</i><b>돌이킴</b> 내가 하나님을 떠나 내 뜻대로 살아온 죄를 인정하고, 그 길에서 하나님께로 돌아섭니다.</div>
+    <div><i>2</i><b>믿음</b> 예수님이 나의 죄를 위해 십자가에서 죽으시고 다시 살아나셨음을 믿고, 나를 그분께 맡깁니다.</div>
+    <div><i>3</i><b>고백</b> 예수님을 나의 구주와 주님으로 부르며 기도합니다.</div>
+  </div>
+  <p>이것도 내가 쌓는 공로가 아닙니다. <b>돌이키는 마음도, 믿는 마음도 하나님이 주십니다.</b> 지금 마음이 움직인다면, 그것이 바로 하나님이 부르시는 소리입니다.</p>
+  <div class="verse">예수를 주님이라고 입으로 고백하고, 하나님께서 그를 죽은 사람들 가운데서 살리셨음을 마음으로 믿으면, 구원을 받을 것입니다.<cite>로마서 10:9</cite></div>
+  <div class="end" style="margin-top:14px"><a href="/goodnews/">함께 드리는 기도 — GoodNews →</a></div>
   </section>
 
   <div class="part">
@@ -525,7 +521,7 @@
     <text class="t" x="500" y="138" text-anchor="middle" font-size="27" fill="#4f6b3f">밖으로 · 세상에</text>
   </svg>
   <div class="roles">
-    <div><b>예배<i class="r-up">위로</i></b>함께 하나님을 높이고, 세례와 성찬으로 은혜를 기억합니다</div>
+    <div><b>예배<i class="r-up">위로</i></b>함께 하나님을 높이고, 세례와 성찬으로 은혜를 받습니다</div>
     <div><b>기도<i class="r-up">위로</i></b>서로를 위해, 세상을 위해 하나님께 구합니다</div>
     <div><b>말씀<i class="r-in">안으로</i></b>성경을 함께 배우며 예수님을 닮아 갑니다</div>
     <div><b>교제<i class="r-in">안으로</i></b>가족처럼 밥을 먹고, 짐을 나누어 집니다</div>
@@ -534,7 +530,7 @@
   </div>
   <details class="more"><summary><span class="o">첫 교회는 이렇게 살았습니다</span><span class="c">접기</span></summary><div>
   <div class="verse">그들은 사도들의 가르침을 받고, 서로 사귀며, 함께 빵을 떼고, 기도하는 일에 힘썼다. … 믿는 사람들은 모두 함께 지내며 모든 것을 나누었다.<cite>사도행전 2:42–44</cite></div>
-  <p>교회는 <b>예수님의 몸</b>입니다(고전 12:27). 머리이신 예수님의 뜻을 따라, 손과 발이 되어 이 땅에서 그분의 일을 이어 갑니다. 세례는 이 가족에 들어오는 문이고, 성찬은 예수님의 십자가를 함께 기억하는 식탁입니다.</p>
+  <p>교회는 <b>예수님의 몸</b>입니다(고전 12:27). 머리이신 예수님의 뜻을 따라, 손과 발이 되어 이 땅에서 그분의 일을 이어 갑니다. 세례는 그리스도께 속하여 이 가족이 되었다는 표이고, 성찬은 십자가를 기억하며 믿음으로 그리스도의 은혜를 받는 식탁입니다.</p>
   </div></details>
   </section>
 
@@ -561,6 +557,26 @@
 
   <section>
   <small>교회 넷</small>
+  <h2>진짜는 어떻게 알아볼까?</h2>
+  <figure class="art"><img src="assets/img/why/pearl.webp" alt="물가에 열린 조개 속에서 은은히 빛나는 진주" loading="lazy"></figure>
+  <p class="cap">진짜 진주는 상처에서 나온 보석입니다</p>
+  <p class="fakelead">교회 곁에는 교회를 흉내 내는 것도 있습니다. 여기서 말하는 '가짜'는 다른 종교가 아니라, <b>기독교의 이름을 빌려 예수님을 다르게 전하는 가르침</b>입니다. 귀한 것 곁에는 흉내 내는 것이 생기기 마련입니다. 아무도 길가의 돌멩이는 흉내 내지 않지만, 위조지폐는 진짜 돈만 흉내 냅니다. 그래서 진짜를 잘 알면 가짜가 보입니다.</p>
+  <div class="ox">
+    <div class="ox-h"><div class="o"><svg class="mk" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="#5f8150" stroke-width="3"/></svg>진짜</div><div class="x"><svg class="mk" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" stroke="#c9584b" stroke-width="3" stroke-linecap="round"/></svg>가짜</div></div>
+    <div class="ox-r"><div class="ox-k">누가 구원하나</div><div><b>하나님이 100%</b> 하신다. 은혜로, 값없이</div><div><b>사람이 자격을 쌓아야</b> 한다. 행위, 규례, 헌신</div></div>
+    <div class="ox-r"><div class="ox-k">예수는 누구인가</div><div><b>사람이 되신 하나님</b>, 오직 한 분 구원자</div><div><b>예수님은 하나님이 아니다</b>(신성 부인). 또는 <b>다른 사람을 세운다.</b> 다시 온 주, 보혜사, 이긴 자</div></div>
+    <div class="ox-r"><div class="ox-k">무엇을 더하나</div><div><b>더할 것이 없다.</b> 믿음으로 받을 뿐</div><div><b>무언가를 더한다.</b> 특정한 날, 숫자, 우리 단체</div></div>
+    <div class="ox-r"><div class="ox-k">무엇에 근거하나</div><div><b>성경 전체</b>와 역사 속 사건</div><div><b>한 사람만 받은</b> 새 계시, 비밀 풀이</div></div>
+    <div class="ox-r"><div class="ox-k">어떤 열매인가</div><div><b>자유와 사랑.</b> 가정과 이웃을 살린다</div><div><b>두려움과 비밀.</b> 가족과 끊게 한다</div></div>
+  </div>
+  <details class="more"><summary><span class="o">가짜는 왜 생길까</span><span class="c">접기</span></summary><div>
+  <p>기독교의 이름을 빌린 가르침들은 거의 언제나 <b>"은혜만으로는 모자라다"</b>며 무언가를 덧붙여, 다시 '올라가는 길'로 되돌립니다.</p>
+  <p>진짜 진주는 이로 긁으면 까끌합니다. 진짜 복음도 처음엔 까끌합니다. "당신은 스스로를 구원할 수 없다"는 말부터 하기 때문입니다. 그러나 그 속에 <b>대신 상처 입으신 사랑</b>이 있습니다.</p>
+  </div></details>
+  </section>
+
+  <section>
+  <small>교회 다섯</small>
   <h2>어떤 교회로 가야 할까?</h2>
   <figure class="art"><img src="assets/img/why/visit.webp" alt="문이 열린 동네의 작은 교회와, 그리로 걸어가는 사람을 반기는 안내자" loading="lazy"></figure>
   <p class="cap">건강한 교회는 가까이 있고, 그 문은 열려 있습니다</p>
@@ -614,7 +630,7 @@
   <div class="dl">
     <svg viewBox="0 0 44 56" fill="none" stroke="#c0564a" stroke-width="1.8" stroke-linejoin="round"><path d="M4 3h26l10 10v40H4z" fill="#fff"/><path d="M30 3v10h10"/><path d="M12 24h20M12 31h20M12 38h13" stroke="#b9ab95"/></svg>
     <b>소책자로 나누기</b>
-    <p>이 글을 A5 소책자(36쪽)로 만들었습니다. 휴대폰으로 보내거나 인쇄해서 나눠 주세요.</p>
+    <p>이 글을 A5 소책자(40쪽)로 만들었습니다. 휴대폰으로 보내거나 인쇄해서 나눠 주세요.</p>
     <div><a href="assets/why-booklet.pdf" download>보기용 PDF<small>휴대폰·집에서 인쇄</small></a><a href="assets/why-booklet-print.pdf" download>인쇄소용 PDF<small>3mm 재단 여유 + 재단선</small></a></div>
   </div>
 
@@ -635,9 +651,10 @@
   a.loop = true; a.preload = 'none'; a.volume = 0;
   let want = true, fade; try { want = localStorage.getItem('theway-why-music') !== 'off'; } catch { /* 사생활 보호 모드 */ }
   const show = () => { const on = !a.paused; btn.classList.toggle('off', !on); btn.setAttribute('aria-pressed', on); btn.lastChild.textContent = on ? lb[1] : lb[0]; };
-  const ramp = (to, done) => { clearInterval(fade); fade = setInterval(() => { const v = a.volume + (to > a.volume ? .02 : -.04); if ((to > a.volume) ? v >= to : v <= to) { a.volume = to; clearInterval(fade); done && done(); } else a.volume = Math.max(0, Math.min(1, v)); }, 80); };
+  // 아이폰은 소리 크기를 페이지가 바꿀 수 없다(volume이 늘 1) — 그대로 두면 서서히 줄이기가 끝나지 않아 끄기가 먹지 않았다(사용자, 2026-11). 바뀌지 않으면 바로 끝낸다
+  const ramp = (to, done) => { clearInterval(fade); fade = setInterval(() => { const was = a.volume, v = was + (to > was ? .02 : -.04); if ((to > was) ? v >= to : v <= to) { a.volume = to; clearInterval(fade); done && done(); } else { a.volume = Math.max(0, Math.min(1, v)); if (a.volume === was) { clearInterval(fade); done && done(); } } }, 80); };
   const play = () => a.play().then(() => { ramp(.35); show(); }).catch(show);
-  const stop = () => ramp(0, () => { a.pause(); show(); });
+  const stop = () => { btn.classList.add('off'); ramp(0, () => { a.pause(); show(); }); }; // 누른 즉시 꺼진 모양으로
   btn.onclick = e => { e.stopPropagation(); want = a.paused; try { localStorage.setItem('theway-why-music', want ? 'on' : 'off'); } catch { /* 무시 */ } want ? play() : stop(); };
   const first = e => { removeEventListener('pointerdown', first, true); removeEventListener('keydown', first, true); if (want && a.paused && !e.target.closest?.('#bgm')) play(); }; // 단추를 처음 누른 때는 단추가 맡는다
   addEventListener('pointerdown', first, true); addEventListener('keydown', first, true);

@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="style.css">
 <style>
   /* '왜 기독교인가'은 손그림과 맞춰 밝은 종이 바탕. 앱 공용 색(var)을 이 페이지에서만 덮는다 */
-  :root{--bg:#f7f1e6;--ink:#2b2620;--muted:#7a6f60;--faint:#a39a8a;--gold:#d0685b;--gold2:#c0564a;--line:#e8dece;color-scheme:light}
+  :root{--bg:#f3ecdf;--ink:#221d17;--muted:#5f5548;--faint:#857a6a;--gold:#c85a4c;--gold2:#b04537;--line:#e2d6c2;color-scheme:light} /* 희끄무레하다(사용자, 2026-11) — 영상처럼 바탕은 조금 가라앉히고 글씨·강조색은 진하게 */
   /* 왜 기독교인가 — 묻고 답하기(qna.html)와 같은 결. 글보다 도표와 단순한 그림을 앞세운다(명화는 쓰지 않는다) */
   body{overflow:auto;word-break:keep-all;background:radial-gradient(ellipse 90% 100% at 50% 0%,rgba(208,104,91,.08),transparent 70%) 0 0/100% 900px no-repeat local,var(--bg)} /* 바탕이 화면 높이마다 되풀이되며 이음선이 보였다: 맨 위에 한 번만 깔고 종이색으로 부드럽게 녹인다 */
   .why{max-width:760px;margin:0 auto;padding:28px 20px 64px}
@@ -28,7 +28,7 @@
   .why h2{font-family:var(--serif);font-size:24px;color:var(--gold2);margin:60px 0 14px;padding-top:12px;border-top:1px solid #e8dece;scroll-margin-top:16px}
   .why h2 small{display:block;font-family:var(--sans);font-size:12px;color:var(--faint);letter-spacing:.08em;margin-bottom:4px}
   .why h3{font-size:16px;color:#2b2620;margin:26px 0 8px}
-  .why p{color:#3d362d;line-height:1.9;font-size:15.5px;margin:0 0 12px}
+  .why p{color:#2f2922;line-height:1.9;font-size:15.5px;margin:0 0 12px}
   .why b{color:var(--gold2)}
   /* 말씀 — 새로 옮긴 글 */
   .verse{margin:16px 0;padding:14px 18px;border-left:2px solid var(--gold);background:rgba(208,104,91,.06);border-radius:0 12px 12px 0;font-family:var(--serif);font-size:16.5px;line-height:1.85;color:#2b2620}
@@ -44,26 +44,26 @@
   .ill .t{font-family:'Gowun Batang',serif;font-weight:700}
   /* 일러스트 — 기쁜 소식 그림과 같은 화풍(paint.mjs) */
   .art{margin:18px auto 8px;max-width:640px}
-  .art img{display:block;width:100%;border-radius:16px;background:#f7f1e6;border:1px solid #eadfcd;box-shadow:0 6px 18px rgba(90,60,30,.08)}
+  .art img{display:block;width:100%;border-radius:16px;background:#f7f1e6;filter:url(#ink);border:1px solid #eadfcd;box-shadow:0 6px 18px rgba(90,60,30,.08)}
   .pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:640px;margin:18px auto 8px}
   .pair .art{margin:0}
   .pair figcaption{text-align:center;font-family:var(--serif);font-weight:700;color:var(--gold2);font-size:15px;margin-top:8px}
   .why .cap{text-align:center;font-family:var(--serif);color:var(--gold2);font-size:16.5px;margin:0 0 16px}
   /* 모든 사람의 세 물음 */
   .asks{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0 6px}
-  .asks div{border:1px solid #e8dece;border-radius:14px;padding:14px 10px;text-align:center;background:#fffaf2;font-size:14px;line-height:1.6;color:#3d362d}
+  .asks div{border:1px solid #e8dece;border-radius:14px;padding:14px 10px;text-align:center;background:#fffaf2;font-size:14px;line-height:1.6;color:#2f2922}
   .asks svg{width:30px;height:30px;display:block;margin:0 auto 8px}
   /* 서로 다른 답 — 물음마다 종교별 칩 */
   .claims{display:grid;gap:12px;margin:14px 0}
   .claim{border:1px solid #e8dece;border-radius:16px;background:#fffaf2;padding:14px 16px}
   .claim h4{margin:0 0 10px;font-family:var(--serif);font-size:16.5px;color:#2b2620}
   .claim ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px}
-  .claim li{display:flex;gap:8px;align-items:baseline;font-size:13.5px;line-height:1.55;color:#3d362d;background:rgba(60,40,20,.04);border-radius:10px;padding:7px 10px}
+  .claim li{display:flex;gap:8px;align-items:baseline;font-size:13.5px;line-height:1.55;color:#2f2922;background:rgba(60,40,20,.04);border-radius:10px;padding:7px 10px}
   .claim li i{flex:none;font-style:normal;font-size:11.5px;font-weight:700;border-radius:999px;padding:1px 7px;color:#fffaf2}
   .c-c{background:#d97a6c}.c-i{background:#8fb2b4}.c-b{background:#c9a3c9}.c-h{background:#e3a07a}.c-j{background:#a9b98a}
   /* 하나는 틀린다 — 맞서는 두 주장 */
   .vs{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch;margin:16px 0}
-  .vs div{border-radius:14px;padding:14px;text-align:center;font-size:14px;line-height:1.6;color:#3d362d;background:#fffaf2;border:1px solid #e8dece}
+  .vs div{border-radius:14px;padding:14px;text-align:center;font-size:14px;line-height:1.6;color:#2f2922;background:#fffaf2;border:1px solid #e8dece}
   .vs div b{display:block;font-family:var(--serif);font-size:16px;color:#2b2620;margin-bottom:4px}
   .vs span{align-self:center;font-family:var(--serif);font-size:30px;color:var(--gold)}
   /* 스펙트럼 — 종교마다 막대 위 한 점. 누르면 풀이가 열린다 */
@@ -79,16 +79,16 @@
   .spec details[open] .chev{transform:rotate(-135deg)}
   .spec dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0 0 14px;padding:12px 14px;border-radius:12px;background:#fffaf2;font-size:14px;line-height:1.75}
   .spec dt{color:var(--faint)}
-  .spec dd{margin:0;color:#3d362d}
+  .spec dd{margin:0;color:#2f2922}
   .why .hint{font-size:12.5px;color:var(--faint);margin:8px 0 0;line-height:1.7}
   /* 재판관 이야기 세 걸음 */
   .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
-  .steps div{border:1px solid #e8dece;border-radius:14px;padding:14px 12px;background:#fffaf2;font-size:14px;line-height:1.7;color:#3d362d}
+  .steps div{border:1px solid #e8dece;border-radius:14px;padding:14px 12px;background:#fffaf2;font-size:14px;line-height:1.7;color:#2f2922}
   .steps div:last-child{border-color:var(--gold)}
   .steps i{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--gold);color:#ffffff;font-style:normal;font-weight:700;font-size:13px;margin-bottom:8px}
   /* 죄의 값 — 네 가지 답 */
   .price{display:grid;gap:8px;margin:14px 0}
-  .price div{display:grid;grid-template-columns:110px 1fr;gap:12px;align-items:center;border:1px solid #e8dece;border-radius:12px;padding:11px 14px;background:#fffaf2;font-size:14px;line-height:1.7;color:#3d362d}
+  .price div{display:grid;grid-template-columns:110px 1fr;gap:12px;align-items:center;border:1px solid #e8dece;border-radius:12px;padding:11px 14px;background:#fffaf2;font-size:14px;line-height:1.7;color:#2f2922}
   .price div>b{font-family:var(--serif);color:#2b2620}
   .price .me{border-color:var(--gold);background:rgba(208,104,91,.07)}
   /* 때와 장소 */
@@ -106,7 +106,7 @@
   .ox-h+.ox-r{border-top:0}
   .ox-k{grid-column:1/-1;padding:9px 16px;margin-bottom:6px;font-family:var(--serif);font-weight:700;font-size:15px;color:#5a3f22;background:#efe2cc}
   .ox-r>div:nth-child(n+2){position:relative;padding:6px 16px 14px 38px;font-size:14px;line-height:1.7}
-  .ox-r>div:nth-child(2){color:#3d362d}
+  .ox-r>div:nth-child(2){color:#2f2922}
   .ox-r>div:nth-child(3){color:#7a6f60;border-left:1px solid #efe6d8}
   .ox-r>div:nth-child(2)::before{content:'';position:absolute;left:15px;top:11px;width:10px;height:10px;border:2.5px solid #6f9160;border-radius:50%}
   .ox-r>div:nth-child(3)::before{content:'✕';position:absolute;left:15px;top:6px;font-size:14px;font-weight:700;color:#d06a5d}
@@ -121,7 +121,7 @@
   }
   /* 믿어야 아는 것들 */
   .know{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
-  .know div{border:1px solid #e8dece;border-radius:16px;background:#fffaf2;padding:14px 12px;font-size:13.5px;line-height:1.6;color:#3d362d}
+  .know div{border:1px solid #e8dece;border-radius:16px;background:#fffaf2;padding:14px 12px;font-size:13.5px;line-height:1.6;color:#2f2922}
   .know svg{width:34px;height:34px;display:block;margin-bottom:6px}
   .know b{display:block;font-family:var(--serif);font-size:16px;color:#2b2620;margin-bottom:3px}
   .flip{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin:16px 0;text-align:center}
@@ -172,10 +172,10 @@
   .tl li::before{content:'';position:absolute;left:3px;top:5px;width:16px;height:16px;border-radius:50%;background:#fffaf2;border:3px solid #d6c8b2}
   .tl li.on::before{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 5px rgba(208,104,91,.15)}
   .tl b{display:block;font-family:var(--serif);font-size:16px;color:#2b2620}
-  .tl span{font-size:14px;color:#3d362d;line-height:1.7}
+  .tl span{font-size:14px;color:#2f2922;line-height:1.7}
   .tl a{font-size:12.5px;color:var(--gold2);text-decoration:none;margin-left:4px;white-space:nowrap}
   .roles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
-  .roles div{border:1px solid #e8dece;border-radius:14px;padding:12px;background:#fffaf2;font-size:13px;line-height:1.6;color:#3d362d}
+  .roles div{border:1px solid #e8dece;border-radius:14px;padding:12px;background:#fffaf2;font-size:13px;line-height:1.6;color:#2f2922}
   .roles b{display:block;font-family:var(--serif);font-size:15.5px;color:#2b2620;margin-bottom:2px}
   .roles i{white-space:nowrap;font-style:normal;font-size:11px;font-weight:700;border-radius:999px;padding:1px 7px;margin-left:4px;vertical-align:2px}
   .r-up{background:#fbe9e5;color:#b8473b}.r-in{background:#f6efe2;color:#8a6a35}.r-out{background:#eef3e8;color:#4f6b3f}
@@ -183,7 +183,7 @@
   .ache p{margin:0 0 12px}.ache p:last-child{margin:0}
   .ache .h{font-family:var(--serif);font-size:18px;color:#b8473b;text-align:center;margin-bottom:14px}
   .fv{list-style:none;counter-reset:w;margin:14px 0;padding:0}
-  .fv li{counter-increment:w;position:relative;padding:11px 14px 11px 50px;margin:8px 0;border:1px solid #e8dece;border-radius:14px;background:#fffaf2;font-size:14.5px;line-height:1.65;color:#3d362d}
+  .fv li{counter-increment:w;position:relative;padding:11px 14px 11px 50px;margin:8px 0;border:1px solid #e8dece;border-radius:14px;background:#fffaf2;font-size:14.5px;line-height:1.65;color:#2f2922}
   .fv li::before{content:counter(w);position:absolute;left:14px;top:11px;width:24px;height:24px;border-radius:50%;background:#5f8150;color:#fff;font-weight:700;font-size:13px;display:grid;place-items:center}
   .fv b{color:#2b2620}
   @media (max-width:600px){.roles{grid-template-columns:1fr 1fr}}
@@ -196,7 +196,7 @@
   .hg .aka{font-size:12.5px;color:var(--muted);margin:2px 0 8px;line-height:1.5}
   .hg .res{display:flex;flex-wrap:wrap;gap:5px;margin:0 0 9px}
   .hg .res span{font-size:11.5px;border-radius:999px;padding:2px 8px;background:#f6efe2;color:#6d5a3a;white-space:nowrap}
-  .hg q{display:block;font-size:13px;line-height:1.65;color:#3d362d;quotes:none;border-left:2px solid #e3b5ab;padding-left:9px}
+  .hg q{display:block;font-size:13px;line-height:1.65;color:#2f2922;quotes:none;border-left:2px solid #e3b5ab;padding-left:9px}
   .hg q small{display:block;color:var(--faint);font-size:11.5px;margin-top:2px}
   .src{font-size:12.5px;line-height:1.8;color:var(--muted);margin:12px 0 0;padding-left:18px}
   .src a{color:var(--gold2)}
@@ -206,9 +206,11 @@
   .bgm svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
   .bgm.off{color:#8a7f70;border-color:#e2d8c8}
   .bgm.off .wave{display:none}.bgm:not(.off) .mute{display:none}
+  .why .fakelead{margin:4px 0 16px;padding:14px 18px;border-radius:14px;background:#fff8f1;border:1px solid #ecd8cb;line-height:1.85} /* '가짜'는 다른 종교가 아니라는 것을 먼저 분명히 */
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="ink" color-interpolation-filters="sRGB"><feComponentTransfer><feFuncR type="gamma" exponent="1.45"/><feFuncG type="gamma" exponent="1.45"/><feFuncB type="gamma" exponent="1.5"/></feComponentTransfer><feColorMatrix type="saturate" values="1.3"/></filter></svg><!-- 그림의 펜 선·색을 진하게(영상과 같은 결) — 밝은 종이는 거의 그대로 두고 어두운 곳만 가라앉힌다 -->
 <main class="why">
   <nav class="why-top">
     <a href="./?lang=id"><img src="assets/logo.svg" alt=""><b style="font-family:var(--serif);font-size:20px">Sang Jalan</b></a>
@@ -289,7 +291,7 @@
     <details><summary><b>Buddha Tanah Suci</b><span class="track"><span class="dot" style="left:80%"></span></span><span class="chev"></span></summary>
       <dl><dt>Masalah</dt><dd>Di zaman akhir ini, kekuatan manusia tidak cukup untuk mencapai pencerahan</dd><dt>Tujuan</dt><dd>Lahir di Tanah Suci Buddha Amitabha</dd><dt>Yang dilakukan</dt><dd>Menyebut nama Buddha Amitabha dan memercayai ikrarnya (bersandar pada kekuatan lain)</dd></dl></details>
     <details class="me" open><summary><b>Kristen</b><span class="track"><span class="dot" style="left:100%;margin-left:-16px"></span></span><span class="chev"></span></summary>
-      <dl><dt>Masalah</dt><dd>Dosa, terputus dari Allah</dd><dt>Tujuan</dt><dd>Dipulihkan kembali bersama Allah, hidup yang kekal</dd><dt>Yang dilakukan</dt><dd><b>Keselamatan 100% dikerjakan oleh Allah.</b> Manusia tidak menambahkan apa-apa; ia hanya menerima dengan iman apa yang sudah Allah kerjakan. Iman itu pun bukan jasa, melainkan tangan kosong yang menerima hadiah</dd></dl></details>
+      <dl><dt>Masalah</dt><dd>Dosa: semua orang telah meninggalkan Allah dan berada di bawah penghakiman</dd><dt>Tujuan</dt><dd>Dipulihkan kembali bersama Allah, hidup yang kekal</dd><dt>Yang dilakukan</dt><dd><b>Keselamatan 100% dikerjakan oleh Allah.</b> Manusia tidak menambahkan apa-apa; ia hanya menerima dengan iman apa yang sudah Allah kerjakan. Iman itu pun bukan jasa, melainkan tangan kosong yang menerima hadiah</dd></dl></details>
   </div>
   <p class="hint">Letak titik hanyalah perkiraan, berdasarkan ajaran yang paling umum dari setiap agama. Untuk mendalaminya, dengarkan setiap agama dari kitab sucinya dan para penganutnya sendiri.</p>
 
@@ -332,6 +334,7 @@
   <figure class="art"><img src="assets/img/why/bridge.webp" alt="Salib yang terbentang seperti jembatan di atas jurang yang dalam" loading="lazy"></figure>
   <p class="cap">Jurang yang tak bisa diseberangi manusia, Allah jembatani dengan salib</p>
   <details class="more"><summary><span class="o">Kisah seorang hakim · ke mana harga dosa</span><span class="c">Tutup</span></summary><div>
+  <p>Alkitab berkata bahwa <b>semua orang telah berdosa</b> (Rm. 3:23) dan upah dosa ialah maut (Rm. 6:23). Dosa bukan sekadar beberapa kesalahan, melainkan hati yang berpaling dari Allah — dan Allah yang kudus tidak pura-pura tidak melihatnya.</p>
   <p>Jika seseorang mencelakai keluarga Anda, lalu hakim berkata "tidak apa-apa" dan membebaskannya, sulit menyebut itu kasih. <b>Jika ditutupi begitu saja, keadilan runtuh; jika dihukum apa adanya, kasih tak punya tempat.</b></p>
   <div class="steps">
     <div><i>1</i>Seorang terdakwa berdiri di hadapan hakim. Ternyata ia adalah anak sang hakim sendiri.</div>
@@ -398,31 +401,13 @@
   <p>Jika seseorang yang tahu letak pintu darurat berseru, "Lewat sini!", kita tidak menyebutnya sombong. Hati orang Kristen yang memberitakan Yesus pun seharusnya <b>bukan hati yang ingin menang, melainkan hati yang ingin hidup bersama-sama.</b></p>
   </div></details>
   <figure class="art"><img src="assets/img/why/knock.webp" alt="Yesus mengetuk pintu yang tertutup dalam cahaya senja" loading="lazy"></figure>
-  <p class="cap">Pintu itu dibuka dari dalam</p>
-  <details class="more"><summary><span class="o">Kasih yang tidak memaksa</span><span class="c">Tutup</span></summary><div>
-  <p>Yesus tidak mendobrak pintu. Ia mengetuk dari luar dan menunggu, sebab memaksa orang membuka pintu bukanlah kasih. Karena itu orang Kristen pun harus memperlakukan sesama yang berbeda keyakinan <b>dengan lemah lembut dan penuh hormat</b> (1Ptr. 3:15–16).</p>
+  <p class="cap">Ia tidak mendobrak pintu; Ia mengetuk</p>
+  <details class="more"><summary><span class="o">Dia yang membuka hati</span><span class="c">Tutup</span></summary><div>
+  <p>Yesus tidak mendobrak pintu. Ia memanggil bukan dengan pedang atau rasa takut, melainkan <b>dengan firman-Nya</b>. Dan Tuhanlah yang membuka hati yang tertutup. Tentang Lidia yang mendengarkan Paulus, Alkitab berkata, "Tuhan membuka hatinya" (Kis. 16:14). Karena itu orang Kristen tidak memaksa siapa pun untuk percaya, dan harus memperlakukan sesama yang berbeda keyakinan <b>dengan lemah lembut dan penuh hormat</b> (1Ptr. 3:15–16).</p>
   <div class="verse">Lihat, Aku berdiri di depan pintu dan mengetuk. Siapa saja yang mendengar suara-Ku dan membuka pintu, Aku akan masuk kepadanya dan makan bersama dia.<cite>Wahyu 3:20</cite></div>
   </div></details>
   </section>
 
-  <section>
-  <small>ENAM</small>
-  <h2>Bagaimana mengenali yang asli?</h2>
-  <figure class="art"><img src="assets/img/why/pearl.webp" alt="Mutiara yang berkilau lembut di dalam kerang yang terbuka di tepi air" loading="lazy"></figure>
-  <p class="cap">Mutiara asli adalah permata yang lahir dari luka</p>
-  <div class="ox">
-    <div class="ox-h"><div class="o"><svg class="mk" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="#5f8150" stroke-width="3"/></svg>Asli</div><div class="x"><svg class="mk" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" stroke="#c9584b" stroke-width="3" stroke-linecap="round"/></svg>Palsu</div></div>
-    <div class="ox-r"><div class="ox-k">Siapa yang menyelamatkan</div><div><b>Allah 100%</b> yang mengerjakannya. Oleh anugerah, cuma-cuma</div><div><b>Manusia harus mengumpulkan kelayakan.</b> Perbuatan, aturan, pengabdian</div></div>
-    <div class="ox-r"><div class="ox-k">Siapakah Yesus</div><div><b>Allah yang menjadi manusia</b>, satu-satunya Juruselamat</div><div><b>Yesus bukan Allah</b> (menyangkal keilahian-Nya). Atau <b>mengangkat orang lain</b>: tuhan yang datang kembali, sang Penghibur, "yang menang"</div></div>
-    <div class="ox-r"><div class="ox-k">Apa yang ditambahkan</div><div><b>Tidak ada yang perlu ditambah.</b> Cukup diterima dengan iman</div><div><b>Selalu menambahkan sesuatu.</b> Hari tertentu, angka tertentu, kelompok kami</div></div>
-    <div class="ox-r"><div class="ox-k">Apa dasarnya</div><div><b>Seluruh Alkitab</b> dan peristiwa dalam sejarah</div><div>Wahyu baru yang <b>hanya diterima satu orang</b>, tafsiran rahasia</div></div>
-    <div class="ox-r"><div class="ox-k">Apa buahnya</div><div><b>Kebebasan dan kasih.</b> Memulihkan keluarga dan sesama</div><div><b>Ketakutan dan kerahasiaan.</b> Memutuskan hubungan dengan keluarga</div></div>
-  </div>
-  <details class="more"><summary><span class="o">Mengapa ada yang palsu?</span><span class="c">Tutup</span></summary><div>
-  <p>Di samping sesuatu yang berharga, selalu muncul tiruannya. Tak ada orang yang memalsukan batu kerikil. Ajaran-ajaran yang meminjam nama Kristen hampir selalu berkata <b>"anugerah saja tidak cukup"</b>, lalu menambahkan sesuatu — dan membawa orang kembali ke 'jalan yang mendaki'.</p>
-  <p>Mutiara asli terasa kasar bila digesekkan ke gigi. Injil yang asli pun awalnya terasa kasar, karena dimulai dengan kalimat "Anda tidak bisa menyelamatkan diri sendiri." Namun di dalamnya ada <b>kasih yang menanggung luka sebagai ganti kita</b>.</p>
-  </div></details>
-  </section>
 
   <section>
   <small>RANGKUMAN</small>
@@ -468,6 +453,17 @@
   <div class="verse">Siapa pun yang mau melakukan kehendak Allah akan tahu apakah ajaran ini berasal dari Allah, atau Aku berbicara atas kehendak-Ku sendiri.<cite>Yohanes 7:17</cite></div>
   </div></details>
   <p style="text-align:center;margin-top:18px">Jadi tidak perlu menunggu tahu segalanya — <b>satu langkah hari ini</b> sudah cukup.</p>
+  
+  <h3 style="text-align:center;margin-top:40px">Apa langkah itu?</h3>
+  <p>Alkitab menyebut langkah itu demikian: <b>"Bertobatlah dan percayalah kepada Injil"</b> (Mrk. 1:15).</p>
+  <div class="steps">
+    <div><i>1</i><b>Berbalik</b> Mengakui bahwa saya telah meninggalkan Allah dan hidup menurut kehendak sendiri, lalu berbalik dari jalan itu kepada Allah.</div>
+    <div><i>2</i><b>Percaya</b> Percaya bahwa Yesus mati di kayu salib karena dosa saya dan bangkit kembali, lalu menyerahkan diri kepada-Nya.</div>
+    <div><i>3</i><b>Mengaku</b> Dalam doa, memanggil Yesus sebagai Juru Selamat dan Tuhan saya.</div>
+  </div>
+  <p>Ini pun bukan jasa yang saya kumpulkan. <b>Hati yang berbalik dan hati yang percaya, keduanya pemberian Allah.</b> Jika hati Anda tergerak sekarang, itulah Allah yang sedang memanggil.</p>
+  <div class="verse">Jika kamu mengaku dengan mulutmu bahwa Yesus adalah Tuhan, dan percaya dalam hatimu bahwa Allah telah membangkitkan Dia dari antara orang mati, kamu akan diselamatkan.<cite>Roma 10:9</cite></div>
+  <div class="end" style="margin-top:14px"><a href="/goodnews/">Berdoa bersama — GoodNews →</a></div>
   </section>
 
   <div class="part">
@@ -516,7 +512,7 @@
     <text class="t" x="490" y="138" text-anchor="middle" font-size="23" fill="#4f6b3f">Ke luar · kepada dunia</text>
   </svg>
   <div class="roles">
-    <div><b>Ibadah<i class="r-up">ke atas</i></b>Bersama memuliakan Allah, dan mengingat anugerah-Nya lewat baptisan dan Perjamuan Kudus</div>
+    <div><b>Ibadah<i class="r-up">ke atas</i></b>Bersama memuliakan Allah, dan menerima anugerah-Nya lewat baptisan dan Perjamuan Kudus</div>
     <div><b>Doa<i class="r-up">ke atas</i></b>Memohon kepada Allah bagi satu sama lain dan bagi dunia</div>
     <div><b>Firman<i class="r-in">ke dalam</i></b>Belajar Alkitab bersama dan makin serupa dengan Yesus</div>
     <div><b>Persekutuan<i class="r-in">ke dalam</i></b>Makan bersama seperti keluarga dan saling menanggung beban</div>
@@ -525,7 +521,7 @@
   </div>
   <details class="more"><summary><span class="o">Beginilah gereja mula-mula hidup</span><span class="c">Tutup</span></summary><div>
   <div class="verse">Mereka tekun dalam pengajaran para rasul, dalam persekutuan, dalam memecahkan roti bersama, dan dalam doa. … Semua orang percaya tetap bersatu dan berbagi segala sesuatu.<cite>Kisah Para Rasul 2:42–44</cite></div>
-  <p>Gereja adalah <b>tubuh Kristus</b> (1Kor. 12:27). Mengikuti kehendak Yesus sebagai Kepala, gereja menjadi tangan dan kaki-Nya untuk meneruskan pekerjaan-Nya di bumi. Baptisan adalah pintu masuk ke dalam keluarga ini, dan Perjamuan Kudus adalah meja tempat kita bersama-sama mengingat salib Yesus.</p>
+  <p>Gereja adalah <b>tubuh Kristus</b> (1Kor. 12:27). Mengikuti kehendak Yesus sebagai Kepala, gereja menjadi tangan dan kaki-Nya untuk meneruskan pekerjaan-Nya di bumi. Baptisan adalah tanda bahwa kita milik Kristus dan telah menjadi bagian dari keluarga ini, dan Perjamuan Kudus adalah meja tempat kita mengingat salib dan dengan iman menerima anugerah Kristus.</p>
   </div></details>
   </section>
 
@@ -552,6 +548,26 @@
 
   <section>
   <small>GEREJA · EMPAT</small>
+  <h2>Bagaimana mengenali yang asli?</h2>
+  <figure class="art"><img src="assets/img/why/pearl.webp" alt="Mutiara yang berkilau lembut di dalam kerang yang terbuka di tepi air" loading="lazy"></figure>
+  <p class="cap">Mutiara asli adalah permata yang lahir dari luka</p>
+  <p class="fakelead">Di samping gereja ada juga tiruannya. ‘Palsu’ di sini bukan berarti agama lain, melainkan <b>ajaran yang meminjam nama Kekristenan dan memberitakan Yesus secara berbeda</b>. Barang berharga selalu ada tiruannya: tak ada yang memalsukan kerikil di jalan, tetapi uang palsu hanya meniru uang asli. Karena itu, siapa yang mengenal yang asli dengan baik akan mengenali yang palsu.</p>
+  <div class="ox">
+    <div class="ox-h"><div class="o"><svg class="mk" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="#5f8150" stroke-width="3"/></svg>Asli</div><div class="x"><svg class="mk" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" stroke="#c9584b" stroke-width="3" stroke-linecap="round"/></svg>Palsu</div></div>
+    <div class="ox-r"><div class="ox-k">Siapa yang menyelamatkan</div><div><b>Allah 100%</b> yang mengerjakannya. Oleh anugerah, cuma-cuma</div><div><b>Manusia harus mengumpulkan kelayakan.</b> Perbuatan, aturan, pengabdian</div></div>
+    <div class="ox-r"><div class="ox-k">Siapakah Yesus</div><div><b>Allah yang menjadi manusia</b>, satu-satunya Juruselamat</div><div><b>Yesus bukan Allah</b> (menyangkal keilahian-Nya). Atau <b>mengangkat orang lain</b>: tuhan yang datang kembali, sang Penghibur, "yang menang"</div></div>
+    <div class="ox-r"><div class="ox-k">Apa yang ditambahkan</div><div><b>Tidak ada yang perlu ditambah.</b> Cukup diterima dengan iman</div><div><b>Selalu menambahkan sesuatu.</b> Hari tertentu, angka tertentu, kelompok kami</div></div>
+    <div class="ox-r"><div class="ox-k">Apa dasarnya</div><div><b>Seluruh Alkitab</b> dan peristiwa dalam sejarah</div><div>Wahyu baru yang <b>hanya diterima satu orang</b>, tafsiran rahasia</div></div>
+    <div class="ox-r"><div class="ox-k">Apa buahnya</div><div><b>Kebebasan dan kasih.</b> Memulihkan keluarga dan sesama</div><div><b>Ketakutan dan kerahasiaan.</b> Memutuskan hubungan dengan keluarga</div></div>
+  </div>
+  <details class="more"><summary><span class="o">Mengapa ada yang palsu?</span><span class="c">Tutup</span></summary><div>
+  <p>Ajaran-ajaran yang meminjam nama Kristen hampir selalu berkata <b>"anugerah saja tidak cukup"</b>, lalu menambahkan sesuatu — dan membawa orang kembali ke 'jalan yang mendaki'.</p>
+  <p>Mutiara asli terasa kasar bila digesekkan ke gigi. Injil yang asli pun awalnya terasa kasar, karena dimulai dengan kalimat "Anda tidak bisa menyelamatkan diri sendiri." Namun di dalamnya ada <b>kasih yang menanggung luka sebagai ganti kita</b>.</p>
+  </div></details>
+  </section>
+
+  <section>
+  <small>GEREJA · LIMA</small>
   <h2>Gereja mana yang sebaiknya saya datangi?</h2>
   <figure class="art"><img src="assets/img/why/visit.webp" alt="Gereja kecil di lingkungan sekitar dengan pintu terbuka, dan penyambut yang menyapa orang yang berjalan ke sana" loading="lazy"></figure>
   <p class="cap">Gereja yang sehat ada di dekat Anda, dan pintunya terbuka</p>
@@ -599,9 +615,10 @@
   a.loop = true; a.preload = 'none'; a.volume = 0;
   let want = true, fade; try { want = localStorage.getItem('theway-why-music') !== 'off'; } catch { /* 사생활 보호 모드 */ }
   const show = () => { const on = !a.paused; btn.classList.toggle('off', !on); btn.setAttribute('aria-pressed', on); btn.lastChild.textContent = on ? lb[1] : lb[0]; };
-  const ramp = (to, done) => { clearInterval(fade); fade = setInterval(() => { const v = a.volume + (to > a.volume ? .02 : -.04); if ((to > a.volume) ? v >= to : v <= to) { a.volume = to; clearInterval(fade); done && done(); } else a.volume = Math.max(0, Math.min(1, v)); }, 80); };
+  // 아이폰은 소리 크기를 페이지가 바꿀 수 없다(volume이 늘 1) — 그대로 두면 서서히 줄이기가 끝나지 않아 끄기가 먹지 않았다(사용자, 2026-11). 바뀌지 않으면 바로 끝낸다
+  const ramp = (to, done) => { clearInterval(fade); fade = setInterval(() => { const was = a.volume, v = was + (to > was ? .02 : -.04); if ((to > was) ? v >= to : v <= to) { a.volume = to; clearInterval(fade); done && done(); } else { a.volume = Math.max(0, Math.min(1, v)); if (a.volume === was) { clearInterval(fade); done && done(); } } }, 80); };
   const play = () => a.play().then(() => { ramp(.35); show(); }).catch(show);
-  const stop = () => ramp(0, () => { a.pause(); show(); });
+  const stop = () => { btn.classList.add('off'); ramp(0, () => { a.pause(); show(); }); }; // 누른 즉시 꺼진 모양으로
   btn.onclick = e => { e.stopPropagation(); want = a.paused; try { localStorage.setItem('theway-why-music', want ? 'on' : 'off'); } catch { /* 무시 */ } want ? play() : stop(); };
   const first = e => { removeEventListener('pointerdown', first, true); removeEventListener('keydown', first, true); if (want && a.paused && !e.target.closest?.('#bgm')) play(); }; // 단추를 처음 누른 때는 단추가 맡는다
   addEventListener('pointerdown', first, true); addEventListener('keydown', first, true);
