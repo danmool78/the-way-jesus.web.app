@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="style.css">
 <style>
   /* '왜 기독교인가'은 손그림과 맞춰 밝은 종이 바탕. 앱 공용 색(var)을 이 페이지에서만 덮는다 */
-  :root{--bg:#f7f1e6;--ink:#2b2620;--muted:#7a6f60;--faint:#a39a8a;--gold:#d0685b;--gold2:#c0564a;--line:#e8dece;color-scheme:light}
+  :root{--bg:#f3ecdf;--ink:#221d17;--muted:#5f5548;--faint:#857a6a;--gold:#c85a4c;--gold2:#b04537;--line:#e2d6c2;color-scheme:light} /* 희끄무레하다(사용자, 2026-11) — 영상처럼 바탕은 조금 가라앉히고 글씨·강조색은 진하게 */
   /* 왜 기독교인가 — 묻고 답하기(qna.html)와 같은 결. 글보다 도표와 단순한 그림을 앞세운다(명화는 쓰지 않는다) */
   body{overflow:auto;word-break:keep-all;background:radial-gradient(ellipse 90% 100% at 50% 0%,rgba(208,104,91,.08),transparent 70%) 0 0/100% 900px no-repeat local,var(--bg)} /* 바탕이 화면 높이마다 되풀이되며 이음선이 보였다: 맨 위에 한 번만 깔고 종이색으로 부드럽게 녹인다 */
   .why{max-width:760px;margin:0 auto;padding:28px 20px 64px}
@@ -28,7 +28,7 @@
   .why h2{font-family:var(--serif);font-size:24px;color:var(--gold2);margin:60px 0 14px;padding-top:12px;border-top:1px solid #e8dece;scroll-margin-top:16px}
   .why h2 small{display:block;font-family:var(--sans);font-size:12px;color:var(--faint);letter-spacing:.08em;margin-bottom:4px}
   .why h3{font-size:16px;color:#2b2620;margin:26px 0 8px}
-  .why p{color:#3d362d;line-height:1.9;font-size:15.5px;margin:0 0 12px}
+  .why p{color:#2f2922;line-height:1.9;font-size:15.5px;margin:0 0 12px}
   .why b{color:var(--gold2)}
   /* 말씀 — 새로 옮긴 글 */
   .verse{margin:16px 0;padding:14px 18px;border-left:2px solid var(--gold);background:rgba(208,104,91,.06);border-radius:0 12px 12px 0;font-family:var(--serif);font-size:16.5px;line-height:1.85;color:#2b2620}
@@ -44,26 +44,26 @@
   .ill .t{font-family:'Gowun Batang',serif;font-weight:700}
   /* 일러스트 — 기쁜 소식 그림과 같은 화풍(paint.mjs) */
   .art{margin:18px auto 8px;max-width:640px}
-  .art img{display:block;width:100%;border-radius:16px;background:#f7f1e6;border:1px solid #eadfcd;box-shadow:0 6px 18px rgba(90,60,30,.08)}
+  .art img{display:block;width:100%;border-radius:16px;background:#f7f1e6;filter:url(#ink);border:1px solid #eadfcd;box-shadow:0 6px 18px rgba(90,60,30,.08)}
   .pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:640px;margin:18px auto 8px}
   .pair .art{margin:0}
   .pair figcaption{text-align:center;font-family:var(--serif);font-weight:700;color:var(--gold2);font-size:15px;margin-top:8px}
   .why .cap{text-align:center;font-family:var(--serif);color:var(--gold2);font-size:16.5px;margin:0 0 16px}
   /* 모든 사람의 세 물음 */
   .asks{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0 6px}
-  .asks div{border:1px solid #e8dece;border-radius:14px;padding:14px 10px;text-align:center;background:#fffaf2;font-size:14px;line-height:1.6;color:#3d362d}
+  .asks div{border:1px solid #e8dece;border-radius:14px;padding:14px 10px;text-align:center;background:#fffaf2;font-size:14px;line-height:1.6;color:#2f2922}
   .asks svg{width:30px;height:30px;display:block;margin:0 auto 8px}
   /* 서로 다른 답 — 물음마다 종교별 칩 */
   .claims{display:grid;gap:12px;margin:14px 0}
   .claim{border:1px solid #e8dece;border-radius:16px;background:#fffaf2;padding:14px 16px}
   .claim h4{margin:0 0 10px;font-family:var(--serif);font-size:16.5px;color:#2b2620}
   .claim ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px}
-  .claim li{display:flex;gap:8px;align-items:baseline;font-size:13.5px;line-height:1.55;color:#3d362d;background:rgba(60,40,20,.04);border-radius:10px;padding:7px 10px}
+  .claim li{display:flex;gap:8px;align-items:baseline;font-size:13.5px;line-height:1.55;color:#2f2922;background:rgba(60,40,20,.04);border-radius:10px;padding:7px 10px}
   .claim li i{flex:none;font-style:normal;font-size:11.5px;font-weight:700;border-radius:999px;padding:1px 7px;color:#fffaf2}
   .c-c{background:#d97a6c}.c-i{background:#8fb2b4}.c-b{background:#c9a3c9}.c-h{background:#e3a07a}.c-j{background:#a9b98a}
   /* 하나는 틀린다 — 맞서는 두 주장 */
   .vs{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch;margin:16px 0}
-  .vs div{border-radius:14px;padding:14px;text-align:center;font-size:14px;line-height:1.6;color:#3d362d;background:#fffaf2;border:1px solid #e8dece}
+  .vs div{border-radius:14px;padding:14px;text-align:center;font-size:14px;line-height:1.6;color:#2f2922;background:#fffaf2;border:1px solid #e8dece}
   .vs div b{display:block;font-family:var(--serif);font-size:16px;color:#2b2620;margin-bottom:4px}
   .vs span{align-self:center;font-family:var(--serif);font-size:30px;color:var(--gold)}
   /* 스펙트럼 — 종교마다 막대 위 한 점. 누르면 풀이가 열린다 */
@@ -79,16 +79,16 @@
   .spec details[open] .chev{transform:rotate(-135deg)}
   .spec dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0 0 14px;padding:12px 14px;border-radius:12px;background:#fffaf2;font-size:14px;line-height:1.75}
   .spec dt{color:var(--faint)}
-  .spec dd{margin:0;color:#3d362d}
+  .spec dd{margin:0;color:#2f2922}
   .why .hint{font-size:12.5px;color:var(--faint);margin:8px 0 0;line-height:1.7}
   /* 재판관 이야기 세 걸음 */
   .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
-  .steps div{border:1px solid #e8dece;border-radius:14px;padding:14px 12px;background:#fffaf2;font-size:14px;line-height:1.7;color:#3d362d}
+  .steps div{border:1px solid #e8dece;border-radius:14px;padding:14px 12px;background:#fffaf2;font-size:14px;line-height:1.7;color:#2f2922}
   .steps div:last-child{border-color:var(--gold)}
   .steps i{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--gold);color:#ffffff;font-style:normal;font-weight:700;font-size:13px;margin-bottom:8px}
   /* 죄의 값 — 네 가지 답 */
   .price{display:grid;gap:8px;margin:14px 0}
-  .price div{display:grid;grid-template-columns:110px 1fr;gap:12px;align-items:center;border:1px solid #e8dece;border-radius:12px;padding:11px 14px;background:#fffaf2;font-size:14px;line-height:1.7;color:#3d362d}
+  .price div{display:grid;grid-template-columns:110px 1fr;gap:12px;align-items:center;border:1px solid #e8dece;border-radius:12px;padding:11px 14px;background:#fffaf2;font-size:14px;line-height:1.7;color:#2f2922}
   .price div>b{font-family:var(--serif);color:#2b2620}
   .price .me{border-color:var(--gold);background:rgba(208,104,91,.07)}
   /* 때와 장소 */
@@ -106,7 +106,7 @@
   .ox-h+.ox-r{border-top:0}
   .ox-k{grid-column:1/-1;padding:9px 16px;margin-bottom:6px;font-family:var(--serif);font-weight:700;font-size:15px;color:#5a3f22;background:#efe2cc}
   .ox-r>div:nth-child(n+2){position:relative;padding:6px 16px 14px 38px;font-size:14px;line-height:1.7}
-  .ox-r>div:nth-child(2){color:#3d362d}
+  .ox-r>div:nth-child(2){color:#2f2922}
   .ox-r>div:nth-child(3){color:#7a6f60;border-left:1px solid #efe6d8}
   .ox-r>div:nth-child(2)::before{content:'';position:absolute;left:15px;top:11px;width:10px;height:10px;border:2.5px solid #6f9160;border-radius:50%}
   .ox-r>div:nth-child(3)::before{content:'✕';position:absolute;left:15px;top:6px;font-size:14px;font-weight:700;color:#d06a5d}
@@ -121,7 +121,7 @@
   }
   /* 믿어야 아는 것들 */
   .know{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
-  .know div{border:1px solid #e8dece;border-radius:16px;background:#fffaf2;padding:14px 12px;font-size:13.5px;line-height:1.6;color:#3d362d}
+  .know div{border:1px solid #e8dece;border-radius:16px;background:#fffaf2;padding:14px 12px;font-size:13.5px;line-height:1.6;color:#2f2922}
   .know svg{width:34px;height:34px;display:block;margin-bottom:6px}
   .know b{display:block;font-family:var(--serif);font-size:16px;color:#2b2620;margin-bottom:3px}
   .flip{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin:16px 0;text-align:center}
@@ -172,10 +172,10 @@
   .tl li::before{content:'';position:absolute;left:3px;top:5px;width:16px;height:16px;border-radius:50%;background:#fffaf2;border:3px solid #d6c8b2}
   .tl li.on::before{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 5px rgba(208,104,91,.15)}
   .tl b{display:block;font-family:var(--serif);font-size:16px;color:#2b2620}
-  .tl span{font-size:14px;color:#3d362d;line-height:1.7}
+  .tl span{font-size:14px;color:#2f2922;line-height:1.7}
   .tl a{font-size:12.5px;color:var(--gold2);text-decoration:none;margin-left:4px;white-space:nowrap}
   .roles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
-  .roles div{border:1px solid #e8dece;border-radius:14px;padding:12px;background:#fffaf2;font-size:13px;line-height:1.6;color:#3d362d}
+  .roles div{border:1px solid #e8dece;border-radius:14px;padding:12px;background:#fffaf2;font-size:13px;line-height:1.6;color:#2f2922}
   .roles b{display:block;font-family:var(--serif);font-size:15.5px;color:#2b2620;margin-bottom:2px}
   .roles i{font-style:normal;font-size:11px;font-weight:700;border-radius:999px;padding:1px 7px;margin-left:4px;vertical-align:2px}
   .r-up{background:#fbe9e5;color:#b8473b}.r-in{background:#f6efe2;color:#8a6a35}.r-out{background:#eef3e8;color:#4f6b3f}
@@ -183,7 +183,7 @@
   .ache p{margin:0 0 12px}.ache p:last-child{margin:0}
   .ache .h{font-family:var(--serif);font-size:18px;color:#b8473b;text-align:center;margin-bottom:14px}
   .fv{list-style:none;counter-reset:w;margin:14px 0;padding:0}
-  .fv li{counter-increment:w;position:relative;padding:11px 14px 11px 50px;margin:8px 0;border:1px solid #e8dece;border-radius:14px;background:#fffaf2;font-size:14.5px;line-height:1.65;color:#3d362d}
+  .fv li{counter-increment:w;position:relative;padding:11px 14px 11px 50px;margin:8px 0;border:1px solid #e8dece;border-radius:14px;background:#fffaf2;font-size:14.5px;line-height:1.65;color:#2f2922}
   .fv li::before{content:counter(w);position:absolute;left:14px;top:11px;width:24px;height:24px;border-radius:50%;background:#5f8150;color:#fff;font-weight:700;font-size:13px;display:grid;place-items:center}
   .fv b{color:#2b2620}
   @media (max-width:600px){.roles{grid-template-columns:1fr 1fr}}
@@ -196,7 +196,7 @@
   .hg .aka{font-size:12.5px;color:var(--muted);margin:2px 0 8px;line-height:1.5}
   .hg .res{display:flex;flex-wrap:wrap;gap:5px;margin:0 0 9px}
   .hg .res span{font-size:11.5px;border-radius:999px;padding:2px 8px;background:#f6efe2;color:#6d5a3a;white-space:nowrap}
-  .hg q{display:block;font-size:13px;line-height:1.65;color:#3d362d;quotes:none;border-left:2px solid #e3b5ab;padding-left:9px}
+  .hg q{display:block;font-size:13px;line-height:1.65;color:#2f2922;quotes:none;border-left:2px solid #e3b5ab;padding-left:9px}
   .hg q small{display:block;color:var(--faint);font-size:11.5px;margin-top:2px}
   .src{font-size:12.5px;line-height:1.8;color:var(--muted);margin:12px 0 0;padding-left:18px}
   .src a{color:var(--gold2)}
@@ -209,6 +209,7 @@
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="ink" color-interpolation-filters="sRGB"><feComponentTransfer><feFuncR type="gamma" exponent="1.45"/><feFuncG type="gamma" exponent="1.45"/><feFuncB type="gamma" exponent="1.5"/></feComponentTransfer><feColorMatrix type="saturate" values="1.3"/></filter></svg><!-- 그림의 펜 선·색을 진하게(영상과 같은 결) — 밝은 종이는 거의 그대로 두고 어두운 곳만 가라앉힌다 -->
 <main class="why">
   <nav class="why-top">
     <a href="./?lang=pt"><img src="assets/logo.svg" alt=""><b style="font-family:var(--serif);font-size:20px">O Caminho</b></a>
