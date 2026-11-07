@@ -208,6 +208,7 @@
   .bgm.off{color:#8a7f70;border-color:#e2d8c8}
   .bgm.off .wave{display:none}.bgm:not(.off) .mute{display:none}
   .why .fakelead{margin:4px 0 16px;padding:14px 18px;border-radius:14px;background:#fff8f1;border:1px solid #ecd8cb;line-height:1.85} /* '가짜'는 다른 종교가 아니라는 것을 먼저 분명히 */
+  .why .ans{margin:28px 0 8px;display:grid;gap:10px} .why .ans>div{background:#fffdf9;border:1px solid var(--line);border-radius:14px;padding:12px 16px} .why .ans small{display:block;font-size:13.5px;color:var(--muted);margin-bottom:3px} .why .ans span{font-family:var(--serif);font-size:17px;line-height:1.7} /* 처음 세 물음에 대한 답 — 글의 처음과 끝을 잇는다 */
 </style>
 </head>
 <body>
@@ -224,7 +225,7 @@
     <div><svg viewBox="0 0 32 32" fill="none" stroke="#d0685b" stroke-width="1.8" stroke-linecap="round"><path d="M16 4c5 6 8 10.5 8 15a8 8 0 0 1-16 0c0-4.5 3-9 8-15z"/></svg>我的过错<br>怎样才能洗净？</div>
     <div><svg viewBox="0 0 32 32" fill="none" stroke="#d0685b" stroke-width="1.8" stroke-linecap="round"><path d="M4 24h24"/><path d="M9 24a7 7 0 0 1 14 0"/><path d="M16 9v3M7 13l2 2M25 13l-2 2"/></svg>死后<br>会有什么？</div>
   </div>
-  <p class="lead">这是每个人心里都有的问题。让我们用同一把尺子，坦诚地比较各宗教的回答。</p>
+  <p class="lead">这是每个人心里都有的问题。让我们用同一把尺子，坦诚地比较各宗教的回答。这不是为了辩赢谁而写的，而是要分享我们先遇见的好消息。</p>
 
   <section>
   <small>一</small>
@@ -266,11 +267,13 @@
   <section>
   <small>二</small>
   <h2>人想怎样到神那里去？</h2>
+  <p style="text-align:center;margin:14px 0 20px">各宗教的答案，在这里分得最清楚：<b>人怎样才能到达神那里、得着救恩？</b></p>
   <div class="pair">
     <figure class="art"><img src="assets/img/why/scale.webp" alt="把祭物放上大秤、不安地望着的人" loading="lazy"><figcaption>① 与神做交易</figcaption></figure>
     <figure class="art"><img src="assets/img/why/ladder.webp" alt="独自攀爬云中无尽梯子的人" loading="lazy"><figcaption>② 靠自己攀登</figcaption></figure>
   </div>
   <p class="cap">方法虽然不同，方向却一样——向上</p>
+  <p style="text-align:center">可是老实说，我们不得不问：要爬多高才够？即使今天活得比昨天好，心底深处的羞愧，<b>靠自己的力量也抹不掉。</b></p>
   <details class="more"><summary><span class="o">细看两条路 · 按宗教来看</span><span class="c">收起</span></summary><div>
   <div class="card">
     <p><b>① 与神做交易。</b>“我这样祷告、禁食、献上、行善，神也会回报我吧。”可是到底要放多少才够，秤会倒向哪一边，直到最后都无从知道。</p>
@@ -354,6 +357,7 @@
 
   <h3>不是故事，而是发生过的事</h3>
   <p>基督教不把这当作神话或比喻来讲。这是有时间、有地点的事件，可以按历史来查考，而基督教把一切都押在这个事件上。</p>
+  <p>第三天，他复活了。坟墓空了，复活的耶稣曾一次向五百多人显现（林前 15:6）。原本因害怕躲起来的门徒，为传这个消息献上了性命。<b>没有人会为明知是谎言的事去死。</b></p>
   <div class="when">
     <svg viewBox="0 0 40 40" fill="none" stroke="#d0685b" stroke-width="2"><path d="M20 37s-11-11.5-11-20a11 11 0 0 1 22 0c0 8.5-11 20-11 20z"/><circle cx="20" cy="17" r="4"/></svg>
     <div><b>约公元30年 · 耶路撒冷城外</b><span>罗马总督本丢·彼拉多在任时</span></div>
@@ -366,6 +370,7 @@
   <section>
   <small>五</small>
   <h2>基督教是排他的吗？</h2>
+  <p style="text-align:center;margin:14px 0 20px">如果是神亲自付了代价，那就只有一条路。那么，基督教是<b>拦住其他一切道路的排他宗教</b>吗？</p>
   <figure class="art"><img src="assets/img/why/doors.webp" alt="陡峭台阶上紧闭的窄门，和许多人一同走进的敞开大门" loading="lazy"></figure>
   <p class="cap">唯一的路，却是最宽的门</p>
   <details class="more"><summary><span class="o">为什么是最宽的门</span><span class="c">收起</span></summary><div>
@@ -440,8 +445,10 @@
     <p class="motto" style="margin:4px 0 12px"><span style="font-size:14px;color:var(--muted);font-family:var(--sans)">别的路说</span><br>“这样做，就能到达神那里。”</p>
     <p class="motto" style="margin:0 0 4px;color:var(--gold2)"><span style="font-size:14px;color:var(--muted);font-family:var(--sans)">基督教说</span><br>“神已经来到你这里了。”</p>
   </div>
+  <h3 style="text-align:center;margin-top:34px">回到开头的三个问题</h3>
+  <div class="ans"><div><small>我是个够好的人吗？</small><span>不够好。但我是<b>被爱到有人为我舍命的人</b>。</span></div><div><small>我的过错怎样才能洗净？</small><span>不用我自己偿还。<b>已经在十字架上付清了。</b></span></div><div><small>死后有什么？</small><span>那胜过死亡、复活的主，<b>在那边等候我们。</b></span></div></div>
   <div class="verse big">神如此爱这世界，把他独一的儿子赐给了世人，使所有信他的人不会灭亡，而是得着永远的生命。<cite>约翰福音 3:16</cite></div>
-  <p style="text-align:center">我们不会催逼你相信。请慢慢地沿着他走过的路走一走。之后再下判断，也不算晚。</p>
+  <p style="text-align:center">我们不会催逼你相信。请慢慢地沿着他走过的路走一走。在那条路上，你会遇见<b>那位先来寻找你的主</b>。</p>
 
   <h3 style="text-align:center;margin-top:40px">要先相信才能知道的事</h3>
   <p>“先弄明白了，我再相信”，这话听起来很合理。可是在真实的生活里，很多事恰恰相反——<b>要先相信、迈出一步，才会真正明白。</b></p>
