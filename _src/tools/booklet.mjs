@@ -113,7 +113,7 @@ await p.addStyleTag({ content: `
   .bk-colo dd small{display:block;font-size:7.6pt;color:var(--muted);margin-top:.5mm}
   .bk-colo .bk-note{margin:1.5mm 0!important}
   .bk-back{break-before:page;text-align:center;padding:${36 + BL}mm ${12 + BL}mm ${12 + BL}mm;display:flex;flex-direction:column;align-items:center}
-  .why .bk-bnote{margin:auto 4mm 0!important}
+  .why .bk-bnote{margin:auto 8mm 0!important;font-size:6.3pt!important;line-height:1.6!important;color:#bdb3a3!important} /* 안내는 눈에 띌 필요 없다 — 작고 옅게 (2026-11 사용자) */
   .bk-back .motto{font-size:17pt;margin:0 0 4mm}
   .bk-inv{color:var(--muted);margin:0 0 12mm!important}
   .bk-qr{display:grid;grid-template-columns:repeat(4,1fr);gap:4mm;margin:0 0 16mm}
