@@ -15,7 +15,7 @@ export { scales } from './street/parts.js';
 /* ---------- stage.js가 쓰는 표 ----------
    STREETS: 대본의 street 이름 → 세트 만들기. 세트는 sun(해가 오는 쪽, 아침 동쪽)도 알려 준다
    SKIES: 분위기(env)마다 하늘빛 [위, 가운데, 아래]과 안개 색 */
-export const STREETS = { gate: gateSquare, field: fieldSet, home: homeSet, alley: alleySet, palace: palaceSet };
+export const STREETS = { gate: gateSquare, field: fieldSet, home: homeSet, alley: alleySet, palace: palaceSet, house: () => homeSet({ own: true }) };
 export const SKIES = {
   day:      { sky: ['#8fb8da', '#d6e4ec', '#efe4cc'], fog: '#c8d2d6', sun: [30, 40, 18] },
   dawn:     { sky: ['#7d8fb8', '#e8c8b8', '#f6d8b0'], fog: '#d8c8bc', sun: [45, 14, -10] },

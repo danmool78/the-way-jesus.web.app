@@ -326,6 +326,45 @@ export const PROVERBS = {
         ['noble', 'idle', { show: 0 }], ['lady', 'idle', { show: 0 }], ['porter', 'idle', { show: 0 }]],
     },
   },
+
+  /* p07. 꺼지지 않는 등불 (잠 31:10–31) — 깊은 밤, 아버지와 아들의 집(세트 house: 네 방 집, 친구의 집과 벽빛·살림이 다르다).
+     어머니가 등잔 곁에서 물레 가락으로 실을 잣는다(31:18–19). 끝에 등불을 끈다(['@set', 'lamps:off']). 자리 가운데 (0, -0.26) */
+  p07: {
+    street: 'house', env: 'night',
+    cams: {
+      door: { pos: [1.15, 1.05, -1.55], at: [-0.05, 0.42, 1.3], fov: 66 },  // 큰방 쪽에서 거리로 난 문을
+      lamp: { pos: [-1.4, 0.72, 1.0], at: [-0.15, 0.25, -0.4], fov: 40 },  // 등잔 곁의 어머니 (앞 왼쪽에서)
+      room: { pos: [-1.25, 0.85, 1.5], at: [0.15, 0.25, -0.4], fov: 58 },  // 마당 — 서쪽 앞에서 (아버지와 아들이 어머니를 가리지 않게)
+      pair: { pos: [-0.95, 0.75, 0.15], at: [0.5, 0.45, -0.45], fov: 48 },  // 아버지와 아들 (어머니 쪽에서)
+    },
+    cam: 'room',
+    cast: {
+      father: ['father', 0.55, -0.75, -1.8],
+      son: ['son', 0.45, -0.15, -1.9],
+      mother: ['mother', -0.22, -0.42, 0.5, { pose: 'sit-ground', gaze: false }],
+    },
+    beats: {
+      // 낭독 없이 볼 때: 등잔 곁에서 실 잣는 어머니, 들어와 선 아버지와 아들
+      enter: [['@env', 'night'], ['@cam', 'room'], ['@set', 'lamps:on'], ['mother', 'sit-ground', { item: 'spindle', look: 0.5 }]],
+      intro: [['@env', 'night'], ['@cam', 'door'], ['@set', 'lamps:on'], ['mother', 'sit-ground', { item: 'spindle', look: 0.5 }],
+        ['father', 'idle', { x: -0.15, z: 1.95, look: 3.14 }], ['son', 'idle', { x: -0.5, z: 2.05, look: 3.14 }]],
+      // 드디어 우리 집에 왔다
+      'p0.0': [['father', 'idle', { x: 0.55, z: -0.75, look: -1.8 }], ['son', 'idle', { x: 0.45, z: -0.15, look: -1.9 }]],
+      // 어머니의 등불은 아직 꺼지지 않았구나 — 등잔 곁의 어머니
+      'p0.1': [['@cam', 'lamp']],
+      'p0.2': [['mother', 'sit-ground', { item: 'spindle', look: 0.3 }]],
+      // 누가 현숙한 아내를 찾아 얻겠느냐 — 아버지가 아들에게
+      'p1.0': [['@cam', 'pair'], ['father', 'speak', { to: 'son' }], ['son', 'listen']],
+      'p1.2': [['father', 'point', { look: -1.6 }], ['son', 'idle', { look: -1.9 }]],
+      // 자식들은 일어나 어머니를 복되다 하고 — 아들이 어머니 앞에 무릎 꿇고, 아버지가 칭찬한다
+      'p2.0': [['@cam', 'room'], ['son', 'kneel', { x: 0.15, z: -0.22, look: -1.9 }], ['mother', 'sit-speak', { item: null, to: 'son' }]],
+      'p2.1': [['father', 'speak', { look: -1.8, to: 'mother' }], ['mother', 'sit-ground', { look: 1.2 }]],
+      'p2.3': [['son', 'idle', { look: 1.2 }], ['father', 'speak', { to: 'son' }]],
+      // 등불을 끄고 자자
+      'p2.4': [['@set', 'lamps:off', { delay: 1800 }], ['father', 'idle', { look: -1.8 }]],
+      end: [['@cam', 'room'], ['@set', 'lamps:dim'], ['mother', 'sit-ground', { item: null, look: 1.2 }], ['son', 'kneel', { x: 0.15, z: -0.22, look: -1.9 }], ['father', 'idle', { x: 0.55, z: -0.75, look: -1.8 }]],
+    },
+  },
 };
 
 // intro 앞에 처음 자리로 되돌리는 명령을 붙인다 (stage/moses.js와 같은 방식 — 다시 들을 때도 대본의 처음 자리에서)

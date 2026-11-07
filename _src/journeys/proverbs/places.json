@@ -40,5 +40,12 @@
   "lng": 35.2355,
   "region": "예루살렘",
   "approx": true
+ },
+ "house": {
+  "name": "우리 집",
+  "lat": 31.7726,
+  "lng": 35.2353,
+  "region": "예루살렘",
+  "approx": true
  }
 }

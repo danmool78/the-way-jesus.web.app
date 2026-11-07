@@ -534,6 +534,12 @@ function makePerson(type) {
   mesh(new THREE.BoxGeometry(0.086, 0.018, 0.066), mat('#7a2a5e', { roughness: 0.5 }), gift, [0, 0.035, 0]);
   mesh(sphere(0.012, 8, 6), gold, gift, [0, 0.05, 0]);
   gift.position.set(0, 0.47, 0.15);
+  // 실 잣는 가락 (잠언 p07 — 31:19 손으로 물레 가락을 잡고): 막대와 가락바퀴, 감긴 실
+  const spindle = new THREE.Group();
+  mesh(new THREE.CylinderGeometry(0.004, 0.004, 0.2, 5), mat('#6a5038'), spindle);
+  mesh(new THREE.CylinderGeometry(0.022, 0.022, 0.008, 12), mat('#8a6a48'), spindle, [0, -0.07, 0]);
+  mesh(sphere(0.02, 10, 8), mat('#efe8da', { roughness: 1 }), spindle, [0, 0.02, 0]).scale.y = 1.6;
+  spindle.position.set(0.04, 0.45, 0.16); spindle.rotation.z = 0.3;
   // 빵 한 덩이 (잠언 p06 — 가난한 사람에게 나누는 빵)
   const bread = new THREE.Group();
   mesh(new THREE.CylinderGeometry(0.05, 0.052, 0.022, 14), mat('#c99858', { roughness: 1 }), bread);
@@ -590,8 +596,8 @@ function makePerson(type) {
   hornGeo.computeVertexNormals();
   mesh(hornGeo, mat('#d8c49a', { roughness: 0.5 }), horn);
   horn.position.set(0.0, 0.78, 0.07); horn.rotation.y = -Math.PI / 2; horn.rotation.z = 0.3;
-  [doves, gift, bread, jar, scroll, alabaster, palm, cup, torch, mat_, timbrel, tablets, horn].forEach(g => { g.visible = false; upper.add(g); });
-  const items = { basket, doves, gift, bread, jar, scroll, alabaster, palm, cup, torch, mat: mat_, timbrel, tablets, horn };
+  [doves, gift, bread, spindle, jar, scroll, alabaster, palm, cup, torch, mat_, timbrel, tablets, horn].forEach(g => { g.visible = false; upper.add(g); });
+  const items = { basket, doves, gift, bread, spindle, jar, scroll, alabaster, palm, cup, torch, mat: mat_, timbrel, tablets, horn };
 
   // 발: 샌들 위의 맨발이 옷자락 아래로
   const feet = [1, -1].map(s => {
