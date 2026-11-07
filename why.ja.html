@@ -194,6 +194,8 @@
   .bgm.off{color:#8a7f70;border-color:#e2d8c8}
   .bgm.off .wave{display:none}.bgm:not(.off) .mute{display:none}
   .why .fakelead{margin:4px 0 16px;padding:14px 18px;border-radius:14px;background:#fff8f1;border:1px solid #ecd8cb;line-height:1.85} /* '가짜'는 다른 종교가 아니라는 것을 먼저 분명히 */
+  .why .ans{margin:28px 0 8px;display:grid;gap:10px} .why .ans>div{background:#fffdf9;border:1px solid var(--line);border-radius:14px;padding:12px 16px} .why .ans small{display:block;font-size:13.5px;color:var(--muted);margin-bottom:3px} .why .ans span{font-family:var(--serif);font-size:17px;line-height:1.7} /* 처음 세 물음에 대한 답 — 글의 처음과 끝을 잇는다 */
+  .more.qa[open]>summary .o{display:inline}.more.qa[open]>summary .c{display:none} /* 물음 펼치기: 펼친 뒤에도 물음이 보이게 */
 </style>
 </head>
 <body>
@@ -210,7 +212,7 @@
     <div><svg viewBox="0 0 32 32" fill="none" stroke="#d0685b" stroke-width="1.8" stroke-linecap="round"><path d="M16 4c5 6 8 10.5 8 15a8 8 0 0 1-16 0c0-4.5 3-9 8-15z"/></svg>わたしの罪は<br>どう洗われる？</div>
     <div><svg viewBox="0 0 32 32" fill="none" stroke="#d0685b" stroke-width="1.8" stroke-linecap="round"><path d="M4 24h24"/><path d="M9 24a7 7 0 0 1 14 0"/><path d="M16 9v3M7 13l2 2M25 13l-2 2"/></svg>死の向こうには<br>何があるのか？</div>
   </div>
-  <p class="lead">だれもが心に抱いて生きている問いです。宗教ごとの答えを同じものさしで、率直に比べてみます。</p>
+  <p class="lead">だれもが心に抱いて生きている問いです。宗教ごとの答えを同じものさしで、率直に比べてみます。論争に勝つための文章ではなく、先に出会った良い知らせを分かち合うための文章です。</p>
 
   <section>
   <small>その一</small>
@@ -252,11 +254,13 @@
   <section>
   <small>その二</small>
   <h2>人はどうやって神のもとへ行こうとするのでしょうか？</h2>
+  <p style="text-align:center;margin:14px 0 20px">答えがもっとも大きく分かれるのは、ここです。</p>
   <div class="pair">
     <figure class="art"><img src="assets/img/why/scale.webp" alt="大きな天秤にささげ物を載せ、不安そうに見つめる人" loading="lazy"><figcaption>① 神と取引する</figcaption></figure>
     <figure class="art"><img src="assets/img/why/ladder.webp" alt="雲の中の果てしないはしごをひとりで登る人" loading="lazy"><figcaption>② 自分で登る</figcaption></figure>
   </div>
   <p class="cap">方法は違っても、向きは同じです — 上へ</p>
+  <p style="text-align:center">けれども正直に問わずにいられません。どこまで上れば十分なのでしょう。昨日より良い今日を生きても、心の奥の恥は<b>自分の力では消えません。</b></p>
   <details class="more"><summary><span class="o">二つの道を詳しく · 宗教ごとに見る</span><span class="c">閉じる</span></summary><div>
   <div class="card">
     <p><b>① 神と取引する。</b>「これだけ祈り、断食し、ささげ、善く生きれば、神も報いてくださるだろう」。けれども、どれだけ載せれば足りるのか、天秤がどちらに傾くのかは、最後までわかりません。</p>
@@ -287,6 +291,7 @@
   <section>
   <small>その三</small>
   <h2>ところが、逆さまの物語がひとつあります</h2>
+  <p style="text-align:center;margin:14px 0 20px">人が上っていくのではなく、<b>神が降りて来られた</b>という話です。</p>
   <figure class="art"><img src="assets/img/why/mountain.webp" alt="多くの人が山を登る間に、頂から金色の光が谷にいるひとりの人へと流れ降りる" loading="lazy"></figure>
   <svg class="ill" viewBox="0 0 640 330" role="img" aria-label="神の座から、人、馬小屋、しもべ、十字架へと一段ずつ降りて来る図">
     <defs><radialGradient id="g2" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fbd9d2"/><stop offset=".4" stop-color="#d97a6c" stop-opacity=".6"/><stop offset="1" stop-color="#d97a6c" stop-opacity="0"/></radialGradient></defs>
@@ -307,7 +312,7 @@
   <div class="card"><p>ほかの宗教にも、神が地上に降りて来る物語はあります。ヒンドゥー教の化身（アヴァターラ）がそうです。しかしその神々は王子や英雄として来て、悪を打ち倒します。<b>いちばん低いところで、罪人の身代わりに死ぬために来られた神</b>は、キリスト教にしかありません。</p></div>
   </div></details>
   <figure class="art"><img src="assets/img/why/father.webp" alt="両腕を広げ、帰って来る息子のもとへ駆け寄る父" loading="lazy"></figure>
-  <p class="cap">「雇い人のひとりとしてでも……」と言い終える前に</p>
+  <p class="cap">「雇い人の一人にしてください…」と言い終える前に、父が先に走り寄りました</p>
   <details class="more"><summary><span class="o">イエスが語られたたとえ</span><span class="c">閉じる</span></summary><div>
   <p>財産を使い果たして帰って来る息子は、道すがら言うことばを練習します。<b>「雇い人のひとりとして使ってください」</b>。働いて返そうという、上っていく道です。ところが父は、そのことばを聞く前に遠くから息子を見つけ、<b>自分から駆け寄って</b>抱きしめます。</p>
   <div class="verse">まだ遠く離れていたのに、父は息子を見つけてかわいそうに思い、走り寄って首を抱き、口づけした。<cite>ルカによる福音書 15:20</cite></div>
@@ -319,8 +324,9 @@
   <h2>ただ赦してくださればいいのでは？</h2>
   <p style="text-align:center;margin:14px 0 20px">放蕩息子の父は、何の代価も求めずに息子を抱きしめました。それなら神も、ただ赦してくださればよいのではないでしょうか。<b>なぜ十字架でなければならなかったのでしょう。</b></p>
   <figure class="art"><img src="assets/img/why/judge.webp" alt="法服を脱いで降りて来て、うなだれる息子のそばで罰金を代わりに払う裁判官" loading="lazy"></figure>
-  <p class="cap">裁判官は法服を脱いで降りて来て、自ら代価を払いました</p>
-  <details class="more"><summary><span class="o">裁判官の話 · 罪の代価はどこへ</span><span class="c">閉じる</span></summary><div>
+  <p class="cap">裁判官は法服を脱いで降りて来て、息子の罰金を代わりに払いました。十字架とは、このことです</p>
+  <p style="text-align:center">そして十字架で死なれたイエスは、三日目に<b>よみがえられました。</b>神話ではなく、時と場所のある歴史です。</p>
+  <details class="more"><summary><span class="o">裁判官の話・罪の代価・復活の証拠</span><span class="c">閉じる</span></summary><div>
   <p>聖書は、<b>すべての人が罪を犯した</b>（ローマ 3:23）、罪の報酬は死である（ローマ 6:23）と語ります。罪はいくつかの失敗ではなく、神から離れた心です。聖なる神は、それを見て見ぬふりはなさいません。</p>
   <p>だれかがわたしの家族を傷つけたのに、裁判官が「かまわない」と言って放免したら、それを愛と呼ぶことはできないでしょう。<b>ただ覆い隠せば正義が崩れ、そのまま罰すれば愛の居場所がありません。</b></p>
   <div class="steps">
@@ -340,6 +346,7 @@
 
   <h3>物語ではなく、起きた出来事</h3>
   <p>キリスト教はこれを神話やたとえとして語りません。時と場所のある出来事なので歴史として確かめることができ、キリスト教はその出来事にすべてを懸けています。</p>
+  <p>そして、その方は三日目によみがえられました。墓は空で、よみがえったイエスを五百人以上の人が同時に見ました。パウロはこれを出来事から二十年ほどのちに書き、「その大部分は今も生きている」と書き添えました（一コリント 15:6）。尋ねて確かめてみよ、ということです。恐れて隠れていた弟子たちは、この知らせを伝えて命を差し出しました。人から聞いたことを信じて死ぬ人はいても、<b>自分の目で見たと言うことがうそだと知りながら、そのために死ぬ人はいません。</b></p>
   <div class="when">
     <svg viewBox="0 0 40 40" fill="none" stroke="#d0685b" stroke-width="2"><path d="M20 37s-11-11.5-11-20a11 11 0 0 1 22 0c0 8.5-11 20-11 20z"/><circle cx="20" cy="17" r="4"/></svg>
     <div><b>紀元30年ごろ · エルサレムの城壁の外</b><span>ローマ総督ポンティオ・ピラトのとき</span></div>
@@ -352,6 +359,7 @@
   <section>
   <small>その五</small>
   <h2>キリスト教は排他的なのでしょうか？</h2>
+  <p style="text-align:center;margin:14px 0 20px">神ご自身が代価を払われた道なら、道はひとつです。</p>
   <figure class="art"><img src="assets/img/why/doors.webp" alt="急な階段の上の閉ざされた狭い門と、大勢がともに入っていく大きく開かれた門" loading="lazy"></figure>
   <p class="cap">ただひとつの道、けれどもいちばん広い門</p>
   <details class="more"><summary><span class="o">なぜいちばん広い門なのか</span><span class="c">閉じる</span></summary><div>
@@ -393,6 +401,14 @@
   <p>イエスは扉を壊して入って来られません。剣や恐れによってではなく、<b>みことばによって呼ばれます。</b>そして、閉ざされた心を開かれるのも主です。パウロの話を聞いていたルデヤについて、聖書は「主は彼女の心を開かれた」と語ります（使徒 16:14）。ですからクリスチャンは、無理に信じさせようとはせず、ほかの信仰をもつ隣人に<b>穏やかに、敬意をもって</b>接するべきです（一ペトロ 3:15–16）。</p>
   <div class="verse">見なさい、わたしは戸口の外に立ってたたいている。だれでもわたしの声を聞いて戸を開けるなら、わたしはその人のところに入り、ともに食事をする。<cite>ヨハネの黙示録 3:20</cite></div>
   </div></details>
+  
+  <h3 style="text-align:center;margin-top:40px">それでも残る問い</h3>
+  <details class="more qa"><summary><span class="o">神が愛なら、なぜ世界に苦しみがあるのか？</span><span class="c">閉じる</span></summary><div>
+  <p>この問いのすべての答えを知っているとは言えません。けれども、キリスト教の神は苦しみを遠くから見下ろしているだけの方ではありません。<b>ご自身がその中に入って来られ</b>、裏切られ、打たれ、十字架で死なれました。そしてよみがえり、苦しみと死が最後のことばではないことを示されました。聖書は、神がすべての涙をぬぐい、もはや死も悲しみもない日が来ると約束しています（黙示録 21:4）。</p>
+  </div></details>
+  <details class="more qa"><summary><span class="o">福音を聞いたことのない人はどうなるのか？</span><span class="c">閉じる</span></summary><div>
+  <p>その人たちのことは、<b>もっとも公正な裁き主である神</b>にゆだねます（創世記 18:25）。聖書は、神が造られた世界と人の良心を通して、すべての人に語ってこられたと言います（ローマ 1:20、2:15）。そして一つのことは確かです。これを読んでいるあなたは、<b>もう聞きました。</b></p>
+  </div></details>
   </section>
 
 
@@ -426,8 +442,10 @@
     <p class="motto" style="margin:4px 0 12px"><span style="font-size:14px;color:var(--muted);font-family:var(--sans)">ほかの道は言います</span><br>「こうすれば神に届く」</p>
     <p class="motto" style="margin:0 0 4px;color:var(--gold2)"><span style="font-size:14px;color:var(--muted);font-family:var(--sans)">キリスト教は言います</span><br>「神はすでに<br>あなたのもとに来られた」</p>
   </div>
+  <h3 style="text-align:center;margin-top:34px">はじめの三つの問いに</h3>
+  <div class="ans"><div><small>わたしは大丈夫な人間だろうか？</small><span>大丈夫ではありません。それでも<b>命を差し出されるほど愛されている人</b>です。</span></div><div><small>わたしの過ちはどうすれば洗われるのか？</small><span>自分で償わなくてよいのです。<b>十字架で代わりに支払われました。</b></span></div><div><small>死の向こうには何があるのか？</small><span>死に打ち勝ってよみがえられた方が、<b>その向こうで待っておられます。</b></span></div></div>
   <div class="verse big">神はそれほどまでに世を愛して、ひとり子をお与えになりました。御子を信じる人がだれひとり滅びることなく、永遠のいのちを得るためです。<cite>ヨハネによる福音書 3:16</cite></div>
-  <p style="text-align:center">信じなさいと急き立てはしません。その方が歩まれた道を、ゆっくりたどって歩いてみてください。判断はそのあとでも遅くありません。</p>
+  <p style="text-align:center">信じなさいと急き立てはしません。その方が歩まれた道を、ゆっくりたどって歩いてみてください。その道で、<b>先にあなたを探しに来られた方</b>に出会うでしょう。</p>
 
   <h3 style="text-align:center;margin-top:40px">信じてはじめてわかること</h3>
   <p>「まずわかってから信じよう」という言葉は、理にかなっているように聞こえます。けれども実際の生活では、逆のことがたくさんあります。<b>信じて一歩踏み出してはじめてわかること</b>です。</p>

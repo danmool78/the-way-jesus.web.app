@@ -207,6 +207,8 @@
   .bgm.off{color:#8a7f70;border-color:#e2d8c8}
   .bgm.off .wave{display:none}.bgm:not(.off) .mute{display:none}
   .why .fakelead{margin:4px 0 16px;padding:14px 18px;border-radius:14px;background:#fff8f1;border:1px solid #ecd8cb;line-height:1.85} /* '가짜'는 다른 종교가 아니라는 것을 먼저 분명히 */
+  .why .ans{margin:28px 0 8px;display:grid;gap:10px} .why .ans>div{background:#fffdf9;border:1px solid var(--line);border-radius:14px;padding:12px 16px} .why .ans small{display:block;font-size:13.5px;color:var(--muted);margin-bottom:3px} .why .ans span{font-family:var(--serif);font-size:17px;line-height:1.7} /* 처음 세 물음에 대한 답 — 글의 처음과 끝을 잇는다 */
+  .more.qa[open]>summary .o{display:inline}.more.qa[open]>summary .c{display:none} /* 물음 펼치기: 펼친 뒤에도 물음이 보이게 */
 </style>
 </head>
 <body>
@@ -223,7 +225,7 @@
     <div><svg viewBox="0 0 32 32" fill="none" stroke="#d0685b" stroke-width="1.8" stroke-linecap="round"><path d="M16 4c5 6 8 10.5 8 15a8 8 0 0 1-16 0c0-4.5 3-9 8-15z"/></svg>Como minhas culpas<br>podem ser lavadas?</div>
     <div><svg viewBox="0 0 32 32" fill="none" stroke="#d0685b" stroke-width="1.8" stroke-linecap="round"><path d="M4 24h24"/><path d="M9 24a7 7 0 0 1 14 0"/><path d="M16 9v3M7 13l2 2M25 13l-2 2"/></svg>O que existe<br>depois da morte?</div>
   </div>
-  <p class="lead">São perguntas que todo mundo carrega. Vamos comparar as respostas das religiões com a mesma régua, com honestidade.</p>
+  <p class="lead">São perguntas que todo mundo carrega. Vamos comparar as respostas das religiões com a mesma régua, com honestidade. Não foi escrito para vencer uma discussão, mas para partilhar uma boa notícia que encontramos primeiro.</p>
 
   <section>
   <small>UM</small>
@@ -265,11 +267,13 @@
   <section>
   <small>DOIS</small>
   <h2>Como as pessoas tentam chegar a Deus?</h2>
+  <p style="text-align:center;margin:14px 0 20px">É aqui que as respostas mais se separam.</p>
   <div class="pair">
     <figure class="art"><img src="assets/img/why/scale.webp" alt="Uma pessoa coloca oferendas numa grande balança e olha para ela, aflita" loading="lazy"><figcaption>① Negociar com Deus</figcaption></figure>
     <figure class="art"><img src="assets/img/why/ladder.webp" alt="Uma pessoa sobe sozinha uma escada sem fim entre as nuvens" loading="lazy"><figcaption>② Subir por conta própria</figcaption></figure>
   </div>
   <p class="cap">Os métodos mudam, mas a direção é a mesma: para cima</p>
+  <p style="text-align:center">Mas, com sinceridade, vem a pergunta: quanto é preciso subir para ser suficiente? Mesmo vivendo hoje melhor do que ontem, a vergonha no fundo do coração <b>não se apaga com as minhas forças.</b></p>
   <details class="more"><summary><span class="o">Os dois caminhos em detalhe · por religião</span><span class="c">Fechar</span></summary><div>
   <div class="card">
     <p><b>① Negociar com Deus.</b> “Se eu orar, jejuar, ofertar e viver direito o bastante, Deus vai me retribuir.” Mas nunca dá para saber quanto é suficiente nem para que lado a balança vai pender.</p>
@@ -300,6 +304,7 @@
   <section>
   <small>TRÊS</small>
   <h2>Mas existe uma história ao contrário</h2>
+  <p style="text-align:center;margin:14px 0 20px">Não é a história de gente que sobe, mas de <b>Deus que desce</b>.</p>
   <figure class="art"><img src="assets/img/why/mountain.webp" alt="Enquanto muitas pessoas sobem a montanha, uma luz dourada desce do cume até uma pessoa no vale" loading="lazy"></figure>
   <svg class="ill" viewBox="0 0 640 330" role="img" aria-label="Desenho de alguém descendo degrau por degrau: do lugar de Deus a homem, estábulo, servo e cruz">
     <defs><radialGradient id="g2" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fbd9d2"/><stop offset=".4" stop-color="#d97a6c" stop-opacity=".6"/><stop offset="1" stop-color="#d97a6c" stop-opacity="0"/></radialGradient></defs>
@@ -320,7 +325,7 @@
   <div class="card"><p>Outras religiões também contam histórias de deuses que descem à terra, como os avatares do hinduísmo. Mas esses deuses vêm como príncipes ou heróis para vencer o mal. <b>Um Deus que vem ao lugar mais baixo para morrer no lugar dos pecadores</b> só existe no cristianismo.</p></div>
   </div></details>
   <figure class="art"><img src="assets/img/why/father.webp" alt="Um pai de braços abertos correndo ao encontro do filho que volta" loading="lazy"></figure>
-  <p class="cap">“Pelo menos como empregado…” — antes mesmo de terminar a frase</p>
+  <p class="cap">Antes que ele terminasse “trata-me como um dos teus empregados…”, o pai correu até ele</p>
   <details class="more"><summary><span class="o">A história que Jesus contou</span><span class="c">Fechar</span></summary><div>
   <p>O filho que desperdiçou toda a herança volta para casa ensaiando pelo caminho o que vai dizer: <b>“Aceite-me pelo menos como um dos seus empregados.”</b> É o caminho de subir: trabalhar para pagar a dívida. Mas o pai, antes mesmo de ouvir essas palavras, o reconhece de longe, <b>corre primeiro</b> e o abraça.</p>
   <div class="verse">Ele ainda estava longe quando o pai o viu. Cheio de compaixão, correu, lançou-se ao seu pescoço e o beijou.<cite>Lucas 15:20</cite></div>
@@ -332,8 +337,9 @@
   <h2>Deus não podia simplesmente perdoar?</h2>
   <p style="text-align:center;margin:14px 0 20px">O pai do filho pródigo abraçou o filho sem cobrar nada. Então Deus não poderia simplesmente perdoar? <b>Por que tinha de ser a cruz?</b></p>
   <figure class="art"><img src="assets/img/why/judge.webp" alt="Um juiz que tirou a toga e desceu, pagando a multa ao lado do filho de cabeça baixa" loading="lazy"></figure>
-  <p class="cap">O juiz tirou a toga, desceu e pagou ele mesmo o preço</p>
-  <details class="more"><summary><span class="o">A história do juiz · para onde vai o preço do pecado</span><span class="c">Fechar</span></summary><div>
+  <p class="cap">O juiz tirou a toga, desceu e pagou ele mesmo a multa do filho. A cruz é isso</p>
+  <p style="text-align:center">E Jesus, que morreu na cruz, <b>ressuscitou</b> ao terceiro dia. Não é mito, é história, com data e lugar.</p>
+  <details class="more"><summary><span class="o">O juiz · o preço do pecado · as provas da ressurreição</span><span class="c">Fechar</span></summary><div>
   <p>A Bíblia diz que <b>todos pecaram</b> (Rm 3:23) e que o salário do pecado é a morte (Rm 6:23). O pecado não é só um punhado de erros, mas um coração que se afastou de Deus — e o Deus santo não finge que não vê.</p>
   <p>Se alguém fizesse mal à sua família e o juiz dissesse “tudo bem” e o soltasse, seria difícil chamar isso de amor. <b>Se apenas encobrir, a justiça cai; se apenas punir, não sobra lugar para o amor.</b></p>
   <div class="steps">
@@ -353,6 +359,7 @@
 
   <h3>Não é uma lenda, é algo que aconteceu</h3>
   <p>O cristianismo não apresenta isso como mito ou parábola. É um acontecimento com data e lugar, que pode ser examinado como história — e o cristianismo aposta tudo nesse acontecimento.</p>
+  <p>E ao terceiro dia ele ressuscitou. O túmulo estava vazio, e mais de quinhentas pessoas viram de uma só vez o Jesus ressurreto. Paulo escreveu isso uns vinte anos depois do fato e acrescentou: “a maioria deles ainda vive” (1Co 15:6) — como quem diz: vão e perguntem. Os discípulos, que tinham se escondido com medo, deram a vida anunciando essa notícia. Há quem morra pelo que outros lhe contaram, mas <b>ninguém morre pelo que diz ter visto com os próprios olhos sabendo que é mentira.</b></p>
   <div class="when">
     <svg viewBox="0 0 40 40" fill="none" stroke="#d0685b" stroke-width="2"><path d="M20 37s-11-11.5-11-20a11 11 0 0 1 22 0c0 8.5-11 20-11 20z"/><circle cx="20" cy="17" r="4"/></svg>
     <div><b>Por volta do ano 30 d.C. · fora dos muros de Jerusalém</b><span>No tempo do governador romano Pôncio Pilatos</span></div>
@@ -365,6 +372,7 @@
   <section>
   <small>CINCO</small>
   <h2>O cristianismo é excludente?</h2>
+  <p style="text-align:center;margin:14px 0 20px">Se o próprio Deus pagou o preço, há um só caminho.</p>
   <figure class="art"><img src="assets/img/why/doors.webp" alt="Uma porta estreita e fechada no alto de uma escada íngreme, e uma porta escancarada por onde muitas pessoas entram juntas" loading="lazy"></figure>
   <p class="cap">Um único caminho, mas a porta mais larga</p>
   <details class="more"><summary><span class="o">Por que é a porta mais larga</span><span class="c">Fechar</span></summary><div>
@@ -406,6 +414,14 @@
   <p>Jesus não arromba a porta para entrar. Ele não chama com a espada nem com o medo, mas <b>com a sua palavra</b>. E é o Senhor quem abre os corações fechados. Sobre Lídia, que ouvia Paulo, a Bíblia diz: “O Senhor lhe abriu o coração” (At 16:14). Por isso o cristão não tenta forçar ninguém a crer, e deve tratar o vizinho de outra fé <b>com mansidão e respeito</b> (1Pe 3:15–16).</p>
   <div class="verse">Olhe: eu estou à porta e bato. Se alguém ouvir a minha voz e abrir a porta, eu entrarei e comeremos juntos.<cite>Apocalipse 3:20</cite></div>
   </div></details>
+  
+  <h3 style="text-align:center;margin-top:40px">Perguntas que ficam</h3>
+  <details class="more qa"><summary><span class="o">Se Deus é amor, por que existe sofrimento no mundo?</span><span class="c">Fechar</span></summary><div>
+  <p>Não podemos dizer que sabemos todas as respostas. Mas o Deus do cristianismo não é alguém que só olha o sofrimento de longe. <b>Ele mesmo entrou nele</b>: foi traído, espancado e morreu numa cruz. E ressuscitou, mostrando que o sofrimento e a morte não têm a última palavra. A Bíblia promete um dia em que Deus enxugará toda lágrima, e não haverá mais morte nem tristeza (Ap 21:4).</p>
+  </div></details>
+  <details class="more qa"><summary><span class="o">O que acontece com quem nunca ouviu o evangelho?</span><span class="c">Fechar</span></summary><div>
+  <p>Deixamos essas pessoas com <b>Deus, o mais justo dos juízes</b> (Gn 18:25). A Bíblia diz que Deus falou a todos por meio do mundo que criou e da consciência (Rm 1:20; 2:15). E uma coisa é certa: você, que está lendo isto, <b>agora já ouviu.</b></p>
+  </div></details>
   </section>
 
 
@@ -439,8 +455,10 @@
     <p class="motto" style="margin:4px 0 12px"><span style="font-size:14px;color:var(--muted);font-family:var(--sans)">Os outros caminhos dizem</span><br>“Faça assim e você poderá alcançar a Deus.”</p>
     <p class="motto" style="margin:0 0 4px;color:var(--gold2)"><span style="font-size:14px;color:var(--muted);font-family:var(--sans)">O cristianismo diz</span><br>“Deus já veio até você.”</p>
   </div>
+  <h3 style="text-align:center;margin-top:34px">As três perguntas do começo</h3>
+  <div class="ans"><div><small>Será que sou uma boa pessoa?</small><span>Não sou. Mesmo assim, sou <b>tão amado que alguém deu a vida por mim</b>.</span></div><div><small>Como meus erros podem ser lavados?</small><span>Não preciso pagá-los. <b>Foram pagos na cruz.</b></span></div><div><small>O que há depois da morte?</small><span>Aquele que venceu a morte e ressuscitou <b>espera por nós do outro lado.</b></span></div></div>
   <div class="verse big">Deus amou tanto o mundo que deu o seu único Filho, para que todo aquele que nele crê não se perca, mas tenha a vida eterna.<cite>João 3:16</cite></div>
-  <p style="text-align:center">Não vamos pressionar você a crer. Caminhe devagar pelo caminho que ele percorreu. Ainda haverá tempo para decidir depois.</p>
+  <p style="text-align:center">Não vamos pressionar você a crer. Caminhe devagar pelo caminho que ele percorreu. Nesse caminho você vai encontrar <b>aquele que veio procurar você primeiro</b>.</p>
 
   <h3 style="text-align:center;margin-top:40px">Coisas que só se conhecem crendo</h3>
   <p>“Primeiro quero entender, depois eu creio” parece razoável. Mas na vida real muitas coisas funcionam ao contrário. São <b>coisas que só se conhecem depois de confiar e dar um passo</b>.</p>

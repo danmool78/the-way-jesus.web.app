@@ -74,6 +74,8 @@ await p.addStyleTag({ content: `
   .part{break-before:page;margin:30mm 0 0}
   details.more>summary,.spec .chev{display:none!important}
   details.more>div{margin-top:4px;animation:none}
+  .ans>div{break-inside:avoid} /* 세 물음 카드가 쪽 사이에서 잘리지 않게 */
+  details.more.qa>summary{display:block!important;background:none!important;border:0!important;padding:0!important;margin:5mm 0 1mm!important;font-weight:700;color:var(--gold2)} details.more.qa>summary::after,details.more.qa>summary .c{display:none!important} /* '그래도 남는 물음'은 물음이 곧 제목 — 접기 단추 대신 굵은 글씨로 */
   .art{max-width:92mm;margin:4mm auto 2mm}
   .pair{max-width:none;gap:4mm}
   .art img{box-shadow:none;border:1px solid #eadfcd}

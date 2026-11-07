@@ -207,6 +207,8 @@
   .bgm.off{color:#8a7f70;border-color:#e2d8c8}
   .bgm.off .wave{display:none}.bgm:not(.off) .mute{display:none}
   .why .fakelead{margin:4px 0 16px;padding:14px 18px;border-radius:14px;background:#fff8f1;border:1px solid #ecd8cb;line-height:1.85} /* '가짜'는 다른 종교가 아니라는 것을 먼저 분명히 */
+  .why .ans{margin:28px 0 8px;display:grid;gap:10px} .why .ans>div{background:#fffdf9;border:1px solid var(--line);border-radius:14px;padding:12px 16px} .why .ans small{display:block;font-size:13.5px;color:var(--muted);margin-bottom:3px} .why .ans span{font-family:var(--serif);font-size:17px;line-height:1.7} /* 처음 세 물음에 대한 답 — 글의 처음과 끝을 잇는다 */
+  .more.qa[open]>summary .o{display:inline}.more.qa[open]>summary .c{display:none} /* 물음 펼치기: 펼친 뒤에도 물음이 보이게 */
 </style>
 </head>
 <body>
@@ -223,7 +225,7 @@
     <div><svg viewBox="0 0 32 32" fill="none" stroke="#d0685b" stroke-width="1.8" stroke-linecap="round"><path d="M16 4c5 6 8 10.5 8 15a8 8 0 0 1-16 0c0-4.5 3-9 8-15z"/></svg>Bagaimana salahku<br>bisa dihapus?</div>
     <div><svg viewBox="0 0 32 32" fill="none" stroke="#d0685b" stroke-width="1.8" stroke-linecap="round"><path d="M4 24h24"/><path d="M9 24a7 7 0 0 1 14 0"/><path d="M16 9v3M7 13l2 2M25 13l-2 2"/></svg>Apa yang ada<br>setelah mati?</div>
   </div>
-  <p class="lead">Pertanyaan yang dibawa setiap orang dalam hidupnya. Mari kita bandingkan jawaban agama-agama dengan ukuran yang sama, secara jujur.</p>
+  <p class="lead">Pertanyaan yang dibawa setiap orang dalam hidupnya. Mari kita bandingkan jawaban agama-agama dengan ukuran yang sama, secara jujur. Tulisan ini tidak dibuat untuk memenangkan perdebatan, melainkan untuk membagikan kabar baik yang lebih dulu kami temukan.</p>
 
   <section>
   <small>SATU</small>
@@ -265,11 +267,13 @@
   <section>
   <small>DUA</small>
   <h2>Bagaimana manusia berusaha mencapai Allah?</h2>
+  <p style="text-align:center;margin:14px 0 20px">Di sinilah jawaban-jawaban itu paling tajam berpisah.</p>
   <div class="pair">
     <figure class="art"><img src="assets/img/why/scale.webp" alt="Seseorang menaruh persembahan di atas timbangan besar dan menatapnya dengan cemas" loading="lazy"><figcaption>① Tawar-menawar dengan Tuhan</figcaption></figure>
     <figure class="art"><img src="assets/img/why/ladder.webp" alt="Seseorang memanjat sendirian tangga tanpa ujung di tengah awan" loading="lazy"><figcaption>② Mendaki dengan usaha sendiri</figcaption></figure>
   </div>
   <p class="cap">Caranya berbeda, tetapi arahnya sama — ke atas</p>
+  <p style="text-align:center">Tetapi jujur saja, kita jadi bertanya: seberapa tinggi harus naik supaya cukup? Sekalipun hari ini saya hidup lebih baik daripada kemarin, rasa malu di dalam hati <b>tidak terhapus oleh kekuatan saya sendiri.</b></p>
   <details class="more"><summary><span class="o">Dua jalan lebih dekat · per agama</span><span class="c">Tutup</span></summary><div>
   <div class="card">
     <p><b>① Tawar-menawar dengan Tuhan.</b> "Kalau aku cukup berdoa, berpuasa, memberi, dan hidup baik, Tuhan pasti membalasnya." Namun seberapa banyak yang cukup, dan ke mana timbangan akan condong, tidak pernah bisa dipastikan sampai akhir.</p>
@@ -300,6 +304,7 @@
   <section>
   <small>TIGA</small>
   <h2>Tetapi ada satu kisah yang terbalik</h2>
+  <p style="text-align:center;margin:14px 0 20px">Bukan manusia yang naik, melainkan <b>Allah yang turun</b>.</p>
   <figure class="art"><img src="assets/img/why/mountain.webp" alt="Sementara banyak orang mendaki gunung, cahaya keemasan mengalir dari puncak kepada seseorang di lembah" loading="lazy"></figure>
   <svg class="ill" viewBox="0 0 640 330" role="img" aria-label="Gambar Allah turun selangkah demi selangkah dari takhta-Nya: menjadi manusia, ke kandang, menjadi hamba, sampai ke salib">
     <defs><radialGradient id="g2" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fbd9d2"/><stop offset=".4" stop-color="#d97a6c" stop-opacity=".6"/><stop offset="1" stop-color="#d97a6c" stop-opacity="0"/></radialGradient></defs>
@@ -320,7 +325,7 @@
   <div class="card"><p>Agama lain juga punya kisah tentang dewa yang turun ke bumi, seperti avatar dalam Hindu. Namun dewa-dewa itu datang sebagai pangeran atau pahlawan untuk mengalahkan kejahatan. <b>Allah yang datang ke tempat paling rendah untuk mati menggantikan orang berdosa</b> hanya ada dalam Kekristenan.</p></div>
   </div></details>
   <figure class="art"><img src="assets/img/why/father.webp" alt="Seorang ayah berlari dengan tangan terbuka menyambut anaknya yang pulang" loading="lazy"></figure>
-  <p class="cap">"Jadikan aku orang upahanmu saja…" — belum selesai ia berkata</p>
+  <p class="cap">Sebelum ia selesai berkata, "Jadikanlah aku orang upahan…", sang ayah lebih dulu berlari kepadanya</p>
   <details class="more"><summary><span class="o">Kisah yang diceritakan Yesus</span><span class="c">Tutup</span></summary><div>
   <p>Anak yang telah menghabiskan hartanya berlatih kata-kata di sepanjang jalan pulang: <b>"Terimalah aku sebagai orang upahan saja."</b> Ia ingin bekerja untuk membayar kesalahannya — jalan yang mendaki. Tetapi sebelum kata-kata itu terucap, sang ayah sudah mengenalinya dari jauh, <b>berlari lebih dulu</b>, dan memeluknya.</p>
   <div class="verse">Ketika ia masih jauh, ayahnya melihatnya dan hatinya tergerak oleh belas kasihan. Ia berlari mendapatkannya, memeluk lehernya, dan menciumnya.<cite>Lukas 15:20</cite></div>
@@ -332,8 +337,9 @@
   <h2>Tidak bisakah Allah mengampuni begitu saja?</h2>
   <p style="text-align:center;margin:14px 0 20px">Ayah si anak hilang memeluk anaknya tanpa menuntut apa pun. Kalau begitu, tidak bisakah Allah mengampuni begitu saja? <b>Mengapa harus salib?</b></p>
   <figure class="art"><img src="assets/img/why/judge.webp" alt="Seorang hakim yang menanggalkan jubahnya dan turun, membayar denda di samping anaknya yang tertunduk" loading="lazy"></figure>
-  <p class="cap">Sang hakim menanggalkan jubahnya, turun, dan membayar sendiri harganya</p>
-  <details class="more"><summary><span class="o">Kisah seorang hakim · ke mana harga dosa</span><span class="c">Tutup</span></summary><div>
+  <p class="cap">Sang hakim menanggalkan jubahnya, turun, dan membayar sendiri denda anaknya. Itulah salib</p>
+  <p style="text-align:center">Dan Yesus, yang mati di kayu salib, <b>bangkit</b> pada hari ketiga. Bukan mitos, melainkan sejarah, dengan waktu dan tempat.</p>
+  <details class="more"><summary><span class="o">Kisah hakim · harga dosa · bukti kebangkitan</span><span class="c">Tutup</span></summary><div>
   <p>Alkitab berkata bahwa <b>semua orang telah berdosa</b> (Rm. 3:23) dan upah dosa ialah maut (Rm. 6:23). Dosa bukan sekadar beberapa kesalahan, melainkan hati yang berpaling dari Allah — dan Allah yang kudus tidak pura-pura tidak melihatnya.</p>
   <p>Jika seseorang mencelakai keluarga Anda, lalu hakim berkata "tidak apa-apa" dan membebaskannya, sulit menyebut itu kasih. <b>Jika ditutupi begitu saja, keadilan runtuh; jika dihukum apa adanya, kasih tak punya tempat.</b></p>
   <div class="steps">
@@ -353,6 +359,7 @@
 
   <h3>Bukan dongeng, melainkan peristiwa nyata</h3>
   <p>Kekristenan tidak menyampaikan hal ini sebagai mitos atau perumpamaan. Ini peristiwa dengan waktu dan tempat yang jelas, sehingga dapat diuji secara sejarah — dan Kekristenan mempertaruhkan segalanya pada peristiwa itu.</p>
+  <p>Dan pada hari ketiga Ia bangkit. Kubur itu kosong, dan lebih dari lima ratus orang sekaligus melihat Yesus yang bangkit. Paulus menuliskannya sekitar dua puluh tahun sesudah peristiwa itu dan menambahkan, "kebanyakan dari mereka masih hidup" (1Kor. 15:6) — seakan berkata: tanyakanlah kepada mereka. Para murid yang tadinya bersembunyi karena takut menyerahkan nyawa demi memberitakan kabar ini. Ada orang yang mati demi apa yang diceritakan orang lain, tetapi <b>tak seorang pun mau mati demi apa yang katanya ia lihat sendiri, padahal ia tahu itu dusta.</b></p>
   <div class="when">
     <svg viewBox="0 0 40 40" fill="none" stroke="#d0685b" stroke-width="2"><path d="M20 37s-11-11.5-11-20a11 11 0 0 1 22 0c0 8.5-11 20-11 20z"/><circle cx="20" cy="17" r="4"/></svg>
     <div><b>Sekitar tahun 30 M · di luar tembok Yerusalem</b><span>Pada masa gubernur Romawi Pontius Pilatus</span></div>
@@ -365,6 +372,7 @@
   <section>
   <small>LIMA</small>
   <h2>Apakah Kekristenan eksklusif?</h2>
+  <p style="text-align:center;margin:14px 0 20px">Jika Allah sendiri yang membayar harganya, jalannya hanya satu.</p>
   <figure class="art"><img src="assets/img/why/doors.webp" alt="Pintu sempit yang tertutup di puncak tangga curam, dan pintu yang terbuka lebar tempat banyak orang masuk bersama" loading="lazy"></figure>
   <p class="cap">Satu-satunya jalan, tetapi pintu yang paling lebar</p>
   <details class="more"><summary><span class="o">Mengapa pintu yang paling lebar</span><span class="c">Tutup</span></summary><div>
@@ -406,6 +414,14 @@
   <p>Yesus tidak mendobrak pintu. Ia memanggil bukan dengan pedang atau rasa takut, melainkan <b>dengan firman-Nya</b>. Dan Tuhanlah yang membuka hati yang tertutup. Tentang Lidia yang mendengarkan Paulus, Alkitab berkata, "Tuhan membuka hatinya" (Kis. 16:14). Karena itu orang Kristen tidak memaksa siapa pun untuk percaya, dan harus memperlakukan sesama yang berbeda keyakinan <b>dengan lemah lembut dan penuh hormat</b> (1Ptr. 3:15–16).</p>
   <div class="verse">Lihat, Aku berdiri di depan pintu dan mengetuk. Siapa saja yang mendengar suara-Ku dan membuka pintu, Aku akan masuk kepadanya dan makan bersama dia.<cite>Wahyu 3:20</cite></div>
   </div></details>
+  
+  <h3 style="text-align:center;margin-top:40px">Pertanyaan yang tersisa</h3>
+  <details class="more qa"><summary><span class="o">Jika Allah itu kasih, mengapa ada penderitaan di dunia?</span><span class="c">Tutup</span></summary><div>
+  <p>Kami tidak bisa mengaku tahu semua jawabannya. Tetapi Allah dalam Kekristenan bukan Allah yang hanya memandang penderitaan dari jauh. <b>Ia sendiri masuk ke dalamnya</b>: dikhianati, dipukuli, dan mati di kayu salib. Lalu Ia bangkit, menunjukkan bahwa penderitaan dan maut bukan kata terakhir. Alkitab menjanjikan hari ketika Allah menghapus segala air mata, dan tidak ada lagi maut atau dukacita (Why. 21:4).</p>
+  </div></details>
+  <details class="more qa"><summary><span class="o">Bagaimana dengan orang yang belum pernah mendengar Injil?</span><span class="c">Tutup</span></summary><div>
+  <p>Kami menyerahkan mereka kepada <b>Allah, Hakim yang paling adil</b> (Kej. 18:25). Alkitab berkata Allah telah berbicara kepada semua orang lewat dunia ciptaan-Nya dan lewat hati nurani (Rm. 1:20; 2:15). Dan satu hal pasti: Anda yang membaca ini <b>kini sudah mendengar.</b></p>
+  </div></details>
   </section>
 
 
@@ -439,8 +455,10 @@
     <p class="motto" style="margin:4px 0 12px"><span style="font-size:14px;color:var(--muted);font-family:var(--sans)">Jalan-jalan lain berkata</span><br>"Lakukan ini, maka engkau bisa mencapai Tuhan."</p>
     <p class="motto" style="margin:0 0 4px;color:var(--gold2)"><span style="font-size:14px;color:var(--muted);font-family:var(--sans)">Kekristenan berkata</span><br>"Allah sudah datang kepada Anda."</p>
   </div>
+  <h3 style="text-align:center;margin-top:34px">Tiga pertanyaan di awal</h3>
+  <div class="ans"><div><small>Apakah saya orang yang cukup baik?</small><span>Tidak. Namun saya <b>dikasihi sampai Seseorang menyerahkan nyawa-Nya bagi saya</b>.</span></div><div><small>Bagaimana kesalahan saya bisa dibersihkan?</small><span>Saya tidak perlu membayarnya. <b>Semuanya sudah dibayar di kayu salib.</b></span></div><div><small>Apa yang ada sesudah kematian?</small><span>Dia yang mengalahkan maut dan bangkit <b>menanti di seberang sana.</b></span></div></div>
   <div class="verse big">Begitu besar kasih Allah kepada dunia ini, sehingga Ia memberikan Anak-Nya yang tunggal, supaya siapa pun yang percaya kepada-Nya tidak binasa, tetapi memperoleh hidup yang kekal.<cite>Yohanes 3:16</cite></div>
-  <p style="text-align:center">Kami tidak akan mendesak Anda untuk percaya. Cobalah perlahan-lahan menyusuri jalan yang pernah Ia tempuh. Belum terlambat untuk menilainya sesudah itu.</p>
+  <p style="text-align:center">Kami tidak akan mendesak Anda untuk percaya. Cobalah perlahan-lahan menyusuri jalan yang pernah Ia tempuh. Di jalan itu Anda akan bertemu <b>Dia yang lebih dulu datang mencari Anda</b>.</p>
 
   <h3 style="text-align:center;margin-top:40px">Hal-hal yang baru diketahui setelah percaya</h3>
   <p>"Saya akan percaya setelah saya tahu" terdengar masuk akal. Namun dalam kehidupan nyata, banyak hal justru sebaliknya — <b>hal-hal yang baru kita ketahui setelah percaya dan melangkah</b>.</p>
