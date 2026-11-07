@@ -29,9 +29,23 @@
  },
  {
   "id": "d5",
-  "name": "밤 · 골목",
+  "name": "밤 · 골목과 왕궁",
   "en": "NIGHT",
   "span": "밤",
   "color": "#5a6890"
+ },
+ {
+  "id": "d6",
+  "name": "깊은 밤 · 우리 집",
+  "en": "MIDNIGHT",
+  "span": "깊은 밤",
+  "color": "#3e4a72"
+ },
+ {
+  "id": "d7",
+  "name": "새벽 · 지혜의 집",
+  "en": "DAWN",
+  "span": "새벽",
+  "color": "#e0a070"
  }
 ]

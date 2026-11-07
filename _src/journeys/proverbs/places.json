@@ -33,5 +33,26 @@
   "lng": 35.2349,
   "region": "예루살렘",
   "approx": true
+ },
+ "palace": {
+  "name": "왕궁 앞뜰",
+  "lat": 31.7772,
+  "lng": 35.2355,
+  "region": "예루살렘",
+  "approx": true
+ },
+ "house": {
+  "name": "우리 집",
+  "lat": 31.7726,
+  "lng": 35.2353,
+  "region": "예루살렘",
+  "approx": true
+ },
+ "wisdomhouse": {
+  "name": "성의 높은 곳",
+  "lat": 31.7779,
+  "lng": 35.2352,
+  "region": "예루살렘",
+  "approx": true
  }
 }

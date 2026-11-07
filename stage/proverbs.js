@@ -276,6 +276,144 @@ export const PROVERBS = {
         ['father', 'idle', { show: 1, x: -0.3, z: -2.0, look: 3.14 }], ['son', 'idle', { show: 1, x: 0.05, z: -1.8, look: 3.14 }]],
     },
   },
+
+  /* p06. 왕궁 앞에서 (잠 21:1, 16:18, 14:31, 30:7–9, 22:9) — 밤, 솔로몬 궁의 앞뜰 문(세트 palace).
+     백향목 기둥 주랑과 잔치 불빛, 파수꾼 사이로 들어가는 귀인들, 문 곁의 가난한 사람. 끝에 아들이 친구가 싸 준 빵을 나눈다.
+     앞뜰 문 z ≈ -1.04 (문기둥 x ±1.35), 궁 앞면 z ≈ -8.3 */
+  p06: {
+    street: 'palace', env: 'night',
+    cams: {
+      wide: { pos: [0.62, 0.99, 8.3], at: [0, 2.0, -7.3], fov: 66 },     // 광장에서 궁을
+      porch: { pos: [1.4, 0.8, 0.9], at: [0, 2.3, -6.8], fov: 60 },     // 문 너머로 올려다본 백향목 기둥
+      gate: { pos: [-0.1, 0.8, 2.6], at: [-1.25, 0.4, -0.4], fov: 52 },  // 파수꾼과 문 곁의 가난한 사람
+      give: { pos: [-2.6, 0.72, 1.5], at: [-1.45, 0.3, -0.05], fov: 48 },  // 빵을 나누는 아들 — 서쪽에서 (아버지 등이 가리지 않게)
+      pair: { pos: [-0.1, 0.8, 3.4], at: [-1.0, 0.62, 1.8], fov: 44 },   // 아버지와 아들
+    },
+    cam: 'wide',
+    cast: {
+      father: ['father', -1.14, 1.77, 2.8],
+      son: ['son', -0.83, 1.98, 3.0],
+      guard1: ['soldier', -0.78, -0.31, 0, { gaze: false }],
+      guard2: ['soldier', 0.78, -0.31, 0, { gaze: false }],
+      beggar: ['beggar', -1.77, -0.2, 0.5, { gaze: false, pose: 'sit-ground' }],
+      noble: ['rich', 1.6, 4.2, 3.14, { gaze: false }],
+      lady: ['princess', 2.0, 4.5, 3.14, { gaze: false }],
+      porter: ['servant', 1.3, 4.8, 3.14, { gaze: false }],
+    },
+    beats: {
+      // 낭독 없이 볼 때: 문 곁의 가난한 사람에게 빵을 내미는 아들
+      enter: [['@env', 'night'], ['@cam', 'give'], ['beggar', 'sit-ground', { item: 'cup' }], ['son', 'kneel', { x: -1.5, z: 0.32, look: -2.6, item: 'bread' }],
+        ['father', 'idle', { x: -0.95, z: 1.15, look: -2.5 }], ['noble', 'idle', { show: 0 }], ['lady', 'idle', { show: 0 }], ['porter', 'idle', { show: 0 }]],
+      intro: [['@env', 'night'], ['@cam', 'wide'], ['beggar', 'sit-ground', { item: 'cup' }],
+        ['father', 'idle', { x: -0.78, z: 6.2, look: 3.14 }], ['son', 'idle', { x: -0.45, z: 6.4, look: 3.14 }]],
+      // 왕궁 앞을 지나는구나 — 광장으로 걸어 들어온다
+      'p0.0': [['father', 'idle', { x: -1.14, z: 1.77, look: 2.8 }], ['son', 'idle', { x: -0.83, z: 1.98, look: 3.0 }]],
+      // 귀인들이 파수꾼 사이로 들어간다 — 등불 든 종을 앞세우고
+      'p0.1': [['@cam', 'porch'], ['porter', 'idle', { item: 'torch', x: 0.1, z: -5.0 }], ['noble', 'idle', { x: 0.25, z: -5.6, delay: 500 }], ['lady', 'idle', { x: 0.55, z: -5.4, delay: 900 }],
+        ['porter', 'idle', { show: 0, delay: 9000 }], ['noble', 'idle', { show: 0, delay: 9500 }], ['lady', 'idle', { show: 0, delay: 9800 }]],
+      // 문 곁의 가난한 사람
+      'p0.2': [['@cam', 'gate'], ['beggar', 'sit-ground', { look: 0.7 }]],
+      // 왕의 마음도 여호와의 손안에 — 궁을 올려다보며
+      'p1.0': [['@cam', 'wide'], ['father', 'point', { look: 3.0 }], ['son', 'look-up', { look: 3.0 }]],
+      'p1.1': [['@cam', 'pair'], ['father', 'speak', { look: 2.6, to: 'son' }], ['son', 'listen', { look: -2.0 }]],
+      'p1.2': [['father', 'point', { look: -2.6 }], ['son', 'idle', { look: -2.7 }]],
+      // 아굴의 기도
+      'p2.0': [['father', 'pray', { look: 2.8 }], ['son', 'pray', { look: 3.0 }]],
+      'p2.3': [['@cam', 'give'], ['father', 'speak', { look: 2.4, to: 'son' }], ['son', 'idle', { item: 'bread', x: -1.5, z: 0.32, look: -2.6 }], ['son', 'kneel', { delay: 2600 }]],
+      // 너그러운 사람은 복을 받는다 — 가난한 사람이 일어나 축복한다
+      'p2.4': [['beggar', 'bless', { look: 0.5, item: 'bread' }], ['son', 'idle', { item: null, look: -2.6, delay: 600 }], ['father', 'idle', { x: -0.95, z: 1.15, look: -2.5 }]],
+      end: [['@cam', 'give'], ['beggar', 'bless', { look: 0.5, item: 'bread' }], ['son', 'idle', { x: -1.5, z: 0.32, look: -2.6, item: null }], ['father', 'idle', { x: -0.95, z: 1.15, look: -2.5 }],
+        ['noble', 'idle', { show: 0 }], ['lady', 'idle', { show: 0 }], ['porter', 'idle', { show: 0 }]],
+    },
+  },
+
+  /* p07. 꺼지지 않는 등불 (잠 31:10–31) — 깊은 밤, 아버지와 아들의 집(세트 house: 네 방 집, 친구의 집과 벽빛·살림이 다르다).
+     어머니가 등잔 곁에서 물레 가락으로 실을 잣는다(31:18–19). 끝에 등불을 끈다(['@set', 'lamps:off']). 자리 가운데 (0, -0.26) */
+  p07: {
+    street: 'house', env: 'night',
+    cams: {
+      door: { pos: [1.15, 1.05, -1.55], at: [-0.05, 0.42, 1.3], fov: 66 },  // 큰방 쪽에서 거리로 난 문을
+      lamp: { pos: [-1.4, 0.72, 1.0], at: [-0.15, 0.25, -0.4], fov: 40 },  // 등잔 곁의 어머니 (앞 왼쪽에서)
+      room: { pos: [-1.25, 0.85, 1.5], at: [0.15, 0.25, -0.4], fov: 58 },  // 마당 — 서쪽 앞에서 (아버지와 아들이 어머니를 가리지 않게)
+      pair: { pos: [-0.95, 0.75, 0.15], at: [0.5, 0.45, -0.45], fov: 48 },  // 아버지와 아들 (어머니 쪽에서)
+    },
+    cam: 'room',
+    cast: {
+      father: ['father', 0.55, -0.75, -1.8],
+      son: ['son', 0.45, -0.15, -1.9],
+      mother: ['mother', -0.22, -0.42, 0.5, { pose: 'sit-ground', gaze: false }],
+    },
+    beats: {
+      // 낭독 없이 볼 때: 등잔 곁에서 실 잣는 어머니, 들어와 선 아버지와 아들
+      enter: [['@env', 'night'], ['@cam', 'room'], ['@set', 'lamps:on'], ['mother', 'sit-ground', { item: 'spindle', look: 0.5 }]],
+      intro: [['@env', 'night'], ['@cam', 'door'], ['@set', 'lamps:on'], ['mother', 'sit-ground', { item: 'spindle', look: 0.5 }],
+        ['father', 'idle', { x: -0.15, z: 1.95, look: 3.14 }], ['son', 'idle', { x: -0.5, z: 2.05, look: 3.14 }]],
+      // 드디어 우리 집에 왔다
+      'p0.0': [['father', 'idle', { x: 0.55, z: -0.75, look: -1.8 }], ['son', 'idle', { x: 0.45, z: -0.15, look: -1.9 }]],
+      // 어머니의 등불은 아직 꺼지지 않았구나 — 등잔 곁의 어머니
+      'p0.1': [['@cam', 'lamp']],
+      'p0.2': [['mother', 'sit-ground', { item: 'spindle', look: 0.3 }]],
+      // 누가 현숙한 아내를 찾아 얻겠느냐 — 아버지가 아들에게
+      'p1.0': [['@cam', 'pair'], ['father', 'speak', { to: 'son' }], ['son', 'listen']],
+      'p1.2': [['father', 'point', { look: -1.6 }], ['son', 'idle', { look: -1.9 }]],
+      // 자식들은 일어나 어머니를 복되다 하고 — 아들이 어머니 앞에 무릎 꿇고, 아버지가 칭찬한다
+      'p2.0': [['@cam', 'room'], ['son', 'kneel', { x: 0.15, z: -0.22, look: -1.9 }], ['mother', 'sit-speak', { item: null, to: 'son' }]],
+      'p2.1': [['father', 'speak', { look: -1.8, to: 'mother' }], ['mother', 'sit-ground', { look: 1.2 }]],
+      'p2.3': [['son', 'idle', { look: 1.2 }], ['father', 'speak', { to: 'son' }]],
+      // 등불을 끄고 자자
+      'p2.4': [['@set', 'lamps:off', { delay: 1800 }], ['father', 'idle', { look: -1.8 }]],
+      end: [['@cam', 'room'], ['@set', 'lamps:dim'], ['mother', 'sit-ground', { item: null, look: 1.2 }], ['son', 'kneel', { x: 0.15, z: -0.22, look: -1.9 }], ['father', 'idle', { x: 0.55, z: -0.75, look: -1.8 }]],
+    },
+  },
+
+  /* p08. 지혜의 집 (잠 9:1–12, 4:18) — 새벽, 성에서 가장 높은 둔덕(세트 wisdom). 일곱 기둥 주랑 앞에 차린 상, 집 앞에서 부르는 지혜,
+     둔덕 가장자리에서 외치는 여종 둘. 동쪽(+x) 감람산 위로 해가 떠오른다(['@set', 'sun:rise']). 마지막에 하루가 밝아진다(glory).
+     기둥 줄 z ≈ -3.22, 상 z ≈ -1.72 */
+  p08: {
+    street: 'wisdom', env: 'dawn',
+    cams: {
+      path: { pos: [0.62, 0.99, 6.3], at: [0, 1.1, -3.1], fov: 62 },     // 길에서 올려다본 지혜의 집
+      east: { pos: [-2.4, 1.5, 1.6], at: [24, -0.5, -4.5], fov: 72 },   // 동쪽 — 아버지와 아들 너머로, 둔덕 아래 성의 지붕들과 감람산·해
+      portico: { pos: [1.3, 0.88, 1.5], at: [0, 0.85, -3.1], fov: 60 },  // 일곱 기둥과 지혜
+      table: { pos: [0.85, 0.75, -0.25], at: [-0.15, 0.32, -1.8], fov: 50 }, // 차린 상
+      pair: { pos: [-2.0, 0.85, 0.7], at: [-0.1, 0.55, -1.0], fov: 42 },   // 상 앞의 아버지와 아들 (옆에서)
+    },
+    cam: 'path',
+    cast: {
+      wisdom: ['wisdom', 0, -2.3, 0, { gaze: false }],
+      maid1: ['woman', -3.3, 0.9, -1.2, { gaze: false }],
+      maid2: ['woman2', 3.3, 0.9, 1.2, { gaze: false }],
+      father: ['father', -0.47, -0.99, 3.14],
+      son: ['son', 0.16, -0.99, 3.14],
+    },
+    beats: {
+      // 낭독 없이 볼 때: 차린 상 앞에서 부르는 지혜, 상 앞의 아버지와 아들, 동쪽 하늘이 밝다
+      enter: [['@env', 'dawn'], ['@cam', 'portico'], ['@set', 'sun:rise'], ['wisdom', 'bless', { look: 0 }], ['maid1', 'raise'], ['maid2', 'raise']],
+      intro: [['@env', 'dawn'], ['@cam', 'path'], ['@set', 'sun:low'], ['wisdom', 'idle', { look: 0 }],
+        ['father', 'idle', { x: -0.3, z: 6.8, look: 3.14 }], ['son', 'idle', { x: 0.1, z: 7.1, look: 3.14 }]],
+      // 일어나라 — 새벽 길을 올라온다
+      'p0.0': [['father', 'idle', { x: -0.4, z: 1.2, look: 3.14 }], ['son', 'idle', { x: 0.1, z: 1.35, look: 3.14 }]],
+      // 새벽빛이 동쪽 산 위로 번진다 — 해가 오르기 시작한다
+      'p0.1': [['@cam', 'east'], ['@set', 'sun:rise']],
+      // 일곱 기둥 집
+      'p0.2': [['@cam', 'portico']],
+      'p0.3': [['@cam', 'table']],
+      // 여종들을 보내어 외치게 한다
+      'p0.4': [['@cam', 'path'], ['maid1', 'raise'], ['maid2', 'raise']],
+      // 어리석은 사람은 누구든지 이리로 오너라 — 지혜가 부른다
+      'p1.0': [['@cam', 'portico'], ['wisdom', 'raise', { look: 0 }]],
+      'p1.1': [['wisdom', 'bless', { look: 0 }], ['father', 'idle', { x: -0.47, z: -0.99, look: 3.14 }], ['son', 'idle', { x: 0.16, z: -0.99, look: 3.14, delay: 400 }]],
+      'p1.2': [['@cam', 'table'], ['wisdom', 'speak', { to: 'son' }]],
+      'p1.4': [['wisdom', 'bless', { look: 0 }], ['father', 'bow'], ['son', 'bow']],
+      // 아들아 — 상 앞에서
+      'p2.0': [['@cam', 'pair'], ['father', 'speak', { to: 'son' }], ['son', 'listen']],
+      // 의인의 길은 돋는 햇살 같아서 — 동쪽, 하루가 밝아진다
+      'p2.1': [['@cam', 'east'], ['@env', 'glory'], ['father', 'look-up', { x: 2.6, z: -0.3, look: 1.57 }], ['son', 'look-up', { x: 2.9, z: 0.15, look: 1.57, delay: 300 }]],
+      'p2.2': [['@cam', 'path'], ['wisdom', 'bless']],
+      end: [['@env', 'glory'], ['@cam', 'portico'], ['@set', 'sun:rise'], ['wisdom', 'bless', { look: 0 }], ['maid1', 'raise'], ['maid2', 'raise'],
+        ['father', 'idle', { x: -0.47, z: -0.99, look: 3.14 }], ['son', 'idle', { x: 0.16, z: -0.99, look: 3.14 }]],
+    },
+  },
 };
 
 // intro 앞에 처음 자리로 되돌리는 명령을 붙인다 (stage/moses.js와 같은 방식 — 다시 들을 때도 대본의 처음 자리에서)

@@ -7,18 +7,20 @@ import { M, reseed, rnd, canvasTex, plaster, rubble, soil, texMat, overlay, bloc
 import { WALLS, jarsAt, oilLamp } from './parts.js';
 
 // 줄무늬 깔개 (염소털·양털 직물)
-function rug() {
-  return canvasTex('rug', 256, (g, S) => {
-    const cols = ['#7a2e22', '#a8653a', '#d8c49a', '#3e2a22', '#a8653a'];
+function rug(cols = ['#7a2e22', '#a8653a', '#d8c49a', '#3e2a22', '#a8653a']) {
+  return canvasTex('rug' + cols.join(), 256, (g, S) => {
     for (let y = 0, i = 0; y < S; i++) { const h = 10 + (i % 3) * 8; g.fillStyle = cols[i % cols.length]; g.fillRect(0, y, S, h); y += h; }
     for (let k = 0; k < 900; k++) { g.fillStyle = `rgba(0,0,0,${Math.random() * 0.08})`; g.fillRect(Math.random() * S, Math.random() * S, 3, 1); }
   });
 }
 
-export function homeSet() {
-  reseed(31);
+// own: 아버지와 아들의 집 (p07) — 같은 네 방 집의 꼴이지만 벽빛·깔개·살림을 바꿔 친구의 집과 다르게:
+// 차린 음식 대신 양털 바구니, 베틀은 마당에 내놓고(31:13, 19), 등잔은 어머니 곁에 하나 (31:18 등불이 밤에 꺼지지 않는다)
+export function homeSet(o = {}) {
+  const own = !!o.own;
+  reseed(own ? 37 : 31);
   const g = new THREE.Group(), m = v => v * M;
-  const wall = texMat(plaster(WALLS[1])), wall2 = texMat(plaster(WALLS[3])), stone = texMat(rubble('#b19c7a')), wood = mat('#5d4632', { roughness: 0.9 });
+  const wall = texMat(plaster(WALLS[own ? 4 : 1])), wall2 = texMat(plaster(WALLS[own ? 0 : 3])), stone = texMat(rubble('#b19c7a')), wood = mat('#5d4632', { roughness: 0.9 });
   // 바닥: 다진 흙 (마당과 방이 한 바닥)
   const floor = mesh(new THREE.PlaneGeometry(m(40), m(40)), texMat(soil('#a08462')), g, [0, 0, 0]);
   floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; floor.castShadow = false;
@@ -48,13 +50,21 @@ export function homeSet() {
   // 큰방 천장, 마당 위로 나온 위층 난간 들보 끝
   mesh(new THREE.BoxGeometry(m(14), m(0.2), m(3)), mat('#6a5038'), g, [0, m(F) + m(0.1), m(-5.5)]).receiveShadow = true;
   // 마당 가운데 자리: 깔개 위 그릇과 빵
-  const mat0 = mesh(new THREE.PlaneGeometry(m(2.2), m(1.5)), overlay(texMat(rug(), '#ffffff', { polygonOffset: true })), g, [0, 0.004, m(-0.5)]);
+  const mat0 = mesh(new THREE.PlaneGeometry(m(2.2), m(1.5)), overlay(texMat(rug(own ? ['#2f4f6a', '#c9a24a', '#e6dcc4', '#3e2a22', '#8a6a48'] : undefined), '#ffffff', { polygonOffset: true })), g, [0, 0.004, m(-0.5)]);
   mat0.rotation.x = -Math.PI / 2; mat0.receiveShadow = true; mat0.castShadow = false;
   const clay = mat('#b0754a'), greens = mat('#6f8a4a', { roughness: 1 }), bread = mat('#c99858', { roughness: 1 });
-  mesh(new THREE.CylinderGeometry(m(0.2), m(0.13), m(0.1), 14), clay, g, [m(0.1), m(0.05), m(-0.5)]);
-  mesh(new THREE.SphereGeometry(m(0.17), 10, 6, 0, Math.PI * 2, 0, Math.PI / 2), greens, g, [m(0.1), m(0.08), m(-0.5)]).scale.y = 0.5; // 나물 한 그릇 (15:17)
-  [[-0.45, -0.2], [-0.5, -0.75], [0.6, -0.85]].forEach(([x, z]) => { const b = mesh(new THREE.CylinderGeometry(m(0.16), m(0.16), m(0.04), 14), bread, g, [m(x), m(0.02), m(z)]); b.scale.y = 1; });
-  mesh(new THREE.CylinderGeometry(m(0.07), m(0.05), m(0.16), 10), clay, g, [m(0.55), m(0.08), m(-0.25)]); // 물 단지
+  if (!own) {
+    mesh(new THREE.CylinderGeometry(m(0.2), m(0.13), m(0.1), 14), clay, g, [m(0.1), m(0.05), m(-0.5)]);
+    mesh(new THREE.SphereGeometry(m(0.17), 10, 6, 0, Math.PI * 2, 0, Math.PI / 2), greens, g, [m(0.1), m(0.08), m(-0.5)]).scale.y = 0.5; // 나물 한 그릇 (15:17)
+    [[-0.45, -0.2], [-0.5, -0.75], [0.6, -0.85]].forEach(([x, z]) => mesh(new THREE.CylinderGeometry(m(0.16), m(0.16), m(0.04), 14), bread, g, [m(x), m(0.02), m(z)]));
+    mesh(new THREE.CylinderGeometry(m(0.07), m(0.05), m(0.16), 10), clay, g, [m(0.55), m(0.08), m(-0.25)]); // 물 단지
+  } else {
+    // 양털 바구니와 자은 실타래 (31:13 양털과 삼을 구하여 부지런히 손으로 일하며)
+    mesh(new THREE.CylinderGeometry(m(0.24), m(0.2), m(0.22), 14, 1, true), mat('#a0804e', { roughness: 1, side: THREE.DoubleSide }), g, [m(-0.75), m(0.11), m(-0.75)]);
+    mesh(new THREE.SphereGeometry(m(0.21), 12, 8), mat('#efe8da', { roughness: 1 }), g, [m(-0.75), m(0.2), m(-0.75)]).scale.y = 0.55;
+    [[0.5, -0.9], [0.68, -0.75]].forEach(([x, z]) => mesh(new THREE.SphereGeometry(m(0.08), 10, 6), mat('#9a3a2e', { roughness: 1 }), g, [m(x), m(0.07), m(z)]));
+    mesh(new THREE.CylinderGeometry(m(0.07), m(0.05), m(0.16), 10), clay, g, [m(0.55), m(0.08), m(-0.25)]);
+  }
   // 진흙 화덕(탄누르)과 불씨, 곁의 땔감
   const oven = mesh(new THREE.CylinderGeometry(m(0.38), m(0.48), m(0.75), 16, 1, true), mat('#9a6a46', { roughness: 1, side: THREE.DoubleSide }), g, [m(-2.9), m(0.375), m(-2.9)]);
   oven.castShadow = true;
@@ -67,13 +77,14 @@ export function homeSet() {
   for (let i = 0; i < 8; i++) mesh(new THREE.BoxGeometry(m(0.05), m(0.05), m(0.5)), wood, lad, [0, m(0.3 + i * 0.36), 0]);
   // 기둥방 안의 항아리와 베틀(서쪽), 둘둘 만 잠자리(동쪽)
   jarsAt(g, [[m(-5.6), m(-2.6)], [m(-5.9), m(-2.0), 0.85], [m(-6.3), m(-2.4), 1.1], [m(5.7), m(2.4), 0.9], [m(6.2), m(2.0)]]);
-  const loom = new THREE.Group(); loom.position.set(m(-5.6), 0, m(1.2)); loom.rotation.y = Math.PI / 2; g.add(loom);
+  const loom = new THREE.Group(); g.add(loom);
+  if (own) { loom.position.set(m(-2.2), 0, m(-1.9)); loom.rotation.y = 0.5; } else { loom.position.set(m(-5.6), 0, m(1.2)); loom.rotation.y = Math.PI / 2; }
   [-1, 1].forEach(s => mesh(new THREE.BoxGeometry(m(0.08), m(1.9), m(0.08)), wood, loom, [s * m(0.6), m(0.95), 0]));
   mesh(new THREE.BoxGeometry(m(1.4), m(0.08), m(0.08)), wood, loom, [0, m(1.85), 0]);
   mesh(new THREE.PlaneGeometry(m(1.1), m(1.4)), mat('#d8c8a4', { side: THREE.DoubleSide, roughness: 1 }), loom, [0, m(1.1), 0]);
   many(g, new THREE.CylinderGeometry(m(0.22), m(0.22), m(1.6), 10).rotateX(Math.PI / 2), mat('#8a6a48', { roughness: 1 }), [[m(5.4), m(-1.5), 1, 0, 0, m(0.22)], [m(5.9), m(-1.6), 1, 0, 0, m(0.22)]]);
   // 등잔: 자리 둘레 셋, 큰방 문가와 기둥방 벽감에 하나씩
-  const lamps = [[0.75, -0.05], [-0.8, -0.95], [0.85, -1.05]].map(([x, z]) => oilLamp(g, m(x), 0.002, m(z)))
+  const lamps = (own ? [[-0.25, -0.15]] : [[0.75, -0.05], [-0.8, -0.95], [0.85, -1.05]]).map(([x, z]) => oilLamp(g, m(x), 0.002, m(z), own ? { power: 1.5, reach: 3.6 } : undefined))
     .concat([oilLamp(g, m(-1.3), m(1.3), m(-3.82), { power: 0.9 }), oilLamp(g, m(5.5), m(1.2), m(-3.6), { power: 0.8 })]);
   // 마당 너머로 보이는 이웃집 지붕 (밤하늘 아래 윤곽)
   [[-10, -12, 7], [8, -13, 8], [-14, 2, 6.5], [15, -3, 7.5]].forEach(([x, z, h]) => block(g, texMat(plaster(WALLS[Math.floor(rnd() * WALLS.length)])), m(x), m(z), m(7), m(7), m(h), 0, m(3)));
