@@ -178,6 +178,57 @@ export const PROVERBS = {
       end: [['@env', 'dusk'], ['@cam', 'west'], ['@set', 'scales:fair'], ['father', 'idle', { x: -3.6, z: 4.2, look: -1.57 }], ['son', 'idle', { x: -3.3, z: 4.6, look: -1.57 }]],
     },
   },
+
+  /* p04. 친구의 집 (잠 15:17, 17:17, 27:6, 27:17, 18:24) — 해 질 녘 네 방 집의 안마당(세트 home).
+     문간에서 친구가 맞아들이고, 등잔을 밝히고(['@set', 'lamps:on']), 마당 가운데 자리에 둘러앉아 나물과 빵을 먹는다.
+     앉은 채 말하는 사람은 'sit-speak'. 자리 가운데 (0, -0.26), 큰방 문 z ≈ -2.08, 거리로 난 문 z ≈ 2.16 */
+  p04: {
+    street: 'home', env: 'dusk',
+    cams: {
+      door: { pos: [1.15, 1.05, -1.55], at: [-0.05, 0.42, 1.3], fov: 66 },  // 큰방 쪽에서 거리로 난 문을 — 들어서고 나가는 사람의 얼굴이 보이게
+      meal: { pos: [1.9, 1.05, 1.85], at: [-0.1, 0.2, -0.4], fov: 56 },    // 둘러앉은 자리
+      pair: { pos: [0.02, 0.5, 0.75], at: [0, 0.24, -0.31], fov: 54 },     // 마주 앉은 아버지와 친구
+      son: { pos: [-0.6, 0.8, 1.35], at: [-0.25, 0.25, -0.5], fov: 50 },  // 아버지와 아들 (아버지 옆얼굴과 아들의 얼굴)
+      sky: { pos: [1.56, 2.5, 1.87], at: [0, 0.1, -0.52], fov: 66 },     // 위에서 본 저녁 마당
+    },
+    cam: 'door',
+    cast: {
+      father: ['father', -0.52, -0.26, 1.57, { pose: 'sit-ground' }],
+      friend: ['elder', 0.52, -0.26, -1.57, { pose: 'sit-ground' }],
+      son: ['son', 0, -0.74, 0, { pose: 'sit-ground' }],
+      wife: ['woman', 0.47, -0.7, -0.6, { pose: 'sit-ground', gaze: false }],
+    },
+    beats: {
+      // 낭독 없이 볼 때: 등잔 둘레에 둘러앉아 친구가 말한다
+      enter: [['@env', 'night'], ['@cam', 'meal'], ['@set', 'lamps:on'], ['friend', 'sit-speak', { to: 'father' }]],
+      // 해 질 녘, 거리로 난 문으로 들어선다. 친구는 마당에서 맞으러 나오고, 아내는 화덕 곁에
+      intro: [['@env', 'dusk'], ['@cam', 'door'], ['@set', 'lamps:dim'],
+        ['father', 'idle', { x: -0.15, z: 1.95, look: 3.14 }], ['son', 'idle', { x: -0.5, z: 2.05, look: 3.14 }],
+        ['friend', 'idle', { x: 0.38, z: 0.45, look: -0.3 }], ['wife', 'idle', { x: -1.25, z: -1.25, look: 0.6 }]],
+      // 내 오랜 친구의 집 — 마당으로 들어서고, 친구가 두 팔을 벌려 맞는다
+      'p0.0': [['father', 'idle', { x: -0.2, z: 0.95, look: 3.0 }], ['son', 'idle', { x: -0.55, z: 1.1, look: 2.8 }], ['friend', 'raise', { look: 0, delay: 1800 }]],
+      // 등잔을 밝히고 우리를 맞아들인다
+      'p0.1': [['@set', 'lamps:on'], ['friend', 'speak', { to: 'father' }]],
+      // 나물 한 그릇과 빵 — 자리에 둘러앉는다
+      'p0.2': [['@cam', 'meal'], ['father', 'sit-ground', { x: -0.52, z: -0.26, look: 1.57 }], ['friend', 'sit-ground', { x: 0.52, z: -0.26, look: -1.57 }],
+        ['son', 'sit-ground', { x: 0, z: -0.74, look: 0 }], ['wife', 'hold-basket', { item: 'basket', x: 0.2, z: -0.62, look: -1.2 }]],
+      'p0.3': [['wife', 'sit-ground', { item: null, x: 0.47, z: -0.7, look: -0.6 }], ['father', 'sit-speak', { to: 'son' }]],
+      // 친구는 언제나 사랑하고 — 마주 앉은 두 사람
+      'p1.0': [['@cam', 'pair'], ['@env', 'night'], ['father', 'sit-ground', { look: 1.57 }], ['friend', 'sit-speak', { to: 'father' }]],
+      // 내 잘못을 숨기지 않고 바로 말해 주었다 — 듣는 아버지는 고개를 숙인다
+      'p1.1': [['friend', 'sit-speak', { to: 'father' }], ['father', 'sit-ground', { look: 1.4 }]],
+      'p1.2': [['friend', 'sit-ground', { look: -1.57 }], ['father', 'sit-speak', { to: 'friend' }]],
+      // 철은 철로 날카로워지듯 — 위에서 본 저녁 마당, 등잔 둘레의 넷
+      'p1.3': [['@cam', 'sky'], ['father', 'sit-ground', { look: 1.57 }]],
+      // 아들아 — 아버지가 아들 쪽으로
+      'p2.0': [['@cam', 'son'], ['father', 'sit-speak', { to: 'son' }], ['son', 'sit-ground', { look: -0.7 }]],
+      'p2.1': [['son', 'sit-ground', { look: -0.9 }]],
+      // 밤이 깊었다 — 일어나 문으로
+      'p2.2': [['@cam', 'door'], ['father', 'idle', { x: -0.2, z: 0.9, look: 3.0 }], ['son', 'idle', { x: -0.55, z: 1.05, look: 2.8 }], ['friend', 'bless', { x: 0.4, z: 0.35, look: -0.3, delay: 600 }], ['wife', 'idle', { x: 0.8, z: 0.15, look: -0.4, delay: 900 }]],
+      'p2.3': [['father', 'idle', { x: -0.1, z: 2.6, look: 0 }], ['son', 'idle', { x: -0.4, z: 2.7, look: 0, delay: 500 }]],
+      end: [['@env', 'night'], ['@cam', 'door'], ['@set', 'lamps:on'], ['father', 'idle', { x: -0.2, z: 0.9, look: 3.0 }], ['son', 'idle', { x: -0.55, z: 1.05, look: 2.8 }], ['friend', 'bless', { x: 0.4, z: 0.35, look: -0.3 }], ['wife', 'idle', { x: 0.8, z: 0.15, look: -0.4 }]],
+    },
+  },
 };
 
 // intro 앞에 처음 자리로 되돌리는 명령을 붙인다 (stage/moses.js와 같은 방식 — 다시 들을 때도 대본의 처음 자리에서)

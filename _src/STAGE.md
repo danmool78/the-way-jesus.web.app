@@ -18,7 +18,7 @@
 | `stage/street/view.js` | 거리 무대를 화면 가득 그리는 쪽(세트 바꾸기·하늘·카메라 자리·카드 비켜 그리기) — stage.js가 `createStreet`로 만들어 쓴다 |
 | `stage/street/kit.js` | 거리 세트의 공통 도구: 축척 `M`, 캔버스 결(돌·회벽·포석·흙), `block`·`many`(InstancedMesh)·`overlay` |
 | `stage/street/parts.js` | 부품: 여섯 방 성문, 성벽, 네 방 집, 좌판·저울, 올리브나무, 항아리, 먼 산 |
-| `stage/street/gate.js`, `field.js` | 세트 하나에 파일 하나: 성문 광장, 성 밖 들판. 새 세트는 여기에 파일을 더하고 street.js의 STREETS에 적는다 |
+| `stage/street/gate.js`, `field.js`, `home.js` | 세트 하나에 파일 하나: 성문 광장, 성 밖 들판, 친구의 집. 새 세트는 여기에 파일을 더하고 street.js의 STREETS에 적는다 |
 | `app.js` | 낭독할 때 `stage:beat` 이벤트를 보낸다 (intro, p0…, w0…, end; 문장마다 s) |
 
 `?beat=p1.2#e03` 처럼 주소에 붙이면 그 순간까지의 동작을 즉시 적용한 화면을 볼 수 있다(확인용).
@@ -108,6 +108,7 @@ e02: {
 - 세트 안의 움직이는 것은 동작 명령 `['@set', '이름:상태']`로 바꾼다(세트의 `cmd`). 성문 광장의 저울: `scales:fair`(수평)·`scales:cheat`(속이는 추 — 곡식 쪽이 들림)·`scales:heavy`. 접시는 들보가 기울어도 늘 수평으로 매달린다.
 - **걷는 방향**: 미니어처 무대는 걸을 때 옆모습(±1.35)으로만 돌고 대화 상대도 앞쪽(±1.15)으로만 본다. 거리 무대는 사방에서 보므로 사람이 실제로 가는 쪽·상대 쪽으로 온전히 돈다(stage.js가 배우에 `realWalk`, people.js). 그대로 두면 성문 쪽으로 가는 사람이 옆으로 게걸음 쳤다.
 - **깜박임(z-fighting)**: 세트의 면이 같은 자리에 겹치지 않게 한다(두 담·축대와 언덕·기둥벽과 탑이 겹쳐 번쩍였다). 바닥 위에 덧까는 면은 `overlay`(polygonOffset)로 깐다. 거리 무대의 near는 0.15.
+- 친구의 집(home): 네 방 집의 안마당 — 하늘이 열린 흙 마당, 양옆 돌기둥 방, 뒤쪽 큰방, 앞쪽 거리로 난 문(z ≈ 2.16). 마당 가운데 깔개에 나물과 빵, 진흙 화덕의 불씨. 등잔(parts.js `oilLamp` — 불꽃이 일렁이는 PointLight)은 `['@set', 'lamps:on|dim|off']`로 켠다. 앉은 채 말하기는 자세 `sit-speak`(말하는 사람으로 쳐서 다른 이들이 돌아본다).
 - 멀리까지 보이도록 거리 무대에서는 카메라의 far를 400으로 늘린다(미니어처 무대는 50 — 그대로 두면 성벽이 잘렸다).
 - 장면 사이 사람들(장사꾼·장로)은 `gaze: false` — 말하는 사람이 멀리 있어도 모두 돌아보면 어색했다. 말하는 사람(speak)은 한 장면에 한 명만 두어야 시선이 엉키지 않는다.
 - 세트만 따로 보는 도구: `/_src/tools/street.html?view=eye|high|low&env=day|dawn|dusk`.
@@ -119,7 +120,7 @@ jesus, mary, joseph, angel, woman, woman2, mother, anna, john(젊은 제자, 수
 새 인물은 TYPES에 옷 색(robe/trim/mantle), 머리(hair, long, curls), 수염(beard), 베일(veil+inner)·머릿수건(hood+band), slim, height 등을 조합해 추가한다.
 
 ### 자세 (pose)
-idle, walk(자동), speak, listen, afraid, kneel, pray, bless, raise, bow, look-up, sleep, carry(아기), ride(나귀에 걸터앉음), point, sit, sit-ground, rebuke, break(빵 떼기), shrug, cower, mourn, crucified, crucified-dead, hold-basket
+idle, walk(자동), speak, sit-speak(앉아서 말하기), listen, afraid, kneel, pray, bless, raise, bow, look-up, sleep, carry(아기), ride(나귀에 걸터앉음), point, sit, sit-ground, rebuke, break(빵 떼기), shrug, cower, mourn, crucified, crucified-dead, hold-basket
 손에 드는 물건(item): basket, doves, gift, baby, timbrel(소고), tablets(돌판 둘)
 
 ### 소품 (MAKERS)

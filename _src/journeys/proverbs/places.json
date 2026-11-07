@@ -19,5 +19,12 @@
   "lng": 35.2361,
   "region": "예루살렘",
   "approx": true
+ },
+ "home": {
+  "name": "친구의 집",
+  "lat": 31.7738,
+  "lng": 35.2342,
+  "region": "예루살렘",
+  "approx": true
  }
 }

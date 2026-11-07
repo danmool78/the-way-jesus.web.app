@@ -204,7 +204,7 @@ function beat(key) {
 }
 // 누군가 말하면(speak) 다른 이들은 말하는 이를 보고, 말하는 이는 to로 정한 상대나 가장 가까운 사람을 본다
 function gaze() {
-  const all = Object.values(actors), speaker = all.find(a => a.pose === 'speak' && a.showT > 0);
+  const all = Object.values(actors), speaker = all.find(a => (a.pose === 'speak' || a.pose === 'sit-speak') && a.showT > 0);
   if (!speaker) return;
   const others = all.filter(a => a !== speaker && a.showT > 0 && !a.noGaze && a.p.root.parent === speaker.p.root.parent);
   others.forEach(a => { a.target = speaker; });

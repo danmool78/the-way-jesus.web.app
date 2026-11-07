@@ -215,3 +215,24 @@ export function farHills(g, zm = 100) {
     mesh(geoD, dots, g, [x, ridge(x) * f, -zm * M - 6 * M * f + 0.6 * M]).castShadow = false;
   }
 }
+
+/* ---------- 등잔 ----------
+   흙으로 빚은 작은 등잔(심지 끝의 불꽃)과 따뜻한 빛. 돌려준 lamp.update(time, k)가 불꽃을 일렁이게 하고 k(0~1)로 켜고 끈다 */
+export function oilLamp(g, x, y, z, { power = 1.1, reach = 3.2 } = {}) {
+  const l = new THREE.Group(); l.position.set(x, y, z); g.add(l);
+  const body = mesh(new THREE.SphereGeometry(0.07 * M, 10, 6), mat('#a8683e', { roughness: 0.9 }), l, [0, 0.03 * M, 0]);
+  body.scale.set(1.3, 0.5, 1);
+  const flame = mesh(new THREE.ConeGeometry(0.018 * M, 0.07 * M, 8), new THREE.MeshBasicMaterial({ color: '#ffd28a' }), l, [0.09 * M, 0.09 * M, 0]);
+  flame.castShadow = false;
+  const light = new THREE.PointLight('#ffb466', power, reach, 1.6);
+  light.position.set(0.09 * M, 0.14 * M, 0); l.add(light);
+  const seed = Math.random() * 10;
+  return {
+    group: l,
+    update(time, k = 1) {
+      const f = 0.86 + Math.sin(time * 9 + seed) * 0.06 + Math.sin(time * 23 + seed * 2) * 0.05; // 불꽃은 쉬지 않고 흔들린다
+      light.intensity = power * f * k;
+      flame.scale.set(1, (0.8 + f * 0.3) * Math.max(0.05, k), 1); flame.visible = k > 0.03;
+    },
+  };
+}
