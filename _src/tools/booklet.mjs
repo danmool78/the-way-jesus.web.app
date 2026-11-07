@@ -89,7 +89,7 @@ await p.addStyleTag({ content: `
   .bk-cover .bk-app img{width:9mm;height:9mm}
   .bk-cover h1{font-size:34pt;letter-spacing:.04em;margin:0 0 5mm}
   .bk-cover .sub{font-size:13.5pt;margin:0}
-  .bk-cover .bk-art{width:128mm;margin-top:auto;-webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 72%,transparent 100%);mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 72%,transparent 100%)}
+  .bk-cover .bk-art{width:118mm;margin-top:auto;mix-blend-mode:multiply;filter:brightness(1.05)} /* 가장자리를 지우면 그림이 잘려 보였다 — 종이색을 곱해 표지 크림색에 녹인다 */
   .why .bk-cfoot{font-size:9.5pt!important;color:var(--muted);letter-spacing:.08em;margin:2mm 0 0!important}
   .asks{margin-top:45mm}
   .spec summary{padding:5px 0}
