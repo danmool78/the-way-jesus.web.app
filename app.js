@@ -1554,7 +1554,7 @@ function nextHtml() {  // 후원 안내에는 아직 준비 중인 여정만 (se
 function setView(v) {
   $$('.view').forEach(m => m.hidden = m.id !== v);
   $$('.tabs button').forEach(b => { const on = b.dataset.view === v || (v === 'harmony' && b.dataset.view === 'words'); b.classList.toggle('active', on); b.setAttribute('aria-selected', on); });
-  if (v !== 'journey') stopSpeech();
+  // 낭독은 다른 탭(말씀·하루 한 장·퀴즈)을 보는 동안에도 이어진다 — 듣다가 말씀을 찾아보면 끊겼다(사용자). 멈춤은 여정 탭의 단추로
   if (v === 'words') renderWords();
   if (v === 'harmony') renderHarmony();
   if (v === 'quiz') renderQuizHome();
