@@ -237,7 +237,7 @@ export const PROVERBS = {
     street: 'alley', env: 'night',
     cams: {
       alley: { pos: [0.16, 0.94, 5.46], at: [0.1, 0.52, -4.68], fov: 58 },   // 골목 위쪽에서 아래로
-      lattice: { pos: [-0.64, 1.7, 1.75], at: [0.25, 0.22, -4.4], fov: 54 },  // 살창 상자 안에서 살 너머로
+      lattice: { pos: [-0.5, 1.72, 0.85], at: [0.3, 0.3, -4.4], fov: 56 },   // 살창 바로 앞(골목 쪽)에서 내려다봄 — 살 뒤에서 보면 살이 골목을 가렸다. 살창 틀만 화면 위 가장자리에 걸린다
       corner: { pos: [-0.85, 0.85, -2.3], at: [0.6, 0.5, -4.3], fov: 54 },  // 모퉁이의 등불 켠 문 — 비스듬히 옆에서 (젊은이가 여인을 가리지 않게, 여인은 멀리 윤곽으로)
       pair: { pos: [0.15, 0.85, 1.4], at: [-0.22, 0.62, 3.0], fov: 46 },     // 걸음을 멈춘 아버지와 아들
     },
@@ -263,8 +263,9 @@ export const PROVERBS = {
       'p1.0': [['@cam', 'corner'], ['woman', 'idle', { show: 1, x: 0.6, z: -4.4, look: -0.9 }], ['youth', 'idle', { x: 0.3, z: -3.75, look: 2.6 }]],
       'p1.1': [['woman', 'speak', { to: 'youth' }]],
       // 젊은이는 곧 그 여인을 따라갔다 — 문 안으로, 문이 닫히고 불이 꺼진다
-      'p1.2': [['woman', 'idle', { x: 1.3, z: -4.6 }], ['woman', 'idle', { show: 0, delay: 2600 }],
-        ['youth', 'idle', { x: 1.3, z: -4.6, delay: 900 }], ['youth', 'idle', { show: 0, delay: 4200 }], ['@set', 'door:shut', { delay: 4600 }]],
+      // 문간 앞(0.55, -4.58)까지 와서 문 안으로 곧게 들어간다 — 비스듬히 곧장 가면 벽에 붙은 문짝을 뚫고 지나갔다
+      'p1.2': [['woman', 'idle', { x: 0.55, z: -4.58 }], ['woman', 'idle', { x: 1.4, z: -4.58, delay: 1300 }], ['woman', 'idle', { show: 0, delay: 3200 }],
+        ['youth', 'idle', { x: 0.4, z: -4.58, delay: 900 }], ['youth', 'idle', { x: 1.4, z: -4.58, delay: 2900 }], ['youth', 'idle', { show: 0, delay: 6600 }], ['@set', 'door:shut', { delay: 7200 }]], // 안으로 다 들어간 뒤에 사라지고, 그다음 문이 닫힌다
       'p1.3': [['@cam', 'lattice']],
       // 아들아 — 다시 지금, 살창 아래의 아버지와 아들
       'p2.0': [['@cam', 'pair'], ['@set', 'door:shut'], ['father', 'speak', { show: 1, to: 'son', look: 2.2 }], ['son', 'listen', { show: 1, look: -1.6 }]],
