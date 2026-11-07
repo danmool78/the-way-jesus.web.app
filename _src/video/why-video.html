@@ -12,6 +12,8 @@
   html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:#f7f1e6}
   #stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:radial-gradient(ellipse at 50% 0%,rgba(208,104,91,.07),transparent 55%),#f7f1e6}
   .sc{position:absolute;inset:0;opacity:0}
+  /* 줄바꿈: 마지막 줄에 한두 낱말만 남지 않게 줄 길이를 고르게 (요한복음 3:16의 '것입니다.'만 따로 떨어졌다 — 사용자, 2026-11) */
+  #stage p,#stage div,#stage span,#stage dd,#stage li,#stage h1,#stage figcaption{text-wrap:balance}
   .head{position:absolute;left:0;right:0;top:64px;text-align:center;font-family:'Gowun Batang',serif;font-weight:700;font-size:54px;color:#c0564a;letter-spacing:.02em}
   .vis{position:absolute;left:110px;right:110px;top:170px;bottom:170px;display:flex;align-items:center;justify-content:center}
   .vis img.pic{max-width:100%;max-height:100%;border-radius:22px;border:1px solid #eadfcd;box-shadow:0 10px 30px rgba(90,60,30,.10);transform-origin:50% 50%}
@@ -22,6 +24,9 @@
   .title .logo{display:flex;align-items:center;gap:16px;font-family:'Gowun Batang',serif;color:#c0564a;font-size:36px;letter-spacing:.3em;margin-bottom:70px}
   .title .logo img{width:56px;height:56px}
   .title.over{background:linear-gradient(rgba(247,241,230,.0),rgba(247,241,230,.0))}
+  .vv{text-align:center;font-family:'Gowun Batang',serif;color:#2b2620}
+  .vv p{margin:0;font-size:60px;line-height:1.75}
+  .vv cite{display:block;margin-top:34px;font-style:normal;font-family:'Noto Sans KR',sans-serif;font-size:30px;color:#7a6f60}
   .sub{position:absolute;left:160px;right:160px;bottom:46px;min-height:96px;display:flex;align-items:center;justify-content:center;text-align:center;font-family:'Noto Sans KR',sans-serif;font-weight:500;font-size:40px;line-height:1.45;color:#2b2620;word-break:keep-all}
   .sub span{background:rgba(255,250,242,.86);border-radius:14px;padding:8px 22px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
   .end .qr{width:260px;height:260px;background:#fff;border-radius:20px;padding:16px;margin-top:50px}
@@ -56,6 +61,7 @@ window.setup = async (tl, qrSvg) => {
       el.innerHTML = (s.head ? `<div class="head">${s.head}</div>` : '') + `<div class="vis"></div>`;
       const vis = el.querySelector('.vis');
       if (s.img) vis.innerHTML = `<img class="pic" src="/${s.img}">`;
+      else if (s.verse) vis.innerHTML = `<div class="vv">${s.verse.map(l => `<p>${l}</p>`).join('')}<cite>${s.cite}</cite></div>`; // 말씀은 뜻 단위로 줄을 나눈다
       else {
         const src = doc.querySelectorAll(s.sel)[s.n || 0];
         const main = document.createElement('main'); main.className = 'why box';
@@ -90,7 +96,7 @@ window.render = t => {
     if (el._box) { const n = el._box._items.length; el._box._items.forEach((c, k) => { const q = ease((t - a - 0.6 - k * Math.min(1.2, (b - a) * 0.55 / Math.max(1, n))) / 0.7); c.style.opacity = q; if (c.style) c.style.transition = 'none'; }); }
     // 자막: 그 장면에서 지금 읽는 문장
     const line = s.lines.find(l => t >= l.start && t < l.next);
-    const sub = el.querySelector('.sub'), txt = line ? line.text : '';
+    const sub = el.querySelector('.sub'), txt = line && !s.verse ? line.text : ''; // 말씀 장면은 화면 글이 곧 낭독이라 자막을 겹쳐 두지 않는다
     if (sub._t !== txt) { sub._t = txt; sub.innerHTML = txt ? `<span>${txt}</span>` : ''; }
   });
 };
