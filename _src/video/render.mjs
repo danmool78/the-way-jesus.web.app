@@ -1,5 +1,5 @@
 // '왜 기독교인가' 영상 만들기: 문장 녹음(tts.mjs) 길이로 장면 시각표를 짜고, why-video.html 무대를 한 장씩 찍어 ffmpeg로 묶는다.
-// 쓰는 법: node _src/video/render.mjs [녹음 폴더] [출력.mp4] [--fps 30] [--from 초 --to 초(미리보기)]   — 저장소 맨 위를 http://localhost:8765 로 띄워 둔다
+// 쓰는 법: node _src/video/render.mjs [녹음 폴더] [출력.mp4] [--tempo 1.1] [--fps 30] [--from 초 --to 초(미리보기)]   — 저장소 맨 위를 http://localhost:8765 로 띄워 둔다
 // 소리: 낭독(24kHz)을 한 줄로 이어 붙이고, 배경음악 assets/music/why.mp3(약 3분)를 되풀이해 낮게 깐다(낭독 중엔 더 낮게)
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { spawn, execFileSync } from 'node:child_process';
@@ -8,17 +8,18 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const { chromium } = require('playwright');
 const argv = process.argv.slice(2), opt = (n, d) => { const i = argv.indexOf('--' + n); if (i < 0) return d; const v = argv[i + 1]; argv.splice(i, 2); return v; };
-const FPS = +opt('fps', 30), FROM = +opt('from', 0), TO = opt('to', null);
+const FPS = +opt('fps', 30), FROM = +opt('from', 0), TO = opt('to', null), TEMPO = +opt('tempo', 1); // tempo: 낭독 빠르기(1.1이면 10% 빠르게, 음높이는 그대로) — 문장 사이 쉼도 같이 줄인다
 const [VDIR = '/tmp/why-video/voice', OUT = 'why-video.mp4'] = argv;
 const sc = JSON.parse(await readFile('_src/video/why-script.json', 'utf8')), VOICE = sc.voice, SR = 24000;
 const keyOf = t => createHash('sha1').update(VOICE + '|' + t).digest('hex').slice(0, 12);
 // 시각표: 장면 앞 1.0초, 문장 사이 0.5초, 장면 끝 1.2초 (그림만 보며 숨 고르기). 첫 장면은 2초 먼저, 끝 장면은 8초
-const GAP = 0.5, LEAD = 1.0, TAIL = 1.2;
+const GAP = 0.5 / TEMPO, LEAD = 1.0 / TEMPO, TAIL = 1.2 / TEMPO;
 let t = 1.5; const tl = { scenes: [] }, clips = [];
 for (const s of sc.scenes) {
   const S = { ...s, start: t, lines: [] }; t += s.title ? 1.5 : LEAD;
   for (const text of s.say) {
-    const f = `${VDIR}/${keyOf(text)}.wav`, buf = await readFile(f), pcm = buf.subarray(44), dur = pcm.length / 2 / SR;
+    const f = `${VDIR}/${keyOf(text)}.wav`, pcm = TEMPO === 1 ? (await readFile(f)).subarray(44)
+      : execFileSync('ffmpeg', ['-v', 'error', '-i', f, '-af', `atempo=${TEMPO}`, '-f', 's16le', '-ac', '1', '-ar', String(SR), '-'], { maxBuffer: 1 << 28 }), dur = pcm.length / 2 / SR;
     clips.push({ at: t, pcm }); S.lines.push({ text, start: t, dur }); t += dur + GAP;
   }
   S.lines.forEach((l, k) => l.next = S.lines[k + 1]?.start ?? l.start + l.dur + 0.6);
