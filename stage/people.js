@@ -785,6 +785,11 @@ class Actor {
       case 'crucified': aL = aR = [0, 1.5, 0]; nod = 0.3; break;
       case 'crucified-dead': aL = aR = [0, 1.42, 0]; nod = 0.62; break;
       case 'sit-ground': kneel = 0.9; aL = aR = [-0.3, -0.2, -1.0]; nod = 0.05; break;
+      // 앉은 채 말하기 (잠언 p04 저녁 자리): 앉은 몸에 speak의 오른손 손짓 — 말하려고 일어서면 어색했다
+      case 'sit-speak':
+        kneel = 0.9; nod = Math.sin(t * 2.2) * 0.06;
+        aR = [-0.55 + Math.sin(t * 2.6) * 0.18, 0.28 + Math.sin(t * 1.3) * 0.08, -1.0 + Math.sin(t * 2.6 + 1) * 0.22]; aL = [-0.3, -0.2, -1.0];
+        break;
       case 'carry-pole': aL = aR = POLE; break; // 두 손으로 허리 옆의 채를 쥐고 멘다 (언약궤)
       case 'hold-basket': aL = aR = [-0.45, -0.3, -1.25]; nod = 0.12; break;
     }
@@ -830,7 +835,7 @@ class Actor {
     const blink = t >= this.blinkAt ? 0.12 : 1;
     // 윗꺼풀을 앞으로 돌려 내리면 감긴다 (-0.4: 뜬 눈, 1.4: 감은 눈)
     p.eyes.forEach(e => { const L = e.userData.lid; L.rotation.x = damp(L.rotation.x, lie > 0.5 || blink < 1 ? 1.4 : -0.4, 30, dt); });
-    const talk = this.pose === 'speak' && !this.solemn ? 0.55 + Math.abs(Math.sin(t * 8.5) * Math.sin(t * 3.1)) * 1.6 : 0.35;
+    const talk = (this.pose === 'speak' || this.pose === 'sit-speak') && !this.solemn ? 0.55 + Math.abs(Math.sin(t * 8.5) * Math.sin(t * 3.1)) * 1.6 : 0.35;
     p.mouth.scale.y = damp(p.mouth.scale.y, talk, 18, dt);
     p.bed.visible = lie > 0.5;
     // 누우면 몸 가운데가 깔개 위에 오도록 발 쪽으로 옮긴다

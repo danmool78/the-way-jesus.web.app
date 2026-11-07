@@ -19,5 +19,12 @@
   "en": "AFTERNOON",
   "span": "오후",
   "color": "#c07a4a"
+ },
+ {
+  "id": "d4",
+  "name": "저녁 · 친구의 집",
+  "en": "EVENING",
+  "span": "저녁",
+  "color": "#a0605a"
  }
 ]
