@@ -229,6 +229,53 @@ export const PROVERBS = {
       end: [['@env', 'night'], ['@cam', 'door'], ['@set', 'lamps:on'], ['father', 'idle', { x: -0.2, z: 0.9, look: 3.0 }], ['son', 'idle', { x: -0.55, z: 1.05, look: 2.8 }], ['friend', 'bless', { x: 0.4, z: 0.35, look: -0.3 }], ['wife', 'idle', { x: 0.8, z: 0.15, look: -0.4 }]],
     },
   },
+
+  /* p05. 해 질 녘 골목 (잠 7장, 4:23) — 집으로 가는 밤 골목(세트 alley). 아버지가 예전에 살창 너머로 본 일을 들려준다.
+     연출 원칙에 따라 꾐은 그리지 않는다: 여인은 어두운 윤곽, 젊은이가 따라 들어가면 문이 닫히고 불빛이 꺼진다(['@set', 'door:shut']).
+     골목은 -z로 내려가 z ≈ -6 무렵에서 동쪽으로 꺾인다. 그 여인의 문 (0.83, -4.6), 살창 상자 (-0.63, 높이 1.69, 1.14) */
+  p05: {
+    street: 'alley', env: 'night',
+    cams: {
+      alley: { pos: [0.16, 0.94, 5.46], at: [0.1, 0.52, -4.68], fov: 58 },   // 골목 위쪽에서 아래로
+      lattice: { pos: [-0.64, 1.7, 1.75], at: [0.25, 0.22, -4.4], fov: 54 },  // 살창 상자 안에서 살 너머로
+      corner: { pos: [-0.85, 0.85, -2.3], at: [0.6, 0.5, -4.3], fov: 54 },  // 모퉁이의 등불 켠 문 — 비스듬히 옆에서 (젊은이가 여인을 가리지 않게, 여인은 멀리 윤곽으로)
+      pair: { pos: [0.15, 0.85, 1.4], at: [-0.22, 0.62, 3.0], fov: 46 },     // 걸음을 멈춘 아버지와 아들
+    },
+    cam: 'alley',
+    cast: {
+      father: ['father', -0.39, 2.81, 3.0],
+      son: ['son', -0.06, 2.95, 3.1],
+      youth: ['rich', 0.26, 7.3, 3.14, { gaze: false, speed: 0.42 }],
+      woman: ['woman2', 1.14, -4.6, -1.0, { gaze: false, silhouette: true }],
+    },
+    beats: {
+      // 낭독 없이 볼 때: 살창 너머로 내려다본 골목 — 모퉁이의 등불 켠 문으로 다가가는 젊은이
+      enter: [['@env', 'night'], ['@cam', 'lattice'], ['@set', 'door:open'], ['youth', 'idle', { x: 0.3, z: -3.2, look: 3.0 }], ['woman', 'idle', { show: 0 }],
+        ['father', 'idle', { show: 0 }], ['son', 'idle', { show: 0 }]],
+      intro: [['@env', 'night'], ['@cam', 'alley'], ['@set', 'door:open'], ['woman', 'idle', { show: 0 }], ['youth', 'idle', { show: 0, x: 0.26, z: 7.3 }],
+        ['father', 'idle', { x: -0.36, z: 4.94, look: 3.14 }], ['son', 'idle', { x: -0.05, z: 5.1, look: 3.14 }]],
+      // 이 골목을 지나 집으로 — 내려오다 살창 아래에서 멈춘다
+      'p0.0': [['father', 'idle', { x: -0.39, z: 2.81, look: 3.0 }], ['son', 'idle', { x: -0.06, z: 2.95, look: 3.1 }]],
+      // 살창 너머로 내다보았을 때 — 기억 속의 그날 밤: 젊은이가 골목을 내려간다
+      'p0.1': [['@cam', 'lattice'], ['father', 'idle', { show: 0 }], ['son', 'idle', { show: 0 }], ['youth', 'idle', { show: 1, x: 0.26, z: 3.6, look: 3.14 }]],
+      'p0.2': [['youth', 'idle', { x: 0.3, z: -3.6, look: 3.0 }]],
+      // 한 여인이 그를 맞으러 나왔다 — 어두운 윤곽으로만
+      'p1.0': [['@cam', 'corner'], ['woman', 'idle', { show: 1, x: 0.6, z: -4.4, look: -0.9 }], ['youth', 'idle', { x: 0.3, z: -3.75, look: 2.6 }]],
+      'p1.1': [['woman', 'speak', { to: 'youth' }]],
+      // 젊은이는 곧 그 여인을 따라갔다 — 문 안으로, 문이 닫히고 불이 꺼진다
+      'p1.2': [['woman', 'idle', { x: 1.3, z: -4.6 }], ['woman', 'idle', { show: 0, delay: 2600 }],
+        ['youth', 'idle', { x: 1.3, z: -4.6, delay: 900 }], ['youth', 'idle', { show: 0, delay: 4200 }], ['@set', 'door:shut', { delay: 4600 }]],
+      'p1.3': [['@cam', 'lattice']],
+      // 아들아 — 다시 지금, 살창 아래의 아버지와 아들
+      'p2.0': [['@cam', 'pair'], ['@set', 'door:shut'], ['father', 'speak', { show: 1, to: 'son', look: 2.2 }], ['son', 'listen', { show: 1, look: -1.6 }]],
+      'p2.1': [['father', 'speak', { look: 2.2, to: 'son' }], ['son', 'bow', { look: -1.6 }]],
+      'p2.3': [['father', 'speak', { look: 2.2, to: 'son' }], ['son', 'look-up', { look: -1.6 }]],
+      // 지혜가 너를 지켜 줄 것이다 — 함께 골목을 내려간다
+      'p2.4': [['@cam', 'alley'], ['father', 'idle', { x: -0.3, z: -2.0, look: 3.14 }], ['son', 'idle', { x: 0.05, z: -1.8, look: 3.14, delay: 500 }]],
+      end: [['@cam', 'alley'], ['@set', 'door:shut'], ['woman', 'idle', { show: 0 }], ['youth', 'idle', { show: 0 }],
+        ['father', 'idle', { show: 1, x: -0.3, z: -2.0, look: 3.14 }], ['son', 'idle', { show: 1, x: 0.05, z: -1.8, look: 3.14 }]],
+    },
+  },
 };
 
 // intro 앞에 처음 자리로 되돌리는 명령을 붙인다 (stage/moses.js와 같은 방식 — 다시 들을 때도 대본의 처음 자리에서)
