@@ -50,12 +50,12 @@ await p.evaluate(({ t, qrs }) => {
   const back = document.createElement('div'); back.className = 'bk-back';
   back.innerHTML = `<p class="motto">${t.back[0]}</p><p class="bk-inv">${t.back[1]}</p>
     <div class="bk-qr">${qrs.map((q, i) => `<figure>${q}<figcaption>${t.qr[i]}</figcaption></figure>`).join('')}</div>
-    `;
-  // 판권면: 제목·펴낸 날·펴낸이·만든 곳(주소는 적지 않는다 — 도메인을 정하기 전이라 QR만, 2026-11 사용자), 그림·말씀·종교 소개에 대한 안내 (뒤표지 바로 앞, 아래쪽에 모은다)
+    <p class="bk-note bk-bnote">${foot ? foot.innerHTML.replace('이 앱이 ', '').replace(/ by this app/i, '') : ''}</p>`; // 그림·말씀·종교 소개 안내는 뒤표지 맨 아래에 작게 (2026-11 사용자) — 책에서는 '앱이 옮긴'을 빼고 '새로 옮긴 글'로만
+  // 판권면: 제목·펴낸 날·펴낸이·만든 곳·펴낸 곳(주소는 적지 않는다 — 도메인을 정하기 전이라 QR만, 2026-11 사용자) (뒤표지 바로 앞, 아래쪽에 모은다)
   const colo = document.createElement('div'); colo.className = 'bk-colo';
   colo.innerHTML = `<p class="bk-ct">${h1.textContent}<small>${sub.textContent}</small></p>
     <dl>${t.colo.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl>
-    <p class="bk-note">${foot ? foot.innerHTML.replace('이 앱이 ', '').replace(/ by this app/i, '') : ''}</p><p class="bk-note">© SSSOFT</p>`; // 책에서는 '앱이 옮긴'을 빼고 '새로 옮긴 글'로만
+    <p class="bk-note">© SSSOFT</p>`;
   foot?.remove();
   const talk = document.createElement('div'); talk.className = 'bk-talk';
   talk.innerHTML = `<h2>${t.talkH}</h2><ol>${t.talk.map(q => `<li>${q}<span></span></li>`).join('')}</ol>`;
@@ -112,7 +112,8 @@ await p.addStyleTag({ content: `
   .bk-blank{display:block;width:70mm;height:9mm;border-bottom:1px solid #b9ab95} /* 펴낸 곳: 비워 둔다 — 나누는 교회·단체가 적거나 도장 */
   .bk-colo dd small{display:block;font-size:7.6pt;color:var(--muted);margin-top:.5mm}
   .bk-colo .bk-note{margin:1.5mm 0!important}
-  .bk-back{break-before:page;text-align:center;padding:${36 + BL}mm ${12 + BL}mm 0}
+  .bk-back{break-before:page;text-align:center;padding:${36 + BL}mm ${12 + BL}mm ${12 + BL}mm;display:flex;flex-direction:column;align-items:center}
+  .why .bk-bnote{margin:auto 4mm 0!important}
   .bk-back .motto{font-size:17pt;margin:0 0 4mm}
   .bk-inv{color:var(--muted);margin:0 0 12mm!important}
   .bk-qr{display:grid;grid-template-columns:repeat(4,1fr);gap:4mm;margin:0 0 16mm}
