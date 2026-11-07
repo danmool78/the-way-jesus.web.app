@@ -9,41 +9,40 @@
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
 <style id="v">
-  html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:#f3ecdf}
-  #stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:radial-gradient(ellipse at 50% 0%,rgba(208,104,91,.08),transparent 55%),#f3ecdf} /* 웹과 같은 종이색 — 영상만 따로 색을 손보면 웹보다 탁했다(사용자, 2026-11) */
+  html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:#f7f1e6}
+  #stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:radial-gradient(ellipse at 50% 0%,rgba(208,104,91,.07),transparent 55%),#f7f1e6}
   .sc{position:absolute;inset:0;opacity:0}
   /* 줄바꿈: 마지막 줄에 한두 낱말만 남지 않게 줄 길이를 고르게 (요한복음 3:16의 '것입니다.'만 따로 떨어졌다 — 사용자, 2026-11) */
   #stage p,#stage div,#stage span,#stage dd,#stage li,#stage h1,#stage figcaption{text-wrap:balance}
   .sub span{text-wrap:nowrap} /* 자막은 breakSub가 뜻을 보고 직접 나눈다 */
-  .head{position:absolute;left:0;right:0;top:64px;text-align:center;font-family:'Gowun Batang',serif;font-weight:700;font-size:54px;color:#c85a4c;letter-spacing:.02em}
+  .head{position:absolute;left:0;right:0;top:64px;text-align:center;font-family:'Gowun Batang',serif;font-weight:700;font-size:54px;color:#c0564a;letter-spacing:.02em}
   .vis{position:absolute;left:110px;right:110px;top:170px;bottom:205px;display:flex;align-items:center;justify-content:center}
-  .vis img.pic{max-width:100%;max-height:100%;border-radius:22px;border:1px solid #eadfcd;box-shadow:0 10px 30px rgba(90,60,30,.10);transform-origin:50% 50%;filter:url(#ink)} /* 웹의 그림과 같은 펜 선 진하기 */
+  .vis img.pic{max-width:100%;max-height:100%;border-radius:22px;border:1px solid #eadfcd;box-shadow:0 10px 30px rgba(90,60,30,.10);transform-origin:50% 50%}
   .box{transform-origin:0 0;position:absolute}
   .title{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-  .title h1{font-family:'Gowun Batang',serif;font-size:120px;color:#221d17;margin:0 0 22px;letter-spacing:.06em}
-  .title p{font-family:'Gowun Batang',serif;font-size:46px;color:#c85a4c;margin:0}
-  .title .logo{display:flex;align-items:center;gap:16px;font-family:'Gowun Batang',serif;color:#c85a4c;font-size:36px;letter-spacing:.3em;margin-bottom:70px}
+  .title h1{font-family:'Gowun Batang',serif;font-size:120px;color:#2b2620;margin:0 0 22px;letter-spacing:.06em}
+  .title p{font-family:'Gowun Batang',serif;font-size:46px;color:#c0564a;margin:0}
+  .title .logo{display:flex;align-items:center;gap:16px;font-family:'Gowun Batang',serif;color:#c0564a;font-size:36px;letter-spacing:.3em;margin-bottom:70px}
   .title .logo img{width:56px;height:56px}
   .title.over{background:linear-gradient(rgba(247,241,230,.0),rgba(247,241,230,.0))}
-  .vv{text-align:center;font-family:'Gowun Batang',serif;color:#221d17}
+  .vv{text-align:center;font-family:'Gowun Batang',serif;color:#2b2620}
   .vv p{margin:0;font-size:60px;line-height:1.75}
-  .vv cite{display:block;margin-top:34px;font-style:normal;font-family:'Noto Sans KR',sans-serif;font-size:30px;color:#5f5548}
+  .vv cite{display:block;margin-top:34px;font-style:normal;font-family:'Noto Sans KR',sans-serif;font-size:30px;color:#7a6f60}
   /* 이단 결의 목록: 영상에서는 단체 이름과 표기만 크게 (결의 연도·이유는 웹 페이지에) */
   .vh .vis{top:200px}
   .vh .hg{grid-template-columns:repeat(4,1fr)!important;gap:14px!important}
   .vh .hg .res,.vh .hg q{display:none!important}
   .vh .hg h4{font-size:22px!important}
-  .vnote{position:absolute;left:0;right:0;top:140px;text-align:center;font-family:'Noto Sans KR',sans-serif;font-size:22px;color:#5f5548}
-  .sub{position:absolute;left:160px;right:160px;bottom:46px;min-height:96px;display:flex;align-items:center;justify-content:center;text-align:center;font-family:'Noto Sans KR',sans-serif;font-weight:500;font-size:40px;line-height:1.45;color:#221d17;word-break:keep-all}
+  .vnote{position:absolute;left:0;right:0;top:140px;text-align:center;font-family:'Noto Sans KR',sans-serif;font-size:22px;color:#7a6f60}
+  .sub{position:absolute;left:160px;right:160px;bottom:46px;min-height:96px;display:flex;align-items:center;justify-content:center;text-align:center;font-family:'Noto Sans KR',sans-serif;font-weight:500;font-size:40px;line-height:1.45;color:#2b2620;word-break:keep-all}
   .sub span{background:rgba(255,250,242,.86);border-radius:14px;padding:8px 22px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
   .end .qr{width:260px;height:260px;background:#fff;border-radius:20px;padding:16px;margin-top:50px}
   .end .qr svg{width:100%;height:100%}
-  .end small{display:block;font-family:'Noto Sans KR',sans-serif;font-size:28px;color:#5f5548;margin-top:22px}
+  .end small{display:block;font-family:'Noto Sans KR',sans-serif;font-size:28px;color:#7a6f60;margin-top:22px}
 </style>
 </head>
 <body>
 <div id="stage"></div>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="ink" color-interpolation-filters="sRGB"><feComponentTransfer><feFuncR type="gamma" exponent="1.45"/><feFuncG type="gamma" exponent="1.45"/><feFuncB type="gamma" exponent="1.5"/></feComponentTransfer><feColorMatrix type="saturate" values="1.3"/></filter></svg>
 <script>
 // 장면 만들기: render.mjs가 window.setup(timeline)을 부른다. 장면마다 머리글·그림(또는 why.html에서 가져온 도표)·자막
 const $ = s => document.querySelector(s);

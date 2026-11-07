@@ -67,7 +67,8 @@ await p.goto('http://localhost:8765/_src/video/why-video.html', { waitUntil: 'ne
 await p.evaluate(([tl, qr]) => window.setup(tl, qr), [tl, qr]);
 const end = TO ? +TO : TOTAL, frames = Math.ceil((end - FROM) * FPS);
 const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-i', '-', '-ss', String(FROM), '-t', String(end - FROM), '-i', `${TMP}/mix.m4a`,
-  // 색 보정은 하지 않는다: 무대가 웹과 같은 색(종이색·그림의 #ink 필터)을 쓴다 — 영상에서만 따로 진하게 했더니 웹보다 탁했다(사용자, 2026-11)
+  // 화면이 희끄무레하다(사용자, 2026-11): 어두운 곳(펜 선·글씨)을 더 진하게, 밝은 종이는 조금 가라앉히고 색은 조금 짙게
+  '-vf', "curves=all='0/0 0.35/0.22 0.7/0.6 0.92/0.88 1/0.97',eq=saturation=1.25",
   '-c:v', 'libx264', '-preset', 'medium', '-crf', '22', '-pix_fmt', 'yuv420p', '-c:a', 'copy', '-shortest', '-movflags', '+faststart', OUT], { stdio: ['pipe', 'inherit', 'inherit'] });
 const t0 = Date.now();
 for (let i = 0; i < frames; i++) {
