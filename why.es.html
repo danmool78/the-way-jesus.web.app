@@ -210,6 +210,7 @@
   .bgm.off{color:#8a7f70;border-color:#e2d8c8}
   .bgm.off .wave{display:none}.bgm:not(.off) .mute{display:none}
   .why .fakelead{margin:4px 0 16px;padding:14px 18px;border-radius:14px;background:#fff8f1;border:1px solid #ecd8cb;line-height:1.85} /* '가짜'는 다른 종교가 아니라는 것을 먼저 분명히 */
+  .why .ans{margin:28px 0 8px;display:grid;gap:10px} .why .ans>div{background:#fffdf9;border:1px solid var(--line);border-radius:14px;padding:12px 16px} .why .ans small{display:block;font-size:13.5px;color:var(--muted);margin-bottom:3px} .why .ans span{font-family:var(--serif);font-size:17px;line-height:1.7} /* 처음 세 물음에 대한 답 — 글의 처음과 끝을 잇는다 */
 </style>
 </head>
 <body>
@@ -226,7 +227,7 @@
     <div><svg viewBox="0 0 32 32" fill="none" stroke="#d0685b" stroke-width="1.8" stroke-linecap="round"><path d="M16 4c5 6 8 10.5 8 15a8 8 0 0 1-16 0c0-4.5 3-9 8-15z"/></svg>¿Cómo se lavan<br>mis faltas?</div>
     <div><svg viewBox="0 0 32 32" fill="none" stroke="#d0685b" stroke-width="1.8" stroke-linecap="round"><path d="M4 24h24"/><path d="M9 24a7 7 0 0 1 14 0"/><path d="M16 9v3M7 13l2 2M25 13l-2 2"/></svg>¿Qué hay después<br>de la muerte?</div>
   </div>
-  <p class="lead">Son preguntas que todos llevamos dentro. Comparamos con honestidad, y con la misma vara, lo que responden las religiones.</p>
+  <p class="lead">Son preguntas que todos llevamos dentro. Comparamos con honestidad, y con la misma vara, lo que responden las religiones. No está escrito para ganar una discusión, sino para compartir una buena noticia que encontramos primero.</p>
 
   <section>
   <small>UNO</small>
@@ -268,11 +269,13 @@
   <section>
   <small>DOS</small>
   <h2>¿Cómo intenta el ser humano llegar a Dios?</h2>
+  <p style="text-align:center;margin:14px 0 20px">Aquí es donde más se separan las respuestas de las religiones. <b>¿Cómo puede una persona llegar a Dios, a la salvación?</b></p>
   <div class="pair">
     <figure class="art"><img src="assets/img/why/scale.webp" alt="Una persona que pone ofrendas en una gran balanza y la mira con inquietud" loading="lazy"><figcaption>① Negociar con Dios</figcaption></figure>
     <figure class="art"><img src="assets/img/why/ladder.webp" alt="Una persona que sube sola una escalera interminable entre las nubes" loading="lazy"><figcaption>② Subir por uno mismo</figcaption></figure>
   </div>
   <p class="cap">Los métodos cambian, pero la dirección es la misma: hacia arriba</p>
+  <p style="text-align:center">Pero, con sinceridad, surge la pregunta: ¿cuánto hay que subir para que sea suficiente? Aunque hoy viva mejor que ayer, la vergüenza en lo profundo del corazón <b>no se borra con mis propias fuerzas.</b></p>
   <details class="more"><summary><span class="o">Los dos caminos en detalle · por religión</span><span class="c">Cerrar</span></summary><div>
   <div class="card">
     <p><b>① Negociar con Dios.</b> «Si rezo tanto, ayuno, doy ofrendas y me porto bien, Dios me lo pagará». Pero nunca se llega a saber cuánto es suficiente ni hacia qué lado se inclinará la balanza.</p>
@@ -356,6 +359,7 @@
 
   <h3>No es un cuento: sucedió</h3>
   <p>El cristianismo no presenta esto como un mito o una parábola. Es un hecho con fecha y lugar, que se puede examinar como historia, y el cristianismo lo apuesta todo a ese hecho.</p>
+  <p>Y al tercer día resucitó. La tumba estaba vacía, y más de quinientas personas vieron a la vez a Jesús resucitado (1 Corintios 15:6). Los discípulos, que se habían escondido por miedo, dieron la vida anunciando esta noticia. <b>Nadie muere por algo que sabe que es mentira.</b></p>
   <div class="when">
     <svg viewBox="0 0 40 40" fill="none" stroke="#d0685b" stroke-width="2"><path d="M20 37s-11-11.5-11-20a11 11 0 0 1 22 0c0 8.5-11 20-11 20z"/><circle cx="20" cy="17" r="4"/></svg>
     <div><b>Hacia el año 30 d. C. · fuera de las murallas de Jerusalén</b><span>Bajo el gobernador romano Poncio Pilato</span></div>
@@ -368,6 +372,7 @@
   <section>
   <small>CINCO</small>
   <h2>¿Es excluyente el cristianismo?</h2>
+  <p style="text-align:center;margin:14px 0 20px">Si Dios mismo pagó el precio, entonces el camino es uno solo. ¿Es entonces el cristianismo <b>una religión exclusiva que cierra el paso a los demás caminos</b>?</p>
   <figure class="art"><img src="assets/img/why/doors.webp" alt="Una puerta estrecha y cerrada al final de una escalera empinada, y una puerta abierta de par en par por la que entran muchas personas juntas" loading="lazy"></figure>
   <p class="cap">Un solo camino, pero la puerta más ancha</p>
   <details class="more"><summary><span class="o">Por qué es la puerta más ancha</span><span class="c">Cerrar</span></summary><div>
@@ -442,8 +447,10 @@
     <p class="motto" style="margin:4px 0 12px"><span style="font-size:14px;color:var(--muted);font-family:var(--sans)">Los demás caminos dicen</span><br>«Haga esto y podrá llegar a Dios».</p>
     <p class="motto" style="margin:0 0 4px;color:var(--gold2)"><span style="font-size:14px;color:var(--muted);font-family:var(--sans)">El cristianismo dice</span><br>«Dios ya vino a usted».</p>
   </div>
+  <h3 style="text-align:center;margin-top:34px">Las tres preguntas del principio</h3>
+  <div class="ans"><div><small>¿Soy una buena persona?</small><span>No lo soy. Aun así, soy <b>tan amado que alguien dio su vida por mí</b>.</span></div><div><small>¿Cómo se lavan mis faltas?</small><span>No tengo que pagarlas yo. <b>Fueron pagadas en la cruz.</b></span></div><div><small>¿Qué hay después de la muerte?</small><span>El que venció a la muerte y resucitó <b>nos espera al otro lado.</b></span></div></div>
   <div class="verse big">Dios amó tanto al mundo que dio a su Hijo único, para que todo el que crea en él no se pierda, sino que tenga vida eterna.<cite>Juan 3:16</cite></div>
-  <p style="text-align:center">No vamos a presionarle para que crea. Recorra despacio el camino que él anduvo. Habrá tiempo de sobra para decidir después.</p>
+  <p style="text-align:center">No vamos a presionarle para que crea. Recorra despacio el camino que él anduvo. En ese camino encontrará <b>a quien salió a buscarle primero</b>.</p>
 
   <h3 style="text-align:center;margin-top:40px">Cosas que solo se conocen creyendo</h3>
   <p>«Primero quiero saber, y después creeré» suena razonable. Pero en la vida real muchas cosas funcionan al revés: <b>son cosas que solo se llegan a conocer cuando uno confía y da un paso</b>.</p>
