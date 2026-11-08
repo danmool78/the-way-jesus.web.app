@@ -39,6 +39,21 @@ jobs:
           if [ -d j ]; then git add -A j; fi
           git commit -m "Rebuild data and narration after an admin edit"
           git pull --rebase -q origin main && git push origin HEAD:main
+      # 시편 노래 작업실(studio.html)에서 mp3를 올리면: 가사 줄마다 부르기 시작하는 시각을 맞춰(assets/psalms/<id>.json) 함께 올린다.
+      # 노래가 그대로인 곡은 건너뛰므로 다른 배포에서는 아무 일도 하지 않는다
+      - name: Sync psalm lyrics to the uploaded songs
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          ls assets/psalms/*.mp3 >/dev/null 2>&1 || exit 0
+          command -v ffprobe >/dev/null || (sudo apt-get update -q && sudo apt-get install -yq ffmpeg)
+          node _src/tools/lyricsync.mjs
+          git add -A assets/psalms
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Sync psalm lyrics to the uploaded songs"
+          git pull --rebase -q origin main && git push origin HEAD:main
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
