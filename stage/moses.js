@@ -968,7 +968,12 @@ export const MOSES = {
       'p2.1': [['sp1', 'rebuke', { to: 'moses' }]],
       'p2.2': [['joshua', 'mourn'], ['caleb', 'mourn'], ['sp2', 'rebuke', { to: 'caleb' }]],
       // 회막 위의 영광
-      'p2.5': [['@env', 'dusk'], ['glory', 'cloud', { show: 1 }], ['sp1', 'cower'], ['sp2', 'cower'], ['moses', 'bow', { look: -1.5 }]],
+      'p2.5': [['@env', 'dusk'], ['glory', 'cloud', { show: 1 }], ['sp1', 'cower'], ['sp2', 'cower'], ['moses', 'listen', { look: -1.5 }]],
+      // 언제까지 나를 업신여기겠느냐 — 모세가 엎드려 백성을 위해 빈다
+      'p2.8': [['moses', 'bow', { look: -1.5 }], ['aaron', 'bow', { look: -1.5 }]],
+      // 용서하셨으나 그 세대는 광야를 떠돈다 — 갈렙과 여호수아만 그 땅에
+      'p2.10': [['sp1', 'mourn'], ['sp2', 'mourn']],
+      'p2.11': [['joshua', 'idle', { look: 0.8 }], ['caleb', 'idle', { look: 0.8 }]],
       w0: [['caleb', 'idle', { look: -0.8 }]],
       w1: [['moses', 'listen', { look: -1.5 }]],
       w2: [['caleb', 'speak', { to: 'moses' }]],
