@@ -116,7 +116,7 @@ function level(pcm) {
 // 녘은 소리 나는 대로 녁으로 넘긴다 — Chirp 성우가 '해 질 녘'을 '해질년'으로 읽었다 (열쇠는 원래 글로 셈하므로 앱은 그대로 찾는다).
 // 앞말에 붙여 읽히면 '질'의 ㄹ에 끌려 '력'이 되므로, 녹음할 때 '녘' 앞에서 나눠 따로 읽혀 잇는다 (아래 NYEOK)
 const spoken = text => text.replace(/\bBC\s*/g, '기원전 ').replace(/\bAD\s*/g, '서기 ').replace(/녘/g, '녁');
-const NYEOK = /\s+(?=녘)/;
+const NYEOK = /\s*(?=녘)/; // 새벽녘처럼 붙여 쓴 것도 녘 앞에서 나눈다 (붙여 읽으면 년이 되었다)
 const plain = text => spoken(text).replace(/\[pause[^\]]*\]\s*/g, ' '); // SSML을 받지 않는 성우(Gemini·일레븐랩스)에는 쉼 표시를 빼고
 
 async function synth(text, v, rate, tries = 0) {
