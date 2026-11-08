@@ -838,7 +838,7 @@ export const MOSES = {
       'p1.4': [['@env', 'dawn'], ['moses', 'idle', { item: 'tablets' }]],
       // 구름 가운데 내려와 그 앞을 지나가신다
       'p2.0': [['glory', null, { show: 1, x: 1.0 }], ['glory', null, { x: -1.2, delay: 1500 }], ['moses', 'bow', { delay: 1000 }]],
-      'p2.2': [['moses', 'kneel', { look: 1 }], ['glory', null, { show: 0, delay: 4000 }]],
+      'p2.3': [['moses', 'kneel', { look: 1 }], ['glory', null, { show: 0, delay: 4000 }]], // 이름을 선포하신 뒤(나는 주다…) 모세가 엎드린다
       w0: [['moses', 'bow']],
       w1: [['moses', 'listen', { look: 0.8 }]],
       w2: [['moses', 'speak', { look: 0.6 }]],
