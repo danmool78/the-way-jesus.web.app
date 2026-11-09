@@ -65,7 +65,10 @@ const CSS = `
 .st ol.lines li i{font:12px ui-monospace,monospace;color:var(--faint);min-width:4.2em;padding-top:2px;font-style:normal}
 .st ol.lines li.now{background:rgba(217,180,106,.18);color:var(--gold2)}.st ol.lines li.tapped i{color:var(--ok)}
 .st .tapbar{display:none;margin:8px 0;gap:8px;align-items:center}.st .tapping .tapbar{display:flex}.st .tapbar .btn{flex:1;padding:14px}
-.st .ghost.on{border-color:var(--gold);color:var(--gold2)}`;
+.st .ghost.on{border-color:var(--gold);color:var(--gold2)}
+.st textarea.ed{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 10px;color:var(--ink);font:14px/1.7 var(--sans);resize:vertical;outline:none}.st textarea.ed:focus{border-color:var(--gold)}
+.st textarea.style{font-size:13px;color:var(--muted)}.st .edrow{display:flex;gap:8px;align-items:center;margin:4px 0 6px}.st .edrow .grow{flex:1}
+.st details.song.dirty{border-color:var(--gold)}`;
 export async function mountStudio(root, tok) {
   token = tok;
   if (!document.getElementById('studioCss')) document.head.insertAdjacentHTML('beforeend', `<style id="studioCss">${CSS}</style>`);
@@ -121,17 +124,49 @@ async function copy(btn, text) {
 /* ---------- 노래 하나 ---------- */
 async function fill(el, s) {
   const body = $('.body', el), info = await infoOf(s.id);
-  body.innerHTML = `${s.intro ? `<p class="intro">${esc(s.intro)}</p>` : ''}
-    ${s.lyrics ? `<div class="box"><h3>Suno 스타일<span class="grow"></span><button class="ghost" data-label="스타일 복사" data-c="style">스타일 복사</button></h3><pre class="style">${esc(s.style)}</pre></div>
-    <div class="box"><h3>가사<span class="grow"></span><button class="ghost" data-label="가사 복사" data-c="lyrics">가사 복사</button></h3><pre>${esc(s.lyrics)}</pre></div>`
-    : '<p class="note">아직 가사를 쓰지 않은 노래입니다.</p>'}
+  // 노래 앞 낭독·Suno 스타일·가사는 여기서 고쳐 저장한다 (songs.json을 main에 바로 커밋 — 가사를 바꾸면 다음 배포가 가사 시간을 다시 맞춘다)
+  body.innerHTML = `<div class="box"><h3>노래 앞 낭독</h3><textarea class="ed intro" rows="3">${esc(s.intro || '')}</textarea></div>
+    <div class="box"><h3>Suno 스타일<span class="grow"></span><button class="ghost" data-label="스타일 복사" data-c="style">스타일 복사</button></h3><textarea class="ed style" rows="3">${esc(s.style || '')}</textarea></div>
+    <div class="box"><h3>가사<span class="grow"></span><button class="ghost" data-label="가사 복사" data-c="lyrics">가사 복사</button></h3><textarea class="ed lyrics" rows="18">${esc(s.lyrics || '')}</textarea></div>
+    <div class="row edrow"><span class="state edstate"></span><span class="grow"></span><button class="ghost edundo" hidden>되돌리기</button><button class="btn edsave" disabled>저장</button></div>
     <div class="box"><h3>노래 파일<span class="grow"></span><label class="btn" style="cursor:pointer">${info ? 'mp3 바꾸기' : 'mp3 올리기'}<input type="file" accept="audio/mpeg,.mp3" hidden></label></h3>
       <div class="state up">${info ? `올린 노래: <a href="${esc(info.src)}" target="_blank" rel="noopener">${esc(info.src.split('/').pop())}</a>` : '아직 올리지 않았습니다'}</div>
       ${info ? `<audio controls preload="none" src="${esc(info.src)}"></audio>` : ''}</div>
     <div class="box sync" hidden></div>`;
-  body.querySelectorAll('[data-c]').forEach(b => { b.onclick = () => copy(b, s[b.dataset.c]); });
+  body.querySelectorAll('[data-c]').forEach(b => { b.onclick = () => copy(b, $(`textarea.${b.dataset.c}`, body).value); }); // 고치는 중인 글을 그대로 복사
+  bindEdit(el, s);
   $('input[type=file]', body).onchange = e => upload(el, s, e.target.files[0]);
   if (info && s.lyrics) showSync(el, s, info);
+}
+
+/* ---------- 글 고치기 ---------- */
+const EDIT = ['intro', 'style', 'lyrics'];
+const edVal = (body, k) => $(`textarea.${k}`, body).value.replace(/\r/g, '').replace(/[ \t]+$/gm, '').trim();
+function bindEdit(el, s) {
+  const body = $('.body', el), st = $('.edstate', body), save = $('.edsave', body), undo = $('.edundo', body);
+  const dirty = () => EDIT.some(k => edVal(body, k) !== (s[k] || ''));
+  const sync = () => { const d = dirty(); save.disabled = !d; undo.hidden = !d; el.classList.toggle('dirty', d); if (d) { st.className = 'state edstate'; st.textContent = '고친 곳이 있습니다'; } };
+  body.addEventListener('input', e => { if (e.target.classList.contains('ed')) sync(); });
+  undo.onclick = () => { EDIT.forEach(k => { $(`textarea.${k}`, body).value = s[k] || ''; }); sync(); st.textContent = ''; };
+  save.onclick = async () => {
+    save.disabled = true; st.className = 'state edstate'; st.textContent = '저장하는 중…';
+    try {
+      // 그사이 다른 곳에서 고쳤을 수 있으니 올리기 직전에 최신 원본을 받아, 이 노래가 그대로일 때만 바꾼다
+      const fresh = await gh(`/repos/${REPO}/contents/${SRC}?ref=${BRANCH}`), j = JSON.parse(fromB64(fresh.content));
+      const now = j.songs.find(x => x.id === s.id);
+      if (EDIT.some(k => (now[k] || '') !== (s[k] || ''))) throw new Error('그사이 이 노래의 글이 바뀌었습니다 — 새로 고침 뒤 다시 고쳐 주세요');
+      const to = Object.fromEntries(EDIT.map(k => [k, edVal(body, k) || null]));
+      Object.assign(now, to);
+      const lyricsChanged = (to.lyrics || '') !== (s.lyrics || '');
+      await gh(`/repos/${REPO}/contents/${SRC}`, { method: 'PUT', body: JSON.stringify({
+        message: `Psalms: edit ${EDIT.filter(k => (to[k] || '') !== (s[k] || '')).join(', ')} of Psalm ${s.psalm} (${s.id}) from the studio`,
+        content: toB64(JSON.stringify(j, null, 1) + '\n'), sha: fresh.sha, branch: BRANCH }) });
+      Object.assign(s, to); el.classList.remove('dirty'); undo.hidden = true;
+      $('.tag', el).classList.toggle('ok', !!s.lyrics);
+      st.className = 'state edstate ok'; st.textContent = `저장했습니다 ✓${lyricsChanged && dir[`${s.id}.json`] ? ' — 가사가 바뀌어 몇 분 뒤 가사 시간을 다시 맞춥니다' : ''}`;
+      summary();
+    } catch (err) { save.disabled = false; st.className = 'state edstate bad'; st.textContent = `저장하지 못했습니다: ${err.message}`; }
+  };
 }
 
 async function upload(el, s, file) {
