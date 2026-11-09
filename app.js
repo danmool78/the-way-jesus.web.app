@@ -439,7 +439,21 @@ let recenterT; addEventListener('resize', () => { clearTimeout(recenterT); recen
 // 전체 경로: 지도 틀 전체가 아니라 장소들이 모인 땅을 카드에 가리지 않는 영역에 꽉 차게.
 // 애굽 피난길(나일 삼각주의 헬리오폴리스·부바스티스)까지 들어오게 남쪽·서쪽을 넉넉히
 let LAND = box(33.36, 31.0, 29.95, 35.82); // 여정마다 바뀐다 (journey.map.land)
-function fitAll() { animateTo(reserveCard({ ...LAND }), 1100); }
+function fitAll() {
+  // 시편(무대 없이 가사를 띄우는 여정): 그려진 땅보다 조금 가까이(0.78 — 땅 끝에 붙은 시내산·바벨론도 옮길 틈이 생기게), 지금 장소가 가운데 가사 바로 아래에 오게 옮긴다
+  if (DATA.journey?.no3d && EVENTS && !isPro()) {
+    const r = map.getBoundingClientRect(), t = reserveCard({ ...LAND });
+    if (r.width) {
+      const f = freeArea('open'), D = drawnNow(), u = Math.min(Math.max(t.w / r.width, t.h / r.height), D.w / (f.r - f.l) * .78, D.h / (f.b - f.t) * .78), [cx, cy] = P(PLACES[here(evAt(idx))]), mobile = innerWidth <= 900;
+      // 가사 자리(style.css .lyrics-ov): 넓은 화면은 카드를 비킨 가운데 높이 50%, 좁은 화면은 위에서 30% — 그 아래 두세 줄 띄워서
+      const sx = mobile ? r.width / 2 : (r.width - Math.min(460, r.width * .42)) / 2;
+      const sy = mobile ? Math.min(r.height * .3 + 110, f.b - 30) : r.height / 2 + 130;
+      animateTo({ x: cx - sx * u, y: cy - sy * u, w: r.width * u, h: r.height * u }, 1100);
+      return;
+    }
+  }
+  animateTo(reserveCard({ ...LAND }), 1100);
+}
 function animateTo(target, ms) {
   cancelAnimationFrame(anim);
   preloadRelief(target);
