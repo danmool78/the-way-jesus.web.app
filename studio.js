@@ -3,8 +3,9 @@
    올릴 때마다 주소가 달라 바꾼 노래가 캐시에 걸리지 않는다. 어느 파일이 지금 노래인지와 가사 시간은 저장소의 assets/psalms/<id>.json
    ({ src: 노래 주소, audio: 내용 해시, by: 'pending'|'auto'|'tap', lines: [{ t: 초, text }] }).
    노래를 올리면 이 json을 by: 'pending'으로 main에 올리고, 배포 작업(firebase-hosting-merge.yml)이 _src/tools/lyricsync.mjs로 가사 시간을 맞춘다.
-   R2 열쇠는 이 버킷에만 쓸 수 있는 토큰으로, GitHub 토큰처럼 이 기기에만 기억한다 */
-const REPO = 'danmool78/the-way-jesus.web.app', BRANCH = 'main', KEY = 'theway-admin-token', R2KEY = 'theway-r2';
+   R2 열쇠는 이 버킷에만 쓸 수 있는 토큰으로, GitHub 토큰처럼 이 기기에만 기억한다.
+   관리자 페이지(admin.html?j=psalms, 위쪽 고르기의 '시편 노래 작업실')가 들어간 토큰으로 mountStudio를 부른다 */
+const REPO = 'danmool78/the-way-jesus.web.app', BRANCH = 'main', R2KEY = 'theway-r2';
 const SRC = '_src/journeys/psalms/songs.json', DIR = 'assets/psalms';
 import { R2, r2Sign, sha256 } from './studio-r2.js';
 const RAW = p => `https://raw.githubusercontent.com/${REPO}/${BRANCH}/${p}`;
@@ -31,28 +32,53 @@ async function r2Put(key, bytes, hash) {
   if (!r.ok) throw new Error(`R2 ${r.status}${r.status === 403 ? ' — R2 열쇠를 확인해 주세요' : ''}`);
 }
 
-/* ---------- 들어가기 ---------- */
-async function enter(t) {
-  token = t.trim();
-  const msg = $('#loginMsg'); msg.className = 'msg'; msg.textContent = '확인하는 중…';
-  try {
-    const repo = await gh(`/repos/${REPO}`);
-    if (!repo.permissions?.push) throw new Error('이 토큰에는 저장소에 쓸 권한이 없습니다');
-    try { localStorage.setItem(KEY, token); } catch { /* 이번 방문만 */ }
-    await load();
-    $('#login').hidden = true; $('#work').hidden = $('#logout').hidden = false;
-  } catch (err) {
-    token = ''; try { localStorage.removeItem(KEY); } catch { /* 없음 */ }
-    $('#login').hidden = false; msg.className = 'msg bad'; msg.textContent = err.status === 401 ? '토큰이 맞지 않습니다' : err.message;
-  }
-}
-$('#loginForm').onsubmit = e => { e.preventDefault(); enter($('#token').value); };
-$('#logout').onclick = () => { try { localStorage.removeItem(KEY); localStorage.removeItem(R2KEY); } catch { /* 없음 */ } location.reload(); };
 // R2 열쇠 (노래를 올릴 때만 필요)
 function showR2() { $('#r2State').textContent = r2 ? `R2 열쇠: ${r2.keyId.slice(0, 6)}… 기억함` : 'R2 열쇠가 없습니다 — 노래를 올리려면 넣어 주세요'; $('#r2Form').hidden = !!r2; $('#r2Forget').hidden = !r2; }
+function bindR2() {
 $('#r2Form').onsubmit = e => { e.preventDefault(); const keyId = $('#r2Id').value.trim(), secret = $('#r2Secret').value.trim(); if (!keyId || !secret) return;
   r2 = { keyId, secret }; try { localStorage.setItem(R2KEY, JSON.stringify(r2)); } catch { /* 이번 방문만 */ } showR2(); };
 $('#r2Forget').onclick = () => { r2 = null; try { localStorage.removeItem(R2KEY); } catch { /* 없음 */ } showR2(); };
+
+}
+
+/* ---------- 관리자 페이지(admin.html?j=psalms) 안에 작업실을 편다 — 같은 GitHub 토큰으로 ---------- */
+const CSS = `
+.st h2.group{font:700 17px var(--serif);color:var(--gold2);margin:26px 0 8px}
+.st .sum{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin:0 0 12px}.st .sum b{color:var(--gold2)}
+.st .card.r2{padding:12px 14px;margin:0 0 12px}.st .card.r2 input{max-width:260px}
+.st .r2row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.st details.song{background:var(--panel);border:1px solid var(--line);border-radius:14px;margin:8px 0;padding:0 14px}
+.st details.song>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:12px 0;flex-wrap:wrap}
+.st details.song>summary::before{content:none}
+.st summary .no{font:700 13px var(--sans);color:#1b140c;background:var(--gold);border-radius:7px;padding:1px 7px}
+.st summary b{font:700 16px var(--serif)}
+.st summary .set{color:var(--faint);font-size:13px;flex:1;min-width:200px}
+.st .tags{display:flex;gap:5px}.st .tag{font-size:11px;border-radius:6px;padding:1px 7px;border:1px solid var(--line);color:var(--faint)}.st .tag.ok{border-color:var(--ok);color:var(--ok)}
+.st .body{padding:0 0 16px}.st .intro{font:15px/1.8 var(--serif);color:var(--muted);margin:2px 0 12px}
+.st .box{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:10px 0}
+.st .box h3{display:flex;align-items:center;gap:8px;margin:0 0 6px;font:600 13px var(--sans);color:var(--faint)}.st .box h3 .grow{flex:1}
+.st .box pre{margin:0;white-space:pre-wrap;font:14px/1.7 var(--sans);color:var(--ink);max-height:22em;overflow:auto}.st .box pre.style{font-size:13px;color:var(--muted)}
+.st .state{font-size:13px;color:var(--muted)}.st .state.ok{color:var(--ok)}.st .state.bad{color:var(--bad)}
+.st audio{width:100%;margin:6px 0}
+.st ol.lines{list-style:none;margin:6px 0 0;padding:0;max-height:24em;overflow:auto}
+.st ol.lines li{display:flex;gap:10px;padding:3px 6px;border-radius:8px;font-size:14px;cursor:pointer}
+.st ol.lines li i{font:12px ui-monospace,monospace;color:var(--faint);min-width:4.2em;padding-top:2px;font-style:normal}
+.st ol.lines li.now{background:rgba(217,180,106,.18);color:var(--gold2)}.st ol.lines li.tapped i{color:var(--ok)}
+.st .tapbar{display:none;margin:8px 0;gap:8px;align-items:center}.st .tapping .tapbar{display:flex}.st .tapbar .btn{flex:1;padding:14px}
+.st .ghost.on{border-color:var(--gold);color:var(--gold2)}`;
+export async function mountStudio(root, tok) {
+  token = tok;
+  if (!document.getElementById('studioCss')) document.head.insertAdjacentHTML('beforeend', `<style id="studioCss">${CSS}</style>`);
+  root.classList.add('st');
+  root.innerHTML = `<p class="note">시편 노래 작업실 — ① 스타일과 가사를 복사해 Suno에서 노래를 만든다 → ② 고른 mp3를 올린다(다시 올리면 교체) → ③ 몇 분 뒤 가사 시간이 자동으로 맞춰진다 → ④ 어긋나면 '탭으로 맞추기'로 고친다. 노래는 Cloudflare R2(theway 버킷 psalms/)에서 스트리밍한다.</p>
+    <div class="card r2"><b>R2 열쇠</b> <span id="r2State" class="state"></span> <button id="r2Forget" class="ghost" hidden>잊기</button>
+      <form id="r2Form" class="r2row" hidden><input id="r2Id" class="f" type="text" placeholder="Access Key ID" autocomplete="off" spellcheck="false"><input id="r2Secret" class="f" type="password" placeholder="Secret Access Key" autocomplete="off"><button class="btn" type="submit">기억하기</button></form>
+      <p class="note" style="margin:6px 0 0">Cloudflare R2 → API 토큰(버킷 theway, 개체 읽기·쓰기)의 두 값. 노래를 올릴 때만 필요하고, 이 기기에만 기억합니다.</p></div>
+    <div class="sum" id="stSum"></div><div id="stList"></div>`;
+  try { r2 = JSON.parse(localStorage.getItem(R2KEY) || 'null'); } catch { r2 = null; }
+  bindR2();
+  await load();
+}
 
 /* ---------- 목록 ---------- */
 async function readDir() {
@@ -71,11 +97,11 @@ async function load() {
 }
 function summary() {
   const n = k => songs.filter(k).length;
-  $('#sum').innerHTML = `<span>모두 <b>${songs.length}</b>편</span><span>가사 준비 <b>${n(s => s.lyrics)}</b></span><span>노래 올림 <b>${n(s => dir[`${s.id}.json`])}</b></span>`;
+  $('#stSum').innerHTML = `<span>모두 <b>${songs.length}</b>편</span><span>가사 준비 <b>${n(s => s.lyrics)}</b></span><span>노래 올림 <b>${n(s => dir[`${s.id}.json`])}</b></span>`;
 }
 function render() {
   summary();
-  const list = $('#list'); list.innerHTML = '';
+  const list = $('#stList'); list.innerHTML = '';
   let g = null;
   for (const s of songs) {
     if (s.group !== g) { g = s.group; list.insertAdjacentHTML('beforeend', `<h2 class="group">${esc(g)}. ${esc(groups[g] || '')}</h2>`); }
@@ -186,6 +212,3 @@ function showSync(el, s, info) {
   };
 }
 
-try { r2 = JSON.parse(localStorage.getItem(R2KEY) || 'null'); } catch { r2 = null; }
-let saved = null; try { saved = localStorage.getItem(KEY); } catch { /* 없음 */ }
-if (saved) enter(saved); else $('#login').hidden = false;
