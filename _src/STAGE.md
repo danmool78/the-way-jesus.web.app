@@ -147,6 +147,8 @@ e02: {
 - 놉(d11)의 제사장들과 길보아(d20)의 사울은 그리지 않는다: 빛이 꺼지고(dark) 그 자리가 빈다(show 0), 살아남은 아비아달은 다윗 앞에 엎드려 울고, 사울은 산 위에서 무릎 꿇었다가 사라진다. 그일라·아말렉의 싸움은 달아나 사라지는 블레셋과 되찾아 돌아오는 가족으로만.
 - 엔게디(d16)는 핀이 사해 물가라 `at`으로 무대를 서쪽 뭍에. 탈것에 태울 때는 `board`와 함께 `x: 0, z: 0`(안 주면 탄 사람이 딴 데 선다), 머리가 -x인 짐승(`rot: Math.PI`) 위에서는 `look: 3`이어야 앞을 본다. 다시 들을 때를 위해 intro에서 `board: null`로 내린다.
 - makeProp은 `size`를 축마다의 배열로 받는다 — cave의 크기는 `size` 숫자 대신 `scale`로.
+- **묶음 c(d21–d30, `stage/david/c.js`)**: 이 묶음에만 쓰는 인물·소품은 `stage/david/props-c.js`(TYPES·MAKERS에 더함). 인물: jebusite·jebusite2(여부스 사람 — 짙은 붉은 옷에 머릿수건), davidE(세마포 에봇의 춤추는 왕 — 붉은 띠로 흰 옷의 레위 사람과 가름), uzzah(소 모는 막대)·ahio, ziba, mephiS(지팡이 짚고 절며 걷는 므비보셋 — 앉을 때는 mephibosheth로 바꿔 낌), tyrian(히람의 사절), joram(하맛), runner(앞서 달리는 사람). 소품: cedarlogs(백향목 재목), palacebuild(짓는 왕궁 — show 0→1에 아래에서 쌓여 오르고 'built'면 비계가 걷힘, fade none), emptycart(궤를 내린 arkcart — 궤를 메고 갈 때 arkcart와 바꿔 낌), chariotI(애굽 모는 사람 없는 병거), kingtable(상보를 바닥까지 드리운 왕의 식탁 — 뒤에 앉은 사람의 발이 가려진다, d26), treasure(금 방패·놋·그릇).
+- 웃사(d23)는 손을 뻗은 자리에 좁은 빛이 내리고 그 빛 속에 `show: 0`으로 스러진다. 밧세바(d28)는 단정한 베일 차림으로 궁에 들어가는 뒷모습뿐, 그다음은 `@env dark`와 지붕 위의 빈자리로. 문간에서 '잔' 우리아는 창이 꼿꼿이 서 보여 sleep 대신 sit-ground. 법궤를 장막에 놓을 때(d24)는 멘 궤(on 두 레위 사람)를 장막 안의 궤로 바꿔 낀다 — 그대로 두면 레위 사람이 떠날 때 궤가 따라갔다.
 
 ### 인물 유형 (TYPES)
 jesus, mary, joseph, angel, woman, woman2, mother, anna, john(젊은 제자, 수염 없음), disciple, peter, man, elder, shepherd, magus, magus2, magus3, king, soldier(창), pharisee, child, boyJesus, baptist, tempter, steward, groom, servant, crossed(십자가 위 예수 — 실루엣 전용), thief(실루엣 전용)
