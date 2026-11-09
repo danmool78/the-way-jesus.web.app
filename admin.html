@@ -29,6 +29,7 @@ input[type=search],input[type=password],input[type=text],input.f,textarea{width:
 input:focus,textarea:focus{border-color:var(--gold)}
 #search{max-width:280px}
 #journeyPick{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:7px 10px;color:inherit;font:inherit}
+#journeyPick option{background:#251f18;color:#f1e8d8} /* 펼친 목록은 운영체제가 그려 흐릿해지지 않게 */
 .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
 .login h2{margin:0 0 6px;font:700 20px var(--serif);color:var(--gold2)}
 .login ol{color:var(--muted);padding-left:20px}
@@ -109,10 +110,12 @@ select.f{width:100%;background:var(--panel2);border:1px solid var(--line);border
     <p id="loginMsg" class="msg"></p>
   </section>
   <section id="editor" hidden>
-    <p class="note">한국어 해설과 말씀을 고칩니다. 저장하면 GitHub에 기록되고, 몇 분 안에 그 장면의 녹음 낭독을 새로 만들어 운영 사이트에 반영합니다. 목소리에서 <b>Gemini 성우</b>를 고르면 그 글만 Gemini 성우(다정 리딩북과 같은 모델)로 녹음합니다. 다른 언어판의 말씀은 바뀌지 않습니다.</p>
+    <p class="note">한국어 해설과 말씀을 고칩니다. 저장하면 GitHub에 기록되고, 해설은 몇 분 안에 그 장면의 녹음 낭독을 새로 만들어 운영 사이트에 반영합니다(목소리에서 <b>Gemini 성우</b>를 고르면 그 문단만 Gemini 성우로). 말씀은 낭독하지 않고 글로만 보여 녹음이 없습니다. 다른 언어판은 바뀌지 않습니다.</p>
     <div class="tools"><button id="openAll" class="ghost">모두 펼치기</button><button id="closeAll" class="ghost">모두 접기</button></div>
     <div id="list"></div>
   </section>
+  <!-- 시편 노래 작업실 (admin.html?j=psalms, studio.js가 채운다) -->
+  <section id="studio" hidden></section>
 </main>
 <script type="module" src="admin.js"></script>
 </body>

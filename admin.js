@@ -45,7 +45,7 @@ async function enter(t, user) {
   } catch (err) {
     token = '';
     try { localStorage.removeItem(KEY); } catch { /* 없음 */ }
-    $('#login').hidden = false; $('#editor').hidden = $('#search').hidden = $('#logout').hidden = true;
+    $('#login').hidden = false; $('#editor').hidden = $('#studio').hidden = $('#search').hidden = $('#logout').hidden = true;
     msg.className = 'msg bad'; msg.textContent = err.status === 401 ? '토큰이 맞지 않습니다' : err.message;
   }
 }
@@ -53,16 +53,29 @@ $('#loginForm').onsubmit = e => { e.preventDefault(); enter($('#token').value, $
 $('#logout').onclick = () => { try { localStorage.removeItem(KEY); } catch { /* 없음 */ } location.reload(); };
 
 /* ---------- 목록 ---------- */
+// 여정 고르기: 원본이 만들어진 여정(built)만 — 원본이 없는 여정을 고르면 불러오지 못해 로그인이 풀린다. 맨 끝에 시편 노래 작업실
+function fillPick(series) {
+  const pick = $('#journeyPick'), names = { jesus: '예수', moses: '모세와 여호수아', david: '다윗', kings: '열왕기', paul: '바울', proverbs: '잠언', goodnews: '복음', psalms: '시편' };
+  pick.innerHTML = (series || [{ id: 'jesus' }]).filter(j => j.built !== false && j.id !== 'psalms').map(j => `<option value="${j.id}"${j.id === JOURNEY ? ' selected' : ''}>${esc(names[j.id] || j.id)}${j.ready ? '' : ' (준비 중)'}</option>`).join('')
+    + `<option value="psalms"${JOURNEY === 'psalms' ? ' selected' : ''}>시편 노래 작업실</option>`;
+  pick.hidden = false;
+  pick.onchange = () => { location.search = pick.value === 'jesus' ? '' : `?j=${pick.value}`; };
+}
 async function load() {
+  // 시편: 해설·말씀 대신 노래 작업실(studio.js)을 편다 — 노래 목록과 가사는 _src/journeys/psalms/songs.json
+  if (JOURNEY === 'psalms') {
+    $('#loginMsg').textContent = '노래 목록을 불러오는 중…';
+    const [{ mountStudio }, d] = await Promise.all([import('./studio.js'), fetch('data.json', { cache: 'no-store' }).then(r => r.json())]);
+    fillPick(d.journey?.series);
+    await mountStudio($('#studio'), token);
+    $('#login').hidden = true; $('#studio').hidden = $('#logout').hidden = false;
+    return;
+  }
   $('#loginMsg').textContent = '말씀을 불러오는 중…';
   // 장면 제목·장소는 배포된 data.json에서, 말씀은 GitHub의 최신 원본에서 (방금 고친 것도 바로 보이게)
   const [d, dir] = await Promise.all([fetch(DATA_URL, { cache: 'no-store' }).then(r => r.json()), gh(`/repos/${REPO}/contents/${SRC}?ref=${BRANCH}`)]);
   data = d;
-  // 여정 고르기: 원본이 만들어진 여정(built)만 — 원본이 없는 여정을 고르면 불러오지 못해 로그인이 풀린다
-  const pick = $('#journeyPick'), names = { jesus: '예수', moses: '모세와 여호수아', david: '다윗', kings: '열왕기', paul: '바울' };
-  pick.innerHTML = (d.journey?.series || [{ id: 'jesus' }]).filter(j => j.built !== false).map(j => `<option value="${j.id}"${j.id === JOURNEY ? ' selected' : ''}>${esc(names[j.id] || j.id)}${j.ready ? '' : ' (준비 중)'}</option>`).join('');
-  pick.hidden = false;
-  pick.onchange = () => { location.search = pick.value === 'jesus' ? '' : `?j=${pick.value}`; };
+  fillPick(d.journey?.series);
   await loadVoices();
   await Promise.all(dir.filter(f => /^content-.*\.json$/.test(f.name)).map(f => readFile(f.path)));
   $('#login').hidden = true; $('#editor').hidden = $('#search').hidden = $('#logout').hidden = false;
@@ -104,18 +117,18 @@ const OPEN = 'theway-admin-open';
 let opened = new Set(); try { opened = new Set(JSON.parse(localStorage.getItem(OPEN) || '[]')); } catch { /* 처음 */ }
 const keepOpen = () => { try { localStorage.setItem(OPEN, JSON.stringify([...opened])); } catch { /* 이번 방문만 */ } };
 const ttsSelect = tts => `<div><label>목소리</label><select class="f tts"><option value="">Google 음성</option><option value="gemini"${tts === 'gemini' ? ' selected' : ''}>Gemini 성우</option></select></div>`;
-const actHtml = '<div class="act"><button class="ghost play" type="button">▶ 듣기</button><span class="state"></span><button class="ghost undo" hidden>되돌리기</button><button class="btn save" disabled>저장</button></div>';
+// 말씀(본문)은 낭독하지 않으므로(2026-11) 듣기·목소리 고르기는 해설 문단에만
+const actHtml = (listen = true) => `<div class="act">${listen ? '<button class="ghost play" type="button">▶ 듣기</button>' : ''}<span class="state"></span><button class="ghost undo" hidden>되돌리기</button><button class="btn save" disabled>저장</button></div>`;
 // 해설 문단: 글과 목소리만 (data-kind="story", data-w는 문단 번호)
 function storyHtml(e, c, i) {
   return `<div class="word story" data-kind="story" data-e="${e.id}" data-w="${i}">
         <div class="meta"><b class="ptitle">해설 ${i + 1}</b>${ttsSelect((c.storyTts || []).includes(i) ? 'gemini' : '')}</div>
-        <textarea class="text" rows="4">${esc(c.story[i])}</textarea>${actHtml}</div>`;
+        <textarea class="text" rows="4">${esc(c.story[i])}</textarea>${actHtml()}</div>`;
 }
 function wordHtml(e, w, i) {
   return `<div class="word${w.who === '예수' ? ' jesus' : ''}" data-e="${e.id}" data-w="${i}">
-        <div class="meta"><div><label>말하는 이</label><input class="f who" value="${esc(w.who)}"></div><div><label>출처</label><input class="f ref" value="${esc(w.ref)}"></div>
-          ${ttsSelect(w.tts)}</div>
-        <textarea class="text" rows="2">${esc(w.text)}</textarea>${actHtml}</div>`;
+        <div class="meta"><div><label>말하는 이</label><input class="f who" value="${esc(w.who)}"></div><div><label>출처</label><input class="f ref" value="${esc(w.ref)}"></div></div>
+        <textarea class="text" rows="2">${esc(w.text)}</textarea>${actHtml(false)}</div>`;
 }
 function render() {
   // 맨 앞에 프롤로그(data.prologue, 61개 장면 목록 밖)를 한 묶음으로 — 시대와 같은 모양
@@ -149,7 +162,7 @@ $('#openAll').onclick = () => setAll(true);
 $('#closeAll').onclick = () => setAll(false);
 const isStory = box => box.dataset.kind === 'story';
 const fields = box => ({ ...(isStory(box) ? {} : { who: $('.who', box).value.trim(), ref: $('.ref', box).value.trim() }),
-  text: $('.text', box).value.trim().replace(/\s*\n\s*/g, ' '), tts: $('.tts', box).value });
+  text: $('.text', box).value.trim().replace(/\s*\n\s*/g, ' '), tts: $('.tts', box) ? $('.tts', box).value : (original(box).tts || '') }); // 말씀은 목소리 칸이 없다 — 있던 값을 그대로
 // 해설 문단도 말씀과 같은 모양으로 ({text, tts})
 const storyOf = (c, i) => ({ text: c.story[i], ...((c.storyTts || []).includes(i) ? { tts: 'gemini' } : {}) });
 const original = box => { const c = sceneOf(box.dataset.e).c, i = +box.dataset.w; return isStory(box) ? storyOf(c, i) : c.words[i]; };
@@ -158,7 +171,7 @@ function bind(box) {
   const changed = () => !same(original(box), fields(box));
   const sync = () => { const c = changed(), f = fields(box); box.classList.toggle('dirty', c); $('.save', box).disabled = !c || !f.text || f.who === ''; $('.undo', box).hidden = !c; };
   box.addEventListener('input', sync);
-  $('.play', box).onclick = () => play(box);
+  if ($('.play', box)) $('.play', box).onclick = () => play(box);
   $('.undo', box).onclick = () => { const o = original(box); for (const k of ['who', 'ref', 'text', 'tts']) { const el = $(`.${k}`, box); if (el) el.value = o[k] || ''; } sync(); };
   $('.save', box).onclick = () => save(box).catch(err => setState(box, `저장하지 못했습니다: ${err.message}`, 'bad')).finally(sync);
 }
