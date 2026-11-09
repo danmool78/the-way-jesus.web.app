@@ -65,6 +65,8 @@ ol.lines li.tapped i{color:var(--ok)}
 .tapbar{display:none;margin:8px 0;gap:8px;align-items:center}
 .tapping .tapbar{display:flex}
 .tapbar .btn{flex:1;padding:14px}
+.card.r2{padding:12px 14px;margin:0 0 12px}
+.card.r2 input{max-width:280px}
 .empty{color:var(--faint);text-align:center;margin:40px 0}
 </style>
 </head>
@@ -83,7 +85,10 @@ ol.lines li.tapped i{color:var(--ok)}
     <p id="loginMsg" class="msg"></p>
   </section>
   <section id="work" hidden>
-    <p class="note">순서: ① 스타일과 가사를 복사해 Suno에서 노래를 만든다 → ② 고른 mp3를 여기서 올린다(다시 올리면 교체) → ③ 올리면 배포 작업이 가사 시간을 자동으로 맞춘다(몇 분) → ④ 어긋나면 '탭으로 맞추기'로 고친다. 노래 파일은 <code>assets/psalms/</code>에, 가사 시간은 같은 이름의 .json에 들어간다.</p>
+    <p class="note">순서: ① 스타일과 가사를 복사해 Suno에서 노래를 만든다 → ② 고른 mp3를 여기서 올린다(다시 올리면 교체) → ③ 올리면 배포 작업이 가사 시간을 자동으로 맞춘다(몇 분) → ④ 어긋나면 '탭으로 맞추기'로 고친다. 노래는 Cloudflare R2(theway 버킷 psalms/)에서 스트리밍하고, 지금 노래가 무엇인지와 가사 시간은 저장소의 <code>assets/psalms/&lt;id&gt;.json</code>에 적힌다.</p>
+    <div class="card r2"><b>R2 열쇠</b> <span id="r2State" class="state"></span> <button id="r2Forget" class="ghost" hidden>잊기</button>
+      <form id="r2Form" class="row" style="margin-top:8px" hidden><input id="r2Id" type="text" placeholder="Access Key ID" autocomplete="off" spellcheck="false"><input id="r2Secret" type="password" placeholder="Secret Access Key" autocomplete="off"><button class="btn" type="submit">기억하기</button></form>
+      <p class="note" style="margin:6px 0 0">Cloudflare R2 → API 토큰(버킷 theway, 개체 읽기·쓰기)의 두 값. 이 기기에만 기억합니다.</p></div>
     <div class="sum" id="sum"></div>
     <div id="list"></div>
   </section>

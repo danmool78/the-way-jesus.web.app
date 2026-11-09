@@ -1,8 +1,9 @@
-// 시편 노래의 가사 시간 맞추기: assets/psalms/<id>.mp3를 Gemini에 들려 주고 가사 줄마다 부르기 시작하는 시각을 받아
-// assets/psalms/<id>.json({ audio: 노래의 git blob sha, by: 'auto', lines: [{ t, text }] })로 쓴다.
-// 노래 파일이 바뀌었거나(blob sha가 다르면) 가사가 바뀐 노래만 다시 맞춘다. 탭으로 맞춘 것(by: 'tap')은 노래가 그대로면 건드리지 않는다.
-// 쓰는 법: GEMINI_API_KEY=… node _src/tools/lyricsync.mjs [id…]   (배포 작업 firebase-hosting-merge.yml이 mp3가 올라오면 돌린다)
-import { readFile, writeFile } from 'node:fs/promises';
+// 시편 노래의 가사 시간 맞추기: assets/psalms/<id>.json의 src(Cloudflare R2에 올린 노래)를 받아 Gemini에 들려 주고,
+// 가사 줄마다 부르기 시작하는 시각을 받아 같은 json의 lines([{ t, text }])에 by: 'auto'로 쓴다.
+// 작업실(studio.html)에서 노래를 새로 올렸거나(by: 'pending') 가사가 바뀐 노래만 다시 맞춘다. 탭으로 맞춘 것(by: 'tap')은 가사가 그대로면 두고,
+// id를 주면 그 노래는 다시 맞춘다. 쓰는 법: GEMINI_API_KEY=… node _src/tools/lyricsync.mjs [id…]   (배포 작업 firebase-hosting-merge.yml이 돌린다)
+import { readFile, writeFile, mkdtemp } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
 import { existsSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 
@@ -43,20 +44,24 @@ function tidy(raw, n, len) {
 }
 
 let made = 0;
+const tmp = await mkdtemp(`${tmpdir()}/lyricsync-`);
 for (const s of songs) {
-  const mp3 = `${DIR}/${s.id}.mp3`, out = `${DIR}/${s.id}.json`;
-  if ((only.length && !only.includes(s.id)) || !s.lyrics || !existsSync(mp3)) continue;
-  const sha = execFileSync('git', ['hash-object', mp3]).toString().trim(), lines = sungLines(s.lyrics);
-  const old = existsSync(out) ? JSON.parse(await readFile(out, 'utf8')) : null;
-  const same = old?.audio === sha && old.lines?.length === lines.length && old.lines.every((l, i) => l.text === lines[i]);
+  const out = `${DIR}/${s.id}.json`;
+  if ((only.length && !only.includes(s.id)) || !s.lyrics || !existsSync(out)) continue;
+  const info = JSON.parse(await readFile(out, 'utf8')), lines = sungLines(s.lyrics);
+  const same = info.by !== 'pending' && info.lines?.length === lines.length && info.lines.every((l, i) => l.text === lines[i]);
   if (same && !only.length) continue;
-  const len = dur(mp3), b64 = (await readFile(mp3)).toString('base64');
+  const r = await fetch(info.src);
+  if (!r.ok) { console.warn(`::warning::${s.id} 노래를 받지 못했습니다 (${r.status} ${info.src})`); continue; }
+  const buf = Buffer.from(await r.arrayBuffer()), mp3 = `${tmp}/${s.id}.mp3`;
+  await writeFile(mp3, buf);
+  const len = dur(mp3), b64 = buf.toString('base64');
   let raw = null;
   for (const m of MODELS) { try { raw = await ask(m, b64, lines); break; } catch (e) { console.warn(e.message); } }
   if (!raw) { console.warn(`::warning::${s.id} 가사 시간을 맞추지 못했습니다 (작업실에서 탭으로 맞춰 주세요)`); continue; }
   const found = raw.filter(x => typeof x?.start === 'number').length;
   const t = tidy(raw, lines.length, len);
-  await writeFile(out, JSON.stringify({ audio: sha, by: 'auto', lines: lines.map((text, i) => ({ t: t[i], text })) }, null, 1) + '\n');
+  await writeFile(out, JSON.stringify({ ...info, by: 'auto', lines: lines.map((text, i) => ({ t: t[i], text })) }, null, 1) + '\n');
   console.log(`${s.id} 시편 ${s.psalm}: ${lines.length}줄 중 ${found}줄 시각을 받음, ${len.toFixed(0)}초`);
   made++;
 }
