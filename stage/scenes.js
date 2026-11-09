@@ -17,6 +17,7 @@ const CROWD = [...ring(1.2, 11, Math.PI + 0.3, Math.PI * 2 - 0.3, 0.62), ...ring
 import { MOSES } from './moses.js';
 import { GOODNEWS } from './goodnews.js';
 import { PROVERBS } from './proverbs.js';
+import { DAVID } from './david.js';
 
 export const SCRIPTS = {
   /* 0. 프롤로그 — 잃어버린 동산 (창 2–3장). 지도에 핀이 없는 장면이라 무대를 에덴의 전승 자리(at)에 세운다.
@@ -2528,4 +2529,4 @@ export const SCRIPTS = {
 };
 
 // 다른 여정의 장면 (장면 id는 여정마다 겹치지 않는다)
-Object.assign(SCRIPTS, MOSES, GOODNEWS, PROVERBS);
+Object.assign(SCRIPTS, MOSES, GOODNEWS, PROVERBS, DAVID);

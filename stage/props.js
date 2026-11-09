@@ -1455,3 +1455,5 @@ export function makeProp(kind, x = 0, z = 0, o = {}) {
   if (o.faceCenter) P.faceCenter = true;  // 무대 가운데(핀)를 바라보게
   return P;
 }
+
+export { MAKERS, Prop }; // 여정마다 쓰는 소품을 따로 파일에서 더할 수 있게 (stage/david/props.js)

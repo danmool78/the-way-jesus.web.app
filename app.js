@@ -322,7 +322,7 @@ function applyView() {
   showHiRelief(x, y, w, h, u);
   // 예루살렘 도성 그림: 가까이 들어갔을 때만 받아서(약 200KB) 서서히 보인다
   const city = $('#city3d', map);
-  if (u < 0.6 && !city.getAttribute('href')) { city.addEventListener('load', () => city.classList.add('ready'), { once: true }); city.setAttribute('href', 'assets/jerusalem.webp'); }
+  if (u < 0.6 && !city.getAttribute('href') && !window.journeyMap?.noCity) { // noCity: 다윗 여정 — 예수 때 도성 그림은 천 년 뒤 모습 city.addEventListener('load', () => city.classList.add('ready'), { once: true }); city.setAttribute('href', 'assets/jerusalem.webp'); }
   $$('.pin, .lbl', map).forEach(el => {
     const tr = el.dataset.x ? `translate(${el.dataset.x},${el.dataset.y})` : (el.dataset.t ||= el.getAttribute('transform'));
     el.setAttribute('transform', `${tr} scale(${u})`);

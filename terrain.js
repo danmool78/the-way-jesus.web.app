@@ -158,7 +158,7 @@ async function loadRegion(r) {
   scene.add(r.mesh);
   if (!r.wild) { addTrees(r); addVillages(r); } else addPalms(r); // 광야에는 나무·마을이 없다 (색 그림의 바닷가 물빛을 풀빛으로 읽어 나무가 줄지어 섰다)
   if (r.name === 'galilee') addBoats();
-  if (r.name === 'judea') { addModel(buildJerusalem(), JLM, 1); addCityDetail(); }
+  if (r.name === 'judea') { if (!window.journeyMap?.noCity) addModel(buildJerusalem(), JLM, 1); addCityDetail(); } // 다윗 여정(noCity): 예수 때의 도성 모형은 천 년 뒤 모습이라 세우지 않는다
   if (r.name === 'egypt') Object.values(EGYPT_MODELS).forEach(m => addModel(m.build(), m.extent, 0.6));
 }
 

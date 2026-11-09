@@ -37,7 +37,7 @@ await send('Emulation.setDeviceMetricsOverride', { width: W, height: H, deviceSc
 for (const [n, s] of shots.entries()) {
   const [ev, beat] = s.split(':');
   // n: 주소가 #만 바뀌면 같은 문서 안의 이동이 되어 앞 장면에서 걸어오는 모습이 찍혔다 — 매번 새로 연다
-  const j = /^m\d/.test(ev) ? 'j=moses&' : /^g\d/.test(ev) ? 'j=goodnews&' : /^p\d/.test(ev) ? 'j=proverbs&' : '';
+  const j = /^d\d/.test(ev) ? 'j=david&' : /^m\d/.test(ev) ? 'j=moses&' : /^g\d/.test(ev) ? 'j=goodnews&' : /^p\d/.test(ev) ? 'j=proverbs&' : '';
   await send('Page.navigate', { url: `${base}/?${j}beat=${beat}&n=${n}#${ev}` });
   // 지도 카메라 이동이 끝나고 무대가 자리를 잡을 때까지 기다린다 (캔버스가 보일 때까지, 최대 8초)
   let rect = null;
