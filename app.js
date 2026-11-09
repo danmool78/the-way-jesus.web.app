@@ -987,13 +987,17 @@ let installEv = null;
 addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEv = e; });
 // 다른 창·앱으로 가도 낭독·노래는 멈추지 않는다 (예전엔 멈춰서 돌아오면 그 장면을 처음부터 다시 들어야 했다 — 사용자, 2026-11).
 // iOS는 뒤에 있는 동안 배경음악(Web Audio)을 재우므로, 돌아오면 깨운다
-document.addEventListener('visibilitychange', () => { if (!document.hidden && bgmCtx && bgmCue && bgmCtx.state !== 'running') bgmCtx.resume().catch(() => {}); });
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) return;
+  if (bgmCtx && bgmCue && bgmCtx.state !== 'running') bgmCtx.resume().catch(() => {});
+  if (song.on) { song.k = -2; song.sync?.(); } // 시편: 가사 줄을 지금 부르는 데로 곧바로
+});
 
 /* ---------- 낭독 (Web Speech API) ---------- */
 const synth = window.speechSynthesis;
 let voices = [], speaking = false, autoOn = false, autoTimer = null, speechToken = 0;
 // 지금 낭독이 끝나면 부를 일과, 그 낭독이 장면 전체 읽기인지 — 읽는 중에 자동 여정을 켜면 끝난 뒤의 일만 바꿔 끼운다
-let speechDone = null, sceneReading = false;
+let speechDone = null, sceneReading = false, speechCtl = null, paused = false; // paused: 일시정지 중 (speechCtl·노래가 이어 간다)
 function pickVoices() {
   if (!synth) return;
   voices = synth.getVoices().filter(v => v.lang.toLowerCase().replace('_', '-').split('-')[0] === LANG);
@@ -1050,8 +1054,16 @@ function speakQueue(items, onDone) {
   const readMs = it => (600 + it.text.length * 140) / rate; // 눈으로 읽는 속도
   let n = 0;
   speaking = true; setListenUI();
+  // 일시정지: 지금 문장을 잠깐 세웠다가 그 자리부터 이어 듣는다 (예전엔 멈추면 장면 처음부터 다시 읽었다 — 사용자)
+  // 녹음은 그 자리에서 이어 틀고, 브라우저 음성(이어 읽기가 기기마다 들쭉날쭉)과 눈으로 읽는 시간은 그 문장 처음부터
+  let hold = null; // 지금 하던 일을 이어 가는 함수 (멈춘 동안)
+  speechCtl = {
+    pause() { if (hold || token !== speechToken) return; clearTimeout(autoTimer); hold = cur.pause(); },
+    resume() { const h = hold; hold = null; h && h(); },
+  };
+  let cur = { pause: () => () => next() };
   const next = () => {
-    if (token !== speechToken) return;
+    if (token !== speechToken || hold) return;
     $$('.speaking').forEach(x => x.classList.remove('speaking'));
     if (n >= queue.length) { speaking = false; setListenUI(); showCaption(null); if (staged) stageBeat('end'); speechDone && speechDone(); return; }
     const it = queue[n++];
@@ -1062,7 +1074,8 @@ function speakQueue(items, onDone) {
     if (it.beat) (it.ks || [it.s]).forEach(k => stageBeat(it.beat, k));
     verseFollow(it);
     let done = false, guard;
-    const advance = d => { if (done) return; done = true; clearTimeout(guard); autoTimer = setTimeout(next, n >= queue.length ? (hasClip(it) ? 500 : 0) : d); }; // 마지막 문장 뒤에는 거의 쉬지 않고 끝낸다 (배경음악이 낭독과 함께 멈추게) — 녹음은 끝소리가 잘리지 않게 0.5초만 둔다
+    const again = () => () => { n--; next(); }; // 이 문장을 처음부터
+    const advance = d => { if (done || hold) return; done = true; clearTimeout(guard); cur = { pause: () => () => next() }; autoTimer = setTimeout(next, n >= queue.length ? (hasClip(it) ? 500 : 0) : d); }; // 마지막 문장 뒤에는 거의 쉬지 않고 끝낸다 (배경음악이 낭독과 함께 멈추게) — 녹음은 끝소리가 잘리지 않게 0.5초만 둔다
     if (hasClip(it)) {
       const gap = (!it.last ? VOICE_GAP.sentence : it.beat === 'intro' ? VOICE_GAP.intro : VOICE_GAP.item) / rate;
       // 감시 타이머는 실제로 소리가 나기 시작할 때부터 남은 길이로 잰다 (받는 중·버퍼링 시간은 빼고).
@@ -1076,10 +1089,12 @@ function speakQueue(items, onDone) {
       // 파일을 못 불러오면 그 문장은 눈으로 읽는 속도만큼 기다린다
       voiceAudio.onerror = () => { clearTimeout(guard); guard = setTimeout(() => advance(0), readMs(it)); };
       voiceAudio.play().catch(err => { if (err.name !== 'AbortError') voiceAudio.onerror(); });
+      cur = { pause: () => { clearTimeout(guard); voiceAudio.pause(); return () => voiceAudio.play().catch(() => advance(0)); } }; // 다시 틀면 onplaying이 감시 타이머를 새로 건다
       // 다음 문장 파일을 미리 받아 두어 문장 사이에 불러오는 시간이 끼지 않게
       if (queue[n]) fetch(voiceUrl(queue[n].clip)).catch(() => {});
       return;
     }
+    cur = { pause: () => { clearTimeout(guard); if (useVoice) synth.cancel(); return again(); } };
     if (!useVoice) { guard = setTimeout(() => advance(it.pause || 0), readMs(it)); return; }
     const u = new SpeechSynthesisUtterance(it.text);
     u.lang = DATA.ui.lang; u.rate = rate;
@@ -1167,17 +1182,30 @@ const stageBeat = (beat, s) => {
   paintBeat(beat, s);
 };
 function stopSpeech(keepAuto) {
-  if (speaking) dispatchEvent(new CustomEvent('stage:stop'));
+  const was = speaking || paused; // 일시정지 중도 읽던 중으로 친다
+  if (was) dispatchEvent(new CustomEvent('stage:stop'));
   // 장면 안에서 옮겨 간 뒤에 멈추면, 무대가 처음 모습(enter)으로 돌아가므로 처음 자리(start)로 함께 돌린다
-  const e = speaking && evAt(idx);
+  const e = was && evAt(idx);
   if (e && here(e) !== startOf(e)) goStop(e, startOf(e));
-  speechToken++; clearTimeout(autoTimer); verseHide(); songStop();
+  speechToken++; clearTimeout(autoTimer); verseHide(); songStop(); paused = false; speechCtl = null;
   if (synth) synth.cancel();
   voiceAudio.pause(); voiceAudio.onended = voiceAudio.onerror = voiceAudio.onplaying = voiceAudio.onwaiting = null;
   speaking = false; $$('.speaking').forEach(x => x.classList.remove('speaking'));
   showCaption(null);
   if (!keepAuto) stopAuto();
   setListenUI();
+}
+// 재생 단추의 일시정지·이어 듣기: 노래 중이면 노래를, 아니면 낭독을 그 자리에서 세운다. 배경음악은 멈춘 동안 서서히 내려간다
+function pauseSpeech() {
+  if (song.on) { if (song.timer) { clearTimeout(song.timer); song.timer = 0; song.held = true; } song.audio.pause(); }
+  else if (speechCtl) speechCtl.pause();
+  else { stopSpeech(); return; }
+  paused = true; speaking = false; setListenUI();
+}
+function resumeSpeech() {
+  paused = false; speaking = true; setListenUI();
+  if (song.on) { if (song.held) { song.held = false; songEnd(song.token); } else song.audio.play().catch(() => songEnd(song.token)); }
+  else speechCtl?.resume();
 }
 function stopAuto() { autoOn = false; clearTimeout(autoTimer); promptThen = null; setListenUI(); }
 
@@ -1220,11 +1248,11 @@ async function songPlay(done) {
   a.currentTime = 0; a.onended = a.onerror = () => songEnd(tk);
   a.play().catch(() => songEnd(tk));
   song.k = -2;
-  const tick = () => {
-    if (tk !== song.token) return;
-    if (times) { const now = a.currentTime + 0.15; let k = -1; times.forEach((x, i) => { if (x <= now) k = i; }); if (k !== song.k) { song.k = k; lyricShow(k, want, e.title); } }
-    song.raf = requestAnimationFrame(tick);
-  };
+  // 부르는 줄 맞추기: 화면 그리기(rAF)는 다른 창에 가 있는 동안 멈추므로 소리 쪽 시각 알림(timeupdate)으로도 맞추고,
+  // 돌아오면 곧바로 다시 맞춘다 (다른 창에 다녀오면 멈췄던 줄이 잠깐 남아 있었다 — 사용자)
+  const sync = () => { if (tk !== song.token || !times) return; const now = a.currentTime + 0.15; let k = -1; times.forEach((x, i) => { if (x <= now) k = i; }); if (k !== song.k) { song.k = k; lyricShow(k, want, e.title); } };
+  song.sync = sync; a.ontimeupdate = sync;
+  const tick = () => { if (tk !== song.token) return; sync(); song.raf = requestAnimationFrame(tick); };
   tick();
 }
 // 노래는 R2에서 흘려 받아 처음 소리가 나기까지 몇 초 걸렸다 — 장면을 열 때(노래 앞 낭독을 읽는 동안) 미리 받아 둔다
@@ -1238,7 +1266,7 @@ async function songWarm(i) {
 }
 function songOff() {
   cancelAnimationFrame(song.raf); clearTimeout(song.timer); song.timer = 0;
-  song.audio.pause(); song.audio.onended = song.audio.onerror = null;
+  song.audio.pause(); song.audio.onended = song.audio.onerror = song.audio.ontimeupdate = null; song.sync = null;
   const ov = $('#lyricsOv'); if (ov) { ov.classList.remove('on'); setTimeout(() => { if (!ov.classList.contains('on')) ov.hidden = true; }, 800); }
   $$('#scene [data-ln].speaking').forEach(p => p.classList.remove('speaking'));
   song.on = false;
@@ -1734,7 +1762,7 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   $('#prev').onclick = () => go(idx - 1);
   $('#next').onclick = () => go(idx + 1);
   $('#skip').onclick = () => go(idx + 1);
-  $('#listen').onclick = () => { if (speaking) stopSpeech(); else { stopAuto(); speakScene(() => { if (idx === EVENTS.length - 1) endJourney(true); }); } };
+  $('#listen').onclick = () => { if (speaking) pauseSpeech(); else if (paused) resumeSpeech(); else { stopAuto(); speakScene(() => { if (idx === EVENTS.length - 1) endJourney(true); }); } };
   // stopSpeech가 스위치를 autoOn(=false)으로 되돌리므로 켠 상태를 먼저 읽어 둔다.
   // 이야기를 읽는 중에는 켜도 꺼도 낭독을 끊지 않는다: 켜면 끝난 뒤 다음 장소로(startAuto), 끄면 이 장면만 마저 읽고 멈춘다
   $('#auto').onchange = () => {
