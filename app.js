@@ -1473,6 +1473,8 @@ function bgmStop(s) {
 // 낭독 상태가 바뀔 때마다 (setListenUI)
 function bgmFollow() {
   $('#music')?.setAttribute('aria-pressed', String(bgmOn()));
+  // 일시정지: 배경음악도 곧바로(0.4초) 줄여 그 자리에 세우고, 다시 틀면 그 자리에서 이어 올린다 (예전엔 4.5초 동안 천천히 내려가 안 멈춘 듯했다 — 사용자)
+  if (paused && bgmCue && bgmCtx) { const p = bgmPlayers[bgmCur], go = ++bgmGo; bgmRamp(p, 0, 0.4); setTimeout(() => { if (go === bgmGo && paused) { p.hold = true; p.el.pause(); } }, 500); return; }
   const cue = bgmOn() && speaking && EVENTS ? evAt(idx)?.music : null;
   if (!cue) { if (bgmCue) bgmStop(bgmOn() ? BGM.stop : 1); return; } // 음악 단추로 끈 때는 빨리
   if (!bgmReady()) return;
