@@ -1658,6 +1658,7 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   const quick = !!d.journey?.quick; // 전도용(기쁜 소식): 첫 화면 없이 늘 첫 장면부터 — 건네받은 사람이 곧바로 보게
   document.body.classList.toggle('stage-only', !!d.journey?.stageOnly);
   document.body.classList.toggle('no-3d', !!d.journey?.no3d); // 시편: 3D 미니어처 없이 지도와 가사만
+  if (d.journey?.no3d) { fitMode = 'all'; $('#fitAll').classList.add('active'); $('#fitNow').classList.remove('active'); } // 무대가 없으니 처음부터 전체 경로로
   $('.tabs [data-view="quiz"]').hidden = !EVENTS.some(e => e.quiz); // 퀴즈가 없는 여정(시편) // 지도 없이 무대만 (기쁜 소식 — 지도와 도성 모형이 뒤에 깔리면 시선이 흩어졌다)
   idx = hashOk ? fromHash : fromLast >= 0 && !quick ? fromLast : firstIdx();
   view = { x: 0, y: 0, w: W, h: H }; applyView();
