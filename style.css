@@ -755,3 +755,19 @@ body.intro-open .intro,body.intro-open .intro *{animation-play-state:running}
 }
 .paint-logo span{font:600 17px var(--serif);color:#5a4a3c;text-shadow:0 0 14px #fdf8ec}
 @media (min-width:901px){.paint-logo{left:calc((100% - min(460px,42%)) / 2)}}
+
+/* 시편: 부르는 줄을 지도 위 가운데에 크게, 앞뒤 줄은 흐리게 (app.js songPlay) */
+.lyrics-ov{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(760px,90%);z-index:6;pointer-events:none;text-align:center;opacity:0;transition:opacity 1s ease}
+.lyrics-ov.on{opacity:1}
+.lyrics-ov p{margin:0;font-family:var(--serif);color:#fbf1d8;text-shadow:0 2px 16px rgba(0,0,0,.9),0 0 34px rgba(0,0,0,.7);word-break:keep-all;transition:opacity .4s}
+.lyrics-ov .cur{font-weight:700;font-size:clamp(24px,3.6vw,40px);line-height:1.45;margin:.35em 0}
+.lyrics-ov .cur.head{font-size:clamp(18px,2.4vw,26px);color:#f0d79a}
+.lyrics-ov .prev,.lyrics-ov .next{font-size:clamp(15px,1.8vw,20px);line-height:1.5;opacity:.5;min-height:1.5em}
+.lyrics-ov::before{content:'';position:absolute;inset:-40px -60px;z-index:-1;background:radial-gradient(ellipse at center,rgba(10,8,6,.55),transparent 70%)}
+@media (min-width:901px){.lyrics-ov{left:calc((100% - min(460px,42%)) / 2);width:min(640px,54%)}} /* 넓은 화면은 오른쪽 장면 카드를 비켜서 */
+.lyrics{padding:4px 2px}
+.lyrics h5{margin:14px 0 4px;font:600 11px var(--sans);letter-spacing:.12em;color:#7f735f}
+.lyrics p{margin:0;padding:2px 8px;border-radius:8px;font:16px/1.75 var(--serif);transition:background .3s,color .3s}
+.lyrics p.speaking{background:rgba(217,180,106,.16);color:#f0d79a}
+.no-3d #mode3d{display:none}
+@media (max-width:900px){.lyrics-ov{top:30%;width:92%}} /* 폰은 아래 장면 카드가 반쯤 덮으므로 보이는 지도 칸 가운데로 */

@@ -25,17 +25,41 @@ BOOKS = {
     'ja': ['マタ', 'マコ', 'ルカ', 'ヨハ', '使', '創', '出', 'レビ', '民', '申', 'ヨシュ', 'ロマ', '一コリ', 'エフェ', '黙', 'イザ', 'エレ', '箴'],
 }
 
+# 시편: 노래 목록(songs.json — 관리자 페이지의 시편 노래 작업실이 고치는 원본)에서 장면을 만든다. 장면 하나 = 노래 하나:
+# 이야기는 노래 앞 낭독 한 문단, song은 가사(작업실에서 올린 노래와 가사 시간은 앱이 assets/psalms/<id>.json에서 받는다).
+# 말씀 탭 자리에는 후렴 첫머리를 둔다(시편 장·편 표시). 묶음이 시대(periods)
+SONG_COLORS = ['#c8963e', '#b5503f', '#7d6aa8', '#c9a227', '#3f8fa0', '#8c6a62', '#a83f3f', '#d6a441']
+def songs_scenes(src):
+    groups = src['groups']
+    periods = [{'id': 's%s' % g, 'name': n, 'en': 'PSALMS ' + ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'][int(g) - 1], 'span': '시편', 'color': SONG_COLORS[(int(g) - 1) % len(SONG_COLORS)]} for g, n in groups.items()]
+    skeleton, content = [], {}
+    for s in src['songs']:
+        if not s.get('lyrics'):
+            continue
+        lines = s['lyrics'].split('\n')
+        sung = [x.strip() for x in lines if x.strip() and not re.match(r'^\[.*\]$', x.strip())]
+        ch = lines.index(next((x for x in lines if x.strip().lower().startswith('[chorus')), lines[0]))
+        hook = [x.strip() for x in lines[ch + 1:] if x.strip() and not x.strip().startswith('[')][:2] or sung[:2]
+        skeleton.append({'id': s['id'], 'p': 's%s' % s['group'], 'when': '시편 %s편' % s['psalm'], 'year': 0, 'place': s['place'], 'title': '%s편 · %s' % (s['psalm'], s['title']), 'refs': {}})
+        content[s['id']] = {'id': s['id'], 'subtitle': s['setting'], 'story': [s['intro']], 'song': {'psalm': s['psalm'], 'lyrics': s['lyrics']},
+                            'words': [{'who': '시편', 'text': ' '.join(hook), 'ref': '시 %s편' % s['psalm']}]}
+    return skeleton, periods, content
+
 def build(jid, src, out_dir):
     """src의 원본으로 out_dir에 data.json·data.<lang>.json을 쓴다"""
     load = lambda n: loadf(os.path.join(src, n))
     has = lambda n: os.path.exists(os.path.join(src, n))
-    skeleton, places, periods = load('skeleton.json'), load('places.json'), load('periods.json')
     meta = load('journey.json') if has('journey.json') else {}  # 여정마다 다른 것: 주인공 이름(main), 대조표 여부(harmony) 등
     main = meta.get('main', '예수')
-    content = {}
-    for f in sorted(glob.glob(os.path.join(src, 'content-*.json'))):
-        for c in loadf(f):
-            content[c['id']] = c
+    places = load('places.json')
+    if has('songs.json'):
+        skeleton, periods, content = songs_scenes(load('songs.json'))
+    else:
+        skeleton, periods = load('skeleton.json'), load('periods.json')
+        content = {}
+        for f in sorted(glob.glob(os.path.join(src, 'content-*.json'))):
+            for c in loadf(f):
+                content[c['id']] = c
     images = load('images.json') if has('images.json') else {}
     music = load('music.json')['scenes'] if has('music.json') else {}
     # 그림도 주소에 내용의 짧은 해시를 붙인다(?v=…): 그림은 7일씩 캐시되어, 같은 이름으로 다시 그리면 앱이 예전 그림을 보였다
@@ -50,7 +74,7 @@ def build(jid, src, out_dir):
         if os.path.exists(mp):
             # 곡 이름 뒤에 파일 내용의 짧은 해시를 붙인다(곡?v=…): 곡을 다시 만들어도 이름이 같아 브라우저가 예전 곡을 7일씩 캐시로 틀었다
             e['music'] = '%s?v=%s' % (music[s['id']], hashlib.md5(open(mp, 'rb').read()).hexdigest()[:8])
-        assert len(e['story']) == 3 and e['words'] and ('quiz' not in e or len(e['quiz']['options']) == 4), s['id']  # 프롤로그는 퀴즈 없음
+        assert len(e['story']) == (1 if 'song' in e else 3) and e['words'] and ('quiz' not in e or len(e['quiz']['options']) == 4), s['id']  # 프롤로그는 퀴즈 없음
         # 한국어 이야기의 문단별 문장 수: 무대 대본·장면 안 이동은 한국어 문장 번호(p1.2 등)에 걸려 있다.
         # 번역은 문장 수가 달라, 앱이 번역 문장의 자리를 이 수에 비례해 한국어 문장 번호로 바꿔 무대를 움직인다 (app.js speakQueue)
         e['sn'] = [len([x for x in re.findall(r'[^.?!…。！？]+[.?!…。！？]*["”’」』]?\s*', p) if x.strip()]) or 1 for p in e['story']]
@@ -64,7 +88,7 @@ def build(jid, src, out_dir):
     journey = {'id': jid, 'harmony': meta.get('harmony', jid == 'jesus'), 'voice': meta.get('voice', jid == 'jesus'), 'series': series,
                **({'map': meta['map']} if 'map' in meta else {}),
                **({'main': main} if isinstance(main, list) else {}),  # 말하는 이가 여럿인 여정(잠언): 앱이 말씀 카드에 '예수' 대신 그 이름을 쓴다  # 여정의 지도 설정(그린 범위·지역 이름 등)
-               **{k: meta[k] for k in ('quick', 'next', 'odo', 'sponsor', 'where', 'rate', 'narrator', 'stageOnly') if k in meta}}  # quick: 첫 화면 없이 첫 장면부터, next: 끝 화면에서 이어 걸을 여정, odo·sponsor: false면 걸은 거리·후원 안내를 숨김, where: false면 낭독에서 장소·때와 걸어가는 안내를 읽지 않음, narrator: 해설 성우('eleven:<id>' 일레븐랩스), stageOnly: 지도 없이 어두운 바탕에 무대만 크게 (GoodNews)
+               **{k: meta[k] for k in ('quick', 'next', 'odo', 'sponsor', 'where', 'rate', 'narrator', 'stageOnly', 'koOnly', 'no3d') if k in meta}}  # quick: 첫 화면 없이 첫 장면부터, next: 끝 화면에서 이어 걸을 여정, odo·sponsor: false면 걸은 거리·후원 안내를 숨김, where: false면 낭독에서 장소·때와 걸어가는 안내를 읽지 않음, narrator: 해설 성우('eleven:<id>' 일레븐랩스), stageOnly: 지도 없이 어두운 바탕에 무대만 크게 (GoodNews)
     # 그림 장면(paints)의 그림 해시: app.js paintSrc가 주소 뒤에 붙인다. '왜 기독교인가' 아이콘도 (앱의 시리즈 목록 맨 끝)
     pv = {}
     for e in events:
@@ -90,8 +114,9 @@ def build(jid, src, out_dir):
     print('[%s]' % jid, len(events), 'events,', sum(1 for e in events if 'img' in e), 'with images')
 
     # 번역본: 한국어 데이터를 바탕으로 글만 갈아 끼운다. 빠진 글은 한국어로 남겨 두고 알려 준다
+    # 한국어 전용 여정(시편, koOnly)은 번역본을 만들지 않는다 — 앱이 이 여정에서는 늘 한국어로 연다
     ui_tr = lambda lang: loadf(os.path.join(here, 'i18n', 'ui.%s.json' % lang))
-    for lang in LANGS[1:]:
+    for lang in ([] if meta.get('koOnly') else LANGS[1:]):
         f = os.path.join(src, 'i18n', lang + '.json')
         tr, miss = (loadf(f) if os.path.exists(f) else {}), []
         o = copy.deepcopy(out)
@@ -122,10 +147,14 @@ def build(jid, src, out_dir):
 
 src_of = lambda jid: here if jid == 'jesus' else os.path.join(here, 'journeys', jid)
 for j in series:  # 원본이 있어 data가 만들어지는 여정 표시 (관리자의 여정 고르기는 이것만 보인다)
-    j['built'] = os.path.exists(os.path.join(src_of(j['id']), 'skeleton.json'))
-    if j['built']:  # 장면 수(프롤로그 빼고): 첫 화면의 여정 카드에 쓴다
-        sk = loadf(os.path.join(src_of(j['id']), 'skeleton.json'))
-        j['n'] = len(sk) - (1 if sk and sk[0]['id'].endswith('00') else 0)
+    songs_src = os.path.join(src_of(j['id']), 'songs.json')
+    j['built'] = os.path.exists(os.path.join(src_of(j['id']), 'skeleton.json')) or os.path.exists(songs_src)
+    if j['built']:  # 장면 수(프롤로그 빼고): 첫 화면의 여정 카드에 쓴다 (시편은 가사가 있는 노래 수)
+        if os.path.exists(songs_src):
+            j['n'] = sum(1 for x in loadf(songs_src)['songs'] if x.get('lyrics'))
+        else:
+            sk = loadf(os.path.join(src_of(j['id']), 'skeleton.json'))
+            j['n'] = len(sk) - (1 if sk and sk[0]['id'].endswith('00') else 0)
 for j in series:
     if j['built']:  # 아직 원본이 없는 여정(준비 중)은 건너뛴다
         build(j['id'], src_of(j['id']), root if j['id'] == 'jesus' else os.path.join(root, 'j', j['id']))
