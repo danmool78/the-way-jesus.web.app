@@ -760,12 +760,13 @@ body.intro-open .intro,body.intro-open .intro *{animation-play-state:running}
 /* 시편: 부르는 줄을 지도 위 가운데에 크게, 앞뒤 줄은 흐리게 (app.js songPlay) */
 .lyrics-ov{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(760px,90%);z-index:6;pointer-events:none;text-align:center;opacity:0;transition:opacity 1s ease}
 .lyrics-ov.on{opacity:1}
-.lyrics-ov p{margin:0;font-family:var(--serif);color:#fbf1d8;text-shadow:0 2px 16px rgba(0,0,0,.9),0 0 34px rgba(0,0,0,.7);word-break:keep-all;transition:opacity .4s}
+.lyrics-ov p{margin:0;font-family:var(--serif);color:#fbf1d8;text-shadow:0 1px 3px rgba(0,0,0,.6),0 0 24px rgba(0,0,0,.45);word-break:keep-all;transition:opacity .4s}
 .lyrics-ov .cur{font-weight:700;font-size:clamp(24px,3.6vw,40px);line-height:1.45;margin:.35em 0}
 .lyrics-ov .cur.head{font-size:clamp(18px,2.4vw,26px);color:#f0d79a}
 .lyrics-ov .prev,.lyrics-ov .next{font-size:clamp(15px,1.8vw,20px);line-height:1.5;opacity:.72;min-height:1.5em}
-/* 가사 뒤 바탕: 둥근 검은 얼룩은 어설퍼 보였다(사용자) — 지도 폭 전체에 위아래로 번지는 옅은 띠로, 영화 자막처럼 */
-.lyrics-ov::before{content:'';position:absolute;top:-40px;bottom:-40px;left:-100vw;right:-100vw;z-index:-1;background:linear-gradient(to bottom,transparent,rgba(18,13,8,.64) 22%,rgba(18,13,8,.64) 78%,transparent)}
+/* 노래하는 동안은 바탕 상자 없이 지도를 어둡게 가라앉혀 가사가 떠오르게 (둥근 얼룩·띠는 어설퍼 보였다 — 사용자) */
+.singing #map{filter:brightness(.42) saturate(.6)}
+.singing #map text{opacity:.18}#map text{transition:opacity 1.2s} /* 지명 글씨는 가사와 겹쳐 지저분해 보여 노래하는 동안 거의 지운다 */
 @media (min-width:901px){.lyrics-ov{left:calc((100% - min(460px,42%)) / 2);width:min(640px,54%)}} /* 넓은 화면은 오른쪽 장면 카드를 비켜서 */
 .lyrics{padding:4px 2px}
 .lyrics h5{margin:14px 0 4px;font:600 11px var(--sans);letter-spacing:.12em;color:#7f735f}

@@ -1236,6 +1236,7 @@ async function songPlay(done) {
   const tk = ++song.token, ov = $('#lyricsOv'), want = songLines(e.song.lyrics);
   song.on = true; song.done = done; speaking = true; setListenUI();
   ov.hidden = false; requestAnimationFrame(() => ov.classList.add('on'));
+  document.body.classList.add('singing'); // 지도를 어둡게 (style.css .singing)
   lyricShow(-1, want, e.title);
   const info = await songInfo(e.id);
   if (tk !== song.token) return;
@@ -1267,6 +1268,7 @@ async function songWarm(i) {
 function songOff() {
   cancelAnimationFrame(song.raf); clearTimeout(song.timer); song.timer = 0;
   song.audio.pause(); song.audio.onended = song.audio.onerror = song.audio.ontimeupdate = null; song.sync = null;
+  document.body.classList.remove('singing');
   const ov = $('#lyricsOv'); if (ov) { ov.classList.remove('on'); setTimeout(() => { if (!ov.classList.contains('on')) ov.hidden = true; }, 800); }
   $$('#scene [data-ln].speaking').forEach(p => p.classList.remove('speaking'));
   song.on = false;
