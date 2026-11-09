@@ -1236,6 +1236,7 @@ async function songPlay(done) {
   const tk = ++song.token, ov = $('#lyricsOv'), want = songLines(e.song.lyrics);
   song.on = true; song.done = done; speaking = true; setListenUI();
   ov.hidden = false; requestAnimationFrame(() => ov.classList.add('on'));
+  document.body.classList.add('singing'); // 지도를 어둡게 (style.css .singing)
   lyricShow(-1, want, e.title);
   const info = await songInfo(e.id);
   if (tk !== song.token) return;
@@ -1250,7 +1251,8 @@ async function songPlay(done) {
   song.k = -2;
   // 부르는 줄 맞추기: 화면 그리기(rAF)는 다른 창에 가 있는 동안 멈추므로 소리 쪽 시각 알림(timeupdate)으로도 맞추고,
   // 돌아오면 곧바로 다시 맞춘다 (다른 창에 다녀오면 멈췄던 줄이 잠깐 남아 있었다 — 사용자)
-  const sync = () => { if (tk !== song.token || !times) return; const now = a.currentTime + 0.15; let k = -1; times.forEach((x, i) => { if (x <= now) k = i; }); if (k !== song.k) { song.k = k; lyricShow(k, want, e.title); } };
+  const sync = () => { if (tk !== song.token) return; document.body.classList.toggle('singing', !(a.duration - a.currentTime < 7)); if (!times) return; // 끝나기 7초 전부터 지도가 서서히 밝아진다
+    const now = a.currentTime + 0.15; let k = -1; times.forEach((x, i) => { if (x <= now) k = i; }); if (k !== song.k) { song.k = k; lyricShow(k, want, e.title); } };
   song.sync = sync; a.ontimeupdate = sync;
   const tick = () => { if (tk !== song.token) return; sync(); song.raf = requestAnimationFrame(tick); };
   tick();
@@ -1267,6 +1269,7 @@ async function songWarm(i) {
 function songOff() {
   cancelAnimationFrame(song.raf); clearTimeout(song.timer); song.timer = 0;
   song.audio.pause(); song.audio.onended = song.audio.onerror = song.audio.ontimeupdate = null; song.sync = null;
+  document.body.classList.remove('singing');
   const ov = $('#lyricsOv'); if (ov) { ov.classList.remove('on'); setTimeout(() => { if (!ov.classList.contains('on')) ov.hidden = true; }, 800); }
   $$('#scene [data-ln].speaking').forEach(p => p.classList.remove('speaking'));
   song.on = false;
@@ -1734,6 +1737,13 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   const quick = !!d.journey?.quick; // 전도용(기쁜 소식): 첫 화면 없이 늘 첫 장면부터 — 건네받은 사람이 곧바로 보게
   document.body.classList.toggle('stage-only', !!d.journey?.stageOnly);
   document.body.classList.toggle('no-3d', !!d.journey?.no3d); // 시편: 3D 미니어처 없이 지도와 가사만
+  // 왼쪽 위 로고와 시작 화면 로고도 여정의 색으로 (설치 아이콘 j/<여정>/icon.svg에서 바탕 사각형을 빼고 해 둘레만 잘라 쓴다 — assets/logo.svg와 같은 짜임)
+  if (JOURNEY !== 'jesus') $('.install-icon').src = `j/${JOURNEY}/icon-192.png`; // 설치 안내 창의 아이콘도 그 여정의 것
+  if (JOURNEY !== 'jesus') fetch(`j/${JOURNEY}/icon.svg`).then(r => r.ok ? r.text() : null).then(svg => {
+    if (!svg) return;
+    const src = 'data:image/svg+xml,' + encodeURIComponent(svg.replace(/<rect[^>]*\/>/, '').replace(/viewBox="[^"]*"/, 'viewBox="64 64 384 384"'));
+    $$('.logo, .intro-logo, .paint-logo img').forEach(img => { img.src = src; });
+  }).catch(() => {});
   if (d.journey?.no3d) { fitMode = 'all'; $('#fitAll').classList.add('active'); $('#fitNow').classList.remove('active'); } // 무대가 없으니 처음부터 전체 경로로
   $('.tabs [data-view="quiz"]').hidden = !EVENTS.some(e => e.quiz); // 퀴즈가 없는 여정(시편) // 지도 없이 무대만 (기쁜 소식 — 지도와 도성 모형이 뒤에 깔리면 시선이 흩어졌다)
   idx = hashOk ? fromHash : fromLast >= 0 && !quick ? fromLast : firstIdx();
