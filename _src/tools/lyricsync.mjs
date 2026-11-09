@@ -1,6 +1,6 @@
 // 시편 노래의 가사 시간 맞추기: assets/psalms/<id>.json의 src(Cloudflare R2에 올린 노래)를 받아 Gemini에 들려 주고,
 // 가사 줄마다 부르기 시작하는 시각을 받아 같은 json의 lines([{ t, text }])에 by: 'auto'로 쓴다.
-// 작업실(studio.html)에서 노래를 새로 올렸거나(by: 'pending') 가사가 바뀐 노래만 다시 맞춘다. 탭으로 맞춘 것(by: 'tap')은 가사가 그대로면 두고,
+// 작업실(studio.html)에서 노래를 새로 올렸거나(by: 'pending') 가사의 줄 수가 바뀐 노래만 다시 맞춘다(줄 수가 같으면 글만 바꾼다). 탭으로 맞춘 것(by: 'tap')은 가사가 그대로면 두고,
 // id를 주면 그 노래는 다시 맞춘다. 쓰는 법: GEMINI_API_KEY=… node _src/tools/lyricsync.mjs [id…]   (배포 작업 firebase-hosting-merge.yml이 돌린다)
 import { readFile, writeFile, mkdtemp } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -51,6 +51,11 @@ for (const s of songs) {
   const info = JSON.parse(await readFile(out, 'utf8')), lines = sungLines(s.lyrics);
   const same = info.by !== 'pending' && info.lines?.length === lines.length && info.lines.every((l, i) => l.text === lines[i]);
   if (same && !only.length) continue;
+  // 줄 수는 그대로이고 글자만 고쳤으면 시각은 두고 글만 바꾼다 (탭으로 맞춘 것도 지키고, 노래를 다시 들을 필요가 없어 바로 끝난다)
+  if (!only.length && info.by !== 'pending' && info.lines?.length === lines.length) {
+    await writeFile(out, JSON.stringify({ ...info, lines: lines.map((text, i) => ({ t: info.lines[i].t, text })) }, null, 1) + '\n');
+    console.log(`${s.id} 시편 ${s.psalm}: 줄 수가 같아 글만 바꿈`); made++; continue;
+  }
   const r = await fetch(info.src);
   if (!r.ok) { console.warn(`::warning::${s.id} 노래를 받지 못했습니다 (${r.status} ${info.src})`); continue; }
   const buf = Buffer.from(await r.arrayBuffer()), mp3 = `${tmp}/${s.id}.mp3`;

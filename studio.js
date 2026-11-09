@@ -163,10 +163,25 @@ function bindEdit(el, s) {
         content: toB64(JSON.stringify(j, null, 1) + '\n'), sha: fresh.sha, branch: BRANCH }) });
       Object.assign(s, to); el.classList.remove('dirty'); undo.hidden = true;
       $('.tag', el).classList.toggle('ok', !!s.lyrics);
-      st.className = 'state edstate ok'; st.textContent = `저장했습니다 ✓${lyricsChanged && dir[`${s.id}.json`] ? ' — 가사가 바뀌어 몇 분 뒤 가사 시간을 다시 맞춥니다' : ''}`;
-      summary();
+      st.className = 'state edstate ok'; st.textContent = '저장했습니다 ✓ — 앱에 반영하는 중… (몇 분)';
+      summary(); waitLive(s, st);
     } catch (err) { save.disabled = false; st.className = 'state edstate bad'; st.textContent = `저장하지 못했습니다: ${err.message}`; }
   };
+}
+
+// 저장한 글이 배포되어 앱(j/psalms/data.json)에 실릴 때까지 기다렸다가 알린다 — 가사 자막 시간도 같은 배포에서 함께 바뀐다
+async function waitLive(s, st) {
+  const tk = st.dataset.tk = String(Date.now());
+  for (let n = 0; n < 60; n++) {
+    await new Promise(r => setTimeout(r, 15000));
+    if (st.dataset.tk !== tk) return; // 그사이 또 저장했다
+    try {
+      const d = await fetch(`j/psalms/data.json?v=${Date.now()}`, { cache: 'no-store' }).then(r => r.json());
+      const e = d.events.find(x => x.id === s.id);
+      if (e && (e.song?.lyrics || null) === (s.lyrics || null)) { st.textContent = '저장했습니다 ✓ — 앱에 반영했습니다 (가사·자막)'; return; }
+    } catch { /* 다시 */ }
+  }
+  st.textContent = '저장했습니다 ✓ — 반영이 늦습니다 (GitHub Actions를 확인하세요)';
 }
 
 async function upload(el, s, file) {
