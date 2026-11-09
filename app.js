@@ -947,8 +947,9 @@ document.addEventListener('visibilitychange', introReset);
 // 설치 창 이벤트는 페이지를 연 직후에 올 수 있어 일찍 받아 둔다 (첫 화면의 '앱으로 설치하기'가 쓴다)
 let installEv = null;
 addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEv = e; });
-// 화면을 내리면(다른 앱·홈 화면) 낭독도 멈춘다 — 배경음악(Web Audio)은 iOS가 저절로 멈추는데 녹음 낭독(<audio>)만 혼자 계속 읽기 때문
-document.addEventListener('visibilitychange', () => { if (document.hidden && speaking) stopSpeech(); });
+// 다른 창·앱으로 가도 낭독·노래는 멈추지 않는다 (예전엔 멈춰서 돌아오면 그 장면을 처음부터 다시 들어야 했다 — 사용자, 2026-11).
+// iOS는 뒤에 있는 동안 배경음악(Web Audio)을 재우므로, 돌아오면 깨운다
+document.addEventListener('visibilitychange', () => { if (!document.hidden && bgmCtx && bgmCue && bgmCtx.state !== 'running') bgmCtx.resume().catch(() => {}); });
 
 /* ---------- 낭독 (Web Speech API) ---------- */
 const synth = window.speechSynthesis;
