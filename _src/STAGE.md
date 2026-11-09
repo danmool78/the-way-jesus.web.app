@@ -14,6 +14,7 @@
 | `stage/moses.js` | 모세와 여호수아 여정의 대본(MOSES) — scenes.js가 SCRIPTS에 합친다. 장면 id(m01…)는 여정마다 겹치지 않게 |
 | `stage/goodnews.js` | 기쁜 소식 여정의 대본(GOODNEWS, g01–g04) |
 | `stage/proverbs.js` | 잠언 여정의 대본(PROVERBS, p01…) — 거리 무대 |
+| `stage/david.js`, `stage/david/` | 다윗 여정의 대본(DAVID, d01–d39) — 묶음마다 파일 하나(`a.js` d01–d10, `b.js` d11–d20, `c.js` d21–d30, `d.js` d31–d39)를 david.js가 합친다. 다윗 여정에만 쓰는 소품은 `stage/david/props.js`(MAKERS에 더함) |
 | `stage/street.js` | 거리 무대의 표: 세트 이름 → 만들기(STREETS), 분위기마다 하늘빛(SKIES) |
 | `stage/street/view.js` | 거리 무대를 화면 가득 그리는 쪽(세트 바꾸기·하늘·카메라 자리·카드 비켜 그리기) — stage.js가 `createStreet`로 만들어 쓴다 |
 | `stage/street/kit.js` | 거리 세트의 공통 도구: 축척 `M`, 캔버스 결(돌·회벽·포석·흙), `block`·`many`(InstancedMesh)·`overlay` |
@@ -116,6 +117,25 @@ e02: {
 - 멀리까지 보이도록 거리 무대에서는 카메라의 far를 400으로 늘린다(미니어처 무대는 50 — 그대로 두면 성벽이 잘렸다).
 - 장면 사이 사람들(장사꾼·장로)은 `gaze: false` — 말하는 사람이 멀리 있어도 모두 돌아보면 어색했다. 말하는 사람(speak)은 한 장면에 한 명만 두어야 시선이 엉키지 않는다.
 - 세트만 따로 보는 도구: `/_src/tools/street.html?view=eye|high|low&env=day|dawn|dusk`.
+
+### 다윗 여정 (stage/david.js, stage/david/)
+- **죽음과 폭력은 그리지 않는다.** 사자·곰은 양을 놓고 달아나 사라질 뿐(치는 모습 없음). 골리앗은 자세 `topple`로 쓰러지며 곧 `show: 0`으로 사라지고, 벤 머리는 그리지 않는다 — 다윗의 손에 든 칼(item `sword`)만. 놉의 제사장들, 사울의 죽음, 우리아, 전염병은 낭독과 빛·애도(mourn·kneel)로만. 압살롬은 상수리나무(`oak`)에 매달린 모습을 그리지 않는다 — 노새(`mule`)가 빠져나가고 빈 나무와 빛만.
+- **밧세바 장면(d28–29)**: 해 질 녘 왕궁 지붕(`roof`) 위에 홀로 선 다윗, 멀리 단정히 베일을 쓴 모습 — 목욕하는 사람은 그리지 않는다. 나단은 다윗과 마주 서서 말한다.
+- 하나님은 모습 없이 빛(`beam`)으로만. 말씀하실 때 듣는 사람 위에 빛을 내리고 그 사람은 look-up·listen.
+- **블레셋 사람과 이스라엘 사람을 한눈에 가른다**(모세 여정의 애굽 사람처럼): 블레셋은 맨 윗몸에 허리치마, 빙 둘러 선 깃털 관(`plume`), 띠 무늬 놋 갑옷(`armor`). 이스라엘 병사는 긴 옷에 둥근 가죽 투구(`cap`).
+- 다윗은 나이마다 다른 유형을 `show`로 바꿔 낀다: 소년 `davidY`(불그레한 얼굴 — 피부 4번, 목자의 막대) → 사울의 군복을 입어 본 소년 `davidA` → 젊은 용사 `davidW`(짧은 수염, 칼집) → 왕 `davidK` → 늙은 왕 `davidO`(흰 머리). 붉은 갈색 머리와 붉은 겉옷으로 이어지게.
+- 예수 때 예루살렘 도성 모형은 이 여정에서 꺼져 있다(journey.json `map.noCity`). 예루살렘 장면은 `zion`(다윗성)을 뒤에 세운다.
+- **날아가는 창·화살**(`spear`): 처음 자리를 던지는 사람의 손에 두고 `show: 0`, 던질 때 `['spear', 'fly', { show: 1 }]` 다음 `{ x, z, delay: 150 }`로 보내고 닿을 즈음 `'stuck'`(벽에 박혀 떤다)이나 `'ground'`(땅에 꽂혀 선다). `speed`(창 3쯤)를 주어야 날아가고, 앞(+x)이 촉이라 `rot`로 처음 방향을 맞춘다. 방 안에서는 `len: 0.8`, 높이 `y: 0.8`(머리 위) — 사람 높이로 날리면 손에 든 창으로 보였다. 궁 안(`hall`)의 뒷벽 앞면은 z ≈ 소품 z − 0.64, 창의 가운데를 촉에서 len/2만큼 물려 둔다. 던지는 사람은 자세 `hurl`(손의 창이 숨는다).
+- 사울은 왕좌에 앉을 때 cast 옵션 `{ y: 0.2, pose: 'sit' }`(hall 왕좌의 자리 높이), 일어설 때 `{ y: 0 }`.
+- intro에서 분위기도 되돌린다(`['@env', …]`) — enter나 앞 낭독의 밤·해 질 녘이 남았다. 상태가 바뀌는 소품(집 'rope'·제단 'fire')도 intro에서 되돌린다(david.js의 자동 되돌림은 자리와 show만).
+
+인물 (TYPES, people.js의 '다윗 여정' 묶음): davidY · davidA · davidW · davidK · davidO, samuel(흰 머리 선지자, 지팡이), jesse, eliab(키 큰 맏형), brother · brother2(형들), saul(키 1.1, 금관, 창) · saulS(창 없이 — 잠든 사울·엔게디), jonathan(흰 옷에 청록 겉옷, 칼집), michal · abigail · bathsheba(늘씬, 베일), ahimelech · zadok(에봇과 흉패) · abiathar · levite(법궤를 멘 레위 사람), nathan · gad(선지자), joab · abner(투구·흉갑·창), israelite(창) · israelite2(칼), goliath(키 1.55, 놋 투구에 깃털 관, 비늘 갑옷, 큰 창) · philistine · shieldman(방패 든 자), achish(블레셋 왕), absalom · absalomK(금관), ahithophel, hushai, shimei, mephibosheth(자세 sit로), solomon(젊은 왕), adonijah, nabal, doeg, uriah, araunah, lad(화살 줍는 아이)
+새 꾸밈: `cap`(둥근 투구, `capMetal`이면 놋), `plume`(깃털 관), `armor`(띠 무늬 흉갑 색), `sword`(허리의 칼집). 지팡이·창은 키(height)를 따라 커진다.
+새 자세: `play`(수금 타기) · `sling`(물매를 머리 위로 돌림) · `shoot`(활 당김) · `anoint`(뿔의 기름을 부음) · `hurl`(창을 던진 뒤) · `dance`(두 팔 들고 들썩이며 돎 — 소고는 머리 위로) · `topple`(쓰러짐, 깔개 없이) · `embrace`(끌어안음)
+새 손에 드는 것(item): 두 손으로 받쳐 드는 `lyre`(수금) · `cloak`(접은 겉옷), 한 손에 쥐는 `oilhorn`(기름 뿔) · `sling`(물매) · `sword`(뽑은 칼) · `hem`(벤 옷자락) — 오른손, `bow`(활) · `shield`(방패) — 왼손. 한 손 물건을 든 사람은 지팡이를 숨긴다.
+
+소품 (stage/david/props.js): cave(굴 입구 — 앞 +z로 열린 어두운 입구, `color`·`size`) · spear(창·화살 fly/stuck/ground, `arrow`·`len`) · jug(물병) · brook(시냇물과 매끄러운 돌, `len`) · camp(진영의 군막과 깃발, `color`·`flag`·`n`·`span` — 언덕 위에는 `y`로 올린다) · hall(사울의 궁 안: 뒷벽·백향목 기둥·깔개·왕좌 `tx`·등잔대 `lamp`) · tallhouse(두 층 집, idle/lit/rope) · zion(다윗성: 언덕·둘레 성벽·집·왕궁 `palace`·법궤 장막 `tent`, heightAt) · roof(왕궁 지붕 — 올라선 사람은 그 높이에, heightAt) · threshing(타작마당, heightAt) · oak(큰 상수리나무, 낮은 가지는 +x) · mule(노새, deck) · packdonkey(짐 실은 나귀) · lion · bear · arkcart(새 수레에 실은 법궤와 두 소, go/stumble, `speed`를 주면 바퀴가 구른다) · bedidol(침상의 드라빔) · showbread(진설병 상) · ruin(불탄 성읍, smoke/cold)
+그대로 쓰는 것: 제단 altar(idle/fire), 법궤 arkc(멘 궤는 `lift`), 장막 tent(`color`로 흰 휘장), 기혼 샘은 rockspring('flow'), 우물 well, 성문 gate, 나귀 donkey, 왕좌 throne, 빛 beam.
 
 ### 인물 유형 (TYPES)
 jesus, mary, joseph, angel, woman, woman2, mother, anna, john(젊은 제자, 수염 없음), disciple, peter, man, elder, shepherd, magus, magus2, magus3, king, soldier(창), pharisee, child, boyJesus, baptist, tempter, steward, groom, servant, crossed(십자가 위 예수 — 실루엣 전용), thief(실루엣 전용)

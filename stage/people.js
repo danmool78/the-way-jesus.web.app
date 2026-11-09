@@ -1,7 +1,7 @@
 /* 3D 무대 인물: 미니어처 피규어 생성과 자세·동작 */
 import { THREE, mat, DS, lathe, folds, mesh, BACK, SBACK, sphere, glowTexture, damp } from './kit.js';
 
-const SKIN = ['#c99a74', '#b9845d', '#d6ad89', '#a87451'];
+const SKIN = ['#c99a74', '#b9845d', '#d6ad89', '#a87451', '#d89f80']; // 4: 불그레한 얼굴 (소년 다윗, 삼상 16:12)
 // 예수님만 밝은 흰 속옷에 붉은 겉옷을 입는다. 다른 사람(특히 제자들)은 이 짝을 쓰지 않는다
 const TYPES = {
   jesus:    { robe: '#efe7d6', trim: '#a8843f', mantle: '#9b3b2a', hair: '#4a2e1c', beard: true, long: true, sash: '#b08a4e' },
@@ -98,6 +98,52 @@ const TYPES = {
   son:      { robe: '#d8c49c', trim: '#8a6a44', mantle: '#a0503a', hair: '#3a2616', sash: '#8a6a44', skin: 1, height: 0.84 }, // 잠언의 아들 (수염 없는 젊은이, 붉은 겉옷)
   wisdom:   { robe: '#f6f1e4', trim: '#d6a93a', mantle: '#e2c070', veil: true, inner: '#fffaf0', skin: 2, soft: true, slim: true, sash: '#d6a93a', glow: true, height: 0.92 }, // 잠언의 지혜 — 성문에서 외치는 여인(잠 1:20, 8:1–3). 은은한 빛으로 보통 사람과 가른다
   official: { robe: '#2f4f6a', trim: '#d6a93a', mantle: '#c8b48c', hair: '#2b1b10', beard: true, sash: '#d6a93a', skin: 2 }, // 왕의 신하
+  // ---- 다윗 여정 ----
+  // 블레셋 사람은 맨 윗몸에 허리치마, 깃털 관(plume), 띠 무늬 놋 갑옷(armor) — 이스라엘 사람의 긴 옷·머릿수건·가죽 투구(cap)와 한눈에 갈리게.
+  // 다윗은 나이마다 따로: 소년(davidY) → 젊은 용사(davidW) → 왕(davidK) → 늙은 왕(davidO). 붉은 갈색 머리로 이어지게
+  davidY:   { robe: '#d9c49a', trim: '#7a4a2a', hair: '#7a3f22', sash: '#7a4a2a', staff: true, skin: 4, height: 0.82 }, // 소년 목동 다윗: 불그레한 얼굴, 망토 없는 무명 속옷, 목자의 막대 (item: sling·lyre)
+  davidA:   { robe: '#d9c49a', trim: '#7a4a2a', hair: '#7a3f22', sash: '#7a4a2a', cap: '#a88a4a', capMetal: true, armor: '#a88a4a', skin: 4, height: 0.82 }, // 사울의 군복과 놋 투구를 입은 소년 (삼상 17:38 — 맞지 않아 벗는다, show로 davidY와 바꿔 낀다)
+  davidW:   { robe: '#c9b48c', trim: '#7a2a20', mantle: '#8a2e24', hair: '#7a3f22', beard: true, sash: '#7a2a20', sword: true, skin: 4, height: 0.9 }, // 젊은 용사 다윗 (사울의 궁·도망 시절): 짧은 수염, 붉은 겉옷, 허리에 칼
+  davidK:   { robe: '#5a2a5e', trim: '#d6a93a', mantle: '#a8312a', hair: '#6a3a22', beard: true, crown: true, sash: '#d6a93a', skin: 4 }, // 왕 다윗: 자주 옷, 붉은 겉옷, 금관
+  davidO:   { robe: '#5a2a5e', trim: '#d6a93a', mantle: '#a8312a', hair: '#d8d2c6', beard: true, long: true, crown: true, sash: '#d6a93a', skin: 4, height: 0.96 }, // 늙은 왕 다윗 (마지막 장면들): 흰 머리·수염
+  samuel:   { robe: '#e3dccb', trim: '#4a4a6a', mantle: '#4a4a6a', hair: '#e6e1d6', beard: true, long: true, hood: '#efe8d8', band: '#4a4a6a', staff: true, skin: 1, height: 0.95 }, // 늙은 선지자 사무엘: 흰 머리, 짙은 청회색 겉옷 (item: oilhorn)
+  jesse:    { robe: '#8a6f4e', trim: '#5e4a33', mantle: '#c8b48c', hair: '#bfb7aa', beard: true, hood: '#e0d4b8', band: '#5e4a33', staff: true, skin: 1, height: 0.95 }, // 이새: 희끗한 머리, 머릿수건
+  eliab:    { robe: '#6e5a40', trim: '#3e3224', mantle: '#4f6a5a', hair: '#2b1b10', beard: true, sash: '#3e3224', skin: 1, height: 1.06 }, // 맏형 엘리압 (키가 크다 — 삼상 16:7)
+  brother:  { robe: '#8a7350', trim: '#5b4630', mantle: '#7a5a3a', hair: '#3a2616', beard: true, sash: '#5b4630', skin: 1 }, // 다윗의 형들 (아비나답·삼마 …)
+  brother2: { robe: '#7d6446', trim: '#4a3a28', mantle: '#a99069', hair: '#2e1d12', beard: true, sash: '#4a3a28', skin: 3 },
+  saul:     { robe: '#3e3a5a', trim: '#d6a93a', mantle: '#7a2a20', hair: '#1d140c', beard: true, crown: true, spear: true, sash: '#d6a93a', skin: 1, height: 1.1 }, // 사울: 어깨 위만큼 큰 왕(삼상 9:2), 금관, 늘 손에 든 창
+  saulS:    { robe: '#3e3a5a', trim: '#d6a93a', mantle: '#7a2a20', hair: '#1d140c', beard: true, crown: true, sash: '#d6a93a', skin: 1, height: 1.1 }, // 창 없이 (자는 사울 곁에 창을 꽂아 둘 때, 엔게디 굴)
+  jonathan: { robe: '#e3d6b8', trim: '#2f5f7a', mantle: '#2f5f7a', hair: '#3a2616', beard: true, sash: '#2f5f7a', sword: true, skin: 2, height: 0.94 }, // 왕자 요나단: 흰 속옷에 청록 겉옷 (item: bow·cloak)
+  michal:   { robe: '#7a2a4a', trim: '#d6a93a', mantle: '#c9a26a', veil: true, inner: '#f3ece0', skin: 2, soft: true, slim: true, sash: '#d6a93a' }, // 사울의 딸 미갈 (왕실의 자줏빛)
+  abigail:  { robe: '#2f5a5a', trim: '#d6a93a', mantle: '#d8c49a', veil: true, inner: '#f6efe2', skin: 2, soft: true, slim: true, sash: '#d6a93a' }, // 아비가일
+  bathsheba: { robe: '#6a5a7a', trim: '#c9a24a', mantle: '#e6dccb', veil: true, inner: '#f6f1e6', skin: 2, soft: true, slim: true, sash: '#c9a24a' }, // 밧세바 (단정히 베일을 쓴 모습으로만)
+  ahimelech: { robe: '#f6f2e8', trim: '#d6a93a', mantle: '#2f4f8a', hair: '#cfc8bb', beard: true, turban: '#f6f2e8', breast: true, sash: '#9d3328', skin: 1 }, // 놉의 제사장 아히멜렉 (에봇과 흉패)
+  abiathar: { robe: '#f6f2e8', trim: '#2f4f8a', mantle: '#2f4f8a', hair: '#3a2616', beard: true, turban: '#f6f2e8', sash: '#2f4f8a', skin: 1 }, // 아비아달 (살아남은 젊은 제사장)
+  zadok:    { robe: '#f6f2e8', trim: '#d6a93a', mantle: '#2f4f8a', hair: '#8a8274', beard: true, turban: '#f6f2e8', breast: true, sash: '#9d3328', skin: 2 }, // 제사장 사독
+  nathan:   { robe: '#5a6470', trim: '#3a4048', mantle: '#c8bfa8', hair: '#bdb6a8', beard: true, long: true, hood: '#d8d0bc', band: '#3a4048', skin: 1 }, // 선지자 나단
+  gad:      { robe: '#6a5a46', trim: '#3e3224', mantle: '#8a7a5a', hair: '#9a948a', beard: true, long: true, hood: '#cdbb94', band: '#3e3224', staff: true, skin: 1 }, // 선견자 갓
+  joab:     { robe: '#6b5a3a', trim: '#5a2018', mantle: '#5a2018', hair: '#1d140c', beard: true, cap: '#8a6a3a', armor: '#9a7a44', spear: true, sash: '#5a2018', skin: 1, height: 1.02 }, // 군대 장관 요압: 가죽 투구, 놋 흉갑, 창
+  abner:    { robe: '#4a4a3a', trim: '#7a2a20', mantle: '#7a2a20', hair: '#3a2a1c', beard: true, cap: '#7a5a34', armor: '#8a7a54', spear: true, sash: '#7a2a20', skin: 1 }, // 사울의 군대 장관 아브넬
+  israelite: { robe: '#8a6f4e', trim: '#5e4a33', hair: '#2e1d12', beard: true, cap: '#7a5a34', spear: true, sash: '#5e4a33', skin: 1 }, // 이스라엘 병사: 망토 없는 짧은 겉옷, 가죽 투구, 창
+  israelite2: { robe: '#6e5a40', trim: '#4a3a28', hair: '#3a2616', beard: true, cap: '#6a4a2a', sword: true, sash: '#4a3a28', skin: 3 }, // 이스라엘 병사 (칼, item: shield)
+  goliath:  { robe: '#c9b28a', trim: '#7a5a2a', cloth: '#d8c8a8', hair: '#1d140c', beard: true, bare: true, kilt: true, armor: '#b08a3a', cap: '#b08a3a', capMetal: true, plume: '#d8c49a', spear: true, skin: 3, height: 1.55 }, // 가드의 골리앗: 사람 키의 한 배 반, 놋 투구에 깃털 관, 비늘 갑옷
+  philistine: { robe: '#c9b28a', trim: '#7a3a2a', cloth: '#e6dcc4', hair: '#1d140c', beard: true, bare: true, kilt: true, armor: '#9a7a4a', plume: '#e8dcc0', spear: true, skin: 3 }, // 블레셋 병사: 깃털 관, 띠 갑옷, 허리치마
+  shieldman: { robe: '#c9b28a', trim: '#7a3a2a', cloth: '#e6dcc4', hair: '#1d140c', bare: true, kilt: true, plume: '#e8dcc0', skin: 3 }, // 골리앗의 방패 든 자 (item: shield)
+  achish:   { robe: '#8a3a2a', trim: '#d6a93a', mantle: '#2f4f6a', hair: '#1d140c', beard: true, plume: '#f1e2b8', crown: true, sash: '#d6a93a', skin: 3 }, // 가드 왕 아기스: 긴 왕의 옷 위에 블레셋 깃털 관과 금관
+  absalom:  { robe: '#e8dcc0', trim: '#d6a93a', mantle: '#2f6a5a', hair: '#2b1b10', long: true, curls: true, sash: '#d6a93a', skin: 2, height: 0.98 }, // 압살롬: 수염 없는 아름다운 왕자, 숱 많은 긴 머리 (삼하 14:25–26)
+  absalomK: { robe: '#e8dcc0', trim: '#d6a93a', mantle: '#2f6a5a', hair: '#2b1b10', long: true, curls: true, crown: true, sash: '#d6a93a', skin: 2, height: 0.98 }, // 왕을 자처한 압살롬 (금관)
+  ahithophel: { robe: '#4a3a5a', trim: '#c9a24a', mantle: '#8a7a5a', hair: '#cfc8bb', beard: true, turban: '#d8c49a', sash: '#c9a24a', skin: 1 }, // 모사 아히도벨
+  hushai:   { robe: '#7a6a5a', trim: '#4a3e34', mantle: '#a89a7c', hair: '#d9d4c8', beard: true, sash: '#4a3e34', skin: 1 }, // 다윗의 벗 후새 (늙은 모사)
+  shimei:   { robe: '#6a5a46', trim: '#3a2e22', mantle: '#4a3a2a', hair: '#1d140c', beard: true, hood: '#8a7a5a', band: '#3a2e22', skin: 3 }, // 사울 집안의 시므이
+  mephibosheth: { robe: '#b9a07a', trim: '#6b5438', mantle: '#5d6b4a', hair: '#3a2616', beard: true, sash: '#6b5438', skin: 2 }, // 요나단의 아들 므비보셋 (두 발을 저는 사람 — 앉은 자세 sit로)
+  solomon:  { robe: '#f1e7cf', trim: '#d6a93a', mantle: '#6b2a5e', hair: '#3a2616', crown: true, sash: '#d6a93a', skin: 2, height: 0.92 }, // 젊은 왕 솔로몬: 수염 없는, 흰 옷에 자주 겉옷
+  adonijah: { robe: '#2f4f6a', trim: '#d6a93a', mantle: '#c9a26a', hair: '#2b1b10', beard: true, sash: '#d6a93a', skin: 2 }, // 아도니야
+  nabal:    { robe: '#7a3b2e', trim: '#d6a93a', mantle: '#c9a26a', hair: '#2b1b10', beard: true, sash: '#d6a93a', skin: 1 }, // 갈멜의 부자 나발
+  doeg:     { robe: '#4a3a2a', trim: '#7a2a20', mantle: '#3a2e22', hair: '#1d140c', beard: true, hood: '#5a4a3a', band: '#7a2a20', skin: 3 }, // 에돔 사람 도엑 (어두운 옷)
+  uriah:    { robe: '#6b5a3a', trim: '#2f4f6a', mantle: '#2f4f6a', hair: '#2b1b10', beard: true, cap: '#7a5a34', spear: true, sash: '#2f4f6a', skin: 3 }, // 헷 사람 우리아 (충직한 용사)
+  araunah:  { robe: '#c9b48c', trim: '#7a5a32', hair: '#3a2a1c', beard: true, hood: '#e8dcc0', band: '#7a5a32', sash: '#7a5a32', skin: 3 }, // 여부스 사람 아라우나 (타작하는 사람)
+  levite:   { robe: '#f6f2e8', trim: '#2f4f8a', hair: '#2b1b10', beard: true, turban: '#f6f2e8', sash: '#2f4f8a', skin: 2 }, // 법궤를 멘 레위 사람 (priest와 같은 결, 다른 얼굴)
+  lad:      { robe: '#e6dcc4', trim: '#8f6d4b', hair: '#4a2e1c', sash: '#8f6d4b', height: 0.7, kid: true }, // 요나단의 화살을 줍는 아이 (삼상 20:35)
 };
 
 // 깃털 한 장: 길이 방향 +y
@@ -349,6 +395,23 @@ function makePerson(type) {
     const tx = new THREE.CanvasTexture(c); tx.colorSpace = THREE.SRGBColorSpace;
     mesh(lathe([[0.034, 0.715], [0.07, 0.705], [0.104, 0.682], [0.124, 0.652]], 32), new THREE.MeshStandardMaterial({ map: tx, roughness: 0.45, metalness: 0.35, side: THREE.DoubleSide }), upper);
   }
+  // 다윗 여정 — 놋 갑옷(armor: 색): 허리에서 가슴까지 덮는 띠 무늬 흉갑 (골리앗의 비늘 갑옷, 블레셋의 띠 갑옷, 요압의 흉갑)
+  if (t.armor) {
+    const c = document.createElement('canvas'); c.width = 8; c.height = 64;
+    const g = c.getContext('2d'), base = new THREE.Color(t.armor);
+    for (let k = 0; k < 16; k++) { g.fillStyle = '#' + base.clone().multiplyScalar(k % 2 ? 0.72 : 1.08).getHexString(); g.fillRect(0, k * 4, 8, 4); }
+    const tx = new THREE.CanvasTexture(c); tx.colorSpace = THREE.SRGBColorSpace;
+    const r = t.bare ? 0.012 : 0.008; // 맨 윗몸(블레셋)은 살 위에, 겉옷 입은 사람은 옷 위에 살짝 띄워
+    mesh(lathe([[0.104 + r, 0.42], [0.106 + r, 0.5], [0.116 + r, 0.6], [0.108 + r, 0.645], [0.08, 0.684], [0.05, 0.7]], 32),
+      new THREE.MeshStandardMaterial({ map: tx, metalness: 0.55, roughness: 0.4, side: THREE.DoubleSide }), upper);
+  }
+  // 칼집(sword): 왼쪽 허리에 찬 칼 — 손에 뽑아 든 칼은 item 'sword'
+  if (t.sword) {
+    const sh = new THREE.Group(); sh.position.set(B.waist[0] + 0.012, B.waist[1] - 0.02, 0.02); sh.rotation.set(0.35, 0, 0.12); upper.add(sh);
+    mesh(new THREE.BoxGeometry(0.016, 0.2, 0.03), mat('#4a3020'), sh, [0, -0.1, 0]);
+    mesh(new THREE.BoxGeometry(0.012, 0.012, 0.06), mat('#b08a4e', { metalness: 0.5, roughness: 0.4 }), sh, [0, 0.005, 0]);
+    mesh(new THREE.CylinderGeometry(0.006, 0.006, 0.04, 6), mat('#3a2a1a'), sh, [0, 0.03, 0]);
+  }
 
   // 머리
   const head = new THREE.Group();
@@ -473,6 +536,24 @@ function makePerson(type) {
     mesh(sphere(0.094, 20, 10, 0, Math.PI * 2, 0, Math.PI * 0.55), mat('#a88a4a', { metalness: 0.5, roughness: 0.4 }), head, [0, 0.01, 0]);
     mesh(new THREE.BoxGeometry(0.02, 0.06, 0.15), mat('#9d3328'), head, [0, 0.11, -0.01]);
   }
+  // 다윗 여정 — 둥근 투구(cap: 색, capMetal이면 놋): 이스라엘 병사의 가죽 투구, 골리앗의 놋 투구 (로마 투구의 붉은 볏 없이)
+  if (t.cap) {
+    const cm = mat(t.cap, t.capMetal ? { metalness: 0.55, roughness: 0.38 } : { roughness: 0.85 });
+    mesh(sphere(0.093, 24, 10, 0, Math.PI * 2, 0, Math.PI * 0.5), cm, head, [0, 0.012, -0.004], [1, 1.02, 1.04]);
+    mesh(new THREE.TorusGeometry(0.093, 0.006, 6, 28), cm, head, [0, 0.014, -0.004], [1, 1, 1.04]).rotation.x = Math.PI / 2;
+  }
+  // 블레셋의 깃털 관(plume: 색): 이마 띠 위에 빙 둘러 곧게 선 깃털 (메디넷 하부 부조의 '바다 사람들') — 애굽의 가발처럼 한눈에 블레셋
+  if (t.plume) {
+    const y0 = t.cap ? 0.05 : 0.035, fm = mat(t.plume, { ...DS, roughness: 0.8 }), tip = mat(new THREE.Color(t.plume).multiplyScalar(0.8).getStyle(), { ...DS, roughness: 0.8 });
+    mesh(new THREE.TorusGeometry(0.092, 0.011, 6, 28), mat('#6b4a2e', { roughness: 0.8 }), head, [0, y0, -0.004], [1, 1, 1.04]).rotation.x = Math.PI / 2; // 가죽 이마 띠
+    // 깃털: 끝이 둥근 가는 잎 모양을 촘촘히 — 뾰족한 상자로 두었더니 금관처럼 보였다
+    const fg = new THREE.CapsuleGeometry(0.0055, 0.085, 3, 6); fg.scale(1, 1, 0.35);
+    for (let i = 0; i < 30; i++) {
+      const a = i / 30 * Math.PI * 2, f = new THREE.Group();
+      f.position.set(Math.sin(a) * 0.088, y0, Math.cos(a) * 0.088 - 0.004); f.rotation.y = a; head.add(f);
+      const b = mesh(fg, i % 2 ? fm : tip, f, [0, 0.05, 0]); b.rotation.x = 0.1; b.castShadow = false;
+    }
+  }
   if (t.halo) {
     const h = mesh(new THREE.TorusGeometry(0.075, 0.0055, 8, 40), mat('#f3d27a', { emissive: '#d9a940', emissiveIntensity: 0.9, metalness: 0.4, roughness: 0.3 }), head, [0, 0.105, -0.035]);
     h.rotation.x = Math.PI / 2 - 0.35;
@@ -596,8 +677,55 @@ function makePerson(type) {
   hornGeo.computeVertexNormals();
   mesh(hornGeo, mat('#d8c49a', { roughness: 0.5 }), horn);
   horn.position.set(0.0, 0.78, 0.07); horn.rotation.y = -Math.PI / 2; horn.rotation.z = 0.3;
-  [doves, gift, bread, spindle, jar, scroll, alabaster, palm, cup, torch, mat_, timbrel, tablets, horn].forEach(g => { g.visible = false; upper.add(g); });
-  const items = { basket, doves, gift, bread, spindle, jar, scroll, alabaster, palm, cup, torch, mat: mat_, timbrel, tablets, horn };
+  // ---- 다윗 여정의 손에 드는 것 ----
+  // 수금(lyre): 울림통에서 솟은 두 팔과 가로대, 줄 — 가슴 앞에 비스듬히 안는다 (자세 'play'로 줄을 퉁긴다)
+  const lyre = new THREE.Group(), lw = mat('#8a5a2e', { roughness: 0.7 });
+  mesh(new THREE.BoxGeometry(0.1, 0.05, 0.025), lw, lyre, [0, -0.04, 0]);
+  [-1, 1].forEach(k => { const a = mesh(new THREE.BoxGeometry(0.012, 0.15, 0.014), lw, lyre, [k * 0.04, 0.04, 0]); a.rotation.z = -k * 0.14; });
+  mesh(new THREE.BoxGeometry(0.13, 0.012, 0.016), lw, lyre, [0, 0.115, 0]);
+  for (let i = 0; i < 5; i++) mesh(new THREE.BoxGeometry(0.0022, 0.13, 0.002), mat('#efe6cf', { roughness: 0.5 }), lyre, [(i - 2) * 0.014, 0.045, 0.006]).castShadow = false;
+  lyre.position.set(0.02, 0.52, 0.15); lyre.rotation.set(-0.25, 0, -0.35);
+  // 접은 겉옷 (요나단이 벗어 준 옷 — 삼상 18:4): 두 손에 받쳐 든 천 꾸러미
+  const cloak = new THREE.Group();
+  mesh(new THREE.BoxGeometry(0.13, 0.045, 0.09), mat('#2f5f7a', { roughness: 0.9 }), cloak);
+  mesh(new THREE.BoxGeometry(0.132, 0.008, 0.092), mat('#d6a93a', { metalness: 0.3, roughness: 0.6 }), cloak, [0, 0.012, 0]);
+  cloak.position.set(0, 0.47, 0.15);
+  [doves, gift, bread, spindle, jar, scroll, alabaster, palm, cup, torch, mat_, timbrel, tablets, horn, lyre, cloak].forEach(g => { g.visible = false; upper.add(g); });
+  const items = { basket, doves, gift, bread, spindle, jar, scroll, alabaster, palm, cup, torch, mat: mat_, timbrel, tablets, horn, lyre, cloak };
+  // 한 손에 쥐는 것: 팔(팔꿈치 묶음)의 손끝에 붙어 팔을 따라 움직인다 — 두 손으로 받쳐 드는 자세로 바꾸지 않는다
+  const hand = (side, g) => { const e = (side > 0 ? armL : armR).userData.elbow; g.position.set(0, -0.185, 0.01); g.visible = false; e.add(g); return g; };
+  // 기름 뿔(oilhorn): 사무엘이 왕에게 붓는 기름 (오른손, 자세 'anoint')
+  const oilhorn = new THREE.Group();
+  { const pts = []; for (let i = 0; i <= 10; i++) { const u = i / 10; pts.push(new THREE.Vector3(Math.sin(u * 1.2) * 0.03, -u * 0.09, 0)); }
+    mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 12, 0.011, 8), mat('#e8dcc0', { roughness: 0.45 }), oilhorn, [0, 0.03, 0]);
+    mesh(new THREE.CylinderGeometry(0.013, 0.013, 0.012, 10), mat('#d6a93a', { metalness: 0.55, roughness: 0.35 }), oilhorn, [0, 0.03, 0]); }
+  // 물매(sling): 손에서 늘어진 두 줄과 돌을 담는 가죽 주머니 (오른손, 자세 'sling'이면 머리 위에서 돌린다)
+  const sling = new THREE.Group(), slingSpin = new THREE.Group(); sling.add(slingSpin);
+  [-1, 1].forEach(k => { const c = mesh(new THREE.CylinderGeometry(0.0022, 0.0022, 0.13, 4), mat('#5a3d22'), slingSpin, [k * 0.008, -0.065, 0]); c.rotation.z = k * 0.06; });
+  mesh(sphere(0.016, 8, 6), mat('#6b4a2a'), slingSpin, [0, -0.135, 0], [1.3, 0.7, 1]);
+  mesh(sphere(0.01, 8, 6), mat('#cfc6b4'), slingSpin, [0, -0.13, 0.008]);
+  // 뽑아 든 칼(sword): 손에서 팔 방향으로 뻗은 날 (오른손 — 골리앗의 칼, 다윗의 칼)
+  const sword = new THREE.Group(), steel = mat('#c8c8c0', { metalness: 0.75, roughness: 0.3 });
+  mesh(new THREE.BoxGeometry(0.016, 0.24, 0.004), steel, sword, [0, -0.13, 0]);
+  mesh(new THREE.BoxGeometry(0.05, 0.01, 0.014), mat('#b08a4e', { metalness: 0.5, roughness: 0.4 }), sword, [0, -0.005, 0]);
+  mesh(new THREE.CylinderGeometry(0.007, 0.007, 0.04, 6), mat('#3a2a1a'), sword, [0, 0.02, 0]);
+  // 활(bow): 왼손에 쥔 나무 활과 시위 (요나단 — 자세 'shoot'이면 세워 들고 시위를 당긴다)
+  const bow = new THREE.Group(), bowArc = new THREE.Group(); bow.add(bowArc);
+  { const arc = mesh(new THREE.TorusGeometry(0.17, 0.0055, 5, 20, 1.5), mat('#6b4a2a', { roughness: 0.8 }), bowArc, [-0.15, 0, 0]); arc.rotation.z = -0.75;
+    const tips = [-0.75, 0.75].map(a => new THREE.Vector3(-0.15 + Math.cos(a) * 0.17, Math.sin(a) * 0.17, 0));
+    mesh(new THREE.CylinderGeometry(0.0015, 0.0015, tips[0].distanceTo(tips[1]), 3), mat('#efe6cf'), bowArc, [tips[0].x, 0, 0]).castShadow = false; }
+  bowArc.rotation.y = Math.PI / 2; // 활등이 앞(+z)으로
+  // 방패(shield): 왼팔에 낀 둥근 가죽 방패, 놋 테와 가운데 돌기
+  const shield = new THREE.Group();
+  { const d = mesh(new THREE.CylinderGeometry(0.095, 0.095, 0.012, 20), mat('#8a6a42', { roughness: 0.85 }), shield, [0, 0, 0]); d.rotation.z = Math.PI / 2;
+    const r = mesh(new THREE.TorusGeometry(0.095, 0.007, 6, 24), mat('#b08a3a', { metalness: 0.5, roughness: 0.4 }), shield); r.rotation.y = Math.PI / 2;
+    mesh(sphere(0.022, 10, 8), mat('#b08a3a', { metalness: 0.5, roughness: 0.4 }), shield, [0.01, 0, 0], [0.6, 1, 1]); }
+  // 옷자락 한 조각 (엔게디 굴에서 벤 사울의 겉옷 자락 — 삼상 24:4): 손에 늘어진 천
+  const hem = new THREE.Group();
+  mesh(new THREE.BoxGeometry(0.05, 0.07, 0.004), mat('#7a2a20', { ...DS, roughness: 0.9 }), hem, [0, -0.04, 0.01]);
+  hand(-1, oilhorn); hand(-1, sling); hand(-1, sword); hand(-1, hem); hand(1, bow);
+  hand(1, shield).position.set(0.035, -0.11, 0.02);
+  Object.assign(items, { oilhorn, sling, sword, bow, shield, hem });
 
   // 발: 샌들 위의 맨발이 옷자락 아래로
   const feet = [1, -1].map(s => {
@@ -632,6 +760,7 @@ function makePerson(type) {
     staff.position.set(-0.17, 0, 0.07);
     root.add(staff);
   }
+  if (staff && t.height) { staff.scale.setScalar(t.height); staff.position.x *= t.height; } // 키 큰 사람(골리앗·사울)은 창도 크게
   // 아기 (안는 자세에서만 보임)
   const baby = new THREE.Group();
   mesh(new THREE.CapsuleGeometry(0.045, 0.1, 6, 12), mat('#f2ead8'), baby).rotation.z = Math.PI / 2;
@@ -644,7 +773,7 @@ function makePerson(type) {
   bed.visible = false;
   bed.receiveShadow = true;
 
-  return { type, t, root, body, skirt, skirtMesh, hemTrim, upper, torso, waist: wy, mantleG, mantleSpan: B.mantle[0][1] - B.mantle[B.mantle.length - 1][1], head, armL, armR, feet, wings, glow, staff, baby, bed, eyes, mouth, basket, items };
+  return { type, t, root, body, skirt, skirtMesh, hemTrim, upper, torso, waist: wy, mantleG, mantleSpan: B.mantle[0][1] - B.mantle[B.mantle.length - 1][1], head, armL, armR, feet, wings, glow, staff, baby, bed, eyes, mouth, basket, items, slingSpin, bowArc };
 }
 
 // 실루엣: 모든 재질을 어두운 단색으로 바꿔 얼굴·무늬가 보이지 않게 한다 (골고다)
@@ -658,6 +787,7 @@ function silhouette(p, light) {
 
 /* ---------- 배우: 자세 목표값을 향해 부드럽게 움직인다 ---------- */
 const wrapA = a => Math.atan2(Math.sin(a), Math.cos(a)); // 각도를 -π…π로
+const HAND = new Set(['oilhorn', 'sling', 'sword', 'bow', 'shield', 'hem']); // 한 손에 쥐는 것 (다윗 여정)
 class Actor {
   // o: { silhouette(true 어두운 윤곽 · 'light' 빛의 윤곽), solemn(입·손짓을 멈추고 느리게), speed, y }
   constructor(type, x = 0, z = 0, face = 0, o = {}) {
@@ -802,14 +932,34 @@ class Actor {
         break;
       case 'carry-pole': aL = aR = POLE; break; // 두 손으로 허리 옆의 채를 쥐고 멘다 (언약궤)
       case 'hold-basket': aL = aR = [-0.45, -0.3, -1.25]; nod = 0.12; break;
+      // ---- 다윗 여정 ----
+      case 'play': // 수금 타기: 왼손으로 받치고 오른손으로 줄을 퉁긴다
+        aL = [-0.5, -0.28, -1.35]; aR = [-0.62 + Math.sin(t * 7) * 0.08, -0.12, -1.1 + Math.sin(t * 7 + 1) * 0.16]; nod = 0.14 + Math.sin(t * 1.2) * 0.04; break;
+      case 'sling': aR = [-2.95, 0.3, -0.25]; aL = [-1.35, 0.12, -0.15]; lean = -0.04; nod = -0.08; break; // 물매를 머리 위로 돌리며 왼손으로 겨눈다
+      case 'shoot': aL = [-1.55, 0.12, 0]; aR = [-1.5, -0.35, -1.75]; nod = -0.04; break; // 활을 당긴다
+      case 'anoint': aR = [-2.25, -0.18, -0.65]; aL = [-0.9, 0.12, -0.6]; nod = 0.22; lean = 0.08; break; // 뿔의 기름을 머리 위에 붓는다
+      case 'hurl': aR = [-1.75, 0.2, -0.05]; aL = [-0.4, 0.3, -0.4]; lean = 0.14; nod = -0.05; break; // 창을 던진 뒤 (손의 창은 숨는다 — 날아가는 창은 소품 spear)
+      case 'dance': { // 온 힘을 다해 춤춘다 (삼하 6:14): 두 팔을 들고 들썩이며 몸을 돌린다
+        const d = Math.sin(t * 4.2);
+        aL = [-2.4 + d * 0.3, 0.55 + d * 0.15, -0.5]; aR = [-2.4 - d * 0.3, 0.55 - d * 0.15, -0.5];
+        sink = -Math.abs(d) * 0.035; nod = -0.15; break;
+      }
+      case 'topple': lie = 1; nod = 0.3; aL = aR = [-2.7, 0.25, -0.05]; break; // 쓰러짐 (골리앗 — 곧 show 0으로 사라지게)
+      case 'embrace': aL = aR = [-1.2, -0.42, -0.75]; nod = 0.28; lean = 0.08; break; // 끌어안고 운다 (다윗과 요나단)
     }
+    if (this.pose === 'dance' && !moving) p.root.rotation.y = this.face + Math.sin(t * 2.1) * 0.55;
+    p.items.timbrel.position.y = this.pose === 'dance' ? 0.98 : 0.62; // 춤출 때 소고는 머리 위로 든 두 손에
+    if (p.slingSpin) p.slingSpin.rotation.x = this.pose === 'sling' ? t * 15 : damp(p.slingSpin.rotation.x % (Math.PI * 2), 0, 4, dt);
+    if (p.bowArc) p.bowArc.rotation.x = damp(p.bowArc.rotation.x, this.pose === 'shoot' ? Math.PI / 2 : 0, 6, dt);
+    if (p.staff) p.staff.visible = !['hurl', 'play', 'sling', 'shoot', 'dance', 'topple', 'anoint'].includes(this.pose) && !(this.item && HAND.has(this.item));
     // 엄숙한 장면: 숨쉬기 외의 작은 몸짓을 멈춘다
     if (this.solemn) { nod += 0.05; }
     p.armL.userData.loaf.visible = p.armR.userData.loaf.visible = this.pose === 'break';
     // 손에 든 물건: item 이름의 것 하나만 보이고, 서 있거나 무릎 꿇은 동안엔 두 손으로 받쳐 든다
     let holding = false;
     Object.entries(p.items).forEach(([k, g]) => { g.visible = this.item === k || (k === 'basket' && this.pose === 'hold-basket'); holding ||= g.visible; });
-    if (holding && !moving && ['idle', 'listen', 'kneel', 'hold-basket', 'bow'].includes(this.pose)) { aL = aR = [-0.45, -0.3, -1.25]; }
+    if (holding && !moving && !HAND.has(this.item) && ['idle', 'listen', 'kneel', 'hold-basket', 'bow'].includes(this.pose)) { aL = aR = [-0.45, -0.3, -1.25]; }
+    if (!moving && this.item && HAND.has(this.item) && this.pose === 'idle') { if (this.item === 'bow' || this.item === 'shield') aL = [-0.35, 0.12, -0.5]; else aR = [-0.35, 0.12, -0.5]; } // 손에 쥔 것을 조금 앞으로
     if (!moving) { p.feet[0].position.z = damp(p.feet[0].position.z, 0.09, 8, dt); p.feet[1].position.z = damp(p.feet[1].position.z, 0.09, 8, dt); }
     const k = 5;
     const arm = (a, [fx, sx, ex]) => {
@@ -847,7 +997,7 @@ class Actor {
     p.eyes.forEach(e => { const L = e.userData.lid; L.rotation.x = damp(L.rotation.x, lie > 0.5 || blink < 1 ? 1.4 : -0.4, 30, dt); });
     const talk = (this.pose === 'speak' || this.pose === 'sit-speak') && !this.solemn ? 0.55 + Math.abs(Math.sin(t * 8.5) * Math.sin(t * 3.1)) * 1.6 : 0.35;
     p.mouth.scale.y = damp(p.mouth.scale.y, talk, 18, dt);
-    p.bed.visible = lie > 0.5;
+    p.bed.visible = lie > 0.5 && this.pose === 'sleep';
     // 누우면 몸 가운데가 깔개 위에 오도록 발 쪽으로 옮긴다
     p.body.position.x = damp(p.body.position.x, lie * 0.42 * -Math.sign(this.face || 1), 3, dt);
     if (p.wings) {
