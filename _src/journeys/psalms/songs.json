@@ -1,0 +1,353 @@
+{
+ "_comment": "시편 — 노래가 태어난 자리를 따라 걷는 길. 노래는 사용자가 Suno로 만든다: style(Suno 스타일 칸)·lyrics(가사 칸, [Verse] 같은 표시 포함)를 studio.html에서 복사해 쓰고, 만든 mp3를 같은 곳에서 올린다(assets/psalms/<id>.mp3). intro는 노래 앞에 읽는 짧은 배경 낭독. 가사는 개역의 뜻과 낱말에 가깝게, 부르기 좋게 끝맺음만 오늘 말로 — 개역개정을 그대로 베끼지 않는다",
+ "groups": {
+  "1": "광야에서 왕궁까지 — 다윗의 노래",
+  "2": "무너지는 집",
+  "3": "솔로몬과 성전",
+  "4": "순례길",
+  "5": "무너짐과 돌아옴"
+ },
+ "songs": [
+  {
+   "id": "ps90",
+   "psalm": 90,
+   "title": "광야의 기도",
+   "place": "wilderness",
+   "group": 1,
+   "setting": "모세가 광야 사십 년 끝에 드린 기도",
+   "intro": null,
+   "style": null,
+   "lyrics": null
+  },
+  {
+   "id": "ps23",
+   "psalm": 23,
+   "title": "나의 목자",
+   "place": "bethlehem",
+   "group": 1,
+   "setting": "베들레헴 들판의 목동 다윗",
+   "intro": "베들레헴 들판, 양 떼를 치던 소년 다윗은 날마다 푸른 풀밭과 물가를 찾아 양들을 이끌었다. 들짐승이 덤벼드는 밤도 있었다. 훗날 그는 그 들판에서 배운 것을 노래했다.",
+   "style": "Korean acoustic worship, warm gentle female vocal, fingerpicked acoustic guitar, soft piano, light pastoral strings, peaceful and tender, 72 bpm, folk-like simplicity, quiet valley verse, hopeful lifting final chorus",
+   "lyrics": "[Intro]\n\n[Verse 1]\n여호와는 나의 목자시니\n내게 부족함이 없으리\n푸른 풀밭에 나를 누이시고\n쉴 만한 물가로 이끄시네\n\n[Pre-Chorus]\n내 영혼을 다시 살리시고\n그 이름을 위하여\n의로운 길로 나를 이끄시네\n\n[Chorus]\n내가 죽음의 그늘진 골짜기를 지나도\n해를 두려워 않으리\n주께서 나와 함께 계시니\n주의 막대기와 지팡이가 나를 지키네\n\n[Verse 2]\n내 원수 앞에서 상을 차려 주시고\n내 머리에 기름 부으시니\n내 잔이 넘쳐 흐르네\n\n[Final Chorus]\n내 평생에 선하심과 인자하심이\n반드시 나를 따르리니\n내가 여호와의 집에\n영원히 살리라\n\n[Outro]\n여호와의 집에 영원히 살리라"
+  },
+  {
+   "id": "ps8",
+   "psalm": 8,
+   "title": "밤하늘",
+   "place": "bethlehem",
+   "group": 1,
+   "setting": "들판에서 올려다본 밤하늘",
+   "intro": null,
+   "style": null,
+   "lyrics": null
+  },
+  {
+   "id": "ps59",
+   "psalm": 59,
+   "title": "창 아래의 군사들",
+   "place": "gibeah",
+   "group": 1,
+   "setting": "사울이 보낸 군사들이 다윗의 집을 지킨 밤 (삼상 19:11)",
+   "intro": null,
+   "style": null,
+   "lyrics": null
+  },
+  {
+   "id": "ps52",
+   "psalm": 52,
+   "title": "놉의 피",
+   "place": "nob",
+   "group": 1,
+   "setting": "도엑이 고해 바쳐 놉의 제사장들이 죽음 (삼상 22장)",
+   "intro": null,
+   "style": null,
+   "lyrics": null
+  },
+  {
+   "id": "ps56",
+   "psalm": 56,
+   "title": "가드에서 붙잡힌 날",
+   "place": "gath",
+   "group": 1,
+   "setting": "블레셋 사람들에게 붙잡힘 (삼상 21:10–15)",
+   "intro": null,
+   "style": null,
+   "lyrics": null
+  },
+  {
+   "id": "ps34",
+   "psalm": 34,
+   "title": "미친 척하고 살아남은 날",
+   "place": "gath",
+   "group": 1,
+   "setting": "아기스 앞에서 미친 척하고 쫓겨남 (삼상 21:13)",
+   "intro": null,
+   "style": null,
+   "lyrics": null
+  },
+  {
+   "id": "ps142",
+   "psalm": 142,
+   "title": "아둘람 굴",
+   "place": "adullam",
+   "group": 1,
+   "setting": "굴에 숨어 부르짖음 (삼상 22:1)",
+   "intro": null,
+   "style": null,
+   "lyrics": null
+  },
+  {
+   "id": "ps54",
+   "psalm": 54,
+   "title": "십 광야의 밀고",
+   "place": "ziph",
+   "group": 1,
+   "setting": "십 사람들이 사울에게 다윗이 숨은 곳을 알림 (삼상 23:19)",
+   "intro": null,
+   "style": null,
+   "lyrics": null
+  },
+  {
+   "id": "ps57",
+   "psalm": 57,
+   "title": "엔게디 굴",
+   "place": "engedi",
+   "group": 1,
+   "setting": "굴에서 사울을 살려 보냄 (삼상 24장)",
+   "intro": null,
+   "style": null,
+   "lyrics": null
+  },
+  {
+   "id": "ps63",
+   "psalm": 63,
+   "title": "물 없는 땅",
+   "place": "judah",
+   "group": 1,
+   "setting": "유다 광야에서 (제목)",
+   "intro": null,
+   "style": null,
+   "lyrics": null
+  },
+  {
+   "id": "ps18",
+   "psalm": 18,
+   "title": "나의 반석",
+   "place": "ziklag",
+   "group": 1,
+   "setting": "사울의 손에서 건지신 날의 노래 (삼하 22장)",
+   "intro": null,
+   "style": null,
+   "lyrics": null
+  },
+  {
+   "id": "ps24",
+   "psalm": 24,
+   "title": "영광의 왕",
+   "place": "jerusalem",
+   "group": 1,
+   "setting": "법궤가 다윗성으로 올라옴 (삼하 6장)",
+   "intro": null,
+   "style": null,
+   "lyrics": null
+  },
+  {
+   "id": "ps132",
+   "psalm": 132,
+   "title": "법궤를 위한 맹세",
+   "place": "jerusalem",
+   "group": 1,
+   "setting": "다윗이 법궤 모실 곳을 찾기까지",
+   "intro": null,
+   "style": null,
+   "lyrics": null
+  },
+  {
+   "id": "ps60",
+   "psalm": 60,
+   "title": "소금 골짜기",
+   "place": "saltvalley",
+   "group": 1,
+   "setting": "아람·에돔과의 전쟁 (삼하 8:13, 제목)",
+   "intro": null,
+   "style": null,
+   "lyrics": null
+  },
+  {
+   "id": "ps51",
+   "psalm": 51,
+   "title": "정한 마음",
+   "place": "jerusalem",
+   "group": 1,
+   "setting": "밧세바 일 뒤 나단의 책망 (삼하 12장)",
+   "intro": null,
+   "style": null,
+   "lyrics": null
+  },
+  {
+   "id": "ps3",
+   "psalm": 3,
+   "title": "맨발로 오른 감람산",
+   "place": "olives",
+   "group": 2,
+   "setting": "압살롬을 피해 도망침 (삼하 15:30)",
+   "intro": "아들 압살롬이 헤브론에서 왕이 되었다는 소식이 예루살렘에 닿았다. 다윗은 머리를 가리고 맨발로 울며 감람산 길을 올랐다. 그 밤, 쫓기는 왕이 부른 노래다.",
+   "style": "Korean worship ballad, intimate male vocal, nylon-string guitar and low cello, begins as a hushed night lament in a minor key, slowly grows into calm trust, last chorus opens up with warm strings and soft choir, 66 bpm, cinematic, sincere, no heavy drums",
+   "lyrics": "[Intro]\n\n[Verse 1]\n여호와여 나의 대적이 어찌 이리 많은지요\n일어나 나를 치는 자가 너무도 많습니다\n많은 사람이 내 영혼을 두고 말하길\n하나님께 그는 구원을 얻지 못한다 하네\n\n[Chorus]\n그러나 여호와여 주는 나를 두른 방패\n나의 영광 나의 머리를 드시는 분\n내가 소리 내어 여호와께 부르짖을 때\n그 거룩한 산에서 내게 응답하시네\n\n[Verse 2]\n내가 누워 자고 다시 깨어났으니\n여호와께서 나를 붙드셨기 때문이라\n천만 사람이 나를 에워싸 진을 쳐도\n나는 두려워하지 아니하리라\n\n[Bridge]\n여호와여 일어나소서\n나의 하나님 나를 구원하소서\n\n[Final Chorus]\n그러나 여호와여 주는 나를 두른 방패\n나의 영광 나의 머리를 드시는 분\n구원은 여호와께 있사오니\n주의 백성에게 복을 내리소서\n\n[Outro]\n주의 백성에게 복을 내리소서"
+  },
+  {
+   "id": "ps7",
+   "psalm": 7,
+   "title": "구시의 말",
+   "place": "mahanaim",
+   "group": 2,
+   "setting": "베냐민 사람 구시의 말 (제목)",
+   "intro": null,
+   "style": null,
+   "lyrics": null
+  },
+  {
+   "id": "ps30",
+   "psalm": 30,
+   "title": "슬픔이 춤으로",
+   "place": "jerusalem",
+   "group": 2,
+   "setting": "집을 봉헌하는 노래 (제목)",
+   "intro": null,
+   "style": null,
+   "lyrics": null
+  },
+  {
+   "id": "ps72",
+   "psalm": 72,
+   "title": "왕을 위한 기도",
+   "place": "jerusalem",
+   "group": 3,
+   "setting": "솔로몬을 위한 시",
+   "intro": null,
+   "style": null,
+   "lyrics": null
+  },
+  {
+   "id": "ps127",
+   "psalm": 127,
+   "title": "집을 세우시는 이",
+   "place": "jerusalem",
+   "group": 3,
+   "setting": "솔로몬의 시",
+   "intro": null,
+   "style": null,
+   "lyrics": null
+  },
+  {
+   "id": "ps48",
+   "psalm": 48,
+   "title": "시온의 노래",
+   "place": "jerusalem",
+   "group": 3,
+   "setting": "성전 선 시온",
+   "intro": null,
+   "style": null,
+   "lyrics": null
+  },
+  {
+   "id": "ps42",
+   "psalm": 42,
+   "title": "시냇물을 찾는 사슴",
+   "place": "hermon",
+   "group": 4,
+   "setting": "요단 근원 헤르몬 땅에서 (42:6)",
+   "intro": null,
+   "style": null,
+   "lyrics": null
+  },
+  {
+   "id": "ps121",
+   "psalm": 121,
+   "title": "산을 향하여",
+   "place": "ascent",
+   "group": 4,
+   "setting": "예루살렘 올라가는 순례자의 노래",
+   "intro": null,
+   "style": null,
+   "lyrics": null
+  },
+  {
+   "id": "ps122",
+   "psalm": 122,
+   "title": "여호와의 집에 올라가자",
+   "place": "ascent",
+   "group": 4,
+   "setting": "순례자의 노래",
+   "intro": null,
+   "style": null,
+   "lyrics": null
+  },
+  {
+   "id": "ps125",
+   "psalm": 125,
+   "title": "산들이 두른 예루살렘",
+   "place": "jerusalem",
+   "group": 4,
+   "setting": "순례자의 노래",
+   "intro": null,
+   "style": null,
+   "lyrics": null
+  },
+  {
+   "id": "ps46",
+   "psalm": 46,
+   "title": "피난처",
+   "place": "jerusalem",
+   "group": 5,
+   "setting": "앗수르에 포위된 예루살렘 (왕하 19장)",
+   "intro": null,
+   "style": null,
+   "lyrics": null
+  },
+  {
+   "id": "ps74",
+   "psalm": 74,
+   "title": "불탄 성소",
+   "place": "jerusalem",
+   "group": 5,
+   "setting": "무너진 성전",
+   "intro": null,
+   "style": null,
+   "lyrics": null
+  },
+  {
+   "id": "ps137",
+   "psalm": 137,
+   "title": "바벨론 강가",
+   "place": "babylon",
+   "group": 5,
+   "setting": "포로로 끌려가 부른 노래",
+   "intro": null,
+   "style": null,
+   "lyrics": null
+  },
+  {
+   "id": "ps126",
+   "psalm": 126,
+   "title": "꿈꾸는 것 같았네",
+   "place": "return",
+   "group": 5,
+   "setting": "포로에서 돌아오는 길",
+   "intro": null,
+   "style": null,
+   "lyrics": null
+  },
+  {
+   "id": "ps150",
+   "psalm": 150,
+   "title": "할렐루야",
+   "place": "jerusalem",
+   "group": 5,
+   "setting": "다시 선 성전의 마지막 노래",
+   "intro": null,
+   "style": null,
+   "lyrics": null
+  }
+ ]
+}

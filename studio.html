@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>시편 노래 작업실 — 그 길</title>
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* 관리자 페이지(admin.html)와 같은 결 */
+:root{--bg:#15110d;--panel:#1d1813;--panel2:#251f18;--line:#3a3026;--ink:#f1e8d8;--muted:#b3a58f;--faint:#7f735f;--gold:#d9b46a;--gold2:#f0d79a;--ok:#8fbf7a;--bad:#e07a62;
+  --serif:'Gowun Batang',Georgia,serif;--sans:'Noto Sans KR',system-ui,-apple-system,'Apple SD Gothic Neo',sans-serif;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--gold2)}
+header{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(21,17,13,.94);border-bottom:1px solid var(--line);backdrop-filter:blur(8px)}
+header h1{margin:0;font:700 19px var(--serif);color:var(--gold2);white-space:nowrap}
+header .grow{flex:1}
+main{max-width:900px;margin:0 auto;padding:16px 16px 80px}
+.btn{white-space:nowrap;border:1px solid var(--gold);background:linear-gradient(#e2c17c,#c99f52);color:#1b140c;border-radius:10px;padding:7px 14px;font-weight:700}
+.btn:disabled,.ghost:disabled{opacity:.35;cursor:default}
+.ghost{white-space:nowrap;border:1px solid var(--line);background:var(--panel2);color:var(--muted);border-radius:10px;padding:6px 12px}
+.ghost.on{border-color:var(--gold);color:var(--gold2)}
+input[type=password],input[type=text]{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:8px 11px;outline:none}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+.login h2{margin:0 0 6px;font:700 20px var(--serif);color:var(--gold2)}
+.login .row{display:flex;gap:8px;max-width:520px}
+.msg{min-height:1.6em;margin:8px 0 0;color:var(--muted)}
+.msg.bad{color:var(--bad)}
+.note{color:var(--faint);font-size:13px;margin:0 0 14px}
+.sum{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin:0 0 12px}
+.sum b{color:var(--gold2)}
+h2.group{font:700 17px var(--serif);color:var(--gold2);margin:26px 0 8px}
+details.song{background:var(--panel);border:1px solid var(--line);border-radius:14px;margin:8px 0;padding:0 14px}
+details.song>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:12px 0;flex-wrap:wrap}
+details.song>summary::-webkit-details-marker{display:none}
+summary .no{font:700 13px var(--sans);color:#1b140c;background:var(--gold);border-radius:7px;padding:1px 7px}
+summary b{font:700 16px var(--serif)}
+summary .set{color:var(--faint);font-size:13px;flex:1;min-width:200px}
+.tags{display:flex;gap:5px}
+.tag{font-size:11px;border-radius:6px;padding:1px 7px;border:1px solid var(--line);color:var(--faint)}
+.tag.ok{border-color:var(--ok);color:var(--ok)}
+.body{padding:0 0 16px}
+.intro{font:15px/1.8 var(--serif);color:var(--muted);margin:2px 0 12px}
+.box{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:10px 0}
+.box h3{display:flex;align-items:center;gap:8px;margin:0 0 6px;font:600 13px var(--sans);color:var(--faint)}
+.box h3 .grow{flex:1}
+.box pre{margin:0;white-space:pre-wrap;font:14px/1.7 var(--sans);color:var(--ink);max-height:22em;overflow:auto}
+.box pre.style{font-size:13px;color:var(--muted)}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.state{font-size:13px;color:var(--muted)}
+.state.ok{color:var(--ok)}.state.bad{color:var(--bad)}
+audio{width:100%;margin:6px 0}
+ol.lines{list-style:none;margin:6px 0 0;padding:0;max-height:24em;overflow:auto}
+ol.lines li{display:flex;gap:10px;padding:3px 6px;border-radius:8px;font-size:14px;cursor:pointer}
+ol.lines li i{font:12px ui-monospace,monospace;color:var(--faint);min-width:4.2em;padding-top:2px;font-style:normal}
+ol.lines li.sec{color:var(--faint);font-size:12px;cursor:default;padding-top:8px}
+ol.lines li.now{background:rgba(217,180,106,.18);color:var(--gold2)}
+ol.lines li.tapped i{color:var(--ok)}
+.tapbar{display:none;margin:8px 0;gap:8px;align-items:center}
+.tapping .tapbar{display:flex}
+.tapbar .btn{flex:1;padding:14px}
+.card.r2{padding:12px 14px;margin:0 0 12px}
+.card.r2 input{max-width:280px}
+.empty{color:var(--faint);text-align:center;margin:40px 0}
+</style>
+</head>
+<body>
+<header>
+  <h1>시편 노래 작업실</h1>
+  <span class="grow"></span>
+  <a href="admin.html" class="ghost" style="text-decoration:none">관리자 페이지</a>
+  <button id="logout" class="ghost" hidden>나가기</button>
+</header>
+<main>
+  <section id="login" class="card login" hidden>
+    <h2>들어가기</h2>
+    <p class="note">관리자 페이지와 같은 GitHub 토큰으로 들어갑니다(한 번 들어가면 이 기기에 기억).</p>
+    <form id="loginForm" class="row" method="post" action="#"><input id="token" type="password" placeholder="github_pat_…" autocomplete="current-password"><button class="btn" type="submit">들어가기</button></form>
+    <p id="loginMsg" class="msg"></p>
+  </section>
+  <section id="work" hidden>
+    <p class="note">순서: ① 스타일과 가사를 복사해 Suno에서 노래를 만든다 → ② 고른 mp3를 여기서 올린다(다시 올리면 교체) → ③ 올리면 배포 작업이 가사 시간을 자동으로 맞춘다(몇 분) → ④ 어긋나면 '탭으로 맞추기'로 고친다. 노래는 Cloudflare R2(theway 버킷 psalms/)에서 스트리밍하고, 지금 노래가 무엇인지와 가사 시간은 저장소의 <code>assets/psalms/&lt;id&gt;.json</code>에 적힌다.</p>
+    <div class="card r2"><b>R2 열쇠</b> <span id="r2State" class="state"></span> <button id="r2Forget" class="ghost" hidden>잊기</button>
+      <form id="r2Form" class="row" style="margin-top:8px" hidden><input id="r2Id" type="text" placeholder="Access Key ID" autocomplete="off" spellcheck="false"><input id="r2Secret" type="password" placeholder="Secret Access Key" autocomplete="off"><button class="btn" type="submit">기억하기</button></form>
+      <p class="note" style="margin:6px 0 0">Cloudflare R2 → API 토큰(버킷 theway, 개체 읽기·쓰기)의 두 값. 이 기기에만 기억합니다.</p></div>
+    <div class="sum" id="sum"></div>
+    <div id="list"></div>
+  </section>
+</main>
+<script type="module" src="studio.js"></script>
+</body>
+</html>
