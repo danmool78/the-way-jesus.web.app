@@ -47,7 +47,7 @@ function applyStatic() {
     ['[data-view="journey"]', 'tabJourney'], ['[data-view="words"]', 'tabWords'], ['[data-view="quiz"]', 'tabQuiz'],
     ['#progressPill', 'myFootsteps', 'title'], ['#gear', 'settings', 'aria-label'], ['.mapwrap', 'mapLabel', 'aria-label'], ['#map', 'mapAria', 'aria-label'],
     ['#fitAll', 'fitAll'], ['#fitAll', 'fitAllTitle', 'title'], ['#fitNow', 'fitNowTitle', 'title'],
-    ['.dock', 'dockLabel', 'aria-label'], ['#track', 'trackLabel', 'aria-label'], ['#prev', 'prevScene', 'aria-label'], ['#skip', 'nextScene', 'aria-label'],
+    ['.dock', 'dockLabel', 'aria-label'], ['#track', 'trackLabel', 'aria-label'], ['#prev', 'prevScene', 'aria-label'], ['#back', 'prevScene', 'aria-label'], ['#skip', 'nextScene', 'aria-label'],
     ['#listen', 'listenScene', 'aria-label'], ['#next', 'walkNext', 'aria-label'], ['#next .lbl', 'walkNext'], ['.switch', 'autoStart', 'title'],
     ['#rate', 'speedLabel', 'aria-label'], ['#music', 'music', 'aria-label'], ['#music', 'music', 'title'],
     ['#words h2', 'wordsHead'], ['#words .list-head p', 'wordsIntro'], ['#wordSearch', 'wordsSearch', 'placeholder'], ['#wordSearch', 'wordsSearchLabel', 'aria-label'],
@@ -918,7 +918,7 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
     bgmWarm(i); songWarm(i);
     setOdo(odoAt(Math.max(0, i)));
     history.replaceState(null, '', '#' + evAt(i).id);
-    $('#prev').disabled = idx === firstIdx(); $('#next').disabled = $('#skip').disabled = idx === EVENTS.length - 1;
+    $('#prev').disabled = $('#back').disabled = idx === firstIdx(); $('#next').disabled = $('#skip').disabled = idx === EVENTS.length - 1;
     const p = PLACES[startOf(evAt(i))]; // 도착 안내는 걸어 닿은 곳 (장면 안에서 옮겨 가는 장면은 시작하는 곳)
     if (stepped) {
       banner(`<span class="wk">📍</span>${esc(evAt(prev).place === startOf(EVENTS[i]) ? t('samePlace') : t('arrive'))} · <b>${esc(p.name)}</b><small>${esc(EVENTS[i].when)}</small>`, 2600);
@@ -1769,7 +1769,7 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   if (!hashOk && !quick && !new URLSearchParams(location.search).has('beat')) showIntro(fromLast > 0 ? fromLast : -1);
   $('.brand').onclick = ev => { ev.preventDefault(); showIntro(state.last && idx > 0 ? idx : -1); }; // 기록을 지운 뒤에는 처음 온 사람처럼
 
-  $('#prev').onclick = () => go(idx - 1);
+  $('#prev').onclick = $('#back').onclick = () => go(idx - 1);
   $('#next').onclick = () => go(idx + 1);
   $('#skip').onclick = () => go(idx + 1);
   $('#listen').onclick = () => { if (speaking) pauseSpeech(); else if (paused) resumeSpeech(); else { stopAuto(); speakScene(() => { if (idx === EVENTS.length - 1) endJourney(true); }); } };
