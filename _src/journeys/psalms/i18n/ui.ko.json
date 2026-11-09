@@ -15,5 +15,7 @@
  "tabLyrics": "가사",
  "lyricsNote": "시편 {n}편을 바탕으로 부르기 좋게 다듬은 가사입니다. 노래와 가사는 AI로 만들고 사람이 다듬었습니다.",
  "songPending": "이 노래는 준비하고 있습니다",
- "songSyncing": "가사를 맞추는 중"
+ "songSyncing": "가사를 맞추는 중",
+ "walkNext": "다음 노래로",
+ "walkShort": "다음 노래"
 }

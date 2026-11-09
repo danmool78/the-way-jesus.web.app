@@ -25,6 +25,7 @@
  "listen": "Ouvir",
  "stop": "Parar",
  "walkNext": "Caminhar até o próximo lugar",
+ "walkShort": "Próximo",
  "autoStart": "Começar a jornada guiada",
  "auto": "Jornada guiada",
  "speed": "Velocidade",
