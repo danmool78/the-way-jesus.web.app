@@ -945,8 +945,10 @@ function showIntro(resume) {
   // 안내 글의 단추 이름은 실제 화면 글씨를 그대로 끌어 쓴다 (언어마다 맞게)
   const names = { walk: t('walkNext'), words: t('tabWords'), quiz: t('tabQuiz') };
   [1, 2, 3, 4].forEach(k => { $('#landStep' + k).textContent = t('landStep' + k, names); });
+  // 이어서 걷기: 장면 이름은 둘째 줄에 작게 (한 줄에 다 넣으니 긴 이름이 단추 밖으로 잘렸다). 시편은 제목에 이미 '68편'이 있어 앞 번호를 뺀다
   const label = resume > 0 ? t('introContinue', { n: resume + 1, title: EVENTS[resume].title }) : t('introStart');
-  starts.forEach(b => { b.textContent = label; });
+  const [head, ...rest] = label.split(' · '), sub = rest.join(' · ').replace(EVENTS[resume]?.song ? `${resume + 1}. ` : '\u0000', '');
+  starts.forEach(b => { b.innerHTML = sub ? `${esc(head)}<small>${esc(sub)}</small>` : esc(head); b.title = label; });
   agains.forEach(b => { b.hidden = !(resume > 0); });
   // 떠 있는 동안 뒤 화면은 inert — Tab 초점·클릭이 가려진 단추로 가지 않게 (방향키 단축키는 아래 keydown에서 막는다)
   // 창(dialog)은 빼 둔다 — 랜딩에서 연 뮤직비디오 창의 닫기 단추가 눌려야 하므로

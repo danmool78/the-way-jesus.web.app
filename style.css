@@ -600,6 +600,7 @@ body.intro-open .intro,body.intro-open .intro *{animation-play-state:running}
 .intro-go{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%} /* 단추 max-width:100%가 화면 폭을 기준으로 잡히게 — 긴 장면 제목이 넘치지 않고 말줄임 */
 .intro-btn{min-width:260px;max-width:100%;padding:15px 28px;border:0;border-radius:999px;background:linear-gradient(180deg,var(--gold-hi),var(--gold-deep));color:#24180a;font-family:var(--serif);font-size:17px;font-weight:700;cursor:pointer;box-shadow:0 8px 28px rgba(185,138,62,.3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .intro-btn:hover{filter:brightness(1.06)}
+.intro-btn small{display:block;margin-top:3px;font-size:13px;font-weight:400;opacity:.8;overflow:hidden;text-overflow:ellipsis} /* 이어서 걷기의 장면 이름 */
 .intro-link{border:0;background:none;color:var(--muted);font-size:14px;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:6px}
 .land-down{margin-top:30px;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--muted);font-size:13px;text-decoration:none}
 .land-down svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;animation:landBob 1.8s ease-in-out infinite}
