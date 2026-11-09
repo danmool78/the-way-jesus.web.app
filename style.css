@@ -763,8 +763,9 @@ body.intro-open .intro,body.intro-open .intro *{animation-play-state:running}
 .lyrics-ov p{margin:0;font-family:var(--serif);color:#fbf1d8;text-shadow:0 2px 16px rgba(0,0,0,.9),0 0 34px rgba(0,0,0,.7);word-break:keep-all;transition:opacity .4s}
 .lyrics-ov .cur{font-weight:700;font-size:clamp(24px,3.6vw,40px);line-height:1.45;margin:.35em 0}
 .lyrics-ov .cur.head{font-size:clamp(18px,2.4vw,26px);color:#f0d79a}
-.lyrics-ov .prev,.lyrics-ov .next{font-size:clamp(15px,1.8vw,20px);line-height:1.5;opacity:.5;min-height:1.5em}
-.lyrics-ov::before{content:'';position:absolute;inset:-40px -60px;z-index:-1;background:radial-gradient(ellipse at center,rgba(10,8,6,.55),transparent 70%)}
+.lyrics-ov .prev,.lyrics-ov .next{font-size:clamp(15px,1.8vw,20px);line-height:1.5;opacity:.72;min-height:1.5em}
+/* 가사 뒤 바탕: 둥근 검은 얼룩은 어설퍼 보였다(사용자) — 지도 폭 전체에 위아래로 번지는 옅은 띠로, 영화 자막처럼 */
+.lyrics-ov::before{content:'';position:absolute;top:-40px;bottom:-40px;left:-100vw;right:-100vw;z-index:-1;background:linear-gradient(to bottom,transparent,rgba(18,13,8,.64) 22%,rgba(18,13,8,.64) 78%,transparent)}
 @media (min-width:901px){.lyrics-ov{left:calc((100% - min(460px,42%)) / 2);width:min(640px,54%)}} /* 넓은 화면은 오른쪽 장면 카드를 비켜서 */
 .lyrics{padding:4px 2px}
 .lyrics h5{margin:14px 0 4px;font:600 11px var(--sans);letter-spacing:.12em;color:#7f735f}
