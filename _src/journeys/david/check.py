@@ -20,7 +20,7 @@ for f in files:
         for w in ws:
             if set(w) != {'who', 'text', 'ref'}: bad.append(f'{i}: words 열쇠는 who·text·ref')
             if len(w.get('text', '')) > 120: bad.append(f'{i}: 말씀 {len(w["text"])}자 (120자 이내)')
-            if not re.match(r'^(출|민|신|수) \d', w.get('ref', '')): bad.append(f'{i}: ref "{w.get("ref")}" (출/민/신/수 장:절)')
+            if not re.match(r'^(삼상|삼하|왕상|대상|민|시) \d', w.get('ref', '')): bad.append(f'{i}: ref "{w.get("ref")}" (삼상/삼하/왕상/대상 장:절)')
         if not 50 <= len(c.get('note', '')) <= 180: bad.append(f'{i}: note 길이 {len(c.get("note", ""))}')
         if not c.get('reflect', '').endswith('?'): bad.append(f'{i}: reflect는 물음 한 문장')
         q = c.get('quiz', {})
