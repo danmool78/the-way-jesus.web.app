@@ -25,6 +25,7 @@
  "listen": "收听",
  "stop": "停止",
  "walkNext": "走向下一处",
+ "walkShort": "下一处",
  "autoStart": "开始自动旅程",
  "auto": "自动旅程",
  "speed": "语速",

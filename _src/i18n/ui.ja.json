@@ -25,6 +25,7 @@
  "listen": "聞く",
  "stop": "停止",
  "walkNext": "次の場所へ歩く",
+ "walkShort": "次の場所へ",
  "autoStart": "自動の旅を始める",
  "auto": "自動の旅",
  "speed": "速さ",

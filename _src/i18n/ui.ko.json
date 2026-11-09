@@ -26,6 +26,7 @@
  "listen": "듣기",
  "stop": "멈춤",
  "walkNext": "다음 장소로 걷기",
+ "walkShort": "다음 장소로",
  "autoStart": "자동 여정 시작",
  "auto": "자동 여정",
  "speed": "속도",

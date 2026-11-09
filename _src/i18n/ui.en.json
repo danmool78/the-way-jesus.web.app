@@ -25,6 +25,7 @@
  "listen": "Listen",
  "stop": "Stop",
  "walkNext": "Walk to the next place",
+ "walkShort": "Next place",
  "autoStart": "Start the guided journey",
  "auto": "Guided journey",
  "speed": "Speed",

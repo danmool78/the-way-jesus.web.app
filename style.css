@@ -362,6 +362,9 @@ html:not(:lang(ko)):not(:lang(zh)):not(:lang(ja)) .river-lbl text{writing-mode:h
 .switch input:checked+i::after{left:20px;background:var(--gold2)}
 .switch input:focus-visible+i{outline:2px solid var(--gold);outline-offset:2px}
 .rate{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:7px 8px;font-size:13px}
+.walk .lbl-s{display:none}
+.walkback{display:none;align-items:center;justify-content:center;flex:none;width:46px;align-self:stretch;border-radius:14px;border:1.5px solid rgba(var(--gold-deep-rgb),.6);background:rgba(var(--gold-deep-rgb),.08);color:var(--gold-hi);padding:0}
+.walkback svg{width:22px;height:22px}.walkback:disabled{opacity:.35}
 .walk{display:flex;align-items:center;gap:9px;border-radius:14px;padding:13px 22px;border:0;background:linear-gradient(180deg,var(--gold-hi),var(--gold-deep));color:#24180a;font-weight:700;font-size:15px;white-space:nowrap;box-shadow:0 6px 18px rgba(var(--gold-deep-rgb),.25)}
 .walk:disabled{opacity:.35}
 .is-walking .walk{opacity:.6}
@@ -564,18 +567,23 @@ dialog{position:fixed}
   .tseg{min-width:30px}
   .tname{font-size:10.5px}
   #skip,#prev{display:none}
+  .walkback{display:flex} /* 휴대폰: '다음 장소로 걷기' 앞에 이전 장소로 가는 작은 단추 (사용자) */
   .qcard b{display:none}
   .controls{justify-content:space-between;gap:6px}
   .switch .lbl,.rate,.qcard small,.qcard .chev{display:none}
   .play{width:48px;height:48px}
   .walk{padding:11px 14px;font-size:14px;flex:1;justify-content:center;min-width:0}
   .walk .lbl{overflow:hidden;text-overflow:ellipsis}
+  .walk .lbl{display:none}.walk .lbl-s{display:inline} /* 휴대폰은 짧은 이름 '다음 장소로'(시편 '다음 노래') — 좁아도 글씨가 보이게 (사용자) */
+  .walk{gap:6px;padding:11px 12px}
   .qcard{padding:8px 10px}
   .qcard b{font-size:14px}
   .stats{grid-template-columns:repeat(3,1fr)}
   .stampgrid{grid-template-columns:repeat(2,1fr)}
   .list-head h2{font-size:28px}
 }
+/* 아이폰 SE처럼 좁은 폰: 다른 단추를 줄여 '다음 장소로' 글씨가 들어가게 */
+@media (max-width:389px){.controls{gap:4px}.play{width:42px;height:42px}.walkback{width:36px}.music{width:30px}.qcard{padding:6px 7px}.walk{padding:10px 9px;font-size:13.5px;gap:4px}.walk>span[aria-hidden]{display:none}.qcard .laurel{width:24px;height:24px}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
 /* ---------- 랜딩페이지 (첫 시작 화면) ---------- */
