@@ -137,6 +137,17 @@ e02: {
 소품 (stage/david/props.js): cave(굴 입구 — 앞 +z로 열린 어두운 입구, `color`·`size`) · spear(창·화살 fly/stuck/ground, `arrow`·`len`) · jug(물병) · brook(시냇물과 매끄러운 돌, `len`) · camp(진영의 군막과 깃발, `color`·`flag`·`n`·`span` — 언덕 위에는 `y`로 올린다) · hall(사울의 궁 안: 뒷벽·백향목 기둥·깔개·왕좌 `tx`·등잔대 `lamp`) · tallhouse(두 층 집, idle/lit/rope) · zion(다윗성: 언덕·둘레 성벽·집·왕궁 `palace`·법궤 장막 `tent`, heightAt) · roof(왕궁 지붕 — 올라선 사람은 그 높이에, heightAt) · threshing(타작마당, heightAt) · oak(큰 상수리나무, 낮은 가지는 +x) · mule(노새, deck) · packdonkey(짐 실은 나귀) · lion · bear · arkcart(새 수레에 실은 법궤와 두 소, go/stumble, `speed`를 주면 바퀴가 구른다) · bedidol(침상의 드라빔) · showbread(진설병 상) · ruin(불탄 성읍, smoke/cold)
 그대로 쓰는 것: 제단 altar(idle/fire), 법궤 arkc(멘 궤는 `lift`), 장막 tent(`color`로 흰 휘장), 기혼 샘은 rockspring('flow'), 우물 well, 성문 gate, 나귀 donkey, 왕좌 throne, 빛 beam.
 
+묶음 d(d31–d39, `stage/david/d.js`, 소품·인물 `stage/david/props-d.js`):
+- 인물: davidH(머리를 가린 피난길의 왕 — 금관 없이 붉은 머릿수건, 삼하 15:30), ittai(가드 사람 잇대 — 블레셋 결에 청색 띠), amasa, ahimaaz(짧은 옷의 달리는 젊은이), cushite, abishag, benaiah(놋 투구·흉갑), shobi(암몬 사람), tyrianD. 아비새는 묶음 b의 abishai를 쓴다(없을 때만 만든다).
+- 소품: gatetower(마하나임 성문 — 두 망대 사이 문길, 양옆 성벽, 앞이 트인 문 위 다락방, 문 곁 돌 의자. 땅 높이(heightAt)를 주지 않는다 — 문을 지나는 사람이 올라탔다. 다락방의 왕은 배역 y 0.82, 망대 위 파수꾼은 y 1.0) · stonethrow(시므이의 돌과 흙먼지 — 'throw'면 포물선으로 되풀이, 돌은 무리 앞에 떨어진다. 던지는 사람과 함께 옮기려면 speed) · provisions(`kind` wares/food — show가 커지면 하나씩 내려놓인다) · cairn(압살롬 위의 돌무더기, 아래부터 쌓인다) · couch(늙은 왕의 침상 — 앉은 사람은 y 0.13, pose sit) · stockpile(`kind` stone/cedar/bronze/gold — 하나씩 쌓인다) · sunrise(동쪽 낮은 해, 'low'|'rise' 아주 천천히 오른다).
+- 장면: d31 기드론을 건너 감람산 비탈로(궤는 levite 둘이 메고 돌아간다) · d32 맞은편 능선(hill)의 시므이 · d33–d35 마하나임 성문(gatetower) — d35의 다락방에서 우는 왕은 배역을 바꿔 낀다(davidUp) · d34 앞은 성문, 뒤는 숲(oak 여럿 — 노새는 줄기 앞을 지나 낮은 가지 밑으로, 탄 사람은 그 자리에서 사라지고 노새만 빠져나간다. 빈 나무에 빛, 요압이 간 뒤는 어둠, 돌무더기) · d36 어둠·엎드린 사람들·타작마당 위의 빛, 제단의 불에 빛이 물러간다 · d37 왼쪽 왕의 방(hall `throne: false` + couch)과 오른쪽 기혼 샘·엔로겔 잔치를 한 무대에 · d38 d36의 타작마당과 제단 · d39 수금 든 늙은 왕, 떠오르는 해와 새 풀, 침상 위의 빛 속으로 사라짐(m31처럼).
+- 탄 사람(board)은 david.js의 자동 되돌림이 자리를 되돌리지 않는다 — 내린 사람은 intro에서 `{ board: '노새', x: 0, z: 0, look: Math.PI }`로 다시 태운다.
+
+묶음 b(d11–d20, `stage/david/b.js`·`props-b.js`): grotto(앞이 트인 굴 — 뒤쪽 반구 바위 지붕 안이 어둡고 앞이 열려 안에 숨은 사람이 보인다, `w`·`h`·`d`·`color` — 엔게디 굴 깊은 곳의 다윗과 부하들, cave는 바깥 모습뿐이라 안을 보일 수 없었다) · fold(낮은 돌담 양 우리, `r`), 인물 abishai(아비새) · amalekite(흙빛 머리의 아말렉 청년) · egyslave(허리치마의 애굽 청년) · abnerS(창 없는 아브넬 — 누운 사람의 창이 몸에서 곧게 솟아 보였다).
+- 놉(d11)의 제사장들과 길보아(d20)의 사울은 그리지 않는다: 빛이 꺼지고(dark) 그 자리가 빈다(show 0), 살아남은 아비아달은 다윗 앞에 엎드려 울고, 사울은 산 위에서 무릎 꿇었다가 사라진다. 그일라·아말렉의 싸움은 달아나 사라지는 블레셋과 되찾아 돌아오는 가족으로만.
+- 엔게디(d16)는 핀이 사해 물가라 `at`으로 무대를 서쪽 뭍에. 탈것에 태울 때는 `board`와 함께 `x: 0, z: 0`(안 주면 탄 사람이 딴 데 선다), 머리가 -x인 짐승(`rot: Math.PI`) 위에서는 `look: 3`이어야 앞을 본다. 다시 들을 때를 위해 intro에서 `board: null`로 내린다.
+- makeProp은 `size`를 축마다의 배열로 받는다 — cave의 크기는 `size` 숫자 대신 `scale`로.
+
 ### 인물 유형 (TYPES)
 jesus, mary, joseph, angel, woman, woman2, mother, anna, john(젊은 제자, 수염 없음), disciple, peter, man, elder, shepherd, magus, magus2, magus3, king, soldier(창), pharisee, child, boyJesus, baptist, tempter, steward, groom, servant, crossed(십자가 위 예수 — 실루엣 전용), thief(실루엣 전용)
 모세 여정: pharaoh, egyptian, taskmaster(막대), egysoldier(창), princess, egywoman, magician, mosesP(궁의 모세, 애굽 옷), mosesS(미디안의 목자), mosesE(여든의 모세, 흰 수염·지팡이), aaron, hebrew, hebrew2, miriam, sister(모세의 누이), joshua(창), hur, jethro, zipporah, aaronP(대제사장: 흰 옷·청색 에봇·관·흉패 `breast`), caleb, eleazar(대제사장 옷을 이은 아론의 아들), balaam, balak, sihon, rahab, priest(언약궤를 멘 레위 제사장)
