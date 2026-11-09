@@ -53,7 +53,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "Sync psalm lyrics to the uploaded songs"
-          git pull --rebase -q origin main && git push origin HEAD:main
+          # 맞추는 사이 작업실에서 노래를 또 바꿨으면 이 결과는 낡았다 — 버리고 배포는 그대로 (뒤따르는 배포가 새 노래를 맞춘다)
+          if git pull --rebase -q origin main; then git push origin HEAD:main; else git rebase --abort; git reset -q --hard HEAD~1; echo "새로 올라온 노래가 있어 이번 맞춤은 건너뜀"; fi
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
