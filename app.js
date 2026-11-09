@@ -439,7 +439,21 @@ let recenterT; addEventListener('resize', () => { clearTimeout(recenterT); recen
 // 전체 경로: 지도 틀 전체가 아니라 장소들이 모인 땅을 카드에 가리지 않는 영역에 꽉 차게.
 // 애굽 피난길(나일 삼각주의 헬리오폴리스·부바스티스)까지 들어오게 남쪽·서쪽을 넉넉히
 let LAND = box(33.36, 31.0, 29.95, 35.82); // 여정마다 바뀐다 (journey.map.land)
-function fitAll() { animateTo(reserveCard({ ...LAND }), 1100); }
+function fitAll() {
+  // 시편(무대 없이 가사를 띄우는 여정): 그려진 땅보다 조금 가까이(0.78 — 땅 끝에 붙은 시내산·바벨론도 옮길 틈이 생기게), 지금 장소가 가운데 가사 바로 아래에 오게 옮긴다
+  if (DATA.journey?.no3d && EVENTS && !isPro()) {
+    const r = map.getBoundingClientRect(), t = reserveCard({ ...LAND });
+    if (r.width) {
+      const f = freeArea('open'), D = drawnNow(), u = Math.min(Math.max(t.w / r.width, t.h / r.height), D.w / (f.r - f.l) * .78, D.h / (f.b - f.t) * .78), [cx, cy] = P(PLACES[here(evAt(idx))]), mobile = innerWidth <= 900;
+      // 가사 자리(style.css .lyrics-ov): 넓은 화면은 카드를 비킨 가운데 높이 50%, 좁은 화면은 위에서 30% — 그 아래 두세 줄 띄워서
+      const sx = mobile ? r.width / 2 : (r.width - Math.min(460, r.width * .42)) / 2;
+      const sy = mobile ? Math.min(r.height * .3 + 110, f.b - 30) : r.height / 2 + 130;
+      animateTo({ x: cx - sx * u, y: cy - sy * u, w: r.width * u, h: r.height * u }, 1100);
+      return;
+    }
+  }
+  animateTo(reserveCard({ ...LAND }), 1100);
+}
 function animateTo(target, ms) {
   cancelAnimationFrame(anim);
   preloadRelief(target);
@@ -931,8 +945,10 @@ function showIntro(resume) {
   // 안내 글의 단추 이름은 실제 화면 글씨를 그대로 끌어 쓴다 (언어마다 맞게)
   const names = { walk: t('walkNext'), words: t('tabWords'), quiz: t('tabQuiz') };
   [1, 2, 3, 4].forEach(k => { $('#landStep' + k).textContent = t('landStep' + k, names); });
+  // 이어서 걷기: 장면 이름은 둘째 줄에 작게 (한 줄에 다 넣으니 긴 이름이 단추 밖으로 잘렸다). 시편은 제목에 이미 '68편'이 있어 앞 번호를 뺀다
   const label = resume > 0 ? t('introContinue', { n: resume + 1, title: EVENTS[resume].title }) : t('introStart');
-  starts.forEach(b => { b.textContent = label; });
+  const [head, ...rest] = label.split(' · '), sub = rest.join(' · ').replace(EVENTS[resume]?.song ? `${resume + 1}. ` : '\u0000', '');
+  starts.forEach(b => { b.innerHTML = sub ? `${esc(head)}<small>${esc(sub)}</small>` : esc(head); b.title = label; });
   agains.forEach(b => { b.hidden = !(resume > 0); });
   // 떠 있는 동안 뒤 화면은 inert — Tab 초점·클릭이 가려진 단추로 가지 않게 (방향키 단축키는 아래 keydown에서 막는다)
   // 창(dialog)은 빼 둔다 — 랜딩에서 연 뮤직비디오 창의 닫기 단추가 눌려야 하므로
