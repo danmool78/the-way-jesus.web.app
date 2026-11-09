@@ -8,7 +8,6 @@
 const REPO = 'danmool78/the-way-jesus.web.app', BRANCH = 'main', R2KEY = 'theway-r2';
 const SRC = '_src/journeys/psalms/songs.json', DIR = 'assets/psalms';
 import { R2, r2Sign, sha256 } from './studio-r2.js';
-const RAW = p => `https://raw.githubusercontent.com/${REPO}/${BRANCH}/${p}`;
 const $ = (s, el = document) => el.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 let token = '', songs = [], groups = {}, dir = {}, r2 = null;
@@ -90,7 +89,8 @@ async function readDir() {
 }
 async function infoOf(id) {
   const f = dir[`${id}.json`]; if (!f) return null;
-  try { return await fetch(`${RAW(`${DIR}/${id}.json`)}?v=${f.sha}`, { cache: 'no-store' }).then(r => r.json()); } catch { return null; }
+  // raw.githubusercontent는 몇 분 캐시해서 바꾼 노래가 늦게 보였다 — API로 바로 읽는다
+  try { return JSON.parse(fromB64((await gh(`/repos/${REPO}/contents/${DIR}/${id}.json?ref=${BRANCH}`)).content)); } catch { return null; }
 }
 async function load() {
   const [src] = await Promise.all([gh(`/repos/${REPO}/contents/${SRC}?ref=${BRANCH}`), readDir()]);
@@ -186,6 +186,10 @@ async function upload(el, s, file) {
     const res = await gh(`/repos/${REPO}/contents/${DIR}/${s.id}.json`, { method: 'PUT', body: JSON.stringify({
       message: `Psalms: ${old ? 'replace' : 'add'} song for Psalm ${s.psalm} (${s.id}) from the studio`, content: toB64(JSON.stringify(out, null, 1) + '\n'), branch: BRANCH, ...(old ? { sha: old.sha } : {}) }) });
     dir[`${s.id}.json`] = res.content; summary();
+    // 가사 시간을 맞추기 전에도 바꾼 노래를 바로 들을 수 있게 플레이어를 새 노래로
+    const box = st.parentElement; let au = $('audio', box);
+    if (!au) { au = document.createElement('audio'); au.controls = true; au.preload = 'none'; box.append(au); }
+    au.src = out.src; $('.sync', el).hidden = true;
     st.innerHTML = `올림 ✓ <a href="https://github.com/${REPO}/commit/${res.commit.sha}" target="_blank" rel="noopener">${res.commit.sha.slice(0, 7)}</a> · 배포하며 가사 시간을 맞추는 중… (몇 분)`;
     await waitSync(el, s, hash);
   } catch (err) { st.className = 'state up bad'; st.textContent = `올리지 못했습니다: ${err.message}`; }

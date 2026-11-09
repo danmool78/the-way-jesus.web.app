@@ -1,0 +1,177 @@
+{
+ "creation": {
+  "name": "광야의 밤하늘",
+  "lat": 29.2,
+  "lng": 34.1,
+  "region": "시내 광야",
+  "approx": true
+ },
+ "wilderness": {
+  "name": "바란 광야",
+  "lat": 30.3,
+  "lng": 34.75,
+  "region": "광야",
+  "approx": true
+ },
+ "redsea": {
+  "name": "갈대 바다",
+  "lat": 30.1,
+  "lng": 32.55,
+  "region": "애굽 동쪽 경계",
+  "approx": true
+ },
+ "sinai": {
+  "name": "시내산",
+  "lat": 28.54,
+  "lng": 33.97,
+  "region": "시내 반도",
+  "approx": true
+ },
+ "kadesh": {
+  "name": "가데스 광야",
+  "lat": 30.65,
+  "lng": 34.42,
+  "region": "신 광야"
+ },
+ "bethlehem": {
+  "name": "베들레헴 들판",
+  "lat": 31.705,
+  "lng": 35.2,
+  "region": "유다"
+ },
+ "gibeah": {
+  "name": "기브아",
+  "lat": 31.823,
+  "lng": 35.231,
+  "region": "베냐민"
+ },
+ "nob": {
+  "name": "놉",
+  "lat": 31.795,
+  "lng": 35.24,
+  "region": "베냐민",
+  "approx": true
+ },
+ "gath": {
+  "name": "가드",
+  "lat": 31.7,
+  "lng": 34.85,
+  "region": "블레셋"
+ },
+ "adullam": {
+  "name": "아둘람 굴",
+  "lat": 31.65,
+  "lng": 34.96,
+  "region": "유다 평지"
+ },
+ "ziph": {
+  "name": "십 광야",
+  "lat": 31.48,
+  "lng": 35.12,
+  "region": "유다"
+ },
+ "engedi": {
+  "name": "엔게디",
+  "lat": 31.46,
+  "lng": 35.39,
+  "region": "사해 서쪽"
+ },
+ "judah": {
+  "name": "유다 광야",
+  "lat": 31.62,
+  "lng": 35.3,
+  "region": "유다",
+  "approx": true
+ },
+ "ziklag": {
+  "name": "시글락",
+  "lat": 31.39,
+  "lng": 34.69,
+  "region": "네게브",
+  "approx": true
+ },
+ "jerusalem": {
+  "name": "예루살렘",
+  "lat": 31.778,
+  "lng": 35.232,
+  "region": "유다"
+ },
+ "saltvalley": {
+  "name": "소금 골짜기",
+  "lat": 31.0,
+  "lng": 35.3,
+  "region": "에돔 쪽",
+  "approx": true
+ },
+ "olives": {
+  "name": "감람산",
+  "lat": 31.7783,
+  "lng": 35.2445,
+  "region": "예루살렘"
+ },
+ "mahanaim": {
+  "name": "마하나임",
+  "lat": 32.18,
+  "lng": 35.65,
+  "region": "요단 동편",
+  "approx": true
+ },
+ "temple": {
+  "name": "성전",
+  "lat": 31.7781,
+  "lng": 35.2354,
+  "region": "예루살렘"
+ },
+ "jericho": {
+  "name": "여리고",
+  "lat": 31.857,
+  "lng": 35.444,
+  "region": "요단 골짜기"
+ },
+ "adummim": {
+  "name": "아둠밈 오르막",
+  "lat": 31.82,
+  "lng": 35.33,
+  "region": "예루살렘 가는 길",
+  "approx": true
+ },
+ "gate": {
+  "name": "예루살렘 성문",
+  "lat": 31.779,
+  "lng": 35.228,
+  "region": "예루살렘"
+ },
+ "babylon": {
+  "name": "바벨론 강가 (동쪽 멀리)",
+  "lat": 32.4,
+  "lng": 36.85,
+  "region": "바벨론 쪽",
+  "approx": true
+ },
+ "return": {
+  "name": "돌아온 예루살렘",
+  "lat": 31.776,
+  "lng": 35.234,
+  "region": "예루살렘"
+ },
+ "upperroom": {
+  "name": "다락방",
+  "lat": 31.7716,
+  "lng": 35.2289,
+  "region": "예루살렘",
+  "approx": true
+ },
+ "golgotha": {
+  "name": "골고다",
+  "lat": 31.7786,
+  "lng": 35.2296,
+  "region": "예루살렘"
+ },
+ "tomb": {
+  "name": "동산 무덤",
+  "lat": 31.7836,
+  "lng": 35.2297,
+  "region": "예루살렘",
+  "approx": true
+ }
+}

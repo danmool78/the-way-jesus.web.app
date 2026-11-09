@@ -20,6 +20,7 @@ window.curEvent = () => evAt(idx); // 3D 지형(terrain.js)이 지금 장면을 
 // LANGS는 번역이 다 된 언어만 (data.<언어>.json이 있는 것) — 새 언어를 올릴 때 여기에 더한다
 const LANGS = ['ko', 'en', 'es', 'pt', 'fr', 'zh', 'id', 'ja'];
 const LANG = (() => {
+  if (['psalms'].includes(new URLSearchParams(location.search).get('j'))) return 'ko'; // 한국어 전용 여정(시편, journey.json koOnly) — 번역본이 없다
   const ok = l => l && LANGS.includes(l) ? l : null, pick = l => ok(String(l || '').toLowerCase().split('-')[0]);
   let saved = null; try { saved = localStorage.getItem('theway-lang'); } catch { /* 사생활 보호 모드 */ }
   return pick(new URLSearchParams(location.search).get('lang')) || pick(saved) || (navigator.languages || [navigator.language]).map(pick).find(Boolean) || 'en';
@@ -61,6 +62,7 @@ function applyStatic() {
   document.body.style.setProperty('--walking', `'👣 ${t('walking')} · '`);
   // 언어 고르기
   const sel = $('#langPick');
+  if (sel) sel.closest('label').hidden = !!DATA.journey?.koOnly; // 한국어 전용 여정에서는 고를 언어가 없다
   if (sel) {
     sel.innerHTML = u.langs.map(l => `<option value="${l}" ${l === LANG ? 'selected' : ''}>${esc(LANG_NAMES[l] || l)}</option>`).join('');
     sel.setAttribute('aria-label', t('language'));
@@ -675,7 +677,7 @@ function renderScene() {
       <p>${esc(w.text)}</p>
       <footer><span>${w.j && !Array.isArray(DATA.journey?.main) ? esc(t('jesus')) : esc(w.who)}</span><cite>${esc(w.ref)}</cite></footer>
     </blockquote>`;
-  const tabs = [['story', t('tabStory')], ['text', t('tabText')], ['compare', t('tabCompare')]].filter(([k]) => !((isPro() || !DATA.journey?.harmony) && k === 'compare')); // 프롤로그와 대조표 없는 여정은 복음서 비교가 없다
+  const tabs = [['story', t('tabStory')], ['text', e.song ? t('tabLyrics') : t('tabText')], ['compare', t('tabCompare')]].filter(([k]) => !((isPro() || !DATA.journey?.harmony) && k === 'compare')); // 프롤로그와 대조표 없는 여정은 복음서 비교가 없다
   if (!tabs.some(([k]) => k === cardTab)) cardTab = 'story'; // 보던 탭을 다음 장면에서도 (프롤로그처럼 그 탭이 없으면 이야기)
   $('#scene').innerHTML = `
   <div class="cardbar">
@@ -697,14 +699,14 @@ function renderScene() {
   <div class="ctabs" role="tablist">${tabs.map(([k, n]) => `<button role="tab" data-tab="${k}" class="${k === cardTab ? 'active' : ''}">${esc(n)}</button>`).join('')}</div>
   <section class="pane" data-pane="story" aria-label="${esc(t('storyLabel'))}">
     <div class="story">${e.story.map((s, i) => i === e.prayer ? `<div class="prayer-para"><h4>${esc(t('prayerOpen'))}</h4><p data-para="${i}">${esc(s)}</p></div>` : `<p data-para="${i}">${esc(s)}</p>`).join('')}</div>
-    <aside class="note"><h4>${esc(t('noteHead'))}</h4><p>${esc(e.note)}</p></aside>
-    <aside class="reflect"><h4>${esc(t('reflectHead'))}</h4><p>${esc(e.reflect)}</p></aside>
+    ${e.note ? `<aside class="note"><h4>${esc(t('noteHead'))}</h4><p>${esc(e.note)}</p></aside>` : ''}
+    ${e.reflect ? `<aside class="reflect"><h4>${esc(t('reflectHead'))}</h4><p>${esc(e.reflect)}</p></aside>` : ''}
   </section>
-  <section class="pane words-sec" data-pane="text" hidden>
+  ${e.song ? `<section class="pane lyrics-sec" data-pane="text" hidden>${lyricsHtml(e)}</section>` : `<section class="pane words-sec" data-pane="text" hidden>
     <h3>${esc(jesus.length ? t('hisWords') : t('voicesOfDay'))}</h3>
     ${e.words.map(word).join('')}
     <p class="fine">${esc(t('wordsNote', { r: refText(e) }))}</p>
-  </section>
+  </section>`}
   <section class="pane" data-pane="compare" hidden>
     <div class="meta">
       <span>📍 ${esc(place.name)}${place.approx ? ` <i>(${esc(t('approxShort'))})</i>` : ''}</span>
@@ -763,8 +765,8 @@ function showTab(k) {
 }
 // 지금 장면의 퀴즈: 아래 조작부의 카드에서 창으로 연다
 function updateQuizBtn() {
-  $('#quizBtn').style.visibility = isPro() ? 'hidden' : ''; // 프롤로그에는 퀴즈가 없다
-  if (isPro()) return;
+  $('#quizBtn').style.visibility = isPro() || !evAt(idx)?.quiz ? 'hidden' : ''; // 프롤로그·시편에는 퀴즈가 없다
+  if (isPro() || !evAt(idx)?.quiz) return;
   const e = EVENTS[idx], done = state.quiz[e.id] === true;
   $('#quizBtn').classList.toggle('done', done);
   $('#quizBtn b').textContent = done ? `${t('tabQuiz')} ★` : t('tabQuiz');
@@ -1113,7 +1115,7 @@ function sceneScript() {
   e.story.forEach((s, i) => items.push({ text: s, el: $(`[data-para="${i}"]`, sc), gemini: (e.storyTts || []).includes(i), pause: 350, beat: 'p' + i, sn: e.sn?.[i] }));
   return items;
 }
-function speakScene(onDone) { speakQueue(sceneScript(), onDone); sceneReading = true; }
+function speakScene(onDone) { speakQueue(sceneScript(), evAt(idx)?.song ? () => songPlay(onDone) : onDone); sceneReading = true; } // 시편: 노래 앞 낭독이 끝나면 노래
 const stageBeat = (beat, s) => {
   const e = evAt(idx);
   if (e?.stops || e?.start) {
@@ -1130,7 +1132,7 @@ function stopSpeech(keepAuto) {
   // 장면 안에서 옮겨 간 뒤에 멈추면, 무대가 처음 모습(enter)으로 돌아가므로 처음 자리(start)로 함께 돌린다
   const e = speaking && evAt(idx);
   if (e && here(e) !== startOf(e)) goStop(e, startOf(e));
-  speechToken++; clearTimeout(autoTimer); verseHide();
+  speechToken++; clearTimeout(autoTimer); verseHide(); songStop();
   if (synth) synth.cancel();
   voiceAudio.pause(); voiceAudio.onended = voiceAudio.onerror = voiceAudio.onplaying = voiceAudio.onwaiting = null;
   speaking = false; $$('.speaking').forEach(x => x.classList.remove('speaking'));
@@ -1139,6 +1141,66 @@ function stopSpeech(keepAuto) {
   setListenUI();
 }
 function stopAuto() { autoOn = false; clearTimeout(autoTimer); promptThen = null; setListenUI(); }
+
+/* ---------- 시편: 노래와 가사 ---------- */
+// 장면마다 노래 하나(관리자 페이지의 시편 노래 작업실에서 Suno로 만든 노래를 R2에 올린다). 지금 노래와 가사 시간은 assets/psalms/<id>.json
+// ({src, by, lines:[{t, text}]}). 노래 앞 낭독이 끝나면 노래를 틀고, 부르는 줄을 지도 위 가운데에 크게(앞뒤 줄은 흐리게), 카드의 가사에서도 밝힌다.
+// 아직 올리지 않은 노래는 '준비 중'을 잠깐 보이고 넘어간다. 가사의 [Verse] 같은 표시는 노래 만들 때만 쓰고 화면에는 '후렴' 같은 작은 이름으로
+const song = { audio: new Audio(), on: false, token: 0, raf: 0, k: -2, done: null, timer: 0 };
+const songLines = lyrics => (lyrics || '').split('\n').map(s => s.trim()).filter(s => s && !/^\[.*\]$/.test(s));
+const SECTION = { verse: '절', chorus: '후렴', 'final chorus': '후렴', bridge: '브리지' };
+function lyricsHtml(e) {
+  let k = 0, prev = '';
+  const body = e.song.lyrics.split('\n').map(x => x.trim()).map(x => {
+    const m = x.match(/^\[(.*)\]$/);
+    if (m) { const n = SECTION[m[1].toLowerCase().replace(/\s*\d+$/, '')] || ''; const h = n && n !== prev ? `<h5>${esc(n)}</h5>` : ''; if (n) prev = n; return h; }
+    return x ? `<p data-ln="${k++}">${esc(x)}</p>` : '';
+  }).join('');
+  return `<div class="lyrics">${body}</div><p class="fine">${esc(t('lyricsNote', { n: e.song.psalm }))}</p>`;
+}
+function lyricShow(k, want, head) {
+  $('#lyricsOv').innerHTML = `<p class="prev">${esc(k > 0 ? want[k - 1] : '')}</p><p class="cur${k < 0 ? ' head' : ''}">${esc(k >= 0 ? want[k] : head)}</p><p class="next">${esc(want[k + 1] || '')}</p>`;
+  $$('#scene [data-ln]').forEach(p => p.classList.toggle('speaking', +p.dataset.ln === k));
+  const el = k >= 0 && $(`#scene [data-ln="${k}"]`);
+  if (el) { const pane = el.closest('.pane'); if (pane?.hidden) showTab(pane.dataset.pane); scrollToEl(el); }
+}
+async function songPlay(done) {
+  const e = evAt(idx); if (!e?.song) { done && done(); return; }
+  const tk = ++song.token, ov = $('#lyricsOv'), want = songLines(e.song.lyrics);
+  song.on = true; song.done = done; speaking = true; setListenUI();
+  ov.hidden = false; requestAnimationFrame(() => ov.classList.add('on'));
+  lyricShow(-1, want, e.title);
+  let info = null;
+  try { info = await fetch(`assets/psalms/${e.id}.json`, { cache: 'no-cache' }).then(r => r.ok ? r.json() : null); } catch { /* 없음 */ }
+  if (tk !== song.token) return;
+  if (!info?.src) { lyricShow(-1, [], t('songPending')); song.timer = setTimeout(() => songEnd(tk), 4000); return; }
+  // 가사 시간이 지금 가사와 맞을 때만 따라간다 (방금 올려 아직 맞추는 중이면 제목만 두고 노래는 튼다)
+  const times = info.by !== 'pending' && info.lines?.length === want.length ? info.lines.map(l => l.t) : null;
+  if (!times) lyricShow(-1, [], `${e.title} · ${t('songSyncing')}`);
+  const a = song.audio;
+  a.src = info.src; a.onended = a.onerror = () => songEnd(tk);
+  a.play().catch(() => songEnd(tk));
+  song.k = -2;
+  const tick = () => {
+    if (tk !== song.token) return;
+    if (times) { const now = a.currentTime + 0.15; let k = -1; times.forEach((x, i) => { if (x <= now) k = i; }); if (k !== song.k) { song.k = k; lyricShow(k, want, e.title); } }
+    song.raf = requestAnimationFrame(tick);
+  };
+  tick();
+}
+function songOff() {
+  cancelAnimationFrame(song.raf); clearTimeout(song.timer); song.timer = 0;
+  song.audio.pause(); song.audio.onended = song.audio.onerror = null;
+  const ov = $('#lyricsOv'); if (ov) { ov.classList.remove('on'); setTimeout(() => { if (!ov.classList.contains('on')) ov.hidden = true; }, 800); }
+  $$('#scene [data-ln].speaking').forEach(p => p.classList.remove('speaking'));
+  song.on = false;
+}
+function songEnd(tk) {
+  if (tk !== song.token) return;
+  songOff(); speaking = false; setListenUI();
+  const d = song.done; song.done = null; d && d();
+}
+function songStop() { if (!song.on && !song.timer) return; song.token++; song.done = null; songOff(); }
 
 /* ---------- 핵심 구절과 보는 사람의 동작 (기쁜 소식 여정) ---------- */
 // 핵심 구절: skeleton의 verse(문장 열쇠 'p0.2' 등)에 든 문장을 낭독하는 동안 무대 위에 큰 글씨로 띄운다. 이어지는 구절 문장은 이어 붙인다.
@@ -1233,8 +1295,8 @@ function startAuto() {
     autoTimer = setTimeout(() => { if (!autoOn) return; go(idx + 1, { keepSpeech: true, onArrive: () => { autoTimer = setTimeout(run, 1400); } }); }, 1200);
   };
   const run = () => { if (autoOn) speakScene(after); };
-  // 이야기를 읽는 중에 켜면 처음부터 다시 읽지 않는다: 읽던 데서 이어 읽고, 끝나면 다음 장소로
-  if (speaking && sceneReading) speechDone = after; else run();
+  // 이야기를 읽는 중에 켜면 처음부터 다시 읽지 않는다: 읽던 데서 이어 읽고, 끝나면 다음 장소로 (노래 중이면 노래가 끝나면)
+  if (song.on) song.done = after; else if (speaking && sceneReading) speechDone = after; else run();
 }
 function setListenUI() {
   const l = $('#listen');
@@ -1594,7 +1656,9 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   const fromHash = hashIdx(), hashOk = fromHash >= 0 || (fromHash === -1 && !!d.prologue && location.hash === '#' + d.prologue.id);
   const fromLast = EVENTS.findIndex(e => e.id === state.last);
   const quick = !!d.journey?.quick; // 전도용(기쁜 소식): 첫 화면 없이 늘 첫 장면부터 — 건네받은 사람이 곧바로 보게
-  document.body.classList.toggle('stage-only', !!d.journey?.stageOnly); // 지도 없이 무대만 (기쁜 소식 — 지도와 도성 모형이 뒤에 깔리면 시선이 흩어졌다)
+  document.body.classList.toggle('stage-only', !!d.journey?.stageOnly);
+  document.body.classList.toggle('no-3d', !!d.journey?.no3d); // 시편: 3D 미니어처 없이 지도와 가사만
+  $('.tabs [data-view="quiz"]').hidden = !EVENTS.some(e => e.quiz); // 퀴즈가 없는 여정(시편) // 지도 없이 무대만 (기쁜 소식 — 지도와 도성 모형이 뒤에 깔리면 시선이 흩어졌다)
   idx = hashOk ? fromHash : fromLast >= 0 && !quick ? fromLast : firstIdx();
   view = { x: 0, y: 0, w: W, h: H }; applyView();
   const start = idx; idx = -2; go(start);
