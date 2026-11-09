@@ -1024,7 +1024,7 @@ function speakQueue(items, onDone) {
     if (it.beat) (it.ks || [it.s]).forEach(k => stageBeat(it.beat, k));
     verseFollow(it);
     let done = false, guard;
-    const advance = d => { if (done) return; done = true; clearTimeout(guard); autoTimer = setTimeout(next, n >= queue.length ? 0 : d); }; // 마지막 문장 뒤에는 쉬지 않고 곧바로 끝낸다 (배경음악이 낭독과 함께 멈추게)
+    const advance = d => { if (done) return; done = true; clearTimeout(guard); autoTimer = setTimeout(next, n >= queue.length ? (hasClip(it) ? 500 : 0) : d); }; // 마지막 문장 뒤에는 거의 쉬지 않고 끝낸다 (배경음악이 낭독과 함께 멈추게) — 녹음은 끝소리가 잘리지 않게 0.5초만 둔다
     if (hasClip(it)) {
       const gap = (!it.last ? VOICE_GAP.sentence : it.beat === 'intro' ? VOICE_GAP.intro : VOICE_GAP.item) / rate;
       // 감시 타이머는 실제로 소리가 나기 시작할 때부터 남은 길이로 잰다 (받는 중·버퍼링 시간은 빼고).
