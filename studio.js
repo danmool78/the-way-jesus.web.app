@@ -129,13 +129,14 @@ async function fill(el, s) {
     <div class="box"><h3>Suno 스타일<span class="grow"></span><button class="ghost" data-label="스타일 복사" data-c="style">스타일 복사</button></h3><textarea class="ed style" rows="3">${esc(s.style || '')}</textarea></div>
     <div class="box"><h3>가사<span class="grow"></span><button class="ghost" data-label="가사 복사" data-c="lyrics">가사 복사</button></h3><textarea class="ed lyrics" rows="18">${esc(s.lyrics || '')}</textarea></div>
     <div class="row edrow"><span class="state edstate"></span><span class="grow"></span><button class="ghost edundo" hidden>되돌리기</button><button class="btn edsave" disabled>저장</button></div>
-    <div class="box"><h3>노래 파일<span class="grow"></span><label class="btn" style="cursor:pointer">${info ? 'mp3 바꾸기' : 'mp3 올리기'}<input type="file" accept="audio/mpeg,.mp3" hidden></label></h3>
+    <div class="box"><h3>노래 파일<span class="grow"></span>${info ? '<button class="ghost trim" title="소리가 나는 채로 잘려 끝나면 끝 3초를 서서히 줄입니다">끝 다듬기</button>' : ''}<label class="btn" style="cursor:pointer">${info ? 'mp3 바꾸기' : 'mp3 올리기'}<input type="file" accept="audio/mpeg,.mp3" hidden></label></h3>
       <div class="state up">${info ? `올린 노래: <a href="${esc(info.src)}" target="_blank" rel="noopener">${esc(info.src.split('/').pop())}</a>` : '아직 올리지 않았습니다'}</div>
       ${info ? `<audio controls preload="none" src="${esc(info.src)}"></audio>` : ''}</div>
     <div class="box sync" hidden></div>`;
   body.querySelectorAll('[data-c]').forEach(b => { b.onclick = () => copy(b, $(`textarea.${b.dataset.c}`, body).value); }); // 고치는 중인 글을 그대로 복사
   bindEdit(el, s);
   $('input[type=file]', body).onchange = e => upload(el, s, e.target.files[0]);
+  const trim = $('.trim', body); if (trim) trim.onclick = () => trimEnd(el, s);
   if (info && s.lyrics) showSync(el, s, info);
 }
 
@@ -184,29 +185,66 @@ async function waitLive(s, st) {
   st.textContent = '저장했습니다 ✓ — 반영이 늦습니다 (GitHub Actions를 확인하세요)';
 }
 
-async function upload(el, s, file) {
-  if (!file) return;
+/* ---------- 노래 끝 다듬기 ---------- */
+// Suno 노래는 소리가 나는 채로 잘려 끝나는 일이 많다(앱에서 들으면 일찍 끊긴 것처럼 들림 — 사용자, 2026-11).
+// 마지막 0.5초가 -45dB보다 크면 끝 3초를 서서히 줄이고 1초 무음을 붙여 mp3로 다시 만든다. 이미 조용히 끝나면 null
+let lameP = null;
+const lame = () => lameP ||= new Promise((ok, no) => { const sc = document.createElement('script'); sc.src = 'https://cdn.jsdelivr.net/npm/lamejs@1.2.1/lame.min.js'; sc.onload = () => ok(window.lamejs); sc.onerror = no; document.head.append(sc); });
+async function softEnd(bytes) {
+  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+  let buf; try { buf = await ctx.decodeAudioData(bytes.slice().buffer); } finally { ctx.close(); }
+  const sr = buf.sampleRate, n = buf.length, chs = Math.min(2, buf.numberOfChannels);
+  const data = Array.from({ length: chs }, (_, c) => buf.getChannelData(c));
+  let sum = 0; const tail = Math.min(n, sr / 2);
+  for (const d of data) for (let i = n - tail; i < n; i++) sum += d[i] * d[i];
+  if (10 * Math.log10(sum / (tail * chs) || 1e-12) < -45) return null;
+  const fade = Math.min(n, 3 * sr), pad = sr, pcm = data.map(() => new Int16Array(n + pad));
+  data.forEach((d, c) => { for (let i = 0; i < n; i++) { const k = i < n - fade ? 1 : Math.cos((i - (n - fade)) / fade * Math.PI / 2); pcm[c][i] = Math.max(-1, Math.min(1, d[i] * k)) * 32767; } });
+  const L = await lame(), enc = new L.Mp3Encoder(chs, sr, 192), out = [];
+  for (let i = 0; i < n + pad; i += 1152) { const m = enc.encodeBuffer(...pcm.map(p => p.subarray(i, i + 1152))); if (m.length) out.push(new Uint8Array(m)); }
+  const end = enc.flush(); if (end.length) out.push(new Uint8Array(end));
+  const all = new Uint8Array(out.reduce((t, x) => t + x.length, 0)); let o = 0; for (const x of out) { all.set(x, o); o += x.length; }
+  return all;
+}
+// 이미 올린 노래의 끝만 다듬는다: 같은 노래라 가사 시간은 그대로 둔다
+async function trimEnd(el, s) {
+  const st = $('.state.up', el);
+  st.className = 'state up'; st.textContent = '노래를 받아 끝을 살피는 중…';
+  try {
+    const info = await infoOf(s.id), bytes = new Uint8Array(await (await fetch(info.src)).arrayBuffer());
+    st.textContent = '끝을 다듬는 중… (몇 초)';
+    const soft = await softEnd(bytes);
+    if (!soft) { st.textContent = '이미 조용히 끝나는 노래입니다 ✓'; return; }
+    await upload(el, s, null, { bytes: soft, keep: info });
+  } catch (err) { st.className = 'state up bad'; st.textContent = `다듬지 못했습니다: ${err.message}`; }
+}
+
+async function upload(el, s, file, { bytes: given, keep } = {}) {
+  if (!file && !given) return;
   const st = $('.state.up', el);
   if (!r2) { st.className = 'state up bad'; st.textContent = '먼저 위에서 R2 열쇠를 넣어 주세요'; return; }
-  if (file.size > 40 * 1048576) { st.className = 'state up bad'; st.textContent = '파일이 너무 큽니다 (40MB까지)'; return; }
-  st.className = 'state up'; st.textContent = 'R2에 올리는 중…';
+  if (file?.size > 40 * 1048576) { st.className = 'state up bad'; st.textContent = '파일이 너무 큽니다 (40MB까지)'; return; }
+  st.className = 'state up'; st.textContent = '노래 끝을 살피는 중…';
   try {
-    const bytes = new Uint8Array(await file.arrayBuffer()), hash = await sha256(bytes);
+    let bytes = given || new Uint8Array(await file.arrayBuffer());
+    if (!given) { const soft = await softEnd(bytes).catch(() => null); if (soft) { bytes = soft; st.textContent = '끝을 부드럽게 다듬었습니다 · R2에 올리는 중…'; } }
+    if (!st.textContent.includes('R2')) st.textContent = 'R2에 올리는 중…';
+    const hash = await sha256(bytes);
     const key = `${R2.prefix}${s.id}-${hash.slice(0, 10)}.mp3`;
     await r2Put(key, bytes, hash);
     // 지금 노래가 이것임을 저장소에 적는다 — 배포 작업이 이 노래를 듣고 가사 시간을 맞춘다
     await readDir();
     const old = dir[`${s.id}.json`];
-    const out = { src: `${R2.base}/${key}`, audio: hash, by: 'pending', lines: [] };
+    const out = { src: `${R2.base}/${key}`, audio: hash, by: keep ? keep.by : 'pending', lines: keep ? keep.lines : [] };
     const res = await gh(`/repos/${REPO}/contents/${DIR}/${s.id}.json`, { method: 'PUT', body: JSON.stringify({
-      message: `Psalms: ${old ? 'replace' : 'add'} song for Psalm ${s.psalm} (${s.id}) from the studio`, content: toB64(JSON.stringify(out, null, 1) + '\n'), branch: BRANCH, ...(old ? { sha: old.sha } : {}) }) });
+      message: `Psalms: ${keep ? 'soften the ending of' : old ? 'replace' : 'add'} song for Psalm ${s.psalm} (${s.id}) from the studio`, content: toB64(JSON.stringify(out, null, 1) + '\n'), branch: BRANCH, ...(old ? { sha: old.sha } : {}) }) });
     dir[`${s.id}.json`] = res.content; summary();
     // 가사 시간을 맞추기 전에도 바꾼 노래를 바로 들을 수 있게 플레이어를 새 노래로
     const box = st.parentElement; let au = $('audio', box);
     if (!au) { au = document.createElement('audio'); au.controls = true; au.preload = 'none'; box.append(au); }
     au.src = out.src; $('.sync', el).hidden = true;
-    st.innerHTML = `올림 ✓ <a href="https://github.com/${REPO}/commit/${res.commit.sha}" target="_blank" rel="noopener">${res.commit.sha.slice(0, 7)}</a> · 배포하며 가사 시간을 맞추는 중… (몇 분)`;
-    await waitSync(el, s, hash);
+    st.innerHTML = `올림 ✓ <a href="https://github.com/${REPO}/commit/${res.commit.sha}" target="_blank" rel="noopener">${res.commit.sha.slice(0, 7)}</a> · ${keep ? '끝을 다듬었습니다 (가사 시간은 그대로) — 몇 분 뒤 앱에 반영' : '배포하며 가사 시간을 맞추는 중… (몇 분)'}`;
+    if (!keep) await waitSync(el, s, hash);
   } catch (err) { st.className = 'state up bad'; st.textContent = `올리지 못했습니다: ${err.message}`; }
 }
 // 배포 작업이 이 노래(hash)에 맞춘 가사 시간을 올릴 때까지 기다린다
