@@ -1251,7 +1251,8 @@ async function songPlay(done) {
   song.k = -2;
   // 부르는 줄 맞추기: 화면 그리기(rAF)는 다른 창에 가 있는 동안 멈추므로 소리 쪽 시각 알림(timeupdate)으로도 맞추고,
   // 돌아오면 곧바로 다시 맞춘다 (다른 창에 다녀오면 멈췄던 줄이 잠깐 남아 있었다 — 사용자)
-  const sync = () => { if (tk !== song.token || !times) return; const now = a.currentTime + 0.15; let k = -1; times.forEach((x, i) => { if (x <= now) k = i; }); if (k !== song.k) { song.k = k; lyricShow(k, want, e.title); } };
+  const sync = () => { if (tk !== song.token) return; document.body.classList.toggle('singing', !(a.duration - a.currentTime < 7)); if (!times) return; // 끝나기 7초 전부터 지도가 서서히 밝아진다
+    const now = a.currentTime + 0.15; let k = -1; times.forEach((x, i) => { if (x <= now) k = i; }); if (k !== song.k) { song.k = k; lyricShow(k, want, e.title); } };
   song.sync = sync; a.ontimeupdate = sync;
   const tick = () => { if (tk !== song.token) return; sync(); song.raf = requestAnimationFrame(tick); };
   tick();

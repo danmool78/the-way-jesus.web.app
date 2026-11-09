@@ -765,8 +765,9 @@ body.intro-open .intro,body.intro-open .intro *{animation-play-state:running}
 .lyrics-ov .cur.head{font-size:clamp(18px,2.4vw,26px);color:#f0d79a}
 .lyrics-ov .prev,.lyrics-ov .next{font-size:clamp(15px,1.8vw,20px);line-height:1.5;opacity:.72;min-height:1.5em}
 /* 노래하는 동안은 바탕 상자 없이 지도를 어둡게 가라앉혀 가사가 떠오르게 (둥근 얼룩·띠는 어설퍼 보였다 — 사용자) */
-.singing #map{filter:brightness(.42) saturate(.6)}
-.singing #map text{opacity:.18}#map text{transition:opacity 1.2s} /* 지명 글씨는 가사와 겹쳐 지저분해 보여 노래하는 동안 거의 지운다 */
+.no-3d #map{transition:filter 5s ease-in-out}
+.singing #map{filter:brightness(.42) saturate(.6)} /* 노래가 시작되면 서서히 어두워지고, 끝나기 조금 전에 서서히 밝아진다 */
+.singing #map text{opacity:.18}#map text{transition:opacity 5s ease-in-out} /* 지명 글씨는 가사와 겹쳐 지저분해 보여 노래하는 동안 거의 지운다 */
 @media (min-width:901px){.lyrics-ov{left:calc((100% - min(460px,42%)) / 2);width:min(640px,54%)}} /* 넓은 화면은 오른쪽 장면 카드를 비켜서 */
 .lyrics{padding:4px 2px}
 .lyrics h5{margin:14px 0 4px;font:600 11px var(--sans);letter-spacing:.12em;color:#7f735f}
