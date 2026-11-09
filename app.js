@@ -915,7 +915,7 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
     window.__stageScene = evAt(i); // stage.js가 늦게 로드돼도 따라잡도록
     dispatchEvent(new CustomEvent('stage:scene', { detail: { ev: evAt(i) } }));
     bgmFollow(); // 읽는 중에 장면이 바뀌면 그 장면의 곡으로 겹쳐 바꾼다
-    bgmWarm(i);
+    bgmWarm(i); songWarm(i);
     setOdo(odoAt(Math.max(0, i)));
     history.replaceState(null, '', '#' + evAt(i).id);
     $('#prev').disabled = idx === firstIdx(); $('#next').disabled = $('#skip').disabled = idx === EVENTS.length - 1;
@@ -1209,15 +1209,15 @@ async function songPlay(done) {
   song.on = true; song.done = done; speaking = true; setListenUI();
   ov.hidden = false; requestAnimationFrame(() => ov.classList.add('on'));
   lyricShow(-1, want, e.title);
-  let info = null;
-  try { info = await fetch(`assets/psalms/${e.id}.json`, { cache: 'no-cache' }).then(r => r.ok ? r.json() : null); } catch { /* 없음 */ }
+  const info = await songInfo(e.id);
   if (tk !== song.token) return;
   if (!info?.src) { lyricShow(-1, [], t('songPending')); song.timer = setTimeout(() => songEnd(tk), 4000); return; }
   // 가사 시간이 지금 가사와 맞을 때만 따라간다 (방금 올려 아직 맞추는 중이면 제목만 두고 노래는 튼다)
   const times = info.by !== 'pending' && info.lines?.length === want.length ? info.lines.map(l => l.t) : null;
   if (!times) lyricShow(-1, [], `${e.title} · ${t('songSyncing')}`);
   const a = song.audio;
-  a.src = info.src; a.onended = a.onerror = () => songEnd(tk);
+  if (a.src !== info.src) a.src = info.src; // songWarm이 미리 받아 둔 노래면 그대로 (처음부터 다시 받지 않게)
+  a.currentTime = 0; a.onended = a.onerror = () => songEnd(tk);
   a.play().catch(() => songEnd(tk));
   song.k = -2;
   const tick = () => {
@@ -1226,6 +1226,15 @@ async function songPlay(done) {
     song.raf = requestAnimationFrame(tick);
   };
   tick();
+}
+// 노래는 R2에서 흘려 받아 처음 소리가 나기까지 몇 초 걸렸다 — 장면을 열 때(노래 앞 낭독을 읽는 동안) 미리 받아 둔다
+const songInfos = {};
+const songInfo = id => songInfos[id] ||= fetch(`assets/psalms/${id}.json`, { cache: 'no-cache' }).then(r => r.ok ? r.json() : null).catch(() => { delete songInfos[id]; return null; });
+async function songWarm(i) {
+  const e = evAt(i); if (!e?.song) return;
+  const info = await songInfo(e.id);
+  if (!info?.src || song.on || evAt(idx) !== e) return;
+  const a = song.audio; if (a.src !== info.src) { a.preload = 'auto'; a.src = info.src; a.load(); }
 }
 function songOff() {
   cancelAnimationFrame(song.raf); clearTimeout(song.timer); song.timer = 0;
