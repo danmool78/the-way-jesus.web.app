@@ -1,0 +1,54 @@
+{
+ "appTag": "Davi · De pastor a rei",
+ "docTitle": "O Caminho — Davi | A vida de Davi num mapa",
+ "metaDesc": "Do pastor dos campos de Belém, passando pelo vale de Elá e pelas cavernas do deserto, até o rei de Jerusalém. Percorra no mapa bíblico as 39 cenas de Davi e ouça em canção os salmos que ele compôs naqueles lugares.",
+ "mapAria": "O caminho de Davi num mapa de Judá, Benjamim, Filístia e Gileade",
+ "introTag": "Dos campos de Belém ao palácio de Jerusalém, o caminho de Davi",
+ "introLead": "Percorra o mapa e acompanhe o caminho de um menino pastor que se torna fugitivo, se torna rei, cai e volta a se levantar.",
+ "introF1": "Siga os lugares, de Belém pelo vale de Elá e pelas cavernas do deserto, até Jerusalém",
+ "introF3": "Ouça a história em voz alta e escute em canção os salmos que Davi compôs naqueles lugares",
+ "landStep2": "Leia a história e os textos no cartão e toque em ▶ para ouvir",
+ "landStep4": "Reúna as palavras de Deus e de Davi na aba “{words}” e relembre as cenas com “{quiz}”",
+ "jesus": "Deus",
+ "hisWords": "As palavras de Deus e de Davi",
+ "wordsHead": "As palavras de Deus e de Davi",
+ "wordsIntro": "As palavras que Deus disse e as que Davi disse no seu caminho, reunidas na ordem da jornada. Cada uma é uma nova tradução do sentido original para a linguagem de hoje.",
+ "odoTitle": "Distância que Davi caminhou até esta cena (caminho estimado entre os lugares; passos de 75 cm)",
+ "gospels": {
+  "1sam": [
+   "1 Samuel",
+   "1Sm"
+  ],
+  "2sam": [
+   "2 Samuel",
+   "2Sm"
+  ],
+  "1ki": [
+   "1 Reis",
+   "1Rs"
+  ],
+  "1chr": [
+   "1 Crônicas",
+   "1Cr"
+  ]
+ },
+ "endLead": "Dos campos de Belém até a última canção de Davi — obrigado por caminhar conosco.",
+ "blessing": "O Senhor é o meu pastor; não me falta nada.\nEle me deixa descansar em pastos verdes e me leva até águas tranquilas. (Sl 23:1–2)\nQue aquele que chamou o menino do campo chame também o seu nome, e aquele que esteve com ele nas noites de fuga guarde o seu caminho.",
+ "psalmHead": "A canção cantada neste lugar",
+ "psalmNote": "Uma canção da jornada dos Salmos, cantada em coreano. A música e a letra foram criadas com IA e revisadas por pessoas.",
+ "map": {
+  "유 다": "JUDÁ",
+  "베 냐 민": "BENJAMIM",
+  "이 스 라 엘": "ISRAEL",
+  "블 레 셋": "FILÍSTIA",
+  "길 르 앗": "GILEADE",
+  "모 압": "MOABE",
+  "에 돔": "EDOM",
+  "갈 릴 리": "GALILEIA",
+  "벧세메스": "Bete-Semes",
+  "에그론": "Ecrom",
+  "아스돗": "Asdode",
+  "가사": "Gaza",
+  "벧산": "Bete-Seã"
+ }
+}
