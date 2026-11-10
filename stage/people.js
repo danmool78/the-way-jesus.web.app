@@ -144,6 +144,95 @@ const TYPES = {
   araunah:  { robe: '#c9b48c', trim: '#7a5a32', hair: '#3a2a1c', beard: true, hood: '#e8dcc0', band: '#7a5a32', sash: '#7a5a32', skin: 3 }, // 여부스 사람 아라우나 (타작하는 사람)
   levite:   { robe: '#f6f2e8', trim: '#2f4f8a', hair: '#2b1b10', beard: true, turban: '#f6f2e8', sash: '#2f4f8a', skin: 2 }, // 법궤를 멘 레위 사람 (priest와 같은 결, 다른 얼굴)
   lad:      { robe: '#e6dcc4', trim: '#8f6d4b', hair: '#4a2e1c', sash: '#8f6d4b', height: 0.7, kid: true }, // 요나단의 화살을 줍는 아이 (삼상 20:35)
+  // ---- 열왕기 여정 ----
+  // 나라마다 옷빛을 가른다: 유다 왕가는 자주·붉은 겉옷(다윗 왕가를 잇는다), 북이스라엘 왕가는 청록·황토 겉옷, 아람은 올리브·황토에 감은 머릿수건,
+  // 앗수르는 짙은 남빛 옷에 붉은 단·뾰족 투구(peak)·네모 수염(beardLong), 바벨론은 밝은 청금석빛 옷에 노란 단·둥근 놋 투구, 애굽은 허리치마와 가발(모세 여정 그대로).
+  // 선지자는 거친 갈색·회색 옷 — 엘리야는 털옷과 가죽 띠, 엘리사는 평범한 옷에서 엘리야의 겉옷(같은 빛 mantle)을 받아 입는다
+  solomonK: { robe: '#f1e7cf', trim: '#d6a93a', mantle: '#6b2a5e', hair: '#3a2616', beard: true, crown: true, sash: '#d6a93a', skin: 2, height: 0.96 }, // 성전을 봉헌하는 왕 솔로몬 (짧은 수염 — 젊은 왕 solomon의 옷 그대로)
+  solomonO: { robe: '#f1e7cf', trim: '#d6a93a', mantle: '#6b2a5e', hair: '#cfc8bb', beard: true, long: true, crown: true, sash: '#d6a93a', skin: 2, height: 0.94 }, // 늙은 솔로몬 (왕상 11:4 — 희어진 머리)
+  rehoboam: { robe: '#5a2a5e', trim: '#d6a93a', mantle: '#a8312a', hair: '#2b1b10', beard: true, crown: true, sash: '#d6a93a', skin: 2 }, // 유다 왕 르호보암: 다윗 왕가의 자주·붉은 옷
+  jeroboam: { robe: '#8a7350', trim: '#2a5a5e', mantle: '#2a5a5e', hair: '#2b1b10', beard: true, sash: '#2a5a5e', skin: 1, height: 0.96 }, // 에브라임 사람 여로보암 (요셉 집안 일꾼의 감독 — 청록 겉옷)
+  jeroboamK: { robe: '#2a5a5e', trim: '#d6a93a', mantle: '#b8892f', hair: '#2b1b10', beard: true, crown: true, sash: '#d6a93a', skin: 1, height: 0.96 }, // 북이스라엘 왕 여로보암: 청록 옷에 황토 겉옷, 금관
+  ahijah:   { robe: '#7a6a58', trim: '#4a3e32', mantle: '#ece2c8', hair: '#e6e1d6', beard: true, long: true, hood: '#d8ccb0', band: '#4a3e32', staff: true, eye: '#d8d4cc', skin: 1, height: 0.94 }, // 실로 사람 아히야: 늙은 선지자, 흐린 눈 (왕상 14:4), 새 겉옷(밝은 빛 — 11:29)
+  ahijahT:  { robe: '#7a6a58', trim: '#4a3e32', hair: '#e6e1d6', beard: true, long: true, hood: '#d8ccb0', band: '#4a3e32', staff: true, eye: '#d8d4cc', skin: 1, height: 0.94 }, // 새 겉옷을 열두 조각으로 찢은 뒤의 아히야 (겉옷 없이 — 조각은 소품 pieces). 늙어 눈이 어두운 아히야(왕상 14:4)도 이것으로
+  godman:   { robe: '#8a7a5e', trim: '#5a4a36', mantle: '#6a5a46', hair: '#2e1d12', beard: true, hood: '#cdbb94', band: '#5a4a36', staff: true, skin: 1 }, // 유다에서 온 하나님의 사람 (왕상 13:1)
+  oldprophet: { robe: '#6a6258', trim: '#3a3630', mantle: '#8a8274', hair: '#d9d4c8', beard: true, long: true, hood: '#b8b0a0', band: '#3a3630', staff: true, skin: 1, height: 0.92 }, // 벧엘의 늙은 선지자
+  shemaiah: { robe: '#6a5a46', trim: '#3e3224', mantle: '#a89a7c', hair: '#8a8274', beard: true, hood: '#d8ccb0', band: '#3e3224', skin: 1 }, // 하나님의 사람 스마야 (왕상 12:22)
+  sheba:    { robe: '#c98a2a', trim: '#d6a93a', mantle: '#2f3f6a', veil: true, inner: '#f6efe2', crown: true, skin: 3, soft: true, slim: true, sash: '#d6a93a', height: 0.94 }, // 스바 여왕: 남쪽 나라의 짙은 얼굴, 금빛 옷과 남빛 겉옷, 베일 위의 금관
+  shebamaid: { robe: '#e6dcc4', trim: '#c98a2a', mantle: '#c98a2a', veil: true, inner: '#f6efe2', skin: 3, soft: true, slim: true, sash: '#c98a2a' }, // 여왕을 따르는 시녀
+  shebaman: { robe: '#e6dcc4', trim: '#c98a2a', hair: '#140e0a', beard: true, turban: '#efe6d4', sash: '#c98a2a', skin: 3 }, // 낙타를 모는 스바 사람
+  mother1:  { robe: '#8e6d4e', trim: '#6e5232', mantle: '#c8b48c', veil: true, inner: '#efe6d4', skin: 1, soft: true, slim: true, sash: '#6e5232' }, // 두 여인 (왕상 3:16) — 진짜 어머니
+  mother2:  { robe: '#6e5a7a', trim: '#4d3f57', mantle: '#a89a8a', veil: true, inner: '#f1e9da', skin: 2, soft: true, slim: true, sash: '#4d3f57' }, //   다른 여인
+  wifeM:    { robe: '#9a3a3a', trim: '#d6a93a', mantle: '#e0c890', veil: true, inner: '#f6efe2', skin: 2, soft: true, slim: true, sash: '#d6a93a' }, // 이방 왕비 (모압)
+  wifeS:    { robe: '#5a2a6e', trim: '#d6a93a', mantle: '#c9a26a', veil: true, inner: '#f6efe2', skin: 3, soft: true, slim: true, sash: '#d6a93a' }, // 이방 왕비 (시돈 — 자줏빛)
+  courtier: { robe: '#e8dcc0', trim: '#a8312a', mantle: '#5a2a5e', hair: '#1d140c', sash: '#a8312a', skin: 2, height: 0.94 }, // 르호보암과 함께 자란 젊은이 (수염 없는, 값진 옷)
+  guardJ:   { robe: '#5a2a3e', trim: '#d6a93a', hair: '#1d140c', beard: true, cap: '#a88a4a', capMetal: true, armor: '#a88a4a', sash: '#d6a93a', skin: 1 }, // 유다 왕궁 호위병 (item: shield)
+  queenN:   { robe: '#2a5a5e', trim: '#d6a93a', mantle: '#b8892f', veil: true, inner: '#efe6d4', crown: true, skin: 2, soft: true, slim: true, sash: '#d6a93a' }, // 여로보암의 아내 — 북이스라엘 왕비 (변장하기 전)
+  jerowife: { robe: '#5e564a', trim: '#4a4238', mantle: '#4a4238', veil: true, inner: '#cfc6b4', skin: 1, soft: true, slim: true, sash: '#4a4238' }, // 변장한 여로보암의 아내 (수수한 잿빛 — 왕비인 줄 모르게)
+  // 엘리야와 엘리사
+  elijahK:  { robe: '#6a4a2c', trim: '#3a2614', mantle: '#4e3a26', hair: '#4a4038', beard: true, long: true, sash: '#2a1a0e', skin: 1 }, // 디셉 사람 엘리야: 털옷(짙은 갈색 겉옷)과 가죽 띠, 헝클어진 긴 머리 (왕하 1:8)
+  elisha:   { robe: '#b8a07a', trim: '#6b5438', hair: '#3a2616', beard: true, sash: '#6b5438', skin: 1 }, // 사밧의 아들 엘리사: 평범한 농부의 옷 (대머리로 그리지 않는다)
+  elishaM:  { robe: '#b8a07a', trim: '#6b5438', mantle: '#4e3a26', hair: '#3a2616', beard: true, sash: '#6b5438', skin: 1 }, // 엘리야의 겉옷을 받은 엘리사 (같은 겉옷 빛)
+  elishaO:  { robe: '#b8a07a', trim: '#6b5438', mantle: '#4e3a26', hair: '#d9d4c8', beard: true, long: true, sash: '#6b5438', skin: 1, height: 0.94 }, // 늙은 엘리사 (왕하 13:14)
+  ahab:     { robe: '#2a5a5e', trim: '#d6a93a', mantle: '#b8892f', hair: '#1d140c', beard: true, crown: true, sash: '#d6a93a', skin: 2, height: 1.0 }, // 북이스라엘 왕 아합
+  ahabA:    { robe: '#2a5a5e', trim: '#d6a93a', mantle: '#b8892f', hair: '#1d140c', beard: true, cap: '#a88a4a', capMetal: true, armor: '#a88a4a', sash: '#d6a93a', skin: 2, height: 1.0 }, // 변장하고 싸움에 나간 아합 (왕상 22:30 — 금관 대신 투구)
+  jezebel:  { robe: '#5a2a6e', trim: '#d6a93a', mantle: '#2f2a4a', veil: true, inner: '#efe6d4', crown: true, skin: 2, soft: true, slim: true, sash: '#d6a93a' }, // 시돈 왕의 딸 이세벨: 단정한 자줏빛 왕비 옷, 베일 위의 금관
+  baalprophet: { robe: '#9a3a1e', trim: '#d6a93a', mantle: '#c96a2a', hair: '#1d140c', beard: true, turban: '#d8a050', sash: '#d6a93a', skin: 3 }, // 바알의 선지자 (붉은 주황 옷, 감아 올린 머릿수건)
+  baalprophet2: { robe: '#7a2a2a', trim: '#d6a93a', hair: '#1d140c', beard: true, turban: '#c88040', sash: '#d6a93a', skin: 2 },
+  widow:    { robe: '#4e4a46', trim: '#3a3632', mantle: '#6a645c', veil: true, inner: '#d8d0c0', skin: 2, soft: true, slim: true, sash: '#3a3632' }, // 사르밧 과부 (시돈 땅의 가난한 과부 — 잿빛)
+  widowson: { robe: '#e6dcc4', trim: '#6a645c', hair: '#3a2616', sash: '#6a645c', height: 0.66, kid: true }, // 과부의 아들
+  obadiah:  { robe: '#e3d6b8', trim: '#2a5a5e', mantle: '#2a5a5e', hair: '#3a2a1c', beard: true, sash: '#2a5a5e', skin: 1 }, // 아합의 궁내대신 오바댜 (왕상 18:3)
+  servantE: { robe: '#c9b48c', trim: '#6b5438', hair: '#3a2616', sash: '#6b5438', skin: 1, height: 0.86 }, // 엘리야의 사환 (젊은이)
+  naboth:   { robe: '#8a6f4e', trim: '#4f6a3a', mantle: '#6a7a4a', hair: '#3a2a1c', beard: true, hood: '#d8c9a6', band: '#4f6a3a', sash: '#4f6a3a', skin: 1 }, // 이스르엘 사람 나봇 (포도원 주인)
+  micaiah:  { robe: '#5e5a54', trim: '#3a3632', mantle: '#8a7e6a', hair: '#8a8274', beard: true, hood: '#c8bfa8', band: '#3a3632', skin: 1 }, // 이믈라의 아들 미가야
+  jehoshaphat: { robe: '#5a2a5e', trim: '#d6a93a', mantle: '#c9a26a', hair: '#8a8274', beard: true, crown: true, sash: '#d6a93a', skin: 1 }, // 유다 왕 여호사밧 (유다의 자주 옷)
+  falseprophet: { robe: '#e8dcc0', trim: '#2a5a5e', mantle: '#2a5a5e', hair: '#2b1b10', beard: true, turban: '#efe6d4', sash: '#2a5a5e', skin: 2 }, // 아합의 궁정 선지자들 (시드기야 무리)
+  israelK:  { robe: '#5a6a6a', trim: '#2a5a5e', hair: '#2e1d12', beard: true, cap: '#7a5a34', spear: true, sash: '#2a5a5e', skin: 1 }, // 북이스라엘 병사 (청록 띠)
+  // 엘리사 시대
+  shunammite: { robe: '#7a5a3a', trim: '#c9a24a', mantle: '#d8c49a', veil: true, inner: '#f6efe2', skin: 2, soft: true, slim: true, sash: '#c9a24a' }, // 수넴의 귀한 여인
+  shunamboy: { robe: '#e6dcc4', trim: '#c9a24a', hair: '#3a2616', sash: '#c9a24a', height: 0.66, kid: true }, // 수넴 여인의 아들
+  gehazi:   { robe: '#9a8466', trim: '#5a4a36', hair: '#2b1b10', beard: true, sash: '#5a4a36', skin: 1, height: 0.92 }, // 엘리사의 사환 게하시
+  prophetson: { robe: '#a89676', trim: '#5a4a36', mantle: '#7a6a52', hair: '#3a2a1c', beard: true, sash: '#5a4a36', skin: 1 }, // 선지자의 제자들
+  prophetson2: { robe: '#8a7e66', trim: '#4a4032', hair: '#2b1b10', beard: true, sash: '#4a4032', skin: 3 },
+  naaman:   { robe: '#7a6a2e', trim: '#d6a93a', mantle: '#9d3328', hair: '#1d140c', beard: true, turban: '#d8c49a', armor: '#b08a3a', sword: true, sash: '#d6a93a', skin: 3, height: 1.0 }, // 아람 군대 장관 나아만: 올리브 옷, 붉은 겉옷, 놋 흉갑
+  naamanH:  { robe: '#efe6d4', trim: '#7a6a2e', hair: '#1d140c', beard: true, sash: '#7a6a2e', skin: 3, height: 1.0 }, // 요단에서 몸을 씻는 나아만 (갑옷·겉옷을 벗은 흰 속옷)
+  aramean:  { robe: '#7a6a2e', trim: '#9d3328', hair: '#1d140c', beard: true, turban: '#c9a86a', spear: true, sash: '#9d3328', skin: 3 }, // 아람 군사: 올리브 옷, 황토 머릿수건, 붉은 띠
+  aramean2: { robe: '#8a7a3a', trim: '#9d3328', hair: '#1d140c', beard: true, turban: '#b89868', sword: true, sash: '#9d3328', skin: 2 },
+  maid:     { robe: '#e6dcc4', trim: '#4f6a7d', hair: '#3b2616', long: true, soft: true, slim: true, sash: '#4f6a7d', height: 0.74, kid: true }, // 나아만 집의 이스라엘 소녀 (왕하 5:2)
+  leper:    { robe: '#8a8070', trim: '#6a6052', mantle: '#6a6052', hood: '#9a9080', hair: '#3a2a1c', beard: true, skin: 1 }, // 성문 밖 나병 환자 (해진 옷, 머리를 가린 천)
+  jehu:     { robe: '#4a5a5a', trim: '#2a5a5e', mantle: '#7a2a20', hair: '#1d140c', beard: true, cap: '#a88a4a', capMetal: true, armor: '#9a7a44', sword: true, sash: '#2a5a5e', skin: 1, height: 1.0 }, // 군대 장관 예후 (놋 투구·흉갑)
+  joramK:   { robe: '#2a5a5e', trim: '#d6a93a', mantle: '#b8892f', hair: '#2b1b10', beard: true, crown: true, sash: '#d6a93a', skin: 2 }, // 북이스라엘 왕 요람 (아합의 아들 — 다윗 여정의 joram과 다른 사람)
+  athaliah: { robe: '#5a2a6e', trim: '#d6a93a', mantle: '#2a5a5e', veil: true, inner: '#efe6d4', crown: true, skin: 2, soft: true, slim: true, sash: '#d6a93a', height: 0.94 }, // 아달랴 (아합의 딸 — 유다의 왕좌를 차지한 왕비)
+  jehoiada: { robe: '#f6f2e8', trim: '#d6a93a', mantle: '#2f4f8a', hair: '#cfc8bb', beard: true, turban: '#f6f2e8', breast: true, sash: '#9d3328', skin: 1 }, // 대제사장 여호야다 (에봇과 흉패)
+  joashboy: { robe: '#f1e7cf', trim: '#d6a93a', mantle: '#6b2a5e', hair: '#3a2616', crown: true, sash: '#d6a93a', skin: 2, height: 0.66, kid: true }, // 일곱 살 왕 요아스 (유다)
+  jehosheba: { robe: '#6b2a5e', trim: '#d6a93a', mantle: '#d8c49a', veil: true, inner: '#f6efe2', skin: 2, soft: true, slim: true, sash: '#d6a93a' }, // 아이를 숨긴 고모 여호세바
+  joashI:   { robe: '#2a5a5e', trim: '#d6a93a', mantle: '#b8892f', hair: '#2b1b10', beard: true, crown: true, sash: '#d6a93a', skin: 1 }, // 북이스라엘 왕 요아스 (엘리사의 마지막 화살, 왕하 13:14)
+  // 유다의 마지막 시대
+  hoshea:   { robe: '#2a5a5e', trim: '#8a7a5a', mantle: '#6a6052', hair: '#2b1b10', beard: true, crown: true, sash: '#8a7a5a', skin: 1 }, // 북이스라엘의 마지막 왕 호세아
+  hezekiah: { robe: '#5a2a5e', trim: '#d6a93a', mantle: '#a8312a', hair: '#3a2616', beard: true, crown: true, sash: '#d6a93a', skin: 2 }, // 유다 왕 히스기야
+  hezekiahS: { robe: '#6a6052', trim: '#4a4238', mantle: '#5a5248', hair: '#3a2616', beard: true, sash: '#4a4238', skin: 2 }, // 굵은 베옷을 입은 히스기야 (왕하 19:1 — 금관 없이)
+  isaiah:   { robe: '#e3dccb', trim: '#4a5a7a', mantle: '#4a5a7a', hair: '#8a8274', beard: true, long: true, hood: '#efe8d8', band: '#4a5a7a', skin: 1 }, // 아모스의 아들 선지자 이사야 (남빛 겉옷)
+  eliakim:  { robe: '#e8dcc0', trim: '#a8312a', mantle: '#5a2a5e', hair: '#2b1b10', beard: true, sash: '#a8312a', skin: 2 }, // 왕궁 맡은 엘리아김 (유다의 신하)
+  shebna:   { robe: '#d8ccb0', trim: '#5a2a5e', mantle: '#8a6a4a', hair: '#3a2a1c', beard: true, sash: '#5a2a5e', skin: 1 }, // 서기관 셉나
+  rabshakeh: { robe: '#3a3e5a', trim: '#9d3328', mantle: '#9d3328', hair: '#140e0a', beard: true, beardLong: true, tiara: '#3a3e5a', sash: '#d6a93a', skin: 3, height: 1.02 }, // 앗수르 장수 랍사게: 남빛 옷, 붉은 단, 높은 관, 네모 수염
+  assyrian: { robe: '#3a3e5a', trim: '#9d3328', hair: '#140e0a', beard: true, beardLong: true, peak: '#8a8a88', armor: '#7a7a78', spear: true, sash: '#9d3328', skin: 3 }, // 앗수르 군사: 뾰족 쇠 투구, 비늘 갑옷
+  assyrian2: { robe: '#2e3248', trim: '#9d3328', hair: '#140e0a', beard: true, beardLong: true, peak: '#8a8a88', sword: true, sash: '#9d3328', skin: 3 }, //  (칼, item: shield/bow)
+  babenvoy: { robe: '#2f5a9a', trim: '#e0b030', mantle: '#e0b030', hair: '#140e0a', beard: true, beardLong: true, tiara: '#e8dcc0', crown: false, sash: '#e0b030', skin: 3 }, // 바벨론 사신 (왕하 20:12 — 청금석빛 옷에 흰 관)
+  josiah:   { robe: '#5a2a5e', trim: '#d6a93a', mantle: '#a8312a', hair: '#2b1b10', beard: true, crown: true, sash: '#d6a93a', skin: 2, height: 0.96 }, // 유다 왕 요시야 (젊은 왕, 짧은 수염)
+  josiahA:  { robe: '#5a2a5e', trim: '#d6a93a', mantle: '#a8312a', hair: '#2b1b10', beard: true, cap: '#a88a4a', capMetal: true, armor: '#a88a4a', sash: '#d6a93a', skin: 2, height: 0.96 }, // 싸움에 나간 요시야 (왕하 23:29 — 투구, 변장)
+  huldah:   { robe: '#4f5a6a', trim: '#c9a24a', mantle: '#d8ccb0', veil: true, inner: '#f6efe2', skin: 1, soft: true, slim: true, sash: '#c9a24a', height: 0.93 }, // 여선지자 훌다 (단정한 남회색 옷)
+  hilkiah:  { robe: '#f6f2e8', trim: '#d6a93a', mantle: '#2f4f8a', hair: '#bfb7aa', beard: true, turban: '#f6f2e8', breast: true, sash: '#9d3328', skin: 1 }, // 대제사장 힐기야
+  shaphan:  { robe: '#d8ccb0', trim: '#5a2a5e', mantle: '#6a5a46', hair: '#4a3a2a', beard: true, sash: '#5a2a5e', skin: 2 }, // 서기관 사반
+  neco:     { robe: '#efe9da', trim: '#d6a93a', cloth: '#f4efe2', hair: '#1a1210', bare: true, kilt: true, nemes: ['#2f4f8a', '#d6a93a'], collar: ['#d6a93a', '#2f6a8a', '#d6a93a', '#9d3328'], skin: 3, height: 1.0 }, // 애굽 왕 느고 (바로의 옷)
+  babylonian: { robe: '#2f5a9a', trim: '#e0b030', hair: '#140e0a', beard: true, cap: '#b08a3a', capMetal: true, armor: '#b08a3a', spear: true, sash: '#e0b030', skin: 3 }, // 바벨론 군사: 청금석빛 옷, 노란 단, 둥근 놋 투구
+  babylonian2: { robe: '#24487a', trim: '#e0b030', hair: '#140e0a', beard: true, cap: '#b08a3a', capMetal: true, sword: true, sash: '#e0b030', skin: 3 },
+  babking:  { robe: '#2f5a9a', trim: '#e0b030', mantle: '#e0b030', hair: '#140e0a', beard: true, beardLong: true, tiara: '#2f5a9a', sash: '#e0b030', skin: 3, height: 1.0 }, // 바벨론 왕 (느부갓네살 · 에윌므로닥)
+  zedekiah: { robe: '#5a2a5e', trim: '#d6a93a', mantle: '#a8312a', hair: '#2b1b10', beard: true, crown: true, sash: '#d6a93a', skin: 1 }, // 유다의 마지막 왕 시드기야
+  jehoiachin: { robe: '#6a6258', trim: '#4a4238', hair: '#5a4a3a', beard: true, long: true, sash: '#4a4238', skin: 2 }, // 갇힌 왕 여호야긴 (죄수의 옷)
+  jehoiachinR: { robe: '#f1e7cf', trim: '#d6a93a', mantle: '#5a2a5e', hair: '#8a8274', beard: true, long: true, sash: '#d6a93a', skin: 2 }, // 죄수의 옷을 벗고 왕의 상에서 먹는 여호야긴 (왕하 25:29)
+  gedaliah: { robe: '#8a7350', trim: '#5a4a36', mantle: '#6a7a6a', hair: '#3a2a1c', beard: true, sash: '#5a4a36', skin: 1 }, // 총독 그달리야
+  exile:    { robe: '#7a6a58', trim: '#4a3e32', mantle: '#5a5048', hair: '#2e1d12', beard: true, hood: '#a89a80', band: '#4a3e32', skin: 1 }, // 사로잡혀 가는 유다 사람
+  exileW:   { robe: '#6a5a4e', trim: '#4a3e32', mantle: '#8a7e6a', veil: true, inner: '#d8d0c0', skin: 1, soft: true, slim: true, sash: '#4a3e32' },
 };
 
 // 깃털 한 장: 길이 방향 +y
@@ -541,6 +630,25 @@ function makePerson(type) {
     const cm = mat(t.cap, t.capMetal ? { metalness: 0.55, roughness: 0.38 } : { roughness: 0.85 });
     mesh(sphere(0.093, 24, 10, 0, Math.PI * 2, 0, Math.PI * 0.5), cm, head, [0, 0.012, -0.004], [1, 1.02, 1.04]);
     mesh(new THREE.TorusGeometry(0.093, 0.006, 6, 28), cm, head, [0, 0.014, -0.004], [1, 1, 1.04]).rotation.x = Math.PI / 2;
+  }
+  // 열왕기 여정 — 앗수르의 뾰족 투구(peak: 색): 둥근 투구 위로 솟은 쇠 고깔 (라기스 부조의 앗수르 군사) — 둥근 투구의 바벨론·이스라엘 군사와 갈리게
+  if (t.peak) {
+    const pm = mat(t.peak, { metalness: 0.55, roughness: 0.4 });
+    mesh(sphere(0.093, 24, 10, 0, Math.PI * 2, 0, Math.PI * 0.5), pm, head, [0, 0.012, -0.004], [1, 1.02, 1.04]);
+    mesh(new THREE.ConeGeometry(0.07, 0.1, 20, 1, true), pm, head, [0, 0.115, -0.004]);
+    mesh(new THREE.TorusGeometry(0.093, 0.007, 6, 28), pm, head, [0, 0.014, -0.004], [1, 1, 1.04]).rotation.x = Math.PI / 2;
+  }
+  // 높은 관(tiara: 색): 위가 좁아지는 둥근 원통 모자와 금띠 — 앗수르·바벨론의 왕과 높은 신하
+  if (t.tiara) {
+    mesh(new THREE.CylinderGeometry(0.074, 0.09, 0.11, 24), mat(t.tiara, { roughness: 0.7 }), head, [0, 0.085, -0.004]);
+    mesh(new THREE.TorusGeometry(0.09, 0.007, 6, 28), mat('#d6a93a', { metalness: 0.6, roughness: 0.35 }), head, [0, 0.036, -0.004]).rotation.x = Math.PI / 2;
+    if (t.crown !== false) mesh(new THREE.ConeGeometry(0.02, 0.04, 10), mat('#d6a93a', { metalness: 0.6, roughness: 0.35 }), head, [0, 0.16, -0.004]);
+  }
+  // 길게 땋아 내린 네모 수염(beardLong): 앗수르·바벨론 사람 — 턱 밑으로 가슴까지
+  if (t.beardLong) {
+    const bm = mat(t.hair || '#1d140c', { roughness: 0.85 });
+    const bl = mesh(new THREE.BoxGeometry(0.07, 0.1, 0.035), bm, head, [0, -0.13, 0.045]); bl.rotation.x = 0.25;
+    for (let i = 0; i < 3; i++) mesh(new THREE.BoxGeometry(0.072, 0.006, 0.037), mat(new THREE.Color(t.hair || '#1d140c').multiplyScalar(0.6).getStyle()), head, [0, -0.1 - i * 0.025, 0.05 - i * 0.006]).rotation.x = 0.25;
   }
   // 블레셋의 깃털 관(plume: 색): 이마 띠 위에 빙 둘러 곧게 선 깃털 (메디넷 하부 부조의 '바다 사람들') — 애굽의 가발처럼 한눈에 블레셋
   if (t.plume) {
