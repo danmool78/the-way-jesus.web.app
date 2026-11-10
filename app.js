@@ -141,9 +141,12 @@ const GEO = {
   suez: [[29.97,32.53],[29.6,32.38],[29.0,32.62],[28.5,32.88],[28.0,33.3],[28.0,33.62],[28.5,33.22],[29.0,32.95],[29.6,32.72],[29.97,32.6]],
   hinnom: [[31.7765,35.2252],[31.7735,35.2258],[31.7705,35.2290],[31.7698,35.2340],[31.7690,35.2362]],
   // 메소포타미아 (프롤로그의 에덴: 창 2:14의 힛데겔·유브라데가 만나는 남쪽 — 전승의 자리). 본 지도와 이어지지 않는 따로 떨어진 무대 (EDEN)
-  euphrates: [[38.75,38.75],[37.6,38.3],[37.0,38.05],[36.6,38.2],[35.95,39.0],[35.33,40.14],[34.45,40.92],[34.1,42.35],[33.42,43.3],[33.35,43.78],[32.54,44.42],[32.03,44.4],[31.6,44.9],[31.31,45.28],[31.04,46.26],[30.98,46.9],[31.0,47.43]],
-  tigris: [[38.0,40.2],[37.5,41.6],[37.32,42.19],[36.34,43.13],[35.47,43.26],[34.6,43.68],[34.2,43.87],[33.32,44.42],[32.9,44.9],[32.5,45.82],[31.84,47.15],[31.3,47.4],[31.0,47.43]],
+  // 유브라데·힛데겔의 가운데 물길(열왕기 여정의 바벨론 포로길이 따라 내려간다)은 도시들로 짚은 점 — _src/relief.py의 EUPHRATES·TIGRIS와 같게
+  euphrates: [[38.75,38.75],[37.6,38.3],[37.0,38.05],[36.6,38.15],[36.05,38.15],[35.9,38.55],[35.95,39.0],[35.69,39.82],[35.33,40.14],[35.02,40.45],[34.45,40.92],[34.37,41.1],[34.47,41.9],[34.13,42.38],[33.87,42.53],[33.64,42.83],[33.42,43.3],[33.35,43.78],[32.78,44.29],[32.54,44.42],[32.03,44.4],[31.6,44.9],[31.31,45.28],[31.04,46.26],[30.98,46.9],[31.0,47.43]],
+  tigris: [[38.0,40.2],[37.5,41.6],[37.32,42.19],[36.34,43.13],[35.47,43.26],[34.93,43.48],[34.6,43.68],[34.2,43.87],[34.0,44.15],[33.32,44.42],[33.1,44.58],[32.9,44.9],[32.5,45.82],[31.84,47.15],[31.3,47.4],[31.0,47.43]],
   shatt: [[31.0,47.43],[30.5,47.81],[30.2,48.2],[29.97,48.53]],
+  // 키프로스: 열왕기 여정(바탕이 북쪽 시리아까지)에서만 보인다 — 그림 바탕이 없어 땅색 섬으로
+  cyprus: [[35.69,34.59],[35.55,34.2],[35.42,33.95],[35.34,33.32],[35.4,32.93],[35.2,32.95],[35.15,32.55],[35.1,32.28],[34.75,32.4],[34.65,32.75],[34.56,33.03],[34.67,33.04],[34.9,33.63],[34.96,34.08],[35.12,33.95],[35.3,33.98],[35.45,34.15],[35.6,34.48]],
   gulf: [[30.05,48.45],[29.95,48.05],[29.55,47.75],[29.35,47.95],[29.0,48.15],[28.4,48.5],[27.8,48.9],[27.0,49.6],[26.5,50.3],[27.0,51.5],[27.8,51.2],[28.6,50.8],[29.3,50.6],[29.9,50.1],[30.1,49.5],[30.2,48.9]]
 };
 // 음영 기복도(assets/relief.webp)가 덮는 범위 — _src/relief.py의 EXTENT와 같게
@@ -152,6 +155,10 @@ const RELIEF = { lat0: 29.15, lat1: 34.6, lng0: 33.0, lng1: 37.4 };
 const RELIEF_WEST = { lat0: 29.15, lat1: 31.9, lng0: 29.4, lng1: 33.25 };
 // 시내 반도·미디안 바탕(assets/relief-south.webp, 모세 여정에서만 깐다) — _src/relief.py의 SOUTH와 같게. 홍해의 두 만은 그림에 바다로 칠해져 있어 이때는 손으로 그린 수에즈 만(GEO.suez)을 덮지 않는다
 const RELIEF_SOUTH = { lat0: 27.2, lat1: 30.15, lng0: 31.25, lng1: 37.4 };
+// 시리아 사막·메소포타미아 바탕(assets/relief-meso.webp, 열왕기 여정 — journey.map.meso — 에서만 맨 밑에 깐다) — _src/relief.py의 MESO와 같게
+const RELIEF_MESO = { lat0: 26.9, lat1: 37.6, lng0: 35.6, lng1: 46.2 };
+// 그 위에 바벨론 둘레만 고운 바탕(assets/relief-babylon.webp — 장면 무대 높이로 내려가면 넓은 바탕은 뭉개진다) — _src/relief.py의 BABYLON과 같게
+const RELIEF_BABYLON = { lat0: 31.95, lat1: 33.15, lng0: 43.65, lng1: 45.2 };
 // 프롤로그의 에덴 둘레 바탕(assets/relief-east.webp) — _src/relief.py의 EAST와 같게
 const RELIEF_EAST = { lat0: 29.2, lat1: 32.8, lng0: 44.6, lng1: 49.9 };
 // 확대했을 때만 불러오는 정밀 타일(assets/relief-hi/행_열.webp) — _src/relief.py의 HI와 같게
@@ -189,13 +196,17 @@ function buildMap() {
   const far = (lat, lng) => px([lat, lng]).join(',');
   // 남쪽은 시나이 북부 → 나일 삼각주 → 알렉산드리아 해안을 따라, 넓은 화면에서도 바다가 끊기지 않게 서쪽으로 넉넉히
   const sinai = [[31.13, 33.8], [31.15, 33.1], [31.26, 32.3], [31.52, 31.85], [31.47, 30.4], [31.2, 29.9], [30.9, 28.5], [30.8, 26]];
-  const sea = `M${far(35.2, 36.0)} L${far(34.2, 35.65)} ` + smooth(GEO.coast).replace(/^M/, 'L') + ' ' + sinai.map(p => 'L' + far(...p)).join(' ') + ` L${far(36, 26)} Z`;
+  // 북쪽은 시리아 해안을 따라 길리기아까지 (열왕기 여정의 바탕이 그 둘레까지 있다 — 다른 여정은 그린 범위가 34.3°에서 끝나 보이지 않는다)
+  const north = [[36.05, 32.6], [36.15, 33.4], [36.35, 33.95], [36.6, 34.3], [36.8, 34.65], [36.57, 35.37], [36.75, 35.8], [36.92, 36.15], [36.6, 36.18], [36.4, 35.9], [36.08, 35.93], [35.85, 35.83], [35.52, 35.75]];
+  const sea = `M${far(...north[0])} ` + north.slice(1).map(p => 'L' + far(...p)).join(' ') + ` L${far(35.2, 36.0)} L${far(34.2, 35.65)} ` + smooth(GEO.coast).replace(/^M/, 'L') + ' ' + sinai.map(p => 'L' + far(...p)).join(' ') + ` L${far(36, 26)} Z`;
   const lbl = (txt, [x, y], cls) => `<g class="lbl ${cls}" transform="translate(${x},${y})"><text>${esc(txt)}</text></g>`;
   const [rx0, ry0] = px([RELIEF.lat1, RELIEF.lng0]), [rx1, ry1] = px([RELIEF.lat0, RELIEF.lng1]);
   const [wx0, wy0] = px([RELIEF_WEST.lat1, RELIEF_WEST.lng0]), [wx1, wy1] = px([RELIEF_WEST.lat0, RELIEF_WEST.lng1]);
   const [ex0, ey0] = px([RELIEF_EAST.lat1, RELIEF_EAST.lng0]), [ex1, ey1] = px([RELIEF_EAST.lat0, RELIEF_EAST.lng1]);
   const [cx0, cy0] = px([CITY3D.lat1, CITY3D.lng0]), [cx1, cy1] = px([CITY3D.lat0, CITY3D.lng1]);
   const [sx0, sy0] = px([RELIEF_SOUTH.lat1, RELIEF_SOUTH.lng0]), [sx1, sy1] = px([RELIEF_SOUTH.lat0, RELIEF_SOUTH.lng1]);
+  const [mx0, my0] = px([RELIEF_MESO.lat1, RELIEF_MESO.lng0]), [mx1, my1] = px([RELIEF_MESO.lat0, RELIEF_MESO.lng1]), jmap = DATA.journey?.map;
+  const [bx0, by0] = px([RELIEF_BABYLON.lat1, RELIEF_BABYLON.lng0]), [bx1, by1] = px([RELIEF_BABYLON.lat0, RELIEF_BABYLON.lng1]);
   map.setAttribute('viewBox', `0 0 ${W} ${H}`);
   map.innerHTML = `
   <defs>
@@ -205,8 +216,10 @@ function buildMap() {
     <filter id="waterEdge" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur in="SourceAlpha" stdDeviation="4" result="b"/><feComposite in="SourceAlpha" in2="b" operator="arithmetic" k2="1" k3="-1" result="edge"/><feFlood flood-color="#21474f" flood-opacity=".5"/><feComposite in2="edge" operator="in"/><feComposite in2="SourceGraphic" operator="over"/></filter>
   </defs>
   <rect x="${-W * 2}" y="${-H * 2}" width="${W * 12}" height="${H * 5}" fill="var(--land)"/>
+  ${jmap?.meso ? `<image href="assets/relief-meso.webp" class="relief" x="${mx0}" y="${my0}" width="${mx1 - mx0}" height="${my1 - my0}" preserveAspectRatio="none"/>
+  <image href="assets/relief-babylon.webp" class="relief" x="${bx0}" y="${by0}" width="${bx1 - bx0}" height="${by1 - by0}" preserveAspectRatio="none"/>` : ''}
   <image href="assets/relief-west.webp" class="relief" x="${wx0}" y="${wy0}" width="${wx1 - wx0}" height="${wy1 - wy0}" preserveAspectRatio="none"/>
-  <image href="assets/relief-east.webp" class="relief" x="${ex0}" y="${ey0}" width="${ex1 - ex0}" height="${ey1 - ey0}" preserveAspectRatio="none"/>
+  ${jmap?.meso ? '' : `<image href="assets/relief-east.webp" class="relief" x="${ex0}" y="${ey0}" width="${ex1 - ex0}" height="${ey1 - ey0}" preserveAspectRatio="none"/>`}
   <image href="assets/relief.webp" class="relief" x="${rx0}" y="${ry0}" width="${rx1 - rx0}" height="${ry1 - ry0}" preserveAspectRatio="none"/>
   ${DATA.journey?.map?.south ? `<image href="assets/relief-south.webp" class="relief" x="${sx0}" y="${sy0}" width="${sx1 - sx0}" height="${sy1 - sy0}" preserveAspectRatio="none"/>` : ''}
   <g id="reliefHi" class="relief"></g>
@@ -219,6 +232,7 @@ function buildMap() {
   <path d="${smooth(GEO.jordanS)}" class="riverbank"/>
   ${OASES.map(([a, b, r]) => `<circle cx="${px([a, b])[0]}" cy="${px([a, b])[1]}" r="${r}" fill="url(#oasis)"/>`).join('')}
   <path d="${sea}" fill="url(#seaGrad)" class="sea"/>
+  ${jmap?.meso ? `<path d="${smooth(GEO.cyprus, true)}" class="isle"/>` : ''}
   <path d="${smooth(GEO.coast)}" class="coast"/>
   <path d="${smooth(GEO.galilee, true)}" class="lake" filter="url(#waterEdge)"/>
   <path d="${smooth(GEO.dead, true)}" class="lake dead" filter="url(#waterEdge)"/>
@@ -440,6 +454,18 @@ let recenterT; addEventListener('resize', () => { clearTimeout(recenterT); recen
 // 전체 경로: 지도 틀 전체가 아니라 장소들이 모인 땅을 카드에 가리지 않는 영역에 꽉 차게.
 // 애굽 피난길(나일 삼각주의 헬리오폴리스·부바스티스)까지 들어오게 남쪽·서쪽을 넉넉히
 let LAND = box(33.36, 31.0, 29.95, 35.82); // 여정마다 바뀐다 (journey.map.land)
+// 지금 장소가 그 땅 밖에 멀리 있으면(열왕기의 바벨론) 그곳과 거기까지 온 길(경유지)까지 넓힌다 — 다른 여정은 모든 장소가 땅 안이라 그대로
+function landNow() {
+  const e = EVENTS && !onEden() ? evAt(idx) : null, p = e && PLACES[here(e)];
+  if (!p) return LAND;
+  const [x, y] = P(p);
+  if (x >= LAND.x && x <= LAND.x + LAND.w && y >= LAND.y && y <= LAND.y + LAND.h) return LAND;
+  const i = EVENTS.indexOf(e), prev = i > 0 ? PLACES[EVENTS[i - 1].place] : null;
+  const pts = [[x, y], ...((prev && routeVia(prev, p, e)) || []).map(px)], m = 250; // 가장자리에 붙지 않게 조금 여유 — 오른쪽은 핀 이름이 있어 더 넉넉히
+  const x0 = Math.min(LAND.x, ...pts.map(q => q[0] - m)), y0 = Math.min(LAND.y, ...pts.map(q => q[1] - m));
+  const x1 = Math.max(LAND.x + LAND.w, ...pts.map(q => q[0] + m * 2.4)), y1 = Math.max(LAND.y + LAND.h, ...pts.map(q => q[1] + m));
+  return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 };
+}
 function fitAll() {
   // 시편(무대 없이 가사를 띄우는 여정): 그려진 땅보다 조금 가까이(0.78 — 땅 끝에 붙은 시내산·바벨론도 옮길 틈이 생기게), 지금 장소가 가운데 가사 바로 아래에 오게 옮긴다
   if (DATA.journey?.no3d && EVENTS && !isPro()) {
@@ -453,7 +479,7 @@ function fitAll() {
       return;
     }
   }
-  animateTo(reserveCard({ ...LAND }), 1100);
+  animateTo(reserveCard({ ...landNow() }), 1100);
 }
 function animateTo(target, ms) {
   cancelAnimationFrame(anim);
@@ -490,7 +516,7 @@ function animateTo(target, ms) {
       drag.moved = true; cancelAnimationFrame(anim); followWalk = false; // 걷는 중에 끌면 카메라 따라가기를 멈춘다 map.setPointerCapture(e.pointerId); map.classList.add('dragging');
     }
     const u = map.viewBox.baseVal.width / map.getBoundingClientRect().width;
-    const B = onEden() ? EDEN : LAND; // 에덴 장면에서는 그 따로 떨어진 무대 안에서
+    const B = onEden() ? EDEN : landNow(); // 에덴 장면에서는 그 따로 떨어진 무대 안에서 (먼 바벨론에서는 그곳까지 넓힌 땅 안에서)
     const { w, h } = drag.v, cx = Math.min(B.x + B.w * 1.25, Math.max(B.x - B.w * 0.25, drag.v.x + w / 2 - dx * u));
     const cy = Math.min(B.y + B.h * 1.25, Math.max(B.y - B.h * 0.25, drag.v.y + h / 2 - dy * u));
     view = { x: cx - w / 2, y: cy - h / 2, w, h };
@@ -617,7 +643,9 @@ function walkTo(i, done) {
   $('#nextHint', map).style.display = 'none';
   banner(`<span class="wk">👣</span><b>${esc(A.name)}</b> → <b>${esc(B.name)}</b><small>${travelText(A, B, to)}</small>`);
   if (autoOn && DATA.journey?.where !== false) speakQueue([{ text: t('walkSpeak', { a: placeSay(A), b: placeSay(B), ro: ro(placeSay(B)) }) }]); // 녹음(voice.mjs walks)과 같은 글이어야 녹음이 나온다
-  const total = path.getTotalLength(), dur = reduced() ? 0 : Math.min(6500, Math.max(2200, km(A, B, to) * 30));
+  // 아주 먼 길(지도 단위 5000 넘게 — 예루살렘에서 바벨론까지, 다른 여정에는 없다)은 조금 더 길게 걷고, 아래 따라가는 화면도 넓게 잡는다
+  const far = Math.hypot(...[0, 1].map(k => P(A)[k] - P(B)[k])) > 5000;
+  const total = path.getTotalLength(), dur = reduced() ? 0 : far ? 10000 : Math.min(6500, Math.max(2200, km(A, B, to) * 30));
   // 카메라가 걷는 사람을 따라간다: 장면에서 물러나 길이 넉넉히 보이는 높이로 올라간 뒤 걷는 사람을 화면 가운데 두고 함께 옮겨 간다.
   // 도착하면 go()의 frameStage가 지금 화면에서 이어 무대로 내려간다. 전체 경로 보기·3D 지형·움직임 줄이기에서는 예전처럼 두 곳을 한 화면에
   followWalk = fitMode !== 'all' && !window.terrainOn && !!dur;
@@ -626,7 +654,7 @@ function walkTo(i, done) {
   const [ax, ay] = P(A), [bx, by] = P(B), from0 = { ...view }, t0 = performance.now();
   // 걷는 동안 화면 가로에 담는 지도 폭: 길이에 맞추되, 도착해 무대를 볼 때(frameStage)보다 가깝지는 않게 — 다가갔다 다시 물러나지 않게
   const near = B.jlm || to.place === 'jerusalem' ? 14 : 300, stageW = reserveCard({ x: 0, y: 0, w: near, h: near }).w;
-  const span = Math.min(1400, Math.max(stageW, Math.hypot(bx - ax, by - ay) * .9));
+  const span = far ? Math.min(4000, Math.hypot(bx - ax, by - ay) * .45) : Math.min(1400, Math.max(stageW, Math.hypot(bx - ax, by - ay) * .9));
   path.classList.add('walking'); path.style.strokeDashoffset = 1;
   $('#walker', map).classList.add('moving');
   const start = performance.now() + (reduced() ? 0 : 700);
@@ -635,7 +663,8 @@ function walkTo(i, done) {
     const e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
     const pt = path.getPointAtLength(e * total);
     setWalker([pt.x, pt.y]);
-    if (followWalk) followCam(pt, span, from0, Math.min(1, (now - t0) / 1400));
+    // 아주 먼 길은 마지막 3할에서 장면 높이로 내려앉으며 닿는다 — 넓게 잡은 채 닿으면 바벨론 동쪽, 그림 없는 바깥까지 보였다
+    if (followWalk) followCam(pt, far ? span + (stageW - span) * Math.max(0, (e - .7) / .3) ** 2 : span, from0, Math.min(1, (now - t0) / 1400));
     path.style.strokeDashoffset = 1 - e;
     setOdo(odoAt(idx) + (odoAt(i) - odoAt(idx)) * e);
     if (k < 1) { walkAnim = requestAnimationFrame(step); return; }

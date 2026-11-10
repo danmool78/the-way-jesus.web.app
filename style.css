@@ -137,6 +137,7 @@ a.sbtn{display:block;text-decoration:none;color:inherit}
 .offmap{fill:var(--bg)} /* 지형 그림이 없는 바깥 — 카드 둘레 틈으로 보여도 맨바닥 대신 바탕색 */
 .sea{opacity:1} /* 덜 덮으면 밑의 지형 그림 가장자리가 비쳐 밤에 바다에 세로줄이 보였다 */
 .coast{fill:none;stroke:#f6efdc;stroke-width:1.6;vector-effect:non-scaling-stroke;opacity:.7}
+.isle{fill:var(--land);stroke:#f6efdc;stroke-width:1.6;vector-effect:non-scaling-stroke;stroke-opacity:.7} /* 그림 바탕이 없는 섬(키프로스, 열왕기 여정) — 바탕 땅색에 해안선만 */
 .lake{fill:var(--sea);stroke:#5f8a92;stroke-width:1;vector-effect:non-scaling-stroke}
 .lake.dead{fill:#9cb6ad}
 .river{fill:none;stroke:#6f9aa2;stroke-width:2.2;vector-effect:non-scaling-stroke;stroke-linecap:round}
