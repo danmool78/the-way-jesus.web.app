@@ -414,6 +414,7 @@ Object.assign(MAKERS, {
 
   // 다락방이 있는 집 (수넴 — 왕하 4:10 · 사르밧 — 왕상 17:19): 흙벽돌 집 지붕 위에 앞이 트인 작은 방 — 침상·상·의자·등잔.
   // 방 안의 사람은 지붕 높이에 선다(heightAt), 침상 위에 누운 사람은 그보다 조금 높게. o.wall 벽빛. state 'idle' | 'lit'(등잔이 켜진다)
+  // 다락방 높이는 1.0 — 0.5였을 때 방 안에 선 사람(0.88)의 머리가 지붕을 뚫어 무릎 꿇기·지붕 위 세우기로 피했다(k14 upperroom을 합침)
   roomhouse(o = {}) {
     const g = new THREE.Group(), wall = mat(o.wall || '#cdb48e', { roughness: 1 }), dark = mat('#2a1c10'), roofM = mat('#a98f68', { roughness: 1 });
     const W = 1.15, H = 0.62, D = 0.85; // 아래층(낮게 — 다락방이 화면에 들어오게)
@@ -422,7 +423,7 @@ Object.assign(MAKERS, {
     mesh(new THREE.BoxGeometry(0.22, 0.46, 0.02), dark, g, [-0.3, 0.23, D / 2 + 0.006]); // 아래층 문
     for (let i = 0; i < 6; i++) { const h = (i + 1) * H / 6; mesh(new THREE.BoxGeometry(0.15, h, 0.12), wall, g, [-W / 2 - 0.08, h / 2, D / 2 - 0.06 - i * 0.12]).receiveShadow = true; } // 지붕으로 오르는 계단
     // 다락방: 지붕의 오른쪽 뒤, 뒷벽·옆벽·지붕만 두고 앞(+z)과 왼쪽은 트였다
-    const RX = 0.12, RW = 0.85, RD = 0.62, RH = 0.5, ry = H + 0.04;
+    const RX = 0.12, RW = 0.85, RD = 0.62, RH = o.rh || 1.0, ry = H + 0.04; // 선 사람(0.88)이 들어가는 높이
     mesh(new THREE.BoxGeometry(RW, RH, 0.05), wall, g, [RX, ry + RH / 2, -D / 2 + 0.03]).receiveShadow = true;
     mesh(new THREE.BoxGeometry(0.05, RH, RD), wall, g, [RX + RW / 2, ry + RH / 2, -D / 2 + RD / 2]).receiveShadow = true;
     const cap = mesh(new THREE.BoxGeometry(RW + 0.04, 0.035, RD + 0.04), roofM, g, [RX, ry + RH + 0.02, -D / 2 + RD / 2]); cap.receiveShadow = true;

@@ -111,7 +111,7 @@ export const B = {
     },
   },
 
-  /* k14. 사르밧 과부의 밀가루 통 — 왼쪽 뒤 시돈 땅 성문(kwall), 오른쪽에 다락방이 있는 과부의 집(upperroom — 방을 높인 roomhouse, props-b.js). 성문 앞에서 나뭇가지를 줍던 과부에게
+  /* k14. 사르밧 과부의 밀가루 통 — 왼쪽 뒤 시돈 땅 성문(kwall), 오른쪽에 다락방이 있는 과부의 집(roomhouse). 성문 앞에서 나뭇가지를 줍던 과부에게
      엘리야가 빵을 청한다. 밀가루 통(flourjar)이 바닥을 보이다가 차오른다. 아이가 숨이 멎은 일은 그리지 않는다 — 어머니의 울음과,
      다락방에 올라가 엎드려 부르짖는 엘리야(등잔), 그리고 다락방에 살아 일어선 아이와 어머니 품으로 */
   k14: {
@@ -121,7 +121,7 @@ export const B = {
     props: {
       sand: ['sand', 0, 0.1, { r: 2.0, color: '#d2bc92' }],
       wall: ['kwall', -1.3, -0.95, { scale: 0.7, w: 2.0, color: '#c8b8a0' }],
-      house: ['upperroom', 1.15, -0.35],
+      house: ['roomhouse', 1.15, -0.35],
       sticks: ['sticks', -0.55, 0.32],
       jar: ['flourjar', 0.45, 0.22, { state: 'low' }],
     },
