@@ -1799,8 +1799,14 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   $('.brand').onclick = ev => { ev.preventDefault(); showIntro(state.last && idx > 0 ? idx : -1); }; // 기록을 지운 뒤에는 처음 온 사람처럼
 
   $('#prev').onclick = $('#back').onclick = () => go(idx - 1);
-  $('#next').onclick = () => go(idx + 1);
-  $('#skip').onclick = () => go(idx + 1);
+  // 자동 여정이 켜진 채 '다음 장소로'를 누르면 걸어간 뒤 그 장면부터 자동으로 이어 간다 (예전엔 걸어가 멈춰 섰다 — 사용자)
+  const next = () => {
+    if (!autoOn) { go(idx + 1); return; }
+    clearTimeout(autoTimer);
+    go(idx + 1, { onArrive: () => { autoTimer = setTimeout(() => { if (autoOn) startAuto(); }, 1400); } });
+  };
+  $('#next').onclick = next;
+  $('#skip').onclick = next;
   $('#listen').onclick = () => { if (speaking) pauseSpeech(); else if (paused) resumeSpeech(); else { stopAuto(); speakScene(() => { if (idx === EVENTS.length - 1) endJourney(true); }); } };
   // stopSpeech가 스위치를 autoOn(=false)으로 되돌리므로 켠 상태를 먼저 읽어 둔다.
   // 이야기를 읽는 중에는 켜도 꺼도 낭독을 끊지 않는다: 켜면 끝난 뒤 다음 장소로(startAuto), 끄면 이 장면만 마저 읽고 멈춘다
