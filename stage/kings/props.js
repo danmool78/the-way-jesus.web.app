@@ -20,14 +20,14 @@ const tongue = (parent, r, h, pos, m) => { const c = mesh(new THREE.ConeGeometry
 // 다른 소품을 묶음 안에 넣어 함께 움직인다 — 그 소품의 update도 대신 불러 준다 (david/props.js와 같다)
 const inner = (g, kind, o, pos, rot = 0) => { const P = MAKERS[kind](o); P.obj.position.set(...pos); P.obj.rotation.y = rot; g.add(P.obj); return P; };
 // 연기: 오르며 커지고 옅어지는 회색 공 (david ruin과 같은 방식 — 스프라이트는 이 무대에서 잘 보이지 않았다)
-function smokePuffs(g, spots, n = 12, color = '#5a524a', rise = 1.2) {
+function smokePuffs(g, spots, n = 12, color = '#5a524a', rise = 1.2, puff = 1) {
   const puffs = Array.from({ length: n }, (_, i) => {
     const m = mesh(sphere(0.1, 12, 8), new THREE.MeshStandardMaterial({ color, roughness: 1, transparent: true, opacity: 0, depthWrite: false }), g);
     m.castShadow = false; m.userData = { at: spots[i % spots.length], s: i / n }; return m; });
   return (k, t) => puffs.forEach(p => {
     const u = (t * 0.15 + p.userData.s) % 1, [x, y, z] = p.userData.at;
-    p.position.set(x + u * 0.25, y + u * rise, z); p.scale.setScalar(0.5 + u * 2.2);
-    p.material.opacity = k * 0.5 * Math.sin(u * Math.PI); p.visible = p.material.opacity > 0.01;
+    p.position.set(x + u * 0.25, y + u * rise, z); p.scale.setScalar((0.5 + u * 2.2) * puff);
+    p.material.opacity = k * 0.42 * Math.sin(u * Math.PI); p.visible = p.material.opacity > 0.01;
   });
 }
 
@@ -140,19 +140,19 @@ Object.assign(MAKERS, {
     return P;
   },
 
-  // 방패 줄 (왕상 10:16–17 · 14:26–27): 벽에 건 둥근 방패 o.n개. state 'gold'(솔로몬의 금 방패) | 'bronze'(르호보암의 놋 방패) | 'none'(빈 벽 — 시삭이 실어 감).
+  // 방패 줄 (왕상 10:16–17 · 14:26–27): 벽 높이(0.55 — 앞에 선 사람 머리 위로 보이게)에 건 둥근 방패 o.n개. state 'gold'(솔로몬의 금 방패) | 'bronze'(르호보암의 놋 방패) | 'none'(빈 벽 — 시삭이 실어 감).
   // 빛깔은 천천히 바뀐다. o.w 너비, 뒤에 낮은 회벽(o.wall false면 없이)
   shields(o = {}) {
     const g = new THREE.Group(), n = o.n || 6, Wd = o.w || 1.4;
-    if (o.wall !== false) { mesh(new THREE.BoxGeometry(Wd + 0.2, 0.62, 0.06), mat('#e2d6bc', { roughness: 1 }), g, [0, 0.31, -0.04]).receiveShadow = true; mesh(new THREE.BoxGeometry(Wd + 0.24, 0.04, 0.1), mat('#7a4a2a'), g, [0, 0.63, -0.04]); }
+    if (o.wall !== false) { mesh(new THREE.BoxGeometry(Wd + 0.2, 0.8, 0.06), mat('#e2d6bc', { roughness: 1 }), g, [0, 0.4, -0.04]).receiveShadow = true; mesh(new THREE.BoxGeometry(Wd + 0.24, 0.04, 0.1), mat('#7a4a2a'), g, [0, 0.81, -0.04]); }
     const gC = new THREE.Color('#e0b040'), bC = new THREE.Color('#9a6a3a');
-    const sm = new THREE.MeshStandardMaterial({ color: gC.clone(), metalness: 0.65, roughness: 0.3 });
-    const list = Array.from({ length: n }, (_, i) => { const s = new THREE.Group(); s.position.set((i / Math.max(1, n - 1) - 0.5) * Wd, 0.36, 0.01); g.add(s);
+    const sm = new THREE.MeshStandardMaterial({ color: gC.clone(), metalness: 0.35, roughness: 0.35 });
+    const list = Array.from({ length: n }, (_, i) => { const s = new THREE.Group(); s.position.set((i / Math.max(1, n - 1) - 0.5) * Wd, 0.55, 0.01); g.add(s);
       mesh(new THREE.CylinderGeometry(0.085, 0.085, 0.012, 24), sm, s).rotation.x = Math.PI / 2; mesh(sphere(0.022, 10, 8), sm, s, [0, 0, 0.01]); return s; });
     let k = o.state === 'bronze' ? 1 : 0, vis = o.state === 'none' ? 0 : 1;
     return new Prop(g, (P, t, dt) => {
-      k = damp(k, P.state === 'bronze' ? 1 : 0, 1.2, dt); vis = damp(vis, P.state === 'none' ? 0 : 1, 1.5, dt);
-      sm.color.copy(gC).lerp(bC, k); sm.metalness = 0.65 - k * 0.25; sm.emissive = sm.emissive || new THREE.Color(); sm.emissive.set('#5a3a08').multiplyScalar((1 - k) * 0.25);
+      k = damp(k, P.state === 'bronze' ? 1 : 0, 1.2, dt); vis = damp(vis, P.state === 'none' ? 0 : 1, 3, dt);
+      sm.color.copy(gC).lerp(bC, k); sm.metalness = 0.35; sm.emissive.set('#8a6010').multiplyScalar((1 - k) * 0.6); // 금속감을 세게 주면 환경빛이 없는 무대에서 검게 보였다
       list.forEach((s, i) => { s.scale.setScalar(Math.max(1e-3, Math.min(1, vis * n - i))); s.visible = s.scale.x > 0.01; });
     }, { state: o.state || 'gold' });
   },
@@ -226,7 +226,7 @@ Object.assign(MAKERS, {
 
   // 높이 솟는 연기 기둥 (불타는 성읍·제사): o.fire면 밑동에 불빛. state 'on' | 'off'(걷힌다)
   smoke(o = {}) {
-    const g = new THREE.Group(), s = smokePuffs(g, [[0, 0.1, 0], [0.12, 0.15, 0.05], [-0.1, 0.12, -0.05]], 14, o.color || '#4a4440', o.rise || 1.8);
+    const g = new THREE.Group(), s = smokePuffs(g, [[0, 0.1, 0], [0.12, 0.15, 0.05], [-0.1, 0.12, -0.05]], 14, o.color || '#6a625a', o.rise || 1.8, o.puff || 0.6);
     const em = o.fire ? glow(1.2, 0, '#ff8a40') : null; if (em) { em.position.y = 0.15; g.add(em); }
     let k = 1;
     return new Prop(g, (P, t, dt) => { k = damp(k, P.state === 'off' ? 0 : 1, 0.7, dt); s(k * P.show, t); if (em) em.material.opacity = k * P.show * (0.6 + Math.sin(t * 8) * 0.1); }, { state: o.state || 'on', fade: 'none' });

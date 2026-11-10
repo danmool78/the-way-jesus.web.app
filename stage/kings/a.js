@@ -18,16 +18,16 @@ export const A = {
     props: {
       grass: ['grass', 0, 0.05, { r: 1.9, color: '#9a9a6a' }],
       rocks: ['rocks', 0, 0, { spots: [[-1.5, 0.45, 0.1], [1.6, -0.2, 0.12], [-0.3, -0.85, 0.1]] }],
-      tab: ['tabernacle', -0.95, -0.6, { scale: 0.55 }],
+      tab: ['tabernacle', -1.15, -0.6, { scale: 0.9 }],
       altar: ['altar', 0.55, -0.35, { scale: 1.7, state: 'fire' }],
-      smoke: ['smoke', 0.55, -0.35, { y: 0.5, rise: 2.2 }],
+      smoke: ['smoke', 0.55, -0.35, { y: 0.32, rise: 1.6, color: '#bdb5aa' }],
       ox: ['ox', 1.55, 0.3, { scale: 0.8, rot: Math.PI, speed: 0.4 }],
       beam: ['beam', 0.0, 0.2, { r: 0.42, h: 2.4 }],
     },
     cast: {
       solomon: ['solomon', 0.0, 0.2, 0.6],
       pr1: ['priest', 1.05, -0.05, -1],
-      pr2: ['levite', 1.15, 0.35, -0.8],
+      pr2: ['levite', 0.05, -0.4, 0.8],
     },
     beats: {
       enter: [['@env', 'night'], ['altar', 'idle'], ['smoke', 'off'], ['ox', null, { show: 0 }], ['pr1', 'idle', { show: 0 }], ['pr2', 'idle', { show: 0 }], ['beam', null, { show: 1 }], ['solomon', 'kneel', { look: 0.2 }]],
@@ -73,9 +73,9 @@ export const A = {
     },
     cast: {
       solomon: ['solomon', 0.7, -0.42, -0.4, { y: 0.22, pose: 'sit' }],
-      mom: ['mother1', -0.42, 0.2, 0.9],
-      other: ['mother2', 0.02, 0.28, 0.9],
-      guard: ['guardJ', 1.25, -0.3, -0.8],
+      mom: ['mother1', -0.55, 0.2, 0.9],
+      other: ['mother2', -0.12, 0.3, 0.9],
+      guard: ['guardJ', 1.2, 0.05, -1],
       off1: ['official', -1.0, -0.35, 0.6, { gaze: false }],
       off2: ['courtier', 0.15, -0.45, 0.5, { gaze: false }],
     },
@@ -96,23 +96,23 @@ export const A = {
       'p1.6': [['mom', 'speak', { to: 'other' }], ['other', 'speak', { to: 'mom', delay: 1400 }], ['mom', 'idle', { delay: 1400 }]],
       // 왕이 말한다 — 칼을 가져오너라
       'p2.0': [['other', 'carry', { item: 'baby', look: 0.9 }], ['mom', 'idle', { look: 0.9 }], ['solomon', 'sit-speak', { to: 'guard' }]],
-      'p2.1': [['guard', 'idle', { item: 'sword', x: 0.6, z: 0.18, look: -1 }]],
+      'p2.1': [['guard', 'idle', { item: 'sword', x: 0.4, z: 0.38, look: -1 }]],
       'p2.2': [['solomon', 'sit-speak', { to: 'other' }], ['guard', 'idle', { look: -1 }]],
       // 진짜 어머니가 애가 타서 — 무릎 꿇고 빈다
-      'p2.3': [['solomon', 'sit'], ['mom', 'kneel', { x: -0.3, z: 0.22, look: 1 }]],
+      'p2.3': [['solomon', 'sit'], ['mom', 'kneel', { x: -0.45, z: 0.22, look: 1 }]],
       'p2.4': [['mom', 'speak', { to: 'solomon' }], ['mom', 'kneel', { delay: 3500 }]],
       'p2.5': [['mom', 'kneel'], ['other', 'speak', { to: 'mom' }]],
       'p2.6': [['other', 'speak', { to: 'mom' }]],
       // 왕의 판결 — 칼은 물러가고, 아기는 처음 여인에게
-      'p2.7': [['other', 'carry', { item: 'baby' }], ['guard', 'idle', { item: null, x: 1.25, z: -0.3, look: -0.8 }], ['solomon', 'sit-speak', { to: 'mom' }]],
+      'p2.7': [['other', 'carry', { item: 'baby' }], ['guard', 'idle', { item: null, x: 1.2, z: 0.05, look: -1 }], ['solomon', 'sit-speak', { to: 'mom' }]],
       'p2.8': [['mom', 'idle', { x: -0.32, z: 0.24, look: 0.9 }], ['other', 'idle', { item: null, x: -0.05, z: 0.3, look: 2.6, delay: 600 }], ['mom', 'carry', { item: 'baby', delay: 800 }]],
       'p2.9': [['solomon', 'sit'], ['mom', 'carry', { item: 'baby', look: 0.4 }], ['other', 'idle', { item: null, x: 0.35, z: 0.45, look: 2.6 }], ['off1', 'bow'], ['off2', 'bow', { delay: 400 }]],
-      w0: [['guard', 'idle', { item: 'sword', x: 0.6, z: 0.18, look: -1 }], ['other', 'carry', { item: 'baby', x: 0.02, z: 0.28, look: 0.9 }], ['mom', 'idle', { item: null, x: -0.42, z: 0.2, look: 0.9 }],
+      w0: [['guard', 'idle', { item: 'sword', x: 0.4, z: 0.38, look: -1 }], ['other', 'carry', { item: 'baby', x: 0.02, z: 0.28, look: 0.9 }], ['mom', 'idle', { item: null, x: -0.42, z: 0.2, look: 0.9 }],
         ['solomon', 'sit-speak', { to: 'other' }]],
-      w1: [['solomon', 'sit'], ['mom', 'kneel', { x: -0.3, z: 0.22, look: 1 }], ['mom', 'speak', { to: 'solomon', delay: 300 }]],
-      w2: [['guard', 'idle', { item: null, x: 1.25, z: -0.3, look: -0.8 }], ['other', 'idle', { item: null, x: 0.35, z: 0.45, look: 2.6 }], ['mom', 'carry', { item: 'baby', x: -0.32, z: 0.24, look: 0.4 }],
+      w1: [['solomon', 'sit'], ['mom', 'kneel', { x: -0.45, z: 0.22, look: 1 }], ['mom', 'speak', { to: 'solomon', delay: 300 }]],
+      w2: [['guard', 'idle', { item: null, x: 1.2, z: 0.05, look: -1 }], ['other', 'idle', { item: null, x: 0.35, z: 0.45, look: 2.6 }], ['mom', 'carry', { item: 'baby', x: -0.32, z: 0.24, look: 0.4 }],
         ['solomon', 'sit-speak', { to: 'mom' }]],
-      end: [['solomon', 'sit'], ['guard', 'idle', { item: null, x: 1.25, z: -0.3, look: -0.8 }], ['other', 'idle', { item: null, x: 0.35, z: 0.45, look: 2.6 }], ['mom', 'carry', { item: 'baby', x: -0.32, z: 0.24, look: 0.4 }],
+      end: [['solomon', 'sit'], ['guard', 'idle', { item: null, x: 1.2, z: 0.05, look: -1 }], ['other', 'idle', { item: null, x: 0.35, z: 0.45, look: 2.6 }], ['mom', 'carry', { item: 'baby', x: -0.32, z: 0.24, look: 0.4 }],
         ['off1', 'bow'], ['off2', 'bow']],
     },
   },
@@ -132,7 +132,7 @@ export const A = {
       p1: ['priest', -1.77, 0.42, 1.3, { speed: 0.3, pose: 'carry-pole' }],
       p2: ['priest', -0.93, 0.42, 1.3, { speed: 0.3, pose: 'carry-pole' }],
       solomon: ['solomonK', 0.75, 0.5, -1.0],
-      stranger: ['tyrian', 2.1, 0.0, -1, { gaze: false }],
+      stranger: ['tyrian', 2.2, 0.6, -1, { gaze: false }],
     },
     beats: {
       enter: [['temple', 'cloud'], ['ark', null, { show: 0 }], ['p1', 'kneel', { x: -0.95, z: 0.35, look: 2.7 }], ['p2', 'kneel', { x: 0.95, z: 0.35, look: -2.7 }],
@@ -151,9 +151,9 @@ export const A = {
       'p1.1': [['solomon', 'raise']],
       'p1.3': [['solomon', 'raise', { look: 0.2 }]],
       // 먼 땅에서 온 이방 사람이 빌어도
-      'p1.4': [['stranger', 'idle', { show: 1, x: 1.55, z: -0.1, look: -2.6 }], ['stranger', 'kneel', { delay: 3000 }]],
+      'p1.4': [['stranger', 'idle', { show: 1, x: 1.05, z: 0.6, look: -2.6 }], ['stranger', 'kneel', { delay: 3000 }]],
       // 무릎을 펴고 일어나 백성을 축복한다
-      'p2.0': [['stranger', 'kneel', { show: 1, x: 1.55, z: -0.1, look: -2.6 }], ['solomon', 'bless', { x: 0.0, z: 0.5, look: 0 }], ['p1', 'idle', { look: 0.3 }], ['p2', 'idle', { look: -0.3 }]],
+      'p2.0': [['stranger', 'kneel', { show: 1, x: 1.05, z: 0.6, look: -2.6 }], ['solomon', 'bless', { x: 0.0, z: 0.5, look: 0 }], ['p1', 'idle', { look: 0.3 }], ['p2', 'idle', { look: -0.3 }]],
       // 화목제물 — 제단의 불, 열나흘의 잔치
       'p2.1': [['temple', 'fire'], ['solomon', 'idle', { look: -0.6 }]],
       // 백성은 기뻐하며 장막으로 돌아간다
@@ -164,7 +164,7 @@ export const A = {
       'p2.4': [['solomon', 'pray', { look: 2.9 }]],
       w0: [['solomon', 'speak', { show: 1, x: -0.3, z: 0.45, look: -0.3 }]],
       w1: [['solomon', 'raise']],
-      w2: [['solomon', 'speak'], ['stranger', 'kneel', { show: 1, x: 1.55, z: -0.1, look: -2.6 }]],
+      w2: [['solomon', 'speak'], ['stranger', 'kneel', { show: 1, x: 1.05, z: 0.6, look: -2.6 }]],
       w3: [['solomon', 'bless', { x: 0.0, z: 0.5, look: 0 }]],
       end: [['@env', 'glory'], ['temple', 'cloud'], ['ark', null, { show: 0 }], ['folkL', null, { show: 1, x: -1.55 }], ['folkR', null, { show: 1, x: 1.6 }], ['stranger', 'idle', { show: 0 }],
         ['p1', 'kneel', { x: -0.95, z: 0.35, look: 2.7 }], ['p2', 'kneel', { x: 0.95, z: 0.35, look: -2.7 }], ['solomon', 'raise', { show: 1, x: -0.3, z: 0.45, look: -0.3 }]],
@@ -182,24 +182,24 @@ export const A = {
       throne: ['ivorythrone', 0.85, -0.3],
       table: ['kingtable', -0.4, -0.25, { len: 0.9 }],
       gifts: ['tribute', 0.25, 0.42, { kind: 'spice' }],
-      cam1: ['camel', -2.6, 0.45, { speed: 0.45 }],
-      cam2: ['camel', -3.0, 0.15, { speed: 0.45 }],
+      cam1: ['camel', -2.7, -0.2, { speed: 0.45, scale: 0.85 }],
+      cam2: ['camel', -3.1, -0.5, { speed: 0.45, scale: 0.85 }],
     },
     cast: {
       solomon: ['solomonK', 0.85, -0.33, -0.6, { y: 0.22, pose: 'sit' }],
       sheba: ['sheba', -2.2, 0.62, 1, { speed: 0.55 }],
       maid: ['shebamaid', -2.55, 0.75, 1, { speed: 0.55, gaze: false }],
-      driver: ['shebaman', -2.2, 0.3, 1, { speed: 0.45, gaze: false }],
+      driver: ['shebaman', -2.3, 0.0, 1, { speed: 0.45, gaze: false }],
       off1: ['official', -0.75, -0.55, 0.4, { gaze: false }],
       off2: ['courtier', -0.1, -0.6, 0.2, { gaze: false }],
       cup: ['servant', 1.35, -0.1, -1, { gaze: false }],
     },
     beats: {
-      enter: [['cam1', null, { x: -1.6 }], ['cam2', null, { x: -2.0 }], ['driver', 'idle', { x: -1.25, z: 0.25 }], ['maid', 'idle', { x: -0.5, z: 0.55, look: 1 }],
+      enter: [['cam1', null, { x: -1.75 }], ['cam2', null, { x: -2.15 }], ['driver', 'idle', { x: -1.3, z: 0.0 }], ['maid', 'idle', { x: -0.5, z: 0.55, look: 1 }],
         ['sheba', 'speak', { x: -0.1, z: 0.3, look: 1, to: 'solomon' }], ['gifts', null, { show: 1 }]],
       // 향품을 실은 낙타 떼가 성문으로 길게 들어온다
-      intro: [['gifts', null, { show: 0 }], ['solomon', 'sit', { look: -0.6 }]],
-      'p0.0': [['cam1', null, { x: -1.6 }], ['cam2', null, { x: -2.0 }], ['driver', 'idle', { x: -1.25, z: 0.25 }], ['sheba', 'idle', { x: -1.1, z: 0.6 }], ['maid', 'idle', { x: -1.45, z: 0.72 }]],
+      intro: [['gifts', null, { show: 0 }], ['cam1', null, { show: 0 }], ['cam2', null, { show: 0 }], ['driver', 'idle', { show: 0 }], ['sheba', 'idle', { show: 0 }], ['maid', 'idle', { show: 0 }], ['solomon', 'sit', { look: -0.6 }]],
+      'p0.0': [['cam1', null, { show: 1, x: -1.75 }], ['cam2', null, { show: 1, x: -2.15 }], ['driver', 'idle', { show: 1, x: -1.3, z: 0.0 }], ['sheba', 'idle', { show: 1, x: -1.1, z: 0.6 }], ['maid', 'idle', { show: 1, x: -1.45, z: 0.72 }]],
       // 먼 남쪽 나라의 여왕 — 왕 앞에 나아가 묻는다
       'p0.2': [['sheba', 'idle', { x: -0.1, z: 0.3, look: 1 }], ['maid', 'idle', { x: -0.5, z: 0.55, look: 1 }]],
       'p0.4': [['sheba', 'speak', { to: 'solomon' }]],
@@ -216,12 +216,13 @@ export const A = {
       'p2.4': [['sheba', 'speak', { to: 'solomon' }]],
       // 금과 향품을 바치고 고국으로
       'p2.5': [['gifts', null, { show: 1 }], ['sheba', 'bow', { look: 1 }], ['maid', 'bow', { delay: 400 }],
-        ['sheba', 'idle', { x: -2.4, z: 0.6, delay: 3500 }], ['maid', 'idle', { x: -2.7, z: 0.75, delay: 3700 }], ['cam1', null, { x: -3.2, delay: 3000 }], ['cam2', null, { x: -3.6, delay: 3000 }], ['driver', 'idle', { x: -3.0, z: 0.3, delay: 3000 }]],
+        ['sheba', 'idle', { x: -2.4, z: 0.6, delay: 3500 }], ['maid', 'idle', { x: -2.7, z: 0.75, delay: 3700 }], ['cam1', null, { x: -3.2, delay: 3000 }], ['cam2', null, { x: -3.6, delay: 3000 }], ['driver', 'idle', { x: -3.0, z: 0.0, delay: 3000 }],
+        ['cam1', null, { show: 0, delay: 7000 }], ['cam2', null, { show: 0, delay: 7000 }], ['driver', 'idle', { show: 0, delay: 7000 }], ['sheba', 'idle', { show: 0, delay: 8000 }], ['maid', 'idle', { show: 0, delay: 8000 }]],
       w0: [['sheba', 'speak', { show: 1, x: -0.1, z: 0.3, look: 1, to: 'solomon' }]],
       w1: [['sheba', 'speak'], ['off1', 'bow'], ['off2', 'bow']],
       w2: [['off1', 'idle'], ['off2', 'idle'], ['sheba', 'raise']],
-      end: [['gifts', null, { show: 1 }], ['cam1', null, { x: -1.6 }], ['cam2', null, { x: -2.0 }], ['driver', 'idle', { x: -1.25, z: 0.25 }], ['maid', 'idle', { x: -0.5, z: 0.55, look: 1 }],
-        ['sheba', 'bow', { x: -0.1, z: 0.3, look: 1 }], ['solomon', 'sit']],
+      end: [['gifts', null, { show: 1 }], ['cam1', null, { show: 1, x: -1.75 }], ['cam2', null, { show: 1, x: -2.15 }], ['driver', 'idle', { show: 1, x: -1.3, z: 0.0 }], ['maid', 'idle', { show: 1, x: -0.5, z: 0.55, look: 1 }],
+        ['sheba', 'bow', { show: 1 }], ['sheba', 'bow', { x: -0.1, z: 0.3, look: 1 }], ['solomon', 'sit']],
     },
   },
 
@@ -233,7 +234,7 @@ export const A = {
     props: {
       grass: ['grass', 0.3, 0, { r: 1.9, color: '#a8a070' }],
       rocks: ['rocks', 0, 0, { spots: [[-0.6, -0.75, 0.12], [2.0, 0.3, 0.1]] }],
-      temple: ['stemple', -1.75, -1.0, { scale: 0.42 }], // 서쪽(왼쪽) 맞은편의 성전
+      temple: ['stemple', -1.8, -1.05, { scale: 0.55 }], // 서쪽(왼쪽) 맞은편의 성전
       hp1: ['highplace', 0.35, -0.45, { pole: false }], // 모압의 그모스
       hp2: ['highplace', 1.45, -0.35, { r: 0.42, color: '#9a8a70' }], // 암몬의 몰록
       beam: ['beam', -0.25, 0.25, { r: 0.4, h: 2.4, peak: 0.36 }],
@@ -290,9 +291,9 @@ export const A = {
       pieces: ['pieces', 0.08, 0.28, { to: [-0.24, 0.02] }],
     },
     cast: {
-      jeroboam: ['jeroboam', -1.05, 0.05, -0.8, { speed: 0.6 }],
-      w1: ['hebrew', -1.75, -0.25, 0.6, { gaze: false }],
-      w2: ['hebrew2', -0.6, -0.35, -0.6, { gaze: false }],
+      jeroboam: ['jeroboam', -0.7, 0.2, -0.8, { speed: 0.6 }],
+      w1: ['hebrew', -1.85, -0.3, 0.6, { gaze: false }],
+      w2: ['hebrew2', -0.35, -0.4, -0.6, { gaze: false }],
       ahijah: ['ahijah', 2.1, 0.3, -1, { speed: 0.45 }],
       ahijahT: ['ahijahT', 0.42, 0.25, -1],
       guard: ['guardJ', -2.2, 0.35, 1, { speed: 0.7 }],
@@ -303,7 +304,7 @@ export const A = {
       // 성을 쌓는 일꾼들과 부지런한 젊은이
       intro: [['@env', 'day'], ['pieces', 'spread', { show: 0 }], ['ahijahT', 'idle', { show: 0 }], ['ahijah', 'idle', { show: 0 }], ['guard', 'idle', { show: 0 }],
         ['w1', 'hold-basket'], ['w2', 'hold-basket'], ['jeroboam', 'point', { look: -0.8 }]],
-      'p0.1': [['jeroboam', 'speak', { to: 'w2' }], ['w2', 'idle', { x: -0.95, z: -0.4, look: -1 }], ['w1', 'hold-basket', { x: -1.45, z: -0.35 }]],
+      'p0.1': [['jeroboam', 'speak', { to: 'w2' }], ['w2', 'idle', { x: -0.6, z: -0.4, look: -1 }], ['w1', 'hold-basket', { x: -1.55, z: -0.35 }]],
       // 예루살렘을 나서는 길에서 아히야를 만난다
       'p0.2': [['jeroboam', 'idle', { x: -0.3, z: 0.25, look: 1 }], ['ahijah', 'idle', { show: 1, x: 0.42, z: 0.25, look: -1 }]],
       // 들에는 두 사람뿐
@@ -485,14 +486,14 @@ export const A = {
       // 사자와 나귀는 그 곁에 가만히 서 있었다
       'p2.5': [['@env', 'dusk'], ['old', 'idle', { show: 0 }], ['godman', 'idle', { show: 0 }], ['donkey', null, { show: 1, x: 0.95, z: 0.42 }], ['lion', null, { show: 1, x: 1.6, z: 0.3 }]],
       // 늙은 선지자가 거두어 묻으며 운다
-      'p2.6': [['old', 'idle', { show: 1, x: -1.4, z: 0.45, look: 1 }], ['old', 'idle', { x: 0.55, z: 0.45, delay: 300 }], ['old', 'mourn', { look: 1, delay: 5000 }]],
-      'p2.7': [['old', 'mourn', { x: 0.55, z: 0.45, look: 1 }]],
+      'p2.6': [['old', 'idle', { show: 1, x: -1.4, z: 0.45, look: 1 }], ['old', 'idle', { x: 0.25, z: 0.5, delay: 300 }], ['old', 'mourn', { look: 1, delay: 5000 }]],
+      'p2.7': [['old', 'mourn', { x: 0.25, z: 0.5, look: 1 }]],
       w0: [['@env', 'day'], ['lion', null, { show: 0 }], ['donkey', null, { show: 0 }], ['old', 'idle', { show: 0 }], ['hp', 'smoke'], ['jeroboam', 'idle', { show: 1, look: -1 }],
         ['godman', 'rebuke', { show: 1, x: -1.25, z: 0.3, look: 1 }], ['godman', 'speak', { to: 'jeroboam', delay: 1500 }]],
       w1: [['hp', 'split'], ['godman', 'speak', { to: 'jeroboam' }]],
-      w2: [['@env', 'dusk'], ['godman', 'idle', { show: 0 }], ['jeroboam', 'idle', { show: 0 }], ['donkey', null, { show: 1, x: 0.95, z: 0.42 }], ['lion', null, { show: 0 }], ['old', 'speak', { show: 1, x: 0.55, z: 0.45, look: -0.6 }]],
+      w2: [['@env', 'dusk'], ['godman', 'idle', { show: 0 }], ['jeroboam', 'idle', { show: 0 }], ['donkey', null, { show: 1, x: 0.95, z: 0.42 }], ['lion', null, { show: 0 }], ['old', 'speak', { show: 1, x: 0.25, z: 0.5, look: -0.6 }]],
       end: [['@env', 'dusk'], ['hp', 'split'], ['jeroboam', 'idle', { show: 0 }], ['pr1', 'idle', { show: 0 }], ['godman', 'idle', { show: 0 }], ['lion', null, { show: 1, x: 1.6, z: 0.3 }],
-        ['donkey', null, { show: 1, x: 0.95, z: 0.42 }], ['old', 'mourn', { show: 1, x: 0.55, z: 0.45, look: 1 }]],
+        ['donkey', null, { show: 1, x: 0.95, z: 0.42 }], ['old', 'mourn', { show: 1, x: 0.25, z: 0.5, look: 1 }]],
     },
   },
 
@@ -556,7 +557,7 @@ export const A = {
     env: 'day',
     wide: 1.4,
     props: {
-      shields: ['shields', -0.55, -0.62, { n: 6, w: 1.4, state: 'none' }],
+      shields: ['shields', -0.45, -0.8, { n: 6, w: 1.5, state: 'none' }],
       temple: ['stemple', 1.35, -0.8, { scale: 0.55, sea: false }],
       hp: ['highplace', -2.05, -0.75, { scale: 0.6, r: 0.4 }],
       gold: ['tribute', 0.45, 0.2, { kind: 'gold', speed: 0.5 }],
@@ -583,7 +584,7 @@ export const A = {
       // 지난날 — 벽에 걸렸던 금 방패와 보물, 시삭이 쳐들어온다
       'p1.0': [['@env', 'overcast'], ['g1', 'idle', { show: 0 }], ['g2', 'idle', { show: 0 }], ['g3', 'idle', { show: 0 }], ['shields', 'gold'], ['gold', null, { show: 1 }],
         ['rehoboam', 'afraid', { x: 1.0, z: 0.0, look: -1 }],
-        ['shishak', 'idle', { show: 1, x: -0.6, z: 0.35, look: 1, delay: 1500 }], ['e1', 'idle', { show: 1, x: -0.85, z: 0.05, delay: 1700 }], ['e2', 'idle', { show: 1, x: -1.1, z: 0.6, delay: 1900 }], ['e3', 'idle', { show: 1, x: -0.1, z: 0.45, delay: 2100 }]],
+        ['shishak', 'idle', { show: 1, x: -0.6, z: 0.5, look: 1, delay: 1500 }], ['e1', 'idle', { show: 1, x: -0.95, z: 0.3, delay: 1700 }], ['e2', 'idle', { show: 1, x: -1.25, z: 0.6, delay: 1900 }], ['e3', 'idle', { show: 1, x: -0.15, z: 0.55, delay: 2100 }]],
       // 성전과 왕궁의 보물을 모조리 털어 간다
       'p1.1': [['shishak', 'point', { look: 1 }], ['e3', 'idle', { x: 0.25, z: 0.35, look: 1 }], ['gold', null, { show: 0, delay: 2500 }], ['e3', 'carry', { delay: 2500 }]],
       // 금 방패도 남김없이
