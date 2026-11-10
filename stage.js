@@ -178,27 +178,38 @@ function setScene(ev) {
   // on이 둘이면 두 사람의 한가운데를 따른다 — 앞뒤의 두 제사장이 멘 언약궤
   Object.entries(script.props || {}).forEach(([name, [, , , o]]) => { if (o?.on) props[name].follow = [].concat(o.on).map(n => actors[n]); });
   setEnv(script.env || 'day', true);
-  apply(script.beats.enter, true);
-  Object.values(actors).forEach(a => { a.show = 0; a.settle(); }); // 처음부터 정해진 자세로 놓고 서서히 나타난다
-  // 연출 확인용: ?beat=p1.3 이면 그 순간까지의 동작을 즉시 적용한다
+  // 연출 확인용: ?beat=p1.3 이면 그 순간까지의 동작을 즉시 적용한다 (?beat=enter는 대표 순간 그대로)
   const until = new URLSearchParams(location.search).get('beat');
+  setStart(until !== 'enter');
+  Object.values(actors).forEach(a => { a.show = 0; a.settle(); }); // 처음부터 정해진 자세로 놓고 서서히 나타난다
   if (until) {
+    atStart = false;
     const keys = until === 'enter' ? [] : Object.keys(script.beats).filter(k => k !== 'enter');
     for (const k of keys) { apply(script.beats[k], true); gaze(); if (k === until) break; }
     Object.values(actors).forEach(a => { a.show = a.showT; for (let i = 0; i < 80; i++) a.update(i * 0.05, 0.05); });
     updateEnvInstant();
   }
 }
+// 낭독 전에 서 있는 모습: 대표 순간(enter) 위에 낭독의 처음 상태(intro)를 얹는다. 예전에는 enter(이야기 중간이나 끝의 모습)로 서 있다가
+// ▶를 누르면 intro로 한꺼번에 바뀌어, 다른 장면이 차려져 있다가 치워지고 시작하는 것처럼 보였다(사용자, 2026-11)
+let atStart = false; // 낭독 전 모습(setStart) 그대로인가 — 그러면 ▶의 intro는 사람을 지웠다 다시 세우지 않고 그대로 이어 간다
+function setStart(withIntro = true, instant = true) {
+  atStart = withIntro;
+  apply(script.beats.enter, instant);
+  if (withIntro && script.beats.intro) apply(script.beats.intro, instant);
+}
 function updateEnvInstant() { for (let i = 0; i < 200; i++) updateEnv(0.05); }
 function beat(key) {
   if (!script || mode !== 'scene') return;
   if (key === 'intro') {
     cancelPending(); // 예약된 동작 취소
+    if (atStart) return; // 이미 처음 모습으로 서 있다
     apply(script.beats.intro || script.beats.enter, true);
     Object.values(actors).forEach(a => { if (a.showT) a.show = 0.0001; a.settle(); });
     return;
   }
   flushPending();
+  atStart = false;
   apply(script.beats[key]);
   gaze();
 }
@@ -490,7 +501,7 @@ if (canvas) {
     if (s !== undefined && script.beats[`${b}.${s}`]) beat(`${b}.${s}`);
     else if (!s) beat(b);
   });
-  addEventListener('stage:stop', () => { if (!script) return; cancelPending(); setEnv(script.env || 'day'); apply(script.beats.enter); });
+  addEventListener('stage:stop', () => { if (!script) return; cancelPending(); setEnv(script.env || 'day'); setStart(true, false); });
   loop();
   // app.js가 먼저 장면을 열었으면 따라잡는다
   if (window.__stageScene) { setScene(window.__stageScene); window.recenterStage?.(); } // 늦게 로드됐으면 무대 쪽으로 다시 맞춘다
