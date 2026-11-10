@@ -523,6 +523,11 @@ function placeLabels() {
   list.forEach(({ L, s, pr }) => {
     const x = s.x - r.left, y = s.y - r.top;
     let show = !s.behind && s.far < fogFar && x > -40 && y > -20 && x < r.width + 40 && y < r.height + 20;
+    // 3D 무대가 서 있으면 이웃 장소(약 5km 안, 기브아 곁의 라마) 이름이 무대 위에 겹쳐 보였다 — 무대가 서 있는 동안은 감춘다 (app.js의 2D 핀과 같게)
+    if (show && L.kind === 'place' && L.key !== cur && document.body.classList.contains('stage-on')) {
+      const a = PLACES[L.key], b = PLACES[cur];
+      if (a && b && !a.jlm && !b.jlm && Math.hypot(a.lat - b.lat, a.lng - b.lng) < 0.045) show = false;
+    }
     if (show) {
       if (!L.w) { L.w = L.el.offsetWidth || 60; L.h = L.el.offsetHeight || 20; }
       const box = [x - L.w / 2 - 4, y - 6, x + L.w / 2 + 4, y + L.h];

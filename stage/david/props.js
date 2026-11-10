@@ -120,7 +120,14 @@ Object.assign(MAKERS, {
       const h = glow(0.5, 0.8); h.position.set(lx, 0.46, -0.45); g.add(h);
       light = new THREE.PointLight('#ffc070', 1.6, 2.2, 1.4); light.position.set(lx, 0.6, -0.3); g.add(light);
     }
-    return new Prop(g, (P, t) => { if (light) light.intensity = 1.6 * P.show * (1 + Math.sin(t * 9) * 0.05); });
+    const P = new Prop(g, (P, t) => { if (light) light.intensity = 1.6 * P.show * (1 + Math.sin(t * 9) * 0.05); });
+    // 바닥(floor): 3D 지형의 비탈에서 궁 바닥 밑으로 땅이 꺼진 자리에 선 사람이 바닥에 묻혀 다리가 잘려 보였다 — 바닥 위의 사람·가구는 바닥 높이에 선다
+    const tx = o.tx ?? 0.7;
+    P.floor = true;
+    P.heightAt = (x, z) => { const u = x - g.position.x, v = z - g.position.z;
+      if (Math.abs(u) > W / 2 || v < -0.75 || v > 0.7) return 0;
+      return o.throne !== false && Math.abs(u - tx) < 0.3 && Math.abs(v + 0.42) < 0.225 ? 0.07 : 0.02; };
+    return P;
   },
 
   // 두 층 흙벽돌 집 (다윗과 미갈의 집, 삼상 19:12): 위층 창. state 'lit'(창에 등불빛) | 'rope'(창에서 땅까지 늘어뜨린 줄, 창도 밝다) | 'idle'
