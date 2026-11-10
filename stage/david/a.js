@@ -27,7 +27,7 @@ export const A = {
       s5: ['sheep', 0.15, 0.3, { rot: 0.2 }],
       lamb: ['sheep', -0.55, 0.2, { scale: 0.7, rot: 0.3, speed: 0.75 }],
       lion: ['lion', -1.95, 0.05, { speed: 0.75 }],
-      bear: ['bear', 1.95, -0.35, { speed: 0.5, rot: Math.PI }],
+      bear: ['bear', 2.05, 0.4, { speed: 0.5, rot: Math.PI }], // 집(1.25, -0.6) 앞쪽 들판으로 — 뒤쪽 길은 곰이 집을 뚫고 지나갔다
     },
     cast: {
       david: ['davidY', -0.15, 0.1, 0.4, { speed: 0.95 }],
@@ -48,8 +48,8 @@ export const A = {
       'p1.2': [['david', 'rebuke', { look: -1 }], ['lion', null, { x: -2.0, z: -0.45, delay: 600 }], ['lion', null, { show: 0, delay: 1800 }], ['lamb', null, { x: -1.3, z: 0.1, delay: 900 }]],
       'p1.3': [['lion', null, { show: 0 }], ['david', 'idle', { x: -0.95, z: 0.2, look: -0.6 }], ['lamb', null, { x: -0.5, z: 0.25, delay: 1500 }], ['david', 'idle', { x: -0.2, z: 0.15, look: 0.5, delay: 1500 }]],
       // 곰이 왔을 때도 — 물매를 돌리는 소년 앞에서 물러간다
-      'p1.4': [['bear', null, { show: 1, x: 1.35, z: -0.4 }], ['david', 'sling', { x: 0.25, z: 0.2, look: 1, item: 'sling' }],
-        ['bear', null, { x: 2.1, z: -0.65, delay: 3000 }], ['bear', null, { show: 0, delay: 4800 }]],
+      'p1.4': [['bear', null, { show: 1, x: 1.4, z: 0.3 }], ['david', 'sling', { x: 0.25, z: 0.2, look: 1, item: 'sling' }],
+        ['bear', null, { x: 2.15, z: 0.55, delay: 3000 }], ['bear', null, { show: 0, delay: 4800 }]],
       // 손뼉 쳐 줄 사람 없는 들판 — 밤이 오고 소년은 양 곁에 앉는다
       'p2.0': [['bear', null, { show: 0 }], ['@env', 'night'], ['david', 'sit-ground', { item: null, x: 0.1, z: 0.15, look: 0.4 }]],
       'p2.1': [['david', 'look-up', { look: 0.2 }]],

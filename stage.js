@@ -441,7 +441,9 @@ function frame() {
   if (!canvas) return;
   const T = !street.on && window.terrainDrives && window.terrain3d; // 거리 무대는 3D 지형에 들어가지 않는다
   if (!!T !== inTerrain) T ? enterTerrain(T) : leaveTerrain();
-  holder.visible = mode !== 'off' && !!curEv;
+  // 노래(다윗 장면의 '이 자리에서 부른 노래')가 나오는 동안은 무대를 감춘다 — 가사가 무대 위에 겹쳐 지저분했다(사용자, 2026-11)
+  const singing = document.body.classList.contains('singing');
+  holder.visible = mode !== 'off' && !!curEv && !(T && singing);
   if (!T || mode === 'off') window.stageTone = null;
   if (mode === 'off' || document.hidden || wrap.offsetParent === null || document.body.classList.contains('intro-open')) return;
   const dt = Math.min(clock.getDelta(), 0.05), time = clock.elapsedTime;
@@ -454,7 +456,7 @@ function frame() {
     const a = anchor();
     if (!a) { canvas.style.opacity = 0; return; }
     followTerrain();
-    canvas.style.opacity = window.stageHide ? 0 : 1; // 장면 안에서 걸어가는 동안(app.js moveWithin)은 숨긴다
+    canvas.style.opacity = window.stageHide || singing ? 0 : 1; // 장면 안에서 걸어가는 동안(app.js moveWithin)·노래하는 동안은 숨긴다
     canvas.style.transform = `translate(${Math.round(a.x - groundPx.x)}px, ${Math.round(a.y - groundPx.y)}px)`;
   }
   updateEnv(dt);
