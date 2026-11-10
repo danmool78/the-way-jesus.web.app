@@ -4,6 +4,8 @@
    연출 원칙(STAGE.md): 하나님은 모습 없이 빛(beam)으로만 — 갈멜산의 불, 불수레·불말, 회오리바람은 빛과 불꽃으로.
    죽음과 폭력은 그리지 않는다 — 하나님의 사람과 사자, 이세벨, 아합의 화살, 앗수르 진영, 요시야, 성전 화재, 그달리야는 사라짐·어둠·애도로 */
 import './kings/props.js';
+import './kings/props-d.js'; // 묶음 d(k32–k41)에만 쓰는 소품
+import './kings/props-b.js'; // 묶음 b(엘리야)에만 쓰는 소품과 인물
 import { A } from './kings/a.js';
 import { B } from './kings/b.js';
 import { C } from './kings/c.js';
