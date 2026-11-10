@@ -20,14 +20,14 @@ export const B = {
       grass: ['grass', 0.2, 0.05, { r: 2.0, color: '#9aa060' }],
       palace: ['palacebuild', -1.25, -0.85, { w: 1.5, state: 'built' }],
       shrine: ['highplace', 1.15, -0.45, { r: 0.5, color: '#b8a888' }],
-      folk: ['crowd', 1.35, 0.3, { spots: flock(6, 0.45, 0.18, 3), face: Math.PI - 0.3 }],
+      folk: ['crowd', 2.0, 0.0, { spots: flock(6, 0.3, 0.25, 3), face: -Math.PI / 2 - 0.7 }],
     },
     cast: {
       ahab: ['ahab', -0.45, 0.1, -0.9],
       jezebel: ['jezebel', -2.3, 0.4, 1.2, { speed: 0.5 }],
       maid: ['woman2', -2.6, 0.5, 1.2, { speed: 0.5, gaze: false }],
       bp: ['baalprophet', 1.6, -0.1, -2.6],
-      man: ['hebrew', 0.65, 0.2, 2.6, { gaze: false }],
+      man: ['hebrew', 0.9, -0.12, 2.6, { gaze: false }],
       elijah: ['elijahK', 2.4, 0.5, -1.2, { speed: 0.5 }],
     },
     beats: {
@@ -117,6 +117,7 @@ export const B = {
   k14: {
     env: 'day',
     wide: 1.4,
+    at: [33.47, 35.34], // 사르밧 핀은 바닷가 — 무대를 뭍(동쪽)으로
     props: {
       sand: ['sand', 0, 0.1, { r: 2.0, color: '#d2bc92' }],
       wall: ['kwall', -1.3, -0.95, { scale: 0.7, w: 2.0, color: '#c8b8a0' }],
@@ -145,7 +146,7 @@ export const B = {
       'p1.2': [['elijah', 'speak', { to: 'widow' }]],
       'p1.3': [['elijah', 'point', { look: 1.1 }]],
       // 과부는 그 말대로 — 빵을 만들어 건넨다
-      'p1.4': [['elijah', 'idle'], ['widow', 'idle', { x: 0.3, z: 0.32 }], ['widow', 'kneel', { look: 1, delay: 2200 }], ['widow', 'idle', { item: 'bread', x: -0.95, z: 0.35, look: -1, delay: 4200 }],
+      'p1.4': [['elijah', 'idle'], ['widow', 'idle', { x: 0.3, z: 0.32 }], ['widow', 'kneel', { look: 1, delay: 2200 }], ['widow', 'idle', { item: 'bread', x: -0.85, z: 0.38, look: -1, delay: 4200 }],
         ['widow', 'idle', { item: null, delay: 7400 }], ['elijah', 'idle', { item: 'bread', delay: 7400 }]],
       // 통은 비지 않았다 — 여러 날을 먹는다
       'p1.5': [['jar', 'full'], ['widow', 'idle', { item: null, x: -0.6, z: 0.35, look: 0.6 }], ['elijah', 'idle', { item: null, x: -1.05, z: 0.3, look: 1 }],
@@ -188,10 +189,10 @@ export const B = {
     },
     cast: {
       elijah: ['elijahK', 0.2, 0.35, -0.3],
-      bp1: ['baalprophet', -1.45, -0.2, 2.4],
-      bp2: ['baalprophet2', -0.5, -0.15, -2.4],
-      bp3: ['baalprophet', -1.25, 0.12, 2.8, { gaze: false }],
-      bp4: ['baalprophet2', -0.7, 0.18, -2.8, { gaze: false }],
+      bp1: ['baalprophet', -1.5, -0.38, 1.6],
+      bp2: ['baalprophet2', -0.4, -0.42, -1.6],
+      bp3: ['baalprophet', -1.2, -0.78, 0.4, { gaze: false }],
+      bp4: ['baalprophet2', -0.7, -0.8, -0.4, { gaze: false }],
       sv1: ['servantE', 1.6, 0.05, -1.2, { gaze: false }],
       sv2: ['hebrew', 1.75, 0.3, -1.2, { gaze: false }],
       man: ['hebrew2', 1.3, 0.55, -1.5],
@@ -245,7 +246,7 @@ export const B = {
     },
   },
 
-  /* k16. 손만 한 구름 — 갈멜산 꼭대기(언덕), 왼쪽 뒤로 서쪽 바다. 아합은 오른쪽 상에서 먹고 마시고, 엘리야는 언덕 위에 얼굴을 무릎 사이에 묻는다.
+  /* k16. 손만 한 구름 — 갈멜산 꼭대기, 왼쪽(서쪽) 지도의 바다 쪽. 아합은 오른쪽 상에서 먹고 마시고, 엘리야는 언덕 위에 얼굴을 무릎 사이에 묻는다.
      사환이 바다 쪽 끝까지 일곱 번 오르내리다 손만 한 구름(stormcloud 'hand')을 본다. 하늘이 캄캄해지고 큰비(storm) —
      아합의 병거가 이스르엘(오른쪽)로 달리고, 허리를 동인 엘리야가 그보다 앞서 빗속을 달린다 */
   k16: {
@@ -253,12 +254,10 @@ export const B = {
     wide: 1.4,
     props: {
       grass: ['grass', 0.2, 0.1, { r: 1.9, color: '#a0a070' }],
-      sea: ['water', -2.5, -0.75, { r: 0.95 }],
-      hill: ['hill', -0.75, -0.25, { w: 0.85, h: 0.2, d: 0.5, soft: true, color: '#9a8a70' }],
       rocks: ['rocks', 0, 0, { spots: [[-1.45, 0.45, 0.1], [0.45, -0.8, 0.12]] }],
       feast: ['feast', 1.4, -0.1, { len: 0.7 }],
       car: ['kchariot', 1.75, -0.6, { speed: 0.7 }],
-      cloud: ['stormcloud', 0, 0, { hx: -2.2, hz: -1.0 }],
+      cloud: ['stormcloud', 0, 0, { hx: -1.7, hz: -0.9 }],
       rain: ['rain', 0, 0],
     },
     cast: {
@@ -420,19 +419,19 @@ export const B = {
     env: 'day',
     wide: 1.4,
     props: {
-      field: ['furrows', 0.1, -0.15, { w: 4.0, d: 1.5 }],
-      t1: ['ploughteam', 1.2, -0.75, { speed: 0.1 }],
-      t2: ['ploughteam', -0.1, -0.6, { speed: 0.1 }],
-      t3: ['ploughteam', -1.4, -0.45, { speed: 0.1 }],
-      team: ['ploughteam', -0.6, 0.0, { speed: 0.1 }],
+      field: ['furrows', 0.1, -0.2, { w: 3.6, d: 1.3 }],
+      t1: ['ploughteam', 1.3, -0.72, { speed: 0.1, scale: 0.72 }],
+      t2: ['ploughteam', 0.0, -0.72, { speed: 0.1, scale: 0.72 }],
+      t3: ['ploughteam', -1.3, -0.72, { speed: 0.1, scale: 0.72 }],
+      team: ['ploughteam', -0.4, -0.05, { speed: 0.1, scale: 0.72 }],
       fire: ['cookfire', -0.55, 0.3],
       folk: ['crowd', -1.25, 0.45, { spots: flock(5, 0.35, 0.16, 2), face: Math.PI / 2 }],
       cloak: ['mantle', 0.3, 0.45, { speed: 1.1 }],
     },
     cast: {
-      d1: ['hebrew', 0.55, -0.75, 1.3, { gaze: false, speed: 0.1 }],
-      d2: ['hebrew2', -0.75, -0.6, 1.3, { gaze: false, speed: 0.1 }],
-      elisha: ['elisha', -1.2, 0.0, 1.3, { speed: 0.1 }],
+      d1: ['hebrew', -0.55, -0.72, 1.3, { gaze: false, speed: 0.1 }],
+      d2: ['hebrew2', -1.85, -0.72, 1.3, { gaze: false, speed: 0.1 }],
+      elisha: ['elisha', -0.95, -0.05, 1.3, { speed: 0.1 }],
       elishaM: ['elishaM', -0.35, 0.18, 1.3, { speed: 0.7 }],
       elijah: ['elijahK', 2.4, 0.5, -1.2, { speed: 0.45 }],
     },
@@ -442,14 +441,14 @@ export const B = {
       // 쟁기 끄는 소들의 숨소리 — 맨 끝 겨리를 모는 엘리사
       intro: [['@env', 'day'], ['team', 'go', { show: 1 }], ['t1', 'go'], ['t2', 'go'], ['t3', 'go'], ['fire', 'idle', { show: 0 }], ['folk', 'stand', { show: 0 }], ['cloak', 'ground', { show: 0, y: 0 }],
         ['elisha', 'idle', { look: 1.3 }], ['elishaM', 'idle', { show: 0 }], ['elijah', 'idle', { show: 0 }]],
-      'p0.0': [['t1', null, { x: 1.5 }], ['t2', null, { x: 0.2 }], ['t3', null, { x: -1.1 }], ['d1', 'idle', { x: 0.85 }], ['d2', 'idle', { x: -0.45 }]],
-      'p0.1': [['team', null, { x: -0.3 }], ['elisha', 'idle', { x: -0.9, z: 0.0 }]],
+      'p0.0': [['t1', null, { x: 1.6 }], ['t2', null, { x: 0.3 }], ['t3', null, { x: -1.0 }], ['d1', 'idle', { x: -0.25 }], ['d2', 'idle', { x: -1.55 }]],
+      'p0.1': [['team', null, { x: -0.1 }], ['elisha', 'idle', { x: -0.65, z: -0.05 }]],
       // 호렙에서 돌아온 엘리야가 밭머리로
       'p0.2': [['elijah', 'idle', { show: 1, x: 0.7, z: 0.48 }], ['elisha', 'idle', { look: 1.0, delay: 2500 }]],
       // 곁을 지나며 겉옷을 던진다
       'p1.0': [['elijah', 'idle', { x: 0.1, z: 0.48 }], ['cloak', 'fly', { show: 1, x: 0.1, z: 0.4, y: 0.55, delay: 1500 }], ['elijah', 'idle', { x: -1.6, z: 0.55, delay: 1700 }],
-        ['cloak', 'fly', { x: -0.85, z: 0.04, y: 0.45, delay: 1900 }], ['cloak', null, { show: 0, delay: 3200 }], ['elisha', 'idle', { show: 0, delay: 3200 }],
-        ['elishaM', 'idle', { show: 1, x: -0.9, z: 0.0, look: -0.4, delay: 3200 }]],
+        ['cloak', 'fly', { x: -0.62, z: 0.0, y: 0.45, delay: 1900 }], ['cloak', null, { show: 0, delay: 3200 }], ['elisha', 'idle', { show: 0, delay: 3200 }],
+        ['elishaM', 'idle', { show: 1, x: -0.65, z: -0.05, look: -0.4, delay: 3200 }]],
       // 소를 버려두고 뒤쫓아 간다
       'p1.1': [['cloak', null, { show: 0 }], ['elisha', 'idle', { show: 0 }], ['elijah', 'idle', { x: -1.6, z: 0.55 }], ['elishaM', 'idle', { show: 1, x: -1.15, z: 0.4 }], ['elijah', 'idle', { look: 1.3, delay: 2000 }]],
       'p1.2': [['elishaM', 'speak', { to: 'elijah' }]],
@@ -474,7 +473,7 @@ export const B = {
     },
   },
 
-  /* k20. 나봇의 포도원 — 이스르엘 왕궁(왼쪽 뒤) 바로 곁의 포도원(오른쪽). 아합이 포도원을 달라 하고 나봇이 거절한다. 아합은 침상에 누워 얼굴을 돌린다.
+  /* k20. 나봇의 포도원 — 이스르엘 왕궁(왼쪽 뒤) 바로 곁의 포도원(오른쪽). 아합이 포도원을 달라 하고 나봇이 거절한다. 아합은 침상에 앉아 얼굴을 벽 쪽으로 돌린다(누운 모습은 침상보다 길었다).
      이세벨이 왕의 이름으로 편지를 쓰고, 금식 자리의 불량배 둘이 거짓 증언 — 나봇은 성 밖으로 끌려가 사라진다(죽음은 그리지 않는다).
      포도원을 차지하러 온 아합 앞에 엘리야가 서 있다. 아합은 옷을 찢고 굵은 베옷(ahabS)을 입는다 */
   k20: {
@@ -485,7 +484,7 @@ export const B = {
       palace: ['palacebuild', -1.3, -0.85, { w: 1.4, state: 'built' }],
       vines: ['vineyard', 1.15, -0.35, { rows: 3, len: 1.6 }],
       couch: ['couch', -1.55, 0.25],
-      folk: ['crowd', -0.15, -0.35, { spots: flock(7, 0.5, 0.15, 4), face: 0.3 }],
+      folk: ['crowd', -0.5, -0.4, { spots: flock(7, 0.38, 0.14, 4), face: 0.5 }],
     },
     cast: {
       ahab: ['ahab', -0.15, 0.3, 1.2],
@@ -510,11 +509,11 @@ export const B = {
       'p0.5': [['ahab', 'idle'], ['naboth', 'bow', { look: -1.2 }]],
       'p0.6': [['naboth', 'speak', { to: 'ahab' }]],
       // 시무룩하여 침상에 누워 얼굴을 돌린다
-      'p0.7': [['naboth', 'idle', { x: 1.2, z: 0.0, look: -1.0 }], ['ahab', 'idle', { x: -1.55, z: 0.28 }], ['ahab', 'sleep', { y: 0.16, look: -2.6, delay: 3600 }]],
+      'p0.7': [['naboth', 'idle', { x: 1.2, z: 0.0, look: -1.0 }], ['ahab', 'idle', { x: -1.55, z: 0.28 }], ['ahab', 'sit', { y: 0.14, look: -2.5, delay: 3600 }]],
       // 이세벨이 말한다
-      'p1.0': [['ahab', 'sleep', { x: -1.55, z: 0.28, y: 0.16, look: -2.6 }], ['jezebel', 'idle', { show: 1, x: -1.0, z: 0.4, look: -1.2 }], ['jezebel', 'speak', { to: 'ahab', delay: 2400 }]],
+      'p1.0': [['ahab', 'sit', { x: -1.55, z: 0.28, y: 0.14, look: -2.5 }], ['jezebel', 'idle', { show: 1, x: -1.0, z: 0.4, look: -1.2 }], ['jezebel', 'speak', { to: 'ahab', delay: 2400 }]],
       'p1.1': [['jezebel', 'speak', { to: 'ahab' }]],
-      'p1.2': [['jezebel', 'bless', { look: -1.2 }], ['ahab', 'sit', { y: 0.16, look: 1.2, delay: 800 }]],
+      'p1.2': [['jezebel', 'bless', { look: -1.2 }], ['ahab', 'sit', { y: 0.14, look: 1.2, delay: 800 }]],
       // 왕의 이름으로 편지를 쓰고 도장을 찍는다
       'p1.3': [['jezebel', 'idle', { item: 'scroll', look: 0.6 }], ['jezebel', 'point', { item: 'scroll', look: 1.0, delay: 3500 }]],
       // 금식 자리 — 불량배 둘이 일어나 거짓 증언
@@ -554,16 +553,16 @@ export const B = {
       sheep2: ['sheep', 1.95, -0.15],
       sheep3: ['sheep', 2.15, 0.45],
       sheep4: ['sheep', 1.3, 0.55],
-      crown: ['fallencrown', -0.05, 0.05],
+      crown: ['fallencrown', -0.05, 0.1, { scale: 1.8 }],
     },
     cast: {
       ahab: ['ahab', -0.18, -0.5, 0.2, { y: 0.15, pose: 'sit' }],
       jehoshaphat: ['jehoshaphat', 0.18, -0.5, -0.2, { y: 0.15, pose: 'sit' }],
-      zed: ['zedekiahF', -0.35, 0.3, -2.8],
-      fp1: ['falseprophet', -1.1, 0.15, 2.4],
-      fp2: ['falseprophet', -0.75, 0.4, 2.9],
-      fp3: ['falseprophet', 0.75, 0.4, -2.9],
-      fp4: ['falseprophet', 1.05, 0.12, -2.4],
+      zed: ['zedekiahF', -0.6, 0.42, -2.6],
+      fp1: ['falseprophet', -1.3, -0.05, 2.2],
+      fp2: ['falseprophet', -1.0, 0.3, 2.6],
+      fp3: ['falseprophet', 0.95, 0.3, -2.6],
+      fp4: ['falseprophet', 1.3, -0.05, -2.2],
       envoy: ['official', 0.55, -0.2, 1.0, { speed: 0.6 }],
       micaiah: ['micaiah', 2.3, 0.55, -1.2, { speed: 0.5 }],
       guard: ['israelK', -1.6, -0.25, 1.0, { speed: 0.5 }],
@@ -571,7 +570,7 @@ export const B = {
     },
     beats: {
       enter: [['crown', null, { show: 0 }], ['sheep1', null, { show: 0 }], ['sheep2', null, { show: 0 }], ['sheep3', null, { show: 0 }], ['sheep4', null, { show: 0 }], ['ahabA', 'idle', { show: 0 }],
-        ['fp1', 'idle', { x: -1.3 }], ['fp4', 'idle', { x: 1.3 }], ['zed', 'idle', { x: -0.75, z: 0.45, look: 1.4 }], ['envoy', 'idle', { x: 1.1, z: 0.45, look: -1.2 }],
+        ['zed', 'idle', { x: -0.75, z: 0.45, look: 1.4 }], ['envoy', 'idle', { x: 1.1, z: 0.45, look: -1.2 }],
         ['micaiah', 'speak', { x: 0.25, z: 0.35, look: -2.9, to: 'ahab' }], ['ahab', 'sit', { look: 0.2 }]],
       // 성문 앞 타작마당 — 두 왕이 나란히 앉고 선지자 사백 명이 외친다
       intro: [['@env', 'day'], ['crown', null, { show: 0 }], ['sheep1', null, { show: 0 }], ['sheep2', null, { show: 0 }], ['sheep3', null, { show: 0 }], ['sheep4', null, { show: 0 }],
@@ -621,7 +620,7 @@ export const B = {
     },
   },
 
-  /* k22. 불수레와 회오리바람 — 여리고 앞 요단강(river, 앞뒤로 흐른다). 서쪽(왼쪽)에서 엘리야와 엘리사가 오고, 선지자의 제자들이 멀찍이 지켜본다.
+  /* k22. 불수레와 회오리바람 — 여리고 앞 요단강(jordan — props-b.js, 앞뒤로 흐르고 갈라지면 양쪽에 물벽이 선다). 서쪽(왼쪽)에서 엘리야와 엘리사가 오고, 선지자의 제자들이 멀찍이 지켜본다.
      엘리야가 겉옷을 말아 물을 치니 물이 갈라지고, 둘은 마른 땅을 밟고 동쪽으로 건넌다. 걸으며 이야기하는데 불수레와 불말(빛)이 둘 사이를 가르고,
      엘리야는 회오리바람(빛)을 타고 오른다. 떨어진 겉옷(mantle)을 주운 엘리사(elishaM)가 물을 치자 물이 다시 갈라진다 */
   k22: {
@@ -629,10 +628,10 @@ export const B = {
     wide: 1.4,
     props: {
       sand: ['sand', 0, 0.05, { r: 2.1, color: '#cbb488' }],
-      river: ['river', 0.1, 0.0, { w: 0.6, len: 3.2, gap: 0.34 }],
+      river: ['jordan', 0.1, 0.0, { w: 0.62, len: 2.6, gap: 0.42 }],
       sons: ['crowd', -1.85, -0.55, { spots: flock(9, 0.4, 0.16, 5), face: 0.9 }],
       fc: ['firechariot', -2.8, 0.08, { speed: 1.4 }],
-      ww: ['whirlwind', 1.45, -0.3, { h: 2.6 }],
+      ww: ['whirlwind', 1.65, -0.32, { h: 2.2 }],
       cloak: ['mantle', 1.4, -0.25, { speed: 0.6 }],
     },
     cast: {
@@ -665,17 +664,17 @@ export const B = {
       'p1.5': [['elijah', 'idle'], ['elisha', 'kneel', { look: -0.7 }], ['elisha', 'speak', { to: 'elijah', delay: 1500 }]],
       'p1.7': [['elisha', 'kneel'], ['elijah', 'speak', { to: 'elisha' }]],
       // 둘이 걸으며 이야기하는데 — 불수레와 불말이 두 사람 사이를 가른다
-      'p2.0': [['elisha', 'idle'], ['elijah', 'idle', { x: 1.45, z: -0.3 }], ['elisha', 'idle', { x: 1.45, z: 0.4 }], ['elijah', 'idle', { look: -1.2, delay: 2400 }], ['elisha', 'afraid', { look: -1.2, delay: 2800 }],
+      'p2.0': [['elisha', 'idle'], ['elijah', 'idle', { x: 1.65, z: -0.32 }], ['elisha', 'idle', { x: 1.2, z: 0.42 }], ['elijah', 'idle', { look: -1.2, delay: 2400 }], ['elisha', 'afraid', { look: -1.2, delay: 2800 }],
         ['fc', null, { show: 1, delay: 1500 }], ['fc', null, { x: 3.2, z: 0.08, delay: 1600 }], ['fc', null, { show: 0, delay: 6000 }]],
       // 엘리야는 회오리바람을 타고 하늘로
-      'p2.1': [['fc', null, { show: 0 }], ['elisha', 'afraid', { x: 1.45, z: 0.4, look: -1.2 }], ['ww', null, { show: 1 }], ['elijah', 'look-up', { x: 1.45, z: -0.3, look: 0 }],
+      'p2.1': [['fc', null, { show: 0 }], ['elisha', 'afraid', { x: 1.2, z: 0.42, look: 0.6 }], ['ww', null, { show: 0.6 }], ['elijah', 'look-up', { x: 1.65, z: -0.32, look: 0 }],
         ['elijah', 'look-up', { y: 1.4, delay: 1600 }], ['elijah', 'look-up', { show: 0, delay: 3200 }],
-        ['cloak', 'fly', { show: 1, x: 1.45, z: -0.28, y: 1.2, delay: 3400 }], ['cloak', 'fly', { x: 1.25, z: 0.05, y: 0.0, delay: 3600 }], ['cloak', 'ground', { delay: 6000 }]],
-      'p2.2': [['elijah', 'idle', { show: 0 }], ['cloak', 'ground', { show: 1, x: 1.25, z: 0.05, y: 0 }], ['elisha', 'look-up', { look: -0.3 }]],
+        ['cloak', 'fly', { show: 1, x: 1.65, z: -0.28, y: 1.2, delay: 3400 }], ['cloak', 'fly', { x: 1.4, z: 0.1, y: 0.0, delay: 3600 }], ['cloak', 'ground', { delay: 6000 }]],
+      'p2.2': [['elijah', 'idle', { show: 0 }], ['cloak', 'ground', { show: 1, x: 1.4, z: 0.1, y: 0 }], ['elisha', 'look-up', { look: -0.3 }]],
       // 내 아버지, 내 아버지여
       'p2.3': [['elisha', 'raise', { look: -0.3 }], ['ww', null, { show: 0, delay: 2500 }], ['elisha', 'mourn', { delay: 2500 }]],
       // 떨어진 겉옷을 주워 요단 물을 친다
-      'p2.4': [['ww', null, { show: 0 }], ['elisha', 'idle', { x: 1.3, z: 0.2 }], ['elisha', 'kneel', { look: -0.4, delay: 1400 }], ['cloak', null, { show: 0, delay: 2600 }], ['elisha', 'idle', { show: 0, delay: 2600 }],
+      'p2.4': [['ww', null, { show: 0 }], ['elisha', 'idle', { x: 1.3, z: 0.18 }], ['elisha', 'kneel', { look: -0.4, delay: 1400 }], ['cloak', null, { show: 0, delay: 2600 }], ['elisha', 'idle', { show: 0, delay: 2600 }],
         ['elishaM', 'idle', { show: 1, x: 1.3, z: 0.2, delay: 2600 }], ['elishaM', 'idle', { x: 0.75, z: 0.0, look: -1.3, delay: 3400 }], ['elishaM', 'raise', { delay: 6000 }]],
       'p2.5': [['cloak', null, { show: 0 }], ['elisha', 'idle', { show: 0 }], ['elishaM', 'raise', { show: 1, x: 0.75, z: 0.0, look: -1.3 }]],
       // 물이 갈라졌다 — 다시 건넌다
@@ -684,8 +683,8 @@ export const B = {
       'p2.8': [['son1', 'bow', { x: -1.1, z: -0.15, look: 1.2 }], ['son2', 'bow', { x: -1.25, z: 0.1, look: 1.2, delay: 300 }], ['river', 'flow', { delay: 3000 }]],
       w0: [['elisha', 'speak', { show: 1, x: 0.72, z: 0.15, to: 'elijah' }], ['elishaM', 'idle', { show: 0 }], ['elijah', 'listen', { show: 1, y: 0, x: 0.75, z: -0.08 }]],
       w1: [['elijah', 'speak', { show: 1, y: 0, x: 0.75, z: -0.08, to: 'elisha' }], ['elisha', 'kneel', { show: 1, x: 0.72, z: 0.15 }], ['elishaM', 'idle', { show: 0 }]],
-      w2: [['elijah', 'idle', { show: 0 }], ['ww', null, { show: 1 }], ['elisha', 'raise', { show: 1, x: 1.45, z: 0.4, look: -0.3 }], ['elishaM', 'idle', { show: 0 }]],
-      w3: [['ww', null, { show: 0 }], ['elisha', 'idle', { show: 0 }], ['river', 'part'], ['elishaM', 'raise', { show: 1, x: 0.75, z: 0.0, look: -1.3 }]],
+      w2: [['elijah', 'idle', { show: 0 }], ['ww', null, { show: 0.6 }], ['fc', null, { show: 1, x: 0.95, z: 0.05 }], ['elisha', 'raise', { show: 1, x: 1.2, z: 0.42, look: -0.3 }], ['elishaM', 'idle', { show: 0 }]],
+      w3: [['ww', null, { show: 0 }], ['fc', null, { show: 0 }], ['elisha', 'idle', { show: 0 }], ['river', 'part'], ['elishaM', 'raise', { show: 1, x: 0.75, z: 0.0, look: -1.3 }]],
       end: [['river', 'part'], ['fc', null, { show: 0 }], ['ww', null, { show: 0 }], ['cloak', null, { show: 0 }], ['elijah', 'idle', { show: 0 }], ['elisha', 'idle', { show: 0 }],
         ['sons', null, { show: 1 }], ['elishaM', 'raise', { show: 1, x: 0.75, z: 0.0, look: -1.3 }], ['son1', 'bow', { show: 1 }], ['son2', 'bow', { show: 1 }]],
     },

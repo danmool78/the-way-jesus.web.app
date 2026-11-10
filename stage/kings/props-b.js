@@ -24,31 +24,31 @@ Object.assign(MAKERS, {
   // 그릿 시냇가 (왕상 17:3–7): 바위 비탈 사이 깊은 골짜기, 앞에 x 방향으로 흐르는 시냇물과 웅덩이.
   // state 'flow'(물이 흐른다) | 'low'(물줄기가 가늘어지고 웅덩이가 준다) | 'dry'(바닥이 드러나고 젖은 돌이 하얗게 마른다). o.len 길이
   wadi(o = {}) {
-    const g = new THREE.Group(), L = o.len || 2.6, rock = rockM('#9a8670'), rock2 = rockM('#b09c80');
+    const g = new THREE.Group(), L = o.len || 2.6, rock = rockM('#c2b092'), rock2 = rockM('#d2c2a4');
     // 뒤쪽의 높은 바위 비탈 (골짜기 벽) — 사람 뒤로 깊게
-    [[-1.05, -0.62, 0.36, [1.5, 1.3, 0.8]], [-0.3, -0.75, 0.4, [1.6, 1.5, 0.7]], [0.55, -0.7, 0.36, [1.4, 1.35, 0.8]], [1.2, -0.58, 0.3, [1.5, 1.2, 0.9]]]
+    [[-1.1, -0.66, 0.3, [1.5, 1.5, 0.8]], [-0.35, -0.8, 0.34, [1.5, 1.7, 0.7]], [0.5, -0.76, 0.3, [1.4, 1.55, 0.8]], [1.2, -0.62, 0.26, [1.5, 1.4, 0.9]]]
       .forEach(([x, z, r, sc], i) => boulder(g, i % 2 ? rock : rock2, r, [x, r * 0.55, z], sc));
     [[-1.35, 0.55, 0.16], [1.4, 0.5, 0.14], [-0.6, 0.62, 0.08]].forEach(([x, z, r]) => boulder(g, rock2, r, [x, r * 0.5, z], [1.3, 0.8, 1]));
-    // 물길: 굽이진 띠 (x 방향, z ≈ 0.25)
-    const bedGeo = new THREE.PlaneGeometry(L, 0.26, 60, 2); bedGeo.rotateX(-Math.PI / 2);
-    const wGeo = new THREE.PlaneGeometry(L, 0.15, 60, 2); wGeo.rotateX(-Math.PI / 2);
+    // 물길: 굽이진 띠 (x 방향, z ≈ 0.3 — 사람은 그 뒤에)
+    const bedGeo = new THREE.PlaneGeometry(L, 0.42, 60, 2); bedGeo.rotateX(-Math.PI / 2);
+    const wGeo = new THREE.PlaneGeometry(L, 0.26, 60, 2); wGeo.rotateX(-Math.PI / 2);
     [bedGeo, wGeo].forEach(geo => { const p = geo.attributes.position; for (let i = 0; i < p.count; i++) { const x = p.getX(i); p.setZ(i, p.getZ(i) + Math.sin(x * 2.2) * 0.08); } geo.computeVertexNormals(); });
-    const bed = mesh(bedGeo, mat('#8a7a62', { roughness: 1 }), g, [0, 0.004, 0.25]); bed.receiveShadow = true; bed.castShadow = false;
+    const bed = mesh(bedGeo, mat('#8a7a62', { roughness: 1 }), g, [0, 0.004, 0.3]); bed.receiveShadow = true; bed.castShadow = false;
     const wm = new THREE.MeshStandardMaterial({ color: '#7fa8b0', roughness: 0.15, metalness: 0.1, transparent: true, opacity: 0.85, depthWrite: false });
-    const water = mesh(wGeo, wm, g, [0, 0.014, 0.25]); water.castShadow = false; water.renderOrder = 2;
+    const water = mesh(wGeo, wm, g, [0, 0.014, 0.3]); water.castShadow = false; water.renderOrder = 2;
     // 웅덩이 셋
-    const pools = [[-0.75, 0.12], [0.1, 0.11], [0.85, 0.1]].map(([x, r]) => { const m = mesh(new THREE.CircleGeometry(r, 24), wm, g, [x, 0.016, 0.25 + Math.sin(x * 2.2) * 0.08]); m.rotation.x = -Math.PI / 2; m.castShadow = false; m.renderOrder = 2; return m; });
+    const pools = [[-0.75, 0.18], [0.1, 0.16], [0.85, 0.15]].map(([x, r]) => { const m = mesh(new THREE.CircleGeometry(r, 24), wm, g, [x, 0.016, 0.3 + Math.sin(x * 2.2) * 0.08]); m.rotation.x = -Math.PI / 2; m.castShadow = false; m.renderOrder = 2; return m; });
     // 물속의 돌: 젖은 빛 → 하얗게 마른다 (공유 재질을 쓰지 않는다 — 빛깔을 바꾸므로)
     const wetC = new THREE.Color('#6e6458'), dryC = new THREE.Color('#e6e0d2');
     const st = new THREE.MeshStandardMaterial({ color: wetC.clone(), roughness: 0.5 });
     for (let i = 0; i < 34; i++) { const x = (i / 33 - 0.5) * L * 0.95, side = i % 2 ? 1 : -1;
-      mesh(sphere(0.016 + (i % 4) * 0.006, 8, 6), st, g, [x, 0.012, 0.25 + Math.sin(x * 2.2) * 0.08 + side * (0.03 + (i % 3) * 0.03)], [1.3, 0.6, 1]); }
+      mesh(sphere(0.016 + (i % 4) * 0.006, 8, 6), st, g, [x, 0.012, 0.3 + Math.sin(x * 2.2) * 0.08 + side * (0.05 + (i % 3) * 0.04)], [1.3, 0.6, 1]); }
     // 둑의 풀 몇 포기 (마르면 누레진다)
     const grassC = new THREE.Color('#7a8c4a'), deadC = new THREE.Color('#b8a070'), tm = new THREE.MeshStandardMaterial({ color: grassC.clone(), roughness: 1 });
-    for (let i = 0; i < 26; i++) { const x = (i / 25 - 0.5) * L, side = i % 2 ? 1 : -1; mesh(new THREE.ConeGeometry(0.014, 0.07, 4), tm, g, [x, 0.035, 0.25 + Math.sin(x * 2.2) * 0.08 + side * 0.17]); }
+    for (let i = 0; i < 26; i++) { const x = (i / 25 - 0.5) * L, side = i % 2 ? 1 : -1; mesh(new THREE.ConeGeometry(0.014, 0.07, 4), tm, g, [x, 0.035, 0.3 + Math.sin(x * 2.2) * 0.08 + side * 0.24]); }
     let k = o.state === 'dry' ? 0 : o.state === 'low' ? 0.45 : 1;
     return new Prop(g, (P, t, dt) => {
-      k = damp(k, P.state === 'dry' ? 0 : P.state === 'low' ? 0.42 : 1, 0.6, dt);
+      k = damp(k, P.state === 'dry' ? 0 : P.state === 'low' ? 0.42 : 1, 1.0, dt);
       water.scale.z = Math.max(0.02, k); water.visible = k > 0.03;
       pools.forEach((m, i) => { m.scale.setScalar(Math.max(0.02, 0.25 + k * 0.75 - i * 0.05 * (1 - k))); m.visible = k > 0.04; });
       wm.opacity = 0.85 * Math.min(1, k * 2.5) * P.show;
@@ -62,10 +62,10 @@ Object.assign(MAKERS, {
   // 구름은 공(구)으로 — 스프라이트는 이 무대에서 잘 보이지 않았다(kings/props.js smoke와 같은 까닭)
   stormcloud(o = {}) {
     const g = new THREE.Group(), hx = o.hx ?? -1.9, hz = o.hz ?? -1.0;
-    const small = new THREE.Group(); small.position.set(hx, 0.5, hz); g.add(small);
+    const small = new THREE.Group(); small.position.set(hx, 0.7, hz); g.add(small);
     const sm = new THREE.MeshStandardMaterial({ color: '#f4f2ec', roughness: 1, transparent: true, opacity: 0, depthWrite: false });
-    [[0, 0, 0, 0.06], [0.06, -0.01, 0, 0.045], [-0.055, -0.012, 0, 0.04], [0.02, 0.03, 0, 0.04]].forEach(([x, y, z, r]) => mesh(sphere(r, 12, 8), sm, small, [x, y, z], [1.3, 0.8, 1]).castShadow = false);
-    const sg = glow(0.5, 0, '#fff4d8'); small.add(sg);
+    [[0, 0, 0, 0.09], [0.09, -0.015, 0, 0.065], [-0.08, -0.018, 0, 0.06], [0.03, 0.045, 0, 0.06]].forEach(([x, y, z, r]) => mesh(sphere(r, 12, 8), sm, small, [x, y, z], [1.3, 0.8, 1]).castShadow = false);
+    const sg = glow(0.7, 0, '#fff4d8'); small.add(sg);
     const big = new THREE.Group(); g.add(big);
     const bm = new THREE.MeshStandardMaterial({ color: '#5a6068', roughness: 1, transparent: true, opacity: 0, depthWrite: false });
     const puffs = Array.from({ length: 22 }, (_, i) => { const a = i * 2.399, r = Math.sqrt((i + 0.5) / 22);
@@ -74,10 +74,42 @@ Object.assign(MAKERS, {
     return new Prop(g, (P, t, dt) => {
       h = damp(h, P.state === 'hand' ? 1 : 0, 1.2, dt); s = damp(s, P.state === 'storm' ? 1 : 0, 0.7, dt);
       sm.opacity = h * 0.95 * P.show; sg.material.opacity = h * 0.5 * P.show;
-      small.position.y = 0.5 + Math.sin(t * 0.5) * 0.02; small.visible = h > 0.02;
+      small.position.y = 0.7 + Math.sin(t * 0.5) * 0.02; small.visible = h > 0.02;
       bm.opacity = s * 0.82 * P.show; big.visible = s > 0.02;
       puffs.forEach((m, i) => { m.position.x = m.userData.x0 + Math.sin(t * 0.2 + i) * 0.08 + (1 - s) * hx * 0.5; });
     }, { state: o.state || 'none', fade: 'none' });
+  },
+
+  // 갈라지는 요단 (왕하 2:8·14) — 공용 river는 앞뒤(z)로 흐르는 물이 조금 물러나기만 해서, 낮게 보는 무대에서는 갈라진 틈이 보이지 않았다.
+  // 이 판은 물이 양쪽으로 크게 물러나며 물러난 끝이 높은 물벽(흰 물거품 테)으로 서고, 가운데 마른 바닥(젖은 진흙과 돌)이 드러난다.
+  // 강은 앞뒤(z)로 흐르고 사람은 서(-x)에서 동(+x)으로 건넌다. state 'flow' | 'part'. o.w 강폭(기본 0.62), o.len 길이(기본 2.6), o.gap 반쪽 틈(기본 0.42)
+  jordan(o = {}) {
+    const g = new THREE.Group(), Wd = o.w || 0.62, L = o.len || 2.6, gap = o.gap || 0.42;
+    const bed = mesh(new THREE.PlaneGeometry(Wd + 0.12, L), mat('#7e6c50', { roughness: 1 }), g, [0, 0.003, 0]); bed.rotation.x = -Math.PI / 2; bed.receiveShadow = true;
+    const mud = mat('#5e4e3a', { roughness: 0.6 });
+    for (let i = 0; i < 16; i++) mesh(sphere(0.018 + (i % 3) * 0.008, 8, 6), mud, g, [(i % 4 - 1.5) * Wd * 0.22, 0.008, (Math.floor(i / 4) - 1.5) * gap * 0.45], [1.3, 0.5, 1]);
+    const wm = new THREE.MeshStandardMaterial({ color: '#6f98a8', roughness: 0.2, metalness: 0.1, transparent: true, opacity: 0.9, depthWrite: false });
+    const foam = new THREE.MeshStandardMaterial({ color: '#eef6f8', roughness: 0.6, transparent: true, opacity: 0.9, depthWrite: false });
+    // 반쪽 물: 바깥 끝(±L/2)에 붙어 있고, 안쪽 끝이 물러나며 솟는다. 물벽은 안쪽 끝의 상자(높이가 커진다)
+    const halves = [-1, 1].map(k => {
+      const h = new THREE.Group(); g.add(h);
+      const top = new THREE.PlaneGeometry(Wd, 1, 6, 12); top.rotateX(-Math.PI / 2); top.translate(0, 0, -k * 0.5); // 바깥 끝(z=0)에서 안쪽(-k)으로 길이 1
+      const surf = mesh(top, wm, h, [0, 0.03, 0]); surf.castShadow = false; surf.renderOrder = 2;
+      const wall = mesh(new THREE.BoxGeometry(Wd, 1, 0.05), wm, h, [0, 0, 0]); wall.castShadow = false; wall.renderOrder = 3;
+      const lip = mesh(new THREE.BoxGeometry(Wd + 0.01, 0.018, 0.06), foam, h, [0, 0, 0]); lip.castShadow = false; lip.renderOrder = 4;
+      h.position.z = k * L / 2; h.userData = { k, surf, wall, lip, top }; return h; });
+    const reed = mat('#8a9a5a', { roughness: 1 });
+    for (let i = 0; i < 36; i++) { const side = i % 2 ? 1 : -1, z = (i / 35 - 0.5) * L * 0.95; if (Math.abs(z) < gap + 0.12) continue;
+      mesh(new THREE.CylinderGeometry(0.004, 0.006, 0.16 + (i % 3) * 0.05, 4), reed, g, [side * (Wd / 2 + 0.05 + (i % 3) * 0.02), 0.09, z]); }
+    let p = o.state === 'part' ? 1 : 0;
+    return new Prop(g, (P, t, dt) => {
+      p = damp(p, P.state === 'part' ? 1 : 0, 1.4, dt);
+      halves.forEach(h => { const { k, surf, wall, lip, top } = h.userData, len = L / 2 - p * gap, wh = 0.03 + p * 0.2;
+        surf.scale.z = Math.max(0.01, len); surf.position.y = 0.03 + p * 0.02;
+        wall.scale.y = wh; wall.position.set(0, wh / 2, -k * len); lip.position.set(0, wh + 0.004, -k * len); lip.visible = p > 0.15; lip.position.y += Math.sin(t * 6 + k) * 0.004 * p;
+        const pos = top.attributes.position; for (let i = 0; i < pos.count; i++) pos.setY(i, Math.sin(pos.getZ(i) * 9 * len + t * 2 + pos.getX(i) * 5) * 0.003); pos.needsUpdate = true; });
+      wm.opacity = 0.9 * P.show; foam.opacity = 0.9 * P.show;
+    }, { state: o.state || 'flow', fade: 'opacity' });
   },
 
   // 엘리야의 겉옷 (왕상 19:19 · 왕하 2:8·13): 털 겉옷 한 장. state 'ground'(땅에 펼쳐져 놓였다) | 'fly'(날리며 펄럭인다 — 높이는 대본의 y) | 'rolled'(말아 쥔 막대 모양).

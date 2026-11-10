@@ -88,26 +88,26 @@ export const C = {
     wide: 1.35,
     props: {
       grass: ['grass', -0.6, 0.1, { r: 1.7, color: '#9a9a6a' }],
-      river: ['river', 1.05, -0.1, { w: 0.62, len: 2.6 }],
-      house: ['house', -0.65, -0.7, { scale: 0.7 }],
-      palm: ['palm', 1.75, -0.65, { scale: 0.7 }],
-      car: ['kchariot', -2.6, 0.3, { speed: 1.0 }],
-      gifts: ['tribute', -1.45, 0.55, { kind: 'gold' }],
+      river: ['river', -0.2, -0.1, { w: 0.62, len: 2.6 }], // 지도의 요단 줄기 위에,
+      house: ['house', -1.3, -0.7, { scale: 0.7 }],
+      palm: ['palm', 0.9, -0.55, { scale: 0.7 }],
+      car: ['kchariot', -3.0, 0.4, { speed: 1.0 }],
+      gifts: ['tribute', -2.3, 0.65, { kind: 'gold' }],
     },
     cast: {
       naaman: ['naaman', 0, 0, 1, { board: 'car' }],
-      foot: ['naaman', -0.85, 0.3, 0.6, { speed: 0.5 }], // 병거에서 내린 나아만
-      bath: ['naamanH', 0.55, 0.2, 1, { speed: 0.4 }], // 흰 속옷으로 물에 들어가는 나아만
-      wife: ['arameanW', -1.55, 0.35, 0.9],
-      maid: ['maid', -1.15, 0.4, -0.9],
-      gehazi: ['gehazi', -0.65, -0.3, 0.3, { speed: 0.45 }],
-      elisha: ['elishaM', -0.4, -0.25, 0.3, { speed: 0.45 }],
-      sv1: ['aramean2', -1.7, 0.15, 1, { speed: 0.5 }],
-      sv2: ['aramean', -1.95, 0.4, 1, { speed: 0.5, gaze: false }],
+      foot: ['naaman', -1.0, 0.12, 0.6, { speed: 0.5 }], // 병거에서 내린 나아만
+      bath: ['naamanH', -0.45, 0.2, 1, { speed: 0.4 }], // 흰 속옷으로 물에 들어가는 나아만
+      wife: ['arameanW', -0.95, 0.35, 0.9],
+      maid: ['maid', -0.55, 0.4, -0.9],
+      gehazi: ['gehazi', -1.3, -0.3, 0.3, { speed: 0.45 }],
+      elisha: ['elishaM', -1.1, -0.25, 0.3, { speed: 0.45 }],
+      sv1: ['aramean2', -2.3, 0.15, 1, { speed: 0.5 }],
+      sv2: ['aramean', -2.55, 0.45, 1, { speed: 0.5, gaze: false }],
     },
     beats: {
-      enter: [['car', null, { show: 1, x: -1.35, z: 0.25 }], ['naaman', 'idle', { show: 0 }], ['foot', 'idle', { show: 0 }], ['wife', 'idle', { show: 0 }], ['maid', 'idle', { show: 0 }],
-        ['river', 'stir'], ['bath', 'raise', { x: 1.05, z: 0.0, y: -0.12, look: -0.6 }], ['sv1', 'idle', { x: 0.45, z: 0.3, look: 1 }], ['sv2', 'idle', { x: 0.3, z: 0.5, look: 1 }]],
+      enter: [['car', null, { show: 1, x: -1.75, z: 0.42 }], ['naaman', 'idle', { show: 0 }], ['foot', 'idle', { show: 0 }], ['wife', 'idle', { show: 0 }], ['maid', 'idle', { show: 0 }],
+        ['river', 'stir'], ['bath', 'raise', { x: -0.2, z: 0.05, y: -0.25, look: -0.6 }], ['sv1', 'idle', { x: -0.6, z: 0.3, look: 1 }], ['sv2', 'idle', { x: -0.75, z: 0.5, look: 1 }]],
       // 아람 집 — 여주인과 이스라엘 소녀
       intro: [['@env', 'day'], ['river', 'flow'], ['car', null, { show: 0 }], ['gifts', null, { show: 0 }], ['naaman', 'idle', { show: 1, look: 1 }], ['foot', 'idle', { show: 0 }], ['bath', 'idle', { show: 0 }],
         ['gehazi', 'idle', { show: 0 }], ['elisha', 'idle', { show: 0 }], ['sv1', 'idle', { show: 0 }], ['sv2', 'idle', { show: 0 }], ['wife', 'idle', { look: 0.9 }], ['maid', 'idle', { look: -0.9 }]],
@@ -115,34 +115,34 @@ export const C = {
       'p0.2': [['maid', 'speak', { to: 'wife' }]],
       'p0.4': [['maid', 'speak', { to: 'wife' }], ['wife', 'listen']],
       // 말과 병거, 은과 금을 싣고 — 엘리사의 집 문 앞
-      'p1.0': [['wife', 'idle', { show: 0 }], ['maid', 'idle', { show: 0 }], ['car', null, { show: 1, x: -1.35, z: 0.25 }], ['sv1', 'idle', { show: 1, x: -1.75, z: 0.0, look: 1, delay: 600 }], ['sv2', 'idle', { show: 1, x: -2.0, z: 0.45, look: 1, delay: 600 }],
+      'p1.0': [['wife', 'idle', { show: 0 }], ['maid', 'idle', { show: 0 }], ['car', null, { show: 1, x: -1.75, z: 0.42 }], ['sv1', 'idle', { show: 1, x: -2.3, z: 0.1, look: 1, delay: 600 }], ['sv2', 'idle', { show: 1, x: -2.55, z: 0.5, look: 1, delay: 600 }],
         ['gifts', null, { show: 1, delay: 2600 }]],
       // 엘리사는 나오지 않고 심부름꾼을 보낸다
-      'p1.1': [['naaman', 'idle', { show: 0 }], ['foot', 'idle', { show: 1, look: 0.6 }], ['gehazi', 'idle', { show: 1, x: -0.6, z: 0.0, look: -0.8 }]],
+      'p1.1': [['naaman', 'idle', { show: 0 }], ['foot', 'idle', { show: 1, look: 0.6 }], ['gehazi', 'idle', { show: 1, x: -1.1, z: -0.12, look: 0.4 }]],
       'p1.2': [['gehazi', 'speak', { to: 'foot' }]],
       // 노하여 돌아선다
       'p1.3': [['gehazi', 'idle'], ['foot', 'rebuke', { look: 0.6 }]],
-      'p1.4': [['foot', 'speak', { x: -1.1, z: 0.4, look: -1, to: 'sv1' }], ['gehazi', 'idle', { x: -0.65, z: -0.3 }], ['gehazi', 'idle', { show: 0, delay: 1600 }]],
+      'p1.4': [['foot', 'speak', { x: -1.25, z: 0.3, look: -1, to: 'sv1' }], ['gehazi', 'idle', { x: -1.3, z: -0.3 }], ['gehazi', 'idle', { show: 0, delay: 1600 }]],
       'p1.5': [['foot', 'rebuke', { look: -1 }]],
       // 종들이 달랜다
-      'p2.0': [['foot', 'idle', { look: -1 }], ['sv1', 'speak', { x: -1.45, z: 0.25, to: 'foot' }], ['sv2', 'bow', { x: -1.45, z: 0.55, look: 1 }]],
+      'p2.0': [['foot', 'idle', { look: -1 }], ['sv1', 'speak', { x: -1.6, z: 0.2, to: 'foot' }], ['sv2', 'bow', { x: -1.55, z: 0.55, look: 1 }]],
       'p2.1': [['sv1', 'speak', { to: 'foot' }]],
       // 요단으로 내려가 — 흰 속옷으로 물에 들어가 일곱 번 잠긴다
-      'p2.2': [['sv1', 'idle', { x: 0.35, z: 0.35, look: 1 }], ['sv2', 'idle', { x: 0.2, z: 0.6, look: 1 }], ['foot', 'idle', { x: 0.55, z: 0.2 }], ['foot', 'idle', { show: 0, delay: 2600 }],
-        ['bath', 'idle', { show: 1, delay: 2600 }], ['bath', 'idle', { x: 1.05, z: 0.0, delay: 3400 }], ['river', 'stir', { delay: 4800 }],
-        ...[0, 1, 2, 3, 4, 5, 6].flatMap(i => [['bath', 'pray', { y: -0.95, delay: 5200 + i * 1500 }], ['bath', 'pray', { y: -0.15, delay: 5900 + i * 1500 }]])],
+      'p2.2': [['sv1', 'idle', { x: -0.62, z: 0.35, look: 1 }], ['sv2', 'idle', { x: -0.8, z: 0.58, look: 1 }], ['foot', 'idle', { x: -0.45, z: 0.2 }], ['foot', 'idle', { show: 0, delay: 2600 }],
+        ['bath', 'idle', { show: 1, delay: 2600 }], ['bath', 'idle', { x: -0.2, z: 0.05, delay: 3400 }], ['river', 'stir', { delay: 4800 }],
+        ...[0, 1, 2, 3, 4, 5, 6].flatMap(i => [['bath', 'pray', { y: -0.95, delay: 5200 + i * 1500 }], ['bath', 'pray', { y: -0.3, delay: 5900 + i * 1500 }]])],
       // 일곱 번째 물에서 일어서자 — 어린아이 살처럼
-      'p2.3': [['bath', 'raise', { y: -0.12, look: -0.6 }], ['river', 'stir'], ['sv1', 'bow'], ['sv2', 'bow']],
+      'p2.3': [['bath', 'raise', { y: -0.25, look: -0.6 }], ['river', 'stir'], ['sv1', 'bow'], ['sv2', 'bow']],
       // 엘리사에게 돌아와
-      'p2.4': [['river', 'flow'], ['bath', 'idle', { y: 0, x: 0.55, z: 0.2 }], ['bath', 'idle', { show: 0, delay: 2200 }], ['foot', 'idle', { x: -0.2, z: 0.2, delay: 2000 }], ['foot', 'idle', { show: 1, delay: 2400 }],
-        ['elisha', 'idle', { show: 1, x: -0.5, z: 0.05, look: 0.6 }], ['sv1', 'idle', { x: 0.25, z: 0.45, look: -1 }], ['sv2', 'idle', { x: 0.5, z: 0.55, look: -1 }]],
+      'p2.4': [['river', 'flow'], ['bath', 'idle', { y: 0, x: -0.45, z: 0.2 }], ['bath', 'idle', { show: 0, delay: 2200 }], ['foot', 'idle', { x: -0.7, z: 0.15, delay: 2000 }], ['foot', 'idle', { show: 1, delay: 2400 }],
+        ['elisha', 'idle', { show: 1, x: -1.1, z: -0.02, look: 0.6 }], ['sv1', 'idle', { x: -0.4, z: 0.45, look: -1 }], ['sv2', 'idle', { x: -0.55, z: 0.62, look: -1 }]],
       'p2.5': [['foot', 'kneel', { look: -1 }]],
       'p2.6': [['foot', 'speak', { to: 'elisha' }]],
-      w0: [['gehazi', 'speak', { show: 1, x: -0.6, z: 0.0, to: 'foot' }], ['foot', 'idle', { show: 1, x: -0.85, z: 0.3, look: 0.6 }], ['car', null, { show: 1, x: -1.35, z: 0.25 }], ['naaman', 'idle', { show: 0 }]],
-      w1: [['foot', 'kneel', { show: 1, x: -0.2, z: 0.2, look: -1 }], ['foot', 'speak', { to: 'elisha', delay: 300 }], ['elisha', 'idle', { show: 1, x: -0.5, z: 0.05, look: 0.6 }]],
+      w0: [['gehazi', 'speak', { show: 1, x: -1.1, z: -0.12, to: 'foot' }], ['foot', 'idle', { show: 1, x: -1.0, z: 0.12, look: 0.6 }], ['car', null, { show: 1, x: -1.75, z: 0.42 }], ['naaman', 'idle', { show: 0 }]],
+      w1: [['foot', 'kneel', { show: 1, x: -0.7, z: 0.15, look: -1 }], ['foot', 'speak', { to: 'elisha', delay: 300 }], ['elisha', 'idle', { show: 1, x: -1.1, z: -0.02, look: 0.6 }]],
       w2: [['maid', 'speak', { show: 1, to: 'wife' }], ['wife', 'listen', { show: 1 }]],
-      w3: [['elisha', 'speak', { show: 1, x: -0.5, z: 0.05, to: 'foot' }], ['foot', 'idle', { show: 1, x: -0.2, z: 0.2, look: -1 }], ['gifts', null, { show: 1 }]],
-      end: [['@env', 'day'], ['river', 'flow'], ['bath', 'idle', { show: 0 }], ['foot', 'kneel', { show: 1, x: -0.2, z: 0.2, look: -1 }], ['elisha', 'bless', { show: 1, x: -0.5, z: 0.05, look: 0.6 }]],
+      w3: [['elisha', 'speak', { show: 1, x: -1.1, z: -0.02, to: 'foot' }], ['foot', 'idle', { show: 1, x: -0.7, z: 0.15, look: -1 }], ['gifts', null, { show: 1 }]],
+      end: [['@env', 'day'], ['river', 'flow'], ['bath', 'idle', { show: 0 }], ['foot', 'kneel', { show: 1, x: -0.7, z: 0.15, look: -1 }], ['elisha', 'bless', { show: 1, x: -1.1, z: -0.02, look: 0.6 }]],
     },
   },
 
@@ -153,53 +153,53 @@ export const C = {
     wide: 1.3,
     props: {
       grass: ['grass', -0.4, 0.05, { r: 1.8, color: '#8f9a5e' }],
-      river: ['river', 1.1, -0.1, { w: 0.62, len: 2.6 }],
-      t1: ['olive', 0.62, -0.62, { scale: 0.6 }],
-      t2: ['oak', -0.95, -0.8, { scale: 0.55 }],
-      t3: ['olive', -0.15, -0.95, { scale: 0.55 }],
-      logs: ['cedarlogs', -0.35, -0.35, { scale: 0.7 }],
-      axe1: ['axe', 0.5, -0.2, { y: 0.4 }],
-      axe2: ['axe', -0.68, -0.48, { y: 0.4, side: -1 }],
-      head: ['axehead', 1.1, -0.05],
+      river: ['river', -0.2, -0.1, { w: 0.62, len: 2.6 }], // 지도의 요단 줄기 위에,
+      t1: ['olive', -0.66, -0.42, { scale: 0.55 }],
+      t2: ['oak', -1.75, -0.8, { scale: 0.55 }],
+      t3: ['olive', -1.05, -1.0, { scale: 0.55 }],
+      logs: ['cedarlogs', -2.05, -0.3, { scale: 0.7 }],
+      axe1: ['axe', -0.84, -0.27, { y: 0.4, scale: 1.3 }],
+      axe2: ['axe', -1.5, -0.5, { y: 0.4, side: -1, scale: 1.3 }],
+      head: ['axehead', -0.2, -0.1],
     },
     cast: {
-      elisha: ['elishaM', -2.0, 0.35, 1, { speed: 0.5 }],
-      son1: ['prophetson', -1.6, 0.2, 1, { speed: 0.5 }],
-      son2: ['prophetson2', -1.75, 0.55, 1, { speed: 0.5 }],
-      son3: ['prophetson', -2.2, 0.15, 1, { speed: 0.5, gaze: false }],
+      elisha: ['elishaM', -2.6, 0.35, 1, { speed: 0.5 }],
+      son1: ['prophetson', -2.2, 0.2, 1, { speed: 0.5 }],
+      son2: ['prophetson2', -2.35, 0.55, 1, { speed: 0.5 }],
+      son3: ['prophetson', -2.8, 0.15, 1, { speed: 0.5, gaze: false }],
     },
     beats: {
-      enter: [['son1', 'bow', { x: 0.75, z: 0.0, look: 1 }], ['axe1', 'empty', { x: 0.88, z: 0.0, y: 0.35 }], ['head', 'float'], ['elisha', 'point', { x: 0.45, z: 0.3, look: 1 }],
-        ['son2', 'idle', { x: -0.45, z: -0.48, look: -1 }], ['axe2', 'idle'], ['son3', 'idle', { x: 0.1, z: 0.45, look: 1 }]],
+      enter: [['son1', 'bow', { x: -0.62, z: -0.02, look: 1 }], ['axe1', 'empty'], ['head', 'float'], ['elisha', 'point', { x: -0.95, z: 0.25, look: 1 }],
+        ['son2', 'idle', { x: -1.35, z: -0.48, look: 1 }], ['axe2', 'idle'], ['son3', 'idle', { x: -1.3, z: 0.4, look: 1 }]],
       // 좁은 집을 두고 의논한다
       intro: [['@env', 'day'], ['axe1', 'idle'], ['axe2', 'idle'], ['head', 'sink'], ['river', 'flow'], ['elisha', 'idle', { look: 1 }], ['son1', 'idle', { look: -1 }], ['son2', 'idle', { look: -1 }], ['son3', 'idle', { look: 1 }]],
       'p0.0': [['son1', 'speak', { to: 'elisha' }]],
       'p0.2': [['son1', 'point', { look: 1 }]],
       'p0.3': [['elisha', 'speak', { to: 'son1' }], ['son2', 'speak', { to: 'elisha', delay: 1800 }], ['elisha', 'idle', { delay: 1800 }]],
       // 엘리사도 따라나선다 — 요단 강가 숲
-      'p0.5': [['son2', 'idle'], ['elisha', 'idle', { x: 0.0, z: 0.4, look: 1 }], ['son1', 'idle', { x: 0.38, z: -0.2, look: 1 }], ['son2', 'idle', { x: -0.45, z: -0.48, look: -1 }], ['son3', 'idle', { x: -0.3, z: 0.1, look: -1 }]],
+      'p0.5': [['son2', 'idle'], ['elisha', 'idle', { x: -1.2, z: 0.3, look: 1 }], ['son1', 'idle', { x: -0.98, z: -0.27, look: 1 }], ['son2', 'idle', { x: -1.36, z: -0.5, look: -1 }], ['son3', 'idle', { x: -1.8, z: -0.1, look: -1 }]],
       // 도끼 소리
-      'p0.6': [['axe1', 'chop'], ['axe2', 'chop', { delay: 500 }], ['son1', 'bow', { look: 1 }], ['son2', 'bow', { look: -1 }], ['son3', 'bow', { x: -0.3, z: -0.2, look: -1 }]],
+      'p0.6': [['axe1', 'chop'], ['axe2', 'chop', { delay: 500 }], ['son1', 'bow', { look: 1 }], ['son2', 'bow', { look: -1 }], ['son3', 'bow', { x: -1.85, z: -0.12, look: -1 }]],
       // 쇠도끼 날이 빠져 물속으로
       'p1.0': [['axe1', 'empty'], ['river', 'stir', { delay: 400 }], ['son1', 'afraid', { look: 1 }]],
-      'p1.1': [['axe2', 'idle'], ['son2', 'idle', { look: 1 }], ['son3', 'idle', { look: 1 }], ['son1', 'idle', { x: 0.6, z: 0.0, look: -1 }]],
-      'p1.2': [['river', 'flow'], ['son1', 'speak', { to: 'elisha' }], ['elisha', 'idle', { x: 0.3, z: 0.3, look: 1 }]],
+      'p1.1': [['axe2', 'idle'], ['son2', 'idle', { look: 1 }], ['son3', 'idle', { look: 1 }], ['son1', 'idle', { x: -0.68, z: -0.05, look: -1 }]],
+      'p1.2': [['river', 'flow'], ['son1', 'speak', { to: 'elisha' }], ['elisha', 'idle', { x: -1.0, z: 0.25, look: 1 }]],
       'p1.3': [['son1', 'shrug']],
       'p1.4': [['son1', 'mourn', { look: 1 }]],
       // 어디에 떨어졌느냐
       'p2.1': [['son1', 'idle', { look: -1 }], ['elisha', 'speak', { to: 'son1' }]],
       'p2.2': [['elisha', 'idle'], ['son1', 'point', { look: 1 }]],
       // 나뭇가지를 베어 던진다
-      'p2.3': [['son1', 'idle', { look: 1 }], ['elisha', 'bow', { x: 0.5, z: 0.12, look: 1 }], ['elisha', 'hurl', { look: 1, delay: 2000 }]],
+      'p2.3': [['son1', 'idle', { look: 1 }], ['elisha', 'bow', { x: -0.66, z: 0.15, look: 1 }], ['elisha', 'hurl', { look: 1, delay: 2000 }]],
       // 쇠도끼가 떠올랐다
-      'p2.4': [['head', 'float'], ['elisha', 'idle', { look: 1 }], ['son2', 'afraid', { x: 0.05, z: -0.3, look: 1 }], ['son3', 'raise', { x: 0.15, z: 0.0, look: 1 }]],
+      'p2.4': [['head', 'float'], ['elisha', 'idle', { look: 1 }], ['son2', 'afraid', { x: -1.05, z: -0.3, look: 1 }], ['son3', 'raise', { x: -1.15, z: 0.02, look: 1 }]],
       'p2.6': [['elisha', 'speak', { to: 'son1' }]],
       // 손을 뻗어 건져 올린다
-      'p2.7': [['elisha', 'idle'], ['son1', 'bow', { x: 0.75, z: 0.0, look: 1 }], ['head', 'held', { x: 0.62, z: 0.12, delay: 1600 }], ['son1', 'raise', { look: -1, delay: 2600 }]],
-      w0: [['elisha', 'speak', { x: 0.3, z: 0.3, to: 'son1' }], ['son1', 'idle', { x: 0.6, z: 0.0, look: -1 }]],
-      w1: [['head', 'float'], ['elisha', 'speak', { x: 0.5, z: 0.12, to: 'son1' }]],
-      w2: [['son1', 'speak', { x: 0.6, z: 0.0, to: 'elisha' }], ['axe1', 'empty']],
-      end: [['head', 'held', { x: 0.62, z: 0.12 }], ['son1', 'raise', { x: 0.75, z: 0.0, look: -1 }], ['elisha', 'bless', { look: 1 }]],
+      'p2.7': [['elisha', 'idle'], ['son1', 'bow', { x: -0.62, z: -0.02, look: 1 }], ['head', 'held', { x: -0.72, z: 0.1, delay: 1600 }], ['son1', 'raise', { look: -1, delay: 2600 }]],
+      w0: [['elisha', 'speak', { x: -1.0, z: 0.25, to: 'son1' }], ['son1', 'idle', { x: -0.68, z: -0.05, look: -1 }]],
+      w1: [['head', 'float'], ['elisha', 'speak', { x: -0.66, z: 0.15, to: 'son1' }]],
+      w2: [['son1', 'speak', { x: -0.68, z: -0.05, to: 'elisha' }], ['axe1', 'empty']],
+      end: [['head', 'held', { x: -0.72, z: 0.1 }], ['son1', 'raise', { x: -0.62, z: -0.02, look: -1 }], ['elisha', 'bless', { look: 1 }]],
     },
   },
 
@@ -211,11 +211,12 @@ export const C = {
     wide: 1.35,
     props: {
       hill: ['hill', 0.1, -0.4, { w: 1.15, h: 0.32, d: 0.6, color: '#9a8a6e' }],
-      town: ['kwall', 0.1, -0.78, { scale: 0.4, w: 2.2, y: 0.22 }],
-      host: ['firehost', 0.1, -0.35, { n: 9, r: 1.75 }],
+      town: ['kwall', 0.1, -0.72, { scale: 0.55, w: 1.8, y: 0.2 }],
+      host: ['firehost', 0.1, -0.3, { n: 11, r: 1.95 }],
       ch1: ['chariotI', -1.7, -0.5, { scale: 0.8, speed: 0.6 }],
       ch2: ['chariotI', 1.9, -0.4, { scale: 0.8, speed: 0.6, rot: Math.PI }],
-      haze: ['haze', 0.1, 0.25, { w: 2.8, d: 0.5 }],
+      hazeL: ['haze', -1.25, 0.2, { w: 0.9, d: 0.5 }],
+      hazeR: ['haze', 1.35, 0.2, { w: 0.9, d: 0.5 }],
       beam: ['beam', -0.05, -0.4, { r: 0.28, h: 2.2 }],
     },
     cast: {
@@ -223,16 +224,16 @@ export const C = {
       boy: ['gehazi', 0.3, -0.3, -0.4, { speed: 0.5 }], // 엘리사의 사환
       king: ['aramK', -1.85, 0.45, 0.9],
       adv: ['aramean2', -1.45, 0.5, -0.9],
-      a1: ['aramean', -1.1, 0.15, 1, { speed: 0.4, gaze: false }],
-      a2: ['aramean2', -0.6, 0.35, 0.8, { speed: 0.4, gaze: false }],
-      a3: ['aramean', 0.8, 0.35, -0.8, { speed: 0.4, gaze: false }],
-      a4: ['aramean2', 1.3, 0.15, -1, { speed: 0.4, gaze: false }],
-      a5: ['aramean', 0.15, 0.5, 2.8, { speed: 0.4, gaze: false }],
+      a1: ['aramean', -2.3, 0.15, 1, { speed: 0.4, gaze: false }],
+      a2: ['aramean2', -2.4, 0.4, 0.8, { speed: 0.4, gaze: false }],
+      a3: ['aramean', 2.4, 0.4, -0.8, { speed: 0.4, gaze: false }],
+      a4: ['aramean2', 2.3, 0.1, -1, { speed: 0.4, gaze: false }],
+      a5: ['aramean', -2.5, -0.2, 2.8, { speed: 0.4, gaze: false }],
     },
     beats: {
       enter: [['@env', 'dawn'], ['host', null, { show: 1 }], ['king', 'idle', { show: 0 }], ['adv', 'idle', { show: 0 }], ['elisha', 'raise', { look: 0.2 }], ['boy', 'look-up', { look: 0.5 }]],
       // 아람 왕과 신하 — 누가 내통하느냐
-      intro: [['@env', 'day'], ['host', null, { show: 0 }], ['haze', 'off'], ['beam', null, { show: 0 }], ['ch1', null, { show: 0 }], ['ch2', null, { show: 0 }],
+      intro: [['@env', 'day'], ['host', null, { show: 0 }], ['hazeL', 'off'], ['hazeR', 'off'], ['beam', null, { show: 0 }], ['ch1', null, { show: 0 }], ['ch2', null, { show: 0 }],
         ...['a1', 'a2', 'a3', 'a4', 'a5'].map(n => [n, 'idle', { show: 0 }]), ['king', 'idle', { look: 0.9 }], ['adv', 'idle', { look: -0.9 }], ['elisha', 'idle', { look: 0.4 }], ['boy', 'idle', { look: -0.4 }]],
       'p0.1': [['king', 'speak', { to: 'adv' }]],
       'p0.3': [['king', 'idle'], ['adv', 'bow']],
@@ -241,8 +242,8 @@ export const C = {
       // 밤에 말과 병거와 큰 군대가 성을 에워싼다
       'p1.0': [['@env', 'night'], ['king', 'idle', { show: 0 }], ['adv', 'idle', { show: 0 }], ['elisha', 'sleep', { look: 1 }], ['boy', 'sleep', { look: -1 }],
         ['ch1', null, { show: 1, x: -1.25, z: -0.35 }], ['ch2', null, { show: 1, x: 1.5, z: -0.3 }],
-        ['a1', 'idle', { show: 1, x: -0.95, z: 0.05, look: 0.6 }], ['a2', 'idle', { show: 1, x: -0.5, z: 0.32, look: 0.6 }], ['a3', 'idle', { show: 1, x: 0.75, z: 0.3, look: -0.6 }],
-        ['a4', 'idle', { show: 1, x: 1.2, z: 0.08, look: -0.6 }], ['a5', 'idle', { show: 1, x: 0.15, z: 0.5, look: 2.8 }]],
+        ['a1', 'idle', { show: 1, x: -1.15, z: 0.05, look: 0.6 }], ['a2', 'idle', { show: 1, x: -1.35, z: 0.38, look: 0.6 }], ['a3', 'idle', { show: 1, x: 1.3, z: 0.38, look: -0.6 }],
+        ['a4', 'idle', { show: 1, x: 1.2, z: 0.02, look: -0.6 }], ['a5', 'idle', { show: 1, x: -0.95, z: -0.3, look: 0.6 }]],
       // 새벽, 사환이 소리친다
       'p1.1': [['@env', 'dawn'], ['elisha', 'idle', { look: 0.4 }], ['boy', 'afraid', { x: 0.35, z: -0.18, look: 0.3 }]],
       'p1.2': [['boy', 'speak', { to: 'elisha' }]],
@@ -252,11 +253,11 @@ export const C = {
       // 눈이 열리자 — 산에 불말과 불병거가 가득
       'p2.0': [['beam', null, { show: 0 }], ['host', null, { show: 1 }], ['elisha', 'idle', { look: 0.4 }], ['boy', 'look-up', { look: 0.4 }]],
       // 아람 군사들의 눈이 어두워진다
-      'p2.1': [['elisha', 'pray'], ['haze', 'on'], ['a1', 'shrug', { delay: 800 }], ['a2', 'afraid', { delay: 1000 }], ['a3', 'shrug', { delay: 900 }], ['a4', 'afraid', { delay: 1100 }], ['a5', 'shrug', { delay: 700 }]],
+      'p2.1': [['elisha', 'pray'], ['hazeL', 'on'], ['hazeR', 'on'], ['a1', 'shrug', { delay: 800 }], ['a2', 'afraid', { delay: 1000 }], ['a3', 'shrug', { delay: 900 }], ['a4', 'afraid', { delay: 1100 }], ['a5', 'shrug', { delay: 700 }]],
       // 사마리아로 이끌고 간다
       'p2.2': [['elisha', 'idle', { x: -0.7, z: 0.5 }], ['elisha', 'idle', { x: -2.4, z: 0.6, delay: 2600 }],
         ...[['a1', -1.1, 0.35], ['a2', -0.85, 0.6], ['a3', -0.5, 0.45], ['a4', -0.2, 0.6], ['a5', -0.35, 0.3]].flatMap(([n, x, z], i) => [[n, 'idle', { x, z, delay: 2200 + i * 200 }], [n, 'idle', { x: x - 1.5, z, delay: 4600 + i * 200 }], [n, 'idle', { show: 0, delay: 7800 + i * 200 }]]),
-        ['elisha', 'idle', { show: 0, delay: 7400 }], ['haze', 'off', { delay: 6000 }], ['ch1', null, { x: -2.6, z: -0.2, delay: 3500 }], ['ch1', null, { show: 0, delay: 7000 }], ['ch2', null, { show: 0, delay: 3500 }]],
+        ['elisha', 'idle', { show: 0, delay: 7400 }], ['hazeL', 'off', { delay: 6000 }], ['hazeR', 'off', { delay: 6000 }], ['ch1', null, { x: -2.6, z: -0.2, delay: 3500 }], ['ch1', null, { show: 0, delay: 7000 }], ['ch2', null, { show: 0, delay: 3500 }]],
       // 나의 도움은 — 산을 둘러보는 사환
       'p2.3': [['@env', 'day'], ['boy', 'idle', { x: 0.1, z: -0.3, look: 0.2 }], ['host', null, { show: 0.8 }]],
       'p2.4': [['boy', 'look-up', { look: 0 }]],

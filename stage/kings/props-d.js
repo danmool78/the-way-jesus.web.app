@@ -154,7 +154,7 @@ Object.assign(MAKERS, {
     for (let i = 0; i < n; i++) {
       const z = 0.4 - i * D, h = R * (i + 1);
       mesh(new THREE.BoxGeometry(0.6, h, D), st, g, [0, h / 2, z]).receiveShadow = true;
-      const sm = new THREE.MeshBasicMaterial({ color: '#2a2230', transparent: true, opacity: 0, depthWrite: false });
+      const sm = new THREE.MeshBasicMaterial({ color: '#1a1424', transparent: true, opacity: 0, depthWrite: false });
       const tread = mesh(new THREE.PlaneGeometry(0.6, D), sm, g, [0, h + 0.002, z]); tread.rotation.x = -Math.PI / 2; tread.castShadow = false;
       const riser = mesh(new THREE.PlaneGeometry(0.6, R), sm, g, [0, h - R / 2, z + D / 2 + 0.002]); riser.castShadow = false;
       shades.push(sm);
@@ -169,7 +169,7 @@ Object.assign(MAKERS, {
     return new Prop(g, (P, t, dt) => {
       const back = P.state === 'back';
       edge = damp(edge, back ? 10.6 : 1.5, back ? 0.28 : 3, dt);
-      shades.forEach((m, i) => { m.opacity = THREE.MathUtils.clamp(i + 1 - edge, 0, 1) * 0.5 * P.show; });
+      shades.forEach((m, i) => { m.opacity = THREE.MathUtils.clamp(i + 1 - edge, 0, 1) * 0.62 * P.show; });
       const since = now() - P.t0;
       halo.material.opacity = back ? Math.min(1, since * 0.35) * 0.65 * P.show * (0.9 + Math.sin(t * 1.4) * 0.1) : 0;
     }, { state: o.state || 'fwd' });

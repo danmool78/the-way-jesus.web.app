@@ -128,7 +128,7 @@ export const D = {
       w1: [['rabshakeh', 'raise', { look: -2.3 }]],
       w2: [['rabshakeh', 'idle', { look: -1.6 }], ['eliakim', 'speak', { to: 'rabshakeh' }]],
       // 왕의 명령 — 성문 안에서
-      w3: [['eliakim', 'listen', { look: -2.8 }], ['hezekiah', 'speak', { show: 1, x: -0.6, z: -0.4, to: 'eliakim' }]],
+      w3: [['eliakim', 'listen', { look: -2.8 }], ['hezekiah', 'speak', { show: 1, x: -1.0, z: -0.38, to: 'eliakim' }]],
       end: [['hezekiah', 'idle', { show: 0 }], ['rabshakeh', 'raise', { x: 0.6, z: 0.0, look: -2.3 }], ['eliakim', 'mourn', { show: 1, x: -0.35, z: 0.0, look: 1.5 }]],
     },
   },
@@ -154,8 +154,8 @@ export const D = {
       envoy: ['assyrian2', 2.5, 0.5, -1.5, { speed: 0.6 }],
     },
     beats: {
-      enter: [['@env', 'glory'], ['letter', null, { show: 1 }], ['hezekiah', 'kneel', { x: -0.55, z: -0.12, look: 3.14 }], ['isaiah', 'speak', { x: 0.3, z: 0.15, to: 'hezekiah' }], ['beam', null, { show: 1 }],
-        ['eliakim', 'pray', { x: 0.05, z: 0.45, look: -2.6 }], ['shebna', 'pray', { x: -0.35, z: 0.55, look: 3.0 }], ['elder', 'pray', { x: -0.9, z: 0.45, look: 2.8 }], ['envoy', 'idle', { show: 0 }]],
+      enter: [['@env', 'glory'], ['letter', null, { show: 1 }], ['hezekiah', 'kneel', { x: -0.55, z: -0.12, look: 3.14 }], ['isaiah', 'speak', { x: 0.35, z: -0.02, to: 'hezekiah' }], ['beam', null, { show: 1 }],
+        ['eliakim', 'pray', { x: 0.8, z: 0.3, look: -2.2 }], ['shebna', 'pray', { x: 1.05, z: 0.5, look: -2.3 }], ['elder', 'pray', { x: -1.4, z: 0.3, look: 2.4 }], ['envoy', 'idle', { show: 0 }]],
       // 굵은 베옷을 걸친 왕이 성전으로
       intro: [['@env', 'overcast'], ['letter', null, { show: 0 }], ['beam', null, { show: 0 }], ['envoy', 'idle', { show: 0 }], ['isaiah', 'idle', { look: -1.2 }]],
       'p0.0': [['hezekiah', 'idle', { x: -0.55, z: -0.12, look: 3.14 }], ['hezekiah', 'kneel', { delay: 4200 }], ['eliakim', 'idle', { x: 0.25, z: 0.3, look: -2.0 }]],
@@ -168,7 +168,7 @@ export const D = {
       'p0.5': [['beam', null, { show: 1 }], ['isaiah', 'look-up']],
       'p0.6': [['isaiah', 'speak', { to: 'eliakim' }]],
       // 얼마 뒤 앗수르 왕의 편지 — 신하들은 뜰로 돌아오고, 전령이 편지를 들고 온다
-      'p1.0': [['beam', null, { show: 0 }], ['isaiah', 'idle', { look: -1.2 }], ['eliakim', 'idle', { x: 0.05, z: 0.45, look: -1.6 }], ['shebna', 'idle', { x: -0.35, z: 0.55, look: 1.2 }], ['elder', 'idle', { x: -0.9, z: 0.45, look: 1.2 }],
+      'p1.0': [['beam', null, { show: 0 }], ['isaiah', 'idle', { look: -1.2 }], ['eliakim', 'idle', { x: 0.8, z: 0.3, look: -1.6 }], ['shebna', 'idle', { x: 1.05, z: 0.5, look: -1.8 }], ['elder', 'idle', { x: -1.4, z: 0.3, look: 1.4 }],
         ['hezekiah', 'idle', { x: -0.3, z: 0.15, look: 1.4 }], ['envoy', 'idle', { show: 1, x: 0.5, z: 0.3, look: -1.6, item: 'scroll' }]],
       'p1.1': [['envoy', 'speak', { to: 'hezekiah' }]],
       'p1.2': [['envoy', 'speak', { to: 'hezekiah' }], ['envoy', 'idle', { item: null, delay: 2200 }], ['hezekiah', 'idle', { item: 'scroll', delay: 2300 }]],
@@ -180,18 +180,18 @@ export const D = {
       'p1.6': [['hezekiah', 'pray']],
       'p1.7': [['hezekiah', 'kneel']],
       // 이사야가 말을 보낸다 — 응답의 빛
-      'p2.0': [['isaiah', 'idle', { x: 0.3, z: 0.15, look: -2.4 }]],
+      'p2.0': [['isaiah', 'idle', { x: 0.35, z: -0.02, look: -2.4 }]],
       'p2.1': [['beam', null, { show: 1 }]],
       'p2.2': [['isaiah', 'speak', { to: 'hezekiah' }], ['hezekiah', 'kneel', { look: 2.4 }]],
       'p2.4': [['isaiah', 'raise']],
       // 시온의 노래 — 뜰이 밝아진다
       'p2.5': [['@env', 'glory'], ['isaiah', 'idle']],
-      'p2.6': [['eliakim', 'pray', { look: -2.6 }], ['shebna', 'pray', { look: 3.0 }], ['elder', 'pray', { look: 2.8 }]],
+      'p2.6': [['eliakim', 'pray', { look: -2.2 }], ['shebna', 'pray', { look: -2.3 }], ['elder', 'pray', { look: 2.4 }]],
       'p2.7': [['hezekiah', 'pray', { look: 3.14 }]],
-      w0: [['beam', null, { show: 1 }], ['isaiah', 'speak', { x: 0.3, z: 0.15, to: 'hezekiah' }]],
+      w0: [['beam', null, { show: 1 }], ['isaiah', 'speak', { x: 0.35, z: -0.02, to: 'hezekiah' }]],
       w1: [['isaiah', 'speak', { to: 'hezekiah' }]],
       w2: [['beam', null, { show: 0 }], ['isaiah', 'idle'], ['hezekiah', 'speak', { look: 3.14 }]],
-      end: [['@env', 'glory'], ['beam', null, { show: 1 }], ['isaiah', 'idle', { x: 0.3, z: 0.15, look: -2.4 }], ['hezekiah', 'kneel', { look: 3.14 }]],
+      end: [['@env', 'glory'], ['beam', null, { show: 1 }], ['isaiah', 'idle', { x: 0.35, z: -0.02, look: -2.4 }], ['hezekiah', 'kneel', { look: 3.14 }]],
     },
   },
 
@@ -202,21 +202,21 @@ export const D = {
     wide: 1.4,
     props: {
       grass: ['grass', 0.6, 0.1, { r: 1.9, color: '#9a9a6a' }],
-      wall: ['kwall', -1.55, -0.75, { scale: 0.7, w: 1.8 }],
-      folk: ['crowd', -1.55, -0.76, { y: 0.49, spots: row(5, 1.0, 2), face: 0.5 }],
-      camp1: ['camp', 1.0, -0.7, { n: 6, span: 2.0, color: '#56586a', flag: '#9d3328' }],
-      camp2: ['camp', 1.35, -0.25, { n: 4, span: 1.4, color: '#4c4e60', flag: '#9d3328', scale: 0.95 }],
-      fires: ['campfires', 0, 0, { spots: [[0.25, -0.35], [0.85, 0.15], [1.55, 0.05], [2.15, -0.35], [1.15, 0.5]], sweep: 2.6 }],
+      wall: ['kwall', -1.55, -0.75, { scale: 0.85, w: 1.8 }],
+      folk: ['crowd', -1.55, -0.76, { y: 0.595, spots: row(5, 1.0, 2), face: 0.5 }],
+      camp1: ['camp', 1.15, -0.8, { n: 6, span: 1.15, color: '#6a6c7e', flag: '#9d3328', scale: 1.8 }],
+      camp2: ['camp', 1.5, -0.4, { n: 4, span: 0.7, color: '#5c5e70', flag: '#9d3328', scale: 1.6 }],
+      fires: ['campfires', 0, 0, { spots: [[0.25, -0.35], [0.85, 0.15], [1.55, 0.05], [2.35, -0.1], [1.15, 0.5]], sweep: 2.6 }],
       angel: ['beam', -0.2, -0.1, { r: 0.4, h: 2.8, peak: 0.5, speed: 0.38 }],
     },
     cast: {
-      hezekiah: ['hezekiahS', -1.75, -0.74, 0.4, { y: 0.49 }],
-      isaiah: ['isaiah', -1.35, -0.74, 0.6, { y: 0.49 }],
+      hezekiah: ['hezekiahS', -1.75, -0.74, 0.4, { y: 0.595 }],
+      isaiah: ['isaiah', -1.35, -0.74, 0.6, { y: 0.595 }],
       s1: ['assyrian', 0.4, -0.15, 2.4, { gaze: false, pose: 'sit-ground' }],
       s2: ['assyrian2', 0.75, 0.32, -0.6, { gaze: false }],
       s3: ['assyrian', 1.45, 0.25, 1.6, { gaze: false, pose: 'sit-ground' }],
-      s4: ['assyrian', 1.95, -0.15, -2.2, { gaze: false }],
-      s5: ['assyrian2', 2.3, -0.5, -1.4, { gaze: false, pose: 'sit-ground' }],
+      s4: ['assyrian', 2.05, 0.08, -2.2, { gaze: false }],
+      s5: ['assyrian2', 2.55, -0.3, -1.4, { gaze: false, pose: 'sit-ground' }],
       s6: ['assyrian', 1.3, 0.65, 0.2, { gaze: false }],
     },
     beats: {
@@ -257,7 +257,7 @@ export const D = {
     env: 'dusk',
     wide: 1.35,
     props: {
-      hall: ['hall', -0.75, -0.05, { w: 1.9, throne: false, lamp: -1.45 }],
+      hall: ['hall', -0.75, -0.05, { w: 1.9, throne: false, lamp: -0.72 }],
       couch: ['couch', -0.85, -0.38],
       stair: ['shadowstair', 1.45, -0.4, { scale: 1.15 }],
       beam: ['beam', 1.0, 0.5, { r: 0.32, h: 2.4, on: 'isaiah' }],
@@ -270,16 +270,16 @@ export const D = {
     beats: {
       enter: [['stair', 'back'], ['hezekiah', 'idle', { x: 0.55, z: 0.35, y: 0, look: 1.4 }], ['isaiah', 'raise', { x: 0.95, z: 0.55, look: 1.2 }], ['beam', null, { show: 0 }], ['servant', 'idle', { x: -0.3, z: 0.4, look: 1.2 }]],
       // 병들어 누운 왕
-      intro: [['@env', 'dusk'], ['stair', 'fwd'], ['beam', null, { show: 0 }], ['isaiah', 'idle', { show: 0 }], ['hezekiah', 'sleep', { y: 0.13, look: 1.57 }], ['servant', 'idle', { look: 0.9 }]],
+      intro: [['@env', 'dusk'], ['stair', 'fwd'], ['beam', null, { show: 0 }], ['isaiah', 'idle', { show: 0 }], ['hezekiah', 'sleep', { y: 0.13, look: -0.05 }], ['servant', 'idle', { look: 0.9 }]],
       // 이사야가 와서 말한다
       'p0.1': [['isaiah', 'idle', { show: 1, x: -0.15, z: 0.12, look: -1.9 }]],
       'p0.3': [['isaiah', 'speak', { to: 'hezekiah' }]],
       'p0.4': [['isaiah', 'speak', { to: 'hezekiah' }], ['hezekiah', 'sit', { y: 0.13, look: 1.1 }]],
       // 얼굴을 벽 쪽으로 — 이사야는 나간다
       'p0.5': [['hezekiah', 'sit', { look: 3.14 }], ['isaiah', 'idle', { x: 0.95, z: 0.55, look: 1.2 }]],
-      'p0.6': [['hezekiah', 'pray', { y: 0.13 }]],
+      'p0.6': [['hezekiah', 'sit', { y: 0.13 }]],
       'p0.7': [['hezekiah', 'sit'], ['servant', 'listen', { look: 1.6 }]],
-      'p0.8': [['hezekiah', 'cower', { y: 0.13 }]],
+      'p0.8': [['hezekiah', 'sit', { y: 0.13, look: 3.0 }]],
       // 가운데 뜰을 다 나서기 전에 — 말씀이 임한다 (빛)
       'p1.0': [['hezekiah', 'sit'], ['beam', null, { show: 1 }], ['isaiah', 'look-up', { look: 0.4 }]],
       'p1.2': [['isaiah', 'idle', { x: -0.15, z: 0.12, look: -1.9 }]],
@@ -311,20 +311,20 @@ export const D = {
     env: 'day',
     wide: 1.35,
     props: {
-      hall: ['hall', -0.1, -0.05, { w: 3.0, tx: -0.95, lamp: -1.45 }],
+      hall: ['hall', -0.1, -0.05, { w: 3.0, tx: -0.95, lamp: -1.3 }],
       vault: ['vault', 0.85, -0.52, { w: 1.5 }],
       treasure: ['treasure', 0.55, -0.05],
       gold: ['tribute', 1.25, 0.0, { kind: 'gold', scale: 0.85 }],
     },
     cast: {
       hezekiah: ['hezekiah', -1.05, -0.47, 0.3, { y: 0.27, pose: 'sit' }],
-      courtier: ['courtier', -1.55, -0.1, 0.8, { gaze: false }],
+      courtier: ['courtier', -1.3, -0.15, 0.8, { gaze: false }],
       env1: ['babenvoy', 2.3, 0.35, -1.5, { speed: 0.5 }],
       env2: ['babenvoy', 2.55, 0.55, -1.5, { speed: 0.5 }],
       isaiah: ['isaiah', 2.4, 0.4, -1.5, { speed: 0.5 }],
     },
     beats: {
-      enter: [['hezekiah', 'shrug', { y: 0, x: 0.15, z: 0.25, look: 2.6 }], ['env1', 'idle', { x: 0.55, z: 0.42, look: 2.9 }], ['env2', 'idle', { x: 0.95, z: 0.45, look: 3.0 }], ['isaiah', 'idle', { show: 0 }]],
+      enter: [['hezekiah', 'shrug', { y: 0, x: 0.0, z: 0.15, look: 2.6 }], ['env1', 'idle', { x: -0.4, z: 0.35, look: 2.5 }], ['env2', 'idle', { x: 1.85, z: 0.25, look: -2.4 }], ['isaiah', 'idle', { show: 0 }]],
       // 왕좌의 왕 — 먼 나라의 사신들이 들어온다
       intro: [['@env', 'day'], ['env1', 'idle', { show: 0 }], ['env2', 'idle', { show: 0 }], ['isaiah', 'idle', { show: 0 }], ['hezekiah', 'sit', { y: 0.27, look: 0.3 }]],
       'p0.0': [['env1', 'idle', { show: 1, x: -0.45, z: 0.12, look: -2.2, item: 'scroll' }], ['env2', 'idle', { show: 1, x: -0.15, z: 0.3, look: -2.1, item: 'gift', delay: 400 }], ['hezekiah', 'sit', { look: 0.8 }]],
@@ -333,11 +333,11 @@ export const D = {
       // 기뻐하며 듣는다
       'p0.3': [['env1', 'speak', { to: 'hezekiah', item: null }], ['hezekiah', 'sit-speak', { to: 'env1' }]],
       // 보물 창고로 데려간다
-      'p1.0': [['env2', 'idle', { item: null }], ['hezekiah', 'idle', { y: 0, x: 0.15, z: 0.25, look: 2.6 }], ['env1', 'idle', { x: 0.55, z: 0.42, look: 2.9 }], ['env2', 'idle', { x: 0.95, z: 0.45, look: 3.0, delay: 300 }]],
+      'p1.0': [['env2', 'idle', { item: null }], ['hezekiah', 'idle', { y: 0, x: 0.0, z: 0.15, look: 2.6 }], ['env1', 'idle', { x: -0.4, z: 0.35, look: 2.5 }], ['env2', 'idle', { x: 1.85, z: 0.25, look: -2.4, delay: 300 }]],
       'p1.1': [['hezekiah', 'point', { look: 2.7 }]],
       'p1.2': [['hezekiah', 'shrug', { look: 2.2 }]],
       // 사신들의 눈이 구석구석을 훑는다
-      'p1.3': [['hezekiah', 'idle', { look: 1.6 }], ['env1', 'idle', { look: 2.6 }], ['env2', 'idle', { look: -2.8 }], ['env1', 'idle', { look: -2.8, delay: 1600 }], ['env2', 'idle', { look: 2.4, delay: 2000 }]],
+      'p1.3': [['hezekiah', 'idle', { look: 1.6 }], ['env1', 'idle', { look: 2.2 }], ['env2', 'idle', { look: -2.0 }], ['env1', 'idle', { look: 2.8, delay: 1600 }], ['env2', 'idle', { look: -2.7, delay: 2000 }]],
       // 사신들이 떠나고 이사야가 찾아온다
       'p1.4': [['env1', 'idle', { x: 2.5, z: 0.4 }], ['env2', 'idle', { x: 2.7, z: 0.6 }], ['env1', 'idle', { show: 0, delay: 3800 }], ['env2', 'idle', { show: 0, delay: 3800 }],
         ['isaiah', 'idle', { show: 1, x: 0.85, z: 0.4, look: -1.8, delay: 3000 }], ['hezekiah', 'idle', { look: 1.6, delay: 3000 }]],

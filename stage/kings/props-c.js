@@ -100,13 +100,13 @@ Object.assign(MAKERS, {
   // 눈이 어두워짐 (왕하 6:18): 무리 머리 높이에 낮게 깔리는 잿빛 안개. o.w·o.d 넓이. state 'on' | 'off'
   haze(o = {}) {
     const g = new THREE.Group(), W = o.w || 1.4, Dd = o.d || 0.6, n = 18;
-    const puffs = Array.from({ length: n }, (_, i) => { const m = mesh(sphere(0.16 + (i % 3) * 0.05, 14, 10), puffM('#4a4652'), g); m.castShadow = false;
+    const puffs = Array.from({ length: n }, (_, i) => { const m = mesh(sphere(0.16 + (i % 3) * 0.05, 14, 10), puffM('#3a3644'), g); m.castShadow = false;
       m.userData = { x: ((i * 0.618) % 1 - 0.5) * W, z: ((i * 0.381) % 1 - 0.5) * Dd, y: 0.62 + (i % 4) * 0.06, s: i }; return m; });
     let k = 0;
     return new Prop(g, (P, t, dt) => {
       k = damp(k, P.state === 'on' ? 1 : 0, 0.8, dt);
       puffs.forEach(p => { const u = p.userData; p.position.set(u.x + Math.sin(t * 0.5 + u.s) * 0.06, u.y + Math.sin(t * 0.8 + u.s * 2) * 0.03, u.z + Math.cos(t * 0.4 + u.s) * 0.04);
-        p.material.opacity = k * 0.42 * P.show; p.visible = p.material.opacity > 0.01; p.scale.set(1.5, 0.55, 1); });
+        p.material.opacity = k * 0.6 * P.show; p.visible = p.material.opacity > 0.01; p.scale.set(1.5, 0.55, 1); });
     }, { state: o.state || 'off', fade: 'none' });
   },
 
