@@ -1,0 +1,450 @@
+[
+ {
+  "id": "d01",
+  "p": "v1",
+  "when": "BC 1025년경",
+  "year": -1025,
+  "place": "bethlehem",
+  "title": "베들레헴 들판의 목동",
+  "refs": {
+   "1sam": "16:11; 17:34–36"
+  },
+  "psalm": "ps23"
+ },
+ {
+  "id": "d02",
+  "p": "v1",
+  "when": "BC 1025년경",
+  "year": -1025,
+  "place": "bethlehem",
+  "title": "이새의 막내에게 부은 기름",
+  "refs": {
+   "1sam": "16:1–13"
+  }
+ },
+ {
+  "id": "d03",
+  "p": "v1",
+  "when": "BC 1025년경",
+  "year": -1025,
+  "place": "gibeah",
+  "title": "수금 타는 소년",
+  "refs": {
+   "1sam": "16:14–23"
+  }
+ },
+ {
+  "id": "d04",
+  "p": "v1",
+  "when": "BC 1020년경",
+  "year": -1020,
+  "place": "elah",
+  "title": "엘라 골짜기의 거인",
+  "refs": {
+   "1sam": "17:1–30"
+  }
+ },
+ {
+  "id": "d05",
+  "p": "v1",
+  "when": "BC 1020년경",
+  "year": -1020,
+  "place": "elah",
+  "title": "다섯 개의 매끄러운 돌",
+  "refs": {
+   "1sam": "17:31–54"
+  }
+ },
+ {
+  "id": "d06",
+  "p": "v2",
+  "when": "BC 1020년경",
+  "year": -1020,
+  "place": "gibeah",
+  "title": "요나단의 언약",
+  "refs": {
+   "1sam": "18:1–5"
+  }
+ },
+ {
+  "id": "d07",
+  "p": "v2",
+  "when": "BC 1019년경",
+  "year": -1019,
+  "place": "gibeah",
+  "title": "천천이요 만만이로다",
+  "refs": {
+   "1sam": "18:6–30"
+  }
+ },
+ {
+  "id": "d08",
+  "p": "v2",
+  "when": "BC 1018년경",
+  "year": -1018,
+  "place": "gibeah",
+  "title": "창문으로 내려간 밤",
+  "refs": {
+   "1sam": "19:1–17"
+  },
+  "psalm": "ps59"
+ },
+ {
+  "id": "d09",
+  "p": "v2",
+  "when": "BC 1018년경",
+  "year": -1018,
+  "place": "ramah",
+  "title": "라마의 선지자들",
+  "refs": {
+   "1sam": "19:18–24"
+  }
+ },
+ {
+  "id": "d10",
+  "p": "v2",
+  "when": "BC 1018년경",
+  "year": -1018,
+  "place": "gibeah",
+  "title": "화살 세 개",
+  "refs": {
+   "1sam": "20:1–42"
+  }
+ },
+ {
+  "id": "d11",
+  "p": "v2",
+  "when": "BC 1018년경",
+  "year": -1018,
+  "place": "nob",
+  "title": "놉의 진설병과 골리앗의 칼",
+  "refs": {
+   "1sam": "21:1–9; 22:6–23"
+  },
+  "psalm": "ps52"
+ },
+ {
+  "id": "d12",
+  "p": "v2",
+  "when": "BC 1018년경",
+  "year": -1018,
+  "place": "gath",
+  "title": "가드에서 미친 척",
+  "refs": {
+   "1sam": "21:10–15"
+  },
+  "psalm": "ps56"
+ },
+ {
+  "id": "d13",
+  "p": "v2",
+  "when": "BC 1017년경",
+  "year": -1017,
+  "place": "adullam",
+  "title": "아둘람 굴의 사백 명",
+  "refs": {
+   "1sam": "22:1–5"
+  },
+  "psalm": "ps142"
+ },
+ {
+  "id": "d14",
+  "p": "v2",
+  "when": "BC 1016년경",
+  "year": -1016,
+  "place": "keilah",
+  "title": "그일라를 구하다",
+  "refs": {
+   "1sam": "23:1–13"
+  }
+ },
+ {
+  "id": "d15",
+  "p": "v2",
+  "when": "BC 1016년경",
+  "year": -1016,
+  "place": "ziph",
+  "title": "십 광야의 밀고",
+  "refs": {
+   "1sam": "23:14–29"
+  },
+  "psalm": "ps54"
+ },
+ {
+  "id": "d16",
+  "p": "v2",
+  "when": "BC 1015년경",
+  "year": -1015,
+  "place": "engedi",
+  "title": "엔게디 굴의 옷자락",
+  "refs": {
+   "1sam": "24:1–22"
+  },
+  "psalm": "ps57"
+ },
+ {
+  "id": "d17",
+  "p": "v2",
+  "when": "BC 1014년경",
+  "year": -1014,
+  "place": "carmel",
+  "title": "나발과 아비가일",
+  "refs": {
+   "1sam": "25:1–42"
+  }
+ },
+ {
+  "id": "d18",
+  "p": "v2",
+  "when": "BC 1013년경",
+  "year": -1013,
+  "place": "ziph",
+  "title": "잠든 사울의 창과 물병",
+  "refs": {
+   "1sam": "26:1–25"
+  },
+  "psalm": "ps63"
+ },
+ {
+  "id": "d19",
+  "p": "v2",
+  "when": "BC 1011년경",
+  "year": -1011,
+  "place": "ziklag",
+  "title": "시글락이 불탄 날",
+  "refs": {
+   "1sam": "27:1–7; 30:1–31"
+  },
+  "psalm": "ps18"
+ },
+ {
+  "id": "d20",
+  "p": "v2",
+  "when": "BC 1010년경",
+  "year": -1010,
+  "place": "gilboa",
+  "title": "길보아의 슬픔",
+  "refs": {
+   "1sam": "31:1–13",
+   "2sam": "1:1–27"
+  }
+ },
+ {
+  "id": "d21",
+  "p": "v3",
+  "when": "BC 1010년경",
+  "year": -1010,
+  "place": "hebron",
+  "title": "헤브론의 왕",
+  "refs": {
+   "2sam": "2:1–7; 5:1–5"
+  }
+ },
+ {
+  "id": "d22",
+  "p": "v3",
+  "when": "BC 1003년경",
+  "year": -1003,
+  "place": "jerusalem",
+  "title": "시온 산성",
+  "refs": {
+   "2sam": "5:6–12"
+  }
+ },
+ {
+  "id": "d23",
+  "p": "v3",
+  "when": "BC 1000년경",
+  "year": -1000,
+  "place": "kiriath",
+  "title": "웃사와 멈춘 법궤",
+  "refs": {
+   "2sam": "6:1–11"
+  }
+ },
+ {
+  "id": "d24",
+  "p": "v3",
+  "when": "BC 1000년경",
+  "year": -1000,
+  "place": "jerusalem",
+  "title": "춤추며 올라온 법궤",
+  "refs": {
+   "2sam": "6:12–23"
+  },
+  "psalm": "ps24"
+ },
+ {
+  "id": "d25",
+  "p": "v3",
+  "when": "BC 998년경",
+  "year": -998,
+  "place": "jerusalem",
+  "title": "영원한 집의 약속",
+  "refs": {
+   "2sam": "7:1–29"
+  },
+  "psalm": "ps132"
+ },
+ {
+  "id": "d26",
+  "p": "v3",
+  "when": "BC 995년경",
+  "year": -995,
+  "place": "jerusalem",
+  "title": "므비보셋의 식탁",
+  "refs": {
+   "2sam": "9:1–13"
+  }
+ },
+ {
+  "id": "d27",
+  "p": "v3",
+  "when": "BC 995년경",
+  "year": -995,
+  "place": "saltvalley",
+  "title": "소금 골짜기",
+  "refs": {
+   "2sam": "8:1–18"
+  },
+  "psalm": "ps60"
+ },
+ {
+  "id": "d28",
+  "p": "v4",
+  "when": "BC 993년경",
+  "year": -993,
+  "place": "jerusalem",
+  "title": "지붕 위에서",
+  "refs": {
+   "2sam": "11:1–27"
+  }
+ },
+ {
+  "id": "d29",
+  "p": "v4",
+  "when": "BC 992년경",
+  "year": -992,
+  "place": "jerusalem",
+  "title": "당신이 그 사람이라",
+  "refs": {
+   "2sam": "12:1–25"
+  },
+  "psalm": "ps51"
+ },
+ {
+  "id": "d30",
+  "p": "v4",
+  "when": "BC 979년경",
+  "year": -979,
+  "place": "hebron",
+  "title": "압살롬의 반역",
+  "refs": {
+   "2sam": "15:1–12"
+  }
+ },
+ {
+  "id": "d31",
+  "p": "v4",
+  "when": "BC 979년경",
+  "year": -979,
+  "place": "olives",
+  "title": "맨발로 오른 감람산",
+  "refs": {
+   "2sam": "15:13–37"
+  },
+  "psalm": "ps3"
+ },
+ {
+  "id": "d32",
+  "p": "v4",
+  "when": "BC 979년경",
+  "year": -979,
+  "place": "bahurim",
+  "title": "시므이의 돌",
+  "refs": {
+   "2sam": "16:5–14"
+  }
+ },
+ {
+  "id": "d33",
+  "p": "v4",
+  "when": "BC 979년경",
+  "year": -979,
+  "place": "mahanaim",
+  "title": "마하나임",
+  "refs": {
+   "2sam": "17:24–29"
+  },
+  "psalm": "ps7"
+ },
+ {
+  "id": "d34",
+  "p": "v4",
+  "when": "BC 979년경",
+  "year": -979,
+  "place": "ephraimwood",
+  "title": "에브라임 숲의 상수리나무",
+  "refs": {
+   "2sam": "18:1–18"
+  }
+ },
+ {
+  "id": "d35",
+  "p": "v4",
+  "when": "BC 979년경",
+  "year": -979,
+  "place": "mahanaim",
+  "title": "내 아들 압살롬아",
+  "refs": {
+   "2sam": "18:19–19:8"
+  }
+ },
+ {
+  "id": "d36",
+  "p": "v5",
+  "when": "BC 975년경",
+  "year": -975,
+  "place": "araunah",
+  "title": "아라우나의 타작마당",
+  "refs": {
+   "2sam": "24:1–25"
+  }
+ },
+ {
+  "id": "d37",
+  "p": "v5",
+  "when": "BC 971년경",
+  "year": -971,
+  "place": "gihon",
+  "title": "기혼 샘의 기름 부음",
+  "refs": {
+   "1ki": "1:1–53"
+  }
+ },
+ {
+  "id": "d38",
+  "p": "v5",
+  "when": "BC 971년경",
+  "year": -971,
+  "place": "jerusalem",
+  "title": "성전을 위한 준비",
+  "refs": {
+   "1chr": "22:1–19; 28:1–29:20"
+  },
+  "psalm": "ps30"
+ },
+ {
+  "id": "d39",
+  "p": "v5",
+  "when": "BC 970년경",
+  "year": -970,
+  "place": "jerusalem",
+  "title": "다윗의 마지막 말",
+  "refs": {
+   "2sam": "23:1–7",
+   "1ki": "2:1–12"
+  },
+  "psalm": "ps72"
+ }
+]

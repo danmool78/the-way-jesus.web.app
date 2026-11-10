@@ -322,7 +322,8 @@ function applyView() {
   showHiRelief(x, y, w, h, u);
   // 예루살렘 도성 그림: 가까이 들어갔을 때만 받아서(약 200KB) 서서히 보인다
   const city = $('#city3d', map);
-  if (u < 0.6 && !city.getAttribute('href')) { city.addEventListener('load', () => city.classList.add('ready'), { once: true }); city.setAttribute('href', 'assets/jerusalem.webp'); }
+  // noCity: 다윗 여정 — 예수 때 도성 그림은 천 년 뒤 모습이라 깔지 않는다
+  if (u < 0.6 && !city.getAttribute('href') && !window.journeyMap?.noCity) { city.addEventListener('load', () => city.classList.add('ready'), { once: true }); city.setAttribute('href', 'assets/jerusalem.webp'); }
   $$('.pin, .lbl', map).forEach(el => {
     const tr = el.dataset.x ? `translate(${el.dataset.x},${el.dataset.y})` : (el.dataset.t ||= el.getAttribute('transform'));
     el.setAttribute('transform', `${tr} scale(${u})`);
@@ -715,6 +716,7 @@ function renderScene() {
     <div class="story">${e.story.map((s, i) => i === e.prayer ? `<div class="prayer-para"><h4>${esc(t('prayerOpen'))}</h4><p data-para="${i}">${esc(s)}</p></div>` : `<p data-para="${i}">${esc(s)}</p>`).join('')}</div>
     ${e.note ? `<aside class="note"><h4>${esc(t('noteHead'))}</h4><p>${esc(e.note)}</p></aside>` : ''}
     ${e.reflect ? `<aside class="reflect"><h4>${esc(t('reflectHead'))}</h4><p>${esc(e.reflect)}</p></aside>` : ''}
+    ${e.psalm ? `<aside class="psalm-link" hidden><h4>${esc(t('psalmHead'))}</h4><button type="button"><span class="pl-play" aria-hidden="true">▶</span><b></b></button><p class="fine">${esc(t('psalmNote'))}</p></aside>` : ''}
   </section>
   ${e.song ? `<section class="pane lyrics-sec" data-pane="text" hidden>${lyricsHtml(e)}</section>` : `<section class="pane words-sec" data-pane="text" hidden>
     <h3>${esc(jesus.length ? t('hisWords') : t('voicesOfDay'))}</h3>
@@ -825,6 +827,12 @@ const PICONS = {
   q3: '<path d="M4 20V8a3 3 0 0 1 6.5 0v12Z M13.5 20V8a3 3 0 0 1 6.5 0v12Z M6 11h2.5 M6 14h2.5 M15.5 11h2.5 M15.5 14h2.5"/>',
   q4: '<path d="M2 20h20 M4 20l8-14 8 14 M12 6v14 M9 20l3-6 3 6 M12 6l2-3"/>',
   q5: '<path d="M12 3v3 M12 4c2-1 4-1 5 1"/><circle cx="9" cy="9" r="2"/><circle cx="15" cy="9" r="2"/><circle cx="12" cy="12.5" r="2"/><circle cx="9" cy="16" r="2"/><circle cx="15" cy="16" r="2"/><circle cx="12" cy="19.5" r="2"/>',
+  // 다윗: 목동의 지팡이와 물맷돌, 광야의 굴, 왕관, 눈물, 떠오르는 아침(구름 없는 아침 — 삼하 23:4)
+  v1: '<path d="M10 21V9a4 4 0 1 1 8 0v1"/><circle cx="6" cy="17" r="2.2"/>',
+  v2: '<path d="M2 20h20 M4 20c1-8 4.5-13 8-13s7 5 8 13 M9 20c0-4 1.4-6.5 3-6.5s3 2.5 3 6.5"/>',
+  v3: '<path d="M4 18h16 M4 18 3 8l5 4 4-7 4 7 5-4-1 10"/>',
+  v4: '<path d="M12 3c3 5 6 8 6 12a6 6 0 0 1-12 0c0-4 3-7 6-12Z"/>',
+  v5: '<path d="M3 17h18 M6 17a6 6 0 0 1 12 0 M12 6V3 M5 10 3 8 M19 10l2-2 M8 21h8"/>',
   // 시편: 별 아래 바다(태초와 출애굽), 수금(다윗), 금 간 집, 두 기둥의 성전, 올라가는 계단, 돌아오는 길, 길을 비추는 등불, 노래(할렐루야)
   s1: '<path d="M3 16c1.5-1.5 3-1.5 4.5 0s3 1.5 4.5 0 3-1.5 4.5 0 3 1.5 4.5 0 M3 20c1.5-1.5 3-1.5 4.5 0s3 1.5 4.5 0 3-1.5 4.5 0 3 1.5 4.5 0 M12 3l1.2 2.8 3 .3-2.3 2 .7 3L12 9.6 9.4 11.1l.7-3-2.3-2 3-.3Z"/>',
   s2: '<path d="M7 3c-3 4-2 9 1 12v5h8v-5c3-3 4-8 1-12 M6 7h12 M10 7v13 M12 7v13 M14 7v13"/>',
@@ -911,7 +919,7 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
   const stepped = i === prev + 1 && prevPlace !== null && !jump;
   const arrive = () => {
     idx = i; setHere(evAt(i), startOf(evAt(i))); window.stageHide = false;
-    renderScene(); paintScene(evAt(i)); updateMap(prev, { camera: !stepped || fitMode === 'all', jump }); updateTrack(); if (i >= 0) markVisited(EVENTS[i].id);
+    renderScene(); psalmBox(evAt(i)); paintScene(evAt(i)); updateMap(prev, { camera: !stepped || fitMode === 'all', jump }); updateTrack(); if (i >= 0) markVisited(EVENTS[i].id);
     window.__stageScene = evAt(i); // stage.js가 늦게 로드돼도 따라잡도록
     dispatchEvent(new CustomEvent('stage:scene', { detail: { ev: evAt(i) } }));
     bgmFollow(); // 읽는 중에 장면이 바뀌면 그 장면의 곡으로 겹쳐 바꾼다
@@ -1231,9 +1239,12 @@ function lyricShow(k, want, head) {
   const el = k >= 0 && $(`#scene [data-ln="${k}"]`);
   if (el) { const pane = el.closest('.pane'); if (pane?.hidden) showTab(pane.dataset.pane); scrollToEl(el); }
 }
-async function songPlay(done) {
-  const e = evAt(idx); if (!e?.song) { done && done(); return; }
-  const tk = ++song.token, ov = $('#lyricsOv'), want = songLines(e.song.lyrics);
+// sg: 틀 노래 { id: assets/psalms/<id>.json, title, lyrics } — 없으면 지금 장면의 노래(시편 여정)
+async function songPlay(done, sg) {
+  const ev = evAt(idx);
+  const e = sg || (ev?.song && { id: ev.id, title: ev.title, lyrics: ev.song.lyrics });
+  if (!e) { done && done(); return; }
+  const tk = ++song.token, ov = $('#lyricsOv'), want = songLines(e.lyrics);
   song.on = true; song.done = done; speaking = true; setListenUI();
   ov.hidden = false; requestAnimationFrame(() => ov.classList.add('on'));
   document.body.classList.add('singing'); // 지도를 어둡게 (style.css .singing)
@@ -1256,6 +1267,18 @@ async function songPlay(done) {
   song.sync = sync; a.ontimeupdate = sync;
   const tick = () => { if (tk !== song.token) return; sync(); song.raf = requestAnimationFrame(tick); };
   tick();
+}
+// 다른 여정(다윗)에서 시편 노래를 틀 때: 제목·가사는 시편 여정의 data에서 (한 번만 받는다)
+let psalmsData = null;
+const psalmSong = id => (psalmsData ||= fetch('j/psalms/data.json').then(r => r.json()).catch(() => { psalmsData = null; return null; }))
+  .then(d => { const x = d?.events.find(v => v.id === id); return x && { id, title: x.title, lyrics: x.song.lyrics, psalm: x.song.psalm }; });
+// 카드의 '이 자리에서 부른 노래': 노래가 올라가 있을 때만 보인다 (시편 여정에서 사용자가 한 편씩 만든다)
+async function psalmBox(e) {
+  const box = $('#scene .psalm-link'); if (!box || !e.psalm) return;
+  const [info, sg] = await Promise.all([songInfo(e.psalm), psalmSong(e.psalm)]);
+  if (!info?.src || !sg || evAt(idx) !== e) return;
+  $('b', box).textContent = sg.title; box.hidden = false;
+  $('button', box).onclick = () => { stopAuto(); stopSpeech(); songPlay(null, sg); };
 }
 // 노래는 R2에서 흘려 받아 처음 소리가 나기까지 몇 초 걸렸다 — 장면을 열 때(노래 앞 낭독을 읽는 동안) 미리 받아 둔다
 const songInfos = {};

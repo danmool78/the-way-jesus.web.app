@@ -783,3 +783,10 @@ body.intro-open .intro,body.intro-open .intro *{animation-play-state:running}
 .lyrics p.speaking{background:rgba(217,180,106,.16);color:#f0d79a}
 .no-3d #mode3d{display:none}
 @media (max-width:900px){.lyrics-ov{top:30%;width:92%}} /* 폰은 아래 장면 카드가 반쯤 덮으므로 보이는 지도 칸 가운데로 */
+
+/* 다윗 여정: 장면에 이어 둔 시편 노래 (app.js psalmBox) */
+.psalm-link{margin:14px 16px 4px;padding:12px 14px;border-radius:14px;border:1px solid rgba(var(--gold-deep-rgb),.35);background:rgba(var(--gold-deep-rgb),.07)}
+.psalm-link h4{margin:0 0 8px;font:600 12px var(--sans);letter-spacing:.06em;color:var(--gold-hi)}
+.psalm-link button{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;border:0;border-radius:10px;background:rgba(var(--gold-deep-rgb),.16);color:inherit;font:600 15px var(--serif);text-align:left;cursor:pointer}
+.psalm-link .pl-play{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--gold-hi);color:#1a140e;font-size:12px;flex:none}
+.psalm-link .fine{margin:8px 0 0}

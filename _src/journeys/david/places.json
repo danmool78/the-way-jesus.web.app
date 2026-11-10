@@ -1,0 +1,149 @@
+{
+ "bethlehem": {
+  "name": "베들레헴",
+  "lat": 31.705,
+  "lng": 35.2,
+  "region": "유다"
+ },
+ "gibeah": {
+  "name": "기브아 (사울의 궁)",
+  "lat": 31.823,
+  "lng": 35.231,
+  "region": "베냐민"
+ },
+ "elah": {
+  "name": "엘라 골짜기",
+  "lat": 31.69,
+  "lng": 34.96,
+  "region": "유다",
+  "approx": true
+ },
+ "ramah": {
+  "name": "라마 나욧",
+  "lat": 31.85,
+  "lng": 35.235,
+  "region": "베냐민",
+  "approx": true
+ },
+ "nob": {
+  "name": "놉",
+  "lat": 31.795,
+  "lng": 35.24,
+  "region": "베냐민",
+  "approx": true
+ },
+ "gath": {
+  "name": "가드",
+  "lat": 31.7,
+  "lng": 34.85,
+  "region": "블레셋"
+ },
+ "adullam": {
+  "name": "아둘람 굴",
+  "lat": 31.65,
+  "lng": 34.96,
+  "region": "유다",
+  "approx": true
+ },
+ "keilah": {
+  "name": "그일라",
+  "lat": 31.61,
+  "lng": 35.0,
+  "region": "유다"
+ },
+ "ziph": {
+  "name": "십 광야",
+  "lat": 31.48,
+  "lng": 35.12,
+  "region": "유다"
+ },
+ "engedi": {
+  "name": "엔게디",
+  "lat": 31.46,
+  "lng": 35.39,
+  "region": "유다"
+ },
+ "carmel": {
+  "name": "갈멜 (마온)",
+  "lat": 31.42,
+  "lng": 35.13,
+  "region": "유다"
+ },
+ "ziklag": {
+  "name": "시글락",
+  "lat": 31.39,
+  "lng": 34.69,
+  "region": "블레셋",
+  "approx": true
+ },
+ "gilboa": {
+  "name": "길보아 산",
+  "lat": 32.47,
+  "lng": 35.42,
+  "region": "이스라엘"
+ },
+ "hebron": {
+  "name": "헤브론",
+  "lat": 31.53,
+  "lng": 35.1,
+  "region": "유다"
+ },
+ "jerusalem": {
+  "name": "예루살렘 (다윗성)",
+  "lat": 31.774,
+  "lng": 35.236,
+  "region": "유다"
+ },
+ "kiriath": {
+  "name": "기럇여아림 (바알레유다)",
+  "lat": 31.805,
+  "lng": 35.1,
+  "region": "유다"
+ },
+ "saltvalley": {
+  "name": "소금 골짜기",
+  "lat": 31.0,
+  "lng": 35.3,
+  "region": "에돔 쪽",
+  "approx": true
+ },
+ "olives": {
+  "name": "감람산",
+  "lat": 31.7783,
+  "lng": 35.2445,
+  "region": "유다"
+ },
+ "bahurim": {
+  "name": "바후림",
+  "lat": 31.79,
+  "lng": 35.27,
+  "region": "베냐민",
+  "approx": true
+ },
+ "mahanaim": {
+  "name": "마하나임",
+  "lat": 32.18,
+  "lng": 35.65,
+  "region": "길르앗",
+  "approx": true
+ },
+ "ephraimwood": {
+  "name": "에브라임 숲",
+  "lat": 32.25,
+  "lng": 35.72,
+  "region": "길르앗",
+  "approx": true
+ },
+ "araunah": {
+  "name": "아라우나의 타작마당 (모리아)",
+  "lat": 31.7781,
+  "lng": 35.2354,
+  "region": "유다"
+ },
+ "gihon": {
+  "name": "기혼 샘",
+  "lat": 31.7732,
+  "lng": 35.2367,
+  "region": "유다"
+ }
+}
