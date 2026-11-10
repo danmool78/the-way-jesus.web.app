@@ -1,0 +1,463 @@
+[
+ {
+  "id": "k01",
+  "p": "r1",
+  "when": "BC 970년경",
+  "year": -970,
+  "place": "gibeon",
+  "title": "기브온의 꿈",
+  "refs": {
+   "1ki": "3:4–15"
+  },
+  "psalm": "ps127"
+ },
+ {
+  "id": "k02",
+  "p": "r1",
+  "when": "BC 969년경",
+  "year": -969,
+  "place": "jerusalem",
+  "title": "두 여인과 한 아기",
+  "refs": {
+   "1ki": "3:16–28"
+  }
+ },
+ {
+  "id": "k03",
+  "p": "r1",
+  "when": "BC 959년경",
+  "year": -959,
+  "place": "jerusalem",
+  "title": "구름이 가득한 성전",
+  "refs": {
+   "1ki": "8:1–66"
+  },
+  "psalm": "ps84"
+ },
+ {
+  "id": "k04",
+  "p": "r1",
+  "when": "BC 950년경",
+  "year": -950,
+  "place": "jerusalem",
+  "title": "스바 여왕의 방문",
+  "refs": {
+   "1ki": "10:1–13"
+  }
+ },
+ {
+  "id": "k05",
+  "p": "r1",
+  "when": "BC 935년경",
+  "year": -935,
+  "place": "olivet",
+  "title": "돌아선 마음",
+  "refs": {
+   "1ki": "11:1–13"
+  }
+ },
+ {
+  "id": "k06",
+  "p": "r1",
+  "when": "BC 932년경",
+  "year": -932,
+  "place": "jerusalem",
+  "title": "아히야의 열두 조각 옷",
+  "refs": {
+   "1ki": "11:26–40"
+  }
+ },
+ {
+  "id": "k07",
+  "p": "r2",
+  "when": "BC 931년경",
+  "year": -931,
+  "place": "shechem",
+  "title": "세겜의 거친 대답",
+  "refs": {
+   "1ki": "12:1–20"
+  }
+ },
+ {
+  "id": "k08",
+  "p": "r2",
+  "when": "BC 930년경",
+  "year": -930,
+  "place": "bethel",
+  "title": "벧엘과 단의 금송아지",
+  "refs": {
+   "1ki": "12:25–33"
+  }
+ },
+ {
+  "id": "k09",
+  "p": "r2",
+  "when": "BC 930년경",
+  "year": -930,
+  "place": "bethel",
+  "title": "유다에서 온 하나님의 사람",
+  "refs": {
+   "1ki": "13:1–32"
+  }
+ },
+ {
+  "id": "k10",
+  "p": "r2",
+  "when": "BC 926년경",
+  "year": -926,
+  "place": "shiloh",
+  "title": "변장하고 온 왕비",
+  "refs": {
+   "1ki": "14:1–18"
+  }
+ },
+ {
+  "id": "k11",
+  "p": "r2",
+  "when": "BC 925년경",
+  "year": -925,
+  "place": "jerusalem",
+  "title": "금 방패가 놋 방패로",
+  "refs": {
+   "1ki": "14:21–31"
+  },
+  "psalm": "ps89"
+ },
+ {
+  "id": "k12",
+  "p": "r3",
+  "when": "BC 870년경",
+  "year": -870,
+  "place": "samaria",
+  "title": "비가 그치리라",
+  "refs": {
+   "1ki": "16:29–17:1"
+  },
+  "psalm": "ps104"
+ },
+ {
+  "id": "k13",
+  "p": "r3",
+  "when": "BC 869년경",
+  "year": -869,
+  "place": "cherith",
+  "title": "그릿 시냇가의 까마귀",
+  "refs": {
+   "1ki": "17:2–7"
+  }
+ },
+ {
+  "id": "k14",
+  "p": "r3",
+  "when": "BC 868년경",
+  "year": -868,
+  "place": "zarephath",
+  "title": "사르밧 과부의 밀가루 통",
+  "refs": {
+   "1ki": "17:8–24"
+  }
+ },
+ {
+  "id": "k15",
+  "p": "r3",
+  "when": "BC 866년경",
+  "year": -866,
+  "place": "carmel",
+  "title": "갈멜산의 불",
+  "refs": {
+   "1ki": "18:1–40"
+  },
+  "psalm": "ps29"
+ },
+ {
+  "id": "k16",
+  "p": "r3",
+  "when": "BC 866년경",
+  "year": -866,
+  "place": "carmel",
+  "title": "손만 한 구름",
+  "refs": {
+   "1ki": "18:41–46"
+  }
+ },
+ {
+  "id": "k17",
+  "p": "r3",
+  "when": "BC 866년경",
+  "year": -866,
+  "place": "beersheba",
+  "title": "로뎀나무 아래",
+  "refs": {
+   "1ki": "19:1–8"
+  }
+ },
+ {
+  "id": "k18",
+  "p": "r3",
+  "when": "BC 866년경",
+  "year": -866,
+  "place": "horeb",
+  "title": "호렙산의 세미한 소리",
+  "refs": {
+   "1ki": "19:9–18"
+  }
+ },
+ {
+  "id": "k19",
+  "p": "r3",
+  "when": "BC 865년경",
+  "year": -865,
+  "place": "abelmeholah",
+  "title": "엘리사에게 던진 겉옷",
+  "refs": {
+   "1ki": "19:19–21"
+  }
+ },
+ {
+  "id": "k20",
+  "p": "r3",
+  "when": "BC 855년경",
+  "year": -855,
+  "place": "jezreel",
+  "title": "나봇의 포도원",
+  "refs": {
+   "1ki": "21:1–29"
+  }
+ },
+ {
+  "id": "k21",
+  "p": "r3",
+  "when": "BC 853년경",
+  "year": -853,
+  "place": "samaria",
+  "title": "미가야의 홀로 다른 예언",
+  "refs": {
+   "1ki": "22:1–40"
+  }
+ },
+ {
+  "id": "k22",
+  "p": "r3",
+  "when": "BC 850년경",
+  "year": -850,
+  "place": "jordan",
+  "title": "불수레와 회오리바람",
+  "refs": {
+   "2ki": "2:1–15"
+  }
+ },
+ {
+  "id": "k23",
+  "p": "r4",
+  "when": "BC 848년경",
+  "year": -848,
+  "place": "shunem",
+  "title": "수넴 여인의 아들",
+  "refs": {
+   "2ki": "4:8–37"
+  }
+ },
+ {
+  "id": "k24",
+  "p": "r4",
+  "when": "BC 846년경",
+  "year": -846,
+  "place": "jordan",
+  "title": "나아만의 일곱 번",
+  "refs": {
+   "2ki": "5:1–19"
+  }
+ },
+ {
+  "id": "k25",
+  "p": "r4",
+  "when": "BC 845년경",
+  "year": -845,
+  "place": "jordan",
+  "title": "떠오른 도끼",
+  "refs": {
+   "2ki": "6:1–7"
+  }
+ },
+ {
+  "id": "k26",
+  "p": "r4",
+  "when": "BC 844년경",
+  "year": -844,
+  "place": "dothan",
+  "title": "도단을 둘러싼 불말과 불병거",
+  "refs": {
+   "2ki": "6:8–23"
+  },
+  "psalm": "ps121"
+ },
+ {
+  "id": "k27",
+  "p": "r4",
+  "when": "BC 842년경",
+  "year": -842,
+  "place": "samaria",
+  "title": "성문 밖 네 나병 환자",
+  "refs": {
+   "2ki": "6:24–7:20"
+  }
+ },
+ {
+  "id": "k28",
+  "p": "r4",
+  "when": "BC 841년경",
+  "year": -841,
+  "place": "jezreel",
+  "title": "예후의 질주",
+  "refs": {
+   "2ki": "9:1–37"
+  }
+ },
+ {
+  "id": "k29",
+  "p": "r4",
+  "when": "BC 835년경",
+  "year": -835,
+  "place": "jerusalem",
+  "title": "성전에 숨긴 아이 요아스",
+  "refs": {
+   "2ki": "11:1–21"
+  }
+ },
+ {
+  "id": "k30",
+  "p": "r4",
+  "when": "BC 796년경",
+  "year": -796,
+  "place": "samaria",
+  "title": "엘리사의 마지막 화살",
+  "refs": {
+   "2ki": "13:14–21"
+  }
+ },
+ {
+  "id": "k31",
+  "p": "r5",
+  "when": "BC 722년경",
+  "year": -722,
+  "place": "samaria",
+  "title": "사마리아 함락",
+  "refs": {
+   "2ki": "17:1–23"
+  }
+ },
+ {
+  "id": "k32",
+  "p": "r6",
+  "when": "BC 715년경",
+  "year": -715,
+  "place": "jerusalem",
+  "title": "놋뱀을 부순 왕",
+  "refs": {
+   "2ki": "18:1–8"
+  }
+ },
+ {
+  "id": "k33",
+  "p": "r6",
+  "when": "BC 701년경",
+  "year": -701,
+  "place": "jerusalem",
+  "title": "랍사게의 조롱",
+  "refs": {
+   "2ki": "18:17–37"
+  }
+ },
+ {
+  "id": "k34",
+  "p": "r6",
+  "when": "BC 701년경",
+  "year": -701,
+  "place": "jerusalem",
+  "title": "성전에 펼친 편지",
+  "refs": {
+   "2ki": "19:1–34"
+  },
+  "psalm": "ps48"
+ },
+ {
+  "id": "k35",
+  "p": "r6",
+  "when": "BC 701년경",
+  "year": -701,
+  "place": "jerusalem",
+  "title": "앗수르 진영의 밤",
+  "refs": {
+   "2ki": "19:35–37"
+  },
+  "psalm": "ps46"
+ },
+ {
+  "id": "k36",
+  "p": "r6",
+  "when": "BC 700년경",
+  "year": -700,
+  "place": "jerusalem",
+  "title": "뒤로 물러간 해 그림자",
+  "refs": {
+   "2ki": "20:1–11"
+  }
+ },
+ {
+  "id": "k37",
+  "p": "r6",
+  "when": "BC 700년경",
+  "year": -700,
+  "place": "jerusalem",
+  "title": "바벨론 사신에게 보인 보물",
+  "refs": {
+   "2ki": "20:12–21"
+  }
+ },
+ {
+  "id": "k38",
+  "p": "r6",
+  "when": "BC 622년경",
+  "year": -622,
+  "place": "jerusalem",
+  "title": "성전에서 찾은 율법책",
+  "refs": {
+   "2ki": "22:1–23:3"
+  }
+ },
+ {
+  "id": "k39",
+  "p": "r6",
+  "when": "BC 609년경",
+  "year": -609,
+  "place": "megiddo",
+  "title": "므깃도의 죽음",
+  "refs": {
+   "2ki": "23:21–30"
+  }
+ },
+ {
+  "id": "k40",
+  "p": "r6",
+  "when": "BC 586년경",
+  "year": -586,
+  "place": "jerusalem",
+  "title": "불타는 성전",
+  "refs": {
+   "2ki": "25:1–21"
+  },
+  "psalm": "ps74"
+ },
+ {
+  "id": "k41",
+  "p": "r6",
+  "when": "BC 561년경",
+  "year": -561,
+  "place": "babylon",
+  "title": "바벨론 강가에서",
+  "refs": {
+   "2ki": "25:22–30"
+  },
+  "psalm": "ps137"
+ }
+]

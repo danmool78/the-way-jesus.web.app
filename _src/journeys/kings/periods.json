@@ -1,0 +1,44 @@
+[
+ {
+  "id": "r1",
+  "name": "솔로몬의 영광과 무너짐",
+  "en": "SOLOMON'S GLORY",
+  "span": "BC 970 – 931",
+  "color": "#c9a24a"
+ },
+ {
+  "id": "r2",
+  "name": "나뉜 나라",
+  "en": "THE DIVIDED KINGDOM",
+  "span": "BC 931 – 910",
+  "color": "#a0603e"
+ },
+ {
+  "id": "r3",
+  "name": "엘리야",
+  "en": "ELIJAH",
+  "span": "BC 874 – 850",
+  "color": "#c4562f"
+ },
+ {
+  "id": "r4",
+  "name": "엘리사",
+  "en": "ELISHA",
+  "span": "BC 850 – 796",
+  "color": "#4f8a6b"
+ },
+ {
+  "id": "r5",
+  "name": "북왕국의 끝",
+  "en": "THE FALL OF ISRAEL",
+  "span": "BC 752 – 722",
+  "color": "#5d6b8a"
+ },
+ {
+  "id": "r6",
+  "name": "남왕국의 끝",
+  "en": "THE FALL OF JUDAH",
+  "span": "BC 715 – 561",
+  "color": "#7a5a8a"
+ }
+]
