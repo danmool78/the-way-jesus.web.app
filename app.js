@@ -564,6 +564,12 @@ function updateMap(prevIdx, { camera = true, jump = false } = {}) {
     const a = PLACES[m.dataset.place], b = PLACES[here(e)];
     m.classList.toggle('close', !!a && !!b && a !== b && !a.jlm && !b.jlm && Math.hypot(a.lat - b.lat, a.lng - b.lng) < 0.045);
   });
+  // 지역·참고 도시 이름도 무대 바로 곁(약 6km 안)이면 무대가 서 있는 동안 감춘다 — 사마리아 무대 위에 '이 스 라 엘' 글씨가 겹쳤다(열왕기 k12)
+  const [hx, hy] = P(PLACES[here(e)]);
+  $$('.lbl.region, .lbl.refcity', map).forEach(l => {
+    const m = /translate\(([-\d.]+)[ ,]+([-\d.]+)\)/.exec(l.dataset.t || l.getAttribute('transform') || '');
+    l.classList.toggle('close', !!m && Math.hypot(+m[1] - hx, +m[2] - hy) < 60);
+  });
   $$('.route', map).forEach(r => {
     r.classList.toggle('done', +r.dataset.i <= idx);
     r.classList.toggle('last', +r.dataset.i === idx);
