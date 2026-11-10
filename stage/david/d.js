@@ -50,15 +50,15 @@ export const D = {
       'p0.0': [['msg', 'idle', { show: 1, x: -0.62, z: 0.2, look: -1 }]],
       'p0.1': [['msg', 'speak', { to: 'david' }], ['david', 'listen', { look: 1 }]],
       // 일어나 피하자
-      'p0.2': [['msg', 'idle'], ['david', 'idle', { look: -1 }]],
-      'p0.3': [['david', 'speak', { to: 'official' }]],
-      'p0.4': [['david', 'rebuke', { to: 'official' }], ['official', 'bow']],
+      'p0.3': [['msg', 'idle'], ['david', 'idle', { look: -1 }]],
+      'p0.4': [['david', 'speak', { to: 'official' }]],
+      'p0.5': [['david', 'rebuke', { to: 'official' }], ['official', 'bow']],
       // 온 집안과 함께 성을 나선다
-      'p0.5': [['david', 'idle', { x: -0.75, z: 0.22, look: 1 }], ['official', 'idle', { x: -1.0, z: 0.32, look: 1 }], ['msg', 'idle', { x: -0.55, z: 0.5, look: 1 }], ['msg', 'idle', { show: 0, delay: 2500 }],
+      'p0.6': [['david', 'idle', { x: -0.75, z: 0.22, look: 1 }], ['official', 'idle', { x: -1.0, z: 0.32, look: 1 }], ['msg', 'idle', { x: -0.55, z: 0.5, look: 1 }], ['msg', 'idle', { show: 0, delay: 2500 }],
         ['folk', null, { show: 1 }]],
       // 가드에서 온 잇대 — 돌아가라 해도
-      'p0.6': [['ittai', 'idle', { show: 1, x: -1.1, z: 0.05, look: 1 }], ['david', 'idle', { look: -1, delay: 1200 }], ['david', 'speak', { to: 'ittai', delay: 2400 }]],
-      'p0.7': [['david', 'idle'], ['ittai', 'speak', { to: 'david' }]],
+      'p0.7': [['ittai', 'idle', { show: 1, x: -1.1, z: 0.05, look: 1 }], ['david', 'idle', { look: -1, delay: 1200 }], ['david', 'speak', { to: 'ittai', delay: 2400 }]],
+      'p0.8': [['david', 'idle'], ['ittai', 'speak', { to: 'david' }]],
       // 온 땅이 소리 내어 운다
       'p1.0': [['@env', 'overcast'], ['ittai', 'idle'], ['official', 'mourn'], ['david', 'idle', { look: 0 }]],
       // 기드론 시내를 건너 광야 쪽으로
@@ -67,8 +67,10 @@ export const D = {
       // 사독과 레위 사람들이 언약궤를 메고 따라온다 — 궤를 성으로 돌려보낸다
       'p1.2': [['zadok', 'idle', { show: 1, x: -0.12, z: 0.05, look: 1 }], ['l1', 'carry-pole', { show: 1, x: -0.98, z: -0.18 }], ['l2', 'carry-pole', { show: 1, x: -0.14, z: -0.18 }], ['ark', null, { show: 1 }],
         ['ittai', 'idle', { x: -0.25, z: 0.4, look: 1 }], ['david', 'idle', { look: -1, delay: 1500 }], ['david', 'speak', { to: 'zadok', delay: 3500 }]],
-      'p1.3': [['david', 'speak', { to: 'zadok' }], ['zadok', 'listen', { look: 1 }]],
-      'p1.4': [['david', 'look-up', { look: -0.6 }], ['zadok', 'bow'],
+      // 궤를 성으로 도로 메고 가라
+      'p1.4': [['david', 'point', { look: -1 }]],
+      'p1.5': [['david', 'speak', { to: 'zadok' }], ['zadok', 'listen', { look: 1 }]],
+      'p1.6': [['david', 'look-up', { look: -0.6 }], ['zadok', 'bow'],
         ['l2', 'carry-pole', { x: -1.15, z: -0.22, delay: 1500 }], ['l1', 'carry-pole', { x: -1.99, z: -0.22, delay: 1500 }], ['l1', 'carry-pole', { show: 0, delay: 4500 }], ['l2', 'carry-pole', { show: 0, delay: 4500 }], ['ark', null, { show: 0, delay: 4500 }],
         ['zadok', 'idle', { x: -0.9, z: 0.0, delay: 2500 }], ['zadok', 'idle', { show: 0, delay: 5500 }]],
       // 머리를 가리고 맨발로, 울면서 감람산을 오른다
@@ -77,10 +79,10 @@ export const D = {
       'p2.1': [['official', 'mourn', { x: 0.45, z: 0.15, look: 1 }], ['ittai', 'idle', { x: 0.1, z: 0.35, look: 1 }], ['folk', null, { x: -0.25, z: -0.3 }], ['davidH', 'mourn', { x: 0.88, z: -0.18 }]],
       // 아히도벨마저 — 왕이 기도한다
       'p2.2': [['official', 'speak', { to: 'davidH' }], ['davidH', 'idle', { look: -0.8 }]],
-      'p2.3': [['official', 'idle', { look: 1 }], ['davidH', 'pray', { look: 0.3 }]],
+      'p2.4': [['official', 'idle', { look: 1 }], ['davidH', 'pray', { look: 0.3 }]],
       // 산마루에서 옷을 찢고 흙을 뒤집어쓴 후새가 맞는다
-      'p2.4': [['davidH', 'idle', { look: 1 }], ['hushai', 'idle', { show: 1, x: 1.4, z: -0.42, look: -1 }], ['hushai', 'idle', { x: 1.18, z: -0.3, look: -1, delay: 600 }], ['hushai', 'mourn', { delay: 3200 }]],
-      'p2.5': [['hushai', 'idle', { x: 1.18, z: -0.3, look: -1 }], ['davidH', 'idle', { look: 1 }]],
+      'p2.6': [['davidH', 'idle', { look: 1 }], ['hushai', 'idle', { show: 1, x: 1.4, z: -0.42, look: -1 }], ['hushai', 'idle', { x: 1.18, z: -0.3, look: -1, delay: 600 }], ['hushai', 'mourn', { delay: 3200 }]],
+      'p2.7': [['hushai', 'idle', { x: 1.18, z: -0.3, look: -1 }], ['davidH', 'idle', { look: 1 }]],
       w0: [['davidH', 'speak', { show: 1, to: 'hushai' }]],
       w1: [['davidH', 'pray', { show: 1 }]],
       w2: [['ittai', 'speak', { show: 1, to: 'davidH' }]],
@@ -137,14 +139,14 @@ export const D = {
       'p1.5': [['david', 'speak', { to: 'abishai' }]],
       'p1.6': [['david', 'mourn']],
       'p1.7': [['david', 'speak', { to: 'abishai' }], ['abishai', 'idle', { item: null, x: 0.05, z: 0.12, look: -1, delay: 1500 }]],
-      'p2.0': [['david', 'look-up', { look: 0.3 }]],
+      'p2.1': [['david', 'look-up', { look: 0.3 }]],
       // 다시 길을 걷는다 — 시므이는 맞은편 비탈을 나란히 따라오며 돌을 던진다
-      'p2.1': [['david', 'idle', { x: 0.75, z: 0.32, look: 1 }], ['abishai', 'idle', { x: 1.05, z: 0.14, look: 1 }], ['joab', 'idle', { x: 0.45, z: 0.1, look: 1 }],
+      'p2.2': [['david', 'idle', { x: 0.75, z: 0.32, look: 1 }], ['abishai', 'idle', { x: 1.05, z: 0.14, look: 1 }], ['joab', 'idle', { x: 0.45, z: 0.1, look: 1 }],
         ['g1', 'idle', { x: 1.1, z: 0.48 }], ['g2', 'idle', { x: 0.42, z: 0.5 }], ['folk', null, { x: -0.05, z: 0.0 }],
         ['shimei', 'idle', { x: 1.35, z: -0.32, look: -1 }], ['throw', 'idle', { x: 1.35, z: -0.32 }]],
-      'p2.2': [['shimei', 'hurl', { look: -1 }], ['throw', 'throw'], ['shimei', 'rebuke', { delay: 3000 }]],
+      'p2.3': [['shimei', 'hurl', { look: -1 }], ['throw', 'throw'], ['shimei', 'rebuke', { delay: 3000 }]],
       // 지칠 대로 지쳐 쉴 곳에 이르러 숨을 돌린다
-      'p2.3': [['@env', 'dusk'], ['throw', 'idle', { show: 0 }], ['shimei', 'idle', { show: 0 }], ['david', 'sit-ground', { look: -0.4 }], ['joab', 'sit-ground'], ['g2', 'sit-ground'],
+      'p2.5': [['@env', 'dusk'], ['throw', 'idle', { show: 0 }], ['shimei', 'idle', { show: 0 }], ['david', 'sit-ground', { look: -0.4 }], ['joab', 'sit-ground'], ['g2', 'sit-ground'],
         ['abishai', 'idle', { look: -1 }]],
       w0: [['david', 'speak', { show: 1, to: 'abishai' }]],
       w1: [['david', 'speak', { show: 1 }]],
@@ -190,12 +192,13 @@ export const D = {
       'p0.0': [['david', 'idle', { x: -0.15, z: -0.02, look: 1 }], ['joab', 'idle', { x: -0.45, z: -0.12, look: 1, delay: 500 }], ['folk', null, { x: -0.75, z: -0.25 }]],
       // 압살롬도 온 이스라엘을 이끌고 건너온다
       'p0.1': [['absalom', 'idle', { show: 1, x: -1.3, z: 0.02, look: 1 }], ['amasa', 'idle', { show: 1, x: -1.58, z: -0.12, look: 1, delay: 600 }]],
-      'p0.2': [['absalom', 'speak', { to: 'amasa' }], ['amasa', 'bow', { look: 1 }]],
-      'p0.3': [['absalom', 'idle', { look: 1 }], ['amasa', 'idle', { look: 1 }]],
-      'p0.4': [['camp', null, { show: 1 }]],
+      // 아마사를 군대 장관으로 세우고 길르앗 땅에 진을 친다
+      'p0.2': [['absalom', 'speak', { to: 'amasa' }], ['amasa', 'bow', { look: 1 }], ['absalom', 'idle', { look: 1, delay: 3200 }], ['amasa', 'idle', { look: 1, delay: 3200 }], ['camp', null, { show: 1, delay: 3600 }]],
       // 아버지와 아들의 군대가 서로를 노려본다
-      'p0.5': [['david', 'idle', { look: -1 }], ['joab', 'idle', { look: -1 }], ['absalom', 'idle', { look: 1 }]],
-      // 사람들이 짐을 싣고 찾아온다
+      'p0.3': [['david', 'idle', { look: -1 }], ['joab', 'idle', { look: -1 }], ['absalom', 'idle', { look: 1 }]],
+      // 지치고 굶주린 왕의 사람들 — 진은 물러난다
+      'p0.4': [['absalom', 'idle', { show: 0 }], ['amasa', 'idle', { show: 0 }], ['camp', null, { show: 0 }], ['david', 'idle', { look: -0.2 }], ['joab', 'idle', { look: -0.6 }]],
+      // 짐 실은 나귀들이 성문으로 들어선다
       'p1.0': [['absalom', 'idle', { show: 0 }], ['amasa', 'idle', { show: 0 }], ['camp', null, { show: 0 }], ['david', 'idle', { look: 1 }], ['joab', 'idle', { look: 1 }],
         ['d1', null, { show: 1, x: 1.5, z: 0.28 }], ['d2', null, { show: 1, x: 1.72, z: 0.02 }],
         ['shobi', 'idle', { show: 1, x: 0.45, z: 0.0, look: -1 }], ['machir', 'idle', { show: 1, x: 0.6, z: 0.25, look: -1, delay: 500 }], ['barzillai', 'idle', { show: 1, x: 0.85, z: -0.12, look: -1, delay: 900 }]],
@@ -253,16 +256,16 @@ export const D = {
         ['soldier', 'idle', { show: 0 }], ['y1', 'idle', { show: 0 }], ['y2', 'idle', { show: 0 }], ['absalom', 'ride', { show: 0 }], ['mule', null, { x: 1.2, z: 0.4 }],
         ['light', null, { show: 1 }], ['cairn', null, { show: 0 }], ['joab', 'idle', { x: -0.5, z: 0.25, look: 0.6 }]],
       intro: [['@env', 'day'], ['oak', null, { show: 0 }], ['t1', null, { show: 0 }], ['t2', null, { show: 0 }], ['t3', null, { show: 0 }], ['t4', null, { show: 0 }], ['t5', null, { show: 0 }],
-        ['mule', null, { show: 0 }], ['absalom', 'ride', { show: 0 }], ['light', null, { show: 0 }], ['cairn', null, { show: 0 }], ['soldier', 'idle', { show: 0 }], ['y1', 'idle', { show: 0 }], ['y2', 'idle', { show: 0 }]],
+        ['mule', null, { show: 0 }], ['absalom', 'ride', { show: 0 }], ['light', null, { show: 0 }], ['cairn', null, { show: 0 }], ['soldier', 'idle', { show: 0 }], ['y1', 'idle', { show: 0 }], ['y2', 'idle', { show: 0 }],
+        ['army', null, { show: 0 }]],
       // 마하나임 성문 곁 — 군사를 셋으로 나눈다
-      'p0.0': [['david', 'idle', { look: 1 }]],
-      'p0.1': [['david', 'speak', { to: 'joab' }], ['joab', 'bow', { delay: 1500 }], ['abishai', 'bow', { delay: 2500 }], ['ittai', 'bow', { delay: 3500 }]],
+      'p0.0': [['david', 'speak', { to: 'joab' }], ['joab', 'bow', { delay: 1500 }], ['abishai', 'bow', { delay: 2500 }], ['ittai', 'bow', { delay: 3500 }]],
       // 왕은 성에 계시라고 백성이 막는다
-      'p0.2': [['joab', 'idle'], ['abishai', 'idle'], ['ittai', 'idle'], ['david', 'idle', { x: -0.3, z: 0.0, look: 1 }]],
-      'p0.3': [['joab', 'speak', { to: 'david' }], ['david', 'listen']],
+      'p0.1': [['joab', 'idle'], ['abishai', 'idle'], ['ittai', 'idle'], ['david', 'idle', { x: -0.3, z: 0.0, look: 1 }]],
+      'p0.2': [['joab', 'speak', { to: 'david' }], ['david', 'listen']],
       // 군대가 성문을 빠져나가고 — 왕이 모두가 듣도록 당부한다
-      'p0.4': [['joab', 'idle'], ['david', 'idle', { x: -0.55, z: -0.18, look: 1 }], ['army', null, { x: 1.2, z: 0.4 }], ['army', null, { show: 0, delay: 5000 }]],
-      'p0.5': [['david', 'speak', { to: 'joab' }]],
+      'p0.3': [['joab', 'idle'], ['david', 'idle', { x: -0.55, z: -0.18, look: 1 }], ['army', null, { show: 1, x: -0.2, z: -0.5 }], ['army', null, { x: 1.4, z: -0.05, delay: 400 }], ['army', null, { show: 0, delay: 5000 }]],
+      'p0.4': [['david', 'speak', { to: 'joab' }]],
       // 에브라임 숲 — 성문이 숲으로 바뀐다
       'p1.0': [['@env', 'overcast'], ['gate', null, { show: 0 }], ['army', null, { show: 0 }], ['david', 'idle', { show: 0 }], ['abishai', 'idle', { show: 0 }], ['ittai', 'idle', { show: 0 }],
         ['oak', null, { show: 1 }], ['t1', null, { show: 1 }], ['t2', null, { show: 1 }], ['t3', null, { show: 1 }], ['t4', null, { show: 1 }], ['t5', null, { show: 1 }],
@@ -275,14 +278,19 @@ export const D = {
       'p1.4': [['mule', null, { x: 0.62, z: -0.24 }], ['absalom', 'ride', { show: 0 }], ['mule', null, { x: 1.2, z: 0.4, delay: 800 }], ['light', null, { show: 1, delay: 1500 }]],
       // 본 사람이 요압에게 알린다
       'p2.0': [['absalom', 'ride', { show: 0 }], ['mule', null, { x: 1.2, z: 0.4 }], ['light', null, { show: 1 }], ['soldier', 'idle', { show: 1, x: -0.55, z: 0.3, look: -1 }]],
-      'p2.1': [['soldier', 'speak', { to: 'joab' }]],
-      'p2.2': [['soldier', 'idle'], ['joab', 'rebuke', { to: 'soldier' }]],
+      // 왜 치지 않았느냐는 요압의 다그침 — 군사의 대답
+      'p2.1': [['joab', 'rebuke', { to: 'soldier' }], ['soldier', 'idle', { delay: 2500 }]],
+      'p2.2': [['joab', 'idle'], ['soldier', 'speak', { to: 'joab' }]],
+      // 요압은 더 듣지 않는다
+      'p2.3': [['soldier', 'idle'], ['joab', 'idle', { look: 2.8 }]],
       // 요압이 그리로 간다 — 그 뒤는 어둠으로만
-      'p2.3': [['joab', 'idle', { x: 0.3, z: -0.05, look: 2.8 }], ['@env', 'dark', { delay: 2500 }], ['soldier', 'mourn', { delay: 1500 }]],
-      'p2.4': [['y1', 'idle', { x: 0.1, z: 0.0, look: 2.6 }], ['y2', 'idle', { x: 0.75, z: 0.05, look: 3.2 }]],
-      // 나팔을 불어 추격을 멈추고, 숲속 구덩이 위에 큰 돌무더기
+      'p2.4': [['joab', 'idle', { x: 0.3, z: -0.05, look: 2.8 }], ['@env', 'dark', { delay: 2500 }], ['soldier', 'mourn', { delay: 1500 }],
+        ['y1', 'idle', { x: 0.1, z: 0.0, look: 2.6, delay: 1500 }], ['y2', 'idle', { x: 0.75, z: 0.05, look: 3.2, delay: 1500 }]],
+      // 나팔을 불어 싸움을 멈춘다
       'p2.5': [['@env', 'overcast'], ['light', null, { show: 0 }], ['joab', 'idle', { x: -0.3, z: 0.15, look: 0.6, item: 'horn' }], ['y1', 'idle', { x: 0.25, z: 0.1, look: 0 }], ['y2', 'idle', { x: 0.9, z: 0.15, look: -0.4 }],
-        ['mule', null, { show: 0 }], ['cairn', null, { show: 1, delay: 2500 }], ['soldier', 'idle', { delay: 1000 }]],
+        ['mule', null, { show: 0 }], ['soldier', 'idle', { delay: 1000 }]],
+      // 숲속 구덩이 위에 큰 돌무더기
+      'p2.6': [['cairn', null, { show: 1, delay: 800 }], ['joab', 'idle', { look: 0.3, item: null, delay: 600 }]],
       w0: [['david', 'speak', { show: 1, to: 'joab' }]],
       w1: [['joab', 'speak', { show: 1 }]],
       w2: [['soldier', 'speak', { show: 1, to: 'joab' }]],
@@ -321,17 +329,17 @@ export const D = {
       'p0.2': [['ahimaaz', 'idle'], ['joab', 'speak', { to: 'cushite' }], ['cushite', 'bow', { delay: 2200 }], ['cushite', 'idle', { x: 0.2, z: 0.35, delay: 3200 }], ['cushite', 'idle', { show: 0, delay: 4600 }]],
       'p0.3': [['joab', 'idle', { look: -1 }], ['cushite', 'idle', { show: 0 }]],
       // 끝내 허락을 받아 요단 들길로 내달린다 — 먼저 떠난 구스 사람을 앞질러
-      'p0.4': [['ahimaaz', 'speak', { to: 'joab' }], ['joab', 'speak', { to: 'ahimaaz', delay: 2000 }], ['ahimaaz', 'idle', { x: 0.1, z: 0.25, delay: 3600 }], ['ahimaaz', 'idle', { show: 0, delay: 4800 }]],
-      'p0.5': [['joab', 'idle', { look: -1 }], ['ahimaaz', 'idle', { show: 0 }]],
+      'p0.4': [['ahimaaz', 'speak', { to: 'joab' }], ['joab', 'speak', { to: 'ahimaaz', delay: 2000 }]],
+      'p0.5': [['joab', 'idle', { look: -1 }], ['ahimaaz', 'idle', { x: 0.1, z: 0.25 }], ['ahimaaz', 'idle', { show: 0, delay: 1400 }]],
       // 두 성문 사이에 앉은 왕 — 성벽 위의 파수꾼
       'p1.0': [['joab', 'idle', { show: 0 }], ['david', 'sit', { show: 1, look: 0.6 }], ['watch', 'idle', { show: 1, look: 1 }],
         ['ahimaaz', 'idle', { x: 1.95, z: 0.2, look: -1 }], ['cushite', 'idle', { x: 1.95, z: 0.35, look: -1 }]],
       'p1.1': [['watch', 'speak', { to: 'david' }]],
       'p1.2': [['watch', 'point', { look: 1 }], ['ahimaaz', 'idle', { show: 1, x: 0.9, z: 0.2, look: -1 }]],
       'p1.3': [['cushite', 'idle', { show: 1, x: 1.6, z: 0.35, look: -1 }]],
-      'p1.4': [['watch', 'speak', { to: 'david' }], ['ahimaaz', 'idle', { x: -0.4, z: 0.08, look: -1 }], ['cushite', 'idle', { x: 1.0, z: 0.35, look: -1 }]],
+      'p1.4': [['watch', 'speak', { to: 'david' }], ['ahimaaz', 'idle', { x: -0.25, z: 0.14, look: -1 }], ['cushite', 'idle', { x: 1.0, z: 0.35, look: -1 }]],
       // 엎드려 승리를 알린다 — 왕이 물은 것은 하나
-      'p1.5': [['watch', 'idle', { look: 1 }], ['ahimaaz', 'kneel', { x: -0.4, z: 0.08, look: -1 }], ['ahimaaz', 'speak', { to: 'david', delay: 2400 }]],
+      'p1.5': [['watch', 'idle', { look: 1 }], ['ahimaaz', 'kneel', { x: -0.25, z: 0.14, look: -1 }], ['ahimaaz', 'speak', { to: 'david', delay: 2400 }]],
       'p1.6': [['ahimaaz', 'kneel'], ['david', 'sit-speak', { to: 'ahimaaz' }]],
       'p1.7': [['david', 'sit'], ['ahimaaz', 'shrug', { look: -1 }]],
       // 뒤이어 온 구스 사람
@@ -384,20 +392,20 @@ export const D = {
     },
     beats: {
       enter: [['@env', 'dusk'], ['beam', null, { show: 1 }], ['altar', 'fire'], ['joab', 'idle', { show: 0 }], ['gad', 'idle', { show: 0 }], ['m1', 'idle', { show: 0 }], ['m2', 'idle', { show: 0 }], ['m3', 'idle', { show: 0 }],
-        ['david', 'pray', { x: 0.05, z: 0.25, look: 1 }], ['elder', 'kneel', { x: -0.35, z: 0.35, look: 1 }], ['araunah', 'bow', { x: 0.55, z: 0.3, look: -1 }]],
+        ['david', 'pray', { x: 0.05, z: 0.25, look: 1 }], ['elder', 'kneel', { x: -0.35, z: 0.35, look: 1 }], ['araunah', 'bow', { x: 0.72, z: 0.32, look: -1 }]],
       intro: [['@env', 'day'], ['beam', null, { show: 0 }], ['altar', 'idle', { show: 0 }], ['gad', 'idle', { show: 0 }], ['elder', 'idle', { show: 0 }], ['araunah', 'idle', { show: 0 }],
         ['m1', 'idle', { show: 0 }], ['m2', 'idle', { show: 0 }], ['m3', 'idle', { show: 0 }]],
       // 백성을 세라
       'p0.0': [['david', 'speak', { to: 'joab' }]],
-      'p0.1': [['david', 'idle'], ['joab', 'idle', { look: -1 }]],
-      'p0.2': [['joab', 'speak', { to: 'david' }]],
-      'p0.3': [['joab', 'idle'], ['david', 'point', { look: 1 }], ['joab', 'bow', { delay: 1500 }], ['joab', 'idle', { x: 1.9, z: 0.35, delay: 2600 }], ['joab', 'idle', { show: 0, delay: 6000 }]],
+      'p0.2': [['david', 'idle'], ['joab', 'idle', { look: -1 }]],
+      'p0.3': [['joab', 'speak', { to: 'david' }]],
+      'p0.4': [['joab', 'idle'], ['david', 'point', { look: 1 }], ['joab', 'bow', { delay: 1500 }], ['joab', 'idle', { x: 1.9, z: 0.35, delay: 2600 }], ['joab', 'idle', { show: 0, delay: 6000 }]],
       // 아홉 달 이십 일 만에 — 두루마리의 숫자
-      'p0.4': [['david', 'idle', { look: 1 }], ['joab', 'idle', { show: 1, item: 'scroll', x: 0.2, z: 0.2, look: -1 }]],
-      'p0.5': [['joab', 'speak', { to: 'david' }]],
+      'p0.5': [['david', 'idle', { look: 1 }], ['joab', 'idle', { show: 1, item: 'scroll', x: 0.2, z: 0.2, look: -1 }]],
+      'p0.6': [['joab', 'speak', { to: 'david' }]],
       // 다윗의 가슴이 찔린다
-      'p0.6': [['joab', 'idle', { item: null }], ['david', 'mourn']],
-      'p0.7': [['david', 'pray', { look: 0.3 }], ['joab', 'idle', { x: 1.9, z: 0.4, delay: 1500 }], ['joab', 'idle', { show: 0, delay: 4500 }]],
+      'p0.7': [['joab', 'idle', { item: null }], ['david', 'mourn']],
+      'p0.8': [['david', 'pray', { look: 0.3 }], ['joab', 'idle', { x: 1.9, z: 0.4, delay: 1500 }], ['joab', 'idle', { show: 0, delay: 4500 }]],
       // 이튿날 아침 선견자 갓
       'p1.0': [['@env', 'dawn'], ['joab', 'idle', { show: 0 }], ['david', 'idle', { look: 1 }], ['gad', 'idle', { show: 1, x: 0.05, z: 0.22, look: -1 }]],
       'p1.1': [['gad', 'speak', { to: 'david' }]],
@@ -414,7 +422,7 @@ export const D = {
       'p2.2': [['david', 'pray', { look: 1 }]],
       // 갓의 말대로 올라가자 아라우나가 엎드려 바치겠다고 한다
       'p2.3': [['elder', 'idle'], ['david', 'idle', { x: 0.05, z: 0.25, look: 1 }], ['elder', 'idle', { x: -0.35, z: 0.35, look: 1, delay: 800 }],
-        ['araunah', 'idle', { x: 0.55, z: 0.3, look: -1, delay: 1500 }], ['araunah', 'bow', { delay: 3500 }], ['araunah', 'speak', { to: 'david', delay: 5500 }]],
+        ['araunah', 'idle', { x: 0.72, z: 0.32, look: -1, delay: 1500 }], ['araunah', 'bow', { delay: 3500 }], ['araunah', 'speak', { to: 'david', delay: 5500 }]],
       'p2.4': [['araunah', 'idle'], ['david', 'speak', { to: 'araunah' }]],
       'p2.5': [['david', 'speak', { to: 'araunah' }]],
       // 은 오십 세겔 — 제단을 쌓자 재앙이 그친다
@@ -455,48 +463,46 @@ export const D = {
       zadok: ['zadok', 0.9, -0.18, -1],
       benaiah: ['benaiah', 1.15, 0.2, -1],
       horn: ['israelite', 1.3, -0.42, -0.6, { gaze: false }],
-      fan1: ['man', 0.05, -0.32, 0.6, { gaze: false }],
     },
     beats: {
       enter: [['spring', 'flow'], ['adonijah', 'idle', { show: 0 }], ['joab', 'idle', { show: 0 }], ['abiathar', 'idle', { show: 0 }], ['feast', null, { show: 0 }],
-        ['mule', null, { x: 0.05, z: -0.6 }], ['solomon', 'ride', { show: 0 }], ['solomon', 'kneel', { show: 1, board: null, x: 0.62, z: -0.1, look: 1 }],
+        ['mule', null, { show: 0 }], ['solomon', 'ride', { show: 0 }], ['solomon', 'kneel', { show: 1, board: null, x: 0.62, z: -0.1, look: 1 }],
         ['zadok', 'anoint', { item: 'oilhorn', look: -1 }], ['nathan', 'idle', { x: 0.25, z: 0.22, look: 1 }], ['benaiah', 'raise'], ['horn', 'idle', { item: 'horn' }],
-        ['fan1', 'raise'], ['bathsheba', 'idle', { x: -0.65, z: 0.2, look: -1 }]],
+        ['bathsheba', 'idle', { x: -0.65, z: 0.2, look: -1 }]],
       intro: [['@env', 'day'], ['spring', 'flow'], ['adonijah', 'idle', { show: 0 }], ['joab', 'idle', { show: 0 }], ['abiathar', 'idle', { show: 0 }], ['feast', null, { show: 0 }],
         ['bathsheba', 'idle', { show: 0 }], ['nathan', 'idle', { show: 0 }], ['mule', null, { show: 0 }], ['solomon', 'ride', { show: 0, board: 'mule', x: 0, z: 0, look: Math.PI }], ['zadok', 'idle', { show: 0, item: null }],
-        ['benaiah', 'idle', { show: 0 }], ['horn', 'idle', { show: 0, item: 'horn' }], ['fan1', 'idle', { show: 0 }]],
+        ['benaiah', 'idle', { show: 0 }], ['horn', 'idle', { show: 0, item: 'horn' }]],
       // 늙은 왕 — 수넴 여자 아비삭이 곁에서
       'p0.1': [['abishag', 'idle', { x: -1.42, z: -0.05, look: 1 }]],
       // 아도니야가 나선다 — 내가 왕이 되리라
       'p0.2': [['adonijah', 'idle', { show: 1, look: -0.3 }]],
       'p0.3': [['adonijah', 'raise', { look: -0.2 }]],
-      'p0.5': [['adonijah', 'idle'], ['joab', 'idle', { show: 1, look: -1 }], ['abiathar', 'idle', { show: 1, look: 0.6, delay: 800 }]],
+      'p0.4': [['adonijah', 'idle'], ['joab', 'idle', { show: 1, look: -1 }], ['abiathar', 'idle', { show: 1, look: 0.6, delay: 800 }]],
       // 엔로겔 곁의 잔치
-      'p0.6': [['feast', null, { show: 1 }], ['adonijah', 'sit-speak', { to: 'joab' }], ['joab', 'sit-ground'], ['abiathar', 'sit-ground']],
+      'p0.5': [['feast', null, { show: 1 }], ['adonijah', 'sit-speak', { to: 'joab' }], ['joab', 'sit-ground'], ['abiathar', 'sit-ground']],
       // 나단이 밧세바를 찾아간다
       'p1.0': [['adonijah', 'sit'], ['bathsheba', 'idle', { show: 1, look: 1 }], ['nathan', 'idle', { show: 1, x: 0.05, z: 0.25, look: -1 }]],
       'p1.1': [['nathan', 'speak', { to: 'bathsheba' }]],
       // 왕의 방에 들어가 엎드린다
       'p1.2': [['nathan', 'idle'], ['bathsheba', 'idle', { x: -0.68, z: -0.18, look: -1 }], ['bathsheba', 'kneel', { delay: 2600 }]],
       'p1.3': [['bathsheba', 'speak', { to: 'david' }], ['david', 'sit', { look: 0.7 }]],
-      'p1.4': [['bathsheba', 'kneel']],
-      'p1.5': [['bathsheba', 'idle', { x: -0.62, z: 0.25, look: -1 }], ['nathan', 'idle', { x: -0.68, z: -0.15, look: -1 }], ['nathan', 'bow', { delay: 2400 }], ['nathan', 'speak', { to: 'david', delay: 3600 }]],
+      'p1.4': [['bathsheba', 'idle', { x: -0.62, z: 0.25, look: -1 }], ['nathan', 'idle', { x: -0.68, z: -0.15, look: -1 }], ['nathan', 'bow', { delay: 2400 }], ['nathan', 'speak', { to: 'david', delay: 3600 }]],
       // 늙은 왕이 입을 연다 — 오늘 그 맹세대로
-      'p1.6': [['nathan', 'idle'], ['david', 'sit-speak', { to: 'nathan' }]],
-      'p1.7': [['david', 'sit-speak', { to: 'bathsheba' }], ['bathsheba', 'bow']],
+      'p1.5': [['nathan', 'idle'], ['david', 'sit-speak', { to: 'nathan' }]],
+      'p1.6': [['david', 'sit-speak', { to: 'bathsheba' }], ['bathsheba', 'bow']],
       // 다윗의 노새에 오른 솔로몬이 기혼 샘으로
       'p2.0': [['david', 'sit', { look: 0.8 }], ['bathsheba', 'idle', { look: 1 }], ['nathan', 'idle', { x: 0.25, z: 0.22, look: 1 }],
         ['mule', null, { show: 1, x: 0.4, z: 0.06 }], ['solomon', 'ride', { show: 1 }], ['benaiah', 'idle', { show: 1, look: -1 }], ['zadok', 'idle', { show: 1, look: -1 }]],
       // 사독이 기름 뿔을 들어 붓는다
-      'p2.1': [['mule', null, { x: 0.4, z: 0.06 }], ['solomon', 'kneel', { board: null, x: 0.62, z: -0.1, look: 1 }], ['mule', null, { x: 0.05, z: -0.6, delay: 1500 }], ['zadok', 'anoint', { item: 'oilhorn', look: -1, delay: 800 }]],
+      'p2.1': [['mule', null, { x: 0.4, z: 0.06 }], ['solomon', 'kneel', { board: null, x: 0.62, z: -0.1, look: 1 }], ['mule', null, { x: -0.1, z: -0.8, delay: 1500 }], ['mule', null, { show: 0, delay: 3800 }], ['zadok', 'anoint', { item: 'oilhorn', look: -1, delay: 800 }]],
       // 나팔이 울리고 — 솔로몬 왕 만세
-      'p2.2': [['zadok', 'idle', { item: null }], ['horn', 'idle', { show: 1, item: 'horn' }], ['fan1', 'raise', { show: 1 }]],
+      'p2.2': [['zadok', 'idle', { item: null }], ['horn', 'idle', { show: 1, item: 'horn' }]],
       'p2.3': [['solomon', 'idle', { look: 0.2 }], ['benaiah', 'raise'], ['nathan', 'raise'], ['zadok', 'raise']],
       // 함성에 아도니야의 손님들이 흩어진다
       'p2.4': [['adonijah', 'afraid', { look: -1 }], ['joab', 'idle', { x: 2.3, z: 0.6 }], ['abiathar', 'idle', { x: 2.2, z: 0.8 }], ['adonijah', 'idle', { x: 2.3, z: 0.3, delay: 1200 }],
         ['joab', 'idle', { show: 0, delay: 2600 }], ['abiathar', 'idle', { show: 0, delay: 2600 }], ['adonijah', 'idle', { show: 0, delay: 3800 }]],
       // 왕은 침상에서 몸을 굽힌다
-      'p2.5': [['benaiah', 'idle'], ['nathan', 'idle'], ['zadok', 'idle'], ['fan1', 'idle'], ['david', 'sit', { look: 0.3 }], ['abishag', 'kneel']],
+      'p2.5': [['benaiah', 'idle'], ['nathan', 'idle'], ['zadok', 'idle'], ['david', 'sit', { look: 0.3 }], ['abishag', 'kneel']],
       'p2.6': [['david', 'sit-speak', { to: 'abishag' }]],
       w0: [['david', 'sit-speak', { show: 1, to: 'bathsheba' }], ['bathsheba', 'idle', { show: 1 }]],
       w1: [['david', 'sit-speak', { show: 1 }]],
@@ -542,8 +548,8 @@ export const D = {
       'p0.2': [['david', 'idle', { look: -0.6 }], ['mason', 'idle', { show: 1 }], ['stone', null, { show: 1 }], ['bronze', null, { show: 1, delay: 2500 }]],
       // 시돈과 두로 사람들이 백향목을
       'p0.3': [['sidon', 'idle', { show: 1, x: 1.7, z: 0.4, look: -1 }], ['cedar', null, { show: 1, delay: 1200 }], ['david', 'idle', { look: 1 }]],
-      'p0.4': [['david', 'idle', { look: -0.3 }]],
-      'p0.5': [['david', 'look-up', { look: 0.4 }]],
+      'p0.5': [['david', 'idle', { look: -0.3 }]],
+      'p0.6': [['david', 'look-up', { look: 0.4 }]],
       // 솔로몬을 부른다
       'p1.0': [['sidon', 'idle', { show: 0 }], ['solomon', 'idle', { show: 1, x: -0.2, z: 0.15, look: 1 }], ['david', 'idle', { look: -1 }]],
       'p1.1': [['david', 'speak', { to: 'solomon' }]],
@@ -556,7 +562,7 @@ export const D = {
       'p1.6': [['solomon', 'idle', { item: 'scroll' }], ['david', 'bless', { to: 'solomon', look: -1 }]],
       // 금과 은을 내놓는다 — 지도자들도 기꺼이
       'p2.0': [['david', 'idle', { look: -0.4 }], ['gold', null, { show: 1 }]],
-      'p2.1': [['l1', 'idle', { item: 'gift', x: -0.4, z: 0.42, look: 1 }], ['l2', 'idle', { item: 'gift', x: -0.6, z: 0.25, look: 1, delay: 700 }], ['l1', 'bow', { delay: 2600 }], ['l2', 'bow', { delay: 3300 }],
+      'p2.1': [['l1', 'idle', { item: 'gift', x: -0.5, z: 0.5, look: 1 }], ['l2', 'idle', { item: 'gift', x: -0.85, z: 0.3, look: 1, delay: 700 }], ['l1', 'bow', { delay: 2600 }], ['l2', 'bow', { delay: 3300 }],
         ['l1', 'raise', { item: null, delay: 4800 }], ['l2', 'raise', { item: null, delay: 5200 }], ['l3', 'raise', { delay: 5200 }]],
       // 온 회중 앞에서 찬양한다
       'p2.2': [['l1', 'idle'], ['l2', 'idle'], ['l3', 'idle'], ['david', 'raise', { look: 0 }]],
@@ -592,20 +598,22 @@ export const D = {
       enter: [['sun', 'rise'], ['beam', null, { show: 0 }], ['david', 'play', { item: 'lyre', look: 0.7 }], ['solomon', 'idle', { show: 0 }]],
       intro: [['@env', 'dawn'], ['sun', 'low'], ['grass', null, { show: 0 }], ['beam', null, { show: 0 }], ['solomon', 'idle', { show: 0 }], ['david', 'idle', { look: 0.7 }]],
       // 이스라엘의 노래하는 사람 — 수금을 든다
-      'p0.0': [['david', 'play', { item: 'lyre', look: 0.7 }]],
-      'p0.1': [['david', 'play', { look: 0.4 }]],
-      'p0.2': [['david', 'look-up', { item: null, look: 0.6 }]],
+      'p0.1': [['david', 'play', { item: 'lyre', look: 0.7 }]],
+      'p0.2': [['david', 'play', { look: 0.4 }]],
+      'p0.3': [['david', 'look-up', { item: null, look: 0.6 }]],
       // 구름 없는 아침에 떠오르는 햇살 — 비 온 뒤 땅에서 돋는 새 풀
-      'p0.3': [['sun', 'rise'], ['grass', null, { show: 1, delay: 2500 }], ['david', 'idle', { look: 0.9 }]],
-      'p1.0': [['david', 'raise', { look: 0.6 }]],
-      'p1.1': [['david', 'pray', { look: 0.5 }]],
+      'p0.4': [['sun', 'rise'], ['grass', null, { show: 1, delay: 2500 }], ['david', 'idle', { look: 0.9 }]],
+      // 노래를 잇는다 — 내 집이 하나님 앞에
+      'p1.0': [['david', 'play', { item: 'lyre', look: 0.6 }]],
+      'p1.1': [['david', 'raise', { item: null, look: 0.6 }]],
+      'p1.2': [['david', 'pray', { look: 0.5 }]],
       // 죽을 날이 가까워지자 솔로몬을 부른다
-      'p1.2': [['david', 'idle', { x: -0.42, z: -0.06, look: 0.6 }], ['david', 'sit', { y: 0.13, look: 0.6, delay: 2600 }], ['solomon', 'idle', { show: 1, x: 0.05, z: 0.15, look: -1, delay: 1000 }],
+      'p1.3': [['david', 'idle', { x: -0.42, z: -0.06, look: 0.6 }], ['david', 'sit', { y: 0.13, look: 0.6, delay: 2600 }], ['solomon', 'idle', { show: 1, x: 0.05, z: 0.15, look: -1, delay: 1000 }],
         ['solomon', 'kneel', { delay: 4000 }]],
-      'p1.3': [['david', 'sit-speak', { y: 0.13, x: -0.42, z: -0.06, to: 'solomon' }], ['solomon', 'kneel', { x: 0.05, z: 0.15, look: -1 }]],
-      'p1.4': [['david', 'sit-speak', { to: 'solomon' }]],
+      'p1.4': [['david', 'sit-speak', { y: 0.13, x: -0.42, z: -0.06, to: 'solomon' }], ['solomon', 'kneel', { x: 0.05, z: 0.15, look: -1 }]],
       'p1.5': [['david', 'sit-speak', { to: 'solomon' }]],
-      'p1.6': [['david', 'sit', { look: 0.6 }], ['solomon', 'bow']],
+      'p1.6': [['david', 'sit-speak', { to: 'solomon' }]],
+      'p1.7': [['david', 'sit', { look: 0.6 }], ['solomon', 'bow']],
       // 조상들과 함께 잠든다 — 빛 속으로
       'p2.0': [['beam', null, { show: 1 }], ['solomon', 'kneel'], ['david', 'pray', { delay: 600 }], ['david', 'pray', { show: 0, delay: 4000 }], ['solomon', 'mourn', { delay: 2000 }]],
       'p2.1': [['david', 'idle', { show: 0 }], ['beam', null, { show: 0, delay: 2500 }]],
