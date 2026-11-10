@@ -82,9 +82,10 @@ Object.assign(MAKERS, {
   // 놋사슬 (왕하 25:7 — 시드기야를 놋사슬로 묶어 끌고 갔다): 손목 높이에 감긴 사슬 띠와 늘어진 고리. 대본에서 on: '배역'으로 그 사람을 따른다.
   // o.y 띠 높이(기본 0.44)
   fetters(o = {}) {
-    const g = new THREE.Group(), br = mat('#8a6a3a', { metalness: 0.45, roughness: 0.45 }), y = o.y ?? 0.44;
-    for (let i = 0; i < 16; i++) { const a = i / 16 * Math.PI * 2, l = mesh(new THREE.TorusGeometry(0.014, 0.0045, 5, 10), br, g, [Math.cos(a) * 0.115, y, Math.sin(a) * 0.105]); l.rotation.set(Math.PI / 2 * (i % 2), -a, 0); l.castShadow = false; }
-    for (let i = 0; i < 6; i++) { const l = mesh(new THREE.TorusGeometry(0.013, 0.0045, 5, 10), br, g, [0.0, y - 0.03 - i * 0.026, 0.11]); l.rotation.y = (i % 2) * Math.PI / 2; l.castShadow = false; }
+    // 어두운 밤 장면이라 금속감을 낮추고 밝은 놋빛으로 (금속감이 세면 환경빛 없는 무대에서 검게 보인다)
+    const g = new THREE.Group(), br = new THREE.MeshStandardMaterial({ color: '#d0a050', emissive: '#5a3a10', emissiveIntensity: 0.5, metalness: 0.2, roughness: 0.5 }), y = o.y ?? 0.46;
+    for (let i = 0; i < 18; i++) { const a = i / 18 * Math.PI * 2, l = mesh(new THREE.TorusGeometry(0.018, 0.006, 5, 10), br, g, [Math.cos(a) * 0.13, y, Math.sin(a) * 0.12]); l.rotation.set(Math.PI / 2 * (i % 2), -a, 0); l.castShadow = false; }
+    for (let i = 0; i < 7; i++) { const l = mesh(new THREE.TorusGeometry(0.016, 0.006, 5, 10), br, g, [0.0, y - 0.035 - i * 0.03, 0.125]); l.rotation.y = (i % 2) * Math.PI / 2; l.castShadow = false; }
     return new Prop(g, null, { fade: 'scale' });
   },
 
@@ -168,10 +169,37 @@ Object.assign(MAKERS, {
     let edge = o.state === 'back' ? 10.5 : 1.5; // 그림자가 덮는 맨 아래 층계 번호 (0이 맨 앞·아래)
     return new Prop(g, (P, t, dt) => {
       const back = P.state === 'back';
-      edge = damp(edge, back ? 10.6 : 1.5, back ? 0.28 : 3, dt);
+      edge = damp(edge, back ? 10.6 : 1.5, back ? 0.45 : 3, dt);
       shades.forEach((m, i) => { m.opacity = THREE.MathUtils.clamp(i + 1 - edge, 0, 1) * 0.62 * P.show; });
       const since = now() - P.t0;
       halo.material.opacity = back ? Math.min(1, since * 0.35) * 0.65 * P.show * (0.9 + Math.sin(t * 1.4) * 0.1) : 0;
     }, { state: o.state || 'fwd' });
   },
+  // 바벨론 강가의 버드나무 (시 137:2) — willow의 고친 판: 세운 잎 판이 갈대처럼 보여, 둥근 잎 덩이에서 실가지가 물가로 휘어 늘어지게 했다.
+  // o.lyres면 앞쪽 낮은 가지에 건 수금 셋 (가지 끝에 걸려 흔들린다)
+  willowD(o = {}) {
+    const g = new THREE.Group(), bark = mat('#6a5a46', { roughness: 1 }), leaf = mat('#9aa866', { roughness: 0.9 }), leaf2 = mat('#86955a', { roughness: 0.9 });
+    const trunk = mesh(new THREE.CylinderGeometry(0.035, 0.06, 0.62, 8), bark, g, [0, 0.31, 0]); trunk.rotation.z = 0.1;
+    [[-0.18, 0.62, 0.05], [0.16, 0.66, -0.04], [0.02, 0.7, 0.12]].forEach(([x, y, z]) => { const c = mesh(new THREE.CylinderGeometry(0.012, 0.022, 0.3, 6), bark, g, [x * 0.55, y - 0.06, z * 0.5]); c.rotation.z = -x * 3; c.rotation.x = z * 2; });
+    [[0, 0.82, 0, 0.3], [-0.2, 0.74, 0.05, 0.22], [0.2, 0.76, -0.03, 0.22], [0.02, 0.76, 0.18, 0.2]].forEach(([x, y, z, r], i) => mesh(sphere(r, 14, 10), i % 2 ? leaf2 : leaf, g, [x, y, z], [1.15, 0.55, 1]).castShadow = true);
+    // 늘어진 실가지: 잎 덩이 가장자리에서 아래로 휘어 내려온다
+    const strands = new THREE.Group(); g.add(strands);
+    for (let i = 0; i < 34; i++) {
+      const a = i * 2.399, r = 0.26 + (i % 4) * 0.04, x = Math.cos(a) * r, z = Math.sin(a) * r * 0.85, top = 0.72 + (i % 3) * 0.04, L = 0.32 + (i % 5) * 0.06;
+      const curve = new THREE.QuadraticBezierCurve3(new THREE.Vector3(x * 0.8, top, z * 0.8), new THREE.Vector3(x * 1.08, top - L * 0.3, z * 1.08), new THREE.Vector3(x * 1.12, top - L, z * 1.12));
+      const m = mesh(new THREE.TubeGeometry(curve, 6, 0.006, 4), i % 2 ? leaf : leaf2, strands); m.castShadow = false;
+    }
+    const lyres = [];
+    if (o.lyres) [[-0.24, 0.5, 0.2], [0.2, 0.52, 0.2], [0.0, 0.46, 0.3]].forEach(([x, y, z], i) => {
+      const l = new THREE.Group(); l.position.set(x, y, z); l.rotation.z = (i - 1) * 0.2; g.add(l); lyres.push(l);
+      const lw = mat('#8a5a2e', { roughness: 0.7 });
+      mesh(new THREE.CylinderGeometry(0.002, 0.002, 0.07, 4), mat('#3a2a1a'), l, [0, 0.11, 0]); // 건 끈
+      mesh(new THREE.BoxGeometry(0.1, 0.05, 0.025), lw, l, [0, -0.06, 0]);
+      [-1, 1].forEach(k => { const a = mesh(new THREE.BoxGeometry(0.012, 0.15, 0.014), lw, l, [k * 0.04, 0.02, 0]); a.rotation.z = -k * 0.14; });
+      mesh(new THREE.BoxGeometry(0.13, 0.012, 0.016), lw, l, [0, 0.095, 0]);
+      for (let k = 0; k < 4; k++) mesh(new THREE.CylinderGeometry(0.0015, 0.0015, 0.13, 3), mat('#e8dcb0'), l, [-0.03 + k * 0.02, 0.015, 0.008]);
+    });
+    return new Prop(g, (P, t) => { strands.rotation.y = Math.sin(t * 0.4) * 0.03; lyres.forEach((l, i) => { l.rotation.z = (i - 1) * 0.2 + Math.sin(t * 0.8 + i) * 0.04; }); });
+  },
 });
+

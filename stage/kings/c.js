@@ -40,7 +40,7 @@ export const C = {
     },
     beats: {
       enter: [['@env', 'dusk'], ['house', 'lit'], ['beam', null, { show: 1 }], ['elisha', 'idle', { show: 0 }], ['gehazi', 'idle', { show: 0 }], ['lap', 'idle', { show: 0 }], ['boy', 'idle', { show: 0 }],
-        ['up', 'pray', { x: -0.62, z: -0.45, look: 1 }], ['bed', 'sit', { look: -1 }], ['woman', 'kneel', { x: -0.5, z: 0.25, look: -0.4 }], ['hus', 'idle', { show: 0 }]],
+        ['up', 'kneel', { x: -0.62, z: -0.45, look: 1 }], ['bed', 'sit', { look: -1 }], ['woman', 'kneel', { x: -0.5, z: 0.25, look: -0.4 }], ['hus', 'idle', { show: 0 }]],
       // 해 질 녘, 길 위의 나그네
       intro: [['@env', 'dusk'], ['house', 'idle'], ['beam', null, { show: 0 }], ['up', 'idle', { show: 0 }], ['boy', 'idle', { show: 0 }], ['lap', 'sleep', { show: 0 }], ['bed', 'sleep', { show: 0 }],
         ['woman', 'idle', { look: 0.8 }], ['hus', 'idle', { look: 0.6 }], ['reap1', 'bow'], ['reap2', 'bow']],
@@ -70,7 +70,7 @@ export const C = {
       'p2.3': [['lap', 'sleep', { show: 0 }], ['bed', 'sleep', { show: 1 }], ['woman', 'idle', { x: 2.4, z: 0.4 }], ['woman', 'idle', { show: 0, delay: 3800 }],
         ['woman', 'idle', { show: 1, x: 0.2, z: 0.35, look: -1, delay: 5200 }], ['elisha', 'idle', { show: 1, x: 2.5, z: 0.3, look: -1, delay: 3000 }], ['elisha', 'idle', { x: 0.55, z: 0.3, delay: 3200 }]],
       // 엘리사가 방에 들어가 문을 닫고 — 침상 곁에 엎드려 기도한다
-      'p2.4': [['woman', 'kneel', { x: 0.0, z: 0.35, look: -1 }], ['elisha', 'idle', { show: 0 }], ['up', 'pray', { show: 1, x: -0.62, z: -0.46, look: 1 }], ['house', 'lit'], ['beam', null, { show: 1, delay: 1800 }]],
+      'p2.4': [['woman', 'kneel', { x: 0.0, z: 0.35, look: -1 }], ['elisha', 'idle', { show: 0 }], ['up', 'kneel', { show: 1, x: -0.62, z: -0.46, look: 1 }], ['house', 'lit'], ['beam', null, { show: 1, delay: 1800 }]],
       // 일곱 번 재채기하고 눈을 떴다
       'p2.5': [['bed', 'sit', { look: -1 }], ['up', 'kneel', { look: 1 }], ['beam', null, { show: 0.6 }]],
       w0: [['up', 'speak', { show: 1, x: -0.35, z: -0.2, to: 'woman' }], ['woman', 'idle', { show: 1, x: -0.55, z: 0.12, look: 0.6 }]],
@@ -92,18 +92,18 @@ export const C = {
       house: ['house', -1.3, -0.7, { scale: 0.7 }],
       palm: ['palm', 0.9, -0.55, { scale: 0.7 }],
       car: ['kchariot', -3.0, 0.4, { speed: 1.0 }],
-      gifts: ['tribute', -2.3, 0.65, { kind: 'gold' }],
+      gifts: ['tribute', -2.0, 0.72, { kind: 'gold', scale: 0.8 }],
     },
     cast: {
       naaman: ['naaman', 0, 0, 1, { board: 'car' }],
-      foot: ['naaman', -1.0, 0.12, 0.6, { speed: 0.5 }], // 병거에서 내린 나아만
+      foot: ['naaman', -0.75, 0.25, 0.6, { speed: 0.5 }], // 병거에서 내린 나아만
       bath: ['naamanH', -0.45, 0.2, 1, { speed: 0.4 }], // 흰 속옷으로 물에 들어가는 나아만
       wife: ['arameanW', -0.95, 0.35, 0.9],
       maid: ['maid', -0.55, 0.4, -0.9],
       gehazi: ['gehazi', -1.3, -0.3, 0.3, { speed: 0.45 }],
       elisha: ['elishaM', -1.1, -0.25, 0.3, { speed: 0.45 }],
-      sv1: ['aramean2', -2.3, 0.15, 1, { speed: 0.5 }],
-      sv2: ['aramean', -2.55, 0.45, 1, { speed: 0.5, gaze: false }],
+      sv1: ['aramean2', -2.0, 0.15, 1, { speed: 0.5 }],
+      sv2: ['aramean', -2.15, 0.45, 1, { speed: 0.5, gaze: false }],
     },
     beats: {
       enter: [['car', null, { show: 1, x: -1.75, z: 0.42 }], ['naaman', 'idle', { show: 0 }], ['foot', 'idle', { show: 0 }], ['wife', 'idle', { show: 0 }], ['maid', 'idle', { show: 0 }],
@@ -115,7 +115,7 @@ export const C = {
       'p0.2': [['maid', 'speak', { to: 'wife' }]],
       'p0.4': [['maid', 'speak', { to: 'wife' }], ['wife', 'listen']],
       // 말과 병거, 은과 금을 싣고 — 엘리사의 집 문 앞
-      'p1.0': [['wife', 'idle', { show: 0 }], ['maid', 'idle', { show: 0 }], ['car', null, { show: 1, x: -1.75, z: 0.42 }], ['sv1', 'idle', { show: 1, x: -2.3, z: 0.1, look: 1, delay: 600 }], ['sv2', 'idle', { show: 1, x: -2.55, z: 0.5, look: 1, delay: 600 }],
+      'p1.0': [['wife', 'idle', { show: 0 }], ['maid', 'idle', { show: 0 }], ['car', null, { show: 1, x: -1.75, z: 0.42 }], ['sv1', 'idle', { show: 1, x: -2.0, z: 0.1, look: 1, delay: 600 }], ['sv2', 'idle', { show: 1, x: -2.15, z: 0.45, look: 1, delay: 600 }],
         ['gifts', null, { show: 1, delay: 2600 }]],
       // 엘리사는 나오지 않고 심부름꾼을 보낸다
       'p1.1': [['naaman', 'idle', { show: 0 }], ['foot', 'idle', { show: 1, look: 0.6 }], ['gehazi', 'idle', { show: 1, x: -1.1, z: -0.12, look: 0.4 }]],
@@ -138,7 +138,7 @@ export const C = {
         ['elisha', 'idle', { show: 1, x: -1.1, z: -0.02, look: 0.6 }], ['sv1', 'idle', { x: -0.4, z: 0.45, look: -1 }], ['sv2', 'idle', { x: -0.55, z: 0.62, look: -1 }]],
       'p2.5': [['foot', 'kneel', { look: -1 }]],
       'p2.6': [['foot', 'speak', { to: 'elisha' }]],
-      w0: [['gehazi', 'speak', { show: 1, x: -1.1, z: -0.12, to: 'foot' }], ['foot', 'idle', { show: 1, x: -1.0, z: 0.12, look: 0.6 }], ['car', null, { show: 1, x: -1.75, z: 0.42 }], ['naaman', 'idle', { show: 0 }]],
+      w0: [['gehazi', 'speak', { show: 1, x: -1.1, z: -0.12, to: 'foot' }], ['foot', 'idle', { show: 1, x: -0.75, z: 0.25, look: 0.6 }], ['car', null, { show: 1, x: -1.75, z: 0.42 }], ['naaman', 'idle', { show: 0 }]],
       w1: [['foot', 'kneel', { show: 1, x: -0.7, z: 0.15, look: -1 }], ['foot', 'speak', { to: 'elisha', delay: 300 }], ['elisha', 'idle', { show: 1, x: -1.1, z: -0.02, look: 0.6 }]],
       w2: [['maid', 'speak', { show: 1, to: 'wife' }], ['wife', 'listen', { show: 1 }]],
       w3: [['elisha', 'speak', { show: 1, x: -1.1, z: -0.02, to: 'foot' }], ['foot', 'idle', { show: 1, x: -0.7, z: 0.15, look: -1 }], ['gifts', null, { show: 1 }]],
@@ -403,10 +403,10 @@ export const C = {
     env: 'day',
     wide: 1.4,
     props: {
-      temple: ['stemple', 0.75, -0.55, { scale: 0.8, sea: false }],
+      temple: ['stemple', 0.75, -0.6, { scale: 0.95, sea: false }],
       palace: ['tallhouse', -1.75, -0.6, { scale: 0.75, wall: '#e2d6bc' }],
       throne: ['ivorythrone', -1.0, -0.25],
-      folk: ['crowd', 0.6, 0.55, { spots: flock(9, 0.6, 0.15, 5), face: Math.PI }],
+      folk: ['crowd', 2.05, 0.2, { spots: flock(9, 0.3, 0.35, 5), face: -Math.PI / 2 }],
       dust: ['smoke', -2.4, -1.0, { state: 'off', color: '#9a8a74', rise: 1.2 }],
     },
     cast: {
@@ -470,7 +470,7 @@ export const C = {
     wide: 1.2,
     props: {
       hall: ['hall', -0.1, -0.05, { throne: false, w: 2.4, lamp: -1.0 }],
-      win: ['kwindow', 1.1, -0.15, { d: 1.35 }],
+      win: ['kwindow', 1.05, -0.15, { d: 1.2, rot: -0.6 }], // 비스듬히 — 앞에서 창이 보이게,
       couch: ['couch', -0.45, -0.3],
       arrow: ['spear', 0.62, -0.15, { arrow: true, y: 0.58, speed: 3.5 }],
       strike: ['strike', 0.4, 0.12],
@@ -479,21 +479,21 @@ export const C = {
     cast: {
       elisha: ['elishaO', -0.45, -0.3, 1, { y: 0.15, pose: 'sleep', speed: 0.3 }],
       king: ['joashI', 0.6, 0.35, -1, { speed: 0.45 }],
-      sv: ['servant', 0.95, 0.4, -1, { speed: 0.45, gaze: false }],
+      sv: ['servant', -0.95, 0.35, 1, { speed: 0.45, gaze: false }],
     },
     beats: {
-      enter: [['elisha', 'bless', { y: 0, x: 0.12, z: -0.05, look: 1 }], ['king', 'shoot', { item: 'bow', x: 0.42, z: -0.15, look: 1 }], ['win', 'open'], ['strike', null, { show: 0 }], ['beam', null, { show: 0 }], ['sv', 'idle', { x: 0.9, z: 0.45, look: -1 }]],
+      enter: [['elisha', 'bless', { y: 0, x: 0.12, z: -0.05, look: 1 }], ['king', 'shoot', { item: 'bow', x: 0.42, z: -0.15, look: 1 }], ['win', 'open'], ['strike', null, { show: 0 }], ['beam', null, { show: 0 }], ['sv', 'idle', { x: -0.95, z: 0.35, look: 1 }]],
       // 죽을병에 든 늙은 선지자 — 왕이 찾아와 운다
-      intro: [['@env', 'day'], ['win', 'shut'], ['arrow', 'fly', { show: 0 }], ['strike', 'held', { show: 0 }], ['beam', null, { show: 0 }], ['elisha', 'sleep', { look: 1 }], ['king', 'idle', { look: -1 }], ['sv', 'idle', { look: -1 }]],
+      intro: [['@env', 'day'], ['win', 'shut'], ['arrow', 'fly', { show: 0 }], ['strike', 'held', { show: 0 }], ['beam', null, { show: 0 }], ['elisha', 'sleep', { look: 1 }], ['king', 'idle', { look: -1 }], ['sv', 'idle', { look: 1 }]],
       'p0.1': [['king', 'mourn', { x: 0.05, z: -0.05, look: -1 }]],
       'p0.3': [['king', 'kneel', { look: -1 }]],
       'p0.4': [['king', 'speak', { to: 'elisha' }]],
       'p0.5': [['king', 'kneel']],
       // 활과 화살을 가져오십시오
       'p1.0': [['elisha', 'sit', { look: 1 }]],
-      'p1.1': [['elisha', 'sit', { look: 1 }], ['king', 'idle', { look: -1 }], ['sv', 'idle', { x: 0.35, z: 0.2, look: -1, item: 'gift' }]],
+      'p1.1': [['elisha', 'sit', { look: 1 }], ['king', 'idle', { look: -1 }], ['sv', 'idle', { x: 0.2, z: 0.3, look: 1, item: 'gift' }]],
       // 왕이 활을 잡자 — 엘리사가 손을 얹는다
-      'p1.2': [['sv', 'idle', { item: null, x: 0.95, z: 0.45 }], ['king', 'idle', { item: 'bow', x: 0.42, z: -0.15, look: 1 }], ['elisha', 'idle', { y: 0, x: 0.12, z: -0.05, look: 1, delay: 400 }], ['elisha', 'bless', { delay: 2400 }]],
+      'p1.2': [['sv', 'idle', { item: null, x: -0.95, z: 0.35 }], ['king', 'idle', { item: 'bow', x: 0.42, z: -0.15, look: 1 }], ['elisha', 'idle', { y: 0, x: 0.12, z: -0.05, look: 1, delay: 400 }], ['elisha', 'bless', { delay: 2400 }]],
       // 동쪽 창을 열고 쏘십시오
       'p1.4': [['win', 'open'], ['elisha', 'point', { look: 1 }]],
       'p1.5': [['win', 'open'], ['king', 'shoot', { look: 1 }], ['arrow', 'fly', { show: 1, delay: 700 }], ['arrow', 'fly', { x: 3.2, z: -0.15, delay: 800 }], ['arrow', null, { show: 0, delay: 1700 }], ['elisha', 'raise', { delay: 1200 }]],
@@ -525,16 +525,16 @@ export const C = {
     wide: 1.4,
     props: {
       wall: ['kwall', -0.6, -0.75, { w: 2.6, state: 'siege' }],
-      camp: ['camp', 1.75, -0.6, { n: 6, span: 1.3, color: '#3e4258', flag: '#9d3328' }],
+      camp: ['camp', 1.3, -0.65, { n: 6, span: 1.1, color: '#3e4258', flag: '#9d3328' }],
       chain: ['chain', -0.35, 0.35, { n: 4, gap: 0.34, y: 0.4, speed: 0.22 }],
-      hp: ['highplace', 1.0, -0.15, { calf: true, pole: false, r: 0.4, state: 'smoke', scale: 0.8 }],
+      hp: ['highplace', 0.85, -0.1, { calf: true, pole: false, r: 0.4, state: 'smoke', scale: 0.8 }],
     },
     cast: {
       watch: ['israelK', -1.35, -0.75, 0.2, { y: 0.7, gaze: false }],
       hoshea: ['hoshea', -0.6, -0.4, 0.6, { speed: 0.35 }],
       s1: ['assyrian', 0.6, 0.15, -1, { speed: 0.35, gaze: false }],
       s2: ['assyrian2', 0.95, 0.4, -1, { speed: 0.35, gaze: false }],
-      s3: ['assyrian', 1.35, 0.0, -1, { speed: 0.35, gaze: false }],
+      s3: ['assyrian', 1.15, -0.05, -1, { speed: 0.35, gaze: false }],
       s4: ['assyrian2', -1.9, 0.2, 1, { speed: 0.35, gaze: false }],
       e1: ['exile', -0.35, 0.35, 1, { speed: 0.22, gaze: false }],
       e2: ['exileW', -0.69, 0.35, 1, { speed: 0.22, gaze: false }],
@@ -551,7 +551,7 @@ export const C = {
       'p0.1': [['watch', 'point', { look: 1 }], ['s1', 'idle', { look: -1 }]],
       // 마지막 왕 호세아 — 앗수르 군사와 함께 진영 쪽으로 사라진다 (옥에 갇힘)
       'p0.2': [['watch', 'idle'], ['hoshea', 'idle', { show: 1, x: -0.4, z: -0.1, look: 1 }], ['s1', 'idle', { x: 0.0, z: 0.05, look: -1, delay: 2000 }], ['s2', 'idle', { x: 0.05, z: 0.3, look: -1, delay: 2000 }],
-        ['hoshea', 'idle', { x: 1.6, z: -0.1, delay: 4500 }], ['s1', 'idle', { x: 1.85, z: -0.25, delay: 4400 }], ['s2', 'idle', { x: 1.85, z: 0.1, delay: 4500 }],
+        ['hoshea', 'idle', { x: 1.3, z: -0.3, delay: 4500 }], ['s1', 'idle', { x: 1.55, z: -0.4, delay: 4400 }], ['s2', 'idle', { x: 1.55, z: -0.1, delay: 4500 }],
         ['hoshea', 'idle', { show: 0, delay: 10500 }]],
       'p0.3': [['hoshea', 'idle', { show: 0 }], ['s1', 'idle', { x: 0.6, z: 0.15, look: -1 }], ['s2', 'idle', { x: 0.95, z: 0.4, look: -1 }], ['watch', 'idle', { look: 0.4 }]],
       // 마침내 사마리아가 무너졌다

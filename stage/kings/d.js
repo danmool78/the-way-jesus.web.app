@@ -324,7 +324,7 @@ export const D = {
       isaiah: ['isaiah', 2.4, 0.4, -1.5, { speed: 0.5 }],
     },
     beats: {
-      enter: [['hezekiah', 'shrug', { y: 0, x: 0.0, z: 0.15, look: 2.6 }], ['env1', 'idle', { x: -0.4, z: 0.35, look: 2.5 }], ['env2', 'idle', { x: 1.85, z: 0.25, look: -2.4 }], ['isaiah', 'idle', { show: 0 }]],
+      enter: [['hezekiah', 'shrug', { y: 0, x: 0.0, z: 0.15, look: 2.6 }], ['env1', 'idle', { x: -0.4, z: 0.35, look: 2.5 }], ['env2', 'idle', { x: 1.2, z: 0.38, look: -2.6 }], ['isaiah', 'idle', { show: 0 }]],
       // 왕좌의 왕 — 먼 나라의 사신들이 들어온다
       intro: [['@env', 'day'], ['env1', 'idle', { show: 0 }], ['env2', 'idle', { show: 0 }], ['isaiah', 'idle', { show: 0 }], ['hezekiah', 'sit', { y: 0.27, look: 0.3 }]],
       'p0.0': [['env1', 'idle', { show: 1, x: -0.45, z: 0.12, look: -2.2, item: 'scroll' }], ['env2', 'idle', { show: 1, x: -0.15, z: 0.3, look: -2.1, item: 'gift', delay: 400 }], ['hezekiah', 'sit', { look: 0.8 }]],
@@ -333,7 +333,7 @@ export const D = {
       // 기뻐하며 듣는다
       'p0.3': [['env1', 'speak', { to: 'hezekiah', item: null }], ['hezekiah', 'sit-speak', { to: 'env1' }]],
       // 보물 창고로 데려간다
-      'p1.0': [['env2', 'idle', { item: null }], ['hezekiah', 'idle', { y: 0, x: 0.0, z: 0.15, look: 2.6 }], ['env1', 'idle', { x: -0.4, z: 0.35, look: 2.5 }], ['env2', 'idle', { x: 1.85, z: 0.25, look: -2.4, delay: 300 }]],
+      'p1.0': [['env2', 'idle', { item: null }], ['hezekiah', 'idle', { y: 0, x: 0.0, z: 0.15, look: 2.6 }], ['env1', 'idle', { x: -0.4, z: 0.35, look: 2.5 }], ['env2', 'idle', { x: 1.2, z: 0.38, look: -2.6, delay: 300 }]],
       'p1.1': [['hezekiah', 'point', { look: 2.7 }]],
       'p1.2': [['hezekiah', 'shrug', { look: 2.2 }]],
       // 사신들의 눈이 구석구석을 훑는다
@@ -535,10 +535,10 @@ export const D = {
       'p1.0': [['@env', 'night'], ['zedekiah', 'idle', { show: 1, x: -2.5, z: 0.4 }], ['zg', 'idle', { show: 1, x: -2.6, z: 0.6, delay: 300 }],
         ['zedekiah', 'idle', { show: 0, delay: 4800 }], ['zg', 'idle', { show: 0, delay: 5000 }]],
       // 바벨론 군대가 뒤쫓아 붙잡는다
-      'p1.1': [['zg', 'idle', { show: 0 }], ['b2', 'idle', { x: -1.95, z: 0.42 }], ['b4', 'idle', { x: -1.9, z: 0.62 }],
-        ['zedekiah', 'bow', { show: 1, x: -2.3, z: 0.3, look: 1.4, delay: 2500 }], ['chain', null, { show: 1, delay: 3500 }]],
+      'p1.1': [['zg', 'idle', { show: 0 }], ['b2', 'idle', { x: -1.85, z: 0.3 }], ['b4', 'idle', { x: -2.6, z: 0.35 }],
+        ['zedekiah', 'hold-basket', { show: 1, x: -2.2, z: 0.52, look: 1.2, delay: 2500 }], ['chain', null, { show: 1, delay: 3500 }]],
       // 놋사슬에 묶여 바벨론 왕에게로 끌려간다 (그 밖의 일은 그리지 않는다)
-      'p1.2': [['zedekiah', 'bow', { show: 1, x: 1.55, z: 0.35, look: 1.5 }], ['chain', null, { show: 1 }], ['b2', 'idle', { x: 1.3, z: 0.6 }], ['b4', 'idle', { x: 1.9, z: 0.6 }], ['neb', 'idle', { look: -1.8 }],
+      'p1.2': [['zedekiah', 'hold-basket', { show: 1, x: 1.55, z: 0.35, look: 1.5 }], ['chain', null, { show: 1 }], ['b2', 'idle', { x: 1.3, z: 0.6 }], ['b4', 'idle', { x: 1.9, z: 0.6 }], ['neb', 'idle', { look: -1.8 }],
         ['zedekiah', 'idle', { x: 2.9, z: 0.4, delay: 7000 }], ['neb', 'idle', { x: 3.0, z: 0.1, delay: 7000 }], ['b2', 'idle', { x: 2.9, z: 0.65, delay: 7000 }], ['b4', 'idle', { x: 3.1, z: 0.45, delay: 7000 }],
         ['zedekiah', 'idle', { show: 0, delay: 9500 }], ['neb', 'idle', { show: 0, delay: 9500 }], ['b2', 'idle', { show: 0, delay: 9500 }], ['b4', 'idle', { show: 0, delay: 9500 }], ['chain', null, { show: 0, delay: 9300 }]],
       // 다섯째 달 — 성전과 왕궁과 큰 집들을 불사른다 (멀리 불빛과 연기)
@@ -575,11 +575,11 @@ export const D = {
       olive: ['olive', -1.7, -0.55],
       house: ['house', -0.55, -0.75, { scale: 0.55 }],
       rocks: ['rocks', 0, 0, { spots: [[0.9, -0.6, 0.12], [1.7, 0.2, 0.1], [-1.9, 0.4, 0.1]] }],
-      zig: ['ziggurat', -0.9, -1.1, { scale: 1.0 }],
+      zig: ['ziggurat', -0.85, -1.3, { scale: 1.45 }],
       prison: ['prison', 1.45, -0.35],
       table: ['kingtable', -0.15, -0.05, { len: 1.0 }],
-      river: ['river', 0.2, 0.68, { w: 0.34, len: 4.6, rot: Math.PI / 2 }],
-      willow: ['willow', -1.55, 0.3, { lyres: true, scale: 1.15 }],
+      river: ['river', 0.2, 0.74, { w: 0.46, len: 4.8, rot: Math.PI / 2 }],
+      willow: ['willowD', -1.5, 0.15, { lyres: true, scale: 1.25 }],
     },
     cast: {
       gedaliah: ['gedaliah', -0.3, -0.1, 0.6],
@@ -598,7 +598,7 @@ export const D = {
     beats: {
       enter: [['grass', null, { show: 0 }], ['olive', null, { show: 0 }], ['house', null, { show: 0 }], ['prison', 'open'],
         ['gedaliah', 'idle', { show: 0 }], ['c1', 'idle', { show: 0 }], ['c2', 'idle', { show: 0 }], ['p1', 'idle', { show: 0 }], ['p2', 'idle', { show: 0 }], ['jehoiachin', 'idle', { show: 0 }],
-        ['jehoiachinR', 'sit', { x: -0.4, z: -0.27, look: 0.4 }], ['king', 'sit', { x: 0.15, z: -0.27, look: -0.6 }], ['bg', 'idle', { x: 0.9, z: -0.1, look: -1.2 }]],
+        ['jehoiachinR', 'sit', { x: -0.4, z: -0.27, look: 0.4 }], ['king', 'sit', { x: 0.15, z: -0.27, look: -0.6 }], ['bg', 'idle', { x: 0.95, z: -0.05, look: -1.2 }]],
       // 폐허가 된 유다 땅, 미스바의 총독 그달리야
       intro: [['@env', 'day'], ['grass', null, { show: 1 }], ['olive', null, { show: 1 }], ['house', null, { show: 1 }], ['zig', null, { show: 0 }], ['prison', 'shut', { show: 0 }], ['table', null, { show: 0 }],
         ['river', null, { show: 0 }], ['willow', null, { show: 0 }], ['jehoiachin', 'sit-ground', { show: 0 }], ['jehoiachinR', 'idle', { show: 0 }], ['king', 'idle', { show: 0 }], ['bg', 'idle', { show: 0 }],
@@ -619,13 +619,15 @@ export const D = {
       // 서른일곱 해가 흐른다 — 밤과 아침이 지나간다
       'p1.3': [['@env', 'night'], ['@env', 'dawn', { delay: 2200 }], ['@env', 'night', { delay: 4200 }], ['@env', 'dawn', { delay: 6000 }]],
       // 에윌므로닥이 왕위에 오른 해
-      'p2.0': [['@env', 'day'], ['king', 'idle', { show: 1, x: 1.6, z: 0.35, look: -2.8 }], ['bg', 'idle', { show: 1, x: 2.1, z: 0.2, look: -2.6 }]],
+      'p2.0': [['@env', 'day'], ['king', 'idle', { show: 1, x: 0.85, z: 0.3, look: 2.6 }], ['bg', 'idle', { show: 1, x: 2.15, z: 0.25, look: -2.6 }]],
       // 감옥에서 풀어 다정하게 말한다
       'p2.1': [['prison', 'open'], ['jehoiachin', 'idle', { x: 1.45, z: 0.05, look: 0.4, delay: 1200 }], ['king', 'speak', { to: 'jehoiachin', delay: 2600 }]],
       // 죄수의 옷을 벗고 왕의 식탁에서
       'p2.2': [['king', 'idle'], ['jehoiachin', 'idle', { show: 0, x: 1.45, z: 0.05 }], ['jehoiachinR', 'idle', { show: 1, look: -1.4 }],
-        ['jehoiachinR', 'idle', { x: -0.4, z: -0.27, delay: 1400 }], ['king', 'idle', { x: 0.15, z: -0.27, delay: 1400 }], ['table', null, { show: 1 }], ['bg', 'idle', { x: 0.9, z: -0.1, look: -1.2, delay: 1600 }],
-        ['jehoiachinR', 'sit', { look: 0.4, delay: 5600 }], ['king', 'sit', { look: -0.6, delay: 5600 }]],
+        ['table', null, { show: 1 }],
+        ['jehoiachinR', 'idle', { x: 0.55, z: -0.34, delay: 1400 }], ['jehoiachinR', 'idle', { x: -0.4, z: -0.27, delay: 3400 }],
+        ['king', 'idle', { x: 0.75, z: -0.32, delay: 3200 }], ['king', 'idle', { x: 0.15, z: -0.27, delay: 5000 }], ['bg', 'idle', { x: 0.95, z: -0.05, look: -1.2, delay: 5200 }],
+        ['jehoiachinR', 'sit', { look: 0.4, delay: 7200 }], ['king', 'sit', { look: -0.6, delay: 7600 }]],
       // 포로들의 노래 — 강가 버드나무에 수금을 걸고
       'p2.3': [['jehoiachin', 'idle', { show: 0 }], ['table', null, { show: 1 }], ['jehoiachinR', 'sit', { show: 1, x: -0.4, z: -0.27, look: 0.4 }], ['king', 'sit', { x: 0.15, z: -0.27, look: -0.6 }],
         ['willow', null, { show: 1 }], ['e1', 'sit-ground', { show: 1 }], ['e2', 'sit-ground', { show: 1, delay: 400 }], ['e3', 'sit-ground', { show: 1, delay: 800 }], ['@env', 'dusk', { delay: 1000 }]],
@@ -634,11 +636,11 @@ export const D = {
         ['jehoiachinR', 'idle', { show: 0 }], ['king', 'idle', { show: 0 }], ['bg', 'idle', { show: 0 }], ['e1', 'idle', { show: 0 }], ['e2', 'idle', { show: 0 }], ['e3', 'idle', { show: 0 }],
         ['gedaliah', 'speak', { show: 1, x: -0.3, z: -0.1, to: 'c1' }], ['c1', 'idle', { show: 1, x: 0.3, z: 0.05, look: -1.6 }], ['c2', 'idle', { show: 1, x: 0.75, z: -0.2, look: -1.6 }]],
       w1: [['gedaliah', 'idle', { show: 0 }], ['c1', 'idle', { show: 0 }], ['c2', 'idle', { show: 0 }], ['grass', null, { show: 0 }], ['olive', null, { show: 0 }], ['house', null, { show: 0 }],
-        ['zig', null, { show: 1 }], ['prison', 'open', { show: 1 }], ['river', null, { show: 1 }], ['king', 'speak', { show: 1, x: 1.6, z: 0.35, to: 'jehoiachinR' }], ['jehoiachinR', 'idle', { show: 1, x: 1.45, z: 0.05, look: -1.4 }], ['bg', 'idle', { show: 1, x: 2.1, z: 0.2, look: -2.6 }]],
-      w2: [['table', null, { show: 1 }], ['king', 'sit', { x: 0.15, z: -0.27, look: -0.6 }], ['jehoiachinR', 'sit', { x: -0.4, z: -0.27, look: 0.4 }], ['bg', 'idle', { x: 0.9, z: -0.1, look: -1.2 }]],
+        ['zig', null, { show: 1 }], ['prison', 'open', { show: 1 }], ['river', null, { show: 1 }], ['king', 'speak', { show: 1, x: 0.85, z: 0.3, to: 'jehoiachinR' }], ['jehoiachinR', 'idle', { show: 1, x: 1.45, z: 0.05, look: -1.4 }], ['bg', 'idle', { show: 1, x: 2.15, z: 0.25, look: -2.6 }]],
+      w2: [['table', null, { show: 1 }], ['king', 'sit', { x: 0.15, z: -0.27, look: -0.6 }], ['jehoiachinR', 'sit', { x: -0.4, z: -0.27, look: 0.4 }], ['bg', 'idle', { x: 0.95, z: -0.05, look: -1.2 }]],
       end: [['@env', 'dusk'], ['grass', null, { show: 0 }], ['olive', null, { show: 0 }], ['house', null, { show: 0 }], ['gedaliah', 'idle', { show: 0 }], ['c1', 'idle', { show: 0 }], ['c2', 'idle', { show: 0 }],
         ['zig', null, { show: 1 }], ['prison', 'open', { show: 1 }], ['river', null, { show: 1 }], ['table', null, { show: 1 }], ['willow', null, { show: 1 }],
-        ['jehoiachinR', 'sit', { show: 1, x: -0.4, z: -0.27, look: 0.4 }], ['king', 'sit', { show: 1, x: 0.15, z: -0.27, look: -0.6 }], ['bg', 'idle', { show: 1, x: 0.9, z: -0.1 }],
+        ['jehoiachinR', 'sit', { show: 1, x: -0.4, z: -0.27, look: 0.4 }], ['king', 'sit', { show: 1, x: 0.15, z: -0.27, look: -0.6 }], ['bg', 'idle', { show: 1, x: 0.95, z: -0.05 }],
         ['e1', 'mourn', { show: 1 }], ['e2', 'mourn', { show: 1 }], ['e3', 'sit-ground', { show: 1 }]],
     },
   },
