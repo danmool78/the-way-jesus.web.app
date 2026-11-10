@@ -1,0 +1,42 @@
+{
+ "appTag": "David · De berger à roi",
+ "docTitle": "Le Chemin — David | La vie de David sur la carte",
+ "metaDesc": "Du berger des champs de Bethléem, par la vallée d’Éla et les grottes du désert, jusqu’au roi de Jérusalem. Parcourez sur une carte biblique les 39 scènes de David et écoutez en chanson les psaumes qu’il a composés en chemin.",
+ "mapAria": "Le chemin de David sur une carte de Juda, de Benjamin, de la Philistie et de Galaad",
+ "introTag": "Des champs de Bethléem au palais de Jérusalem, le chemin de David",
+ "introLead": "Parcourez la carte et découvrez le chemin d’un jeune berger devenu fugitif, puis roi, qui tomba et se releva.",
+ "introF1": "Suivez les lieux, de Bethléem à la vallée d’Éla et aux grottes du désert, jusqu’à Jérusalem",
+ "introF3": "Écoutez le récit lu à voix haute, et en chanson les psaumes que David a composés en ces lieux",
+ "landStep2": "Lisez le récit et les textes sur la carte, puis appuyez sur ▶ pour l’écouter",
+ "landStep4": "Rassemblez les paroles de Dieu et de David dans l’onglet « {words} » et revisitez les scènes parcourues avec « {quiz} »",
+ "jesus": "Dieu",
+ "hisWords": "Paroles de Dieu et de David",
+ "wordsHead": "Paroles de Dieu et de David",
+ "wordsIntro": "Les paroles que Dieu a prononcées et celles de David sur son chemin, rassemblées dans l’ordre du voyage. Chacune est une traduction nouvelle du sens original, dans la langue d’aujourd’hui.",
+ "odoTitle": "Distance parcourue par David jusqu’à cette scène (route estimée entre les lieux ; pas de 75 cm)",
+ "gospels": {
+  "1sam": ["1 Samuel", "1 S"],
+  "2sam": ["2 Samuel", "2 S"],
+  "1ki": ["1 Rois", "1 R"],
+  "1chr": ["1 Chroniques", "1 Ch"]
+ },
+ "endLead": "Des champs de Bethléem jusqu’au dernier chant de David : merci d’avoir marché avec nous.",
+ "blessing": "Le Seigneur est mon berger, je ne manque de rien.\nIl me fait reposer dans de verts pâturages, il me conduit vers des eaux paisibles. (Ps 23,1–2)\nQue celui qui appela le jeune garçon des champs appelle aussi votre nom, et que celui qui était présent dans les nuits de fuite garde votre chemin.",
+ "psalmHead": "Le chant né en ce lieu",
+ "psalmNote": "Un chant du parcours des Psaumes, chanté en coréen. La musique et les paroles ont été créées avec l’IA, puis retravaillées par des personnes.",
+ "map": {
+  "유 다": "JUDA",
+  "베 냐 민": "BENJAMIN",
+  "이 스 라 엘": "ISRAËL",
+  "블 레 셋": "PHILISTIE",
+  "길 르 앗": "GALAAD",
+  "모 압": "MOAB",
+  "에 돔": "ÉDOM",
+  "갈 릴 리": "GALILÉE",
+  "벧세메스": "Beth-Shèmesh",
+  "에그론": "Ékron",
+  "아스돗": "Ashdod",
+  "가사": "Gaza",
+  "벧산": "Beth-Shéân"
+ }
+}

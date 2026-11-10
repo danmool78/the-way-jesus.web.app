@@ -1,0 +1,1623 @@
+{
+ "periods": {
+  "v1": {
+   "name": "Le jeune berger",
+   "span": "1025 – 1020 av. J.-C."
+  },
+  "v2": {
+   "name": "David traqué",
+   "span": "1020 – 1010 av. J.-C."
+  },
+  "v3": {
+   "name": "David devenu roi",
+   "span": "1010 – 995 av. J.-C."
+  },
+  "v4": {
+   "name": "La maison qui s’effondre",
+   "span": "993 – 979 av. J.-C."
+  },
+  "v5": {
+   "name": "Les derniers jours",
+   "span": "975 – 970 av. J.-C."
+  }
+ },
+ "places": {
+  "bethlehem": {
+   "name": "Bethléem",
+   "region": "Juda"
+  },
+  "gibeah": {
+   "name": "Guibea (palais de Saül)",
+   "region": "Benjamin"
+  },
+  "elah": {
+   "name": "Vallée d’Éla",
+   "region": "Juda"
+  },
+  "ramah": {
+   "name": "Nayoth de Rama",
+   "region": "Benjamin"
+  },
+  "nob": {
+   "name": "Nob",
+   "region": "Benjamin"
+  },
+  "gath": {
+   "name": "Gath",
+   "region": "Philistie"
+  },
+  "adullam": {
+   "name": "Grotte d’Adoullam",
+   "region": "Juda"
+  },
+  "keilah": {
+   "name": "Qeïla",
+   "region": "Juda"
+  },
+  "ziph": {
+   "name": "Désert de Ziph",
+   "region": "Juda"
+  },
+  "engedi": {
+   "name": "En-Guédi",
+   "region": "Juda"
+  },
+  "carmel": {
+   "name": "Carmel (Maôn)",
+   "region": "Juda"
+  },
+  "ziklag": {
+   "name": "Tsiklag",
+   "region": "Philistie"
+  },
+  "gilboa": {
+   "name": "Mont Guilboa",
+   "region": "Israël"
+  },
+  "hebron": {
+   "name": "Hébron",
+   "region": "Juda"
+  },
+  "jerusalem": {
+   "name": "Jérusalem (cité de David)",
+   "region": "Juda"
+  },
+  "kiriath": {
+   "name": "Qiryath-Yearim (Baala de Juda)",
+   "region": "Juda"
+  },
+  "saltvalley": {
+   "name": "Vallée du Sel",
+   "region": "Vers Édom"
+  },
+  "olives": {
+   "name": "Mont des Oliviers",
+   "region": "Juda"
+  },
+  "bahurim": {
+   "name": "Bahourim",
+   "region": "Benjamin"
+  },
+  "mahanaim": {
+   "name": "Mahanaïm",
+   "region": "Galaad"
+  },
+  "ephraimwood": {
+   "name": "Forêt d’Éphraïm",
+   "region": "Galaad"
+  },
+  "araunah": {
+   "name": "Aire d’Arauna (Moriya)",
+   "region": "Juda"
+  },
+  "gihon": {
+   "name": "Source du Guihôn",
+   "region": "Juda"
+  }
+ },
+ "events": {
+  "d01": {
+   "title": "Le berger des champs de Bethléem",
+   "when": "vers 1025 av. J.-C.",
+   "subtitle": "Dans les champs où personne ne regardait",
+   "story": [
+    "Quand la lumière du soir se posait sur les collines de Bethléem, les bêlements du troupeau se dispersaient le long des pentes. David, le plus jeune des huit fils d’Isaï, gardait là les moutons de son père. C’était un garçon au teint roux et au regard clair. Tandis que ses frères aînés prenaient en main les grandes affaires de la famille, la place du cadet était toujours auprès du troupeau.",
+    "Un jour, un lion surgit, saisit un agneau et s’enfuit. Le garçon n’hésita pas. Il le poursuivit, frappa la bête et arracha l’agneau de sa gueule. Le lion se retourna contre lui ; David l’empoigna par la crinière, le frappa et le tua. Quand un ours vint, il fit de même.",
+    "Dans ces champs, personne n’était là pour l’applaudir. David ne parla de tout cela que bien plus tard, le jour où il se présenta devant le roi Saül pour affronter le géant. Le garçon dit alors au roi : « Ton serviteur gardait les moutons de son père. Le Seigneur, qui m’a délivré des griffes du lion et de l’ours, me délivrera cette fois encore. »"
+   ],
+   "words": [
+    {
+     "who": "David",
+     "text": "Ton serviteur gardait le troupeau de son père. Quand un lion ou un ours venait emporter un agneau, je le poursuivais, je le frappais et je l’arrachais de sa gueule."
+    },
+    {
+     "who": "David",
+     "text": "Le Seigneur, qui m’a délivré des griffes du lion et de l’ours, me délivrera aussi de la main de ce Philistin."
+    },
+    {
+     "who": "Isaï",
+     "text": "Il reste encore le plus jeune. Il est aux champs, en train de garder les moutons."
+    }
+   ],
+   "note": "Au temps de David, des lions et des ours vivaient encore dans les montagnes de Juda. Le berger portait un bâton, une fronde et une besace pour ses provisions, et défendait ses bêtes contre les fauves. Bethléem est un village de montagne situé à une dizaine de kilomètres au sud de Jérusalem.",
+   "reflect": "Là où personne ne me voit, avec quelle fidélité est-ce que je prends soin des petites choses qui me sont confiées ?",
+   "quiz": {
+    "q": "Contre quelles bêtes David s’est-il battu et a-t-il vaincu en gardant son troupeau ?",
+    "options": [
+     "Le loup et le léopard",
+     "Le lion et l’ours",
+     "La hyène et le chacal",
+     "L’ours et le loup"
+    ],
+    "explain": "David raconta à Saül que, lorsqu’un lion ou un ours emportait un agneau, il le poursuivait pour le reprendre, et qu’il avait tué le lion comme l’ours (1 S 17,34–36)."
+   },
+   "credit": "Elizabeth Jane Gardner, The Shepherd David, vers 1895 · National Museum of Women in the Arts · Domaine public"
+  },
+  "d02": {
+   "title": "L’onction du plus jeune fils d’Isaï",
+   "when": "vers 1025 av. J.-C.",
+   "subtitle": "L’homme regarde le visage, Dieu regarde le cœur",
+   "story": [
+    "Le vieux prophète Samuel pleurait depuis longtemps sur Saül, le roi rejeté. Alors le Seigneur lui dit : « Jusqu’à quand vas-tu pleurer ? Remplis ta corne d’huile et va chez Isaï de Bethléem, car j’ai choisi un roi parmi ses fils. » Samuel répondit : « Si Saül l’apprend, il me tuera. » Le Seigneur lui dit : « Emmène une génisse, et dis que tu viens offrir un sacrifice. »",
+    "Quand le prophète arriva, les anciens de Bethléem vinrent à sa rencontre en tremblant. « Viens-tu en paix ? » demandèrent-ils. Samuel répondit : « Oui, je viens offrir un sacrifice. » Lorsque Éliab, le fils aîné d’Isaï, se présenta devant lui, Samuel pensa : « C’est sûrement lui. » Mais le Seigneur lui dit : « Ne regarde pas son visage ni sa haute taille. L’homme regarde l’apparence, mais moi, je regarde le cœur. »",
+    "Ce n’était pas Abinadab, ni Shamma. Quand les sept fils furent tous passés, Samuel demanda à Isaï : « Sont-ce là tous tes fils ? » Isaï répondit : « Il reste le plus jeune, mais il garde les moutons. » Samuel déclara que personne ne s’assiérait avant qu’il soit arrivé. Quand le garçon, rappelé des champs, entra, le Seigneur dit : « Lève-toi et donne-lui l’onction, c’est lui. » Sous les yeux de ses frères, l’huile coula sur sa tête, et à partir de ce jour l’Esprit du Seigneur s’empara de David avec force."
+   ],
+   "words": [
+    {
+     "who": "Le Seigneur",
+     "text": "Ne regarde ni son visage ni sa haute taille : je ne l’ai pas choisi. L’homme voit ce qui frappe les yeux, mais moi, le Seigneur, je vois le cœur."
+    },
+    {
+     "who": "Le Seigneur",
+     "text": "Lève-toi et répands l’huile sur lui. C’est lui."
+    },
+    {
+     "who": "Samuel",
+     "text": "Envoie quelqu’un le chercher. Nous ne prendrons pas place avant qu’il soit arrivé."
+    }
+   ],
+   "note": "L’onction d’huile marquait l’homme que Dieu établissait roi ou prêtre. En hébreu, « celui qui a reçu l’onction » se dit Messie. Saül, lui aussi, avait déjà reçu l’onction des mains de Samuel.",
+   "reflect": "Est-ce que je juge les autres, et moi-même, d’après l’apparence ?",
+   "quiz": {
+    "q": "En voyant quel fils d’Isaï Samuel pensa-t-il d’abord : « C’est sûrement lui que le Seigneur a choisi » ?",
+    "options": [
+     "Shamma",
+     "Abinadab",
+     "Éliab",
+     "Jonathan"
+    ],
+    "explain": "Samuel le pensa en voyant Éliab, le fils aîné, mais le Seigneur lui dit de ne regarder ni son apparence ni sa taille (1 S 16,6–7)."
+   },
+   "credit": "Paolo Veronese, The Anointing of David, vers 1555 · Kunsthistorisches Museum de Vienne · Domaine public"
+  },
+  "d03": {
+   "title": "Le jeune joueur de lyre",
+   "when": "vers 1025 av. J.-C.",
+   "subtitle": "Le son d’une lyre dans un palais assombri",
+   "story": [
+    "L’Esprit du Seigneur s’était retiré de Saül, et un esprit mauvais envoyé par le Seigneur tourmentait le roi. Une ombre lourde pesait sur le palais de Guibea. Ses serviteurs lui dirent avec prudence : « Fais chercher un homme qui joue bien de la lyre. Quand l’esprit mauvais viendra sur toi, il jouera de sa main et tu iras mieux. » Saül répondit : « Trouvez-moi un bon musicien et amenez-le-moi. »",
+    "Un jeune serviteur prit la parole : « J’ai vu un fils d’Isaï de Bethléem. Il joue bien de la lyre, c’est un homme vaillant, il parle avec sagesse et il est beau. Le Seigneur est avec lui. » Saül envoya dire à Isaï : « Envoie-moi ton fils David, celui qui garde les moutons. » Isaï chargea un âne de pain, d’une outre de vin et d’un chevreau, et fit partir son fils.",
+    "Dès qu’il vit David, Saül se prit d’une grande affection pour lui et en fit son porteur d’armes. Il envoya de nouveau dire à Isaï : « Laisse David rester auprès de moi, car il a gagné ma faveur. » Désormais, chaque fois que l’esprit mauvais s’abattait sur le roi, le garçon prenait sa lyre et en pinçait les cordes. Quand la mélodie se répandait dans la pièce obscure, Saül respirait de nouveau, il se sentait mieux, et l’esprit mauvais s’éloignait de lui."
+   ],
+   "words": [
+    {
+     "who": "Un serviteur de Saül",
+     "text": "J’ai vu un fils d’Isaï de Bethléem. Il joue bien de la lyre, c’est un homme vaillant, il parle avec sagesse et il est beau. Le Seigneur est avec lui."
+    },
+    {
+     "who": "Saül",
+     "text": "Trouvez-moi un homme qui joue bien de la lyre et amenez-le-moi."
+    },
+    {
+     "who": "Saül",
+     "text": "Laisse David rester auprès de moi, car il a gagné ma faveur."
+    }
+   ],
+   "note": "La lyre, appelée kinnor en hébreu, était un petit instrument à cordes tendues sur un cadre de bois, que l’on pinçait avec les doigts. Guibea, où se trouvait le palais de Saül, est généralement identifiée à Tell el-Foul, au nord de Jérusalem.",
+   "reflect": "Auprès de quelqu’un qui traverse des heures sombres, qu’est-ce que je peux offrir pour apaiser son cœur ?",
+   "quiz": {
+    "q": "Quelle charge Saül confia-t-il à David en le gardant au palais ?",
+    "options": [
+     "Porteur d’armes",
+     "Chef de l’armée",
+     "Échanson du roi",
+     "Gardien de la porte"
+    ],
+    "explain": "Saül aima beaucoup David et en fit son porteur d’armes (1 S 16,21)."
+   },
+   "credit": "Rembrandt, Saul and David, vers 1651–1658 · Mauritshuis, La Haye · Domaine public"
+  },
+  "d04": {
+   "title": "Le géant de la vallée d’Éla",
+   "when": "vers 1020 av. J.-C.",
+   "subtitle": "Quarante jours de railleries",
+   "story": [
+    "De part et d’autre de la vallée d’Éla, Israël campait sur une montagne et les Philistins sur l’autre. Chaque jour, un homme sortait du camp philistin : Goliath, de Gath. Il mesurait six coudées et un empan ; il portait un casque de bronze et une cuirasse à écailles qui pesait à elle seule cinq mille sicles. La hampe de sa lance était comme l’ensouple d’un tisserand, et un porteur de bouclier marchait devant lui.",
+    "Le géant criait vers l’autre côté de la vallée : « Choisissez l’un des vôtres et qu’il descende vers moi ! S’il me tue, nous serons vos esclaves ; si je le tue, c’est vous qui serez nos esclaves. » En l’entendant, Saül et tout Israël furent saisis d’une grande peur. Matin et soir, cela dura quarante jours.",
+    "En ce temps-là, Isaï confia à son plus jeune fils du grain grillé et dix pains pour ses frères. Arrivé au camp, David entendit les railleries du géant. Les soldats reculaient, terrifiés, mais le garçon demanda à ceux qui l’entouraient : « Qui est donc ce Philistin incirconcis pour insulter l’armée du Dieu vivant ? » Éliab, son frère aîné, l’entendit et se mit en colère : « À qui as-tu laissé ces quelques moutons ? »"
+   ],
+   "words": [
+    {
+     "who": "David",
+     "text": "Qui est donc ce Philistin incirconcis pour oser insulter l’armée du Dieu vivant ?"
+    },
+    {
+     "who": "David",
+     "text": "Qu’est-ce que j’ai fait ? Je n’ai fait que poser une question."
+    },
+    {
+     "who": "Goliath",
+     "text": "Aujourd’hui, je défie l’armée d’Israël. Envoyez-moi un homme, et battons-nous tous les deux."
+    },
+    {
+     "who": "Éliab",
+     "text": "Pourquoi es-tu descendu ici ? À qui as-tu laissé ces quelques moutons dans la steppe ? Tu es venu pour regarder la bataille."
+    }
+   ],
+   "note": "Six coudées et un empan font environ 2,90 mètres. Les manuscrits de la mer Morte et la Septante indiquent quatre coudées et un empan, soit un peu plus de deux mètres. La vallée d’Éla était un passage qui montait de la plaine philistine vers les montagnes de Juda.",
+   "reflect": "Devant une voix qui paralyse tout le monde, est-ce que je regarde le géant, ou le Dieu vivant ?",
+   "quiz": {
+    "q": "Pendant combien de temps Goliath vint-il, matin et soir, se poster devant le camp d’Israël ?",
+    "options": [
+     "Sept jours",
+     "Trois jours",
+     "Dix jours",
+     "Quarante jours"
+    ],
+    "explain": "Le Philistin s’avança matin et soir pendant quarante jours (1 S 17,16)."
+   },
+   "credit": "James Tissot, The Defiance of Goliath, vers 1896–1902 · John Rylands Library, Manchester · Domaine public"
+  },
+  "d05": {
+   "title": "Cinq pierres lisses",
+   "when": "vers 1020 av. J.-C.",
+   "subtitle": "Non par l’épée, mais au nom du Seigneur",
+   "story": [
+    "David se présenta devant Saül : « Ton serviteur ira se battre contre ce Philistin. » Saül voulut l’en empêcher : « Tu n’es qu’un garçon, et lui est un guerrier depuis sa jeunesse. » David répondit : « Le Seigneur, qui m’a délivré du lion et de l’ours, me délivrera cette fois encore. » Saül le revêtit de sa tunique de guerre et lui mit son casque de bronze. David fit quelques pas, puis il dit : « Je n’y suis pas habitué, je ne peux pas marcher avec cela. »",
+    "David ôta l’armure, descendit au torrent, choisit cinq pierres lisses et les mit dans sa besace de berger. Dans sa main, une simple fronde. Le géant regarda avec mépris ce garçon au teint roux. Goliath cria : « Suis-je un chien, pour que tu viennes à moi avec un bâton ? » David lui lança en retour : « Tu viens à moi avec l’épée, la lance et le javelot, mais moi je viens au nom du Seigneur des armées. La bataille appartient au Seigneur. »",
+    "Quand le géant s’approcha, David courut à sa rencontre. Il tira une pierre de sa besace et la lança avec sa fronde. La pierre s’enfonça dans son front, et le géant tomba face contre terre. David n’avait pas d’épée en main. Il courut, tira l’épée du géant de son fourreau et lui trancha la tête avec cette épée. L’armée philistine s’enfuit, et Israël, poussant des cris de victoire, la poursuivit jusqu’aux portes de Gath et d’Ékron."
+   ],
+   "words": [
+    {
+     "who": "David",
+     "text": "Tu viens à moi avec l’épée, la lance et le javelot, mais moi je viens à toi au nom du Seigneur des armées, le Dieu de l’armée d’Israël que tu as insultée."
+    },
+    {
+     "who": "David",
+     "text": "Le Seigneur ne sauve ni par l’épée ni par la lance. Cette bataille est au Seigneur, et c’est lui qui vous livrera entre nos mains."
+    },
+    {
+     "who": "Saül",
+     "text": "Va, et que le Seigneur soit avec toi."
+    },
+    {
+     "who": "Goliath",
+     "text": "Suis-je donc un chien, pour que tu viennes à moi avec un bâton ?"
+    }
+   ],
+   "note": "La fronde était une poche de cuir munie de deux cordes ; on la faisait tournoyer, puis on lâchait l’une des cordes pour projeter la pierre. Le livre des Juges (20,16) parle de frondeurs benjaminites capables de viser un cheveu sans le manquer. Ce n’était pas un jouet de berger, mais une arme de guerre.",
+   "reflect": "Quand je veux me battre dans l’armure d’un autre, qu’est-ce que Dieu a déjà mis dans ma main ?",
+   "quiz": {
+    "q": "Combien de pierres David choisit-il au torrent pour les mettre dans sa besace ?",
+    "options": [
+     "Trois",
+     "Cinq",
+     "Sept",
+     "Douze"
+    ],
+    "explain": "David choisit dans le torrent cinq pierres lisses et les mit dans sa besace de berger (1 S 17,40)."
+   },
+   "credit": "Osmar Schindler, David and Goliath, 1888 · Domaine public"
+  },
+  "d06": {
+   "title": "L’alliance de Jonathan",
+   "when": "vers 1020 av. J.-C.",
+   "subtitle": "Un ami aimé comme sa propre vie",
+   "story": [
+    "La tête du géant à la main, le garçon se tint devant Saül. Le roi lui demanda : « Jeune homme, de qui es-tu le fils ? » David répondit : « Je suis le fils de ton serviteur Isaï, de Bethléem. » Quand cette courte réponse s’acheva, le cœur du prince Jonathan, qui regardait la scène, se lia étroitement à celui de David. Jonathan l’aima comme sa propre vie.",
+    "Ce jour-là, Saül prit David avec lui et ne le laissa plus retourner dans la maison de son père. Jonathan conclut une alliance avec David. Il ôta le manteau qu’il portait et le donna à David, puis sa tunique, son épée, son arc et jusqu’à sa ceinture. Un à un, le fils du roi remit ce qu’il possédait au berger venu des champs.",
+    "Partout où Saül l’envoyait, David s’en allait et réussissait avec sagesse. Saül le plaça à la tête des hommes de guerre. Tout le peuple l’appréciait, et les serviteurs de Saül aussi. Dans le palais de Guibea, l’un fils de roi, l’autre fils de berger, les deux se tenaient côte à côte, unis par une même alliance."
+   ],
+   "words": [
+    {
+     "who": "David",
+     "text": "Je suis le fils de ton serviteur Isaï, de Bethléem."
+    },
+    {
+     "who": "Saül",
+     "text": "Jeune homme, de qui es-tu le fils ?"
+    }
+   ],
+   "note": "Dans l’ancien Proche-Orient, remettre son manteau et ses armes signifiait partager sa place et sa part. Jonathan était le prince héritier, et un guerrier qui avait mis en déroute le camp philistin de Mikmas (1 Samuel 14).",
+   "reflect": "Est-ce que je peux, comme Jonathan, chérir et faire grandir quelqu’un qui pourrait menacer ma place ?",
+   "quiz": {
+    "q": "Parmi ces objets, lequel Jonathan n’a-t-il PAS donné à David ?",
+    "options": [
+     "Son manteau",
+     "Son arc",
+     "Sa couronne",
+     "Sa ceinture"
+    ],
+    "explain": "Jonathan donna à David son manteau et sa tunique, son épée, son arc et sa ceinture (1 S 18,4)."
+   },
+   "credit": "Gustave Doré, David and Jonathan, 1866 · Bible illustrée par Doré · Domaine public"
+  },
+  "d07": {
+   "title": "Des milliers et des dizaines de milliers",
+   "when": "vers 1019 av. J.-C.",
+   "subtitle": "Un refrain qui changea le regard du roi",
+   "story": [
+    "Au retour de la campagne contre les Philistins, dans chaque ville d’Israël, les femmes sortaient avec des tambourins, dansaient et chantaient : « Saül a tué ses milliers, et David ses dizaines de milliers. » Plus le refrain revenait, plus le visage du roi se fermait. Saül, très irrité, dit : « On donne des dizaines de milliers à David, et à moi seulement des milliers. Il ne lui manque plus que la royauté. » À partir de ce jour, Saül regarda David d’un mauvais œil.",
+    "Le lendemain, l’esprit mauvais fondit sur Saül. Le roi délirait dans sa maison, et David jouait de la lyre comme les autres jours. Saül, la lance à la main, se disait : « Je vais clouer David au mur. » La lance partit, et par deux fois David l’esquiva. Saül comprit que le Seigneur était avec David et s’était retiré de lui, et il eut peur de David.",
+    "Saül fit de David un chef de mille et l’envoya au combat. Tout en lui promettant sa fille, il espérait qu’il tomberait sous les coups des Philistins. Mikal, fille de Saül, aimait David. Le roi demanda comme dot cent prépuces de Philistins. Avant le terme fixé, David sortit et en abattit deux cents. Mikal devint la femme de David, et Saül resta toute sa vie l’ennemi de David."
+   ],
+   "words": [
+    {
+     "who": "David",
+     "text": "Qui suis-je, et qu’est ma famille, la maison de mon père en Israël, pour que je devienne le gendre du roi ?"
+    },
+    {
+     "who": "Les femmes",
+     "text": "Saül a tué ses milliers, et David ses dizaines de milliers."
+    },
+    {
+     "who": "Saül",
+     "text": "On donne dix mille à David, et à moi mille seulement. Que lui manque-t-il encore, sinon la royauté ?"
+    }
+   ],
+   "note": "La dot était le présent que le fiancé versait à la famille de la fiancée ; on la trouve aussi en Genèse 34 et en Exode 22. Au lieu d’argent, Saül exigea la preuve de cent Philistins tués, dans l’espoir que David tombe au combat.",
+   "reflect": "Quand j’entends les applaudissements qu’un autre reçoit, de quel œil mon cœur commence-t-il à le regarder ?",
+   "quiz": {
+    "q": "Quelle dot Saül exigea-t-il de David pour lui donner Mikal ?",
+    "options": [
+     "Cent prépuces de Philistins",
+     "Cinquante sicles d’argent",
+     "L’épée de Goliath",
+     "Mille moutons"
+    ],
+    "explain": "Saül fit dire que le roi ne voulait pour dot que cent prépuces de Philistins, et David en abattit deux cents (1 S 18,25–27)."
+   },
+   "credit": "Guercino, Saul Attacking David, 1646 · Galerie nationale d'art ancien, Rome · Domaine public"
+  },
+  "d08": {
+   "title": "La nuit de la fenêtre",
+   "when": "vers 1018 av. J.-C.",
+   "subtitle": "La fenêtre que Mikal ouvrit",
+   "story": [
+    "Saül dit à son fils Jonathan et à ses serviteurs : « Tuez David. » Jonathan, qui aimait profondément David, l’avertit en secret : « Cache-toi jusqu’au matin ; je parlerai à mon père. » Dans la campagne, Jonathan se tint devant son père : « David a risqué sa vie pour frapper le Philistin, et le Seigneur a accordé à tout Israël une grande victoire. Pourquoi verser un sang innocent ? »",
+    "Saül l’écouta et fit un serment : « Aussi vrai que le Seigneur est vivant, il ne mourra pas. » David revint auprès du roi. Mais lorsque David rentra après une grande victoire sur les Philistins, l’esprit mauvais s’abattit de nouveau sur Saül. Entre deux notes de lyre, la lance de Saül fendit l’air. Elle se planta dans le mur, et David s’échappa cette nuit-là.",
+    "Saül envoya des hommes surveiller la maison de David, avec l’ordre de le tuer au matin. Mikal dit à son mari : « Si tu ne fuis pas cette nuit, demain tu es mort. » Mikal fit descendre David par la fenêtre. Puis elle coucha sur le lit le téraphim de la maison, mit à son chevet du poil de chèvre et le couvrit d’un vêtement. David se glissa entre les hommes qui cernaient la maison. De cette nuit-là, David a chanté : « Mon Dieu, délivre-moi de mes ennemis. »"
+   ],
+   "words": [
+    {
+     "who": "Jonathan",
+     "text": "Ô roi, ne commets pas de faute envers ton serviteur David. Il a risqué sa vie pour frapper le Philistin, et le Seigneur a donné à tout Israël une grande délivrance."
+    },
+    {
+     "who": "Saül",
+     "text": "Aussi vrai que le Seigneur est vivant, je le jure : il ne sera pas mis à mort."
+    },
+    {
+     "who": "Mikal",
+     "text": "Si tu ne sauves pas ta vie cette nuit, demain tu seras mis à mort."
+    },
+    {
+     "who": "Saül",
+     "text": "Pourquoi m’as-tu trompé ainsi et laissé partir mon ennemi pour qu’il s’échappe ?"
+    }
+   ],
+   "note": "Les téraphim étaient des statuettes de dieux domestiques ; ce sont aussi des téraphim que Rachel avait dérobés dans la maison de son père Laban. L’en-tête du Psaume 59 précise qu’il fut composé lorsque Saül envoya surveiller la maison de David pour le faire mourir.",
+   "reflect": "Comme quelqu’un a pris la parole pour moi, ai-je le courage de parler pour celui qui est injustement accusé ?",
+   "quiz": {
+    "q": "Qu’est-ce que Mikal coucha sur le lit après avoir fait fuir David ?",
+    "options": [
+     "Deux oreillers",
+     "Un sac de grain",
+     "Une peau de mouton",
+     "Le téraphim"
+    ],
+    "explain": "Mikal prit le téraphim, le coucha sur le lit, mit à son chevet un tressage de poil de chèvre et le couvrit d’un vêtement (1 S 19,13)."
+   },
+   "credit": "Gustave Doré, David Escapes through a Window, 1866 · Bible illustrée par Doré · Domaine public"
+  },
+  "d09": {
+   "title": "Les prophètes de Rama",
+   "when": "vers 1018 av. J.-C.",
+   "subtitle": "L’Esprit de Dieu, que même le roi ne put arrêter",
+   "story": [
+    "Échappé aux mains de Saül, David se rendit auprès de Samuel, à Rama. Devant le vieux prophète qui l’avait oint, il raconta tout ce que Saül lui avait fait. Les deux hommes allèrent ensemble demeurer à Nayoth. Bientôt, quelqu’un vint le rapporter à Saül : « David est à Nayoth de Rama. »",
+    "Saül envoya des hommes pour s’emparer de David. Quand ils arrivèrent, une troupe de prophètes était en train de prophétiser, et Samuel se tenait devant eux pour les conduire. L’Esprit de Dieu vint sur les hommes de Saül, et eux aussi se mirent à prophétiser. Saül en envoya d’autres : ils prophétisèrent aussi. Ceux qu’il envoya une troisième fois firent de même.",
+    "Finalement, Saül alla lui-même à Rama. Près de la grande citerne de Sékou, il demanda : « Où sont Samuel et David ? » En chemin vers Nayoth, l’Esprit de Dieu vint aussi sur Saül. Le roi marchait en prophétisant ; devant Samuel, il ôta ses vêtements et resta étendu nu tout ce jour-là et toute la nuit. Les gens murmuraient : « Saül aussi est-il parmi les prophètes ? »"
+   ],
+   "words": [
+    {
+     "who": "Les gens",
+     "text": "David est en ce moment à Nayoth de Rama."
+    },
+    {
+     "who": "Saül",
+     "text": "Où sont Samuel et David ?"
+    },
+    {
+     "who": "Les gens",
+     "text": "Saül aussi s’est donc mis parmi les prophètes ?"
+    }
+   ],
+   "note": "Nayoth signifie « demeures » ; c’était sans doute le lieu où, à Rama, une communauté de prophètes vivait autour de Samuel. La parole « Saül aussi est-il parmi les prophètes ? » avait déjà circulé après la première onction de Saül (1 Samuel 10,11–12).",
+   "reflect": "M’est-il arrivé que ce que je poursuivais et voulais saisir par mes propres forces s’arrête net devant Dieu ?",
+   "quiz": {
+    "q": "Combien de fois Saül envoya-t-il des hommes à Nayoth pour prendre David, avant d’y aller lui-même ?",
+    "options": [
+     "Deux fois",
+     "Trois fois",
+     "Quatre fois",
+     "Sept fois"
+    ],
+    "explain": "Les trois fois, les messagers de Saül se mirent à prophétiser ; ensuite Saül se rendit lui-même à Rama (1 S 19,20–22)."
+   },
+   "credit": "Gerard Hoet, Saul among the Prophets, 1728 · Rijksmuseum, Amsterdam · Domaine public"
+  },
+  "d10": {
+   "title": "Trois flèches",
+   "when": "vers 1018 av. J.-C.",
+   "subtitle": "Les flèches de la promesse, tirées au-delà",
+   "story": [
+    "Revenu en fuite de Nayoth, David demanda à Jonathan : « Qu’ai-je fait pour que ton père en veuille à ma vie ? » Jonathan répondit : « Impossible, tu ne mourras pas. » David secoua la tête : « Il n’y a qu’un pas entre moi et la mort. » David décida de manquer le repas de la nouvelle lune et de se cacher dans la campagne. En concluant une alliance avec lui, Jonathan lui dit : « Ne retire jamais ta bonté à ma maison. »",
+    "Le lendemain de la nouvelle lune, la place de David à la table du roi était encore vide. Saül demanda : « Pourquoi le fils d’Isaï n’est-il venu ni hier ni aujourd’hui ? » Quand Jonathan donna l’excuse convenue, Saül s’enflamma de colère : « Tant que le fils d’Isaï vivra, ni toi ni ta royauté ne tiendrez. Il doit mourir. » Jonathan lui tint tête : « Pourquoi devrait-il mourir ? » Pour toute réponse, la lance de Saül fut lancée contre son propre fils.",
+    "Le lendemain matin, Jonathan sortit dans la campagne avec un jeune serviteur. Une flèche passa par-dessus la tête du garçon. Jonathan cria : « La flèche n’est-elle pas plus loin que toi ? Vite, dépêche-toi, ne t’arrête pas ! » C’était le signal pour David, caché derrière le rocher : il devait partir. Quand le garçon fut reparti, David sortit, se prosterna trois fois face contre terre. Les deux hommes s’embrassèrent et pleurèrent ensemble, et David pleura plus fort encore. Jonathan lui dit : « Va en paix. »"
+   ],
+   "words": [
+    {
+     "who": "David",
+     "text": "Aussi vrai que le Seigneur est vivant et que tu es vivant, je te le jure : il n’y a qu’un pas entre moi et la mort."
+    },
+    {
+     "who": "Jonathan",
+     "text": "Va en paix. Nous nous sommes juré tous deux au nom du Seigneur : le Seigneur sera pour toujours entre moi et toi, entre ma descendance et ta descendance."
+    },
+    {
+     "who": "Jonathan",
+     "text": "Tant que je vivrai, use envers moi de la bonté du Seigneur. Et après ma mort, ne retire jamais cette bonté à ma maison."
+    },
+    {
+     "who": "Saül",
+     "text": "Tant que le fils d’Isaï vivra sur la terre, ni toi ni ta royauté ne serez affermis."
+    }
+   ],
+   "note": "La nouvelle lune était une fête où l’on sonnait de la trompette, où l’on offrait des sacrifices et où l’on mangeait ensemble (Nombres 10,10 ; 28,11). La Bible appelle « pierre d’Ézel » le rocher près duquel David attendait, caché.",
+   "reflect": "Même au moment de laisser partir quelqu’un, est-ce que je tiens ferme la promesse faite devant Dieu ?",
+   "quiz": {
+    "q": "Combien de flèches Jonathan convint-il de tirer pour faire connaître à David les intentions de son père ?",
+    "options": [
+     "Trois",
+     "Une",
+     "Cinq",
+     "Sept"
+    ],
+    "explain": "Jonathan dit qu’il tirerait trois flèches à côté du rocher, comme s’il visait une cible (1 S 20,20). Les mots « la flèche est plus loin que toi » signifiaient qu’il fallait partir (1 S 20,22)."
+   },
+   "credit": "Rembrandt, David and Jonathan, 1642 · Musée de l'Ermitage, Saint-Pétersbourg · Domaine public"
+  },
+  "d11": {
+   "title": "Les pains de Nob et l’épée de Goliath",
+   "when": "vers 1018 av. J.-C.",
+   "subtitle": "Le pain sacré reçu par un fugitif affamé, et ce qu’il coûta",
+   "story": [
+    "Sorti du palais de Saül, David arriva les mains vides au sanctuaire de Nob. Le prêtre Ahimélek vint à sa rencontre en tremblant : « Pourquoi viens-tu seul ? Personne ne t’accompagne ? » David inventa une excuse : « Le roi m’a confié une mission secrète. Donne-moi seulement cinq pains. » Il n’y avait au sanctuaire que le pain consacré qu’on venait de retirer. Ahimélek remit à David ces pains, remplacés devant le Seigneur par du pain frais.",
+    "David demanda encore : « N’as-tu pas ici une lance ou une épée ? L’affaire du roi pressait, je n’ai même pas pris mon épée. » Ahimélek répondit : « L’épée de Goliath, que tu as abattu dans la vallée d’Éla, est là, enveloppée dans un manteau derrière l’éphod. » David dit : « Il n’y en a pas de pareille, donne-la-moi. » Mais un autre homme se trouvait là : Doëg l’Édomite, chef des bergers de Saül. Doëg observa tout sans dire un mot.",
+    "Quelque temps après, Doëg rapporta à Saül ce qu’il avait vu ce jour-là. Sur l’ordre de Saül, Doëg tua quatre-vingt-cinq prêtres. Seul Abiatar, fils d’Ahimélek, s’échappa et courut rejoindre David. David dit à Abiatar : « Ce jour-là, en voyant Doëg, j’ai su que cela arriverait. C’est à cause de moi que la maison de ton père est morte. Reste avec moi, ici tu es en sûreté. » Plus tard, David chanta au sujet de Doëg : « Pourquoi te glorifies-tu du mal, homme puissant ? »"
+   ],
+   "words": [
+    {
+     "who": "David",
+     "text": "Ce jour-là, quand j’ai vu Doëg l’Édomite, j’ai su qu’il irait tout rapporter à Saül. Si les gens de la maison de ton père sont morts, c’est à cause de moi."
+    },
+    {
+     "who": "David",
+     "text": "N’aie pas peur, reste avec moi. Celui qui en veut à ta vie en veut aussi à la mienne. Auprès de moi, tu es en sûreté."
+    },
+    {
+     "who": "David",
+     "text": "Il n’y en a pas de pareille. Donne-la-moi."
+    },
+    {
+     "who": "Ahimélek",
+     "text": "Parmi tous les serviteurs du roi, qui est aussi fidèle que David ? Il est le gendre du roi, le chef de sa garde, et il est honoré dans le palais."
+    }
+   ],
+   "note": "Les pains de proposition étaient douze pains disposés chaque sabbat sur la table du sanctuaire ; ceux qu’on retirait ne pouvaient être mangés que par les prêtres (Lv 24,5–9). Jésus évoqua cet épisode lors d’une discussion sur le sabbat (Mc 2,25–26).",
+   "reflect": "Ai-je déjà réfléchi au prix qu’une petite excuse inventée par moi pourrait faire payer à quelqu’un d’autre ?",
+   "quiz": {
+    "q": "Combien de prêtres Doëg tua-t-il à Nob ?",
+    "options": [
+     "Soixante-dix",
+     "Soixante-quinze",
+     "Quatre-vingt-cinq",
+     "Quatre-vingt-dix"
+    ],
+    "explain": "Ce jour-là, Doëg l’Édomite tua quatre-vingt-cinq prêtres qui portaient l’éphod de lin (1 S 22,18). Seul Abiatar, fils d’Ahimélek, s’échappa et rejoignit David (1 S 22,20)."
+   },
+   "credit": "Aert de Gelder, Ahimelech Giving the Sword of Goliath to David, vers 1680–1690 · J. Paul Getty Museum · Domaine public"
+  },
+  "d12": {
+   "title": "La folie feinte à Gath",
+   "when": "vers 1018 av. J.-C.",
+   "subtitle": "Le héros qui se fit passer pour fou aux portes de l’ennemi",
+   "story": [
+    "David se tenait seul devant la porte de Gath, en pays philistin, la ville natale de Goliath. À force de fuir Saül, il n’avait plus d’endroit où se cacher en Israël. Au pays de l’ennemi, pensait-il, la main de Saül ne l’atteindrait pas. David se présenta devant Akish, roi de Gath.",
+    "Mais les serviteurs d’Akish le reconnurent les premiers. Ils murmurèrent au roi : « N’est-ce pas David, le roi du pays ? Celui-là même dont les femmes chantaient en dansant : “Saül a tué ses milliers, et David ses dizaines de milliers” ? » Ces paroles transpercèrent le cœur de David. Il eut très peur d’Akish.",
+    "Devant eux, David devint soudain un autre homme. Il se contorsionnait, griffonnait n’importe comment sur les battants de la porte et laissait couler sa salive sur sa barbe. Akish cria à ses serviteurs : « Vous voyez bien que c’est un fou. Est-ce que je manque de fous, pour que vous m’ameniez celui-ci faire le fou devant moi ? » C’est ainsi que David quitta Gath, comme chassé. De ce jour de terreur, David a chanté : « Le jour où j’ai peur, c’est en toi que je me confie. »"
+   ],
+   "words": [
+    {
+     "who": "Les serviteurs d’Akish",
+     "text": "N’est-ce pas David, le roi du pays ? N’est-ce pas celui dont on chantait en dansant : Saül a tué ses milliers, et David ses dizaines de milliers ?"
+    },
+    {
+     "who": "Akish",
+     "text": "Vous voyez bien que cet homme est fou. Pourquoi me l’amener ? Est-ce que je manque de fous, pour que vous fassiez entrer celui-là dans ma maison ?"
+    }
+   ],
+   "note": "Gath était l’une des cinq villes philistines et la patrie de Goliath (1 S 17,4). On l’identifie largement aujourd’hui à Tell es-Safi. Les en-têtes des Psaumes 56 et 34 renvoient à cet épisode.",
+   "reflect": "Derrière le personnage que je me compose quand j’ai peur, quel est le vrai cœur que je devrais confier à Dieu ?",
+   "quiz": {
+    "q": "Qu’est-ce que David n’a PAS fait à Gath en feignant la folie ?",
+    "options": [
+     "Il brandit son épée contre Akish",
+     "Il griffonna sur les battants de la porte",
+     "Il laissa couler sa salive sur sa barbe",
+     "Il changea d’attitude devant eux"
+    ],
+    "explain": "Devant Akish, David changea d’attitude et fit le fou : il griffonna sur les battants de la porte et laissa couler sa salive sur sa barbe (1 S 21,13). Rien n’indique qu’il ait brandi une épée."
+   },
+   "credit": "Artiste inconnu, David Feigning Madness before Achish · Domaine public"
+  },
+  "d13": {
+   "title": "Les quatre cents de la grotte d’Adoullam",
+   "when": "vers 1017 av. J.-C.",
+   "subtitle": "Une grotte où se rassemblèrent les endettés et les cœurs amers",
+   "story": [
+    "À peine sorti de Gath, David alla se cacher dans la grotte d’Adoullam, au pied des montagnes de Juda. Il n’y avait là que l’obscurité, à part la lumière qui filtrait entre les rochers. C’est alors que des visages familiers parurent à l’entrée de la grotte : ses frères et toute la maison de son père, ayant appris la nouvelle, étaient descendus le rejoindre.",
+    "Puis d’autres vinrent encore : des hommes traqués, des hommes écrasés de dettes, des hommes au cœur plein d’amertume. Venus un à un, ils furent bientôt environ quatre cents. David devint leur chef. Sa première armée n’était pas faite de guerriers du palais, mais de gens que le monde avait rejetés.",
+    "David conduisit ses vieux parents à Mitspé, au pays de Moab, et demanda au roi de Moab : « Permets que mon père et ma mère demeurent ici jusqu’à ce que je sache ce que Dieu fera de moi. » Ensuite, le prophète Gad dit à David : « Ne reste pas dans ce refuge, va au pays de Juda. » David partit pour la forêt de Héreth. Au temps où il se cachait dans la grotte, David cria : « Tu es mon refuge, ma part sur la terre des vivants. »"
+   ],
+   "words": [
+    {
+     "who": "David",
+     "text": "Jusqu’à ce que je sache ce que Dieu fera de moi, permets que mon père et ma mère viennent demeurer ici avec toi."
+    },
+    {
+     "who": "Gad",
+     "text": "Ne reste pas dans ce refuge. Pars, et entre au pays de Juda."
+    }
+   ],
+   "note": "Adoullam était une ancienne ville de la Shéphéla, les basses collines de Juda ; Josué en avait vaincu le roi (Jos 12,15). Comme Ruth, l’arrière-grand-mère de David, était moabite, certains pensent que c’est pour cela qu’il confia ses parents à Moab (Rt 4,17).",
+   "reflect": "Si des gens rejetés et blessés se rassemblaient autour de moi, les verrais-je comme un fardeau, ou les accueillerais-je comme des compagnons de route ?",
+   "quiz": {
+    "q": "Combien d’hommes environ se rassemblèrent autour de David à la grotte d’Adoullam ?",
+    "options": [
+     "Deux cents",
+     "Quatre cents",
+     "Six cents",
+     "Trois mille"
+    ],
+    "explain": "Tous ceux qui étaient dans la détresse, endettés ou amers se rassemblèrent auprès de David ; ils étaient environ quatre cents, et David devint leur chef (1 S 22,2)."
+   },
+   "credit": "Claude Lorrain, Landscape with David at the Cave of Adullam, 1658 · National Gallery de Londres · Domaine public"
+  },
+  "d14": {
+   "title": "Qeïla délivrée",
+   "when": "vers 1016 av. J.-C.",
+   "subtitle": "Quand la ville secourue s’apprête à refermer ses portes",
+   "story": [
+    "La nouvelle arriva : les Philistins attaquaient Qeïla et pillaient le grain sur les aires. David consulta le Seigneur : « Dois-je aller les battre ? » Le Seigneur répondit : « Va, frappe les Philistins et sauve Qeïla. » Mais ses hommes secouèrent la tête : « Déjà ici, en Juda, nous avons peur en nous cachant. Et tu veux aller jusqu’à Qeïla attaquer l’armée des Philistins ? »",
+    "David consulta de nouveau le Seigneur. Cette fois, la réponse fut plus claire encore : « Lève-toi, descends à Qeïla, car je livrerai les Philistins entre tes mains. » David et ses hommes descendirent, infligèrent une lourde défaite aux Philistins et emmenèrent leur bétail. Les habitants de Qeïla furent sauvés. Vers ce temps-là, le prêtre Abiatar, seul rescapé de Nob, rejoignit David en apportant l’éphod.",
+    "Apprenant la nouvelle, Saül s’écria tout joyeux : « David s’est enfermé lui-même dans une ville à portes et à verrous ! » Devant l’éphod, David demanda : « Saül va-t-il descendre ? » Le Seigneur répondit : « Il descendra. » David demanda encore : « Les gens de Qeïla me livreront-ils ? » Le Seigneur dit : « Ils te livreront. » David quitta Qeïla avec ses hommes, environ six cents, et ils errèrent sans but fixe. Saül renonça à son expédition."
+   ],
+   "words": [
+    {
+     "who": "Dieu",
+     "text": "Va, frappe les Philistins et sauve Qeïla."
+    },
+    {
+     "who": "Dieu",
+     "text": "Lève-toi, descends à Qeïla, car je livrerai les Philistins entre tes mains."
+    },
+    {
+     "who": "David",
+     "text": "Seigneur, Dieu d’Israël, ton serviteur a appris avec certitude que Saül cherche à venir à Qeïla pour détruire la ville à cause de moi."
+    },
+    {
+     "who": "Dieu",
+     "text": "Ils te livreront."
+    }
+   ],
+   "note": "Qeïla était une ville de la Shéphéla, au sud d’Adoullam, à environ 13 km au nord-ouest d’Hébron ; on l’identifie aujourd’hui à Khirbet Qila. Les aires de battage se trouvaient hors des murs, ce qui en faisait une proie facile au moment de la moisson.",
+   "reflect": "Même pour des gens qui ne savent pas dire merci, puis-je d’abord interroger le Seigneur, puis agir ?",
+   "quiz": {
+    "q": "Combien d’hommes environ accompagnaient David quand il quitta Qeïla ?",
+    "options": [
+     "Quatre cents",
+     "Deux cents",
+     "Trois mille",
+     "Six cents"
+    ],
+    "explain": "David et ses hommes, environ six cents, se levèrent, quittèrent Qeïla et allèrent où ils purent (1 S 23,13)."
+   },
+   "credit": "François van Bleyswijck, David Consults the High Priest through the Ephod, vers 1681–1746 · Rijksmuseum, Amsterdam · Domaine public"
+  },
+  "d15": {
+   "title": "La dénonciation au désert de Ziph",
+   "when": "vers 1016 av. J.-C.",
+   "subtitle": "Deux amis au désert, et une poursuite de part et d’autre d’une montagne",
+   "story": [
+    "David errait parmi les refuges et les hauteurs du désert de Ziph. Saül le cherchait chaque jour, mais Dieu ne le livra pas entre ses mains. C’est alors que Jonathan, fils de Saül, vint trouver David à Horesh. Jonathan lui prit la main et lui dit : « N’aie pas peur. La main de mon père ne t’atteindra pas. Tu seras roi d’Israël, et moi je serai le second après toi. » Ils conclurent une alliance devant le Seigneur, puis se séparèrent. Ce fut leur dernière rencontre.",
+    "Mais des gens de Ziph montèrent à Guibea pour dénoncer David à Saül : « David ne se cache-t-il pas chez nous, dans les refuges de la colline de Hakila ? » Saül les bénit : « Vous avez eu pitié de moi. Allez repérer tous les endroits où il se cache. » Saül descendit avec ses troupes jusqu’au désert de Maôn.",
+    "Saül marchait d’un côté de la montagne, David de l’autre. David se hâtait de fuir, et les hommes de Saül l’encerclaient en resserrant l’étau. Il était sur le point d’être pris. Juste à ce moment, un messager accourut auprès de Saül : « Reviens vite, les Philistins ont envahi le pays ! » Saül rebroussa chemin. C’est pourquoi on appela ce lieu le Rocher de la Séparation, Séla-Hammahleqoth. De ce jour, David a chanté : « Ô Dieu, sauve-moi par ton nom. »"
+   ],
+   "words": [
+    {
+     "who": "Jonathan",
+     "text": "N’aie pas peur. La main de mon père Saül ne te trouvera pas. Tu seras roi d’Israël, et moi, je serai le second après toi."
+    },
+    {
+     "who": "Les gens de Ziph",
+     "text": "David ne se cache-t-il pas chez nous, dans les refuges de Horesh, sur la colline de Hakila, au sud du Yeshimôn ?"
+    },
+    {
+     "who": "Saül",
+     "text": "Que le Seigneur vous bénisse, car vous avez eu pitié de moi."
+    },
+    {
+     "who": "Le messager",
+     "text": "Reviens vite, les Philistins ont envahi le pays."
+    }
+   ],
+   "note": "Ziph est identifiée à Tell Zif, à environ 7 km au sud-est d’Hébron. À l’est, le désert aride de Juda s’étend jusqu’à la mer Morte. C’est à Horesh que Jonathan et David se virent vivants pour la dernière fois.",
+   "reflect": "Comme Jonathan qui alla affermir en Dieu la main de son ami traqué, qui devrais-je aller trouver aujourd’hui ?",
+   "quiz": {
+    "q": "Quel nom fut donné au lieu où Saül, ayant presque rattrapé David, fit demi-tour ?",
+    "options": [
+     "Ében-Ézer",
+     "Séla-Hammahleqoth",
+     "Guilgal",
+     "Beer-Lahaï-Roï"
+    ],
+    "explain": "Saül repartit en apprenant que les Philistins avaient envahi le pays ; c’est pourquoi on appela ce lieu Séla-Hammahleqoth (1 S 23,27–28)."
+   },
+   "credit": "James Tissot, David in the Wilderness of Ziph, vers 1896–1902 · John Rylands Library, Manchester · Domaine public"
+  },
+  "d16": {
+   "title": "Le pan du manteau dans la grotte d’En-Guédi",
+   "when": "vers 1015 av. J.-C.",
+   "subtitle": "La main qui, dans la grotte, coupa un pan de manteau au lieu de frapper",
+   "story": [
+    "Parmi les Rochers des Bouquetins d’En-Guédi, Saül arriva avec trois mille hommes d’élite. Près des parcs à moutons, au bord du chemin, il y avait une grotte. Saül y entra seul pour se soulager. Or tout au fond de cette grotte, dans l’obscurité, David et ses hommes étaient assis, retenant leur souffle.",
+    "Les hommes de David lui chuchotèrent : « Voici le jour où le Seigneur te livre ton ennemi ! » David s’approcha sans bruit et coupa doucement un pan du manteau de Saül. Mais en revenant, David eut le cœur troublé. Il dit à ses hommes : « Que le Seigneur me garde de porter la main sur mon seigneur, l’oint du Seigneur ! » C’est ainsi que David retint ses hommes et les empêcha de frapper Saül.",
+    "Quand Saül sortit de la grotte, David sortit à sa suite et cria : « Mon seigneur le roi ! » Prosterné à terre, il leva le pan du manteau : « Mon père, regarde. Je n’ai coupé que le pan de ton manteau, je ne t’ai pas tué. » Saül éleva la voix et pleura : « Est-ce bien ta voix, mon fils David ? Tu es plus juste que moi. » Saül rentra chez lui, et David remonta vers son refuge. Le chant de cette grotte est resté : « À l’ombre de tes ailes, je me réfugie. »"
+   ],
+   "words": [
+    {
+     "who": "David",
+     "text": "Que le Seigneur me garde à tout prix de porter la main sur mon seigneur, l’oint du Seigneur, pour lui faire du mal."
+    },
+    {
+     "who": "David",
+     "text": "Mon père, regarde, regarde ce pan de manteau dans ma main. Je n’ai coupé que ce pan et je ne t’ai pas tué : reconnais qu’il n’y a en moi ni mal ni révolte."
+    },
+    {
+     "who": "Saül",
+     "text": "Tu es plus juste que moi. Je t’ai rendu le mal, et toi, tu m’as rendu le bien."
+    },
+    {
+     "who": "Saül",
+     "text": "Maintenant je le sais : tu seras roi, et la royauté d’Israël sera affermie dans ta main."
+    }
+   ],
+   "note": "En-Guédi signifie « source du chevreau » : c’est une oasis où jaillissent des sources au pied des falaises qui bordent la mer Morte à l’ouest. Aujourd’hui encore, des bouquetins de Nubie vivent dans ces montagnes rocheuses. Les falaises calcaires voisines sont percées de nombreuses grottes.",
+   "reflect": "Quand l’occasion de frapper mon ennemi ressemble à un « jour donné par Dieu », est-ce que mon cœur sait se troubler devant elle ?",
+   "quiz": {
+    "q": "Que coupa David à Saül dans la grotte d’En-Guédi ?",
+    "options": [
+     "Un pan de son manteau",
+     "Une mèche de cheveux",
+     "Sa ceinture",
+     "La pointe de sa lance"
+    ],
+    "explain": "David se leva et coupa doucement le pan du manteau de Saül, puis il en eut le cœur troublé (1 S 24,4–5)."
+   },
+   "credit": "Julius Schnorr von Carolsfeld, David Spares Saul in the Cave, vers 1851–1860 · Die Bibel in Bildern · Domaine public"
+  },
+  "d17": {
+   "title": "Nabal et Abigaïl",
+   "when": "vers 1014 av. J.-C.",
+   "subtitle": "Une femme face à quatre cents hommes armés",
+   "story": [
+    "Samuel était mort, et tout Israël le pleurait. À Carmel, on était en pleine fête de la tonte. C’était la fête de Nabal, un homme riche qui possédait trois mille moutons et mille chèvres. David envoya dix jeunes gens le saluer courtoisement et lui demander de quoi manger. Nabal ricana : « Qui est David ? Qui est ce fils d’Isaï ? Ils sont nombreux, aujourd’hui, les esclaves qui s’enfuient de chez leur maître. »",
+    "Quand on lui rapporta ces paroles, David s’écria : « Que chacun ceigne son épée ! » Quatre cents hommes partirent, l’épée au côté. Pendant ce temps, un serviteur de Nabal courut prévenir sa maîtresse, Abigaïl : « Les hommes de David ont été pour nous un rempart, jour et nuit, et notre maître les a insultés. » Abigaïl se hâta. Elle chargea sur des ânes deux cents pains, deux outres de vin, cinq moutons apprêtés, des grappes de raisins secs et des gâteaux de figues, et se mit en route sans rien dire à son mari.",
+    "Sur un chemin de montagne, elle rencontra David qui descendait ; Abigaïl sauta de son âne et se prosterna. Elle dit : « Que la faute retombe sur moi. Que mon seigneur n’ait pas sur le cœur le poids d’avoir versé le sang sans raison. » David lui répondit : « Béni soit le Seigneur qui t’a envoyée aujourd’hui. Tu m’as empêché de verser le sang. » Une dizaine de jours plus tard, le Seigneur frappa Nabal, et il mourut. David prit Abigaïl pour femme."
+   ],
+   "words": [
+    {
+     "who": "David",
+     "text": "Béni soit le Seigneur, le Dieu d’Israël, qui t’a envoyée aujourd’hui à ma rencontre. Bénie soit ta sagesse. C’est toi qui m’as empêché aujourd’hui de verser le sang."
+    },
+    {
+     "who": "Abigaïl",
+     "text": "Le Seigneur bâtira sûrement pour mon seigneur une maison solide, car mon seigneur combat les combats du Seigneur, et de toute ta vie aucun mal ne sera trouvé en toi."
+    },
+    {
+     "who": "Nabal",
+     "text": "Qui est David ? Qui est le fils d’Isaï ? Ils sont nombreux, aujourd’hui, les esclaves qui s’enfuient de chez leur maître."
+    }
+   ],
+   "note": "Le Carmel dont il est question ici n’est pas le mont Carmel au bord de la mer, mais une ville de Juda près de Maôn, au sud d’Hébron. La tonte des moutons était un temps de fête où l’on partageait largement. « Nabal » signifie « insensé » en hébreu.",
+   "reflect": "Quand ma colère ceint l’épée et part, est-ce que j’écoute la voix sage qui se met en travers de mon chemin ?",
+   "quiz": {
+    "q": "Quand Nabal mourut-il, après la rencontre d’Abigaïl avec David ?",
+    "options": [
+     "La nuit même",
+     "Le lendemain matin",
+     "Une dizaine de jours plus tard",
+     "Un mois plus tard"
+    ],
+    "explain": "Le lendemain matin, dégrisé, Nabal entendit le récit de sa femme et son cœur devint comme une pierre ; une dizaine de jours plus tard, le Seigneur le frappa et il mourut (1 S 25,37–38)."
+   },
+   "credit": "Peter Paul Rubens, The Meeting of David and Abigail, vers 1625–1628 · Detroit Institute of Arts · Domaine public"
+  },
+  "d18": {
+   "title": "La lance et la gourde de Saül endormi",
+   "when": "vers 1013 av. J.-C.",
+   "subtitle": "Deux hommes à travers un camp plongé dans un profond sommeil",
+   "story": [
+    "Les gens de Ziph allèrent une fois de plus révéler à Saül la cachette de David. Saül, avec trois mille hommes d’élite, campa au bord du chemin, sur la colline de Hakila. Cette nuit-là, du haut de la montagne, David observait le camp. Saül était couché au milieu, entouré d’Abner, le chef de l’armée, et de ses soldats. David demanda à ses hommes : « Qui descendra avec moi dans ce camp ? » Abishaï, frère de Joab, s’avança : « Moi, j’irai avec toi. »",
+    "Les deux hommes s’avancèrent parmi les soldats endormis. À la tête de Saül, sa lance était plantée en terre. Abishaï chuchota : « Laisse-moi le clouer au sol d’un seul coup de cette lance. Je n’aurai pas besoin de frapper deux fois. » David l’en empêcha : « Qui pourrait porter la main sur l’oint du Seigneur et rester innocent ? Prenons seulement la lance et la gourde. » Le Seigneur avait fait tomber sur eux un profond sommeil : personne ne vit rien, personne ne se réveilla.",
+    "David se tint au loin, au sommet de la montagne d’en face, et cria : « Abner, pourquoi n’as-tu pas gardé ton maître ? Regarde où sont la lance et la gourde du roi ! » Saül reconnut la voix de David : « J’ai péché. Reviens, mon fils David. » David lui dit d’envoyer quelqu’un chercher la lance, et il poursuivit son chemin. Ce fut la dernière fois qu’ils se trouvèrent face à face. Au désert, David chanta : « Sur une terre aride, mon âme a soif de toi. »"
+   ],
+   "words": [
+    {
+     "who": "David",
+     "text": "Ne le tue pas. Qui pourrait porter la main sur l’oint du Seigneur et se dire innocent ?"
+    },
+    {
+     "who": "David",
+     "text": "Comme aujourd’hui j’ai tenu pour précieuse la vie du roi, que le Seigneur tienne aussi ma vie pour précieuse et me délivre de toute détresse."
+    },
+    {
+     "who": "Saül",
+     "text": "J’ai péché. Reviens, mon fils David. Puisque aujourd’hui tu as tenu ma vie pour précieuse, je ne te ferai plus de mal. J’ai agi comme un insensé."
+    },
+    {
+     "who": "Abishaï",
+     "text": "Aujourd’hui, Dieu a livré ton ennemi entre tes mains. D’un seul coup de lance, je vais le clouer au sol. Je n’aurai pas besoin de frapper deux fois."
+    }
+   ],
+   "note": "Ce fut la dernière fois que Saül et David se trouvèrent face à face de leur vivant. Abishaï était fils de Tserouya, la sœur de David, et frère de Joab. L’en-tête du Psaume 63 indique qu’il fut composé lorsque David était au désert de Juda.",
+   "reflect": "Quand la même tentation revient une seconde fois, puis-je encore choisir d’attendre le temps de Dieu ?",
+   "quiz": {
+    "q": "Qu’est-ce que David emporta de la tête de Saül endormi ?",
+    "options": [
+     "La couronne et le bracelet",
+     "L’épée et le bouclier",
+     "Un pan de son manteau",
+     "La lance et la gourde"
+    ],
+    "explain": "David prit la lance et la gourde qui étaient à la tête de Saül, et personne ne se réveilla, car le Seigneur les avait plongés dans un profond sommeil (1 S 26,12)."
+   },
+   "credit": "James Tissot, David Stops on a Hill, vers 1896–1902 · John Rylands Library, Manchester · Domaine public"
+  },
+  "d19": {
+   "title": "Le jour où Tsiklag brûla",
+   "when": "vers 1011 av. J.-C.",
+   "subtitle": "Retrouver la force là où l’on n’a même plus la force de pleurer",
+   "story": [
+    "David se disait en lui-même : « Un jour ou l’autre, je finirai par périr de la main de Saül. » Avec ses six cents hommes et leurs familles, il alla se mettre sous la protection d’Akish, roi de Gath, en pays philistin. Akish lui donna Tsiklag. Un an et quatre mois passèrent là. Puis un jour, renvoyés du camp philistin, ils revinrent après trois jours de marche : devant eux, il ne restait que de la fumée. Les Amalécites avaient incendié la ville et emmené toutes les femmes et tous les enfants.",
+    "David et ses hommes éclatèrent en sanglots. Ils pleurèrent jusqu’à ne plus en avoir la force. Les deux femmes de David avaient aussi été emmenées. Ceux qui avaient perdu leurs enfants parlaient de lapider David. David était dans une grande détresse. Mais David trouva sa force dans le Seigneur, son Dieu. Il fit apporter l’éphod par Abiatar et consulta le Seigneur. Le Seigneur répondit : « Poursuis-les. Tu les rattraperas, et tu reprendras tout. »",
+    "Au torrent de Besor, deux cents hommes épuisés restèrent en arrière, et quatre cents partirent à la poursuite. Ils trouvèrent dans la campagne un jeune Égyptien qui n’avait rien mangé depuis trois jours ; on le nourrit, et il leur montra le chemin. David tomba sur les Amalécites en pleine fête et reprit tout. Il ne manqua rien, ni petite chose ni enfant. Quelques-uns grognèrent : « Ceux qui ne sont pas venus avec nous n’auront rien. » David répondit : « Celui qui est parti au combat et celui qui est resté près des bagages auront la même part. »"
+   ],
+   "words": [
+    {
+     "who": "Dieu",
+     "text": "Poursuis-les. Tu les rattraperas à coup sûr, et tu reprendras tout."
+    },
+    {
+     "who": "David",
+     "text": "Mes frères, n’agissez pas ainsi avec ce que le Seigneur nous a donné. C’est lui qui nous a gardés et qui a livré entre nos mains la bande qui nous avait attaqués."
+    },
+    {
+     "who": "David",
+     "text": "La part de celui qui est descendu au combat sera la même que celle de celui qui est resté près des bagages. Tous partageront ensemble."
+    },
+    {
+     "who": "David",
+     "text": "Un jour ou l’autre, je finirai par périr de la main de Saül. Je n’ai rien de mieux à faire que de me réfugier au pays des Philistins."
+    }
+   ],
+   "note": "Tsiklag était une ville de l’ouest du Néguev ; depuis qu’Akish l’avait donnée à David, elle appartint aux rois de Juda (1 S 27,6). David envoya une partie du butin repris en présent aux anciens de Juda, et le partage égal devint une règle en Israël.",
+   "reflect": "Le jour où je n’ai même plus la force de pleurer, en qui est-ce que je retrouve des forces ?",
+   "quiz": {
+    "q": "Combien d’hommes de David, trop épuisés, restèrent au torrent de Besor ?",
+    "options": [
+     "Cent",
+     "Deux cents",
+     "Trois cents",
+     "Quatre cents"
+    ],
+    "explain": "Sur les six cents hommes de David, deux cents, épuisés, restèrent au torrent de Besor, et David poursuivit avec quatre cents (1 S 30,9–10)."
+   },
+   "credit": "D'après Maerten de Vos, David before Ziklag · Collection particulière · Domaine public"
+  },
+  "d20": {
+   "title": "Le deuil de Guilboa",
+   "when": "vers 1010 av. J.-C.",
+   "subtitle": "Le chant de l’arc, pour un roi et un ami tombés",
+   "story": [
+    "Les pentes du mont Guilboa étaient couvertes des corps des soldats d’Israël. Les trois fils de Saül, Jonathan, Abinadab et Malki-Shoua, étaient tombés, et Saül lui-même, atteint par les archers, était grièvement blessé. Saül dit à son porteur d’armes : « Tire ton épée et transperce-moi. » Le soldat, saisi de crainte, n’osa pas. Saül se jeta sur sa propre épée. Le lendemain, les Philistins pendirent son corps aux remparts de Beth-Shéân.",
+    "En l’apprenant, les vaillants de Jabesh de Galaad marchèrent toute la nuit et décrochèrent des remparts les corps de Saül et de ses fils. Ils enterrèrent leurs os sous le tamaris et jeûnèrent sept jours. Vers ce temps-là, à Tsiklag, un jeune Amalécite vint trouver David, les vêtements déchirés et de la terre sur la tête. Il prétendit avoir tué Saül et présenta la couronne et le bracelet. David déchira ses vêtements, pleura et jeûna jusqu’au soir.",
+    "Puis David composa un chant et le fit apprendre aux fils de Juda. Dans ce chant, appelé le chant de l’arc, David pleura ainsi : « Ta gloire, Israël, a été tuée sur tes hauteurs ! Comment les héros sont-ils tombés ? Ne l’annoncez pas à Gath. Montagnes de Guilboa, que ni rosée ni pluie ne tombent sur vous. Saül et Jonathan n’ont pas été séparés, ni dans la vie ni dans la mort. Mon frère Jonathan, mon cœur se déchire à cause de toi. »"
+   ],
+   "words": [
+    {
+     "who": "David",
+     "text": "Ta gloire, Israël, a été tuée sur tes hauteurs. Ah, comment les héros sont-ils tombés !"
+    },
+    {
+     "who": "David",
+     "text": "Mon frère Jonathan, j’ai le cœur serré à cause de toi. Tu m’étais si cher. Ton amour était pour moi plus merveilleux que l’amour des femmes."
+    },
+    {
+     "who": "David",
+     "text": "Saül et Jonathan, aimés et pleins de tendresse durant leur vie, n’ont pas été séparés dans leur mort. Ils étaient plus rapides que les aigles, plus forts que les lions."
+    },
+    {
+     "who": "Saül",
+     "text": "Tire ton épée et transperce-moi, pour que ces incirconcis ne viennent pas me transpercer et me couvrir d’outrages."
+    }
+   ],
+   "note": "Le chant de l’arc était, dit-on, consigné dans le « livre du Juste » (2 S 1,18). Jabesh de Galaad était la ville que Saül, tout juste devenu roi, avait délivrée des Ammonites (1 S 11).",
+   "reflect": "Devant la mort de celui qui m’a poursuivi jusqu’au bout, puis-je pleurer sur lui au lieu de me réjouir ?",
+   "quiz": {
+    "q": "Qui marcha toute la nuit pour décrocher des remparts les corps de Saül et de ses fils ?",
+    "options": [
+     "Les vaillants de Jabesh de Galaad",
+     "Les anciens de Bethléem",
+     "Les hommes de David à Tsiklag",
+     "Les prêtres de Guibea"
+    ],
+    "explain": "Apprenant la nouvelle, les vaillants de Jabesh de Galaad marchèrent toute la nuit, prirent les corps sur les remparts de Beth-Shéân, les enterrèrent à Jabesh et jeûnèrent sept jours (1 S 31,11–13)."
+   },
+   "credit": "Paul Hardy, David Lamented over Saul · Domaine public"
+  },
+  "d21": {
+   "title": "Roi à Hébron",
+   "when": "vers 1010 av. J.-C.",
+   "subtitle": "La première place de celui qui sortit du désert",
+   "story": [
+    "La nouvelle que Saül était tombé à Guilboa parvint à Tsiklag. Le trône était vacant, mais David ne se précipita pas : il consulta d’abord le Seigneur. « Dois-je monter dans une des villes de Juda ? » Le Seigneur répondit : « Monte. » David demanda encore : « Où dois-je aller ? » Le Seigneur répondit : « À Hébron. » Avec ses deux femmes, Ahinoam et Abigaïl, avec ses hommes et leurs familles, David gravit les chemins de montagne et s’installa à Hébron.",
+    "Les hommes de Juda affluèrent à Hébron et donnèrent l’onction à David. Celui qui avait erré dans le désert devenait roi de la maison de Juda. On rapporta alors au roi que ceux qui avaient enseveli Saül étaient les gens de Jabesh de Galaad, au-delà du Jourdain. David leur envoya des messagers : « Vous avez été fidèles envers votre maître Saül ; que le Seigneur vous bénisse. Moi aussi, je vous ferai du bien. »",
+    "Ensuite, une longue guerre opposa la maison de Saül à la maison de David. Quand elle prit fin, toutes les tribus d’Israël vinrent trouver David à Hébron. Les anciens dirent : « Nous sommes tes os et ta chair. Même quand Saül était roi, c’est toi qui conduisais Israël au combat et le ramenais. » David conclut avec eux une alliance devant le Seigneur, et les anciens lui donnèrent l’onction pour l’établir roi sur tout Israël. Il avait régné sept ans et demi à Hébron sur Juda seul."
+   ],
+   "words": [
+    {
+     "who": "Dieu",
+     "text": "Monte. Va à Hébron."
+    },
+    {
+     "who": "David",
+     "text": "Vous avez enseveli votre maître Saül et lui êtes restés fidèles : que le Seigneur vous bénisse et vous montre son amour constant et sa fidélité."
+    },
+    {
+     "who": "Les tribus d’Israël",
+     "text": "Nous sommes tes os et ta chair. Le Seigneur t’a dit : C’est toi qui seras le berger de mon peuple Israël, c’est toi qui seras son chef."
+    }
+   ],
+   "note": "Hébron est une ancienne ville des montagnes de Juda, où se trouve la grotte de Macpéla, où Abraham vécut et fut enseveli. David y régna sept ans et demi sur Juda, puis il s’installa à Jérusalem, d’où il régna trente-trois ans sur tout Israël.",
+   "reflect": "Comme David, oint par Samuel puis passé par un long désert avant d’arriver à Hébron, est-ce que je marche en interrogeant le Seigneur pendant le long temps qui sépare la promesse de son accomplissement ?",
+   "quiz": {
+    "q": "Quel âge avait David quand il devint roi pour la première fois ?",
+    "options": [
+     "Vingt ans",
+     "Vingt-cinq ans",
+     "Trente ans",
+     "Quarante ans"
+    ],
+    "explain": "David avait trente ans quand il devint roi, et il régna quarante ans (2 S 5,4)."
+   },
+   "credit": "Julius Schnorr von Carolsfeld, David Is Made King of Judah, vers 1851–1860 · Die Bibel in Bildern · Domaine public"
+  },
+  "d22": {
+   "title": "La forteresse de Sion",
+   "when": "vers 1003 av. J.-C.",
+   "subtitle": "La ville où, disait-on, nul ne pouvait entrer",
+   "story": [
+    "Partis d’Hébron, David et ses soldats se tinrent devant la ville des Jébuséens. Sur une crête étroite, entourée sur trois côtés de vallées profondes, se dressait la forteresse de Sion. Du haut des remparts, les Jébuséens se moquaient : « Tu n’entreras pas ici. Même les aveugles et les boiteux te repousseront. » Ils voulaient dire que jamais David n’entrerait dans cette ville.",
+    "Ce jour-là, David dit à ses soldats : « Que celui qui veut battre les Jébuséens monte par le canal. » Et la ville où nul ne pouvait entrer tomba. David s’empara de la forteresse de Sion et s’y installa. On l’appela la cité de David. David bâtit une enceinte tout autour, depuis le Millo vers l’intérieur. Le Seigneur, le Dieu des armées, était avec lui, et David devenait de plus en plus puissant.",
+    "De Tyr, au bord de la mer, au nord, le roi Hiram envoya des ambassadeurs, avec du bois de cèdre, des charpentiers et des tailleurs de pierre. Ils bâtirent un palais pour David. Tandis que les coups de marteau résonnaient dans la forteresse, David comprit que le Seigneur l’avait affermi comme roi d’Israël, et qu’il avait élevé son royaume non pour David seul, mais à cause de son peuple Israël."
+   ],
+   "words": [
+    {
+     "who": "David",
+     "text": "Que celui qui veut battre les Jébuséens monte par le canal et frappe."
+    },
+    {
+     "who": "Les Jébuséens",
+     "text": "Tu n’entreras pas ici. Même les aveugles et les boiteux te chasseront."
+    }
+   ],
+   "note": "La cité de David se trouvait au sud de l’actuelle vieille ville de Jérusalem, sur une crête étroite au-dessus de la vallée du Cédron. Selon une hypothèse, le puits vertical qui servait à faire monter l’eau dans la ville serait le canal emprunté par les soldats de David, mais cela reste incertain.",
+   "reflect": "Devant un rempart que tous jugeaient infranchissable, David regardait le Dieu qui était avec lui ; quand je vois le haut mur devant moi, qu’est-ce que je regarde en premier ?",
+   "quiz": {
+    "q": "Quel roi envoya à David du cèdre, des charpentiers et des tailleurs de pierre pour bâtir son palais ?",
+    "options": [
+     "Hiram, roi de Tyr",
+     "Pharaon, roi d’Égypte",
+     "Toï, roi de Hamath",
+     "Hadadézer, roi de Tsoba"
+    ],
+    "explain": "Hiram, roi de Tyr, envoya des messagers, du bois de cèdre, des charpentiers et des tailleurs de pierre, qui bâtirent le palais de David (2 S 5,11)."
+   },
+   "credit": "David Roberts, Jerusalem from the South, 1842 · Bibliothèque du Congrès · Domaine public"
+  },
+  "d23": {
+   "title": "Ouzza et l’arche arrêtée",
+   "when": "vers 1000 av. J.-C.",
+   "subtitle": "L’aire où s’arrêta le cortège de joie",
+   "story": [
+    "Le son des lyres et des harpes, des tambourins et des cymbales remplissait les chemins de montagne. David rassembla trente mille hommes d’élite et monta à Baala de Juda, pour en ramener l’arche de Dieu, qui était restée longtemps dans la maison d’Abinadab. L’arche fut chargée sur un chariot neuf, conduit par Ouzza et Ahio, fils d’Abinadab. Ahio marchait devant l’arche, et David et tout Israël se réjouissaient de toutes leurs forces devant le Seigneur.",
+    "Ils arrivèrent à l’aire de Nakôn. Les bœufs firent un écart, et le chariot pencha. Ouzza tendit la main et saisit l’arche de Dieu. À l’instant, la colère du Seigneur s’enflamma contre Ouzza. Dieu le frappa à cause de cette faute, et Ouzza mourut là, près de l’arche. La musique se tut d’un coup. David fut irrité de ce que le Seigneur avait frappé Ouzza, et depuis ce jour on appelle ce lieu Pérèç-Ouzza, « la brèche d’Ouzza ».",
+    "Après la colère vint la crainte. David dit : « Comment l’arche du Seigneur pourrait-elle venir chez moi ? » Il renonça à la faire entrer dans la cité de David et la fit porter dans la maison d’Obed-Édom de Gath. L’arche demeura trois mois dans cette maison. Et le Seigneur bénit Obed-Édom et toute sa maison."
+   ],
+   "words": [
+    {
+     "who": "David",
+     "text": "Comment l’arche du Seigneur pourrait-elle venir chez moi ?"
+    },
+    {
+     "who": "Dieu",
+     "text": "Les fils de Qehath viendront porter les objets sacrés, mais ils ne toucheront pas aux choses saintes, sinon ils mourront."
+    },
+    {
+     "who": "Le narrateur",
+     "text": "Pendant les trois mois où l’arche du Seigneur demeura dans la maison d’Obed-Édom, le Seigneur bénit Obed-Édom et toute sa maison."
+    }
+   ],
+   "note": "La Loi prescrivait que l’arche soit transportée non sur un chariot, mais sur les épaules des Qehathites, de la tribu de Lévi, au moyen de barres passées dans ses anneaux. Revenue du pays philistin, l’arche était restée plus de vingt ans à Qiryath-Yearim, dans la maison d’Abinadab.",
+   "reflect": "Même un cortège plein de joie et de zèle a pu s’arrêter faute d’avoir demandé comment Dieu voulait agir ; est-ce que je mets en avant mes bonnes intentions en sautant l’étape où je demande le chemin du Seigneur ?",
+   "quiz": {
+    "q": "Combien de temps l’arche de Dieu resta-t-elle dans la maison d’Obed-Édom ?",
+    "options": [
+     "Un mois",
+     "Sept mois",
+     "Un an",
+     "Trois mois"
+    ],
+    "explain": "L’arche du Seigneur resta trois mois dans la maison d’Obed-Édom de Gath, et le Seigneur bénit sa maison (2 S 6,11)."
+   },
+   "credit": "James Tissot, The Chastisement of Uzzah, vers 1896–1902 · John Rylands Library, Manchester · Domaine public"
+  },
+  "d24": {
+   "title": "L’arche monte au son des danses",
+   "when": "vers 1000 av. J.-C.",
+   "subtitle": "La danse d’un roi, de toutes ses forces",
+   "story": [
+    "La nouvelle parvint au roi : le Seigneur avait béni la maison d’Obed-Édom. David reprit la route et fit monter l’arche dans la joie. Cette fois, ce n’était plus un chariot, mais des hommes qui portaient l’arche. Quand ils eurent fait six pas, David offrit un bœuf et un veau gras en sacrifice. Puis, vêtu d’un éphod de lin, il dansa de toutes ses forces devant le Seigneur. Les acclamations et le son du cor résonnaient dans chaque ruelle de la cité de David.",
+    "À ce moment, Mikal, femme de David et fille de Saül, regardait par la fenêtre. Elle vit le roi sauter et danser devant le Seigneur, et dans son cœur, elle le méprisa. L’arche fut déposée à sa place, dans la tente que David avait dressée. David offrit des holocaustes et des sacrifices de paix, puis il bénit le peuple au nom du Seigneur des armées. Il distribua à chacun, homme et femme, un pain, une portion de viande et un gâteau de raisins secs.",
+    "Quand David rentra pour bénir sa maison, Mikal sortit à sa rencontre et lui dit, moqueuse : « Il s’est couvert de gloire aujourd’hui, le roi d’Israël, en se découvrant sans retenue sous les yeux des servantes de ses serviteurs ! » David répondit : « C’est devant le Seigneur que j’ai dansé. Devant celui qui m’a choisi plutôt que ton père, je me réjouirai. Je m’abaisserai plus encore. » Mikal, fille de Saül, n’eut pas d’enfant jusqu’au jour de sa mort."
+   ],
+   "words": [
+    {
+     "who": "David",
+     "text": "C’est devant le Seigneur que j’ai dansé. Devant le Seigneur qui m’a choisi plutôt que ton père et toute sa maison pour m’établir chef d’Israël, je me réjouirai."
+    },
+    {
+     "who": "David",
+     "text": "Je m’abaisserai plus encore, et je serai humble à mes propres yeux. Mais auprès de ces servantes dont tu parles, je serai honoré."
+    },
+    {
+     "who": "Mikal",
+     "text": "Il s’est couvert de gloire aujourd’hui, le roi d’Israël ! Sous les yeux des servantes de ses serviteurs, il s’est découvert comme un homme de rien."
+    }
+   ],
+   "note": "L’éphod était un vêtement court porté par les prêtres ; en revêtant un éphod de lin plutôt que ses habits royaux, le roi se présentait comme un adorateur. Cette fois, conformément à la Loi, l’arche fut portée sur les épaules.",
+   "reflect": "Comme David, qui faisait plus de cas du regard du Seigneur que de celui des hommes, ai-je déjà laissé tomber ma réputation pour me réjouir de tout mon cœur devant le Seigneur ?",
+   "quiz": {
+    "q": "Après combien de pas des porteurs de l’arche David offrit-il un sacrifice ?",
+    "options": [
+     "Trois pas",
+     "Six pas",
+     "Sept pas",
+     "Douze pas"
+    ],
+    "explain": "Quand les porteurs de l’arche eurent fait six pas, David offrit un bœuf et un veau gras (2 S 6,13)."
+   },
+   "credit": "James Tissot, David Danced Before the Lord with All His Might, vers 1896–1902 · Jewish Museum de New York · Domaine public"
+  },
+  "d25": {
+   "title": "La promesse d’une maison éternelle",
+   "when": "vers 998 av. J.-C.",
+   "subtitle": "Une maison donnée au roi qui voulait en bâtir une",
+   "story": [
+    "La lumière du soir glissait entre les colonnes de cèdre du palais. Le Seigneur avait repoussé les ennemis tout autour, et David avait enfin trouvé le repos. David dit au prophète Nathan : « Vois : j’habite un palais de cèdre, et l’arche de Dieu demeure sous une tenture. » Nathan répondit : « Fais tout ce que tu as à cœur, car le Seigneur est avec toi. » Mais cette nuit-là, la parole du Seigneur fut adressée à Nathan.",
+    "Le Seigneur dit : « Va dire à mon serviteur David : Est-ce toi qui me bâtiras une maison ? Depuis le jour où j’ai fait sortir Israël d’Égypte, j’ai voyagé sous une tente. Toi qui suivais les troupeaux, je t’ai pris pour faire de toi le chef de mon peuple. Maintenant, c’est moi qui te bâtirai une maison. Un fils issu de toi bâtira une maison pour mon nom. Ta maison et ton trône seront affermis pour toujours. »",
+    "Nathan revint et rapporta fidèlement ces paroles. David entra, s’assit devant le Seigneur et pria : « Seigneur Dieu, qui suis-je, et qu’est ma maison, pour que tu m’aies conduit jusqu’ici ? Et cela encore t’a paru peu de chose : tu as parlé de la maison de ton serviteur pour un avenir lointain. » Le roi qui voulait bâtir une maison pour Dieu reçut au contraire la promesse d’une maison sans fin, et il resta longtemps assis devant elle."
+   ],
+   "words": [
+    {
+     "who": "Dieu",
+     "text": "Je t’ai pris au pâturage, derrière les troupeaux, pour faire de toi le chef de mon peuple Israël."
+    },
+    {
+     "who": "Dieu",
+     "text": "Ta maison et ta royauté seront fermement établies devant moi pour toujours, et ton trône sera affermi à jamais."
+    },
+    {
+     "who": "David",
+     "text": "Seigneur Dieu, qui suis-je, et qu’est ma maison, pour que tu m’aies conduit jusqu’ici ?"
+    },
+    {
+     "who": "Nathan",
+     "text": "Va, fais tout ce que tu as à cœur, car le Seigneur est avec toi."
+    }
+   ],
+   "note": "Le mot hébreu bayit signifie « maison », mais peut désigner aussi une dynastie ou un temple. Cette promesse d’un roi éternel issu de la maison de David est devenue la racine de l’attente messianique d’Israël, et le Nouveau Testament présente Jésus comme le fils de David.",
+   "reflect": "David voulait faire quelque chose pour le Seigneur et reçut une promesse plus grande encore ; me suis-je déjà assis devant ce que le Seigneur m’a déjà donné, plutôt que devant ce que je pourrais lui offrir ?",
+   "quiz": {
+    "q": "Quel prophète transmit à David la parole du Seigneur sur la maison éternelle ?",
+    "options": [
+     "Gad",
+     "Tsadoq",
+     "Nathan",
+     "Abiatar"
+    ],
+    "explain": "Cette nuit-là, la parole du Seigneur fut adressée à Nathan, et Nathan rapporta toutes ces paroles à David (2 S 7,4.17)."
+   },
+   "credit": "Leonaert Bramer, King David in Prayer before the Ark of the Covenant · Collection particulière · Domaine public"
+  },
+  "d26": {
+   "title": "La table de Mephiboshèth",
+   "when": "vers 995 av. J.-C.",
+   "subtitle": "Traiter en prince celui qui se voyait comme un chien mort",
+   "story": [
+    "Un jour, quand le tumulte des guerres se fut apaisé, David demanda à ses serviteurs : « Reste-t-il encore quelqu’un de la maison de Saül ? Je voudrais lui faire du bien, à cause de Jonathan. » On fit venir Tsiba, qui avait été serviteur de la maison de Saül. Tsiba répondit : « Il reste un fils de Jonathan. Il est infirme des deux pieds. » Il vivait au-delà du Jourdain, à Lo-Dabar, dans la maison de Makir. David l’envoya chercher aussitôt.",
+    "L’homme entra en boitant et se prosterna devant le roi, face contre terre. David l’appela : « Mephiboshèth ! » Mephiboshèth répondit en tremblant : « Voici ton serviteur. » Le roi lui dit : « N’aie pas peur. À cause de ton père Jonathan, je te ferai du bien, c’est certain. Je te rendrai toutes les terres de Saül, et tu mangeras toujours à ma table. » Mephiboshèth se prosterna de nouveau : « Qui suis-je, pour que tu te tournes vers un chien mort comme moi ? »",
+    "Le roi fit venir Tsiba, lui confia les terres de Saül et le chargea de les cultiver pour nourrir la maison de son maître. Tsiba avait quinze fils et vingt serviteurs. À partir de ce jour, Mephiboshèth vécut à Jérusalem et mangea toujours à la table du roi, comme l’un des fils du roi. Il avait un jeune fils nommé Mika. Sous la table, cachés, ses deux pieds boitaient toujours."
+   ],
+   "words": [
+    {
+     "who": "David",
+     "text": "N’aie pas peur. À cause de ton père Jonathan, je te ferai du bien, c’est certain. Tu mangeras toujours à ma table."
+    },
+    {
+     "who": "David",
+     "text": "Reste-t-il encore quelqu’un de la maison de Saül ? Je voudrais lui faire du bien, à cause de Jonathan."
+    },
+    {
+     "who": "Mephiboshèth",
+     "text": "Qu’est-ce que ton serviteur, pour que tu te tournes vers un chien mort comme moi ?"
+    }
+   ],
+   "note": "Mephiboshèth avait cinq ans quand arriva la nouvelle de la mort de Saül et de Jonathan ; sa nourrice, en s’enfuyant précipitamment avec lui, le laissa tomber, et il resta infirme des deux pieds. À une époque où un nouveau roi éliminait les descendants de l’ancienne dynastie, David resta fidèle à son alliance avec Jonathan.",
+   "reflect": "Comme le roi fit asseoir à sa table Mephiboshèth, prosterné et sans rien à faire valoir, est-ce que je me souviens de la place que j’ai reçue par grâce, et est-ce que je fais place aux autres ?",
+   "quiz": {
+    "q": "Où vivait Mephiboshèth avant que David ne le fasse venir ?",
+    "options": [
+     "Lo-Dabar",
+     "Guibea",
+     "Mahanaïm",
+     "Adoullam"
+    ],
+    "explain": "Mephiboshèth était à Lo-Dabar, dans la maison de Makir, fils d’Ammiel (2 S 9,4)."
+   },
+   "credit": "Paul Hardy, And David Said unto Him, Fear Not · Domaine public"
+  },
+  "d27": {
+   "title": "La vallée du Sel",
+   "when": "vers 995 av. J.-C.",
+   "subtitle": "Le Seigneur qui le fit vaincre partout où il allait",
+   "story": [
+    "Par la suite, l’armée de David s’avança de tous côtés. À l’ouest, il battit les Philistins et les soumit ; à l’est, il battit Moab et le rendit tributaire. Au nord, il défit Hadadézer, roi de Tsoba, qui partait rétablir sa puissance vers l’Euphrate. Les Araméens de Damas vinrent à son secours, mais ils furent battus eux aussi. Le Seigneur donnait la victoire à David partout où il allait.",
+    "Les boucliers d’or que portaient les serviteurs d’Hadadézer furent emportés à Jérusalem, avec une grande quantité de bronze pris dans ses villes. Toï, roi de Hamath, envoya son fils Joram saluer David et lui offrir des objets d’argent, d’or et de bronze. David ne les garda pas pour lui : avec l’argent et l’or pris aux nations qu’il avait soumises, il consacra tout au Seigneur.",
+    "Au sud, dans la vallée du Sel, en dessous de la mer Morte, David battit dix-huit mille Édomites. Son nom en devint célèbre. David régna sur tout Israël et rendit à tout son peuple le droit et la justice. Joab commandait l’armée ; Tsadoq et Ahimélek étaient prêtres. En ce temps-là, David chanta : « Le secours de l’homme n’est que vanité ; avec Dieu, nous combattrons vaillamment. »"
+   ],
+   "words": [
+    {
+     "who": "Le narrateur",
+     "text": "Le Seigneur donnait la victoire à David partout où il allait."
+    },
+    {
+     "who": "Le narrateur",
+     "text": "David régna sur tout Israël, et il rendit à tout son peuple le droit et la justice."
+    },
+    {
+     "who": "Dieu",
+     "text": "J’ai été avec toi partout où tu es allé, et j’ai abattu devant toi tous tes ennemis. Maintenant, je rendrai ton nom grand."
+    }
+   ],
+   "note": "La vallée du Sel se situait sans doute au sud de la mer Morte, dans une terre saline entre Juda et Édom. Le titre du Psaume 60 rappelle le moment où Joab, à son retour, battit les Édomites dans la vallée du Sel.",
+   "reflect": "Comme David, qui consacra au Seigneur toutes ses victoires et tout son butin, à qui est-ce que j’estime qu’appartient ce que je crois avoir gagné de mes mains ?",
+   "quiz": {
+    "q": "Où David battit-il dix-huit mille Édomites ?",
+    "options": [
+     "La vallée d’Éla",
+     "La vallée des Rephaïm",
+     "La vallée d’Ayyalôn",
+     "La vallée du Sel"
+    ],
+    "explain": "David battit dix-huit mille Édomites dans la vallée du Sel et, à son retour, il se fit un nom (2 S 8,13)."
+   },
+   "credit": "David Roberts, The Dead Sea, Looking towards Moab, 1843 · Bibliothèque du Congrès · Domaine public"
+  },
+  "d28": {
+   "title": "Sur la terrasse",
+   "when": "vers 993 av. J.-C.",
+   "subtitle": "Le roi qui n’était pas allé à la guerre",
+   "story": [
+    "Le printemps était venu, le temps où les rois partent en guerre. David envoya Joab et toute l’armée d’Israël assiéger Rabba, la ville des Ammonites. Mais le roi, lui, resta à Jérusalem. Un soir, au coucher du soleil, sorti de sa sieste, David se promenait sur la terrasse du palais quand il aperçut une femme. Il envoya se renseigner : c’était Bethsabée, fille d’Éliam, femme d’Urie le Hittite. David la fit venir et commit l’adultère avec la femme d’un autre.",
+    "Quelque temps après, Bethsabée envoya dire au roi : « Je suis enceinte. » David fit revenir Urie du champ de bataille. Il lui demanda des nouvelles de la guerre, puis lui dit d’aller se reposer chez lui. Mais Urie dormit à l’entrée du palais, avec les serviteurs. Le roi lui en demanda la raison, et Urie répondit : « L’arche, Israël et Juda logent sous des tentes, mon maître Joab campe en rase campagne, et moi j’irais chez moi ? » Même enivré par le roi, il refusa jusqu’au bout de rentrer chez lui.",
+    "Le matin, David remit à Urie une lettre pour Joab. On y lisait : « Placez Urie là où le combat est le plus dur, puis retirez-vous derrière lui pour qu’il soit frappé et qu’il meure. » Joab fit ainsi, et Urie mourut. Au messager qui apporta la nouvelle, le roi dit : « Dis à Joab de ne pas s’en affliger : l’épée dévore tantôt l’un, tantôt l’autre. » Le deuil achevé, David prit Bethsabée pour femme. Mais ce qu’avait fait David déplut au Seigneur."
+   ],
+   "words": [
+    {
+     "who": "David",
+     "text": "Placez Urie au premier rang, là où le combat est le plus dur, puis retirez-vous loin de lui, pour qu’il soit frappé et qu’il meure."
+    },
+    {
+     "who": "Urie",
+     "text": "L’arche, Israël et Juda logent sous des tentes, mon maître et ses soldats campent en rase campagne : comment irais-je chez moi manger et boire ?"
+    },
+    {
+     "who": "David",
+     "text": "Ne t’afflige pas de cette affaire. L’épée dévore tantôt l’un, tantôt l’autre."
+    },
+    {
+     "who": "Le narrateur",
+     "text": "Mais ce qu’avait fait David fut mauvais aux yeux du Seigneur."
+    }
+   ],
+   "note": "Urie était un Hittite, mais son nom figure parmi les trente-sept meilleurs guerriers de David. Rabba était la capitale des Ammonites, à l’emplacement de l’actuelle Amman, capitale de la Jordanie.",
+   "reflect": "La chute de David commença un soir où il flânait, loin de la place où il aurait dû être ; suis-je, en ce moment, à la place où je devrais me tenir ?",
+   "quiz": {
+    "q": "Qui porta à Joab la lettre ordonnant de faire mourir Urie ?",
+    "options": [
+     "Un soldat de Joab",
+     "Urie lui-même",
+     "Le prophète Nathan",
+     "Éliam, le père de Bethsabée"
+    ],
+    "explain": "David écrivit une lettre à Joab et la lui envoya par la main d’Urie (2 S 11,14)."
+   },
+   "credit": "Pieter Lastman, David Gives Uriah a Letter for Joab, 1619 · The Leiden Collection, New York · Domaine public"
+  },
+  "d29": {
+   "title": "Cet homme, c’est toi",
+   "when": "vers 992 av. J.-C.",
+   "subtitle": "Le roi qui s’indignait de l’histoire d’un autre",
+   "story": [
+    "Le Seigneur envoya le prophète Nathan auprès de David. Debout devant le roi, Nathan raconta une histoire : « Dans une ville, il y avait un riche et un pauvre. Le riche avait beaucoup de moutons et de bœufs, mais le pauvre n’avait qu’une petite brebis, qu’il avait achetée et élevée. Elle dormait dans ses bras, elle était pour lui comme une fille. Or un voyageur arriva chez le riche ; épargnant ses propres bêtes, celui-ci prit la brebis du pauvre pour la servir à son hôte. »",
+    "David s’enflamma de colère et s’écria : « Aussi vrai que le Seigneur est vivant, l’homme qui a fait cela mérite la mort ! Qu’il rende la brebis au quadruple ! » Nathan regarda le roi en face : « Cet homme, c’est toi. » Puis Nathan transmit la parole du Seigneur : « C’est moi qui t’ai fait roi. Pourquoi as-tu méprisé ma parole ? Tu as fait périr Urie par l’épée et tu as pris sa femme. » David, comme effondré, dit : « J’ai péché contre le Seigneur. »",
+    "Nathan répondit : « Le Seigneur aussi a effacé ton péché, tu ne mourras pas. Mais l’enfant qui t’est né mourra. » Quand l’enfant tomba malade, David jeûna, couché à terre toute la nuit ; le septième jour, l’enfant mourut. David se releva, se lava, entra dans la maison du Seigneur et se prosterna. Plus tard, quand Salomon naquit, le Seigneur le fit appeler Yedidya. En ce temps-là, David chanta : « Ô Dieu, crée en moi un cœur pur. »"
+   ],
+   "words": [
+    {
+     "who": "Dieu",
+     "text": "Pourquoi as-tu méprisé ma parole et fait ce qui est mal à mes yeux ? Tu as fait périr Urie par l’épée et tu as pris sa femme."
+    },
+    {
+     "who": "David",
+     "text": "J’ai péché contre le Seigneur."
+    },
+    {
+     "who": "Nathan",
+     "text": "Cet homme, c’est toi."
+    },
+    {
+     "who": "David",
+     "text": "Tant que l’enfant vivait, je jeûnais et je pleurais, me disant que le Seigneur aurait peut-être pitié. Maintenant qu’il est mort, j’irai vers lui, mais lui ne reviendra pas vers moi."
+    }
+   ],
+   "note": "Le titre du Psaume 51 indique qu’il fut composé lorsque le prophète Nathan vint trouver David après son péché avec Bethsabée. Yedidya signifie « aimé du Seigneur ».",
+   "reflect": "David, si prompt à s’indigner de la faute d’autrui, s’effondra devant les mots « cet homme, c’est toi » ; mon oreille est-elle ouverte à cette parole quand elle s’adresse à moi ?",
+   "quiz": {
+    "q": "Quel nom le Seigneur fit-il donner à Salomon par l’intermédiaire de Nathan ?",
+    "options": [
+     "Yedidya",
+     "Emmanuel",
+     "Ikabod",
+     "Adonias"
+    ],
+    "explain": "Le Seigneur aima Salomon et envoya Nathan lui donner le nom de Yedidya (2 S 12,24–25)."
+   },
+   "credit": "Palma il Giovane, The Prophet Nathan Admonishes King David, vers 1600–1628 · Kunsthistorisches Museum de Vienne · Domaine public"
+  },
+  "d30": {
+   "title": "La révolte d’Absalom",
+   "when": "vers 979 av. J.-C.",
+   "subtitle": "Des cœurs volés à la porte de la ville",
+   "story": [
+    "De bon matin, le prince Absalom se tenait au bord du chemin qui menait à la porte de Jérusalem. Derrière lui, un char, des chevaux et cinquante hommes qui couraient devant. Dès qu’il voyait quelqu’un venir trouver le roi pour un procès, Absalom l’appelait le premier : « De quelle ville es-tu ? » Quand l’homme nommait sa tribu, Absalom lui disait : « Ta cause est bonne et juste, mais chez le roi, personne ne t’écoutera. Ah, si l’on m’établissait juge dans le pays ! »",
+    "Si quelqu’un s’approchait pour se prosterner, Absalom tendait la main, le relevait et l’embrassait. Il faisait de même avec tous les Israélites qui venaient chercher justice. C’est ainsi qu’Absalom vola le cœur des gens d’Israël. Au bout de quatre ans, Absalom dit à son père David : « Quand j’étais réfugié à Gueshour, j’ai fait un vœu : si le Seigneur me ramenait à Jérusalem, je le servirais. Laisse-moi aller à Hébron accomplir ce vœu. »",
+    "Le roi, qui ne se doutait de rien, lui dit : « Va en paix. » Absalom descendit à Hébron, là où son père était devenu roi pour la première fois. Il envoya en secret des émissaires dans toutes les tribus d’Israël : « Quand vous entendrez le son du cor, criez : Absalom est roi à Hébron ! » Deux cents invités de Jérusalem le suivirent sans rien savoir. Pendant qu’il offrait les sacrifices, Absalom fit même venir Ahitofel, le conseiller de David. La conjuration ne cessait de grandir."
+   ],
+   "words": [
+    {
+     "who": "David",
+     "text": "Va en paix."
+    },
+    {
+     "who": "Absalom",
+     "text": "Ah, si l’on m’établissait juge dans ce pays ! Quiconque aurait un procès viendrait à moi et je lui rendrais justice."
+    },
+    {
+     "who": "Absalom",
+     "text": "Quand vous entendrez le son du cor, criez : Absalom est roi à Hébron !"
+    }
+   ],
+   "note": "Le texte hébreu porte « quarante ans », mais on lit souvent « quatre ans » en suivant les anciennes versions. Hébron est le lieu où David devint roi pour la première fois, et aussi celui où naquit Absalom.",
+   "reflect": "Absalom volait les cœurs en tendant la main et en embrassant ; est-ce que je regarde qui ma gentillesse, quand elle cherche à gagner les cœurs, met vraiment en valeur ?",
+   "quiz": {
+    "q": "Quel conseiller de David Absalom fit-il venir pendant qu’il offrait les sacrifices à Hébron ?",
+    "options": [
+     "Houshaï",
+     "Joab",
+     "Ahitofel",
+     "Shiméï"
+    ],
+    "explain": "Pendant qu’il offrait les sacrifices, Absalom fit venir de sa ville de Guilo Ahitofel le Guilonite, conseiller de David (2 S 15,12)."
+   },
+   "credit": "James Tissot, Absalom, vers 1896–1902 · John Rylands Library, Manchester · Domaine public"
+  },
+  "d31": {
+   "title": "Pieds nus sur le mont des Oliviers",
+   "when": "vers 979 av. J.-C.",
+   "subtitle": "Une montée en pleurs, pieds nus, mais des pas remis au Seigneur",
+   "story": [
+    "Un messager hors d’haleine se précipita dans le palais : « Le cœur des Israélites s’est tourné vers Absalom. » Absalom, le fils de David, s’était révolté contre son père. David dit à ses serviteurs : « Levez-vous, fuyons ! Si nous ne faisons pas vite, Absalom frappera cette ville par l’épée. » Le roi sortit de la ville avec toute sa maison. Quand il dit à Ittaï, un chef venu de Gath chez les Philistins, de s’en retourner, Ittaï répondit : « À la mort comme à la vie, là où sera le roi, je serai aussi. »",
+    "Tout le pays pleurait à grands cris. Le roi traversa le torrent du Cédron et marcha vers le désert. Le prêtre Tsadoq et les lévites suivaient, portant l’arche de l’alliance de Dieu. David dit à Tsadoq : « Ramène l’arche dans la ville. Si je trouve grâce aux yeux du Seigneur, il me fera revenir et me la laissera revoir. S’il ne prend plus plaisir en moi, me voici : qu’il fasse ce qui lui semble bon. »",
+    "La tête couverte, pieds nus, en pleurant, David gravit la pente du mont des Oliviers. Tout le peuple qui l’accompagnait avait aussi la tête couverte et pleurait. C’est alors qu’arriva une mauvaise nouvelle : Ahitofel, le sage conseiller du roi, s’était rangé lui aussi du côté d’Absalom. David pria : « Seigneur, rends insensés les conseils d’Ahitofel. » Arrivé au sommet, là où l’on se prosternait devant Dieu, son ami Houshaï vint au-devant du roi, la tunique déchirée et la tête couverte de terre. La réponse à sa prière venait ainsi à sa rencontre."
+   ],
+   "words": [
+    {
+     "who": "David",
+     "text": "Si je trouve grâce aux yeux du Seigneur, il me fera revenir et me laissera revoir l’arche et le lieu où il demeure. S’il ne prend plus plaisir en moi, me voici : qu’il fasse ce qui lui semble bon."
+    },
+    {
+     "who": "David",
+     "text": "Seigneur, change en folie les conseils d’Ahitofel."
+    },
+    {
+     "who": "Ittaï",
+     "text": "Aussi vrai que le Seigneur est vivant et que vit mon seigneur le roi, à la mort comme à la vie, là où sera le roi, ton serviteur y sera aussi."
+    }
+   ],
+   "note": "Le torrent du Cédron coule dans la vallée qui sépare le rempart oriental de Jérusalem du mont des Oliviers ; il n’a d’eau qu’à la saison des pluies. Un millier d’années plus tard, la nuit de son arrestation, Jésus aussi traversa ce torrent pour se rendre dans un jardin du côté du mont des Oliviers.",
+   "reflect": "Sur le chemin de l’exil, ayant tout perdu, David renvoya pourtant l’arche de l’alliance ; est-ce que j’essaie de retenir Dieu à mes côtés, ou est-ce que je me remets entre ses mains ?",
+   "quiz": {
+    "q": "Quel homme de Gath dit à David en fuite : « À la mort comme à la vie, là où sera le roi, je serai aussi » ?",
+    "options": [
+     "Ittaï",
+     "Houshaï",
+     "Tsadoq",
+     "Ahitofel"
+    ],
+    "explain": "Ittaï de Gath, à qui le roi disait de s’en retourner, répondit qu’à la mort comme à la vie il serait là où serait le roi (2 S 15,19–21). Houshaï, lui, fut renvoyé dans la ville pour faire échouer les conseils d’Ahitofel (2 S 15,32–34)."
+   },
+   "credit": "James Tissot, David Quits Jerusalem, vers 1896–1902 · John Rylands Library, Manchester · Domaine public"
+  },
+  "d32": {
+   "title": "Les pierres de Shiméï",
+   "when": "vers 979 av. J.-C.",
+   "subtitle": "Le roi qui rengaina l’épée sous les pierres et les malédictions",
+   "story": [
+    "Quand le roi arriva à Bahourim, un homme descendit de la colline. C’était Shiméï, fils de Guéra, de la famille de Saül. Shiméï jetait des pierres au roi et à ses serviteurs en criant : « Va-t’en, va-t’en, homme de sang, vaurien ! Tu as pris la place de la maison de Saül, et le Seigneur fait retomber ce sang sur toi. Maintenant, le royaume est passé aux mains de ton fils Absalom. » À droite et à gauche du roi se tenaient ses guerriers, l’épée au côté.",
+    "Abishaï, frère de Joab, saisit la poignée de son épée : « Comment ce chien mort ose-t-il maudire mon seigneur le roi ? Laisse-moi traverser et lui couper la tête. » David secoua la tête : « Fils de Tserouya, qu’ai-je à faire avec vous ? Si le Seigneur lui a dit de maudire David, qui pourrait le lui reprocher ? Mon propre fils, sorti de mes entrailles, en veut à ma vie ; à plus forte raison ce Benjaminite. Laissez-le. »",
+    "David ajouta à voix basse : « Peut-être le Seigneur regardera-t-il ma détresse, et me rendra-t-il du bien en échange de la malédiction de ce jour. » David et ses hommes reprirent la route. Shiméï les suivait sur le flanc de la colline d’en face, sans cesser de maudire, de jeter des pierres et de soulever la poussière. Le roi ne leva jamais l’épée. Le peuple, épuisé, ne reprit son souffle qu’en arrivant à un lieu de repos."
+   ],
+   "words": [
+    {
+     "who": "David",
+     "text": "Mon propre fils, sorti de mes entrailles, en veut à ma vie ; à plus forte raison ce Benjaminite. Laissez-le, c’est le Seigneur qui le lui a dit."
+    },
+    {
+     "who": "David",
+     "text": "Peut-être le Seigneur regardera-t-il ma détresse, et me rendra-t-il du bien en échange des malédictions qu’il déverse aujourd’hui."
+    },
+    {
+     "who": "Abishaï",
+     "text": "Pourquoi ce chien mort maudit-il mon seigneur le roi ? Laisse-moi traverser et je lui couperai la tête."
+    },
+    {
+     "who": "Shiméï",
+     "text": "Va-t’en, va-t’en, homme de sang, vaurien !"
+    }
+   ],
+   "note": "Bahourim était sans doute un village benjaminite au-delà du mont des Oliviers, sur la route qui descend de Jérusalem vers la vallée du Jourdain. C’est dans ce même village que Paltiel, le mari de Mikal, qui la suivait en pleurant, avait dû rebrousser chemin.",
+   "reflect": "Quand des reproches injustes pleuvent sur moi, est-ce que je cherche aussitôt à rendre coup pour coup, ou est-ce que, comme David, je dépose même ces paroles devant Dieu en attendant qu’il rétablisse les choses ?",
+   "quiz": {
+    "q": "De quelle famille était Shiméï, qui maudit David en lui jetant des pierres ?",
+    "options": [
+     "La famille de Joab",
+     "La famille de David",
+     "La famille de Saül",
+     "La famille d’Absalom"
+    ],
+    "explain": "Shiméï, fils de Guéra, était un parent de la maison de Saül ; il maudit David en l’appelant l’homme qui avait versé le sang de la maison de Saül (2 S 16,5–8)."
+   },
+   "credit": "Julius Schnorr von Carolsfeld, Shimei Curses David, vers 1851–1860 · Die Bibel in Bildern · Domaine public"
+  },
+  "d33": {
+   "title": "Mahanaïm",
+   "when": "vers 979 av. J.-C.",
+   "subtitle": "Une table dressée en terre étrangère pour un roi chassé",
+   "story": [
+    "Après avoir passé le Jourdain, David arriva à Mahanaïm, une ville de Galaad. Absalom, à son tour, franchit le Jourdain avec tous les hommes d’Israël. À la place de Joab, Absalom avait nommé chef de l’armée Amasa, cousin de Joab, et il campa au pays de Galaad. Les armées du père et du fils se faisaient face sur la même terre. Les hommes du roi, qui avaient traversé le désert, étaient épuisés et affamés.",
+    "C’est alors que des ânes lourdement chargés franchirent la porte de la ville. Il y avait Shobi, fils de Nahash, venu de Rabba, la ville des Ammonites ; Makir, fils d’Ammiel, venu de Lo-Dabar ; et Barzillaï le Galaadite, venu de Roguelim. Ils déposèrent des lits, des bassins et des vases de terre. Suivirent du blé et de l’orge, de la farine et du grain grillé, des fèves et des lentilles, du miel et du lait caillé, des moutons et des fromages de vache.",
+    "Les trois hommes dirent au roi : « Le peuple a dû souffrir de la faim, de la fatigue et de la soif dans le désert. » Makir était celui qui avait accueilli chez lui Mephiboshèth, le petit-fils de Saül, et Shobi venait de la capitale ammonite que David avait abattue. Le roi chassé par son fils s’assit devant une table dressée en terre étrangère. Les hommes épuisés purent enfin manger et boire."
+   ],
+   "words": [
+    {
+     "who": "Shobi, Makir et Barzillaï",
+     "text": "Le peuple a dû souffrir de la faim, de la fatigue et de la soif dans le désert."
+    },
+    {
+     "who": "Le narrateur",
+     "text": "Ils apportèrent des lits, des bassins et des vases de terre, du blé, de l’orge et de la farine, du grain grillé, des fèves et des lentilles, du miel et du lait caillé, des moutons et des fromages, pour que David et son peuple puissent manger."
+    }
+   ],
+   "note": "Mahanaïm signifie « deux camps » ; c’est le nom que Jacob donna à ce lieu après y avoir rencontré les anges de Dieu. C’est là aussi qu’après la mort de Saül, son fils Ishboshèth avait été établi roi.",
+   "reflect": "Comme Barzillaï, qui vit le visage épuisé d’un homme chassé et lui dressa d’abord une table, de qui est-ce que je remarque aujourd’hui la faim et la soif ?",
+   "quiz": {
+    "q": "Lequel de ces hommes n’a PAS apporté de nourriture à David à Mahanaïm ?",
+    "options": [
+     "Barzillaï",
+     "Ahitofel",
+     "Shobi",
+     "Makir"
+    ],
+    "explain": "Shobi de Rabba, Makir de Lo-Dabar et Barzillaï de Roguelim apportèrent des ustensiles et des vivres (2 S 17,27–29). Ahitofel était le conseiller qui s’était rangé du côté d’Absalom (2 S 15,12)."
+   },
+   "credit": "James Tissot, David Sees the Messenger Arrive, vers 1896–1902 · John Rylands Library, Manchester · Domaine public"
+  },
+  "d34": {
+   "title": "Le chêne de la forêt d’Éphraïm",
+   "when": "vers 979 av. J.-C.",
+   "subtitle": "Un prince suspendu entre ciel et terre",
+   "story": [
+    "Près de la porte de Mahanaïm, David divisa ses troupes en trois et les confia à Joab, à Abishaï et à Ittaï de Gath. Quand le roi annonça qu’il sortirait lui aussi, le peuple s’y opposa : « Tu vaux dix mille d’entre nous. Reste dans la ville et viens-nous en aide. » Tandis que l’armée sortait par centaines et par milliers, le roi donna cet ordre aux trois chefs, devant tous : « Par égard pour moi, ménagez le jeune Absalom. »",
+    "La bataille eut lieu dans la forêt d’Éphraïm. L’armée d’Israël qui suivait Absalom s’effondra devant les serviteurs de David, et ce jour-là vingt mille hommes tombèrent. Le combat s’étendit sur tout le pays, et la forêt dévora plus d’hommes que l’épée. Absalom, monté sur un mulet, passa sous les branches enchevêtrées d’un grand chêne, et sa tête s’y prit. Le mulet continua sa course, et Absalom resta suspendu entre le ciel et la terre.",
+    "Un soldat qui l’avait vu alla le dire à Joab. Joab le pressa : pourquoi ne l’avait-il pas frappé ? Le soldat répondit : « Même pour mille sicles d’argent, je ne porterais pas la main sur le fils du roi. » Joab n’en écouta pas davantage. Il prit trois javelots et les planta dans le cœur d’Absalom, encore vivant, et dix jeunes gens de Joab l’achevèrent. Joab sonna du cor pour arrêter le combat. On jeta Absalom dans une fosse de la forêt et l’on éleva sur lui un grand monceau de pierres."
+   ],
+   "words": [
+    {
+     "who": "David",
+     "text": "Par égard pour moi, ménagez le jeune Absalom."
+    },
+    {
+     "who": "Le peuple",
+     "text": "Ne sors pas, ô roi. Tu vaux dix mille d’entre nous ; il vaut mieux que tu restes dans la ville et que tu nous viennes en aide."
+    },
+    {
+     "who": "Un soldat",
+     "text": "Même si l’on me mettait dans la main mille sicles d’argent, je ne porterais pas la main sur le fils du roi. Le roi a donné son ordre devant nous tous."
+    }
+   ],
+   "note": "De son vivant, Absalom, n’ayant pas de fils pour perpétuer son nom, s’était érigé une stèle dans la vallée du Roi. Le monument qu’on appelle aujourd’hui « tombeau d’Absalom », dans la vallée du Cédron, date d’une époque bien plus tardive.",
+   "reflect": "Entre l’ordre de David de ménager son fils et les trois javelots de Joab, comment est-ce que je tiens ensemble l’amour et la justice ?",
+   "quiz": {
+    "q": "Qu’est-ce que Joab planta dans le cœur d’Absalom suspendu au chêne ?",
+    "options": [
+     "Une épée",
+     "Cinq pierres",
+     "Deux flèches",
+     "Trois javelots"
+    ],
+    "explain": "Joab prit trois javelots et les planta dans le cœur d’Absalom, encore vivant et suspendu au chêne ; puis dix jeunes porteurs d’armes de Joab le frappèrent à mort (2 S 18,14–15)."
+   },
+   "credit": "James Tissot, Absalom Hanging on the Oak Tree, vers 1896–1902 · John Rylands Library, Manchester · Domaine public"
+  },
+  "d35": {
+   "title": "Mon fils Absalom",
+   "when": "vers 979 av. J.-C.",
+   "subtitle": "Les sanglots d’un père au jour de la victoire",
+   "story": [
+    "Le combat terminé, Ahimaats, fils du prêtre Tsadoq, supplia Joab : « Laisse-moi courir annoncer la bonne nouvelle au roi. » Joab refusa : « Pas aujourd’hui », et envoya un Koushite à sa place. C’était le jour où le fils du roi était mort. Mais comme Ahimaats insistait encore, Joab finit par le laisser partir. Ahimaats prit le chemin de la plaine du Jourdain et dépassa le Koushite, parti avant lui.",
+    "David était assis entre les deux portes de la ville et attendait. Du haut du rempart, le guetteur cria : « Un homme arrive en courant ! Un autre vient derrière lui. Le premier, on dirait Ahimaats. » Ahimaats se prosterna et annonça la victoire, mais le roi ne posa qu’une question : « Le jeune Absalom est-il sain et sauf ? » Ahimaats répondit de façon évasive. Le Koushite, arrivé ensuite, dit : « Que tous les ennemis du roi deviennent comme ce jeune homme ! »",
+    "Le roi, tout tremblant, monta dans la chambre au-dessus de la porte et cria en pleurant : « Mon fils Absalom, mon fils, mon fils Absalom ! Si seulement j’étais mort à ta place ! » Ce jour-là, la victoire se changea en deuil, et les soldats rentrèrent dans la ville à la dérobée, comme des fuyards. Joab entra et rudoya le roi : « Si tu ne sors pas maintenant parler au cœur de tes serviteurs, pas un seul ne restera avec toi cette nuit. » Le roi se leva et alla s’asseoir à la porte."
+   ],
+   "words": [
+    {
+     "who": "David",
+     "text": "Mon fils Absalom, mon fils, mon fils Absalom ! Si seulement j’étais mort à ta place ! Absalom, mon fils, mon fils !"
+    },
+    {
+     "who": "David",
+     "text": "Le jeune Absalom est-il sain et sauf ?"
+    },
+    {
+     "who": "Le Koushite",
+     "text": "Que les ennemis de mon seigneur le roi, et tous ceux qui se sont dressés contre toi pour te faire du mal, deviennent comme ce jeune homme !"
+    },
+    {
+     "who": "Joab",
+     "text": "Tu aimes ceux qui te haïssent et tu hais ceux qui t’aiment. Maintenant, lève-toi, sors, et parle au cœur de tes serviteurs."
+    }
+   ],
+   "note": "Dans la Bible hébraïque, le cri de David « Mon fils Absalom » est le premier verset du chapitre 19. La porte de la ville était le lieu des jugements et des assemblées : dire que le roi s’assit à la porte, c’est dire qu’il se tint de nouveau devant son peuple.",
+   "reflect": "David aurait voulu mourir à la place même du fils qui cherchait à le tuer ; quels sentiments est-ce que je garde envers ceux qui m’ont fait souffrir ?",
+   "quiz": {
+    "q": "Qui arriva le premier auprès de David après le combat ?",
+    "options": [
+     "Ahimaats",
+     "Le Koushite",
+     "Jonathan",
+     "Houshaï"
+    ],
+    "explain": "Le Koushite était parti le premier, mais Ahimaats, en courant par la plaine, le dépassa (2 S 18,21–23). La mort d’Absalom fut connue par les paroles du Koushite, arrivé ensuite (2 S 18,32)."
+   },
+   "credit": "Gustave Doré, David Mourns the Death of Absalom, 1866 · Bible illustrée par Doré · Domaine public"
+  },
+  "d36": {
+   "title": "L’aire d’Arauna",
+   "when": "vers 975 av. J.-C.",
+   "subtitle": "Je n’offrirai pas un sacrifice qui ne me coûte rien",
+   "story": [
+    "Alors que la colère du Seigneur s’enflammait de nouveau contre Israël, David ordonna à Joab : « Parcours tout Israël et fais le dénombrement du peuple. » Joab tenta de l’en dissuader : « Pourquoi le roi veut-il cela ? » Mais la parole du roi l’emporta. Au bout de neuf mois et vingt jours, les chiffres arrivèrent : huit cent mille hommes capables de tirer l’épée en Israël, cinq cent mille en Juda. Devant ces chiffres, David eut le cœur transpercé. Il dit au Seigneur : « J’ai commis un grand péché. »",
+    "Le lendemain matin, le prophète Gad vint lui transmettre la parole du Seigneur : « Choisis : la famine, trois mois de fuite devant tes ennemis, ou trois jours de peste. » David répondit : « Que je tombe entre les mains du Seigneur, car sa miséricorde est grande, et non entre les mains des hommes. » La peste frappa, et de Dan à Beer-Shéva, soixante-dix mille hommes moururent. Quand l’ange étendit la main sur Jérusalem, le Seigneur se ravisa et dit à l’ange : « Assez ! Retire ta main. »",
+    "L’ange se tenait alors près de l’aire d’Arauna le Jébuséen. En le voyant, David cria au Seigneur : « C’est moi qui ai péché ! Ces brebis, qu’ont-elles fait ? » Suivant la parole de Gad, David y monta, et Arauna, prosterné, voulut lui donner gratuitement l’aire et les bœufs. David secoua la tête : « Je n’offrirai pas d’holocauste avec ce qui ne m’a rien coûté. » David acheta l’aire pour cinquante sicles d’argent, y bâtit un autel, et le fléau s’arrêta."
+   ],
+   "words": [
+    {
+     "who": "Dieu",
+     "text": "Assez maintenant. Retire ta main."
+    },
+    {
+     "who": "David",
+     "text": "C’est moi qui ai péché, c’est moi qui suis coupable. Mais ces brebis, qu’ont-elles fait ? Que ta main me frappe, moi et la maison de mon père."
+    },
+    {
+     "who": "David",
+     "text": "Non, je veux te l’acheter, et en payer le prix. Je n’offrirai pas au Seigneur mon Dieu des holocaustes qui ne m’ont rien coûté."
+    },
+    {
+     "who": "Arauna",
+     "text": "Que mon seigneur le roi prenne ce qui lui semble bon et l’offre. Que le Seigneur ton Dieu t’accueille avec faveur."
+    }
+   ],
+   "note": "Les Chroniques rapportent que cette aire se trouvait sur le mont Moriya, et que Salomon bâtit le Temple à cet endroit même. On l’identifie au pays de Moriya où Abraham était monté pour offrir Isaac.",
+   "reflect": "David refusa un culte qui ne lui coûtait rien ; dans ce que j’offre à Dieu, qu’est-ce qui me coûte vraiment quelque chose ?",
+   "quiz": {
+    "q": "Quel prix David paya-t-il à Arauna pour l’aire et les bœufs ?",
+    "options": [
+     "30 sicles d’argent",
+     "600 sicles d’or",
+     "50 sicles d’argent",
+     "Il les reçut gratuitement"
+    ],
+    "explain": "Refusant d’offrir un holocauste qui ne lui coûte rien, David acheta l’aire et les bœufs pour cinquante sicles d’argent (2 S 24,24). Les six cents sicles d’or de 1 Ch 21,25 sont indiqués comme le prix de tout l’emplacement."
+   },
+   "credit": "Pieter de Grebber, King David in Prayer, vers 1635–1640 · Musée Catharijneconvent, Utrecht · Domaine public"
+  },
+  "d37": {
+   "title": "L’onction à la source du Guihôn",
+   "when": "vers 971 av. J.-C.",
+   "subtitle": "Le fils qui descendit sur la mule de David",
+   "story": [
+    "David était devenu vieux. On avait beau le couvrir de couvertures, il ne se réchauffait pas, et Abishag de Shounem prenait soin de lui. Profitant de ce moment, le prince Adonias, né après Absalom, s’éleva lui-même en disant : « C’est moi qui serai roi. » Adonias se procura des chars, des cavaliers et cinquante hommes pour courir devant lui ; Joab et le prêtre Abiatar se rangèrent de son côté. Un festin fut donné près de la source d’En-Roguel, mais on n’y invita ni Nathan, ni Benaya, ni Salomon.",
+    "Le prophète Nathan alla trouver Bethsabée, la mère de Salomon : « Adonias est devenu roi, et notre seigneur David n’en sait rien. » Bethsabée entra dans la chambre du roi, se prosterna et dit : « N’as-tu pas juré que mon fils Salomon régnerait après toi ? » Nathan entra à son tour et dit la même chose. Le vieux roi prit la parole : « Aussi vrai qu’est vivant le Seigneur qui m’a délivré de toute détresse, j’agirai aujourd’hui selon ce serment. »",
+    "Monté sur la mule de David, Salomon descendit à la source du Guihôn. Le prêtre Tsadoq prit dans la Tente la corne d’huile et la versa sur la tête de Salomon. On sonna du cor, et le peuple cria : « Vive le roi Salomon ! » Au son des flûtes et des acclamations, la terre semblait se fendre, et les invités d’Adonias se dispersèrent en tremblant. Sur son lit, David s’inclina pour adorer et dit : « Béni soit le Seigneur, le Dieu d’Israël, qui m’a donné aujourd’hui quelqu’un pour s’asseoir sur mon trône, et me l’a laissé voir de mes yeux. »"
+   ],
+   "words": [
+    {
+     "who": "David",
+     "text": "Aussi vrai qu’est vivant le Seigneur qui m’a délivré de toute détresse : comme je te l’ai juré, ton fils Salomon régnera après moi, et je l’accomplirai aujourd’hui même."
+    },
+    {
+     "who": "David",
+     "text": "Béni soit le Seigneur, le Dieu d’Israël ! Il m’a donné aujourd’hui quelqu’un pour s’asseoir sur mon trône, et il me l’a laissé voir de mes yeux."
+    },
+    {
+     "who": "Bethsabée",
+     "text": "Que mon seigneur le roi David vive à jamais !"
+    },
+    {
+     "who": "Benaya",
+     "text": "Amen. Que le Seigneur soit avec Salomon comme il a été avec mon seigneur le roi, et qu’il rende son trône plus grand encore que celui du roi David."
+    }
+   ],
+   "note": "La source du Guihôn, principale source de Jérusalem, jaillit sur le flanc de la vallée du Cédron, à l’est de la cité de David. En-Roguel, où Adonias donnait son festin, se trouvait un peu plus au sud, si bien que les acclamations du Guihôn parvenaient jusque-là.",
+   "reflect": "Comme David, vieux et las, rassembla ses dernières forces pour tenir sa promesse, puis-je tenir aujourd’hui une promesse que j’ai laissée en suspens ?",
+   "quiz": {
+    "q": "Sur quoi Salomon était-il monté quand il descendit au Guihôn pour recevoir l’onction ?",
+    "options": [
+     "Le char du roi",
+     "La mule de David",
+     "Un cheval blanc",
+     "Un ânon"
+    ],
+    "explain": "David ordonna de faire monter Salomon sur sa propre mule, de le conduire au Guihôn et de lui donner l’onction (1 R 1,33.38)."
+   },
+   "credit": "Cornelis de Vos, The Anointing of Solomon, vers 1630 · Kunsthistorisches Museum de Vienne · Domaine public"
+  },
+  "d38": {
+   "title": "Les préparatifs du Temple",
+   "when": "vers 971 av. J.-C.",
+   "subtitle": "Ce qu’il rassembla pour une maison qu’il ne bâtirait pas",
+   "story": [
+    "Montrant l’aire d’Arauna, David dit : « C’est ici que s’élèvera la maison du Seigneur Dieu. » Dès ce jour, David fit venir des tailleurs de pierre, et il amassa du fer et une quantité de bronze impossible à peser. Les Sidoniens et les Tyriens apportèrent du bois de cèdre en quantité innombrable. David dit : « Mon fils Salomon est encore jeune et fragile. La maison du Seigneur doit être renommée dans le monde entier ; je vais donc tout préparer d’avance. »",
+    "David appela Salomon et lui dit : « Mon fils, j’avais à cœur de bâtir une maison pour le nom du Seigneur. Mais le Seigneur m’a dit : Tu as versé beaucoup de sang et mené de grandes guerres, tu ne bâtiras pas ma maison. Le fils qui te naîtra sera un homme de paix ; c’est lui qui la bâtira. » Plus tard, devant tous les chefs d’Israël, David remit à Salomon le plan du Temple que le Seigneur lui avait fait comprendre, en lui disant : « Sois fort et courageux, et mène l’œuvre à bien. »",
+    "David donna de son propre trésor trois mille talents d’or d’Ophir et sept mille talents d’argent. Les chefs, eux aussi, donnèrent de bon cœur, et le peuple se réjouit de ce qu’on avait offert de tout son cœur. Devant toute l’assemblée, David bénit le Seigneur : « Qui suis-je, et qu’est mon peuple, pour que nous puissions offrir ainsi ? Tout vient de toi ; nous n’avons fait que te donner ce que nous avons reçu de ta main. Nos jours sur la terre sont comme une ombre. »"
+   ],
+   "words": [
+    {
+     "who": "Dieu",
+     "text": "Un fils va te naître ; ce sera un homme de paix. C’est lui qui bâtira une maison pour mon nom. Il sera pour moi un fils, et je serai pour lui un père."
+    },
+    {
+     "who": "David",
+     "text": "Toi, mon fils Salomon, connais le Dieu de ton père, et sers-le d’un cœur entier et d’une âme bien disposée. Si tu le cherches, il se laissera trouver par toi."
+    },
+    {
+     "who": "David",
+     "text": "Qui suis-je, et qu’est mon peuple, pour que nous puissions offrir ainsi ? Tout vient de toi ; nous n’avons fait que te donner ce que nous avons reçu de ta main."
+    },
+    {
+     "who": "David",
+     "text": "Sois fort et courageux, et mène cette œuvre à bien. N’aie pas peur. Le Seigneur mon Dieu est avec toi ; il ne t’abandonnera pas avant que tout le travail soit achevé."
+    }
+   ],
+   "note": "Les Chroniques rapportent que David prépara pour le Temple cent mille talents d’or et un million de talents d’argent. Un talent pesait sans doute une trentaine de kilos. Le Psaume 30 porte l’en-tête « cantique pour la dédicace de la maison ».",
+   "reflect": "David consacra ce qu’il possédait à une maison qu’il ne verrait jamais ; puis-je, moi aussi, donner volontiers mon cœur à une œuvre dont je ne verrai pas les fruits ?",
+   "quiz": {
+    "q": "Pourquoi Dieu ne permit-il pas à David de bâtir le Temple ?",
+    "options": [
+     "Parce qu’il était trop âgé",
+     "Parce qu’il manquait de richesses",
+     "Parce que Nathan s’y opposait",
+     "Parce qu’il était un homme de guerre qui avait versé beaucoup de sang"
+    ],
+    "explain": "Dieu ne permit pas à David de bâtir le Temple, parce qu’il avait versé beaucoup de sang et mené de grandes guerres ; c’est son fils Salomon, un homme de paix, qui le bâtirait (1 Ch 22,8–9 ; 28,3)."
+   },
+   "credit": "Cornelis de Vos, King David Presenting the Sceptre to Solomon · Domaine public"
+  },
+  "d39": {
+   "title": "Les dernières paroles de David",
+   "when": "vers 970 av. J.-C.",
+   "subtitle": "Un dernier souffle qui chantait un matin sans nuages",
+   "story": [
+    "Le garçon qui gardait les moutons était devenu un vieux roi aux cheveux blancs. David, fils d’Isaï, le chantre d’Israël, chanta son dernier chant : « L’Esprit du Seigneur parle par moi, sa parole est sur ma langue. Le Rocher d’Israël m’a dit : Celui qui gouverne les hommes avec justice, qui gouverne dans la crainte de Dieu, est comme la lumière du soleil qui se lève un matin sans nuages, comme l’herbe nouvelle qui pousse de la terre après la pluie. »",
+    "David poursuivit son chant : « N’en est-il pas ainsi de ma maison devant Dieu ? Il a conclu avec moi une alliance éternelle, en tout point réglée et bien gardée. » Quand approcha le jour de sa mort, David appela Salomon et lui fit ses recommandations : « Je m’en vais par le chemin de toute la terre. Sois fort, et montre-toi un homme. Marche dans les voies du Seigneur, comme il est écrit dans la loi de Moïse. Alors s’accomplira la promesse du Seigneur : il ne manquera jamais à ta descendance quelqu’un pour s’asseoir sur le trône. »",
+    "Après lui avoir donné ses instructions une à une, au sujet de Joab et de Shiméï, et de la bonté à montrer aux fils de Barzillaï, David se coucha avec ses pères et fut enseveli dans la cité de David. Il avait régné sept ans à Hébron et trente-trois ans à Jérusalem, quarante ans en tout. Le Psaume 72 se termine sur une seule ligne : les prières de David, fils d’Isaï, sont achevées. Ce roi issu de sa descendance, qui se lèverait comme un matin sans nuages, Israël l’attendit longtemps."
+   ],
+   "words": [
+    {
+     "who": "Dieu",
+     "text": "Celui qui gouverne les hommes avec justice, qui gouverne dans la crainte de Dieu, est comme la lumière du soleil qui se lève un matin sans nuages, comme l’herbe nouvelle qui pousse de la terre après la pluie."
+    },
+    {
+     "who": "David",
+     "text": "L’Esprit du Seigneur parle par moi, sa parole est sur ma langue."
+    },
+    {
+     "who": "David",
+     "text": "Il a conclu avec moi une alliance éternelle, en tout point réglée et solidement gardée."
+    },
+    {
+     "who": "David",
+     "text": "Je m’en vais par le chemin de toute la terre. Sois fort et montre-toi un homme. Garde ce que le Seigneur ton Dieu t’a confié et marche dans ses voies."
+    }
+   ],
+   "note": "Les sept années d’Hébron sont celles où il ne régnait que sur la tribu de Juda. Longtemps après, les prophètes attendirent le germe juste qui sortirait de la maison de David, et le Nouveau Testament appelle Jésus « fils de David ».",
+   "reflect": "Dans son dernier souffle, David ne s’accrochait pas à ses exploits mais à l’alliance de Dieu ; à quoi voudrais-je m’accrocher au terme de ma vie ?",
+   "quiz": {
+    "q": "Combien d’années David régna-t-il en tout sur Israël ?",
+    "options": [
+     "33 ans",
+     "7 ans",
+     "40 ans",
+     "50 ans"
+    ],
+    "explain": "David régna sur Israël sept ans à Hébron et trente-trois ans à Jérusalem, quarante ans en tout (1 R 2,11)."
+   },
+   "credit": "Gerard van Honthorst, King David Playing the Harp, 1622 · Centraal Museum, Utrecht · Domaine public"
+  }
+ }
+}

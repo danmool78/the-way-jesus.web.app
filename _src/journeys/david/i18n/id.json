@@ -1,0 +1,1623 @@
+{
+ "periods": {
+  "v1": {
+   "name": "Gembala Muda",
+   "span": "1025 – 1020 SM"
+  },
+  "v2": {
+   "name": "Daud dalam Pelarian",
+   "span": "1020 – 1010 SM"
+  },
+  "v3": {
+   "name": "Daud Menjadi Raja",
+   "span": "1010 – 995 SM"
+  },
+  "v4": {
+   "name": "Rumah yang Runtuh",
+   "span": "993 – 979 SM"
+  },
+  "v5": {
+   "name": "Hari-hari Terakhir",
+   "span": "975 – 970 SM"
+  }
+ },
+ "places": {
+  "bethlehem": {
+   "name": "Betlehem",
+   "region": "Yehuda"
+  },
+  "gibeah": {
+   "name": "Gibea (istana Saul)",
+   "region": "Benyamin"
+  },
+  "elah": {
+   "name": "Lembah Ela",
+   "region": "Yehuda"
+  },
+  "ramah": {
+   "name": "Nayot di Rama",
+   "region": "Benyamin"
+  },
+  "nob": {
+   "name": "Nob",
+   "region": "Benyamin"
+  },
+  "gath": {
+   "name": "Gat",
+   "region": "Filistin"
+  },
+  "adullam": {
+   "name": "Gua Adulam",
+   "region": "Yehuda"
+  },
+  "keilah": {
+   "name": "Keila",
+   "region": "Yehuda"
+  },
+  "ziph": {
+   "name": "Padang Gurun Zif",
+   "region": "Yehuda"
+  },
+  "engedi": {
+   "name": "En-Gedi",
+   "region": "Yehuda"
+  },
+  "carmel": {
+   "name": "Karmel (Maon)",
+   "region": "Yehuda"
+  },
+  "ziklag": {
+   "name": "Ziklag",
+   "region": "Filistin"
+  },
+  "gilboa": {
+   "name": "Gunung Gilboa",
+   "region": "Israel"
+  },
+  "hebron": {
+   "name": "Hebron",
+   "region": "Yehuda"
+  },
+  "jerusalem": {
+   "name": "Yerusalem (Kota Daud)",
+   "region": "Yehuda"
+  },
+  "kiriath": {
+   "name": "Kiryat-Yearim (Baale-Yehuda)",
+   "region": "Yehuda"
+  },
+  "saltvalley": {
+   "name": "Lembah Asin",
+   "region": "Arah Edom"
+  },
+  "olives": {
+   "name": "Bukit Zaitun",
+   "region": "Yehuda"
+  },
+  "bahurim": {
+   "name": "Bahurim",
+   "region": "Benyamin"
+  },
+  "mahanaim": {
+   "name": "Mahanaim",
+   "region": "Gilead"
+  },
+  "ephraimwood": {
+   "name": "Hutan Efraim",
+   "region": "Gilead"
+  },
+  "araunah": {
+   "name": "Tempat Pengirikan Arauna (Moria)",
+   "region": "Yehuda"
+  },
+  "gihon": {
+   "name": "Mata Air Gihon",
+   "region": "Yehuda"
+  }
+ },
+ "events": {
+  "d01": {
+   "title": "Gembala di Padang Betlehem",
+   "when": "sekitar 1025 SM",
+   "subtitle": "Di padang tempat tak seorang pun melihat",
+   "story": [
+    "Ketika cahaya senja turun di bukit-bukit Betlehem, embik kawanan domba terdengar bertebaran di sepanjang lereng. Di padang itulah Daud, si bungsu dari delapan anak laki-laki Isai, menggembalakan domba ayahnya. Ia anak yang kemerah-merahan wajahnya dan bening sorot matanya. Selagi kakak-kakaknya memegang urusan besar keluarga, tempat si bungsu selalu di samping kawanan domba.",
+    "Suatu hari seekor singa muncul, menerkam seekor anak domba, lalu lari membawanya. Anak itu tidak ragu sedikit pun. Ia mengejar, memukul binatang itu, dan merebut anak domba dari mulutnya. Ketika singa itu berbalik menyerangnya, Daud menangkap janggutnya, menghantamnya, dan membunuhnya. Ketika seekor beruang datang, ia pun berbuat yang sama.",
+    "Di padang itu tidak ada orang yang bertepuk tangan untuknya. Daud baru menceritakan hal itu bertahun-tahun kemudian, ketika ia berdiri di hadapan Raja Saul dan menyatakan diri siap melawan seorang raksasa. Anak muda itu berkata. Hamba sudah biasa menjaga domba ayah hamba. TUHAN yang telah melepaskan hamba dari cakar singa dan cakar beruang, Dia juga akan melepaskan hamba kali ini."
+   ],
+   "words": [
+    {
+     "who": "Daud",
+     "text": "Hamba biasa menggembalakan kawanan domba ayah hamba. Kalau singa atau beruang datang menerkam seekor anak domba, hamba mengejarnya, memukulnya, dan merebut anak domba itu dari mulutnya."
+    },
+    {
+     "who": "Daud",
+     "text": "TUHAN yang telah melepaskan hamba dari cakar singa dan cakar beruang, Dia juga akan melepaskan hamba dari tangan orang Filistin ini."
+    },
+    {
+     "who": "Isai",
+     "text": "Masih ada si bungsu. Ia sedang menggembalakan domba di padang."
+    }
+   ],
+   "note": "Pada zaman Daud, singa dan beruang masih hidup di pegunungan Yehuda. Seorang gembala membawa tongkat, umban, dan kantong berisi bekal untuk menjaga dombanya dari binatang buas. Betlehem adalah desa di pegunungan, kira-kira sepuluh kilometer di selatan Yerusalem.",
+   "reflect": "Di tempat yang tak dilihat siapa pun, seberapa setia aku menjaga perkara kecil yang dipercayakan kepadaku?",
+   "quiz": {
+    "q": "Binatang apa yang dilawan dan dikalahkan Daud ketika menjaga domba?",
+    "options": [
+     "Serigala dan macan tutul",
+     "Singa dan beruang",
+     "Hiena dan serigala liar",
+     "Beruang dan serigala"
+    ],
+    "explain": "Daud berkata kepada Saul bahwa bila singa atau beruang menerkam anak domba, ia mengejar dan merebutnya kembali, dan ia telah membunuh singa maupun beruang (1Sam 17:34–36)."
+   },
+   "credit": "Elizabeth Jane Gardner, The Shepherd David, sekitar 1895 · Museum Nasional Perempuan dalam Seni · Domain publik"
+  },
+  "d02": {
+   "title": "Minyak bagi Si Bungsu Isai",
+   "when": "sekitar 1025 SM",
+   "subtitle": "Manusia melihat rupa, Allah melihat hati",
+   "story": [
+    "Nabi Samuel yang sudah tua lama berdukacita karena Saul, raja yang telah ditolak. Lalu TUHAN berfirman kepadanya. Berapa lama lagi engkau mau berdukacita? Isilah tabung tandukmu dengan minyak dan pergilah kepada Isai, orang Betlehem itu. Aku telah memilih seorang raja dari antara anak-anaknya. Samuel menjawab. Kalau Saul mendengarnya, ia akan membunuh hamba. TUHAN berfirman. Bawalah seekor lembu muda dan katakan bahwa engkau datang untuk mempersembahkan korban.",
+    "Ketika nabi itu tiba, para tua-tua Betlehem keluar menyambutnya dengan gemetar dan bertanya. Apakah engkau datang dengan maksud baik? Samuel menjawab. Ya, aku datang untuk mempersembahkan korban. Ketika Eliab, anak sulung Isai, berdiri di depannya, Samuel berpikir. Pasti inilah orangnya. Tetapi TUHAN berfirman. Jangan pandang parasnya atau tinggi badannya. Manusia melihat apa yang tampak di luar, tetapi Aku melihat hati.",
+    "Bukan Abinadab, bukan pula Syama. Setelah tujuh anak laki-laki lewat semuanya, Samuel bertanya. Inikah semua anakmu? Isai menjawab. Masih ada si bungsu, ia sedang menggembalakan domba. Samuel berkata bahwa tak seorang pun boleh duduk sebelum anak itu datang. Ketika anak yang dipanggil dari padang itu masuk, TUHAN berfirman. Bangkitlah, urapilah dia, sebab inilah orangnya. Di depan mata kakak-kakaknya minyak itu mengalir di kepalanya, dan sejak hari itu Roh TUHAN berkuasa atas Daud."
+   ],
+   "words": [
+    {
+     "who": "TUHAN",
+     "text": "Jangan pandang parasnya atau tinggi badannya, sebab Aku tidak memilih dia. Manusia melihat apa yang tampak di depan mata, tetapi Aku, TUHAN, melihat hati."
+    },
+    {
+     "who": "TUHAN",
+     "text": "Bangkitlah dan urapilah dia, sebab inilah orangnya."
+    },
+    {
+     "who": "Samuel",
+     "text": "Suruhlah orang menjemput anak itu. Kami tidak akan duduk sebelum ia datang."
+    }
+   ],
+   "note": "Pengurapan dengan minyak dilakukan ketika Allah menetapkan seseorang menjadi raja atau imam. Dalam bahasa Ibrani, 'orang yang diurapi' adalah Mesias. Saul pun sebelumnya telah diurapi oleh Samuel.",
+   "reflect": "Apakah aku menilai orang lain, dan diriku sendiri, menurut apa yang tampak di luar?",
+   "quiz": {
+    "q": "Anak Isai manakah yang mula-mula disangka Samuel 'pasti orang yang akan diurapi TUHAN'?",
+    "options": [
+     "Syama",
+     "Abinadab",
+     "Eliab",
+     "Yonatan"
+    ],
+    "explain": "Samuel berpikir begitu ketika melihat Eliab, anak sulung, tetapi TUHAN berfirman agar ia tidak memandang paras dan tinggi badannya (1Sam 16:6–7)."
+   },
+   "credit": "Paolo Veronese, The Anointing of David, sekitar 1555 · Museum Sejarah Seni Wina · Domain publik"
+  },
+  "d03": {
+   "title": "Anak Pemain Kecapi",
+   "when": "sekitar 1025 SM",
+   "subtitle": "Bunyi kecapi di istana yang gelap",
+   "story": [
+    "Roh TUHAN telah mundur dari Saul, dan roh jahat yang diutus TUHAN mengganggu raja itu. Bayang-bayang berat menyelimuti istana di Gibea. Para pegawainya memberanikan diri berkata. Biarlah kami mencari seorang yang pandai main kecapi. Bila roh jahat itu datang, ia akan memetik kecapi dan Tuanku akan merasa lega. Saul berkata. Carilah orang yang pandai main kecapi dan bawalah dia kepadaku.",
+    "Seorang pegawai muda maju dan berkata. Hamba pernah melihat seorang anak Isai, orang Betlehem itu. Ia pandai main kecapi, gagah berani, bijak bicaranya, dan elok parasnya. TUHAN menyertai dia. Saul mengirim utusan kepada Isai dengan pesan. Suruhlah anakmu Daud, yang menggembalakan domba itu, datang kepadaku. Isai memuat roti, sekirbat anggur, dan seekor anak kambing ke atas keledai, lalu mengutus anaknya.",
+    "Begitu melihat Daud, Saul sangat menyayanginya dan mengangkatnya menjadi pembawa senjatanya. Saul mengirim pesan lagi kepada Isai. Biarlah Daud tinggal di dekatku, sebab aku berkenan kepadanya. Sejak itu, setiap kali roh jahat menyerang raja, anak itu mengambil kecapi dan memetik dawainya. Ketika nada-nada itu memenuhi ruangan yang gelap, Saul dapat bernapas lega dan merasa lebih baik, dan roh jahat itu undur darinya."
+   ],
+   "words": [
+    {
+     "who": "Pegawai Saul",
+     "text": "Hamba pernah melihat seorang anak Isai, orang Betlehem itu. Ia pandai main kecapi, gagah berani, bijak bicaranya, dan elok parasnya. TUHAN menyertai dia."
+    },
+    {
+     "who": "Saul",
+     "text": "Carilah orang yang pandai main kecapi dan bawalah dia kepadaku."
+    },
+    {
+     "who": "Saul",
+     "text": "Biarlah Daud tinggal di dekatku, sebab aku berkenan kepadanya."
+    }
+   ],
+   "note": "Kecapi, dalam bahasa Ibrani disebut 'kinnor', adalah alat musik dawai kecil yang dawainya direntangkan pada bingkai kayu dan dipetik dengan jari. Gibea, tempat istana Saul, diduga adalah Tell el-Ful di utara Yerusalem.",
+   "reflect": "Di samping seseorang yang sedang melewati masa gelapnya, dengan apa aku dapat menenangkan hatinya?",
+   "quiz": {
+    "q": "Tugas apa yang diberikan Saul kepada Daud di istananya?",
+    "options": [
+     "Pembawa senjata",
+     "Panglima tentara",
+     "Juru minuman raja",
+     "Penjaga pintu gerbang"
+    ],
+    "explain": "Saul sangat mengasihi Daud dan mengangkatnya menjadi pembawa senjatanya (1Sam 16:21)."
+   },
+   "credit": "Rembrandt, Saul and David, sekitar 1651–1658 · Mauritshuis, Den Haag · Domain publik"
+  },
+  "d04": {
+   "title": "Raksasa di Lembah Ela",
+   "when": "sekitar 1020 SM",
+   "subtitle": "Ejekan raksasa selama empat puluh hari",
+   "story": [
+    "Lembah Ela membentang di antara dua pasukan: orang Israel berkemah di gunung sebelah sini, orang Filistin di gunung sebelah sana. Setiap hari seorang laki-laki berjalan keluar dari perkemahan Filistin. Goliat, orang Gat. Tingginya enam hasta sejengkal, ia memakai ketopong tembaga, dan baju zirah sisiknya saja beratnya lima ribu syikal. Gagang tombaknya seperti pesa tukang tenun, dan seorang pembawa perisai berjalan di depannya.",
+    "Raksasa itu berseru ke seberang lembah. Pilihlah seorang dari antaramu dan suruh dia turun kepadaku. Jika ia dapat membunuh aku, kami akan menjadi budakmu. Jika aku yang membunuh dia, kamulah yang menjadi budak kami. Saul dan seluruh Israel mendengar perkataan itu dan menjadi sangat ketakutan. Pagi dan petang, empat puluh hari lamanya keadaan itu berlangsung.",
+    "Pada waktu itu Isai menyuruh si bungsu membawa bertih gandum dan sepuluh roti kepada kakak-kakaknya. Setibanya di perkemahan, ejekan raksasa itu menusuk telinga Daud. Para prajurit mundur ketakutan, tetapi anak muda itu bertanya kepada orang-orang di sekitarnya. Siapakah orang Filistin yang tidak bersunat ini, sampai berani menghina barisan Allah yang hidup? Eliab, kakak sulungnya, mendengar itu dan menjadi marah. Kepada siapa kautinggalkan domba-domba yang sedikit itu?"
+   ],
+   "words": [
+    {
+     "who": "Daud",
+     "text": "Siapakah sebenarnya orang Filistin yang tidak bersunat ini, sehingga ia berani menghina barisan Allah yang hidup?"
+    },
+    {
+     "who": "Daud",
+     "text": "Apa salahku? Aku hanya bertanya sepatah kata."
+    },
+    {
+     "who": "Goliat",
+     "text": "Hari ini aku menantang barisan Israel. Kirimlah seorang laki-laki, supaya kami berdua bertarung."
+    },
+    {
+     "who": "Eliab",
+     "text": "Untuk apa engkau turun ke sini? Kepada siapa kautinggalkan domba-domba yang sedikit itu di padang? Engkau datang hanya untuk menonton pertempuran."
+    }
+   ],
+   "note": "Enam hasta sejengkal kira-kira 2,9 meter. Gulungan Laut Mati dan Septuaginta mencatat empat hasta sejengkal, yaitu sedikit lebih dari 2 meter. Lembah Ela adalah jalur naik dari dataran Filistin ke pegunungan Yehuda.",
+   "reflect": "Di hadapan suara yang membuat semua orang membeku, apakah aku sedang memandang raksasa itu atau Allah yang hidup?",
+   "quiz": {
+    "q": "Berapa lama Goliat tampil pagi dan petang di depan perkemahan Israel?",
+    "options": [
+     "Tujuh hari",
+     "Tiga hari",
+     "Sepuluh hari",
+     "Empat puluh hari"
+    ],
+    "explain": "Orang Filistin itu tampil pagi dan petang selama empat puluh hari (1Sam 17:16)."
+   },
+   "credit": "James Tissot, The Defiance of Goliath, sekitar 1896–1902 · Perpustakaan John Rylands, Manchester · Domain publik"
+  },
+  "d05": {
+   "title": "Lima Batu yang Licin",
+   "when": "sekitar 1020 SM",
+   "subtitle": "Bukan dengan pedang, tetapi demi nama TUHAN",
+   "story": [
+    "Daud maju ke hadapan Saul dan berkata. Hamba akan pergi melawan orang Filistin itu. Saul mencegahnya. Engkau masih muda, sedangkan dia sudah prajurit sejak masa mudanya. Daud menjawab. TUHAN yang telah melepaskan hamba dari singa dan beruang akan melepaskan hamba kali ini juga. Saul mengenakan baju perangnya dan ketopong tembaganya pada Daud. Daud mencoba melangkah beberapa kali, lalu berkata. Hamba tidak dapat berjalan dengan ini, sebab hamba belum terbiasa.",
+    "Daud menanggalkan baju zirah itu, turun ke tepi sungai, memilih lima batu yang licin, lalu memasukkannya ke dalam kantong gembalanya. Di tangannya hanya ada umban. Raksasa itu melihat anak muda yang kemerah-merahan itu dan memandangnya rendah. Goliat berteriak. Engkau datang membawa tongkat, apakah aku ini anjing? Daud balas berseru. Engkau mendatangi aku dengan pedang, tombak, dan lembing, tetapi aku mendatangi engkau demi nama TUHAN semesta alam. Pertempuran ini milik TUHAN.",
+    "Ketika raksasa itu mendekat, Daud berlari menyongsongnya. Ia mengambil sebuah batu dari kantongnya dan melontarkannya dengan umban. Batu itu terbenam di dahi raksasa itu, dan ia jatuh tersungkur dengan muka ke tanah. Di tangan Daud tidak ada pedang. Daud berlari, menghunus pedang raksasa itu dari sarungnya, dan dengan pedang itu memenggal kepala Goliat. Pasukan Filistin melarikan diri, dan orang Israel mengejar mereka sambil bersorak sampai ke gerbang Gat dan Ekron."
+   ],
+   "words": [
+    {
+     "who": "Daud",
+     "text": "Engkau mendatangi aku dengan pedang, tombak, dan lembing, tetapi aku mendatangi engkau demi nama TUHAN semesta alam, Allah barisan Israel yang kautantang itu."
+    },
+    {
+     "who": "Daud",
+     "text": "TUHAN tidak menyelamatkan dengan pedang atau tombak. Pertempuran ini milik TUHAN, dan Dia akan menyerahkan kamu ke dalam tangan kami."
+    },
+    {
+     "who": "Saul",
+     "text": "Pergilah. Kiranya TUHAN menyertai engkau."
+    },
+    {
+     "who": "Goliat",
+     "text": "Engkau mendatangi aku dengan tongkat, apakah aku ini anjing?"
+    }
+   ],
+   "note": "Umban adalah senjata berupa kantong kulit dengan dua tali. Umban diayun berputar, lalu satu talinya dilepas untuk melontarkan batu. Hakim-hakim 20:16 menyebut para pengumban suku Benyamin yang dapat mengenai sehelai rambut tanpa meleset. Umban bukan mainan gembala, melainkan senjata tentara.",
+   "reflect": "Ketika aku mencoba berperang dengan baju zirah orang lain, apa yang sebenarnya sudah Allah taruh di tanganku?",
+   "quiz": {
+    "q": "Berapa batu yang dipilih Daud di tepi sungai dan dimasukkan ke kantongnya?",
+    "options": [
+     "Tiga",
+     "Lima",
+     "Tujuh",
+     "Dua belas"
+    ],
+    "explain": "Daud memilih lima batu yang licin dari sungai dan memasukkannya ke dalam kantong gembalanya (1Sam 17:40)."
+   },
+   "credit": "Osmar Schindler, David and Goliath, 1888 · Domain publik"
+  },
+  "d06": {
+   "title": "Perjanjian Yonatan",
+   "when": "sekitar 1020 SM",
+   "subtitle": "Sahabat yang dikasihi seperti nyawanya sendiri",
+   "story": [
+    "Dengan kepala raksasa di tangannya, anak muda itu berdiri di hadapan Saul. Saul bertanya. Hai orang muda, anak siapakah engkau? Daud menjawab. Hamba anak hamba Tuanku, Isai orang Betlehem. Ketika jawaban singkat itu selesai, hati Pangeran Yonatan, yang menyaksikan dari dekat, terpaut erat pada hati Daud. Yonatan mengasihinya seperti nyawanya sendiri.",
+    "Hari itu Saul membawa Daud dan tidak membiarkannya pulang lagi ke rumah ayahnya. Yonatan mengikat perjanjian dengan Daud. Lalu ia menanggalkan jubah yang dipakainya dan memberikannya kepada Daud. Juga baju perangnya, pedangnya, busurnya, bahkan ikat pinggangnya. Satu per satu, putra raja menyerahkan miliknya kepada seorang gembala yang datang dari padang.",
+    "Ke mana pun Saul mengutusnya, Daud pergi dan berhasil dengan bijaksana. Saul mengangkatnya menjadi kepala atas para prajurit. Seluruh rakyat menyukainya, demikian pula para pegawai Saul. Di istana Gibea, yang seorang sebagai putra raja dan yang seorang sebagai putra gembala, keduanya berdiri berdampingan dalam satu perjanjian."
+   ],
+   "words": [
+    {
+     "who": "Daud",
+     "text": "Hamba anak hamba Tuanku, Isai orang Betlehem."
+    },
+    {
+     "who": "Saul",
+     "text": "Hai orang muda, anak siapakah engkau?"
+    }
+   ],
+   "note": "Di Timur Dekat kuno, menyerahkan jubah dan senjata adalah tanda berbagi kedudukan dan bagian sendiri. Yonatan adalah putra mahkota, dan dalam 1 Samuel 14 ia juga seorang pahlawan yang meruntuhkan pos Filistin di Mikhmas.",
+   "reflect": "Dapatkah aku, seperti Yonatan, dengan rela menghargai dan meneguhkan orang yang mungkin mengancam kedudukanku?",
+   "quiz": {
+    "q": "Manakah yang TIDAK diberikan Yonatan kepada Daud?",
+    "options": [
+     "Jubah",
+     "Busur",
+     "Mahkota",
+     "Ikat pinggang"
+    ],
+    "explain": "Yonatan memberikan jubahnya dan baju perangnya, pedangnya, busurnya, dan ikat pinggangnya kepada Daud (1Sam 18:4)."
+   },
+   "credit": "Gustave Doré, David and Jonathan, 1866 · Alkitab bergambar Doré · Domain publik"
+  },
+  "d07": {
+   "title": "Beribu-ribu dan Berlaksa-laksa",
+   "when": "sekitar 1019 SM",
+   "subtitle": "Sebait lagu mengubah pandangan sang raja",
+   "story": [
+    "Dalam perjalanan pulang sesudah mengalahkan orang Filistin, kaum perempuan dari setiap kota Israel keluar membawa rebana, menari dan bernyanyi. Saul mengalahkan beribu-ribu, Daud berlaksa-laksa. Makin sering lagu itu diulang, makin kaku wajah sang raja. Saul menjadi sangat marah dan berkata. Kepada Daud diperhitungkan berlaksa-laksa, kepadaku hanya beribu-ribu. Apa lagi yang kurang baginya selain kerajaan ini? Sejak hari itu Saul selalu memandang Daud dengan curiga.",
+    "Keesokan harinya roh jahat menyerbu Saul. Raja itu meracau di dalam rumah, dan Daud memetik kecapi seperti biasa. Saul menggenggam erat tombak di tangannya sambil berkata dalam hati. Aku akan menancapkan Daud ke dinding. Tombak itu melayang, dan dua kali Daud mengelak. Saul tahu bahwa TUHAN menyertai Daud dan telah meninggalkan dirinya, maka ia menjadi takut kepada Daud.",
+    "Saul mengangkat Daud menjadi kepala pasukan seribu orang dan mengirimnya ke medan perang. Sambil berjanji memberikan putrinya, ia berharap Daud tewas di tangan orang Filistin. Mikhal, putri Saul, mencintai Daud. Mas kawin yang diminta raja adalah seratus kulit khatan orang Filistin. Sebelum waktunya habis, Daud pergi dan membunuh dua ratus orang. Mikhal menjadi istri Daud, dan seumur hidupnya Saul menjadi musuh Daud."
+   ],
+   "words": [
+    {
+     "who": "Daud",
+     "text": "Siapakah aku ini, dan apakah artinya kaum keluargaku dan kaum ayahku di Israel, sehingga aku menjadi menantu raja?"
+    },
+    {
+     "who": "Para perempuan",
+     "text": "Saul mengalahkan beribu-ribu, Daud mengalahkan berlaksa-laksa."
+    },
+    {
+     "who": "Saul",
+     "text": "Kepada Daud diperhitungkan berlaksa-laksa, kepadaku hanya beribu-ribu. Apa lagi yang kurang baginya selain kerajaan ini?"
+    }
+   ],
+   "note": "Mas kawin adalah pemberian yang dibayar pengantin laki-laki kepada keluarga pengantin perempuan, seperti juga dalam Kejadian 34 dan Keluaran 22. Saul tidak meminta uang, tetapi bukti kematian seratus orang Filistin, dengan harapan Daud tewas di medan perang.",
+   "reflect": "Ketika orang lain menerima tepuk tangan, dengan mata seperti apa hatiku mulai memandang dia?",
+   "quiz": {
+    "q": "Mas kawin apa yang diminta Saul dari Daud sebagai ganti Mikhal?",
+    "options": [
+     "Seratus kulit khatan orang Filistin",
+     "Lima puluh syikal perak",
+     "Pedang Goliat",
+     "Seribu ekor domba"
+    ],
+    "explain": "Saul menyuruh orang mengatakan bahwa raja hanya menginginkan seratus kulit khatan orang Filistin sebagai mas kawin, dan Daud membunuh dua ratus orang Filistin (1Sam 18:25–27)."
+   },
+   "credit": "Guercino, Saul Attacking David, 1646 · Galleria Nazionale d'Arte Antica, Roma · Domain publik"
+  },
+  "d08": {
+   "title": "Malam Turun lewat Jendela",
+   "when": "sekitar 1018 SM",
+   "subtitle": "Jendela yang dibukakan Mikhal",
+   "story": [
+    "Saul berkata kepada anaknya Yonatan dan kepada para pegawainya. Bunuhlah Daud. Yonatan, yang sangat menyayangi Daud, diam-diam memberitahunya. Bersembunyilah sampai pagi. Aku akan berbicara dengan ayahku. Di padang Yonatan berdiri di hadapan ayahnya dan berkata. Daud mempertaruhkan nyawanya untuk membunuh orang Filistin itu, dan TUHAN telah memberikan kemenangan besar kepada seluruh Israel. Mengapa Ayah hendak menumpahkan darah orang yang tidak bersalah?",
+    "Saul mendengar perkataan itu dan bersumpah. Demi TUHAN yang hidup, ia tidak akan dibunuh. Daud kembali ke sisi raja. Tetapi ketika Daud pulang sesudah mengalahkan orang Filistin dengan dahsyat, roh jahat kembali menyerang Saul. Di sela bunyi kecapi, tombak Saul melayang. Tombak itu menancap di dinding, dan malam itu Daud meloloskan diri.",
+    "Saul menyuruh orang menjaga rumah Daud, dengan perintah untuk membunuhnya pada pagi hari. Mikhal berkata kepada suaminya. Kalau malam ini engkau tidak menyelamatkan diri, besok engkau mati. Mikhal menurunkan Daud lewat jendela. Lalu ia membaringkan terafim, patung berhala yang ada di rumah, di tempat tidur, menaruh anyaman bulu kambing di bagian kepala, dan menutupinya dengan kain. Daud lolos di antara orang-orang yang mengepung rumah itu. Tentang malam itu Daud bernyanyi. Ya Allahku, lepaskanlah aku dari musuh-musuhku."
+   ],
+   "words": [
+    {
+     "who": "Yonatan",
+     "text": "Janganlah raja berbuat dosa terhadap Daud, hambanya. Ia mempertaruhkan nyawanya untuk membunuh orang Filistin itu, dan TUHAN telah memberikan kemenangan besar kepada seluruh Israel."
+    },
+    {
+     "who": "Saul",
+     "text": "Demi TUHAN yang hidup, aku bersumpah: ia tidak akan dibunuh."
+    },
+    {
+     "who": "Mikhal",
+     "text": "Kalau malam ini engkau tidak menyelamatkan nyawamu, besok engkau akan dibunuh."
+    },
+    {
+     "who": "Saul",
+     "text": "Mengapa engkau menipu aku seperti ini dan melepaskan musuhku sehingga ia luput?"
+    }
+   ],
+   "note": "Terafim adalah patung dewa yang disimpan di rumah. Yang dicuri Rahel dari rumah ayahnya, Laban, juga terafim. Judul Mazmur 59 menyebutkan bahwa nyanyian itu digubah ketika Saul menyuruh orang menjaga rumah Daud untuk membunuhnya.",
+   "reflect": "Seperti seseorang pernah membuka mulut untuk membelaku, beranikah aku berbicara bagi orang yang diperlakukan tidak adil?",
+   "quiz": {
+    "q": "Apa yang dibaringkan Mikhal di tempat tidur sesudah meloloskan Daud?",
+    "options": [
+     "Dua bantal",
+     "Karung gandum",
+     "Kulit domba",
+     "Terafim"
+    ],
+    "explain": "Mikhal membaringkan terafim di tempat tidur, menaruh anyaman bulu kambing di bagian kepala, dan menutupinya dengan kain (1Sam 19:13)."
+   },
+   "credit": "Gustave Doré, David Escapes through a Window, 1866 · Alkitab bergambar Doré · Domain publik"
+  },
+  "d09": {
+   "title": "Para Nabi di Rama",
+   "when": "sekitar 1018 SM",
+   "subtitle": "Roh Allah yang tak dapat dihalangi raja",
+   "story": [
+    "Setelah lolos dari tangan Saul, Daud pergi kepada Samuel di Rama. Di hadapan nabi tua yang dahulu mengurapinya, ia menceritakan semua yang telah dilakukan Saul. Keduanya pergi bersama ke Nayot dan tinggal di sana. Tak lama kemudian ada orang yang melapor kepada Saul. Daud ada di Nayot, di Rama.",
+    "Saul mengirim orang untuk menangkap Daud. Ketika mereka tiba, serombongan nabi sedang bernubuat, dan Samuel berdiri memimpin mereka. Roh Allah turun ke atas orang-orang suruhan Saul, dan mereka pun mulai bernubuat. Saul mengirim orang lagi. Mereka pun bernubuat. Orang-orang yang dikirimnya untuk ketiga kalinya juga demikian.",
+    "Akhirnya Saul sendiri pergi ke Rama. Di dekat sumur besar di Sekhu, Saul bertanya. Di mana Samuel dan Daud? Dalam perjalanan ke Nayot, Roh Allah turun juga ke atas Saul. Raja itu berjalan sambil bernubuat, menanggalkan pakaiannya di hadapan Samuel, dan sepanjang siang dan malam itu terbaring tanpa pakaian. Orang-orang berbisik-bisik. Apakah Saul juga termasuk golongan nabi?"
+   ],
+   "words": [
+    {
+     "who": "Orang-orang",
+     "text": "Daud sekarang ada di Nayot, di Rama."
+    },
+    {
+     "who": "Saul",
+     "text": "Di mana Samuel dan Daud?"
+    },
+    {
+     "who": "Orang-orang",
+     "text": "Apakah Saul juga termasuk golongan nabi?"
+    }
+   ],
+   "note": "Nayot berarti 'tempat kediaman', dan diduga merupakan tempat rombongan nabi tinggal bersama di Rama dengan Samuel sebagai pusatnya. Ucapan 'Apakah Saul juga termasuk golongan nabi?' sudah pernah terdengar sesudah Saul pertama kali diurapi (1 Samuel 10:11–12).",
+   "reflect": "Pernahkah sesuatu yang hendak kukejar dan kutangkap dengan kekuatanku sendiri terhenti di hadapan Allah?",
+   "quiz": {
+    "q": "Berapa kali Saul mengirim orang ke Nayot untuk menangkap Daud sebelum ia pergi sendiri?",
+    "options": [
+     "Dua kali",
+     "Tiga kali",
+     "Empat kali",
+     "Tujuh kali"
+    ],
+    "explain": "Ketiga rombongan suruhan Saul semuanya bernubuat, lalu Saul sendiri pergi ke Rama (1Sam 19:20–22)."
+   },
+   "credit": "Gerard Hoet, Saul among the Prophets, 1728 · Rijksmuseum, Amsterdam · Domain publik"
+  },
+  "d10": {
+   "title": "Tiga Anak Panah",
+   "when": "sekitar 1018 SM",
+   "subtitle": "Anak panah janji yang melayang ke seberang",
+   "story": [
+    "Daud, yang melarikan diri dari Nayot, bertanya kepada Yonatan. Apa yang telah kuperbuat sehingga ayahmu mengincar nyawaku? Yonatan menjawab. Tidak mungkin, engkau tidak akan mati. Daud menggeleng dan berkata. Hanya selangkah jarak antara aku dan maut. Daud memutuskan untuk tidak hadir dalam perjamuan bulan baru dan bersembunyi di padang. Sambil mengikat perjanjian, Yonatan berkata. Jangan sekali-kali engkau menarik kasihmu dari keluargaku untuk selama-lamanya.",
+    "Pada hari kedua bulan baru, tempat Daud di meja raja kembali kosong. Saul bertanya. Mengapa anak Isai tidak datang makan, baik kemarin maupun hari ini? Ketika Yonatan memberi alasan seperti yang sudah mereka sepakati, Saul menjadi murka. Selama anak Isai itu hidup, engkau dan kerajaanmu tidak akan kokoh. Ia harus mati. Yonatan membantah. Mengapa ia harus mati? Sebagai jawaban, tombak Saul melayang ke arah anaknya sendiri.",
+    "Keesokan paginya Yonatan pergi ke padang membawa seorang bujang kecil. Anak panah melayang melewati kepala anak itu. Yonatan berseru. Bukankah anak panah itu lebih jauh di depanmu? Cepat, jangan berlambat-lambat. Itulah isyarat bagi Daud di balik batu untuk pergi. Setelah bujang itu pulang, Daud keluar, sujud ke tanah, dan menyembah tiga kali. Keduanya berciuman dan menangis bersama, dan tangis Daud lebih keras. Yonatan berkata. Pergilah dengan selamat."
+   ],
+   "words": [
+    {
+     "who": "Daud",
+     "text": "Demi TUHAN yang hidup dan demi hidupmu, hanya selangkah jarak antara aku dan maut."
+    },
+    {
+     "who": "Yonatan",
+     "text": "Pergilah dengan selamat. Kita berdua telah bersumpah demi nama TUHAN. TUHAN akan berada di antara aku dan engkau, di antara keturunanku dan keturunanmu, untuk selama-lamanya."
+    },
+    {
+     "who": "Yonatan",
+     "text": "Selama aku masih hidup, tunjukkanlah kasih setia TUHAN kepadaku. Dan sesudah aku mati pun, jangan sekali-kali engkau menarik kasihmu dari keluargaku untuk selama-lamanya."
+    },
+    {
+     "who": "Saul",
+     "text": "Selama anak Isai itu hidup di muka bumi, engkau dan kerajaanmu tidak akan berdiri kokoh."
+    }
+   ],
+   "note": "Bulan baru adalah hari ketika bulan mulai tampak lagi. Pada hari itu orang meniup nafiri, mempersembahkan korban, dan makan bersama (Bilangan 10:10; 28:11). Alkitab menyebut batu di dekat tempat Daud bersembunyi dan menunggu itu batu Ezel.",
+   "reflect": "Bahkan saat harus melepas seseorang pergi, apakah aku tetap memegang janji yang kubuat di hadapan Allah?",
+   "quiz": {
+    "q": "Berapa anak panah yang hendak ditembakkan Yonatan untuk memberi tahu Daud maksud ayahnya?",
+    "options": [
+     "Tiga",
+     "Satu",
+     "Lima",
+     "Tujuh"
+    ],
+    "explain": "Yonatan berkata ia akan menembakkan tiga anak panah ke sisi batu seolah-olah memanah sasaran (1Sam 20:20). Kata-kata bahwa anak panah ada lebih jauh dari bujang itu adalah isyarat untuk pergi (1Sam 20:22)."
+   },
+   "credit": "Rembrandt, David and Jonathan, 1642 · Museum Hermitage, Sankt Peterburg · Domain publik"
+  },
+  "d11": {
+   "title": "Roti Sajian di Nob dan Pedang Goliat",
+   "when": "sekitar 1018 SM",
+   "subtitle": "Roti kudus bagi pelarian yang lapar, dan harga yang harus dibayar",
+   "story": [
+    "Setelah lolos dari istana Saul, Daud tiba dengan tangan kosong di tempat kudus di Nob. Imam Ahimelekh keluar menyambutnya dengan gemetar. Ahimelekh bertanya. Mengapa engkau datang seorang diri? Tidak adakah orang yang menyertaimu? Daud berdalih. Raja menugaskan aku suatu urusan rahasia. Berikanlah aku lima roti saja. Di tempat kudus itu tidak ada apa-apa selain roti kudus yang baru saja diangkat. Ahimelekh memberikan kepada Daud roti yang telah diganti dengan roti baru di hadapan TUHAN itu.",
+    "Daud bertanya lagi. Tidak adakah tombak atau pedang di sini? Urusan raja begitu mendesak sehingga aku tidak sempat membawa pedang. Ahimelekh menjawab. Pedang Goliat, yang kaukalahkan di Lembah Ela, ada di sana, terbungkus kain di belakang efod. Daud berkata. Tidak ada yang seperti itu, berikanlah kepadaku. Tetapi di tempat itu ada seorang lagi. Doeg, orang Edom, kepala para gembala Saul. Doeg menyaksikan semuanya tanpa berkata apa-apa.",
+    "Tak lama kemudian Doeg melaporkan kepada Saul apa yang dilihatnya hari itu. Atas perintah Saul, Doeg membunuh delapan puluh lima imam. Hanya Abyatar, anak Ahimelekh, yang lolos dan berlari kepada Daud. Daud berkata kepada Abyatar. Ketika aku melihat Doeg hari itu, aku sudah tahu akan jadi begini. Keluarga ayahmu mati karena aku. Tinggallah bersamaku, di sini engkau aman. Kelak Daud bernyanyi tentang Doeg. Hai pahlawan, mengapa engkau memegahkan kejahatan?"
+   ],
+   "words": [
+    {
+     "who": "Daud",
+     "text": "Hari itu, ketika aku melihat Doeg orang Edom ada di sana, aku sudah tahu ia pasti akan memberitahu Saul. Seluruh keluarga ayahmu mati karena aku."
+    },
+    {
+     "who": "Daud",
+     "text": "Jangan takut, tinggallah bersamaku. Orang yang mengincar nyawamu juga mengincar nyawaku. Di sisiku engkau aman."
+    },
+    {
+     "who": "Daud",
+     "text": "Tidak ada pedang yang seperti itu. Berikanlah pedang itu kepadaku."
+    },
+    {
+     "who": "Ahimelekh",
+     "text": "Siapakah di antara semua pegawai raja yang setia seperti Daud? Ia menantu raja, kepala pengawal raja, dan dihormati di istana."
+    }
+   ],
+   "note": "Roti sajian adalah dua belas roti yang setiap hari Sabat disusun baru di atas meja di tempat kudus. Roti yang diangkat hanya boleh dimakan para imam (Im 24:5–9). Yesus menyebut peristiwa ini dalam perdebatan tentang hari Sabat (Mrk 2:25–26).",
+   "reflect": "Pernahkah aku memikirkan harga yang mungkin harus dibayar orang lain karena satu dalih kecil yang kuucapkan?",
+   "quiz": {
+    "q": "Berapa imam yang dibunuh Doeg di Nob?",
+    "options": [
+     "Tujuh puluh",
+     "Tujuh puluh lima",
+     "Delapan puluh lima",
+     "Sembilan puluh"
+    ],
+    "explain": "Hari itu Doeg orang Edom membunuh delapan puluh lima imam yang memakai efod linen (1Sam 22:18). Hanya Abyatar, anak Ahimelekh, yang lolos dan pergi kepada Daud (1Sam 22:20)."
+   },
+   "credit": "Aert de Gelder, Ahimelech Giving the Sword of Goliath to David, sekitar 1680–1690 · Museum J. Paul Getty · Domain publik"
+  },
+  "d12": {
+   "title": "Pura-pura Gila di Gat",
+   "when": "sekitar 1018 SM",
+   "subtitle": "Sang pahlawan menjadi orang gila di depan gerbang musuh",
+   "story": [
+    "Di depan gerbang Gat, tanah Filistin, kampung halaman Goliat, Daud berdiri seorang diri. Dalam pelariannya dari Saul, tidak ada lagi tempat bersembunyi di Israel. Di tanah musuh, pikirnya, tangan Saul tidak akan sampai. Daud menghadap Akhis, raja Gat.",
+    "Tetapi para pegawai Akhis lebih dulu mengenalinya. Para pegawai itu berbisik kepada raja. Bukankah ini Daud, raja negeri itu? Orang yang dinyanyikan para perempuan sambil menari? Saul mengalahkan beribu-ribu, Daud berlaksa-laksa. Kata-kata itu menancap di hati Daud. Daud menjadi sangat takut kepada Akhis.",
+    "Di depan mereka Daud tiba-tiba menjadi orang lain. Ia menggeliat-geliat, mencoret-coret pintu gerbang sembarangan, dan membiarkan ludahnya meleleh ke janggutnya. Akhis membentak para pegawainya. Lihat, dia orang gila. Apakah aku kekurangan orang gila sehingga kamu membawa orang ini untuk berbuat gila di depanku? Demikianlah Daud seakan diusir keluar dari Gat. Tentang hari yang menakutkan itu Daud bernyanyi. Pada waktu aku takut, aku percaya kepada-Mu."
+   ],
+   "words": [
+    {
+     "who": "Para pegawai Akhis",
+     "text": "Bukankah ini Daud, raja negeri itu? Bukankah tentang dia orang menari dan bernyanyi: Saul mengalahkan beribu-ribu, Daud berlaksa-laksa?"
+    },
+    {
+     "who": "Akhis",
+     "text": "Lihat, dia orang gila. Mengapa kamu membawanya kepadaku? Apakah aku kekurangan orang gila sehingga orang seperti ini kamu masukkan ke rumahku?"
+    }
+   ],
+   "note": "Gat adalah salah satu dari lima kota Filistin dan kampung halaman Goliat (1Sam 17:4). Pendapat bahwa Gat adalah Tell es-Safi sekarang diterima secara luas. Judul Mazmur 56 dan 34 merujuk pada peristiwa ini.",
+   "reflect": "Di balik wajah yang kubuat-buat karena takut, apa isi hati yang sesungguhnya perlu kuungkapkan kepada Allah?",
+   "quiz": {
+    "q": "Manakah yang TIDAK dilakukan Daud ketika berpura-pura gila di Gat?",
+    "options": [
+     "Mengayunkan pedang kepada Akhis",
+     "Mencoret-coret pintu gerbang",
+     "Membiarkan ludahnya meleleh ke janggut",
+     "Mengubah tingkah lakunya di depan mereka"
+    ],
+    "explain": "Daud mengubah tingkah lakunya di depan Akhis dan berpura-pura gila, mencoret-coret pintu gerbang dan membiarkan ludahnya meleleh ke janggutnya (1Sam 21:13). Tidak ada catatan bahwa ia mengayunkan pedang."
+   },
+   "credit": "Seniman tak dikenal, David Feigning Madness before Achish · Domain publik"
+  },
+  "d13": {
+   "title": "Empat Ratus Orang di Gua Adulam",
+   "when": "sekitar 1017 SM",
+   "subtitle": "Gua tempat berkumpulnya orang berutang dan orang yang sakit hati",
+   "story": [
+    "Setelah nyaris lolos dari Gat, Daud bersembunyi di gua Adulam di kaki pegunungan Yehuda. Tidak ada apa-apa di sana selain gelap, kecuali cahaya yang menyusup di celah batu. Lalu wajah-wajah yang dikenalnya muncul di mulut gua. Mendengar kabar itu, kakak-kakaknya dan seluruh keluarga ayahnya turun mendapatkan dia.",
+    "Lalu datang pula orang-orang lain. Orang yang dikejar-kejar, orang yang terhimpit utang, orang yang sakit hati. Satu demi satu mereka berkumpul hingga jumlahnya sekitar empat ratus orang. Daud menjadi pemimpin mereka. Pasukan pertamanya bukan para pahlawan istana, melainkan orang-orang yang tersingkir dari dunia.",
+    "Daud membawa ayah dan ibunya yang sudah tua ke Mizpa di tanah Moab dan memohon kepada raja Moab. Izinkanlah ayah dan ibuku tinggal di sini sampai aku tahu apa yang akan dilakukan Allah kepadaku. Sesudah itu nabi Gad berkata kepada Daud. Janganlah tinggal di kubu ini, masuklah ke tanah Yehuda. Daud pun pergi ke hutan Heret. Pada masa ia bersembunyi di gua itu, Daud berseru demikian. Engkaulah tempat perlindunganku, bagianku di negeri orang-orang hidup."
+   ],
+   "words": [
+    {
+     "who": "Daud",
+     "text": "Izinkanlah ayah dan ibuku datang dan tinggal bersamamu di sini, sampai aku tahu apa yang akan dilakukan Allah kepadaku."
+    },
+    {
+     "who": "Gad",
+     "text": "Janganlah tinggal di kubu ini. Pergilah dan masuklah ke tanah Yehuda."
+    }
+   ],
+   "note": "Adulam adalah kota kuno di Sefela, dataran rendah Yehuda, yang rajanya dikalahkan oleh Yosua (Yos 12:15). Ada pendapat bahwa Daud menitipkan orang tuanya di Moab karena nenek buyutnya, Rut, adalah perempuan Moab (Rut 4:17).",
+   "reflect": "Kalau orang-orang yang tersingkir dan sakit hati berkumpul di sekitarku, akankah aku menganggap mereka beban atau menerima mereka sebagai teman seperjalanan?",
+   "quiz": {
+    "q": "Kira-kira berapa orang yang berkumpul kepada Daud di gua Adulam?",
+    "options": [
+     "Dua ratus",
+     "Empat ratus",
+     "Enam ratus",
+     "Tiga ribu"
+    ],
+    "explain": "Orang yang dalam kesukaran, orang yang berutang, dan orang yang sakit hati berkumpul kepada Daud, kira-kira empat ratus orang, dan Daud menjadi pemimpin mereka (1Sam 22:2)."
+   },
+   "credit": "Claude Lorrain, Landscape with David at the Cave of Adullam, 1658 · Galeri Nasional London · Domain publik"
+  },
+  "d14": {
+   "title": "Menyelamatkan Keila",
+   "when": "sekitar 1016 SM",
+   "subtitle": "Ketika kota yang diselamatkan hendak menutup pintunya",
+   "story": [
+    "Terdengar kabar bahwa orang Filistin menyerang Keila dan merampok gandum di tempat-tempat pengirikan. Daud bertanya kepada TUHAN. Haruskah aku pergi menyerang mereka? TUHAN menjawab. Pergilah, seranglah orang Filistin itu dan selamatkanlah Keila. Tetapi anak buahnya menggeleng. Bersembunyi di sini, di Yehuda, saja kami sudah ketakutan, apalagi kalau pergi ke Keila melawan pasukan Filistin?",
+    "Daud bertanya lagi. Kali ini jawaban TUHAN lebih jelas. Bangkitlah, pergilah ke Keila. Aku akan menyerahkan orang Filistin ke dalam tanganmu. Daud dan anak buahnya pergi, memukul kalah orang Filistin dengan hebat, dan menggiring ternak mereka. Penduduk Keila selamat. Pada waktu itu Abyatar, imam yang satu-satunya selamat dari Nob, datang kepada Daud membawa efod.",
+    "Mendengar kabar itu, Saul berseru dengan gembira. Daud telah mengurung dirinya sendiri di kota yang berpintu gerbang dan berpalang. Di hadapan efod Daud bertanya. Akankah Saul datang? TUHAN menjawab. Ia akan datang. Daud bertanya lagi. Akankah orang Keila menyerahkan aku? TUHAN berfirman. Mereka akan menyerahkan engkau. Daud dan anak buahnya, kira-kira enam ratus orang, meninggalkan Keila dan mengembara tanpa tujuan. Saul pun membatalkan penyerangannya."
+   ],
+   "words": [
+    {
+     "who": "Allah",
+     "text": "Pergilah, seranglah orang Filistin itu dan selamatkanlah Keila."
+    },
+    {
+     "who": "Allah",
+     "text": "Bangkitlah, pergilah ke Keila. Aku akan menyerahkan orang Filistin ke dalam tanganmu."
+    },
+    {
+     "who": "Daud",
+     "text": "TUHAN, Allah Israel, hamba-Mu telah mendengar dengan pasti bahwa Saul berusaha datang ke Keila untuk memusnahkan kota ini karena aku."
+    },
+    {
+     "who": "Allah",
+     "text": "Mereka akan menyerahkan engkau."
+    }
+   ],
+   "note": "Keila adalah kota di Sefela, di selatan Adulam dan sekitar 13 km di barat laut Hebron. Kini kota itu dikenal sebagai Khirbet Qila. Tempat pengirikan terletak di luar kota sehingga mudah menjadi sasaran rampokan pada musim panen.",
+   "reflect": "Bahkan bagi orang yang tidak tahu berterima kasih, dapatkah aku lebih dulu bertanya kepada Tuhan lalu bertindak?",
+   "quiz": {
+    "q": "Kira-kira berapa anak buah yang menyertai Daud ketika meninggalkan Keila?",
+    "options": [
+     "Empat ratus",
+     "Dua ratus",
+     "Tiga ribu",
+     "Enam ratus"
+    ],
+    "explain": "Daud dan orang-orangnya, kira-kira enam ratus orang, bangkit meninggalkan Keila dan pergi ke mana saja mereka dapat pergi (1Sam 23:13)."
+   },
+   "credit": "François van Bleyswijck, David Consults the High Priest through the Ephod, sekitar 1681–1746 · Rijksmuseum, Amsterdam · Domain publik"
+  },
+  "d15": {
+   "title": "Pengkhianatan di Padang Gurun Zif",
+   "when": "sekitar 1016 SM",
+   "subtitle": "Dua sahabat di padang gurun dan pengejaran yang terpisah sebuah gunung",
+   "story": [
+    "Daud mengembara di kubu-kubu dan pegunungan padang gurun Zif. Setiap hari Saul mencarinya, tetapi Allah tidak menyerahkan Daud ke tangannya. Pada waktu itu Yonatan, anak Saul, datang menemui Daud di Koresa. Yonatan menggenggam tangan Daud dan berkata. Jangan takut. Tangan ayahku tidak akan menemukan engkau. Engkau akan menjadi raja atas Israel, dan aku akan menjadi orang kedua sesudahmu. Keduanya mengikat perjanjian di hadapan TUHAN lalu berpisah. Itulah pertemuan terakhir mereka.",
+    "Tetapi orang-orang Zif dari daerah itu naik ke Gibea dan melapor kepada Saul. Bukankah Daud bersembunyi di kubu gunung Hakhila, di tanah kami? Saul memberkati mereka dan berkata. Kamu telah menaruh belas kasihan kepadaku. Selidikilah semua tempat ia bersembunyi. Saul membawa pasukannya turun sampai ke padang gurun Maon.",
+    "Saul berjalan di sisi gunung yang satu, Daud di sisi gunung yang lain. Daud bergegas menghindar, dan pasukan Saul mengepung serta makin mendekat. Ia hampir tertangkap. Tepat pada saat itu seorang utusan berlari mendapatkan Saul. Segeralah pulang, orang Filistin telah menyerbu negeri ini. Saul berbalik. Karena itu tempat itu dinamai Gunung Batu Keluputan, Sela-Hamahlekot. Tentang hari itu Daud bernyanyi. Ya Allah, selamatkanlah aku karena nama-Mu."
+   ],
+   "words": [
+    {
+     "who": "Yonatan",
+     "text": "Jangan takut. Tangan ayahku Saul tidak akan menemukan engkau. Engkau akan menjadi raja atas Israel, dan aku akan menjadi orang kedua sesudahmu."
+    },
+    {
+     "who": "Orang-orang Zif",
+     "text": "Bukankah Daud bersembunyi di tengah-tengah kami, di kubu Koresa di gunung Hakhila, di sebelah selatan Yesimon?"
+    },
+    {
+     "who": "Saul",
+     "text": "Kamu telah menaruh belas kasihan kepadaku. Kiranya TUHAN memberkati kamu."
+    },
+    {
+     "who": "Utusan",
+     "text": "Segeralah pulang. Orang Filistin telah menyerbu negeri ini."
+    }
+   ],
+   "note": "Zif diyakini adalah Tell Zif, sekitar 7 km di tenggara Hebron. Di sebelah timurnya terbentang padang gurun Yehuda yang gersang sampai ke Laut Mati. Koresa adalah tempat terakhir Yonatan dan Daud bertemu semasa hidup.",
+   "reflect": "Seperti Yonatan yang mendatangi sahabatnya yang sedang dikejar dan meneguhkan tangannya di dalam Allah, siapa yang perlu kudatangi hari ini?",
+   "quiz": {
+    "q": "Apa nama tempat Saul berbalik pulang setelah hampir menangkap Daud?",
+    "options": [
+     "Eben-Haezer",
+     "Sela-Hamahlekot",
+     "Gilgal",
+     "Beer-Lahai-Roi"
+    ],
+    "explain": "Karena Saul pulang setelah mendengar orang Filistin menyerbu, tempat itu dinamai Sela-Hamahlekot (1Sam 23:27–28)."
+   },
+   "credit": "James Tissot, David in the Wilderness of Ziph, sekitar 1896–1902 · Perpustakaan John Rylands, Manchester · Domain publik"
+  },
+  "d16": {
+   "title": "Punca Jubah di Gua En-Gedi",
+   "when": "sekitar 1015 SM",
+   "subtitle": "Tangan di dalam gua yang memotong punca jubah, bukan nyawa",
+   "story": [
+    "Di antara bukit-bukit batu kambing hutan di En-Gedi, Saul datang membawa tiga ribu orang pilihan. Di dekat kandang-kandang domba di tepi jalan ada sebuah gua. Saul masuk seorang diri ke gua itu untuk membuang hajat. Tepat di bagian paling dalam gua itu, dalam gelap, Daud dan anak buahnya sedang duduk menahan napas.",
+    "Anak buahnya berbisik kepada Daud. Inilah harinya, TUHAN berkata akan menyerahkan musuhmu ke dalam tanganmu. Daud merayap tanpa suara dan diam-diam memotong punca jubah Saul. Tetapi ketika kembali, hati Daud berdebar menyesal. Daud berkata kepada anak buahnya. Kiranya TUHAN menjauhkan aku dari menjamah tuanku, orang yang diurapi TUHAN. Demikianlah Daud mencegah anak buahnya menyerang Saul.",
+    "Ketika Saul keluar dari gua, Daud ikut keluar dan berseru. Tuanku raja! Daud sujud ke tanah, mengangkat punca jubah itu, dan berkata. Ayahku, lihatlah. Aku hanya memotong punca jubahmu dan tidak membunuhmu. Saul menangis dengan suara keras dan berkata. Itukah suaramu, Daud, anakku? Engkau lebih benar daripada aku. Saul pulang ke rumahnya, dan Daud naik ke kubu gunung. Nyanyian dari gua itu tetap tinggal. Dalam naungan sayap-Mu aku berlindung."
+   ],
+   "words": [
+    {
+     "who": "Daud",
+     "text": "Kiranya TUHAN sama sekali menjauhkan aku dari menjamah tuanku, orang yang diurapi TUHAN, untuk mencelakakan dia."
+    },
+    {
+     "who": "Daud",
+     "text": "Ayahku, lihatlah. Lihatlah punca jubah di tanganku ini. Aku hanya memotong punca jubahmu dan tidak membunuhmu. Ketahuilah bahwa tidak ada kejahatan atau pemberontakan padaku."
+    },
+    {
+     "who": "Saul",
+     "text": "Engkau lebih benar daripada aku. Aku membalasmu dengan kejahatan, tetapi engkau membalasku dengan kebaikan."
+    },
+    {
+     "who": "Saul",
+     "text": "Sekarang aku tahu, engkau pasti menjadi raja, dan kerajaan Israel akan tetap kokoh di tanganmu."
+    }
+   ],
+   "note": "En-Gedi berarti 'mata air anak kambing'. Tempat itu adalah oasis dengan mata air yang memancar di kaki tebing sebelah barat Laut Mati. Sampai sekarang ibex Nubia masih hidup di gunung-gunung batunya. Tebing-tebing kapur di sekitarnya penuh gua besar dan kecil.",
+   "reflect": "Ketika kesempatan menyerang musuh tampak seperti 'hari yang diberikan Allah', apakah hatiku masih dapat merasa ditegur?",
+   "quiz": {
+    "q": "Apa yang dipotong Daud dari Saul di gua En-Gedi?",
+    "options": [
+     "Punca jubahnya",
+     "Segenggam rambutnya",
+     "Ikat pinggangnya",
+     "Ujung tombaknya"
+    ],
+    "explain": "Daud bangkit dan diam-diam memotong punca jubah Saul, dan sesudah itu hatinya berdebar menyesal (1Sam 24:4–5)."
+   },
+   "credit": "Julius Schnorr von Carolsfeld, David Spares Saul in the Cave, sekitar 1851–1860 · Die Bibel in Bildern · Domain publik"
+  },
+  "d17": {
+   "title": "Nabal dan Abigail",
+   "when": "sekitar 1014 SM",
+   "subtitle": "Seorang perempuan yang menghadang empat ratus orang bersenjata pedang",
+   "story": [
+    "Ketika Samuel wafat dan seluruh Israel meratapinya, di Karmel sedang berlangsung pesta pengguntingan bulu domba. Itu pesta Nabal, orang kaya yang memiliki tiga ribu domba dan seribu kambing. Daud mengutus sepuluh orang muda untuk menyampaikan salam dengan hormat dan meminta makanan. Nabal mencibir. Siapakah Daud? Siapakah anak Isai itu? Sekarang ini banyak hamba yang lari dari tuannya.",
+    "Mendengar kata-kata itu, Daud berseru. Sandanglah pedangmu masing-masing! Empat ratus orang berangkat dengan pedang di pinggang. Sementara itu seorang hamba Nabal berlari kepada nyonya rumah, Abigail, dan memberitahunya. Orang-orang Daud siang dan malam menjadi tembok bagi kami, tetapi tuan kita menghina mereka. Abigail bergegas. Ia memuat dua ratus roti, dua kirbat anggur, lima ekor domba yang sudah diolah, serta kue kismis dan kue ara ke atas keledai, lalu berangkat tanpa memberi tahu suaminya.",
+    "Ketika berpapasan dengan Daud yang turun di jalan lembah gunung, Abigail turun dari keledai dan sujud. Abigail berkata. Biarlah kesalahan itu ditanggungkan kepadaku. Jangan sampai tuanku menanggung beban hati karena menumpahkan darah dengan sia-sia. Daud menjawab. Terpujilah TUHAN yang mengutus engkau menyongsong aku hari ini. Engkau telah mencegah aku menumpahkan darah. Kira-kira sepuluh hari kemudian TUHAN memukul Nabal sehingga ia mati. Daud mengambil Abigail menjadi istrinya."
+   ],
+   "words": [
+    {
+     "who": "Daud",
+     "text": "Terpujilah TUHAN, Allah Israel, yang mengutus engkau menyongsong aku hari ini. Diberkatilah kebijaksanaanmu. Hari ini engkau telah mencegah aku menumpahkan darah."
+    },
+    {
+     "who": "Abigail",
+     "text": "TUHAN pasti akan membangun keturunan yang teguh bagi tuanku, sebab tuanku berperang dalam peperangan TUHAN. Seumur hidupmu tidak akan didapati kejahatan padamu."
+    },
+    {
+     "who": "Nabal",
+     "text": "Siapakah Daud? Siapakah anak Isai itu? Sekarang ini banyak hamba yang lari dari tuannya."
+    }
+   ],
+   "note": "Karmel di sini bukan Gunung Karmel di tepi laut, melainkan kota di Yehuda dekat Maon, di sebelah selatan Hebron. Musim pengguntingan bulu domba adalah masa pesta untuk berbagi dengan murah hati. Dalam bahasa Ibrani, 'Nabal' berarti 'orang bebal'.",
+   "reflect": "Ketika amarah menyandang pedang dan bergegas pergi, apakah aku mau mendengarkan suara bijak yang menghadangku?",
+   "quiz": {
+    "q": "Kapan Nabal mati sesudah Abigail bertemu Daud?",
+    "options": [
+     "Malam itu juga",
+     "Keesokan paginya",
+     "Kira-kira sepuluh hari kemudian",
+     "Sebulan kemudian"
+    ],
+    "explain": "Keesokan paginya, setelah anggurnya habis, Nabal mendengar cerita istrinya dan tubuhnya menjadi kaku seperti batu. Kira-kira sepuluh hari kemudian TUHAN memukul Nabal sehingga ia mati (1Sam 25:37–38)."
+   },
+   "credit": "Peter Paul Rubens, The Meeting of David and Abigail, sekitar 1625–1628 · Detroit Institute of Arts · Domain publik"
+  },
+  "d18": {
+   "title": "Tombak dan Kendi Air Saul yang Tertidur",
+   "when": "sekitar 1013 SM",
+   "subtitle": "Dua orang yang melintasi perkemahan yang terlelap",
+   "story": [
+    "Orang-orang Zif sekali lagi melaporkan kepada Saul tempat Daud bersembunyi. Saul membawa tiga ribu orang pilihan dan berkemah di tepi jalan di gunung Hakhila. Malam itu Daud memandang perkemahan dari atas gunung. Saul berbaring di tengah perkemahan, dan Abner, panglima tentaranya, serta para prajurit berbaring di sekelilingnya. Daud bertanya kepada anak buah di dekatnya. Siapa yang mau turun bersamaku ke perkemahan itu? Abisai, adik Yoab, maju. Aku akan pergi bersamamu.",
+    "Keduanya berjalan masuk di antara perkemahan yang tertidur. Di tanah dekat kepala Saul tertancap tombaknya. Abisai berbisik. Dengan tombak ini aku akan menancapkan dia ke tanah sekali tusuk. Tidak perlu dua kali. Daud mencegahnya. Siapa yang dapat menjamah orang yang diurapi TUHAN dan tetap tidak bersalah? Ambil saja tombak dan kendi air itu, lalu mari kita pergi. TUHAN telah membuat mereka tertidur lelap, sehingga tak seorang pun melihat atau terbangun.",
+    "Daud berdiri jauh di puncak gunung di seberang dan berseru. Abner, mengapa engkau tidak menjaga tuanmu? Lihatlah, di mana tombak raja dan kendi airnya? Saul mengenali suara Daud dan berkata. Aku telah berdosa. Kembalilah, Daud, anakku. Daud menyuruh orang datang mengambil tombak itu, lalu ia pergi menempuh jalannya. Itulah terakhir kalinya mereka berhadapan. Di padang gurun Daud bernyanyi. Di tanah yang kering, jiwaku haus akan Engkau."
+   ],
+   "words": [
+    {
+     "who": "Daud",
+     "text": "Jangan bunuh dia. Siapa yang dapat menjamah orang yang diurapi TUHAN dan tetap tidak bersalah?"
+    },
+    {
+     "who": "Daud",
+     "text": "Seperti hari ini aku menghargai nyawa raja, kiranya TUHAN pun menghargai nyawaku dan melepaskan aku dari segala kesesakan."
+    },
+    {
+     "who": "Saul",
+     "text": "Aku telah berdosa. Kembalilah, Daud, anakku. Karena hari ini engkau menghargai nyawaku, aku tidak akan berbuat jahat lagi kepadamu. Sungguh, aku telah berlaku bodoh."
+    },
+    {
+     "who": "Abisai",
+     "text": "Hari ini Allah telah menyerahkan musuhmu ke dalam tanganmu. Biarlah aku menancapkan dia ke tanah dengan tombak sekali tusuk. Tidak perlu dua kali."
+    }
+   ],
+   "note": "Inilah terakhir kalinya Saul dan Daud berhadapan semasa hidup. Abisai adalah anak Zeruya, saudara perempuan Daud, dan saudara Yoab. Judul Mazmur 63 menyebutkan bahwa mazmur itu digubah ketika Daud berada di padang gurun Yehuda.",
+   "reflect": "Ketika godaan yang sama datang untuk kedua kalinya, dapatkah aku sekali lagi memilih jalan menanti waktu Allah?",
+   "quiz": {
+    "q": "Apa yang diambil Daud dari dekat kepala Saul yang sedang tidur?",
+    "options": [
+     "Mahkota dan gelang",
+     "Pedang dan perisai",
+     "Punca jubah",
+     "Tombak dan kendi air"
+    ],
+    "explain": "Daud mengambil tombak dan kendi air yang ada di dekat kepala Saul, dan tak seorang pun terbangun, sebab TUHAN membuat mereka tertidur lelap (1Sam 26:12)."
+   },
+   "credit": "James Tissot, David Stops on a Hill, sekitar 1896–1902 · Perpustakaan John Rylands, Manchester · Domain publik"
+  },
+  "d19": {
+   "title": "Hari Ziklag Terbakar",
+   "when": "sekitar 1011 SM",
+   "subtitle": "Mendapat kekuatan kembali ketika tenaga untuk menangis pun habis",
+   "story": [
+    "Daud berkata dalam hati. Begini terus, suatu hari aku pasti mati di tangan Saul. Daud membawa enam ratus anak buahnya beserta keluarga mereka dan berlindung kepada Akhis, raja Gat, di tanah Filistin. Akhis memberinya Ziklag. Setahun empat bulan berlalu di sana. Lalu suatu hari, setelah disuruh pulang dari perkemahan Filistin dan berjalan tiga hari, mereka hanya mendapati asap membubung. Orang Amalek telah membakar kota itu dan menawan semua istri dan anak-anak mereka.",
+    "Daud dan orang-orangnya menangis dengan suara keras. Mereka menangis sampai tidak kuat menangis lagi. Kedua istri Daud pun ikut ditawan. Orang-orang yang kehilangan anak-anaknya berbicara tentang melempari Daud dengan batu. Daud sangat terjepit. Tetapi Daud menguatkan hatinya di dalam TUHAN, Allahnya. Ia menyuruh Abyatar membawa efod dan bertanya kepada TUHAN. TUHAN menjawab. Kejarlah, engkau pasti akan menyusul mereka dan pasti merebut semuanya kembali.",
+    "Di sungai Besor dua ratus orang yang kelelahan tinggal, dan empat ratus orang terus mengejar. Mereka bertemu seorang pemuda Mesir yang sudah tiga hari tidak makan di padang. Setelah diberi makan, ia menunjukkan jalannya. Daud menyerang orang Amalek yang sedang berpesta dan merebut kembali segalanya. Tak satu barang kecil pun dan tak seorang anak pun hilang. Beberapa orang menggerutu. Orang yang tidak ikut pergi tidak boleh diberi bagian. Daud berkata. Bagian orang yang pergi berperang sama dengan bagian orang yang tinggal menjaga barang."
+   ],
+   "words": [
+    {
+     "who": "Allah",
+     "text": "Kejarlah. Engkau pasti akan menyusul mereka dan pasti merebut semuanya kembali."
+    },
+    {
+     "who": "Daud",
+     "text": "Saudara-saudaraku, janganlah kamu berbuat begitu dengan apa yang diberikan TUHAN kepada kita. Dia telah melindungi kita dan menyerahkan gerombolan yang menyerang kita ke dalam tangan kita."
+    },
+    {
+     "who": "Daud",
+     "text": "Bagian orang yang turun berperang sama dengan bagian orang yang tinggal menjaga barang. Semuanya harus dibagi bersama."
+    },
+    {
+     "who": "Daud",
+     "text": "Suatu hari aku pasti akan mati di tangan Saul. Tidak ada jalan yang lebih baik daripada melarikan diri ke tanah Filistin."
+    }
+   ],
+   "note": "Ziklag adalah kota di sebelah barat Tanah Negeb. Sejak diberikan oleh Akhis, kota itu menjadi milik raja-raja Yehuda (1Sam 27:6). Daud mengirim sebagian rampasan yang direbutnya kembali sebagai hadiah bagi para tua-tua Yehuda, dan pembagian yang sama rata itu menjadi ketetapan di Israel.",
+   "reflect": "Pada hari ketika tenaga untuk menangis pun habis, di dalam siapa aku mendapat kekuatan kembali?",
+   "quiz": {
+    "q": "Berapa anak buah Daud yang terlalu letih dan tinggal di sungai Besor?",
+    "options": [
+     "Seratus",
+     "Dua ratus",
+     "Tiga ratus",
+     "Empat ratus"
+    ],
+    "explain": "Dari enam ratus orang Daud, dua ratus orang yang letih tinggal di sungai Besor, dan Daud mengejar bersama empat ratus orang (1Sam 30:9–10)."
+   },
+   "credit": "Menurut Maerten de Vos, David before Ziklag · Koleksi pribadi · Domain publik"
+  },
+  "d20": {
+   "title": "Duka Gilboa",
+   "when": "sekitar 1010 SM",
+   "subtitle": "Nyanyian busur bagi raja dan sahabat yang gugur",
+   "story": [
+    "Lereng Gunung Gilboa tertutup mayat prajurit Israel. Ketiga anak Saul, Yonatan, Abinadab, dan Malkisua, gugur, dan Saul pun terluka parah terkena para pemanah. Saul berkata kepada pembawa senjatanya. Hunuslah pedangmu dan tikamlah aku. Pembawa senjata itu takut dan tidak mau melakukannya. Saul menjatuhkan diri ke atas pedangnya sendiri. Keesokan harinya orang Filistin memakukan mayatnya pada tembok Bet-Sean.",
+    "Mendengar kabar itu, para pahlawan Yabesh-Gilead berjalan semalam suntuk dan mengambil mayat Saul dan anak-anaknya dari tembok itu. Mereka menguburkan tulang-tulangnya di bawah pohon tamariska dan berpuasa tujuh hari. Pada waktu itu seorang pemuda Amalek, dengan pakaian terkoyak dan tanah di kepalanya, datang kepada Daud di Ziklag. Pemuda itu mengaku telah membunuh Saul dan menyerahkan mahkota serta gelangnya. Daud mengoyakkan pakaiannya, menangis, dan berpuasa sampai petang.",
+    "Lalu Daud menggubah sebuah nyanyian dan menyuruh orang mengajarkannya kepada bani Yehuda. Dalam nyanyian yang disebut nyanyian busur itu, Daud meratap demikian. Hai Israel, kemuliaanmu terbunuh di atas bukit-bukit. Bagaimana mungkin para pahlawan gugur seperti ini? Jangan kabarkan di Gat. Hai gunung-gunung Gilboa, jangan ada embun atau hujan turun ke atasmu. Saul dan Yonatan tidak terpisahkan, baik dalam hidup maupun dalam mati. Saudaraku Yonatan, hatiku hancur karena engkau."
+   ],
+   "words": [
+    {
+     "who": "Daud",
+     "text": "Hai Israel, kemuliaanmu terbunuh di atas bukit-bukitmu. Ah, bagaimana mungkin para pahlawan gugur seperti ini!"
+    },
+    {
+     "who": "Daud",
+     "text": "Saudaraku Yonatan, hatiku pedih karena engkau. Engkau begitu ramah kepadaku. Kasihmu lebih ajaib daripada kasih perempuan."
+    },
+    {
+     "who": "Daud",
+     "text": "Saul dan Yonatan, yang dicintai dan disayangi semasa hidupnya, tidak terpisahkan dalam kematiannya. Mereka lebih cepat daripada rajawali dan lebih kuat daripada singa."
+    },
+    {
+     "who": "Saul",
+     "text": "Hunuslah pedangmu dan tikamlah aku, supaya orang-orang yang tidak bersunat itu tidak datang menikam dan mempermainkan aku."
+    }
+   ],
+   "note": "Nyanyian busur konon tertulis dalam 'Kitab Orang Jujur' (2Sam 1:18). Yabesh-Gilead adalah kota yang pertama kali diselamatkan Saul dari tangan orang Amon sesudah ia menjadi raja (1 Samuel 11).",
+   "reflect": "Di hadapan kematian orang yang mengejarku sampai akhir, dapatkah aku menangisinya dan bukan bersukacita?",
+   "quiz": {
+    "q": "Siapakah yang berjalan semalam suntuk untuk mengambil mayat Saul dan anak-anaknya yang dipakukan pada tembok?",
+    "options": [
+     "Para pahlawan Yabesh-Gilead",
+     "Para tua-tua Betlehem",
+     "Anak buah Daud di Ziklag",
+     "Para imam di Gibea"
+    ],
+    "explain": "Penduduk Yabesh-Gilead mendengar kabar itu, dan para pahlawannya berjalan semalam suntuk, mengambil mayat-mayat itu dari tembok Bet-Sean, menguburkannya di Yabesh, lalu berpuasa tujuh hari (1Sam 31:11–13)."
+   },
+   "credit": "Paul Hardy, David Lamented over Saul · Domain publik"
+  },
+  "d21": {
+   "title": "Raja di Hebron",
+   "when": "sekitar 1010 SM",
+   "subtitle": "Takhta pertama bagi orang yang meninggalkan padang gurun",
+   "story": [
+    "Kabar bahwa Saul gugur di Gilboa sampai ke Ziklag. Takhta raja kosong, tetapi Daud tidak tergesa-gesa. Ia lebih dulu bertanya kepada TUHAN. Bolehkah aku pergi ke salah satu kota di Yehuda? TUHAN berfirman. Pergilah. Daud bertanya lagi. Ke mana aku harus pergi? TUHAN menjawab. Ke Hebron. Daud membawa kedua istrinya, Ahinoam dan Abigail, serta orang-orang yang menyertainya beserta keluarga mereka, mendaki jalan gunung, dan menetap di Hebron.",
+    "Orang-orang Yehuda berduyun-duyun datang ke Hebron dan mengurapi Daud. Orang yang dulu mengembara di padang gurun kini menjadi raja atas kaum Yehuda. Pada waktu itu sebuah kabar disampaikan kepada raja. Yang menguburkan Saul adalah orang-orang Yabesh-Gilead di seberang Yordan. Daud mengirim utusan kepada mereka dengan pesan. Karena kamu telah setia kepada tuanmu Saul, kiranya TUHAN memberkati kamu. Aku pun akan berbuat baik kepadamu.",
+    "Sesudah itu terjadilah perang yang lama antara keluarga Saul dan keluarga Daud. Ketika perang itu berakhir, semua suku Israel datang menemui Daud di Hebron. Para tua-tua berkata. Kami ini tulang dan dagingmu. Bahkan ketika Saul menjadi raja, engkaulah yang memimpin Israel keluar masuk. Daud mengikat perjanjian dengan mereka di hadapan TUHAN, dan para tua-tua mengurapinya menjadi raja atas seluruh Israel. Itu terjadi setelah tujuh setengah tahun ia memerintah hanya atas Yehuda di Hebron."
+   ],
+   "words": [
+    {
+     "who": "Allah",
+     "text": "Pergilah. Pergilah ke Hebron."
+    },
+    {
+     "who": "Daud",
+     "text": "Karena kamu telah menunjukkan kesetiaan dengan menguburkan Saul, tuanmu, kiranya TUHAN memberkati kamu dan menunjukkan kasih setia dan kesetiaan-Nya kepadamu."
+    },
+    {
+     "who": "Suku-suku Israel",
+     "text": "Kami ini tulang dan dagingmu. TUHAN telah berfirman kepadamu: Engkaulah yang akan menggembalakan umat-Ku Israel dan menjadi pemimpin mereka."
+    }
+   ],
+   "note": "Hebron adalah kota kuno di pegunungan Yehuda, tempat gua Makhpela, tempat Abraham tinggal dan dikuburkan. Di sini Daud memerintah Yehuda tujuh setengah tahun, lalu pindah ke Yerusalem dan memerintah seluruh Israel tiga puluh tiga tahun.",
+   "reflect": "Seperti Daud yang sudah diurapi Samuel tetapi baru tiba di Hebron setelah melewati padang gurun yang panjang, apakah aku berjalan sambil terus bertanya kepada Tuhan selama menanti janji-Nya digenapi?",
+   "quiz": {
+    "q": "Berapa umur Daud ketika ia pertama kali menjadi raja?",
+    "options": [
+     "Dua puluh tahun",
+     "Dua puluh lima tahun",
+     "Tiga puluh tahun",
+     "Empat puluh tahun"
+    ],
+    "explain": "Daud berumur tiga puluh tahun ketika menjadi raja, dan ia memerintah empat puluh tahun (2Sam 5:4)."
+   },
+   "credit": "Julius Schnorr von Carolsfeld, David Is Made King of Judah, sekitar 1851–1860 · Die Bibel in Bildern · Domain publik"
+  },
+  "d22": {
+   "title": "Kubu Gunung Sion",
+   "when": "sekitar 1003 SM",
+   "subtitle": "Kota yang katanya tak dapat dimasuki siapa pun",
+   "story": [
+    "Setelah meninggalkan Hebron, Daud dan prajuritnya berdiri di depan kota orang Yebus. Di atas punggung bukit sempit yang tiga sisinya dikelilingi lembah dalam, kubu Sion berdiri kokoh. Dari atas tembok orang-orang Yebus mengejek. Engkau tidak akan masuk ke sini. Orang buta dan orang timpang pun akan mengusir engkau. Itu ejekan bahwa Daud sekali-kali tidak akan dapat masuk ke kota itu.",
+    "Hari itu Daud berkata kepada prajuritnya. Siapa yang hendak menyerang orang Yebus, naiklah melalui saluran air. Lalu kota yang katanya tak dapat dimasuki siapa pun itu jatuh. Daud merebut kubu Sion dan tinggal di dalamnya. Orang menyebut tempat itu Kota Daud. Daud membangun tembok mengelilinginya, mulai dari Milo ke arah dalam. Daud makin lama makin kuat, sebab TUHAN, Allah semesta alam, menyertai dia.",
+    "Dari Tirus di pesisir utara, Raja Hiram mengirim utusan. Bersama mereka datang kayu aras, tukang kayu, dan tukang batu. Mereka membangun istana bagi Daud. Ketika bunyi palu bergema di kubu itu, Daud menyadari bahwa TUHAN telah mengokohkan dia menjadi raja atas Israel. Dan bahwa kerajaan itu ditinggikan bukan demi Daud seorang, melainkan demi Israel, umat TUHAN."
+   ],
+   "words": [
+    {
+     "who": "Daud",
+     "text": "Siapa yang hendak menyerang orang Yebus, naiklah melalui saluran air dan seranglah mereka."
+    },
+    {
+     "who": "Orang-orang Yebus",
+     "text": "Engkau tidak akan masuk ke sini. Orang buta dan orang timpang pun akan mengusir engkau."
+    }
+   ],
+   "note": "Kota Daud terletak di punggung bukit sempit di atas Lembah Kidron, di sebelah selatan Kota Lama Yerusalem sekarang. Ada pendapat bahwa saluran air yang didaki prajurit Daud adalah terowongan tegak yang dipakai untuk menimba air ke dalam kota, tetapi hal itu belum pasti.",
+   "reflect": "Di depan tembok yang diejek semua orang tak dapat dilewati, Daud memandang Allah yang menyertainya. Ketika melihat tembok tinggi di depanku, apa yang pertama kali kulihat?",
+   "quiz": {
+    "q": "Raja manakah yang mengirim kayu aras, tukang kayu, dan tukang batu untuk membangun istana Daud?",
+    "options": [
+     "Hiram, raja Tirus",
+     "Firaun, raja Mesir",
+     "Tou, raja Hamat",
+     "Hadadezer, raja Zoba"
+    ],
+    "explain": "Hiram, raja Tirus, mengirim utusan beserta kayu aras, tukang kayu, dan tukang batu, dan mereka membangun istana bagi Daud (2Sam 5:11)."
+   },
+   "credit": "David Roberts, Jerusalem from the South, 1842 · Perpustakaan Kongres AS · Domain publik"
+  },
+  "d23": {
+   "title": "Uza dan Tabut yang Terhenti",
+   "when": "sekitar 1000 SM",
+   "subtitle": "Tempat pengirikan tempat arak-arakan sukacita terhenti",
+   "story": [
+    "Bunyi kecapi dan gambus, rebana dan ceracap memenuhi jalan pegunungan. Daud mengumpulkan tiga puluh ribu orang pilihan dan naik ke Baale-Yehuda. Mereka hendak menjemput tabut Allah yang sudah lama tinggal di rumah Abinadab. Tabut itu dinaikkan ke atas kereta baru, dan Uza serta Ahyo, anak-anak Abinadab, mengendarai kereta itu. Ahyo berjalan di depan tabut, dan Daud serta seluruh Israel bersukaria di hadapan TUHAN dengan segenap tenaga.",
+    "Ketika mereka sampai di tempat pengirikan Nakhon, lembu-lembu itu tergelincir sehingga kereta itu oleng. Uza mengulurkan tangannya dan memegang tabut Allah. Seketika itu juga murka TUHAN menyala terhadap Uza. Allah membunuh dia karena kesalahannya itu, dan Uza mati di samping tabut. Musik terhenti seketika. Daud marah karena TUHAN telah menyambar Uza, dan sejak hari itu tempat itu disebut Peres-Uza, tempat Uza disambar.",
+    "Setelah amarahnya reda, datanglah ketakutan. Daud berkata. Bagaimana tabut TUHAN dapat datang kepadaku? Daud mengurungkan niatnya membawa tabut itu ke Kota Daud dan membelokkannya ke rumah Obed-Edom, orang Gat. Tabut itu tinggal di rumah itu tiga bulan lamanya. Dan TUHAN memberkati Obed-Edom dan seisi rumahnya."
+   ],
+   "words": [
+    {
+     "who": "Daud",
+     "text": "Bagaimana tabut TUHAN dapat datang kepadaku?"
+    },
+    {
+     "who": "Allah",
+     "text": "Bani Kehat harus datang mengangkut barang-barang kudus itu, tetapi janganlah mereka menyentuh yang kudus itu, supaya mereka tidak mati."
+    },
+    {
+     "who": "Pencatat",
+     "text": "Selama tiga bulan tabut TUHAN tinggal di rumah Obed-Edom, dan TUHAN memberkati Obed-Edom dan seisi rumahnya."
+    }
+   ],
+   "note": "Hukum Taurat menetapkan bahwa tabut perjanjian tidak diangkut dengan kereta, tetapi dipikul di bahu dengan kayu pengusung oleh orang Kehat dari suku Lewi. Sejak kembali dari tanah Filistin, tabut itu sudah lebih dari dua puluh tahun tinggal di rumah Abinadab di Kiryat-Yearim.",
+   "reflect": "Arak-arakan yang penuh sukacita dan semangat pun dapat terhenti bila tidak bertanya tentang cara Allah. Apakah aku hanya mengedepankan niat baik dan melewatkan bertanya tentang jalan Tuhan?",
+   "quiz": {
+    "q": "Berapa lama tabut Allah tinggal di rumah Obed-Edom?",
+    "options": [
+     "Satu bulan",
+     "Tujuh bulan",
+     "Satu tahun",
+     "Tiga bulan"
+    ],
+    "explain": "Tabut TUHAN tinggal di rumah Obed-Edom, orang Gat, tiga bulan lamanya, dan TUHAN memberkati rumah itu (2Sam 6:11)."
+   },
+   "credit": "James Tissot, The Chastisement of Uzzah, sekitar 1896–1902 · Perpustakaan John Rylands, Manchester · Domain publik"
+  },
+  "d24": {
+   "title": "Tabut yang Diarak dengan Tarian",
+   "when": "sekitar 1000 SM",
+   "subtitle": "Tarian raja dengan segenap tenaga",
+   "story": [
+    "Kabar bahwa TUHAN memberkati rumah Obed-Edom sampai kepada raja. Daud berangkat lagi dan dengan sukacita membawa tabut itu naik. Kali ini tabut itu tidak diangkut kereta, melainkan dipikul orang. Setelah para pengangkut melangkah enam langkah, Daud mempersembahkan seekor lembu dan seekor anak lembu tambun. Lalu dengan berbaju efod linen ia menari-nari di hadapan TUHAN dengan segenap tenaga. Sorak-sorai dan bunyi sangkakala bergema di setiap lorong Kota Daud.",
+    "Pada waktu itu Mikhal, istri Daud, anak Saul, menjenguk dari jendela. Ia melihat raja meloncat-loncat dan menari di hadapan TUHAN. Dalam hatinya Mikhal memandang rendah Daud. Tabut itu diletakkan di tempatnya di dalam kemah yang telah dipasang Daud. Daud mempersembahkan korban bakaran dan korban keselamatan, lalu memberkati rakyat demi nama TUHAN semesta alam. Kemudian kepada setiap orang, laki-laki maupun perempuan, ia membagikan sepotong roti, sekerat daging, dan sepotong kue kismis.",
+    "Ketika Daud pulang untuk memberkati seisi rumahnya, Mikhal keluar menyambutnya dengan sindiran. Betapa mulianya raja Israel hari ini. Ia menanggalkan segala kehormatannya di depan mata budak-budak perempuan para hambanya. Daud menjawab. Tarian itu di hadapan TUHAN. Di hadapan Dia yang memilih aku sebagai ganti ayahmu, aku akan bersukaria. Aku akan merendahkan diriku lebih lagi. Mikhal, anak Saul, tidak mempunyai anak sampai hari kematiannya."
+   ],
+   "words": [
+    {
+     "who": "Daud",
+     "text": "Aku menari di hadapan TUHAN. Di hadapan TUHAN, yang memilih aku sebagai ganti ayahmu dan seluruh keluarganya untuk mengangkat aku menjadi pemimpin atas Israel, aku akan bersukaria."
+    },
+    {
+     "who": "Daud",
+     "text": "Aku akan merendahkan diriku lebih lagi dan menjadi hina di mataku sendiri. Tetapi di mata budak-budak perempuan yang kaukatakan itu, aku justru akan dihormati."
+    },
+    {
+     "who": "Mikhal",
+     "text": "Betapa mulianya raja Israel hari ini. Ia menanggalkan kehormatannya seperti orang hina di depan mata budak-budak perempuan para hambanya."
+    }
+   ],
+   "note": "Efod adalah jubah pendek yang dipakai imam. Bahwa raja memakai efod linen dan bukan pakaian kebesaran dapat dibaca sebagai tanda bahwa ia berdiri sebagai seorang penyembah. Kali ini, sesuai dengan hukum Taurat, tabut itu dipikul di bahu orang.",
+   "reflect": "Seperti Daud yang lebih menghiraukan pandangan Tuhan daripada pandangan manusia, pernahkah aku menanggalkan gengsi dan bersukacita dengan segenap hati di hadapan Tuhan?",
+   "quiz": {
+    "q": "Setelah para pengangkut tabut melangkah berapa langkah, Daud mempersembahkan korban?",
+    "options": [
+     "Tiga langkah",
+     "Enam langkah",
+     "Tujuh langkah",
+     "Dua belas langkah"
+    ],
+    "explain": "Setelah para pengangkut tabut melangkah enam langkah, Daud mempersembahkan seekor lembu dan seekor anak lembu tambun (2Sam 6:13)."
+   },
+   "credit": "James Tissot, David Danced Before the Lord with All His Might, sekitar 1896–1902 · Museum Yahudi New York · Domain publik"
+  },
+  "d25": {
+   "title": "Janji Rumah yang Kekal",
+   "when": "sekitar 998 SM",
+   "subtitle": "Rumah yang diberikan kepada raja yang hendak membangun rumah",
+   "story": [
+    "Di istana, cahaya senja menyusup di antara tiang-tiang kayu aras. TUHAN telah mengalahkan musuh di sekelilingnya, dan Daud akhirnya mendapat ketenangan. Daud berkata kepada nabi Natan. Lihatlah, aku tinggal dalam istana dari kayu aras, sedangkan tabut Allah tinggal di bawah tenda. Natan menjawab. Lakukanlah apa yang ada dalam hatimu, sebab TUHAN menyertai engkau. Tetapi malam itu firman TUHAN datang kepada Natan.",
+    "TUHAN berfirman. Pergilah, katakan kepada hamba-Ku Daud. Engkaukah yang akan mendirikan rumah bagi-Ku? Sejak hari Aku membawa Israel keluar dari Mesir, Aku berpindah-pindah dalam kemah. Engkau yang dahulu mengikuti kambing domba, Aku ambil dan Aku angkat menjadi pemimpin umat-Ku. Sekarang Akulah yang akan mendirikan rumah bagimu. Anak kandungmu akan mendirikan rumah bagi nama-Ku. Keluargamu dan takhtamu akan kokoh untuk selama-lamanya.",
+    "Natan kembali dan menyampaikan firman itu persis seperti yang didengarnya. Daud masuk, duduk di hadapan TUHAN, dan berdoa. Ya Tuhan ALLAH, siapakah aku ini dan apakah keluargaku, sehingga Engkau membawa aku sampai sejauh ini? Tetapi hal itu pun masih terlalu kecil di mata-Mu, sehingga Engkau berfirman tentang keluarga hamba-Mu ini sampai ke masa yang jauh. Raja yang hendak membangun rumah bagi Tuhan justru menerima janji rumah yang akan bertahan selama-lamanya, dan lama ia duduk di hadapan-Nya."
+   ],
+   "words": [
+    {
+     "who": "Allah",
+     "text": "Aku telah mengambil engkau dari padang rumput, dari mengikuti kambing domba, untuk menjadi pemimpin atas umat-Ku Israel."
+    },
+    {
+     "who": "Allah",
+     "text": "Keluargamu dan kerajaanmu akan kokoh di hadapan-Ku untuk selama-lamanya, dan takhtamu akan tegak untuk selama-lamanya."
+    },
+    {
+     "who": "Daud",
+     "text": "Ya Tuhan ALLAH, siapakah aku ini dan apakah keluargaku, sehingga Engkau membawa aku sampai sejauh ini?"
+    },
+    {
+     "who": "Natan",
+     "text": "Pergilah dan lakukanlah segala yang ada dalam hatimu, sebab TUHAN menyertai engkau."
+    }
+   ],
+   "note": "Kata Ibrani 'bayit' berarti rumah, tetapi juga dapat berarti dinasti dan bait suci. Janji bahwa seorang raja yang kekal akan datang dari keturunan Daud menjadi akar penantian Israel akan Mesias, dan Perjanjian Baru memperkenalkan Yesus sebagai Anak Daud.",
+   "reflect": "Seperti Daud yang hendak berbuat sesuatu bagi Tuhan justru menerima janji yang lebih besar, pernahkah aku duduk di hadapan segala yang sudah Tuhan berikan, bukan hanya memikirkan apa yang akan kuberikan?",
+   "quiz": {
+    "q": "Nabi manakah yang menyampaikan firman Tuhan tentang rumah yang kekal kepada Daud?",
+    "options": [
+     "Gad",
+     "Zadok",
+     "Natan",
+     "Abyatar"
+    ],
+    "explain": "Malam itu firman TUHAN datang kepada Natan, dan Natan menyampaikan semua firman itu kepada Daud (2Sam 7:4, 17)."
+   },
+   "credit": "Leonaert Bramer, King David in Prayer before the Ark of the Covenant · Koleksi pribadi · Domain publik"
+  },
+  "d26": {
+   "title": "Meja Mefiboset",
+   "when": "sekitar 995 SM",
+   "subtitle": "Orang yang seperti anjing mati diperlakukan seperti pangeran",
+   "story": [
+    "Pada suatu hari, ketika gemuruh perang mereda, Daud bertanya kepada para pegawainya. Masih adakah orang yang tinggal dari keluarga Saul? Aku ingin menunjukkan kasih kepadanya demi Yonatan. Ziba, bekas hamba keluarga Saul, dipanggil. Ziba berkata. Masih ada seorang anak Yonatan. Kedua kakinya timpang. Ia tinggal di seberang Yordan, di Lodebar, di rumah Makhir. Daud segera menyuruh orang menjemputnya.",
+    "Seorang laki-laki masuk dengan terpincang-pincang dan sujud dengan muka ke tanah di hadapan raja. Daud memanggilnya. Mefiboset. Dengan gemetar Mefiboset menjawab. Inilah hambamu. Raja berkata. Jangan takut. Demi ayahmu Yonatan, aku pasti akan menunjukkan kasih kepadamu. Aku akan mengembalikan seluruh tanah Saul kepadamu, dan engkau akan selalu makan sehidangan denganku. Mefiboset sujud lagi. Mengapa Tuanku memperhatikan aku, yang seperti anjing mati ini?",
+    "Raja memanggil Ziba, menyerahkan tanah Saul kepadanya, dan menyuruhnya mengolah tanah itu serta memberi makan keluarga tuannya dari hasilnya. Ziba mempunyai lima belas anak laki-laki dan dua puluh hamba. Sejak hari itu Mefiboset tinggal di Yerusalem dan selalu makan sehidangan dengan raja, seperti salah seorang anak raja. Ia mempunyai seorang anak laki-laki kecil bernama Mikha. Di bawah meja, kedua kakinya yang tersembunyi tetap timpang."
+   ],
+   "words": [
+    {
+     "who": "Daud",
+     "text": "Jangan takut. Demi ayahmu Yonatan, aku pasti akan menunjukkan kasih kepadamu. Engkau akan selalu makan sehidangan denganku."
+    },
+    {
+     "who": "Daud",
+     "text": "Masih adakah orang yang tinggal dari keluarga Saul? Aku ingin menunjukkan kasih kepadanya demi Yonatan."
+    },
+    {
+     "who": "Mefiboset",
+     "text": "Apakah hambamu ini, sehingga Tuanku memperhatikan aku, yang seperti anjing mati ini?"
+    }
+   ],
+   "note": "Ketika Mefiboset berumur lima tahun, datang kabar bahwa Saul dan Yonatan telah mati. Pengasuhnya menggendongnya dan lari terburu-buru, lalu ia terjatuh sehingga kedua kakinya menjadi timpang. Pada zaman ketika raja baru biasa melenyapkan keturunan dinasti lama, Daud memegang perjanjiannya dengan Yonatan.",
+   "reflect": "Seperti raja yang mendudukkan Mefiboset, yang tak punya apa-apa untuk dibanggakan, di mejanya sendiri, apakah aku mengingat tempat yang kududuki karena anugerah dan juga memberi tempat bagi orang lain?",
+   "quiz": {
+    "q": "Di manakah Mefiboset tinggal sebelum dijemput Daud?",
+    "options": [
+     "Lodebar",
+     "Gibea",
+     "Mahanaim",
+     "Adulam"
+    ],
+    "explain": "Mefiboset tinggal di rumah Makhir anak Amiel di Lodebar (2Sam 9:4)."
+   },
+   "credit": "Paul Hardy, And David Said unto Him, Fear Not · Domain publik"
+  },
+  "d27": {
+   "title": "Lembah Asin",
+   "when": "sekitar 995 SM",
+   "subtitle": "TUHAN memberi kemenangan ke mana pun ia pergi",
+   "story": [
+    "Sesudah itu pasukan Daud maju ke segala penjuru. Di barat ia mengalahkan dan menundukkan orang Filistin, di timur ia mengalahkan Moab dan membuat mereka membayar upeti. Di utara ia menghancurkan Hadadezer, raja Zoba, yang sedang pergi untuk memulihkan kekuasaannya di dekat Sungai Efrat. Orang Aram dari Damsyik datang hendak menolong, tetapi mereka pun dipatahkan. TUHAN memberi kemenangan kepada Daud ke mana pun ia pergi.",
+    "Perisai-perisai emas yang dibawa para pegawai Hadadezer diangkut ke Yerusalem. Tembaga yang diambil dari kota-kotanya pun sangat banyak. Tou, raja Hamat, mengutus anaknya Yoram untuk memberi salam kepada Daud dan mempersembahkan barang-barang perak, emas, dan tembaga. Daud tidak mengambil semua itu bagi dirinya, tetapi bersama perak dan emas dari bangsa-bangsa yang ditaklukkannya, semuanya dikhususkan bagi TUHAN.",
+    "Di Lembah Asin, di bawah Laut Mati di selatan, Daud mengalahkan delapan belas ribu orang Edom. Karena itu namanya menjadi termasyhur. Daud memerintah seluruh Israel dan menegakkan keadilan dan kebenaran bagi seluruh rakyatnya. Yoab mengepalai tentara, dan Zadok serta Ahimelekh memimpin ibadah. Pada masa itu Daud bernyanyi. Sia-sia pertolongan manusia. Bersama Allah kita akan berperang dengan gagah berani."
+   ],
+   "words": [
+    {
+     "who": "Pencatat",
+     "text": "TUHAN memberi kemenangan kepada Daud ke mana pun ia pergi."
+    },
+    {
+     "who": "Pencatat",
+     "text": "Daud memerintah seluruh Israel dan menegakkan keadilan dan kebenaran bagi seluruh rakyatnya."
+    },
+    {
+     "who": "Allah",
+     "text": "Aku telah menyertai engkau ke mana pun engkau pergi dan melenyapkan semua musuhmu dari hadapanmu. Sekarang Aku akan membuat namamu besar."
+    }
+   ],
+   "note": "Lembah Asin diduga adalah tanah yang banyak mengandung garam di selatan Laut Mati, di antara Yehuda dan Edom. Judul Mazmur 60 mengingat saat Yoab kembali dan mengalahkan orang Edom di Lembah Asin.",
+   "reflect": "Seperti Daud yang mengkhususkan semua kemenangan dan rampasan bagi Tuhan, milik siapakah menurutku segala yang kuanggap kuperoleh dengan tanganku sendiri?",
+   "quiz": {
+    "q": "Di manakah Daud mengalahkan delapan belas ribu orang Edom?",
+    "options": [
+     "Lembah Ela",
+     "Lembah Refaim",
+     "Lembah Ayalon",
+     "Lembah Asin"
+    ],
+    "explain": "Daud mengalahkan delapan belas ribu orang Edom di Lembah Asin, lalu pulang dan namanya menjadi termasyhur (2Sam 8:13)."
+   },
+   "credit": "David Roberts, The Dead Sea, Looking towards Moab, 1843 · Perpustakaan Kongres AS · Domain publik"
+  },
+  "d28": {
+   "title": "Di Atas Sotoh",
+   "when": "sekitar 993 SM",
+   "subtitle": "Raja yang tidak pergi ke medan perang",
+   "story": [
+    "Musim semi tiba, waktu raja-raja biasanya maju berperang. Daud mengutus Yoab dan seluruh tentara Israel untuk mengepung Raba, kota bani Amon. Tetapi raja sendiri tinggal di Yerusalem. Suatu senja, setelah bangun dari tidur siang, Daud berjalan-jalan di atas sotoh istana dan melihat seorang perempuan. Ia menyuruh orang menyelidikinya, dan ternyata perempuan itu Batsyeba, anak Eliam, istri Uria orang Het. Daud menyuruh orang menjemputnya, lalu berbuat dosa dengan istri orang itu.",
+    "Tak lama kemudian Batsyeba mengirim kabar kepada raja. Aku mengandung. Daud memanggil Uria pulang dari medan perang. Ia menanyakan keadaan perang, lalu menyuruhnya pulang dan beristirahat di rumahnya. Tetapi Uria tidur di pintu istana bersama para hamba. Ketika raja menanyakan alasannya, Uria menjawab. Tabut, orang Israel, dan orang Yehuda tinggal di pondok-pondok, dan tuanku Yoab berkemah di padang. Bagaimana mungkin aku sendiri pulang ke rumah? Bahkan ketika raja membuatnya mabuk, ia tetap tidak pulang ke rumahnya.",
+    "Pagi harinya Daud menulis surat kepada Yoab dan mengirimkannya melalui tangan Uria. Dalam surat itu tertulis demikian. Tempatkanlah Uria di barisan depan dalam pertempuran yang paling hebat, lalu mundurlah dari dia, supaya ia terbunuh. Yoab melakukannya, dan Uria mati. Kepada utusan yang membawa kabar itu raja berkata. Katakan kepada Yoab, jangan susah hati, sebab pedang memakan siapa saja. Setelah masa perkabungan lewat, Daud mengambil Batsyeba menjadi istrinya. Tetapi perbuatan itu jahat di mata TUHAN."
+   ],
+   "words": [
+    {
+     "who": "Daud",
+     "text": "Tempatkanlah Uria di barisan paling depan dalam pertempuran yang paling hebat, lalu mundurlah dari dia, supaya ia terpukul dan mati."
+    },
+    {
+     "who": "Uria",
+     "text": "Tabut, orang Israel, dan orang Yehuda tinggal di pondok-pondok, dan tuanku serta para prajurit berkemah di padang. Bagaimana mungkin aku pulang ke rumah untuk makan dan minum?"
+    },
+    {
+     "who": "Daud",
+     "text": "Jangan susah hati karena perkara ini. Pedang memakan orang ini maupun orang itu."
+    },
+    {
+     "who": "Pencatat",
+     "text": "Tetapi perbuatan Daud itu jahat di mata TUHAN."
+    }
+   ],
+   "note": "Uria adalah orang Het, tetapi namanya tercatat di antara tiga puluh tujuh pahlawan Daud yang paling unggul. Raba adalah ibu kota bani Amon, di tempat Amman, ibu kota Yordania sekarang.",
+   "reflect": "Kejatuhan Daud dimulai pada suatu senja ketika ia meninggalkan tempat yang seharusnya dan berjalan-jalan santai. Apakah aku sekarang berdiri di tempat yang seharusnya?",
+   "quiz": {
+    "q": "Siapakah yang membawa surat kepada Yoab yang berisi perintah supaya Uria terbunuh?",
+    "options": [
+     "Seorang prajurit Yoab",
+     "Uria sendiri",
+     "Nabi Natan",
+     "Eliam, ayah Batsyeba"
+    ],
+    "explain": "Daud menulis surat kepada Yoab dan mengirimkannya melalui tangan Uria (2Sam 11:14)."
+   },
+   "credit": "Pieter Lastman, David Gives Uriah a Letter for Joab, 1619 · The Leiden Collection, New York · Domain publik"
+  },
+  "d29": {
+   "title": "Engkaulah Orang Itu",
+   "when": "sekitar 992 SM",
+   "subtitle": "Raja yang murka mendengar kisah orang lain",
+   "story": [
+    "TUHAN mengutus nabi Natan kepada Daud. Natan berdiri di hadapan raja dan menuturkan sebuah kisah. Di sebuah kota ada seorang kaya dan seorang miskin. Orang kaya itu mempunyai sangat banyak kambing domba dan lembu, tetapi orang miskin itu hanya mempunyai seekor anak domba betina kecil yang dibeli dan dipeliharanya. Anak domba itu seperti anak perempuannya sendiri, yang tidur di pangkuannya. Lalu ketika seorang tamu datang, orang kaya itu sayang mengambil dombanya sendiri, dan merampas domba orang miskin itu untuk menjamu tamunya.",
+    "Daud menjadi sangat marah dan berseru. Demi TUHAN yang hidup, orang yang melakukan itu harus mati. Ia harus membayar anak domba itu empat kali lipat. Natan menatap raja lurus-lurus dan berkata. Engkaulah orang itu. Lalu Natan menyampaikan firman TUHAN. Aku telah mengangkat engkau menjadi raja. Mengapa engkau menghina firman-Ku, membunuh Uria dengan pedang, dan mengambil istrinya? Daud berkata seperti orang yang runtuh. Aku sudah berdosa kepada TUHAN.",
+    "Natan menjawab. TUHAN telah menjauhkan dosamu, engkau tidak akan mati. Tetapi anak yang lahir itu akan mati. Ketika anak itu sakit, Daud berpuasa dan berbaring di tanah semalam-malaman, dan pada hari ketujuh anak itu meninggal. Daud bangun, membasuh diri, masuk ke rumah TUHAN, dan sujud menyembah. Kelak ketika Salomo lahir, TUHAN menyuruh menamainya Yedija. Pada masa itu Daud bernyanyi demikian. Ya Allah, buatlah hati yang bersih di dalam diriku."
+   ],
+   "words": [
+    {
+     "who": "Allah",
+     "text": "Mengapa engkau menghina firman-Ku dan melakukan apa yang jahat di mata-Ku? Engkau telah membunuh Uria dengan pedang dan mengambil istrinya."
+    },
+    {
+     "who": "Daud",
+     "text": "Aku sudah berdosa kepada TUHAN."
+    },
+    {
+     "who": "Natan",
+     "text": "Engkaulah orang itu."
+    },
+    {
+     "who": "Daud",
+     "text": "Selagi anak itu hidup, aku berpuasa dan menangis, sebab pikirku, siapa tahu TUHAN mengasihani aku. Sekarang anak itu sudah mati. Aku akan pergi kepadanya, tetapi ia tidak akan kembali kepadaku."
+    }
+   ],
+   "note": "Judul Mazmur 51 menyebutkan bahwa nyanyian itu digubah ketika nabi Natan datang kepada Daud sesudah ia berbuat dosa dengan Batsyeba. Yedija berarti 'yang dikasihi TUHAN'.",
+   "reflect": "Daud yang murka mendengar kesalahan orang lain runtuh di hadapan kata-kata 'Engkaulah orang itu'. Apakah telingaku terbuka untuk mendengar satu kalimat yang ditujukan kepadaku itu?",
+   "quiz": {
+    "q": "Nama apa yang diberikan TUHAN kepada Salomo melalui Natan?",
+    "options": [
+     "Yedija",
+     "Imanuel",
+     "Ikabod",
+     "Adonia"
+    ],
+    "explain": "TUHAN mengasihi Salomo dan mengutus Natan supaya anak itu dinamai Yedija (2Sam 12:24–25)."
+   },
+   "credit": "Palma il Giovane, The Prophet Nathan Admonishes King David, sekitar 1600–1628 · Museum Sejarah Seni Wina · Domain publik"
+  },
+  "d30": {
+   "title": "Pemberontakan Absalom",
+   "when": "sekitar 979 SM",
+   "subtitle": "Hati yang dicuri di pintu gerbang",
+   "story": [
+    "Pagi-pagi benar, Pangeran Absalom berdiri di tepi jalan menuju pintu gerbang Yerusalem. Di belakangnya ada kereta dan kuda, serta lima puluh orang yang berlari di depannya. Setiap kali melihat orang yang datang menghadap raja untuk suatu perkara, Absalom lebih dulu memanggilnya. Dari kota mana engkau datang? Ketika orang itu menyebut sukunya, Absalom berkata. Perkaramu baik dan benar. Tetapi di pihak raja tidak ada seorang pun yang mau mendengarkan engkau. Ah, seandainya ada orang yang mengangkat aku menjadi hakim di negeri ini.",
+    "Bila seseorang mendekat hendak sujud, Absalom mengulurkan tangan, memegangnya, dan menciumnya. Begitulah ia memperlakukan setiap orang Israel yang datang meminta keadilan. Demikianlah Absalom mencuri hati orang Israel. Setelah empat tahun lewat, Absalom berkata kepada ayahnya, Daud. Ketika aku melarikan diri ke Gesur, aku bernazar. Jika TUHAN membawa aku kembali ke Yerusalem, aku akan beribadah kepada TUHAN. Izinkanlah aku pergi ke Hebron untuk membayar nazar itu.",
+    "Raja yang tidak tahu apa-apa berkata. Pergilah dengan selamat. Absalom turun ke Hebron, tempat ayahnya pertama kali menjadi raja. Lalu ia diam-diam mengirim orang ke seluruh suku Israel dengan pesan. Begitu kamu mendengar bunyi sangkakala, berserulah: Absalom telah menjadi raja di Hebron! Dua ratus orang undangan dari Yerusalem ikut tanpa tahu apa-apa. Sambil mempersembahkan korban, Absalom bahkan memanggil Ahitofel, penasihat Daud. Kekuatan pemberontakan itu makin lama makin besar."
+   ],
+   "words": [
+    {
+     "who": "Daud",
+     "text": "Pergilah dengan selamat."
+    },
+    {
+     "who": "Absalom",
+     "text": "Ah, seandainya ada orang yang mengangkat aku menjadi hakim di negeri ini. Setiap orang yang mempunyai perkara dapat datang kepadaku, dan aku akan memberinya keadilan."
+    },
+    {
+     "who": "Absalom",
+     "text": "Begitu kamu mendengar bunyi sangkakala, berserulah: Absalom telah menjadi raja di Hebron!"
+    }
+   ],
+   "note": "Jangka waktu empat tahun tertulis empat puluh tahun dalam naskah Ibrani, tetapi banyak yang membacanya empat tahun mengikuti terjemahan-terjemahan kuno. Hebron adalah tempat Daud pertama kali menjadi raja dan juga tempat Absalom lahir.",
+   "reflect": "Absalom mencuri hati orang dengan mengulurkan tangan dan mencium mereka. Apakah aku memeriksa siapa yang sebenarnya ditinggikan oleh kebaikan yang kulakukan untuk merebut hati orang?",
+   "quiz": {
+    "q": "Siapakah penasihat Daud yang dipanggil Absalom ketika mempersembahkan korban di Hebron?",
+    "options": [
+     "Husai",
+     "Yoab",
+     "Ahitofel",
+     "Simei"
+    ],
+    "explain": "Sambil mempersembahkan korban, Absalom memanggil Ahitofel, orang Gilo, penasihat Daud, dari kotanya, Gilo (2Sam 15:12)."
+   },
+   "credit": "James Tissot, Absalom, sekitar 1896–1902 · Perpustakaan John Rylands, Manchester · Domain publik"
+  },
+  "d31": {
+   "title": "Mendaki Bukit Zaitun Tanpa Alas Kaki",
+   "when": "sekitar 979 SM",
+   "subtitle": "Jalan yang didaki sambil menangis tanpa alas kaki, namun langkahnya diserahkan kepada Tuhan",
+   "story": [
+    "Seorang utusan berlari masuk ke istana dengan napas tersengal-sengal dan melapor. Hati orang Israel telah berpaling kepada Absalom. Absalom, anak Daud, telah memberontak melawan ayahnya. Daud berkata kepada para pegawainya. Bangunlah, mari kita melarikan diri. Kalau kita tidak bergegas, Absalom akan memukul kota ini dengan pedang. Raja keluar dari kota bersama seisi istananya. Ketika raja menyuruh Itai, panglima yang datang dari Gat, tanah Filistin, untuk kembali, Itai menjawab. Entah mati entah hidup, di mana tuanku raja berada, di situ hamba pun akan berada.",
+    "Seluruh negeri menangis dengan suara nyaring. Raja menyeberangi sungai Kidron dan berjalan ke arah padang gurun. Imam Zadok dan orang-orang Lewi menyusul sambil memikul tabut perjanjian Allah. Daud berkata kepada Zadok. Bawalah tabut itu kembali ke kota. Jika aku mendapat kasih karunia di mata TUHAN, Ia akan membawa aku kembali dan memperlihatkan tabut itu kepadaku. Tetapi jika Ia tidak berkenan kepadaku, inilah aku, biarlah Ia berbuat kepadaku apa yang baik di mata-Nya.",
+    "Dengan kepala berselubung dan tanpa alas kaki, Daud mendaki lereng Bukit Zaitun sambil menangis. Seluruh rakyat yang menyertainya pun berselubung kepala dan menangis. Lalu datang kabar buruk. Ahitofel, penasihat raja yang bijak itu, pun telah berpihak kepada Absalom. Daud berdoa. Ya TUHAN, gagalkanlah nasihat Ahitofel. Ketika ia sampai di puncak bukit, tempat orang biasa sujud menyembah Allah, Husai sahabatnya, dengan jubah terkoyak dan tanah di kepala, menyongsong raja. Jawaban doa itu datang berjalan kaki."
+   ],
+   "words": [
+    {
+     "who": "Daud",
+     "text": "Jika aku mendapat kasih karunia di mata TUHAN, Ia akan membawa aku kembali dan memperlihatkan tabut itu serta tempat kediaman-Nya kepadaku. Tetapi jika Ia tidak berkenan kepadaku, inilah aku, biarlah Ia berbuat kepadaku apa yang baik di mata-Nya."
+    },
+    {
+     "who": "Daud",
+     "text": "Ya TUHAN, jadikanlah nasihat Ahitofel itu kebodohan."
+    },
+    {
+     "who": "Itai",
+     "text": "Demi TUHAN yang hidup dan demi hidup tuanku raja, entah mati entah hidup, di mana tuanku raja berada, di situ hamba pun akan berada."
+    }
+   ],
+   "note": "Sungai Kidron adalah lembah di antara tembok timur Yerusalem dan Bukit Zaitun, yang hanya berair pada musim hujan. Kira-kira seribu tahun kemudian, pada malam Ia ditangkap, Yesus juga menyeberangi sungai ini menuju taman di lereng Bukit Zaitun.",
+   "reflect": "Bahkan di jalan pelarian setelah kehilangan segalanya, Daud mengembalikan tabut perjanjian. Apakah aku berusaha menahan Allah di sisiku, atau menyerahkan diriku ke dalam tangan-Nya?",
+   "quiz": {
+    "q": "Siapakah orang Gat yang berkata kepada Daud yang melarikan diri, 'entah mati entah hidup, aku akan berada di tempat raja berada'?",
+    "options": [
+     "Itai",
+     "Husai",
+     "Zadok",
+     "Ahitofel"
+    ],
+    "explain": "Itai, orang Gat, meskipun disuruh raja kembali, menjawab bahwa entah mati entah hidup ia akan berada di tempat raja berada (2Sam 15:19–21). Husai kembali ke kota untuk menggagalkan nasihat Ahitofel (2Sam 15:32–34)."
+   },
+   "credit": "James Tissot, David Quits Jerusalem, sekitar 1896–1902 · Perpustakaan John Rylands, Manchester · Domain publik"
+  },
+  "d32": {
+   "title": "Batu-batu Simei",
+   "when": "sekitar 979 SM",
+   "subtitle": "Raja yang menyarungkan pedang di bawah lemparan batu dan kutuk",
+   "story": [
+    "Ketika mereka sampai di Bahurim, seorang laki-laki turun dari bukit. Ia Simei, anak Gera, dari kaum keluarga Saul. Simei melempari raja dan para pegawainya dengan batu sambil berteriak. Enyahlah, enyahlah, engkau penumpah darah, engkau orang dursila! Engkau merampas tempat keluarga Saul, maka TUHAN membalas darah itu. Sekarang kerajaan telah diserahkan ke tangan Absalom, anakmu. Di kiri kanan raja berdiri para pahlawan dengan pedang di pinggang.",
+    "Abisai, adik Yoab, memegang hulu pedangnya dan berkata. Mengapa anjing mati ini mengutuki tuanku raja? Izinkanlah aku menyeberang dan memenggal kepalanya. Daud menggeleng dan berkata. Apa urusanku dengan kamu, hai anak-anak Zeruya? Jika TUHAN menyuruh dia mengutuki Daud, siapa yang boleh menyalahkannya? Anak kandungku sendiri mengincar nyawaku, apalagi orang Benyamin ini. Biarkan dia.",
+    "Dengan suara pelan Daud menambahkan. Mungkin TUHAN akan memperhatikan kesengsaraanku dan membalas aku dengan kebaikan sebagai ganti kutuk hari ini. Daud dan orang-orangnya meneruskan perjalanan. Simei berjalan sejajar di lereng gunung di seberang, terus mengutuk, melempar batu, dan menghamburkan debu. Raja tidak mengangkat pedang sampai akhir. Rakyat yang sudah sangat letih baru dapat bernapas lega ketika sampai di tempat peristirahatan."
+   ],
+   "words": [
+    {
+     "who": "Daud",
+     "text": "Anak kandungku sendiri mengincar nyawaku, apalagi orang Benyamin ini. Biarkan saja dia. TUHAN yang menyuruhnya."
+    },
+    {
+     "who": "Daud",
+     "text": "Mungkin TUHAN akan memperhatikan kesengsaraanku dan membalas aku dengan kebaikan sebagai ganti kutuk yang dilontarkannya hari ini."
+    },
+    {
+     "who": "Abisai",
+     "text": "Mengapa anjing mati ini mengutuki tuanku raja? Biarlah aku menyeberang dan memenggal kepalanya."
+    },
+    {
+     "who": "Simei",
+     "text": "Enyahlah, enyahlah, engkau penumpah darah, engkau orang dursila!"
+    }
+   ],
+   "note": "Bahurim diduga adalah desa Benyamin di jalan yang turun dari Yerusalem melewati Bukit Zaitun menuju lembah Yordan. Di desa ini pula Paltiel, suami Mikhal, yang mengikutinya sambil menangis, berbalik pulang.",
+   "reflect": "Ketika tuduhan yang tidak adil menghujaniku, apakah aku langsung ingin membalas, atau seperti Daud meletakkan kata-kata itu pun di hadapan Allah dan menantikan balasan-Nya?",
+   "quiz": {
+    "q": "Simei, yang melempari Daud dengan batu dan mengutukinya, berasal dari kaum keluarga siapa?",
+    "options": [
+     "Keluarga Yoab",
+     "Keluarga Daud",
+     "Keluarga Saul",
+     "Keluarga Absalom"
+    ],
+    "explain": "Simei adalah anak Gera, kerabat keluarga Saul, dan ia mengutuki Daud sebagai penumpah darah keluarga Saul (2Sam 16:5–8)."
+   },
+   "credit": "Julius Schnorr von Carolsfeld, Shimei Curses David, sekitar 1851–1860 · Die Bibel in Bildern · Domain publik"
+  },
+  "d33": {
+   "title": "Mahanaim",
+   "when": "sekitar 979 SM",
+   "subtitle": "Hidangan di negeri asing bagi raja yang terusir",
+   "story": [
+    "Setelah menyeberangi Yordan, Daud tiba di Mahanaim, kota di Gilead. Menyusul kemudian, Absalom pun menyeberangi Yordan bersama semua orang Israel. Absalom mengangkat Amasa, sepupu Yoab, menjadi panglima tentara menggantikan Yoab, dan berkemah di tanah Gilead. Pasukan ayah dan pasukan anak saling mengintai di tanah yang sama. Orang-orang raja yang baru melewati padang gurun kelelahan dan kelaparan.",
+    "Lalu keledai-keledai yang penuh muatan memasuki pintu gerbang. Mereka adalah Sobi anak Nahas dari Raba, kota bani Amon, Makhir anak Amiel dari Lodebar, dan Barzilai, orang Gilead dari Rogelim. Mereka menurunkan tempat tidur, pasu, dan periuk belanga. Menyusul gandum dan jelai, tepung dan bertih gandum, kacang merah dan kacang hijau, madu dan dadih, kambing domba, dan keju dari susu lembu.",
+    "Ketiga orang itu berkata kepada raja. Rakyat tentu lapar, letih, dan haus di padang gurun. Makhir adalah orang yang pernah menampung Mefiboset, cucu Saul, di rumahnya, dan Sobi datang dari ibu kota Amon yang dahulu ditaklukkan Daud. Raja yang terusir oleh anaknya sendiri duduk di depan hidangan yang disediakan di negeri asing. Barulah orang-orang yang letih itu makan dan minum."
+   ],
+   "words": [
+    {
+     "who": "Sobi, Makhir, dan Barzilai",
+     "text": "Rakyat tentu lapar, letih, dan haus di padang gurun."
+    },
+    {
+     "who": "Pencatat",
+     "text": "Mereka membawa tempat tidur, pasu, dan periuk belanga, gandum, jelai, dan tepung, bertih gandum, kacang merah dan kacang hijau, madu dan dadih, kambing domba dan keju, untuk dimakan Daud dan rakyatnya."
+    }
+   ],
+   "note": "Mahanaim berarti 'dua perkemahan', nama yang diberikan Yakub ketika ia bertemu dengan malaikat-malaikat Allah. Di tempat ini pula Isyboset, anak Saul, diangkat menjadi raja sesudah Saul mati.",
+   "reflect": "Seperti Barzilai yang melihat wajah letih orang yang terusir dan lebih dulu menyediakan hidangan, rasa lapar dan haus siapakah yang sedang kuperhatikan sekarang?",
+   "quiz": {
+    "q": "Siapakah yang TIDAK termasuk orang yang membawa makanan kepada Daud di Mahanaim?",
+    "options": [
+     "Barzilai",
+     "Ahitofel",
+     "Sobi",
+     "Makhir"
+    ],
+    "explain": "Sobi dari Raba, Makhir dari Lodebar, dan Barzilai dari Rogelim membawa perlengkapan dan makanan (2Sam 17:27–29). Ahitofel adalah penasihat yang berpihak kepada Absalom (2Sam 15:12)."
+   },
+   "credit": "James Tissot, David Sees the Messenger Arrive, sekitar 1896–1902 · Perpustakaan John Rylands, Manchester · Domain publik"
+  },
+  "d34": {
+   "title": "Pohon Tarbantin di Hutan Efraim",
+   "when": "sekitar 979 SM",
+   "subtitle": "Pangeran yang tergantung di antara langit dan bumi",
+   "story": [
+    "Di dekat pintu gerbang Mahanaim, Daud membagi pasukannya menjadi tiga dan menyerahkannya kepada Yoab, Abisai, dan Itai orang Gat. Ketika raja berkata bahwa ia juga akan maju, rakyat menghalanginya. Tuanku sama nilainya dengan sepuluh ribu orang dari kami, maka tinggallah di kota dan bantulah kami. Ketika pasukan keluar dari pintu gerbang per seratus dan per seribu orang, raja berpesan kepada ketiga panglima itu di depan semua orang. Demi aku, perlakukanlah Absalom, orang muda itu, dengan lunak.",
+    "Pertempuran terjadi di hutan Efraim. Tentara Israel yang mengikuti Absalom kalah di hadapan para pegawai Daud, dan dua puluh ribu orang tewas hari itu. Pertempuran meluas ke seluruh daerah itu, dan lebih banyak orang ditelan hutan daripada oleh pedang. Absalom, yang menunggang bagal, lewat di bawah dahan-dahan yang berjalin dari sebuah pohon tarbantin besar, dan kepalanya tersangkut. Bagal itu terus berlari, dan Absalom tergantung di antara langit dan bumi.",
+    "Seorang prajurit yang melihatnya memberitahu Yoab. Ketika Yoab membentaknya mengapa ia tidak memukul Absalom, prajurit itu menjawab. Sekalipun aku diberi seribu syikal perak, aku tidak akan menjamah anak raja. Yoab tidak mau mendengar lagi. Ia mengambil tiga lembing kecil, pergi, dan menikamkannya ke jantung Absalom yang masih hidup, lalu sepuluh orang anak buah Yoab menghabisinya. Yoab meniup sangkakala untuk menghentikan pertempuran. Orang-orang melemparkan Absalom ke sebuah lubang di hutan dan menimbunnya dengan setumpuk besar batu."
+   ],
+   "words": [
+    {
+     "who": "Daud",
+     "text": "Demi aku, perlakukanlah Absalom, orang muda itu, dengan lunak."
+    },
+    {
+     "who": "Rakyat",
+     "text": "Janganlah tuanku maju. Tuanku sama nilainya dengan sepuluh ribu orang dari kami, maka lebih baik tuanku tinggal di kota dan membantu kami."
+    },
+    {
+     "who": "Seorang prajurit",
+     "text": "Sekalipun seribu syikal perak diletakkan di tanganku, aku tidak akan menjamah anak raja. Raja telah berpesan di depan telinga kami semua."
+    }
+   ],
+   "note": "Semasa hidupnya Absalom mendirikan tugu atas namanya sendiri di Lembah Raja, karena katanya ia tidak mempunyai anak laki-laki untuk melanjutkan namanya. Makam yang kini disebut 'Tugu Absalom' di Lembah Kidron dibangun pada masa yang jauh lebih kemudian.",
+   "reflect": "Di antara pesan Daud untuk berlaku lunak dan tiga lembing Yoab, bagaimana aku memegang kasih dan keadilan bersama-sama?",
+   "quiz": {
+    "q": "Apa yang ditikamkan Yoab kepada Absalom yang tergantung di pohon tarbantin?",
+    "options": [
+     "Sebilah pedang",
+     "Lima batu",
+     "Dua anak panah",
+     "Tiga lembing kecil"
+    ],
+    "explain": "Yoab mengambil tiga lembing kecil dan menikamkannya ke jantung Absalom yang masih hidup dan tergantung di pohon tarbantin, lalu sepuluh orang muda pembawa senjata Yoab memukulnya sampai mati (2Sam 18:14–15)."
+   },
+   "credit": "James Tissot, Absalom Hanging on the Oak Tree, sekitar 1896–1902 · Perpustakaan John Rylands, Manchester · Domain publik"
+  },
+  "d35": {
+   "title": "Absalom, Anakku",
+   "when": "sekitar 979 SM",
+   "subtitle": "Tangis seorang ayah yang pecah pada hari kemenangan",
+   "story": [
+    "Ketika pertempuran usai, Ahimaas, anak imam Zadok, mendesak Yoab. Izinkanlah aku berlari menyampaikan kabar baik kepada raja. Yoab berkata bahwa hari ini tidak boleh, dan sebagai gantinya ia mengutus seorang Etiopia. Hari itu adalah hari anak raja mati. Tetapi karena Ahimaas terus mendesak, akhirnya Yoab mengizinkannya. Ahimaas berlari melalui jalan Lembah Yordan dan mendahului orang Etiopia yang berangkat lebih dulu.",
+    "Daud sedang duduk menunggu di antara kedua pintu gerbang. Penjaga di atas tembok berseru. Ada seorang berlari datang. Di belakangnya ada seorang lagi. Yang di depan tampaknya Ahimaas. Ahimaas sujud dan memberitakan kemenangan, tetapi yang ditanyakan raja hanya satu. Selamatkah Absalom, orang muda itu? Ahimaas menjawab dengan samar-samar. Lalu orang Etiopia yang datang kemudian berkata. Biarlah semua musuh raja menjadi seperti orang muda itu.",
+    "Dengan tubuh gemetar raja naik ke kamar di atas pintu gerbang dan meratap. Anakku Absalom, anakku, anakku Absalom! Seandainya aku mati menggantikan engkau. Hari itu kemenangan berubah menjadi ratapan, dan para prajurit masuk ke kota diam-diam seperti orang yang lari dari pertempuran. Yoab masuk dan mendesak raja. Jika tuanku tidak keluar sekarang untuk menenangkan hati para hambamu, malam ini tidak seorang pun akan tinggal di sisimu. Raja bangkit dan duduk di pintu gerbang."
+   ],
+   "words": [
+    {
+     "who": "Daud",
+     "text": "Anakku Absalom, anakku, anakku Absalom! Seandainya aku mati menggantikan engkau. Absalom, anakku, anakku!"
+    },
+    {
+     "who": "Daud",
+     "text": "Selamatkah Absalom, orang muda itu?"
+    },
+    {
+     "who": "Orang Etiopia",
+     "text": "Biarlah musuh-musuh tuanku raja dan semua orang yang bangkit hendak mencelakakan tuanku menjadi seperti orang muda itu."
+    },
+    {
+     "who": "Yoab",
+     "text": "Tuanku mengasihi orang yang membenci tuanku dan membenci orang yang mengasihi tuanku. Sekarang bangunlah, keluarlah, dan tenangkanlah hati para hambamu."
+    }
+   ],
+   "note": "Ratapan Daud 'Anakku Absalom' adalah ayat pertama pasal 19 dalam Alkitab Ibrani. Pintu gerbang kota adalah tempat pengadilan dan musyawarah, sehingga raja yang duduk di pintu gerbang berarti ia kembali berdiri di hadapan rakyatnya.",
+   "reflect": "Daud ingin mati menggantikan anak yang hendak membunuhnya. Sikap hati seperti apa yang kusimpan terhadap orang yang telah menyakitiku?",
+   "quiz": {
+    "q": "Siapakah yang lebih dulu sampai kepada Daud setelah pertempuran usai?",
+    "options": [
+     "Ahimaas",
+     "Orang Etiopia",
+     "Yonatan",
+     "Husai"
+    ],
+    "explain": "Orang Etiopia berangkat lebih dulu, tetapi Ahimaas berlari melalui jalan lembah dan mendahuluinya (2Sam 18:21–23). Kematian Absalom diketahui dari perkataan orang Etiopia yang datang kemudian (2Sam 18:32)."
+   },
+   "credit": "Gustave Doré, David Mourns the Death of Absalom, 1866 · Alkitab bergambar Doré · Domain publik"
+  },
+  "d36": {
+   "title": "Tempat Pengirikan Arauna",
+   "when": "sekitar 975 SM",
+   "subtitle": "Aku tidak akan mempersembahkan korban yang tidak bernilai apa-apa bagiku",
+   "story": [
+    "Ketika murka TUHAN kembali menyala terhadap Israel, Daud memerintahkan Yoab. Jelajahilah seluruh Israel dan hitunglah rakyat. Yoab mencegahnya. Mengapa tuanku raja menginginkan hal ini? Tetapi perkataan raja menang. Setelah sembilan bulan dua puluh hari, angka itu dilaporkan. Delapan ratus ribu orang yang dapat menghunus pedang di Israel, lima ratus ribu di Yehuda. Di hadapan angka itu hati Daud berdebar menyesal. Daud berkata kepada TUHAN. Aku telah sangat berdosa.",
+    "Keesokan paginya nabi Gad datang menyampaikan firman TUHAN. Pilihlah satu: kelaparan, tiga bulan dikejar musuh, atau tiga hari penyakit sampar. Daud menjawab. Biarlah aku jatuh ke tangan TUHAN, bukan ke tangan manusia, sebab besar kasih sayang-Nya. Sampar melanda, dan dari Dan sampai Bersyeba tujuh puluh ribu orang mati. Ketika malaikat itu mengulurkan tangannya ke Yerusalem, TUHAN menyesal karena malapetaka itu dan berfirman kepada malaikat itu. Cukup, turunkanlah tanganmu.",
+    "Saat itu malaikat itu berdiri di dekat tempat pengirikan Arauna, orang Yebus. Ketika melihat malaikat itu, Daud berseru kepada TUHAN. Akulah yang berdosa, apakah yang dilakukan domba-domba ini? Sesuai perkataan Gad, Daud naik ke sana, dan Arauna sujud lalu menawarkan tempat pengirikan dan lembu-lembunya dengan cuma-cuma. Daud menggeleng dan berkata. Aku tidak akan mempersembahkan korban bakaran dari sesuatu yang kudapat dengan cuma-cuma. Daud membeli tempat pengirikan itu dengan lima puluh syikal perak dan mendirikan mezbah, dan tulah itu berhenti."
+   ],
+   "words": [
+    {
+     "who": "Allah",
+     "text": "Cukup. Turunkanlah tanganmu."
+    },
+    {
+     "who": "Daud",
+     "text": "Akulah yang berdosa. Akulah yang bersalah. Apakah yang dilakukan domba-domba ini? Biarlah tangan-Mu menimpa aku dan keluarga ayahku."
+    },
+    {
+     "who": "Daud",
+     "text": "Tidak, aku harus membelinya dengan membayar harganya. Aku tidak akan mempersembahkan kepada TUHAN, Allahku, korban bakaran dari sesuatu yang kudapat dengan cuma-cuma."
+    },
+    {
+     "who": "Arauna",
+     "text": "Biarlah tuanku raja mengambil dan mempersembahkan apa yang baik di matanya. Kiranya TUHAN, Allah tuanku, berkenan kepada tuanku."
+    }
+   ],
+   "note": "Kitab Tawarikh mencatat bahwa tempat pengirikan ini berada di Gunung Moria, dan bahwa Salomo membangun Bait Suci tepat di tempat itu. Tempat itu dianggap sama dengan tanah Moria, tempat Abraham naik hendak mempersembahkan Ishak.",
+   "reflect": "Daud menolak ibadah yang tidak menuntut harga. Di antara yang kupersembahkan kepada Allah, apa yang sungguh menuntut harga dariku?",
+   "quiz": {
+    "q": "Berapa harga yang dibayar Daud kepada Arauna untuk tempat pengirikan dan lembu-lembunya?",
+    "options": [
+     "30 syikal perak",
+     "600 syikal emas",
+     "50 syikal perak",
+     "Diterima dengan cuma-cuma"
+    ],
+    "explain": "Daud berkata tidak akan mempersembahkan korban bakaran dengan cuma-cuma, lalu membeli tempat pengirikan dan lembu-lembu itu dengan lima puluh syikal perak (2Sam 24:24). Enam ratus syikal emas dalam 1 Tawarikh 21:25 dicatat sebagai harga seluruh tempat itu."
+   },
+   "credit": "Pieter de Grebber, King David in Prayer, sekitar 1635–1640 · Museum Catharijneconvent, Utrecht · Domain publik"
+  },
+  "d37": {
+   "title": "Pengurapan di Mata Air Gihon",
+   "when": "sekitar 971 SM",
+   "subtitle": "Anak yang turun dengan menunggang bagal Daud",
+   "story": [
+    "Daud sudah tua. Sekalipun diselimuti berlapis-lapis, tubuhnya tidak menjadi hangat, sehingga Abisag, gadis Sunem, merawatnya di sisinya. Pada kesempatan itu Adonia, pangeran yang lahir sesudah Absalom, meninggikan diri dan berkata. Akulah yang akan menjadi raja. Adonia menyiapkan kereta dan pasukan berkuda serta lima puluh orang yang berlari di depannya, dan Yoab serta imam Abyatar mendukungnya. Sebuah perjamuan diadakan di dekat mata air En-Rogel, tetapi Natan, Benaya, dan Salomo tidak diundang.",
+    "Nabi Natan menemui Batsyeba, ibu Salomo, dan berkata. Adonia telah menjadi raja, dan tuan kita Daud tidak mengetahuinya. Batsyeba masuk ke kamar raja, sujud, dan berkata. Bukankah tuanku telah bersumpah bahwa anakku Salomo akan menggantikan tuanku? Natan pun masuk dan menyampaikan hal yang sama. Raja yang tua itu membuka mulutnya. Demi TUHAN yang hidup, yang telah melepaskan aku dari segala kesesakan, hari ini juga aku akan melakukan sesuai dengan sumpah itu.",
+    "Salomo naik ke atas bagal Daud dan turun ke mata air Gihon. Imam Zadok mengambil tabung tanduk berisi minyak dari Kemah Suci dan menuangkannya ke kepala Salomo. Ketika sangkakala ditiup, rakyat berseru. Hidup Raja Salomo! Bunyi seruling dan sorak-sorai seakan membelah bumi, dan para tamu Adonia bubar dengan gemetar. Daud membungkuk menyembah di atas tempat tidurnya dan berkata. Terpujilah TUHAN, Allah Israel, yang hari ini memberikan seorang yang duduk di takhtaku dan membiarkan mataku sendiri melihatnya."
+   ],
+   "words": [
+    {
+     "who": "Daud",
+     "text": "Demi TUHAN yang hidup, yang telah melepaskan aku dari segala kesesakan, hari ini juga akan kulakukan seperti yang telah kusumpahkan kepadamu, bahwa anakmu Salomo akan menjadi raja menggantikan aku."
+    },
+    {
+     "who": "Daud",
+     "text": "Terpujilah TUHAN, Allah Israel. Hari ini Ia memberikan seorang yang duduk di takhtaku dan membiarkan mataku sendiri melihatnya."
+    },
+    {
+     "who": "Batsyeba",
+     "text": "Hiduplah tuanku Raja Daud untuk selama-lamanya!"
+    },
+    {
+     "who": "Benaya",
+     "text": "Amin. Seperti TUHAN menyertai tuanku raja, kiranya Ia menyertai Salomo dan membuat takhtanya lebih besar daripada takhta Raja Daud."
+    }
+   ],
+   "note": "Mata air Gihon adalah mata air utama Yerusalem yang memancar di lereng Lembah Kidron di sebelah timur Kota Daud. En-Rogel, tempat Adonia mengadakan perjamuan, terletak sedikit di sebelah selatannya, sehingga sorak-sorai di Gihon terdengar sampai ke sana.",
+   "reflect": "Seperti Daud yang tua dan lelah mengerahkan sisa tenaganya untuk menepati janji, dapatkah aku menepati satu janji yang selama ini kutunda, hari ini?",
+   "quiz": {
+    "q": "Apa yang ditunggangi Salomo ketika turun ke mata air Gihon untuk diurapi?",
+    "options": [
+     "Kereta raja",
+     "Bagal Daud",
+     "Kuda putih",
+     "Anak keledai"
+    ],
+    "explain": "Daud memerintahkan supaya Salomo dinaikkan ke atas bagalnya sendiri, dibawa ke Gihon, dan diurapi di sana (1Raj 1:33, 38)."
+   },
+   "credit": "Cornelis de Vos, The Anointing of Solomon, sekitar 1630 · Museum Sejarah Seni Wina · Domain publik"
+  },
+  "d38": {
+   "title": "Persiapan bagi Bait Suci",
+   "when": "sekitar 971 SM",
+   "subtitle": "Yang dikumpulkan bagi rumah yang tak akan dibangunnya sendiri",
+   "story": [
+    "Sambil menunjuk tempat pengirikan Arauna, Daud berkata. Di sinilah rumah TUHAN Allah akan berdiri. Sejak hari itu Daud mengumpulkan tukang batu untuk memahat batu, dan menimbun besi serta tembaga yang tak terhitung beratnya. Orang Sidon dan Tirus mengangkut kayu aras yang tak terbilang banyaknya. Daud berkata. Anakku Salomo masih muda dan belum berpengalaman. Rumah TUHAN harus termasyhur di seluruh dunia, maka aku akan mempersiapkannya lebih dulu.",
+    "Daud memanggil Salomo dan berkata. Anakku, aku ingin membangun rumah bagi nama TUHAN. Tetapi TUHAN berfirman kepadaku. Engkau telah menumpahkan banyak darah dan melakukan peperangan besar, karena itu engkau tidak akan membangun rumah bagi-Ku. Anak yang akan lahir bagimu adalah seorang yang suka damai, dialah yang akan membangunnya. Kelak, di hadapan para pemimpin seluruh Israel, Daud menyerahkan kepada Salomo rancangan bait suci yang dinyatakan TUHAN kepadanya dan berkata. Kuatkan dan teguhkanlah hatimu, lalu kerjakanlah.",
+    "Dari perbendaharaannya sendiri Daud menyerahkan tiga ribu talenta emas Ofir dan tujuh ribu talenta perak. Para pemimpin pun memberi dengan sukarela, dan rakyat bersukacita karena persembahan yang diberikan dengan segenap hati. Di hadapan seluruh jemaah Daud memuji TUHAN. Siapakah aku ini dan siapakah bangsaku, sehingga kami sanggup memberi persembahan seperti ini? Segala sesuatu berasal dari pada-Mu, dan kami hanya memberikan kembali apa yang kami terima dari tangan-Mu. Hari-hari kami di bumi ini seperti bayang-bayang."
+   ],
+   "words": [
+    {
+     "who": "Allah",
+     "text": "Seorang anak laki-laki akan lahir bagimu, dan ia akan menjadi orang yang suka damai. Dialah yang akan membangun rumah bagi nama-Ku. Ia akan menjadi anak-Ku, dan Aku akan menjadi Bapanya."
+    },
+    {
+     "who": "Daud",
+     "text": "Anakku Salomo, kenallah Allah ayahmu dan beribadahlah kepada-Nya dengan segenap hati dan dengan rela hati. Jika engkau mencari Dia, Ia akan berkenan ditemui olehmu."
+    },
+    {
+     "who": "Daud",
+     "text": "Siapakah aku ini dan siapakah bangsaku, sehingga kami sanggup memberi persembahan seperti ini? Segala sesuatu berasal dari pada-Mu, dan kami hanya memberikan kembali apa yang kami terima dari tangan-Mu."
+    },
+    {
+     "who": "Daud",
+     "text": "Kuatkan dan teguhkanlah hatimu, lalu kerjakanlah. Jangan takut. TUHAN Allah, Allahku, menyertai engkau dan tidak akan meninggalkan engkau sampai seluruh pekerjaan itu selesai."
+    }
+   ],
+   "note": "Kitab Tawarikh mencatat bahwa Daud menyediakan seratus ribu talenta emas dan sejuta talenta perak untuk Bait Suci. Satu talenta diperkirakan sekitar tiga puluh kilogram. Mazmur 30 diberi judul 'Nyanyian untuk penahbisan Bait Suci'.",
+   "reflect": "Daud mencurahkan apa yang dimilikinya bagi rumah yang tak akan pernah dilihatnya. Dapatkah aku dengan rela memberikan hatiku bagi pekerjaan yang buahnya tidak akan kulihat?",
+   "quiz": {
+    "q": "Mengapa Allah tidak mengizinkan Daud membangun Bait Suci?",
+    "options": [
+     "Karena ia sudah terlalu tua",
+     "Karena hartanya tidak cukup",
+     "Karena Natan menentangnya",
+     "Karena ia orang perang yang telah menumpahkan banyak darah"
+    ],
+    "explain": "Allah tidak mengizinkan Daud membangun Bait Suci karena ia telah menumpahkan banyak darah dan melakukan peperangan besar, dan menyerahkannya kepada Salomo, anaknya, orang yang suka damai (1Taw 22:8–9; 28:3)."
+   },
+   "credit": "Cornelis de Vos, King David Presenting the Sceptre to Solomon · Domain publik"
+  },
+  "d39": {
+   "title": "Perkataan Terakhir Daud",
+   "when": "sekitar 970 SM",
+   "subtitle": "Napas terakhir yang menyanyikan pagi tanpa awan",
+   "story": [
+    "Anak gembala itu kini telah menjadi raja tua berambut putih. Daud anak Isai, pemazmur Israel, menyanyikan nyanyiannya yang terakhir. Roh TUHAN berbicara melalui aku, firman-Nya ada di lidahku. Gunung Batu Israel telah berfirman kepadaku. Orang yang memerintah manusia dengan adil, yang memerintah dengan takut akan Allah, ia seperti cahaya pagi ketika matahari terbit pada pagi tanpa awan, seperti rumput muda yang tumbuh dari tanah sesudah hujan.",
+    "Daud melanjutkan nyanyiannya. Bukankah demikian keluargaku di hadapan Allah? Sebab Ia telah mengikat perjanjian kekal denganku, teratur rapi dan terpelihara teguh. Ketika hari kematiannya mendekat, Daud memanggil Salomo dan berpesan. Aku sekarang akan menempuh jalan segala yang fana. Kuatkanlah hatimu dan bersikaplah sebagai laki-laki. Hiduplah menurut jalan TUHAN seperti yang tertulis dalam hukum Musa. Maka janji TUHAN akan tetap teguh, bahwa keturunanmu tidak akan terputus dari takhta.",
+    "Setelah berpesan satu per satu, tentang Yoab dan Simei sampai kebaikan yang harus ditunjukkan kepada anak-anak Barzilai, Daud mendapat perhentian bersama nenek moyangnya dan dikuburkan di Kota Daud. Ia raja yang memerintah tujuh tahun di Hebron dan tiga puluh tiga tahun di Yerusalem, seluruhnya empat puluh tahun. Mazmur 72 ditutup dengan satu baris: doa-doa Daud bin Isai sudah selesai. Raja keturunannya, yang akan terbit seperti pagi tanpa awan, lama dinanti-nantikan Israel."
+   ],
+   "words": [
+    {
+     "who": "Allah",
+     "text": "Orang yang memerintah manusia dengan adil, yang memerintah dengan takut akan Allah, ia seperti cahaya pagi pada pagi tanpa awan, seperti rumput muda yang tumbuh dari tanah sesudah hujan."
+    },
+    {
+     "who": "Daud",
+     "text": "Roh TUHAN berbicara melalui aku, dan firman-Nya ada di lidahku."
+    },
+    {
+     "who": "Daud",
+     "text": "Ia telah mengikat perjanjian kekal denganku, perjanjian yang teratur rapi dalam segala hal dan terpelihara teguh."
+    },
+    {
+     "who": "Daud",
+     "text": "Aku sekarang akan menempuh jalan segala yang fana. Kuatkanlah hatimu dan bersikaplah sebagai laki-laki. Peliharalah apa yang diserahkan TUHAN, Allahmu, kepadamu, dan hiduplah menurut jalan-Nya."
+    }
+   ],
+   "note": "Tujuh tahun di Hebron adalah masa ketika ia hanya menjadi raja atas suku Yehuda. Sesudah itu para nabi lama menantikan tunas yang benar yang akan tumbuh dari keluarga Daud, dan Perjanjian Baru menyebut Yesus 'Anak Daud'.",
+   "reflect": "Yang dipegang Daud dengan napas terakhirnya bukanlah prestasinya, melainkan perjanjian Allah. Pada akhir hidupku, apa yang ingin kupegang?",
+   "quiz": {
+    "q": "Berapa tahun seluruhnya Daud memerintah atas Israel?",
+    "options": [
+     "33 tahun",
+     "7 tahun",
+     "40 tahun",
+     "50 tahun"
+    ],
+    "explain": "Daud memerintah atas Israel tujuh tahun di Hebron dan tiga puluh tiga tahun di Yerusalem, seluruhnya empat puluh tahun (1Raj 2:11)."
+   },
+   "credit": "Gerard van Honthorst, King David Playing the Harp, 1622 · Centraal Museum, Utrecht · Domain publik"
+  }
+ }
+}
