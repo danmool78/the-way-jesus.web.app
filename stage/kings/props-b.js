@@ -112,6 +112,42 @@ Object.assign(MAKERS, {
     }, { state: o.state || 'flow', fade: 'opacity' });
   },
 
+  // 다락방 집, 방을 높게 (사르밧 — 왕상 17:19): 공용 roomhouse의 다락방은 높이 0.5라 그 안에 선 엘리야의 머리가 지붕을 뚫고 나왔다.
+  // 같은 집에 다락방 높이만 1.0으로 — 옵션·state·heightAt·bed는 roomhouse와 같다
+  upperroom(o = {}) {
+    const g = new THREE.Group(), wall = mat(o.wall || '#cdb48e', { roughness: 1 }), dark = mat('#2a1c10'), roofM = mat('#a98f68', { roughness: 1 });
+    const W = 1.15, H = 0.62, D = 0.85; // 아래층(낮게 — 다락방이 화면에 들어오게)
+    mesh(new THREE.BoxGeometry(W, H, D), wall, g, [0, H / 2, 0]).receiveShadow = true;
+    mesh(new THREE.BoxGeometry(W + 0.04, 0.04, D + 0.04), roofM, g, [0, H + 0.02, 0]).receiveShadow = true;
+    mesh(new THREE.BoxGeometry(0.22, 0.46, 0.02), dark, g, [-0.3, 0.23, D / 2 + 0.006]); // 아래층 문
+    for (let i = 0; i < 6; i++) { const h = (i + 1) * H / 6; mesh(new THREE.BoxGeometry(0.15, h, 0.12), wall, g, [-W / 2 - 0.08, h / 2, D / 2 - 0.06 - i * 0.12]).receiveShadow = true; } // 지붕으로 오르는 계단
+    // 다락방: 지붕의 오른쪽 뒤, 뒷벽·옆벽·지붕만 두고 앞(+z)과 왼쪽은 트였다
+    const RX = 0.12, RW = 0.85, RD = 0.62, RH = 1.0, ry = H + 0.04; // 선 사람(0.88)이 들어가는 높이
+    mesh(new THREE.BoxGeometry(RW, RH, 0.05), wall, g, [RX, ry + RH / 2, -D / 2 + 0.03]).receiveShadow = true;
+    mesh(new THREE.BoxGeometry(0.05, RH, RD), wall, g, [RX + RW / 2, ry + RH / 2, -D / 2 + RD / 2]).receiveShadow = true;
+    const cap = mesh(new THREE.BoxGeometry(RW + 0.04, 0.035, RD + 0.04), roofM, g, [RX, ry + RH + 0.02, -D / 2 + RD / 2]); cap.receiveShadow = true;
+    mesh(new THREE.BoxGeometry(0.05, RH, 0.05), wall, g, [RX - RW / 2, ry + RH / 2, -D / 2 + RD]); // 앞 모서리 기둥
+    // 침상·상·의자·등잔 (4:10)
+    const bed = new THREE.Group(); bed.position.set(RX + 0.18, ry, -D / 2 + 0.2); g.add(bed);
+    mesh(new THREE.BoxGeometry(0.42, 0.05, 0.2), wood(), bed, [0, 0.08, 0]);
+    [[-1, -1], [-1, 1], [1, -1], [1, 1]].forEach(([a, b]) => mesh(new THREE.BoxGeometry(0.02, 0.08, 0.02), wood(), bed, [a * 0.19, 0.04, b * 0.08]));
+    mesh(new THREE.BoxGeometry(0.4, 0.02, 0.18), mat('#e8dcc0', { roughness: 1 }), bed, [0, 0.115, 0]);
+    mesh(new THREE.BoxGeometry(0.16, 0.012, 0.12), wood(), g, [RX - 0.22, ry + 0.14, -D / 2 + 0.16]); mesh(new THREE.BoxGeometry(0.02, 0.14, 0.02), wood(), g, [RX - 0.22, ry + 0.07, -D / 2 + 0.16]);
+    mesh(new THREE.BoxGeometry(0.08, 0.08, 0.08), wood(), g, [RX - 0.08, ry + 0.04, -D / 2 + 0.3]);
+    const flame = mesh(new THREE.ConeGeometry(0.008, 0.024, 6), mat('#ffd27a', { emissive: '#ffb347', emissiveIntensity: 2.5 }), g, [RX - 0.22, ry + 0.17, -D / 2 + 0.16]); flame.castShadow = false;
+    const halo = glow(0.45, 0); halo.position.set(RX - 0.22, ry + 0.18, -D / 2 + 0.16); g.add(halo);
+    const light = new THREE.PointLight('#ffc070', 0, 1.6, 1.4); light.position.set(RX - 0.15, ry + 0.3, -D / 2 + 0.35); g.add(light);
+    let k = 0;
+    const P = new Prop(g, (P, t, dt) => { k = damp(k, P.state === 'lit' ? 1 : 0, 1.5, dt); flame.visible = k > 0.1; halo.material.opacity = k * 0.8 * P.show; light.intensity = k * 1.5 * P.show * (1 + Math.sin(t * 9) * 0.05); });
+    P.floor = true;
+    P.heightAt = (x, z) => { const u = (x - g.position.x) / g.scale.x, v = (z - g.position.z) / g.scale.z;
+      if (P.show < 0.5 || Math.abs(u) > W / 2 || Math.abs(v) > D / 2) return 0;
+      if (Math.abs(u - bed.position.x) < 0.21 && Math.abs(v - bed.position.z) < 0.1) return (ry + 0.125) * g.scale.y; // 침상 위
+      return (H + 0.04) * g.scale.y; };
+    P.bed = [RX + 0.18, -D / 2 + 0.2]; // 침상 자리 (소품 기준) — 대본에서 x, z를 맞출 때
+    return P;
+  },
+
   // 엘리야의 겉옷 (왕상 19:19 · 왕하 2:8·13): 털 겉옷 한 장. state 'ground'(땅에 펼쳐져 놓였다) | 'fly'(날리며 펄럭인다 — 높이는 대본의 y) | 'rolled'(말아 쥔 막대 모양).
   // 던지는 것·떨어지는 것은 대본에서 x·z·y로 옮긴다 (speed를 주면 그 속도로 날아간다)
   mantle(o = {}) {
