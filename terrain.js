@@ -29,7 +29,7 @@ const lv = m => m * M * EXAG;  // 고도(m) → 높이
 const LAKES = [['galilee', -210], ['dead', -395], ['hula', 72], ['mareotis'], ['manzala'], ['sirbonis'], ['bitter']];
 const RIVERS = ['jordanN', 'jordanS', 'nile', 'canopic', 'rosetta', 'damietta', 'pelusiac'];
 // 넓게 그리는 강의 반폭(지도 단위, 1 = 약 111m): 요단은 그 시대 골짜기의 물길처럼 넓게 — 가는 관은 멀리서 실처럼 보였다
-const RIVER_W = { jordanN: 0.9, jordanS: 1.2 };
+const RIVER_W = { jordanN: 0.9, jordanS: 1.2, euphrates: 1.1, tigris: 1.0 }; // 유브라데·힛데겔은 열왕기 여정(바벨론)에서만 (decorate)
 const RIVER_SRC = { jordanN: 0.25 }; // 시작에서 이만큼(전체 길이 비율)을 지나며 제 폭이 된다
 // 바다 해안선: app.js buildMap의 바다 판과 같게 (남쪽은 시나이 북부 → 나일 삼각주 → 알렉산드리아)
 const SINAI = [[31.13, 33.8], [31.15, 33.1], [31.26, 32.3], [31.52, 31.85], [31.47, 30.4], [31.2, 29.9], [30.9, 28.5], [30.8, 26]];
@@ -37,6 +37,11 @@ const SINAI = [[31.13, 33.8], [31.15, 33.1], [31.26, 32.3], [31.52, 31.85], [31.
 const BASES = [{ src: 'assets/relief.webp', lat0: 29.15, lat1: 34.6, lng0: 33.0, lng1: 37.4, y: 0 }, { src: 'assets/relief-west.webp', lat0: 29.15, lat1: 31.9, lng0: 29.4, lng1: 33.25, y: -0.05 }];
 // 시내 반도·미디안 바탕(모세 여정, app.js의 RELIEF_SOUTH): 다른 바탕 위에. 애굽 지형 지역과 겹치는 북쪽 끝은 잘라(cut) 지형의 높이를 덮지 않게
 const SOUTH = { src: 'assets/relief-south.webp', lat0: 27.2, lat1: 30.15, lng0: 31.25, lng1: 37.4, y: 0.02, cut: 29.8 };
+// 시리아 사막·메소포타미아 바탕(열왕기 여정, app.js의 RELIEF_MESO): 다른 바탕 밑에 넓게 — 바벨론은 3D 지형 지역이 없어 이 판 위에 무대만 선다
+const MESO = { src: 'assets/relief-meso.webp', lat0: 26.9, lat1: 37.6, lng0: 35.6, lng1: 46.2, y: -0.1 };
+const BABYLON = { src: 'assets/relief-babylon.webp', lat0: 31.95, lat1: 33.15, lng0: 43.65, lng1: 45.2, y: -0.08 }; // 바벨론 둘레의 고운 바탕 (app.js의 RELIEF_BABYLON)
+// 그때 지중해는 시리아 해안을 따라 길리기아까지 (app.js buildMap의 north와 같게)
+const NORTH = [[36.05, 32.6], [36.15, 33.4], [36.35, 33.95], [36.6, 34.3], [36.8, 34.65], [36.57, 35.37], [36.75, 35.8], [36.92, 36.15], [36.6, 36.18], [36.4, 35.9], [36.08, 35.93], [35.85, 35.83], [35.52, 35.75]];
 
 const wrap = document.querySelector('.mapwrap'), svg = document.getElementById('map');
 let renderer, scene, camera, sun, hemi, env, on = false, ready = false, loading = null;
@@ -111,6 +116,7 @@ async function build() {
   const land = new THREE.Mesh(new THREE.PlaneGeometry(30000, 30000), greyable(new THREE.MeshStandardMaterial({ color: '#e3d5b4', roughness: 1 })));
   land.rotation.x = -Math.PI / 2; land.position.y = -8; land.receiveShadow = true; scene.add(land);
   if (window.journeyMap?.south && !BASES.includes(SOUTH)) BASES.push(SOUTH);
+  if (window.journeyMap?.meso && !BASES.includes(MESO)) BASES.unshift(MESO, BABYLON);
   await Promise.all(BASES.map(async b => { b.tex = mapTex(await loadImg(b.src)); }));
   addWalker(); addLabels(); addStars();
   decorate();
@@ -253,7 +259,8 @@ function decorate() {
   });
   // 지중해와 수에즈 만 (바탕 그림 위에 — 2D 지도도 바다를 그림 위에 덮는다)
   const seaM = new THREE.MeshStandardMaterial({ color: '#7ea6ad', roughness: 0.4, metalness: 0.1, envMap: env, envMapIntensity: 0.7, side: THREE.DoubleSide });
-  flat(new THREE.Shape([[35.2, 36.0], [34.2, 35.65], ...GEO.coast, ...SINAI, [36, 26]].map(V2)), seaM, 0.05);
+  flat(new THREE.Shape([...(window.journeyMap?.meso ? NORTH : []), [35.2, 36.0], [34.2, 35.65], ...GEO.coast, ...SINAI, [36, 26]].map(V2)), seaM, 0.05);
+  if (window.journeyMap?.meso) flat(new THREE.Shape(GEO.cyprus.map(V2)), greyable(new THREE.MeshStandardMaterial({ color: '#e3d5b4', roughness: 1, side: THREE.DoubleSide })), 0.07); // 키프로스 (2D의 .isle)
   if (!window.journeyMap?.south) flat(new THREE.Shape(GEO.suez.map(V2)), seaM, 0.05); // 시내 반도 바탕에는 홍해의 두 만이 이미 바다로 칠해져 있다 (2D와 같게)
   // 호수: 2D 지도처럼 물가 점들을 매끄러운 곡선으로. 수면 고도가 정해진 호수는 그 높이에
   const lakeM = new THREE.MeshStandardMaterial({ color: '#4f8798', roughness: 0.55, metalness: 0.05, envMap: env, envMapIntensity: 0.6, transparent: true, opacity: 0.94, side: THREE.DoubleSide }); // 너무 매끈하면 해가 하얀 얼룩으로 번진다
@@ -266,7 +273,7 @@ function decorate() {
   // 강: 땅을 따라 굽는 물빛 띠
   const riverM = new THREE.MeshStandardMaterial({ color: '#5f93a3', roughness: 0.25, metalness: 0.15, envMap: env });
   const riverWideM = new THREE.MeshStandardMaterial({ color: '#5a8fa0', roughness: 0.35, metalness: 0.1, envMap: env, side: THREE.DoubleSide });
-  RIVERS.forEach(k => {
+  (window.journeyMap?.meso ? [...RIVERS, 'euphrates', 'tigris'] : RIVERS).forEach(k => {
     const base = new THREE.CatmullRomCurve3(GEO[k].map(p => { const [x, z] = px(p); return new THREE.Vector3(x, 0, z); }));
     const half = RIVER_W[k];
     if (!half) {

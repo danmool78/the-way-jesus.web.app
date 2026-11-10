@@ -1,0 +1,12 @@
+{
+ "_comment": "열왕기 여정의 배경음악 — 다윗·잠언처럼 새 곡을 만들지 않고 예수·모세 여정에서 만든 곡(assets/music/<곡>.mp3)을 장면 결에 맞게 골라 쓴다. 솔로몬의 지혜·성전 → wonder·glory·m-presence, 갈라짐·우상 → m-mystery·storm, 엘리야의 가뭄·불 → m-wilderness·zeal·m-glory, 로뎀나무·세미한 소리 → night·tender·m-presence, 엘리사의 기적 → healing·joy, 포위와 함락 → m-struggle·storm·m-exile, 히스기야의 기도와 구원 → m-covenant·dawn, 율법책 → m-covenant, 불타는 성전 → m-farewell, 바벨론 강가 → m-exile",
+ "cues": {},
+ "scenes": {
+  "k01": "wonder", "k02": "tender", "k03": "m-presence", "k04": "glory", "k05": "m-mystery", "k06": "m-mystery",
+  "k07": "storm", "k08": "night", "k09": "m-mystery", "k10": "m-farewell", "k11": "m-exile",
+  "k12": "m-wilderness", "k13": "wilderness", "k14": "healing", "k15": "zeal", "k16": "m-glory", "k17": "night", "k18": "m-presence", "k19": "tender", "k20": "passion", "k21": "m-struggle", "k22": "m-glory",
+  "k23": "healing", "k24": "joy", "k25": "village", "k26": "m-glory", "k27": "m-struggle", "k28": "storm", "k29": "m-covenant", "k30": "m-farewell",
+  "k31": "m-exile",
+  "k32": "zeal", "k33": "m-struggle", "k34": "m-covenant", "k35": "dawn", "k36": "healing", "k37": "m-mystery", "k38": "m-covenant", "k39": "m-farewell", "k40": "m-farewell", "k41": "m-exile"
+ }
+}
