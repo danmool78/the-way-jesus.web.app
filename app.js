@@ -1534,7 +1534,7 @@ function renderWords() {
   EVENTS.forEach((e, i) => e.words.forEach((w, j) => {
     if (!w.j) return;
     if (q && !(w.text + e.title + PLACES[e.place].name).toLowerCase().includes(q.toLowerCase())) return;
-    if (lastP !== e.p) { html += `<h3 class="psep" style="--c:${PERIODS[e.p].color}">${esc(PERIODS[e.p].name)} <small>${esc(PERIODS[e.p].span)}</small></h3>`; lastP = e.p; }
+    if (lastP !== e.p) { html += `<h3 class="psep" style="--c:${PERIODS[e.p].color}">${esc(PERIODS[e.p].name)}${PERIODS[e.p].name.includes(PERIODS[e.p].span) ? '' : ` <small>${esc(PERIODS[e.p].span)}</small>`}</h3>`; lastP = e.p; }
     count++;
     html += `<div class="wcard" style="--c:${PERIODS[e.p].color}">
       <p>${q ? esc(w.text).replace(new RegExp(esc(q).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'), m => `<mark>${m}</mark>`) : esc(w.text)}</p>
