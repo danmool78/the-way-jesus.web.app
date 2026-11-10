@@ -27,7 +27,7 @@ export const A = {
     cast: {
       solomon: ['solomon', 0.0, 0.2, 0.6],
       pr1: ['priest', 1.05, -0.05, -1],
-      pr2: ['levite', 0.05, -0.4, 0.8],
+      pr2: ['levite', -0.45, -0.15, 0.9], // 왕 바로 뒤에 서면 겹쳐 보였다
     },
     beats: {
       enter: [['@env', 'night'], ['altar', 'idle'], ['smoke', 'off'], ['ox', null, { show: 0 }], ['pr1', 'idle', { show: 0 }], ['pr2', 'idle', { show: 0 }], ['beam', null, { show: 1 }], ['solomon', 'kneel', { look: 0.2 }]],
@@ -123,29 +123,29 @@ export const A = {
     env: 'day',
     wide: 1.4,
     props: {
-      temple: ['stemple', 0, -0.5, { scale: 0.85 }],
-      ark: ['arkc', -1.35, 0.42, { lift: 0.33, on: ['p1', 'p2'] }],
-      folkL: ['crowd', -1.55, 0.25, { spots: flock(8, 0.42, 0.22, 1), face: Math.PI / 2 + 0.4 }],
-      folkR: ['crowd', 1.6, 0.3, { spots: flock(8, 0.42, 0.22, 2), face: -Math.PI / 2 - 0.4 }],
+      temple: ['stemple', 0, -0.72, { scale: 1.2 }], // 0.85일 때 집이 사람 키의 한 배 반쯤이라 작아 보였다
+      ark: ['arkc', -1.35, 0.6, { lift: 0.33, on: ['p1', 'p2'] }],
+      folkL: ['crowd', -1.9, -0.12, { spots: flock(6, 0.5, 0.36, 1), face: Math.PI / 2 + 0.4 }], // 좁게 모으면 한 덩어리로 보였다 — 넓게 흩는다
+      folkR: ['crowd', 1.95, -0.05, { spots: flock(6, 0.5, 0.36, 2), face: -Math.PI / 2 - 0.4 }],
     },
     cast: {
-      p1: ['priest', -1.77, 0.42, 1.3, { speed: 0.3, pose: 'carry-pole' }],
-      p2: ['priest', -0.93, 0.42, 1.3, { speed: 0.3, pose: 'carry-pole' }],
-      solomon: ['solomonK', 0.75, 0.5, -1.0],
+      p1: ['priest', -1.77, 0.6, 1.3, { speed: 0.3, pose: 'carry-pole' }],
+      p2: ['priest', -0.93, 0.6, 1.3, { speed: 0.3, pose: 'carry-pole' }],
+      solomon: ['solomonK', 0.6, 0.62, -1.0],
       stranger: ['tyrian', 2.2, 0.6, -1, { gaze: false }],
     },
     beats: {
-      enter: [['temple', 'cloud'], ['ark', null, { show: 0 }], ['p1', 'kneel', { x: -0.95, z: 0.35, look: 2.7 }], ['p2', 'kneel', { x: 0.95, z: 0.35, look: -2.7 }],
+      enter: [['temple', 'cloud'], ['ark', null, { show: 0 }], ['p1', 'kneel', { x: -1.0, z: 0.15, look: 2.7 }], ['p2', 'kneel', { x: 1.0, z: 0.15, look: -2.7 }],
         ['stranger', 'idle', { show: 0 }], ['solomon', 'raise', { x: -0.3, z: 0.45, look: -0.3 }]],
       // 일곱째 달 명절 — 제사장들이 궤를 메고 올라온다
       intro: [['@env', 'day'], ['temple', 'idle'], ['ark', null, { show: 1 }], ['stranger', 'idle', { show: 0 }], ['solomon', 'idle', { look: -1.0 }]],
-      'p0.0': [['p1', 'carry-pole', { x: -1.02, z: 0.42 }], ['p2', 'carry-pole', { x: -0.18, z: 0.42 }]],
+      'p0.0': [['p1', 'carry-pole', { x: -1.02, z: 0.45 }], ['p2', 'carry-pole', { x: -0.18, z: 0.45 }]],
       // 궤 안의 돌판 두 개 — 두 놋 기둥 사이로 들어간다
-      'p0.1': [['p1', 'carry-pole', { x: -0.42, z: 0.2 }], ['p2', 'carry-pole', { x: 0.42, z: 0.2 }], ['solomon', 'idle', { look: -0.6 }]],
+      'p0.1': [['p1', 'carry-pole', { x: -0.42, z: -0.3 }], ['p2', 'carry-pole', { x: 0.42, z: -0.3 }], ['solomon', 'idle', { look: -0.6 }]],
       // 궤가 지성소에 놓이고 제사장들이 물러나오는 순간, 구름이 가득하다
-      'p0.2': [['ark', null, { show: 0, delay: 1200 }], ['p1', 'idle', { x: -0.95, z: 0.35, look: 2.7, delay: 1500 }], ['p2', 'idle', { x: 0.95, z: 0.35, look: -2.7, delay: 1500 }],
+      'p0.2': [['ark', null, { show: 0, delay: 1200 }], ['p1', 'idle', { x: -1.0, z: 0.15, look: 2.7, delay: 1500 }], ['p2', 'idle', { x: 1.0, z: 0.15, look: -2.7, delay: 1500 }],
         ['temple', 'cloud', { delay: 3500 }], ['@env', 'glory', { delay: 3500 }]],
-      'p0.3': [['ark', null, { show: 0 }], ['temple', 'cloud'], ['@env', 'glory'], ['p1', 'kneel', { x: -0.95, z: 0.35, look: 2.7 }], ['p2', 'kneel', { x: 0.95, z: 0.35, look: -2.7, delay: 400 }], ['solomon', 'look-up', { look: -0.8 }]],
+      'p0.3': [['ark', null, { show: 0 }], ['temple', 'cloud'], ['@env', 'glory'], ['p1', 'kneel', { x: -1.0, z: 0.15, look: 2.7 }], ['p2', 'kneel', { x: 1.0, z: 0.15, look: -2.7, delay: 400 }], ['solomon', 'look-up', { look: -0.8 }]],
       // 왕이 회중 앞 제단 앞에 서서 하늘을 향해 두 손을 편다
       'p1.0': [['@env', 'day'], ['solomon', 'idle', { x: -0.3, z: 0.45, look: -0.3 }], ['solomon', 'raise', { delay: 2600 }]],
       'p1.1': [['solomon', 'raise']],
@@ -157,7 +157,7 @@ export const A = {
       // 화목제물 — 제단의 불, 열나흘의 잔치
       'p2.1': [['temple', 'fire'], ['solomon', 'idle', { look: -0.6 }]],
       // 백성은 기뻐하며 장막으로 돌아간다
-      'p2.2': [['folkL', null, { x: -2.3 }], ['folkR', null, { x: 2.4 }], ['folkL', null, { show: 0, delay: 2500 }], ['folkR', null, { show: 0, delay: 2500 }], ['stranger', 'idle', { x: 2.3, z: 0.1, delay: 800 }], ['stranger', 'idle', { show: 0, delay: 3000 }],
+      'p2.2': [['folkL', null, { x: -2.6 }], ['folkR', null, { x: 2.7 }], ['folkL', null, { show: 0, delay: 2500 }], ['folkR', null, { show: 0, delay: 2500 }], ['stranger', 'idle', { x: 2.3, z: 0.1, delay: 800 }], ['stranger', 'idle', { show: 0, delay: 3000 }],
         ['solomon', 'bless', { look: 0 }]],
       // 주의 뜰에서 보내는 하루
       'p2.3': [['folkL', null, { show: 0 }], ['folkR', null, { show: 0 }], ['stranger', 'idle', { show: 0 }], ['solomon', 'idle', { x: 0.0, z: 0.42, look: 2.9 }]],
@@ -166,8 +166,8 @@ export const A = {
       w1: [['solomon', 'raise']],
       w2: [['solomon', 'speak'], ['stranger', 'kneel', { show: 1, x: 1.05, z: 0.6, look: -2.6 }]],
       w3: [['solomon', 'bless', { x: 0.0, z: 0.5, look: 0 }]],
-      end: [['@env', 'glory'], ['temple', 'cloud'], ['ark', null, { show: 0 }], ['folkL', null, { show: 1, x: -1.55 }], ['folkR', null, { show: 1, x: 1.6 }], ['stranger', 'idle', { show: 0 }],
-        ['p1', 'kneel', { x: -0.95, z: 0.35, look: 2.7 }], ['p2', 'kneel', { x: 0.95, z: 0.35, look: -2.7 }], ['solomon', 'raise', { show: 1, x: -0.3, z: 0.45, look: -0.3 }]],
+      end: [['@env', 'glory'], ['temple', 'cloud'], ['ark', null, { show: 0 }], ['folkL', null, { show: 1, x: -1.85 }], ['folkR', null, { show: 1, x: 1.9 }], ['stranger', 'idle', { show: 0 }],
+        ['p1', 'kneel', { x: -1.0, z: 0.15, look: 2.7 }], ['p2', 'kneel', { x: 1.0, z: 0.15, look: -2.7 }], ['solomon', 'raise', { show: 1, x: -0.3, z: 0.45, look: -0.3 }]],
     },
   },
 
@@ -180,28 +180,28 @@ export const A = {
       palace: ['palacebuild', -0.1, -0.85, { w: 1.6, state: 'built' }],
       temple: ['stemple', 1.75, -1.0, { scale: 0.5, sea: false }],
       throne: ['ivorythrone', 0.85, -0.3],
-      table: ['kingtable', -0.4, -0.25, { len: 0.9 }],
-      gifts: ['tribute', 0.25, 0.42, { kind: 'spice' }],
-      cam1: ['camel', -2.7, -0.2, { speed: 0.45, scale: 0.85 }],
-      cam2: ['camel', -3.1, -0.5, { speed: 0.45, scale: 0.85 }],
+      table: ['kingtable', -0.55, -0.48, { len: 0.75 }], // 여왕이 설 자리 앞을 비운다
+      gifts: ['tribute', 0.42, 0.22, { kind: 'spice' }],
+      cam1: ['camel', -2.9, -0.3, { speed: 0.45, scale: 0.55 }], // 0.85면 사람보다 훨씬 컸다
+      cam2: ['camel', -3.3, -0.62, { speed: 0.45, scale: 0.55 }],
     },
     cast: {
       solomon: ['solomonK', 0.85, -0.33, -0.6, { y: 0.22, pose: 'sit' }],
       sheba: ['sheba', -2.2, 0.62, 1, { speed: 0.55 }],
       maid: ['shebamaid', -2.55, 0.75, 1, { speed: 0.55, gaze: false }],
       driver: ['shebaman', -2.3, 0.0, 1, { speed: 0.45, gaze: false }],
-      off1: ['official', -0.75, -0.55, 0.4, { gaze: false }],
-      off2: ['courtier', -0.1, -0.6, 0.2, { gaze: false }],
+      off1: ['official', -1.05, -0.7, 0.4, { gaze: false }],
+      off2: ['courtier', -0.05, -0.7, 0.2, { gaze: false }],
       cup: ['servant', 1.35, -0.1, -1, { gaze: false }],
     },
     beats: {
-      enter: [['cam1', null, { x: -1.75 }], ['cam2', null, { x: -2.15 }], ['driver', 'idle', { x: -1.3, z: 0.0 }], ['maid', 'idle', { x: -0.5, z: 0.55, look: 1 }],
-        ['sheba', 'speak', { x: -0.1, z: 0.3, look: 1, to: 'solomon' }], ['gifts', null, { show: 1 }]],
+      enter: [['cam1', null, { x: -2.05 }], ['cam2', null, { x: -2.45 }], ['driver', 'idle', { x: -1.6, z: -0.08 }], ['maid', 'idle', { x: -0.45, z: 0.6, look: 1 }],
+        ['sheba', 'speak', { x: 0.0, z: 0.35, look: 1, to: 'solomon' }], ['gifts', null, { show: 1 }]],
       // 향품을 실은 낙타 떼가 성문으로 길게 들어온다
       intro: [['gifts', null, { show: 0 }], ['cam1', null, { show: 0 }], ['cam2', null, { show: 0 }], ['driver', 'idle', { show: 0 }], ['sheba', 'idle', { show: 0 }], ['maid', 'idle', { show: 0 }], ['solomon', 'sit', { look: -0.6 }]],
-      'p0.0': [['cam1', null, { show: 1, x: -1.75 }], ['cam2', null, { show: 1, x: -2.15 }], ['driver', 'idle', { show: 1, x: -1.3, z: 0.0 }], ['sheba', 'idle', { show: 1, x: -1.1, z: 0.6 }], ['maid', 'idle', { show: 1, x: -1.45, z: 0.72 }]],
+      'p0.0': [['cam1', null, { show: 1, x: -2.05 }], ['cam2', null, { show: 1, x: -2.45 }], ['driver', 'idle', { show: 1, x: -1.6, z: -0.08 }], ['sheba', 'idle', { show: 1, x: -1.1, z: 0.6 }], ['maid', 'idle', { show: 1, x: -1.45, z: 0.72 }]],
       // 먼 남쪽 나라의 여왕 — 왕 앞에 나아가 묻는다
-      'p0.2': [['sheba', 'idle', { x: -0.1, z: 0.3, look: 1 }], ['maid', 'idle', { x: -0.5, z: 0.55, look: 1 }]],
+      'p0.2': [['sheba', 'idle', { x: 0.0, z: 0.35, look: 1 }], ['maid', 'idle', { x: -0.45, z: 0.6, look: 1 }]],
       'p0.4': [['sheba', 'speak', { to: 'solomon' }]],
       // 막힘 없는 대답
       'p1.0': [['sheba', 'listen', { look: 1 }], ['solomon', 'sit-speak', { to: 'sheba' }]],
@@ -218,11 +218,11 @@ export const A = {
       'p2.5': [['gifts', null, { show: 1 }], ['sheba', 'bow', { look: 1 }], ['maid', 'bow', { delay: 400 }],
         ['sheba', 'idle', { x: -2.4, z: 0.6, delay: 3500 }], ['maid', 'idle', { x: -2.7, z: 0.75, delay: 3700 }], ['cam1', null, { x: -3.2, delay: 3000 }], ['cam2', null, { x: -3.6, delay: 3000 }], ['driver', 'idle', { x: -3.0, z: 0.0, delay: 3000 }],
         ['cam1', null, { show: 0, delay: 7000 }], ['cam2', null, { show: 0, delay: 7000 }], ['driver', 'idle', { show: 0, delay: 7000 }], ['sheba', 'idle', { show: 0, delay: 8000 }], ['maid', 'idle', { show: 0, delay: 8000 }]],
-      w0: [['sheba', 'speak', { show: 1, x: -0.1, z: 0.3, look: 1, to: 'solomon' }]],
+      w0: [['sheba', 'speak', { show: 1, x: 0.0, z: 0.35, look: 1, to: 'solomon' }]],
       w1: [['sheba', 'speak'], ['off1', 'bow'], ['off2', 'bow']],
       w2: [['off1', 'idle'], ['off2', 'idle'], ['sheba', 'raise']],
-      end: [['gifts', null, { show: 1 }], ['cam1', null, { show: 1, x: -1.75 }], ['cam2', null, { show: 1, x: -2.15 }], ['driver', 'idle', { show: 1, x: -1.3, z: 0.0 }], ['maid', 'idle', { show: 1, x: -0.5, z: 0.55, look: 1 }],
-        ['sheba', 'bow', { show: 1 }], ['sheba', 'bow', { x: -0.1, z: 0.3, look: 1 }], ['solomon', 'sit']],
+      end: [['gifts', null, { show: 1 }], ['cam1', null, { show: 1, x: -2.05 }], ['cam2', null, { show: 1, x: -2.45 }], ['driver', 'idle', { show: 1, x: -1.6, z: -0.08 }], ['maid', 'idle', { show: 1, x: -0.45, z: 0.6, look: 1 }],
+        ['sheba', 'bow', { show: 1 }], ['sheba', 'bow', { x: 0.0, z: 0.35, look: 1 }], ['solomon', 'sit']],
     },
   },
 
@@ -361,7 +361,7 @@ export const A = {
       'p1.0': [['rehoboam', 'idle', { x: 1.2, z: -0.2, look: 0.6 }], ['jeroboam', 'idle', { look: 0.6 }]],
       'p1.1': [['elder1', 'speak', { to: 'rehoboam' }]],
       // 그 말을 버리고 젊은이들에게
-      'p1.3': [['elder1', 'idle'], ['rehoboam', 'idle', { x: 0.55, z: -0.25, look: -0.6 }], ['elder1', 'shrug', { delay: 2500 }]],
+      'p1.3': [['elder1', 'idle'], ['rehoboam', 'idle', { x: 0.85, z: -0.18, look: -1.9 }], ['elder1', 'shrug', { delay: 2500 }]],
       'p1.4': [['elder1', 'idle'], ['young1', 'speak', { to: 'rehoboam' }]],
       'p1.6': [['young1', 'speak'], ['young2', 'point', { look: -1 }]],
       // 사흘째 — 거친 대답
