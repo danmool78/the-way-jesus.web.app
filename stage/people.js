@@ -772,6 +772,9 @@ function makePerson(type) {
   const bed = mesh(new THREE.BoxGeometry(0.95, 0.025, 0.36), mat('#a2875c'), root, [0, 0.012, 0]);
   bed.visible = false;
   bed.receiveShadow = true;
+  // 베개: 잠자리 머리맡에 둘둘 만 겉옷 (잠언 p02 — 맨땅에 머리를 대고 자는 게으른 사람이 어색했다). 머리 쪽은 update에서 정한다
+  const pillow = mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.26, 12).rotateX(Math.PI / 2), mat('#8a6a48', { roughness: 1 }), bed, [0, 0.035, 0]);
+  pillow.scale.set(1, 0.75, 1);
 
   return { type, t, root, body, skirt, skirtMesh, hemTrim, upper, torso, waist: wy, mantleG, mantleSpan: B.mantle[0][1] - B.mantle[B.mantle.length - 1][1], head, armL, armR, feet, wings, glow, staff, baby, bed, eyes, mouth, basket, items, slingSpin, bowArc };
 }
@@ -998,6 +1001,7 @@ class Actor {
     const talk = (this.pose === 'speak' || this.pose === 'sit-speak') && !this.solemn ? 0.55 + Math.abs(Math.sin(t * 8.5) * Math.sin(t * 3.1)) * 1.6 : 0.35;
     p.mouth.scale.y = damp(p.mouth.scale.y, talk, 18, dt);
     p.bed.visible = lie > 0.5 && this.pose === 'sleep';
+    if (p.bed.visible) p.bed.children[0].position.x = 0.45 * Math.sign(this.face || 1); // 머리 쪽 (몸이 눕는 방향은 바라보는 쪽을 따른다)
     // 누우면 몸 가운데가 깔개 위에 오도록 발 쪽으로 옮긴다
     p.body.position.x = damp(p.body.position.x, lie * 0.42 * -Math.sign(this.face || 1), 3, dt);
     if (p.wings) {
