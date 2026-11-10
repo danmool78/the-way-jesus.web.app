@@ -366,12 +366,12 @@ export const D = {
     props: {
       temple: ['stemple', -1.35, -0.7, { scale: 0.62, sea: false }],
       logs: ['cedarlogs', -2.2, 0.0, { scale: 0.8 }],
-      stones: ['stockpile', -0.45, -0.3, { kind: 'stone', scale: 0.8 }],
+      stones: ['stockpile', -0.3, -0.6, { kind: 'stone', scale: 0.8 }],
       chest: ['lawscroll', -0.95, 0.1],
       throne: ['ivorythrone', 0.55, -0.45, { scale: 0.9 }],
       house: ['house', 2.0, -0.55, { scale: 0.62 }],
       beam: ['beam', 1.7, 0.0, { r: 0.3, h: 2.4, on: 'huldah' }],
-      folk: ['crowd', -0.9, 0.5, { spots: flock(10, 0.75, 0.2, 3), face: Math.PI - 0.2 }],
+      folk: ['crowd', -0.45, 0.45, { spots: flock(10, 0.55, 0.2, 3), face: -2.3 }],
     },
     cast: {
       josiah: ['josiah', 0.55, -0.48, 0.2, { y: 0.2, pose: 'sit' }],
@@ -385,9 +385,9 @@ export const D = {
       enter: [['chest', 'found'], ['josiah', 'mourn', { y: 0, x: 0.45, z: -0.05, look: 0 }], ['shaphan', 'idle', { x: 0.1, z: 0.15, look: 1.2, item: 'scroll' }], ['hilkiah', 'idle', { x: -0.3, z: 0.2, look: 1.0 }], ['folk', null, { show: 0 }], ['beam', null, { show: 0 }]],
       // 성전 수리가 한창 — 대제사장이 상자 앞에
       intro: [['@env', 'day'], ['chest', 'hidden'], ['folk', null, { show: 0 }], ['beam', null, { show: 0 }], ['josiah', 'sit', { y: 0.2, look: 0.2 }], ['worker', 'carry-pole', { look: 1.2 }]],
-      'p0.0': [['hilkiah', 'bow', { look: -2.4 }], ['shaphan', 'idle', { x: -0.5, z: 0.3, look: -1.8 }]],
+      'p0.0': [['hilkiah', 'bow', { look: 0.2 }], ['shaphan', 'idle', { x: -0.5, z: 0.3, look: -1.8 }]],
       // 율법책을 찾았소
-      'p0.1': [['chest', 'found'], ['hilkiah', 'look-up', { look: -2.0 }]],
+      'p0.1': [['chest', 'found'], ['hilkiah', 'look-up', { look: 0.6 }]],
       'p0.2': [['hilkiah', 'speak', { to: 'shaphan' }]],
       // 사반이 책을 왕궁으로 가져간다
       'p0.3': [['chest', 'hidden'], ['hilkiah', 'idle', { x: -0.3, z: 0.2, look: 1.0 }], ['shaphan', 'idle', { item: 'scroll', x: 0.1, z: 0.15, look: 1.2 }]],
@@ -404,12 +404,12 @@ export const D = {
       'p2.4': [['huldah', 'bless', { look: -1.8 }]],
       'p2.5': [['huldah', 'speak', { to: 'shaphan' }]],
       // 온 백성 앞에서 언약책을 읽고 언약을 세운다
-      'p2.6': [['beam', null, { show: 0 }], ['huldah', 'idle'], ['folk', null, { show: 1 }], ['josiah', 'speak', { x: -0.9, z: 0.0, look: 0.2, item: 'scroll' }],
-        ['hilkiah', 'idle', { x: -1.5, z: 0.05, look: 0.6 }], ['shaphan', 'idle', { x: -0.35, z: 0.05, look: -0.6, item: null }], ['josiah', 'raise', { item: null, delay: 6500 }]],
+      'p2.6': [['beam', null, { show: 0 }], ['huldah', 'idle'], ['folk', null, { show: 1 }], ['chest', null, { show: 0 }], ['josiah', 'speak', { x: -1.35, z: -0.2, look: 0.5, item: 'scroll' }],
+        ['hilkiah', 'idle', { x: -1.9, z: -0.05, look: 0.9 }], ['shaphan', 'idle', { x: -0.95, z: -0.1, look: -1.2, item: null }], ['josiah', 'raise', { item: null, delay: 6500 }]],
       w0: [['beam', null, { show: 1 }], ['huldah', 'speak', { to: 'hilkiah' }], ['hilkiah', 'idle', { x: 1.3, z: 0.25, look: 1.7 }], ['shaphan', 'idle', { x: 1.15, z: 0.45, look: 1.4 }]],
-      w1: [['beam', null, { show: 0 }], ['chest', 'found'], ['hilkiah', 'speak', { x: -0.8, z: -0.05, to: 'shaphan' }], ['shaphan', 'idle', { x: -0.5, z: 0.3, look: -1.8 }]],
+      w1: [['beam', null, { show: 0 }], ['chest', 'found', { show: 1 }], ['hilkiah', 'speak', { x: -0.8, z: -0.05, to: 'shaphan' }], ['shaphan', 'idle', { x: -0.5, z: 0.3, look: -1.8 }]],
       w2: [['josiah', 'speak', { to: 'hilkiah' }]],
-      end: [['chest', 'hidden'], ['beam', null, { show: 0 }], ['folk', null, { show: 1 }], ['josiah', 'raise', { y: 0, x: -0.9, z: 0.0, look: 0.2, item: null }]],
+      end: [['chest', 'hidden', { show: 0 }], ['beam', null, { show: 0 }], ['folk', null, { show: 1 }], ['josiah', 'raise', { y: 0, x: -1.35, z: -0.2, look: 0.5, item: null }], ['hilkiah', 'idle', { x: -1.9, z: -0.05, look: 0.9 }], ['shaphan', 'idle', { x: -0.95, z: -0.1, look: -1.2, item: null }]],
     },
   },
 
@@ -425,14 +425,14 @@ export const D = {
       temple: ['stemple', -1.75, -0.95, { scale: 0.5, sea: false }],
       altar: ['altar', -1.0, -0.3, { scale: 1.4, state: 'fire' }],
       sheep: ['sheep', -1.55, 0.3, { scale: 0.8 }],
-      folk: ['crowd', -0.85, 0.42, { spots: flock(9, 0.6, 0.2, 5), face: Math.PI - 0.3 }],
+      folk: ['crowd', -1.2, 0.5, { spots: flock(9, 0.5, 0.18, 5), face: Math.PI - 0.5 }],
       city: ['kwall', 1.55, -0.85, { scale: 0.55, w: 1.8, color: '#c8b896' }],
       ech1: ['chariot', -2.6, 0.62, { speed: 0.55 }],
       ech2: ['chariot', -3.1, 0.35, { speed: 0.55 }],
-      car: ['kchariot', 0.2, 0.3, { speed: 0.5 }],
+      car: ['kchariot', 0.35, 0.45, { speed: 0.5 }],
     },
     cast: {
-      josiah: ['josiah', -0.4, 0.05, -1.4],
+      josiah: ['josiah', -0.25, 0.05, -1.4],
       priest: ['hilkiah', -1.35, -0.1, 1.0],
       levite: ['levite', -0.65, -0.35, -1.0, { gaze: false }],
       josiahA: ['josiahA', 0, 0, 1.57, { board: 'car' }],
@@ -446,7 +446,7 @@ export const D = {
     },
     beats: {
       enter: [['@env', 'dusk'], ['altar', 'idle'], ['folk', null, { show: 0 }], ['sheep', null, { show: 0 }], ['josiah', 'idle', { show: 0 }], ['josiahA', 'idle', { show: 0 }], ['neco', 'idle', { show: 0 }], ['e1', 'idle', { show: 0 }], ['e2', 'idle', { show: 0 }],
-        ['ech1', null, { show: 0 }], ['ech2', null, { show: 0 }], ['car', null, { x: -0.3, z: 0.4 }], ['m1', 'mourn', { x: -0.85, z: 0.05, look: 1.2 }], ['m2', 'mourn', { x: -1.25, z: 0.3, look: 1.4 }], ['priest', 'mourn', { x: -1.4, z: -0.05, look: 1.0 }],
+        ['ech1', null, { show: 0 }], ['ech2', null, { show: 0 }], ['car', null, { x: 0.35, z: 0.45 }], ['m1', 'mourn', { x: -0.25, z: 0.12, look: 1.2 }], ['m2', 'mourn', { x: -0.55, z: 0.3, look: 1.4 }], ['priest', 'mourn', { x: -1.6, z: 0.12, look: 1.0 }],
         ['prince', 'idle', { show: 0 }], ['levite', 'idle', { show: 0 }]],
       // 예루살렘에 울려 퍼지는 유월절 노래
       intro: [['@env', 'day'], ['altar', 'fire'], ['folk', null, { show: 1 }], ['sheep', null, { show: 1 }], ['car', null, { show: 0 }], ['josiahA', 'idle', { show: 0 }], ['driver', 'idle', { show: 0 }],
@@ -463,41 +463,41 @@ export const D = {
       'p1.3': [['josiah', 'bow', { look: -2.6 }]],
       // 애굽 왕 느고가 유브라데로 올라간다
       'p2.0': [['@env', 'day'], ['priest', 'idle'], ['folk', null, { show: 0 }], ['sheep', null, { show: 0 }], ['josiah', 'idle', { look: 1.0 }],
-        ['ech1', null, { show: 1 }], ['ech2', null, { show: 1 }], ['ech1', null, { x: 2.0, z: 0.55 }], ['ech2', null, { x: 1.7, z: 0.25 }],
-        ['neco', 'idle', { show: 1, x: 1.2, z: 0.15, look: -1.5 }], ['e1', 'idle', { show: 1, x: 1.55, z: 0.0, look: -1.5 }], ['e2', 'idle', { show: 1, x: 1.6, z: 0.35, look: -1.5 }]],
+        ['ech1', null, { show: 1 }], ['ech2', null, { show: 1 }], ['ech1', null, { x: 2.45, z: 0.6 }], ['ech2', null, { x: 2.2, z: 0.05 }],
+        ['neco', 'idle', { show: 1, x: 1.35, z: 0.2, look: -1.5 }], ['e1', 'idle', { show: 1, x: 1.7, z: -0.02, look: -1.5 }], ['e2', 'idle', { show: 1, x: 1.75, z: 0.4, look: -1.5 }]],
       // 요시야가 그를 막으러 므깃도로
-      'p2.1': [['josiah', 'idle', { show: 0 }], ['car', null, { show: 1, x: 0.4, z: 0.25 }], ['josiahA', 'idle', { show: 1, look: 1.57 }], ['driver', 'idle', { show: 1 }], ['neco', 'point', { look: -1.5, delay: 2000 }]],
+      'p2.1': [['josiah', 'idle', { show: 0 }], ['car', null, { show: 1, x: 0.0, z: 0.3 }], ['josiahA', 'idle', { show: 1, look: 1.57 }], ['driver', 'idle', { show: 1 }], ['neco', 'point', { look: -1.5, delay: 2000 }]],
       // 싸움은 그리지 않는다 — 해가 지고, 요시야는 보이지 않는다. 애굽 군대는 북쪽으로 떠난다
-      'p2.2': [['@env', 'dusk'], ['neco', 'idle', { x: 2.6, z: -0.3 }], ['e1', 'idle', { x: 2.7, z: -0.5 }], ['e2', 'idle', { x: 2.8, z: -0.1 }], ['ech1', null, { x: 3.0, z: 0.1 }], ['ech2', null, { x: 3.0, z: -0.3 }],
+      'p2.2': [['@env', 'dusk'], ['car', null, { x: 0.7, z: 0.25 }], ['neco', 'idle', { x: 2.6, z: -0.3 }], ['e1', 'idle', { x: 2.7, z: -0.5 }], ['e2', 'idle', { x: 2.8, z: -0.1 }], ['ech1', null, { x: 3.0, z: 0.1 }], ['ech2', null, { x: 3.0, z: -0.3 }],
         ['neco', 'idle', { show: 0, delay: 3200 }], ['e1', 'idle', { show: 0, delay: 3200 }], ['e2', 'idle', { show: 0, delay: 3200 }], ['ech1', null, { show: 0, delay: 3200 }], ['ech2', null, { show: 0, delay: 3200 }],
         ['josiahA', 'idle', { show: 0, delay: 1200 }]],
       // 신하가 모는 병거가 예루살렘으로 돌아오고, 사람들이 엎드려 운다
       'p2.3': [['neco', 'idle', { show: 0 }], ['e1', 'idle', { show: 0 }], ['e2', 'idle', { show: 0 }], ['ech1', null, { show: 0 }], ['ech2', null, { show: 0 }], ['josiahA', 'idle', { show: 0 }],
-        ['car', null, { x: -0.3, z: 0.4 }], ['m1', 'mourn', { show: 1, x: -0.85, z: 0.05, look: 1.2, delay: 1500 }], ['m2', 'mourn', { show: 1, x: -1.25, z: 0.3, look: 1.4, delay: 1900 }], ['priest', 'mourn', { x: -1.4, z: -0.05, look: 1.0, delay: 2300 }]],
+        ['car', null, { x: 0.35, z: 0.45 }], ['m1', 'mourn', { show: 1, x: -0.25, z: 0.12, look: 1.2, delay: 1500 }], ['m2', 'mourn', { show: 1, x: -0.55, z: 0.3, look: 1.4, delay: 1900 }], ['priest', 'mourn', { x: -1.6, z: 0.12, look: 1.0, delay: 2300 }]],
       // 백성이 여호아하스에게 기름을 붓는다
-      'p2.4': [['@env', 'overcast'], ['prince', 'kneel', { show: 1, x: -0.6, z: -0.05, look: -1.2 }], ['priest', 'anoint', { x: -0.95, z: -0.08, look: 1.5, item: 'oilhorn' }], ['levite', 'idle', { show: 1, look: -0.6 }]],
+      'p2.4': [['@env', 'overcast'], ['prince', 'kneel', { show: 1, x: -1.3, z: 0.18, look: -1.6 }], ['priest', 'anoint', { x: -1.62, z: 0.15, look: 1.5, item: 'oilhorn' }], ['levite', 'idle', { show: 1, look: -0.6 }]],
       w0: [['@env', 'overcast'], ['josiah', 'bow', { show: 1 }]],
       w1: [['josiah', 'pray', { show: 1 }]],
       w2: [['josiah', 'speak', { show: 1, look: 1.6 }]],
-      w3: [['neco', 'speak', { show: 1, x: 1.2, z: 0.15, look: -1.5 }]],
-      end: [['@env', 'overcast'], ['car', null, { show: 1, x: -0.3, z: 0.4 }], ['m1', 'mourn', { show: 1, x: -0.85, z: 0.05 }], ['m2', 'mourn', { show: 1, x: -1.25, z: 0.3 }],
-        ['neco', 'idle', { show: 0 }], ['josiah', 'idle', { show: 0 }], ['priest', 'mourn', { item: null, x: -1.4, z: -0.05, look: 1.0 }], ['prince', 'idle', { show: 0 }]],
+      w3: [['neco', 'speak', { show: 1, x: 1.35, z: 0.2, look: -1.5 }]],
+      end: [['@env', 'overcast'], ['car', null, { show: 1, x: 0.35, z: 0.45 }], ['m1', 'mourn', { show: 1, x: -0.25, z: 0.12 }], ['m2', 'mourn', { show: 1, x: -0.55, z: 0.3 }],
+        ['neco', 'idle', { show: 0 }], ['josiah', 'idle', { show: 0 }], ['priest', 'mourn', { item: null, x: -1.6, z: 0.12, look: 1.0 }], ['prince', 'idle', { show: 0 }]],
     },
   },
 
   /* k40. 불타는 성전 — 앞쪽에 예루살렘 성벽(가운데 문), 그 뒤로 높이 선 성전. 오른쪽에서 바벨론 군대(청금석빛 옷·둥근 놋 투구)가 와서 에워싸고 흙 언덕을 쌓는다.
      성 안의 양식이 떨어지고(성벽 위 사람들이 주저앉는다) 성벽이 뚫린다. 밤에 시드기야가 왼쪽으로 빠져나가 달아나다 붙잡히고,
-     손목에 놋사슬을 찬 채 오른쪽으로 끌려간다(그 밖의 일은 그리지 않는다). 성전은 멀리 불빛과 연기로만 — 다음 날 그을린 빈 집. 사로잡힌 백성이 끌려가고, 가난한 이만 포도원에 남는다 */
+     손목에 놋사슬을 찬 채 오른쪽으로 끌려간다(그 밖의 일은 그리지 않는다). 성전은 멀리 불빛과 연기로만 — 다음 날 그을린 빈 집. 사로잡힌 백성이 끌려가고, 가난한 이만 밭에 남는다 */
   k40: {
     env: 'overcast',
     wide: 1.4,
     props: {
-      temple: ['stemple', -0.3, -1.05, { scale: 0.62, sea: false }],
-      wall: ['kwall', -0.55, -0.3, { scale: 0.8, w: 2.6 }],
-      folk: ['crowd', -0.55, -0.31, { y: 0.56, spots: row(7, 2.0, 4), face: 0.2 }],
-      smoke1: ['smoke', -1.35, -0.75, { fire: true, state: 'off', rise: 1.6 }],
-      smoke2: ['smoke', 0.6, -0.8, { fire: true, state: 'off', rise: 1.4 }],
-      vines: ['vineyard', -1.3, 0.55, { rows: 2, len: 1.0, scale: 0.8 }],
+      temple: ['stemple', 0.55, -0.95, { scale: 0.62, sea: false }],
+      wall: ['kwall', -1.0, -0.3, { scale: 0.8, w: 1.9 }],
+      folk: ['crowd', -1.0, -0.31, { y: 0.56, spots: row(5, 1.4, 4), face: 0.2 }],
+      smoke1: ['smoke', -1.3, -0.75, { fire: true, state: 'off', rise: 1.6 }],
+      smoke2: ['smoke', 1.2, -0.85, { fire: true, state: 'off', rise: 1.4 }],
+      field: ['furrows', -1.9, 0.6, { w: 0.9, d: 0.35 }],
       chain: ['fetters', 0, 0, { on: 'zedekiah' }],
     },
     cast: {
@@ -506,12 +506,12 @@ export const D = {
       b2: ['babylonian2', 1.5, 0.45, -1.5, { speed: 0.6, gaze: false }],
       b3: ['babylonian', 1.7, -0.05, -1.5, { speed: 0.6, gaze: false }],
       b4: ['babylonian2', 0.95, 0.55, -1.5, { speed: 0.6, gaze: false }],
-      zedekiah: ['zedekiah', -0.55, -0.12, 0, { speed: 0.6 }],
-      zg: ['guardJ', -0.55, -0.12, 0, { speed: 0.6, gaze: false }],
+      zedekiah: ['zedekiah', -1.0, -0.12, 0, { speed: 0.6 }],
+      zg: ['guardJ', -1.0, -0.12, 0, { speed: 0.6, gaze: false }],
       ex1: ['exile', -0.3, 0.1, 1.5, { speed: 0.35, gaze: false }],
       ex2: ['exileW', -0.6, 0.25, 1.5, { speed: 0.35, gaze: false }],
       ex3: ['exile', -0.85, 0.05, 1.5, { speed: 0.35, gaze: false }],
-      poor: ['shepherd', -1.5, 0.35, 0.6, { gaze: false }],
+      poor: ['shepherd', -1.95, 0.55, 0.6, { gaze: false }],
       mourner: ['hebrew', -0.2, 0.45, 3.0],
     },
     beats: {
@@ -535,8 +535,8 @@ export const D = {
       'p1.0': [['@env', 'night'], ['zedekiah', 'idle', { show: 1, x: -2.5, z: 0.4 }], ['zg', 'idle', { show: 1, x: -2.6, z: 0.6, delay: 300 }],
         ['zedekiah', 'idle', { show: 0, delay: 4800 }], ['zg', 'idle', { show: 0, delay: 5000 }]],
       // 바벨론 군대가 뒤쫓아 붙잡는다
-      'p1.1': [['zg', 'idle', { show: 0 }], ['b2', 'idle', { x: -1.8, z: 0.5 }], ['b4', 'idle', { x: -1.7, z: 0.7 }],
-        ['zedekiah', 'bow', { show: 1, x: -2.1, z: 0.55, look: 1.4, delay: 2500 }], ['chain', null, { show: 1, delay: 3500 }]],
+      'p1.1': [['zg', 'idle', { show: 0 }], ['b2', 'idle', { x: -1.95, z: 0.42 }], ['b4', 'idle', { x: -1.9, z: 0.62 }],
+        ['zedekiah', 'bow', { show: 1, x: -2.3, z: 0.3, look: 1.4, delay: 2500 }], ['chain', null, { show: 1, delay: 3500 }]],
       // 놋사슬에 묶여 바벨론 왕에게로 끌려간다 (그 밖의 일은 그리지 않는다)
       'p1.2': [['zedekiah', 'bow', { show: 1, x: 1.55, z: 0.35, look: 1.5 }], ['chain', null, { show: 1 }], ['b2', 'idle', { x: 1.3, z: 0.6 }], ['b4', 'idle', { x: 1.9, z: 0.6 }], ['neb', 'idle', { look: -1.8 }],
         ['zedekiah', 'idle', { x: 2.9, z: 0.4, delay: 7000 }], ['neb', 'idle', { x: 3.0, z: 0.1, delay: 7000 }], ['b2', 'idle', { x: 2.9, z: 0.65, delay: 7000 }], ['b4', 'idle', { x: 3.1, z: 0.45, delay: 7000 }],
@@ -546,7 +546,7 @@ export const D = {
         ['@env', 'night'], ['temple', 'burn'], ['smoke1', 'on', { delay: 600 }], ['smoke2', 'on', { delay: 1200 }]],
       // 놋기둥과 놋바다는 깨어져 실려 간다 — 그을린 빈 집
       'p2.1': [['@env', 'dawn'], ['temple', 'ruin'], ['smoke2', 'off']],
-      // 백성은 끌려가고, 가난한 이만 포도원에
+      // 백성은 끌려가고, 가난한 이만 밭에
       'p2.2': [['@env', 'overcast'], ['smoke1', 'off'], ['ex1', 'idle', { show: 1, x: 2.8, z: 0.3 }], ['ex2', 'idle', { show: 1, x: 2.7, z: 0.5, delay: 400 }], ['ex3', 'idle', { show: 1, x: 2.9, z: 0.15, delay: 800 }],
         ['b1', 'idle', { x: 3.0, z: 0.4, delay: 1200 }], ['b3', 'idle', { x: 3.1, z: 0.0, delay: 1200 }],
         ['ex1', 'idle', { show: 0, delay: 9000 }], ['ex2', 'idle', { show: 0, delay: 9400 }], ['ex3', 'idle', { show: 0, delay: 9800 }], ['b1', 'idle', { show: 0, delay: 9000 }], ['b3', 'idle', { show: 0, delay: 9000 }],
