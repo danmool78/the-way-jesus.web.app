@@ -727,10 +727,12 @@ function makePerson(type) {
   hand(1, shield).position.set(0.035, -0.11, 0.02);
   Object.assign(items, { oilhorn, sling, sword, bow, shield, hem });
 
-  // 발: 샌들 위의 맨발이 옷자락 아래로
+  // 발: 샌들 위의 맨발이 옷자락 아래로. 맨다리(bare: 허리치마·허리천)는 다리 바로 밑에 — 옷자락 앞 자리에 두면
+  // 발이 다리에서 떨어져 앞에 따로 놓여 다리가 끊긴 것처럼 보였다(블레셋 병사, 2026-11)
+  const FZ = t.bare ? 0.012 : 0.085;
   const feet = [1, -1].map(s => {
     const f = new THREE.Group();
-    f.position.set(s * 0.055, 0, 0.085);
+    f.position.set(s * (t.bare ? (slim ? 0.038 : 0.042) : 0.055), 0, FZ); f.userData.z0 = FZ;
     root.add(f);
     mesh(new THREE.BoxGeometry(0.052, 0.01, 0.105), mat('#6b4a2a'), f, [0, 0.005, 0.005]);
     mesh(sphere(0.026, 12, 8), skin, f, [0, 0.018, 0.012], [1, 0.55, 1.7]);
@@ -891,7 +893,7 @@ class Actor {
         aL = [s * 0.4, 0.07, -0.3]; aR = [-s * 0.4, 0.07, -0.3];
         sink = -Math.abs(Math.cos(this.walkPhase)) * 0.02;
         lean = 0.06;
-        p.feet[0].position.z = 0.09 + s * 0.07; p.feet[1].position.z = 0.09 - s * 0.07;
+        p.feet[0].position.z = p.feet[0].userData.z0 + s * 0.07; p.feet[1].position.z = p.feet[1].userData.z0 - s * 0.07;
         if (this.pose === 'carry') { carry = true; aL = aR = [-0.4, -0.25, -1.3]; }
         if (this.pose === 'carry-pole') aL = aR = POLE; // 언약궤의 채를 쥔 채 걷는다
         break;
@@ -963,7 +965,7 @@ class Actor {
     Object.entries(p.items).forEach(([k, g]) => { g.visible = this.item === k || (k === 'basket' && this.pose === 'hold-basket'); holding ||= g.visible; });
     if (holding && !moving && !HAND.has(this.item) && ['idle', 'listen', 'kneel', 'hold-basket', 'bow'].includes(this.pose)) { aL = aR = [-0.45, -0.3, -1.25]; }
     if (!moving && this.item && HAND.has(this.item) && this.pose === 'idle') { if (this.item === 'bow' || this.item === 'shield') aL = [-0.35, 0.12, -0.5]; else aR = [-0.35, 0.12, -0.5]; } // 손에 쥔 것을 조금 앞으로
-    if (!moving) { p.feet[0].position.z = damp(p.feet[0].position.z, 0.09, 8, dt); p.feet[1].position.z = damp(p.feet[1].position.z, 0.09, 8, dt); }
+    if (!moving) p.feet.forEach(f => { f.position.z = damp(f.position.z, f.userData.z0, 8, dt); });
     const k = 5;
     const arm = (a, [fx, sx, ex]) => {
       a.rotation.x = damp(a.rotation.x, fx, k, dt);

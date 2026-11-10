@@ -400,6 +400,8 @@ const floorAt = (x, z, self) => Math.max(0, ...Object.values(props).filter(f => 
 // 땅에 붙은 소품: 지형과 같은 고정 축척에 둔다. 나머지(사람 곁의 십자가·배·짐승·상·바구니…)는 사람과 함께 커진다
 // 바닥이 평평한 건물: 가운데 땅 높이에 앉히면 비탈 위쪽이 땅에 묻힌다(골짜기 바닥의 실로암 못) — 바닥 네 귀퉁이 가운데 가장 높은 땅에 앉힌다
 const FLAT = new Set(['pool', 'house', 'well', 'synagogue', 'temple', 'gate', 'walls', 'cliffshrine']);
+// 땅에 까는 얇은 판(모래·풀밭): 가운데 땅 높이에 두면 비탈 아래쪽에 선 사람의 다리를 판이 덮어 발만 보였다(가드 성문, 2026-11) — 가장 낮은 귀퉁이에 깐다(높은 쪽은 지형 밑으로 숨는다)
+const COVER = new Set(['sand', 'grass', 'field', 'flowers']);
 const FIXED = new Set(['water', 'grass', 'hill', 'tomb', 'temple', 'house', 'rocks', 'figtree', 'synagogue', 'well', 'pool', 'flowers', 'gate', 'field', 'cliffshrine', 'palm', 'walls', 'olive', 'star', 'host', 'rain']);
 // '@at' 명령: 3D 지형에서만 무대 바닥을 다른 실제 지점으로 옮긴다 — 무대 (x, z) 자리가 그 위경도에 오도록.
 // 나사렛 회당에서 낭떠러지로 끌고 가는 대목처럼, 이야기가 근처의 실제 지형으로 옮겨 갈 때. 2D 무대는 그대로 둔다
@@ -470,7 +472,9 @@ function frame() {
       const stay = FIXED.has(p.kind);
       p.lift.position.x = stay ? (home.x - base.x) / base.k : 0; p.lift.position.z = stay ? (home.z - base.z) / base.k : 0;
       const ox = p.obj.position.x + p.lift.position.x, oz = p.obj.position.z + p.lift.position.z, f = p.foot;
-      p.lift.position.y = FLAT.has(p.kind) || p.floor ? Math.max(groundAt(ox, oz), groundAt(ox + f[0], oz + f[2]), groundAt(ox + f[1], oz + f[2]), groundAt(ox + f[0], oz + f[3]), groundAt(ox + f[1], oz + f[3]))
+      const corners = () => [groundAt(ox, oz), groundAt(ox + f[0], oz + f[2]), groundAt(ox + f[1], oz + f[2]), groundAt(ox + f[0], oz + f[3]), groundAt(ox + f[1], oz + f[3])];
+      p.lift.position.y = FLAT.has(p.kind) || p.floor ? Math.max(...corners())
+        : COVER.has(p.kind) ? Math.min(...corners())
         : Math.max(groundAt(ox, oz), floorAt(ox, oz, p));
       if (!FIXED.has(p.kind)) { // 사람과 함께 키운다: 크기는 제자리에서, 높이(십자가가 선 언덕 위, 나는 비둘기)는 바닥에서부터
         if (p.fade === 'scale') p.obj.scale.multiplyScalar(bigNow); else p.obj.scale.copy(p.base).multiplyScalar(bigNow);
