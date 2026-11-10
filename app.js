@@ -534,6 +534,9 @@ function updateMap(prevIdx, { camera = true, jump = false } = {}) {
   $$('.pin', map).forEach(m => {
     m.classList.toggle('seen', seen.has(m.dataset.place));
     m.classList.toggle('now', m.dataset.place === here(e));
+    // 3D 무대 위에 이웃 장소(약 5km 안, 예: 기브아 곁의 라마)의 핀과 이름이 겹쳐 보여서 무대가 서 있는 동안은 감춘다
+    const a = PLACES[m.dataset.place], b = PLACES[here(e)];
+    m.classList.toggle('close', !!a && !!b && a !== b && !a.jlm && !b.jlm && Math.hypot(a.lat - b.lat, a.lng - b.lng) < 0.045);
   });
   $$('.route', map).forEach(r => {
     r.classList.toggle('done', +r.dataset.i <= idx);
