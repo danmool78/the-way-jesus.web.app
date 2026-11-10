@@ -1,0 +1,54 @@
+{
+ "appTag": "David · From Shepherd to King",
+ "docTitle": "The Way — David | Walk the Life of David on a Map",
+ "metaDesc": "From a shepherd boy in the fields of Bethlehem, through the Valley of Elah and the caves of the wilderness, to the king of Jerusalem. Walk 39 scenes of David's life on a Bible map, and hear the psalms he wrote in those places as songs.",
+ "mapAria": "David's route on a map of Judah, Benjamin, Philistia and Gilead",
+ "introTag": "The way of David, from the fields of Bethlehem to the palace in Jerusalem",
+ "introLead": "Walk the map and follow the road of a shepherd boy who became a hunted man, then a king, who fell and rose again.",
+ "introF1": "Follow the places, from Bethlehem through the Valley of Elah and the caves of the wilderness to Jerusalem",
+ "introF3": "Hear the story read aloud, and listen to the psalms David wrote in those places as songs",
+ "landStep2": "Read the story and the texts on the card, and press ▶ to hear it read aloud",
+ "landStep4": "Gather the words of God and of David in the '{words}' tab, and revisit the scenes you have walked with '{quiz}'",
+ "jesus": "God",
+ "hisWords": "Words of God and David",
+ "wordsHead": "Words of God and David",
+ "wordsIntro": "The words God spoke and the words David said along David's way, gathered in the order of the journey. Every saying is a fresh rendering of the original meaning in today's language.",
+ "odoTitle": "Distance David has walked up to this scene (estimated road distance between places; steps at a 75 cm stride)",
+ "gospels": {
+  "1sam": [
+   "1 Samuel",
+   "1 Sam"
+  ],
+  "2sam": [
+   "2 Samuel",
+   "2 Sam"
+  ],
+  "1ki": [
+   "1 Kings",
+   "1 Kgs"
+  ],
+  "1chr": [
+   "1 Chronicles",
+   "1 Chr"
+  ]
+ },
+ "endLead": "From the fields of Bethlehem to David's last song — thank you for walking with us.",
+ "blessing": "The Lord is my shepherd; I have all that I need.\nHe lets me lie down in green pastures and leads me beside quiet waters. (Ps 23:1–2)\nMay the one who called the boy in the fields call your name too, and may the one who was with him through the nights of flight guard your way.",
+ "psalmHead": "The song sung in this place",
+ "psalmNote": "A song from the Psalms journey, sung in Korean. The music and lyrics were made with AI and refined by people.",
+ "map": {
+  "유 다": "JUDAH",
+  "베 냐 민": "BENJAMIN",
+  "이 스 라 엘": "ISRAEL",
+  "블 레 셋": "PHILISTIA",
+  "길 르 앗": "GILEAD",
+  "모 압": "MOAB",
+  "에 돔": "EDOM",
+  "갈 릴 리": "GALILEE",
+  "벧세메스": "Beth-shemesh",
+  "에그론": "Ekron",
+  "아스돗": "Ashdod",
+  "가사": "Gaza",
+  "벧산": "Beth-shan"
+ }
+}
