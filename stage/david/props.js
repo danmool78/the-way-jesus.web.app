@@ -124,9 +124,10 @@ Object.assign(MAKERS, {
     // 바닥(floor): 3D 지형의 비탈에서 궁 바닥 밑으로 땅이 꺼진 자리에 선 사람이 바닥에 묻혀 다리가 잘려 보였다 — 바닥 위의 사람·가구는 바닥 높이에 선다
     const tx = o.tx ?? 0.7;
     P.floor = true;
-    P.heightAt = (x, z) => { const u = x - g.position.x, v = z - g.position.z;
+    P.heightAt = (x, z) => { const u = (x - g.position.x) / g.scale.x, v = (z - g.position.z) / g.scale.z;
       if (Math.abs(u) > W / 2 || v < -0.75 || v > 0.7) return 0;
-      return o.throne !== false && Math.abs(u - tx) < 0.3 && Math.abs(v + 0.42) < 0.225 ? 0.07 : 0.02; };
+      // 3D 지형에서 멀리 볼 때는 궁이 사람과 함께 커진다(bigNow) — 바닥 높이도 같은 배율로 (안 그러면 발이 바닥에 묻혔다)
+      return (o.throne !== false && Math.abs(u - tx) < 0.3 && Math.abs(v + 0.42) < 0.225 ? 0.07 : 0.02) * g.scale.y; };
     return P;
   },
 
