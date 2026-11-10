@@ -80,8 +80,9 @@ Object.assign(MAKERS, {
   // state 'throw'(되풀이) | 'idle'. 돌은 왕의 무리 앞에 떨어진다 — 맞는 모습은 없다. 던지는 사람과 함께 옮기려면 speed를 준다
   stonethrow(o = {}) {
     const g = new THREE.Group(), H = o.h ?? 0.62, DX = o.dx ?? -0.4, DZ = o.dz ?? 0.5, N = 3, PER = 1.6;
-    const sm = mat('#8a7a62', { roughness: 1, flatShading: true });
-    const stones = Array.from({ length: N }, (_, i) => { const s = mesh(new THREE.DodecahedronGeometry(0.034 + i * 0.006, 0), sm, g); s.visible = false; return s; });
+    // 돌은 주먹보다 크게, 흙빛 땅과 가르게 짙은 색 — 작고 옅으면 멀리서 보이지 않았다
+    const sm = mat('#5f5446', { roughness: 1, flatShading: true });
+    const stones = Array.from({ length: N }, (_, i) => { const s = mesh(new THREE.DodecahedronGeometry(0.058 + i * 0.01, 0), sm, g); s.visible = false; return s; });
     const dm = () => new THREE.MeshStandardMaterial({ color: '#b8a582', roughness: 1, transparent: true, opacity: 0, depthWrite: false });
     const dust = Array.from({ length: N * 2 }, () => { const d = mesh(sphere(0.06, 10, 8), dm(), g); d.castShadow = false; return d; });
     let k = 0;
