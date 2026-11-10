@@ -1,6 +1,6 @@
 /* 그 길 — 3D 지형 모드.
    실제 고도 자료(assets/terrain/*-height.png)로 땅을 솟게 하고 2D 지도와 같은 색(-color.webp)을 입혀 비스듬히 내려다본다.
-   지역(갈릴리·유대·애굽)은 가까이 갈 때 하나씩 불러오고, 그 바깥은 2D 지도의 바탕 그림을 평평하게 깔아 이어 보인다.
+   지역(갈릴리·유대·그 서쪽 해안·애굽)은 가까이 갈 때 하나씩 불러오고, 그 바깥은 2D 지도의 바탕 그림을 평평하게 깔아 이어 보인다.
    지도 한켠의 조작기: 3D 켜고 끄기, 기울이기, 돌리기, 당기기, 처음 시점.
    마우스: 끌면 옮기고, 오른쪽 버튼(또는 Shift)으로 끌면 돌리고 기울이고, 바퀴로 당긴다. 손가락: 하나로 옮기고, 둘로 벌려 당기고 비틀어 돌린다.
    좌표는 2D 지도와 같은 지도 단위(app.js의 px, 1단위 = 1/1000도 ≈ 111m). 높이는 EXAG배로 과장한다.
@@ -12,8 +12,12 @@ import { SCRIPTS } from './stage/scenes.js';
 
 // 지역: _src/terrain.py와 같게. fade: 높이를 해수면으로 풀어 내리는 가장자리 (맞닿은 쪽은 풀지 않는다)
 const TREG = {
-  galilee: { lat0: 32.55, lat1: 33.45, lng0: 35.0, lng1: 35.95, fade: 'nwe' },
-  judea: { lat0: 30.96, lat1: 32.55, lng0: 35.0, lng1: 35.95, fade: 'swe' },
+  galilee: { lat0: 32.55, lat1: 33.45, lng0: 35.0, lng1: 35.95, fade: 'ne' },
+  judea: { lat0: 30.96, lat1: 32.55, lng0: 35.0, lng1: 35.95, fade: 'se' },
+  // 유대 서쪽의 쉐펠라·블레셋 평야와 그 북쪽 해안(사론·갈멜): 동경 35.0에서 유대·갈릴리와 맞닿는다 — 없을 때는 그 서쪽을 풀어 내려
+  // 엘라 골짜기·가드·아둘람이 경계에서 갑자기 납작하고 흐릿했다. 서쪽 끝은 바다라 풀 것이 없다
+  shephelah: { lat0: 30.96, lat1: 32.55, lng0: 34.2, lng1: 35.0, fade: 'sw' },
+  carmel: { lat0: 32.55, lat1: 32.95, lng0: 34.6, lng1: 35.0, fade: 'nw' },
   egypt: { lat0: 29.8, lat1: 31.35, lng0: 30.95, lng1: 32.65, fade: 'nswe' },
   // 모세 여정만(south): 시내 반도와 그 북쪽 광야(가데스·호르산)는 29.8°에서 맞닿는다. 광야라 나무·마을을 두지 않고 오아시스에 종려나무만(wild) — 진영은 무대가 세운다
   sinai: { lat0: 28.2, lat1: 29.8, lng0: 32.65, lng1: 35.6, fade: 'swe', south: 1, wild: 1 },
@@ -119,7 +123,8 @@ async function build() {
 function ensureRegion(r) {
   if (r.south && !window.journeyMap?.south) return Promise.resolve(); // 다른 여정에서는 불러오지 않는다
   if (!r.load) {
-    r.load = loadRegion(r).then(() => { decorate(); window.recenterStage?.(); });
+    // 무대 밑을 고른 뒤에 이웃 지역이 늦게 오면 그 지역만 고르지 않은 채라 경계에 틈이 벌어졌다 — 다시 고른다
+    r.load = loadRegion(r).then(() => { if (leveled) level(leveled.cx, leveled.cz, leveled.r); decorate(); window.recenterStage?.(); });
     // 높이를 풀지 않은 변(맞닿은 지역 쪽)은 그 이웃도 함께 불러온다 — 한쪽만 있으면 경계에 가짜 낭떠러지(턱)가 섰다 (갈릴리·유대 32.55°)
     const near = (a, b) => Math.abs(a - b) < 0.01, overlapX = o => o.X0 < r.X1 && o.X1 > r.X0, overlapZ = o => o.Z0 < r.Z1 && o.Z1 > r.Z0;
     regions.forEach(o => {
@@ -150,16 +155,50 @@ async function loadRegion(r) {
   const geo = new THREE.PlaneGeometry(r.X1 - r.X0, r.Z1 - r.Z0, hw - 1, hh - 1);
   geo.rotateX(-Math.PI / 2);
   const pos = geo.attributes.position;
-  for (let k = 0; k < hw * hh; k++) pos.setY(k, H[k]);
   geo.translate((r.X0 + r.X1) / 2, 0, (r.Z0 + r.Z1) / 2);
+  // 꼭짓점 자리를 지역 경계에서 바로 셈해 끝 칸은 경계값 그대로 — 가운데로 옮긴 판의 끝은 반올림으로 어긋날 수 있어,
+  // 맞닿은 지역(유대·쉐펠라 35.0° 등)과 경계 꼭짓점이 꼭 겹치게 한다
+  const gx = i => (i === hw - 1 ? r.X1 : r.X0 + (r.X1 - r.X0) * i / (hw - 1)), gz = j => (j === hh - 1 ? r.Z1 : r.Z0 + (r.Z1 - r.Z0) * j / (hh - 1));
+  for (let k = 0; k < hw * hh; k++) pos.setXYZ(k, gx(k % hw), H[k], gz(Math.floor(k / hw)));
   geo.computeVertexNormals();
   r.mesh = new THREE.Mesh(geo, greyable(new THREE.MeshStandardMaterial({ map: mapTex(cImg), roughness: 0.95 })));
   r.mesh.receiveShadow = r.mesh.castShadow = true;
-  scene.add(r.mesh);
+  scene.add(r.mesh); seams(r);
   if (!r.wild) { addTrees(r); addVillages(r); } else addPalms(r); // 광야에는 나무·마을이 없다 (색 그림의 바닷가 물빛을 풀빛으로 읽어 나무가 줄지어 섰다)
   if (r.name === 'galilee') addBoats();
   if (r.name === 'judea') { if (!window.journeyMap?.noCity) addModel(buildJerusalem(), JLM, 1); addCityDetail(); } // 다윗 여정(noCity): 예수 때의 도성 모형은 천 년 뒤 모습이라 세우지 않는다
   if (r.name === 'egypt') Object.values(EGYPT_MODELS).forEach(m => addModel(m.build(), m.extent, 0.6));
+}
+
+// 맞닿은 두 지역의 경계 꼭짓점은 높이가 같아도 법선을 제 판 안쪽만 보고 셈해 경계에서 빛이 꺾인다 — 양쪽 법선을 더해 같은 값으로 맞춘다.
+// 줄(행·열)은 지역마다 같은 간격이라 경계 위에서 꼭짓점이 겹친다
+function seams(r) {
+  const near = (a, b) => Math.abs(a - b) < 0.01;
+  regions.forEach(o => {
+    if (o === r || !o.mesh) return;
+    const pairs = [];
+    if (near(o.X0, r.X1) || near(o.X1, r.X0)) { // 동서로 맞닿음: a는 서쪽, b는 동쪽
+      const [a, b] = near(o.X0, r.X1) ? [r, o] : [o, r];
+      for (let j = 0; j < a.hh; j++) {
+        const z = a.Z0 + (a.Z1 - a.Z0) * j / (a.hh - 1), jb = Math.round((z - b.Z0) / (b.Z1 - b.Z0) * (b.hh - 1));
+        if (jb >= 0 && jb < b.hh && near(b.Z0 + (b.Z1 - b.Z0) * jb / (b.hh - 1), z)) pairs.push([a, j * a.hw + a.hw - 1, b, jb * b.hw]);
+      }
+    } else if (near(o.Z0, r.Z1) || near(o.Z1, r.Z0)) { // 남북으로 맞닿음: a는 북쪽, b는 남쪽
+      const [a, b] = near(o.Z0, r.Z1) ? [r, o] : [o, r];
+      for (let i = 0; i < a.hw; i++) {
+        const x = a.X0 + (a.X1 - a.X0) * i / (a.hw - 1), ib = Math.round((x - b.X0) / (b.X1 - b.X0) * (b.hw - 1));
+        if (ib >= 0 && ib < b.hw && near(b.X0 + (b.X1 - b.X0) * ib / (b.hw - 1), x)) pairs.push([a, (a.hh - 1) * a.hw + i, b, ib]);
+      }
+    }
+    if (!pairs.length) return;
+    const v = new THREE.Vector3();
+    pairs.forEach(([a, ka, b, kb]) => {
+      const na = a.mesh.geometry.attributes.normal, nb = b.mesh.geometry.attributes.normal;
+      v.set(na.getX(ka) + nb.getX(kb), na.getY(ka) + nb.getY(kb), na.getZ(ka) + nb.getZ(kb)).normalize();
+      na.setXYZ(ka, v.x, v.y, v.z); nb.setXYZ(kb, v.x, v.y, v.z);
+    });
+    r.mesh.geometry.attributes.normal.needsUpdate = o.mesh.geometry.attributes.normal.needsUpdate = true;
+  });
 }
 
 // 예루살렘 둘레의 초정밀 색(2D 지도의 도성 타일, 지도 단위당 25.6픽셀)을 지형 위에 덧입힌다 —
@@ -411,7 +450,7 @@ let cleared = null;
 let leveled = null;
 function unlevel() {
   if (!leveled) return;
-  leveled.parts.forEach(({ rg, ks, orig }) => { const pos = rg.mesh.geometry.attributes.position; ks.forEach((k, i) => { rg.heights[k] = orig[i]; pos.setY(k, orig[i]); }); pos.needsUpdate = true; rg.mesh.geometry.computeVertexNormals(); });
+  leveled.parts.forEach(({ rg, ks, orig }) => { const pos = rg.mesh.geometry.attributes.position; ks.forEach((k, i) => { rg.heights[k] = orig[i]; pos.setY(k, orig[i]); }); pos.needsUpdate = true; rg.mesh.geometry.computeVertexNormals(); seams(rg); });
   leveled = null;
 }
 function level(cx, cz, r) {
@@ -436,7 +475,7 @@ function level(cx, cz, r) {
         ks.push(k); orig.push(H[k]); H[k] += (y0 - H[k]) * e; pos.setY(k, H[k]);
       }
     if (!ks.length) return;
-    pos.needsUpdate = true; rg.mesh.geometry.computeVertexNormals();
+    pos.needsUpdate = true; rg.mesh.geometry.computeVertexNormals(); seams(rg);
     leveled.parts.push({ rg, ks, orig });
   });
 }
