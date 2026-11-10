@@ -302,14 +302,15 @@ Object.assign(MAKERS, {
   firechariot(o = {}) {
     const P = MAKERS.chariot({ coat: '#ffb347' }), body = P.obj.children[0];
     body.children[body.children.length - 1].visible = false; // 모는 사람 없이
-    const lm = new THREE.MeshBasicMaterial({ color: '#ffcf70', transparent: true, opacity: 0.55, blending: THREE.AdditiveBlending, depthWrite: false });
+    // 더하기 섞음(additive)만 쓰면 낮의 밝은 모래 위에서 거의 보이지 않았다(k22) — 몸은 보통 섞음의 불빛 주황, 둘레의 빛만 더한다
+    const lm = new THREE.MeshBasicMaterial({ color: '#ffa940', transparent: true, opacity: 0.55, depthWrite: false });
     P.obj.traverse(m => { if (m.isMesh) { m.material = lm; m.castShadow = false; } });
     const fm = flameM('#ffb347', 0.6), sparks = [];
     for (let i = 0; i < 9; i++) sparks.push(tongue(body, 0.03, 0.12, [-0.15 + i * 0.1, 0.25 + (i % 3) * 0.08, (i % 2 ? 1 : -1) * 0.08], fm));
     const h1 = glow(1.3, 0.8), h2 = glow(0.9, 0.7); h1.position.set(0.55, 0.35, 0); h2.position.set(-0.05, 0.35, 0); body.add(h1, h2);
     const light = new THREE.PointLight('#ffb050', 1.6, 2.4, 1.4); light.position.set(0.3, 0.5, 0); body.add(light);
     const upd = P.upd;
-    P.upd = (P2, t, dt, env) => { upd(P2, t, dt, env); lm.opacity = 0.55 * P2.show * (1 + Math.sin(t * 9) * 0.08); h1.material.opacity = 0.8 * P2.show; h2.material.opacity = 0.7 * P2.show; light.intensity = 1.6 * P2.show;
+    P.upd = (P2, t, dt, env) => { upd(P2, t, dt, env); lm.opacity = 0.72 * P2.show * (1 + Math.sin(t * 9) * 0.08); h1.material.opacity = 0.8 * P2.show; h2.material.opacity = 0.7 * P2.show; light.intensity = 1.6 * P2.show;
       sparks.forEach((c, i) => { c.scale.y = 0.7 + Math.sin(t * 12 + i * 2) * 0.4; c.position.y = 0.25 + (i % 3) * 0.08 + Math.sin(t * 6 + i) * 0.02; }); };
     if (o.small) P.obj.scale.setScalar(0.55);
     return P;
@@ -450,11 +451,11 @@ Object.assign(MAKERS, {
   },
 
   // 갈라지는 강 (요단 — 왕하 2:8·14): 앞뒤(z)로 흐르는 강줄기와 갈대 둑. 사람은 서(-x)에서 동(+x)으로 건넌다.
-  // state 'flow' | 'part'(가운데 |z| < o.gap 사이의 물이 위아래로 물러나 마른 바닥) | 'stir'(물결이 인다 — 몸을 담그는 자리). o.w 강폭(기본 0.6), o.len 길이(기본 3.2)
+  // state 'flow' | 'part'(가운데 |z| < o.gap 사이의 물이 위아래로 물러나 마른 바닥) | 'stir'(물결이 인다 — 몸을 담그는 자리). o.w 강폭(기본 0.6), o.len 길이(기본 3.2), o.color 물빛
   river(o = {}) {
     const g = new THREE.Group(), Wd = o.w || 0.6, L = o.len || 3.2, gap = o.gap || 0.32;
     const bed = mesh(new THREE.PlaneGeometry(Wd + 0.1, L), mat('#8a7a5a', { roughness: 1 }), g, [0, 0.004, 0]); bed.rotation.x = -Math.PI / 2; bed.receiveShadow = true;
-    const wm = new THREE.MeshStandardMaterial({ color: '#6f98a8', roughness: 0.2, metalness: 0.15, transparent: true, opacity: 0.88, depthWrite: false });
+    const wm = new THREE.MeshStandardMaterial({ color: o.color || '#6f98a8', roughness: 0.2, metalness: 0.15, transparent: true, opacity: 0.88, depthWrite: false });
     const halves = [-1, 1].map(k => { const h = new THREE.Group(); h.position.z = k * L / 4; g.add(h);
       const geo = new THREE.PlaneGeometry(Wd, L / 2, 6, 24); geo.rotateX(-Math.PI / 2);
       const m = mesh(geo, wm, h, [0, 0.03, 0]); m.castShadow = false; m.renderOrder = 2; h.userData.geo = geo; h.userData.k = k;

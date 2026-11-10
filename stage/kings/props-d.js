@@ -15,6 +15,26 @@ const flameM = (c = '#ffb347', o = 0.85) => new THREE.MeshBasicMaterial({ color:
 const now = () => performance.now() / 1000;
 
 Object.assign(MAKERS, {
+  // 성전 뜰의 놋 제단 (왕하 23:22 · 대하 4:1): 네 뿔이 달린 네모 놋 단. 모세 여정의 돌 제단(altar)은 돌무더기처럼 보여 성전 앞에는 이것을 쓴다.
+  // state 'idle' | 'fire' (altar와 같다)
+  bronzealtar(o = {}) {
+    const g = new THREE.Group(), br = mat('#9a6a32', { metalness: 0.35, roughness: 0.5 }), dk = mat('#3a2a1a', { roughness: 1 });
+    mesh(new THREE.BoxGeometry(0.46, 0.04, 0.46), mat('#b8a888', { roughness: 1 }), g, [0, 0.02, 0]).receiveShadow = true; // 받침
+    mesh(new THREE.BoxGeometry(0.38, 0.24, 0.38), br, g, [0, 0.16, 0]).castShadow = true;
+    mesh(new THREE.BoxGeometry(0.4, 0.025, 0.4), br, g, [0, 0.12, 0]); // 가운데 두른 테
+    [[-1, -1], [-1, 1], [1, -1], [1, 1]].forEach(([a, b]) => mesh(new THREE.ConeGeometry(0.022, 0.07, 6), br, g, [a * 0.17, 0.31, b * 0.17])); // 네 뿔
+    for (let i = 0; i < 4; i++) mesh(new THREE.BoxGeometry(0.12, 0.035, 0.035), dk, g, [-0.06 + i * 0.04, 0.29, (i % 2 - 0.5) * 0.08]).rotation.y = i * 0.8; // 장작
+    const fire = new THREE.Group(); fire.position.y = 0.3; g.add(fire);
+    const fm = flameM(); const tongues = Array.from({ length: 6 }, (_, i) => { const c = mesh(new THREE.ConeGeometry(0.045, 0.18, 7), fm, fire, [Math.cos(i * 1.1) * 0.07, 0.07, Math.sin(i * 1.1) * 0.06]); c.castShadow = false; return c; });
+    const halo = glow(0.9, 0.7); halo.position.y = 0.08; fire.add(halo);
+    const light = new THREE.PointLight('#ff9a50', 0, 1.8, 1.4); light.position.y = 0.5; g.add(light);
+    return new Prop(g, (P, t) => {
+      const on = P.state === 'fire'; fire.visible = on;
+      tongues.forEach((c, i) => { c.scale.y = 0.8 + Math.sin(t * 10 + i) * 0.25; });
+      halo.material.opacity = on ? 0.7 * P.show : 0; light.intensity = on ? 1.6 * P.show : 0;
+    }, { state: o.state || 'fire' });
+  },
+
   // 아세라 목상과 돌기둥 (왕하 18:4 — 히스기야가 산당을 헐고 돌기둥을 깨뜨리고 아세라 목상을 찍었다).
   // o.kind 'pole'(새김 머리의 나무 기둥 — 찍히면 o.dir 쪽(기본 +x)으로 넘어간다) | 'stone'(세운 돌 — 깨지면 윗동이 기울어 떨어지고 조각이 흩어진다).
   // state 'stand' | 'down'

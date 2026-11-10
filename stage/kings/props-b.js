@@ -106,7 +106,7 @@ Object.assign(MAKERS, {
       p = damp(p, P.state === 'part' ? 1 : 0, 1.4, dt);
       halves.forEach(h => { const { k, surf, wall, lip, top } = h.userData, len = L / 2 - p * gap, wh = 0.03 + p * 0.2;
         surf.scale.z = Math.max(0.01, len); surf.position.y = 0.03 + p * 0.02;
-        wall.scale.y = wh; wall.position.set(0, wh / 2, -k * len); lip.position.set(0, wh + 0.004, -k * len); lip.visible = p > 0.15; lip.position.y += Math.sin(t * 6 + k) * 0.004 * p;
+        wall.scale.y = wh; wall.position.set(0, wh / 2, -k * len); lip.position.set(0, wh + 0.004, -k * len); lip.visible = p > 0.15; wall.visible = p > 0.02; // 흐를 때 가운데 이음매가 검은 줄로 보였다 lip.position.y += Math.sin(t * 6 + k) * 0.004 * p;
         const pos = top.attributes.position; for (let i = 0; i < pos.count; i++) pos.setY(i, Math.sin(pos.getZ(i) * 9 * len + t * 2 + pos.getX(i) * 5) * 0.003); pos.needsUpdate = true; });
       wm.opacity = 0.9 * P.show; foam.opacity = 0.9 * P.show;
     }, { state: o.state || 'flow', fade: 'opacity' });
@@ -115,11 +115,11 @@ Object.assign(MAKERS, {
   // 엘리야의 겉옷 (왕상 19:19 · 왕하 2:8·13): 털 겉옷 한 장. state 'ground'(땅에 펼쳐져 놓였다) | 'fly'(날리며 펄럭인다 — 높이는 대본의 y) | 'rolled'(말아 쥔 막대 모양).
   // 던지는 것·떨어지는 것은 대본에서 x·z·y로 옮긴다 (speed를 주면 그 속도로 날아간다)
   mantle(o = {}) {
-    const g = new THREE.Group(), cm = mat(o.color || '#4e3a26', { ...DS, roughness: 1 });
-    const geo = new THREE.PlaneGeometry(0.26, 0.2, 8, 6); geo.rotateX(-Math.PI / 2);
+    const g = new THREE.Group(), cm = mat(o.color || '#6b4f33', { ...DS, roughness: 1 }); // 작고 어두우면 땅에 놓인 겉옷이 보이지 않았다
+    const geo = new THREE.PlaneGeometry(0.36, 0.28, 8, 6); geo.rotateX(-Math.PI / 2);
     const cloth = mesh(geo, cm, g, [0, 0.006, 0]); cloth.castShadow = true;
     const base = geo.attributes.position.array.slice();
-    const roll = mesh(new THREE.CylinderGeometry(0.022, 0.022, 0.24, 8), cm, g, [0, 0.03, 0]); roll.rotation.z = Math.PI / 2; roll.visible = false;
+    const roll = mesh(new THREE.CylinderGeometry(0.024, 0.024, 0.3, 8), cm, g, [0, 0.03, 0]); roll.rotation.z = Math.PI / 2; roll.visible = false;
     return new Prop(g, (P, t, dt) => {
       const s = P.state, fly = s === 'fly';
       if (P.y !== undefined) g.position.y = damp(g.position.y, P.y, 2.2, dt);

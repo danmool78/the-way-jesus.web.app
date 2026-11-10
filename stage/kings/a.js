@@ -19,7 +19,7 @@ export const A = {
       grass: ['grass', 0, 0.05, { r: 1.9, color: '#9a9a6a' }],
       rocks: ['rocks', 0, 0, { spots: [[-1.5, 0.45, 0.1], [1.6, -0.2, 0.12], [-0.3, -0.85, 0.1]] }],
       tab: ['tabernacle', -1.15, -0.6, { scale: 0.9 }],
-      altar: ['altar', 0.55, -0.35, { scale: 1.7, state: 'fire' }],
+      altar: ['bronzealtar', 0.55, -0.35, { scale: 1.4, state: 'fire' }], // 기브온 산당의 놋 제단 (대하 1:5)
       smoke: ['smoke', 0.55, -0.35, { y: 0.32, rise: 1.6, color: '#bdb5aa' }],
       ox: ['ox', 1.55, 0.3, { scale: 0.8, rot: Math.PI, speed: 0.4 }],
       beam: ['beam', 0.0, 0.2, { r: 0.42, h: 2.4 }],
@@ -151,9 +151,9 @@ export const A = {
       'p1.1': [['solomon', 'raise']],
       'p1.3': [['solomon', 'raise', { look: 0.2 }]],
       // 먼 땅에서 온 이방 사람이 빌어도
-      'p1.4': [['stranger', 'idle', { show: 1, x: 1.05, z: 0.6, look: -2.6 }], ['stranger', 'kneel', { delay: 3000 }]],
+      'p1.4': [['stranger', 'idle', { show: 1, x: 1.4, z: 0.62, look: -2.6 }], ['stranger', 'kneel', { delay: 3000 }]],
       // 무릎을 펴고 일어나 백성을 축복한다
-      'p2.0': [['stranger', 'kneel', { show: 1, x: 1.05, z: 0.6, look: -2.6 }], ['solomon', 'bless', { x: 0.0, z: 0.5, look: 0 }], ['p1', 'idle', { look: 0.3 }], ['p2', 'idle', { look: -0.3 }]],
+      'p2.0': [['stranger', 'kneel', { show: 1, x: 1.4, z: 0.62, look: -2.6 }], ['solomon', 'bless', { x: 0.0, z: 0.5, look: 0 }], ['p1', 'idle', { look: 0.3 }], ['p2', 'idle', { look: -0.3 }]],
       // 화목제물 — 제단의 불, 열나흘의 잔치
       'p2.1': [['temple', 'fire'], ['solomon', 'idle', { look: -0.6 }]],
       // 백성은 기뻐하며 장막으로 돌아간다
@@ -164,7 +164,7 @@ export const A = {
       'p2.4': [['solomon', 'pray', { look: 2.9 }]],
       w0: [['solomon', 'speak', { show: 1, x: -0.3, z: 0.45, look: -0.3 }]],
       w1: [['solomon', 'raise']],
-      w2: [['solomon', 'speak'], ['stranger', 'kneel', { show: 1, x: 1.05, z: 0.6, look: -2.6 }]],
+      w2: [['solomon', 'speak'], ['stranger', 'kneel', { show: 1, x: 1.4, z: 0.62, look: -2.6 }]],
       w3: [['solomon', 'bless', { x: 0.0, z: 0.5, look: 0 }]],
       end: [['@env', 'glory'], ['temple', 'cloud'], ['ark', null, { show: 0 }], ['folkL', null, { show: 1, x: -1.85 }], ['folkR', null, { show: 1, x: 1.9 }], ['stranger', 'idle', { show: 0 }],
         ['p1', 'kneel', { x: -1.0, z: 0.15, look: 2.7 }], ['p2', 'kneel', { x: 1.0, z: 0.15, look: -2.7 }], ['solomon', 'raise', { show: 1, x: -0.3, z: 0.45, look: -0.3 }]],
