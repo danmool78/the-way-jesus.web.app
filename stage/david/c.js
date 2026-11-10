@@ -44,14 +44,13 @@ export const C = {
         ['elder', 'idle', { show: 0 }], ['elder2', 'idle', { show: 0 }], ['elder3', 'idle', { show: 0 }], ['envoy', 'idle', { show: 0 }], ['david', 'pray', { look: 0.3 }]],
       // 시글락에서 주께 여쭙는다 — 빛 아래에서 듣는다
       'p0.1': [['david', 'look-up', { look: 0 }]],
-      'p0.2': [['beam', null, { show: 1 }], ['david', 'listen']],
-      'p0.3': [['david', 'look-up']],
-      'p0.4': [['david', 'listen']],
+      'p0.3': [['beam', null, { show: 1 }], ['david', 'listen']],
+      'p0.5': [['david', 'look-up']],
+      'p0.7': [['david', 'listen']],
       // 두 아내와 사람들을 이끌고 산길을 오른다
-      'p0.5': [['beam', null, { show: 0 }], ['david', 'idle', { x: -0.1, z: 0.15, look: 1, delay: 600 }],
+      'p0.9': [['beam', null, { show: 0 }], ['david', 'idle', { x: -0.1, z: 0.15, look: 1, delay: 600 }],
         ['abigail', 'idle', { show: 1, x: -0.95, z: 0.42, look: 0.7 }], ['ahinoam', 'idle', { show: 1, x: -1.2, z: 0.3, look: 0.7 }],
         ['m1', 'idle', { show: 1, x: -1.35, z: -0.05, look: 0.6 }], ['m2', 'idle', { show: 1, x: -1.5, z: 0.5, look: 0.6 }]],
-      'p0.6': [['david', 'idle', { look: -1 }], ['m1', 'idle', { look: -0.3 }]],
       // 유다 사람들이 와서 기름을 붓는다 — 유다 집의 왕
       'p1.0': [['david', 'idle', { look: 1 }], ['elder', 'idle', { show: 1, x: 0.2, z: 0.12, look: -1, item: 'oilhorn' }], ['elder2', 'idle', { show: 1, x: 0.55, z: 0.38, look: -1 }], ['elder3', 'idle', { show: 1, x: 0.55, z: -0.12, look: -1 }],
         ['david', 'kneel', { delay: 3200 }], ['elder', 'anoint', { delay: 3800 }]],
@@ -67,11 +66,11 @@ export const C = {
       // 세월이 흘러 — 온 지파가 헤브론으로
       'p2.0': [['envoy', 'idle', { show: 0 }], ['king', 'idle', { look: 1 }], ['@env', 'dusk'], ['@env', 'day', { delay: 2200 }],
         ['folk', null, { show: 1, x: 1.1 }], ['elder', 'idle', { x: 0.3, z: 0.12, look: -1 }], ['elder3', 'idle', { x: 0.5, z: -0.15 }], ['elder2', 'idle', { x: 0.6, z: 0.4 }]],
-      'p2.1': [['elder', 'speak', { to: 'king' }]],
       'p2.2': [['elder', 'speak', { to: 'king' }]],
+      'p2.4': [['elder', 'speak', { to: 'king' }]],
       // 주 앞에서 언약을 맺고 온 이스라엘의 왕으로 — 다시 기름을 붓는다
-      'p2.3': [['beam', null, { show: 1, x: -0.1, z: 0.15 }], ['king', 'kneel', { look: 1 }], ['elder', 'anoint', { item: 'oilhorn', x: 0.2, z: 0.12, delay: 900 }], ['elder2', 'bow'], ['elder3', 'bow']],
-      'p2.4': [['beam', null, { show: 0 }], ['elder', 'idle', { item: null, x: 0.35, z: 0.1 }], ['king', 'idle', { look: 0.5, delay: 800 }], ['elder2', 'idle'], ['elder3', 'idle'], ['m1', 'raise'], ['m2', 'raise']],
+      'p2.5': [['beam', null, { show: 1, x: -0.1, z: 0.15 }], ['king', 'kneel', { look: 1 }], ['elder', 'anoint', { item: 'oilhorn', x: 0.2, z: 0.12, delay: 900 }], ['elder2', 'bow'], ['elder3', 'bow']],
+      'p2.6': [['beam', null, { show: 0 }], ['elder', 'idle', { item: null, x: 0.35, z: 0.1 }], ['king', 'idle', { look: 0.5, delay: 800 }], ['elder2', 'idle'], ['elder3', 'idle'], ['m1', 'raise'], ['m2', 'raise']],
       w0: [['beam', null, { show: 1, x: -0.1, z: 0.15 }], ['king', 'listen', { show: 1 }]],
       w1: [['beam', null, { show: 0 }], ['king', 'speak', { show: 1, to: 'elder' }]],
       w2: [['elder', 'speak', { show: 1, to: 'king' }], ['king', 'listen']],
@@ -207,16 +206,16 @@ export const C = {
       'p1.6': [['david', 'idle', { look: -0.6 }], ['david', 'shrug', { delay: 1500 }]],
       // 그날 다윗은 주를 두려워했다
       'p2.0': [['david', 'afraid', { look: 1 }]],
-      'p2.1': [['david', 'kneel', { look: 1 }]],
+      'p2.2': [['david', 'kneel', { look: 1 }]],
       // 궤를 메어 오벧에돔의 집으로
-      'p2.2': [['cart', 'go', { show: 0 }], ['cartE', null, { show: 1 }], ['ark', null, { show: 1 }], ['lev1', 'carry-pole', { show: 1 }], ['lev2', 'carry-pole', { show: 1 }],
+      'p2.3': [['cart', 'go', { show: 0 }], ['cartE', null, { show: 1 }], ['ark', null, { show: 1 }], ['lev1', 'carry-pole', { show: 1 }], ['lev2', 'carry-pole', { show: 1 }],
         ['ahio', 'idle', { x: 1.0, z: 0.6, look: -1 }],
         ['lev1', 'carry-pole', { x: 0.88, z: -0.2, delay: 1500 }], ['lev2', 'carry-pole', { x: 1.72, z: -0.2, delay: 1500 }],
         ['obedEdom', 'idle', { show: 1, x: 1.95, z: -0.3, look: -1, delay: 2500 }]],
       // 석 달 — 낮과 밤이 지나며 그 집에 복이
-      'p2.3': [['@env', 'dusk'], ['@env', 'night', { delay: 1800 }], ['@env', 'dawn', { delay: 3600 }], ['@env', 'day', { delay: 5400 }],
+      'p2.4': [['@env', 'dusk'], ['@env', 'night', { delay: 1800 }], ['@env', 'dawn', { delay: 3600 }], ['@env', 'day', { delay: 5400 }],
         ['lev', 'idle'], ['w1', 'idle'], ['w2', 'idle'], ['david', 'idle', { look: 1 }]],
-      'p2.4': [['bless', null, { show: 1 }], ['obedEdom', 'raise', { x: 1.95, z: -0.3, look: -1 }], ['wife', 'idle', { show: 1, x: 2.0, z: -0.05, look: -1 }], ['kid', 'idle', { show: 1, x: 2.1, z: 0.15, look: -1 }]],
+      'p2.5': [['bless', null, { show: 1 }], ['obedEdom', 'raise', { x: 1.95, z: -0.3, look: -1 }], ['wife', 'idle', { show: 1, x: 2.0, z: -0.05, look: -1 }], ['kid', 'idle', { show: 1, x: 2.1, z: 0.15, look: -1 }]],
       w0: [['david', 'speak', { show: 1 }]],
       w1: [['beam', null, { show: 1 }]],
       w2: [['bless', null, { show: 1 }], ['obedEdom', 'raise', { show: 1 }]],
@@ -319,9 +318,9 @@ export const C = {
       // 그날 밤 — 홀로 선 나단 위에 빛
       'p0.7': [['@env', 'night'], ['king', 'idle', { x: -0.2, z: -0.3 }], ['king', 'idle', { show: 0, delay: 1500 }], ['nathan', 'idle', { x: 0.95, z: 0.25, look: -0.3 }], ['beam', null, { show: 1, delay: 2600 }], ['nathan', 'look-up', { delay: 3000 }]],
       'p1.0': [['king', 'idle', { show: 0 }], ['beam', null, { show: 1 }], ['nathan', 'listen']],
-      'p1.2': [['nathan', 'look-up']],
-      'p1.3': [['nathan', 'listen']],
-      'p1.5': [['nathan', 'kneel']],
+      'p1.4': [['nathan', 'look-up']],
+      'p1.5': [['nathan', 'listen']],
+      'p1.7': [['nathan', 'kneel']],
       // 나단이 돌아가 그대로 전한다
       'p2.0': [['@env', 'dawn'], ['beam', null, { show: 0 }], ['king', 'sit', { show: 1, y: 0.2, x: -0.2, z: -0.42, look: 0.4 }], ['nathan', 'idle', { x: 0.4, z: 0.2, look: -1 }], ['nathan', 'speak', { to: 'king', delay: 2600 }]],
       // 왕은 주 앞에 들어가 앉았다
@@ -365,18 +364,18 @@ export const C = {
       // 사울의 집 종 시바
       'p0.3': [['king', 'sit'], ['official', 'idle', { x: 1.0, z: -0.05, look: -1 }], ['ziba', 'idle', { show: 1, x: -0.1, z: 0.15, look: 1 }], ['ziba', 'bow', { delay: 3000 }]],
       'p0.4': [['ziba', 'speak', { to: 'king' }]],
-      'p0.5': [['ziba', 'speak', { to: 'king' }]],
-      'p0.7': [['ziba', 'idle'], ['king', 'sit-speak', { to: 'official' }], ['official', 'bow', { delay: 1200 }]],
+      'p0.6': [['ziba', 'speak', { to: 'king' }]],
+      'p0.8': [['ziba', 'idle'], ['king', 'sit-speak', { to: 'official' }], ['official', 'bow', { delay: 1200 }]],
       // 절룩이며 들어와 얼굴을 대고 엎드린다
       'p1.0': [['king', 'sit', { look: -0.6 }], ['official', 'idle'], ['ziba', 'idle', { x: -0.8, z: -0.05, look: 0.6 }], ['walker', 'idle', { show: 1, x: -0.25, z: 0.2, look: 1 }], ['walker', 'kneel', { delay: 5600 }]],
       'p1.1': [['walker', 'kneel', { x: -0.25, z: 0.2, look: 1 }], ['king', 'sit-speak', { to: 'walker' }]],
       'p1.3': [['king', 'sit'], ['walker', 'speak', { to: 'king' }]],
       // 두려워하지 마라 — 왕이 일어나 다가간다
-      'p1.4': [['walker', 'kneel'], ['king', 'idle', { y: 0, x: 0.25, z: 0.1, look: -1 }], ['king', 'speak', { to: 'walker', delay: 2000 }]],
-      'p1.5': [['king', 'speak', { y: 0, x: 0.25, z: 0.1, to: 'walker' }]],
-      'p1.7': [['king', 'bless', { to: 'walker' }]],
-      'p1.8': [['king', 'idle'], ['walker', 'kneel']],
-      'p1.9': [['walker', 'kneel']],
+      'p1.5': [['walker', 'kneel'], ['king', 'idle', { y: 0, x: 0.25, z: 0.1, look: -1 }], ['king', 'speak', { to: 'walker', delay: 2000 }]],
+      'p1.7': [['king', 'speak', { y: 0, x: 0.25, z: 0.1, to: 'walker' }]],
+      'p1.8': [['king', 'bless', { to: 'walker' }]],
+      'p1.9': [['king', 'idle'], ['walker', 'kneel']],
+      'p1.10': [['walker', 'kneel']],
       // 시바에게 땅을 맡긴다
       'p2.0': [['walker', 'idle'], ['king', 'speak', { to: 'ziba' }], ['ziba', 'idle', { x: -0.45, z: 0.2, look: 1 }], ['ziba', 'bow', { delay: 2600 }]],
       'p2.1': [['king', 'idle'], ['ziba', 'idle', { x: -1.9, z: 0.3, look: -1 }], ['ziba', 'idle', { show: 0, delay: 4200 }]],
@@ -493,7 +492,7 @@ export const C = {
       'p0.6': [['page', 'idle', { x: 1.25, z: -0.2 }], ['bathsheba', 'idle', { show: 1, x: 1.45, z: -0.32, look: -1, delay: 1800 }],
         ['page', 'idle', { x: -0.2, z: 0.1, delay: 2800 }], ['bathsheba', 'idle', { x: -0.05, z: 0.1, delay: 3300 }],
         ['page', 'idle', { show: 0, delay: 7000 }], ['bathsheba', 'idle', { show: 0, delay: 7200 }], ['@env', 'dark', { delay: 6500 }], ['king', 'idle', { show: 0, delay: 6000 }]],
-      // 얼마 뒤 여인에게서 온 전갈
+      // 얼마 뒤 밧세바가 보낸 전갈
       'p1.0': [['@env', 'day'], ['page', 'idle', { show: 0 }], ['bathsheba', 'idle', { show: 0 }], ['king', 'idle', { show: 1, x: -0.45, z: 0.25, look: 1 }], ['page', 'idle', { show: 1, x: 0.15, z: 0.25, look: -1, delay: 600 }]],
       'p1.1': [['page', 'speak', { to: 'king' }], ['king', 'listen']],
       // 싸움터에서 우리아를 불러들인다
@@ -504,19 +503,19 @@ export const C = {
       // 어찌 저만 집에 가겠습니까
       'p1.5': [['@env', 'dawn'], ['king', 'idle', { show: 1, x: -0.6, z: 0.4, look: 1 }], ['uriah', 'speak', { x: -0.15, z: 0.25, to: 'king' }], ['guard', 'sleep']],
       // 왕이 그를 취하게 해도 — 끝내 집에 가지 않는다
-      'p1.6': [['@env', 'night'], ['king', 'idle', { item: 'cup', look: 1 }], ['uriah', 'shrug', { delay: 1500 }]],
+      'p1.7': [['@env', 'night'], ['king', 'idle', { item: 'cup', look: 1 }], ['uriah', 'shrug', { delay: 1500 }]],
       // 아침에 요압에게 쓴 편지 — 우리아의 손에
       'p2.0': [['@env', 'day'], ['guard', 'idle', { show: 0 }], ['king', 'idle', { item: 'scroll', look: 1 }], ['king', 'idle', { item: null, delay: 2600 }], ['uriah', 'idle', { item: 'scroll', look: -1, delay: 2600 }]],
       'p2.1': [['uriah', 'bow'], ['uriah', 'idle', { x: 2.1, z: 0.35, delay: 1500 }], ['uriah', 'idle', { show: 0, delay: 5200 }], ['king', 'idle', { look: 1 }]],
       // 우리아는 죽었다 — 무대는 비고 어두워진다
-      'p2.2': [['uriah', 'idle', { show: 0 }], ['@env', 'overcast'], ['king', 'idle', { look: 0 }]],
-      'p2.3': [['runner', 'idle', { show: 1, x: 0.15, z: 0.35, look: -1 }], ['runner', 'bow', { delay: 4200 }]],
-      'p2.4': [['runner', 'idle'], ['king', 'speak', { to: 'runner' }]],
+      'p2.3': [['uriah', 'idle', { show: 0 }], ['@env', 'overcast'], ['king', 'idle', { look: 0 }]],
+      'p2.4': [['runner', 'idle', { show: 1, x: 0.15, z: 0.35, look: -1 }], ['runner', 'bow', { delay: 4200 }]],
+      'p2.5': [['runner', 'idle'], ['king', 'speak', { to: 'runner' }]],
       // 애도가 끝나자 아내로 맞는다
-      'p2.5': [['runner', 'idle', { x: 2.1, z: 0.45 }], ['runner', 'idle', { show: 0, delay: 3000 }], ['king', 'idle'], ['@env', 'dusk'],
+      'p2.6': [['runner', 'idle', { x: 2.1, z: 0.45 }], ['runner', 'idle', { show: 0, delay: 3000 }], ['king', 'idle'], ['@env', 'dusk'],
         ['bathsheba', 'mourn', { show: 1, x: 1.45, z: -0.32, look: -0.6 }], ['bathsheba', 'idle', { delay: 3200 }], ['bathsheba', 'idle', { x: 0.05, z: 0.3, look: -1, delay: 3800 }]],
       // 그러나 주의 눈에 악했다
-      'p2.6': [['runner', 'idle', { show: 0 }], ['bathsheba', 'idle', { x: 0.05, z: 0.3, look: -0.3 }], ['@env', 'dark'], ['king', 'idle', { look: 0 }]],
+      'p2.7': [['runner', 'idle', { show: 0 }], ['bathsheba', 'idle', { x: 0.05, z: 0.3, look: -0.3 }], ['@env', 'dark'], ['king', 'idle', { look: 0 }]],
       w0: [['king', 'speak', { show: 1 }]],
       w1: [['uriah', 'speak', { show: 1, to: 'king' }]],
       w2: [['king', 'speak', { show: 1 }]],
@@ -548,11 +547,11 @@ export const C = {
         ['king', 'kneel', { y: 0, x: 0.35, z: 0.05, look: -1 }], ['nathan', 'point', { x: -0.4, z: 0.12, look: 1 }]],
       intro: [['@env', 'day'], ['glory', null, { show: 0 }], ['bathsheba', 'idle', { show: 0 }], ['mother', 'idle', { show: 0 }], ['elder', 'idle', { show: 0 }], ['king', 'sit', { look: -0.4 }]],
       // 예언자 나단이 왕 앞에 선다 — 한 성의 부자와 가난한 사람
-      'p0.0': [['nathan', 'idle', { x: -0.4, z: 0.12, look: 1 }], ['nathan', 'bow', { delay: 4200 }]],
+      'p0.0': [['nathan', 'idle', { x: -0.4, z: 0.12, look: 1 }], ['nathan', 'bow', { delay: 2600 }]],
       'p0.1': [['nathan', 'speak', { to: 'king' }]],
-      'p0.3': [['nathan', 'speak', { to: 'king' }], ['king', 'sit', { look: -0.6 }]],
+      'p0.4': [['nathan', 'speak', { to: 'king' }], ['king', 'sit', { look: -0.6 }]],
       'p0.5': [['nathan', 'speak', { to: 'king' }]],
-      // 왕의 얼굴이 붉어진다 — 일어나 노한다
+      // 왕이 불같이 노하여 일어난다
       'p1.0': [['nathan', 'idle'], ['king', 'idle', { y: 0, x: 0.35, z: 0.05, look: -1 }]],
       'p1.1': [['king', 'rebuke', { to: 'nathan' }]],
       'p1.2': [['king', 'speak', { to: 'nathan' }]],
@@ -565,18 +564,18 @@ export const C = {
       'p1.8': [['nathan', 'idle'], ['king', 'kneel', { look: -1 }]],
       'p1.9': [['king', 'mourn']],
       'p2.0': [['nathan', 'speak', { to: 'king' }]],
-      'p2.1': [['nathan', 'idle', { look: 1 }]],
+      'p2.2': [['nathan', 'idle', { look: 1 }]],
       // 아이가 앓자 왕은 밤새 땅에 엎드려 금식한다 — 이레째 (애도로만)
-      'p2.2': [['@env', 'night'], ['nathan', 'idle', { x: -1.9, z: 0.25, look: -1 }], ['nathan', 'idle', { show: 0, delay: 3000 }], ['king', 'mourn', { x: 0.1, z: 0.15, look: 0 }],
+      'p2.3': [['@env', 'night'], ['nathan', 'idle', { x: -1.9, z: 0.25, look: -1 }], ['nathan', 'idle', { show: 0, delay: 3000 }], ['king', 'mourn', { x: 0.1, z: 0.15, look: 0 }],
         ['elder', 'idle', { show: 1, x: 0.55, z: 0.05, look: -1, delay: 1500 }], ['elder', 'bow', { delay: 4000 }], ['bathsheba', 'mourn', { show: 1, x: -1.0, z: 0.3, look: 0.6, delay: 2500 }]],
       // 일어나 씻고 주의 집에 들어가 경배한다
-      'p2.3': [['@env', 'day'], ['nathan', 'idle', { show: 0 }], ['bathsheba', 'idle', { show: 0 }], ['elder', 'idle', { x: 0.2, z: -0.1, look: 1 }],
+      'p2.4': [['@env', 'day'], ['nathan', 'idle', { show: 0 }], ['bathsheba', 'idle', { show: 0 }], ['elder', 'idle', { x: 0.2, z: -0.1, look: 1 }],
         ['king', 'idle', { x: 0.9, z: 0.25, look: 1 }], ['king', 'idle', { x: 1.5, z: 0.15, delay: 2400 }], ['king', 'kneel', { look: 2.8, delay: 4200 }], ['glory', null, { show: 1, delay: 3800 }]],
       // 솔로몬 — 여디디야
-      'p2.4': [['king', 'idle', { x: 0.8, z: 0.15, look: -1 }], ['glory', null, { show: 0 }], ['mother', 'carry', { show: 1, x: 0.15, z: 0.3, look: 1, item: 'baby' }],
+      'p2.5': [['king', 'idle', { x: 0.8, z: 0.15, look: -1 }], ['glory', null, { show: 0 }], ['mother', 'carry', { show: 1, x: 0.15, z: 0.3, look: 1, item: 'baby' }],
         ['nathan', 'idle', { show: 1, x: -0.55, z: 0.1, look: 1 }], ['nathan', 'bless', { to: 'mother', delay: 2500 }]],
       // 참회의 노래
-      'p2.5': [['nathan', 'idle'], ['king', 'pray', { look: 0 }]],
+      'p2.6': [['nathan', 'idle'], ['king', 'pray', { look: 0 }]],
       w0: [['nathan', 'speak', { show: 1, to: 'king' }]],
       w1: [['king', 'kneel', { show: 1 }]],
       w2: [['nathan', 'point', { show: 1 }]],
@@ -620,7 +619,7 @@ export const C = {
       'p0.3': [['absalom', 'speak', { to: 'man1' }]],
       'p0.4': [['man1', 'speak', { to: 'absalom' }], ['absalom', 'listen']],
       'p0.5': [['man1', 'idle'], ['absalom', 'speak', { to: 'man1' }]],
-      'p0.6': [['absalom', 'shrug']],
+      'p0.7': [['absalom', 'shrug']],
       // 절하려 하면 붙들고 입을 맞춘다
       'p1.0': [['man1', 'bow'], ['absalom', 'idle', { x: -0.22, z: 0.18, look: 1 }], ['absalom', 'embrace', { delay: 1500 }], ['man1', 'embrace', { delay: 1500 }]],
       'p1.1': [['man1', 'idle', { x: -0.95, z: 0.5, look: 1 }], ['absalom', 'idle', { x: -0.55, z: 0.15, look: 1 }], ['man2', 'idle', { show: 1, x: 0.05, z: 0.15, look: -1 }],
