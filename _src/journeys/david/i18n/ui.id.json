@@ -1,0 +1,42 @@
+{
+ "appTag": "Daud · Dari gembala menjadi raja",
+ "docTitle": "Sang Jalan — Daud | Menyusuri hidup Daud di atas peta",
+ "metaDesc": "Dari gembala muda di padang Betlehem, melalui Lembah Ela dan gua-gua di padang gurun, sampai menjadi raja di Yerusalem. Telusuri 39 adegan Daud di atas peta Alkitab dan dengarkan mazmur yang digubahnya di tempat-tempat itu sebagai lagu.",
+ "mapAria": "Jalan Daud pada peta Yehuda, Benyamin, Filistin, dan Gilead",
+ "introTag": "Dari padang Betlehem sampai istana Yerusalem, jalan Daud",
+ "introLead": "Jelajahi peta dan temui jalan seorang anak gembala yang menjadi buronan, lalu menjadi raja, jatuh, dan bangkit kembali.",
+ "introF1": "Ikuti tempat-tempatnya, dari Betlehem melalui Lembah Ela dan gua-gua di padang gurun sampai ke Yerusalem",
+ "introF3": "Dengarkan kisahnya dibacakan, dan dengarkan sebagai lagu mazmur yang digubah Daud di tempat itu",
+ "landStep2": "Baca kisah dan teks di kartu, lalu tekan ▶ untuk mendengarkannya",
+ "landStep4": "Kumpulkan firman Allah dan perkataan Daud di tab '{words}' dan ingat kembali adegan yang telah dilalui dengan '{quiz}'",
+ "jesus": "Allah",
+ "hisWords": "Firman Allah dan perkataan Daud",
+ "wordsHead": "Firman Allah dan perkataan Daud",
+ "wordsIntro": "Firman yang diucapkan Allah dan perkataan yang diucapkan Daud di sepanjang jalannya, dihimpun menurut urutan perjalanan. Setiap perkataan adalah terjemahan baru yang menghidupkan makna aslinya dalam bahasa masa kini.",
+ "odoTitle": "Jarak yang ditempuh Daud sampai adegan ini (perkiraan jalan antartempat; langkah 75 cm)",
+ "gospels": {
+  "1sam": ["1 Samuel", "1Sam"],
+  "2sam": ["2 Samuel", "2Sam"],
+  "1ki": ["1 Raja-raja", "1Raj"],
+  "1chr": ["1 Tawarikh", "1Taw"]
+ },
+ "endLead": "Dari padang Betlehem sampai nyanyian terakhir Daud — terima kasih telah berjalan bersama kami.",
+ "blessing": "TUHAN gembalaku, tak ada yang kurang padaku.\nIa membiarkan aku berbaring di rumput yang hijau dan membawa aku ke tepi air tempat aku dapat beristirahat. (Mzm 23:1–2)\nKiranya Dia yang memanggil anak gembala di padang juga memanggil nama Anda, dan Dia yang menyertai Daud pada malam-malam pelariannya menjaga jalan Anda.",
+ "psalmHead": "Lagu yang dinyanyikan di tempat ini",
+ "psalmNote": "Lagu dari perjalanan Mazmur, dinyanyikan dalam bahasa Korea. Musik dan liriknya dibuat dengan AI lalu disempurnakan oleh manusia.",
+ "map": {
+  "유 다": "YEHUDA",
+  "베 냐 민": "BENYAMIN",
+  "이 스 라 엘": "ISRAEL",
+  "블 레 셋": "FILISTIN",
+  "길 르 앗": "GILEAD",
+  "모 압": "MOAB",
+  "에 돔": "EDOM",
+  "갈 릴 리": "GALILEA",
+  "벧세메스": "Bet-Semes",
+  "에그론": "Ekron",
+  "아스돗": "Asdod",
+  "가사": "Gaza",
+  "벧산": "Bet-Sean"
+ }
+}
