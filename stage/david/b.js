@@ -33,20 +33,20 @@ export const B = {
       // 아히멜렉이 떨며 나와 맞는다
       'p0.1': [['ahimelech', 'afraid', { x: 0.0, z: 0.08, look: -1 }]],
       'p0.2': [['ahimelech', 'speak', { to: 'david' }]],
-      'p0.3': [['ahimelech', 'listen'], ['david', 'speak', { to: 'ahimelech' }]],
-      'p0.4': [['david', 'speak', { to: 'ahimelech' }]],
+      'p0.4': [['ahimelech', 'listen'], ['david', 'speak', { to: 'ahimelech' }]],
+      'p0.6': [['david', 'speak', { to: 'ahimelech' }]],
       // 막 물려 낸 거룩한 빵 — 진설병 상에서
-      'p0.5': [['david', 'idle'], ['ahimelech', 'idle', { x: -0.22, z: -0.06, look: -0.6 }]],
-      'p0.6': [['ahimelech', 'idle', { item: 'bread', x: -0.1, z: 0.1, look: -1, delay: 1400 }], ['david', 'idle', { item: 'bread', delay: 3600 }], ['ahimelech', 'idle', { item: null, delay: 3600 }]],
+      'p0.7': [['david', 'idle'], ['ahimelech', 'idle', { x: -0.22, z: -0.06, look: -0.6 }]],
+      'p0.8': [['ahimelech', 'idle', { item: 'bread', x: -0.1, z: 0.1, look: -1, delay: 1400 }], ['david', 'idle', { item: 'bread', delay: 3600 }], ['ahimelech', 'idle', { item: null, delay: 3600 }]],
       // 창이나 칼이 없소 — 에봇 뒤에 천에 싸인 거인의 칼
       'p1.0': [['ahimelech', 'idle', { look: -1 }], ['david', 'idle', { item: null }]],
       'p1.1': [['david', 'speak', { to: 'ahimelech' }]],
-      'p1.2': [['david', 'idle'], ['ahimelech', 'idle', { x: 0.3, z: -0.3, look: 1 }], ['ahimelech', 'idle', { item: 'cloak', x: 0.0, z: 0.08, look: -1, delay: 2600 }]],
-      'p1.3': [['david', 'speak', { to: 'ahimelech' }], ['david', 'idle', { item: 'sword', delay: 2200 }], ['ahimelech', 'idle', { item: null, delay: 2200 }]],
+      'p1.3': [['david', 'idle'], ['ahimelech', 'idle', { x: 0.3, z: -0.3, look: 1 }], ['ahimelech', 'idle', { item: 'cloak', x: 0.0, z: 0.08, look: -1, delay: 2600 }]],
+      'p1.5': [['david', 'speak', { to: 'ahimelech' }], ['david', 'idle', { item: 'sword', delay: 2200 }], ['ahimelech', 'idle', { item: null, delay: 2200 }]],
       // 그 자리에 또 한 사람 — 에돔 사람 도엑
-      'p1.4': [['david', 'idle'], ['doeg', 'idle', { show: 1, look: -1 }]],
-      'p1.5': [['doeg', 'idle', { x: 0.85, z: 0.12, look: -1 }]],
-      'p1.6': [['ahimelech', 'idle', { look: 1 }], ['david', 'idle', { look: 1 }]],
+      'p1.7': [['david', 'idle'], ['doeg', 'idle', { show: 1, look: -1 }]],
+      'p1.8': [['doeg', 'idle', { x: 0.85, z: 0.12, look: -1 }]],
+      'p1.9': [['ahimelech', 'idle', { look: 1 }], ['david', 'idle', { look: 1 }]],
       // 다윗은 떠나고 — 기브아의 나무 아래 사울에게 도엑이 고한다
       'p2.0': [['david', 'idle', { x: -1.85, z: 0.3, look: -1 }], ['david', 'idle', { show: 0, delay: 3200 }], ['saul', 'idle', { show: 1, look: -1 }],
         ['doeg', 'bow', { x: 0.95, z: 0.08, look: 1, delay: 600 }], ['doeg', 'speak', { to: 'saul', delay: 3400 }]],
@@ -57,8 +57,8 @@ export const B = {
         ['abiathar', 'mourn', { delay: 3000 }]],
       'p2.3': [['david', 'mourn', { look: 1 }]],
       'p2.4': [['david', 'speak', { to: 'abiathar' }]],
-      'p2.5': [['abiathar', 'idle', { look: -1 }], ['david', 'bless', { to: 'abiathar' }]],
-      'p2.6': [['david', 'idle', { look: 0.5 }], ['abiathar', 'idle', { look: -1 }]],
+      'p2.6': [['abiathar', 'idle', { look: -1 }], ['david', 'bless', { to: 'abiathar' }]],
+      'p2.7': [['david', 'idle', { look: 0.5 }], ['abiathar', 'idle', { look: -1 }]],
       w0: [['david', 'speak', { show: 1, to: 'abiathar' }]],
       w1: [['david', 'speak', { show: 1, to: 'abiathar' }]],
       w2: [['david', 'speak', { show: 1, to: 'ahimelech' }], ['ahimelech', 'listen', { show: 1 }]],
@@ -90,11 +90,11 @@ export const B = {
       // 신하들이 먼저 알아본다
       'p1.0': [['david', 'idle'], ['ph1', 'point', { look: -1 }]],
       'p1.1': [['ph1', 'speak', { to: 'achish' }]],
-      'p1.2': [['ph1', 'idle', { look: -1 }], ['ph2', 'speak', { to: 'achish' }]],
-      'p1.3': [['ph2', 'point', { look: -1 }]],
+      'p1.3': [['ph1', 'idle', { look: -1 }], ['ph2', 'speak', { to: 'achish' }]],
+      'p1.4': [['ph2', 'point', { look: -1 }]],
       // 그 말이 가슴에 박힌다
-      'p1.4': [['ph2', 'idle'], ['david', 'afraid', { look: 1 }]],
-      'p1.5': [['david', 'cower', { look: 1 }]],
+      'p1.5': [['ph2', 'idle'], ['david', 'afraid', { look: 1 }]],
+      'p1.6': [['david', 'cower', { look: 1 }]],
       // 딴사람이 된다 — 문짝에 금을 긋고, 몸을 비튼다
       'p2.0': [['david', 'shrug', { look: 0.4 }], ['achish', 'idle', { look: -1 }]],
       'p2.1': [['david', 'idle', { x: 0.0, z: -0.32, look: 0.6 }], ['david', 'point', { delay: 1800 }], ['david', 'cower', { delay: 3400 }], ['david', 'shrug', { delay: 4800 }], ['david', 'cower', { delay: 6200 }],
@@ -193,8 +193,9 @@ export const B = {
       t1: ['man', 0.85, -0.38, -1, { gaze: false }],
       t2: ['woman', 1.2, -0.4, -1, { gaze: false }],
       abiathar: ['abiathar', -1.95, 0.45, 1],
-      saul: ['saul', -1.55, -0.55, 0.6],
-      abner: ['abner', -1.85, -0.45, 0.8, { gaze: false }],
+      // 멀리 기브아의 사울 — 다윗 무리와 섞여 보이지 않게 무대 왼쪽 끝 뒤에
+      saul: ['saul', -2.0, -0.7, 0.6],
+      abner: ['abner', -2.25, -0.5, 0.8, { gaze: false }],
     },
     beats: {
       enter: [['ph1', 'idle', { show: 0 }], ['ph2', 'idle', { show: 0 }], ['saul', 'idle', { show: 0 }], ['abner', 'idle', { show: 0 }], ['beam', null, { show: 1, x: -0.3, z: 0.2 }],
@@ -207,37 +208,38 @@ export const B = {
       'p0.2': [['david', 'pray']],
       'p0.3': [['beam', null, { show: 1, x: -1.05, z: 0.12 }], ['david', 'look-up']],
       // 부하들은 고개를 젓는다
-      'p0.4': [['beam', null, { show: 0 }], ['david', 'idle', { look: -1 }], ['i1', 'shrug'], ['i2', 'afraid']],
-      'p0.5': [['i1', 'speak', { to: 'david' }], ['i2', 'idle']],
+      'p0.5': [['beam', null, { show: 0 }], ['david', 'idle', { look: -1 }], ['i1', 'shrug'], ['i2', 'afraid']],
+      'p0.6': [['i1', 'speak', { to: 'david' }], ['i2', 'idle']],
       // 다시 여쭙고 — 더 분명한 대답
       'p1.0': [['i1', 'idle'], ['david', 'kneel', { look: 0 }], ['beam', null, { show: 1, x: -1.05, z: 0.12, delay: 800 }]],
       'p1.1': [['david', 'look-up']],
-      'p1.2': [['david', 'listen']],
+      'p1.3': [['david', 'listen']],
       // 내려가 블레셋을 친다 — 그들은 달아나 사라지고, 가축을 끌고 온다
-      'p1.3': [['beam', null, { show: 0 }], ['david', 'raise', { x: -0.05, z: 0.2, look: 1 }], ['i1', 'idle', { x: -0.3, z: 0.0, look: 1 }], ['i2', 'idle', { x: -0.25, z: 0.42, look: 1 }],
+      'p1.4': [['beam', null, { show: 0 }], ['david', 'raise', { x: -0.05, z: 0.2, look: 1 }], ['i1', 'idle', { x: -0.3, z: 0.0, look: 1 }], ['i2', 'idle', { x: -0.25, z: 0.42, look: 1 }],
         ['ph1', 'afraid', { delay: 600 }], ['ph2', 'afraid', { delay: 600 }], ['ph1', 'idle', { x: 2.0, z: -0.15, delay: 1500 }], ['ph2', 'idle', { x: 2.0, z: 0.25, delay: 1500 }],
         ['ph1', 'idle', { show: 0, delay: 4500 }], ['ph2', 'idle', { show: 0, delay: 4500 }], ['s1', null, { x: -0.1, z: 0.5, delay: 3500 }], ['s2', null, { x: 0.15, z: 0.55, delay: 3800 }]],
       // 그일라 주민이 살아났다
-      'p1.4': [['ph1', 'idle', { show: 0 }], ['ph2', 'idle', { show: 0 }], ['david', 'idle', { look: 1 }], ['t1', 'raise', { show: 1 }], ['t2', 'raise', { show: 1 }]],
+      'p1.5': [['ph1', 'idle', { show: 0 }], ['ph2', 'idle', { show: 0 }], ['david', 'idle', { look: 1 }], ['t1', 'raise', { show: 1 }], ['t2', 'raise', { show: 1 }]],
       // 에봇을 들고 온 아비아달
-      'p1.5': [['t1', 'idle'], ['t2', 'idle'], ['abiathar', 'idle', { show: 1, x: -0.75, z: 0.3, look: 1, item: 'cloak' }], ['david', 'idle', { look: -1, delay: 2500 }]],
+      'p1.6': [['t1', 'idle'], ['t2', 'idle'], ['abiathar', 'idle', { show: 1, x: -0.75, z: 0.3, look: 1, item: 'cloak' }], ['david', 'idle', { look: -1, delay: 2500 }]],
       // 멀리 기브아에서 사울이 기뻐한다
       'p2.0': [['saul', 'raise', { show: 1, look: 0.6 }], ['abner', 'idle', { show: 1, look: 1 }]],
-      'p2.1': [['saul', 'speak', { to: 'abner' }]],
-      'p2.2': [['saul', 'point', { look: 1 }]],
+      'p2.1': [['saul', 'speak', { to: 'abner' }], ['saul', 'point', { look: 1, delay: 2400 }]],
       // 에봇 앞에서 여쭙는다
-      'p2.3': [['saul', 'idle'], ['abiathar', 'idle', { x: -0.6, z: 0.15, look: 1 }], ['david', 'kneel', { x: -0.3, z: 0.2, look: -1 }], ['beam', null, { show: 1, x: -0.3, z: 0.2 }]],
-      'p2.4': [['david', 'pray']],
-      'p2.5': [['david', 'listen']],
+      'p2.2': [['saul', 'idle'], ['abiathar', 'idle', { x: -0.6, z: 0.15, look: 1 }], ['david', 'kneel', { x: -0.3, z: 0.2, look: -1 }], ['beam', null, { show: 1, x: -0.3, z: 0.2 }],
+        ['i1', 'idle', { x: -0.95, z: -0.02, look: 1 }], ['i2', 'idle', { x: -1.0, z: 0.4, look: 1 }]], // 부하들은 비켜서 — 무릎 꿇은 다윗을 가리지 않게
+      'p2.3': [['david', 'pray']],
+      'p2.4': [['david', 'listen']],
       'p2.6': [['david', 'pray']],
+      'p2.8': [['david', 'listen']],
       // 그들이 너를 넘겨줄 것이다 — 성 사람들이 돌아선다
-      'p2.7': [['david', 'listen'], ['t1', 'idle', { look: 2.8 }], ['t2', 'idle', { look: 2.8 }]],
+      'p2.9': [['david', 'listen'], ['t1', 'idle', { look: 2.8 }], ['t2', 'idle', { look: 2.8 }]],
       // 육백 명과 함께 정처 없이
-      'p2.8': [['beam', null, { show: 0 }], ['david', 'idle', { x: -1.2, z: 0.65, look: -1 }], ['abiathar', 'idle', { x: -1.4, z: 0.55, delay: 500 }], ['i1', 'idle', { x: -1.35, z: 0.8, delay: 800 }], ['i2', 'idle', { x: -1.6, z: 0.75, delay: 1100 }],
+      'p2.10': [['beam', null, { show: 0 }], ['david', 'idle', { x: -1.2, z: 0.65, look: -1 }], ['abiathar', 'idle', { x: -1.4, z: 0.55, delay: 500 }], ['i1', 'idle', { x: -1.35, z: 0.8, delay: 800 }], ['i2', 'idle', { x: -1.6, z: 0.75, delay: 1100 }],
         ['david', 'idle', { show: 0, delay: 4200 }], ['abiathar', 'idle', { show: 0, delay: 4400 }], ['i1', 'idle', { show: 0, delay: 4600 }], ['i2', 'idle', { show: 0, delay: 4800 }]],
       // 사울은 출정을 그만둔다
-      'p2.9': [['david', 'idle', { show: 0 }], ['abiathar', 'idle', { show: 0 }], ['i1', 'idle', { show: 0 }], ['i2', 'idle', { show: 0 }],
-        ['saul', 'idle', { x: -2.0, z: -0.6, look: -1 }], ['abner', 'idle', { x: -2.1, z: -0.4 }], ['saul', 'idle', { show: 0, delay: 2500 }], ['abner', 'idle', { show: 0, delay: 2500 }]],
+      'p2.11': [['david', 'idle', { show: 0 }], ['abiathar', 'idle', { show: 0 }], ['i1', 'idle', { show: 0 }], ['i2', 'idle', { show: 0 }],
+        ['saul', 'idle', { x: -2.6, z: -0.7, look: -1 }], ['abner', 'idle', { x: -2.7, z: -0.5 }], ['saul', 'idle', { show: 0, delay: 2500 }], ['abner', 'idle', { show: 0, delay: 2500 }]],
       w0: [['beam', null, { show: 1 }], ['david', 'listen', { show: 1 }]],
       w1: [['beam', null, { show: 1 }], ['david', 'listen', { show: 1 }]],
       w2: [['david', 'speak', { show: 1 }]],
@@ -278,11 +280,11 @@ export const B = {
       // 호레스 수풀로 요나단이 찾아온다
       'p0.2': [['jonathan', 'idle', { show: 1, x: 1.2, z: 0.15, look: -1 }], ['david', 'idle', { x: 0.92, z: 0.18, look: 1 }], ['m1', 'idle', { x: 1.45, z: 0.45, look: -1 }]],
       'p0.3': [['jonathan', 'speak', { to: 'david' }]],
-      'p0.5': [['jonathan', 'bless', { to: 'david' }], ['david', 'bow']],
+      'p0.6': [['jonathan', 'bless', { to: 'david' }], ['david', 'bow']],
       // 주 앞에서 언약을 맺고
-      'p0.6': [['beam', null, { show: 1 }], ['jonathan', 'kneel', { look: -1 }], ['david', 'kneel', { look: 1 }]],
+      'p0.7': [['beam', null, { show: 1 }], ['jonathan', 'kneel', { look: -1 }], ['david', 'kneel', { look: 1 }]],
       // 마지막 만남 — 끌어안고 헤어진다
-      'p0.7': [['beam', null, { show: 0 }], ['jonathan', 'embrace', { look: -1 }], ['david', 'embrace', { look: 1 }], ['jonathan', 'idle', { x: 2.0, z: 0.0, delay: 2600 }], ['jonathan', 'idle', { show: 0, delay: 5600 }],
+      'p0.8': [['beam', null, { show: 0 }], ['jonathan', 'embrace', { look: -1 }], ['david', 'embrace', { look: 1 }], ['jonathan', 'idle', { x: 2.0, z: 0.0, delay: 2600 }], ['jonathan', 'idle', { show: 0, delay: 5600 }],
         ['david', 'idle', { look: 1, delay: 2600 }]],
       // 십 사람들이 기브아의 사울에게
       'p1.0': [['jonathan', 'idle', { show: 0 }], ['saul', 'idle', { show: 1, look: 1 }], ['z1', 'idle', { show: 1, x: -1.05, z: 0.08, look: -1 }], ['z2', 'idle', { show: 1, x: -0.95, z: 0.3, look: -1 }]],
@@ -298,14 +300,14 @@ export const B = {
       // 서둘러 피하고 — 군사들이 에워싸며 좁혀 온다
       'p2.1': [['david', 'idle', { x: 1.3, z: 0.2, look: -1 }], ['m1', 'idle', { x: 1.55, z: 0.32, look: -1 }], ['sol1', 'idle', { x: 0.0, z: 0.3, look: 1 }], ['sol2', 'idle', { x: -0.15, z: -0.68, look: 1 }]],
       // 전령이 달려온다
-      'p2.2': [['runner', 'idle', { show: 1, x: -0.95, z: 0.3, look: 1 }]],
-      'p2.3': [['runner', 'speak', { to: 'saul' }], ['saul', 'idle', { look: -1 }]],
+      'p2.3': [['runner', 'idle', { show: 1, x: -0.95, z: 0.3, look: 1 }]],
+      'p2.4': [['runner', 'speak', { to: 'saul' }], ['saul', 'idle', { look: -1 }]],
       // 사울이 발길을 돌린다
-      'p2.4': [['runner', 'idle'], ['saul', 'idle', { x: -2.0, z: 0.0, look: -1 }], ['sol1', 'idle', { x: -2.0, z: 0.3 }], ['sol2', 'idle', { x: -2.0, z: -0.3 }], ['runner', 'idle', { x: -2.0, z: 0.5 }],
+      'p2.5': [['runner', 'idle'], ['saul', 'idle', { x: -2.0, z: 0.0, look: -1 }], ['sol1', 'idle', { x: -2.0, z: 0.3 }], ['sol2', 'idle', { x: -2.0, z: -0.3 }], ['runner', 'idle', { x: -2.0, z: 0.5 }],
         ['saul', 'idle', { show: 0, delay: 5500 }], ['sol1', 'idle', { show: 0, delay: 5500 }], ['sol2', 'idle', { show: 0, delay: 5500 }], ['runner', 'idle', { show: 0, delay: 5500 }]],
       // 갈라짐의 바위
-      'p2.5': [['saul', 'idle', { show: 0 }], ['sol1', 'idle', { show: 0 }], ['sol2', 'idle', { show: 0 }], ['runner', 'idle', { show: 0 }], ['david', 'idle', { x: 0.62, z: 0.05, look: -1 }]],
-      'p2.6': [['david', 'pray', { look: -0.3 }]],
+      'p2.6': [['saul', 'idle', { show: 0 }], ['sol1', 'idle', { show: 0 }], ['sol2', 'idle', { show: 0 }], ['runner', 'idle', { show: 0 }], ['david', 'idle', { x: 0.62, z: 0.05, look: -1 }]],
+      'p2.7': [['david', 'pray', { look: -0.3 }]],
       w0: [['jonathan', 'speak', { show: 1, to: 'david' }], ['david', 'listen', { show: 1 }]],
       w1: [['z1', 'speak', { show: 1, to: 'saul' }], ['saul', 'idle', { show: 1 }]],
       w2: [['saul', 'speak', { show: 1, to: 'z1' }], ['z1', 'bow', { show: 1 }]],
@@ -353,13 +355,13 @@ export const B = {
       // 마음이 찔린다
       'p1.3': [['david', 'idle', { x: 0.72, z: -0.48, look: -0.6 }], ['david', 'mourn', { delay: 2200 }]],
       'p1.4': [['david', 'speak', { to: 'm1' }]],
-      'p1.5': [['david', 'rebuke', { to: 'm1' }], ['m1', 'idle', { x: 0.4, z: -0.55, look: 0.6 }]],
+      'p1.6': [['david', 'rebuke', { to: 'm1' }], ['m1', 'idle', { x: 0.4, z: -0.55, look: 0.6 }]],
       // 굴을 나선 사울 — 뒤따라 나와 외친다
       'p2.0': [['saul', 'idle', { x: -0.9, z: 0.25, look: -1 }], ['david', 'idle', { x: -0.15, z: 0.25, look: -1, delay: 1800 }], ['m1', 'idle', { x: 0.3, z: 0.0, look: -1, delay: 2400 }]],
       'p2.1': [['david', 'speak', { to: 'saul' }], ['saul', 'idle', { look: 1 }]],
       // 땅에 엎드려 옷자락을 들어 보인다
       'p2.2': [['david', 'kneel', { look: -1, item: 'hem' }]],
-      'p2.3': [['david', 'speak', { to: 'saul', item: 'hem' }]],
+      'p2.3': [['david', 'kneel', { look: -1, item: 'hem' }]], // 엎드린 채 말한다(삼상 24:8) — speak로 일으키면 서서 말하는 것처럼 보였다
       'p2.4': [['david', 'kneel']],
       // 사울이 소리 높여 운다
       'p2.5': [['saul', 'mourn']],
@@ -433,14 +435,14 @@ export const B = {
       'p2.0': [['donkey', null, { x: -0.3, z: 0.42 }], ['david', 'idle', { item: null, x: -1.0, z: 0.15, look: 1 }], ['m1', 'idle', { x: -1.35, z: 0.0, look: 1 }], ['y1', 'idle', { x: -1.3, z: 0.38 }],
         ['abigail', 'idle', { board: null, x: -0.62, z: 0.22, look: -1, delay: 1500 }], ['abigail', 'kneel', { delay: 3000 }]],
       'p2.1': [['abigail', 'bow', { look: -1 }]],
-      'p2.2': [['abigail', 'kneel']],
-      'p2.3': [['david', 'speak', { to: 'abigail' }]],
-      'p2.4': [['david', 'raise', { look: 0.4 }]],
-      'p2.5': [['david', 'bless', { to: 'abigail' }]],
+      'p2.3': [['abigail', 'kneel']],
+      'p2.4': [['david', 'speak', { to: 'abigail' }]],
+      'p2.5': [['david', 'raise', { look: 0.4 }]],
+      'p2.6': [['david', 'bless', { to: 'abigail' }]],
       // 열흘쯤 뒤 — 나발은 잔칫자리에서 사라진다
-      'p2.6': [['@env', 'dusk'], ['nabal', 'sit', { show: 0 }], ['guest', 'mourn', { look: -0.6 }], ['david', 'idle']],
+      'p2.7': [['@env', 'dusk'], ['nabal', 'sit', { show: 0 }], ['guest', 'mourn', { look: -0.6 }], ['david', 'idle']],
       // 다윗이 아비가일을 아내로
-      'p2.7': [['@env', 'day'], ['guest', 'sit', { show: 0 }], ['donkey', null, { show: 0 }], ['abigail', 'idle', { x: -0.72, z: 0.2, look: -1 }], ['david', 'idle', { x: -0.98, z: 0.15, look: 1 }]],
+      'p2.8': [['@env', 'day'], ['guest', 'sit', { show: 0 }], ['donkey', null, { show: 0 }], ['abigail', 'idle', { x: -0.72, z: 0.2, look: -1 }], ['david', 'idle', { x: -0.98, z: 0.15, look: 1 }]],
       w0: [['david', 'speak', { show: 1, to: 'abigail' }], ['abigail', 'listen', { show: 1 }]],
       w1: [['abigail', 'speak', { show: 1, to: 'david' }], ['david', 'listen', { show: 1 }]],
       w2: [['nabal', 'sit-speak', { show: 1 }]],
@@ -461,6 +463,9 @@ export const B = {
       camp: ['camp', 0.0, -0.62, { n: 3, span: 1.0, color: '#8a7a62', flag: '#3c5d96', scale: 1.3 }],
       spear: ['spear', -0.32, 0.05, { state: 'ground', len: 0.9 }],
       jug: ['jug', -0.22, 0.14],
+      // 잦아든 진영의 모닥불 — 밤 장면이 너무 어두워 잠든 사람들이 묻혔다(사울 곁·진 가장자리)
+      fire1: ['fire', 0.3, 0.12, { scale: 0.8 }],
+      fire2: ['fire', -0.85, 0.2, { scale: 0.7 }],
     },
     cast: {
       saul: ['saulS', 0.0, 0.05, 0, { pose: 'sleep' }],
@@ -553,14 +558,14 @@ export const B = {
         ['david', 'idle', { look: 0.3 }]],
       // 언젠가는 사울의 손에 — 블레셋 땅 가드 왕에게 몸을 맡긴다
       'p0.0': [['david', 'mourn', { look: 0 }]],
-      'p0.1': [['david', 'idle', { x: 0.95, z: 0.15, look: 1 }], ['m1', 'idle', { x: 0.62, z: 0.08, look: 1, delay: 400 }], ['david', 'bow', { delay: 4500 }]],
-      'p0.2': [['david', 'idle'], ['achish', 'speak', { to: 'david' }], ['achish', 'point', { look: -1, delay: 3000 }]],
+      'p0.2': [['david', 'idle', { x: 0.95, z: 0.15, look: 1 }], ['m1', 'idle', { x: 0.62, z: 0.08, look: 1, delay: 400 }], ['david', 'bow', { delay: 4500 }]],
+      'p0.3': [['david', 'idle'], ['achish', 'speak', { to: 'david' }], ['achish', 'point', { look: -1, delay: 3000 }]],
       // 일 년 넉 달 — 가족과 함께
-      'p0.3': [['achish', 'idle', { x: 2.0, z: 0.0, look: 1 }], ['achish', 'idle', { show: 0, delay: 2500 }], ['david', 'idle', { x: -0.45, z: 0.12, look: 0.6 }], ['m1', 'idle', { x: -0.8, z: 0.0, look: 1 }]],
+      'p0.4': [['achish', 'idle', { x: 2.0, z: 0.0, look: 1 }], ['achish', 'idle', { show: 0, delay: 2500 }], ['david', 'idle', { x: -0.45, z: 0.12, look: 0.6 }], ['m1', 'idle', { x: -0.8, z: 0.0, look: 1 }]],
       // 사흘 길에서 돌아오니 연기만
-      'p0.4': [['achish', 'idle', { show: 0 }], ['@env', 'overcast'], ['abigail', 'idle', { show: 0 }], ['ahinoam', 'idle', { show: 0 }], ['kid', 'idle', { show: 0 }],
+      'p0.5': [['achish', 'idle', { show: 0 }], ['@env', 'overcast'], ['abigail', 'idle', { show: 0 }], ['ahinoam', 'idle', { show: 0 }], ['kid', 'idle', { show: 0 }],
         ['h1', null, { show: 0 }], ['h2', null, { show: 0 }], ['ruin', 'smoke', { show: 1 }], ['david', 'idle', { look: 0 }], ['m1', 'idle', { look: 0.6 }]],
-      'p0.5': [['david', 'afraid', { look: 0 }], ['m1', 'afraid'], ['m2', 'afraid'], ['m3', 'afraid', { look: -0.6 }]],
+      'p0.6': [['david', 'afraid', { look: 0 }], ['m1', 'afraid'], ['m2', 'afraid'], ['m3', 'afraid', { look: -0.6 }]],
       // 소리 높여 운다 — 울 힘이 없을 때까지
       'p1.0': [['david', 'mourn'], ['m1', 'mourn'], ['m2', 'mourn'], ['m3', 'mourn']],
       'p1.1': [['m3', 'kneel']],
@@ -585,7 +590,7 @@ export const B = {
       'p2.3': [['abigail', 'embrace', { look: -1 }], ['david', 'embrace', { look: 1 }], ['m1', 'raise', { x: -0.2, z: 0.05, look: 1 }]],
       // 나누지 말자 — 짐 곁에 남은 사람의 몫도 같다
       'p2.4': [['abigail', 'idle'], ['m1', 'rebuke', { look: -1 }], ['m2', 'idle', { x: -0.55, z: 0.45, look: 1 }], ['m3', 'idle', { x: -0.85, z: 0.3, look: 1 }]],
-      'p2.5': [['m1', 'idle'], ['david', 'speak', { to: 'm1' }]],
+      'p2.6': [['m1', 'idle'], ['david', 'speak', { to: 'm1' }]],
       w0: [['beam', null, { show: 1 }], ['david', 'listen', { show: 1 }]],
       w1: [['david', 'speak', { show: 1, to: 'm1' }]],
       w2: [['david', 'speak', { show: 1, to: 'm1' }]],
