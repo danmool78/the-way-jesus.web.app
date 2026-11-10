@@ -384,6 +384,8 @@ function scaleLights() {
 const skyC = new THREE.Color(), toneH = new THREE.Color(), toneS = new THREE.Color(), WHITE = new THREE.Color('#fff4e4');
 const groundAt = (x, z) => inTerrain ? (window.terrain3d.heightAt(base.x + x * base.k, base.z + z * base.k) - base.y) / base.k : 0;
 let bigNow = 1;
+// 바닥이 있는 소품(궁 안, floor) 위라면 그 바닥의 받침 높이 — 3D 지형 위에서 바닥 위의 가구와 왕좌에 앉은 사람이 바닥에 묻히지 않게 (2D에서는 0)
+const floorAt = (x, z, self) => Math.max(0, ...Object.values(props).filter(f => f.floor && f !== self && f.heightAt(x, z) > 0).map(f => f.lift.position.y));
 // 땅에 붙은 소품: 지형과 같은 고정 축척에 둔다. 나머지(사람 곁의 십자가·배·짐승·상·바구니…)는 사람과 함께 커진다
 // 바닥이 평평한 건물: 가운데 땅 높이에 앉히면 비탈 위쪽이 땅에 묻힌다(골짜기 바닥의 실로암 못) — 바닥 네 귀퉁이 가운데 가장 높은 땅에 앉힌다
 const FLAT = new Set(['pool', 'house', 'well', 'synagogue', 'temple', 'gate', 'walls', 'cliffshrine']);
@@ -457,8 +459,8 @@ function frame() {
       const stay = FIXED.has(p.kind);
       p.lift.position.x = stay ? (home.x - base.x) / base.k : 0; p.lift.position.z = stay ? (home.z - base.z) / base.k : 0;
       const ox = p.obj.position.x + p.lift.position.x, oz = p.obj.position.z + p.lift.position.z, f = p.foot;
-      p.lift.position.y = FLAT.has(p.kind) ? Math.max(groundAt(ox, oz), groundAt(ox + f[0], oz + f[2]), groundAt(ox + f[1], oz + f[2]), groundAt(ox + f[0], oz + f[3]), groundAt(ox + f[1], oz + f[3]))
-        : groundAt(ox, oz);
+      p.lift.position.y = FLAT.has(p.kind) || p.floor ? Math.max(groundAt(ox, oz), groundAt(ox + f[0], oz + f[2]), groundAt(ox + f[1], oz + f[2]), groundAt(ox + f[0], oz + f[3]), groundAt(ox + f[1], oz + f[3]))
+        : Math.max(groundAt(ox, oz), floorAt(ox, oz, p));
       if (!FIXED.has(p.kind)) { // 사람과 함께 키운다: 크기는 제자리에서, 높이(십자가가 선 언덕 위, 나는 비둘기)는 바닥에서부터
         if (p.fade === 'scale') p.obj.scale.multiplyScalar(bigNow); else p.obj.scale.copy(p.base).multiplyScalar(bigNow);
         p.lift.position.y += p.obj.position.y * (bigNow - 1);
@@ -469,7 +471,7 @@ function frame() {
   // 3D 지형 안에서는 그 자리의 땅 높이를 따른다. 높이를 정한 사람(십자가 위)은 땅만 따르고, 사람만 키우는 배율도 받지 않는다(십자가와 어긋나지 않게)
   const grounds = Object.values(props).filter(p => p.heightAt);
   Object.values(actors).forEach(ac => {
-    const onDeck = ac.p.root.parent !== stageGroup, g0 = onDeck ? 0 : groundAt(ac.pos.x, ac.pos.y);
+    const onDeck = ac.p.root.parent !== stageGroup, g0 = onDeck ? 0 : ac.fixedY ? Math.max(groundAt(ac.pos.x, ac.pos.y), floorAt(ac.pos.x, ac.pos.y)) : groundAt(ac.pos.x, ac.pos.y);
     ac.ground = ac.fixedY || onDeck ? g0 + (ac.fixedY && inTerrain ? ac.y * (bigNow - 1) : 0) : Math.max(g0, ...grounds.map(p => { const h = p.heightAt(ac.pos.x, ac.pos.y); return h > 0 ? p.lift.position.y + h : -Infinity; }));
     ac.big = inTerrain && !onDeck ? bigNow : 1; // 배·나귀에 탄 사람은 그 소품과 함께 커진다
     ac.update(time, dt);
