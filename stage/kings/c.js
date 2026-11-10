@@ -276,7 +276,7 @@ export const C = {
     wide: 1.35,
     props: {
       wall: ['kwall', -0.7, -0.75, { w: 2.4, state: 'siege' }],
-      camp: ['camp', 1.65, -0.45, { n: 6, span: 1.3, color: '#b89868', flag: '#7a6a2e' }],
+      camp: ['camp', 1.65, -0.45, { n: 6, span: 1.3, color: '#b89868', flag: '#7a6a2e', scale: 1.4 }],
       food: ['provisions', 1.45, -0.1, { kind: 'food' }],
       gold: ['tribute', 1.95, 0.05, { kind: 'gold', scale: 0.7 }],
       flour: ['tribute', -0.3, -0.25, { kind: 'spice', scale: 0.8 }],
