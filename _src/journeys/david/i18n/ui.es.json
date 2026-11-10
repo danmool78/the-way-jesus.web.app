@@ -1,0 +1,54 @@
+{
+ "appTag": "David · De pastor a rey",
+ "docTitle": "El Camino — David | La vida de David sobre el mapa",
+ "metaDesc": "Del pastor de los campos de Belén, por el valle de Ela y las cuevas del desierto, hasta el rey de Jerusalén. Recorre sobre un mapa bíblico 39 escenas de David y escucha cantados los salmos que compuso en esos lugares.",
+ "mapAria": "El camino de David sobre el mapa de Judá, Benjamín, Filistea y Galaad",
+ "introTag": "De los campos de Belén al palacio de Jerusalén, el camino de David",
+ "introLead": "Camina sobre el mapa y acompaña a un joven pastor que se convierte en fugitivo, llega a ser rey, cae y vuelve a levantarse.",
+ "introF1": "Recorre los lugares desde Belén, por el valle de Ela y las cuevas del desierto, hasta Jerusalén",
+ "introF3": "Escucha la historia en voz alta y oye cantados los salmos que David compuso en esos mismos lugares",
+ "landStep2": "En la tarjeta, lee la historia y el texto, y escucha la lectura con el botón ▶",
+ "landStep4": "En la pestaña «{words}» de arriba, reúne las palabras de Dios y de David, y con «{quiz}» repasa las escenas recorridas",
+ "jesus": "Dios",
+ "hisWords": "Palabras de Dios y de David",
+ "wordsHead": "Palabras de Dios y de David",
+ "wordsIntro": "Aquí se reúnen, en el orden del viaje, las palabras que Dios pronunció en el camino de David y las que dijo David. Todas son una reconstrucción traducida de nuevo al lenguaje de hoy, fiel al sentido del texto original.",
+ "odoTitle": "Distancia recorrida por David hasta esta escena (suma aproximada de los caminos entre lugares; pasos calculados con una zancada de 75 cm)",
+ "gospels": {
+  "1sam": [
+   "1 Samuel",
+   "1 S"
+  ],
+  "2sam": [
+   "2 Samuel",
+   "2 S"
+  ],
+  "1ki": [
+   "1 Reyes",
+   "1 R"
+  ],
+  "1chr": [
+   "1 Crónicas",
+   "1 Cr"
+  ]
+ },
+ "endLead": "De los campos de Belén hasta el último canto de David, gracias por caminar con nosotros.",
+ "blessing": "El Señor es mi pastor; nada me falta.\nMe hace descansar en verdes praderas y me conduce junto a aguas tranquilas. (Sal 23:1–2)\nQue quien llamó al muchacho del campo llame también tu nombre, y quien estuvo con él en las noches de huida guarde tu camino.",
+ "psalmHead": "El canto de este lugar",
+ "psalmNote": "Es una canción del viaje de los Salmos, cantada en coreano. La música y la letra se crearon con IA y fueron revisadas por personas.",
+ "map": {
+  "유 다": "JUDÁ",
+  "베 냐 민": "BENJAMÍN",
+  "이 스 라 엘": "ISRAEL",
+  "블 레 셋": "FILISTEA",
+  "길 르 앗": "GALAAD",
+  "모 압": "MOAB",
+  "에 돔": "EDOM",
+  "갈 릴 리": "GALILEA",
+  "벧세메스": "Bet-semes",
+  "에그론": "Ecrón",
+  "아스돗": "Asdod",
+  "가사": "Gaza",
+  "벧산": "Bet-sán"
+ }
+}
