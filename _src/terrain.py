@@ -18,10 +18,15 @@ import relief as R  # noqa: E402
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / 'assets' / 'terrain'
 # 지역: 북쪽 갈릴리와 남쪽 유대·사마리아는 위도 32.55에서 맞닿는다. 애굽(나일 삼각주)은 따로.
+# 위도 32.55 아래위가 맞닿는 줄(행)은 지역마다 같은 간격(1/grid 단위)이라, 북쪽 끝을 32.95로 둔 갈멜도 갈릴리의 줄과 겹친다
 # grid: 지도 단위당 꼭짓점 수, color: 지도 단위당 색 그림 픽셀 수, src: 색 정밀 타일
 REGIONS = {
     'galilee': dict(lat0=32.55, lat1=33.45, lng0=35.0, lng1=35.95, grid=0.6, color=2.2, src=('relief-hi', R.HI)),
     'judea': dict(lat0=30.96, lat1=32.55, lng0=35.0, lng1=35.95, grid=0.6, color=2.2, src=('relief-hi', R.HI)),
+    # 유대 서쪽(쉐펠라·블레셋 평야·해안)과 그 북쪽 해안(사론·갈멜)은 동경 35.0에서 유대·갈릴리와 맞닿는다 — 없을 때는
+    # 그 서쪽이 평평한 2D 바탕이라 경계에서 땅이 갑자기 납작해졌다(다윗 여정의 엘라·가드·아둘람·시글락). 서쪽 끝은 지중해 바다까지
+    'shephelah': dict(lat0=30.96, lat1=32.55, lng0=34.2, lng1=35.0, grid=0.6, color=2.2, src=('relief-hi', R.HI)),
+    'carmel': dict(lat0=32.55, lat1=32.95, lng0=34.6, lng1=35.0, grid=0.6, color=2.2, src=('relief-hi', R.HI), sea0=True),
     'egypt': dict(lat0=29.8, lat1=31.35, lng0=30.95, lng1=32.65, grid=0.25, color=1.2, src=('relief-hi-w', R.HI_W)),
     # 모세 여정: 시내 반도 남쪽(마라·신 광야·르비딤·시내산·미디안)과 그 북쪽(가데스·호르산·부논)은 위도 29.8에서 맞닿는다.
     # 정밀 타일이 없는 사막이라 색은 2D 바탕(relief-south)과 같은 방식으로 고도에서 바로 칠한다(src 없음, dry). 바다는 홍해의 두 만
@@ -87,6 +92,8 @@ def main(cache, only=None):
         land = dem > 0
         first = np.where(land.any(axis=1), np.argmax(land, axis=1), gw)
         sea = np.arange(gw)[None, :] < first[:, None]
+        if e.get('sea0'):  # 갈멜 곶 동쪽의 아고 만: 곶 너머의 바다도 바다로 — 갈릴리 쪽 경계 꼭짓점과 같게 (해수면 아래 땅이 없는 지역만)
+            sea |= dem <= 0
         if e.get('gulf'):  # 홍해의 두 만은 동쪽에도 있다 (아카바 만)
             sea = gulf(cache, e, lat, lng) < -6
         dem = np.clip(dem, -480, 6000)
