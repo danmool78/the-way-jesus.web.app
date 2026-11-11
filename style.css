@@ -164,6 +164,8 @@ html:not(:lang(ko)):not(:lang(zh)):not(:lang(ja)) .river-lbl text{writing-mode:h
 .refcity circle{fill:#8f7c5c}
 .refcity text{font-size:10.5px;fill:#4f4330;text-anchor:start;stroke:rgba(245,236,212,.92);stroke-width:3px}
 .zoom-city .region,.zoom-city .refcity,.zoom-city .sea-lbl{opacity:0}
+.zoom-far .lv{opacity:0} /* 지중해 지도(바울)를 멀리서 볼 때 레반트의 작은 물 이름 */
+.medmap.zoom-vfar .refcity,.medmap.zoom-xfar .region,.medmap.zoom-xfar .pin:not(.now) text{opacity:0} /* 지중해 전체를 한 화면에: 이름이 서로 겹친다 */
 .landmark{opacity:0;transition:opacity .8s;pointer-events:none}
 .landmark.ready{opacity:1}
 .nilebank{stroke-width:9;opacity:.6}

@@ -162,6 +162,8 @@ const RELIEF_BABYLON = { lat0: 31.95, lat1: 33.15, lng0: 43.65, lng1: 45.2 };
 // 지중해 동쪽·가운데 바탕(assets/relief-med.webp, 바울 여정 — journey.map.med — 에서만) — _src/relief.py의 MED와 같게.
 // 바다는 투명하게 비어 있어 밑에 바다색을 깔고, 레반트·애굽 자리(MED_HOLE)도 비어 있어 원래 바탕·벡터 바다가 비친다. 그래서 다른 그림·바다 위에 얹는다
 const RELIEF_MED = { lat0: 30.5, lat1: 43.0, lng0: 11.0, lng1: 38.0 };
+// 그 밑의 넓고 거친 바탕(assets/relief-med-wide.webp) — 예루살렘에서 로마까지를 한 화면에 담을 때 위아래가 비지 않게. _src/relief.py의 MED_WIDE와 같게
+const RELIEF_MED_WIDE = { lat0: 24.5, lat1: 48.5, lng0: 8.0, lng1: 41.0 };
 // 그 위에 바울의 장소 둘레만 고운 타일(assets/relief-med-hi/, 있는 타일은 tiles.json) — _src/relief.py의 MED_HI_와 같게
 const RELIEF_MED_HI = { ...RELIEF_MED, tile: 256, dir: 'relief-med-hi', below: 3, group: '#reliefMedHi', have: new Set() };
 // 프롤로그의 에덴 둘레 바탕(assets/relief-east.webp) — _src/relief.py의 EAST와 같게
@@ -213,8 +215,11 @@ function buildMap() {
   const [mx0, my0] = px([RELIEF_MESO.lat1, RELIEF_MESO.lng0]), [mx1, my1] = px([RELIEF_MESO.lat0, RELIEF_MESO.lng1]), jmap = DATA.journey?.map;
   const [bx0, by0] = px([RELIEF_BABYLON.lat1, RELIEF_BABYLON.lng0]), [bx1, by1] = px([RELIEF_BABYLON.lat0, RELIEF_BABYLON.lng1]);
   const [dx0, dy0] = px([RELIEF_MED.lat1, RELIEF_MED.lng0]), [dx1, dy1] = px([RELIEF_MED.lat0, RELIEF_MED.lng1]);
+  const [vx0, vy0] = px([RELIEF_MED_WIDE.lat1, RELIEF_MED_WIDE.lng0]), [vx1, vy1] = px([RELIEF_MED_WIDE.lat0, RELIEF_MED_WIDE.lng1]);
   // 지중해 지도(바울): 그림 밑에 까는 바다와 레반트의 벡터 바다를 한 그라데이션(지도 좌표)으로 칠해, 두 바다가 만나는 자리에 이음매가 없게
   const seaFill = jmap?.med ? 'url(#seaMed)' : 'url(#seaGrad)';
+  // 지중해 전체를 볼 때 갈릴리 바다·사해·요단 강 이름이 예루살렘 둘레에 겹쳐 쌓인다 — 멀리서는 숨긴다 (.zoom-far .lv)
+  const lv = jmap?.med ? ' lv' : '';
   if (jmap?.med) fetch(`assets/${RELIEF_MED_HI.dir}/tiles.json`).then(r => r.json()).then(a => { RELIEF_MED_HI.have = new Set(a); applyView(); }).catch(() => {});
   map.setAttribute('viewBox', `0 0 ${W} ${H}`);
   map.innerHTML = `
@@ -226,7 +231,7 @@ function buildMap() {
     <filter id="waterEdge" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur in="SourceAlpha" stdDeviation="4" result="b"/><feComposite in="SourceAlpha" in2="b" operator="arithmetic" k2="1" k3="-1" result="edge"/><feFlood flood-color="#21474f" flood-opacity=".5"/><feComposite in2="edge" operator="in"/><feComposite in2="SourceGraphic" operator="over"/></filter>
   </defs>
   <rect x="${-W * 2}" y="${-H * 2}" width="${W * 12}" height="${H * 5}" fill="var(--land)"/>
-  ${jmap?.med ? `<rect x="${dx0}" y="${dy0}" width="${dx1 - dx0}" height="${dy1 - dy0}" fill="${seaFill}"/>` : ''}
+  ${jmap?.med ? `<rect x="${vx0}" y="${vy0}" width="${vx1 - vx0}" height="${vy1 - vy0}" fill="${seaFill}"/>` : ''}
   ${jmap?.meso ? `<image href="assets/relief-meso.webp" class="relief" x="${mx0}" y="${my0}" width="${mx1 - mx0}" height="${my1 - my0}" preserveAspectRatio="none"/>
   <image href="assets/relief-babylon.webp" class="relief" x="${bx0}" y="${by0}" width="${bx1 - bx0}" height="${by1 - by0}" preserveAspectRatio="none"/>` : ''}
   <image href="assets/relief-west.webp" class="relief" x="${wx0}" y="${wy0}" width="${wx1 - wx0}" height="${wy1 - wy0}" preserveAspectRatio="none"/>
@@ -243,7 +248,8 @@ function buildMap() {
   <path d="${smooth(GEO.jordanS)}" class="riverbank"/>
   ${OASES.map(([a, b, r]) => `<circle cx="${px([a, b])[0]}" cy="${px([a, b])[1]}" r="${r}" fill="url(#oasis)"/>`).join('')}
   <path d="${sea}" fill="${seaFill}" class="sea"/>
-  ${jmap?.med ? `<image href="assets/relief-med.webp" class="relief" x="${dx0}" y="${dy0}" width="${dx1 - dx0}" height="${dy1 - dy0}" preserveAspectRatio="none"/>
+  ${jmap?.med ? `<image href="assets/relief-med-wide.webp" class="relief" x="${vx0}" y="${vy0}" width="${vx1 - vx0}" height="${vy1 - vy0}" preserveAspectRatio="none"/>
+  <image href="assets/relief-med.webp" class="relief" x="${dx0}" y="${dy0}" width="${dx1 - dx0}" height="${dy1 - dy0}" preserveAspectRatio="none"/>
   <g id="reliefMedHi" class="relief"></g>` : ''}
   ${jmap?.meso ? `<path d="${smooth(GEO.cyprus, true)}" class="isle"/>` : ''}
   <path d="${smooth(GEO.coast)}" class="coast"/>
@@ -252,7 +258,7 @@ function buildMap() {
   <path d="${smooth(GEO.hula, true)}" class="lake"/>
   ${['mareotis', 'manzala', 'sirbonis', 'bitter'].map(k => `<path d="${smooth(GEO[k], true)}" class="lake"/>`).join('')}
   ${(DATA.journey?.map?.waters || []).map(w => `<path d="${smooth(w.d, true)}" class="lake old ${w.cls || ''}"/>`).join('')}
-  ${DATA.journey?.map?.south ? '' : `<path d="${smooth(GEO.suez, true)}" fill="url(#seaGrad)" class="sea"/>`}
+  ${DATA.journey?.map?.south ? '' : `<path d="${smooth(GEO.suez, true)}" fill="${seaFill}" class="sea"/>`}
   ${['nile', 'canopic', 'rosetta', 'damietta', 'pelusiac'].map(k => `<path d="${smooth(GEO[k])}" class="river nile"/>`).join('')}
   <path d="${smooth(GEO.jordanN)}" class="river jordan"/>
   <path d="${smooth(GEO.jordanS)}" class="river jordan"/>
@@ -260,17 +266,17 @@ function buildMap() {
     <path d="${smooth(GEO.kidron)}" class="valley"/>
     <path d="${smooth(GEO.hinnom)}" class="valley"/>
   </g>
- ${LANDMARKS.map(L => { const [a, b] = px([L.lat1, L.lng0]), [c, d] = px([L.lat0, L.lng1]); return `<g class="lmk" data-cx="${(a + c) / 2}" data-cy="${(b + d) / 2}" data-w="${c - a}"><image class="landmark" data-src="assets/egypt-${L.id}.webp" x="${a}" y="${b - L.top}" width="${c - a}" height="${d - b + L.top}" preserveAspectRatio="none"/></g>`; }).join('')}
+ ${jmap?.med ? '' : LANDMARKS.map(L => { const [a, b] = px([L.lat1, L.lng0]), [c, d] = px([L.lat0, L.lng1]); return `<g class="lmk" data-cx="${(a + c) / 2}" data-cy="${(b + d) / 2}" data-w="${c - a}"><image class="landmark" data-src="assets/egypt-${L.id}.webp" x="${a}" y="${b - L.top}" width="${c - a}" height="${d - b + L.top}" preserveAspectRatio="none"/></g>`; }).join('')}
   <image id="city3d" class="city3d" x="${cx0}" y="${cy0 - CITY3D.top}" width="${cx1 - cx0}" height="${cy1 - cy0 + CITY3D.top}" preserveAspectRatio="none"/>
   ${jmap?.med ? '' : lbl(tm('지 중 해'), px([32.35, 34.48]), 'sea-lbl')}
-  ${lbl(tm('갈릴리 바다'), px([32.80, 35.60]), 'water-lbl')}
-  ${lbl(tm('사해'), px([31.42, 35.49]), 'water-lbl')}
-  ${lbl(tm('요단 강'), px([32.40, 35.585]), 'water-lbl river-lbl')}
+  ${lbl(tm('갈릴리 바다'), px([32.80, 35.60]), 'water-lbl' + lv)}
+  ${lbl(tm('사해'), px([31.42, 35.49]), 'water-lbl' + lv)}
+  ${lbl(tm('요단 강'), px([32.40, 35.585]), 'water-lbl river-lbl' + lv)}
   ${REGIONS.map(([n, a, b]) => lbl(tm(n), px([a, b]), 'region')).join('')}
   ${(DATA.journey?.map?.labels || []).map(([n, a, b, c]) => lbl(tm(n), px([a, b]), c || 'region')).join('')}
   ${REFCITIES.map(([n, a, b]) => `<g class="lbl refcity" transform="translate(${px([a, b]).join(',')})"><circle r="2.2"/><text x="5" y="3">${esc(tm(n))}</text></g>`).join('')}
-  ${lbl(tm('나일 강'), px([29.7, 31.33]), 'water-lbl river-lbl')}
-  ${lbl(tm('수에즈 만'), px([29.55, 32.66]), 'water-lbl river-lbl')}
+  ${jmap?.med ? '' : lbl(tm('나일 강'), px([29.7, 31.33]), 'water-lbl river-lbl')}
+  ${jmap?.med ? '' : lbl(tm('수에즈 만'), px([29.55, 32.66]), 'water-lbl river-lbl')}
   ${lbl(tm('메소포타미아'), px([32.05, 46.0]), 'region meso')}
   ${lbl(tm('유프라테스 강'), px([30.88, 45.95]), 'water-lbl river-lbl meso')}
   ${lbl(tm('티그리스 강'), px([32.3, 46.7]), 'water-lbl river-lbl meso')}
@@ -354,6 +360,9 @@ function applyView() {
   }
   map.classList.toggle('zoom-city', u < 0.06);
   map.classList.toggle('zoom-near', u < 0.6);
+  map.classList.toggle('zoom-far', u > 4);
+  map.classList.toggle('zoom-vfar', u > 20); // 지중해 전체(바울): 참고 도시는 숨기고, 휴대폰처럼 아주 멀면 지역 이름도
+  map.classList.toggle('zoom-xfar', u > 45);
   showHiRelief(x, y, w, h, u);
   // 예루살렘 도성 그림: 가까이 들어갔을 때만 받아서(약 200KB) 서서히 보인다
   const city = $('#city3d', map);
@@ -1826,6 +1835,7 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   }
   buildMap(); renderTrack();
   map.classList.toggle('jflood', !!jm?.jordanFlood);
+  map.classList.toggle('medmap', !!jm?.med);
   window.journeyMap = jm || null; // 3D 지형(terrain.js)도 여정의 바탕(시내 반도)을 깐다
   // 장면 주소(#e05, 프롤로그는 #e00)가 있으면 그 장면, 없으면 지난번 장면, 처음 온 사람은 프롤로그부터
   const hashIdx = () => d.prologue && location.hash === '#' + d.prologue.id ? -1 : EVENTS.findIndex(e => '#' + e.id === location.hash);
