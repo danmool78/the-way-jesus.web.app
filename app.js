@@ -331,6 +331,14 @@ function applyView() {
   map.setAttribute('viewBox', `${x} ${y} ${w} ${h}`);
   const u = w / r.width; // 화면 1px 당 지도 단위
   map.style.setProperty('--u', u);
+  // 축척 막대: 지도 1단위 = 위도 1/K도(약 111m). 110px 안에 드는 가장 긴 '보기 좋은' 거리를 고른다
+  const sb = $('#scalebar');
+  if (sb) {
+    const kmPx = u * 111.32 / K, km = [0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50, 100, 200, 500].filter(d => d / kmPx <= 110).pop() || 0.05;
+    sb.firstChild.style.width = Math.round(km / kmPx) + 'px';
+    sb.lastChild.textContent = km < 1 ? `${km * 1000} m` : `${km} km`;
+    sb.style.bottom = Math.round(r.height - f.b + 14) + 'px'; // 휴대폰은 아래 카드 위로
+  }
   map.classList.toggle('zoom-city', u < 0.06);
   map.classList.toggle('zoom-near', u < 0.6);
   showHiRelief(x, y, w, h, u);
