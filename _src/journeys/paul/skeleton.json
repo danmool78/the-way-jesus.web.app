@@ -1,0 +1,529 @@
+[
+ {
+  "id": "a01",
+  "p": "a1",
+  "when": "AD 34년경",
+  "year": 34,
+  "place": "jerusalem",
+  "title": "스데반의 돌무더기 앞에서",
+  "refs": {
+   "acts": "7:54–8:3"
+  }
+ },
+ {
+  "id": "a02",
+  "p": "a1",
+  "when": "AD 34년경",
+  "year": 34,
+  "place": "damascusroad",
+  "title": "다메섹 길의 빛",
+  "refs": {
+   "acts": "9:1–9"
+  }
+ },
+ {
+  "id": "a03",
+  "p": "a1",
+  "when": "AD 34년경",
+  "year": 34,
+  "place": "damascus",
+  "title": "곧은 길의 아나니아",
+  "refs": {
+   "acts": "9:10–22"
+  }
+ },
+ {
+  "id": "a04",
+  "p": "a1",
+  "when": "AD 37년경",
+  "year": 37,
+  "place": "damascus",
+  "title": "광주리에 담겨 성벽을 내려가다",
+  "refs": {
+   "acts": "9:23–25",
+   "2co": "11:32–33"
+  }
+ },
+ {
+  "id": "a05",
+  "p": "a1",
+  "when": "AD 37년경",
+  "year": 37,
+  "place": "jerusalem",
+  "title": "바나바가 손을 잡아 준 사람",
+  "refs": {
+   "acts": "9:26–30",
+   "gal": "1:18–24"
+  }
+ },
+ {
+  "id": "a06",
+  "p": "a1",
+  "when": "AD 44년경",
+  "year": 44,
+  "place": "antioch",
+  "title": "처음 그리스도인이라 불린 곳",
+  "refs": {
+   "acts": "11:19–30"
+  }
+ },
+ {
+  "id": "a07",
+  "p": "a2",
+  "when": "AD 47년경",
+  "year": 47,
+  "place": "antioch",
+  "title": "따로 세우라 하신 두 사람",
+  "refs": {
+   "acts": "13:1–4"
+  }
+ },
+ {
+  "id": "a08",
+  "p": "a2",
+  "when": "AD 47년경",
+  "year": 47,
+  "place": "paphos",
+  "title": "총독 앞에서 눈이 먼 마술사",
+  "refs": {
+   "acts": "13:4–12"
+  }
+ },
+ {
+  "id": "a09",
+  "p": "a2",
+  "when": "AD 47년경",
+  "year": 47,
+  "place": "pantioch",
+  "title": "회당에서 처음 전한 말",
+  "refs": {
+   "acts": "13:13–52"
+  },
+  "later": [
+   "gal"
+  ]
+ },
+ {
+  "id": "a10",
+  "p": "a2",
+  "when": "AD 48년경",
+  "year": 48,
+  "place": "lystra",
+  "title": "신이라 불리다가 돌에 맞다",
+  "refs": {
+   "acts": "14:8–20"
+  },
+  "later": [
+   "gal"
+  ]
+ },
+ {
+  "id": "a11",
+  "p": "a2",
+  "when": "AD 48년경",
+  "year": 48,
+  "place": "derbe",
+  "title": "다시 그 성들로",
+  "refs": {
+   "acts": "14:20–28"
+  }
+ },
+ {
+  "id": "a12",
+  "p": "a2",
+  "when": "AD 49년경",
+  "year": 49,
+  "place": "jerusalem",
+  "title": "무엇으로 구원을 받는가",
+  "refs": {
+   "acts": "15:1–35",
+   "gal": "2:1–16"
+  },
+  "letters": [
+   "gal"
+  ]
+ },
+ {
+  "id": "a13",
+  "p": "a3",
+  "when": "AD 50년경",
+  "year": 50,
+  "place": "antioch",
+  "title": "바나바와 갈라선 날",
+  "refs": {
+   "acts": "15:36–41"
+  }
+ },
+ {
+  "id": "a14",
+  "p": "a3",
+  "when": "AD 50년경",
+  "year": 50,
+  "place": "lystra",
+  "title": "젊은 디모데",
+  "refs": {
+   "acts": "16:1–5"
+  }
+ },
+ {
+  "id": "a15",
+  "p": "a3",
+  "when": "AD 50년경",
+  "year": 50,
+  "place": "troas",
+  "title": "마게도냐 사람의 환상",
+  "refs": {
+   "acts": "16:6–10"
+  }
+ },
+ {
+  "id": "a16",
+  "p": "a3",
+  "when": "AD 50년경",
+  "year": 50,
+  "place": "philippi",
+  "title": "강가의 기도처, 루디아",
+  "refs": {
+   "acts": "16:11–15"
+  },
+  "later": [
+   "php"
+  ]
+ },
+ {
+  "id": "a17",
+  "p": "a3",
+  "when": "AD 50년경",
+  "year": 50,
+  "place": "philippi",
+  "title": "한밤의 찬송과 흔들린 감옥",
+  "refs": {
+   "acts": "16:16–40"
+  },
+  "later": [
+   "php"
+  ]
+ },
+ {
+  "id": "a18",
+  "p": "a3",
+  "when": "AD 50년경",
+  "year": 50,
+  "place": "thessalonica",
+  "title": "성경을 날마다 상고한 사람들",
+  "refs": {
+   "acts": "17:1–15"
+  },
+  "later": [
+   "1th",
+   "2th"
+  ]
+ },
+ {
+  "id": "a19",
+  "p": "a3",
+  "when": "AD 51년경",
+  "year": 51,
+  "place": "athens",
+  "title": "알지 못하는 신에게",
+  "refs": {
+   "acts": "17:16–34"
+  }
+ },
+ {
+  "id": "a20",
+  "p": "a3",
+  "when": "AD 51년경",
+  "year": 51,
+  "place": "corinth",
+  "title": "천막 깁는 친구들",
+  "refs": {
+   "acts": "18:1–4"
+  },
+  "later": [
+   "1co",
+   "2co"
+  ]
+ },
+ {
+  "id": "a21",
+  "p": "a3",
+  "when": "AD 51년경",
+  "year": 51,
+  "place": "corinth",
+  "title": "두려워하지 말고 말하라",
+  "refs": {
+   "acts": "18:5–18"
+  },
+  "letters": [
+   "1th",
+   "2th"
+  ]
+ },
+ {
+  "id": "a22",
+  "p": "a4",
+  "when": "AD 53–55년경",
+  "year": 54,
+  "place": "ephesus",
+  "title": "두란노 서원의 두 해",
+  "refs": {
+   "acts": "19:1–12"
+  },
+  "letters": [
+   "1co"
+  ],
+  "later": [
+   "eph"
+  ]
+ },
+ {
+  "id": "a23",
+  "p": "a4",
+  "when": "AD 54년경",
+  "year": 54,
+  "place": "ephesus",
+  "title": "불살라진 마술책",
+  "refs": {
+   "acts": "19:13–20"
+  }
+ },
+ {
+  "id": "a24",
+  "p": "a4",
+  "when": "AD 55년경",
+  "year": 55,
+  "place": "ephesus",
+  "title": "크다, 에베소의 아데미여",
+  "refs": {
+   "acts": "19:21–41"
+  }
+ },
+ {
+  "id": "a25",
+  "p": "a4",
+  "when": "AD 56년경",
+  "year": 56,
+  "place": "philippi",
+  "title": "눈물로 쓴 편지",
+  "refs": {
+   "acts": "20:1–2",
+   "2co": "2:12–13; 7:5–7"
+  },
+  "letters": [
+   "2co"
+  ]
+ },
+ {
+  "id": "a26",
+  "p": "a4",
+  "when": "AD 57년경",
+  "year": 57,
+  "place": "corinth",
+  "title": "겨울의 고린도에서 쓴 긴 편지",
+  "refs": {
+   "acts": "20:2–3",
+   "rom": "15:22–33"
+  },
+  "letters": [
+   "rom"
+  ]
+ },
+ {
+  "id": "a27",
+  "p": "a4",
+  "when": "AD 57년경",
+  "year": 57,
+  "place": "troas",
+  "title": "창에서 떨어진 유두고",
+  "refs": {
+   "acts": "20:6–12"
+  }
+ },
+ {
+  "id": "a28",
+  "p": "a4",
+  "when": "AD 57년경",
+  "year": 57,
+  "place": "miletus",
+  "title": "다시 얼굴을 보지 못하리라",
+  "refs": {
+   "acts": "20:13–38"
+  }
+ },
+ {
+  "id": "a29",
+  "p": "a4",
+  "when": "AD 57년경",
+  "year": 57,
+  "place": "caesarea",
+  "title": "아가보의 허리띠",
+  "refs": {
+   "acts": "21:1–16"
+  }
+ },
+ {
+  "id": "a30",
+  "p": "a5",
+  "when": "AD 57년경",
+  "year": 57,
+  "place": "temple",
+  "title": "성전에서 붙잡히다",
+  "refs": {
+   "acts": "21:17–36"
+  }
+ },
+ {
+  "id": "a31",
+  "p": "a5",
+  "when": "AD 57년경",
+  "year": 57,
+  "place": "antonia",
+  "title": "계단 위에서 들려준 이야기",
+  "refs": {
+   "acts": "21:37–22:29"
+  }
+ },
+ {
+  "id": "a32",
+  "p": "a5",
+  "when": "AD 57년경",
+  "year": 57,
+  "place": "jerusalem",
+  "title": "조카가 엿들은 음모",
+  "refs": {
+   "acts": "22:30–23:35"
+  }
+ },
+ {
+  "id": "a33",
+  "p": "a5",
+  "when": "AD 57–59년경",
+  "year": 58,
+  "place": "caesarea",
+  "title": "벨릭스가 두려워한 이야기",
+  "refs": {
+   "acts": "24:1–27"
+  }
+ },
+ {
+  "id": "a34",
+  "p": "a5",
+  "when": "AD 59년경",
+  "year": 59,
+  "place": "caesarea",
+  "title": "가이사에게 상소하노라",
+  "refs": {
+   "acts": "25:1–26:32"
+  }
+ },
+ {
+  "id": "a35",
+  "p": "a6",
+  "when": "AD 59년경",
+  "year": 59,
+  "place": "cretesea",
+  "title": "유라굴로 광풍",
+  "refs": {
+   "acts": "27:1–20"
+  }
+ },
+ {
+  "id": "a36",
+  "p": "a6",
+  "when": "AD 59년경",
+  "year": 59,
+  "place": "adria",
+  "title": "한 사람도 잃지 않으리라",
+  "refs": {
+   "acts": "27:21–44"
+  }
+ },
+ {
+  "id": "a37",
+  "p": "a6",
+  "when": "AD 59–60년경",
+  "year": 60,
+  "place": "malta",
+  "title": "독사를 떨어 버린 손",
+  "refs": {
+   "acts": "28:1–10"
+  }
+ },
+ {
+  "id": "a38",
+  "p": "a6",
+  "when": "AD 60년경",
+  "year": 60,
+  "place": "appii",
+  "title": "압비오 광장에 마중 나온 형제들",
+  "refs": {
+   "acts": "28:11–16"
+  },
+  "later": [
+   "rom"
+  ]
+ },
+ {
+  "id": "a39",
+  "p": "a6",
+  "when": "AD 60–62년경",
+  "year": 61,
+  "place": "rome",
+  "title": "셋집에서 두 해",
+  "refs": {
+   "acts": "28:16–31",
+   "php": "1:12–21"
+  },
+  "letters": [
+   "php"
+  ]
+ },
+ {
+  "id": "a40",
+  "p": "a6",
+  "when": "AD 61년경",
+  "year": 61,
+  "place": "rome",
+  "title": "오네시모를 위한 편지",
+  "refs": {
+   "phm": "1:1–25",
+   "col": "4:7–9"
+  },
+  "letters": [
+   "phm",
+   "col",
+   "eph"
+  ]
+ },
+ {
+  "id": "a41",
+  "p": "a6",
+  "when": "AD 63–64년경",
+  "year": 63,
+  "place": "crete",
+  "title": "그레데에 남겨 둔 디도",
+  "refs": {
+   "1ti": "1:3–4",
+   "tit": "1:5; 3:12"
+  },
+  "letters": [
+   "1ti",
+   "tit"
+  ]
+ },
+ {
+  "id": "a42",
+  "p": "a6",
+  "when": "AD 66–67년경",
+  "year": 66,
+  "place": "rome",
+  "title": "선한 싸움을 다 싸우고",
+  "refs": {
+   "2ti": "4:6–22"
+  },
+  "letters": [
+   "2ti"
+  ]
+ }
+]
