@@ -62,17 +62,17 @@ export const C = {
       'p1.6': [['up', 'idle', { show: 0 }], ['gehazi', 'idle', { show: 0 }], ['woman', 'carry', { item: 'baby', x: -0.75, z: 0.2, look: 0.4 }], ['house', 'idle']],
       // 아이가 자라 밭의 아버지에게 — 내 머리야
       'p2.0': [['woman', 'idle', { item: null, look: 0.5 }], ['hus', 'bow', { x: 1.05, z: -0.15, look: 1 }], ['boy', 'idle', { show: 1, x: 0.75, z: -0.05, look: 1 }]],
-      'p2.1': [['boy', 'cower', { look: 1 }], ['hus', 'idle', { look: -1 }]],
+      'p2.2': [['boy', 'cower', { look: 1 }], ['hus', 'idle', { look: -1 }]],
       // 어머니 무릎에서 — 낮까지, 그리고 고요히
-      'p2.2': [['boy', 'idle', { x: -0.45, z: 0.3, look: -1 }], ['boy', 'idle', { show: 0, delay: 2600 }], ['woman', 'sit-ground', { x: -0.85, z: 0.28, look: 1, delay: 1200 }],
+      'p2.3': [['boy', 'idle', { x: -0.45, z: 0.3, look: -1 }], ['boy', 'idle', { show: 0, delay: 2600 }], ['woman', 'sit-ground', { x: -0.85, z: 0.28, look: 1, delay: 1200 }],
         ['lap', 'sleep', { show: 1, delay: 2600 }], ['hus', 'idle', { look: -1 }]],
       // 선지자의 침상에 누이고 갈멜로 달려간다
-      'p2.3': [['lap', 'sleep', { show: 0 }], ['bed', 'sleep', { show: 1 }], ['woman', 'idle', { x: 2.4, z: 0.4 }], ['woman', 'idle', { show: 0, delay: 3800 }],
+      'p2.5': [['lap', 'sleep', { show: 0 }], ['bed', 'sleep', { show: 1 }], ['woman', 'idle', { x: 2.4, z: 0.4 }], ['woman', 'idle', { show: 0, delay: 3800 }],
         ['woman', 'idle', { show: 1, x: 0.2, z: 0.35, look: -1, delay: 5200 }], ['elisha', 'idle', { show: 1, x: 2.5, z: 0.3, look: -1, delay: 3000 }], ['elisha', 'idle', { x: 0.55, z: 0.3, delay: 3200 }]],
       // 엘리사가 방에 들어가 문을 닫고 — 침상 곁에 엎드려 기도한다
-      'p2.4': [['woman', 'kneel', { x: 0.0, z: 0.35, look: -1 }], ['elisha', 'idle', { show: 0 }], ['up', 'kneel', { show: 1, x: -0.62, z: -0.46, look: 1 }], ['house', 'lit'], ['beam', null, { show: 1, delay: 1800 }]],
+      'p2.6': [['woman', 'kneel', { x: 0.0, z: 0.35, look: -1 }], ['elisha', 'idle', { show: 0 }], ['up', 'kneel', { show: 1, x: -0.62, z: -0.46, look: 1 }], ['house', 'lit'], ['beam', null, { show: 1, delay: 1800 }]],
       // 일곱 번 재채기하고 눈을 떴다
-      'p2.5': [['bed', 'sit', { look: -1 }], ['up', 'kneel', { look: 1 }], ['beam', null, { show: 0.6 }]],
+      'p2.7': [['bed', 'sit', { look: -1 }], ['up', 'kneel', { look: 1 }], ['beam', null, { show: 0.6 }]],
       w0: [['up', 'speak', { show: 1, x: -0.72, z: -0.5, to: 'woman' }], ['woman', 'idle', { show: 1, x: -0.55, z: 0.12, look: 0.6 }]],
       w1: [['woman', 'speak', { show: 1, x: -0.2, z: 0.25, to: 'up' }], ['up', 'idle', { show: 1, x: -0.62, z: -0.46, look: 1 }]],
       w2: [['bed', 'sit', { show: 1, look: -1 }], ['up', 'speak', { show: 1, x: -0.72, z: -0.5, to: 'woman' }], ['woman', 'kneel', { show: 1, x: -0.5, z: 0.25, look: -0.4 }]],
