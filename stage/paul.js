@@ -6,8 +6,10 @@
    스데반과 루스드라의 돌은 날아가 땅에 떨어지는 돌과 흙먼지·무릎 꿇은 사람·빛으로만(피·상처 없음) */
 import './paul/props.js';
 import { A } from './paul/a.js';
+import './paul/props-b.js';
+import { B } from './paul/b.js';
 
-export const PAUL = { ...A };
+export const PAUL = { ...A, ...B };
 
 // intro 앞에 처음 자리로 되돌리는 명령을 붙인다 (kings.js와 같다 — node _src/tools/stagecheck.mjs로 점검).
 // 탄 사람(board)은 자리를 되돌리지 않는다 — 내린 사람은 intro에서 다시 태운다. 상태가 바뀌는 소품과 분위기(@env)·무대 자리(@at)는 intro에서 되돌린다

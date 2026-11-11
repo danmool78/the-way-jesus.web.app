@@ -289,6 +289,13 @@ const TYPES = {
   islander: { robe: '#a8906a', trim: '#5a4a36', hair: '#1d140c', beard: true, sash: '#5a4a36', skin: 3 }, // 멜리데 섬 사람
   agrippa:  { robe: '#5a2a5e', trim: '#d6a93a', mantle: '#a8312a', hair: '#2b1b10', crown: true, sash: '#d6a93a', skin: 2 }, // 아그립바 왕
   bernice:  { robe: '#6b2a5e', trim: '#d6a93a', mantle: '#e0c890', veil: true, inner: '#f6efe2', crown: true, skin: 2, soft: true, slim: true, sash: '#d6a93a' }, // 버니게
+  // 바울 b 묶음
+  aquila:   { robe: '#8a6a48', trim: '#3a2e22', mantle: '#4a3e34', hair: '#2b1b10', beard: true, hood: '#d9cfb6', band: '#3a2e22', sash: '#3a2e22', skin: 2 }, // 천막 깁는 아굴라 (본도 출신 유대 사람 — 염소털 빛 겉옷)
+  priscilla: { robe: '#3e5a6a', trim: '#c9a24a', mantle: '#c8b48c', veil: true, inner: '#efe6d4', skin: 2, soft: true, slim: true, sash: '#c9a24a' }, // 브리스길라
+  eunice:   { robe: '#5a6a4a', trim: '#c9a24a', mantle: '#d8c8a8', veil: true, inner: '#efe6d4', skin: 2, soft: true, slim: true, sash: '#c9a24a' }, // 디모데의 어머니 유니게 (믿는 유대 여인)
+  lois:     { robe: '#6a5e50', trim: '#8a7a5a', mantle: '#8a8274', veil: true, inner: '#e0dcd2', skin: 2, soft: true, slim: true, sash: '#8a7a5a', height: 0.84 }, // 할머니 로이스 (잿빛 겉옷)
+  paulOS:   { robe: '#b8a07a', trim: '#6b4a2a', mantle: '#9a5a2a', hair: '#d4cec2', beard: true, sash: '#6b4a2a', skin: 1, height: 0.94 }, // 지팡이 없는 늙은 바울 (옥에서 편지를 쓸 때 — 앉은 사람 곁에 지팡이만 서 있었다)
+  macedonian: { robe: '#d8c49a', trim: '#7a3a2a', mantle: '#7a3a2a', hair: '#3a2a1c', beard: true, cap: '#c8b48c', sash: '#7a3a2a', skin: 2 }, // 환상 속의 마게도냐 사람 (납작한 펠트 모자 — 빛의 실루엣으로만 쓴다)
 };
 
 // 깃털 한 장: 길이 방향 +y
