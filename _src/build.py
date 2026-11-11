@@ -16,14 +16,14 @@ ui_ko['langs'] = LANGS
 # 말씀 출처(ref)의 책 이름 약자: 한국어 → 언어별. 여정이 늘면 그 책을 더한다 (없는 책은 한국어 약자 그대로)
 # 말씀 출처의 책 이름(번역본에서 바꿔 단다) — 다윗·열왕기 여정의 사무엘·열왕기·역대·시편까지
 BOOKS = {
-    'ko': ['마', '막', '눅', '요', '행', '창', '출', '레', '민', '신', '수', '롬', '고전', '엡', '계', '사', '렘', '잠', '삼상', '삼하', '왕상', '왕하', '대상', '대하', '시'],
-    'en': ['Mt', 'Mk', 'Lk', 'Jn', 'Acts', 'Gen', 'Ex', 'Lev', 'Num', 'Deut', 'Josh', 'Rom', '1 Cor', 'Eph', 'Rev', 'Isa', 'Jer', 'Prov', '1 Sam', '2 Sam', '1 Kgs', '2 Kgs', '1 Chr', '2 Chr', 'Ps'],
-    'es': ['Mt', 'Mc', 'Lc', 'Jn', 'Hch', 'Gn', 'Éx', 'Lv', 'Nm', 'Dt', 'Jos', 'Ro', '1 Co', 'Ef', 'Ap', 'Is', 'Jer', 'Pr', '1 S', '2 S', '1 R', '2 R', '1 Cr', '2 Cr', 'Sal'],
-    'pt': ['Mt', 'Mc', 'Lc', 'Jo', 'At', 'Gn', 'Êx', 'Lv', 'Nm', 'Dt', 'Js', 'Rm', '1 Co', 'Ef', 'Ap', 'Is', 'Jr', 'Pv', '1 Sm', '2 Sm', '1 Rs', '2 Rs', '1 Cr', '2 Cr', 'Sl'],
-    'fr': ['Mt', 'Mc', 'Lc', 'Jn', 'Ac', 'Gn', 'Ex', 'Lv', 'Nb', 'Dt', 'Jos', 'Rm', '1 Co', 'Ep', 'Ap', 'Es', 'Jr', 'Pr', '1 S', '2 S', '1 R', '2 R', '1 Ch', '2 Ch', 'Ps'],
-    'zh': ['太', '可', '路', '约', '徒', '创', '出', '利', '民', '申', '书', '罗', '林前', '弗', '启', '赛', '耶', '箴', '撒上', '撒下', '王上', '王下', '代上', '代下', '诗'],
-    'id': ['Mat', 'Mrk', 'Luk', 'Yoh', 'Kis', 'Kej', 'Kel', 'Im', 'Bil', 'Ul', 'Yos', 'Rm', '1Kor', 'Ef', 'Why', 'Yes', 'Yer', 'Ams', '1Sam', '2Sam', '1Raj', '2Raj', '1Taw', '2Taw', 'Mzm'],
-    'ja': ['マタ', 'マコ', 'ルカ', 'ヨハ', '使', '創', '出', 'レビ', '民', '申', 'ヨシュ', 'ロマ', '一コリ', 'エフェ', '黙', 'イザ', 'エレ', '箴', 'サム上', 'サム下', '王上', '王下', '代上', '代下', '詩'],
+    'ko': ['마', '막', '눅', '요', '행', '창', '출', '레', '민', '신', '수', '롬', '고전', '엡', '계', '사', '렘', '잠', '삼상', '삼하', '왕상', '왕하', '대상', '대하', '시', '갈', '살전', '살후', '고후', '빌', '몬', '골', '딤전', '딛', '딤후', '합'],
+    'en': ['Mt', 'Mk', 'Lk', 'Jn', 'Acts', 'Gen', 'Ex', 'Lev', 'Num', 'Deut', 'Josh', 'Rom', '1 Cor', 'Eph', 'Rev', 'Isa', 'Jer', 'Prov', '1 Sam', '2 Sam', '1 Kgs', '2 Kgs', '1 Chr', '2 Chr', 'Ps', 'Gal', '1 Thess', '2 Thess', '2 Cor', 'Phil', 'Phlm', 'Col', '1 Tim', 'Titus', '2 Tim', 'Hab'],
+    'es': ['Mt', 'Mc', 'Lc', 'Jn', 'Hch', 'Gn', 'Éx', 'Lv', 'Nm', 'Dt', 'Jos', 'Ro', '1 Co', 'Ef', 'Ap', 'Is', 'Jer', 'Pr', '1 S', '2 S', '1 R', '2 R', '1 Cr', '2 Cr', 'Sal', 'Gá', '1 Ts', '2 Ts', '2 Co', 'Flp', 'Flm', 'Col', '1 Ti', 'Tit', '2 Ti', 'Hab'],
+    'pt': ['Mt', 'Mc', 'Lc', 'Jo', 'At', 'Gn', 'Êx', 'Lv', 'Nm', 'Dt', 'Js', 'Rm', '1 Co', 'Ef', 'Ap', 'Is', 'Jr', 'Pv', '1 Sm', '2 Sm', '1 Rs', '2 Rs', '1 Cr', '2 Cr', 'Sl', 'Gl', '1 Ts', '2 Ts', '2 Co', 'Fp', 'Fm', 'Cl', '1 Tm', 'Tt', '2 Tm', 'Hc'],
+    'fr': ['Mt', 'Mc', 'Lc', 'Jn', 'Ac', 'Gn', 'Ex', 'Lv', 'Nb', 'Dt', 'Jos', 'Rm', '1 Co', 'Ep', 'Ap', 'Es', 'Jr', 'Pr', '1 S', '2 S', '1 R', '2 R', '1 Ch', '2 Ch', 'Ps', 'Ga', '1 Th', '2 Th', '2 Co', 'Ph', 'Phm', 'Col', '1 Tm', 'Tt', '2 Tm', 'Ha'],
+    'zh': ['太', '可', '路', '约', '徒', '创', '出', '利', '民', '申', '书', '罗', '林前', '弗', '启', '赛', '耶', '箴', '撒上', '撒下', '王上', '王下', '代上', '代下', '诗', '加', '帖前', '帖后', '林后', '腓', '门', '西', '提前', '多', '提后', '哈'],
+    'id': ['Mat', 'Mrk', 'Luk', 'Yoh', 'Kis', 'Kej', 'Kel', 'Im', 'Bil', 'Ul', 'Yos', 'Rm', '1Kor', 'Ef', 'Why', 'Yes', 'Yer', 'Ams', '1Sam', '2Sam', '1Raj', '2Raj', '1Taw', '2Taw', 'Mzm', 'Gal', '1Tes', '2Tes', '2Kor', 'Flp', 'Flm', 'Kol', '1Tim', 'Tit', '2Tim', 'Hab'],
+    'ja': ['マタ', 'マコ', 'ルカ', 'ヨハ', '使', '創', '出', 'レビ', '民', '申', 'ヨシュ', 'ロマ', '一コリ', 'エフェ', '黙', 'イザ', 'エレ', '箴', 'サム上', 'サム下', '王上', '王下', '代上', '代下', '詩', 'ガラ', '一テサ', '二テサ', '二コリ', 'フィリ', 'フィレ', 'コロ', '一テモ', 'テト', '二テモ', 'ハバ'],
 }
 
 # 시편: 노래 목록(songs.json — 관리자 페이지의 시편 노래 작업실이 고치는 원본)에서 장면을 만든다. 장면 하나 = 노래 하나:
@@ -155,6 +155,18 @@ def build(jid, src, out_dir):
                 e['quiz'].update(q=t['quiz']['q'], options=t['quiz']['options'], explain=t['quiz']['explain'])
             if 'img' in e and t.get('credit'):
                 e['img']['credit'] = t['credit']
+        # 바울 서신 13편: 이름·받는 이·때·전한 사람·까닭·한 문장·구절·다른 견해를 갈아 끼운다 (구절 약자는 장면 말씀처럼 바꾼다). 빠지면 한국어로 남기고 알린다
+        for l in o['journey'].get('letters', []):
+            t = tr.get('letters', {}).get(l['id'])
+            if not t:
+                miss.append(l['id']); continue
+            for k in ('name', 'when', 'carrier', 'why', 'heart', 'view'):
+                if l.get(k): l[k] = t[k]
+            l['to'] = {**l['to'], 'name': t['to']}
+            assert len(t['verses']) == len(l['verses']), (lang, l['id'])
+            for v, tv in zip(l['verses'], t['verses']):
+                v['text'] = tv
+                v['ref'] = re.sub(r'(^|[;,·]\s*)([가-힣]+)(?=\s*\d)', lambda m: m.group(1) + books.get(m.group(2), m.group(2)), v['ref'])
         json.dump(o, open(os.path.join(out_dir, 'data.%s.json' % lang), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
         print('[%s] data.%s.json' % (jid, lang), 'missing:', (miss[:12] + ['…'] if len(miss) > 12 else miss) or 'none')
 
