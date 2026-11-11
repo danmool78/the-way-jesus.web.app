@@ -113,8 +113,8 @@
  },
  "cretesea": {
   "name": "그레데 앞바다",
-  "lat": 34.75,
-  "lng": 25.4,
+  "lat": 34.85,
+  "lng": 24.4,
   "region": "바다",
   "approx": true
  },
