@@ -725,9 +725,11 @@ function setCard(mode, user) {
 /* ---------- 장면 ---------- */
 const refText = e => Object.keys(DATA.ui.gospels).filter(k => e.refs[k]).map(k => `${DATA.ui.gospels[k][1]} ${e.refs[k]}`).join(' · '); // 책 차례는 ui의 책 이름표(gospels) 차례 — 여정마다 책이 다르다
 
-let cardTab = 'story'; // 장면 카드의 탭: story(이야기) · text(본문) · compare(비교)
+let cardTab = 'story', cardIdx = null; // 장면 카드의 탭: story(이야기) · text(본문) · compare(비교)
 function renderScene() {
   const e = evAt(idx), place = PLACES[e.place];
+  // 다른 장면으로 넘어가면 이야기 탭부터 — 본문을 보다 다음 장소로 걸어가도 새 장면은 이야기로 시작한다(사용자). 같은 장면을 다시 그릴 때(언어 바꿈 등)는 보던 탭 그대로
+  if (cardIdx !== idx) { cardTab = 'story'; cardIdx = idx; }
   const per = isPro() ? { color: '#b89a5e', name: t('prologue'), en: 'PROLOGUE' } : PERIODS[e.p];
   document.documentElement.style.setProperty('--period', per.color);
   const img = e.img
@@ -739,7 +741,7 @@ function renderScene() {
       <footer><span>${w.j && !Array.isArray(DATA.journey?.main) ? esc(t('jesus')) : esc(w.who)}</span><cite>${esc(w.ref)}</cite></footer>
     </blockquote>`;
   const tabs = [['story', t('tabStory')], ['text', e.song ? t('tabLyrics') : t('tabText')], ['compare', t('tabCompare')]].filter(([k]) => !((isPro() || !DATA.journey?.harmony) && k === 'compare')); // 프롤로그와 대조표 없는 여정은 복음서 비교가 없다
-  if (!tabs.some(([k]) => k === cardTab)) cardTab = 'story'; // 보던 탭을 다음 장면에서도 (프롤로그처럼 그 탭이 없으면 이야기)
+  if (!tabs.some(([k]) => k === cardTab)) cardTab = 'story'; // 그 탭이 없는 장면(프롤로그 등)은 이야기
   $('#scene').innerHTML = `
   <div class="cardbar">
     <span class="pdot"></span>
