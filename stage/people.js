@@ -296,6 +296,13 @@ const TYPES = {
   lois:     { robe: '#6a5e50', trim: '#8a7a5a', mantle: '#8a8274', veil: true, inner: '#e0dcd2', skin: 2, soft: true, slim: true, sash: '#8a7a5a', height: 0.84 }, // 할머니 로이스 (잿빛 겉옷)
   paulOS:   { robe: '#b8a07a', trim: '#6b4a2a', mantle: '#9a5a2a', hair: '#d4cec2', beard: true, sash: '#6b4a2a', skin: 1, height: 0.94 }, // 지팡이 없는 늙은 바울 (옥에서 편지를 쓸 때 — 앉은 사람 곁에 지팡이만 서 있었다)
   macedonian: { robe: '#d8c49a', trim: '#7a3a2a', mantle: '#7a3a2a', hair: '#3a2a1c', beard: true, cap: '#c8b48c', sash: '#7a3a2a', skin: 2 }, // 환상 속의 마게도냐 사람 (납작한 펠트 모자 — 빛의 실루엣으로만 쓴다)
+  // 바울 c 묶음
+  titus:    { robe: '#e8e0cc', trim: '#7a5a2a', mantle: '#b8863a', hair: '#3a2616', sash: '#7a5a2a', staff: true, skin: 2 }, // 헬라 사람 디도 (수염 없이, 겨잣빛 겉옷 — 고린도에서 돌아온 나그네)
+  tertius:  { robe: '#ece6d8', trim: '#5a6a7a', mantle: '#8a9aa8', hair: '#4a3a2a', beard: true, sash: '#5a6a7a', skin: 2 }, // 받아 적는 더디오 (롬 16:22)
+  phoebe:   { robe: '#4a6a7a', trim: '#d6a93a', mantle: '#e6dcc4', veil: true, inner: '#f6efe2', skin: 2, soft: true, slim: true, sash: '#d6a93a' }, // 겐그레아 교회의 일꾼 뵈뵈
+  eutychus: { robe: '#e8dcc4', trim: '#8a6a48', hair: '#3a2616', sash: '#8a6a48', skin: 2, height: 0.86 }, // 창턱에 앉은 청년 유두고 (수염 없는 젊은이)
+  nephew:   { robe: '#c8b48c', trim: '#2f4f6a', mantle: '#2f4f6a', hair: '#2b1b10', sash: '#2f4f6a', skin: 1, height: 0.86 }, // 바울의 누이의 아들 (수염 없는 젊은이, 바울 집안의 남청)
+  demetrius: { robe: '#c97a3a', trim: '#5a3a1a', mantle: '#8a8a88', hair: '#2b1b10', beard: true, sash: '#5a3a1a', skin: 2 }, // 은장색 데메드리오 (잿빛 은장이 앞치마 같은 겉옷)
 };
 
 // 깃털 한 장: 길이 방향 +y
