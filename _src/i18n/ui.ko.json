@@ -296,5 +296,19 @@
  "missedQuizName": "못 푼 퀴즈",
  "endReopen": "여정을 마친 창 보기",
  "favLine": "마음에 남은 장면 · {t}",
- "prologue": "프롤로그"
+ "prologue": "프롤로그",
+ "tabLetters": "편지",
+ "lettersHead": "바울의 편지 열세 편",
+ "lettersLead": "바울이 쓴 차례대로 모았습니다. 어디서 누구에게 왜 썼는지, 한 문장으로 담은 마음과 새겨 둘 구절 셋을 함께 읽어 보세요.",
+ "lettersHere": "이 자리에서 쓴 편지",
+ "lettersLater": "훗날 이 교회에 보낸 편지",
+ "letterRoute": "편지 길 보기",
+ "letterCarrier": "전한 사람 · {c}",
+ "letterWhy": "왜 썼나",
+ "letterHeart": "한 문장으로",
+ "letterVerses": "새겨 둘 구절",
+ "letterView": "다른 견해",
+ "letterToScene": "이 장면으로",
+ "letterOnMap": "지도에서 보기",
+ "letterCount": "{n}번째 편지"
 }

@@ -295,5 +295,19 @@
  "missedQuizName": "Perguntas restantes",
  "endReopen": "Abrir o fim da jornada",
  "favLine": "A cena que ficou com você · {t}",
- "prologue": "Prólogo"
+ "prologue": "Prólogo",
+ "tabLetters": "Cartas",
+ "lettersHead": "As treze cartas de Paulo",
+ "lettersLead": "Reunidas na ordem em que Paulo as escreveu. Leia onde, para quem e por que cada uma foi escrita, o seu coração numa frase e três versículos para guardar.",
+ "lettersHere": "Cartas escritas aqui",
+ "lettersLater": "Cartas enviadas depois a esta igreja",
+ "letterRoute": "Ver o caminho da carta",
+ "letterCarrier": "Levada por · {c}",
+ "letterWhy": "Por que escreveu",
+ "letterHeart": "Numa frase",
+ "letterVerses": "Versículos para guardar",
+ "letterView": "Outra opinião",
+ "letterToScene": "Ir para esta cena",
+ "letterOnMap": "Ver no mapa",
+ "letterCount": "Carta {n}"
 }

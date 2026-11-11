@@ -295,5 +295,19 @@
  "missedQuizName": "剩下的题目",
  "endReopen": "打开旅程的终点",
  "favLine": "最难忘的场景 · {t}",
- "prologue": "序幕"
+ "prologue": "序幕",
+ "tabLetters": "书信",
+ "lettersHead": "保罗的十三封书信",
+ "lettersLead": "按保罗写作的先后排列。读一读每封信在哪里、写给谁、为什么而写，一句话的核心，以及三节值得铭记的经文。",
+ "lettersHere": "在此地写的书信",
+ "lettersLater": "后来写给这个教会的书信",
+ "letterRoute": "查看书信之路",
+ "letterCarrier": "送信人 · {c}",
+ "letterWhy": "为何而写",
+ "letterHeart": "一句话",
+ "letterVerses": "铭记的经文",
+ "letterView": "另一种看法",
+ "letterToScene": "前往这个场景",
+ "letterOnMap": "在地图上查看",
+ "letterCount": "第{n}封书信"
 }

@@ -98,6 +98,15 @@ def build(jid, src, out_dir):
             if os.path.exists(f): pv[n] = fver(f)
     if pv: journey['pv'] = pv
     if has('daily.json'): journey['daily'] = load('daily.json')['days']  # 하루 한 장 31일 잠언 (그날 날짜의 장) — app.js renderDaily
+    # 바울 서신 13편(쓴 차례): 장면 카드의 '이 자리에서 쓴 편지'·지도의 편지 길·편지 탭 — app.js renderLetters. 순서를 지키려고 목록으로 싣는다
+    # 장면의 letters(그 자리에서 쓴 편지)·later(그 교회에 훗날 보낸 편지)는 skeleton에서 그대로 따라온다. 글은 아직 한국어뿐이라 번역본에도 한국어로
+    if has('letters.json'):
+        L = load('letters.json'); L.pop('_comment', None)
+        ids = {e['id'] for e in events}
+        for k, v in L.items(): assert v['scene'] in ids and v['from'] in places and len(v['verses']) == 3, k
+        for e in events:
+            for k in e.get('letters', []) + e.get('later', []): assert k in L, (e['id'], k)
+        journey['letters'] = [{'id': k, **v} for k, v in L.items()]
     journey['whyIcon'] = 'assets/why-icon.webp?v=' + fver(os.path.join(root, 'assets', 'why-icon.webp'))
     def ui_for(lang):
         u = {**ui_ko, **(loadf(os.path.join(here, 'i18n', 'ui.%s.json' % lang)) if lang != 'ko' else {})}

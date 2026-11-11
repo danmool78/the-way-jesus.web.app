@@ -295,5 +295,19 @@
  "missedQuizName": "Questions restantes",
  "endReopen": "Ouvrir la fin du voyage",
  "favLine": "La scène qui vous a marqué · {t}",
- "prologue": "Prologue"
+ "prologue": "Prologue",
+ "tabLetters": "Lettres",
+ "lettersHead": "Les treize lettres de Paul",
+ "lettersLead": "Rassemblées dans l'ordre où Paul les a écrites. Lisez où, à qui et pourquoi chacune a été écrite, son cœur en une phrase et trois versets à garder.",
+ "lettersHere": "Lettres écrites ici",
+ "lettersLater": "Lettres envoyées plus tard à cette Église",
+ "letterRoute": "Voir le chemin de la lettre",
+ "letterCarrier": "Portée par · {c}",
+ "letterWhy": "Pourquoi il a écrit",
+ "letterHeart": "En une phrase",
+ "letterVerses": "Versets à garder",
+ "letterView": "Un autre avis",
+ "letterToScene": "Aller à cette scène",
+ "letterOnMap": "Voir sur la carte",
+ "letterCount": "Lettre {n}"
 }

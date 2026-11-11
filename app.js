@@ -284,6 +284,7 @@ function buildMap() {
   <path class="offmap" fill-rule="evenodd" d="${offmapD(DRAWN)}"/>
   <g id="routes"><path id="nextHint" class="nexthint"/></g>
   <g id="markers"></g>
+  ${DATA.journey?.letters ? '<g id="letterRoutes"></g>' : ''}
   <g id="walker" class="walker"><circle class="wglow" r="18"/><g class="wfig"><circle class="wbody" r="8"/><text class="wicon" y="4.5">✦</text></g></g>`;
   // 장소 마커
   const g = $('#markers', map);
@@ -787,6 +788,7 @@ function renderScene() {
   <section class="pane" data-pane="story" aria-label="${esc(t('storyLabel'))}">
     <div class="story">${e.story.map((s, i) => i === e.prayer ? `<div class="prayer-para"><h4>${esc(t('prayerOpen'))}</h4><p data-para="${i}">${esc(s)}</p></div>` : `<p data-para="${i}">${esc(s)}</p>`).join('')}</div>
     ${e.core ? `<aside class="core"><h4>${esc(t('coreHead'))}</h4><p>${esc(e.core)}</p></aside>` : ''}
+    ${letterBox(e)}
     ${e.note ? `<aside class="note"><h4>${esc(t('noteHead'))}</h4><p>${esc(e.note)}</p></aside>` : ''}
     ${e.reflect ? `<aside class="reflect"><h4>${esc(t('reflectHead'))}</h4><p>${esc(e.reflect)}</p></aside>` : ''}
     ${e.psalm ? `<aside class="psalm-link" hidden><h4>${esc(t('psalmHead'))}</h4><button type="button"><span class="pl-play" aria-hidden="true">▶</span><b></b></button><p class="fine">${esc(t('psalmNote'))}</p></aside>` : ''}
@@ -818,6 +820,7 @@ function renderScene() {
   if (e.img) { $('#heroBtn').onclick = () => openViewer(e); $('#viewBtn').onclick = () => openViewer(e); }
   $$('.ctabs button', $('#scene')).forEach(b => b.onclick = () => showTab(b.dataset.tab));
   $('#toHarmony')?.addEventListener('click', () => setView('harmony'));
+  letterWire($('#scene'));
   showTab(cardTab);
   updateQuizBtn();
 }
@@ -992,6 +995,7 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
   if (walking && i === idx + 1) return; // 이미 그곳으로 걷는 중
   if (!keepSpeech) stopSpeech(true);
   cancelWalk();
+  showLetters([]); // 앞 장면의 편지 길은 떠날 때 거둔다
   const prev = idx;
   const prevPlace = $('#scene').innerHTML ? evAt(prev).place : null;
   // 에덴과 본 지도 사이(프롤로그와 첫 장면 등)는 이어 걷지 않는다: 다음 장면을 처음 연 것처럼 새로 시작한다 (jump)
@@ -999,7 +1003,7 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
   const stepped = i === prev + 1 && prevPlace !== null && !jump;
   const arrive = () => {
     idx = i; setHere(evAt(i), startOf(evAt(i))); window.stageHide = false;
-    renderScene(); psalmBox(evAt(i)); paintScene(evAt(i)); updateMap(prev, { camera: !stepped || fitMode === 'all', jump }); updateTrack(); if (i >= 0) markVisited(EVENTS[i].id);
+    renderScene(); showLetters(evAt(i).letters || []); psalmBox(evAt(i)); paintScene(evAt(i)); updateMap(prev, { camera: !stepped || fitMode === 'all', jump }); updateTrack(); if (i >= 0) markVisited(EVENTS[i].id);
     window.__stageScene = evAt(i); // stage.js가 늦게 로드돼도 따라잡도록
     dispatchEvent(new CustomEvent('stage:scene', { detail: { ev: evAt(i) } }));
     bgmFollow(); // 읽는 중에 장면이 바뀌면 그 장면의 곡으로 겹쳐 바꾼다
@@ -1648,6 +1652,97 @@ function renderHarmony() {
 
 /* ---------- 퀴즈 ---------- */
 let quizRun = null;
+/* ---------- 바울의 편지 (journey.letters, 원본 _src/journeys/paul/letters.json) ----------
+   장면 카드의 '이 자리에서 쓴 편지'·'훗날 이 교회에 보낸 편지', 지도의 편지 길(쓴 곳 → 받는 곳 점선), 머리의 편지 탭이 같은 자료를 쓴다.
+   이 여정의 중심이 편지라서(PLAN.md) 걷다가 편지를 만나고, 편지에서 그 장면과 길로 되돌아갈 수 있게 서로 잇는다 */
+const letterList = () => DATA.journey?.letters || [];
+const letterOf = id => letterList().find(l => l.id === id);
+const SCROLL_ICON = '<svg class="lt-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 7h16M4 17h16M8 10.5h8M8 13.5h8"/></svg>';
+const letterVerses = l => `<ul class="lt-verses">${l.verses.map(v => `<li><p>${esc(v.text)}</p><cite>${esc(v.ref)}</cite></li>`).join('')}</ul>`;
+const letterRoute = l => `${esc(PLACES[l.from]?.name || l.from)} <span aria-hidden="true">→</span> ${esc(l.to.name)}`;
+function letterBox(e) {
+  if (!letterList().length) return '';
+  const here = (e.letters || []).map(letterOf).filter(Boolean), later = (e.later || []).map(letterOf).filter(Boolean);
+  return (here.length ? `<aside class="letters-here"><h4>${SCROLL_ICON}${esc(t('lettersHere'))}</h4>${here.map(l => `<div class="lt">
+      <b class="lt-name">${esc(l.name)}</b>
+      <p class="lt-route">${letterRoute(l)}</p>
+      <p class="lt-meta">${esc(l.when)}${l.carrier ? ` · ${esc(t('letterCarrier', { c: l.carrier }))}` : ''}</p>
+      <p class="lt-heart">${esc(l.heart)}</p>
+      ${letterVerses(l)}
+      <button type="button" class="lt-btn" data-lroute="${l.id}">${esc(t('letterRoute'))}</button>
+    </div>`).join('')}</aside>` : '')
+    + (later.length ? `<aside class="letters-later"><h4>${esc(t('lettersLater'))}</h4><div class="lt-chips">${later.map(l => `<button type="button" data-lopen="${l.id}">${esc(l.name)} <span aria-hidden="true">›</span></button>`).join('')}</div></aside>` : '');
+}
+// 카드·편지 탭의 단추: 편지 길 보기(지도에서 두 끝을 담아), 편지 열기(편지 탭의 그 편지로)
+function letterWire(root) {
+  $$('[data-lroute]', root).forEach(b => b.onclick = () => letterOnMap(b.dataset.lroute));
+  $$('[data-lopen]', root).forEach(b => b.onclick = () => openLetter(b.dataset.lopen));
+}
+function letterOnMap(id) {
+  if ($('#journey').hidden) setView('journey');
+  // 휴대폰에서 끝까지 펼친 시트는 지도를 다 덮는다 — 반으로 내려 길이 보이게
+  if (innerWidth <= 900 && $('#scene').classList.contains('full')) setCard('open', true);
+  requestAnimationFrame(() => showLetters([id], true));
+}
+function openLetter(id) {
+  setView('letters');
+  const el = $(`#lt-${CSS.escape(id)}`); if (!el) return;
+  el.scrollIntoView({ block: 'start' });
+  el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
+}
+// 지도의 편지 길: 쓴 곳에서 받는 곳까지 가는 점선 곡선(걷는 길과 다른 먹빛), 끝에 두루마리 표지와 편지·받는 이 이름.
+// 받는 곳이 같은 편지(데살로니가전·후서, 빌레몬서·골로새서)는 길 하나에 이름을 함께 단다. fit이면 두 끝이 다 보이게 카메라를 옮긴다
+function showLetters(ids, fit) {
+  const g = $('#letterRoutes', map); if (!g) return;
+  const groups = new Map();
+  ids.map(letterOf).filter(Boolean).forEach(l => { const k = `${l.from}|${l.to.lat},${l.to.lng}`; if (groups.has(k)) groups.get(k).push(l); else groups.set(k, [l]); });
+  const pts = [], all = [...groups.values()], ends = all.map(ls => px([ls[0].to.lat, ls[0].to.lng]));
+  // 받는 곳끼리 가까우면(로마에서 보낸 에베소서와 골로새서, 약 2° 사이) 멀리서 볼 때 이름이 겹친다 — 서쪽 것은 왼쪽으로, 동쪽 것은 오른쪽으로 펼친다
+  const side = ends.map(([x, y], n) => { const o = ends.find(([a, b], m) => m !== n && Math.hypot(a - x, b - y) < 3000); return o ? (o[0] > x ? 'end' : 'start') : 'middle'; });
+  g.innerHTML = all.map((ls, n) => {
+    const l = ls[0], [x1, y1] = P(PLACES[l.from]), [x2, y2] = ends[n], dx = x2 - x1, dy = y2 - y1, tx = { end: 6, start: -6, middle: 0 }[side[n]];
+    const bend = (n % 2 ? -1 : 1) * 0.16, cx = (x1 + x2) / 2 - dy * bend, cy = (y1 + y2) / 2 + dx * bend, d = `M${x1},${y1} Q${cx},${cy} ${x2},${y2}`;
+    pts.push([x1, y1], [x2, y2]);
+    const tos = [...new Set(ls.map(x => x.to.name))];
+    // 이름은 표지 위에 — 받는 곳(데살로니가·고린도 등)은 대개 핀이 있어 오른쪽에는 핀 이름이, 아래로는 이웃 핀(루스드라 등)이 선다
+    return `<path class="lr-halo" d="${d}"/><path class="lr" d="${d}"/>
+      <g class="lbl lr-end" data-x="${x2}" data-y="${y2}"><circle class="lr-dot" r="3.2"/>
+        <g class="lr-scroll" transform="translate(-9,-25) scale(.75)"><rect x="3" y="2" width="18" height="20" rx="2"/><path d="M3 6h18M3 18h18M7 10h10M7 14h10"/></g>
+        ${tos.map((s, k) => `<text class="lr-to" x="${tx}" y="${-31 - (tos.length - 1 - k) * 13}" style="text-anchor:${side[n]}">${esc(s)}</text>`).join('')}
+        <text class="lr-name" x="${tx}" y="${-31 - tos.length * 13 - 2}" style="text-anchor:${side[n]}">${esc(ls.map(x => x.name).join(' · '))}</text>
+      </g>`;
+  }).join('');
+  applyView(); // 새 표지를 지금 확대에 맞는 크기로
+  if (!fit || !pts.length) return;
+  const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
+  const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys), pad = Math.max(x1 - x0, y1 - y0, 300) * (innerWidth <= 900 ? .4 : .3); // 휴대폰은 왼쪽 위에 장소 칩이 있어 조금 더 넉넉히
+  animateTo(reserveCard({ x: x0 - pad, y: y0 - pad * 1.4, w: x1 - x0 + pad * 2, h: y1 - y0 + pad * 2.4 }), 1300); // 위로 조금 더 — 받는 곳 이름이 표지 위에 선다
+}
+function renderLetters() {
+  const ls = letterList(); if (!ls.length) return;
+  let html = '', lastP = null;
+  ls.forEach((l, n) => {
+    const i = EVENTS.findIndex(e => e.id === l.scene), e = EVENTS[i], per = PERIODS[e.p];
+    if (lastP !== e.p) { html += `<h3 class="psep" style="--c:${per.color}">${esc(per.name)}${per.name.includes(per.span) ? '' : ` <small>${esc(per.span)}</small>`}</h3>`; lastP = e.p; }
+    html += `<article class="lcard" id="lt-${l.id}" style="--c:${per.color}">
+      <header>
+        <small class="lc-no">${esc(t('letterCount', { n: n + 1 }))} · ${esc(l.when)}</small>
+        <h3>${esc(l.name)}</h3>
+        <p class="lt-route">${letterRoute(l)}</p>
+        ${l.carrier ? `<p class="lt-meta">${esc(t('letterCarrier', { c: l.carrier }))}</p>` : ''}
+      </header>
+      <h4>${esc(t('letterHeart'))}</h4><p class="lt-heart">${esc(l.heart)}</p>
+      <h4>${esc(t('letterWhy'))}</h4><p class="lc-why">${esc(l.why)}</p>
+      <h4>${esc(t('letterVerses'))}</h4>${letterVerses(l)}
+      ${l.view ? `<p class="lc-view"><b>${esc(t('letterView'))}</b>${esc(l.view)}</p>` : ''}
+      <footer class="lc-btns"><button type="button" class="lc-go" data-goto="${i}">${esc(t('letterToScene'))} <span aria-hidden="true">→</span></button><button type="button" class="lt-btn" data-lroute="${l.id}">${esc(t('letterOnMap'))}</button></footer>
+    </article>`;
+  });
+  $('#letterList').innerHTML = html;
+  $$('#letterList [data-goto]').forEach(b => b.onclick = () => { setView('journey'); go(+b.dataset.goto); });
+  letterWire($('#letterList'));
+}
+
 /* ---------- 하루 한 장 31일 잠언 (journey.daily) ----------
    오늘 날짜의 장(1–31)을 펴 두고, 고른 구절 셋과 아버지의 한마디를 보인다. 아래 31칸에서 다른 장으로 옮겨 가고,
    '읽었어요'는 이 기기에만 이 달의 기록으로 남긴다(다음 달이 되면 새로 — 한 달에 잠언을 한 번 걷는다) */
@@ -1806,6 +1901,7 @@ function setView(v) {
   if (v === 'harmony') renderHarmony();
   if (v === 'quiz') renderQuizHome();
   if (v === 'daily') renderDaily();
+  if (v === 'letters') renderLetters();
   if (v === 'journey') requestAnimationFrame(applyView);
   scrollTo(0, 0);
 }
@@ -1897,6 +1993,7 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   };
   $('#music').hidden = !EVENTS.some(e => e.music);
   $('.tabs [data-view="daily"]').hidden = !d.journey?.daily; // 하루 한 장 (잠언)
+  $('.tabs [data-view="letters"]').hidden = !d.journey?.letters; // 편지 (바울)
   $('#music').onclick = () => { bgmPref = !bgmPref; try { localStorage.setItem(BGM.key, bgmPref ? 'on' : 'off'); } catch { /* 이번 방문만 */ } bgmFollow(); };
   $('#quizBtn').onclick = openSceneQuiz;
   $('#closeQuiz').onclick = () => $('#quizDlg').close();

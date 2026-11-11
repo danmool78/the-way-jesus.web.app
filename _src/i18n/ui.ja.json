@@ -295,5 +295,19 @@
  "missedQuizName": "残りのクイズ",
  "endReopen": "旅の終わりを開く",
  "favLine": "心に残った場面 · {t}",
- "prologue": "プロローグ"
+ "prologue": "プロローグ",
+ "tabLetters": "手紙",
+ "lettersHead": "パウロの十三の手紙",
+ "lettersLead": "パウロが書いた順に集めました。どこで、だれに、なぜ書いたのか、ひと言にまとめた心、心に刻む三つの聖句をあわせて読んでみましょう。",
+ "lettersHere": "この地で書いた手紙",
+ "lettersLater": "のちにこの教会へ送った手紙",
+ "letterRoute": "手紙の道を見る",
+ "letterCarrier": "届けた人 · {c}",
+ "letterWhy": "なぜ書いたか",
+ "letterHeart": "ひと言で",
+ "letterVerses": "心に刻む聖句",
+ "letterView": "別の見方",
+ "letterToScene": "この場面へ",
+ "letterOnMap": "地図で見る",
+ "letterCount": "{n}通目の手紙"
 }

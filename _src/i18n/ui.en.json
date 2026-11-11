@@ -295,5 +295,19 @@
  "missedQuizName": "Remaining questions",
  "endReopen": "Open the journey’s end",
  "favLine": "The scene that stayed with you · {t}",
- "prologue": "Prologue"
+ "prologue": "Prologue",
+ "tabLetters": "Letters",
+ "lettersHead": "Paul's thirteen letters",
+ "lettersLead": "Gathered in the order Paul wrote them. Read where, to whom and why each was written, its heart in one sentence, and three verses to keep.",
+ "lettersHere": "Letters written here",
+ "lettersLater": "Letters later sent to this church",
+ "letterRoute": "Show the letter’s path",
+ "letterCarrier": "Carried by · {c}",
+ "letterWhy": "Why he wrote",
+ "letterHeart": "In one sentence",
+ "letterVerses": "Verses to keep",
+ "letterView": "Another view",
+ "letterToScene": "Go to this scene",
+ "letterOnMap": "Show on the map",
+ "letterCount": "Letter {n}"
 }

@@ -295,5 +295,19 @@
  "missedQuizName": "Preguntas pendientes",
  "endReopen": "Abrir el final del viaje",
  "favLine": "La escena que se quedó contigo · {t}",
- "prologue": "Prólogo"
+ "prologue": "Prólogo",
+ "tabLetters": "Cartas",
+ "lettersHead": "Las trece cartas de Pablo",
+ "lettersLead": "Reunidas en el orden en que Pablo las escribió. Lee dónde, a quién y por qué escribió cada una, su corazón en una frase y tres versículos para guardar.",
+ "lettersHere": "Cartas escritas aquí",
+ "lettersLater": "Cartas enviadas después a esta iglesia",
+ "letterRoute": "Ver el camino de la carta",
+ "letterCarrier": "La llevó · {c}",
+ "letterWhy": "Por qué la escribió",
+ "letterHeart": "En una frase",
+ "letterVerses": "Versículos para guardar",
+ "letterView": "Otra opinión",
+ "letterToScene": "Ir a esta escena",
+ "letterOnMap": "Ver en el mapa",
+ "letterCount": "Carta {n}"
 }

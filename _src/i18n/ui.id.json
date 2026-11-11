@@ -295,5 +295,19 @@
  "missedQuizName": "Soal yang tersisa",
  "endReopen": "Buka akhir perjalanan",
  "favLine": "Adegan yang paling membekas · {t}",
- "prologue": "Prolog"
+ "prologue": "Prolog",
+ "tabLetters": "Surat",
+ "lettersHead": "Tiga belas surat Paulus",
+ "lettersLead": "Disusun menurut urutan Paulus menulisnya. Bacalah di mana, kepada siapa, dan mengapa setiap surat ditulis, intinya dalam satu kalimat, dan tiga ayat untuk diingat.",
+ "lettersHere": "Surat yang ditulis di sini",
+ "lettersLater": "Surat yang kemudian dikirim ke jemaat ini",
+ "letterRoute": "Lihat jalur surat",
+ "letterCarrier": "Dibawa oleh · {c}",
+ "letterWhy": "Mengapa ditulis",
+ "letterHeart": "Dalam satu kalimat",
+ "letterVerses": "Ayat untuk diingat",
+ "letterView": "Pandangan lain",
+ "letterToScene": "Ke adegan ini",
+ "letterOnMap": "Lihat di peta",
+ "letterCount": "Surat ke-{n}"
 }
