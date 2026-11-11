@@ -134,6 +134,9 @@ def build(jid, src, out_dir):
                 miss.append(e['id']); continue
             for k in ('title', 'when', 'subtitle', 'note', 'reflect'):
                 e[k] = t[k]
+            if 'core' in e:  # 복음의 중심(바울 여정) — 번역본에 없으면 한국어로 남기지 않고 뺀다
+                if t.get('core'): e['core'] = t['core']
+                else: del e['core']
             assert len(t['story']) == 3 and len(t['words']) == len(e['words']) and ('quiz' not in e or len(t['quiz']['options']) == 4), (lang, e['id'])
             e['story'] = t['story']
             for w, tw in zip(e['words'], t['words']):

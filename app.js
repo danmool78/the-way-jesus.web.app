@@ -762,6 +762,7 @@ function renderScene() {
   <div class="ctabs" role="tablist">${tabs.map(([k, n]) => `<button role="tab" data-tab="${k}" class="${k === cardTab ? 'active' : ''}">${esc(n)}</button>`).join('')}</div>
   <section class="pane" data-pane="story" aria-label="${esc(t('storyLabel'))}">
     <div class="story">${e.story.map((s, i) => i === e.prayer ? `<div class="prayer-para"><h4>${esc(t('prayerOpen'))}</h4><p data-para="${i}">${esc(s)}</p></div>` : `<p data-para="${i}">${esc(s)}</p>`).join('')}</div>
+    ${e.core ? `<aside class="core"><h4>${esc(t('coreHead'))}</h4><p>${esc(e.core)}</p></aside>` : ''}
     ${e.note ? `<aside class="note"><h4>${esc(t('noteHead'))}</h4><p>${esc(e.note)}</p></aside>` : ''}
     ${e.reflect ? `<aside class="reflect"><h4>${esc(t('reflectHead'))}</h4><p>${esc(e.reflect)}</p></aside>` : ''}
     ${e.psalm ? `<aside class="psalm-link" hidden><h4>${esc(t('psalmHead'))}</h4><button type="button"><span class="pl-play" aria-hidden="true">▶</span><b></b></button><p class="fine">${esc(t('psalmNote'))}</p></aside>` : ''}

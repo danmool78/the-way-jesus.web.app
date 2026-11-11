@@ -306,6 +306,10 @@ html:not(:lang(ko)):not(:lang(zh)):not(:lang(ja)) .river-lbl text{writing-mode:h
 .word cite{font-style:normal}
 .say{margin-left:auto;border:1px solid var(--line);background:none;border-radius:999px;width:32px;height:32px;font-size:13px}
 .say:hover{border-color:var(--gold)}
+/* 복음의 중심(바울 여정, 장면 몇 곳): 설명과 같은 상자에 여정 색 테두리 — 교리 요점 한두 문장 */
+.core{margin:10px 22px;padding:4px 20px 14px;border-radius:14px;border:1px solid rgba(var(--gold-rgb),.45);background:rgba(var(--gold-rgb),.07)}
+.core h4{font-size:12px;letter-spacing:.2em;color:var(--gold);margin:14px 0 12px;font-weight:700}
+.core p{margin:0;line-height:1.75;color:#e6dac2;font-size:14.5px}
 .note,.reflect{margin:10px 22px;padding:4px 20px 14px;border-radius:14px;border:1px solid var(--line);background:var(--panel)}
 .note p,.reflect p{margin:0;line-height:1.75;color:#d7cbb4;font-size:14.5px}
 .reflect{background:linear-gradient(135deg,color-mix(in srgb,var(--period) 18%,var(--panel)),var(--panel))}

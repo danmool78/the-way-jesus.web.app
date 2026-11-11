@@ -9,7 +9,7 @@ for f in files:
     for c in json.load(open(f if os.path.isabs(f) or os.path.exists(f) else os.path.join(here, f), encoding='utf-8')):
         i = c.get('id'); seen.append(i)
         if i not in sk: bad.append(f'{i}: 뼈대에 없는 id'); continue
-        if set(c) - {'id', 'subtitle', 'story', 'words', 'note', 'reflect', 'quiz'}: bad.append(f'{i}: 모르는 열쇠 {set(c) - {"id","subtitle","story","words","note","reflect","quiz"}}')
+        if set(c) - {'id', 'subtitle', 'story', 'words', 'note', 'core', 'reflect', 'quiz'}: bad.append(f'{i}: 모르는 열쇠 {set(c) - {"id","subtitle","story","words","note","core","reflect","quiz"}}')
         st = c.get('story', [])
         if len(st) != 3: bad.append(f'{i}: story는 3문단')
         for k, p in enumerate(st):
