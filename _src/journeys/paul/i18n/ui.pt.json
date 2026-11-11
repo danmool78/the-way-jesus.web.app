@@ -1,0 +1,100 @@
+{
+ "appTag": "Paulo · O evangelho até os confins da terra",
+ "docTitle": "O Caminho — Paulo | O evangelho até os confins da terra",
+ "metaDesc": "Da luz no caminho de Damasco à casa alugada em Roma. Percorra no mapa bíblico as 42 cenas de Paulo e leia junto as cartas que ele escreveu em cada lugar.",
+ "mapAria": "O caminho de Paulo de Jerusalém a Roma num mapa do Mediterrâneo",
+ "introTag": "Do caminho de Damasco a Roma, o caminho do evangelho até os confins da terra",
+ "introLead": "Percorra o mapa seguindo as viagens de Paulo e leia junto as cartas que ele escreveu em cada lugar.",
+ "introF1": "Siga os lugares, de Antioquia e Éfeso, passando por Filipos e Corinto, e atravessando o mar até Roma",
+ "introF3": "Ouça a história em voz alta e leia junto as cartas que Paulo escreveu em cada lugar",
+ "landStep2": "Leia a história e os textos no cartão e toque em ▶ para ouvir",
+ "landStep4": "Reúna as palavras do Senhor e de Paulo na aba “{words}” e relembre as cenas com “{quiz}”",
+ "jesus": "Senhor",
+ "hisWords": "As palavras do Senhor e de Paulo",
+ "wordsHead": "As palavras do Senhor e de Paulo",
+ "wordsIntro": "As palavras que o Senhor disse e as que Paulo anunciou no seu caminho, reunidas na ordem da jornada. Cada uma é uma nova tradução do sentido original para a linguagem de hoje.",
+ "odoTitle": "Distância percorrida até esta cena (caminhos por terra e rotas por mar estimados entre os lugares; passos de 75 cm)",
+ "gospels": {
+  "acts": [
+   "Atos",
+   "At"
+  ],
+  "gal": [
+   "Gálatas",
+   "Gl"
+  ],
+  "1th": [
+   "1 Tessalonicenses",
+   "1Ts"
+  ],
+  "2th": [
+   "2 Tessalonicenses",
+   "2Ts"
+  ],
+  "1co": [
+   "1 Coríntios",
+   "1Co"
+  ],
+  "2co": [
+   "2 Coríntios",
+   "2Co"
+  ],
+  "rom": [
+   "Romanos",
+   "Rm"
+  ],
+  "php": [
+   "Filipenses",
+   "Fp"
+  ],
+  "phm": [
+   "Filemom",
+   "Fm"
+  ],
+  "col": [
+   "Colossenses",
+   "Cl"
+  ],
+  "eph": [
+   "Efésios",
+   "Ef"
+  ],
+  "1ti": [
+   "1 Timóteo",
+   "1Tm"
+  ],
+  "tit": [
+   "Tito",
+   "Tt"
+  ],
+  "2ti": [
+   "2 Timóteo",
+   "2Tm"
+  ]
+ },
+ "endLead": "Do caminho de Damasco à casa alugada em Roma — obrigado por caminhar conosco.",
+ "blessing": "Combati o bom combate, terminei a corrida, guardei a fé. (2Tm 4:7)\nQue aquele que chamou Paulo no caminho de Damasco chame também o seu nome e caminhe com você até o fim desse caminho, onde quer que você esteja.",
+ "map": {
+  "수 리 아": "SÍRIA",
+  "길 리 기 아": "CILÍCIA",
+  "갈 라 디 아": "GALÁCIA",
+  "아 시 아": "ÁSIA",
+  "마 게 도 냐": "MACEDÔNIA",
+  "아 가 야": "ACAIA",
+  "이 탈 리 아": "ITÁLIA",
+  "구 브 로": "CHIPRE",
+  "다소": "Tarso",
+  "이고니온": "Icônio",
+  "버가": "Perge",
+  "네압볼리": "Neápolis",
+  "베뢰아": "Bereia",
+  "겐그레아": "Cencreia",
+  "로도": "Rodes",
+  "시라구사": "Siracusa",
+  "레기온": "Régio",
+  "보디올": "Putéoli",
+  "지 중 해": "MAR MEDITERRÂNEO",
+  "에 게 해": "MAR EGEU",
+  "흑 해": "MAR NEGRO"
+ }
+}
