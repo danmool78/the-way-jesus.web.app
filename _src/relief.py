@@ -102,7 +102,7 @@ def med_rain(dem, land, lat, km_px):
     비그늘은 바다에서 먼 내륙에서만 — 해안 평야(밤빌리아)가 뒤의 높은 산 때문에 메마르게 칠해지지 않게"""
     sm = blur(np.maximum(dem, 0), 3)
     d = coast_km(land, km_px)
-    base = np.interp(lat, [30.5, 31.5, 32.5, 34.0, 36.0, 38.0, 40.0, 43.0], [40, 130, 300, 520, 600, 650, 700, 820])[:, None]
+    base = np.interp(lat, [30.5, 31.5, 32.5, 34.0, 36.0, 38.0, 40.0, 43.0], [40, 120, 260, 400, 440, 470, 540, 700])[:, None]
     oro = np.minimum(1 + sm / 1000 * .6, 1.45)
     ridge = sm.copy()
     s = 1
