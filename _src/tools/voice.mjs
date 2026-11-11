@@ -34,6 +34,7 @@ const scenes = [...(d.prologue ? [d.prologue] : []), ...d.events]; // 프롤로�
 let events = args.includes('all') ? scenes : scenes.filter(e => args.includes(e.id));
 // walks: 다음 장소로 걸어갈 때 읽는 안내("나사렛에서 베들레헴으로.") — 장소가 바뀌는 이웃 장면마다 (app.js의 walkTo와 같은 글)
 const walks = args.includes('walks');
+const REDO_DIGITS = args.includes('digits'); // 숫자 읽기를 바꾼 뒤 한 번: 숫자가 든 문장(때·편 번호)만 다시 녹음
 if (!events.length && !old && !walks) { console.error('장면 id를 주세요 (예: e01, 또는 all, 또는 walks, 또는 changed <예전 data.json>)'); process.exit(1); }
 
 // app.js의 sentences·sceneScript와 같은 규칙
@@ -115,7 +116,11 @@ function level(pcm) {
 // 읽을 때만 바꾸는 말: 영어 글자 BC·AD 앞에서 Chirp가 앞말을 늘이고 멈칫하므로 우리말로 읽힌다 (화면 글과 열쇠는 그대로)
 // 녘은 소리 나는 대로 녁으로 넘긴다 — Chirp 성우가 '해 질 녘'을 '해질년'으로 읽었다 (열쇠는 원래 글로 셈하므로 앱은 그대로 찾는다).
 // 앞말에 붙여 읽히면 '질'의 ㄹ에 끌려 '력'이 되므로, 녹음할 때 '녘' 앞에서 나눠 따로 읽혀 잇는다 (아래 NYEOK)
-const spoken = text => text.replace(/\bBC\s*/g, '기원전 ').replace(/\bAD\s*/g, '서기 ').replace(/녘/g, '녁');
+// 숫자는 한자어 수로 풀어 넘긴다 — Chirp가 'BC 870년경'을 '팔칠공 년'처럼 자리마다 끊어 읽었다(사용자). 970–931처럼 이어진 해는 '에서'로
+const KO_D = ['', '일', '이', '삼', '사', '오', '육', '칠', '팔', '구'];
+const koNum = n => { if (!n) return '영'; let o = ''; [[1000, '천'], [100, '백'], [10, '십'], [1, '']].forEach(([u, w]) => { const k = Math.floor(n / u) % 10; if (k) o += (k === 1 && u > 1 ? '' : KO_D[k]) + w; }); return o; };
+const spoken = text => text.replace(/\bBC\s*/g, '기원전 ').replace(/\bAD\s*/g, '서기 ').replace(/녘/g, '녁')
+  .replace(/(\d+)\s*[–-]\s*(\d+)/g, '$1에서 $2').replace(/\d+(?=([가-힣])?)/g, (m, h) => koNum(+m) + (h ? ' ' : '')); // '팔백칠십 년경', '사십 일 후'처럼 단위 앞을 띄운다
 const NYEOK = /\s*(?=녘)/; // 새벽녘처럼 붙여 쓴 것도 녘 앞에서 나눈다 (붙여 읽으면 년이 되었다)
 const plain = text => spoken(text).replace(/\[pause[^\]]*\]\s*/g, ' '); // SSML을 받지 않는 성우(Gemini·일레븐랩스)에는 쉼 표시를 빼고
 
@@ -221,7 +226,7 @@ const jobs = [...events.map(e => [e.id, script(e)]), ...(walks ? [['walk', walkL
 for (const [id, lines] of jobs) {
   for (const s of lines) {
     const v = voiceOf(s), key = keyOf(s), mp3 = `${OUT}/${key}.mp3`;
-    if (existsSync(mp3)) continue;
+    if (existsSync(mp3) && !(REDO_DIGITS && /\d/.test(s.text))) continue; // digits: 숫자가 든 문장을 새 읽기로 다시 녹음
     let b, pcm;
     if (v.eleven) { // 일레븐랩스 성우: 문장 하나씩, 앞뒤 무음을 다듬고 소리 크기를 맞춘다 (키가 없으면 건너뛰고 앱은 그 문장을 브라우저 음성으로 읽는다)
       const e = await elevenSynth(s.text, v);
