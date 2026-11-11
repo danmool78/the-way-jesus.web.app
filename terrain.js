@@ -89,8 +89,6 @@ function standAt(x, z) {
   return h;
 }
 const loadImg = src => new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = rej; im.src = src; });
-// 2의 거듭제곱 크기로 다시 그린다: 큰(2048 넘는) 지중해 그림은 밉맵이 깨져 가까이서도 가장 거친 단계(온통 바다색)로 보였다
-const pot = img => { const p2 = n => Math.min(4096, 2 ** Math.round(Math.log2(n))), c = document.createElement('canvas'); c.width = p2(img.width); c.height = p2(img.height); c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); return c; };
 const mapTex = img => { const t = new THREE.Texture(img); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = renderer.capabilities.getMaxAnisotropy(); t.needsUpdate = true; return t; };
 
 /* ---------- 바탕: 하늘·빛·물 반사 ---------- */
@@ -124,7 +122,7 @@ async function build() {
   if (window.journeyMap?.south && !BASES.includes(SOUTH)) BASES.push(SOUTH);
   if (window.journeyMap?.meso && !BASES.includes(MESO)) BASES.unshift(MESO, BABYLON);
   if (window.journeyMap?.med && !BASES.includes(MED)) BASES.push(MED_WIDE, MED);
-  await Promise.all(BASES.map(async b => { b.tex = mapTex(b.top ? pot(await loadImg(b.src)) : await loadImg(b.src)); }));
+  await Promise.all(BASES.map(async b => { b.tex = mapTex(await loadImg(b.src)); }));
   addWalker(); addLabels(); addStars();
   decorate();
   // 3D 무대(stage.js)가 이 장면 안에 서도록 여는 창구: 같은 카메라·깊이로 그리고, 땅 높이에 발을 붙인다
@@ -261,7 +259,12 @@ function decorate() {
       if (x1 - x0 > 0.01 && z1 - z0 > 0.01) sh.holes.push(new THREE.Path([[x0, z0], [x0, z1], [x1, z1], [x1, z0]].map(([x, z]) => new THREE.Vector2(x, z))));
     });
     const m = flat(sh, greyable(new THREE.MeshStandardMaterial({ map: b.tex, transparent: true, roughness: 1, side: THREE.DoubleSide, depthWrite: !b.top })), b.y);
-    if (b.top) m.renderOrder = b.top;
+    if (b.top) {
+      // 지중해 판은 아주 커서(2만 단위 넘게) 삼각형 두 개로는 밉맵 단계가 틀어져 가까이서도 온통 바다색으로 보였다 — 잘게 나눈 판으로
+      m.renderOrder = b.top;
+      m.geometry.dispose();
+      m.geometry = new THREE.PlaneGeometry(bx1 - bx0, bz1 - bz0, 96, 48).translate((bx0 + bx1) / 2, (bz0 + bz1) / 2, 0);
+    }
     const p = m.geometry.attributes.position, uv = m.geometry.attributes.uv;
     for (let i = 0; i < p.count; i++) uv.setXY(i, (p.getX(i) - bx0) / (bx1 - bx0), 1 - (p.getY(i) - bz0) / (bz1 - bz0));
   });
