@@ -303,6 +303,17 @@ const TYPES = {
   eutychus: { robe: '#e8dcc4', trim: '#8a6a48', hair: '#3a2616', sash: '#8a6a48', skin: 2, height: 0.86 }, // 창턱에 앉은 청년 유두고 (수염 없는 젊은이)
   nephew:   { robe: '#c8b48c', trim: '#2f4f6a', mantle: '#2f4f6a', hair: '#2b1b10', sash: '#2f4f6a', skin: 1, height: 0.86 }, // 바울의 누이의 아들 (수염 없는 젊은이, 바울 집안의 남청)
   demetrius: { robe: '#c97a3a', trim: '#5a3a1a', mantle: '#8a8a88', hair: '#2b1b10', beard: true, sash: '#5a3a1a', skin: 2 }, // 은장색 데메드리오 (잿빛 은장이 앞치마 같은 겉옷)
+  // 바울 d 묶음
+  festus:   { robe: '#f6f2e8', trim: '#9d3328', mantle: '#f6f2e8', toga: '#f6f2e8', togaStripe: '#9d3328', hair: '#3a2a1c', sash: '#f6f2e8', skin: 2 }, // 새 총독 베스도 (검은 머리, 붉은 단 토가 — 희끗한 벨릭스와 가른다)
+  drusilla: { robe: '#2f5a6a', trim: '#d6a93a', mantle: '#e6d4a8', veil: true, inner: '#f6efe2', skin: 2, soft: true, slim: true, sash: '#d6a93a' }, // 벨릭스의 아내 드루실라 (유대 왕가의 여인)
+  tertullus: { robe: '#ece6d8', trim: '#5a5a6a', mantle: '#ece6d8', toga: '#ece6d8', hair: '#2b1b10', sash: '#ece6d8', skin: 2 }, // 변호사 더둘로 (단 없는 토가)
+  aristarchus: { robe: '#d8ccb0', trim: '#8a5a2a', mantle: '#8a5a2a', hair: '#3a2616', beard: true, sash: '#8a5a2a', skin: 2 }, // 데살로니가 사람 아리스다고
+  shipowner: { robe: '#e8dcc0', trim: '#2f4f6a', mantle: '#2f4f6a', hair: '#5a4a3a', beard: true, sash: '#d6a93a', skin: 2 }, // 선주 (남빛 겉옷에 금빛 띠)
+  publius:  { robe: '#f6f2e8', trim: '#6b2a5e', mantle: '#f6f2e8', toga: '#f6f2e8', togaStripe: '#6b2a5e', hair: '#8a8274', sash: '#f6f2e8', skin: 2 }, // 멜리데 섬의 으뜸가는 사람 보블리오
+  islanderW: { robe: '#8a6a4a', trim: '#c9a24a', mantle: '#a8906a', veil: true, inner: '#efe6d4', skin: 3, soft: true, slim: true, sash: '#c9a24a' }, // 멜리데 섬 여인
+  epaphroditus: { robe: '#e0d4b8', trim: '#6a3a5a', mantle: '#6a3a5a', hair: '#3a2616', beard: true, sash: '#6a3a5a', staff: true, skin: 2 }, // 빌립보 교회가 보낸 에바브로디도 (루디아의 자줏빛을 닮은 겉옷)
+  onesimus: { robe: '#a8906a', trim: '#5a4a36', hair: '#1d140c', sash: '#5a4a36', skin: 3, height: 0.88 }, // 빌레몬의 종 오네시모 (겉옷 없이 짧은 옷, 수염 없는 젊은이)
+  tychicus: { robe: '#e8e0cc', trim: '#3a6a5a', mantle: '#3a6a5a', hair: '#3a2a1c', beard: true, sash: '#3a6a5a', staff: true, skin: 2 }, // 아시아 사람 두기고 (편지를 가져가는 나그네)
 };
 
 // 깃털 한 장: 길이 방향 +y
