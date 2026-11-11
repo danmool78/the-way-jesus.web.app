@@ -725,11 +725,12 @@ function setCard(mode, user) {
 /* ---------- 장면 ---------- */
 const refText = e => Object.keys(DATA.ui.gospels).filter(k => e.refs[k]).map(k => `${DATA.ui.gospels[k][1]} ${e.refs[k]}`).join(' · '); // 책 차례는 ui의 책 이름표(gospels) 차례 — 여정마다 책이 다르다
 
+let followRead = true; // 낭독을 따라 카드를 굴릴지 (scrollToEl 위 설명)
 let cardTab = 'story', cardIdx = null; // 장면 카드의 탭: story(이야기) · text(본문) · compare(비교)
 function renderScene() {
   const e = evAt(idx), place = PLACES[e.place];
   // 다른 장면으로 넘어가면 이야기 탭부터 — 본문을 보다 다음 장소로 걸어가도 새 장면은 이야기로 시작한다(사용자). 같은 장면을 다시 그릴 때(언어 바꿈 등)는 보던 탭 그대로
-  if (cardIdx !== idx) { cardTab = 'story'; cardIdx = idx; }
+  if (cardIdx !== idx) { cardTab = 'story'; cardIdx = idx; followRead = true; }
   const per = isPro() ? { color: '#b89a5e', name: t('prologue'), en: 'PROLOGUE' } : PERIODS[e.p];
   document.documentElement.style.setProperty('--period', per.color);
   const img = e.img
@@ -1215,7 +1216,16 @@ function captionLines(p, text) {
   if (parts.length < 2) return; // 나누지 않는 편이 낫다
   p.innerHTML = parts.map(x => `<span>${esc(x)}</span>`).join(''); // 덩이마다 따로 줄 길이를 고르게 (style.css)
 }
+// 낭독을 따라 카드를 굴리는 것은 사람이 카드를 직접 굴리거나 탭을 바꾸기 전까지만 — 듣는 동안 다른 곳을 자유롭게 읽게 둔다(사용자).
+// 새로 ▶를 누르거나 다른 장면으로 가면 다시 따라간다
+{
+  const sc = document.getElementById('scene'); // 정적 마크업이라 바로 붙인다
+  ['wheel', 'touchmove'].forEach(k => sc?.addEventListener(k, () => { if (speaking) followRead = false; }, { passive: true }));
+  sc?.addEventListener('keydown', ev => { if (speaking && /Arrow|Page|Home|End|Space/.test(ev.code)) followRead = false; });
+  sc?.addEventListener('click', ev => { if (speaking && ev.target.closest('.ctabs button')) followRead = false; });
+}
 function scrollToEl(el) {
+  if (!followRead) return;
   // 낭독 중인 문단이 보이도록 해당 스크롤 영역만 움직인다 (창 전체가 밀리지 않게)
   const box = el.closest('#scene') || document.scrollingElement;
   const r = el.getBoundingClientRect(), b = box === document.scrollingElement ? { top: 0, height: innerHeight } : box.getBoundingClientRect();
@@ -1232,7 +1242,7 @@ function sceneScript() {
   e.story.forEach((s, i) => items.push({ text: s, el: $(`[data-para="${i}"]`, sc), gemini: (e.storyTts || []).includes(i), pause: 350, beat: 'p' + i, sn: e.sn?.[i] }));
   return items;
 }
-function speakScene(onDone) { speakQueue(sceneScript(), evAt(idx)?.song ? () => songPlay(onDone) : onDone); sceneReading = true; } // 시편: 노래 앞 낭독이 끝나면 노래
+function speakScene(onDone) { followRead = true; speakQueue(sceneScript(), evAt(idx)?.song ? () => songPlay(onDone) : onDone); sceneReading = true; } // 시편: 노래 앞 낭독이 끝나면 노래
 const stageBeat = (beat, s) => {
   const e = evAt(idx);
   if (e?.stops || e?.start) {
@@ -1292,7 +1302,7 @@ function lyricShow(k, want, head) {
   $('#lyricsOv').innerHTML = `<p class="prev">${esc(k > 0 ? want[k - 1] : '')}</p><p class="cur${k < 0 ? ' head' : ''}">${esc(k >= 0 ? want[k] : head)}</p><p class="next">${esc(want[k + 1] || '')}</p>`;
   $$('#scene [data-ln]').forEach(p => p.classList.toggle('speaking', +p.dataset.ln === k));
   const el = k >= 0 && $(`#scene [data-ln="${k}"]`);
-  if (el) { const pane = el.closest('.pane'); if (pane?.hidden) showTab(pane.dataset.pane); scrollToEl(el); }
+  if (el && followRead) { const pane = el.closest('.pane'); if (pane?.hidden) showTab(pane.dataset.pane); scrollToEl(el); } // 사람이 다른 곳을 보고 있으면 가사 탭으로 끌고 가지 않는다
 }
 // sg: 틀 노래 { id: assets/psalms/<id>.json, title, lyrics } — 없으면 지금 장면의 노래(시편 여정)
 async function songPlay(done, sg) {
