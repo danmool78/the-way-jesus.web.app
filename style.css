@@ -785,8 +785,11 @@ body.intro-open .intro,body.intro-open .intro *{animation-play-state:running}
 @media (min-width:901px){.lyrics-ov{left:calc((100% - min(460px,42%)) / 2);width:min(640px,54%)}} /* 넓은 화면은 오른쪽 장면 카드를 비켜서 */
 .lyrics{padding:4px 2px}
 .lyrics h5{margin:14px 0 4px;font:600 11px var(--sans);letter-spacing:.12em;color:#7f735f}
-.lyrics p{margin:0;padding:2px 8px;border-radius:8px;font:16px/1.75 var(--serif);transition:background .3s,color .3s}
-.lyrics p.speaking{background:rgba(217,180,106,.16);color:#f0d79a}
+/* 가사: 부르는 동안에는 지금 줄만 밝게 — 네모 상자 대신 왼쪽 금빛 줄과 오른쪽으로 사라지는 은은한 빛, 다른 줄은 한 걸음 물러난다 */
+.lyrics p{position:relative;margin:0;padding:3px 12px 3px 14px;font:16px/1.75 var(--serif);transform-origin:left center;transition:color .4s,opacity .4s,transform .4s,background .4s,text-shadow .4s}
+.lyrics:has(p.speaking) p:not(.speaking){opacity:.5}
+.lyrics p.speaking{color:var(--gold2)!important;background:linear-gradient(90deg,rgba(var(--gold-rgb),.16),rgba(var(--gold-rgb),0) 75%);box-shadow:none;text-shadow:0 0 16px rgba(var(--gold-rgb),.5);transform:scale(1.05)} /* 이야기 글의 .speaking(둘레 상자)을 덮어쓴다 */
+.lyrics p.speaking::before{content:'';position:absolute;left:0;top:20%;bottom:20%;width:3px;border-radius:2px;background:linear-gradient(var(--gold2),rgba(var(--gold-rgb),.4));box-shadow:0 0 8px rgba(var(--gold-rgb),.7)}
 .no-3d #mode3d{display:none}
 @media (max-width:900px){.lyrics-ov{top:30%;width:92%}} /* 폰은 아래 장면 카드가 반쯤 덮으므로 보이는 지도 칸 가운데로 */
 
