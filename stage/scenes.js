@@ -19,6 +19,7 @@ import { GOODNEWS } from './goodnews.js';
 import { PROVERBS } from './proverbs.js';
 import { DAVID } from './david.js';
 import { KINGS } from './kings.js';
+import { PAUL } from './paul.js';
 
 export const SCRIPTS = {
   /* 0. 프롤로그 — 잃어버린 동산 (창 2–3장). 지도에 핀이 없는 장면이라 무대를 에덴의 전승 자리(at)에 세운다.
@@ -2530,4 +2531,4 @@ export const SCRIPTS = {
 };
 
 // 다른 여정의 장면 (장면 id는 여정마다 겹치지 않는다)
-Object.assign(SCRIPTS, MOSES, GOODNEWS, PROVERBS, DAVID, KINGS);
+Object.assign(SCRIPTS, MOSES, GOODNEWS, PROVERBS, DAVID, KINGS, PAUL);
