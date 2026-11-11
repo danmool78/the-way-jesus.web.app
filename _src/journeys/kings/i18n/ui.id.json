@@ -1,0 +1,57 @@
+{
+ "appTag": "Raja-raja · Dua kerajaan di jalan para nabi",
+ "docTitle": "Sang Jalan — Raja-raja | Dua kerajaan di jalan para nabi",
+ "metaDesc": "Dari Bait Allah Salomo, melewati api di Gunung Karmel dan kuda serta kereta berapi Elisa, sampai ke tepi sungai-sungai Babel. Telusuri 41 adegan dua kerajaan di atas peta Alkitab bersama para nabi, dan dengarkan mazmur dari tempat-tempat itu sebagai lagu.",
+ "mapAria": "Jalan kitab Raja-raja pada peta Yehuda, Israel, Aram, dan Babel",
+ "introTag": "Dari Bait Allah Salomo sampai ke tepi sungai-sungai Babel, dua kerajaan di jalan para nabi",
+ "introLead": "Jelajahi peta dan ikuti Elia, Elisa, dan Yesaya untuk menemui raja-raja dari dua kerajaan yang terbelah.",
+ "introF1": "Ikuti tempat-tempatnya, dari Yerusalem dan Samaria melalui Gunung Karmel dan Gunung Horeb sampai ke Babel",
+ "introF3": "Dengarkan kisahnya dibacakan, dan dengarkan sebagai lagu mazmur yang terkait dengan tempat itu",
+ "landStep2": "Baca kisah dan teks di kartu, lalu tekan ▶ untuk mendengarkannya",
+ "landStep4": "Kumpulkan firman Allah dan perkataan para nabi di tab '{words}' dan ingat kembali adegan yang telah dilalui dengan '{quiz}'",
+ "jesus": "Allah",
+ "hisWords": "Firman Allah dan perkataan para nabi",
+ "wordsHead": "Firman Allah dan perkataan para nabi",
+ "wordsIntro": "Firman yang diucapkan Allah dan perkataan yang disampaikan para nabi di sepanjang jalan dua kerajaan, dihimpun menurut urutan perjalanan. Setiap perkataan adalah terjemahan baru yang menghidupkan makna aslinya dalam bahasa masa kini.",
+ "odoTitle": "Jarak yang ditempuh sampai adegan ini (perkiraan jalan antartempat; langkah 75 cm)",
+ "gospels": {
+  "1ki": [
+   "1 Raja-raja",
+   "1Raj"
+  ],
+  "2ki": [
+   "2 Raja-raja",
+   "2Raj"
+  ]
+ },
+ "endLead": "Dari Bait Allah Salomo sampai ke tepi sungai-sungai Babel — terima kasih telah berjalan bersama kami.",
+ "blessing": "Allah adalah tempat perlindungan dan kekuatan kita, penolong yang sungguh nyata dalam kesesakan. (Mzm 46:2)\nKiranya Dia yang hadir di dalam api dan di dalam suara yang lembut juga berbicara di jalan Anda, dan membangun kembali apa yang telah runtuh.",
+ "psalmHead": "Lagu yang dinyanyikan di tempat ini",
+ "psalmNote": "Lagu dari perjalanan Mazmur, dinyanyikan dalam bahasa Korea. Musik dan liriknya dibuat dengan AI lalu disempurnakan oleh manusia.",
+ "map": {
+  "유 다": "YEHUDA",
+  "이 스 라 엘": "ISRAEL",
+  "길 르 앗": "GILEAD",
+  "모 압": "MOAB",
+  "에 돔": "EDOM",
+  "블 레 셋": "FILISTIN",
+  "아 람": "ARAM",
+  "시 돈": "SIDON",
+  "앗 수 르": "ASYUR",
+  "아 라 비 아 사 막": "GURUN ARAB",
+  "시 내 반 도": "SEMENANJUNG SINAI",
+  "단": "Dan",
+  "디르사": "Tirza",
+  "라기스": "Lakhis",
+  "여리고": "Yerikho",
+  "다메섹": "Damsyik",
+  "립나": "Ribla",
+  "하맛": "Hamat",
+  "갈그미스": "Karkemis",
+  "니느웨": "Niniwe",
+  "유브라데 강": "Sungai Efrat",
+  "힛데겔 강": "Sungai Tigris",
+  "홍 해": "Laut Merah",
+  "아카바 만": "Teluk Akaba"
+ }
+}
