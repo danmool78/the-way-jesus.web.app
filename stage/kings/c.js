@@ -67,7 +67,7 @@ export const C = {
       'p2.3': [['boy', 'idle', { x: -0.45, z: 0.3, look: -1 }], ['boy', 'idle', { show: 0, delay: 2600 }], ['woman', 'sit-ground', { x: -0.85, z: 0.28, look: 1, delay: 1200 }],
         ['lap', 'sleep', { show: 1, delay: 2600 }], ['hus', 'idle', { look: -1 }]],
       // 선지자의 침상에 누이고 갈멜로 달려간다
-      'p2.5': [['lap', 'sleep', { show: 0 }], ['bed', 'sleep', { show: 1 }], ['woman', 'idle', { x: 2.4, z: 0.4 }], ['woman', 'idle', { show: 0, delay: 3800 }],
+      'p2.5': [['lap', 'sleep', { show: 0 }], ['bed', 'sleep', { show: 1 }], ['woman', 'idle', { x: 2.4, z: 0.4 }], ['woman', 'idle', { show: 0, delay: 1800 }],
         ['woman', 'idle', { show: 1, x: 0.2, z: 0.35, look: -1, delay: 5200 }], ['elisha', 'idle', { show: 1, x: 2.5, z: 0.3, look: -1, delay: 3000 }], ['elisha', 'idle', { x: 0.55, z: 0.3, delay: 3200 }]],
       // 엘리사가 방에 들어가 문을 닫고 — 침상 곁에 엎드려 기도한다
       'p2.6': [['woman', 'kneel', { x: 0.0, z: 0.35, look: -1 }], ['elisha', 'idle', { show: 0 }], ['up', 'kneel', { show: 1, x: -0.62, z: -0.46, look: 1 }], ['house', 'lit'], ['beam', null, { show: 1, delay: 1800 }]],
@@ -257,7 +257,7 @@ export const C = {
       // 사마리아로 이끌고 간다
       'p2.2': [['elisha', 'idle', { x: -0.7, z: 0.5 }], ['elisha', 'idle', { x: -2.4, z: 0.6, delay: 2600 }],
         ...[['a1', -1.1, 0.35], ['a2', -0.85, 0.6], ['a3', -0.5, 0.45], ['a4', -0.2, 0.6], ['a5', -0.35, 0.3]].flatMap(([n, x, z], i) => [[n, 'idle', { x, z, delay: 2200 + i * 200 }], [n, 'idle', { x: x - 1.5, z, delay: 4600 + i * 200 }], [n, 'idle', { show: 0, delay: 7800 + i * 200 }]]),
-        ['elisha', 'idle', { show: 0, delay: 7400 }], ['hazeL', 'off', { delay: 6000 }], ['hazeR', 'off', { delay: 6000 }], ['ch1', null, { x: -2.6, z: -0.2, delay: 3500 }], ['ch1', null, { show: 0, delay: 7000 }], ['ch2', null, { show: 0, delay: 3500 }]],
+        ['elisha', 'idle', { show: 0, delay: 1800 }], ['hazeL', 'off', { delay: 6000 }], ['hazeR', 'off', { delay: 6000 }], ['ch1', null, { x: -2.6, z: -0.2, delay: 3500 }], ['ch1', null, { show: 0, delay: 1800 }], ['ch2', null, { show: 0, delay: 1800 }]],
       // 나의 도움은 — 산을 둘러보는 사환
       'p2.3': [['@env', 'day'], ['boy', 'idle', { x: 0.1, z: -0.3, look: 0.2 }], ['host', null, { show: 0.8 }]],
       'p2.4': [['boy', 'look-up', { look: 0 }]],
@@ -308,7 +308,7 @@ export const C = {
       'p1.3': [['l2', 'speak', { to: 'l1' }], ['l1', 'idle', { delay: 400 }], ['l3', 'idle', { delay: 700 }], ['l4', 'idle', { delay: 1000 }]],
       // 살려 주면 살고 — 진영으로 간다
       'p1.4': [['l2', 'idle', { x: 0.2, z: 0.35 }], ['l1', 'idle', { x: -0.05, z: 0.25 }], ['l3', 'idle', { x: -0.2, z: 0.45 }], ['l4', 'idle', { x: -0.3, z: 0.3 }],
-        ['ar1', 'idle', { x: 2.6, z: 0.1, delay: 400 }], ['ar2', 'idle', { x: 2.8, z: 0.2, delay: 200 }], ['ar1', 'idle', { show: 0, delay: 2600 }], ['ar2', 'idle', { show: 0, delay: 2400 }]],
+        ['ar1', 'idle', { x: 2.6, z: 0.1, delay: 400 }], ['ar2', 'idle', { x: 2.8, z: 0.2, delay: 200 }], ['ar1', 'idle', { show: 0, delay: 1800 }], ['ar2', 'idle', { show: 0, delay: 1800 }]],
       // 어스름 녘 — 텅 빈 진영
       'p1.5': [['@env', 'dusk'], ['ar1', 'idle', { show: 0 }], ['ar2', 'idle', { show: 0 }], ['l2', 'afraid', { x: 1.15, z: 0.25, look: 1 }], ['l1', 'idle', { x: 1.0, z: 0.05, look: 1 }], ['l3', 'idle', { x: 0.8, z: 0.4, look: 1 }], ['l4', 'idle', { x: 0.75, z: 0.15, look: 1 }]],
       'p1.6': [['l2', 'look-up', { look: 0.8 }]],
@@ -378,7 +378,7 @@ export const C = {
       'p1.7': [['joram', 'idle']],
       'p1.8': [['rider', 'rebuke', { to: 'joram' }]],
       // 화살은 그리지 않는다 — 요람은 사라지고 빈 병거가 달아난다
-      'p1.9': [['rider', 'idle'], ['joram', 'idle', { show: 0 }], ['car2', null, { x: 2.6, z: 0.5, delay: 900 }], ['car2', null, { show: 0, delay: 3200 }]],
+      'p1.9': [['rider', 'idle'], ['joram', 'idle', { show: 0 }], ['car2', null, { x: 2.1, z: 0.45, delay: 900 }], ['car2', null, { show: 0, delay: 1700 }]],
       // 창가의 이세벨
       'p2.0': [['car2', null, { show: 0 }], ['joram', 'idle', { show: 0 }], ['jezebel', 'idle', { show: 1, look: 0.3 }], ['car', null, { x: 0.65, z: 0.25 }]],
       'p2.1': [['jezebel', 'speak', { to: 'rider' }]],

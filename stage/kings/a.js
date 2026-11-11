@@ -157,7 +157,7 @@ export const A = {
       // 화목제물 — 제단의 불, 열나흘의 잔치
       'p2.1': [['temple', 'fire'], ['solomon', 'idle', { look: -0.6 }]],
       // 백성은 기뻐하며 장막으로 돌아간다
-      'p2.2': [['folkL', null, { x: -2.6 }], ['folkR', null, { x: 2.7 }], ['folkL', null, { show: 0, delay: 2500 }], ['folkR', null, { show: 0, delay: 2500 }], ['stranger', 'idle', { x: 2.3, z: 0.1, delay: 800 }], ['stranger', 'idle', { show: 0, delay: 3000 }],
+      'p2.2': [['folkL', null, { x: -2.6 }], ['folkR', null, { x: 2.7 }], ['folkL', null, { show: 0, delay: 1800 }], ['folkR', null, { show: 0, delay: 1800 }], ['stranger', 'idle', { x: 2.3, z: 0.1, delay: 800 }], ['stranger', 'idle', { show: 0, delay: 1800 }],
         ['solomon', 'bless', { look: 0 }]],
       // 주의 뜰에서 보내는 하루
       'p2.3': [['folkL', null, { show: 0 }], ['folkR', null, { show: 0 }], ['stranger', 'idle', { show: 0 }], ['solomon', 'idle', { x: 0.0, z: 0.42, look: 2.9 }]],
@@ -319,7 +319,7 @@ export const A = {
       'p2.0': [['ahijahT', 'speak', { to: 'jeroboam' }]],
       // 솔로몬이 그를 죽이려 하자 — 애굽으로 달아난다
       'p2.3': [['ahijahT', 'idle'], ['guard', 'idle', { show: 1, x: -1.4, z: 0.35, look: 1 }], ['jeroboam', 'afraid', { look: -1, delay: 1200 }]],
-      'p2.4': [['jeroboam', 'idle', { x: 2.4, z: 0.6 }], ['jeroboam', 'idle', { show: 0, delay: 3800 }], ['guard', 'idle', { x: -0.7, z: 0.4, delay: 600 }], ['guard', 'idle', { show: 0, delay: 4200 }],
+      'p2.4': [['jeroboam', 'idle', { x: 2.4, z: 0.6 }], ['jeroboam', 'idle', { show: 0, delay: 1800 }], ['guard', 'idle', { x: -0.7, z: 0.4, delay: 600 }], ['guard', 'idle', { show: 0, delay: 1800 }],
         ['ahijahT', 'idle', { look: 0.6, delay: 1500 }]],
       w0: [['ahijah', 'idle', { show: 0 }], ['pieces', 'ten', { show: 1 }], ['ahijahT', 'speak', { show: 1, x: 0.42, z: 0.25, to: 'jeroboam' }], ['jeroboam', 'kneel', { show: 1, x: -0.3, z: 0.25, look: 1 }]],
       w1: [['ahijahT', 'speak', { show: 1 }]],
@@ -369,7 +369,7 @@ export const A = {
       'p2.1': [['rehoboam', 'rebuke']],
       // 이스라엘아, 장막으로 돌아가자!
       'p2.2': [['rehoboam', 'idle'], ['jeroboam', 'raise', { look: 1 }]],
-      'p2.4': [['jeroboam', 'idle', { x: -1.8, z: 0.4, look: -1, delay: 1500 }], ['folk', null, { x: -2.3, delay: 1200 }], ['folk', null, { show: 0, delay: 4500 }], ['jeroboam', 'idle', { show: 0, delay: 5000 }]],
+      'p2.4': [['jeroboam', 'idle', { x: -1.8, z: 0.4, look: -1, delay: 1500 }], ['folk', null, { x: -2.3, delay: 1200 }], ['folk', null, { show: 0, delay: 1800 }], ['jeroboam', 'idle', { show: 0, delay: 1800 }]],
       // 왕은 급히 수레를 타고 예루살렘으로 — 감독 아도람의 일은 낭독으로만
       'p2.5': [['folk', null, { show: 0 }], ['jeroboam', 'idle', { show: 0 }], ['elder1', 'afraid'], ['rehoboam', 'afraid', { look: 1 }],
         ['rehoboam', 'idle', { x: 1.6, z: 0.5, delay: 800 }], ['rehoboam', 'idle', { board: 'car', x: 0, z: 0, look: 1.3, delay: 3200 }], ['car', null, { x: 3.0, z: 0.75, delay: 3600 }], ['car', null, { show: 0, delay: 6500 }]],
