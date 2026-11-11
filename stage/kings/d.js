@@ -173,7 +173,7 @@ export const D = {
       'p1.1': [['envoy', 'speak', { to: 'hezekiah' }]],
       'p1.2': [['envoy', 'speak', { to: 'hezekiah' }], ['envoy', 'idle', { item: null, delay: 2200 }], ['hezekiah', 'idle', { item: 'scroll', delay: 2300 }]],
       // 편지를 들고 성전에 올라가 여호와 앞에 펼친다
-      'p1.3': [['envoy', 'idle', { x: 2.6, z: 0.55 }], ['envoy', 'idle', { show: 0, delay: 3200 }], ['hezekiah', 'idle', { x: -0.55, z: -0.12, look: 3.14 }],
+      'p1.3': [['envoy', 'idle', { x: 2.6, z: 0.55 }], ['envoy', 'idle', { show: 0, delay: 1800 }], ['hezekiah', 'idle', { x: -0.55, z: -0.12, look: 3.14 }],
         ['hezekiah', 'kneel', { item: null, delay: 2400 }], ['letter', null, { show: 1, delay: 2600 }]],
       'p1.4': [['hezekiah', 'kneel', { item: null, x: -0.55, z: -0.12, look: 3.14 }], ['letter', null, { show: 1 }], ['envoy', 'idle', { show: 0 }]],
       'p1.5': [['hezekiah', 'look-up']],
@@ -339,7 +339,7 @@ export const D = {
       // 사신들의 눈이 구석구석을 훑는다
       'p1.3': [['hezekiah', 'idle', { look: 1.6 }], ['env1', 'idle', { look: 2.2 }], ['env2', 'idle', { look: -2.0 }], ['env1', 'idle', { look: 2.8, delay: 1600 }], ['env2', 'idle', { look: -2.7, delay: 2000 }]],
       // 사신들이 떠나고 이사야가 찾아온다
-      'p1.4': [['env1', 'idle', { x: 2.5, z: 0.4 }], ['env2', 'idle', { x: 2.7, z: 0.6 }], ['env1', 'idle', { show: 0, delay: 3800 }], ['env2', 'idle', { show: 0, delay: 3800 }],
+      'p1.4': [['env1', 'idle', { x: 2.5, z: 0.4 }], ['env2', 'idle', { x: 2.7, z: 0.6 }], ['env1', 'idle', { show: 0, delay: 1800 }], ['env2', 'idle', { show: 0, delay: 1800 }],
         ['isaiah', 'idle', { show: 1, x: 0.85, z: 0.4, look: -1.8, delay: 3000 }], ['hezekiah', 'idle', { look: 1.6, delay: 3000 }]],
       'p2.0': [['env1', 'idle', { show: 0 }], ['env2', 'idle', { show: 0 }], ['isaiah', 'idle', { show: 1, x: 0.85, z: 0.4, look: -1.8 }]],
       'p2.1': [['isaiah', 'speak', { to: 'hezekiah' }]],

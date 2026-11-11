@@ -55,7 +55,7 @@ export const B = {
       'p2.3': [['elijah', 'rebuke', { look: -1.3 }], ['ahab', 'afraid'], ['jezebel', 'idle', { look: 1.1 }]],
       // 이제 하늘이 대답할 차례 — 풀빛이 바래고 하늘이 메마른다
       'p2.4': [['elijah', 'idle', { look: -1.3 }], ['grass', null, { show: 0.25 }], ['@env', 'dusk'], ['shrine', 'idle']],
-      'p2.5': [['elijah', 'idle', { x: 2.4, z: 0.55 }], ['elijah', 'idle', { show: 0, delay: 3800 }], ['ahab', 'idle', { look: 1.3 }]],
+      'p2.5': [['elijah', 'idle', { x: 2.4, z: 0.55 }], ['elijah', 'idle', { show: 0, delay: 1800 }], ['ahab', 'idle', { look: 1.3 }]],
       'p2.6': [['elijah', 'idle', { show: 0 }]],
       w0: [['grass', null, { show: 1 }], ['elijah', 'speak', { show: 1, x: 0.45, z: 0.3, look: -1.3, to: 'ahab' }], ['ahab', 'idle', { look: 1.3 }]],
       w1: [['elijah', 'speak', { show: 1, x: 0.45, z: 0.3, to: 'ahab' }], ['ahab', 'rebuke', { look: 1.3 }]],
@@ -98,7 +98,7 @@ export const B = {
         ['r1', 'fly', { x: 0.35, z: 0.05, y: 0.25, delay: 3500 }], ['r2', 'fly', { x: -0.3, z: 0.1, y: 0.35, delay: 3700 }], ['r1', 'rest', { y: 0, delay: 6200 }], ['r2', 'rest', { y: 0, delay: 6400 }]],
       'p1.4': [['r1', 'rest', { x: 0.35, z: 0.05, y: 0 }], ['r2', 'rest', { x: -0.3, z: 0.1, y: 0 }], ['elijah', 'sit-ground', { item: 'bread' }]],
       // 그 시냇물을 마시며 — 새들은 날아가고
-      'p1.5': [['@env', 'day'], ['r1', 'fly', { x: 2.7, z: -0.3, y: 1.2 }], ['r2', 'fly', { x: 2.9, z: -0.1, y: 1.3 }], ['r1', 'fly', { show: 0, delay: 3200 }], ['r2', 'fly', { show: 0, delay: 3200 }],
+      'p1.5': [['@env', 'day'], ['r1', 'fly', { x: 2.7, z: -0.3, y: 1.2 }], ['r2', 'fly', { x: 2.9, z: -0.1, y: 1.3 }], ['r1', 'fly', { show: 0, delay: 1800 }], ['r2', 'fly', { show: 0, delay: 1800 }],
         ['elijah', 'idle', { item: null, x: 0.05, z: 0.08, look: 0 }], ['elijah', 'kneel', { delay: 1600 }]],
       // 하늘은 닫혀 있고, 물소리가 가늘어진다
       'p2.0': [['r1', 'fly', { show: 0 }], ['r2', 'fly', { show: 0 }], ['elijah', 'sit-ground', { x: 0.05, z: 0.0, look: 0.3 }], ['elijah', 'look-up', { delay: 2000 }]],
@@ -351,7 +351,7 @@ export const B = {
       'p2.6': [['elijah', 'sit-ground', { look: -0.4 }]],
       'p2.7': [['elijah', 'idle', { look: 0.4 }]],
       // 사십 일 밤낮을 걸어 호렙으로 — 남쪽(앞)으로 떠난다
-      'p2.8': [['light', null, { show: 0 }], ['cake', null, { show: 0, delay: 1500 }], ['@env', 'dusk', { delay: 1500 }], ['elijah', 'idle', { x: 2.4, z: 0.65 }], ['elijah', 'idle', { show: 0, delay: 5000 }]],
+      'p2.8': [['light', null, { show: 0 }], ['cake', null, { show: 0, delay: 1500 }], ['@env', 'dusk', { delay: 1500 }], ['elijah', 'idle', { x: 2.4, z: 0.65 }], ['elijah', 'idle', { show: 0, delay: 1800 }]],
       w0: [['light', null, { show: 0 }], ['elijah', 'pray', { show: 1, x: 0.82, z: -0.02, look: -0.4 }]],
       w1: [['light', null, { show: 1 }], ['cake', null, { show: 1 }], ['elijah', 'sit-ground', { show: 1, x: 0.82, z: -0.02, look: -0.4 }]],
       w2: [['light', null, { show: 0 }], ['cake', null, { show: 0 }], ['runner', 'speak', { show: 1, x: -0.4, z: 0.2, look: 1.2 }], ['elijah', 'afraid', { show: 1, x: 0.35, z: 0.25, look: -1.3 }]],
@@ -604,7 +604,7 @@ export const B = {
         ['micaiah', 'idle', { show: 0, delay: 8400 }], ['guard', 'idle', { show: 0, delay: 8600 }]],
       // 아합은 변장하고 싸움터로
       'p2.3': [['micaiah', 'idle', { show: 0 }], ['guard', 'idle', { show: 0 }], ['zed', 'idle', { x: -0.75, z: 0.45, look: 1.4 }], ['@env', 'dusk'],
-        ['ahab', 'idle', { show: 0 }], ['ahabA', 'idle', { show: 1, x: -0.35, z: -0.1, look: 1.2, delay: 300 }], ['ahabA', 'idle', { x: 2.6, z: 0.55, delay: 2000 }], ['ahabA', 'idle', { show: 0, delay: 6600 }],
+        ['ahab', 'idle', { show: 0 }], ['ahabA', 'idle', { show: 1, x: -0.35, z: -0.1, look: 1.2, delay: 300 }], ['ahabA', 'idle', { x: 2.6, z: 0.55, delay: 2000 }], ['ahabA', 'idle', { show: 0, delay: 1800 }],
         ['jehoshaphat', 'sit', { look: 0.8, delay: 2000 }]],
       // 무심코 쏜 화살 — 그리지 않는다: 어둠이 내린다
       'p2.4': [['ahab', 'idle', { show: 0 }], ['ahabA', 'idle', { show: 0 }], ['@env', 'dark'], ['fp1', 'idle', { look: 1.6 }], ['fp4', 'idle', { look: 1.6 }]],

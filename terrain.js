@@ -574,6 +574,8 @@ function placeLabels() {
       const a = PLACES[L.key], b = PLACES[cur];
       if (a && b && !a.jlm && !b.jlm && Math.hypot(a.lat - b.lat, a.lng - b.lng) < 0.045) show = false;
     }
+    // 지금 장소의 이름표는 그 자리에 선 무대 한가운데에 찍혀 소품과 사람을 가렸다(예루살렘 성전 앞) — 무대가 서 있는 동안은 감춘다. 이름은 왼쪽 위 장소 단추에 있다
+    if (show && L.key === cur && document.body.classList.contains('stage-on')) show = false;
     if (show) {
       if (!L.w) { L.w = L.el.offsetWidth || 60; L.h = L.el.offsetHeight || 20; }
       const box = [x - L.w / 2 - 4, y - 6, x + L.w / 2 + 4, y + L.h];
