@@ -1,0 +1,1649 @@
+{
+ "periods": {
+  "r1": {
+   "name": "Gloria y caída de Salomón",
+   "span": "970 – 931 a. C."
+  },
+  "r2": {
+   "name": "El reino dividido",
+   "span": "931 – 910 a. C."
+  },
+  "r3": {
+   "name": "Elías",
+   "span": "874 – 850 a. C."
+  },
+  "r4": {
+   "name": "Eliseo",
+   "span": "850 – 796 a. C."
+  },
+  "r5": {
+   "name": "El fin del reino del norte",
+   "span": "752 – 722 a. C."
+  },
+  "r6": {
+   "name": "El fin del reino del sur",
+   "span": "715 – 561 a. C."
+  }
+ },
+ "places": {
+  "gibeon": {
+   "name": "Gabaón",
+   "region": "Benjamín"
+  },
+  "jerusalem": {
+   "name": "Jerusalén",
+   "region": "Judá"
+  },
+  "olivet": {
+   "name": "Lugares altos frente al monte de los Olivos",
+   "region": "Judá"
+  },
+  "shechem": {
+   "name": "Siquem",
+   "region": "Efraín"
+  },
+  "bethel": {
+   "name": "Betel",
+   "region": "Efraín"
+  },
+  "shiloh": {
+   "name": "Silo",
+   "region": "Efraín"
+  },
+  "samaria": {
+   "name": "Samaria",
+   "region": "Israel"
+  },
+  "cherith": {
+   "name": "Arroyo de Querit",
+   "region": "Galaad"
+  },
+  "zarephath": {
+   "name": "Sarepta",
+   "region": "Sidón"
+  },
+  "carmel": {
+   "name": "Monte Carmelo",
+   "region": "Israel"
+  },
+  "jezreel": {
+   "name": "Jezreel",
+   "region": "Israel"
+  },
+  "beersheba": {
+   "name": "Desierto de Beerseba",
+   "region": "Judá"
+  },
+  "horeb": {
+   "name": "Monte Horeb",
+   "region": "Península del Sinaí"
+  },
+  "abelmeholah": {
+   "name": "Abel-mehola",
+   "region": "Israel"
+  },
+  "ramoth": {
+   "name": "Ramot de Galaad",
+   "region": "Galaad"
+  },
+  "jordan": {
+   "name": "Río Jordán (frente a Jericó)",
+   "region": "Jordán"
+  },
+  "shunem": {
+   "name": "Sunem",
+   "region": "Israel"
+  },
+  "dothan": {
+   "name": "Dotán",
+   "region": "Israel"
+  },
+  "megiddo": {
+   "name": "Meguido",
+   "region": "Israel"
+  },
+  "babylon": {
+   "name": "Babilonia",
+   "region": "Babilonia"
+  }
+ },
+ "events": {
+  "k01": {
+   "title": "El sueño de Gabaón",
+   "when": "hacia el 970 a. C.",
+   "subtitle": "La noche en que Dios preguntó qué quería",
+   "story": [
+    "Sobre el gran lugar alto de Gabaón el humo no cesaba de subir. Salomón, hijo de David, llevaba poco tiempo como rey, y ofreció sobre aquel altar mil animales en holocausto. Aquella noche, cuando las llamas se apagaron, el joven rey se quedó dormido allí mismo. En sueños se le apareció el Señor y le dijo: «¿Qué quieres que te dé? Pídelo».",
+    "Salomón respondió: «Tú mostraste un gran amor a mi padre David. Pero yo soy como un niño pequeño y no sé ni cómo salir ni cómo entrar. Me has confiado este pueblo tan numeroso que no se puede contar; dame un corazón que sepa escuchar, para gobernarlo y distinguir entre el bien y el mal». Aquellas palabras, que no pedían larga vida, ni riquezas, ni la vida de sus enemigos, agradaron al Señor.",
+    "Dios le dijo: «Ya que has pedido esto, te daré un corazón sabio e inteligente. Y también te daré lo que no has pedido: riquezas y gloria». Salomón despertó, y era un sueño. Volvió a Jerusalén, se presentó delante del arca de la alianza, ofreció sacrificios y celebró un banquete con sus servidores. Mucho después, un canto que lleva el nombre de Salomón dice así: «El Señor da el sueño a quienes ama»."
+   ],
+   "words": [
+    {
+     "who": "Dios",
+     "text": "¿Qué quieres que te dé? Pídelo."
+    },
+    {
+     "who": "Salomón",
+     "text": "Da a tu siervo un corazón que sepa escuchar, para juzgar a tu pueblo y distinguir entre el bien y el mal."
+    },
+    {
+     "who": "Dios",
+     "text": "Ya que no has pedido larga vida, ni riquezas, ni la vida de tus enemigos, sino sabiduría para discernir lo justo, haré lo que me has pedido."
+    },
+    {
+     "who": "Dios",
+     "text": "También te daré lo que no has pedido: riquezas y gloria. Mientras vivas, no habrá entre los reyes nadie como tú."
+    }
+   ],
+   "note": "Gabaón era una ciudad del territorio de Benjamín, unos diez kilómetros al noroeste de Jerusalén. Según Crónicas, antes de que se construyera el templo, la tienda del encuentro de los tiempos de Moisés y el altar de bronce estaban en el lugar alto de esta ciudad.",
+   "reflect": "Si Dios me dijera «pide lo que quieras», ¿qué le pediría?",
+   "quiz": {
+    "q": "¿Qué le pidió Salomón a Dios en el sueño de Gabaón?",
+    "options": [
+     "Una larga vida",
+     "La vida de sus enemigos",
+     "Un corazón que sepa escuchar para juzgar al pueblo",
+     "Muchas riquezas y gloria"
+    ],
+    "explain": "Salomón pidió un corazón que supiera escuchar para juzgar al pueblo y distinguir el bien del mal, y Dios le añadió las riquezas y la gloria que no había pedido (1 R 3:9–13)."
+   },
+   "credit": "Reinier Vinkeles, God Appears to Solomon, 1767 · Rijksmuseum, Ámsterdam · Dominio público"
+  },
+  "k02": {
+   "title": "Dos mujeres y un niño",
+   "when": "hacia el 969 a. C.",
+   "subtitle": "El corazón de una madre ante la espada",
+   "story": [
+    "Dos mujeres se presentaron ante el rey. Una de ellas tenía en brazos a un niño vivo. La mujer que no llevaba al niño habló primero: «Mi señor, esta mujer y yo vivimos en la misma casa. Con tres días de diferencia, las dos dimos a luz un hijo, pero una noche esta mujer se acostó encima de su niño y el niño murió. Entonces ella, a medianoche, mientras yo dormía, se llevó a mi hijo y me puso a su niño muerto en el regazo».",
+    "La misma mujer siguió hablando: «Por la mañana me levanté para darle el pecho y vi que el niño estaba muerto. Pero cuando hubo luz y lo miré bien, vi que no era el hijo que yo había dado a luz». La mujer que tenía al niño en brazos gritó: «¡No! El niño vivo es mi hijo, y el muerto es el tuyo». No había ningún testigo. Solo las voces de las dos mujeres se cruzaban en el palacio.",
+    "El rey Salomón dijo: «Traedme una espada. Partid en dos al niño vivo y dad la mitad a cada una». Entonces la verdadera madre del niño vivo, con el corazón deshecho, gritó: «¡Mi señor, dale a ella el niño vivo, pero no lo mates!». La mujer que había tenido al niño en brazos dijo: «Que no sea ni para mí ni para ti; partidlo». El rey señaló a la mujer que había suplicado por la vida del niño y dictó sentencia: «Dadle a ella el niño vivo y no lo matéis de ningún modo. Ella es su madre»."
+   ],
+   "words": [
+    {
+     "who": "Salomón",
+     "text": "Partid en dos al niño vivo y dad una mitad a esta mujer y la otra mitad a aquella."
+    },
+    {
+     "who": "La verdadera madre",
+     "text": "Mi señor, dale a ella el niño vivo. Pero, por favor, no lo mates."
+    },
+    {
+     "who": "Salomón",
+     "text": "Dadle a ella el niño vivo y no lo matéis de ningún modo. Ella es su madre."
+    }
+   ],
+   "note": "En el antiguo Israel el rey era el juez supremo, y cualquiera que sufriera una injusticia podía presentarse ante él para pedir justicia. Cuando todo Israel oyó esta sentencia, sintió temor del rey, porque vio que tenía la sabiduría de Dios.",
+   "reflect": "¿Dónde busco yo la sabiduría?",
+   "quiz": {
+    "q": "¿Qué mandó traer Salomón para descubrir a la verdadera madre?",
+    "options": [
+     "Una espada",
+     "Una balanza",
+     "Una lámpara",
+     "Un rollo de la ley"
+    ],
+    "explain": "Salomón mandó traer una espada y ordenó partir al niño; así se descubrió que la mujer que quería salvarlo era la verdadera madre (1 R 3:24–27)."
+   },
+   "credit": "Gustave Doré, The Judgment of Solomon, 1866 · Biblia ilustrada por Doré · Dominio público"
+  },
+  "k03": {
+   "title": "La nube que llenó el templo",
+   "when": "hacia el 959 a. C.",
+   "subtitle": "La casa donde habitó aquel a quien no caben los cielos",
+   "story": [
+    "En la fiesta del mes séptimo, los sacerdotes cargaron el arca de la alianza y la subieron de la ciudad de David al nuevo templo. Dentro del arca no había más que las dos tablas de piedra que Moisés había puesto allí en Horeb. En cuanto el arca quedó en el lugar santísimo, bajo las alas de los dos querubines, y los sacerdotes salieron, una nube llenó el templo. La gloria del Señor cubrió la casa, y los sacerdotes no podían quedarse de pie para servir.",
+    "Salomón se puso delante del altar, frente a toda la asamblea; luego se arrodilló, extendió las manos hacia el cielo y oró: «¿Es posible que Dios habite de verdad en la tierra? Si los cielos, y aun los cielos más altos, no pueden contenerte, ¡cuánto menos esta casa que yo he construido! Pero cuando tu pueblo ore mirando hacia este lugar, escucha desde el cielo y perdona. Y si un extranjero viene de una tierra lejana y ora, escúchalo también».",
+    "Cuando terminó de orar, el rey se levantó y bendijo al pueblo. Se ofrecieron veintidós mil bueyes y ciento veinte mil ovejas como sacrificios de paz, y la fiesta duró siete días y otros siete más: catorce días en total. El pueblo bendijo al rey y volvió a sus tiendas con el corazón alegre. Mucho después, quienes añoraban este templo cantaban: «Más vale un día en tus atrios que mil en cualquier otro lugar»."
+   ],
+   "words": [
+    {
+     "who": "Salomón",
+     "text": "¿Es posible que Dios habite de verdad en la tierra? Si los cielos, y aun los cielos más altos, no pueden contenerte, ¡cuánto menos esta casa que yo he construido!"
+    },
+    {
+     "who": "Salomón",
+     "text": "Cuando tu pueblo ore mirando hacia este lugar, escucha desde el cielo, donde tú habitas; escucha y perdona."
+    },
+    {
+     "who": "Salomón",
+     "text": "Cuando un extranjero, que no es de tu pueblo, oiga hablar de tu nombre, venga de una tierra lejana y ore mirando hacia esta casa, escucha también su oración."
+    },
+    {
+     "who": "Salomón",
+     "text": "Bendito sea el Señor, que ha dado descanso a su pueblo, tal como lo prometió. No ha caído por tierra ni una sola de las buenas palabras que dijo por medio de Moisés."
+    }
+   ],
+   "note": "La dedicación del templo se celebró en el mes séptimo, el mes de Etanim, por la fiesta de las Enramadas. El lugar santísimo era una sala en forma de cubo de veinte codos por lado, donde solo entraba el sumo sacerdote una vez al año.",
+   "reflect": "¿Adoro a Dios de todo corazón y con alegría?",
+   "quiz": {
+    "q": "Cuando metieron el arca de la alianza en el lugar santísimo, ¿qué había dentro de ella?",
+    "options": [
+     "Una vasija de maná",
+     "La vara de Aarón",
+     "La corona de Salomón",
+     "Dos tablas de piedra"
+    ],
+    "explain": "Dentro del arca no había nada más que las dos tablas de piedra que Moisés había puesto allí en Horeb (1 R 8:9)."
+   },
+   "credit": "James Tissot, Solomon Dedicates the Temple at Jerusalem, c. 1896–1902 · Museo Judío de Nueva York · Dominio público"
+  },
+  "k04": {
+   "title": "La visita de la reina de Sabá",
+   "when": "hacia el 950 a. C.",
+   "subtitle": "No me habían contado ni la mitad",
+   "story": [
+    "Una larga caravana de camellos cargados de especias entró por las puertas de Jerusalén. También traían mucho oro y piedras preciosas. Era la reina de Sabá, un país lejano del sur. Había oído hablar de la fama de Salomón, unida al nombre del Señor, y había hecho aquel largo viaje para ponerlo a prueba con preguntas difíciles. La reina le preguntó todo lo que llevaba en el corazón.",
+    "Salomón respondió a todas sus preguntas sin quedarse callado ni una vez. La reina vio la sabiduría del rey y el palacio que había construido. Vio la comida de su mesa, a sus funcionarios sentados en orden, la ropa de los que lo servían, a sus coperos y los holocaustos que el rey ofrecía al subir a la casa del Señor. La reina se quedó sin aliento, asombrada.",
+    "La reina le dijo al rey: «Era verdad lo que oí en mi país. No lo creía hasta que vine y lo vi con mis propios ojos, y no me habían contado ni la mitad. ¡Bendito sea el Señor tu Dios, que se ha complacido en ti! Porque ama a Israel para siempre, te ha puesto como rey para que hagas justicia». La reina le regaló ciento veinte talentos de oro y especias, y volvió a su tierra."
+   ],
+   "words": [
+    {
+     "who": "La reina de Sabá",
+     "text": "No creía lo que me contaban hasta que vine y lo vi con mis propios ojos. Y no me habían contado ni la mitad."
+    },
+    {
+     "who": "La reina de Sabá",
+     "text": "¡Qué dichosos los servidores que están siempre delante de ti escuchando tu sabiduría!"
+    },
+    {
+     "who": "La reina de Sabá",
+     "text": "¡Bendito sea el Señor tu Dios, que se ha complacido en ti! Porque ama a Israel para siempre, te ha puesto como rey para que hagas justicia."
+    }
+   ],
+   "note": "Se cree que Sabá estaba en el suroeste de la península arábiga, en la tierra del actual Yemen. Era un país rico gracias al comercio de especias como el incienso y la mirra, y sus caravanas de camellos subían hacia el norte siguiendo el mar Rojo.",
+   "reflect": "Al ver mi vida, ¿pensará la gente en Dios?",
+   "quiz": {
+    "q": "¿Qué dijo la reina de Sabá después de conocer a Salomón?",
+    "options": [
+     "Que la fama era exagerada",
+     "Que no le habían contado ni la mitad",
+     "Que la sabiduría de su país era mayor",
+     "Que no volvería nunca más"
+    ],
+    "explain": "La reina dijo que no lo había creído hasta venir y verlo ella misma, y que no le habían contado ni la mitad (1 R 10:7)."
+   },
+   "credit": "Edward Poynter, The Visit of the Queen of Sheba to King Solomon, 1890 · Galería de Arte de Nueva Gales del Sur · Dominio público"
+  },
+  "k05": {
+   "title": "Un corazón que se apartó",
+   "when": "hacia el 935 a. C.",
+   "subtitle": "El corazón del viejo rey se desvía",
+   "story": [
+    "En el monte que está frente a Jerusalén se levantó un altar extraño. Era un lugar alto para Quemos, el dios de Moab, y junto a él se alzó otro para Moloc, el dios de los amonitas. Quien los había construido era el rey Salomón, el mismo que en Gabaón había pedido sabiduría. Allí quemaban incienso y ofrecían sacrificios sus mujeres extranjeras. El humo subía al cielo, justo enfrente del templo.",
+    "Además de la hija del faraón, Salomón amó a mujeres de Moab, Amón, Edom, Sidón y de los hititas. Eran precisamente las naciones de las que el Señor había dicho: «No os caséis con ellas, porque desviarán vuestro corazón hacia otros dioses». Tuvo setecientas esposas de rango real y trescientas concubinas. Cuando Salomón envejeció, ellas desviaron el corazón del rey. El rey siguió a Astoret, la diosa de los sidonios, y a Milcom, el dios de los amonitas.",
+    "El Señor se enojó. Era el mismo que se le había aparecido a Salomón dos veces. El Señor le dijo a Salomón: «Como no has guardado mi alianza, sin falta te arrancaré este reino y se lo daré a uno de tus servidores. Pero, por amor a tu padre David, lo haré en tiempos de tu hijo. Y no le arrancaré todo el reino: por amor a David y a Jerusalén, la ciudad que yo escogí, dejaré a tu hijo una tribu»."
+   ],
+   "words": [
+    {
+     "who": "Dios",
+     "text": "Como no has guardado mi alianza ni mis mandatos, sin falta te arrancaré este reino y se lo daré a uno de tus servidores."
+    },
+    {
+     "who": "Dios",
+     "text": "Por amor a tu padre David, no lo haré mientras vivas; lo arrancaré de la mano de tu hijo."
+    },
+    {
+     "who": "Dios",
+     "text": "No le arrancaré todo el reino. Por amor a mi siervo David y a Jerusalén, la ciudad que yo escogí, daré una tribu a tu hijo."
+    }
+   ],
+   "note": "La cumbre sur del monte de los Olivos, al este de Jerusalén, fue llamada más tarde «el monte de la Destrucción». Los lugares altos que construyó Salomón siguieron allí hasta que, unos trescientos años después, el rey Josías los profanó y los derribó.",
+   "reflect": "Las personas que tengo cerca, ¿hacia dónde llevan mi corazón?",
+   "quiz": {
+    "q": "¿Para qué dios de Moab construyó Salomón un lugar alto en el monte frente a Jerusalén?",
+    "options": [
+     "Baal",
+     "Dagón",
+     "Quemos",
+     "Asera"
+    ],
+    "explain": "En el monte frente a Jerusalén, Salomón construyó lugares altos para Quemos, el abominable dios de Moab, y para Moloc, el de los amonitas (1 R 11:7)."
+   },
+   "credit": "Caspar Luyken, The Idolatry of Solomon, 1712 · Rijksmuseum, Ámsterdam · Dominio público"
+  },
+  "k06": {
+   "title": "El manto de Ahías en doce pedazos",
+   "when": "hacia el 932 a. C.",
+   "subtitle": "El profeta que rasgó su manto nuevo",
+   "story": [
+    "Jeroboam, de la tribu de Efraín, era hijo de una viuda. Cuando Salomón construía las murallas, vio lo trabajador que era aquel joven y lo puso al frente de todos los trabajadores de la casa de José. Un día, cuando Jeroboam salía de Jerusalén, se encontró en el camino con el profeta Ahías, de Silo. Ahías llevaba puesto un manto nuevo, y en el campo no había nadie más que ellos dos.",
+    "De pronto, Ahías agarró su manto nuevo y lo rasgó en doce pedazos. Ahías le dijo a Jeroboam: «Toma diez pedazos. Así dice el Señor, Dios de Israel: “Voy a arrancar este reino de la mano de Salomón y te daré a ti diez tribus, porque él me ha abandonado y se ha postrado ante otros dioses. Pero, por amor a mi siervo David, le dejaré una tribu”».",
+    "Ahías siguió comunicándole la palabra del Señor: «Si sigues mis caminos como mi siervo David, yo estaré contigo y te edificaré una casa firme, como hice con David. Humillaré a la descendencia de David, pero no para siempre». Después de esto, Salomón intentó matar a Jeroboam. Jeroboam huyó a Egipto, junto a Sisac, rey de Egipto, y se quedó allí hasta la muerte de Salomón."
+   ],
+   "words": [
+    {
+     "who": "Ahías",
+     "text": "Toma diez pedazos. El Señor dice que va a arrancar este reino de la mano de Salomón y que te dará a ti diez tribus."
+    },
+    {
+     "who": "Dios",
+     "text": "Dejaré una tribu a su hijo, para que mi siervo David tenga siempre una lámpara delante de mí en Jerusalén."
+    },
+    {
+     "who": "Dios",
+     "text": "Si escuchas mi palabra y sigues mis caminos como mi siervo David, yo estaré contigo y te edificaré una casa firme."
+    }
+   ],
+   "note": "Silo, el pueblo de Ahías, era el lugar donde estuvieron la tienda del encuentro y el arca de la alianza en tiempos de los jueces. Rasgar el manto era una acción simbólica con la que el profeta ponía la palabra de Dios ante los ojos de la gente; también Samuel había dicho algo parecido a Saúl.",
+   "reflect": "¿Trato lo que Dios me ha confiado como si fuera mío?",
+   "quiz": {
+    "q": "¿Cuántos pedazos de su manto le dio Ahías a Jeroboam?",
+    "options": [
+     "Diez pedazos",
+     "Doce pedazos",
+     "Dos pedazos",
+     "Un pedazo"
+    ],
+    "explain": "Ahías rasgó su manto nuevo en doce pedazos, le dio diez a Jeroboam y le anunció que Dios le daría diez tribus (1 R 11:30–31)."
+   },
+   "credit": "Caspar Luyken, Ahijah Tears His Garment into Twelve Pieces, 1712 · Rijksmuseum, Ámsterdam · Dominio público"
+  },
+  "k07": {
+   "title": "La respuesta dura de Siquem",
+   "when": "hacia el 931 a. C.",
+   "subtitle": "El clamor por un yugo más ligero",
+   "story": [
+    "Cuando murió Salomón, su hijo Roboam fue a Siquem. Todo Israel se había reunido allí para hacerlo rey. También llamaron a Jeroboam, que estaba escondido en Egipto, y él se presentó ante el pueblo. El pueblo le dijo a Roboam: «Tu padre hizo pesado nuestro yugo. Si nos alivias ese duro trabajo, te serviremos». Roboam respondió: «Volved dentro de tres días».",
+    "Roboam consultó primero a los ancianos que habían servido a Salomón. Los ancianos le aconsejaron: «Si hoy te haces servidor de este pueblo y le respondes con buenas palabras, ellos serán tus servidores para siempre». Roboam dejó a un lado ese consejo y consultó a los jóvenes que se habían criado con él. Los jóvenes le dijeron: «Diles: “Mi dedo meñique es más grueso que la cintura de mi padre. Mi padre os castigaba con látigos, pero yo os castigaré con escorpiones”».",
+    "Al tercer día, Roboam les respondió con dureza, como le habían dicho los jóvenes. El Señor dispuso así las cosas para que se cumpliera la palabra que Ahías de Silo había comunicado a Jeroboam. El pueblo gritó: «¿Qué parte tenemos nosotros con David? ¡Israel, a tus tiendas!». Adoram, el capataz que envió Roboam, murió apedreado, y el rey subió a toda prisa a su carro y huyó a Jerusalén."
+   ],
+   "words": [
+    {
+     "who": "Los ancianos",
+     "text": "Si hoy te haces servidor de este pueblo, lo sirves y le respondes con buenas palabras, ellos serán tus servidores para siempre."
+    },
+    {
+     "who": "Roboam",
+     "text": "Mi padre hizo pesado vuestro yugo, pero yo lo haré todavía más pesado. Mi padre os castigaba con látigos, pero yo os castigaré con escorpiones."
+    },
+    {
+     "who": "El pueblo de Israel",
+     "text": "¿Qué parte tenemos nosotros con David? ¡Israel, a tus tiendas! ¡Y tú, David, ocúpate ahora de tu propia casa!"
+    }
+   ],
+   "note": "Siquem, donde Abraham levantó su primer altar y Josué renovó la alianza, era el centro de las tribus del norte. Desde aquel día, las diez tribus del norte se llamaron Israel y el sur se llamó Judá.",
+   "reflect": "¿Escucho más las palabras correctas que las palabras agradables?",
+   "quiz": {
+    "q": "¿Cómo decidió responder Roboam a la petición del pueblo?",
+    "options": [
+     "Alivió el yugo, como le dijeron los ancianos",
+     "Consultó al profeta Ahías",
+     "Le entregó el reino a Jeroboam",
+     "Dijo que haría el yugo aún más pesado, como le dijeron los jóvenes"
+    ],
+    "explain": "Roboam rechazó el consejo de los ancianos y, siguiendo a los jóvenes, respondió con dureza que haría el yugo aún más pesado (1 R 12:13–14)."
+   },
+   "credit": "Paul Hardy, King Rehoboam Consulted with the Old Men · Dominio público"
+  },
+  "k08": {
+   "title": "Los becerros de oro de Betel y Dan",
+   "when": "hacia el 930 a. C.",
+   "subtitle": "Para que no fueran a Jerusalén",
+   "story": [
+    "Jeroboam, el primer rey del Israel del norte, fortificó la ciudad de Siquem y vivió allí. Pero por las noches había una idea que no lo dejaba en paz. Jeroboam pensó: «Si este pueblo sube a ofrecer sacrificios al templo del Señor en Jerusalén, su corazón volverá a Roboam, rey de Judá. Y entonces me matarán y volverán con Roboam».",
+    "Después de pedir consejo, el rey hizo dos becerros de oro. Jeroboam le dijo al pueblo: «¿No os resulta demasiado pesado subir hasta Jerusalén? Israel, aquí están tus dioses, los que te sacaron de la tierra de Egipto». Eran las mismas palabras que había gritado el pueblo en el desierto, delante del becerro de oro. Uno de los becerros se colocó en Betel, al sur, y el otro en Dan, en el extremo norte.",
+    "Esto se convirtió en pecado. El pueblo iba en fila hasta Dan para seguir a uno de los becerros. Jeroboam construyó santuarios en los lugares altos y puso como sacerdotes a hombres que no eran de la tribu de Leví. Imitando la fiesta de Judá, fijó una fiesta el día quince del mes octavo, un mes que él mismo había escogido a su antojo. Aquel día, Jeroboam subió al altar de Betel y se puso de pie para quemar incienso."
+   ],
+   "words": [
+    {
+     "who": "Jeroboam",
+     "text": "Si este pueblo sube a ofrecer sacrificios al templo del Señor en Jerusalén, su corazón volverá a Roboam, rey de Judá, y me matarán."
+    },
+    {
+     "who": "Jeroboam",
+     "text": "Os resulta demasiado pesado subir a Jerusalén. Israel, aquí están tus dioses, los que te sacaron de la tierra de Egipto."
+    }
+   ],
+   "note": "Dan estaba en el extremo norte de Israel y Betel cerca de su frontera sur, de modo que los dos lugares cerraban por ambos lados el camino del pueblo hacia Jerusalén. Betel era también el lugar donde Jacob vio la escalera que llegaba al cielo.",
+   "reflect": "¿Hay algo en lo que tuerzo la palabra de Dios o cedo para conservar mi lugar?",
+   "quiz": {
+    "q": "¿En qué dos lugares puso Jeroboam los becerros de oro?",
+    "options": [
+     "Siquem y Silo",
+     "Betel y Dan",
+     "Samaria y Tirsa",
+     "Gabaón y Beerseba"
+    ],
+    "explain": "Jeroboam puso un becerro de oro en Betel y el otro en Dan (1 R 12:29)."
+   },
+   "credit": "Theodoor Koning, Jeroboam's Idolatry, 1780 · Rijksmuseum, Ámsterdam · Dominio público"
+  },
+  "k09": {
+   "title": "El hombre de Dios que vino de Judá",
+   "when": "hacia el 930 a. C.",
+   "subtitle": "El hombre que clamó contra el altar",
+   "story": [
+    "En el momento en que Jeroboam iba a quemar incienso junto al altar de Betel, un hombre de Dios que había venido de Judá clamó contra el altar: «¡Altar, altar! Así dice el Señor: “En la casa de David nacerá un hijo llamado Josías, y sobre ti sacrificará a los sacerdotes de los lugares altos y quemará huesos humanos”. La señal será esta: el altar se partirá y se derramará la ceniza».",
+    "El rey extendió la mano y gritó: «¡Prendedlo!». Pero la mano se le quedó seca y no pudo volver a doblarla, y el altar se partió y se derramó la ceniza. El hombre de Dios oró, y la mano del rey quedó sana. El rey le pidió que fuera a su casa a descansar y a recibir un regalo, pero el hombre de Dios respondió: «Aunque me dieras la mitad de tu palacio, no iría. El Señor me ordenó que aquí no comiera pan ni bebiera agua, y que no volviera por el camino por el que vine».",
+    "Pero un profeta anciano de Betel fue tras él y le dijo: «Yo también soy profeta. Un ángel me ha dicho que te lleve a mi casa y te dé de comer». Era mentira. El hombre de Dios volvió con él y comió pan, y en el camino de regreso lo mató un león. El león y el asno se quedaron quietos junto al cadáver. El profeta anciano recogió el cuerpo, lo enterró en su propio sepulcro y lloró diciendo: «¡Ay, hermano mío!»."
+   ],
+   "words": [
+    {
+     "who": "El hombre de Dios",
+     "text": "¡Altar, altar! Así dice el Señor: en la casa de David nacerá un hijo llamado Josías, y sobre ti sacrificará a los sacerdotes de los lugares altos."
+    },
+    {
+     "who": "El hombre de Dios",
+     "text": "Aunque me dieras la mitad de tu palacio, no iría contigo. El Señor me ordenó que aquí no comiera pan ni bebiera agua."
+    },
+    {
+     "who": "El profeta anciano",
+     "text": "Cuando yo muera, enterradme en el sepulcro donde está enterrado el hombre de Dios, y poned mis huesos junto a los suyos. Lo que él clamó contra el altar de Betel se cumplirá sin falta."
+    }
+   ],
+   "note": "Esta profecía se cumplió unos trescientos años después, cuando Josías, rey de Judá, derribó el altar de Betel y quemó los huesos de los sepulcros. Aquel día, Josías dejó sin tocar solo la tumba de este hombre de Dios y del profeta anciano.",
+   "reflect": "Cuando unas palabras que suenan bien no coinciden con la palabra de Dios, ¿a cuál sigo?",
+   "quiz": {
+    "q": "¿Qué rey de la casa de David nombró el hombre de Dios en su profecía contra el altar de Betel?",
+    "options": [
+     "Josías",
+     "Ezequías",
+     "Roboam",
+     "Asa"
+    ],
+    "explain": "El hombre de Dios anunció que en la casa de David nacería un hijo llamado Josías, que sobre aquel altar sacrificaría a los sacerdotes de los lugares altos (1 R 13:2)."
+   },
+   "credit": "Caspar Luyken, The Man of God from Judah Prophesies against the Altar, 1712 · Rijksmuseum, Ámsterdam · Dominio público"
+  },
+  "k10": {
+   "title": "La reina disfrazada",
+   "when": "hacia el 926 a. C.",
+   "subtitle": "El profeta ciego ya lo sabía",
+   "story": [
+    "Abías, el hijo de Jeroboam, cayó enfermo. Jeroboam le dijo a su mujer: «Disfrázate para que nadie sepa que eres la reina y ve a Silo. Allí está el profeta Ahías, el que me dijo que yo sería rey. Él te dirá lo que le va a pasar al niño». La reina tomó diez panes, unas tortas y un frasco de miel, y se puso en camino. Para entonces Ahías era ya anciano y tenía los ojos tan apagados que no veía.",
+    "El Señor le había avisado de antemano a Ahías: «La mujer de Jeroboam viene a consultarte por su hijo, y fingirá ser otra mujer». Al oír sus pasos en la puerta, Ahías dijo: «Mujer de Jeroboam, entra. ¿Por qué finges ser otra? Me han enviado a darte una noticia dura». La reina disfrazada se quedó inmóvil allí mismo.",
+    "Ahías le comunicó la palabra del Señor para Jeroboam: «Yo te levanté de en medio del pueblo y te puse como jefe de Israel, pero tú te hiciste otros dioses e ídolos y me echaste a tus espaldas». Luego Ahías le dijo a la reina: «Cuando tu pie entre en la ciudad, el niño morirá. De la familia de Jeroboam, solo este niño será enterrado en una tumba, porque en él se ha hallado algo bueno para con el Señor». Cuando la reina volvió a Tirsa, donde estaba el palacio, y cruzó el umbral, el niño murió."
+   ],
+   "words": [
+    {
+     "who": "Ahías",
+     "text": "Mujer de Jeroboam, entra. ¿Por qué finges ser otra? Me han enviado a darte una noticia dura."
+    },
+    {
+     "who": "Dios",
+     "text": "Yo te levanté de en medio del pueblo y te puse como jefe de Israel, pero tú te hiciste otros dioses e ídolos y me echaste a tus espaldas."
+    },
+    {
+     "who": "Ahías",
+     "text": "De la familia de Jeroboam, solo este niño será enterrado en una tumba, porque en él se ha hallado algo bueno para con el Señor."
+    }
+   ],
+   "note": "Tirsa era una hermosa ciudad al noreste de Siquem; fue la capital del Israel del norte desde los tiempos de Jeroboam hasta que Omri fundó Samaria. Se calcula que de Silo a Tirsa había algo más de un día de camino a pie.",
+   "reflect": "¿Me presento ante Dios reconociendo primero mi pecado?",
+   "quiz": {
+    "q": "¿Por qué Ahías, que no veía, reconoció a la reina disfrazada?",
+    "options": [
+     "Porque recordaba su voz",
+     "Por los regalos que traía",
+     "Porque el Señor se lo había avisado de antemano",
+     "Porque un siervo se lo dijo al oído"
+    ],
+    "explain": "El Señor le había avisado de antemano a Ahías que la mujer de Jeroboam vendría fingiendo ser otra (1 R 14:5–6)."
+   },
+   "credit": "Frans van Mieris el Viejo, Jeroboam's Wife Visits the Prophet Ahijah, 1671 · Palacio de Bellas Artes de Lille · Dominio público"
+  },
+  "k11": {
+   "title": "De escudos de oro a escudos de bronce",
+   "when": "hacia el 925 a. C.",
+   "subtitle": "Los escudos del palacio pierden su brillo",
+   "story": [
+    "Los guardias del palacio formaron delante del rey con sus escudos. Ya no eran los escudos de oro que brillaban al sol, sino escudos de bronce amarillento. Roboam, hijo de Salomón, llegó a ser rey a los cuarenta y un años y reinó diecisiete años en Jerusalén. Su madre era Naama, una mujer amonita. En aquel tiempo Judá levantó lugares altos, piedras sagradas e imágenes de Asera en cada colina alta y bajo cada árbol frondoso.",
+    "En el quinto año del rey Roboam, Sisac, rey de Egipto, atacó Jerusalén. Sisac saqueó por completo los tesoros del templo del Señor y del palacio real. Se llevó también todos los escudos de oro que había hecho Salomón, sin dejar ni uno. La gloria de Salomón, que un día había dejado sin aliento a la reina de Sabá, bajaba ahora en los carros de un país extranjero antes de que pasara una sola generación.",
+    "En lugar de los escudos de oro, Roboam hizo escudos de bronce y los confió al jefe de la guardia que vigilaba la entrada del palacio. Cada vez que el rey entraba en el templo, los guardias salían con aquellos escudos y luego los devolvían a la sala de la guardia. Entre Roboam y Jeroboam hubo guerra continua. Mucho después, un poeta, al ver derrumbada la casa real de David, cantó: «Señor, ¿dónde está tu antiguo amor, el que juraste a David?»."
+   ],
+   "words": [
+    {
+     "who": "Semaías",
+     "text": "Así dice el Señor: «Vosotros me habéis abandonado; por eso yo también os he abandonado y os he entregado en manos de Sisac»."
+    },
+    {
+     "who": "Dios",
+     "text": "Ya que se han humillado, no los destruiré. Pronto los libraré, y no derramaré mi ira sobre Jerusalén por mano de Sisac."
+    },
+    {
+     "who": "El salmista",
+     "text": "Señor, ¿dónde está ahora tu antiguo amor, el que juraste a David por tu fidelidad?"
+    }
+   ],
+   "note": "Se identifica a Sisac con Sheshonq I, de la dinastía XXII de Egipto. En un muro del templo de Karnak está grabada la lista de las ciudades de Canaán que conquistó en esta campaña. El capítulo 12 de 2 Crónicas cuenta que en aquel momento el profeta Semaías comunicó al rey la palabra de Dios.",
+   "reflect": "¿Estoy tapando por fuera lo que he perdido y fingiendo que todo va bien?",
+   "quiz": {
+    "q": "Después de que Sisac se llevara los escudos de oro, ¿qué escudos hizo Roboam en su lugar?",
+    "options": [
+     "Escudos de plata",
+     "Escudos de madera",
+     "Escudos de hierro",
+     "Escudos de bronce"
+    ],
+    "explain": "Cuando Sisac se llevó todos los escudos de oro de Salomón, Roboam hizo en su lugar escudos de bronce y los confió al jefe de la guardia (1 R 14:26–27)."
+   },
+   "credit": "Christoffel van Sichem, Shishak of Egypt Plunders the Temple Treasures, 1645–1646 · Rijksmuseum, Ámsterdam · Dominio público"
+  },
+  "k12": {
+   "title": "No habrá lluvia",
+   "when": "hacia el 870 a. C.",
+   "subtitle": "Una palabra que cierra el cielo",
+   "story": [
+    "Al palacio de la colina de Samaria llegó una princesa de Sidón. Acab, rey del Israel del norte, se había casado con Jezabel, hija de Et-baal, rey de Sidón. Acab construyó en Samaria un templo a Baal y levantó dentro un altar. También hizo una imagen de Asera. Acab provocó al Señor más que todos los reyes anteriores.",
+    "A Baal se le adoraba como el dios que tenía en su mano la lluvia y las tormentas. La gente creía que había que suplicar a Baal para que se abriera el cielo y el campo diera grano. Uno tras otro, también los israelitas se arrodillaron ante los altares de Baal. Las voces que invocaban el nombre del Señor se oían cada vez más débiles.",
+    "Entonces Elías, el tisbita de Galaad, se presentó ante el rey. Elías le dijo a Acab: «Vive el Señor, Dios de Israel, a quien yo sirvo: en los próximos años no habrá rocío ni lluvia, a no ser por mi palabra». Ahora le tocaba al cielo responder quién es el que da la lluvia. El poeta de los Salmos cantó así: «Desde lo alto riegas los montes; la tierra se sacia del fruto de tus obras»."
+   ],
+   "words": [
+    {
+     "who": "Elías",
+     "text": "Vive el Señor, Dios de Israel, a quien yo sirvo: en los próximos años no habrá rocío ni lluvia, a no ser por mi palabra."
+    },
+    {
+     "who": "Elías",
+     "text": "No soy yo quien ha traído la desgracia a Israel, sino tú y la casa de tu padre, porque habéis abandonado los mandamientos del Señor y habéis seguido a los baales."
+    }
+   ],
+   "note": "En Canaán y Fenicia se adoraba a Baal como dios de la lluvia y de las tormentas. Al anunciar que no llovería, Elías planteaba de frente la pregunta de quién da la lluvia: Baal o el Señor. Samaria era la nueva capital del Israel del norte, fundada por Omri, el padre de Acab.",
+   "reflect": "¿Qué creo yo que llena mi vida?",
+   "quiz": {
+    "q": "Jezabel, la mujer de Acab, ¿de qué rey era hija?",
+    "options": [
+     "Del rey de Egipto",
+     "Del rey de Aram",
+     "Del rey de Sidón",
+     "Del rey de Moab"
+    ],
+    "explain": "Acab se casó con Jezabel, hija de Et-baal, rey de los sidonios, y sirvió a Baal (1 R 16:31)."
+   },
+   "credit": "Taller de Philips Galle, Elijah Foretells the Drought to King Ahab, 1579 · Rijksmuseum, Ámsterdam · Dominio público"
+  },
+  "k13": {
+   "title": "Los cuervos del arroyo de Querit",
+   "when": "hacia el 869 a. C.",
+   "subtitle": "Una mesa servida por cuervos",
+   "story": [
+    "Cuando Elías se retiró de delante del rey, la palabra del Señor vino a él. El Señor le dijo: «Vete de aquí hacia el oriente y escóndete junto al arroyo de Querit, frente al Jordán. Bebe del arroyo. Ya he ordenado a los cuervos que te den de comer allí». Elías se puso en camino, tal como el Señor le había dicho.",
+    "En el fondo de un barranco, el agua corría entre las rocas con un murmullo. Al amanecer, unas alas negras bajaban batiendo el aire. Los cuervos le traían pan y carne. Por la tarde, lo mismo. Las aves que la ley llamaba impuras le llevaban la comida al profeta. Elías bebía del arroyo y así pasaba los días.",
+    "Pero el cielo seguía cerrado. Con el paso de los días, el rumor del agua se hacía más débil. Las pozas se encogían, las piedras mojadas se secaban hasta volverse blancas, y por fin el arroyo quedó seco. La sequía que Elías había anunciado secaba ahora hasta su propio arroyo."
+   ],
+   "words": [
+    {
+     "who": "Dios",
+     "text": "Vete de aquí hacia el oriente y escóndete junto al arroyo de Querit, frente al Jordán."
+    },
+    {
+     "who": "Dios",
+     "text": "Bebe del arroyo. Ya he ordenado a los cuervos que te den de comer allí."
+    }
+   ],
+   "note": "Se cree que el arroyo de Querit era un barranco al este del Jordán, hacia Galaad, pero no se sabe dónde estaba exactamente. Muchos barrancos así solo llevan agua en la temporada de lluvias, y cuando la sequía se alarga se secan pronto. En la ley, el cuervo era un ave impura que no se podía comer.",
+   "reflect": "Hoy, ¿cuántas cosas puedo contar que Dios me ha dado?",
+   "quiz": {
+    "q": "¿Cuándo le traían comida los cuervos a Elías?",
+    "options": [
+     "Por la mañana y por la tarde",
+     "Solo por la mañana",
+     "Solo por la tarde",
+     "Una vez cada tres días"
+    ],
+    "explain": "Los cuervos le traían pan y carne por la mañana, y pan y carne por la tarde, y Elías bebía del arroyo (1 R 17:6)."
+   },
+   "credit": "Giovanni Girolamo Savoldo, Elijah Fed by the Raven, c. 1510 · Galería Nacional de Arte, Washington · Dominio público"
+  },
+  "k14": {
+   "title": "La tinaja de harina de la viuda de Sarepta",
+   "when": "hacia el 868 a. C.",
+   "subtitle": "El último puñado de harina",
+   "story": [
+    "El Señor envió a Elías a Sarepta, en la tierra de Sidón, donde reinaba el padre de Jezabel. A la puerta de la ciudad, una viuda estaba recogiendo leña seca. Elías le pidió agua y un trozo de pan, y la viuda le dijo: «No tengo más que un puñado de harina en la tinaja y un poco de aceite en la vasija. Con esto voy a preparar la última comida para mi hijo y para mí, y después moriremos».",
+    "Elías le dijo: «No tengas miedo. Primero hazme a mí un panecillo y tráemelo; después haz algo para ti y para tu hijo. Hasta el día en que el Señor haga llover, no se acabará la harina de la tinaja ni se agotará el aceite de la vasija». La viuda hizo lo que Elías le dijo. La tinaja no se vació, y la viuda, Elías y los de su casa comieron durante muchos días.",
+    "Algún tiempo después, el hijo de la viuda enfermó y dejó de respirar. La viuda gritó: «Hombre de Dios, ¿has venido a recordarme mi pecado y a hacer morir a mi hijo?». Elías subió al niño en brazos a la habitación de arriba, se tendió tres veces sobre él y clamó al Señor. El Señor oyó su voz, y el niño volvió a respirar. La viuda dijo: «Ahora sé que la palabra del Señor que sale de tu boca es verdad»."
+   ],
+   "words": [
+    {
+     "who": "Elías",
+     "text": "No tengas miedo. Hasta el día en que el Señor haga llover, no se acabará la harina de la tinaja ni se agotará el aceite de la vasija."
+    },
+    {
+     "who": "Dios",
+     "text": "Levántate, ve a Sarepta, en la tierra de Sidón, y quédate allí. He ordenado a una viuda de aquel lugar que te dé de comer."
+    },
+    {
+     "who": "La viuda de Sarepta",
+     "text": "Ahora sé que eres un hombre de Dios y que la palabra del Señor que sale de tu boca es verdad."
+    }
+   ],
+   "note": "Sarepta era un pueblo de la costa del Mediterráneo, entre Sidón y Tiro: una tierra donde se adoraba a Baal y donde reinaba el padre de Jezabel. También Jesús recordó la historia de esta viuda en la sinagoga de Nazaret.",
+   "reflect": "¿Cuál es el último puñado que me queda, y con quién podría compartirlo?",
+   "quiz": {
+    "q": "Cuando conoció a Elías, ¿qué le quedaba a la viuda de Sarepta?",
+    "options": [
+     "Cinco panes de cebada",
+     "Un cesto de higos",
+     "Un saco de grano",
+     "Un puñado de harina en la tinaja y un poco de aceite en la vasija"
+    ],
+    "explain": "La viuda dijo que no tenía más que un puñado de harina en la tinaja y un poco de aceite en la vasija (1 R 17:12)."
+   },
+   "credit": "Bernardo Strozzi, The Prophet Elijah and the Widow of Zarephath, c. 1630–1639 · Dominio público"
+  },
+  "k15": {
+   "title": "El fuego del monte Carmelo",
+   "when": "hacia el 866 a. C.",
+   "subtitle": "El Dios que responde con fuego",
+   "story": [
+    "En el tercer año de la sequía, todo Israel se reunió en el monte Carmelo. También habían venido los cuatrocientos cincuenta profetas de Baal. Elías se puso delante del pueblo y dijo: «¿Hasta cuándo vais a vacilar entre dos opiniones? Si el Señor es Dios, seguidlo a él; y si Baal es Dios, seguid a Baal». El pueblo no respondió ni una palabra.",
+    "Como había propuesto Elías, cada parte preparó un becerro y lo puso sobre la leña, y acordaron que el dios que respondiera con fuego sería reconocido como Dios. Los profetas de Baal gritaban desde la mañana: «¡Baal, respóndenos!». Al mediodía, Elías se burló de ellos: «¡Gritad más fuerte! A lo mejor Baal está dormido». Ellos se hacían cortes con espadas y lanzas y se agitaban como locos. Pero llegó la tarde y no hubo ninguna respuesta.",
+    "Elías reconstruyó el altar del Señor, que estaba derribado, con doce piedras, y mandó echar agua sobre la ofrenda tres veces. Elías oró: «Señor, que hoy se sepa que tú eres el Dios de Israel». Cayó fuego y consumió la ofrenda, las piedras y hasta el agua de la zanja. El pueblo se postró y gritó: «¡El Señor es Dios!». Ya mucho antes, David había cantado así: «La voz del Señor lanza llamas de fuego»."
+   ],
+   "words": [
+    {
+     "who": "Elías",
+     "text": "¿Hasta cuándo vais a vacilar entre dos opiniones? Si el Señor es Dios, seguidlo a él; y si Baal es Dios, seguid a Baal."
+    },
+    {
+     "who": "Elías",
+     "text": "Respóndeme, Señor. Que este pueblo sepa que tú eres Dios y que tú haces volver su corazón."
+    },
+    {
+     "who": "El pueblo",
+     "text": "¡El Señor es Dios! ¡El Señor es Dios!"
+    }
+   ],
+   "note": "El monte Carmelo es una cordillera que avanza hacia el Mediterráneo; recibe antes que nadie las nubes de lluvia que vienen del mar y era famoso por estar siempre verde. Se cree que había sido un lugar de culto a Baal, dios de la lluvia y la fertilidad, lo que daba a la prueba un sentido todavía más profundo.",
+   "reflect": "¿Estoy ahora mismo vacilando entre dos opiniones?",
+   "quiz": {
+    "q": "¿Cuántas piedras usó Elías para reconstruir el altar del Señor?",
+    "options": [
+     "Siete",
+     "Diez",
+     "Doce",
+     "Cuarenta"
+    ],
+    "explain": "Elías tomó doce piedras, una por cada tribu de los hijos de Jacob, y con ellas edificó un altar en el nombre del Señor (1 R 18:31–32)."
+   },
+   "credit": "Caspar Luyken, Elijah's Sacrifice Consumed by Fire, 1712 · Rijksmuseum, Ámsterdam · Dominio público"
+  },
+  "k16": {
+   "title": "Una nube como la mano de un hombre",
+   "when": "hacia el 866 a. C.",
+   "subtitle": "La nube que apareció a la séptima vez",
+   "story": [
+    "Después de que cayó el fuego, Elías le dijo a Acab: «Sube, come y bebe, porque ya se oye el ruido de una gran lluvia». El cielo todavía estaba despejado. Mientras Acab subía a comer y beber, Elías subió a la cumbre del Carmelo y se postró en tierra. Hundió la cara entre las rodillas.",
+    "Elías le dijo a su criado: «Sube y mira hacia el mar». El criado subió, volvió y dijo: «No hay nada». Elías le dijo: «Vuelve a mirar». El criado subió una y otra vez. A la séptima vez, el criado dijo jadeando: «Una nube pequeña, como la mano de un hombre, sube del mar».",
+    "Elías le dijo a su criado: «Ve y dile a Acab que enganche los caballos a su carro y baje antes de que la lluvia se lo impida». Al poco rato, el cielo se oscureció de nubes y viento, y cayó una gran lluvia. Acab subió a su carro y corrió hacia Jezreel. La mano del Señor vino sobre Elías, que se ciñó la ropa a la cintura y corrió bajo la lluvia delante del carro del rey."
+   ],
+   "words": [
+    {
+     "who": "Elías",
+     "text": "Sube, come y bebe, porque ya se oye el ruido de una gran lluvia."
+    },
+    {
+     "who": "El criado",
+     "text": "Mira, una nube pequeña, como la mano de un hombre, está subiendo del mar."
+    },
+    {
+     "who": "Elías",
+     "text": "Ve y dile a Acab que enganche los caballos a su carro y baje antes de que la lluvia se lo impida."
+    }
+   ],
+   "note": "Desde la cumbre del Carmelo se ve de lleno el Mediterráneo, al oeste. Hasta Jezreel hay casi treinta kilómetros de camino, y Elías los recorrió corriendo delante del carro del rey.",
+   "reflect": "¿Tengo alguna oración en la que haya esperado hasta la séptima vez?",
+   "quiz": {
+    "q": "¿A la cuántas veces vio el criado la nube que subía del mar?",
+    "options": [
+     "A la tercera",
+     "A la séptima",
+     "A la décima",
+     "A la cuadragésima"
+    ],
+    "explain": "Elías le dijo que volviera a mirar siete veces, y a la séptima el criado vio una nube pequeña como la mano de un hombre (1 R 18:43–44)."
+   },
+   "credit": "Caspar Luyken, Elijah's Servant Sees a Small Cloud, 1712 · Rijksmuseum, Ámsterdam · Dominio público"
+  },
+  "k17": {
+   "title": "Bajo la retama",
+   "when": "hacia el 866 a. C.",
+   "subtitle": "Levántate y come",
+   "story": [
+    "Acab le contó a Jezabel todo lo que Elías había hecho en el Carmelo y cómo había matado a espada a los profetas de Baal. Jezabel envió un mensajero a Elías para decirle: «Que los dioses me castiguen si mañana a esta hora no he hecho con tu vida lo mismo que tú hiciste con la de esos profetas». Elías, que había hecho bajar fuego del cielo, se levantó y huyó por una sola frase de la reina.",
+    "Elías dejó a su criado en Beerseba, en el extremo sur de Judá, y se adentró solo un día de camino más en el desierto. Bajo el sol abrasador había una retama. Elías se dejó caer a su sombra y pidió morir: «Basta ya, Señor. Quítame la vida, porque no soy mejor que mis antepasados». Y se acostó bajo el árbol y se quedó dormido.",
+    "Alguien tocó a Elías. El ángel le dijo: «Levántate y come». Junto a su cabeza había un pan cocido sobre piedras calientes y una jarra de agua. Elías comió, bebió y volvió a acostarse. El ángel volvió y le dijo: «Levántate y come, que todavía te queda mucho camino». Con la fuerza de aquella comida, Elías caminó cuarenta días y cuarenta noches hasta llegar a Horeb, el monte de Dios."
+   ],
+   "words": [
+    {
+     "who": "Elías",
+     "text": "Basta ya, Señor. Quítame la vida, porque no soy mejor que mis antepasados."
+    },
+    {
+     "who": "El ángel del Señor",
+     "text": "Levántate y come, porque el camino es demasiado largo para ti."
+    },
+    {
+     "who": "Jezabel",
+     "text": "Que los dioses me castiguen con dureza si mañana a esta hora no he hecho con tu vida lo mismo que con la de uno de esos profetas."
+    }
+   ],
+   "note": "Beerseba era la ciudad del extremo sur de Judá, donde la mano de Jezabel, reina del Israel del norte, no llegaba fácilmente. La retama es un arbusto del desierto; su sombra es escasa, pero bajo el sol abrasador era un refugio valioso.",
+   "reflect": "¿Qué es lo que más me agota estos días, y se lo he contado a Dios?",
+   "quiz": {
+    "q": "¿Qué había junto a la cabeza de Elías cuando dormía bajo la retama?",
+    "options": [
+     "Maná y codornices",
+     "Vino y carne",
+     "Higos y pasas",
+     "Un pan cocido sobre piedras calientes y una jarra de agua"
+    ],
+    "explain": "Al despertar, Elías vio junto a su cabeza un pan cocido sobre piedras calientes y una jarra de agua (1 R 19:6)."
+   },
+   "credit": "Gustave Doré, Elijah Is Nourished by an Angel, 1866 · Biblia ilustrada por Doré · Dominio público"
+  },
+  "k18": {
+   "title": "El susurro suave en el monte Horeb",
+   "when": "hacia el 866 a. C.",
+   "subtitle": "Después del viento y del fuego",
+   "story": [
+    "Elías pasó la noche en una cueva del monte Horeb, y allí vino a él la palabra del Señor. El Señor le preguntó: «¿Qué haces aquí, Elías?». Elías respondió: «Los israelitas han abandonado tu alianza, han derribado tus altares y han matado a espada a los profetas. Solo quedo yo, y ahora me buscan para quitarme la vida».",
+    "El Señor le dijo: «Sal y ponte delante de mí en el monte». Un viento fuerte y violento partió el monte y destrozó las rocas. Pero el Señor no estaba en el viento. Tras el viento pasó un terremoto, y tras el terremoto, un fuego. Tampoco allí estaba el Señor. Después del fuego se oyó un susurro suave y apacible. Elías se cubrió la cara con su manto y se puso a la entrada de la cueva.",
+    "El Señor volvió a preguntarle: «¿Qué haces aquí, Elías?». Elías dio la misma respuesta: «Solo quedo yo». El Señor le dijo: «Vuelve y unge a Hazael como rey de Aram, a Jehú como rey de Israel y a Eliseo como profeta que te sucederá. Yo he dejado en Israel siete mil que no han doblado la rodilla ante Baal»."
+   ],
+   "words": [
+    {
+     "who": "Dios",
+     "text": "¿Qué haces aquí, Elías?"
+    },
+    {
+     "who": "Dios",
+     "text": "He dejado en Israel siete mil personas. Todas ellas no han doblado la rodilla ante Baal ni lo han besado."
+    },
+    {
+     "who": "Elías",
+     "text": "Los israelitas han abandonado tu alianza, han derribado tus altares y han matado a espada a tus profetas. Solo quedo yo, y ahora me buscan para quitarme la vida."
+    }
+   ],
+   "note": "Horeb es otro nombre del monte Sinaí, donde Moisés estuvo ante la llama de la zarza y recibió la ley. Está a cientos de kilómetros al sur de Beerseba, y hay varias teorías sobre su ubicación exacta.",
+   "reflect": "¿Me he detenido últimamente en silencio para escuchar la voz de Dios?",
+   "quiz": {
+    "q": "¿Cuántas personas dijo el Señor que había dejado sin doblar la rodilla ante Baal?",
+    "options": [
+     "Siete mil",
+     "Setecientas",
+     "Diez mil",
+     "Cuatrocientas"
+    ],
+    "explain": "El Señor dijo que había dejado en Israel siete mil que no habían doblado la rodilla ante Baal ni lo habían besado (1 R 19:18)."
+   },
+   "credit": "Jan Luyken, Elijah in the Cave, 1704 · Rijksmuseum, Ámsterdam · Dominio público"
+  },
+  "k19": {
+   "title": "El manto echado sobre Eliseo",
+   "when": "hacia el 865 a. C.",
+   "subtitle": "El día en que quemó el yugo",
+   "story": [
+    "En el campo de Abel-mehola, en el valle del Jordán, se oía la respiración de los bueyes que tiraban del arado. Doce yuntas de bueyes iban en fila removiendo la tierra, y Eliseo, hijo de Safat, guiaba la última, la duodécima. Hasta el borde de aquel campo llegó caminando Elías, que volvía del monte Horeb.",
+    "Al pasar junto a Eliseo, Elías le echó encima su manto. Eliseo dejó los bueyes, corrió tras Elías y le dijo: «Déjame despedirme de mi padre y de mi madre con un beso, y después te seguiré». Elías le dijo: «Vuelve. ¿Qué te he hecho yo?».",
+    "Eliseo se volvió. Y tomó la yunta de bueyes que guiaba y los mató. Partió el arado y el yugo para hacer fuego, coció la carne y la repartió entre la gente. No dejó yugo que volver a atar ni arado al que volver. Eliseo se levantó, siguió a Elías y se puso a su servicio."
+   ],
+   "words": [
+    {
+     "who": "Eliseo",
+     "text": "Déjame despedirme de mi padre y de mi madre con un beso. Después te seguiré, maestro."
+    },
+    {
+     "who": "Elías",
+     "text": "Vuelve. ¿Qué te he hecho yo?"
+    },
+    {
+     "who": "Dios",
+     "text": "Unge a Eliseo, hijo de Safat, de Abel-mehola, como profeta que te sucederá."
+    }
+   ],
+   "note": "El manto del profeta era la prenda por la que se le reconocía, y echarlo sobre alguien se entiende como un llamado a continuar su obra. Doce yuntas son veinticuatro bueyes, lo que muestra que la familia de Eliseo era una casa de labradores acomodados.",
+   "reflect": "¿Qué yugo no he quemado todavía?",
+   "quiz": {
+    "q": "¿Qué estaba haciendo Eliseo cuando Elías le echó su manto?",
+    "options": [
+     "Cuidaba ovejas",
+     "Araba el campo",
+     "Vendimiaba",
+     "Montaba una tienda"
+    ],
+    "explain": "Eliseo estaba arando con doce yuntas de bueyes delante de él, y él iba con la duodécima (1 R 19:19)."
+   },
+   "credit": "Jan Matsys, The Calling of Elisha, 1572 · Dominio público"
+  },
+  "k20": {
+   "title": "La viña de Nabot",
+   "when": "hacia el 855 a. C.",
+   "subtitle": "El profeta que lo esperaba en la viña robada",
+   "story": [
+    "Junto al palacio de Jezreel estaba la viña de Nabot. El rey Acab le dijo a Nabot: «Dame tu viña. La usaré como huerto. Te daré a cambio una viña mejor o te pagaré lo que vale». Nabot respondió: «El Señor me prohíbe darte la tierra que heredé de mis antepasados». Acab, de mal humor, se acostó en su cama, volvió la cara hacia la pared y no quiso comer.",
+    "Jezabel, la mujer de Acab, le dijo: «¿No eres tú el que ahora reina sobre Israel? Yo te daré esa viña». Jezabel escribió cartas en nombre del rey y las selló con el sello real. En la asamblea donde se proclamó un ayuno, se levantaron dos canallas y dieron falso testimonio: «Nabot ha maldecido a Dios y al rey». Sacaron a Nabot fuera de la ciudad y lo mataron a pedradas.",
+    "Cuando Acab bajó a tomar posesión de la viña, allí estaba Elías. Acab le dijo: «¿Me has encontrado, enemigo mío?». Elías le dijo: «Te he encontrado. En el mismo lugar donde los perros lamieron la sangre de Nabot, lamerán también la tuya». Acab se rasgó la ropa, se vistió de luto con ropa áspera y ayunó. El Señor vio que se había humillado y aplazó hasta los días de su hijo la desgracia que iba a caer sobre su casa."
+   ],
+   "words": [
+    {
+     "who": "Dios",
+     "text": "¿Has matado a un hombre y además le has robado su tierra? En el mismo lugar donde los perros lamieron la sangre de Nabot, lamerán también la tuya."
+    },
+    {
+     "who": "Elías",
+     "text": "Te he encontrado, porque te has vendido para hacer lo que es malo a los ojos del Señor."
+    },
+    {
+     "who": "Nabot",
+     "text": "El Señor me prohíbe darte la herencia que recibí de mis antepasados."
+    },
+    {
+     "who": "Dios",
+     "text": "¿Has visto cómo se ha humillado Acab delante de mí? Como se ha humillado ante mí, no enviaré la desgracia mientras él viva."
+    }
+   ],
+   "note": "En Israel, la tierra era la herencia que cada familia había recibido de Dios, y no se podía vender a la ligera. Jezreel era, junto con Samaria, una ciudad donde residía Acab; su palacio estaba en una colina desde la que se dominaba el amplio valle de Jezreel.",
+   "reflect": "¿Alguna vez he tenido en poco lo que es de otros para satisfacer mi ambición?",
+   "quiz": {
+    "q": "¿Por qué Nabot no quiso darle su viña a Acab?",
+    "options": [
+     "Porque le ofrecía muy poco dinero",
+     "Porque ya se la había vendido a otro",
+     "Porque odiaba a Acab",
+     "Porque era la herencia de sus antepasados"
+    ],
+    "explain": "Nabot respondió que el Señor le prohibía darle al rey la herencia de sus antepasados (1 R 21:3)."
+   },
+   "credit": "Frank Dicksee, Jezebel and Ahab Meeting Elijah in Naboth's Vineyard · Dominio público"
+  },
+  "k21": {
+   "title": "Micaías, el único que profetizó distinto",
+   "when": "hacia el 853 a. C.",
+   "subtitle": "Cuatrocientos contra uno",
+   "story": [
+    "En la era junto a la puerta de Samaria, dos reyes vestidos con sus mantos reales estaban sentados uno al lado del otro. Eran Acab, rey de Israel, y Josafat, rey de Judá. Estaban a punto de salir juntos a recuperar Ramot de Galaad de manos de Aram. Cuatrocientos profetas gritaron a una sola voz: «¡Sube! El Señor entregará la ciudad en manos del rey».",
+    "Josafat preguntó: «¿No hay aquí ningún otro profeta del Señor?». Acab respondió: «Está Micaías, hijo de Imla. Pero yo lo odio. Nunca me profetiza nada bueno». El funcionario que fue a buscar a Micaías le advirtió en voz baja: «Habla bien, como los demás profetas». Micaías respondió: «Solo diré lo que el Señor me diga».",
+    "Micaías dijo delante del rey: «He visto a todo Israel disperso por los montes, como ovejas sin pastor». El profeta Sedequías le dio una bofetada a Micaías, y Acab mandó meter a Micaías en la cárcel. Acab se disfrazó y salió a la batalla. Pero una flecha que alguien disparó al azar atravesó las junturas de su armadura. Aquella tarde Acab murió, y cuando lavaron su carro en el estanque de Samaria, los perros lamieron su sangre. Fue tal como el Señor había dicho."
+   ],
+   "words": [
+    {
+     "who": "Micaías",
+     "text": "Vive el Señor: lo que el Señor me diga, eso y solo eso diré."
+    },
+    {
+     "who": "Micaías",
+     "text": "He visto a todo Israel disperso por los montes, como ovejas sin pastor."
+    },
+    {
+     "who": "Micaías",
+     "text": "Si el rey vuelve sano y salvo, es que el Señor no ha hablado por medio de mí."
+    },
+    {
+     "who": "Josafat",
+     "text": "Consultad primero hoy la palabra del Señor."
+    }
+   ],
+   "note": "Ramot de Galaad era una ciudad fortificada de Galaad, al este del Jordán, por la que Aram e Israel lucharon muchas veces. Josafat, rey de Judá, casó a su hijo con Atalía, hija de Acab, y así emparentó con él.",
+   "reflect": "Cuando todos dicen «sí», ¿me he atrevido alguna vez a decir «no» yo solo?",
+   "quiz": {
+    "q": "¿Por qué dijo Acab que odiaba a Micaías?",
+    "options": [
+     "Porque servía a Baal",
+     "Porque nunca le profetizaba nada bueno",
+     "Porque era de Judá",
+     "Porque había robado tesoros del palacio"
+    ],
+    "explain": "Acab dijo que odiaba a Micaías porque nunca le profetizaba nada bueno, sino siempre el mal (1 R 22:8)."
+   },
+   "credit": "Caspar Luyken, The Prophet Micaiah before Jehoshaphat and Ahab, 1712 · Rijksmuseum, Ámsterdam · Dominio público"
+  },
+  "k22": {
+   "title": "El carro de fuego y el torbellino",
+   "when": "hacia el 850 a. C.",
+   "subtitle": "Recogió el manto que había caído",
+   "story": [
+    "Elías salió de Gilgal con Eliseo. Elías dijo: «Quédate aquí, porque el Señor me envía a Betel». Eliseo respondió: «Vive el Señor, y vives tú, maestro: no me separaré de ti». En Betel y en Jericó se repitieron las mismas palabras. Eliseo no se apartó de su maestro hasta el final.",
+    "Al llegar a la orilla del Jordán, cincuenta discípulos de los profetas se quedaron mirando desde lejos. Elías enrolló su manto y golpeó el agua; el agua se dividió, y los dos cruzaron pisando tierra seca. Elías preguntó: «¿Qué quieres que haga por ti antes de que me separen de ti?». Eliseo dijo: «Que tenga yo una doble porción de tu espíritu». Elías dijo: «Pides algo difícil».",
+    "Mientras caminaban y hablaban, un carro de fuego con caballos de fuego los separó a los dos. Elías subió al cielo en un torbellino. Eliseo gritó: «¡Padre mío, padre mío!». Eliseo recogió el manto que había caído, golpeó con él el agua del Jordán y exclamó: «¿Dónde está el Señor, el Dios de Elías?». El agua se dividió. Los discípulos dijeron: «El espíritu de Elías reposa sobre Eliseo»."
+   ],
+   "words": [
+    {
+     "who": "Eliseo",
+     "text": "Que tenga yo una doble porción de tu espíritu, maestro."
+    },
+    {
+     "who": "Elías",
+     "text": "Pides algo difícil. Si me ves cuando me separen de ti, así será; pero si no me ves, no será así."
+    },
+    {
+     "who": "Eliseo",
+     "text": "¡Padre mío, padre mío! ¡Carro de Israel y su caballería!"
+    },
+    {
+     "who": "Eliseo",
+     "text": "¿Dónde está el Señor, el Dios de Elías?"
+    }
+   ],
+   "note": "La «doble porción» alude a la ley por la que el primogénito recibía de la herencia de su padre dos partes, el doble que los demás hijos; se entiende como la petición de ser el primogénito que continúa la obra de Elías. Se recuerda a Elías, como a Enoc, como alguien que fue llevado al cielo sin ver la muerte.",
+   "reflect": "¿Soy alguien que se queda al lado hasta el final?",
+   "quiz": {
+    "q": "Después de cruzar el Jordán, ¿qué le pidió Eliseo a Elías?",
+    "options": [
+     "El carro de fuego de Elías",
+     "El trono del rey",
+     "Una doble porción del espíritu de Elías",
+     "Cincuenta discípulos de los profetas"
+    ],
+    "explain": "Eliseo pidió que hubiera sobre él una doble porción del espíritu de Elías (2 R 2:9)."
+   },
+   "credit": "Giuseppe Angeli, Elijah Taken Up in a Chariot of Fire, c. 1740–1755 · Galería Nacional de Arte, Washington · Dominio público"
+  },
+  "k23": {
+   "title": "El hijo de la mujer de Sunem",
+   "when": "hacia el 848 a. C.",
+   "subtitle": "Un regalo que no pidió y un hijo devuelto",
+   "story": [
+    "Cuando el sol se ponía sobre los campos de Sunem, un viajero cansado pasaba por delante de una casa. Era Eliseo, el hombre de Dios. La mujer importante de aquella casa lo invitaba a comer cada vez que lo veía. La mujer le dijo a su marido: «Ese hombre es un santo hombre de Dios. Hagámosle un cuarto pequeño en la azotea y pongámosle una cama, una mesa, una silla y una lámpara».",
+    "Guejazí, el criado de Eliseo, le comentó en voz baja: «Esta mujer no tiene hijos, y su marido es viejo». Eliseo le dijo a la mujer, que estaba en la puerta: «El año que viene, por estas fechas, tendrás un hijo en brazos». La mujer dijo temblando: «Hombre de Dios, no engañes a esta sierva tuya». Al año siguiente, por aquellas fechas, nació de verdad un hijo.",
+    "El niño creció, y un día salió a ver a su padre, que estaba con los segadores. El niño le gritó a su padre: «¡Padre, me duele la cabeza, me duele la cabeza!». El padre le dijo a un criado que llevara al niño en brazos a su madre. El niño estuvo sobre las rodillas de su madre hasta el mediodía, y murió. La mujer acostó al niño en la cama del profeta, corrió al monte Carmelo y se abrazó a los pies de Eliseo. Eliseo entró en aquel cuarto, cerró la puerta, oró y se tendió sobre el niño. El niño estornudó siete veces y abrió los ojos."
+   ],
+   "words": [
+    {
+     "who": "Eliseo",
+     "text": "El año que viene, por estas fechas, tendrás un hijo en brazos."
+    },
+    {
+     "who": "La mujer de Sunem",
+     "text": "¿Acaso te pedí yo un hijo, señor mío? ¿No te dije que no me engañaras?"
+    },
+    {
+     "who": "Eliseo",
+     "text": "Toma a tu hijo."
+    }
+   ],
+   "note": "Sunem era un pueblo al norte del valle de Jezreel, en la ladera del monte More. Hasta el monte Carmelo, donde estaba Eliseo, había unos treinta kilómetros hacia el oeste; se calcula que la mujer cabalgó en un asno durante media jornada.",
+   "reflect": "¿Cuándo fue la última vez que atendí a alguien sin esperar nada a cambio?",
+   "quiz": {
+    "q": "Cuando Eliseo oró y el hijo de la mujer de Sunem revivió, ¿qué hizo el niño antes de abrir los ojos?",
+    "options": [
+     "Estornudó siete veces",
+     "Lloró con fuerza",
+     "Llamó a su madre",
+     "Pidió agua"
+    ],
+    "explain": "Cuando Eliseo se tendió sobre el niño, este estornudó siete veces y abrió los ojos (2 R 4:35)."
+   },
+   "credit": "Gerbrand van den Eeckhout, Elisha and the Shunammite Woman on Mount Carmel, 1649 · Museo Nacional de Varsovia · Dominio público"
+  },
+  "k24": {
+   "title": "Las siete veces de Naamán",
+   "when": "hacia el 846 a. C.",
+   "subtitle": "Las aguas del Jordán donde se humilló un gran general",
+   "story": [
+    "Naamán, jefe del ejército de Aram, era un gran guerrero muy apreciado por su rey, pero estaba enfermo de lepra. En su casa había una niña que habían llevado cautiva desde Israel y que servía a la mujer de Naamán. La niña le dijo a su señora: «Ojalá mi amo fuera a ver al profeta que está en Samaria. Él lo curaría de su enfermedad».",
+    "Naamán llegó con sus caballos y sus carros, cargado de plata y oro, y se detuvo a la puerta de la casa de Eliseo. Eliseo ni siquiera salió; le envió un mensajero que le dijo: «Ve al río Jordán y lávate siete veces». Naamán se enfureció, se dio la vuelta y dijo: «Yo pensaba que saldría y me curaría moviendo la mano sobre mí. ¿No son mejores los ríos de Damasco que las aguas de esta tierra?».",
+    "Sus criados se le acercaron para calmarlo: «Si el profeta te hubiera mandado hacer algo grande, ¿no lo habrías hecho? ¿Cuánto más si solo te dice que te laves?». Naamán bajó al Jordán y se sumergió siete veces. Al salir del agua la séptima vez, su carne estaba limpia como la de un niño. Naamán volvió a Eliseo y le dijo: «Ahora lo sé: no hay Dios en toda la tierra fuera de Israel»."
+   ],
+   "words": [
+    {
+     "who": "Eliseo",
+     "text": "Ve al río Jordán y lávate siete veces. Tu carne quedará sana y limpia."
+    },
+    {
+     "who": "Naamán",
+     "text": "Ahora lo sé: en todo el mundo no hay Dios fuera de Israel."
+    },
+    {
+     "who": "La niña",
+     "text": "Ojalá mi amo fuera a ver al profeta que está en Samaria. Él lo curaría de la lepra."
+    },
+    {
+     "who": "Eliseo",
+     "text": "Vive el Señor, a quien yo sirvo: no aceptaré nada."
+    }
+   ],
+   "note": "Los ríos de Damasco con los que Naamán comparó el Jordán, el Abana y el Farfar, eran ríos limpios por los que corría el agua del deshielo del monte Hermón. En cambio, el curso bajo del Jordán es un río estrecho, sinuoso y de aguas turbias.",
+   "reflect": "¿Hay algún Jordán mío al que no bajo por orgullo?",
+   "quiz": {
+    "q": "¿Cuántas veces le dijo Eliseo a Naamán que se lavara en el Jordán?",
+    "options": [
+     "Tres veces",
+     "Cinco veces",
+     "Siete veces",
+     "Diez veces"
+    ],
+    "explain": "Eliseo le dijo que fuera al Jordán y se lavara siete veces, y que su carne quedaría sana y limpia (2 R 5:10, 14)."
+   },
+   "credit": "Lambert Jacobsz, Elisha Refusing Naaman's Gifts, c. 1628–1633 · The Leiden Collection, Nueva York · Dominio público"
+  },
+  "k25": {
+   "title": "El hacha que flotó",
+   "when": "hacia el 845 a. C.",
+   "subtitle": "Un hacha de hierro prestada",
+   "story": [
+    "Los discípulos de los profetas le dijeron a Eliseo: «El lugar donde vivimos contigo se nos ha quedado pequeño. Vamos al Jordán, que cada uno corte una viga y construyamos allí un lugar para vivir». Eliseo les dijo que fueran, y uno de los discípulos dijo: «Ven tú también con nosotros, maestro». Eliseo aceptó y se fue con ellos. Pronto resonaron los golpes de hacha en el bosque de la orilla del Jordán.",
+    "Mientras uno de los discípulos cortaba un árbol, el hierro del hacha se salió del mango y cayó al agua. El discípulo gritó: «¡Ay, maestro, era prestada!». Era una época en que el hierro era muy valioso. Para el discípulo que había perdido algo prestado, aquella hacha era una deuda que no sabía cómo pagar.",
+    "Eliseo preguntó: «¿Dónde cayó?». El discípulo le señaló el lugar. Eliseo cortó un palo y lo echó allí. Entonces el hacha de hierro, que se había hundido, salió a flote. Eliseo dijo: «Sácala». El discípulo extendió la mano y sacó el hacha que flotaba."
+   ],
+   "words": [
+    {
+     "who": "Eliseo",
+     "text": "¿Dónde cayó?"
+    },
+    {
+     "who": "Eliseo",
+     "text": "Sácala."
+    },
+    {
+     "who": "Un discípulo de los profetas",
+     "text": "¡Ay, maestro, era un hacha prestada!"
+    }
+   ],
+   "note": "Era una época en que el hierro se estaba extendiendo, pero las herramientas de hierro seguían siendo caras. La ley establecía que, si un animal prestado se lesionaba o moría, quien lo había pedido prestado debía pagarlo.",
+   "reflect": "¿Hay alguna preocupación que no he llevado en oración por parecerme demasiado pequeña?",
+   "quiz": {
+    "q": "¿Cómo salió a flote el hacha de hierro que cayó al agua?",
+    "options": [
+     "Eliseo metió la mano en el agua",
+     "Los discípulos oraron juntos",
+     "Eliseo golpeó el agua con su manto",
+     "Eliseo cortó un palo y lo echó al agua"
+    ],
+    "explain": "Eliseo cortó un palo, lo echó en aquel lugar y el hacha de hierro salió a flote (2 R 6:6)."
+   },
+   "credit": "Autor desconocido, Elisha Makes the Axe Swim, 1873 · The Story of the Bible from Genesis to Revelation · Dominio público"
+  },
+  "k26": {
+   "title": "Caballos y carros de fuego alrededor de Dotán",
+   "when": "hacia el 844 a. C.",
+   "subtitle": "El ejército de fuego que se vio al abrirse los ojos",
+   "story": [
+    "El rey de Aram escogía en secreto dónde acampar para atacar a Israel, pero cada vez el rey de Israel se enteraba antes y lo evitaba. El rey de Aram preguntó a sus oficiales: «¿Quién de nosotros está en contacto con el rey de Israel?». Uno de los oficiales respondió: «Nadie, majestad. Es el profeta Eliseo quien le cuenta al rey de Israel hasta lo que tú dices en tu dormitorio».",
+    "El rey de Aram oyó que Eliseo estaba en Dotán y envió de noche caballos, carros y un gran ejército, que rodearon la ciudad. El criado de Eliseo, que había salido al amanecer, gritó: «¡Ay, señor mío! ¿Qué vamos a hacer?». Eliseo dijo: «No tengas miedo. Son más los que están con nosotros que los que están con ellos». Eliseo oró: «Señor, abre los ojos de este muchacho para que vea».",
+    "Cuando se le abrieron los ojos al criado, vio que el monte alrededor de Eliseo estaba lleno de caballos y carros de fuego. Eliseo volvió a orar, y los soldados de Aram quedaron con la vista nublada. Eliseo los condujo a Samaria, detuvo al rey de Israel, que quería atacarlos, e hizo que les dieran de comer y los dejaran volver. Lo que sintió aquel criado al mirar los montes se parece a un canto que mucho después entonaban los peregrinos. Ese canto dice así: «Mi ayuda viene del Señor, que hizo el cielo y la tierra»."
+   ],
+   "words": [
+    {
+     "who": "Eliseo",
+     "text": "No tengas miedo. Son más los que están con nosotros que los que están con ellos."
+    },
+    {
+     "who": "Eliseo",
+     "text": "Señor, abre los ojos de este muchacho para que vea."
+    },
+    {
+     "who": "Eliseo",
+     "text": "No los ataques. Dales pan y agua, que coman y beban, y después déjalos volver a su señor."
+    }
+   ],
+   "note": "Dotán era una ciudad sobre una colina al norte de Samaria, en el paso hacia el valle de Jezreel. También cerca de Dotán fue vendido José por sus hermanos.",
+   "reflect": "Si se me abrieran los ojos, ¿qué vería ahora mismo a mi lado?",
+   "quiz": {
+    "q": "Cuando se le abrieron los ojos al criado, ¿de qué estaba lleno el monte alrededor de Eliseo?",
+    "options": [
+     "De carros de Aram",
+     "De caballos y carros de fuego",
+     "De ángeles vestidos de blanco",
+     "De una columna de nube"
+    ],
+    "explain": "Cuando el Señor abrió los ojos del criado, el monte estaba lleno de caballos y carros de fuego alrededor de Eliseo (2 R 6:17)."
+   },
+   "credit": "Providence Lithograph Company, Elisha at Dothan, 1898 · Dominio público"
+  },
+  "k27": {
+   "title": "Los cuatro leprosos de la puerta",
+   "when": "hacia el 842 a. C.",
+   "subtitle": "Buenas noticias desde el umbral de la muerte",
+   "story": [
+    "Cuando el ejército de Aram sitió Samaria, el hambre dentro de la ciudad se hizo tan terrible que una cabeza de asno se vendía por ochenta siclos de plata. Eliseo dijo: «Esta es la palabra del Señor: mañana a esta hora, en la puerta de la ciudad, una medida de harina fina se venderá por un siclo». El oficial del rey se burló: «¡Aunque el Señor abriera ventanas en el cielo! ¿Podría pasar algo así?». Eliseo respondió: «Lo verás con tus propios ojos, pero no lo comerás».",
+    "A la entrada de la puerta estaban sentados cuatro leprosos. Se dijeron unos a otros: «¿Vamos a quedarnos aquí sentados esperando la muerte? Vamos al campamento de Aram. Si nos dejan vivir, viviremos; y si nos matan, moriremos». Cuando llegaron al campamento, al anochecer, estaba vacío. El Señor había hecho oír al ejército de Aram un estruendo de carros como de un gran ejército, y ellos habían abandonado sus tiendas y huido.",
+    "Los cuatro comieron y bebieron, y estaban escondiendo plata y oro cuando de pronto se detuvieron. Se dijeron unos a otros: «No estamos haciendo bien. Hoy es un día de buenas noticias, y nosotros estamos callados». El pueblo, al oír la noticia, salió en masa hacia el campamento, y una medida de harina se vendió por un siclo. El oficial que se había burlado de Eliseo estaba guardando la puerta y murió pisoteado por la gente."
+   ],
+   "words": [
+    {
+     "who": "Eliseo",
+     "text": "Escuchad la palabra del Señor: mañana a esta hora, en la puerta de Samaria, se comprará y se venderá una medida de harina fina por un siclo."
+    },
+    {
+     "who": "Los leprosos",
+     "text": "No estamos haciendo bien. Hoy es un día de buenas noticias, y nosotros nos quedamos callados."
+    },
+    {
+     "who": "Eliseo",
+     "text": "Lo verás con tus propios ojos, pero no lo comerás."
+    }
+   ],
+   "note": "Según la ley, los leprosos tenían que vivir aparte, fuera del campamento, y por eso se quedaban fuera de la puerta de la ciudad. Se calcula que la medida de grano, llamada seá, equivalía a unos siete litros, y el siclo, a unos once gramos de plata.",
+   "reflect": "¿Quién es la persona a la que hoy tengo que llevarle esta buena noticia?",
+   "quiz": {
+    "q": "¿Por qué el ejército de Aram abandonó su campamento y huyó?",
+    "options": [
+     "Porque se extendió una epidemia",
+     "Porque el Señor les hizo oír el estruendo de carros de un gran ejército",
+     "Porque atacó el ejército de Asiria",
+     "Porque los leprosos prendieron fuego al campamento"
+    ],
+    "explain": "El Señor hizo oír al ejército de Aram un estruendo de carros, de caballos y de un gran ejército, y huyeron al anochecer (2 R 7:6–7)."
+   },
+   "credit": "Jan Luyken, The People of Samaria Plunder the Abandoned Syrian Camp, 1708 · Rijksmuseum, Ámsterdam · Dominio público"
+  },
+  "k28": {
+   "title": "La carrera de Jehú",
+   "when": "hacia el 841 a. C.",
+   "subtitle": "El carro del juicio que llegó como loco",
+   "story": [
+    "Eliseo llamó a uno de los discípulos de los profetas y le dijo: «Toma este frasco de aceite y ve a Ramot de Galaad. Lleva a Jehú, nieto de Nimsi, a un cuarto apartado, derrama el aceite sobre su cabeza, abre la puerta y huye». El joven profeta llamó a Jehú de entre los jefes del ejército, entró con él en la casa, le derramó el aceite sobre la cabeza y le dijo: «Así dice el Señor: “Tú destruirás la casa de Acab”». Luego abrió la puerta y huyó.",
+    "Los jefes tocaron la trompeta y gritaron: «¡Jehú es rey!». Jehú lanzó su carro hacia Jezreel. El centinela de la torre gritó: «Por cómo conduce, como un loco, parece Jehú». El rey Joram, hijo de Acab, salió a su encuentro y le preguntó: «Jehú, ¿hay paz?». Jehú respondió: «¿Qué paz puede haber mientras sean tantas las prostituciones y las hechicerías de tu madre Jezabel?». La flecha de Jehú atravesó a Joram.",
+    "Jezabel, la mujer de Acab, se pintó los ojos, se arregló el cabello y se asomó a la ventana. Jezabel le dijo a Jehú, que entraba por la puerta de la ciudad: «¿Hay paz, Zimri, asesino de tu señor?». Jehú levantó la vista hacia la ventana y gritó: «¿Quién está de mi parte?». Por orden de Jehú, unos eunucos arrojaron a Jezabel por la ventana. Más tarde se cumplió al pie de la letra lo que había dicho Elías: que en la tierra de Jezreel los perros devorarían a Jezabel."
+   ],
+   "words": [
+    {
+     "who": "Dios",
+     "text": "Te unjo como rey de Israel, mi pueblo. Tú destruirás la casa de Acab, tu señor."
+    },
+    {
+     "who": "Eliseo",
+     "text": "Derrama el aceite sobre su cabeza, abre la puerta y huye. No te entretengas."
+    },
+    {
+     "who": "Jehú",
+     "text": "Con tantas prostituciones y hechicerías de tu madre Jezabel, ¿qué paz puede haber?"
+    },
+    {
+     "who": "Jehú",
+     "text": "Esta es la palabra que el Señor dijo por medio de Elías: en la tierra de Jezreel los perros comerán la carne de Jezabel."
+    }
+   ],
+   "note": "En Jezreel había un palacio de la familia real de Acab, y a su lado estaba la viña de Nabot, que Acab había robado. Jehú mandó arrojar el cadáver de Joram precisamente en el campo de Nabot.",
+   "reflect": "Entre las promesas de Dios que parecen tardar en cumplirse, ¿a cuál me aferro yo?",
+   "quiz": {
+    "q": "¿Qué vio el centinela de la torre para saber que venía Jehú?",
+    "options": [
+     "La bandera de Jehú",
+     "El sonido de la trompeta de Jehú",
+     "Que conducía el carro como un loco",
+     "El manto rojo de Jehú"
+    ],
+    "explain": "El centinela avisó que el que venía conducía el carro como un loco, y que por eso parecía Jehú, nieto de Nimsi (2 R 9:20)."
+   },
+   "credit": "Caspar Luyken, Jehu's Arrow Strikes Joram in His Chariot, 1712 · Rijksmuseum, Ámsterdam · Dominio público"
+  },
+  "k29": {
+   "title": "Joás, el niño escondido en el templo",
+   "when": "hacia el 835 a. C.",
+   "subtitle": "La lámpara de David que casi se apaga",
+   "story": [
+    "Cuando murió Ocozías, rey de Judá, su madre Atalía se levantó y mató a toda la descendencia real. El día en que la espada barría el palacio, Josaba, hermana de Ocozías, sacó a escondidas a su sobrino Joás, que todavía mamaba, y lo escondió con su nodriza en un dormitorio. Después, el niño creció escondido en el templo del Señor durante seis años, y en ese tiempo Atalía gobernó el país.",
+    "En el séptimo año, el sacerdote Joiada llamó al templo a los jefes de cien, les hizo jurar y les mostró al hijo del rey. Joiada les repartió las lanzas y los escudos que había dejado el rey David. Los guardias, con las armas en la mano, se colocaron a derecha e izquierda del templo. Joiada sacó al niño, le puso la corona y lo ungió. La gente aplaudía y gritaba: «¡Viva el rey!».",
+    "Al oír el clamor, Atalía entró en el templo. Cuando vio al joven rey de pie junto a la columna y al pueblo tocando las trompetas, Atalía se rasgó la ropa y gritó: «¡Traición, traición!». Joiada ordenó: «No la matéis dentro del templo». Sacaron a Atalía y la mataron, y el pueblo derribó el templo de Baal. Joás, con siete años, se sentó en el trono de David."
+   ],
+   "words": [
+    {
+     "who": "Joiada",
+     "text": "Sacad a Atalía de entre las filas. Al que la siga, matadlo a espada. No la matéis dentro del templo del Señor."
+    },
+    {
+     "who": "Atalía",
+     "text": "¡Traición, traición!"
+    },
+    {
+     "who": "El pueblo",
+     "text": "¡Viva el rey!"
+    }
+   ],
+   "note": "Crónicas cuenta que Josaba era la esposa del sacerdote Joiada. Atalía era una mujer de la familia de Acab, del Israel del norte, que se había casado con un rey de Judá, y llevó el culto a Baal a Jerusalén.",
+   "reflect": "¿He protegido alguna vez a alguien sin que nadie lo supiera?",
+   "quiz": {
+    "q": "¿Cuánto tiempo estuvo Joás escondido en el templo antes de llegar a ser rey?",
+    "options": [
+     "Seis años",
+     "Tres años",
+     "Siete meses",
+     "Doce años"
+    ],
+    "explain": "Joás estuvo escondido seis años en el templo del Señor, y en el séptimo año Joiada lo proclamó rey (2 R 11:3–4)."
+   },
+   "credit": "Autor desconocido, The Crowning of Joash, 1873 · The Story of the Bible from Genesis to Revelation · Dominio público"
+  },
+  "k30": {
+   "title": "Las últimas flechas de Eliseo",
+   "when": "hacia el 796 a. C.",
+   "subtitle": "Las flechas que se detuvieron tras tres golpes",
+   "story": [
+    "El anciano Eliseo cayó enfermo de la enfermedad de la que iba a morir. Joás, rey del Israel del norte, fue a verlo y lloró sobre su rostro. Era un rey del norte que se llamaba igual que Joás, el rey de Judá que había crecido escondido en el templo. Joás clamó: «¡Padre mío, padre mío, carro de Israel y su caballería!». Eran las mismas palabras que Eliseo había gritado mucho antes al ver a Elías subir al cielo.",
+    "Eliseo dijo: «Trae un arco y unas flechas». Cuando el rey tomó el arco, Eliseo puso sus manos sobre las manos del rey. Eliseo dijo: «Abre la ventana del oriente y dispara». Cuando la flecha salió volando por la ventana, Eliseo exclamó: «¡Flecha de la salvación del Señor, flecha de victoria sobre Aram! Derrotarás a Aram en Afec».",
+    "Eliseo le dijo además: «Toma las flechas y golpea el suelo». El rey golpeó tres veces y se detuvo. Eliseo se enojó y le dijo: «Tenías que haber golpeado cinco o seis veces. Entonces habrías acabado con Aram; ahora solo lo vencerás tres veces». Eliseo murió y fue enterrado. Tiempo después, arrojaron un cadáver en la tumba de Eliseo, y en cuanto tocó sus huesos, el muerto revivió y se puso en pie."
+   ],
+   "words": [
+    {
+     "who": "Eliseo",
+     "text": "Tenías que haber golpeado cinco o seis veces. Entonces habrías derrotado a Aram hasta acabar con él; ahora solo lo vencerás tres veces."
+    },
+    {
+     "who": "Eliseo",
+     "text": "Esta es la flecha de la salvación del Señor, la flecha de la salvación sobre Aram."
+    },
+    {
+     "who": "Joás",
+     "text": "¡Padre mío, padre mío, carro de Israel y su caballería!"
+    }
+   ],
+   "note": "Se calcula que Eliseo sirvió como profeta más de cincuenta años, desde los días de Joram, hijo de Acab, hasta los de Joás, nieto de Jehú. Después, Joás derrotó tres veces a Aram y recuperó las ciudades que le habían quitado.",
+   "reflect": "Como las flechas que se detuvieron tras tres golpes, ¿qué oración he dejado demasiado pronto?",
+   "quiz": {
+    "q": "¿Cuántas veces golpeó el suelo con las flechas el rey Joás?",
+    "options": [
+     "Una vez",
+     "Dos veces",
+     "Cinco veces",
+     "Tres veces"
+    ],
+    "explain": "Joás golpeó tres veces y se detuvo, y Eliseo se enojó diciendo que debería haber golpeado cinco o seis veces (2 R 13:18–19)."
+   },
+   "credit": "Autor desconocido, The Death of Elisha, 1873 · The Story of the Bible from Genesis to Revelation · Dominio público"
+  },
+  "k31": {
+   "title": "La caída de Samaria",
+   "when": "hacia el 722 a. C.",
+   "subtitle": "El último día de un reino que no quiso escuchar",
+   "story": [
+    "Por tercer año, el centinela de las murallas de Samaria contemplaba la misma escena. El ejército de Asiria rodeaba la ciudad por completo. Oseas, hijo de Ela, el último rey del Israel del norte, había dejado de pagar el tributo que cada año entregaba a Asiria y había pedido ayuda en secreto al rey de Egipto; lo descubrieron y lo metieron en la cárcel. Aun después de que se llevaran preso al rey, la ciudad resistió tres años.",
+    "En el noveno año del reinado de Oseas, Samaria cayó por fin. El rey de Asiria hizo cautivos a los israelitas y se los llevó a tierras lejanas. Los llevaron a Halah, a las orillas del río Habor en la región de Gozán y a las ciudades de los medos. De los dos reinos en que se había partido el país tras la muerte de Salomón, el del norte, Israel, terminó así.",
+    "Durante todo ese tiempo, el Señor había enviado una y otra vez a sus profetas para decir: «Volveos de vuestros malos caminos y guardad mis mandamientos». Pero el pueblo se obstinó y no escuchó. Sirvieron a los becerros de oro que había hecho Jeroboam y a Baal, y llegaron a quemar a sus propios hijos en el fuego como ofrenda a los ídolos. Al final, el Señor echó a Israel de aquella tierra, y solo quedó la tribu de Judá."
+   ],
+   "words": [
+    {
+     "who": "Dios",
+     "text": "Volveos de vuestros malos caminos. Guardad mis mandamientos y mis decretos, conforme a la ley que di a vuestros antepasados y que os comuniqué por medio de mis siervos los profetas."
+    },
+    {
+     "who": "Dios",
+     "text": "No sirváis a otros dioses."
+    }
+   ],
+   "note": "Samaria cayó hacia el año 722 a. C. El libro de Reyes dice que Salmanasar sitió la ciudad, y de quien la tomó dice solo «el rey de Asiria»; pero los registros asirios cuentan que Sargón II, sucesor de Salmanasar V, conquistó la ciudad y deportó a más de veintisiete mil personas.",
+   "reflect": "¿Hay alguna palabra de Dios que he oído muchas veces y todavía no obedezco?",
+   "quiz": {
+    "q": "¿Quién era el rey del Israel del norte cuando cayó Samaria?",
+    "options": [
+     "Jeroboam",
+     "Peka",
+     "Oseas",
+     "Jehú"
+    ],
+    "explain": "En el noveno año de Oseas, el rey de Asiria tomó Samaria y se llevó cautivo a Israel (2 R 17:6)."
+   },
+   "credit": "David Roberts, Sebaste, Ancient Samaria, 1842 · Biblioteca del Congreso · Dominio público"
+  },
+  "k32": {
+   "title": "El rey que destrozó la serpiente de bronce",
+   "when": "hacia el 715 a. C.",
+   "subtitle": "Rompió aquello ante lo que todos se postraban",
+   "story": [
+    "El humo del incienso envolvía una serpiente hecha de bronce. La gente se postraba delante de ella y quemaba incienso. Era la misma serpiente que, según se decía, Moisés había levantado en un asta en el desierto, muchísimo tiempo atrás. Ezequías, que había llegado a ser rey de Judá a los veinticinco años, se puso delante de ella. Era hijo del rey Acaz, pero había decidido seguir el camino de su antepasado David y no el de su padre.",
+    "Ezequías derribó primero los lugares altos. Hizo pedazos las piedras sagradas y taló las imágenes de Asera. Luego llegó ante la serpiente de bronce. Había sido una señal que en otro tiempo salvó a Israel, pero ahora se había convertido en un objeto ante el que la gente se postraba en lugar de hacerlo ante Dios. Ezequías hizo añicos la serpiente de bronce y la llamó Nehustán. Es un nombre que suele entenderse como «un pedazo de bronce».",
+    "Ezequías confió en el Señor, el Dios de Israel. Ni antes ni después de él hubo entre los reyes de Judá nadie como él. Ezequías se mantuvo unido al Señor sin apartarse de él, y el Señor estaba con él, de modo que le iba bien dondequiera que iba. Por fin, Ezequías le dio la espalda al enorme imperio de Asiria y se negó a seguir sometido a él. En el cielo del norte empezaron a acumularse nubes negras."
+   ],
+   "words": [
+    {
+     "who": "El cronista",
+     "text": "Ezequías confió en el Señor, el Dios de Israel. Ni entre los reyes de Judá que hubo antes de él ni entre los que vinieron después hubo nadie como él."
+    },
+    {
+     "who": "El cronista",
+     "text": "Hizo pedazos la serpiente de bronce que había hecho Moisés, porque hasta entonces los israelitas le quemaban incienso. La llamó Nehustán."
+    },
+    {
+     "who": "El cronista",
+     "text": "Se mantuvo unido al Señor sin apartarse de él y guardó los mandamientos que el Señor había dado a Moisés. El Señor estaba con él, y le iba bien dondequiera que iba."
+    }
+   ],
+   "note": "La serpiente de bronce es la que hizo Moisés, en Números 21, para salvar al pueblo mordido por las serpientes venenosas. Nehustán es un nombre que en hebreo hace pensar a la vez en «bronce» y en «serpiente», y también se interpreta como «un pedazo de bronce».",
+   "reflect": "¿En qué me apoyo más que en Dios?",
+   "quiz": {
+    "q": "¿Qué nombre le dio Ezequías a la serpiente de bronce al destruirla?",
+    "options": [
+     "Néguev",
+     "Nisroc",
+     "Nehustán",
+     "Neftalí"
+    ],
+    "explain": "Como hasta entonces los israelitas quemaban incienso a la serpiente de bronce, Ezequías la hizo pedazos y la llamó Nehustán (2 R 18:4)."
+   },
+   "credit": "Jan Luyken, King Hezekiah Destroys the Idols, 1708 · Rijksmuseum, Ámsterdam · Dominio público"
+  },
+  "k33": {
+   "title": "Las burlas del Rabsaces",
+   "when": "hacia el 701 a. C.",
+   "subtitle": "¿En qué confías para resistir así?",
+   "story": [
+    "Junto al canal del estanque de arriba, en el camino que va al campo del Lavador, se desplegó el gran ejército de Asiria. Eran el Tartán, el Rabsaris y el Rabsaces, los jefes que Senaquerib, rey de Asiria, había enviado desde Laquis. De la ciudad salieron Eliaquim, mayordomo del palacio, el secretario Sebna y el cronista Joa. Sobre la muralla, el pueblo se apiñaba conteniendo el aliento.",
+    "El Rabsaces dijo en voz alta: «¿En qué confiáis para resistir así? Egipto es una caña rota que, si te apoyas en ella, te atraviesa la mano. ¿Diréis que confiáis en el Señor? ¿No ha derribado Ezequías los lugares altos y los altares de ese mismo Señor?». Eliaquim, Sebna y Joa le pidieron con urgencia: «Háblanos en arameo. El pueblo que está sobre la muralla nos oye». Pero el Rabsaces gritó todavía más fuerte, en la lengua de Judá.",
+    "El Rabsaces gritó: «¡No os dejéis engañar por Ezequías! ¿Acaso los dioses de Hamat y de Arfad salvaron su tierra? ¿Hay algún dios que haya librado a Samaria de mi mano? ¿Y va a librar el Señor a Jerusalén?». Sobre la muralla reinaba el silencio. Era porque el rey había ordenado que no le respondieran. Eliaquim y los demás funcionarios volvieron a Ezequías con la ropa rasgada."
+   ],
+   "words": [
+    {
+     "who": "El Rabsaces",
+     "text": "¿En qué confías para resistir así? Te apoyas en Egipto, que es como una caña rota. Al que se apoya en esa caña, se le clava en la mano y se la atraviesa."
+    },
+    {
+     "who": "El Rabsaces",
+     "text": "¿Cuál de los dioses de las naciones ha librado su tierra de mi mano? ¿Y va a librar el Señor a Jerusalén de mi mano?"
+    },
+    {
+     "who": "Eliaquim",
+     "text": "Háblanos en arameo, que lo entendemos. No nos hables en la lengua de Judá delante del pueblo que está sobre la muralla."
+    },
+    {
+     "who": "Ezequías",
+     "text": "No le respondáis ni una palabra."
+    }
+   ],
+   "note": "En aquel tiempo, Senaquerib, rey de Asiria, atacó las ciudades fortificadas de Judá y conquistó Laquis. En los muros del palacio de Nínive se conserva un gran relieve con escenas del asalto a Laquis.",
+   "reflect": "Cuando alguien se burla de mi fe, ¿a qué me aferro?",
+   "quiz": {
+    "q": "¿En qué lengua le pidió Eliaquim al Rabsaces que hablara?",
+    "options": [
+     "En arameo",
+     "En la lengua de Judá",
+     "En egipcio",
+     "En asirio"
+    ],
+    "explain": "Le pidieron que hablara en arameo para que no lo entendiera el pueblo que estaba sobre la muralla, pero el Rabsaces gritó aún más fuerte en la lengua de Judá (2 R 18:26–28)."
+   },
+   "credit": "Autor desconocido, Assyrians Crying to the Men on the Wall, 1873 · The Story of the Bible from Genesis to Revelation · Dominio público"
+  },
+  "k34": {
+   "title": "La carta extendida en el templo",
+   "when": "hacia el 701 a. C.",
+   "subtitle": "La puso tal cual delante de Dios",
+   "story": [
+    "Ezequías se rasgó la ropa, se vistió de luto con ropa áspera y entró en el templo. Después envió a sus funcionarios y a los sacerdotes ancianos al profeta Isaías, hijo de Amoz, con este mensaje: «Hoy es un día de angustia y de vergüenza. Es como cuando una mujer está a punto de dar a luz y no tiene fuerzas para hacerlo». Isaías respondió: «Así dice el Señor: “No tengas miedo de las palabras con que los siervos del rey de Asiria me han insultado”».",
+    "Poco después llegó una carta del rey de Asiria. En la carta estaba escrito: «No te dejes engañar por el dios en quien confías». Ezequías tomó la carta, subió al templo y la extendió tal cual delante del Señor. Ezequías oró: «Señor, que reinas sobre los querubines, solo tú eres el Dios de todos los reinos de la tierra. Los dioses que ellos quemaron eran madera y piedra talladas por hombres. Ahora sálvanos».",
+    "Isaías le envió un mensaje a Ezequías: «Así dice el Señor: “He escuchado tu oración. El rey de Asiria no entrará en esta ciudad, no disparará contra ella ni una flecha y volverá por el camino por donde vino. Yo defenderé esta ciudad por amor a mí mismo y por amor a mi siervo David”». Un canto en honor de Sion dice así: «Lo que habíamos oído, ahora lo hemos visto. Dios afirmará esta ciudad para siempre»."
+   ],
+   "words": [
+    {
+     "who": "Dios",
+     "text": "El rey de Asiria no entrará en esta ciudad ni disparará contra ella ni una flecha. Yo defenderé esta ciudad y la salvaré, por amor a mí mismo y por amor a mi siervo David."
+    },
+    {
+     "who": "Isaías",
+     "text": "Así dice el Señor: «No tengas miedo de las palabras con que los siervos del rey de Asiria me han insultado»."
+    },
+    {
+     "who": "Ezequías",
+     "text": "Señor, Dios de Israel, que reinas sobre los querubines, solo tú eres el Dios de todos los reinos de la tierra. Ahora sálvanos, para que todo el mundo sepa que solo tú eres Dios."
+    }
+   ],
+   "note": "Los querubines eran dos figuras de ángeles con las alas extendidas sobre la tapa del arca de la alianza, y se consideraban el lugar donde se sentaba el Dios invisible. Los capítulos 36 y 37 del libro de Isaías recogen casi palabra por palabra la misma historia.",
+   "reflect": "Igual que Ezequías extendió la carta, ¿qué tengo que extender hoy delante de Dios?",
+   "quiz": {
+    "q": "¿Qué hizo Ezequías al recibir la carta del rey de Asiria?",
+    "options": [
+     "Quemó la carta",
+     "Escribió una respuesta",
+     "Pidió ayuda a Egipto",
+     "Subió al templo y la extendió delante del Señor"
+    ],
+    "explain": "Ezequías recibió la carta, la leyó, subió al templo del Señor, la extendió delante del Señor y oró (2 R 19:14–15)."
+   },
+   "credit": "Autor desconocido, Hezekiah Spreads the Letter before the Lord, 1873 · The Story of the Bible from Genesis to Revelation · Dominio público"
+  },
+  "k35": {
+   "title": "La noche en el campamento asirio",
+   "when": "hacia el 701 a. C.",
+   "subtitle": "Lo que ocurrió en una sola noche",
+   "story": [
+    "Aquella noche Jerusalén contenía el aliento. El gran ejército asirio seguía acampado en tierra de Judá, y lo único a lo que podía aferrarse la gente de la ciudad era la palabra que había comunicado Isaías. El Señor había dicho: «El rey de Asiria no entrará en esta ciudad; volverá por el camino por donde vino». Aferrados a esa sola palabra, pasaron en vela una larga noche.",
+    "Esa misma noche, el ángel del Señor salió e hirió el campamento asirio. Cuando la gente se levantó de madrugada, ciento ochenta y cinco mil soldados yacían sin poder levantarse. El ejército que parecía a punto de tragarse a Judá se derrumbó en una sola noche. Sobre el campamento cayó un silencio pesado.",
+    "Senaquerib, rey de Asiria, retiró su ejército y volvió a Nínive. Tiempo después, mientras se postraba en el templo de su dios Nisroc, Senaquerib murió a manos de dos de sus hijos, y otro de sus hijos, Esar-hadón, llegó a ser rey. Un canto de los Salmos dice así: «Deteneos y sabed que yo soy Dios»."
+   ],
+   "words": [
+    {
+     "who": "El cronista",
+     "text": "Aquella noche salió el ángel del Señor e hirió a ciento ochenta y cinco mil hombres en el campamento asirio. Cuando se levantaron de madrugada, todos eran cadáveres."
+    },
+    {
+     "who": "Dios",
+     "text": "Volverá por el camino por donde vino y no entrará en esta ciudad. Lo digo yo, el Señor."
+    },
+    {
+     "who": "El cronista",
+     "text": "Senaquerib, rey de Asiria, levantó el campamento, se volvió y se quedó en Nínive."
+    }
+   ],
+   "note": "En el prisma de los anales de Senaquerib está escrito que encerró a Ezequías en Jerusalén «como a un pájaro en una jaula», pero no dice que tomara la ciudad. Senaquerib fue asesinado por sus hijos hacia el año 681 a. C.",
+   "reflect": "Al querer resolverlo todo con mis fuerzas, ¿estoy cerrándole a Dios el lugar donde él quiere obrar?",
+   "quiz": {
+    "q": "¿Cuántos soldados asirios hirió aquella noche el ángel del Señor?",
+    "options": [
+     "Dieciocho mil",
+     "Ciento ochenta y cinco mil",
+     "Tres mil",
+     "Un millón"
+    ],
+    "explain": "El ángel del Señor hirió a ciento ochenta y cinco mil hombres en el campamento asirio (2 R 19:35)."
+   },
+   "credit": "Christoffel van Sichem, The Angel Strikes the Army of Sennacherib, 1645–1646 · Rijksmuseum, Ámsterdam · Dominio público"
+  },
+  "k36": {
+   "title": "La sombra del sol que retrocedió",
+   "when": "hacia el 700 a. C.",
+   "subtitle": "Lágrimas de cara a la pared",
+   "story": [
+    "Ezequías cayó enfermo de muerte. El profeta Isaías fue a verlo y le dijo: «Así dice el Señor: “Pon en orden tu casa, porque vas a morir; no vivirás”». Ezequías volvió la cara hacia la pared. Ezequías oró: «Señor, acuérdate de que he andado delante de ti con fidelidad y con un corazón íntegro». Y Ezequías lloró amargamente.",
+    "Antes de que Isaías saliera del patio central del palacio, la palabra del Señor vino a él. El Señor le dijo: «Vuelve y dile a Ezequías, jefe de mi pueblo: “He escuchado tu oración y he visto tus lágrimas. Te voy a sanar. Dentro de tres días subirás al templo. Añadiré quince años a tu vida”».",
+    "Isaías mandó poner una masa de higos sobre la llaga, y el rey se curó. Ezequías preguntó: «¿Cuál es la señal de que el Señor me va a sanar?». Isaías le preguntó: «¿Quieres que la sombra del sol avance diez escalones o que retroceda diez?». Ezequías respondió: «Que retroceda». Isaías clamó al Señor, y la sombra que caía sobre la escalera de Acaz retrocedió diez escalones."
+   ],
+   "words": [
+    {
+     "who": "Dios",
+     "text": "He escuchado tu oración y he visto tus lágrimas. Te voy a sanar. Añadiré quince años a tu vida."
+    },
+    {
+     "who": "Isaías",
+     "text": "Así dice el Señor: «Pon en orden tu casa, porque vas a morir; no vivirás»."
+    },
+    {
+     "who": "Ezequías",
+     "text": "Señor, acuérdate de que he andado delante de ti con fidelidad y con un corazón íntegro, y de que he hecho lo que es bueno a tus ojos."
+    }
+   ],
+   "note": "Se cree que «la escalera de Acaz», construida por el rey Acaz, servía de reloj de sol: la sombra que proyectaba la luz del sol marcaba la hora. En el capítulo 38 de Isaías se recoge el canto de acción de gracias que compuso Ezequías después de sanar.",
+   "reflect": "En los momentos más difíciles, ¿a quién busco primero?",
+   "quiz": {
+    "q": "Como señal, ¿qué pasó con la sombra del sol sobre la escalera de Acaz?",
+    "options": [
+     "Avanzó diez escalones",
+     "Se quedó quieta",
+     "Retrocedió diez escalones",
+     "Desapareció"
+    ],
+    "explain": "Ezequías pidió que la sombra retrocediera; Isaías clamó al Señor, y la sombra retrocedió diez escalones (2 R 20:10–11)."
+   },
+   "credit": "Jan Luyken, The Shadow on Hezekiah's Sundial Turns Back, 1708 · Rijksmuseum, Ámsterdam · Dominio público"
+  },
+  "k37": {
+   "title": "Los tesoros mostrados a los enviados de Babilonia",
+   "when": "hacia el 700 a. C.",
+   "subtitle": "Unos almacenes enseñados de arriba abajo",
+   "story": [
+    "Desde la lejana Babilonia llegaron a Jerusalén unos enviados con cartas y regalos. Los mandaba Merodac-baladán, rey de Babilonia, que se había enterado de que Ezequías había estado enfermo. Un rey de un país lejano había enviado a alguien a preguntar por su salud. Ezequías se alegró y escuchó a los enviados.",
+    "Ezequías llevó a los enviados a sus almacenes de tesoros. Les fue abriendo uno por uno la plata y el oro, las especias y los aceites finos, y hasta el arsenal. No hubo nada en el palacio ni en todo el reino que no les enseñara. Los ojos de los enviados recorrieron cada rincón de los almacenes. Entonces el profeta Isaías fue a ver al rey.",
+    "Isaías le preguntó: «¿De dónde han venido esos hombres y qué han visto?». Ezequías respondió: «Han venido de la lejana Babilonia y han visto todo lo que hay en mis almacenes». Isaías le comunicó la palabra del Señor: «Vienen días en que todo lo que hay en este palacio y todo lo que tus antepasados acumularon será llevado a Babilonia. Algunos de los hijos que nacerán de ti serán llevados cautivos y serán eunucos en el palacio del rey de Babilonia». Ezequías dijo: «Es buena la palabra del Señor que me has comunicado. Al menos habrá paz mientras yo viva»."
+   ],
+   "words": [
+    {
+     "who": "Isaías",
+     "text": "Escucha la palabra del Señor: vienen días en que todo lo que hay en este palacio y todo lo que tus antepasados acumularon será llevado a Babilonia. No quedará nada."
+    },
+    {
+     "who": "Ezequías",
+     "text": "Han visto todo lo que hay en mi palacio. No hay nada en mis almacenes que no les haya enseñado."
+    },
+    {
+     "who": "Ezequías",
+     "text": "Es buena la palabra del Señor que me has comunicado. ¿No habrá al menos paz y seguridad mientras yo viva?"
+    }
+   ],
+   "note": "Merodac-baladán era un caldeo que ocupó varias veces el trono de Babilonia enfrentándose a Asiria; se cree que con esta embajada buscaba aliados contra Asiria.",
+   "reflect": "Últimamente, ¿qué es lo que más quiero mostrar a los demás?",
+   "quiz": {
+    "q": "¿De qué país eran los enviados a los que Ezequías mostró sus tesoros?",
+    "options": [
+     "De Babilonia",
+     "De Egipto",
+     "De Asiria",
+     "De Tiro"
+    ],
+    "explain": "Eran enviados de Merodac-baladán, rey de Babilonia, y Ezequías les mostró todos sus almacenes de tesoros (2 R 20:12–15)."
+   },
+   "credit": "Hippolyte Flandrin, Hezekiah, King of Judah · Museo Metropolitano de Arte · Dominio público"
+  },
+  "k38": {
+   "title": "El libro de la ley hallado en el templo",
+   "when": "hacia el 622 a. C.",
+   "subtitle": "Ropa rasgada ante la palabra",
+   "story": [
+    "Un día, en plena reparación del templo, el rey Josías envió al templo al secretario Safán. El sumo sacerdote Hilcías le dijo a Safán: «He encontrado el libro de la ley en el templo del Señor». Safán leyó el libro y lo llevó al palacio. Josías había llegado a ser rey a los ocho años y llevaba dieciocho reinando; delante de él, Safán leyó el libro en voz alta.",
+    "Al oír las palabras de la ley, Josías se rasgó la ropa. Josías ordenó: «Id a consultar al Señor por mí, por el pueblo y por todo Judá acerca de las palabras de este libro. Grande es la ira del Señor, porque nuestros antepasados no escucharon estas palabras». Hilcías, Safán y los demás fueron a ver a la profetisa Hulda, que vivía en el segundo barrio de Jerusalén.",
+    "Hulda dijo: «Así dice el Señor: “Como este pueblo me ha abandonado, traeré la desgracia sobre este lugar. Pero decidle al rey de Judá: Como al oír estas palabras tu corazón se ablandó, te rasgaste la ropa y lloraste, también yo te he escuchado. Tus ojos no verán esa desgracia”». Josías leyó el libro de la alianza delante de todo el pueblo e hizo una alianza para seguir al Señor."
+   ],
+   "words": [
+    {
+     "who": "Hulda",
+     "text": "Como al oír estas palabras tu corazón se ablandó, te humillaste delante del Señor, te rasgaste la ropa y lloraste, también yo te he escuchado. Palabra del Señor."
+    },
+    {
+     "who": "Hilcías",
+     "text": "He encontrado el libro de la ley en el templo del Señor."
+    },
+    {
+     "who": "Josías",
+     "text": "Id a consultar al Señor por mí, por el pueblo y por todo Judá acerca de las palabras de este libro. Grande es su ira, porque nuestros antepasados no siguieron estas palabras."
+    }
+   ],
+   "note": "Se cree que el libro de la ley hallado entonces era el Deuteronomio o su parte central. El «segundo barrio» donde vivía Hulda se considera el nuevo barrio del oeste de Jerusalén, ampliado hacia los tiempos de Ezequías.",
+   "reflect": "Ante la palabra de Dios, ¿mi corazón está blando o endurecido?",
+   "quiz": {
+    "q": "¿A qué profeta fueron a ver los funcionarios de Josías para consultar al Señor sobre las palabras del libro de la ley?",
+    "options": [
+     "Isaías",
+     "Micaías",
+     "Eliseo",
+     "Hulda"
+    ],
+    "explain": "Hilcías, Safán y los demás fueron a ver a la profetisa Hulda, que vivía en el segundo barrio de Jerusalén (2 R 22:14)."
+   },
+   "credit": "Julius Schnorr von Carolsfeld, Josiah Hears the Book of the Law, c. 1851–1860 · Die Bibel in Bildern · Dominio público"
+  },
+  "k39": {
+   "title": "La muerte en Meguido",
+   "when": "hacia el 609 a. C.",
+   "subtitle": "El final repentino del rey más recto",
+   "story": [
+    "Los cantos de la Pascua resonaban en Jerusalén. Josías ordenó: «Celebrad la Pascua al Señor vuestro Dios, como está escrito en este libro de la alianza». Desde los tiempos de los jueces no se había celebrado una Pascua así. Josías eliminó a los médiums, a los adivinos y a todos los ídolos. Ni antes ni después hubo un rey que se volviera al Señor como él, con todo su corazón y con todas sus fuerzas.",
+    "Aun así, el Señor no apartó el ardor de su ira, encendida por los pecados que había acumulado Manasés, el abuelo de Josías. El Señor dijo: «Así como eché a Israel de mi presencia, echaré también a Judá. Rechazaré a Jerusalén, esta ciudad que escogí, y a este templo del que dije que allí estaría mi nombre».",
+    "Por aquel tiempo, Necao, rey de Egipto, subía hacia el río Éufrates para ayudar al rey de Asiria. Cuando Josías salió a Meguido para cerrarle el paso, Necao le envió mensajeros advirtiéndole que no se lo impidiera, porque Dios le había ordenado darse prisa. Pero Josías no hizo caso, se disfrazó y salió a pelear, y las flechas de los arqueros egipcios lo hirieron gravemente. Sus servidores lo pasaron a otro carro y lo llevaron a Jerusalén, pero allí Josías murió, y todo Judá y Jeremías lloraron por él. El pueblo ungió a Joacaz, hijo de Josías, y lo hizo rey."
+   ],
+   "words": [
+    {
+     "who": "Dios",
+     "text": "Así como eché a Israel de mi presencia, echaré también a Judá. Rechazaré a Jerusalén, esta ciudad que escogí, y a este templo del que dije que allí estaría mi nombre."
+    },
+    {
+     "who": "El cronista",
+     "text": "Ni antes ni después de él hubo un rey como Josías, que se volviera al Señor con todo su corazón, con toda su alma y con todas sus fuerzas, conforme a toda la ley de Moisés."
+    },
+    {
+     "who": "Josías",
+     "text": "Celebrad la Pascua al Señor vuestro Dios, como está escrito en este libro de la alianza."
+    },
+    {
+     "who": "Necao",
+     "text": "Dios me ha ordenado que me dé prisa. No te opongas a Dios, que está conmigo, y apártate, no sea que él te destruya."
+    }
+   ],
+   "note": "Meguido era la fortaleza que vigilaba el paso por donde el camino de la costa entra en el valle de Jezreel. Necao iba a ayudar a Asiria, que se enfrentaba a Babilonia, y el capítulo 35 de 2 Crónicas cuenta que Josías peleó disfrazado y fue alcanzado por las flechas.",
+   "reflect": "Antes de empezar algo, ¿le pregunto primero a Dios?",
+   "quiz": {
+    "q": "¿Dónde murió Josías al enfrentarse a Necao, rey de Egipto?",
+    "options": [
+     "Laquis",
+     "Meguido",
+     "Ribla",
+     "Betel"
+    ],
+    "explain": "El faraón Necao se encontró con Josías en Meguido y lo mató (2 R 23:29)."
+   },
+   "credit": "David Roberts, Mount Tabor from the Plain of Esdraelon, 1842 · Biblioteca del Congreso · Dominio público"
+  },
+  "k40": {
+   "title": "El templo en llamas",
+   "when": "hacia el 586 a. C.",
+   "subtitle": "La casa del Nombre se derrumba entre las llamas",
+   "story": [
+    "En el noveno año del rey Sedequías, el día diez del mes décimo, Nabucodonosor, rey de Babilonia, llegó con todo su ejército y sitió Jerusalén. Alrededor de la ciudad levantaron rampas de tierra. El asedio duró hasta el año undécimo. El día nueve del mes cuarto, en la ciudad ya no quedaba nada que comer. Por fin abrieron una brecha en la muralla.",
+    "Aquella noche, Sedequías y sus soldados salieron por la puerta que había entre las dos murallas, junto al jardín del rey, y huyeron hacia el Arabá. El ejército de Babilonia los persiguió, capturó al rey en la llanura de Jericó y lo llevó ante el rey de Babilonia, que estaba en Ribla. El rey de Babilonia mató a los hijos de Sedequías delante de sus ojos, luego le sacó los ojos a Sedequías, lo ató con cadenas de bronce y se lo llevó a Babilonia.",
+    "El día siete del mes quinto llegó Nabuzaradán, jefe de la guardia, y quemó el templo del Señor, el palacio real y todas las casas importantes. Las columnas de bronce y el mar de bronce fueron hechos pedazos y llevados a Babilonia. El pueblo fue llevado cautivo, y solo quedaron los más pobres para cuidar las viñas y los campos. Ante el santuario en ruinas brotó este canto: «Oh Dios, ¿hasta cuándo? Han prendido fuego a tu santuario»."
+   ],
+   "words": [
+    {
+     "who": "El cronista",
+     "text": "Quemó el templo del Señor, el palacio real y todas las casas de Jerusalén. No quedó ni una sola casa importante sin quemar."
+    },
+    {
+     "who": "Dios",
+     "text": "Como quien lava un plato y lo pone boca abajo, así limpiaré a Jerusalén. Abandonaré al resto de mi pueblo y lo entregaré en manos de sus enemigos."
+    },
+    {
+     "who": "El cronista",
+     "text": "Así fue llevado Judá en cautiverio, lejos de su tierra."
+    }
+   ],
+   "note": "El templo de Salomón fue destruido cuando tenía casi cuatrocientos años. Unos sitúan su destrucción en el año 586 a. C. y otros en el 587. Todavía hoy los judíos ayunan el día nueve del mes de Av en recuerdo de la destrucción del templo.",
+   "reflect": "En un lugar donde todo parece derrumbado, ¿qué le estoy diciendo a Dios?",
+   "quiz": {
+    "q": "¿Cómo se llamaba el jefe de la guardia babilonia que quemó el templo del Señor y el palacio real?",
+    "options": [
+     "El Rabsaces",
+     "Gedalías",
+     "Nabuzaradán",
+     "Evil-merodac"
+    ],
+    "explain": "Nabuzaradán, jefe de la guardia del rey de Babilonia, llegó a Jerusalén y quemó el templo, el palacio real y todas las casas (2 R 25:8–9)."
+   },
+   "credit": "James Tissot, The Flight of the Prisoners, c. 1896–1902 · Museo Judío de Nueva York · Dominio público"
+  },
+  "k41": {
+   "title": "Junto a los ríos de Babilonia",
+   "when": "hacia el 561 a. C.",
+   "subtitle": "El día en que se abrió la puerta de la cárcel",
+   "story": [
+    "En la tierra arruinada de Judá solo quedaron unos pocos pobres, y el rey de Babilonia puso a Gedalías, nieto de Safán, para gobernarlos. Cuando los jefes del ejército que andaban dispersos fueron a verlo a Mizpa, Gedalías les hizo una promesa: «No tengáis miedo de los babilonios. Quedaos en esta tierra, servid al rey de Babilonia y todo os irá bien». Pero en el mes séptimo de aquel año, Ismael, que era de la familia real, llegó con diez hombres y mató a Gedalías.",
+    "El pueblo que quedaba, temiendo que Babilonia se vengara por aquello, huyó todo a Egipto. Por entonces, lejos, en una cárcel de Babilonia, estaba preso Joaquín, rey de Judá. Había llegado a ser rey a los dieciocho años y, a los tres meses, se lo habían llevado a Babilonia. Así pasaron treinta y siete años en la cárcel.",
+    "Era el último mes del año en que Evil-merodac subió al trono de Babilonia como nuevo rey. El nuevo rey sacó a Joaquín de la cárcel, lo trató con bondad y le dio un asiento más alto que el de los demás reyes que habían sido llevados a Babilonia. Joaquín se quitó la ropa de prisionero y, por el resto de su vida, comió a la mesa del rey. Los que habían sido llevados a Babilonia cantaban este canto: «Junto a los ríos de Babilonia nos sentábamos y llorábamos, acordándonos de Sion»."
+   ],
+   "words": [
+    {
+     "who": "Gedalías",
+     "text": "No tengáis miedo de los funcionarios babilonios. Vivid en esta tierra y servid al rey de Babilonia, y os irá bien."
+    },
+    {
+     "who": "El cronista",
+     "text": "En el año en que Evil-merodac llegó a ser rey de Babilonia, sacó de la cárcel a Joaquín, rey de Judá. Le habló con bondad y le dio un asiento más alto que el de los reyes que estaban con él."
+    },
+    {
+     "who": "El cronista",
+     "text": "Joaquín se quitó la ropa de prisionero y, todos los días de su vida, comió en presencia del rey."
+    }
+   ],
+   "note": "En unas tablillas de arcilla halladas en el palacio de Babilonia hay registros de raciones de aceite entregadas a «Yaukin, rey de Judá», y a sus hijos. Joaquín fue llevado de Jerusalén a Babilonia en el año 597 a. C.",
+   "reflect": "En un lugar donde creía que todo había terminado, ¿me ha abierto Dios alguna vez una puerta nueva?",
+   "quiz": {
+    "q": "¿Qué rey de Babilonia sacó a Joaquín de la cárcel?",
+    "options": [
+     "Evil-merodac",
+     "Nabucodonosor",
+     "Merodac-baladán",
+     "Senaquerib"
+    ],
+    "explain": "En el año en que subió al trono, Evil-merodac sacó a Joaquín de la cárcel (2 R 25:27)."
+   },
+   "credit": "Eduard Bendemann, The Mourning Jews in Exile, 1832 · Museo Wallraf-Richartz, Colonia · Dominio público"
+  }
+ }
+}

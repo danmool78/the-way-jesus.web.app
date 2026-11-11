@@ -1,0 +1,57 @@
+{
+ "appTag": "Reyes · Dos reinos tras los pasos de los profetas",
+ "docTitle": "El Camino — Reyes | Dos reinos tras los pasos de los profetas",
+ "metaDesc": "Del templo de Salomón, por el fuego del monte Carmelo y los caballos y carros de fuego de Eliseo, hasta los ríos de Babilonia. Recorre sobre un mapa bíblico 41 escenas de dos reinos siguiendo a los profetas y escucha cantados los salmos de cada lugar.",
+ "mapAria": "El camino de los Reyes sobre el mapa de Judá, Israel, Aram y Babilonia",
+ "introTag": "Del templo de Salomón a los ríos de Babilonia, dos reinos tras los pasos de los profetas",
+ "introLead": "Camina sobre el mapa siguiendo a Elías, Eliseo e Isaías, y conoce a los reyes de los dos reinos divididos.",
+ "introF1": "Recorre los lugares por Jerusalén y Samaria, el monte Carmelo y el monte Horeb, hasta Babilonia",
+ "introF3": "Escucha la historia en voz alta y oye cantados los salmos unidos a cada lugar",
+ "landStep2": "En la tarjeta, lee la historia y el texto, y escucha la lectura con el botón ▶",
+ "landStep4": "En la pestaña «{words}» de arriba, reúne las palabras de Dios y de los profetas, y con «{quiz}» repasa las escenas recorridas",
+ "jesus": "Dios",
+ "hisWords": "Palabras de Dios y de los profetas",
+ "wordsHead": "Palabras de Dios y de los profetas",
+ "wordsIntro": "Aquí se reúnen, en el orden del viaje, las palabras que Dios pronunció en el camino de los dos reinos y las que comunicaron los profetas. Todas son una reconstrucción traducida de nuevo al lenguaje de hoy, fiel al sentido del texto original.",
+ "odoTitle": "Distancia recorrida hasta esta escena (suma aproximada de los caminos entre lugares; pasos calculados con una zancada de 75 cm)",
+ "gospels": {
+  "1ki": [
+   "1 Reyes",
+   "1 R"
+  ],
+  "2ki": [
+   "2 Reyes",
+   "2 R"
+  ]
+ },
+ "endLead": "Del templo de Salomón a los ríos de Babilonia, gracias por caminar con nosotros.",
+ "blessing": "Dios es nuestro refugio y nuestra fuerza, nuestra ayuda segura en la angustia. (Sal 46:1)\nQue quien estuvo en el fuego y en el susurro suave te hable también en tu camino, y vuelva a levantarte donde todo se derrumbó.",
+ "psalmHead": "El canto de este lugar",
+ "psalmNote": "Es una canción del viaje de los Salmos, cantada en coreano. La música y la letra se crearon con IA y fueron revisadas por personas.",
+ "map": {
+  "유 다": "JUDÁ",
+  "이 스 라 엘": "ISRAEL",
+  "길 르 앗": "GALAAD",
+  "모 압": "MOAB",
+  "에 돔": "EDOM",
+  "블 레 셋": "FILISTEA",
+  "아 람": "ARAM",
+  "시 돈": "SIDÓN",
+  "앗 수 르": "ASIRIA",
+  "아 라 비 아 사 막": "DESIERTO DE ARABIA",
+  "시 내 반 도": "PENÍNSULA DEL SINAÍ",
+  "단": "Dan",
+  "디르사": "Tirsa",
+  "라기스": "Laquis",
+  "여리고": "Jericó",
+  "다메섹": "Damasco",
+  "립나": "Ribla",
+  "하맛": "Hamat",
+  "갈그미스": "Carquemis",
+  "니느웨": "Nínive",
+  "유브라데 강": "Río Éufrates",
+  "힛데겔 강": "Río Tigris",
+  "홍 해": "MAR ROJO",
+  "아카바 만": "Golfo de Aqaba"
+ }
+}

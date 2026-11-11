@@ -1,0 +1,57 @@
+{
+ "appTag": "Kings · Two Kingdoms in the Steps of the Prophets",
+ "docTitle": "The Way — Kings | Two Kingdoms in the Steps of the Prophets",
+ "metaDesc": "From Solomon's temple, past the fire on Mount Carmel and Elisha's horses and chariots of fire, to the rivers of Babylon. Walk 41 scenes of the two kingdoms on a Bible map in the steps of the prophets, and hear the psalms of those places as songs.",
+ "mapAria": "The way of Kings on a map of Judah, Israel, Aram and Babylon",
+ "introTag": "Two kingdoms in the steps of the prophets, from Solomon's temple to the rivers of Babylon",
+ "introLead": "Walk the map with Elijah, Elisha and Isaiah, and meet the kings of a kingdom torn in two.",
+ "introF1": "Follow the places, from Jerusalem and Samaria, past Mount Carmel and Mount Horeb, all the way to Babylon",
+ "introF3": "Hear the story read aloud, and listen to the psalms linked to each place as songs",
+ "landStep2": "Read the story and the texts on the card, and press ▶ to hear it read aloud",
+ "landStep4": "Gather the words of God and of the prophets in the '{words}' tab, and revisit the scenes you have walked with '{quiz}'",
+ "jesus": "God",
+ "hisWords": "Words of God and the Prophets",
+ "wordsHead": "Words of God and the Prophets",
+ "wordsIntro": "The words God spoke and the words the prophets proclaimed along the way of the two kingdoms, gathered in the order of the journey. Every saying is a fresh rendering of the original meaning in today's language.",
+ "odoTitle": "Distance walked up to this scene (estimated road distance between places; steps at a 75 cm stride)",
+ "gospels": {
+  "1ki": [
+   "1 Kings",
+   "1 Kgs"
+  ],
+  "2ki": [
+   "2 Kings",
+   "2 Kgs"
+  ]
+ },
+ "endLead": "From Solomon's temple to the rivers of Babylon — thank you for walking with us.",
+ "blessing": "God is our refuge and strength, a great help always found in times of trouble. (Ps 46:1)\nMay the one who was there in the fire and in the still small voice speak on your way too, and build you up again where things have fallen down.",
+ "psalmHead": "The song sung in this place",
+ "psalmNote": "A song from the Psalms journey, sung in Korean. The music and lyrics were made with AI and refined by people.",
+ "map": {
+  "유 다": "JUDAH",
+  "이 스 라 엘": "ISRAEL",
+  "길 르 앗": "GILEAD",
+  "모 압": "MOAB",
+  "에 돔": "EDOM",
+  "블 레 셋": "PHILISTIA",
+  "아 람": "ARAM",
+  "시 돈": "SIDON",
+  "앗 수 르": "ASSYRIA",
+  "아 라 비 아 사 막": "ARABIAN DESERT",
+  "시 내 반 도": "SINAI PENINSULA",
+  "단": "Dan",
+  "디르사": "Tirzah",
+  "라기스": "Lachish",
+  "여리고": "Jericho",
+  "다메섹": "Damascus",
+  "립나": "Libnah",
+  "하맛": "Hamath",
+  "갈그미스": "Carchemish",
+  "니느웨": "Nineveh",
+  "유브라데 강": "Euphrates River",
+  "힛데겔 강": "Tigris River",
+  "홍 해": "Red Sea",
+  "아카바 만": "Gulf of Aqaba"
+ }
+}

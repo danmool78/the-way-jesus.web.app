@@ -1,0 +1,57 @@
+{
+ "appTag": "Reis · Dois reinos no caminho dos profetas",
+ "docTitle": "O Caminho — Reis | Dois reinos no caminho dos profetas",
+ "metaDesc": "Do templo de Salomão, passando pelo fogo do monte Carmelo e pelos cavalos e carros de fogo de Eliseu, até os rios da Babilônia. Percorra no mapa bíblico as 41 cenas dos dois reinos seguindo os profetas e ouça em canção os salmos ligados a cada lugar.",
+ "mapAria": "O caminho dos Reis num mapa de Judá, Israel, Arã e Babilônia",
+ "introTag": "Do templo de Salomão aos rios da Babilônia, dois reinos no caminho dos profetas",
+ "introLead": "Percorra o mapa seguindo Elias, Eliseu e Isaías e conheça os reis dos dois reinos divididos.",
+ "introF1": "Siga os lugares, de Jerusalém e Samaria, pelo monte Carmelo e pelo monte Horebe, até a Babilônia",
+ "introF3": "Ouça a história em voz alta e escute em canção os salmos ligados a cada lugar",
+ "landStep2": "Leia a história e os textos no cartão e toque em ▶ para ouvir",
+ "landStep4": "Reúna as palavras de Deus e dos profetas na aba “{words}” e relembre as cenas com “{quiz}”",
+ "jesus": "Deus",
+ "hisWords": "As palavras de Deus e dos profetas",
+ "wordsHead": "As palavras de Deus e dos profetas",
+ "wordsIntro": "As palavras que Deus disse e as que os profetas anunciaram no caminho dos dois reinos, reunidas na ordem da jornada. Cada uma é uma nova tradução do sentido original para a linguagem de hoje.",
+ "odoTitle": "Distância percorrida até esta cena (caminho estimado entre os lugares; passos de 75 cm)",
+ "gospels": {
+  "1ki": [
+   "1 Reis",
+   "1Rs"
+  ],
+  "2ki": [
+   "2 Reis",
+   "2Rs"
+  ]
+ },
+ "endLead": "Do templo de Salomão aos rios da Babilônia — obrigado por caminhar conosco.",
+ "blessing": "Deus é o nosso refúgio e a nossa força, socorro sempre presente na angústia. (Sl 46:1)\nQue aquele que estava no fogo e no sussurro suave fale também no seu caminho e volte a levantar o que caiu.",
+ "psalmHead": "A canção cantada neste lugar",
+ "psalmNote": "Uma canção da jornada dos Salmos, cantada em coreano. A música e a letra foram criadas com IA e revisadas por pessoas.",
+ "map": {
+  "유 다": "JUDÁ",
+  "이 스 라 엘": "ISRAEL",
+  "길 르 앗": "GILEADE",
+  "모 압": "MOABE",
+  "에 돔": "EDOM",
+  "블 레 셋": "FILÍSTIA",
+  "아 람": "ARÃ",
+  "시 돈": "SIDOM",
+  "앗 수 르": "ASSÍRIA",
+  "아 라 비 아 사 막": "DESERTO DA ARÁBIA",
+  "시 내 반 도": "PENÍNSULA DO SINAI",
+  "단": "Dã",
+  "디르사": "Tirza",
+  "라기스": "Laquis",
+  "여리고": "Jericó",
+  "다메섹": "Damasco",
+  "립나": "Ribla",
+  "하맛": "Hamate",
+  "갈그미스": "Carquemis",
+  "니느웨": "Nínive",
+  "유브라데 강": "Rio Eufrates",
+  "힛데겔 강": "Rio Tigre",
+  "홍 해": "MAR VERMELHO",
+  "아카바 만": "Golfo de Ácaba"
+ }
+}
