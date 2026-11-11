@@ -213,6 +213,10 @@ html:not(:lang(ko)):not(:lang(zh)):not(:lang(ja)) .river-lbl text{writing-mode:h
 .terrain3d:active{cursor:grabbing}
 .terrain-on .terrain3d{display:block}
 .terrain-on #fitAll{display:none}
+/* 축척 막대: 2D 지도의 확대에 맞춰 길이와 숫자가 바뀐다(applyView). 3D 지형은 원근이라 한 길이로 잴 수 없어 감춘다 */
+.scalebar{position:absolute;left:16px;bottom:14px;z-index:2;display:flex;flex-direction:column;align-items:flex-start;gap:3px;pointer-events:none;color:#f3e3bf;font-size:11px;font-variant-numeric:tabular-nums;text-shadow:0 1px 3px rgba(0,0,0,.85);transition:bottom .3s}
+.scalebar i{display:block;height:6px;border:2px solid #f3e3bf;border-top:0;box-shadow:0 1px 3px rgba(0,0,0,.6);width:60px}
+.terrain-on .scalebar,.stage-only .scalebar{display:none}
 .tlabels{position:absolute;inset:0;pointer-events:none;display:none;overflow:hidden}
 .terrain-on .tlabels{display:block}
 .tlabel{position:absolute;left:0;top:0;display:flex;flex-direction:column;align-items:center;transition:opacity .3s;white-space:nowrap}
