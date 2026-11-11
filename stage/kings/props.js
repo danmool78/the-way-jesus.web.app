@@ -361,17 +361,72 @@ Object.assign(MAKERS, {
     return P;
   },
 
-  // 로뎀나무 (왕상 19:4): 광야의 낮은 떨기 — 가늘고 곧은 회록빛 가지가 빽빽이 솟고 흰 꽃이 조금. 그 아래 사람이 누울 만한 그늘 (앞이 트였다)
+  // 로뎀나무 (왕상 19:4, Retama raetam): 광야의 큰 떨기나무 — 밑동에서 굽은 회갈색 줄기 여럿이 비스듬히 갈라져 오르고,
+  // 그 끝에서 잎이 거의 없는 가늘고 긴 회록빛 가지가 수백 가닥 솟았다가 끝이 늘어져 성긴 둥근 지붕을 이룬다. 가지마다 흰 꽃이 조금.
+  // 사람(약 0.88)보다 한 길 반쯤 높고, 그 아래 앉은 사람 위로 그늘이 진다 — 앞(+z) 쪽 가지는 앉은 머리 위로 높게 둔다
   broom(o = {}) {
-    const g = new THREE.Group(), tw = mat('#7a8a6a', { roughness: 1 }), bark = mat('#6a5a46', { roughness: 1 });
-    mesh(new THREE.CylinderGeometry(0.03, 0.04, 0.2, 6), bark, g, [-0.1, 0.1, -0.12]);
-    for (let i = 0; i < 70; i++) {
-      const a = i * 2.399, r = 0.05 + (i % 7) * 0.05, L = 0.3 + (i % 5) * 0.08;
-      const x = -0.1 + Math.cos(a) * r * 1.2, z = -0.12 + Math.sin(a) * r * 0.55 - 0.05;
-      const c = mesh(new THREE.CylinderGeometry(0.003, 0.005, L, 3), tw, g, [x, 0.18 + L / 2, z]); c.rotation.set(Math.sin(a) * 0.4, 0, Math.cos(a) * 0.5); c.castShadow = i % 3 === 0;
-      if (i % 6 === 0) mesh(sphere(0.012, 6, 4), mat('#f4f0e6', { roughness: 1 }), g, [x + Math.cos(a) * 0.1, 0.18 + L * 0.95, z]);
+    const g = new THREE.Group();
+    let seed = o.seed || 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+    const up = new THREE.Vector3(0, 1, 0), tmp = new THREE.Vector3(), m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), one = new THREE.Vector3();
+    const bark = mat('#5f5448', { roughness: 1 });
+    // 굽은 줄기 한 마디
+    const seg = (a, b, r0, r1) => {
+      const d = tmp.subVectors(b, a), L = d.length();
+      const c = mesh(new THREE.CylinderGeometry(r1, r0, L, 6), bark, g);
+      c.position.copy(a).addScaledVector(d, 0.5); c.quaternion.setFromUnitVectors(up, d.clone().normalize()); return c;
+    };
+    // 가는 가지(낱낱이 그리면 수백 개라 한 번에 그리는 instanced 원기둥, 밑이 0인 높이 1짜리를 늘려 쓴다)
+    const rodG = new THREE.CylinderGeometry(0.0028, 0.0045, 1, 3); rodG.translate(0, 0.5, 0);
+    const rods = [], blooms = [];
+    const rod = (a, b) => rods.push([a.clone(), b.clone()]);
+    const forks = [];
+    const N = 7;
+    for (let i = 0; i < N; i++) {
+      const a = (i / N) * Math.PI * 2 + rnd() * 0.5;
+      let p = new THREE.Vector3(Math.cos(a) * 0.05 + (rnd() - 0.5) * 0.04, 0, Math.sin(a) * 0.04 + (rnd() - 0.5) * 0.03), r = 0.034; // 밑동이 한 점으로 모이지 않게 조금씩 벌려 선다
+      for (let k = 0; k < 3; k++) {
+        const h = 0.15 + rnd() * 0.05, out = (0.28 + k * 0.16) * (0.8 + rnd() * 0.4);
+        const n = p.clone().add(new THREE.Vector3(Math.cos(a) * out * h * 2.4 + (rnd() - 0.5) * 0.04, h, Math.sin(a) * out * h * 1.8 + (rnd() - 0.5) * 0.04));
+        seg(p, n, r, r * 0.72); p = n; r *= 0.72;
+        if (k >= 1) forks.push([p.clone(), a]);
+      }
     }
-    mesh(sphere(0.32, 16, 10), mat('#8a9a76', { roughness: 1, transparent: true, opacity: 0.35, depthWrite: false }), g, [-0.1, 0.5, -0.2], [1.3, 0.7, 0.8]).castShadow = true; // 가지 덩이의 그늘
+    // 가운데 줄기 끝 — 지붕 한가운데가 비지 않고 둥글게 차도록
+    for (let i = 0; i < 4; i++) { const a = rnd() * 6.28, f = new THREE.Vector3(Math.cos(a) * 0.08, 0.42 + rnd() * 0.08, Math.sin(a) * 0.06 - 0.03); seg(new THREE.Vector3(0, 0.12, -0.02), f, 0.022, 0.012); forks.push([f, a]); }
+    // 갈래 끝마다 가는 가지 다발: 위·바깥으로 솟았다가 끝이 바깥으로 늘어진다
+    forks.forEach(([f, a]) => {
+      for (let j = 0; j < 46; j++) {
+        const b = a + (rnd() - 0.5) * 2.2, rise = 0.16 + rnd() * 0.36, reach = 0.08 + rnd() * 0.24;
+        const s = f.clone().add(new THREE.Vector3((rnd() - 0.5) * 0.06, (rnd() - 0.3) * 0.08, (rnd() - 0.5) * 0.05));
+        const m = s.clone().add(new THREE.Vector3(Math.cos(b) * reach, rise, Math.sin(b) * reach * 0.8));
+        const front = Math.sin(b) > 0.3; // 앞쪽은 앉은 사람 머리 위로 늘어지지 않게 덜 처진다
+        const drop = front ? 0.05 + rnd() * 0.08 : 0.1 + rnd() * 0.26;
+        const e = m.clone().add(new THREE.Vector3(Math.cos(b) * (0.1 + rnd() * 0.16), -drop, Math.sin(b) * (0.08 + rnd() * 0.12)));
+        if (front) e.y = Math.max(e.y, 0.66);
+        rod(s, m); rod(m, e);
+        if (rnd() < 0.35) blooms.push(m.clone().lerp(e, 0.3 + rnd() * 0.6));
+        if (rnd() < 0.2) blooms.push(s.clone().lerp(m, 0.5 + rnd() * 0.4));
+      }
+    });
+    const rodM = mat('#ffffff', { roughness: 1 });
+    const im = new THREE.InstancedMesh(rodG, rodM, rods.length), col = new THREE.Color();
+    rods.forEach(([a, b], i) => {
+      const d = tmp.subVectors(b, a), L = d.length();
+      q.setFromUnitVectors(up, d.normalize()); m4.compose(a, q, one.set(1, L, 1)); im.setMatrixAt(i, m4);
+      im.setColorAt(i, col.set('#8e9a78').offsetHSL((rnd() - 0.5) * 0.03, (rnd() - 0.5) * 0.08, (rnd() - 0.5) * 0.08));
+    });
+    im.castShadow = true; g.add(im);
+    // 흰 꽃 (이른 봄)
+    const fl = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(0.011, 0), mat('#f3efe2', { roughness: 1 }), blooms.length);
+    blooms.forEach((p, i) => { m4.compose(p, q.identity(), one.set(1, 0.8, 1)); fl.setMatrixAt(i, m4); });
+    g.add(fl);
+    // 가지 덩이의 엷은 빛 — 가는 가지 사이가 흐리게 차 보이도록 (멀리서도 나무로 읽히게)
+    const haze = mat('#97a382', { roughness: 1, transparent: true, opacity: 0.26, depthWrite: false });
+    [[0, 0.86, -0.04, 0.46], [-0.3, 0.74, 0.05, 0.3], [0.3, 0.76, -0.1, 0.32], [0.05, 0.78, 0.25, 0.28], [-0.05, 0.8, -0.32, 0.3]]
+      .forEach(([x, y, z, s]) => { mesh(sphere(1, 12, 8), haze, g, [x, y, z], [s * 1.2, s * 0.55, s]).castShadow = true; });
+    // 그늘: 나무 밑 모래에 진 둥근 그림자
+    const sh = mesh(new THREE.CircleGeometry(0.62, 24), new THREE.MeshBasicMaterial({ color: '#3a2e1e', transparent: true, opacity: 0.1, depthWrite: false }), g, [0, 0.006, 0.04]);
+    sh.rotation.x = -Math.PI / 2; sh.scale.set(1.25, 1, 1); sh.castShadow = false;
     return new Prop(g);
   },
 
