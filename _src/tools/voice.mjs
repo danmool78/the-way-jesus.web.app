@@ -120,7 +120,7 @@ function level(pcm) {
 const KO_D = ['', '일', '이', '삼', '사', '오', '육', '칠', '팔', '구'];
 const koNum = n => { if (!n) return '영'; let o = ''; [[1000, '천'], [100, '백'], [10, '십'], [1, '']].forEach(([u, w]) => { const k = Math.floor(n / u) % 10; if (k) o += (k === 1 && u > 1 ? '' : KO_D[k]) + w; }); return o; };
 const spoken = text => text.replace(/\bBC\s*/g, '기원전 ').replace(/\bAD\s*/g, '서기 ').replace(/녘/g, '녁')
-  .replace(/(\d+)\s*[–-]\s*(\d+)/g, '$1에서 $2').replace(/\d+(?=([가-힣])?)/g, (m, h) => koNum(+m) + (h ? ' ' : '')); // '팔백칠십 년경', '사십 일 후'처럼 단위 앞을 띄운다
+  .replace(/(\d+)\s*[–-]\s*(\d+)/g, '$1에서 $2').replace(/년경/g, '년 무렵') // '년경'의 '경'이 '전'처럼 들려 '팔백칠십 년 전'으로 알아들었다(사용자).replace(/\d+(?=([가-힣])?)/g, (m, h) => koNum(+m) + (h ? ' ' : '')); // '팔백칠십 년경', '사십 일 후'처럼 단위 앞을 띄운다
 const NYEOK = /\s*(?=녘)/; // 새벽녘처럼 붙여 쓴 것도 녘 앞에서 나눈다 (붙여 읽으면 년이 되었다)
 const plain = text => spoken(text).replace(/\[pause[^\]]*\]\s*/g, ' '); // SSML을 받지 않는 성우(Gemini·일레븐랩스)에는 쉼 표시를 빼고
 
