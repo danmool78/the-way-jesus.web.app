@@ -159,6 +159,11 @@ const RELIEF_SOUTH = { lat0: 27.2, lat1: 30.15, lng0: 31.25, lng1: 37.4 };
 const RELIEF_MESO = { lat0: 26.9, lat1: 37.6, lng0: 35.6, lng1: 46.2 };
 // 그 위에 바벨론 둘레만 고운 바탕(assets/relief-babylon.webp — 장면 무대 높이로 내려가면 넓은 바탕은 뭉개진다) — _src/relief.py의 BABYLON과 같게
 const RELIEF_BABYLON = { lat0: 31.95, lat1: 33.15, lng0: 43.65, lng1: 45.2 };
+// 지중해 동쪽·가운데 바탕(assets/relief-med.webp, 바울 여정 — journey.map.med — 에서만) — _src/relief.py의 MED와 같게.
+// 바다는 투명하게 비어 있어 밑에 바다색을 깔고, 레반트·애굽 자리(MED_HOLE)도 비어 있어 원래 바탕·벡터 바다가 비친다. 그래서 다른 그림·바다 위에 얹는다
+const RELIEF_MED = { lat0: 30.5, lat1: 43.0, lng0: 11.0, lng1: 38.0 };
+// 그 위에 바울의 장소 둘레만 고운 타일(assets/relief-med-hi/, 있는 타일은 tiles.json) — _src/relief.py의 MED_HI_와 같게
+const RELIEF_MED_HI = { ...RELIEF_MED, tile: 256, dir: 'relief-med-hi', below: 3, group: '#reliefMedHi', have: new Set() };
 // 프롤로그의 에덴 둘레 바탕(assets/relief-east.webp) — _src/relief.py의 EAST와 같게
 const RELIEF_EAST = { lat0: 29.2, lat1: 32.8, lng0: 44.6, lng1: 49.9 };
 // 확대했을 때만 불러오는 정밀 타일(assets/relief-hi/행_열.webp) — _src/relief.py의 HI와 같게
@@ -207,15 +212,21 @@ function buildMap() {
   const [sx0, sy0] = px([RELIEF_SOUTH.lat1, RELIEF_SOUTH.lng0]), [sx1, sy1] = px([RELIEF_SOUTH.lat0, RELIEF_SOUTH.lng1]);
   const [mx0, my0] = px([RELIEF_MESO.lat1, RELIEF_MESO.lng0]), [mx1, my1] = px([RELIEF_MESO.lat0, RELIEF_MESO.lng1]), jmap = DATA.journey?.map;
   const [bx0, by0] = px([RELIEF_BABYLON.lat1, RELIEF_BABYLON.lng0]), [bx1, by1] = px([RELIEF_BABYLON.lat0, RELIEF_BABYLON.lng1]);
+  const [dx0, dy0] = px([RELIEF_MED.lat1, RELIEF_MED.lng0]), [dx1, dy1] = px([RELIEF_MED.lat0, RELIEF_MED.lng1]);
+  // 지중해 지도(바울): 그림 밑에 까는 바다와 레반트의 벡터 바다를 한 그라데이션(지도 좌표)으로 칠해, 두 바다가 만나는 자리에 이음매가 없게
+  const seaFill = jmap?.med ? 'url(#seaMed)' : 'url(#seaGrad)';
+  if (jmap?.med) fetch(`assets/${RELIEF_MED_HI.dir}/tiles.json`).then(r => r.json()).then(a => { RELIEF_MED_HI.have = new Set(a); applyView(); }).catch(() => {});
   map.setAttribute('viewBox', `0 0 ${W} ${H}`);
   map.innerHTML = `
   <defs>
     <linearGradient id="seaGrad" x1="0" x2="1"><stop offset="0" stop-color="var(--sea-deep)"/><stop offset="1" stop-color="var(--sea)"/></linearGradient>
+    ${jmap?.med ? `<linearGradient id="seaMed" gradientUnits="userSpaceOnUse" x1="${dx0}" x2="${px([0, 36.2])[0]}" y1="0" y2="0"><stop offset="0" stop-color="var(--sea-deep)"/><stop offset="1" stop-color="var(--sea)"/></linearGradient>` : ''}
     <radialGradient id="oasis"><stop offset="0" stop-color="var(--oasis)" stop-opacity=".75"/><stop offset=".6" stop-color="var(--oasis)" stop-opacity=".4"/><stop offset="1" stop-color="var(--oasis)" stop-opacity="0"/></radialGradient>
     <filter id="lakeSoft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3.2"/></filter>
     <filter id="waterEdge" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur in="SourceAlpha" stdDeviation="4" result="b"/><feComposite in="SourceAlpha" in2="b" operator="arithmetic" k2="1" k3="-1" result="edge"/><feFlood flood-color="#21474f" flood-opacity=".5"/><feComposite in2="edge" operator="in"/><feComposite in2="SourceGraphic" operator="over"/></filter>
   </defs>
   <rect x="${-W * 2}" y="${-H * 2}" width="${W * 12}" height="${H * 5}" fill="var(--land)"/>
+  ${jmap?.med ? `<rect x="${dx0}" y="${dy0}" width="${dx1 - dx0}" height="${dy1 - dy0}" fill="${seaFill}"/>` : ''}
   ${jmap?.meso ? `<image href="assets/relief-meso.webp" class="relief" x="${mx0}" y="${my0}" width="${mx1 - mx0}" height="${my1 - my0}" preserveAspectRatio="none"/>
   <image href="assets/relief-babylon.webp" class="relief" x="${bx0}" y="${by0}" width="${bx1 - bx0}" height="${by1 - by0}" preserveAspectRatio="none"/>` : ''}
   <image href="assets/relief-west.webp" class="relief" x="${wx0}" y="${wy0}" width="${wx1 - wx0}" height="${wy1 - wy0}" preserveAspectRatio="none"/>
@@ -231,7 +242,9 @@ function buildMap() {
   <path d="${smooth(GEO.jordanN)}" class="riverbank"/>
   <path d="${smooth(GEO.jordanS)}" class="riverbank"/>
   ${OASES.map(([a, b, r]) => `<circle cx="${px([a, b])[0]}" cy="${px([a, b])[1]}" r="${r}" fill="url(#oasis)"/>`).join('')}
-  <path d="${sea}" fill="url(#seaGrad)" class="sea"/>
+  <path d="${sea}" fill="${seaFill}" class="sea"/>
+  ${jmap?.med ? `<image href="assets/relief-med.webp" class="relief" x="${dx0}" y="${dy0}" width="${dx1 - dx0}" height="${dy1 - dy0}" preserveAspectRatio="none"/>
+  <g id="reliefMedHi" class="relief"></g>` : ''}
   ${jmap?.meso ? `<path d="${smooth(GEO.cyprus, true)}" class="isle"/>` : ''}
   <path d="${smooth(GEO.coast)}" class="coast"/>
   <path d="${smooth(GEO.galilee, true)}" class="lake" filter="url(#waterEdge)"/>
@@ -249,7 +262,7 @@ function buildMap() {
   </g>
  ${LANDMARKS.map(L => { const [a, b] = px([L.lat1, L.lng0]), [c, d] = px([L.lat0, L.lng1]); return `<g class="lmk" data-cx="${(a + c) / 2}" data-cy="${(b + d) / 2}" data-w="${c - a}"><image class="landmark" data-src="assets/egypt-${L.id}.webp" x="${a}" y="${b - L.top}" width="${c - a}" height="${d - b + L.top}" preserveAspectRatio="none"/></g>`; }).join('')}
   <image id="city3d" class="city3d" x="${cx0}" y="${cy0 - CITY3D.top}" width="${cx1 - cx0}" height="${cy1 - cy0 + CITY3D.top}" preserveAspectRatio="none"/>
-  ${lbl(tm('지 중 해'), px([32.35, 34.48]), 'sea-lbl')}
+  ${jmap?.med ? '' : lbl(tm('지 중 해'), px([32.35, 34.48]), 'sea-lbl')}
   ${lbl(tm('갈릴리 바다'), px([32.80, 35.60]), 'water-lbl')}
   ${lbl(tm('사해'), px([31.42, 35.49]), 'water-lbl')}
   ${lbl(tm('요단 강'), px([32.40, 35.585]), 'water-lbl river-lbl')}
@@ -368,13 +381,15 @@ function applyView() {
 // 보이는 범위의 정밀 타일(단위당 3.2픽셀)을, 도성까지 들어가면 초정밀 타일(25.6픽셀)을 얹는다.
 // 타일은 다 받은 뒤 서서히 나타나고, 한 번 만든 타일은 숨겼다 다시 쓴다
 const hiTiles = new Map();
+const hiLayers = () => DATA?.journey?.map?.med ? [RELIEF_HI, RELIEF_HI_W, RELIEF_CITY, RELIEF_MED_HI] : [RELIEF_HI, RELIEF_HI_W, RELIEF_CITY];
 function reliefTiles(L, x, y, w, h, u, show) {
   const T = L.tile, [ox, oy] = px([L.lat1, L.lng0]), keys = [];
-  if (u >= L.below) return keys;
+  if (u >= L.below || L.have?.size === 0) return keys;
   const cols = Math.ceil((L.lng1 - L.lng0) * COS * K / T), rows = Math.ceil((L.lat1 - L.lat0) * K / T);
   const c0 = Math.max(0, Math.floor((x - ox) / T)), c1 = Math.min(cols - 1, Math.floor((x + w - ox) / T));
   const r0 = Math.max(0, Math.floor((y - oy) / T)), r1 = Math.min(rows - 1, Math.floor((y + h - oy) / T));
   for (let r = r0; r <= r1; r++) for (let c = c0; c <= c1; c++) {
+    if (L.have && !L.have.has(`${r}_${c}`)) continue; // 드문드문 있는 타일(지중해 — 장소 둘레만)
     const k = `${L.dir}/${r}_${c}`; keys.push(k);
     if (hiTiles.has(k)) continue;
     const im = document.createElementNS(svgNS, 'image');
@@ -386,12 +401,12 @@ function reliefTiles(L, x, y, w, h, u, show) {
     Object.entries({ x: ox + c * T, y: oy + r * T, width: T + lap, height: T + lap }).forEach(([a, v]) => im.setAttribute(a, v));
     im.setAttribute('preserveAspectRatio', 'none');
     if (!show) im.style.display = 'none';
-    $(L === RELIEF_CITY ? '#reliefCity' : '#reliefHi', map).appendChild(im); hiTiles.set(k, im);
+    $(L.group || (L === RELIEF_CITY ? '#reliefCity' : '#reliefHi'), map).appendChild(im); hiTiles.set(k, im);
   }
   return keys;
 }
 function showHiRelief(x, y, w, h, u) {
-  const want = new Set([RELIEF_HI, RELIEF_HI_W, RELIEF_CITY].flatMap(L => reliefTiles(L, x, y, w, h, u, true)));
+  const want = new Set(hiLayers().flatMap(L => reliefTiles(L, x, y, w, h, u, true)));
   hiTiles.forEach((im, k) => { im.style.display = want.has(k) ? '' : 'none'; });
 }
 // 확대가 시작될 때 도착할 화면의 타일을 미리 받아 둔다 — 다 들어왔을 때 이미 준비되어 있게
@@ -401,7 +416,7 @@ function preloadRelief(t) {
   let { x, y, w, h } = t;
   const ar = r.width / r.height;
   if (w / h > ar) { const nh = w / ar; y -= (nh - h) / 2; h = nh; } else { const nw = h * ar; x -= (nw - w) / 2; w = nw; }
-  [RELIEF_HI, RELIEF_HI_W, RELIEF_CITY].forEach(L => reliefTiles(L, x, y, w, h, w / r.width, false));
+  hiLayers().forEach(L => reliefTiles(L, x, y, w, h, w / r.width, false));
 }
 
 function frame(ids, ms = 1300, reserve = true) {
