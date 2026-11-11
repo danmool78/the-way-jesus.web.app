@@ -1712,6 +1712,9 @@ function showLetters(ids, fit) {
         <text class="lr-name" x="${tx}" y="${-31 - tos.length * 13 - 2}" style="text-anchor:${side[n]}">${esc(ls.map(x => x.name).join(' · '))}</text>
       </g>`;
   }).join('');
+  // 받는 곳이 지금 장면 자리(그레데의 디도서, a41)면 표지와 이름이 3D 무대 한가운데를 가린다 — 무대가 서 있는 동안은 감춘다(.stage-on .lbl.close)
+  const ce = evAt(idx), hp = ce && PLACES[here(ce)];
+  if (hp) { const [hx, hy] = P(hp); $$('.lr-end', g).forEach(l => l.classList.toggle('close', Math.hypot(+l.dataset.x - hx, +l.dataset.y - hy) < 60)); }
   applyView(); // 새 표지를 지금 확대에 맞는 크기로
   if (!fit || !pts.length) return;
   const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
