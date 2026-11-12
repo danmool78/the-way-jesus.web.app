@@ -6,6 +6,7 @@ import json, os, html
 here = os.path.dirname(os.path.abspath(__file__))
 root = os.path.join(here, '..')
 SITE = 'https://thewaymap.org'
+CF = '''<!-- Cloudflare Web Analytics: 쿠키·개인정보 없이 방문 수만 센다 --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f33dcbc61cc949909499f044d7eeae69"}'></script><!-- End Cloudflare Web Analytics -->'''  # 방문 수(Cloudflare Web Analytics, 쿠키 없음)
 out_dir = os.path.join(root, 's')
 os.makedirs(out_dir, exist_ok=True)
 esc = lambda s: html.escape(str(s), quote=True)
@@ -169,7 +170,7 @@ for JID, JDIR, LIST, OG in JOURNEYS:
                 '<a href="%s" rel="prev">← %s</a>' % (fname(scenes[i - 1]['id'], lang), esc(scenes[i - 1]['title'])) if i > 0 else '<span></span>',
                 '<a href="%s" rel="next">%s →</a>' % (fname(scenes[i + 1]['id'], lang), esc(scenes[i + 1]['title'])) if i + 1 < len(scenes) else '<span></span>'))
             b.append('<p style="text-align:center;margin-top:26px"><a href="%s">%s</a></p>\n' % (fname(LIST, lang), esc(P['all'].format(n=n))))
-            b.append(langline(JL[LIST], e['id'], lang) + '</main>\n</body>\n</html>\n')
+            b.append(langline(JL[LIST], e['id'], lang) + '</main>\n' + CF + '\n</body>\n</html>\n')
             open(os.path.join(out_dir, fname(e['id'], lang)), 'w', encoding='utf-8').write(''.join(b))
             if lang == 'ko': urls.append(e['id']); imgs[e['id']] = img.split('?')[0]; JL[e['id']] = JL[LIST]
         # 장면 목록: 시대별로 묶어 모든 장면 페이지로 잇는다
@@ -181,7 +182,7 @@ for JID, JDIR, LIST, OG in JOURNEYS:
         for name, es in groups:
             if not es: continue
             b.append('<h2>%s</h2>\n<ol>\n' % esc(name) + ''.join('<li><a href="%s">%s</a><small>%s · %s</small></li>\n' % (fname(e['id'], lang), esc(e['title']), esc(D['places'][e['place']]['name']), esc(e['when'])) for e in es) + '</ol>\n')
-        b.append('</div>\n' + series_nav(lang) + langline(JL[LIST], LIST, lang) + '</main>\n</body>\n</html>\n')
+        b.append('</div>\n' + series_nav(lang) + langline(JL[LIST], LIST, lang) + '</main>\n' + CF + '\n</body>\n</html>\n')
         open(os.path.join(out_dir, fname(LIST, lang)), 'w', encoding='utf-8').write(''.join(b))
 
 # sitemap.xml: 첫 화면·여정 공유 주소·묻고 답하기·왜 기독교인가·여정별 장면 목록·장면 페이지(그림 함께) — 언어별 짝은 hreflang으로.
