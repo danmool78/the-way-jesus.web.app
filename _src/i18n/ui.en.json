@@ -309,5 +309,6 @@
  "letterView": "Another view",
  "letterToScene": "Go to this scene",
  "letterOnMap": "Show on the map",
- "letterCount": "Letter {n}"
+ "letterCount": "Letter {n}",
+ "inProgress": "{p}% complete"
 }

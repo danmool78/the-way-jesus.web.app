@@ -310,5 +310,6 @@
  "letterView": "다른 견해",
  "letterToScene": "이 장면으로",
  "letterOnMap": "지도에서 보기",
- "letterCount": "{n}번째 편지"
+ "letterCount": "{n}번째 편지",
+ "inProgress": "{p}% 진행 중"
 }

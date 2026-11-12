@@ -309,5 +309,6 @@
  "letterView": "Outra opinião",
  "letterToScene": "Ir para esta cena",
  "letterOnMap": "Ver no mapa",
- "letterCount": "Carta {n}"
+ "letterCount": "Carta {n}",
+ "inProgress": "{p}% concluído"
 }
