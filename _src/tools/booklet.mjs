@@ -166,9 +166,9 @@ await p.addStyleTag({ content: `
   .bk-series img{width:8.5mm;height:8.5mm;border-radius:2mm;flex:none}
   .bk-series b{display:block;font-family:var(--serif);font-size:8.6pt;color:#2b2620;line-height:1.3}
   .bk-series small{display:block;font-size:6.4pt;line-height:1.4;color:var(--muted)}
-  .bk-qr1{display:flex;align-items:center;justify-content:center;gap:5mm}
+  .bk-qr1{display:flex;flex-direction:column;align-items:center;gap:3mm} /* QR을 정중앙에, 주소·설명은 그 아래 — 옆에 두니 묶음만 가운데라 QR이 왼쪽으로 치우쳐 보였다(사용자) */
   .bk-qr1 svg{width:24mm;height:24mm;background:#fff;border-radius:2mm;padding:1.5mm}
-  .bk-qr1 p{margin:0!important;text-align:left}
+  .bk-qr1 p{margin:0!important;text-align:center}
   .bk-qr1 b{display:block;font:700 13pt var(--sans, sans-serif);letter-spacing:.04em;color:#2b2620}
   .bk-qr1 span{display:block;font-size:8pt;color:var(--muted);margin-top:1mm}
   .bk-qr{display:grid;grid-template-columns:repeat(4,1fr);gap:4mm;margin:0 0 16mm}
