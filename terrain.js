@@ -879,6 +879,20 @@ function start() {
   // 프롤로그(에덴)는 본 지도와 떨어진 2D 무대라 3D를 막는다 — 3D로 보던 중에 들어오면 2D로 돌린다
   const lock = ev => { const pro = !!PLACES[ev.place]?.hidden; $('#mode3d').disabled = pro; if (pro && on) setOn(false); return pro; };
   lock(curEvent());
+  // 3D를 켜기 전에 자료를 미리 받아 둔다: 처음 3D 단추를 누르면 바탕·지형 그림을 받느라 한참 걸렸다(사용자).
+  // 와이파이(또는 유선)일 때만 — 휴대폰 데이터를 쓰게 하지 않는다. 연결 종류를 알려 주지 않는 브라우저는 컴퓨터(마우스)일 때만 받는다
+  const roomy = () => { const c = navigator.connection; if (c?.saveData) return false; if (c?.type) return c.type === 'wifi' || c.type === 'ethernet'; return matchMedia('(pointer: fine)').matches; };
+  const fetched = new Set(), warm = url => { if (fetched.has(url)) return; fetched.add(url); fetch(url, { priority: 'low' }).catch(() => fetched.delete(url)); };
+  const prefetch = ev => {
+    if (on || !ev || PLACES[ev.place]?.hidden || !roomy()) return;
+    const jm = window.journeyMap || {};
+    [...BASES, ...(jm.south ? [SOUTH] : []), ...(jm.meso ? [MESO, BABYLON] : []), ...(jm.med ? [MED_WIDE, MED] : [])].forEach(b => warm(b.src));
+    const p = PLACES[placeOf(ev)]; if (!p) return; const [x, z] = px([p.lat, p.lng]);
+    regions.forEach(r => { if (x > r.X0 - 120 && x < r.X1 + 120 && z > r.Z0 - 120 && z < r.Z1 + 120) { warm(`assets/terrain/${r.name}-height.png`); warm(`assets/terrain/${r.name}-color.webp`); } });
+  };
+  const later = f => (window.requestIdleCallback || (g => setTimeout(g, 2500)))(f, { timeout: 6000 }); // 장면이 다 뜬 뒤 한가할 때
+  later(() => prefetch(curEvent()));
+  addEventListener('stage:scene', e => later(() => prefetch(e.detail.ev)));
   // 다음 장면으로: 눕히고 돌린 각도는 그대로, 거리는 그 장면의 기본 거리에 사용자가 당긴 비율을 곱해
   addEventListener('stage:scene', e => { if (!lock(e.detail.ev) && on) { flyToScene(e.detail.ev); if (cam.goal) cam.goal.dist = THREE.MathUtils.clamp(cam.goal.dist * zoomUser, minDist(), 520); } });
   // 장면 안에서 옮겨 갈 때: 걸어가면 그곳으로 미리 날아가고, 장면만 바뀌면 그 자리의 무대로
