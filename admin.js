@@ -64,7 +64,31 @@ function fillPick(series) {
   pick.hidden = false;
   pick.onchange = () => { location.search = pick.value === 'jesus' ? '' : `?j=${pick.value}`; };
 }
+/* ---------- 방문 수 ---------- */
+// 대시보드에 안 가도 보게(사용자): 매일 Actions가 stats 가지에 적는 visits.json을 읽어 맨 위에 띄운다. 로봇은 빠진 수(자바스크립트를 실행한 방문만)
+async function showVisits() {
+  const box = $('#visits');
+  let v;
+  try { v = JSON.parse(fromB64((await gh(`/repos/${REPO}/contents/visits.json?ref=stats`)).content)); }
+  catch (e) { box.innerHTML = `<p class="note" style="margin:0">방문 수: ${e.status === 404 ? '아직 모은 기록이 없습니다 (매일 0시 넘어 모읍니다)' : '불러오지 못했습니다'}</p>`; box.hidden = false; return; }
+  const d = v.days || [], n = k => d.slice(-k).reduce((s, x) => s + x.visits, 0), num = x => x.toLocaleString('ko-KR');
+  const today = new Date(Date.now() + 9 * 36e5).toISOString().slice(0, 10); // 한국 날짜
+  const past = d.filter(x => x.date < today), yday = past.at(-1);
+  const max = Math.max(1, ...d.map(x => x.visits));
+  const top = (h, rows, f = x => x) => rows?.length ? `<div><h4>${h}</h4>${rows.slice(0, 8).map(([k, vis]) => `<p><span>${esc(f(k))}</span><em>${num(vis)}</em></p>`).join('')}</div>` : '';
+  box.innerHTML = `<div class="nums">
+      <div><b>${num(yday?.visits || 0)}</b><small>어제 방문${yday ? ` (${yday.date.slice(5).replace('-', '/')})` : ''}</small></div>
+      <div><b>${num(n(7))}</b><small>최근 7일</small></div>
+      <div><b>${num(n(30))}</b><small>최근 30일 · 페이지 보기 ${num(d.reduce((s, x) => s + x.views, 0))}</small></div>
+    </div>
+    <div class="bars" title="최근 30일 날마다 방문">${d.map(x => `<i style="height:${Math.max(2, x.visits / max * 100)}%" title="${x.date} · ${num(x.visits)}명"></i>`).join('')}</div>
+    <details><summary><span class="note" style="margin:0">많이 본 페이지 · 나라 · 들어온 곳 (30일) — ${new Date(v.updated).toLocaleString('ko-KR', { dateStyle: 'short', timeStyle: 'short' })} 기준</span></summary>
+      <div class="tops">${top('페이지', v.paths)}${top('나라', v.countries)}${top('들어온 곳', v.referers, k => k === '(없음)' ? '직접·앱' : k)}${top('기기', v.devices)}</div>
+    </details>`;
+  box.hidden = false;
+}
 async function load() {
+  showVisits().catch(() => {});
   // 시편: 해설·말씀 대신 노래 작업실(studio.js)을 편다 — 노래 목록과 가사는 _src/journeys/psalms/songs.json
   if (JOURNEY === 'psalms') {
     $('#loginMsg').textContent = '노래 목록을 불러오는 중…';

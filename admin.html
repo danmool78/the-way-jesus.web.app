@@ -30,6 +30,18 @@ input:focus,textarea:focus{border-color:var(--gold)}
 #search{max-width:280px}
 #journeyPick{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:7px 10px;color:inherit;font:inherit}
 #journeyPick option{background:#251f18;color:#f1e8d8} /* 펼친 목록은 운영체제가 그려 흐릿해지지 않게 */
+.vis{margin-bottom:16px}
+.vis .nums{display:flex;gap:18px;flex-wrap:wrap;align-items:baseline}
+.vis .nums div{display:flex;flex-direction:column}
+.vis .nums b{font:700 24px var(--serif);color:var(--gold2)}
+.vis .nums small{color:var(--faint);font-size:12px}
+.vis .bars{display:flex;align-items:flex-end;gap:2px;height:56px;margin:12px 0 4px}
+.vis .bars i{flex:1;min-width:2px;background:var(--gold);opacity:.75;border-radius:2px 2px 0 0}
+.vis .tops{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:4px 18px;margin-top:10px;font-size:13px}
+.vis .tops h4{margin:8px 0 2px;color:var(--muted);font-size:12px;font-weight:600}
+.vis .tops p{margin:0;display:flex;justify-content:space-between;gap:8px;color:var(--ink)}
+.vis .tops p span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vis .tops p em{font-style:normal;color:var(--faint);font-variant-numeric:tabular-nums}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
 .login h2{margin:0 0 6px;font:700 20px var(--serif);color:var(--gold2)}
 .login ol{color:var(--muted);padding-left:20px}
@@ -87,9 +99,12 @@ select.f{width:100%;background:var(--panel2);border:1px solid var(--line);border
   <select id="journeyPick" aria-label="여정" hidden></select>
   <div class="grow"></div>
   <input id="search" type="search" placeholder="말씀·인물·장면 찾기" aria-label="말씀 찾기" hidden>
+  <a class="ghost" href="https://dash.cloudflare.com/?to=/:account/web-analytics" target="_blank" rel="noopener" style="text-decoration:none" title="Cloudflare Web Analytics — 방문 수(로봇 제외)">방문 수</a>
   <button id="logout" class="ghost" hidden>나가기</button>
 </header>
 <main>
+  <!-- 방문 수: Actions(visits.yml)가 매일 stats 가지에 적는 visits.json (Cloudflare Web Analytics) -->
+  <section id="visits" class="card vis" hidden></section>
   <!-- 들어가기: 이 저장소에 쓰기 권한이 있는 GitHub 토큰이 있어야만 고칠 수 있다 (토큰은 이 브라우저에만 남는다) -->
   <section id="login" class="card login" hidden>
     <h2>관리자 확인</h2>

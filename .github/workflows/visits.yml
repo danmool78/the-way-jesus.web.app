@@ -1,0 +1,29 @@
+name: Visit stats
+# 매일 방문 수를 Cloudflare Web Analytics에서 받아 stats 가지의 visits.json에 적는다 — 관리자 페이지가 읽어 띄운다.
+# main이 아니라 따로 떨어진 가지에 올려 배포(firebase-hosting-merge)를 부르지 않고, 사이트에도 공개되지 않는다
+on:
+  schedule:
+    - cron: '23 15 * * *'   # 한국 시간 0:23 — 하루가 끝난 뒤
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  stats:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch visit stats
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+        run: node _src/tools/visits.mjs "$RUNNER_TEMP/visits.json"
+      - name: Commit to the stats branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git fetch origin stats 2>/dev/null; then git worktree add "$RUNNER_TEMP/stats" origin/stats && cd "$RUNNER_TEMP/stats" && git checkout -B stats
+          else git worktree add --detach "$RUNNER_TEMP/stats" && cd "$RUNNER_TEMP/stats" && git checkout --orphan stats && git rm -rfq . ; fi
+          cp "$RUNNER_TEMP/visits.json" visits.json
+          git add visits.json
+          git diff --cached --quiet || git commit -qm "Visit stats $(date -u +%F)"
+          git push origin stats
