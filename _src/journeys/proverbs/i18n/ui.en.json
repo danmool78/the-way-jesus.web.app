@@ -1,0 +1,33 @@
+{
+ "appTag": "Proverbs · A Day Walking with Wisdom",
+ "docTitle": "The Way — Proverbs | A Day Walking with Wisdom",
+ "metaDesc": "Walk at eye level through the gate and the market, the fields and the alleys of Jerusalem in Solomon's day, and hear the wisdom of Proverbs.",
+ "mapAria": "The streets of Jerusalem in Solomon's day",
+ "introTag": "Jerusalem in Solomon's day, from morning to night",
+ "introLead": "From the city gate to the fields, the market and the alleys, follow the wisdom of Proverbs through {n} scenes.",
+ "hisWords": "Sayings",
+ "voicesOfDay": "Sayings",
+ "wordsHead": "Sayings of Proverbs",
+ "wordsIntro": "The sayings found in the scenes of Proverbs, gathered together. Every saying is a fresh rendering of the original meaning in today's language.",
+ "gospels": {
+  "prov": [
+   "Proverbs",
+   "Prov"
+  ]
+ },
+ "endEyebrow": "PROVERBS",
+ "endTitle": "You have walked a day with Wisdom",
+ "endLead": "From the city gate to home — thank you for walking with us.",
+ "tabDaily": "A Chapter a Day",
+ "dailyHead": "A Chapter a Day: Proverbs in 31 Days",
+ "dailyLead": "Proverbs has 31 chapters. Read the chapter that matches today's date, one a day, and in a month you will have walked through all of Proverbs.",
+ "dailyToday": "Today is day {d} — Proverbs {d}",
+ "dailyCh": "Proverbs {d}",
+ "dailyDone": "I read it",
+ "dailyDoneOn": "Read ✓",
+ "dailyCount": "{n} chapters read this month",
+ "dailyFather": "A word from Father",
+ "dailyAll": "See all 31 chapters",
+ "dailyGo": "A Chapter a Day: Proverbs in 31 Days →",
+ "dailyEnd": "You have finished the day's walk. Now walk with wisdom one chapter at a time, every day."
+}

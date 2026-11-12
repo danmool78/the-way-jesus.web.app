@@ -1,0 +1,33 @@
+{
+ "appTag": "Proverbios · Un día tras los pasos de la sabiduría",
+ "docTitle": "El Camino — Proverbios | Un día tras los pasos de la sabiduría",
+ "metaDesc": "Recorre a la altura de los ojos la puerta, el mercado, el campo y las callejuelas de la Jerusalén de Salomón, y escucha la sabiduría de Proverbios.",
+ "mapAria": "Las calles de Jerusalén en tiempos de Salomón",
+ "introTag": "Jerusalén en tiempos de Salomón, de la mañana a la noche",
+ "introLead": "De la puerta de la ciudad al campo, del mercado a las callejuelas: camina tras la sabiduría de Proverbios en {n} escenas.",
+ "hisWords": "Palabras",
+ "voicesOfDay": "Palabras",
+ "wordsHead": "Palabras de Proverbios",
+ "wordsIntro": "Aquí se reúnen las palabras que contienen las escenas de Proverbios. Todas son una reconstrucción traducida de nuevo al lenguaje de hoy, fiel al sentido del texto original.",
+ "gospels": {
+  "prov": [
+   "Proverbios",
+   "Pr"
+  ]
+ },
+ "endEyebrow": "PROVERBS · PROVERBIOS",
+ "endTitle": "Has caminado un día con la Sabiduría",
+ "endLead": "De la puerta de la ciudad hasta casa, gracias por caminar con nosotros.",
+ "tabDaily": "Un capítulo al día",
+ "dailyHead": "Un capítulo al día: Proverbios en 31 días",
+ "dailyLead": "Proverbios tiene 31 capítulos. Si cada día lees el capítulo que corresponde a la fecha de hoy, en un mes recorrerás todo el libro de Proverbios.",
+ "dailyToday": "Hoy es día {d} — Proverbios {d}",
+ "dailyCh": "Proverbios {d}",
+ "dailyDone": "Ya lo leí",
+ "dailyDoneOn": "Leído ✓",
+ "dailyCount": "Este mes has leído {n} capítulos",
+ "dailyFather": "La palabra del padre",
+ "dailyAll": "Ver los 31 capítulos",
+ "dailyGo": "Un capítulo al día: Proverbios en 31 días →",
+ "dailyEnd": "Has terminado el día de camino. Ahora, cada día un capítulo, camina tras la sabiduría."
+}
