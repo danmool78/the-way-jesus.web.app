@@ -1,0 +1,21 @@
+# 그 길 — The Way (thewaymap.org)
+
+> 성경의 이야기를 지도 위에서 걷는 무료 웹앱. 예수의 발자취(사복음서 61장면)에서 모세와 여호수아, 다윗, 열왕기, 바울(편지 13편과 함께), 시편, 잠언, GoodNews(복음)까지 여정마다 장면을 시간과 장소의 순서로 엮었다. 장면마다 이야기 낭독, 명화, 3D 무대, 말씀, 배경 지식, 묵상 질문, 퀴즈가 있다. 8개 언어(한국어·영어·스페인어·포르투갈어·프랑스어·중국어·인도네시아어·일본어). 광고·가입 없음. 말씀은 기존 번역을 베끼지 않고 원문의 뜻을 살려 새로 옮겼다.
+
+A free web app for walking the stories of the Bible on a map: the life of Jesus from the four Gospels, Moses and Joshua, David, Kings, Paul with his 13 letters, Psalms, Proverbs and GoodNews. Each scene has a narrated story, a painting, a 3D diorama, Scripture, background notes, a reflection question and a quiz. Available in 8 languages.
+
+## 여정 (Journeys)
+- [예수](https://thewaymap.org/jesus): 사복음서로 걷는 예수의 발자취 — 장면 목록 https://thewaymap.org/s/index.html
+- [모세와 여호수아](https://thewaymap.org/moses): 애굽에서 광야를 지나 가나안까지 — 장면 목록 https://thewaymap.org/s/moses.html
+- [다윗](https://thewaymap.org/david): 베들레헴의 목동에서 예루살렘의 왕으로 — 장면 목록 https://thewaymap.org/s/david.html
+- [열왕기](https://thewaymap.org/kings): 선지자를 따라 걷는 두 왕국 — 장면 목록 https://thewaymap.org/s/kings.html
+- [바울](https://thewaymap.org/paul): 다메섹 길에서 로마까지, 복음이 땅끝까지 — 장면 목록 https://thewaymap.org/s/paul.html
+- [시편](https://thewaymap.org/psalms): 광야와 왕궁에서 부른 노래와 기도, 그 자리에서
+- [잠언](https://thewaymap.org/proverbs): 솔로몬의 지혜를 오늘의 길 위에서 — 장면 목록 https://thewaymap.org/s/proverbs.html
+- [GoodNews (복음)](https://thewaymap.org/goodnews/): 하나님의 사랑과 구원, 네 가지 영적 원리 — 장면 목록 https://thewaymap.org/s/goodnews.html
+- [왜 기독교인가](https://thewaymap.org/why.html): 올라가는 종교, 내려오신 하나님, 그리고 교회 — 그림과 도표로
+
+## 안내 (About)
+- [묻고 답하기](https://thewaymap.org/qna.html): 왜 만들었는지, 3D 무대 원칙, 기능 활용법 (English: https://thewaymap.org/qna.en.html)
+- [왜 기독교인가](https://thewaymap.org/why.html): 사람이 올라가는 종교와 내려오신 하나님, 그리고 교회 (English: https://thewaymap.org/why.en.html)
+- [사이트맵](https://thewaymap.org/sitemap.xml): 모든 장면 페이지(언어별)
