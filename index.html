@@ -63,9 +63,9 @@ h2{font:700 24px var(--serif);text-align:center;letter-spacing:.06em;color:var(-
 .txt small{font-size:13.5px;line-height:1.5;color:var(--muted)}
 .txt em{font-style:normal;font-size:12px;letter-spacing:.04em;color:var(--gold);margin-top:2px}
 .btns{grid-column:1/-1;display:flex;gap:8px}
-.go{flex:1;display:inline-flex;justify-content:center;align-items:center;padding:11px 14px;border-radius:999px;background:var(--gold);color:#1b140c;font:600 14.5px var(--sans);text-decoration:none}
+.go{flex:1;display:inline-flex;justify-content:center;align-items:center;padding:11px 14px;border-radius:999px;background:var(--gold);color:#1b140c;font:600 14.5px var(--sans);text-decoration:none;white-space:nowrap;min-width:0}
 .go.off{background:transparent;border:1px solid #4a3e30;color:var(--faint);cursor:default}
-.share{display:inline-flex;align-items:center;gap:6px;padding:10px 14px;border-radius:999px;border:1px solid rgba(var(--gold-rgb),.45);background:transparent;color:var(--gold2);font:13.5px var(--sans);cursor:pointer}
+.share{display:inline-flex;align-items:center;gap:6px;padding:10px 14px;border-radius:999px;border:1px solid rgba(var(--gold-rgb),.45);background:transparent;color:var(--gold2);font:13.5px var(--sans);cursor:pointer;white-space:nowrap;flex:none}
 .share svg,.big svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8}
 .go:hover{filter:brightness(1.08)}.share:hover{background:rgba(var(--gold-rgb),.1)}
 /* 주제가 뮤직비디오: 누르면 그 자리에서 재생 (처음부터 영상 창을 띄우지 않아 첫 화면이 가볍다) */
@@ -146,9 +146,16 @@ function render(lang) {
     <div class="txt"><b>${esc(t(c.title))}</b><small>${esc(t(c.desc))}</small>${c.n ? `<em>${esc(t('seriesScenes', { n: c.n }))}</em>` : ''}</div>
     <div class="btns">${c.ready ? `<a class="go" href="${hrefOf(c) || `/app.html?j=${c.id}`}">${esc(t(c.go || 'seriesGo'))} →</a><button type="button" class="share" data-id="${c.id}">${SHARE}<span>${esc(t('shareShort'))}</span></button>`
       : `<span class="go off">${esc(t('soon'))}</span>`}</div></li>`).join('');
+  // 단추 글씨는 한 줄로: 언어마다 길이가 달라('Walk this journey →'가 두 줄로 꺾였다) 넘치면 글자를 조금씩 줄인다 (사용자, 2026-11)
+  requestAnimationFrame(fitBtns);
   // 여정마다의 공유 주소(/jesus, /moses — 그 여정의 미리보기 카드). 4영리처럼 따로 만든 페이지는 그 주소(href)
   document.querySelectorAll('.share[data-id]').forEach(b => b.onclick = () => { const c = L.cards.find(x => x.id === b.dataset.id); share(location.origin + (hrefOf(c) || `/${c.id}`), `${t('appName')} — ${t(c.title)}`); });
 }
+function fitBtns() {
+  document.querySelectorAll('.go, .share').forEach(b => { b.style.fontSize = ''; let f = parseFloat(getComputedStyle(b).fontSize); while (b.scrollWidth > b.clientWidth + 1 && f > 10) b.style.fontSize = (f -= 0.5) + 'px'; });
+}
+addEventListener('resize', () => requestAnimationFrame(fitBtns));
+document.fonts?.ready.then(() => requestAnimationFrame(fitBtns)); // 웹 글꼴이 늦게 들어오면 글자가 넓어져 다시 맞춘다
 fetch('land.json').then(r => r.json()).then(d => {
   L = d;
   const pick = l => l && d.langs.find(x => x === l || x === l.slice(0, 2));

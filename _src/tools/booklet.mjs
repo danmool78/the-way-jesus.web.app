@@ -15,7 +15,9 @@ const lang = args[0] || 'ko', out = args[1] || `why-booklet${lang === 'ko' ? '' 
 const BL = PRINT ? 3 : 0, PW = 148 + BL * 2, PH = 210 + BL * 2; // 쪽 크기(mm) — 인쇄용은 재단 여유만큼 크게
 const page = lang === 'ko' ? 'why.html' : `why.${lang}.html`;
 const SITE = 'https://thewaymap.org';
-const qr = url => execFileSync('python3', ['-c', `import segno,sys,io;b=io.BytesIO();segno.make(sys.argv[1],error='m').save(b,kind='svg',scale=4,border=1,dark='#2b2620',light=None,xmldecl=False,svgns=True);print(b.getvalue().decode())`, url]).toString();
+const qr = url => execFileSync('python3', ['-c', `import segno,sys,io;b=io.BytesIO();segno.make(sys.argv[1],error='m').save(b,kind='svg',scale=4,border=1,dark='#2b2620',light=None,xmldecl=False,svgns=True);print(b.getvalue().decode())`, url]).toString()
+  // segno의 svg는 width·height만 있고 viewBox가 없어, CSS로 크기를 정하면 그림이 늘지 않고 왼쪽 위에 붙었다(흰 상자 안 여백이 왼쪽 20·오른쪽 13) — viewBox를 달아 상자에 꼭 맞게
+  .replace(/width="(\d+)" height="(\d+)"/, 'viewBox="0 0 $1 $2"');
 const T = {
   ko: { app: '그 길', talkH: '함께 나눠 볼 물음', memo: '메모', talk: ['나는 지금 \'올라가는 길\'과 \'내려오신 하나님\' 가운데 어디에 서 있나요?', '"모든 종교는 다 같다"는 말을 들으면 어떤 생각이 드나요?', '탕자의 아버지처럼 나에게 먼저 달려와 준 사람이 있었나요?', '재판관 이야기에서, 공의와 사랑이 함께 이루어진다는 말이 어떻게 들리나요?', '믿고 한 걸음 내디뎌서 비로소 알게 된 일이 있나요?', '이번 주에 가 볼 수 있는 교회는 어디인가요? 누구와 함께 가고 싶나요?'], back: ['당신을 기다리는 가족이 있습니다', '예수님은 혼자 걷게 두지 않으십니다. 이번 주일, 가까운 교회의 문을 두드려 보세요.'], qr: ['그 길 — 성경의 길을 지도 위에서', '이 글을 휴대폰으로', '예수의 발자취', 'GoodNews — 네 장면으로 듣는 복음'], coverFoot: '그림과 도표로 견주어 보는 이야기', bnote: '그림은 AI로 만들고 사람이 다듬었습니다 · 말씀은 새로 옮긴 글입니다', colo: [['펴낸 날', '2026년 11월'], ['펴낸이', '김성수<small>대전 새로남교회 집사</small>'], ['만든 곳', 'SSSOFT'], ['펴낸 곳', '<span class="bk-blank"></span><small>나누는 교회나 단체가 이름을 적거나 도장을 찍으세요</small>']] },
   en: { app: 'The Way', talkH: 'Questions to talk over', memo: 'Notes', talk: ['Where do I stand now — on the road up, or before the God who came down?', 'What comes to mind when you hear "all religions are the same"?', 'Has anyone ever run to you first, like the father in the story?', 'In the judge story, how does it sound that justice and love meet?', 'Is there something you only came to know after trusting and taking a step?', 'Which church could you visit this week, and who would you like to go with?'], back: ['A family is waiting for you', 'Jesus does not leave you to walk alone. This Sunday, knock on the door of a church near you.'], qr: ['The Way — Bible journeys on the map', 'Read this on your phone', 'The footsteps of Jesus', 'GoodNews — the gospel in four scenes'], coverFoot: 'A comparison in pictures and charts', bnote: 'Pictures made with AI and refined by hand · Scripture newly translated', colo: [['Published', 'November 2026'], ['Publisher', '김성수<small>Deacon, 새로남 Church, Daejeon</small>'], ['Made by', 'SSSOFT'], ['Distributed by', '<span class="bk-blank"></span><small>Churches and groups sharing this may write their name or stamp here</small>']] },
@@ -166,9 +168,9 @@ await p.addStyleTag({ content: `
   .bk-series img{width:8.5mm;height:8.5mm;border-radius:2mm;flex:none}
   .bk-series b{display:block;font-family:var(--serif);font-size:8.6pt;color:#2b2620;line-height:1.3}
   .bk-series small{display:block;font-size:6.4pt;line-height:1.4;color:var(--muted)}
-  .bk-qr1{display:flex;align-items:center;justify-content:center;gap:5mm}
+  .bk-qr1{display:flex;flex-direction:column;align-items:center;gap:3mm} /* QR을 정중앙에, 주소·설명은 그 아래 — 옆에 두니 묶음만 가운데라 QR이 왼쪽으로 치우쳐 보였다(사용자) */
   .bk-qr1 svg{width:24mm;height:24mm;background:#fff;border-radius:2mm;padding:1.5mm}
-  .bk-qr1 p{margin:0!important;text-align:left}
+  .bk-qr1 p{margin:0!important;text-align:center}
   .bk-qr1 b{display:block;font:700 13pt var(--sans, sans-serif);letter-spacing:.04em;color:#2b2620}
   .bk-qr1 span{display:block;font-size:8pt;color:var(--muted);margin-top:1mm}
   .bk-qr{display:grid;grid-template-columns:repeat(4,1fr);gap:4mm;margin:0 0 16mm}
