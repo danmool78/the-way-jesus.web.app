@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#f7f1e6">
 <meta name="description" content="Sang Jalan · Mengapa Kekristenan? — Jalan-jalan lain berusaha naik kepada Tuhan, sedangkan Kekristenan berkata bahwa Allah turun ke tempat yang rendah. Dibandingkan dengan mudah lewat bagan dan gambar">
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
@@ -223,6 +223,13 @@
 <meta property="og:type" content="article"><meta property="og:url" content="https://thewaymap.org/why.id.html"><meta property="og:title" content="Mengapa Kekristenan? — Sang Jalan"><meta property="og:description" content="Sang Jalan · Mengapa Kekristenan? — Jalan-jalan lain berusaha naik kepada Tuhan, sedangkan Kekristenan berkata bahwa Allah turun ke tempat yang rendah. Dibandingkan dengan mudah lewat bagan dan gambar"><meta property="og:image" content="https://thewaymap.org/assets/img/why/mountain.webp"><meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Mengapa Kekristenan?", "description": "Sang Jalan · Mengapa Kekristenan? — Jalan-jalan lain berusaha naik kepada Tuhan, sedangkan Kekristenan berkata bahwa Allah turun ke tempat yang rendah. Dibandingkan dengan mudah lewat bagan dan gambar", "inLanguage": "id", "url": "https://thewaymap.org/why.id.html", "image": "https://thewaymap.org/assets/img/why/mountain.webp", "author": {"@type": "Organization", "name": "SSSOFT", "url": "https://sssoft-idea.web.app/"}, "publisher": {"@type": "Organization", "name": "SSSOFT", "url": "https://sssoft-idea.web.app/"}, "isPartOf": {"@type": "WebSite", "name": "The Way", "url": "https://thewaymap.org/"}}</script>
 <!--/seo-->
+<script>/* 폰에서 화면 전체가 확대되지 않게 — 두 번 누르기·오므리기로 틀이 커져 어긋났다(사용자). 아이폰은 user-scalable=no를 무시해 직접 막는다 (지도·3D의 두 손가락 확대는 포인터 이벤트라 그대로) */
+['gesturestart', 'gesturechange'].forEach(k => document.addEventListener(k, e => e.preventDefault(), { passive: false }));
+document.addEventListener('touchmove', e => { if (e.scale !== undefined && e.scale !== 1) e.preventDefault(); }, { passive: false });</script>
+<style>/* 앱처럼(사용자): 당겨서 새로 고침·튕김 없이, 단추를 길게 눌러도 복사 메뉴·눌림 테두리가 뜨지 않게 (글은 그대로 고를 수 있다) */
+html,body{overscroll-behavior:none}
+html{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+button,a,img,svg,nav,header,.btn{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}</style>
 </head>
 <body>
 <main class="why">
