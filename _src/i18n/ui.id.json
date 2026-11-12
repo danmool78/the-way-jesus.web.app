@@ -309,5 +309,7 @@
  "letterView": "Pandangan lain",
  "letterToScene": "Ke adegan ini",
  "letterOnMap": "Lihat di peta",
- "letterCount": "Surat ke-{n}"
+ "letterCount": "Surat ke-{n}",
+ "inProgress": "{p}% selesai",
+ "seriesPsalms": "{n} mazmur"
 }
