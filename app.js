@@ -1144,6 +1144,7 @@ document.addEventListener('visibilitychange', () => {
   if (document.hidden) return;
   if (bgmCtx && bgmCue && bgmCtx.state !== 'running') bgmCtx.resume().catch(() => {});
   if (song.on) { song.k = -2; song.sync?.(); } // 시편: 가사 줄을 지금 부르는 데로 곧바로
+  if (song.on && !paused && song.audio.paused && !song.audio.ended) song.audio.play().catch(() => { paused = true; speaking = false; setListenUI(); }); // 멎어 있으면 다시 (안 되면 '멈춤'으로 보여 누르게)
 });
 
 /* ---------- 낭독 (Web Speech API) ---------- */
@@ -1403,7 +1404,7 @@ function pauseSpeech() {
 }
 function resumeSpeech() {
   paused = false; speaking = true; setListenUI();
-  if (song.on) { if (song.held) { song.held = false; songEnd(song.token); } else song.audio.play().catch(() => songEnd(song.token)); }
+  if (song.on) { if (song.held) { song.held = false; songEnd(song.token); } else song.audio.play().catch(err => { if (err?.name === 'NotAllowedError' || err?.name === 'AbortError') { paused = true; speaking = false; setListenUI(); } else songEnd(song.token); }); }
   else speechCtl?.resume();
 }
 function stopAuto() { autoOn = false; clearTimeout(autoTimer); promptThen = null; setListenUI(); }
@@ -1449,6 +1450,9 @@ async function songPlay(done, sg) {
   const a = song.audio;
   if (a.src !== info.src) a.src = info.src; // songWarm이 미리 받아 둔 노래면 그대로 (처음부터 다시 받지 않게)
   a.currentTime = 0; a.onended = a.onerror = () => songEnd(tk);
+  // 우리가 멈추지 않았는데 멈추면(창을 내렸다 올림·전화·잠금 화면 단추 등) 재생 단추를 '멈춤'으로 바꿔 둔다 — 화면은 재생 중인데 소리가 없고,
+  // 단추를 눌러도 노래가 안 나오는 때가 있었다(사용자). 다시 누르면 그 자리에서 이어 튼다
+  a.onpause = () => { if (tk !== song.token || a.ended || paused || barDrag) return; paused = true; speaking = false; setListenUI(); };
   songBarOn(a, () => { song.k = -2; sync(); });
   a.play().catch(() => songEnd(tk));
   song.k = -2;
@@ -1471,7 +1475,11 @@ function songBarTime(a) {
 function songBarOn(a, resync) {
   const bar = $('#songBar'), r = $('input', bar);
   r.setAttribute('aria-label', t('songSeek')); r.value = 0; bar.hidden = false; songBarTime(a);
+  barDrag = false;
   r.oninput = () => { barDrag = true; if (a.duration) { $('.t0', bar).textContent = mmss(r.value / 1000 * a.duration); } };
+  // 손을 떼면 끌기를 끝낸다 — 아이폰은 막대를 건드리기만 하고 값이 안 바뀌면 change가 오지 않아, 끌기 표시가 남은 채
+  // 시간은 가는데 막대가 멈춰 있었다(사용자)
+  if (!songBarOn.once) { songBarOn.once = true; ['pointerup', 'pointercancel', 'touchend', 'touchcancel'].forEach(k => addEventListener(k, () => { if (barDrag) setTimeout(() => { barDrag = false; }, 50); }, { passive: true })); }
   r.onchange = () => { barDrag = false; if (a.duration) { a.currentTime = r.value / 1000 * a.duration; resync(); } };
 }
 // 다른 여정(다윗)에서 시편 노래를 틀 때: 제목·가사는 시편 여정의 data에서 (한 번만 받는다)
@@ -1499,7 +1507,7 @@ async function songWarm(i) {
 }
 function songOff() {
   cancelAnimationFrame(song.raf); clearTimeout(song.timer); song.timer = 0;
-  song.audio.pause(); song.audio.onended = song.audio.onerror = song.audio.ontimeupdate = null; song.sync = null;
+  song.audio.pause(); song.audio.onended = song.audio.onerror = song.audio.ontimeupdate = song.audio.onpause = null; song.sync = null;
   document.body.classList.remove('singing'); $('#songBar').hidden = true;
   const ov = $('#lyricsOv'); if (ov) { ov.classList.remove('on'); setTimeout(() => { if (!ov.classList.contains('on')) ov.hidden = true; }, 800); }
   $$('#scene [data-ln].speaking').forEach(p => p.classList.remove('speaking'));
