@@ -1,0 +1,480 @@
+{
+ "periods": {
+  "d1": {"name": "Matin · La porte de la ville", "span": "Matin"},
+  "d2": {"name": "Midi · Les champs", "span": "Midi"},
+  "d3": {"name": "Après-midi · Le marché", "span": "Après-midi"},
+  "d4": {"name": "Soir · Chez un ami", "span": "Soir"},
+  "d5": {"name": "Nuit · La ruelle et le palais", "span": "Nuit"},
+  "d6": {"name": "Pleine nuit · Notre maison", "span": "Pleine nuit"},
+  "d7": {"name": "Aube · La maison de la sagesse", "span": "Aube"}
+ },
+ "places": {
+  "gate": {"name": "Place de la porte", "region": "Jérusalem"},
+  "field": {"name": "Champs hors de la ville", "region": "Jérusalem"},
+  "market": {"name": "Marché de la porte", "region": "Jérusalem"},
+  "home": {"name": "Maison de l’ami", "region": "Jérusalem"},
+  "alley": {"name": "Ruelle de nuit", "region": "Jérusalem"},
+  "palace": {"name": "Parvis du palais", "region": "Jérusalem"},
+  "house": {"name": "Notre maison", "region": "Jérusalem"},
+  "wisdomhouse": {"name": "Hauteurs de la ville", "region": "Jérusalem"}
+ },
+ "events": {
+  "p01": {
+   "title": "La sagesse appelle à la porte",
+   "when": "Au temps du roi Salomon · Matin",
+   "subtitle": "La crainte du Seigneur est le commencement de la connaissance",
+   "story": [
+    "Mon fils, viens avec moi aujourd’hui jusqu’à la porte de la ville. Le soleil vient à peine de se lever, et déjà les anciens sont assis sur les bancs de pierre de la porte pour entendre les causes, tandis que les marchands déploient leurs étals. Même au milieu de tout ce vacarme, grave bien une chose dans ton cœur. La crainte du Seigneur est le commencement de la connaissance. Les insensés méprisent la sagesse et l’instruction.",
+    "Tends l’oreille. La sagesse crie dans les rues, elle élève la voix sur les places. Elle appelle à l’angle des carrefours bruyants, elle fait entendre ses paroles à l’entrée des portes et dans la ville. Vous, les sots, jusqu’à quand aimerez-vous la sottise ? Revenez, et écoutez mes reproches. Voici, je répandrai sur vous mon esprit, je vous ferai connaître mes paroles.",
+    "La sagesse ne se cache pas au fond des montagnes. Elle t’appelle ici même, à cette porte où les gens achètent et vendent, se disputent et reçoivent leur jugement. Mon fils, écoute l’instruction de ton père, et ne rejette pas l’enseignement de ta mère. Ce sera une belle couronne sur ta tête et un collier d’or à ton cou."
+   ],
+   "words": [
+    {"who": "Salomon", "text": "La crainte du Seigneur est le commencement de la connaissance ; les insensés méprisent la sagesse et l’instruction."},
+    {"who": "La Sagesse", "text": "Vous, les sots, jusqu’à quand aimerez-vous la sottise ? Jusqu’à quand les moqueurs se plairont-ils à la moquerie, et les insensés haïront-ils la connaissance ? Revenez, et écoutez mes reproches. Voici, je répandrai sur vous mon esprit, je vous ferai connaître mes paroles."},
+    {"who": "Salomon", "text": "Mon fils, écoute l’instruction de ton père, et ne rejette pas l’enseignement de ta mère. Ce sera une belle couronne sur ta tête et un collier d’or à ton cou."}
+   ],
+   "note": "Dans l’ancien Israël, la porte de la ville était à la fois un passage, un marché et un tribunal. Les anciens s’y asseyaient pour entendre les causes et rendre la justice (Rt 4,1–2 ; Pr 31,23). Les Proverbes dépeignent la sagesse comme une femme qui crie à l’entrée de cette porte animée (Pr 1,20–21 ; 8,1–3).",
+   "reflect": "Est-ce que j’évite les paroles justes parce qu’elles me dérangent ?",
+   "quiz": {
+    "q": "Selon les Proverbes, quel est le commencement de la connaissance ?",
+    "options": ["Lire beaucoup de livres", "La crainte du Seigneur", "Étudier au palais du roi", "Amasser des richesses"],
+    "explain": "Proverbes 1,7 dit que la crainte du Seigneur est le commencement de la connaissance. Tout le livre repose sur cette seule phrase."
+   }
+  },
+  "p02": {
+   "title": "Les fourmis des champs",
+   "when": "Au temps du roi Salomon · Midi",
+   "subtitle": "Va vers la fourmi, paresseux, et regarde",
+   "story": [
+    "Mon fils, sortons par la porte et allons jusqu’aux champs. Le soleil est haut, et les gens sont déjà aux champs pour moissonner le grain. Accroupis-toi au bord du chemin et regarde ces petites bêtes. Va vers la fourmi, paresseux ; regarde ce qu’elle fait, et deviens sage. Elle n’a ni chef, ni surveillant, ni maître ; pourtant elle prépare sa nourriture en été et amasse ses provisions au temps de la moisson.",
+    "Regarde maintenant ce champ, là-bas. Je passe près du champ d’un paresseux et de la vigne d’un homme sans intelligence, et voici : les ronces ont tout envahi, les orties en couvrent la surface, et le mur de pierres est écroulé. Et le propriétaire, lui, dort profondément à l’ombre d’un arbre. Paresseux, jusqu’à quand resteras-tu couché ? Quand te lèveras-tu de ton sommeil ?",
+    "Un peu de sommeil, un peu d’assoupissement, un peu croiser les mains pour dormir, et ta pauvreté viendra comme un rôdeur, et ta disette comme un homme armé. Mon fils, j’ai vu cela et j’y ai appliqué mon cœur ; j’ai regardé, et j’en ai tiré une leçon : l’ardeur au travail, on peut l’apprendre même d’une petite fourmi. Rentrons au marché avant que le soleil ne décline."
+   ],
+   "words": [
+    {"who": "Salomon", "text": "Va vers la fourmi, paresseux ; regarde ce qu’elle fait, et deviens sage. Elle n’a ni chef, ni surveillant, ni maître ; pourtant elle prépare sa nourriture en été et amasse ses provisions au temps de la moisson."},
+    {"who": "Salomon", "text": "Paresseux, jusqu’à quand resteras-tu couché ? Quand te lèveras-tu de ton sommeil ? Un peu de sommeil, un peu d’assoupissement, un peu croiser les mains pour dormir, et ta pauvreté viendra comme un rôdeur, et ta disette comme un homme armé."},
+    {"who": "Salomon", "text": "J’ai passé près du champ d’un paresseux et près de la vigne d’un homme sans intelligence : les ronces y avaient tout envahi, les orties en couvraient la surface, et le mur de pierres était écroulé. J’ai regardé, et j’y ai appliqué mon cœur ; j’ai vu, et j’en ai tiré une leçon."}
+   ],
+   "note": "Dans les champs d’Israël vivent des fourmis moissonneuses, qui ramassent les grains et les entassent dans des galeries sous terre. À la moisson, les voir transporter les grains en file au bord des champs était un spectacle familier aux paysans d’autrefois. Les pentes autour de Jérusalem étaient couvertes de champs en terrasses soutenus par des murets de pierre ; si on ne les entretenait pas, ils s’écroulaient vite et la terre était emportée.",
+   "reflect": "Est-ce que je repousse ce que je dois faire aujourd’hui, en me disant « encore un peu » ?",
+   "quiz": {
+    "q": "Selon les Proverbes, vers quel animal le paresseux doit-il aller pour apprendre ?",
+    "options": ["Le lion", "L’aigle", "La fourmi", "Le bœuf"],
+    "explain": "Proverbes 6,6 dit au paresseux d’aller vers la fourmi, de regarder ce qu’elle fait et de devenir sage. Sans personne pour la commander, la fourmi prépare sa nourriture en été."
+   }
+  },
+  "p03": {
+   "title": "La balance du marché",
+   "when": "Au temps du roi Salomon · Après-midi",
+   "subtitle": "La balance fausse est en horreur au Seigneur",
+   "story": [
+    "Mon fils, le soleil commence à décliner, retournons au marché. Chaque marchand a suspendu sa balance et pèse le grain ou l’huile qu’il vend. Regarde bien les mains de ce marchand de grain. Il garde deux jeux de poids dans sa bourse : le lourd quand il achète, le léger quand il vend. La balance penche, et l’acheteur ne s’aperçoit de rien.",
+    "La balance fausse est en horreur au Seigneur, mais le poids juste lui est agréable. Deux sortes de poids, deux sortes de mesures, sont l’un et l’autre en horreur au Seigneur. La balance et les plateaux justes sont au Seigneur ; tous les poids du sac sont son ouvrage.",
+    "Mon fils, même au fond d’une bourse où personne ne regarde, Dieu voit tout. Préfère une bonne réputation à de grandes richesses, et la faveur à l’argent et à l’or. Avant le coucher du soleil, passons chez mon ami pour dîner ensemble."
+   ],
+   "words": [
+    {"who": "Salomon", "text": "La balance fausse est en horreur au Seigneur, mais le poids juste lui est agréable."},
+    {"who": "Salomon", "text": "La balance et les plateaux justes sont au Seigneur ; tous les poids du sac sont son ouvrage."},
+    {"who": "Salomon", "text": "Une bonne réputation est préférable à de grandes richesses, et la faveur vaut mieux que l’argent et l’or."}
+   ],
+   "note": "Sur les marchés de l’ancien Israël, on portait dans une bourse des poids taillés dans la pierre, et l’on pesait sur la balance pour acheter et vendre. Deux poids portant le même nom n’avaient pas toujours exactement le même poids, et il était courant de tricher en gardant sur soi un poids lourd et un poids léger. La Loi interdisait déjà d’avoir dans sa bourse deux sortes de poids (Dt 25,13–16).",
+   "reflect": "Suis-je honnête même quand personne ne me voit ?",
+   "quiz": {
+    "q": "Selon les Proverbes, qu’est-ce qui est agréable au Seigneur ?",
+    "options": ["Le poids lourd", "Les grandes richesses", "Le poids juste", "Le grand marché"],
+    "explain": "La balance fausse est en horreur au Seigneur, mais le poids juste lui est agréable (Pr 11,1)."
+   }
+  },
+  "p04": {
+   "title": "La maison de l’ami",
+   "when": "Au temps du roi Salomon · Soir",
+   "subtitle": "Comme le fer aiguise le fer",
+   "story": [
+    "Mon fils, voici la maison de mon vieil ami. Le soleil s’est couché, et mon ami allume une lampe dans la cour pour nous accueillir avec joie. Sur la table, il n’y a qu’un plat d’herbes et quelques pains. Mais mieux vaut un plat de légumes là où règne l’amour qu’un bœuf engraissé avec la haine.",
+    "L’ami aime en tout temps, et le frère est né pour le jour de la détresse. Ce soir, mon ami ne m’a pas caché mes torts, il me les a dits franchement. Les blessures d’un ami viennent de sa fidélité, mais les baisers d’un ennemi sont trompeurs. Comme le fer aiguise le fer, ainsi l’homme ravive le visage de son ami.",
+    "Mon fils, celui qui a beaucoup d’amis peut s’en trouver mal, mais il est tel ami plus attaché qu’un frère. Garde un tel ami près de toi, et deviens toi aussi cet ami-là pour quelqu’un. La nuit est tombée. Passons maintenant par la ruelle sombre pour rentrer à la maison."
+   ],
+   "words": [
+    {"who": "Salomon", "text": "Comme le fer aiguise le fer, ainsi l’homme ravive le visage de son ami."},
+    {"who": "Salomon", "text": "L’ami aime en tout temps, et le frère est né pour le jour de la détresse."},
+    {"who": "Salomon", "text": "Les blessures d’un ami viennent de sa fidélité, mais les baisers d’un ennemi sont trompeurs."}
+   ],
+   "note": "Au temps de Salomon, les maisons d’Israël étaient souvent des « maisons à quatre pièces » : une cour centrale à ciel ouvert, bordée de chaque côté de pièces séparées par des piliers de pierre, et au fond une grande pièce en largeur. Le soir, on étendait des nattes dans la cour pour partager le pain cuit au four et des herbes, et l’on s’éclairait avec de petites lampes d’argile remplies d’huile d’olive.",
+   "reflect": "Ai-je un ami qui me dit franchement mes torts ? Et suis-je ce genre d’ami ?",
+   "quiz": {
+    "q": "En Proverbes 27,17, comme le fer aiguise le fer, de qui l’homme ravive-t-il le visage ?",
+    "options": ["Du roi", "De son ami", "De lui-même", "De son ennemi"],
+    "explain": "Comme le fer aiguise le fer, ainsi l’homme ravive le visage de son ami (Pr 27,17). Un ami qui nous confronte et nous façonne nous fait grandir."
+   }
+  },
+  "p05": {
+   "title": "La ruelle au crépuscule",
+   "when": "Au temps du roi Salomon · Nuit",
+   "subtitle": "Plus que tout, garde ton cœur",
+   "story": [
+    "Mon fils, la nuit est avancée ; rentrons par cette ruelle. Autrefois, en regardant par le treillis de la fenêtre de notre maison, j’ai vu parmi les sots, parmi les jeunes gens, un jeune homme dépourvu de sens. Il passait dans la rue, près de l’angle où habitait cette femme, au crépuscule, à la tombée du jour, au milieu de la nuit et de l’obscurité.",
+    "Alors une femme au cœur rusé sortit à sa rencontre. Elle le séduisit par de douces paroles et lui murmura que son mari était parti pour un long voyage. Aussitôt, le jeune homme la suivit, comme le bœuf qui va à l’abattoir, comme l’oiseau qui se précipite dans le filet sans savoir qu’il y va de sa vie.",
+    "Mon fils, que ton cœur ne se détourne pas vers les voies de cette femme, ne t’égare pas dans ses sentiers. Plus que tout ce que l’on garde, garde ton cœur, car de lui jaillissent les sources de la vie. Dis à la sagesse : Tu es ma sœur ! et appelle l’intelligence ta parente. Alors la sagesse te gardera, et tu ne tomberas pas dans les bras de la femme aux paroles enjôleuses."
+   ],
+   "words": [
+    {"who": "Salomon", "text": "Plus que tout ce que l’on garde, garde ton cœur, car de lui jaillissent les sources de la vie."},
+    {"who": "Salomon", "text": "Dis à la sagesse : Tu es ma sœur ! et appelle l’intelligence ta parente, pour qu’elles te gardent de la femme adultère, de l’étrangère aux paroles enjôleuses."},
+    {"who": "Salomon", "text": "Que ton cœur ne se détourne pas vers les voies de la femme adultère, ne t’égare pas dans ses sentiers ; car elle a fait tomber beaucoup de victimes, et nombreux sont ceux qu’elle a tués."}
+   ],
+   "note": "Le chapitre 7 des Proverbes est un court récit où un père raconte ce qu’il a vu à travers le treillis de sa fenêtre. Dans l’ancien Israël, les fenêtres n’avaient pas de vitres mais un treillis de bois : de l’intérieur on voyait dehors, mais du dehors on voyait mal à l’intérieur. Juste après ce récit (chapitres 8–9), les Proverbes dépeignent une autre femme qui appelle dans les rues : la sagesse.",
+   "reflect": "Quel chemin dangereux attire sans cesse mon cœur ?",
+   "quiz": {
+    "q": "Selon Proverbes 4,23, que faut-il garder plus que tout ce que l’on garde ?",
+    "options": ["Ses richesses", "Son cœur", "Sa maison", "Son nom"],
+    "explain": "Plus que tout ce que l’on garde, garde ton cœur, car de lui jaillissent les sources de la vie (Pr 4,23)."
+   }
+  },
+  "p06": {
+   "title": "Devant le palais",
+   "when": "Au temps du roi Salomon · Nuit",
+   "subtitle": "Ne me donne ni pauvreté ni richesse",
+   "story": [
+    "Mon fils, sur le chemin du retour, nous passons devant le palais. Là où les colonnes de cèdre se dressent comme une forêt, chaque fenêtre brille des lumières d’un festin, et des nobles richement vêtus entrent entre les gardes. Mais à côté de la porte, un pauvre est assis, un bol vide entre les mains.",
+    "Le cœur du roi est dans la main du Seigneur comme un cours d’eau : il le dirige partout où il veut. L’orgueil précède la ruine, et l’esprit hautain précède la chute. Opprimer le pauvre, c’est outrager celui qui l’a fait ; avoir pitié du malheureux, c’est l’honorer.",
+    "C’est pourquoi Agour a prié ainsi : Éloigne de moi la fausseté et la parole mensongère ; ne me donne ni pauvreté ni richesse, accorde-moi seulement le pain qui m’est nécessaire. De peur que, rassasié, je ne te renie et ne dise : Qui est le Seigneur ? ou que, dans la pauvreté, je ne vole et ne profane le nom de mon Dieu. Mon fils, partageons avec cet homme le pain que mon ami nous a donné. Celui dont l’œil est bienveillant sera béni."
+   ],
+   "words": [
+    {"who": "Salomon", "text": "Le cœur du roi est dans la main du Seigneur comme un cours d’eau : il le dirige partout où il veut."},
+    {"who": "Agour", "text": "Éloigne de moi la fausseté et la parole mensongère ; ne me donne ni pauvreté ni richesse, accorde-moi seulement le pain qui m’est nécessaire. De peur que, rassasié, je ne te renie et ne dise : Qui est le Seigneur ? ou que, dans la pauvreté, je ne vole et ne profane le nom de mon Dieu."},
+    {"who": "Salomon", "text": "Celui dont l’œil est bienveillant sera béni, parce qu’il donne de son pain au pauvre."}
+   ],
+   "note": "Salomon mit sept ans à bâtir le Temple et treize ans à bâtir son propre palais (1 R 6,38–7,1). Dans ce palais, la « Maison de la Forêt du Liban » avait quatre rangées de colonnes de cèdre et trois rangées de fenêtres (1 R 7,2–5). Le chapitre 30 des Proverbes rapporte les paroles non pas de Salomon mais d’« Agour, fils de Yaqé », et contient une prière rare dans la Bible : ne demander ni la pauvreté ni la richesse.",
+   "reflect": "Suis-je content de ce dont j’ai besoin, et prêt à partager ce que j’ai ?",
+   "quiz": {
+    "q": "Qu’est-ce qu’Agour a demandé à Dieu ?",
+    "options": ["De grandes richesses et la gloire", "La force de vaincre ses ennemis", "Ni pauvreté ni richesse, seulement le pain nécessaire", "Le trône du roi"],
+    "explain": "Agour a prié Dieu de ne lui donner ni pauvreté ni richesse, mais de le nourrir du pain nécessaire, pour ne pas renier Dieu une fois rassasié, ni voler dans la pauvreté (Pr 30,8–9)."
+   }
+  },
+  "p07": {
+   "title": "La lampe qui ne s’éteint pas",
+   "when": "Au temps du roi Salomon · Pleine nuit",
+   "subtitle": "La femme qui craint le Seigneur sera louée",
+   "story": [
+    "Mon fils, nous voilà enfin à la maison. La nuit est si avancée, et pourtant la lampe de ta mère brille encore. Elle met la main à la quenouille, et ses doigts tiennent le fuseau. Elle ne craint pas la neige pour sa maison, car toute sa maison est vêtue d’écarlate.",
+    "Une femme vaillante, qui la trouvera ? Elle a bien plus de valeur que les perles. Le cœur de son mari a confiance en elle, et rien ne manque à la maison. Elle ouvre la bouche avec sagesse, et la loi de la bonté est sur sa langue.",
+    "Ses fils se lèvent et la disent heureuse, son mari aussi, et il fait son éloge. La grâce est trompeuse et la beauté est vaine ; la femme qui craint le Seigneur est celle qui sera louée. Mon fils, as-tu entendu aujourd’hui la voix de la sagesse qui appelle ? Éteignons maintenant la lampe et dormons. Quand l’aube viendra, la sagesse nous appellera encore."
+   ],
+   "words": [
+    {"who": "Salomon", "text": "Une femme vaillante, qui la trouvera ? Elle a bien plus de valeur que les perles. Le cœur de son mari a confiance en elle, et rien ne manque à la maison."},
+    {"who": "Salomon", "text": "Elle ouvre la bouche avec sagesse, et la loi de la bonté est sur sa langue."},
+    {"who": "Salomon", "text": "La grâce est trompeuse et la beauté est vaine ; la femme qui craint le Seigneur est celle qui sera louée."}
+   ],
+   "note": "Proverbes 31,10–31 est un poème dont les versets commencent, l’un après l’autre, par les vingt-deux lettres de l’alphabet hébreu. Dans l’ancien Israël, les femmes filaient la laine et le lin, tissaient la toile et confectionnaient les vêtements de la famille. Le livre s’ouvre sur « la crainte du Seigneur est le commencement de la connaissance » (1,7) et se termine sur « la femme qui craint le Seigneur » (31,30).",
+   "reflect": "Est-ce que je trouve normale la peine que se donne chaque jour celui ou celle qui est à mes côtés ?",
+   "quiz": {
+    "q": "Selon Proverbes 31, la femme vaillante a plus de valeur que quoi ?",
+    "options": ["L’or", "Les perles", "L’argent", "Un palais"],
+    "explain": "Une femme vaillante, qui la trouvera ? Elle a bien plus de valeur que les perles (Pr 31,10)."
+   }
+  },
+  "p08": {
+   "title": "La maison de la sagesse",
+   "when": "Au temps du roi Salomon · Aube",
+   "subtitle": "Le sentier des justes est comme la lumière de l’aurore",
+   "story": [
+    "Mon fils, lève-toi. La lumière de l’aube se répand au-dessus des montagnes, à l’est. La sagesse a bâti sa maison, elle a taillé ses sept colonnes. Elle a égorgé ses bêtes, mêlé son vin, et dressé sa table. Puis elle a envoyé ses servantes, et elle appelle depuis les hauteurs de la ville.",
+    "Toi qui es sot, viens par ici ! Viens, mange de mon pain, et bois du vin que j’ai mêlé. Quitte la sottise, et tu vivras ; marche dans la voie de l’intelligence. La crainte du Seigneur est le commencement de la sagesse, et la connaissance du Saint, c’est l’intelligence.",
+    "Mon fils, la sagesse qui nous appelait hier à la porte de la ville nous invite ce matin à son festin. Le sentier des justes est comme la lumière de l’aurore, dont l’éclat grandit jusqu’au plein jour. Marchons maintenant sur ce chemin. Avec la sagesse, chaque jour est un nouveau départ."
+   ],
+   "words": [
+    {"who": "La Sagesse", "text": "Viens, mange de mon pain, et bois du vin que j’ai mêlé. Quitte la sottise, et tu vivras ; marche dans la voie de l’intelligence."},
+    {"who": "Salomon", "text": "La crainte du Seigneur est le commencement de la sagesse, et la connaissance du Saint, c’est l’intelligence."},
+    {"who": "Salomon", "text": "Le sentier des justes est comme la lumière de l’aurore, dont l’éclat grandit jusqu’au plein jour."}
+   ],
+   "note": "Les chapitres 1 à 9 des Proverbes s’achèvent sur l’appel de deux femmes : la sagesse, qui a bâti sur les hauteurs une maison à sept colonnes et invite à son festin (9,1–6), et la femme folle qui, depuis les mêmes hauteurs, appelle en disant que les eaux dérobées sont douces (9,13–18). Entre ces deux appels se tient la parole « La crainte du Seigneur est le commencement de la sagesse » (9,10) — celle-là même par laquelle le livre s’ouvrait en 1,7. Le Nouveau Testament appelle le Christ « sagesse de Dieu » (1 Co 1,24).",
+   "reflect": "Devant un sage conseil, est-ce que j’ouvre mon cœur, ou est-ce que je commence par me justifier ?",
+   "quiz": {
+    "q": "En Proverbes 9, combien de colonnes la sagesse a-t-elle taillées pour bâtir sa maison ?",
+    "options": ["Trois", "Cinq", "Sept", "Douze"],
+    "explain": "La sagesse a taillé sept colonnes pour bâtir sa maison, puis elle a dressé sa table et invité les gens à son festin (Pr 9,1–2)."
+   }
+  }
+ },
+ "daily": [
+  {
+   "t": "La sagesse appelle",
+   "v": [
+    "La crainte du Seigneur est le commencement de la connaissance ; les insensés méprisent la sagesse et l’instruction.",
+    "Mon fils, si des méchants veulent te séduire, ne les suis pas.",
+    "Mais celui qui m’écoute habitera en paix ; il vivra tranquille, sans craindre le malheur."
+   ],
+   "n": "Tout savoir commence par la crainte de Dieu. Aujourd’hui, prête l’oreille : écoute qui t’appelle."
+  },
+  {
+   "t": "Comme on cherche un trésor caché",
+   "v": [
+    "Si tu la cherches comme l’argent, si tu la poursuis comme un trésor caché, alors tu comprendras la crainte du Seigneur, et tu trouveras la connaissance de Dieu.",
+    "Car le Seigneur donne la sagesse ; de sa bouche sortent la connaissance et l’intelligence.",
+    "La réflexion veillera sur toi, l’intelligence te protégera."
+   ],
+   "n": "Celui qui cherche un trésor ne se lasse pas de creuser. La sagesse s’ouvre à celui qui la cherche ainsi."
+  },
+  {
+   "t": "Reconnais-le dans toutes tes voies",
+   "v": [
+    "Confie-toi au Seigneur de tout ton cœur, et ne t’appuie pas sur ta propre intelligence. Reconnais-le dans toutes tes voies, et il dirigera tes sentiers.",
+    "Mon fils, ne méprise pas la correction du Seigneur, et ne te lasse pas de ses reproches ; car le Seigneur reprend celui qu’il aime, comme un père le fils qu’il chérit.",
+    "Ne refuse pas un bienfait à celui qui y a droit, quand tu as le pouvoir de l’accorder."
+   ],
+   "n": "Le jour où je laisse mes propres idées pour lui demander le chemin, c’est le jour où je marche le plus droit."
+  },
+  {
+   "t": "Garde ton cœur",
+   "v": [
+    "La sagesse passe avant tout : acquiers la sagesse ; et avec tout ce que tu possèdes, acquiers l’intelligence.",
+    "Le sentier des justes est comme la lumière de l’aurore, dont l’éclat grandit jusqu’au plein jour.",
+    "Plus que tout ce que l’on garde, garde ton cœur, car de lui jaillissent les sources de la vie."
+   ],
+   "n": "Quand le cœur se trouble, les pas aussi se troublent. Regarde ce que tu laisses entrer dans ton cœur aujourd’hui."
+  },
+  {
+   "t": "Bois l’eau de ta source",
+   "v": [
+    "Bois les eaux de ta citerne, les eaux qui jaillissent de ton puits.",
+    "Que ta source soit bénie, et fais ta joie de la femme de ta jeunesse.",
+    "Car les voies de l’homme sont devant les yeux du Seigneur, qui aplanit tous ses sentiers."
+   ],
+   "n": "Prendre soin de ceux qui sont à tes côtés, voilà la plus grande sagesse. Aujourd’hui, dis merci à ta famille."
+  },
+  {
+   "t": "Apprends de la fourmi",
+   "v": [
+    "Va vers la fourmi, paresseux ; regarde ce qu’elle fait, et deviens sage. Elle n’a ni chef, ni surveillant, ni maître ; pourtant elle prépare sa nourriture en été et amasse ses provisions au temps de la moisson.",
+    "Il y a six choses que hait le Seigneur, et même sept qu’il a en horreur : les yeux hautains, la langue menteuse, les mains qui versent le sang innocent, le cœur qui médite des projets mauvais, les pieds qui se hâtent de courir au mal, le faux témoin qui dit des mensonges, et celui qui sème la discorde entre des frères.",
+    "Mon fils, garde le commandement de ton père, et ne rejette pas l’enseignement de ta mère."
+   ],
+   "n": "L’ardeur au travail ne commence pas par une grande résolution, mais en faisant aujourd’hui ce qu’il faut faire aujourd’hui."
+  },
+  {
+   "t": "Comme la prunelle de tes yeux",
+   "v": [
+    "Garde mes commandements, et tu vivras ; garde mon enseignement comme la prunelle de tes yeux. Lie-les sur tes doigts, écris-les sur la table de ton cœur.",
+    "Dis à la sagesse : Tu es ma sœur ! et appelle l’intelligence ta parente.",
+    "Que ton cœur ne se détourne pas vers les voies de la femme adultère, ne t’égare pas dans ses sentiers."
+   ],
+   "n": "La tentation attend toujours au coin de la ruelle. Ne pas prendre ce chemin dès le départ, c’est la victoire la plus facile."
+  },
+  {
+   "t": "Ceux qui me cherchent me trouvent",
+   "v": [
+    "Car la sagesse vaut mieux que les perles ; rien de ce qu’on peut désirer ne l’égale.",
+    "J’aime ceux qui m’aiment, et ceux qui me cherchent avec ardeur me trouvent.",
+    "Car celui qui me trouve a trouvé la vie, et il obtient la faveur du Seigneur."
+   ],
+   "n": "La sagesse ne joue pas à cache-cache. Elle vient la première vers celui qui la cherche de tout son cœur."
+  },
+  {
+   "t": "Le festin de la sagesse",
+   "v": [
+    "Ne reprends pas le moqueur, de peur qu’il ne te haïsse ; reprends le sage, et il t’aimera.",
+    "Donne au sage, et il deviendra plus sage encore ; instruis le juste, et il augmentera son savoir.",
+    "La crainte du Seigneur est le commencement de la sagesse, et la connaissance du Saint, c’est l’intelligence."
+   ],
+   "n": "Celui qui reçoit les reproches avec reconnaissance est un sage. Si l’on t’a dit aujourd’hui une parole dure, repense-y."
+  },
+  {
+   "t": "L’amour couvre les fautes",
+   "v": [
+    "Un fils sage fait la joie de son père, mais un fils insensé est le chagrin de sa mère.",
+    "La haine excite des querelles, mais l’amour couvre toutes les fautes.",
+    "Qui parle beaucoup ne manque pas de pécher, mais celui qui retient ses lèvres est un homme sage."
+   ],
+   "n": "Il est facile de dévoiler les fautes des autres, et difficile de les couvrir. Aujourd’hui, sois celui qui couvre."
+  },
+  {
+   "t": "Celui qui arrose sera arrosé",
+   "v": [
+    "Quand vient l’orgueil, vient aussi la honte ; mais la sagesse est avec les humbles.",
+    "Faute de direction, un peuple tombe ; le salut est dans le grand nombre des conseillers.",
+    "L’âme généreuse sera rassasiée, et celui qui arrose sera lui-même arrosé."
+   ],
+   "n": "On croit que partager fait diminuer, mais le champ de celui qui arrose les autres est le premier à être humide."
+  },
+  {
+   "t": "La bonne parole réjouit le cœur",
+   "v": [
+    "Celui qui aime la correction aime la connaissance ; celui qui hait la réprimande est stupide comme une bête.",
+    "La voie de l’insensé est droite à ses yeux, mais le sage écoute les conseils.",
+    "L’inquiétude dans le cœur de l’homme l’abat, mais une bonne parole le réjouit."
+   ],
+   "n": "Prépare aujourd’hui une bonne parole qui allégera l’inquiétude de quelqu’un."
+  },
+  {
+   "t": "Marche avec les sages",
+   "v": [
+    "Celui qui veille sur sa bouche garde sa vie ; celui qui ouvre grand les lèvres court à sa perte.",
+    "Un espoir différé rend le cœur malade, mais un désir accompli est un arbre de vie.",
+    "Celui qui marche avec les sages devient sage, mais celui qui fréquente les insensés s’en trouve mal."
+   ],
+   "n": "Avec qui tu marches décide où tu arrives. Pense à tes compagnons de route."
+  },
+  {
+   "t": "Un cœur paisible est la vie du corps",
+   "v": [
+    "Il y a une voie qui paraît droite à l’homme, mais son issue, c’est la voie de la mort.",
+    "Celui qui est lent à la colère a une grande intelligence, mais celui qui s’emporte vite étale sa folie.",
+    "Un cœur paisible est la vie du corps, mais l’envie est la carie des os."
+   ],
+   "n": "Quand la colère monte, ralentir d’un temps suffit à éviter bien des folies."
+  },
+  {
+   "t": "La réponse douce",
+   "v": [
+    "Une réponse douce calme la fureur, mais une parole dure excite la colère.",
+    "Les yeux du Seigneur sont en tout lieu, observant les méchants et les bons.",
+    "Les projets échouent faute de conseil, mais ils réussissent quand les conseillers sont nombreux."
+   ],
+   "n": "Bien plus de combats qu’on ne le croit se gagnent par une parole douce. Aujourd’hui, adoucis une de tes réponses."
+  },
+  {
+   "t": "Celui qui dirige les pas",
+   "v": [
+    "Remets tes œuvres au Seigneur, et tes projets réussiront.",
+    "Le cœur de l’homme médite sa voie, mais c’est le Seigneur qui dirige ses pas.",
+    "Celui qui est lent à la colère vaut mieux qu’un héros, et celui qui est maître de lui-même, mieux que celui qui prend des villes."
+   ],
+   "n": "Fais tes projets, mais confie-lui tes pas. Alors, même si le chemin se ferme, tu n’auras pas peur."
+  },
+  {
+   "t": "Un cœur joyeux est un bon remède",
+   "v": [
+    "Mieux vaut un morceau de pain sec avec la paix qu’une maison pleine de viandes avec des querelles.",
+    "L’ami aime en tout temps, et le frère est né pour le jour de la détresse.",
+    "Un cœur joyeux est un bon remède, mais un esprit abattu dessèche les os."
+   ],
+   "n": "Le rire est le remède le moins cher et le meilleur. Aujourd’hui, apporte un éclat de rire à table."
+  },
+  {
+   "t": "La mort et la vie sont au pouvoir de la langue",
+   "v": [
+    "Le nom du Seigneur est une tour forte ; le juste s’y réfugie et se trouve en sûreté.",
+    "Celui qui répond avant d’avoir écouté fait preuve de folie et se couvre de honte.",
+    "La mort et la vie sont au pouvoir de la langue ; ceux qui l’aiment en mangeront les fruits."
+   ],
+   "n": "Il n’est jamais trop tard pour parler après avoir écouté jusqu’au bout. Aujourd’hui, écoute encore un peu avant de parler."
+  },
+  {
+   "t": "La gloire de pardonner",
+   "v": [
+    "La sagesse de l’homme le rend lent à la colère, et c’est sa gloire de passer par-dessus une offense.",
+    "Celui qui a pitié du pauvre prête au Seigneur, qui lui rendra son bienfait.",
+    "Il y a beaucoup de projets dans le cœur de l’homme, mais c’est le dessein du Seigneur qui s’accomplit."
+   ],
+   "n": "Pardonner, ce n’est pas perdre, c’est vaincre. Si quelqu’un te pèse sur le cœur, laisse-le aller aujourd’hui."
+  },
+  {
+   "t": "Attends le Seigneur",
+   "v": [
+    "C’est une gloire pour l’homme de se tenir loin des querelles, mais tout insensé se jette dans la dispute.",
+    "Même l’enfant laisse voir par ses actions si sa conduite est pure et droite.",
+    "Ne dis pas : Je rendrai le mal. Attends le Seigneur, et il te sauvera."
+   ],
+   "n": "Quand tu as envie de rendre la pareille, c’est le moment d’attendre. Laisse-lui les comptes."
+  },
+  {
+   "t": "La justice plutôt que les sacrifices",
+   "v": [
+    "Toutes les voies de l’homme sont droites à ses yeux, mais c’est le Seigneur qui pèse les cœurs.",
+    "Pratiquer la justice et l’équité, cela plaît au Seigneur plus que les sacrifices.",
+    "Celui qui poursuit la justice et la bonté trouve la vie, la justice et la gloire."
+   ],
+   "n": "Plus que la piété dans la maison de prière, Dieu aime l’honnêteté une fois la porte franchie."
+  },
+  {
+   "t": "Le chemin qu’il doit suivre",
+   "v": [
+    "Le riche et le pauvre vivent ensemble ; c’est le Seigneur qui les a faits l’un et l’autre.",
+    "Instruis l’enfant selon la voie qu’il doit suivre ; et quand il sera vieux, il ne s’en détournera pas.",
+    "As-tu vu un homme habile dans son ouvrage ? Il se tiendra devant les rois."
+   ],
+   "n": "Le chemin que tu enseignes à l’enfant, c’est celui que tu as toi-même parcouru. Enseigne par tes pas plus que par tes paroles."
+  },
+  {
+   "t": "Mon fils, donne-moi ton cœur",
+   "v": [
+    "Ne te fatigue pas pour t’enrichir, renonce à ta propre sagesse. Pourquoi poser les yeux sur ce qui n’est rien ? Car la richesse se fait des ailes, et comme l’aigle elle s’envole vers les cieux.",
+    "Écoute ton père, lui qui t’a engendré, et ne méprise pas ta mère quand elle est devenue vieille.",
+    "Mon fils, donne-moi ton cœur, et que tes yeux se plaisent dans mes voies."
+   ],
+   "n": "La richesse a des ailes et s’envole, mais ce à quoi tu as donné ton cœur demeure jusqu’au bout."
+  },
+  {
+   "t": "Sept fois il tombe",
+   "v": [
+    "Si tu perds courage au jour de la détresse, ta force n’est que faiblesse.",
+    "Car sept fois le juste tombe, et il se relève, mais les méchants sont renversés par le malheur.",
+    "Ne te réjouis pas de la chute de ton ennemi, et que ton cœur ne soit pas dans l’allégresse quand il chancelle."
+   ],
+   "n": "Personne ne traverse la vie sans tomber. Il y a seulement ceux qui se relèvent."
+  },
+  {
+   "t": "Une parole dite à propos",
+   "v": [
+    "Une parole dite à propos, c’est comme des pommes d’or sur un plateau d’argent ciselé.",
+    "Si ton ennemi a faim, donne-lui du pain à manger ; s’il a soif, donne-lui de l’eau à boire.",
+    "Comme une ville forcée et sans murailles, ainsi est l’homme qui ne sait pas se maîtriser."
+   ],
+   "n": "Une même parole, dite au bon moment, devient un joyau. Aujourd’hui, dis la parole qu’il faut au moment où il le faut."
+  },
+  {
+   "t": "Faute de bois, le feu s’éteint",
+   "v": [
+    "Vois-tu un homme qui se croit sage ? Il y a plus à espérer d’un insensé que de lui.",
+    "Faute de bois, le feu s’éteint ; et quand il n’y a plus de rapporteur, la querelle s’apaise.",
+    "Celui qui creuse une fosse y tombera, et la pierre revient sur celui qui la roule."
+   ],
+   "n": "N’ajoute pas de bois aux rumeurs. Si elles s’arrêtent à ta bouche, le feu s’éteint."
+  },
+  {
+   "t": "Le fer aiguise le fer",
+   "v": [
+    "Ne te vante pas du lendemain, car tu ne sais pas ce qu’un jour peut enfanter.",
+    "Qu’un autre te loue, et non ta bouche ; un étranger, et non tes lèvres.",
+    "Comme le fer aiguise le fer, ainsi l’homme ravive le visage de son ami."
+   ],
+   "n": "Demain est entre ses mains. Aujourd’hui, avec l’ami qui est à tes côtés, aidez-vous l’un l’autre à grandir."
+  },
+  {
+   "t": "Ne cache pas tes fautes",
+   "v": [
+    "Le méchant prend la fuite sans qu’on le poursuive, mais le juste a de l’assurance comme un lion.",
+    "Celui qui cache ses fautes ne prospère pas, mais celui qui les avoue et les délaisse obtient miséricorde.",
+    "Celui qui donne au pauvre ne manquera de rien, mais celui qui ferme les yeux sera chargé de malédictions."
+   ],
+   "n": "La faute cachée pèse lourd ; la faute avouée devient légère. S’il y a quelque chose à déposer aujourd’hui, dépose-le."
+  },
+  {
+   "t": "Quand il n’y a pas de vision",
+   "v": [
+    "L’insensé laisse éclater toute sa colère, mais le sage la contient.",
+    "Quand il n’y a pas de vision, le peuple est sans frein ; heureux celui qui observe la loi !",
+    "La crainte des hommes tend un piège, mais celui qui se confie dans le Seigneur est en sûreté."
+   ],
+   "n": "Vivre sous le regard des hommes, c’est être lié ; regarder vers lui, c’est être libre."
+  },
+  {
+   "t": "La prière d’Agour",
+   "v": [
+    "Toute parole de Dieu est éprouvée ; il est un bouclier pour ceux qui se réfugient en lui.",
+    "Éloigne de moi la fausseté et la parole mensongère ; ne me donne ni pauvreté ni richesse, accorde-moi seulement le pain qui m’est nécessaire.",
+    "Il y a sur la terre quatre êtres petits, et pourtant parmi les plus sages : les fourmis, peuple sans force, qui préparent en été leur nourriture."
+   ],
+   "n": "Ni l’abondance ni le manque, mais « juste ce qu’il faut » : la prière qui demande cela est la plus paisible."
+  },
+  {
+   "t": "La femme vaillante",
+   "v": [
+    "Ouvre ta bouche pour le muet, pour la cause de tous les délaissés. Ouvre ta bouche, juge avec justice, et défends le malheureux et l’indigent.",
+    "La force et la dignité sont son vêtement, et elle rit de l’avenir.",
+    "La grâce est trompeuse et la beauté est vaine ; la femme qui craint le Seigneur est celle qui sera louée."
+   ],
+   "n": "Nous avons marché tout un mois. Demain, nous recommençons au chapitre 1. Avec la sagesse, chaque jour est un nouveau départ."
+  }
+ ]
+}

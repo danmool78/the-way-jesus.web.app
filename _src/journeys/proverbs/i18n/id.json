@@ -1,0 +1,637 @@
+{
+ "periods": {
+  "d1": {
+   "name": "Pagi · Gerbang Kota",
+   "span": "Pagi"
+  },
+  "d2": {
+   "name": "Siang · Padang",
+   "span": "Siang"
+  },
+  "d3": {
+   "name": "Sore · Pasar",
+   "span": "Sore"
+  },
+  "d4": {
+   "name": "Petang · Rumah Sahabat",
+   "span": "Petang"
+  },
+  "d5": {
+   "name": "Malam · Lorong dan Istana",
+   "span": "Malam"
+  },
+  "d6": {
+   "name": "Larut Malam · Rumah Kita",
+   "span": "Larut malam"
+  },
+  "d7": {
+   "name": "Fajar · Rumah Hikmat",
+   "span": "Fajar"
+  }
+ },
+ "places": {
+  "gate": {
+   "name": "Alun-alun Gerbang Kota",
+   "region": "Yerusalem"
+  },
+  "field": {
+   "name": "Padang di Luar Kota",
+   "region": "Yerusalem"
+  },
+  "market": {
+   "name": "Pasar di Gerbang Kota",
+   "region": "Yerusalem"
+  },
+  "home": {
+   "name": "Rumah Sahabat",
+   "region": "Yerusalem"
+  },
+  "alley": {
+   "name": "Lorong Malam",
+   "region": "Yerusalem"
+  },
+  "palace": {
+   "name": "Pelataran Istana",
+   "region": "Yerusalem"
+  },
+  "house": {
+   "name": "Rumah Kita",
+   "region": "Yerusalem"
+  },
+  "wisdomhouse": {
+   "name": "Tempat Tinggi di Kota",
+   "region": "Yerusalem"
+  }
+ },
+ "events": {
+  "p01": {
+   "title": "Hikmat Berseru di Gerbang Kota",
+   "when": "Zaman Raja Salomo · Pagi",
+   "subtitle": "Takut akan TUHAN adalah awal pengetahuan",
+   "story": [
+    "Anakku, hari ini ikutlah Ayah ke gerbang kota. Matahari baru saja terbit, tetapi para tua-tua sudah duduk di bangku batu di gerbang mendengarkan perkara, dan para pedagang sedang menggelar dagangan mereka. Di tempat seramai ini pun, simpanlah baik-baik satu perkataan ini di dalam hatimu. Takut akan TUHAN adalah awal pengetahuan. Orang bodoh memandang rendah hikmat dan didikan.",
+    "Dengarkanlah baik-baik. Hikmat berseru di jalan-jalan, di lapangan ia memperdengarkan suaranya. Di ujung jalan yang ramai ia berseru, di pintu gerbang dan di dalam kota ia menyampaikan perkataannya. Hai orang-orang yang tak berpengalaman, berapa lama lagi kamu mencintai kebodohan? Dengarkanlah teguranku dan berbaliklah. Lihat, aku akan mencurahkan rohku kepadamu dan memberitahukan perkataanku kepadamu.",
+    "Hikmat tidak bersembunyi di gunung yang jauh. Ia memanggilmu justru di gerbang ini, tempat orang berjual beli, bertengkar, dan menerima keputusan hakim. Anakku, dengarkanlah didikan ayahmu dan jangan tinggalkan ajaran ibumu. Itulah mahkota yang indah di kepalamu dan kalung emas di lehermu."
+   ],
+   "words": [
+    {
+     "who": "Salomo",
+     "text": "Takut akan TUHAN adalah awal pengetahuan. Orang bodoh memandang rendah hikmat dan didikan."
+    },
+    {
+     "who": "Hikmat",
+     "text": "Hai orang-orang yang tak berpengalaman, berapa lama lagi kamu mencintai kebodohan? Berapa lama lagi para pencemooh menyukai cemoohan dan orang bebal membenci pengetahuan? Dengarkanlah teguranku dan berbaliklah. Lihat, aku akan mencurahkan rohku kepadamu dan memberitahukan perkataanku kepadamu."
+    },
+    {
+     "who": "Salomo",
+     "text": "Anakku, dengarkanlah didikan ayahmu dan jangan tinggalkan ajaran ibumu. Itulah mahkota yang indah di kepalamu dan kalung emas di lehermu."
+    }
+   ],
+   "note": "Gerbang kota di Israel kuno adalah jalan keluar-masuk, sekaligus pasar dan tempat pengadilan. Para tua-tua duduk di gerbang untuk mendengar perkara dan memberi keputusan (Rut 4:1–2, Ams 31:23). Kitab Amsal menggambarkan hikmat seperti seorang perempuan yang berseru di pintu gerbang yang ramai ini (Ams 1:20–21, 8:1–3).",
+   "reflect": "Apakah aku menghindari nasihat yang benar karena tidak suka mendengarnya?",
+   "quiz": {
+    "q": "Menurut Amsal, apakah awal pengetahuan?",
+    "options": [
+     "Membaca banyak buku",
+     "Takut akan TUHAN",
+     "Belajar di istana raja",
+     "Mengumpulkan harta"
+    ],
+    "explain": "Amsal 1:7 berkata bahwa takut akan TUHAN adalah awal pengetahuan. Seluruh kitab Amsal berdiri di atas kalimat ini."
+   }
+  },
+  "p02": {
+   "title": "Semut di Padang",
+   "when": "Zaman Raja Salomo · Siang",
+   "subtitle": "Hai pemalas, pergilah kepada semut",
+   "story": [
+    "Anakku, mari kita keluar dari gerbang dan pergi ke padang. Matahari sudah tinggi, dan orang-orang sudah turun ke ladang menuai gandum. Berjongkoklah di tepi jalan dan perhatikan makhluk-makhluk kecil ini. Hai pemalas, pergilah kepada semut, perhatikanlah apa yang dilakukannya dan jadilah bijak. Semut tidak punya pemimpin, pengawas, atau penguasa, tetapi ia menyiapkan makanannya pada musim panas dan mengumpulkan bekalnya pada waktu panen.",
+    "Sekarang lihatlah ladang di sebelah sana. Aku melewati ladang si pemalas dan kebun anggur orang yang tidak berakal, dan lihatlah, semak duri tumbuh di mana-mana, rumput liar menutupi tanahnya, dan tembok batunya sudah runtuh. Padahal pemilik ladang itu sedang tidur nyenyak di bawah naungan pohon. Hai pemalas, berapa lama lagi engkau berbaring? Kapan engkau akan bangun dari tidurmu?",
+    "'Tidur sebentar lagi, mengantuk sebentar lagi, melipat tangan sebentar lagi untuk berbaring' — maka kemiskinan akan datang kepadamu seperti perampok, dan kekurangan seperti orang bersenjata. Anakku, aku melihat semua itu dan memikirkannya dalam-dalam; aku melihatnya dan menerima pelajaran. Ketekunan bisa kita pelajari bahkan dari semut kecil itu. Mari kita kembali ke pasar sebelum matahari condong."
+   ],
+   "words": [
+    {
+     "who": "Salomo",
+     "text": "Hai pemalas, pergilah kepada semut, perhatikanlah apa yang dilakukannya dan jadilah bijak. Semut tidak punya pemimpin, pengawas, atau penguasa, tetapi ia menyiapkan makanannya pada musim panas dan mengumpulkan bekalnya pada waktu panen."
+    },
+    {
+     "who": "Salomo",
+     "text": "Hai pemalas, berapa lama lagi engkau berbaring? Kapan engkau akan bangun dari tidurmu? 'Tidur sebentar lagi, mengantuk sebentar lagi, melipat tangan sebentar lagi untuk berbaring' — maka kemiskinan akan datang kepadamu seperti perampok, dan kekurangan seperti orang bersenjata."
+    },
+    {
+     "who": "Salomo",
+     "text": "Aku melewati ladang si pemalas dan kebun anggur orang yang tidak berakal, dan lihatlah, semak duri tumbuh di mana-mana, rumput liar menutupi tanahnya, dan tembok batunya sudah runtuh. Aku melihatnya dan memikirkannya dalam-dalam; aku melihatnya dan menerima pelajaran."
+    }
+   ],
+   "note": "Di padang-padang Israel hidup semut pemanen yang mengumpulkan biji-bijian dan menimbunnya di sarang di dalam tanah. Barisan semut yang mengangkut biji di tepi ladang pada musim panen adalah pemandangan yang akrab bagi para petani zaman dulu. Lereng-lereng di sekitar Yerusalem berupa ladang bertingkat yang ditopang tembok batu; jika tembok itu tidak dirawat, ia segera runtuh dan tanahnya hanyut terbawa air.",
+   "reflect": "Apakah aku menunda pekerjaan hari ini dengan berkata 'sebentar lagi'?",
+   "quiz": {
+    "q": "Kepada siapa Amsal menyuruh si pemalas pergi untuk belajar?",
+    "options": [
+     "Singa",
+     "Rajawali",
+     "Semut",
+     "Lembu jantan"
+    ],
+    "explain": "Amsal 6:6 menyuruh si pemalas pergi kepada semut, memperhatikan apa yang dilakukannya, dan menjadi bijak. Semut menyiapkan makanannya pada musim panas walaupun tidak ada yang menyuruhnya."
+   }
+  },
+  "p03": {
+   "title": "Timbangan di Pasar",
+   "when": "Zaman Raja Salomo · Sore",
+   "subtitle": "TUHAN membenci neraca yang curang",
+   "story": [
+    "Anakku, matahari mulai condong, mari kita kembali ke pasar. Setiap pedagang menggantung neracanya dan menjual gandum atau minyak menurut timbangan. Perhatikan baik-baik tangan pedagang gandum itu. Di kantongnya ada dua set batu timbangan; waktu membeli ia mengeluarkan batu yang berat, waktu menjual ia mengeluarkan yang ringan. Neracanya sudah miring, tetapi si pembeli tidak menyadarinya.",
+    "Neraca yang curang dibenci TUHAN, tetapi batu timbangan yang tepat menyenangkan hati-Nya. Dua macam batu timbangan dan dua macam takaran, keduanya dibenci TUHAN. Neraca dan timbangan yang benar adalah milik TUHAN; segala batu timbangan di dalam kantong pun buatan-Nya.",
+    "Anakku, sampai ke dalam kantong yang tidak dilihat siapa pun, Allah melihat semuanya. Pilihlah nama baik daripada kekayaan besar, dan kasih karunia lebih daripada perak dan emas. Sebelum matahari terbenam, mari kita singgah di rumah sahabat Ayah dan makan malam bersama."
+   ],
+   "words": [
+    {
+     "who": "Salomo",
+     "text": "Neraca yang curang dibenci TUHAN, tetapi batu timbangan yang tepat menyenangkan hati-Nya."
+    },
+    {
+     "who": "Salomo",
+     "text": "Neraca dan timbangan yang benar adalah milik TUHAN; segala batu timbangan di dalam kantong pun buatan-Nya."
+    },
+    {
+     "who": "Salomo",
+     "text": "Nama baik lebih patut dipilih daripada kekayaan besar, dan kasih karunia lebih daripada perak dan emas."
+    }
+   ],
+   "note": "Di pasar Israel kuno orang membawa batu timbangan yang dipahat dari batu di dalam kantong, lalu menimbang barang dengan neraca untuk berjual beli. Batu dengan nama yang sama pun beratnya bisa sedikit berbeda, sehingga kecurangan dengan membawa batu berat dan batu ringan sekaligus sering terjadi. Hukum Taurat pun melarang menyimpan dua macam batu timbangan di dalam kantong (Ul 25:13–16).",
+   "reflect": "Apakah aku tetap jujur di tempat yang tidak dilihat siapa pun?",
+   "quiz": {
+    "q": "Menurut Amsal, apa yang menyenangkan hati TUHAN?",
+    "options": [
+     "Batu timbangan yang berat",
+     "Kekayaan yang besar",
+     "Batu timbangan yang tepat",
+     "Pasar yang besar"
+    ],
+    "explain": "Neraca yang curang dibenci TUHAN, tetapi batu timbangan yang tepat menyenangkan hati-Nya (Ams 11:1)."
+   }
+  },
+  "p04": {
+   "title": "Rumah Sahabat",
+   "when": "Zaman Raja Salomo · Petang",
+   "subtitle": "Seperti besi menajamkan besi",
+   "story": [
+    "Anakku, inilah rumah sahabat lama Ayah. Begitu matahari terbenam, ia menyalakan pelita di halaman dan menyambut kita dengan gembira. Hidangannya hanya semangkuk sayur dan beberapa potong roti. Namun makan sayur dengan saling mengasihi lebih baik daripada makan lembu tambun dengan saling membenci.",
+    "Seorang sahabat mengasihi setiap waktu, dan seorang saudara lahir untuk menolong dalam kesukaran. Malam ini sahabat Ayah tidak menutupi kesalahanku, tetapi mengatakannya terus terang. Luka dari teguran sahabat timbul dari kesetiaan, tetapi ciuman musuh yang berlimpah adalah tipuan. Seperti besi menajamkan besi, demikianlah orang membuat wajah sahabatnya bercahaya.",
+    "Anakku, orang yang punya banyak teman bisa celaka, tetapi ada sahabat yang lebih karib daripada saudara. Simpanlah sahabat seperti itu di dekatmu, dan jadilah juga sahabat seperti itu bagi orang lain. Malam sudah larut. Sekarang mari kita pulang melewati lorong yang gelap."
+   ],
+   "words": [
+    {
+     "who": "Salomo",
+     "text": "Seperti besi menajamkan besi, demikianlah orang membuat wajah sahabatnya bercahaya."
+    },
+    {
+     "who": "Salomo",
+     "text": "Seorang sahabat mengasihi setiap waktu, dan seorang saudara lahir untuk menolong dalam kesukaran."
+    },
+    {
+     "who": "Salomo",
+     "text": "Luka dari teguran sahabat timbul dari kesetiaan, tetapi ciuman musuh yang berlimpah adalah tipuan."
+    }
+   ],
+   "note": "Pada zaman Salomo, rumah orang Israel umumnya berupa 'rumah empat ruang'. Di tengahnya ada halaman terbuka beratap langit, di kedua sisinya ruangan yang dibatasi deretan tiang batu, dan di belakangnya sebuah ruang besar yang memanjang melintang. Pada petang hari orang menggelar tikar di halaman dan makan bersama roti yang dipanggang di tungku serta sayur-sayuran, dan menyalakan pelita kecil dari tanah liat yang diisi minyak zaitun.",
+   "reflect": "Adakah sahabat yang mau berterus terang tentang kesalahanku? Apakah aku sahabat seperti itu?",
+   "quiz": {
+    "q": "Dalam Amsal 27:17, seperti besi menajamkan besi, wajah siapakah yang dibuat bercahaya oleh seseorang?",
+    "options": [
+     "Raja",
+     "Sahabatnya",
+     "Dirinya sendiri",
+     "Musuhnya"
+    ],
+    "explain": "Seperti besi menajamkan besi, demikianlah orang membuat wajah sahabatnya bercahaya (Ams 27:17). Sahabat yang saling mengasah membuat orang bertumbuh."
+   }
+  },
+  "p05": {
+   "title": "Lorong di Waktu Senja",
+   "when": "Zaman Raja Salomo · Malam",
+   "subtitle": "Jagalah hatimu lebih dari segalanya",
+   "story": [
+    "Anakku, malam sudah larut, mari kita pulang lewat lorong ini. Dulu, ketika Ayah memandang ke luar dari kisi-kisi jendela rumah kita, aku melihat di antara orang-orang yang tak berpengalaman, di antara orang-orang muda, seorang pemuda yang tidak berakal. Ia menyusuri jalan dekat sudut rumah perempuan itu, pada waktu senja, pada petang hari, di tengah malam yang gelap.",
+    "Lalu datanglah seorang perempuan yang licik hatinya menyongsong dia. Dengan kata-kata manis perempuan itu membujuknya dan berbisik bahwa suaminya sedang pergi jauh dan tidak ada di rumah. Seketika pemuda itu mengikutinya, seperti lembu yang dibawa ke pembantaian, seperti burung yang bergegas masuk ke jerat tanpa tahu bahwa nyawanya akan hilang.",
+    "Anakku, janganlah hatimu menyimpang ke jalan perempuan itu, dan janganlah tersesat ke jalannya. Jagalah hatimu lebih dari segala yang patut dijaga, karena dari situlah terpancar sumber kehidupan. Katakanlah kepada hikmat, 'Engkaulah saudariku,' dan sebutlah pengertian 'kaum kerabatku.' Maka hikmat akan menjagamu, supaya engkau tidak jatuh ke tangan perempuan yang merayu dengan kata-katanya."
+   ],
+   "words": [
+    {
+     "who": "Salomo",
+     "text": "Jagalah hatimu lebih dari segala yang patut dijaga, karena dari situlah terpancar sumber kehidupan."
+    },
+    {
+     "who": "Salomo",
+     "text": "Katakanlah kepada hikmat, 'Engkaulah saudariku,' dan sebutlah pengertian 'kaum kerabatku.' Maka semua itu akan menjagamu dari perempuan jalang, dari perempuan asing yang merayu dengan kata-katanya."
+    },
+    {
+     "who": "Salomo",
+     "text": "Janganlah hatimu menyimpang ke jalan perempuan jalang, dan janganlah tersesat ke jalannya. Sebab banyak orang telah dilukainya hingga rebah; sungguh banyak orang yang mati karenanya."
+    }
+   ],
+   "note": "Amsal 7 adalah kisah pendek tentang apa yang dilihat seorang ayah dari balik kisi-kisi jendela rumahnya. Jendela rumah di Israel kuno tidak berkaca, melainkan diberi kisi-kisi kayu, sehingga dari dalam orang dapat melihat ke luar, tetapi dari luar bagian dalam rumah sulit terlihat. Tepat sesudah kisah ini (pasal 8–9), Amsal melukiskan seorang perempuan lain yang berseru di jalan-jalan — yaitu hikmat.",
+   "reflect": "Jalan berbahaya mana yang terus menarik hatiku?",
+   "quiz": {
+    "q": "Menurut Amsal 4:23, apa yang harus dijaga lebih dari segala yang patut dijaga?",
+    "options": [
+     "Harta",
+     "Hati",
+     "Rumah",
+     "Nama"
+    ],
+    "explain": "Jagalah hatimu lebih dari segala yang patut dijaga, karena dari situlah terpancar sumber kehidupan (Ams 4:23)."
+   }
+  },
+  "p06": {
+   "title": "Di Depan Istana",
+   "when": "Zaman Raja Salomo · Malam",
+   "subtitle": "Jangan berikan aku kemiskinan ataupun kekayaan",
+   "story": [
+    "Anakku, dalam perjalanan pulang kita melewati depan istana. Di istana yang tiang-tiang kayu arasnya berjajar seperti hutan itu, setiap jendela terang oleh cahaya pesta, dan para bangsawan berpakaian megah masuk melewati para penjaga. Tetapi di samping pintunya duduk seorang miskin memegang mangkuk kosong.",
+    "Hati raja ada di tangan TUHAN seperti aliran air; Ia mengarahkannya ke mana saja yang dikehendaki-Nya. Kecongkakan mendahului kehancuran, dan hati yang sombong mendahului kejatuhan. Siapa menindas orang miskin menghina Penciptanya, tetapi siapa menaruh belas kasihan kepada orang yang berkekurangan memuliakan Dia.",
+    "Karena itulah Agur berdoa demikian. Jauhkanlah dariku kesia-siaan dan kebohongan. Jangan berikan kepadaku kemiskinan ataupun kekayaan, tetapi berilah aku makan secukupnya. Aku takut kalau aku kenyang, aku menyangkal Engkau dan berkata, 'Siapakah TUHAN itu?' Dan aku takut kalau aku miskin, aku mencuri dan mencemarkan nama Allahku. Anakku, mari kita bagi roti bekal dari sahabat Ayah dengan orang itu sebelum kita pulang. Orang yang murah hati akan diberkati."
+   ],
+   "words": [
+    {
+     "who": "Salomo",
+     "text": "Hati raja ada di tangan TUHAN seperti aliran air; Ia mengarahkannya ke mana saja yang dikehendaki-Nya."
+    },
+    {
+     "who": "Agur",
+     "text": "Jauhkanlah dariku kesia-siaan dan kebohongan. Jangan berikan kepadaku kemiskinan ataupun kekayaan, tetapi berilah aku makan secukupnya. Aku takut kalau aku kenyang, aku menyangkal Engkau dan berkata, 'Siapakah TUHAN itu?' Dan aku takut kalau aku miskin, aku mencuri dan mencemarkan nama Allahku."
+    },
+    {
+     "who": "Salomo",
+     "text": "Orang yang murah hati akan diberkati, karena ia membagi rotinya dengan orang miskin."
+    }
+   ],
+   "note": "Salomo membangun Bait Allah selama tujuh tahun, dan istananya sendiri selama tiga belas tahun (1Raj 6:38–7:1). Di antara bangunan istana itu ada 'Gedung Hutan Libanon' dengan tiang-tiang kayu aras yang berjajar empat baris dan jendela-jendela dalam tiga deret (1Raj 7:2–5). Amsal 30 bukan perkataan Salomo, melainkan perkataan 'Agur bin Yake', dan memuat doa yang jarang ada dalam Alkitab: doa yang tidak meminta kemiskinan maupun kekayaan.",
+   "reflect": "Dapatkah aku puas dengan apa yang cukup bagiku dan berbagi apa yang kumiliki?",
+   "quiz": {
+    "q": "Apa yang diminta Agur kepada Allah?",
+    "options": [
+     "Kekayaan dan kehormatan yang besar",
+     "Kekuatan untuk mengalahkan musuh",
+     "Bukan kemiskinan, bukan kekayaan, hanya makanan secukupnya",
+     "Takhta raja"
+    ],
+    "explain": "Agur berdoa agar ia tidak diberi kemiskinan ataupun kekayaan, tetapi diberi makan secukupnya, supaya ia tidak menyangkal Allah karena kenyang, atau mencuri karena miskin (Ams 30:8–9)."
+   }
+  },
+  "p07": {
+   "title": "Pelita yang Tak Padam",
+   "when": "Zaman Raja Salomo · Larut malam",
+   "subtitle": "Perempuan yang takut akan TUHAN akan dipuji",
+   "story": [
+    "Anakku, akhirnya kita sampai di rumah. Malam sudah selarut ini, tetapi pelita ibumu masih menyala. Tangannya memegang segumpal kapas, jari-jarinya memegang alat pemintal. Ia tidak khawatir akan seisi rumahnya bila salju turun, karena seluruh keluarganya berpakaian kain merah tua.",
+    "Siapakah yang dapat menemukan perempuan yang cakap? Nilainya jauh melebihi mutiara. Hati suaminya percaya kepadanya, dan rumah tangganya tidak kekurangan apa pun. Ia membuka mulutnya dengan hikmat, dan ajaran kasih ada di lidahnya.",
+    "Anak-anaknya bangun dan menyebut dia berbahagia, dan suaminya memujinya. Kemolekan itu menipu dan kecantikan itu sia-sia, tetapi perempuan yang takut akan TUHAN akan dipuji. Anakku, sudahkah hari ini engkau mendengar suara hikmat memanggil? Sekarang mari kita padamkan pelita dan tidur. Bila fajar tiba, hikmat akan memanggil kita lagi."
+   ],
+   "words": [
+    {
+     "who": "Salomo",
+     "text": "Siapakah yang dapat menemukan perempuan yang cakap? Nilainya jauh melebihi mutiara. Hati suaminya percaya kepadanya, dan rumah tangganya tidak kekurangan apa pun."
+    },
+    {
+     "who": "Salomo",
+     "text": "Ia membuka mulutnya dengan hikmat, dan ajaran kasih ada di lidahnya."
+    },
+    {
+     "who": "Salomo",
+     "text": "Kemolekan itu menipu dan kecantikan itu sia-sia, tetapi perempuan yang takut akan TUHAN akan dipuji."
+    }
+   ],
+   "note": "Amsal 31:10–31 adalah syair yang setiap barisnya diawali huruf-huruf abjad Ibrani secara berurutan, dua puluh dua huruf seluruhnya. Perempuan Israel kuno memintal benang dari bulu domba dan rami, menenunnya menjadi kain, lalu menjahit pakaian bagi keluarganya. Kitab Amsal dimulai dengan 'takut akan TUHAN adalah awal pengetahuan' (1:7) dan diakhiri dengan 'perempuan yang takut akan TUHAN' (31:30).",
+   "reflect": "Apakah aku menganggap biasa jerih payah orang yang selalu ada di sampingku?",
+   "quiz": {
+    "q": "Menurut Amsal 31, nilai perempuan yang cakap jauh melebihi apa?",
+    "options": [
+     "Emas",
+     "Mutiara",
+     "Perak",
+     "Istana"
+    ],
+    "explain": "Siapakah yang dapat menemukan perempuan yang cakap? Nilainya jauh melebihi mutiara (Ams 31:10)."
+   }
+  },
+  "p08": {
+   "title": "Rumah Hikmat",
+   "when": "Zaman Raja Salomo · Fajar",
+   "subtitle": "Jalan orang benar seperti cahaya fajar",
+   "story": [
+    "Anakku, bangunlah. Cahaya fajar mulai merekah di atas gunung sebelah timur. Hikmat telah mendirikan rumahnya dan memahat ketujuh tiangnya. Ia telah menyembelih ternaknya, mencampur anggurnya, dan menata mejanya. Lalu ia menyuruh pelayan-pelayan perempuannya berseru dari tempat-tempat tinggi di kota.",
+    "Siapa yang tak berpengalaman, singgahlah ke mari. Marilah, makanlah rotiku dan minumlah anggur yang telah kucampur. Tinggalkanlah kebodohan, maka engkau akan hidup. Berjalanlah di jalan pengertian. Takut akan TUHAN adalah awal hikmat, dan mengenal Yang Mahakudus adalah pengertian.",
+    "Anakku, hikmat yang kemarin memanggil kita di gerbang kota, pagi ini mengundang kita ke perjamuannya. Jalan orang benar itu seperti cahaya fajar, yang kian bersinar sampai rembang tengah hari. Sekarang marilah kita menempuh jalan itu. Berjalan mengikuti hikmat selalu dimulai baru setiap hari."
+   ],
+   "words": [
+    {
+     "who": "Hikmat",
+     "text": "Marilah, makanlah rotiku dan minumlah anggur yang telah kucampur. Tinggalkanlah kebodohan, maka engkau akan hidup. Berjalanlah di jalan pengertian."
+    },
+    {
+     "who": "Salomo",
+     "text": "Takut akan TUHAN adalah awal hikmat, dan mengenal Yang Mahakudus adalah pengertian."
+    },
+    {
+     "who": "Salomo",
+     "text": "Jalan orang benar itu seperti cahaya fajar, yang kian bersinar sampai rembang tengah hari."
+    }
+   ],
+   "note": "Amsal 1–9 berakhir dengan panggilan dua perempuan: hikmat yang membangun rumah bertiang tujuh di tempat tinggi dan mengundang orang ke perjamuan (9:1–6), dan perempuan bebal yang dari tempat tinggi yang sama berseru bahwa air curian itu manis (9:13–18). Di antara kedua panggilan itu berdiri kalimat 'takut akan TUHAN adalah awal hikmat' (9:10) — kalimat yang sudah dimulai Amsal di 1:7. Perjanjian Baru menyebut Kristus 'hikmat Allah' (1Kor 1:24).",
+   "reflect": "Di hadapan nasihat yang bijak, apakah aku membuka hati atau langsung membela diri?",
+   "quiz": {
+    "q": "Dalam Amsal 9, berapa tiang yang dipahat hikmat untuk membangun rumahnya?",
+    "options": [
+     "Tiga",
+     "Lima",
+     "Tujuh",
+     "Dua belas"
+    ],
+    "explain": "Hikmat memahat tujuh tiang dan membangun rumahnya, lalu menata meja dan mengundang orang ke perjamuannya (Ams 9:1–2)."
+   }
+  }
+ },
+ "daily": [
+  {
+   "t": "Hikmat memanggil",
+   "v": [
+    "Takut akan TUHAN adalah awal pengetahuan. Orang bodoh memandang rendah hikmat dan didikan.",
+    "Anakku, jika orang jahat membujukmu, janganlah engkau menurut.",
+    "Tetapi siapa mendengarkan aku akan tinggal dengan tenteram, aman tanpa takut akan malapetaka."
+   ],
+   "n": "Segala pengetahuan dimulai dari takut akan Allah. Hari ini, pasanglah telingamu: siapa yang sedang memanggilmu?"
+  },
+  {
+   "t": "Seperti mencari harta terpendam",
+   "v": [
+    "Jika engkau mencari hikmat seperti mencari perak dan mengejarnya seperti mengejar harta terpendam, maka engkau akan mengerti takut akan TUHAN dan mendapat pengenalan akan Allah.",
+    "TUHANlah yang memberi hikmat; dari mulut-Nya datang pengetahuan dan pengertian.",
+    "Kebijaksanaan akan menjagamu, dan pengertian akan memeliharamu."
+   ],
+   "n": "Orang yang mencari harta tidak lelah menggali tanah. Hikmat pun terbuka bagi orang yang mencarinya seperti itu."
+  },
+  {
+   "t": "Akuilah Dia dalam segala lakumu",
+   "v": [
+    "Percayalah kepada TUHAN dengan segenap hatimu dan jangan bersandar pada pengertianmu sendiri. Dalam segala jalanmu akuilah Dia, maka Ia akan meluruskan jalan-jalanmu.",
+    "Anakku, janganlah menganggap remeh didikan TUHAN dan janganlah bosan akan teguran-Nya. Sebab TUHAN menegur orang yang dikasihi-Nya, seperti seorang ayah menegur anak yang disayanginya.",
+    "Jika engkau mampu berbuat baik, janganlah menahannya dari orang yang berhak menerimanya."
+   ],
+   "n": "Hari ketika aku meletakkan pikiranku sendiri dan bertanya kepada-Nya tentang jalan adalah hari aku berjalan di jalan yang paling lurus."
+  },
+  {
+   "t": "Jagalah hatimu",
+   "v": [
+    "Permulaan hikmat ialah: perolehlah hikmat. Dengan segala yang kauperoleh, perolehlah pengertian.",
+    "Jalan orang benar itu seperti cahaya fajar, yang kian bersinar sampai rembang tengah hari.",
+    "Jagalah hatimu lebih dari segala yang patut dijaga, karena dari situlah terpancar sumber kehidupan."
+   ],
+   "n": "Jika hati keruh, langkah pun ikut keruh. Perhatikanlah apa yang kaubiarkan masuk ke dalam hatimu hari ini."
+  },
+  {
+   "t": "Minumlah dari mata airmu sendiri",
+   "v": [
+    "Minumlah air dari sumurmu sendiri, air yang mengalir dari mata airmu sendiri.",
+    "Diberkatilah sendangmu, dan bersukacitalah dengan istri masa mudamu.",
+    "Sebab jalan setiap orang ada di depan mata TUHAN, dan Ia meratakan segala jalannya."
+   ],
+   "n": "Menyayangi orang yang ada di sampingmu adalah hikmat yang terbesar. Hari ini, ucapkanlah terima kasih kepada keluargamu."
+  },
+  {
+   "t": "Belajarlah dari semut",
+   "v": [
+    "Hai pemalas, pergilah kepada semut, perhatikanlah apa yang dilakukannya dan jadilah bijak. Semut tidak punya pemimpin, pengawas, atau penguasa, tetapi ia menyiapkan makanannya pada musim panas dan mengumpulkan bekalnya pada waktu panen.",
+    "Ada enam perkara yang dibenci TUHAN, bahkan tujuh yang menjijikkan hati-Nya: mata yang sombong, lidah yang dusta, tangan yang menumpahkan darah orang tak bersalah, hati yang merencanakan rancangan jahat, kaki yang cepat berlari menuju kejahatan, saksi dusta yang menyemburkan kebohongan, dan orang yang menimbulkan pertengkaran di antara saudara.",
+    "Anakku, peliharalah perintah ayahmu, dan janganlah tinggalkan ajaran ibumu."
+   ],
+   "n": "Kerajinan tidak dimulai dari tekad yang besar, tetapi dari mengerjakan hari ini apa yang harus dikerjakan hari ini."
+  },
+  {
+   "t": "Jagalah seperti biji matamu",
+   "v": [
+    "Peliharalah perintahku, maka engkau akan hidup; jagalah ajaranku seperti biji matamu. Tambatkanlah semuanya pada jarimu, tuliskanlah pada loh hatimu.",
+    "Katakanlah kepada hikmat, 'Engkaulah saudariku,' dan sebutlah pengertian 'kaum kerabatku.'",
+    "Janganlah hatimu menyimpang ke jalan perempuan jalang, dan janganlah tersesat ke jalannya."
+   ],
+   "n": "Godaan selalu menunggu di sudut lorong. Kemenangan yang paling mudah adalah tidak berjalan ke sana sejak awal."
+  },
+  {
+   "t": "Yang mencari aku akan menemukan aku",
+   "v": [
+    "Hikmat lebih berharga daripada mutiara; apa pun yang kauinginkan tidak dapat menyamainya.",
+    "Aku mengasihi orang yang mengasihi aku, dan orang yang tekun mencari aku akan menemukan aku.",
+    "Siapa mendapatkan aku, mendapatkan hidup, dan TUHAN berkenan kepadanya."
+   ],
+   "n": "Hikmat tidak bermain petak umpet. Ia lebih dulu mendekat kepada orang yang mencarinya dengan sungguh-sungguh."
+  },
+  {
+   "t": "Perjamuan hikmat",
+   "v": [
+    "Janganlah menegur pencemooh, supaya ia tidak membencimu; tegurlah orang bijak, maka ia akan mengasihimu.",
+    "Berilah ajaran kepada orang bijak, maka ia akan menjadi lebih bijak; ajarilah orang benar, maka pengetahuannya akan bertambah.",
+    "Takut akan TUHAN adalah awal hikmat, dan mengenal Yang Mahakudus adalah pengertian."
+   ],
+   "n": "Orang yang bijak adalah orang yang menerima teguran dengan rasa syukur. Jika hari ini engkau mendengar kata-kata yang pahit, renungkanlah sekali lagi."
+  },
+  {
+   "t": "Kasih menutupi pelanggaran",
+   "v": [
+    "Anak yang bijak menggembirakan ayahnya, tetapi anak yang bebal mendukakan ibunya.",
+    "Kebencian membangkitkan pertengkaran, tetapi kasih menutupi segala pelanggaran.",
+    "Di dalam banyak bicara pasti ada pelanggaran, tetapi siapa menahan bibirnya, berakal budi."
+   ],
+   "n": "Membongkar kesalahan orang lain itu mudah, menutupinya itu sulit. Hari ini, jadilah orang yang menutupi."
+  },
+  {
+   "t": "Siapa menyegarkan orang lain",
+   "v": [
+    "Jika keangkuhan datang, datang pula cemooh, tetapi pada orang yang rendah hati ada hikmat.",
+    "Tanpa pimpinan yang bijak bangsa akan jatuh, tetapi bila banyak penasihat ada keselamatan.",
+    "Siapa banyak memberi akan berkelimpahan, dan siapa menyegarkan orang lain, ia sendiri akan disegarkan."
+   ],
+   "n": "Berbagi tampaknya akan membuat berkurang, tetapi ladang orang yang membasahi sesamanya justru yang lebih dulu menjadi basah."
+  },
+  {
+   "t": "Perkataan yang baik menggembirakan hati",
+   "v": [
+    "Siapa mencintai didikan, mencintai pengetahuan; tetapi siapa membenci teguran, ia seperti binatang.",
+    "Jalan orang bodoh lurus dalam pandangannya sendiri, tetapi orang bijak mendengarkan nasihat.",
+    "Kekhawatiran dalam hati membuat orang tertekan, tetapi perkataan yang baik menggembirakan dia."
+   ],
+   "n": "Hari ini, siapkanlah satu perkataan yang baik untuk meringankan kekhawatiran seseorang."
+  },
+  {
+   "t": "Berjalanlah bersama orang bijak",
+   "v": [
+    "Siapa menjaga mulutnya, memelihara nyawanya; siapa lebar bibirnya, akan ditimpa kebinasaan.",
+    "Harapan yang tertunda menyakitkan hati, tetapi keinginan yang terpenuhi adalah pohon kehidupan.",
+    "Siapa berjalan bersama orang bijak akan menjadi bijak, tetapi teman orang bebal akan celaka."
+   ],
+   "n": "Dengan siapa engkau berjalan menentukan ke mana engkau tiba. Pikirkanlah teman seperjalanan di sampingmu."
+  },
+  {
+   "t": "Hati yang tenang menghidupkan tubuh",
+   "v": [
+    "Ada jalan yang tampaknya lurus bagi manusia, tetapi ujungnya menuju maut.",
+    "Orang yang sabar besar pengertiannya, tetapi orang yang cepat marah membesarkan kebodohan.",
+    "Hati yang tenang menghidupkan tubuh, tetapi iri hati membusukkan tulang."
+   ],
+   "n": "Saat amarah datang, menunda satu tarikan napas saja sudah cukup untuk menghindari banyak kebodohan."
+  },
+  {
+   "t": "Jawaban yang lemah lembut",
+   "v": [
+    "Jawaban yang lemah lembut meredakan amarah, tetapi perkataan yang kasar membangkitkan kemarahan.",
+    "Mata TUHAN memandang ke segala tempat, mengawasi orang jahat dan orang baik.",
+    "Rancangan gagal kalau tidak ada pertimbangan, tetapi terlaksana kalau banyak penasihat."
+   ],
+   "n": "Lebih banyak pertengkaran dimenangkan oleh kata-kata yang lembut daripada yang kaukira. Hari ini, lembutkanlah satu jawabanmu."
+  },
+  {
+   "t": "Dia yang memimpin langkah",
+   "v": [
+    "Serahkanlah segala pekerjaanmu kepada TUHAN, maka rencanamu akan terlaksana.",
+    "Manusia boleh merancang jalannya dalam hati, tetapi TUHANlah yang memimpin langkahnya.",
+    "Orang yang sabar lebih baik daripada seorang pahlawan, dan orang yang menguasai dirinya lebih baik daripada orang yang merebut kota."
+   ],
+   "n": "Buatlah rencanamu, tetapi serahkanlah langkahmu kepada-Nya. Maka walaupun jalan tertutup, engkau tidak akan takut."
+  },
+  {
+   "t": "Hati yang gembira adalah obat yang baik",
+   "v": [
+    "Lebih baik sekerat roti kering disertai damai, daripada rumah penuh daging disertai pertengkaran.",
+    "Seorang sahabat mengasihi setiap waktu, dan seorang saudara lahir untuk menolong dalam kesukaran.",
+    "Hati yang gembira adalah obat yang baik, tetapi jiwa yang patah mengeringkan tulang."
+   ],
+   "n": "Tawa adalah obat yang paling murah dan paling baik. Hari ini, hidangkanlah satu tawa di meja makan."
+  },
+  {
+   "t": "Hidup dan mati dikuasai lidah",
+   "v": [
+    "Nama TUHAN adalah menara yang kuat; orang benar berlari ke sana dan ia selamat.",
+    "Siapa menjawab sebelum mendengar, itulah kebodohan dan kehinaannya.",
+    "Hidup dan mati dikuasai lidah; siapa suka menggunakannya akan memakan buahnya."
+   ],
+   "n": "Berbicara setelah mendengar sampai selesai tidaklah terlambat. Hari ini, dengarkanlah sekali lagi sebelum berbicara."
+  },
+  {
+   "t": "Kemuliaan mengampuni pelanggaran",
+   "v": [
+    "Akal budi membuat orang panjang sabar, dan merupakan kemuliaannya bila ia memaafkan pelanggaran.",
+    "Siapa menaruh belas kasihan kepada orang miskin, memiutangi TUHAN, dan Ia akan membalas perbuatan baiknya itu.",
+    "Banyak rancangan di hati manusia, tetapi hanya keputusan TUHANlah yang terlaksana."
+   ],
+   "n": "Mengampuni bukan berarti kalah, melainkan menang. Jika ada orang yang masih mengganjal di hatimu, lepaskanlah dia hari ini."
+  },
+  {
+   "t": "Nantikanlah TUHAN",
+   "v": [
+    "Menjauhi pertengkaran adalah kehormatan bagi seseorang, tetapi setiap orang bodoh membiarkan amarahnya meledak.",
+    "Bahkan seorang anak pun menunjukkan dari perbuatannya apakah kelakuannya bersih dan jujur.",
+    "Janganlah berkata, 'Aku akan membalas kejahatan itu'; nantikanlah TUHAN, maka Ia akan menyelamatkanmu."
+   ],
+   "n": "Saat ingin membalas adalah saat untuk menunggu. Serahkanlah perhitungannya kepada-Nya."
+  },
+  {
+   "t": "Keadilan lebih dari korban",
+   "v": [
+    "Setiap jalan orang lurus dalam pandangannya sendiri, tetapi TUHANlah yang menguji hati.",
+    "Melakukan kebenaran dan keadilan lebih berkenan kepada TUHAN daripada korban sembelihan.",
+    "Siapa mengejar kebenaran dan kasih setia akan memperoleh kehidupan, kebenaran, dan kehormatan."
+   ],
+   "n": "Kejujuran di luar pintu lebih menyenangkan hati-Nya daripada kesalehan di dalam rumah ibadah."
+  },
+  {
+   "t": "Jalan yang patut ditempuh",
+   "v": [
+    "Orang kaya dan orang miskin hidup bersama; TUHANlah yang menjadikan mereka semua.",
+    "Ajarlah anak jalan yang harus ditempuhnya, maka sampai tua pun ia tidak akan meninggalkannya.",
+    "Pernahkah engkau melihat orang yang cakap dalam pekerjaannya? Ia akan berdiri di hadapan raja-raja."
+   ],
+   "n": "Jalan yang kauajarkan kepada anak adalah jalan yang kautempuh sendiri. Ajarlah dengan langkahmu, bukan dengan kata-kata."
+  },
+  {
+   "t": "Berikanlah hatimu kepadaku",
+   "v": [
+    "Janganlah bersusah payah untuk menjadi kaya, tinggalkanlah niatmu itu. Mengapa engkau mengarahkan matamu kepada yang sia-sia? Sebab tiba-tiba kekayaan itu bersayap lalu terbang ke angkasa seperti rajawali.",
+    "Dengarkanlah ayahmu yang memperanakkan engkau, dan janganlah menghina ibumu kalau ia sudah tua.",
+    "Anakku, serahkanlah hatimu kepadaku, dan biarlah matamu menyukai jalan-jalanku."
+   ],
+   "n": "Kekayaan bersayap dan terbang pergi, tetapi tempat engkau menyerahkan hatimu akan tetap tinggal sampai akhir."
+  },
+  {
+   "t": "Tujuh kali jatuh",
+   "v": [
+    "Jika engkau tawar hati pada masa kesesakan, kecillah kekuatanmu.",
+    "Walaupun orang benar jatuh tujuh kali, ia akan bangkit lagi, tetapi orang fasik tersandung dalam malapetaka.",
+    "Jangan bersukacita kalau musuhmu jatuh, jangan hatimu bersorak kalau ia terperosok."
+   ],
+   "n": "Tidak ada orang yang tidak pernah jatuh. Yang ada hanyalah orang yang bangun kembali."
+  },
+  {
+   "t": "Perkataan yang tepat pada waktunya",
+   "v": [
+    "Kata yang diucapkan pada saat yang tepat bagaikan apel emas di atas pinggan perak berukir.",
+    "Jika musuhmu lapar, berilah dia makan; jika ia haus, berilah dia minum.",
+    "Orang yang tidak dapat mengendalikan dirinya seperti kota yang roboh temboknya, tanpa tembok lagi."
+   ],
+   "n": "Perkataan yang sama menjadi permata bila diucapkan pada waktunya. Hari ini, ucapkanlah kata yang tepat pada saat yang tepat."
+  },
+  {
+   "t": "Tanpa kayu, api padam",
+   "v": [
+    "Pernahkah engkau melihat orang yang menganggap dirinya bijak? Ada lebih banyak harapan bagi orang bebal daripada bagi orang itu.",
+    "Tanpa kayu api akan padam; tanpa pemfitnah pertengkaran akan reda.",
+    "Siapa menggali lubang akan jatuh ke dalamnya, dan siapa menggelindingkan batu akan tertimpa olehnya."
+   ],
+   "n": "Janganlah menambah kayu bakar pada kabar angin. Bila berhenti di mulutmu, api itu padam."
+  },
+  {
+   "t": "Besi menajamkan besi",
+   "v": [
+    "Janganlah membanggakan hari esok, sebab engkau tidak tahu apa yang akan terjadi dalam sehari.",
+    "Biarlah orang lain memuji engkau dan bukan mulutmu sendiri; orang asing, dan bukan bibirmu sendiri.",
+    "Seperti besi menajamkan besi, demikianlah orang membuat wajah sahabatnya bercahaya."
+   ],
+   "n": "Hari esok ada di tangan-Nya. Hari ini, saling asahlah dengan sahabat di sampingmu."
+  },
+  {
+   "t": "Jangan menyembunyikan dosa",
+   "v": [
+    "Orang fasik lari walaupun tidak ada yang mengejar, tetapi orang benar berani seperti singa.",
+    "Orang yang menutupi dosanya tidak akan berhasil, tetapi orang yang mengakui dan meninggalkannya akan beroleh belas kasihan.",
+    "Siapa memberi kepada orang miskin tidak akan berkekurangan, tetapi siapa menutup mata akan sangat dikutuki."
+   ],
+   "n": "Kesalahan yang disembunyikan terasa berat, kesalahan yang diakui terasa ringan. Jika ada yang perlu kauletakkan, letakkanlah hari ini."
+  },
+  {
+   "t": "Tanpa wahyu",
+   "v": [
+    "Orang bebal melampiaskan seluruh amarahnya, tetapi orang bijak menahannya.",
+    "Tanpa wahyu, rakyat hidup tanpa kendali; tetapi berbahagialah orang yang memegang hukum.",
+    "Takut kepada orang mendatangkan jerat, tetapi siapa percaya kepada TUHAN akan aman."
+   ],
+   "n": "Bila memperhatikan pandangan orang, engkau terikat; bila memandang kepada-Nya, engkau merdeka."
+  },
+  {
+   "t": "Doa Agur",
+   "v": [
+    "Setiap firman Allah teruji murni; Ia perisai bagi orang yang berlindung kepada-Nya.",
+    "Jauhkanlah dariku kesia-siaan dan kebohongan. Jangan berikan kepadaku kemiskinan ataupun kekayaan, tetapi berilah aku makan secukupnya.",
+    "Ada empat binatang yang terkecil di bumi, tetapi yang sangat cekatan: semut, bangsa yang tidak kuat, tetapi yang menyediakan makanannya di musim panas."
+   ],
+   "n": "Doa yang paling tenteram adalah doa yang meminta 'secukupnya', bukan kelimpahan dan bukan kekurangan."
+  },
+  {
+   "t": "Perempuan yang cakap",
+   "v": [
+    "Bukalah mulutmu bagi orang yang bisu, bagi hak semua orang yang ditinggalkan. Bukalah mulutmu, adililah dengan benar, dan belalah hak orang yang tertindas dan yang miskin.",
+    "Pakaiannya adalah kekuatan dan kemuliaan, dan ia tertawa tentang hari depan.",
+    "Kemolekan itu menipu dan kecantikan itu sia-sia, tetapi perempuan yang takut akan TUHAN akan dipuji."
+   ],
+   "n": "Sebulan sudah kita berjalan. Besok kita mulai lagi dari pasal 1. Berjalan mengikuti hikmat selalu dimulai baru setiap hari."
+  }
+ ]
+}
