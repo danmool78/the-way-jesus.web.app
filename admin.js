@@ -43,10 +43,13 @@ async function enter(t, user) {
     if (user && window.PasswordCredential) navigator.credentials.store(new PasswordCredential({ id: me.login, password: token })).catch(() => {});
     await load();
   } catch (err) {
-    token = '';
-    try { localStorage.removeItem(KEY); } catch { /* 없음 */ }
+    // 기억한 토큰은 GitHub가 '틀린 토큰'(401)이라고 할 때만 지운다 — 전에는 잠깐의 연결 오류나 요청 한도에도 지워져
+    // 들어올 때마다 토큰을 다시 넣어야 했다 (사용자). 그 밖의 오류는 토큰을 남겨 두고 다시 시도하게 한다
+    const bad = err.status === 401 || /권한|계정/.test(err.message || '');
+    if (bad) { token = ''; try { localStorage.removeItem(KEY); } catch { /* 없음 */ } }
+    else token = '';
     $('#login').hidden = false; $('#editor').hidden = $('#studio').hidden = $('#search').hidden = $('#logout').hidden = true;
-    msg.className = 'msg bad'; msg.textContent = err.status === 401 ? '토큰이 맞지 않습니다' : err.message;
+    msg.className = 'msg bad'; msg.textContent = err.status === 401 ? '토큰이 맞지 않습니다' : bad ? err.message : `연결하지 못했습니다 (${err.message}) — 토큰은 기억해 두었습니다. 잠시 뒤 새로 고침하면 다시 들어갑니다`;
   }
 }
 $('#loginForm').onsubmit = e => { e.preventDefault(); enter($('#token').value, $('#user').value); };
