@@ -7,7 +7,7 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const { chromium } = require('playwright');
 
-const SITE = 'https://the-way-jesus.web.app';
+const SITE = 'https://thewaymap.org';
 // sub: 그림의 둘째 줄, foot: 셋째 줄, title·desc: 미리보기 카드의 제목·설명, c: 테마색(밝은 빛, 해, 짙은 테두리 — icons.mjs와 같게)
 const J = {
   jesus: { title: '그 길 — 예수의 발자취', desc: '지도 위를 걸으며 예수의 생애를 생생한 장면으로 만나 보세요.', og: 'assets/og.jpg' }, // 그림은 처음 만든 것 그대로
