@@ -1,0 +1,33 @@
+{
+ "appTag": "Amsal · Sehari berjalan bersama hikmat",
+ "docTitle": "Sang Jalan — Amsal | Sehari berjalan bersama hikmat",
+ "metaDesc": "Telusuri gerbang kota dan pasar, padang dan lorong-lorong Yerusalem pada zaman Salomo setinggi mata manusia, dan dengarkan hikmat kitab Amsal.",
+ "mapAria": "Jalan-jalan Yerusalem pada zaman Salomo",
+ "introTag": "Yerusalem zaman Salomo, dari pagi sampai malam",
+ "introLead": "Dari gerbang kota ke padang, pasar, dan lorong, ikutilah hikmat kitab Amsal dalam {n} adegan.",
+ "hisWords": "Firman",
+ "voicesOfDay": "Firman",
+ "wordsHead": "Firman dalam kitab Amsal",
+ "wordsIntro": "Firman yang terdapat dalam adegan-adegan kitab Amsal, dihimpun di sini. Setiap perkataan adalah terjemahan baru yang menghidupkan makna aslinya dalam bahasa masa kini.",
+ "gospels": {
+  "prov": [
+   "Amsal",
+   "Ams"
+  ]
+ },
+ "endEyebrow": "PROVERBS · AMSAL",
+ "endTitle": "Sehari penuh kita berjalan bersama hikmat",
+ "endLead": "Dari gerbang kota sampai ke rumah — terima kasih telah berjalan bersama kami.",
+ "tabDaily": "Satu pasal sehari",
+ "dailyHead": "Satu pasal sehari, Amsal 31 hari",
+ "dailyLead": "Kitab Amsal memiliki 31 pasal. Bacalah satu pasal setiap hari sesuai tanggal hari ini, maka dalam sebulan Anda akan menelusuri seluruh kitab Amsal satu kali.",
+ "dailyToday": "Hari ini tanggal {d} — Amsal pasal {d}",
+ "dailyCh": "Amsal pasal {d}",
+ "dailyDone": "Sudah dibaca",
+ "dailyDoneOn": "Dibaca ✓",
+ "dailyCount": "Bulan ini {n} pasal sudah dibaca",
+ "dailyFather": "Sepatah kata dari Ayah",
+ "dailyAll": "Lihat semua 31 pasal",
+ "dailyGo": "Satu pasal sehari, Amsal 31 hari →",
+ "dailyEnd": "Perjalanan sehari telah selesai. Mulai sekarang, berjalanlah mengikuti hikmat, satu pasal setiap hari."
+}

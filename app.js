@@ -1782,7 +1782,7 @@ function renderDaily() {
   $('#dailyBody').innerHTML = `
     <p class="count">${esc(t(d === today ? 'dailyToday' : 'dailyCh', { d }))} · ${esc(t('dailyCount', { n: rec.read.length }))}</p>
     <h3 class="psep" style="--c:var(--gold)">${esc(t('dailyCh', { d }))} · ${esc(day.t)}</h3>
-    ${day.v.map(([ref, text]) => `<div class="wcard" style="--c:var(--gold)"><p>${esc(text)}</p><footer><cite>잠 ${esc(ref)}</cite></footer></div>`).join('')}
+    ${day.v.map(([ref, text]) => `<div class="wcard" style="--c:var(--gold)"><p>${esc(text)}</p><footer><cite>${esc(DATA.ui.gospels?.prov?.[1] || '잠')} ${esc(ref)}</cite></footer></div>`).join('')}
     <div class="daily-note"><small>${esc(t('dailyFather'))}</small><p>${esc(day.n)}</p></div>
     <div class="endbtns"><button class="${read ? 'textbtn' : 'goldbtn'}" id="dailyRead">${esc(t(read ? 'dailyDoneOn' : 'dailyDone'))}</button></div>
     <div class="daily-grid" role="list">${days.map((x, i) => `<button role="listitem" data-d="${i + 1}" class="${i + 1 === d ? 'on' : ''} ${rec.read.includes(i + 1) ? 'read' : ''} ${i + 1 === today ? 'today' : ''}" title="${esc(x.t)}">${i + 1}</button>`).join('')}</div>`;

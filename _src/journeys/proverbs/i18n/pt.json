@@ -1,0 +1,637 @@
+{
+ "periods": {
+  "d1": {
+   "name": "Manhã · Porta da cidade",
+   "span": "Manhã"
+  },
+  "d2": {
+   "name": "Meio-dia · Campo",
+   "span": "Meio-dia"
+  },
+  "d3": {
+   "name": "Tarde · Mercado",
+   "span": "Tarde"
+  },
+  "d4": {
+   "name": "Entardecer · Casa do amigo",
+   "span": "Entardecer"
+  },
+  "d5": {
+   "name": "Noite · Becos e palácio",
+   "span": "Noite"
+  },
+  "d6": {
+   "name": "Alta noite · Nossa casa",
+   "span": "Alta noite"
+  },
+  "d7": {
+   "name": "Madrugada · Casa da Sabedoria",
+   "span": "Madrugada"
+  }
+ },
+ "places": {
+  "gate": {
+   "name": "Praça da porta",
+   "region": "Jerusalém"
+  },
+  "field": {
+   "name": "Campo fora dos muros",
+   "region": "Jerusalém"
+  },
+  "market": {
+   "name": "Mercado da porta",
+   "region": "Jerusalém"
+  },
+  "home": {
+   "name": "Casa do amigo",
+   "region": "Jerusalém"
+  },
+  "alley": {
+   "name": "Beco à noite",
+   "region": "Jerusalém"
+  },
+  "palace": {
+   "name": "Pátio do palácio",
+   "region": "Jerusalém"
+  },
+  "house": {
+   "name": "Nossa casa",
+   "region": "Jerusalém"
+  },
+  "wisdomhouse": {
+   "name": "O alto da cidade",
+   "region": "Jerusalém"
+  }
+ },
+ "events": {
+  "p01": {
+   "title": "A sabedoria chama na porta",
+   "when": "No tempo do rei Salomão · manhã",
+   "subtitle": "O temor do Senhor é o princípio do conhecimento",
+   "story": [
+    "Filho, hoje venha comigo até a porta da cidade. O sol mal nasceu, e os anciãos já estão sentados nos bancos de pedra da porta ouvindo as causas, enquanto os comerciantes armam as suas bancas. Mesmo num lugar barulhento assim, guarde no coração pelo menos esta palavra: o temor do Senhor é o princípio do conhecimento; os insensatos desprezam a sabedoria e a instrução.",
+    "Preste atenção. A Sabedoria clama nas ruas e levanta a voz nas praças. Ela grita nas esquinas barulhentas e, à entrada das portas e dentro da cidade, diz: Até quando vocês, ingênuos, vão amar a ingenuidade? Deem ouvidos à minha repreensão e voltem. Eis que derramarei sobre vocês o meu espírito e lhes farei conhecer as minhas palavras.",
+    "A sabedoria não está escondida no fundo das montanhas. Ela chama você bem aqui, nesta porta, onde as pessoas compram e vendem, discutem e recebem sentença. Meu filho, ouça a instrução de seu pai e não abandone o ensino de sua mãe. Eles serão um belo diadema na sua cabeça e um colar de ouro no seu pescoço."
+   ],
+   "words": [
+    {
+     "who": "Salomão",
+     "text": "O temor do Senhor é o princípio do conhecimento; os insensatos desprezam a sabedoria e a instrução."
+    },
+    {
+     "who": "Sabedoria",
+     "text": "Até quando vocês, ingênuos, vão amar a ingenuidade? Até quando os zombadores terão prazer na zombaria, e os insensatos odiarão o conhecimento? Deem ouvidos à minha repreensão e voltem. Eis que derramarei sobre vocês o meu espírito e lhes farei conhecer as minhas palavras."
+    },
+    {
+     "who": "Salomão",
+     "text": "Meu filho, ouça a instrução de seu pai e não abandone o ensino de sua mãe. Eles serão um belo diadema na sua cabeça e um colar de ouro no seu pescoço."
+    }
+   ],
+   "note": "Na antiga Israel, a porta da cidade era ao mesmo tempo passagem, mercado e tribunal. Os anciãos se sentavam à porta para ouvir as causas e julgá-las (Rt 4:1–2; Pv 31:23). Provérbios retrata a sabedoria como uma mulher que clama nessa entrada movimentada da cidade (Pv 1:20–21; 8:1–3).",
+   "reflect": "Será que fujo das palavras certas só porque não quero ouvi-las?",
+   "quiz": {
+    "q": "Segundo Provérbios, qual é o princípio do conhecimento?",
+    "options": [
+     "Ler muitos livros",
+     "O temor do Senhor",
+     "Aprender no palácio do rei",
+     "Juntar riquezas"
+    ],
+    "explain": "Provérbios 1:7 diz que o temor do Senhor é o princípio do conhecimento. Todo o livro de Provérbios está firmado sobre essa frase."
+   }
+  },
+  "p02": {
+   "title": "A formiga no campo",
+   "when": "No tempo do rei Salomão · meio-dia",
+   "subtitle": "Preguiçoso, vá até a formiga e observe",
+   "story": [
+    "Filho, vamos sair pela porta e ir ao campo. Com o sol já alto, o povo está nas lavouras colhendo o trigo. Agache-se aqui na beira do caminho e olhe para estes bichinhos. Vá até a formiga, preguiçoso; observe o que ela faz e seja sábio. Ela não tem chefe, nem supervisor, nem governante, mas no verão prepara a sua comida e na colheita ajunta o seu alimento.",
+    "Agora olhe para aquele campo ali. Passei pelo campo do preguiçoso e pela vinha do homem sem juízo, e veja: os espinhos se espalharam, o mato cobriu o chão, e o muro de pedra está caído. E o dono do campo está deitado à sombra de uma árvore, dormindo pesado. Preguiçoso, até quando você vai ficar deitado? Quando vai se levantar do seu sono?",
+    "Um pouco para dormir, um pouco para cochilar, um pouco para cruzar os braços e descansar — e a sua pobreza virá como um ladrão, e a sua necessidade, como um guerreiro. Filho, eu vi isso e pensei bem; vi e aprendi a lição. A diligência se aprende até com aquela formiguinha. Vamos voltar ao mercado antes que o sol desça."
+   ],
+   "words": [
+    {
+     "who": "Salomão",
+     "text": "Vá até a formiga, preguiçoso; observe o que ela faz e seja sábio. Ela não tem chefe, nem supervisor, nem governante, mas no verão prepara a sua comida e na colheita ajunta o seu alimento."
+    },
+    {
+     "who": "Salomão",
+     "text": "Preguiçoso, até quando você vai ficar deitado? Quando vai se levantar do seu sono? Um pouco para dormir, um pouco para cochilar, um pouco para cruzar os braços e descansar — e a sua pobreza virá como um ladrão, e a sua necessidade, como um guerreiro."
+    },
+    {
+     "who": "Salomão",
+     "text": "Passei pelo campo do preguiçoso e pela vinha do homem sem juízo, e veja: os espinhos se espalharam, o mato cobriu o chão, e o muro de pedra estava caído. Eu vi isso e pensei bem; vi e aprendi a lição."
+    }
+   ],
+   "note": "Nos campos de Israel vivem formigas-ceifeiras, que juntam grãos e os guardam em galerias debaixo da terra. Na colheita, a fila de formigas carregando grãos à beira da lavoura era uma cena conhecida dos antigos lavradores. As encostas ao redor de Jerusalém eram campos em terraços sustentados por muros de pedra; se ninguém cuidasse dos muros, eles logo desabavam e a terra escorria morro abaixo.",
+   "reflect": "Estou adiando o que preciso fazer hoje, dizendo “só mais um pouco”?",
+   "quiz": {
+    "q": "Segundo Provérbios, com quem o preguiçoso deve ir aprender?",
+    "options": [
+     "Com o leão",
+     "Com a águia",
+     "Com a formiga",
+     "Com o touro"
+    ],
+    "explain": "Provérbios 6:6 diz ao preguiçoso que vá até a formiga, observe o que ela faz e seja sábio. Mesmo sem ninguém mandar, a formiga prepara a sua comida no verão."
+   }
+  },
+  "p03": {
+   "title": "A balança do mercado",
+   "when": "No tempo do rei Salomão · tarde",
+   "subtitle": "O Senhor detesta a balança enganosa",
+   "story": [
+    "Filho, o sol começou a baixar; vamos voltar ao mercado. Cada comerciante pendurou a sua balança e vende grãos e azeite pesando tudo. Olhe bem as mãos daquele vendedor de grãos. Ele tem dois jogos de pesos na bolsa: quando compra, tira o peso pesado; quando vende, o leve. A balança pende para um lado, e o comprador nem percebe.",
+    "O Senhor detesta a balança enganosa, mas o peso justo lhe agrada. Dois pesos diferentes e duas medidas diferentes, o Senhor detesta ambos. A balança e os pratos justos pertencem ao Senhor; todos os pesos da bolsa são obra dele.",
+    "Filho, Deus vê tudo, até dentro da bolsa onde ninguém olha. Escolha o bom nome em vez de muitas riquezas, e prefira o favor à prata e ao ouro. Antes que o sol se ponha, vamos passar na casa do meu amigo e jantar com ele."
+   ],
+   "words": [
+    {
+     "who": "Salomão",
+     "text": "O Senhor detesta a balança enganosa, mas o peso justo lhe agrada."
+    },
+    {
+     "who": "Salomão",
+     "text": "A balança e os pratos justos pertencem ao Senhor; todos os pesos da bolsa são obra dele."
+    },
+    {
+     "who": "Salomão",
+     "text": "Mais vale escolher o bom nome do que muitas riquezas, e o favor é melhor do que a prata e o ouro."
+    }
+   ],
+   "note": "Nos mercados da antiga Israel, as pessoas levavam numa bolsa pesos de pedra lavrada e pesavam as mercadorias na balança para comprar e vender. Pesos com o mesmo nome variavam um pouco, e era comum andar com um peso pesado e outro leve para enganar. A própria lei mandava não levar dois tipos de peso na bolsa (Dt 25:13–16).",
+   "reflect": "Ajo com honestidade mesmo quando ninguém está vendo?",
+   "quiz": {
+    "q": "Segundo Provérbios, o que agrada ao Senhor?",
+    "options": [
+     "O peso pesado",
+     "Muitas riquezas",
+     "O peso justo",
+     "Um grande mercado"
+    ],
+    "explain": "O Senhor detesta a balança enganosa, mas o peso justo lhe agrada (Pv 11:1)."
+   }
+  },
+  "p04": {
+   "title": "A casa do amigo",
+   "when": "No tempo do rei Salomão · entardecer",
+   "subtitle": "Como o ferro afia o ferro",
+   "story": [
+    "Filho, esta é a casa de um velho amigo meu. O sol se pôs, e ele acendeu a lamparina no pátio e nos recebe com alegria. Na mesa há só um prato de verduras e alguns pães. Mesmo assim, melhor é comer verduras onde há amor do que um boi gordo onde há ódio.",
+    "O amigo ama em todo tempo, e o irmão nasce para ajudar na hora da angústia. Esta noite o meu amigo não escondeu o meu erro; falou comigo com franqueza. A repreensão dolorosa do amigo nasce da lealdade, mas os muitos beijos do inimigo são falsos. Como o ferro afia o ferro, assim o homem faz brilhar o rosto do seu amigo.",
+    "Filho, quem tem muitos amigos pode acabar se dando mal, mas há amigo mais chegado que um irmão. Tenha um amigo assim ao seu lado, e seja você também esse amigo para alguém. A noite já vai alta. Agora vamos para casa, passando pelos becos escuros."
+   ],
+   "words": [
+    {
+     "who": "Salomão",
+     "text": "Como o ferro afia o ferro, assim o homem faz brilhar o rosto do seu amigo."
+    },
+    {
+     "who": "Salomão",
+     "text": "O amigo ama em todo tempo, e o irmão nasce para ajudar na hora da angústia."
+    },
+    {
+     "who": "Salomão",
+     "text": "A repreensão dolorosa do amigo nasce da lealdade, mas os muitos beijos do inimigo são falsos."
+    }
+   ],
+   "note": "No tempo de Salomão, as casas de Israel costumavam ser “casas de quatro cômodos”. No centro havia um pátio aberto para o céu; dos lados, cômodos ladeados por colunas de pedra; e ao fundo, um cômodo largo de lado a lado. À noitinha, estendia-se uma esteira no pátio para repartir o pão assado no forno e as verduras, e acendia-se uma pequena lamparina de barro com azeite de oliva.",
+   "reflect": "Tenho um amigo que me fala com franqueza dos meus erros? E eu, sou esse amigo para alguém?",
+   "quiz": {
+    "q": "Em Provérbios 27:17, como o ferro afia o ferro, o homem faz brilhar o rosto de quem?",
+    "options": [
+     "Do rei",
+     "Do amigo",
+     "De si mesmo",
+     "Do inimigo"
+    ],
+    "explain": "Como o ferro afia o ferro, assim o homem faz brilhar o rosto do seu amigo (Pv 27:17). O amigo que nos lapida no atrito nos faz crescer."
+   }
+  },
+  "p05": {
+   "title": "O beco ao cair da tarde",
+   "when": "No tempo do rei Salomão · noite",
+   "subtitle": "Acima de tudo, guarde o seu coração",
+   "story": [
+    "Filho, a noite já vai alta; vamos para casa por este beco. Certa vez, olhando pela grade da janela da nossa casa, eu vi entre os ingênuos, entre os jovens, um rapaz sem juízo. Ele passava pela rua e chegava perto da esquina da casa daquela mulher, ao entardecer, ao cair do dia, na escuridão da noite.",
+    "Então uma mulher de coração astuto saiu ao encontro dele. Com palavras macias, ela o seduzia e sussurrava que o marido tinha saído para uma longa viagem e não estava em casa. Logo o rapaz foi atrás dela, como o boi que vai para o matadouro, como o pássaro que se apressa para a rede sem saber que isso lhe custará a vida.",
+    "Filho, não deixe o seu coração se desviar para o caminho dessa mulher, nem se perca nas veredas dela. Acima de tudo o que se deve guardar, guarde o seu coração, porque dele procedem as fontes da vida. Diga à sabedoria: Você é minha irmã; e chame o entendimento de seu parente. Assim a sabedoria guardará você, para que não caia nas mãos da mulher de palavras sedutoras."
+   ],
+   "words": [
+    {
+     "who": "Salomão",
+     "text": "Acima de tudo o que se deve guardar, guarde o seu coração, porque dele procedem as fontes da vida."
+    },
+    {
+     "who": "Salomão",
+     "text": "Diga à sabedoria: Você é minha irmã; e chame o entendimento de seu parente. Assim eles guardarão você da mulher imoral, da estrangeira de palavras sedutoras."
+    },
+    {
+     "who": "Salomão",
+     "text": "Não deixe o seu coração se desviar para os caminhos da mulher imoral, nem se perca nas veredas dela. Pois ela fez cair muitos feridos, e são numerosos os que ela matou."
+    }
+   ],
+   "note": "Provérbios 7 é uma pequena história em que o pai conta o que viu pela grade da janela de casa. Nas casas da antiga Israel, em vez de vidro, as janelas tinham grades de madeira: de dentro se via a rua, mas de fora mal se via o interior. Logo depois dessa história (capítulos 8–9), Provérbios apresenta outra mulher que chama nas ruas — a Sabedoria.",
+   "reflect": "Para qual caminho perigoso o meu coração vive pendendo?",
+   "quiz": {
+    "q": "Provérbios 4:23 manda guardar o quê, acima de tudo o que se deve guardar?",
+    "options": [
+     "As riquezas",
+     "O coração",
+     "A casa",
+     "O nome"
+    ],
+    "explain": "Acima de tudo o que se deve guardar, guarde o seu coração, porque dele procedem as fontes da vida (Pv 4:23)."
+   }
+  },
+  "p06": {
+   "title": "Diante do palácio",
+   "when": "No tempo do rei Salomão · noite",
+   "subtitle": "Não me dês nem pobreza nem riqueza",
+   "story": [
+    "Filho, no caminho de casa passamos diante do palácio do rei. No palácio, onde as colunas de cedro se enfileiram como uma floresta, a luz do banquete brilha em cada janela, e nobres ricamente vestidos entram passando entre os guardas. Mas ao lado do portão há um pobre sentado, segurando uma tigela vazia.",
+    "Como os ribeiros de águas, assim é o coração do rei na mão do Senhor; ele o dirige para onde quer. A soberba vem antes da ruína, e o espírito altivo, antes da queda. Quem oprime o pobre despreza aquele que o criou, mas quem se compadece do necessitado o honra.",
+    "Por isso Agur orou assim: Afasta de mim a falsidade e a mentira; não me dês nem pobreza nem riqueza; sustenta-me apenas com o pão de que preciso. Tenho medo de que, farto, eu te negue e diga: Quem é o Senhor? E tenho medo de que, pobre, eu venha a roubar e desonre o nome do meu Deus. Filho, vamos repartir com aquele homem o pão que o meu amigo nos deu. Quem tem olhos bondosos será abençoado."
+   ],
+   "words": [
+    {
+     "who": "Salomão",
+     "text": "Como os ribeiros de águas, assim é o coração do rei na mão do Senhor; ele o dirige para onde quer."
+    },
+    {
+     "who": "Agur",
+     "text": "Afasta de mim a falsidade e a mentira; não me dês nem pobreza nem riqueza; sustenta-me apenas com o pão de que preciso. Tenho medo de que, farto, eu te negue e diga: Quem é o Senhor? E tenho medo de que, pobre, eu venha a roubar e desonre o nome do meu Deus."
+    },
+    {
+     "who": "Salomão",
+     "text": "Quem tem olhos bondosos será abençoado, porque reparte o seu pão com o pobre."
+    }
+   ],
+   "note": "Salomão levou sete anos para construir o templo e treze anos para construir o seu palácio (1Rs 6:38–7:1). Entre os edifícios do palácio, a “Casa do Bosque do Líbano” tinha quatro fileiras de colunas de cedro e três fileiras de janelas (1Rs 7:2–5). Provérbios 30 traz as palavras de “Agur, filho de Jaque”, e não de Salomão, e guarda uma oração rara na Bíblia: a que não pede nem pobreza nem riqueza.",
+   "reflect": "Fico contente com o que me basta e consigo repartir o que tenho?",
+   "quiz": {
+    "q": "O que Agur pediu a Deus?",
+    "options": [
+     "Grande riqueza e honra",
+     "Força para vencer os inimigos",
+     "Nem pobreza nem riqueza, só o pão necessário",
+     "O trono do rei"
+    ],
+    "explain": "Agur orou para não ser nem pobre nem rico, mas receber o pão necessário. Assim não negaria a Deus por estar farto, nem roubaria por ser pobre (Pv 30:8–9)."
+   }
+  },
+  "p07": {
+   "title": "A lâmpada que não se apaga",
+   "when": "No tempo do rei Salomão · alta noite",
+   "subtitle": "A mulher que teme ao Senhor será louvada",
+   "story": [
+    "Filho, finalmente chegamos em casa. A noite já vai tão alta, e a lâmpada da sua mãe ainda está acesa. Ela segura a roca com as mãos e prende o fuso com os dedos. Quando neva, ela não teme pela sua casa, pois todos os seus estão vestidos de escarlate.",
+    "Mulher virtuosa, quem a achará? O seu valor excede muito o das pérolas. O coração do seu marido confia nela, e nada falta à sua casa. Ela abre a boca com sabedoria, e na sua língua está a lei da bondade.",
+    "Seus filhos se levantam e a chamam bem-aventurada, e o seu marido a elogia. Enganosa é a graça, e vã a beleza, mas a mulher que teme ao Senhor, essa será louvada. Filho, hoje você ouviu a voz da sabedoria chamando? Agora vamos apagar a lâmpada e dormir. Quando chegar a madrugada, a sabedoria vai nos chamar de novo."
+   ],
+   "words": [
+    {
+     "who": "Salomão",
+     "text": "Mulher virtuosa, quem a achará? O seu valor excede muito o das pérolas. O coração do seu marido confia nela, e nada falta à sua casa."
+    },
+    {
+     "who": "Salomão",
+     "text": "Ela abre a boca com sabedoria, e na sua língua está a lei da bondade."
+    },
+    {
+     "who": "Salomão",
+     "text": "Enganosa é a graça, e vã a beleza, mas a mulher que teme ao Senhor, essa será louvada."
+    }
+   ],
+   "note": "Provérbios 31:10–31 é um poema em que cada verso começa, em ordem, com uma das vinte e duas letras do alfabeto hebraico. Na antiga Israel, as mulheres fiavam lã e linho e teciam o pano para vestir a família. Provérbios começa com “o temor do Senhor é o princípio do conhecimento” (1:7) e termina com “a mulher que teme ao Senhor” (31:30).",
+   "reflect": "Estou achando natural o esforço de quem sempre cuida de mim?",
+   "quiz": {
+    "q": "Provérbios 31 diz que o valor da mulher virtuosa excede o de quê?",
+    "options": [
+     "O do ouro",
+     "O das pérolas",
+     "O da prata",
+     "O dos palácios"
+    ],
+    "explain": "Mulher virtuosa, quem a achará? O seu valor excede muito o das pérolas (Pv 31:10)."
+   }
+  },
+  "p08": {
+   "title": "A casa da Sabedoria",
+   "when": "No tempo do rei Salomão · madrugada",
+   "subtitle": "A vereda dos justos é como a luz da aurora",
+   "story": [
+    "Filho, levante-se. A luz da madrugada está se espalhando sobre os montes do oriente. A Sabedoria edificou a sua casa e lavrou as suas sete colunas. Abateu os animais, misturou o vinho e preparou a mesa. E enviou as suas criadas para anunciar dos lugares mais altos da cidade:",
+    "Quem é ingênuo, volte-se para cá. Venham, comam do meu pão e bebam do vinho que misturei. Deixem a ingenuidade e vivam; andem pelo caminho do entendimento. O temor do Senhor é o princípio da sabedoria, e o conhecimento do Santo é entendimento.",
+    "Filho, a sabedoria que ontem nos chamava na porta da cidade, hoje de manhã nos convida para um banquete. A vereda dos justos é como a luz da aurora, que vai brilhando mais e mais até ser pleno dia. Agora vamos andar por esse caminho. Os dias de caminhar com a sabedoria recomeçam a cada manhã."
+   ],
+   "words": [
+    {
+     "who": "Sabedoria",
+     "text": "Venham, comam do meu pão e bebam do vinho que misturei. Deixem a ingenuidade e vivam; andem pelo caminho do entendimento."
+    },
+    {
+     "who": "Salomão",
+     "text": "O temor do Senhor é o princípio da sabedoria, e o conhecimento do Santo é entendimento."
+    },
+    {
+     "who": "Salomão",
+     "text": "A vereda dos justos é como a luz da aurora, que vai brilhando mais e mais até ser pleno dia."
+    }
+   ],
+   "note": "Provérbios 1–9 termina com o chamado de duas mulheres: a Sabedoria, que edifica num lugar alto uma casa de sete colunas e convida para o banquete (9:1–6), e a mulher insensata, que do mesmo lugar alto chama dizendo que as águas roubadas são doces (9:13–18). Entre os dois chamados está a frase “o temor do Senhor é o princípio da sabedoria” (9:10) — a mesma com que Provérbios começou em 1:7. O Novo Testamento chama Cristo de “sabedoria de Deus” (1Co 1:24).",
+   "reflect": "Diante de um conselho sábio, abro o coração ou começo logo a me justificar?",
+   "quiz": {
+    "q": "Em Provérbios 9, quantas colunas a Sabedoria lavrou para edificar a sua casa?",
+    "options": [
+     "Três",
+     "Cinco",
+     "Sete",
+     "Doze"
+    ],
+    "explain": "A Sabedoria lavrou sete colunas, edificou a sua casa, preparou a mesa e convidou o povo para o banquete (Pv 9:1–2)."
+   }
+  }
+ },
+ "daily": [
+  {
+   "t": "A sabedoria chama",
+   "v": [
+    "O temor do Senhor é o princípio do conhecimento; os insensatos desprezam a sabedoria e a instrução.",
+    "Meu filho, se os pecadores quiserem seduzir você, não ceda.",
+    "Mas quem me ouvir habitará em segurança e viverá tranquilo, sem medo do mal."
+   ],
+   "n": "Todo saber começa no temor de Deus. Hoje, preste atenção em quem está chamando você."
+  },
+  {
+   "t": "Como quem busca um tesouro",
+   "v": [
+    "Se você a buscar como a prata e a procurar como a tesouros escondidos, então entenderá o temor do Senhor e achará o conhecimento de Deus.",
+    "Pois o Senhor dá a sabedoria; da sua boca procedem o conhecimento e o entendimento.",
+    "O bom senso guardará você, e o entendimento o protegerá."
+   ],
+   "n": "Quem procura um tesouro não se cansa de cavar. A sabedoria também se abre para quem a busca assim."
+  },
+  {
+   "t": "Reconheça-o em seus caminhos",
+   "v": [
+    "Confie no Senhor de todo o seu coração e não se apoie no seu próprio entendimento. Reconheça-o em todos os seus caminhos, e ele endireitará as suas veredas.",
+    "Meu filho, não despreze a disciplina do Senhor, nem se aborreça com a sua repreensão. Pois o Senhor repreende a quem ama, como o pai repreende o filho a quem quer bem.",
+    "Quando estiver ao alcance da sua mão fazer o bem, não o negue a quem dele precisa."
+   ],
+   "n": "O dia em que deixo de lado as minhas ideias e pergunto a ele o caminho é o dia em que ando pelo caminho mais reto."
+  },
+  {
+   "t": "Guarde o seu coração",
+   "v": [
+    "A sabedoria é o principal; adquira a sabedoria. Com tudo o que você possui, adquira o entendimento.",
+    "A vereda dos justos é como a luz da aurora, que vai brilhando mais e mais até ser pleno dia.",
+    "Acima de tudo o que se deve guardar, guarde o seu coração, porque dele procedem as fontes da vida."
+   ],
+   "n": "Quando o coração fica turvo, os passos também ficam. Hoje, repare no que você deixa entrar no seu coração."
+  },
+  {
+   "t": "Beba da sua própria fonte",
+   "v": [
+    "Beba a água da sua própria cisterna e as águas que correm do seu próprio poço.",
+    "Seja bendita a sua fonte, e alegre-se com a mulher da sua juventude.",
+    "Os caminhos do homem estão diante dos olhos do Senhor, e ele aplana todas as suas veredas."
+   ],
+   "n": "Cuidar de quem está ao seu lado é a maior sabedoria. Hoje, diga à sua família que você é grato por ela."
+  },
+  {
+   "t": "Aprenda com a formiga",
+   "v": [
+    "Vá até a formiga, preguiçoso; observe o que ela faz e seja sábio. Ela não tem chefe, nem supervisor, nem governante, mas no verão prepara a sua comida e na colheita ajunta o seu alimento.",
+    "Seis coisas o Senhor detesta, e a sétima a sua alma abomina: olhos altivos, língua mentirosa, mãos que derramam sangue inocente, coração que trama planos perversos, pés que se apressam a correr para o mal, testemunha falsa que espalha mentiras e quem semeia discórdia entre irmãos.",
+    "Meu filho, guarde o mandamento de seu pai e não abandone o ensino de sua mãe."
+   ],
+   "n": "A diligência não começa com uma grande decisão, e sim em fazer hoje o que é para hoje."
+  },
+  {
+   "t": "Como a menina dos olhos",
+   "v": [
+    "Guarde os meus mandamentos e viva; guarde o meu ensino como a menina dos seus olhos. Amarre-os nos seus dedos e escreva-os na tábua do seu coração.",
+    "Diga à sabedoria: Você é minha irmã; e chame o entendimento de seu parente.",
+    "Não deixe o seu coração se desviar para os caminhos da mulher imoral, nem se perca nas veredas dela."
+   ],
+   "n": "A tentação sempre espera na esquina do beco. Não entrar naquele caminho desde o começo é a vitória mais fácil."
+  },
+  {
+   "t": "Quem me busca me encontra",
+   "v": [
+    "A sabedoria é melhor do que as pérolas; nada do que se possa desejar se compara a ela.",
+    "Eu amo os que me amam, e os que me buscam com empenho me encontrarão.",
+    "Quem me encontra encontra a vida e alcança o favor do Senhor."
+   ],
+   "n": "A sabedoria não brinca de esconde-esconde. Ela vem primeiro ao encontro de quem a busca de verdade."
+  },
+  {
+   "t": "O banquete da sabedoria",
+   "v": [
+    "Não repreenda o zombador, para que ele não odeie você; repreenda o sábio, e ele o amará.",
+    "Dê instrução ao sábio, e ele se tornará ainda mais sábio; ensine o justo, e ele aumentará o seu saber.",
+    "O temor do Senhor é o princípio da sabedoria, e o conhecimento do Santo é entendimento."
+   ],
+   "n": "Sábio é quem recebe a repreensão com gratidão. Se hoje você ouviu uma palavra dura, pense nela outra vez."
+  },
+  {
+   "t": "O amor cobre as faltas",
+   "v": [
+    "O filho sábio alegra o pai, mas o filho insensato é a tristeza da sua mãe.",
+    "O ódio provoca brigas, mas o amor cobre todas as faltas.",
+    "Onde há muitas palavras não falta transgressão, mas quem refreia os lábios é sábio."
+   ],
+   "n": "É fácil expor as faltas dos outros e difícil cobri-las. Hoje, seja alguém que cobre."
+  },
+  {
+   "t": "Quem dá de beber aos outros",
+   "v": [
+    "Quando vem a soberba, vem também a desonra, mas com os humildes está a sabedoria.",
+    "Onde não há conselho, o povo cai, mas na multidão de conselheiros há segurança.",
+    "A alma generosa prosperará, e quem dá de beber aos outros também será saciado."
+   ],
+   "n": "Parece que repartir faz diminuir, mas o campo de quem rega os outros é o primeiro a ficar molhado."
+  },
+  {
+   "t": "A boa palavra alegra o coração",
+   "v": [
+    "Quem ama a disciplina ama o conhecimento, mas quem odeia a repreensão é como um animal.",
+    "O caminho do insensato parece reto aos seus próprios olhos, mas o sábio ouve os conselhos.",
+    "A ansiedade no coração do homem o abate, mas uma boa palavra o alegra."
+   ],
+   "n": "Prepare hoje uma boa palavra que alivie a preocupação de alguém."
+  },
+  {
+   "t": "Ande com os sábios",
+   "v": [
+    "Quem guarda a boca preserva a sua vida, mas quem abre demais os lábios traz sobre si a ruína.",
+    "A esperança adiada faz o coração adoecer, mas o desejo cumprido é árvore de vida.",
+    "Quem anda com os sábios será sábio, mas o companheiro dos insensatos sofrerá o mal."
+   ],
+   "n": "Com quem você anda decide aonde você chega. Pense nos companheiros de caminho que estão ao seu lado."
+  },
+  {
+   "t": "O coração tranquilo dá vida",
+   "v": [
+    "Há caminho que ao homem parece direito, mas no fim é caminho de morte.",
+    "Quem demora a se irar tem grande entendimento, mas o impaciente põe à mostra a sua insensatez.",
+    "O coração tranquilo é vida para o corpo, mas a inveja apodrece os ossos."
+   ],
+   "n": "Só de esperar um instante quando a raiva sobe, você escapa de muitas tolices."
+  },
+  {
+   "t": "A resposta branda",
+   "v": [
+    "A resposta branda desvia a ira, mas a palavra dura desperta o furor.",
+    "Os olhos do Senhor estão em todo lugar, observando os maus e os bons.",
+    "Onde não há conselho os planos fracassam, mas com muitos conselheiros eles se firmam."
+   ],
+   "n": "Há mais brigas vencidas por palavras mansas do que se imagina. Hoje, dê pelo menos uma resposta com brandura."
+  },
+  {
+   "t": "Quem dirige os passos",
+   "v": [
+    "Entregue ao Senhor as suas obras, e os seus planos serão bem-sucedidos.",
+    "O coração do homem planeja o seu caminho, mas é o Senhor quem dirige os seus passos.",
+    "Melhor é quem demora a se irar do que o guerreiro valente, e quem domina o seu espírito do que quem conquista uma cidade."
+   ],
+   "n": "Faça os planos, mas entregue os passos a ele. Assim, mesmo quando o caminho se fechar, você não terá medo."
+  },
+  {
+   "t": "O coração alegre é bom remédio",
+   "v": [
+    "Melhor é um pedaço de pão seco com paz do que uma casa cheia de carne com brigas.",
+    "O amigo ama em todo tempo, e o irmão nasce para ajudar na hora da angústia.",
+    "O coração alegre é bom remédio, mas o espírito abatido seca os ossos."
+   ],
+   "n": "O riso é o remédio mais barato e melhor. Hoje, ponha um sorriso na mesa."
+  },
+  {
+   "t": "Morte e vida no poder da língua",
+   "v": [
+    "O nome do Senhor é torre forte; o justo corre para ela e está seguro.",
+    "Quem responde antes de ouvir mostra a sua insensatez e passa vergonha.",
+    "A morte e a vida estão no poder da língua, e quem gosta de usá-la comerá do seu fruto."
+   ],
+   "n": "Não é tarde falar depois de ouvir até o fim. Hoje, ouça mais uma vez antes de falar."
+  },
+  {
+   "t": "A glória de perdoar",
+   "v": [
+    "A prudência faz o homem demorar a se irar, e a sua glória é perdoar a ofensa.",
+    "Quem se compadece do pobre empresta ao Senhor, e ele lhe retribuirá o bem que fez.",
+    "Muitos são os planos no coração do homem, mas só o propósito do Senhor permanecerá."
+   ],
+   "n": "Perdoar não é perder, é vencer. Se alguém pesa no seu coração, solte-o hoje."
+  },
+  {
+   "t": "Espere no Senhor",
+   "v": [
+    "É honra para o homem afastar-se das brigas, mas todo insensato se mete nelas.",
+    "Até a criança se dá a conhecer pelo que faz, se o seu proceder é puro e reto.",
+    "Não diga: Vou me vingar do mal; espere no Senhor, e ele salvará você."
+   ],
+   "n": "Quando dá vontade de revidar, é hora de esperar. Deixe a conta com ele."
+  },
+  {
+   "t": "Mais que sacrifícios, a justiça",
+   "v": [
+    "Todo caminho do homem parece reto aos seus próprios olhos, mas o Senhor examina os corações.",
+    "Praticar a justiça e o direito agrada mais ao Senhor do que o sacrifício.",
+    "Quem segue a justiça e a bondade encontra a vida, a justiça e a honra."
+   ],
+   "n": "Mais do que a piedade dentro do templo, ele se alegra com a honestidade do lado de fora da porta."
+  },
+  {
+   "t": "O caminho em que deve andar",
+   "v": [
+    "O rico e o pobre vivem lado a lado; foi o Senhor quem fez a ambos.",
+    "Ensine a criança no caminho em que deve andar, e mesmo quando for velha não se desviará dele.",
+    "Você já viu um homem hábil no seu trabalho? Ele estará diante de reis."
+   ],
+   "n": "O caminho que ensino à criança é o caminho que eu mesmo percorri. Ensine mais com os passos do que com palavras."
+  },
+  {
+   "t": "Dê-me o seu coração",
+   "v": [
+    "Não se esgote para ficar rico; deixe de lado a sua própria esperteza. Por que fixar os olhos no que não é nada? Pois as riquezas criam asas e voam para o céu como a águia.",
+    "Ouça o seu pai, que gerou você, e não despreze a sua mãe quando ela envelhecer.",
+    "Meu filho, dê-me o seu coração, e que os seus olhos se agradem dos meus caminhos."
+   ],
+   "n": "A riqueza tem asas e voa, mas o lugar onde você entregou o coração permanece até o fim."
+  },
+  {
+   "t": "Sete vezes cai",
+   "v": [
+    "Se você desanima no dia da angústia, a sua força é pequena.",
+    "Pois o justo cai sete vezes e se levanta, mas os ímpios são derrubados pela desgraça.",
+    "Quando o seu inimigo cair, não se alegre, e quando ele tropeçar, não se regozije o seu coração."
+   ],
+   "n": "Não existe quem nunca caia. Existe apenas quem se levanta de novo."
+  },
+  {
+   "t": "A palavra dita a seu tempo",
+   "v": [
+    "Como maçãs de ouro em bandejas de prata lavrada, assim é a palavra dita a seu tempo.",
+    "Se o seu inimigo tiver fome, dê-lhe de comer; se tiver sede, dê-lhe de beber.",
+    "Como a cidade com os muros derrubados, sem defesa, assim é o homem que não domina o seu espírito."
+   ],
+   "n": "A mesma palavra, dita na hora certa, vira joia. Hoje, diga a palavra necessária no momento necessário."
+  },
+  {
+   "t": "Sem lenha, o fogo se apaga",
+   "v": [
+    "Você vê um homem que se acha sábio aos próprios olhos? Há mais esperança para o insensato do que para ele.",
+    "Sem lenha o fogo se apaga, e sem o fofoqueiro a briga acaba.",
+    "Quem cava uma cova nela cairá, e a pedra rolará de volta sobre quem a empurra."
+   ],
+   "n": "Não ponha lenha nos boatos. Se pararem na sua boca, o fogo se apaga."
+  },
+  {
+   "t": "O ferro afia o ferro",
+   "v": [
+    "Não se glorie do dia de amanhã, pois você não sabe o que um dia pode trazer.",
+    "Que outro o elogie, e não a sua própria boca; um estranho, e não os seus próprios lábios.",
+    "Como o ferro afia o ferro, assim o homem faz brilhar o rosto do seu amigo."
+   ],
+   "n": "O amanhã está nas mãos dele. Hoje, você e o amigo ao seu lado podem afiar um ao outro."
+  },
+  {
+   "t": "Não esconda o pecado",
+   "v": [
+    "O ímpio foge sem que ninguém o persiga, mas os justos são ousados como o leão.",
+    "Quem esconde os seus pecados não prospera, mas quem os confessa e os abandona alcança misericórdia.",
+    "Quem dá ao pobre não passará necessidade, mas quem fecha os olhos para ele receberá muitas maldições."
+   ],
+   "n": "O erro escondido pesa; o erro confessado fica leve. Se há algo para deixar hoje, deixe."
+  },
+  {
+   "t": "Onde não há revelação",
+   "v": [
+    "O insensato dá vazão a toda a sua ira, mas o sábio a contém.",
+    "Onde não há revelação, o povo se desenfreia, mas feliz é quem guarda a lei.",
+    "O medo dos homens é uma armadilha, mas quem confia no Senhor estará seguro."
+   ],
+   "n": "Quem vive de olho na opinião dos outros fica preso; quem olha para ele fica livre."
+  },
+  {
+   "t": "A oração de Agur",
+   "v": [
+    "Toda palavra de Deus é pura; ele é escudo para os que nele se refugiam.",
+    "Afasta de mim a falsidade e a mentira; não me dês nem pobreza nem riqueza; sustenta-me apenas com o pão de que preciso.",
+    "Há quatro coisas pequenas na terra que são muito sábias: as formigas, povo sem força, que no verão preparam a sua comida."
+   ],
+   "n": "Nem fartura nem falta: a oração que pede “o necessário” é a oração mais tranquila."
+  },
+  {
+   "t": "A mulher virtuosa",
+   "v": [
+    "Abra a boca em favor do mudo, pela causa de todos os desamparados. Abra a boca, julgue com justiça e defenda o direito do aflito e do necessitado.",
+    "Ela se veste de força e dignidade e sorri diante do futuro.",
+    "Enganosa é a graça, e vã a beleza, mas a mulher que teme ao Senhor, essa será louvada."
+   ],
+   "n": "Caminhamos um mês inteiro. Amanhã voltamos ao capítulo 1. Os dias de caminhar com a sabedoria recomeçam a cada manhã."
+  }
+ ]
+}

@@ -1,0 +1,30 @@
+{
+ "appTag": "Proverbes · Une journée sur les pas de la sagesse",
+ "docTitle": "Le Chemin — Proverbes | Une journée sur les pas de la sagesse",
+ "metaDesc": "Parcourez à hauteur d’homme la porte, le marché, les champs et les ruelles de Jérusalem au temps de Salomon, et écoutez la sagesse des Proverbes.",
+ "mapAria": "Les rues de Jérusalem au temps de Salomon",
+ "introTag": "Jérusalem au temps de Salomon, du matin jusqu’à la nuit",
+ "introLead": "De la porte de la ville aux champs, du marché aux ruelles, suivez la sagesse des Proverbes en {n} scènes.",
+ "hisWords": "Paroles",
+ "voicesOfDay": "Paroles",
+ "wordsHead": "Paroles des Proverbes",
+ "wordsIntro": "Les paroles contenues dans les scènes des Proverbes, rassemblées ici. Chacune est une traduction nouvelle du sens original, dans la langue d’aujourd’hui.",
+ "gospels": {
+  "prov": ["Proverbes", "Pr"]
+ },
+ "endEyebrow": "PROVERBES",
+ "endTitle": "Nous avons marché une journée avec la sagesse",
+ "endLead": "De la porte de la ville jusqu’à la maison : merci d’avoir marché avec nous.",
+ "tabDaily": "Un chapitre par jour",
+ "dailyHead": "Un chapitre par jour : les Proverbes en 31 jours",
+ "dailyLead": "Le livre des Proverbes compte 31 chapitres. En lisant chaque jour le chapitre qui correspond à la date, vous parcourez tout le livre en un mois.",
+ "dailyToday": "Aujourd’hui, le {d} — Proverbes {d}",
+ "dailyCh": "Proverbes {d}",
+ "dailyDone": "Je l’ai lu",
+ "dailyDoneOn": "Lu ✓",
+ "dailyCount": "Ce mois-ci : {n} chapitres lus",
+ "dailyFather": "Le mot du père",
+ "dailyAll": "Voir les 31 chapitres",
+ "dailyGo": "Les Proverbes en 31 jours →",
+ "dailyEnd": "Vous avez fini la marche d’une journée. Désormais, un chapitre chaque jour : marchez sur les pas de la sagesse."
+}

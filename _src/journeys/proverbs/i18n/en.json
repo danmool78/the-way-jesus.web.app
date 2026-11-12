@@ -1,0 +1,637 @@
+{
+ "periods": {
+  "d1": {
+   "name": "Morning · The City Gate",
+   "span": "Morning"
+  },
+  "d2": {
+   "name": "Midday · The Fields",
+   "span": "Midday"
+  },
+  "d3": {
+   "name": "Afternoon · The Market",
+   "span": "Afternoon"
+  },
+  "d4": {
+   "name": "Evening · A Friend's House",
+   "span": "Evening"
+  },
+  "d5": {
+   "name": "Night · The Alley and the Palace",
+   "span": "Night"
+  },
+  "d6": {
+   "name": "Late Night · Our House",
+   "span": "Late night"
+  },
+  "d7": {
+   "name": "Dawn · The House of Wisdom",
+   "span": "Dawn"
+  }
+ },
+ "places": {
+  "gate": {
+   "name": "The Gate Square",
+   "region": "Jerusalem"
+  },
+  "field": {
+   "name": "The Fields outside the City",
+   "region": "Jerusalem"
+  },
+  "market": {
+   "name": "The Market at the Gate",
+   "region": "Jerusalem"
+  },
+  "home": {
+   "name": "A Friend's House",
+   "region": "Jerusalem"
+  },
+  "alley": {
+   "name": "The Alley at Night",
+   "region": "Jerusalem"
+  },
+  "palace": {
+   "name": "The Palace Forecourt",
+   "region": "Jerusalem"
+  },
+  "house": {
+   "name": "Our House",
+   "region": "Jerusalem"
+  },
+  "wisdomhouse": {
+   "name": "The Heights of the City",
+   "region": "Jerusalem"
+  }
+ },
+ "events": {
+  "p01": {
+   "title": "Wisdom Calls at the Gate",
+   "when": "In the days of King Solomon · Morning",
+   "subtitle": "The fear of the Lord is the beginning of knowledge",
+   "story": [
+    "My son, come out to the city gate with me today. The sun has only just come up, and already the elders are sitting on the stone benches by the gate hearing cases, and the traders are setting out their stalls. Even in all this noise, I want you to hold on to one thing and keep it in your heart. The fear of the Lord is the beginning of knowledge, but fools despise wisdom and instruction.",
+    "Listen closely. Wisdom cries aloud in the street; she raises her voice in the squares. She calls out at the head of the noisy streets, and at the entrance of the city gates she speaks her words. How long, you simple ones, will you love being simple? Turn back at my rebuke. See, I will pour out my spirit on you; I will make my words known to you.",
+    "Wisdom is not hidden away deep in the mountains. She is calling you right here at this gate, where people buy and sell, quarrel and come to be judged. My son, hear your father's instruction, and do not forsake your mother's teaching. They are a graceful garland on your head and a chain of gold around your neck."
+   ],
+   "words": [
+    {
+     "who": "Solomon",
+     "text": "The fear of the Lord is the beginning of knowledge, but fools despise wisdom and instruction."
+    },
+    {
+     "who": "Wisdom",
+     "text": "How long, you simple ones, will you love being simple? How long will mockers delight in mocking and fools hate knowledge? Turn back at my rebuke. See, I will pour out my spirit on you; I will make my words known to you."
+    },
+    {
+     "who": "Solomon",
+     "text": "My son, hear your father's instruction, and do not forsake your mother's teaching. They are a graceful garland on your head and a chain of gold around your neck."
+    }
+   ],
+   "note": "In ancient Israel the city gate was a passageway, a marketplace and a court of law all at once. The elders sat at the gate to hear cases and give judgment (Ruth 4:1–2; Prov 31:23). Proverbs pictures Wisdom as a woman crying out at this crowded entrance to the city (Prov 1:20–21; 8:1–3).",
+   "reflect": "Am I avoiding the truth because I don't want to hear it?",
+   "quiz": {
+    "q": "According to Proverbs, what is the beginning of knowledge?",
+    "options": [
+     "Reading many books",
+     "The fear of the Lord",
+     "Learning in the king's palace",
+     "Gathering wealth"
+    ],
+    "explain": "Proverbs 1:7 says that the fear of the Lord is the beginning of knowledge. The whole book of Proverbs stands on this one sentence."
+   }
+  },
+  "p02": {
+   "title": "The Ants in the Field",
+   "when": "In the days of King Solomon · Midday",
+   "subtitle": "Go to the ant, you sluggard",
+   "story": [
+    "My son, let's go out through the gate into the fields. The sun is high, and people are already out reaping grain. Crouch down here by the path and take a look at these little ones. Go to the ant, you sluggard; consider her ways and be wise. She has no chief, no overseer and no ruler, yet she prepares her food in the summer and gathers her provisions at harvest.",
+    "Now look at that field over there. I passed by the field of the sluggard and the vineyard of the man who lacks sense, and look: thorns have spread all over it, weeds cover the ground, and its stone wall has fallen down. And the owner is lying fast asleep in the shade of a tree. How long will you lie there, you sluggard? When will you get up from your sleep?",
+    "A little sleep, a little slumber, a little folding of the hands to rest, and poverty will come on you like a robber and want like an armed man. My son, I saw this and took it to heart; I looked and received instruction. You can learn diligence even from that tiny ant. Let's head back to the market before the sun goes down."
+   ],
+   "words": [
+    {
+     "who": "Solomon",
+     "text": "Go to the ant, you sluggard; consider her ways and be wise. She has no chief, no overseer and no ruler, yet she prepares her food in the summer and gathers her provisions at harvest."
+    },
+    {
+     "who": "Solomon",
+     "text": "How long will you lie there, you sluggard? When will you get up from your sleep? A little sleep, a little slumber, a little folding of the hands to rest, and poverty will come on you like a robber and want like an armed man."
+    },
+    {
+     "who": "Solomon",
+     "text": "I passed by the field of the sluggard and the vineyard of the man who lacks sense, and thorns had spread all over it, weeds covered the ground, and its stone wall had fallen down. I saw it and took it to heart; I looked and received instruction."
+    }
+   ],
+   "note": "The fields of Israel are home to harvester ants, which gather grain and store it in underground nests. At harvest time, lines of ants carrying grain along the edges of the fields were a familiar sight to farmers of old. The slopes around Jerusalem were terraced with stone retaining walls, and if a wall was neglected it soon collapsed and the soil washed away.",
+   "reflect": "Am I putting off today's work with 'just a little longer'?",
+   "quiz": {
+    "q": "Proverbs tells the lazy person to go and learn from which creature?",
+    "options": [
+     "The lion",
+     "The eagle",
+     "The ant",
+     "The ox"
+    ],
+    "explain": "Proverbs 6:6 tells the lazy person to go to the ant, watch what she does and be wise. With no one to give her orders, the ant still lays up food in the summer."
+   }
+  },
+  "p03": {
+   "title": "The Scales in the Market",
+   "when": "In the days of King Solomon · Afternoon",
+   "subtitle": "The Lord hates dishonest scales",
+   "story": [
+    "My son, the sun is starting to sink, so let's go back to the market. Every trader has hung up his scales and is weighing out grain and oil to sell. Watch that grain seller's hands carefully. He keeps two sets of weights in his pouch: the heavy one when he buys, the light one when he sells. The scales are tipped, and the buyer never notices.",
+    "Dishonest scales are hateful to the Lord, but an honest weight is his delight. Unequal weights and unequal measures, the Lord hates them both alike. Honest balances and scales belong to the Lord; all the weights in the bag are his making.",
+    "My son, God sees everything, even inside the pouch where no one else can look. Choose a good name rather than great riches, and favor rather than silver or gold. Let's stop by my friend's house and eat supper together before the sun goes down."
+   ],
+   "words": [
+    {
+     "who": "Solomon",
+     "text": "Dishonest scales are hateful to the Lord, but an honest weight is his delight."
+    },
+    {
+     "who": "Solomon",
+     "text": "Honest balances and scales belong to the Lord; all the weights in the bag are his making."
+    },
+    {
+     "who": "Solomon",
+     "text": "A good name is to be chosen rather than great riches, and favor rather than silver or gold."
+    }
+   ],
+   "note": "In the markets of ancient Israel, people carried carved stone weights in a pouch and used them on the scales to buy and sell. Weights with the same name could differ slightly, and it was common to cheat by carrying both a heavy and a light weight. The Law also said not to keep two kinds of weights in your bag (Deut 25:13–16).",
+   "reflect": "Am I honest even where no one can see me?",
+   "quiz": {
+    "q": "According to Proverbs, what does the Lord delight in?",
+    "options": [
+     "A heavy weight",
+     "Great riches",
+     "An honest weight",
+     "A large market"
+    ],
+    "explain": "Dishonest scales are hateful to the Lord, but an honest weight is his delight (Prov 11:1)."
+   }
+  },
+  "p04": {
+   "title": "A Friend's House",
+   "when": "In the days of King Solomon · Evening",
+   "subtitle": "As iron sharpens iron",
+   "story": [
+    "My son, this is the house of an old friend of mine. Now that the sun has set, he has lit a lamp in the courtyard and is welcoming us gladly. All he has set out is a bowl of greens and a few loaves of bread. Still, better a meal of vegetables where there is love than a fattened ox where there is hatred.",
+    "A friend loves at all times, and a brother is born for a time of trouble. This evening my friend did not hide my fault from me; he told me plainly. Faithful are the wounds of a friend, but the many kisses of an enemy are deceitful. As iron sharpens iron, so one person brightens the face of his friend.",
+    "My son, a man of many companions may come to ruin, but there is a friend who sticks closer than a brother. Keep a friend like that beside you, and be that kind of friend to someone too. It's late now. Let's go home through the dark alleys."
+   ],
+   "words": [
+    {
+     "who": "Solomon",
+     "text": "As iron sharpens iron, so one person brightens the face of his friend."
+    },
+    {
+     "who": "Solomon",
+     "text": "A friend loves at all times, and a brother is born for a time of trouble."
+    },
+    {
+     "who": "Solomon",
+     "text": "Faithful are the wounds of a friend, but the many kisses of an enemy are deceitful."
+    }
+   ],
+   "note": "In Solomon's time a house in Israel was often a 'four-room house'. In the middle was a courtyard open to the sky, with rooms lined by stone pillars on either side and a long broad room across the back. In the evening people spread mats in the courtyard and shared bread baked in the oven along with greens, and they lit small clay lamps filled with olive oil.",
+   "reflect": "Do I have a friend who will tell me my faults honestly? Am I that kind of friend?",
+   "quiz": {
+    "q": "In Proverbs 27:17, as iron sharpens iron, whose face does a person brighten?",
+    "options": [
+     "The king's",
+     "His friend's",
+     "His own",
+     "His enemy's"
+    ],
+    "explain": "As iron sharpens iron, so one person brightens the face of his friend (Prov 27:17). Friends who rub against each other and shape each other help one another grow."
+   }
+  },
+  "p05": {
+   "title": "The Alley at Dusk",
+   "when": "In the days of King Solomon · Night",
+   "subtitle": "Above all else, guard your heart",
+   "story": [
+    "My son, it's late, so let's go home by this alley. Once, looking out through the lattice of our window, I saw among the simple, among the young men, a young man lacking sense. He was passing along the street near the corner of her house, in the twilight, in the evening, in the black dark of night.",
+    "Then a woman with a crafty heart came out to meet him. She coaxed him with smooth words and whispered that her husband had gone on a long journey and was not at home. At once the young man followed her, like an ox going to the slaughter, like a bird darting into a snare, not knowing it will cost him his life.",
+    "My son, do not let your heart turn aside to her ways; do not stray into her paths. Above all else, guard your heart, for from it flow the springs of life. Say to wisdom, You are my sister, and call understanding your close kin. Then wisdom will guard you and keep you from the woman who leads you astray with her words."
+   ],
+   "words": [
+    {
+     "who": "Solomon",
+     "text": "Above all else, guard your heart, for from it flow the springs of life."
+    },
+    {
+     "who": "Solomon",
+     "text": "Say to wisdom, You are my sister, and call understanding your close kin, so that they may keep you from the forbidden woman, from the foreign woman with her smooth words."
+    },
+    {
+     "who": "Solomon",
+     "text": "Do not let your heart turn aside to her ways; do not stray into her paths. For many are the victims she has brought down, and all her slain are a mighty throng."
+    }
+   ],
+   "note": "Proverbs 7 is a short story in which a father tells what he saw through the lattice of his window. Houses in ancient Israel had wooden lattices instead of glass, so those inside could see out while those outside could hardly see in. In the very next chapters (8–9), Proverbs portrays another woman calling in the streets: Wisdom.",
+   "reflect": "Where is the dangerous path my heart keeps leaning toward?",
+   "quiz": {
+    "q": "Proverbs 4:23 says that above all else we should guard what?",
+    "options": [
+     "Our wealth",
+     "Our heart",
+     "Our house",
+     "Our name"
+    ],
+    "explain": "Above all else, guard your heart, for from it flow the springs of life (Prov 4:23)."
+   }
+  },
+  "p06": {
+   "title": "Before the Palace",
+   "when": "In the days of King Solomon · Night",
+   "subtitle": "Give me neither poverty nor riches",
+   "story": [
+    "My son, on our way home we pass in front of the palace. Cedar pillars stand there like a forest, the windows are bright with the lights of a feast, and richly dressed nobles walk in past the guards. But beside the gate a poor man sits holding an empty bowl.",
+    "The king's heart is in the hand of the Lord like streams of water; he turns it wherever he wills. Pride goes before destruction, and a haughty spirit before a fall. Whoever oppresses the poor shows contempt for their Maker, but whoever is kind to the needy honors him.",
+    "That is why Agur prayed like this: Keep falsehood and lies far from me; give me neither poverty nor riches, but feed me with the bread I need. Otherwise I may be full and deny you and say, Who is the Lord? Or I may become poor and steal, and dishonor the name of my God. My son, let's share the bread my friend packed for us with that man before we go. Whoever has a generous eye will be blessed."
+   ],
+   "words": [
+    {
+     "who": "Solomon",
+     "text": "The king's heart is in the hand of the Lord like streams of water; he turns it wherever he wills."
+    },
+    {
+     "who": "Agur",
+     "text": "Keep falsehood and lies far from me; give me neither poverty nor riches, but feed me with the bread I need. Otherwise I may be full and deny you and say, Who is the Lord? Or I may become poor and steal, and dishonor the name of my God."
+    },
+    {
+     "who": "Solomon",
+     "text": "Whoever has a generous eye will be blessed, for he shares his bread with the poor."
+    }
+   ],
+   "note": "Solomon spent seven years building the temple and thirteen years building his own palace (1 Kgs 6:38–7:1). Among the palace buildings was the 'House of the Forest of Lebanon', with four rows of cedar pillars and windows set in three rows (1 Kgs 7:2–5). Proverbs 30 contains the words not of Solomon but of 'Agur son of Jakeh', and it holds a prayer rare in the Bible, one that asks for neither poverty nor riches.",
+   "reflect": "Can I be content with what I need and share what I have?",
+   "quiz": {
+    "q": "What did Agur ask God for?",
+    "options": [
+     "Great riches and honor",
+     "Strength to defeat his enemies",
+     "Neither poverty nor riches, only the bread he needs",
+     "The king's throne"
+    ],
+    "explain": "Agur prayed to be given neither poverty nor riches, but to be fed with the bread he needed, so that he would not grow full and deny God, or grow poor and steal (Prov 30:8–9)."
+   }
+  },
+  "p07": {
+   "title": "The Lamp That Does Not Go Out",
+   "when": "In the days of King Solomon · Late night",
+   "subtitle": "A woman who fears the Lord is to be praised",
+   "story": [
+    "My son, we're home at last. It's this late, and your mother's lamp is still burning. She puts her hands to the distaff, and her fingers hold the spindle. She is not afraid of snow for her household, for all of them are clothed in scarlet.",
+    "Who can find a woman of noble character? Her worth is far above pearls. Her husband's heart trusts in her, and the household lacks nothing. She opens her mouth with wisdom, and the teaching of kindness is on her tongue.",
+    "Her children rise up and call her blessed; her husband also praises her. Charm is deceptive and beauty is fleeting, but a woman who fears the Lord is to be praised. My son, did you hear Wisdom calling today? Now let's put out the lamp and sleep. When dawn comes, Wisdom will call us again."
+   ],
+   "words": [
+    {
+     "who": "Solomon",
+     "text": "Who can find a woman of noble character? Her worth is far above pearls. Her husband's heart trusts in her, and the household lacks nothing."
+    },
+    {
+     "who": "Solomon",
+     "text": "She opens her mouth with wisdom, and the teaching of kindness is on her tongue."
+    },
+    {
+     "who": "Solomon",
+     "text": "Charm is deceptive and beauty is fleeting, but a woman who fears the Lord is to be praised."
+    }
+   ],
+   "note": "Proverbs 31:10–31 is a poem in which each line begins with the next of the twenty-two letters of the Hebrew alphabet. Women in ancient Israel spun thread from wool and flax and wove cloth to make clothes for the family. Proverbs begins with 'The fear of the Lord is the beginning of knowledge' (1:7) and ends with 'a woman who fears the Lord' (31:30).",
+   "reflect": "Am I taking for granted the work of someone who is always there for me?",
+   "quiz": {
+    "q": "Proverbs 31 says the worth of a woman of noble character is far above what?",
+    "options": [
+     "Gold",
+     "Pearls",
+     "Silver",
+     "A palace"
+    ],
+    "explain": "Who can find a woman of noble character? Her worth is far above pearls (Prov 31:10)."
+   }
+  },
+  "p08": {
+   "title": "The House of Wisdom",
+   "when": "In the days of King Solomon · Dawn",
+   "subtitle": "The path of the righteous is like the light of dawn",
+   "story": [
+    "My son, get up. The light of dawn is spreading over the eastern hills. Wisdom has built her house; she has hewn out her seven pillars. She has slaughtered her animals, mixed her wine and set her table. And she has sent out her maidservants to call from the highest places of the city.",
+    "Let all who are simple turn in here. Come, eat of my bread and drink of the wine I have mixed. Leave your simple ways and live; walk in the way of understanding. The fear of the Lord is the beginning of wisdom, and knowledge of the Holy One is understanding.",
+    "My son, the Wisdom who called to us at the city gate yesterday is calling us to a feast this morning. The path of the righteous is like the light of dawn, shining brighter and brighter until the full day. Now let's walk that path. The days we walk following wisdom begin new every day."
+   ],
+   "words": [
+    {
+     "who": "Wisdom",
+     "text": "Come, eat of my bread and drink of the wine I have mixed. Leave your simple ways and live; walk in the way of understanding."
+    },
+    {
+     "who": "Solomon",
+     "text": "The fear of the Lord is the beginning of wisdom, and knowledge of the Holy One is understanding."
+    },
+    {
+     "who": "Solomon",
+     "text": "The path of the righteous is like the light of dawn, shining brighter and brighter until the full day."
+    }
+   ],
+   "note": "Proverbs 1–9 ends with the calls of two women: Wisdom, who builds a house of seven pillars on the heights and invites people to her feast (9:1–6), and the woman Folly, who calls from the same heights that stolen water is sweet (9:13–18). Between the two calls stands the saying 'The fear of the Lord is the beginning of wisdom' (9:10), the words with which Proverbs began at 1:7. The New Testament calls Christ 'the wisdom of God' (1 Cor 1:24).",
+   "reflect": "When I hear wise advice, do I open my heart, or do I start making excuses?",
+   "quiz": {
+    "q": "In Proverbs 9, how many pillars did Wisdom hew out to build her house?",
+    "options": [
+     "Three",
+     "Five",
+     "Seven",
+     "Twelve"
+    ],
+    "explain": "Wisdom hewed out seven pillars and built her house, then set her table and invited people to her feast (Prov 9:1–2)."
+   }
+  }
+ },
+ "daily": [
+  {
+   "t": "Wisdom Calls",
+   "v": [
+    "The fear of the Lord is the beginning of knowledge, but fools despise wisdom and instruction.",
+    "My son, if sinners entice you, do not go along with them.",
+    "But whoever listens to me will dwell in safety, and will be at ease, without fear of harm."
+   ],
+   "n": "All knowing begins with fearing God. Today, listen carefully for who is calling you."
+  },
+  {
+   "t": "Searching for Hidden Treasure",
+   "v": [
+    "If you seek wisdom like silver and search for it as for hidden treasure, then you will understand the fear of the Lord and find the knowledge of God.",
+    "For the Lord gives wisdom; from his mouth come knowledge and understanding.",
+    "Discretion will watch over you, and understanding will guard you."
+   ],
+   "n": "Someone hunting for treasure doesn't tire of digging. Wisdom opens up to those who look for it that way."
+  },
+  {
+   "t": "Acknowledge Him in All Your Ways",
+   "v": [
+    "Trust in the Lord with all your heart, and do not lean on your own understanding. In all your ways acknowledge him, and he will direct your paths.",
+    "My son, do not despise the Lord's discipline, and do not resent his rebuke, for the Lord rebukes the one he loves, as a father the son he delights in.",
+    "Do not withhold good from those to whom it is due, when it is in the power of your hand to do it."
+   ],
+   "n": "The day I set my own ideas down and ask him the way is the day I walk the straightest road."
+  },
+  {
+   "t": "Guard Your Heart",
+   "v": [
+    "Wisdom is the first thing; so get wisdom. With all that you have, get understanding.",
+    "The path of the righteous is like the light of dawn, shining brighter and brighter until the full day.",
+    "Above all else, guard your heart, for from it flow the springs of life."
+   ],
+   "n": "When the heart grows cloudy, the steps grow unsure. Watch what you let into your heart today."
+  },
+  {
+   "t": "Drink from Your Own Spring",
+   "v": [
+    "Drink water from your own cistern, flowing water from your own well.",
+    "Let your fountain be blessed, and rejoice in the wife of your youth.",
+    "For a man's ways are before the eyes of the Lord, and he makes all his paths level."
+   ],
+   "n": "Cherishing the people beside you is the greatest wisdom. Tell your family thank you today."
+  },
+  {
+   "t": "Learn from the Ant",
+   "v": [
+    "Go to the ant, you sluggard; consider her ways and be wise. She has no chief, overseer or ruler, yet she prepares her food in the summer and gathers her provisions at harvest.",
+    "There are six things the Lord hates, seven that he detests: haughty eyes, a lying tongue, hands that shed innocent blood, a heart that devises wicked schemes, feet quick to rush into evil, a false witness who breathes out lies, and one who sows discord among brothers.",
+    "My son, keep your father's command, and do not forsake your mother's teaching."
+   ],
+   "n": "Diligence starts not with a big resolution but with doing today's work today."
+  },
+  {
+   "t": "As the Apple of Your Eye",
+   "v": [
+    "Keep my commands and live; keep my teaching as the apple of your eye. Bind them on your fingers; write them on the tablet of your heart.",
+    "Say to wisdom, You are my sister, and call understanding your close kin.",
+    "Do not let your heart turn aside to her ways; do not stray into her paths."
+   ],
+   "n": "Temptation always waits around the corner of the alley. The easiest victory is never taking that road at all."
+  },
+  {
+   "t": "Those Who Seek Me Find Me",
+   "v": [
+    "Wisdom is better than pearls, and nothing you desire can compare with her.",
+    "I love those who love me, and those who seek me diligently find me.",
+    "Whoever finds me finds life and obtains favor from the Lord."
+   ],
+   "n": "Wisdom doesn't play hide-and-seek. She comes first to those who seek her with all their heart."
+  },
+  {
+   "t": "Wisdom's Feast",
+   "v": [
+    "Do not rebuke a mocker, or he will hate you; rebuke a wise man, and he will love you.",
+    "Give instruction to a wise man, and he will be wiser still; teach a righteous man, and he will add to his learning.",
+    "The fear of the Lord is the beginning of wisdom, and knowledge of the Holy One is understanding."
+   ],
+   "n": "The wise person is the one who is grateful for a rebuke. If you heard a hard word today, think it over again."
+  },
+  {
+   "t": "Love Covers All Wrongs",
+   "v": [
+    "A wise son brings joy to his father, but a foolish son is a grief to his mother.",
+    "Hatred stirs up strife, but love covers all wrongs.",
+    "When words are many, wrongdoing is hard to avoid, but whoever restrains his lips is wise."
+   ],
+   "n": "It is easy to uncover another's faults and hard to cover them. Today, be someone who covers."
+  },
+  {
+   "t": "Whoever Refreshes Others",
+   "v": [
+    "When pride comes, then comes disgrace, but with the humble is wisdom.",
+    "Where there is no guidance, a people falls, but with many counselors there is safety.",
+    "A generous person will prosper; whoever refreshes others will himself be refreshed."
+   ],
+   "n": "Sharing seems to leave you with less, but the one who waters others finds his own field watered first."
+  },
+  {
+   "t": "A Good Word Makes the Heart Glad",
+   "v": [
+    "Whoever loves discipline loves knowledge, but whoever hates correction is like a brute beast.",
+    "The way of a fool is right in his own eyes, but a wise man listens to advice.",
+    "Anxiety in a person's heart weighs it down, but a good word makes it glad."
+   ],
+   "n": "Have a good word ready today to lighten someone's worry."
+  },
+  {
+   "t": "Walk with the Wise",
+   "v": [
+    "Whoever guards his mouth preserves his life, but whoever opens wide his lips comes to ruin.",
+    "Hope deferred makes the heart sick, but a desire fulfilled is a tree of life.",
+    "Whoever walks with the wise becomes wise, but the companion of fools suffers harm."
+   ],
+   "n": "Who you walk with decides where you arrive. Think about the companions beside you on the road."
+  },
+  {
+   "t": "A Heart at Peace Gives Life",
+   "v": [
+    "There is a way that seems right to a man, but its end is the way to death.",
+    "Whoever is slow to anger has great understanding, but one who is quick-tempered displays folly.",
+    "A heart at peace gives life to the body, but envy rots the bones."
+   ],
+   "n": "Just waiting one beat when you're angry can spare you a great deal of foolishness."
+  },
+  {
+   "t": "A Gentle Answer",
+   "v": [
+    "A gentle answer turns away wrath, but a harsh word stirs up anger.",
+    "The eyes of the Lord are in every place, keeping watch on the evil and the good.",
+    "Without counsel plans fail, but with many advisers they succeed."
+   ],
+   "n": "More fights are won by a soft word than you'd think. Make one answer gentle today."
+  },
+  {
+   "t": "The One Who Directs Our Steps",
+   "v": [
+    "Commit your works to the Lord, and your plans will be established.",
+    "A man's heart plans his way, but the Lord directs his steps.",
+    "Whoever is slow to anger is better than the mighty, and he who rules his spirit than one who takes a city."
+   ],
+   "n": "Make your plans, but leave your steps to him. Then even when the road is blocked, you need not fear."
+  },
+  {
+   "t": "A Cheerful Heart Is Good Medicine",
+   "v": [
+    "Better a dry crust of bread with peace than a house full of feasting with strife.",
+    "A friend loves at all times, and a brother is born for a time of trouble.",
+    "A cheerful heart is good medicine, but a crushed spirit dries up the bones."
+   ],
+   "n": "Laughter is the cheapest and best medicine. Bring some to the table today."
+  },
+  {
+   "t": "Death and Life in the Power of the Tongue",
+   "v": [
+    "The name of the Lord is a strong tower; the righteous run into it and are safe.",
+    "Whoever answers before he hears the matter, it is his folly and his shame.",
+    "Death and life are in the power of the tongue, and those who love it will eat its fruit."
+   ],
+   "n": "It's never too late to speak after you've listened to the end. Today, listen once more before you speak."
+  },
+  {
+   "t": "The Glory of Overlooking an Offense",
+   "v": [
+    "A man's wisdom makes him slow to anger, and it is his glory to overlook an offense.",
+    "Whoever is kind to the poor lends to the Lord, and he will repay him for his deed.",
+    "Many are the plans in a man's heart, but it is the purpose of the Lord that will stand."
+   ],
+   "n": "Forgiving is not losing; it is winning. If someone weighs on your heart, let them go today."
+  },
+  {
+   "t": "Wait for the Lord",
+   "v": [
+    "It is an honor for a man to keep aloof from strife, but every fool will be quarreling.",
+    "Even a child makes himself known by his acts, whether his conduct is pure and right.",
+    "Do not say, I will repay evil; wait for the Lord, and he will deliver you."
+   ],
+   "n": "The moment you want to get even is the moment to wait. Leave the reckoning to him."
+  },
+  {
+   "t": "Justice More Than Sacrifice",
+   "v": [
+    "Every way of a man is right in his own eyes, but the Lord weighs the heart.",
+    "To do righteousness and justice is more acceptable to the Lord than sacrifice.",
+    "Whoever pursues righteousness and kindness will find life, righteousness and honor."
+   ],
+   "n": "He delights more in honesty outside the door than in piety inside the house of worship."
+  },
+  {
+   "t": "The Way He Should Go",
+   "v": [
+    "The rich and the poor meet together; the Lord is the Maker of them all.",
+    "Train up a child in the way he should go; even when he is old he will not depart from it.",
+    "Do you see a man skillful in his work? He will stand before kings."
+   ],
+   "n": "The road you teach a child is the road you walk yourself. Teach with your steps more than your words."
+  },
+  {
+   "t": "Give Me Your Heart",
+   "v": [
+    "Do not wear yourself out to get rich; cease from your own cleverness. Will you set your eyes on what is gone? For riches surely sprout wings and fly off like an eagle toward the sky.",
+    "Listen to your father who gave you life, and do not despise your mother when she is old.",
+    "My son, give me your heart, and let your eyes delight in my ways."
+   ],
+   "n": "Riches have wings and fly away, but the place you give your heart remains to the end."
+  },
+  {
+   "t": "Though He Falls Seven Times",
+   "v": [
+    "If you faint in the day of trouble, your strength is small.",
+    "For though the righteous fall seven times, they rise again, but the wicked stumble in times of calamity.",
+    "Do not rejoice when your enemy falls, and let not your heart be glad when he stumbles."
+   ],
+   "n": "No one never falls. There are only those who get back up."
+  },
+  {
+   "t": "A Word Fitly Spoken",
+   "v": [
+    "A word fitly spoken is like apples of gold in a setting of silver.",
+    "If your enemy is hungry, give him bread to eat, and if he is thirsty, give him water to drink.",
+    "A man without self-control is like a city broken into and left without walls."
+   ],
+   "n": "The same word becomes a jewel when spoken at the right time. Today, say the needed word at the needed moment."
+  },
+  {
+   "t": "Without Wood the Fire Goes Out",
+   "v": [
+    "Do you see a man wise in his own eyes? There is more hope for a fool than for him.",
+    "Without wood a fire goes out, and where there is no whisperer, quarreling ceases.",
+    "Whoever digs a pit will fall into it, and a stone will come back on him who starts it rolling."
+   ],
+   "n": "Don't add fuel to a rumor. If it stops at your mouth, the fire goes out."
+  },
+  {
+   "t": "As Iron Sharpens Iron",
+   "v": [
+    "Do not boast about tomorrow, for you do not know what a day may bring.",
+    "Let another praise you, and not your own mouth; a stranger, and not your own lips.",
+    "As iron sharpens iron, so one person brightens the face of his friend."
+   ],
+   "n": "Tomorrow is in his hands. Today, help shape the friend beside you, and let him shape you."
+  },
+  {
+   "t": "Do Not Conceal Your Sins",
+   "v": [
+    "The wicked flee when no one pursues, but the righteous are bold as a lion.",
+    "Whoever conceals his sins will not prosper, but whoever confesses and forsakes them will find mercy.",
+    "Whoever gives to the poor will not lack, but whoever hides his eyes will get many a curse."
+   ],
+   "n": "A hidden wrong is heavy; a confessed wrong is light. If there is something to lay down today, lay it down."
+  },
+  {
+   "t": "Where There Is No Vision",
+   "v": [
+    "A fool gives full vent to his anger, but a wise man quietly holds it back.",
+    "Where there is no vision, the people cast off restraint, but blessed is he who keeps the law.",
+    "The fear of man lays a snare, but whoever trusts in the Lord is kept safe."
+   ],
+   "n": "Watching what people think ties you up; looking to him sets you free."
+  },
+  {
+   "t": "Agur's Prayer",
+   "v": [
+    "Every word of God is pure; he is a shield to those who take refuge in him.",
+    "Keep falsehood and lies far from me; give me neither poverty nor riches, but feed me with the bread I need.",
+    "Four things on earth are small, yet they are exceedingly wise: the ants are a people without strength, yet they prepare their food in the summer."
+   ],
+   "n": "The most peaceful prayer asks not for plenty or for little, but for 'just what I need'."
+  },
+  {
+   "t": "A Woman of Noble Character",
+   "v": [
+    "Open your mouth for the mute, for the cause of all who are left alone. Open your mouth, judge righteously, and defend the rights of the poor and needy.",
+    "Strength and dignity are her clothing, and she laughs at the days to come.",
+    "Charm is deceptive and beauty is fleeting, but a woman who fears the Lord is to be praised."
+   ],
+   "n": "We have walked a whole month. Tomorrow it's chapter 1 again. The days we walk following wisdom begin new every day."
+  }
+ ]
+}

@@ -1,0 +1,33 @@
+{
+ "appTag": "箴言 · 跟随智慧走过的一天",
+ "docTitle": "那条路 — 箴言 | 跟随智慧走过的一天",
+ "metaDesc": "以人的视线走过所罗门时代耶路撒冷的城门与集市、田野与小巷，聆听箴言的智慧。",
+ "mapAria": "所罗门时代耶路撒冷的街道",
+ "introTag": "所罗门时代的耶路撒冷，从清晨到深夜",
+ "introLead": "从城门到田野，从集市到小巷，在{n}个场景中跟随箴言的智慧走一走。",
+ "hisWords": "话语",
+ "voicesOfDay": "话语",
+ "wordsHead": "箴言的话语",
+ "wordsIntro": "汇集了箴言各场景中的话语。所有话语都是依照原文的意思，用今天的语言重新翻译的重述。",
+ "gospels": {
+  "prov": [
+   "箴言",
+   "箴"
+  ]
+ },
+ "endEyebrow": "PROVERBS · 箴言",
+ "endTitle": "与智慧同行了一天",
+ "endLead": "从城门走到家里，谢谢你一路同行。",
+ "tabDaily": "每日一章",
+ "dailyHead": "每日一章，31天箴言",
+ "dailyLead": "箴言共31章。按今天的日期每天读一章，一个月就能把整卷箴言走一遍。",
+ "dailyToday": "今天是{d}日 — 箴言第{d}章",
+ "dailyCh": "箴言第{d}章",
+ "dailyDone": "读过了",
+ "dailyDoneOn": "已读 ✓",
+ "dailyCount": "本月已读{n}章",
+ "dailyFather": "父亲的一句话",
+ "dailyAll": "查看全部31章",
+ "dailyGo": "每日一章 31天箴言 →",
+ "dailyEnd": "一天的行走结束了。从今以后，每天一章，跟随智慧而行吧。"
+}

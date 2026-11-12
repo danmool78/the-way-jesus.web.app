@@ -155,6 +155,14 @@ def build(jid, src, out_dir):
                 e['quiz'].update(q=t['quiz']['q'], options=t['quiz']['options'], explain=t['quiz']['explain'])
             if 'img' in e and t.get('credit'):
                 e['img']['credit'] = t['credit']
+        # 하루 한 장 31일 잠언: 장 제목·구절 글·아버지의 한마디를 갈아 끼운다 (장:절은 그대로). 빠지면 한국어로
+        if o['journey'].get('daily'):
+            if tr.get('daily') and len(tr['daily']) == len(o['journey']['daily']):
+                for d, td in zip(o['journey']['daily'], tr['daily']):
+                    assert len(td['v']) == len(d['v']), (lang, d['t'])
+                    d['t'], d['n'] = td['t'], td['n']
+                    d['v'] = [[x[0], tv] for x, tv in zip(d['v'], td['v'])]
+            else: miss.append('daily')
         # 바울 서신 13편: 이름·받는 이·때·전한 사람·까닭·한 문장·구절·다른 견해를 갈아 끼운다 (구절 약자는 장면 말씀처럼 바꾼다). 빠지면 한국어로 남기고 알린다
         for l in o['journey'].get('letters', []):
             t = tr.get('letters', {}).get(l['id'])
