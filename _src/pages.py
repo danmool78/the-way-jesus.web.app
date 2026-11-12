@@ -5,7 +5,7 @@ Run: python3 _src/pages.py"""
 import json, os, html
 here = os.path.dirname(os.path.abspath(__file__))
 root = os.path.join(here, '..')
-SITE = 'https://the-way-jesus.web.app'
+SITE = 'https://thewaymap.org'
 out_dir = os.path.join(root, 's')
 os.makedirs(out_dir, exist_ok=True)
 esc = lambda s: html.escape(str(s), quote=True)
