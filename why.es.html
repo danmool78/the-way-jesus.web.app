@@ -212,6 +212,14 @@
   .why .fakelead{margin:4px 0 16px;padding:14px 18px;border-radius:14px;background:#fff8f1;border:1px solid #ecd8cb;line-height:1.85} /* '가짜'는 다른 종교가 아니라는 것을 먼저 분명히 */
   .why .ans{margin:28px 0 8px;display:grid;gap:10px} .why .ans>div{background:#fffdf9;border:1px solid var(--line);border-radius:14px;padding:12px 16px} .why .ans small{display:block;font-size:13.5px;color:var(--muted);margin-bottom:3px} .why .ans span{font-family:var(--serif);font-size:17px;line-height:1.7} /* 처음 세 물음에 대한 답 — 글의 처음과 끝을 잇는다 */
   .more.qa[open]>summary .o{display:inline}.more.qa[open]>summary .c{display:none} /* 물음 펼치기: 펼친 뒤에도 물음이 보이게 */
+  .dl{margin:40px 0 0;border:1px solid #e3d3b8;border-radius:16px;background:#fffaf2;padding:18px;display:grid;grid-template-columns:auto 1fr;gap:6px 16px;align-items:center}
+  .dl svg{grid-row:span 2;width:44px;height:56px}
+  .dl b{font-family:var(--serif);font-size:17px;color:#2b2620}
+  .dl p{margin:0!important;font-size:14px!important;color:var(--muted)!important;line-height:1.7!important}
+  .dl div{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+  .dl a{flex:1;min-width:150px;text-align:center;text-decoration:none;border-radius:999px;padding:11px 14px;font-weight:700;font-size:14px;border:1px solid #d6c8b2;color:var(--gold2);background:#fff}
+  .dl a:first-child{background:linear-gradient(180deg,#e08a7d,#c9604f);color:#fff;border-color:transparent}
+  .dl small{display:block;font-weight:400;font-size:11.5px;opacity:.85}
 </style>
 </head>
 <body>
@@ -630,6 +638,13 @@
   <div class="card warm" style="text-align:center;margin-top:48px">
     <p class="motto" style="margin:0">Hay una familia que le espera</p>
     <p style="margin:6px 0 0;color:var(--muted)">Jesús no le deja caminar solo. Este domingo, llame a la puerta de una iglesia cercana.</p>
+  </div>
+
+  <div class="dl">
+    <svg viewBox="0 0 44 56" fill="none" stroke="#c0564a" stroke-width="1.8" stroke-linejoin="round"><path d="M4 3h26l10 10v40H4z" fill="#fff"/><path d="M30 3v10h10"/><path d="M12 24h20M12 31h20M12 38h13" stroke="#b9ab95"/></svg>
+    <b>Compartir como folleto</b>
+    <p>Este texto también es un folleto A5 (44 páginas). Envíalo al teléfono o imprímelo para regalarlo.</p>
+    <div><a href="assets/why-booklet.es.pdf?v=85a69d" download>PDF para leer<small>para el teléfono o imprimir en casa</small></a><a href="assets/why-booklet.es-print.pdf?v=73c31c" download>PDF para imprenta<small>3 mm de sangrado + marcas de corte</small></a></div>
   </div>
 
   <div class="end">
