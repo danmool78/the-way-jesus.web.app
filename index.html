@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <!-- 첫 주소의 랜딩: 그 길 시리즈의 여정을 고르는 가벼운 페이지 (앱은 app.html — 지도·데이터는 여정을 고른 뒤에 받는다).
      예전 주소(/?j=moses, /#e05, /?lang=en#e05 등)는 앱으로 그대로 넘긴다 -->
 <script>(()=>{const q=new URLSearchParams(location.search);if(q.has('j')||q.has('beat')||location.hash.length>1)location.replace('/app.html'+location.search+location.hash)})()</script>
@@ -24,6 +24,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
+html{touch-action:manipulation} /* 두 번 눌러 화면이 확대되지 않게 */
 :root{--bg:#16120e;--ink:#efe6d6;--muted:#b3a692;--faint:#8a7d6b;--serif:'Gowun Batang',serif;--sans:'Noto Sans KR',system-ui,sans-serif;
   --gold:#d9b46a;--gold2:#f0d79a;--gold-rgb:217,180,106}
 /* 여정마다의 색 (앱 style.css의 [data-journey]와 같게) */
@@ -94,6 +95,9 @@ footer a{color:var(--muted);font-size:13.5px}
 <!--seo-->
 <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "WebSite", "name": "그 길 — The Way", "alternateName": ["그 길", "The Way", "thewaymap"], "url": "https://thewaymap.org/", "inLanguage": ["ko", "en", "es", "fr", "id", "ja", "pt", "zh"], "description": "지도 위에서 걷는 성경의 길", "publisher": {"@type": "Organization", "name": "SSSOFT", "url": "https://sssoft-idea.web.app/"}}, {"@context": "https://schema.org", "@type": "ItemList", "name": "그 길 시리즈", "itemListElement": [{"@type": "ListItem", "position": 1, "url": "https://thewaymap.org/jesus", "name": "예수", "description": "사복음서로 걷는 예수의 발자취"}, {"@type": "ListItem", "position": 2, "url": "https://thewaymap.org/moses", "name": "모세와 여호수아", "description": "애굽에서 광야를 지나 가나안까지"}, {"@type": "ListItem", "position": 3, "url": "https://thewaymap.org/david", "name": "다윗", "description": "베들레헴의 목동에서 예루살렘의 왕으로"}, {"@type": "ListItem", "position": 4, "url": "https://thewaymap.org/kings", "name": "열왕기", "description": "선지자를 따라 걷는 두 왕국"}, {"@type": "ListItem", "position": 5, "url": "https://thewaymap.org/paul", "name": "바울", "description": "다메섹 길에서 로마까지, 복음이 땅끝까지"}, {"@type": "ListItem", "position": 6, "url": "https://thewaymap.org/psalms", "name": "시편", "description": "광야와 왕궁에서 부른 노래와 기도, 그 자리에서"}, {"@type": "ListItem", "position": 7, "url": "https://thewaymap.org/proverbs", "name": "잠언", "description": "솔로몬의 지혜를 오늘의 길 위에서"}, {"@type": "ListItem", "position": 8, "url": "https://thewaymap.org/goodnews/", "name": "GoodNews (복음)", "description": "하나님의 사랑과 구원, 네 가지 영적 원리"}, {"@type": "ListItem", "position": 9, "url": "https://thewaymap.org/why.html", "name": "왜 기독교인가", "description": "올라가는 종교, 내려오신 하나님, 그리고 교회 — 그림과 도표로"}]}]</script>
 <!--/seo-->
+<script>/* 폰에서 화면 전체가 확대되지 않게 — 두 번 누르기·오므리기로 틀이 커져 어긋났다(사용자). 아이폰은 user-scalable=no를 무시해 직접 막는다 (지도·3D의 두 손가락 확대는 포인터 이벤트라 그대로) */
+['gesturestart', 'gesturechange'].forEach(k => document.addEventListener(k, e => e.preventDefault(), { passive: false }));
+document.addEventListener('touchmove', e => { if (e.scale !== undefined && e.scale !== 1) e.preventDefault(); }, { passive: false });</script>
 </head>
 <body>
 <div class="lang"><select id="lang" aria-label="언어"></select></div>
