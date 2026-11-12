@@ -89,6 +89,7 @@
     <button role="tab" data-view="words">말씀</button>
     <button role="tab" data-view="quiz">퀴즈</button>
     <button role="tab" data-view="daily" data-i="tabDaily" hidden>하루 한 장</button>
+    <button role="tab" data-view="letters" data-i="tabLetters" hidden>편지</button>
   </nav>
   <button class="progress" id="progressPill" title="나의 발자취">
     <span id="progressText">0 / 61</span>
@@ -176,6 +177,16 @@
     <p data-i="dailyLead">잠언은 31장입니다. 날짜에 맞는 장을 하루 한 장씩 읽어 보세요.</p>
   </div>
   <div id="dailyBody"></div>
+</main>
+
+<!-- 편지 (바울 여정, journey.letters): 바울 서신 13편을 쓴 차례대로 — app.js renderLetters -->
+<main id="letters" class="view list-view" hidden>
+  <div class="list-head">
+    <div class="eyebrow">THE LETTERS</div>
+    <h2 data-i="lettersHead">바울의 편지 열세 편</h2>
+    <p data-i="lettersLead"></p>
+  </div>
+  <div id="letterList"></div>
 </main>
 
 <main id="quiz" class="view list-view" hidden>

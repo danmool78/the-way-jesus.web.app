@@ -1,0 +1,1899 @@
+{
+ "periods": {
+  "a1": {
+   "name": "The Call",
+   "span": "AD 34 – 46"
+  },
+  "a2": {
+   "name": "The First Journey",
+   "span": "AD 47 – 49"
+  },
+  "a3": {
+   "name": "The Second Journey",
+   "span": "AD 50 – 52"
+  },
+  "a4": {
+   "name": "The Third Journey",
+   "span": "AD 53 – 57"
+  },
+  "a5": {
+   "name": "In Chains",
+   "span": "AD 57 – 59"
+  },
+  "a6": {
+   "name": "To Rome",
+   "span": "AD 59 – 67"
+  }
+ },
+ "places": {
+  "jerusalem": {
+   "name": "Jerusalem",
+   "region": "Judea"
+  },
+  "temple": {
+   "name": "Temple Courts",
+   "region": "Judea"
+  },
+  "antonia": {
+   "name": "Antonia Fortress",
+   "region": "Judea"
+  },
+  "damascusroad": {
+   "name": "The Road to Damascus",
+   "region": "Syria"
+  },
+  "damascus": {
+   "name": "Damascus",
+   "region": "Syria"
+  },
+  "antioch": {
+   "name": "Antioch in Syria",
+   "region": "Syria"
+  },
+  "paphos": {
+   "name": "Paphos",
+   "region": "Cyprus"
+  },
+  "pantioch": {
+   "name": "Pisidian Antioch",
+   "region": "Galatia"
+  },
+  "lystra": {
+   "name": "Lystra",
+   "region": "Galatia"
+  },
+  "derbe": {
+   "name": "Derbe",
+   "region": "Galatia"
+  },
+  "troas": {
+   "name": "Troas",
+   "region": "Asia"
+  },
+  "philippi": {
+   "name": "Philippi",
+   "region": "Macedonia"
+  },
+  "thessalonica": {
+   "name": "Thessalonica",
+   "region": "Macedonia"
+  },
+  "athens": {
+   "name": "Athens",
+   "region": "Achaia"
+  },
+  "corinth": {
+   "name": "Corinth",
+   "region": "Achaia"
+  },
+  "ephesus": {
+   "name": "Ephesus",
+   "region": "Asia"
+  },
+  "miletus": {
+   "name": "Miletus",
+   "region": "Asia"
+  },
+  "caesarea": {
+   "name": "Caesarea",
+   "region": "Judea"
+  },
+  "cretesea": {
+   "name": "The Sea off Crete",
+   "region": "At sea"
+  },
+  "adria": {
+   "name": "The Sea of Adria",
+   "region": "At sea"
+  },
+  "malta": {
+   "name": "Malta",
+   "region": "Malta"
+  },
+  "appii": {
+   "name": "Forum of Appius",
+   "region": "Italy"
+  },
+  "rome": {
+   "name": "Rome",
+   "region": "Italy"
+  },
+  "crete": {
+   "name": "Crete",
+   "region": "Crete"
+  }
+ },
+ "events": {
+  "a01": {
+   "title": "Before Stephen's Pile of Stones",
+   "when": "c. AD 34",
+   "subtitle": "The young man who watched the coats of the men with stones",
+   "story": [
+    "The men of the Council, the highest court of the Jews, could not hold back their rage, and they ground their teeth. Stephen, a servant of the church in Jerusalem, had told them they were the ones who killed Jesus, the Righteous One. But Stephen, full of the Holy Spirit, looked up to heaven. Stephen said, “Look, I see heaven opened and the Son of Man standing at the right hand of God.”",
+    "They covered their ears, shouted, and rushed at him all together. They dragged Stephen out of the city. The witnesses who would throw the first stones took off their coats and laid them at the feet of a young man named Saul. As the stones flew, Stephen prayed, “Lord Jesus, receive my spirit.”",
+    "Stephen fell to his knees and cried out loudly, “Lord, do not hold this sin against them.” When he had said this, Stephen died, as if falling asleep. Saul thought it was right that Stephen was killed. That same day a great persecution broke out against the church in Jerusalem, and Saul went from house to house, dragging off men and women and handing them over to prison."
+   ],
+   "words": [
+    {
+     "who": "Stephen",
+     "text": "Look, I see heaven opened and the Son of Man standing at the right hand of God."
+    },
+    {
+     "who": "Stephen",
+     "text": "Lord Jesus, receive my spirit."
+    },
+    {
+     "who": "Stephen",
+     "text": "Lord, do not hold this sin against them."
+    }
+   ],
+   "note": "Stephen was one of the seven men the church in Jerusalem chose to care for its widows. As the believers scattered by the persecution spread the word wherever they went, the gospel actually spread beyond Jerusalem.",
+   "reflect": "Can I pray even for someone who has hurt me?",
+   "quiz": {
+    "q": "At whose feet did the witnesses who stoned Stephen lay their coats?",
+    "options": [
+     "Peter",
+     "Gamaliel",
+     "Saul",
+     "Philip"
+    ],
+    "explain": "The witnesses laid their coats at the feet of a young man named Saul, and Saul approved of Stephen's death (Acts 7:58; 8:1)."
+   },
+   "credit": "Benjamin West, Devout Men Taking the Body of Saint Stephen, 1776 · Museum of Fine Arts, Boston · Public domain"
+  },
+  "a02": {
+   "title": "The Light on the Damascus Road",
+   "when": "c. AD 34",
+   "subtitle": "The name a persecutor heard",
+   "story": [
+    "Saul was still breathing out threats and murder against the Lord's disciples. He went to the high priest and got letters for the synagogues in Damascus. If he found anyone who belonged to the Way of Jesus, man or woman, he would tie them up and bring them back to Jerusalem. So Saul set out on the long road to Damascus.",
+    "As he came near Damascus, a light from heaven suddenly flashed around him. Saul fell to the ground. A voice said to him, “Saul, Saul, why are you persecuting me?” Saul asked, “Who are you, Lord?” The Lord said, “I am Jesus, whom you are persecuting.”",
+    "The Lord said, “Get up and go into the city. Someone there will tell you what you must do.” The men traveling with him heard the sound but saw no one, and they stood there speechless. Saul got up and opened his eyes, but he could see nothing. They led him by the hand into Damascus. For three days Saul could not see, and he did not eat or drink."
+   ],
+   "words": [
+    {
+     "who": "Jesus",
+     "text": "Saul, Saul, why are you persecuting me?"
+    },
+    {
+     "who": "Saul",
+     "text": "Who are you, Lord?"
+    },
+    {
+     "who": "Jesus",
+     "text": "I am Jesus, whom you are persecuting. Get up and go into the city. Someone there will tell you what you must do."
+    }
+   ],
+   "note": "Damascus is an ancient city more than two hundred kilometers northeast of Jerusalem. Paul later told this story twice more. He said it happened at midday, and that the light was brighter than the sun.",
+   "core": "Saul's conversion is not a success story of a man who found the truth on his own. It is an act of grace in which the risen Jesus Christ came first and called a persecutor (Acts 9:3–6; Gal 1:15–16).",
+   "reflect": "Among the things I am sure are right, is there anything that goes against the Lord's will?",
+   "quiz": {
+    "q": "How did Saul spend his three days in Damascus after meeting the light?",
+    "options": [
+     "He preached in every synagogue",
+     "He hid in the house of Ananias",
+     "He went straight back to Jerusalem",
+     "He could not see, and he did not eat or drink"
+    ],
+    "explain": "For three days Saul was without sight, and he neither ate nor drank (Acts 9:9)."
+   },
+   "credit": "Caravaggio, The Conversion on the Way to Damascus, c. 1600–1601 · Santa Maria del Popolo, Rome · Public domain"
+  },
+  "a03": {
+   "title": "Ananias on Straight Street",
+   "when": "c. AD 34",
+   "subtitle": "The man who put fear aside and said “Brother”",
+   "story": [
+    "A disciple named Ananias lived in Damascus. The Lord called to him in a vision. Ananias answered, “Here I am, Lord.” The Lord said, “Go to the street called Straight. At the house of Judas, look for a man from Tarsus named Saul. He is praying right now.”",
+    "Ananias said, “Lord, I have heard from many people how much harm this man has done to your people in Jerusalem. And he has come here with authority from the chief priests to arrest everyone who calls on your name.” The Lord said, “Go. He is the instrument I have chosen to carry my name before the Gentiles and kings and the people of Israel.”",
+    "Ananias went into the house and laid his hands on Saul. Ananias said, “Brother Saul, the Lord Jesus, who appeared to you on the road, has sent me so that you may see again and be filled with the Holy Spirit.” At once something like scales fell from Saul's eyes. He could see again, and he was baptized."
+   ],
+   "words": [
+    {
+     "who": "Jesus",
+     "text": "Go. He is the instrument I have chosen to carry my name before the Gentiles and kings and the people of Israel."
+    },
+    {
+     "who": "Ananias",
+     "text": "Brother Saul, the Lord Jesus, who appeared to you on the road, has sent me so that you may see again and be filled with the Holy Spirit."
+    },
+    {
+     "who": "Saul",
+     "text": "Jesus is the Son of God."
+    }
+   ],
+   "note": "Straight Street was the main road that ran straight across old Damascus from the east gate to the west gate. Saul stayed with the disciples for some days and at once began preaching Jesus in the synagogues of Damascus, which amazed the people who knew him.",
+   "reflect": "Who is the hardest person for me to call brother or sister?",
+   "quiz": {
+    "q": "What was the name of the street where the Lord sent Ananias to find Saul?",
+    "options": [
+     "Straight Street",
+     "The King's Highway",
+     "The Way of the Sea",
+     "Temple Street"
+    ],
+    "explain": "The Lord told Ananias to go to the street called Straight and look for Saul of Tarsus at the house of Judas (Acts 9:11)."
+   },
+   "credit": "Pietro da Cortona, Ananias Restoring the Sight of Saint Paul, c. 1631 · Santa Maria della Concezione, Rome · Public domain"
+  },
+  "a04": {
+   "title": "Let Down the Wall in a Basket",
+   "when": "c. AD 37",
+   "subtitle": "The man who boasted of his most shameful night",
+   "story": [
+    "Many days went by. The more Saul proved in the synagogues that Jesus was the Christ, the more the Jews of Damascus were thrown into confusion. At last they plotted to kill him. The governor under Aretas, the Nabataean king, was also guarding the city to seize Saul. Men watched the gates day and night.",
+    "But Saul learned of the plot. One night the disciples who had come to believe through his preaching put him in a large basket. They slowly lowered the basket through an opening in the city wall. Saul stepped down into the darkness below the high wall, and that is how he escaped from Damascus.",
+    "The man who had come to tie up disciples slipped away in a basket. Years later Saul, better known by the name Paul, told this very night in a letter to the church in Corinth. Paul wrote, “If I must boast, I will boast about my weakness.”"
+   ],
+   "words": [
+    {
+     "who": "Paul",
+     "text": "If I must boast, I will boast about the things that show my weakness."
+    },
+    {
+     "who": "Paul",
+     "text": "In Damascus the governor under King Aretas guarded the city to arrest me, but I was lowered in a basket through a window in the wall and escaped his hands."
+    },
+    {
+     "who": "The narrator",
+     "text": "The disciples Saul had taught took him by night and lowered him in a basket down the city wall."
+    }
+   ],
+   "note": "In Galatians, Paul writes that after his conversion he went to Arabia, came back to Damascus, and only after three years went up to Jerusalem. King Aretas ruled the Nabataeans, whose capital was Petra.",
+   "reflect": "Why am I so afraid of letting my weakness show?",
+   "quiz": {
+    "q": "How did Saul escape from Damascus when people wanted to kill him?",
+    "options": [
+     "He was lowered in a basket through a window in the wall",
+     "He passed through the gate dressed as a merchant",
+     "He left by boat at night",
+     "Roman soldiers escorted him out"
+    ],
+    "explain": "The disciples lowered Saul down the wall in a basket at night, and Paul himself wrote that he was let down through a window in the wall (Acts 9:25; 2 Cor 11:33)."
+   },
+   "credit": "Philips Galle after Maarten van Heemskerck, Saint Paul Escaping from Damascus by Night, 1575 · Royal Library of Belgium · Public domain"
+  },
+  "a05": {
+   "title": "The Man Barnabas Took by the Hand",
+   "when": "c. AD 37",
+   "subtitle": "The one who stood beside him when everyone was afraid",
+   "story": [
+    "Saul came back to Jerusalem and tried to join the disciples. But they were all afraid of him. They did not believe he had really become a disciple. Only a few years before, he had been bursting into house after house and dragging believers away. The door would not open for him.",
+    "Then Barnabas, a generous disciple from Cyprus, took Saul by the hand and brought him to the apostles. Barnabas told them step by step how Saul had seen the Lord on the road to Damascus and heard him speak, and how in Damascus he had preached boldly in the name of Jesus. After that, Saul went in and out among the disciples in Jerusalem.",
+    "Saul met Peter and stayed with him for fifteen days. He also met James, the Lord's brother, who later led the church in Jerusalem. When Saul argued boldly with the Greek-speaking Jews, they tried to kill him. When the brothers learned of it, they took Saul down to Caesarea and sent him off to his hometown of Tarsus."
+   ],
+   "words": [
+    {
+     "who": "The narrator",
+     "text": "Barnabas brought Saul to the apostles and told them how Saul had seen the Lord on the road and how he had preached boldly in the name of Jesus in Damascus."
+    },
+    {
+     "who": "Paul",
+     "text": "I went up to Jerusalem to meet Cephas and stayed with him fifteen days. I saw none of the other apostles except James, the Lord's brother."
+    },
+    {
+     "who": "The churches of Judea",
+     "text": "The man who once persecuted us is now preaching the very faith he tried to destroy."
+    }
+   ],
+   "note": "Barnabas was a Levite born in Cyprus, and his given name was Joseph. The apostles called him Barnabas, which means “son of encouragement.” He was the one who sold his field and laid the money at the apostles' feet. Cephas is Peter's name in Aramaic.",
+   "reflect": "Can I be the first to take the hand of someone everyone else avoids?",
+   "quiz": {
+    "q": "Where did the brothers in Jerusalem send Saul when his life was in danger?",
+    "options": [
+     "Antioch",
+     "Tarsus",
+     "Damascus",
+     "Joppa"
+    ],
+    "explain": "When the brothers learned of it, they brought Saul down to Caesarea and sent him off to Tarsus (Acts 9:30)."
+   },
+   "credit": "Cornelis Bos, Barnabas Brings Paul to the Apostles, 1546 · Rijksmuseum, Amsterdam · Public domain"
+  },
+  "a06": {
+   "title": "Where They Were First Called Christians",
+   "when": "c. AD 44",
+   "subtitle": "People given a new name",
+   "story": [
+    "The believers scattered after the death of Stephen traveled as far as Phoenicia, Cyprus, and Antioch, telling the message only to Jews. But some of them, men from Cyprus and Cyrene, came to Antioch and told Greeks, too, about the Lord Jesus. The Lord's hand was with them, and a great number believed and turned to the Lord.",
+    "When the church in Jerusalem heard this news, they sent Barnabas to Antioch. Barnabas saw the grace of God there and was glad. He urged them all to stay true to the Lord with all their hearts. Then Barnabas went to Tarsus to look for Saul and brought him back to Antioch. For a whole year the two met with the church and taught many people.",
+    "It was in Antioch that the disciples were first called Christians. Around that time a prophet named Agabus came down from Jerusalem. Moved by the Holy Spirit, he announced that a great famine would come over the whole world. The disciples in Antioch decided to help the brothers in Judea, each as much as they could, and they sent their gift to the elders of the church in Judea by Barnabas and Saul."
+   ],
+   "words": [
+    {
+     "who": "The narrator",
+     "text": "It was in Antioch that the disciples were first called Christians."
+    },
+    {
+     "who": "The narrator",
+     "text": "Barnabas saw the grace of God and was glad, and he urged everyone to stay true to the Lord with all their hearts."
+    },
+    {
+     "who": "The narrator",
+     "text": "The disciples decided, each as much as they could, to send help to the brothers living in Judea."
+    }
+   ],
+   "note": "Antioch of Syria stood on the Orontes River. It was the third largest city in the Roman Empire, after Rome and Alexandria. “Christian” means a person who belongs to Christ.",
+   "reflect": "Could people who watch my life tell whom I follow?",
+   "quiz": {
+    "q": "What did the prophet Agabus announce, moved by the Holy Spirit?",
+    "options": [
+     "That the temple would fall",
+     "That Saul would be arrested",
+     "That a great earthquake would come",
+     "That a great famine would come over the whole world"
+    ],
+    "explain": "Agabus said by the Spirit that a great famine would come over the whole world, and it happened in the days of Emperor Claudius (Acts 11:28)."
+   },
+   "credit": "Louis Fabritius Dubourg, Paul and Barnabas Preaching before the Temple, c. 1713–1775 · Rijksmuseum, Amsterdam · Public domain"
+  },
+  "a07": {
+   "title": "Set Apart These Two",
+   "when": "c. AD 47",
+   "subtitle": "A church that sent away two men it loved",
+   "story": [
+    "In the church at Antioch there were prophets and teachers: Barnabas, Simeon who was called Niger, Lucius of Cyrene, Manaen, who had grown up with Herod the ruler of Galilee, and Saul. They came from different homelands and different families, but they served the Lord together in one church.",
+    "While they were worshiping the Lord and fasting, the Holy Spirit said, “Set apart for me Barnabas and Saul for the work I have called them to.” These were the two men the church had learned from for more than a year. The church obeyed the Spirit.",
+    "After more fasting and prayer, they laid their hands on Barnabas and Saul and sent them off. Sent by the Holy Spirit, the two went down to the port of Seleucia. From there they sailed out to sea toward Cyprus, the island where Barnabas was born."
+   ],
+   "words": [
+    {
+     "who": "The Holy Spirit",
+     "text": "Set apart for me Barnabas and Saul for the work I have called them to."
+    },
+    {
+     "who": "The narrator",
+     "text": "After fasting and praying, they laid their hands on the two men and sent them off."
+    },
+    {
+     "who": "The narrator",
+     "text": "Sent out by the Holy Spirit, the two went down to Seleucia and from there sailed to Cyprus."
+    }
+   ],
+   "note": "Seleucia was a seaport about twenty-five kilometers west of Antioch. Niger is a Latin word meaning “black,” so many scholars think Simeon came from Africa.",
+   "core": "Mission is not one person's adventure. It is the work of the Holy Spirit calling people, and of the church sending them out with prayer (Acts 13:2–4).",
+   "reflect": "Can I gladly let go of someone I love when God calls them?",
+   "quiz": {
+    "q": "Which two men did the Holy Spirit tell the church in Antioch to set apart?",
+    "options": [
+     "Peter and John",
+     "Barnabas and Saul",
+     "Paul and Silas",
+     "Simeon and Lucius"
+    ],
+    "explain": "The Holy Spirit said to set apart Barnabas and Saul for the work he had called them to (Acts 13:2)."
+   },
+   "credit": "Attributed to Pieter de Grebber, Paul Preaching on His First Missionary Journey, c. 1610–1652 · Rijksmuseum, Amsterdam · Public domain"
+  },
+  "a08": {
+   "title": "The Sorcerer Blinded Before the Governor",
+   "when": "c. AD 47",
+   "subtitle": "The day Saul stepped forward as Paul",
+   "story": [
+    "Barnabas and Saul landed at Salamis on the island of Cyprus and preached the word in the synagogues. John, also called Mark, whom they had brought from Jerusalem, helped them. They crossed the island all the way to Paphos, the port city at its western end. The governor, Sergius Paulus, lived there. He was a wise man, and he sent for the two because he wanted to hear the word of God.",
+    "But beside the governor was a Jewish sorcerer named Bar-Jesus. He was also called Elymas, and he was a false prophet. Elymas opposed the two men and tried to keep the governor from believing. Then Saul, who was also called Paul, filled with the Holy Spirit, looked straight at Elymas.",
+    "Paul said, “You are full of lies and evil. Will you never stop twisting the straight ways of the Lord? Now the hand of the Lord is against you. You will be blind, and for a time you will not see the sun.” At once mist and darkness came over Elymas, and he groped about, looking for someone to lead him by the hand. When the governor saw this, he was amazed at the teaching about the Lord, and he believed."
+   ],
+   "words": [
+    {
+     "who": "Paul",
+     "text": "You are full of lies and evil. Will you never stop twisting the straight ways of the Lord?"
+    },
+    {
+     "who": "Paul",
+     "text": "Now the hand of the Lord is against you. You will be blind, and for a time you will not see the sun."
+    },
+    {
+     "who": "The narrator",
+     "text": "When the governor saw what happened, he was amazed at the teaching about the Lord, and he believed."
+    }
+   ],
+   "note": "Paphos was the capital of Roman Cyprus and the seat of the governor. From this scene on, Acts calls Saul by his Roman name, Paul, and begins to write “Paul and his companions” instead of “Barnabas and Saul.” The governor Sergius Paulus is a different person from the apostle Paul.",
+   "reflect": "Am I listening to words that pull me away from God's word?",
+   "quiz": {
+    "q": "What was the name of the sorcerer in Paphos who tried to keep the governor from believing?",
+    "options": [
+     "Simon",
+     "Sceva",
+     "Elymas",
+     "Demetrius"
+    ],
+    "explain": "The sorcerer Elymas, also called Bar-Jesus, tried hard to turn the governor away from the faith (Acts 13:6–8)."
+   },
+   "credit": "Raphael, The Conversion of the Proconsul, 1515 · Victoria and Albert Museum, London · Public domain"
+  },
+  "a09": {
+   "title": "The First Sermon in the Synagogue",
+   "when": "c. AD 47",
+   "subtitle": "A light to the ends of the earth",
+   "story": [
+    "Paul and his companions sailed from the port of Paphos to Perga. There John Mark left them and went back to Jerusalem. Paul and Barnabas climbed the mountain road and reached Pisidian Antioch, a city with the same name as Antioch in Syria. On the Sabbath, after the reading from the Law and the Prophets, the leaders of the synagogue said, “Brothers, if you have a word of encouragement for the people, please speak.”",
+    "Paul stood up, motioned with his hand, and told the story of Israel. He said that God had sent Jesus, a Savior from the family of David. The people of Jerusalem and their leaders asked Pilate to have him killed, but God raised him from the dead. Paul said, “Everyone who believes in him is set right from everything the law of Moses could not set you free from.”",
+    "The next Sabbath almost the whole city gathered, and the Jews were filled with jealousy and argued against them. Paul and Barnabas spoke boldly: “Since you reject the word, we now turn to the Gentiles. The Lord has made us a light to bring salvation to the ends of the earth.” The Gentiles were glad and believed, but the Jews stirred up the leading women and the important men of the city and drove the two out. The two shook the dust off their feet in protest and went on to Iconium."
+   ],
+   "words": [
+    {
+     "who": "Paul",
+     "text": "Through this man forgiveness of sins is proclaimed to you. From everything the law of Moses could not set you free from, everyone who believes is set right in him."
+    },
+    {
+     "who": "Paul and Barnabas",
+     "text": "The Lord has commanded us: I have made you a light for the Gentiles, to bring salvation to the ends of the earth."
+    },
+    {
+     "who": "The narrator",
+     "text": "The disciples were filled with joy and with the Holy Spirit."
+    }
+   ],
+   "note": "Pisidian Antioch belonged to the Roman province of Galatia. Many scholars think Paul's later letter to the churches of Galatia was written to the churches founded on this first journey.",
+   "core": "Paul's sermon does not end with advice to be a good person. It announces forgiveness of sins and being made right with God through Jesus, who died on the cross and rose again (Acts 13:38–39).",
+   "reflect": "Who is the one person I most want to share the gospel with?",
+   "quiz": {
+    "q": "Where did John, also called Mark, leave the group and go back to Jerusalem?",
+    "options": [
+     "Paphos",
+     "Iconium",
+     "Salamis",
+     "Perga"
+    ],
+    "explain": "When Paul and his companions sailed from Paphos and came to Perga in Pamphylia, John left them and went back to Jerusalem (Acts 13:13)."
+   },
+   "credit": "After Johann Jakob von Sandrart, Paul Preaches the Gospel in Antioch, 1697 · Rijksmuseum, Amsterdam · Public domain"
+  },
+  "a10": {
+   "title": "Called Gods, Then Stoned",
+   "when": "c. AD 48",
+   "subtitle": "The crowd that honored them as gods, then picked up stones",
+   "story": [
+    "The two had fled Iconium to escape being stoned. While they were preaching in Lystra, a man who had never walked from birth sat listening to Paul. Paul saw that he had faith to be healed, and he called out in a loud voice, “Stand up straight on your feet!” The man jumped up and began to walk.",
+    "The crowd shouted in the Lycaonian language, “The gods have come down to us in human form!” They called Barnabas Zeus, and because Paul did most of the speaking, they called him Hermes. The priest of the temple of Zeus brought bulls and wreaths and wanted to offer sacrifices. When Barnabas and Paul heard this, they were shocked and grieved. They tore their clothes, rushed into the crowd, and shouted, “We are only human, just like you.”",
+    "The two cried out to them to turn from these empty things to the living God, who made heaven and earth, and only just stopped the sacrifice. But then Jews came from Pisidian Antioch and Iconium and stirred up the crowd. The crowd stoned Paul and dragged him out of the city, thinking he was dead. But when the disciples gathered around him, Paul got up and went back into the city. The next day he left with Barnabas for Derbe."
+   ],
+   "words": [
+    {
+     "who": "Paul",
+     "text": "Stand up straight on your feet!"
+    },
+    {
+     "who": "The crowd in Lystra",
+     "text": "The gods have come down to us in human form!"
+    },
+    {
+     "who": "Barnabas and Paul",
+     "text": "We are only human, just like you. We bring you good news, telling you to turn from these empty things to the living God, who made heaven and earth and the sea and everything in them."
+    }
+   ],
+   "note": "Ancient writings tell an old tale of Zeus and Hermes visiting people in human form. But the Bible does not say whether that tale is why the people of Lystra took the two apostles for gods.",
+   "reflect": "When people praise me, do I give the glory to God?",
+   "quiz": {
+    "q": "What did the people of Lystra call Barnabas?",
+    "options": [
+     "Hermes",
+     "Zeus",
+     "Artemis",
+     "Apollo"
+    ],
+    "explain": "The crowd called Barnabas Zeus, and they called Paul Hermes because he was the chief speaker (Acts 14:12)."
+   },
+   "credit": "Raphael, The Sacrifice at Lystra, 1515 · Victoria and Albert Museum, London · Public domain"
+  },
+  "a11": {
+   "title": "Back to the Same Cities",
+   "when": "c. AD 48",
+   "subtitle": "Walking back down the road where he was stoned",
+   "story": [
+    "Paul and Barnabas preached the gospel in Derbe and won many disciples. From there, just over the Cilician Gates, Paul's hometown of Tarsus was not far. But the two turned back. They went again into Lystra, Iconium, and Antioch, where they had been driven out and stoned.",
+    "In each city the two strengthened the disciples and urged them to remain in the faith. Paul and Barnabas said, “We must go through many hardships to enter the kingdom of God.” They appointed elders in every church, and with prayer and fasting they entrusted the disciples to the Lord in whom they had believed.",
+    "The two preached the word in Perga, went down to Attalia, and sailed back to Antioch, where they had first set out. They gathered the church and told everything God had done with them, and how he had opened the door of faith to the Gentiles. And they stayed there a long time with the disciples."
+   ],
+   "words": [
+    {
+     "who": "Paul and Barnabas",
+     "text": "We must go through many hardships to enter the kingdom of God."
+    },
+    {
+     "who": "The narrator",
+     "text": "The two appointed elders in every church, and with prayer and fasting they entrusted the disciples to the Lord in whom they had believed."
+    },
+    {
+     "who": "The narrator",
+     "text": "The two gathered the church and reported all that God had done with them, and how he had opened the door of faith to the Gentiles."
+    }
+   ],
+   "note": "Derbe was a town east of Lystra, at the edge of the Lycaonian plain. From here they could have crossed the Taurus Mountains by the Cilician Gates and gone straight to Tarsus, but the two went back the way they had come.",
+   "reflect": "Do I go back to visit and hold up those who are struggling?",
+   "quiz": {
+    "q": "When Paul and Barnabas returned to Antioch, what did they tell the church?",
+    "options": [
+     "How God had opened the door of faith to the Gentiles",
+     "A letter sent by the apostles in Jerusalem",
+     "A gift sent by the governor of Cyprus",
+     "A vision they saw in Damascus"
+    ],
+    "explain": "The two gathered the church and reported all that God had done with them and how he had opened the door of faith to the Gentiles (Acts 14:27)."
+   },
+   "credit": "Cornelis Bos, Paul Preaching in the Synagogue, 1546 · Rijksmuseum, Amsterdam · Public domain"
+  },
+  "a12": {
+   "title": "How Are We Saved?",
+   "when": "c. AD 49",
+   "subtitle": "Do not add a burden on top of grace",
+   "story": [
+    "Some men came down from Judea to the church in Antioch and taught, “Unless you are circumcised as the law of Moses says, you cannot be saved.” Paul and Barnabas argued sharply with them. The churches of Galatia, founded on the first journey, were being shaken by the same teaching. Paul wrote to those churches: “I am amazed that you are so quickly leaving the one who called you by the grace of Christ and turning to a different gospel.”",
+    "Someone else wrote that letter down for him, but at the end Paul added large letters in his own hand. Around that time the church in Antioch sent the two to the apostles and elders in Jerusalem. After a long debate, Peter said, “God gave the Holy Spirit to the Gentiles just as he did to us. He made their hearts clean by faith and made no difference between us and them. We believe that we are saved through the grace of the Lord Jesus, just as they are.”",
+    "The whole assembly fell silent as Barnabas and Paul told of the signs and wonders God had done among the Gentiles. James, the Lord's brother, who led the church, said, “Let us not make it hard for the Gentiles who are turning to God.” The apostles and elders sent Judas called Barsabbas and Silas, two leaders, with Paul and Barnabas to Antioch to deliver a letter. When the church read the letter, which said they would not lay the burden of circumcision on them, they were filled with joy."
+   ],
+   "words": [
+    {
+     "who": "Paul",
+     "text": "A person is made right with God not by doing what the law says but by faith in Jesus Christ. So we, too, have put our faith in Christ Jesus."
+    },
+    {
+     "who": "Peter",
+     "text": "We believe that we are saved through the grace of the Lord Jesus, just as they are."
+    },
+    {
+     "who": "James",
+     "text": "So my judgment is that we should not make it hard for the Gentiles who are turning to God."
+    }
+   ],
+   "note": "If Galatians was written in Antioch just before this council, it is the earliest of Paul's letters. Some scholars think it was written after the council, in Ephesus or Macedonia. Circumcision was a Jewish rite performed on the male body as a sign of belonging to God's people.",
+   "core": "Salvation is not a reward for circumcision or for keeping the law. It is received by the grace of the Lord Jesus Christ (Acts 15:11). True faith bears good fruit, but we are not made right with God because of that fruit (Gal 2:16; Eph 2:8–10).",
+   "reflect": "Do I say I am saved by grace, yet still boast about what I do?",
+   "quiz": {
+    "q": "At the Jerusalem council, who said, “Let us not make it hard for the Gentiles who are turning to God”?",
+    "options": [
+     "Peter",
+     "Barnabas",
+     "James",
+     "Silas"
+    ],
+    "explain": "After hearing Peter, Barnabas, and Paul, James said this, and the council wrote that decision in a letter and sent it (Acts 15:19–20)."
+   },
+   "credit": "Jan Luyken, A Letter Read Aloud to a Great Gathering of Christians, 1712 · Rijksmuseum, Amsterdam · Public domain"
+  },
+  "a13": {
+   "title": "The Day He Parted from Barnabas",
+   "when": "c. AD 50",
+   "subtitle": "One road, two paths",
+   "story": [
+    "After they came back from Jerusalem and spent some time in Antioch, Paul said to Barnabas, “Let us go back and visit the brothers in every city where we preached the word of the Lord, and see how they are doing.” Barnabas wanted to take John, also called Mark, with them.",
+    "Paul did not agree. Mark had left them at Perga in Pamphylia the last time and had not stayed with them in the work to the end. The two disagreed so sharply that they parted ways. Barnabas took Mark and sailed for Cyprus.",
+    "Paul chose Silas, who had brought the letter from Jerusalem. The brothers in Antioch entrusted the two of them to the grace of the Lord and sent them off, and Paul and Silas went through Syria and Cilicia, strengthening the churches. Many years later, Paul, now in prison, wrote to Timothy, the disciple he loved like a son: “Bring Mark with you. He is a help to me in my work.”"
+   ],
+   "words": [
+    {
+     "who": "Paul",
+     "text": "Let us go back and visit the brothers in every city where we preached the word of the Lord, and see how they are doing."
+    },
+    {
+     "who": "The narrator",
+     "text": "Barnabas took Mark and sailed for Cyprus. Paul chose Silas, and the brothers entrusted the two to the grace of the Lord and sent them off."
+    },
+    {
+     "who": "Paul",
+     "text": "Bring Mark with you. He is a help to me in my work."
+    }
+   ],
+   "note": "Mark was Barnabas's cousin. Later Paul asked the church in Colossae to welcome Mark if he came to them, and in Philemon he called him his fellow worker.",
+   "reflect": "In a relationship where feelings have been hurt, is there something I should be the first to make right?",
+   "quiz": {
+    "q": "Where did Barnabas sail with Mark?",
+    "options": [
+     "Cyprus",
+     "Pamphylia",
+     "Cilicia",
+     "Rome"
+    ],
+    "explain": "After the sharp disagreement with Paul, Barnabas took Mark and left for Cyprus, and Paul went with Silas through Syria and Cilicia (Acts 15:39–41)."
+   },
+   "credit": "Rembrandt, Two Old Men Disputing (Peter and Paul), 1628 · National Gallery of Victoria, Melbourne · Public domain"
+  },
+  "a14": {
+   "title": "Young Timothy",
+   "when": "c. AD 50",
+   "subtitle": "The young man who carried on his grandmother's and mother's faith",
+   "story": [
+    "Paul and Silas passed through Derbe and came to Lystra. It was the very city where Paul had been stoned a few years before. A disciple named Timothy lived there. His mother was a Jewish woman who believed in Jesus, and his father was a Greek. All the brothers in Lystra and Iconium spoke well of him.",
+    "Paul wanted to take Timothy along with him. The Jews in that area all knew Timothy's father was a Greek and that Timothy had not been circumcised. Paul circumcised Timothy, not for the sake of salvation, but so that nothing would stand in the way of bringing the gospel to them. Later Paul wrote, “To the Jews I became like a Jew, to win the Jews.”",
+    "The group went from city to city, passing on the decisions the apostles and elders in Jerusalem had made. The churches grew strong in faith and grew in number every day. Timothy became a fellow worker whom Paul loved like a son. Years later Paul wrote to him, “I am sure that the sincere faith that lived first in your grandmother Lois and your mother Eunice now lives in you too.”"
+   ],
+   "words": [
+    {
+     "who": "Paul",
+     "text": "I remember your sincere faith. It lived first in your grandmother Lois and your mother Eunice, and I am sure it lives in you too."
+    },
+    {
+     "who": "Paul",
+     "text": "To the Jews I became like a Jew. I did it to win the Jews."
+    },
+    {
+     "who": "Paul",
+     "text": "You know what kind of man Timothy is. Like a son with his father, he has worked with me for the gospel."
+    }
+   ],
+   "note": "Lystra was a hilltop site south of present-day Konya in Türkiye. It became a Roman colony under Emperor Augustus. The Bible does not say when Timothy first heard the gospel, but it may have been during the first journey.",
+   "reflect": "Do I remember the labor of those who passed the faith on to me?",
+   "quiz": {
+    "q": "Who was Timothy's father?",
+    "options": [
+     "A Jewish priest",
+     "A Greek",
+     "A Roman soldier",
+     "A Pharisee"
+    ],
+    "explain": "Timothy was the son of a Jewish woman who believed, and his father was a Greek (Acts 16:1)."
+   },
+   "credit": "Willem Drost, Timothy and His Grandmother Lois, 1650s · Hermitage Museum, Saint Petersburg · Public domain"
+  },
+  "a15": {
+   "title": "The Vision of the Man from Macedonia",
+   "when": "c. AD 50",
+   "subtitle": "At the end of closed roads, an open sea",
+   "story": [
+    "Paul and his companions traveled through the region of Phrygia and Galatia. They wanted to preach the word in the province of Asia, where Ephesus was, but the Holy Spirit stopped them. When they came to the border of Mysia and tried to go north into Bithynia, this time the Spirit of Jesus would not allow it. Each time a road closed, they had to turn around.",
+    "So they passed by Mysia and went down to Troas on the coast. Beyond the city lay the Aegean Sea. That night Paul saw a vision. A man of Macedonia was standing there, pleading with him. The man said, “Come over to Macedonia and help us.”",
+    "After Paul saw the vision, they at once looked for a way to leave for Macedonia. They were sure God had called them to preach the gospel to the people there. Luke, who wrote the book of Acts, joined the group at this time. From this point on, he wrote “we” instead of “they.”"
+   ],
+   "words": [
+    {
+     "who": "A man of Macedonia",
+     "text": "Come over to Macedonia and help us."
+    },
+    {
+     "who": "Luke",
+     "text": "When Paul had seen the vision, we got ready at once to leave for Macedonia, sure that God had called us to preach the gospel to them."
+    },
+    {
+     "who": "Luke",
+     "text": "The Holy Spirit kept them from speaking the word in Asia. They tried to go into Bithynia, but the Spirit of Jesus would not allow them."
+    }
+   ],
+   "note": "Troas was a Roman colony on the Aegean coast south of old Troy. It was the port where ships left Asia for Macedonia. Because Acts begins to say “we” here, the writer Luke is thought to have joined the group at this point.",
+   "reflect": "When the way does not open as I want, do I still trust God to lead me?",
+   "quiz": {
+    "q": "In the vision, where was the man from who asked Paul to come over and help?",
+    "options": [
+     "Bithynia",
+     "Asia",
+     "Mysia",
+     "Macedonia"
+    ],
+    "explain": "At Troas Paul saw a vision in the night of a man of Macedonia standing and begging him to come over and help (Acts 16:9)."
+   },
+   "credit": "After Johann Jakob von Sandrart, Paul's Vision of a Man of Macedonia, 1697 · Rijksmuseum, Amsterdam · Public domain"
+  },
+  "a16": {
+   "title": "Lydia at the Riverside Place of Prayer",
+   "when": "c. AD 50",
+   "subtitle": "A heart opened by the river",
+   "story": [
+    "Setting sail from Troas, the group passed Samothrace and reached Neapolis the next day. From there they went to Philippi. Philippi was a leading city of the region of Macedonia and a Roman colony. A few days later, on the Sabbath, they went outside the city gate to the riverside, where they expected to find a place of prayer.",
+    "Some women had gathered by the river. The group sat down and spoke the word to them. Among them was Lydia, from the city of Thyatira. She was a dealer in purple cloth and a woman who worshiped God. The Lord opened Lydia's heart, and she listened closely to what Paul said.",
+    "Lydia and her household were baptized. Lydia urged them, “If you consider me a believer in the Lord, come and stay at my house.” They could not refuse her. Paul always remembered the church in Philippi that began this way with joy, and years later he sent them a letter from prison."
+   ],
+   "words": [
+    {
+     "who": "Luke",
+     "text": "The Lord opened Lydia's heart to listen closely to what Paul said."
+    },
+    {
+     "who": "Lydia",
+     "text": "If you consider me a believer in the Lord, come and stay at my house."
+    },
+    {
+     "who": "Paul",
+     "text": "I thank God every time I think of you, because you have shared with me in the gospel from the first day until now."
+    }
+   ],
+   "note": "Philippi was named after Philip II, king of Macedonia. After a battle on its plain in 42 BC, retired Roman soldiers settled there, and it became a colony. The Gangites River flows west of the city.",
+   "core": "Lydia received the word above all because the Lord opened her heart (Acts 16:14). We must see both the labor of the one who speaks the word and the grace of God who opens hearts.",
+   "reflect": "Remembering how the Lord opened my heart, whom am I opening my door to?",
+   "quiz": {
+    "q": "What did Lydia sell?",
+    "options": [
+     "Spices",
+     "Tents",
+     "Purple cloth",
+     "Olive oil"
+    ],
+    "explain": "Lydia, from the city of Thyatira, was a dealer in purple cloth and a woman who worshiped God (Acts 16:14)."
+   },
+   "credit": "Marie Ellenrieder, The Baptism of Lydia, 1861 · Public domain"
+  },
+  "a17": {
+   "title": "Midnight Hymns and a Shaken Prison",
+   "when": "c. AD 50",
+   "subtitle": "Songs at midnight",
+   "story": [
+    "In Philippi there was a slave girl who had a spirit that told fortunes. For many days she followed Paul and his companions, shouting, “These men are servants of the Most High God!” Paul was deeply troubled by these cries from the spirit. He turned around and said to the spirit, “In the name of Jesus Christ I command you to come out of her.” At once the spirit left her. Her owners, seeing their profits gone, dragged Paul and Silas before the officials.",
+    "The two were beaten many times and thrown into the inner prison. Their feet were fastened in wooden stocks. At midnight Paul and Silas were praying and singing hymns to God, and the other prisoners were listening. Suddenly there was a great earthquake. All the prison doors flew open, and everyone's chains came loose. The jailer, thinking the prisoners had escaped, drew his sword to kill himself. But Paul shouted, “Don't harm yourself! We are all here!”",
+    "Trembling, the jailer fell down before them. Then he brought the two out and asked, “Sirs, what must I do to be saved?” Paul and Silas said, “Believe in the Lord Jesus, and you will be saved, you and your household.” That same night the jailer washed their wounds, and he and his whole household were baptized. Joy filled that house, now that they had come to believe in God."
+   ],
+   "words": [
+    {
+     "who": "Paul and Silas",
+     "text": "Believe in the Lord Jesus, and you will be saved, you and your household."
+    },
+    {
+     "who": "The jailer",
+     "text": "Sirs, what must I do to be saved?"
+    },
+    {
+     "who": "Paul",
+     "text": "Don't harm yourself! We are all here!"
+    }
+   ],
+   "note": "The next day Paul made it known that he and Silas were Roman citizens who had been beaten in public without a trial. Beating a Roman citizen without a trial broke the law, so the officials were afraid and came in person to apologize.",
+   "core": "The words “you and your household will be saved” do not mean a family is saved automatically. Paul spoke the word to the whole household, and that house rejoiced as they believed in God (Acts 16:31–34).",
+   "reflect": "Even when my heart is breaking, can I still praise God?",
+   "quiz": {
+    "q": "What did Paul and Silas answer when the jailer asked how to be saved?",
+    "options": [
+     "Believe in the Lord Jesus",
+     "Be circumcised",
+     "Offer a sacrifice at the temple",
+     "Guard the prison doors"
+    ],
+    "explain": "Paul and Silas answered that if he believed in the Lord Jesus, he and his household would be saved (Acts 16:31)."
+   },
+   "credit": "Illustration from Scenes from the Life of St. Paul, The Conversion of the Jailer at Philippi, 1909 · Public domain"
+  },
+  "a18": {
+   "title": "Searching the Scriptures Every Day",
+   "when": "c. AD 50",
+   "subtitle": "People who opened the Scriptures every day",
+   "story": [
+    "The group came to Thessalonica. As was his custom, Paul went into the synagogue, and for three Sabbaths he explained the Scriptures. Paul said, “The Christ had to suffer and rise from the dead. This Jesus I am telling you about is the Christ.” Some Jews believed, along with many Greeks and quite a few leading women.",
+    "But some Jews grew jealous. They gathered troublemakers from the marketplace, threw the city into an uproar, and rushed to the house of Jason, who had welcomed the group. When they could not find Paul and Silas, they dragged Jason before the city officials. They shouted, “These men who have turned the world upside down have come here too!” That night the brothers sent Paul and Silas away to Berea.",
+    "The people of Berea were more open-minded than those in Thessalonica. They received the word eagerly and searched the Scriptures every day to see if what Paul said was true. Many of them believed. But the Jews from Thessalonica followed and stirred up the crowds, so the brothers sent Paul off to the coast, while Silas and Timothy stayed in Berea. For a long time afterward, Paul worried about the church in Thessalonica he had left so suddenly."
+   ],
+   "words": [
+    {
+     "who": "Paul",
+     "text": "The Christ had to suffer and rise from the dead. This Jesus I am telling you about is the Christ."
+    },
+    {
+     "who": "Luke",
+     "text": "The people of Berea received the word eagerly and searched the Scriptures every day to see if it was really so."
+    },
+    {
+     "who": "Paul",
+     "text": "Brothers, we were separated from you for a short time, in person but not in heart, and we tried very hard to see your faces."
+    }
+   ],
+   "note": "Thessalonica was the capital of Macedonia, a port city on the Via Egnatia, the great Roman road. Today it is Thessaloniki, the second largest city in Greece. Berea was a town at the foot of the mountains to its southwest.",
+   "reflect": "Even with words I have heard many times, do I open the Bible and check them?",
+   "quiz": {
+    "q": "What did the people of Berea do every day after hearing Paul?",
+    "options": [
+     "They guarded the synagogue door",
+     "They searched the Scriptures",
+     "They fasted and prayed",
+     "They sent messengers to Thessalonica"
+    ],
+    "explain": "The people of Berea received the word eagerly and searched the Scriptures every day to see if it was true (Acts 17:11)."
+   },
+   "credit": "Gustave Doré, Saint Paul Preaching to the Thessalonians, 1866 · Public domain"
+  },
+  "a19": {
+   "title": "To an Unknown God",
+   "when": "c. AD 51",
+   "subtitle": "To an unknown god",
+   "story": [
+    "Brought to Athens by the brothers, Paul waited there for Silas and Timothy. When he saw that the city was full of idols, he was deeply upset. Paul talked with people in the synagogue, and every day in the marketplace with whoever was there. Epicurean and Stoic philosophers took him to the Areopagus, the hill where the council of Athens met. The philosophers asked, “What is this new teaching you are talking about?”",
+    "Paul stood up in the middle of the Areopagus and said, “People of Athens, as I walked around your city, I found an altar with the words: To an unknown god. Now I will tell you about the one you worship without knowing. The God who made the world and everything in it does not live in temples built by human hands.”",
+    "Paul went on, “In him we live and move and have our being. Now God commands all people everywhere to repent. He has set a day when he will judge the world by a man he has appointed, and he has given proof of this by raising him from the dead.” When they heard about the resurrection, some laughed at him, and others said they would hear him again. But Dionysius, a member of the Areopagus, a woman named Damaris, and some others believed."
+   ],
+   "words": [
+    {
+     "who": "Paul",
+     "text": "As I walked around and looked at the things you worship, I found an altar with the words: To an unknown god. The one you worship without knowing, I now make known to you."
+    },
+    {
+     "who": "Paul",
+     "text": "God is not far from any one of us. In him we live and move and have our being."
+    },
+    {
+     "who": "Paul",
+     "text": "God has set a day when he will judge the world with justice by a man he has appointed, and he has given proof of this to everyone by raising him from the dead."
+    }
+   ],
+   "note": "Areopagus means “hill of Ares,” the god of war. It was a rocky hill northwest of the Acropolis, and also the name of the Athenian council that met there. The words Paul quoted next, “We are his offspring,” come from the poet Aratus.",
+   "core": "Paul did not simply accept the religion of the Gentiles. He proclaimed God the Creator and called them to turn from idols, repent, and prepare to stand before the risen Christ (Acts 17:24–31).",
+   "reflect": "Do I tell people what they want to hear, or the gospel of repentance and resurrection?",
+   "quiz": {
+    "q": "What was written on the altar Paul saw in Athens?",
+    "options": [
+     "To the King of heaven",
+     "To all the gods",
+     "To the goddess Athena",
+     "To an unknown god"
+    ],
+    "explain": "Paul began with the altar marked “To an unknown god” and told them about the God they worshiped without knowing (Acts 17:23)."
+   },
+   "credit": "Raphael, Saint Paul Preaching in Athens, 1515 · Victoria and Albert Museum, London · Public domain"
+  },
+  "a20": {
+   "title": "Friends Who Sewed Tents",
+   "when": "c. AD 51",
+   "subtitle": "Tentmaker friends",
+   "story": [
+    "Paul left Athens and went to Corinth. It was a large city on a narrow strip of land between two seas, crowded with ships and merchants. Years later Paul looked back on that time and wrote to the church in Corinth, “I came to you in weakness and fear, trembling greatly.”",
+    "There Paul met a Jew named Aquila. He came from Pontus, south of the Black Sea, and he and his wife Priscilla had recently come from Italy. Emperor Claudius had ordered all Jews to leave Rome. Aquila and his wife made tents, and Paul did the same work.",
+    "Paul stayed in their home and worked with them. And every Sabbath he tried to persuade Jews and Greeks in the synagogue. From then on, Priscilla and Aquila were Paul's fellow workers for many years. Later Paul wrote to the church in Rome, “They risked their own lives for mine.”"
+   ],
+   "words": [
+    {
+     "who": "Luke",
+     "text": "Because Paul did the same work they did, he stayed and worked with them. They were tentmakers by trade."
+    },
+    {
+     "who": "Paul",
+     "text": "I came to you in weakness and fear, trembling greatly."
+    },
+    {
+     "who": "Paul",
+     "text": "Greet Priscilla and Aquila, who worked with me in Christ Jesus. They risked their own lives for mine."
+    }
+   ],
+   "note": "The Roman historian Suetonius also writes about Emperor Claudius driving the Jews out of Rome. It is usually dated to around AD 49. Corinth, the capital of the region of Achaia, sat on the narrow neck of land between two seas.",
+   "reflect": "At my workplace, do I live like someone who follows Jesus?",
+   "quiz": {
+    "q": "Why had Aquila and Priscilla left Italy and come to Corinth?",
+    "options": [
+     "To grow their business",
+     "To meet Paul",
+     "Emperor Claudius had made the Jews leave Rome",
+     "The church in Jerusalem sent them"
+    ],
+    "explain": "They came from Italy to Corinth because Emperor Claudius had ordered all Jews to leave Rome (Acts 18:2)."
+   },
+   "credit": "Raphael Sadeler after Joos van Winghe, Saint Paul with the Tentmakers Aquila and Priscilla in Corinth, c. 1588–1589 · Museum Boijmans Van Beuningen, Rotterdam · Public domain"
+  },
+  "a21": {
+   "title": "Do Not Be Afraid; Keep Speaking",
+   "when": "c. AD 51",
+   "subtitle": "I am with you",
+   "story": [
+    "Silas and Timothy came down from Macedonia. Timothy brought good news: the church in Thessalonica was holding on to faith and love even in suffering. Paul, together with Silas and Timothy, sent that church a letter. Paul wrote, “Now we really live, since you are standing firm in the Lord.” A little later he sent them a second letter, because they were shaken about the day the Lord would come again.",
+    "In the synagogue in Corinth, the opposition was fierce. Paul shook out his clothes in protest and said he would now go to the Gentiles. He moved to the house of a man named Titius Justus, right next door to the synagogue. Crispus, the leader of the synagogue, believed in the Lord with his whole household, and many Corinthians were baptized. One night the Lord spoke to Paul in a vision: “Do not be afraid. Keep on speaking. I am with you.”",
+    "Paul stayed a year and a half, teaching the word. When Gallio, sent by Rome, was governor of Achaia, the Jews dragged Paul into court. Just as Paul was about to speak, Gallio said to the Jews, “This is a question about words and names and your own law. Settle it yourselves. I will not be a judge of such things.” Just as the Lord had promised to be with him, no one was able to harm Paul."
+   ],
+   "words": [
+    {
+     "who": "The Lord",
+     "text": "Do not be afraid. Do not be silent; keep on speaking. I am with you, and no one will harm you, for I have many people in this city."
+    },
+    {
+     "who": "Paul",
+     "text": "Now we really live, since you are standing firm in the Lord."
+    },
+    {
+     "who": "Paul",
+     "text": "Do not be easily shaken or alarmed by talk that the day of the Lord has already come."
+    }
+   ],
+   "note": "An inscription found at Delphi gives the time when Gallio was governor of Achaia. This lets us date Paul's stay in Corinth to about AD 51. It is the most important fixed point for working out the dates of Paul's life.",
+   "reflect": "Where fear keeps me silent, do I trust that the Lord is with me?",
+   "quiz": {
+    "q": "Which governor of Achaia refused to judge the charges against Paul in Corinth?",
+    "options": [
+     "Felix",
+     "Gallio",
+     "Festus",
+     "Sergius Paulus"
+    ],
+    "explain": "Gallio, governor of Achaia, said it was a question of words and names and Jewish law, and he refused to be a judge (Acts 18:14–15)."
+   },
+   "credit": "Valentin de Boulogne, Saint Paul Writing His Epistles, c. 1618–1620 · Museum of Fine Arts, Houston · Public domain"
+  },
+  "a22": {
+   "title": "Two Years in the Hall of Tyrannus",
+   "when": "c. AD 53–55",
+   "subtitle": "The word that spread from a lecture hall to all of Asia",
+   "story": [
+    "After leaving Corinth, Paul went to Antioch and then set out again. In Ephesus he met some disciples and asked them, “Did you receive the Holy Spirit when you believed?” They answered, “We have not even heard that there is a Holy Spirit.” They had received only the baptism of John the Baptist. When Paul told them about Jesus, they were baptized in the name of the Lord Jesus. Paul laid his hands on them, and the Holy Spirit came on them. There were about twelve of them in all.",
+    "For three months Paul spoke boldly in the synagogue about the kingdom of God. But some hardened their hearts and spoke evil of the Way of Jesus in front of the crowd. So Paul took the disciples apart and taught every day in the lecture hall of Tyrannus. This went on for two years, until all the Jews and Greeks who lived in the province of Asia had heard the word of the Lord.",
+    "Around that time, worrying news came from Corinth across the sea. The church was splitting into groups and quarreling. The Corinthians had also written to him with a number of questions. From Ephesus, Paul wrote a letter to the church in Corinth. Paul wrote, “You are the one body of Christ. Of faith, hope, and love, the greatest is love.”"
+   ],
+   "words": [
+    {
+     "who": "Paul",
+     "text": "Did you receive the Holy Spirit when you believed?"
+    },
+    {
+     "who": "The disciples in Ephesus",
+     "text": "No, we have not even heard that there is a Holy Spirit."
+    },
+    {
+     "who": "Paul",
+     "text": "Brothers and sisters, I urge you in the name of our Lord Jesus Christ: agree with one another, do not split apart, and be united in one mind and one purpose."
+    },
+    {
+     "who": "Paul",
+     "text": "So these three remain forever: faith, hope, and love. And the greatest of these is love."
+    }
+   ],
+   "note": "The hall of Tyrannus is thought to have been a lecture hall belonging to a man named Tyrannus. One old manuscript adds that Paul taught there during the midday rest. At the end of 1 Corinthians, Paul wrote that he would stay in Ephesus until Pentecost.",
+   "reflect": "Even on busy days, do I stay close to God's word?",
+   "quiz": {
+    "q": "Where did Paul teach the disciples every day for two years after leaving the synagogue?",
+    "options": [
+     "The temple of Artemis",
+     "The lecture hall of Tyrannus",
+     "The theater of Ephesus",
+     "Priscilla's house"
+    ],
+    "explain": "Paul took the disciples apart and spent two years teaching every day in the lecture hall of Tyrannus (Acts 19:9–10)."
+   },
+   "credit": "After Johann Jakob von Sandrart, The Sick Healed by Paul's Handkerchiefs, 1697 · Rijksmuseum, Amsterdam · Public domain"
+  },
+  "a23": {
+   "title": "The Burned Books of Magic",
+   "when": "c. AD 54",
+   "subtitle": "A name no one can imitate",
+   "story": [
+    "God did amazing things through Paul's hands. Even handkerchiefs or aprons that had touched Paul were taken to the sick, and their illnesses left them and evil spirits went out. Then some Jews who went from place to place driving out spirits tried to copy Paul. They said to people with evil spirits, “By the Jesus whom Paul preaches, I command you.” The seven sons of Sceva, a Jewish priest, were doing this too.",
+    "The evil spirit answered them, “Jesus I know, and Paul I know about. But who are you?” The man with the evil spirit jumped on them and overpowered them all. They ran out of that house naked and wounded. When this became known all over Ephesus, everyone was filled with fear, and the name of the Lord Jesus was held in honor.",
+    "Many who had come to believe came and confessed what they had been doing. Those who had practiced magic brought their books and burned them in front of everyone. When they added up what the books were worth, it came to fifty thousand silver coins. In this way the word of the Lord grew mightily and spread far and wide."
+   ],
+   "words": [
+    {
+     "who": "The traveling Jewish exorcists",
+     "text": "By the Jesus whom Paul preaches, I command you."
+    },
+    {
+     "who": "The evil spirit",
+     "text": "Jesus I know, and Paul I know about. But who are you?"
+    },
+    {
+     "who": "Luke",
+     "text": "In this way the word of the Lord grew mightily and spread far and wide."
+    }
+   ],
+   "note": "Ephesus was famous for its spells and charms. If one silver coin was a worker's pay for a day, fifty thousand silver coins was a fortune that would take one person more than a hundred years to earn.",
+   "reflect": "What habit must I clearly cut off in order to follow the Lord?",
+   "quiz": {
+    "q": "Who heard an evil spirit say, “But who are you?”",
+    "options": [
+     "Paul and Silas",
+     "The silversmiths of Ephesus",
+     "The officials of Asia",
+     "The seven sons of Sceva"
+    ],
+    "explain": "When the seven sons of Sceva, a Jewish priest, copied Paul, the evil spirit said it knew Jesus and knew about Paul, but asked who they were (Acts 19:14–15)."
+   },
+   "credit": "Eustache Le Sueur, Saint Paul Preaching at Ephesus, 1649 · National Gallery, London · Public domain"
+  },
+  "a24": {
+   "title": "Great Is Artemis of the Ephesians",
+   "when": "c. AD 55",
+   "subtitle": "A chant that rang out for two hours",
+   "story": [
+    "Paul decided to go to Jerusalem by way of Macedonia and Achaia. Paul said, “After I have been there, I must see Rome too.” Around that time a silversmith named Demetrius was making a good living by crafting silver models of the temple of Artemis, the goddess of Ephesus. He gathered the craftsmen and said, “This Paul says that gods made by human hands are no gods at all. Our trade is in danger, and the temple of our goddess will be looked down on.”",
+    "The craftsmen grew furious and shouted, “Great is Artemis of the Ephesians!” The whole city was in an uproar. The crowd seized Gaius and Aristarchus, Paul's traveling companions from Macedonia, and rushed into the theater. Paul wanted to go out before the crowd, but the disciples stopped him. Some officials of Asia who were Paul's friends also sent word, begging him not to go into the theater.",
+    "Most of the people did not even know why they had come together. For two hours the crowd shouted the same words. At last the city clerk calmed the crowd and said, “These men you have brought here have not robbed the temple or insulted our goddess. If you have a complaint, the courts are open. I am afraid we may be charged with rioting because of today.” With that, the city clerk sent the assembly away."
+   ],
+   "words": [
+    {
+     "who": "Paul",
+     "text": "After I have been there, I must see Rome too."
+    },
+    {
+     "who": "Demetrius",
+     "text": "This man Paul says that gods made by human hands are no gods at all, and he has led many people astray, not only in Ephesus but in almost all of Asia."
+    },
+    {
+     "who": "The crowd in Ephesus",
+     "text": "Great is Artemis of the Ephesians!"
+    },
+    {
+     "who": "The city clerk",
+     "text": "These men you have brought here have not robbed the temple, and they have not insulted our goddess."
+    }
+   ],
+   "note": "The theater of Ephesus could seat more than twenty thousand people, and its ruins still stand today. The temple of Artemis at Ephesus was counted among the Seven Wonders of the ancient world.",
+   "reflect": "Am I being swept along by the crowd into agreeing with what is wrong?",
+   "quiz": {
+    "q": "What did the crowd in the theater shout for two hours?",
+    "options": [
+     "Great is Artemis of the Ephesians",
+     "Away with Paul",
+     "Caesar alone is lord",
+     "Defend our temple"
+    ],
+    "explain": "With one voice the crowd shouted for two hours, “Great is Artemis of the Ephesians!” (Acts 19:34)."
+   },
+   "credit": "Unknown artist, View of the Theatre at Ephesus, 1873 · The Story of the Bible from Genesis to Revelation · Public domain"
+  },
+  "a25": {
+   "title": "A Letter Written with Tears",
+   "when": "c. AD 56",
+   "subtitle": "The comfort Titus brought",
+   "story": [
+    "When the uproar was over, Paul called the disciples together, encouraged them, and said goodbye. On his way to Macedonia he stopped at Troas. Before this, Paul had written the church in Corinth a letter out of great distress and with many tears. In Troas a door opened for the gospel, but Paul had no peace of mind, because he did not find Titus, the Greek coworker he had sent to Corinth. So Paul left Troas and crossed over to Macedonia.",
+    "Even in Macedonia he had no rest. There was conflict on the outside and fear on the inside. Then Titus came. Titus told him that the church in Corinth longed to see Paul, that they were sorry for what had happened, and that they were eager to stand by him. God, who comforts the downhearted, comforted Paul by sending Titus.",
+    "From Macedonia Paul wrote to the church in Corinth again. Paul wrote, “We have this treasure in jars of clay. If anyone is in Christ, he is a new creation.” Paul sent Titus back to Corinth, along with a brother praised by many churches. The letter was probably carried in their hands. Paul traveled through many parts of Macedonia, encouraging the believers, and then went down to Greece."
+   ],
+   "words": [
+    {
+     "who": "Paul",
+     "text": "I wrote to you out of great distress and anguish of heart, and with many tears, not to make you sad, but to let you know my love for you."
+    },
+    {
+     "who": "Paul",
+     "text": "God, who comforts the downhearted, comforted us by bringing Titus to us."
+    },
+    {
+     "who": "Paul",
+     "text": "We have this treasure in jars of clay, to show that this great power comes from God and not from us."
+    },
+    {
+     "who": "Paul",
+     "text": "If anyone is in Christ, he is a new creation. The old has gone; look, the new has come."
+    }
+   ],
+   "note": "Acts does not say where in Macedonia Paul wrote this letter. Some old manuscripts note at the end that it was written in Philippi. Second Corinthians is the letter in which Paul shows the most of his inner heart and his weakness.",
+   "reflect": "When I was downhearted, who came to my side and gave me strength?",
+   "quiz": {
+    "q": "Why was Paul uneasy in Troas even though a door had opened for the gospel?",
+    "options": [
+     "He could not find a ship",
+     "He was driven out of the synagogue",
+     "He did not find Titus",
+     "He was ill"
+    ],
+    "explain": "Paul had no peace of mind because he did not find his brother Titus in Troas, so he went on to Macedonia (2 Cor 2:12–13)."
+   },
+   "credit": "Rembrandt, Saint Paul at His Writing Desk, c. 1629–1630 · Germanisches Nationalmuseum, Nuremberg · Public domain"
+  },
+  "a26": {
+   "title": "A Long Letter from Corinth in Winter",
+   "when": "c. AD 57",
+   "subtitle": "A letter sent to a Rome he had never seen",
+   "story": [
+    "Paul came to Greece and stayed there three months. He had once written to the church in Corinth that he might spend the winter with them. In Corinth, Gaius, a local man Paul had baptized, welcomed him and looked after the whole church. There Paul wrote a long letter to the believers in Rome, a city he had never yet visited. A brother named Tertius wrote down Paul's words.",
+    "Paul wrote that he had wanted to come to Rome for many years, but the way had been blocked again and again. Now he was on his way to Jerusalem, carrying a gift collected by the believers in Macedonia and Achaia for the poor among God's people there. When that was done, he said, he would pass through Rome and go on to Spain, at the far west. Paul wrote that the gospel is the power of God that saves everyone who believes.",
+    "Paul asked, “Pray with me that I may be rescued from the unbelievers in Judea.” At the end of the letter he asked them to welcome Phoebe, a servant of the church in Cenchreae. Phoebe was probably the one who carried this letter to Rome. When Paul was about to sail for Syria, some Jews made a plot against him, so he decided to go back through Macedonia."
+   ],
+   "words": [
+    {
+     "who": "Paul",
+     "text": "I am not ashamed of the gospel. It is the power of God that saves everyone who believes."
+    },
+    {
+     "who": "Paul",
+     "text": "Neither death nor life, neither things present nor things to come, can separate us from the love of God that is in Christ Jesus our Lord."
+    },
+    {
+     "who": "Paul",
+     "text": "When I go to Spain, I hope to see you on the way, and first to enjoy your company for a while."
+    },
+    {
+     "who": "Tertius",
+     "text": "I, Tertius, who wrote down this letter, greet you in the Lord."
+    }
+   ],
+   "note": "Cenchreae was the eastern port of Corinth. At the end of Romans, Paul also sends greetings from Erastus, the city treasurer of Corinth. An old paving stone with the name Erastus carved on it has been found in Corinth.",
+   "reflect": "Whom do I carry in prayer, and where is the gospel needed?",
+   "quiz": {
+    "q": "At the end of Romans, who says he wrote down the letter?",
+    "options": [
+     "Phoebe",
+     "Tertius",
+     "Timothy",
+     "Gaius"
+    ],
+    "explain": "Tertius wrote, “I, Tertius, who wrote down this letter, greet you in the Lord” (Rom 16:22)."
+   },
+   "credit": "After Johann Jakob von Sandrart, Paul Writes His Letter to the Romans, 1697 · Rijksmuseum, Amsterdam · Public domain"
+  },
+  "a27": {
+   "title": "Eutychus Falls from the Window",
+   "when": "c. AD 57",
+   "subtitle": "A long night in a lamplit upper room",
+   "story": [
+    "After the Feast of Unleavened Bread, Paul and his companions sailed from Philippi and reached Troas five days later, where they stayed seven days. On the first day of the week, the believers gathered to break bread and share the Lord's Supper. Paul meant to leave the next day, so he kept on talking, and he went on until midnight. Many lamps were burning in the upstairs room where they met.",
+    "A young man named Eutychus was sitting in a window, and he grew very sleepy. As Paul talked on and on, he fell sound asleep and dropped from the third story to the ground. When they picked him up, he was dead. Paul went down, threw himself on the young man, put his arms around him, and said, “Do not be alarmed. He is alive.”",
+    "Paul went back upstairs, broke bread, and ate. He talked with them for a long time, until daylight, and then he left. The people took the young man home alive and were greatly comforted."
+   ],
+   "words": [
+    {
+     "who": "Luke",
+     "text": "On the first day of the week, when we gathered to break bread, Paul spoke to the people because he meant to leave the next day, and he kept talking until midnight."
+    },
+    {
+     "who": "Paul",
+     "text": "Do not be alarmed. He is alive."
+    },
+    {
+     "who": "Luke",
+     "text": "The people took the young man home alive and were greatly comforted."
+    }
+   ],
+   "note": "The word “we,” which disappeared after the Philippi story, appears again in Acts 20. This is taken as a sign that Luke, the writer of the book, walked with Paul again from Philippi. The name Eutychus means “lucky.”",
+   "reflect": "Do I treasure the time spent sharing God's word with other believers?",
+   "quiz": {
+    "q": "From which floor did Eutychus fall when he dozed off in the window?",
+    "options": [
+     "The second story",
+     "The fourth story",
+     "The roof",
+     "The third story"
+    ],
+    "explain": "Eutychus fell sound asleep and fell from the third story (Acts 20:9)."
+   },
+   "credit": "Illustrators of Figures de la Bible, Paul Raises Eutychus to Life, 1728 · Public domain"
+  },
+  "a28": {
+   "title": "You Will Not See My Face Again",
+   "when": "c. AD 57",
+   "subtitle": "The elders who wept and walked him to the ship",
+   "story": [
+    "Paul was hurrying to reach Jerusalem before Pentecost. So he did not stop at Ephesus but sailed past it and landed at Miletus. Paul sent to Ephesus and called for the elders of the church. When the elders came, Paul said, “You know how I served the Lord with humility and tears from the first day I came to Asia.”",
+    "Paul went on, “Now, bound by the Spirit, I am going to Jerusalem. In every city the Holy Spirit warns me that chains and troubles are waiting for me. But my life means nothing to me, if only I can finish the work of telling the gospel of God's grace. Now none of you will ever see my face again.”",
+    "Paul urged them, “Savage wolves will come in and attack the flock, so stay alert. The Lord Jesus himself said, ‘It is more blessed to give than to receive.’” When he had finished speaking, Paul knelt down and prayed with them all. The elders wept loudly, threw their arms around Paul's neck, and kissed him. Then they walked him to the ship."
+   ],
+   "words": [
+    {
+     "who": "Paul",
+     "text": "My life means nothing to me, if only I can finish my race and complete the task the Lord Jesus gave me: to testify to the gospel of God's grace."
+    },
+    {
+     "who": "Paul",
+     "text": "Now I entrust you to God and to the word of his grace."
+    },
+    {
+     "who": "Paul",
+     "text": "Remember the words the Lord Jesus himself said: It is more blessed to give than to receive."
+    }
+   ],
+   "note": "Miletus was a port city a little more than fifty kilometers south of Ephesus. Here Paul looked back on his three years in Ephesus, when he taught the believers night and day with tears.",
+   "core": "Paul did not leave the church to the personal abilities of the elders. He entrusted it to God and to the word of his grace. Elders do not care for their own flock but for the church God bought with his own blood (Acts 20:28, 32).",
+   "reflect": "What path of faith do I want to hold to until the end?",
+   "quiz": {
+    "q": "In Miletus, which words of the Lord Jesus did Paul tell the elders to remember?",
+    "options": [
+     "It is more blessed to give than to receive",
+     "Ask, and you will receive",
+     "Love one another",
+     "Do not be afraid"
+    ],
+    "explain": "Paul told them to remember the words the Lord Jesus himself said: it is more blessed to give than to receive (Acts 20:35)."
+   },
+   "credit": "Jan Luyken, Paul Takes Leave of the Elders, 1712 · Rijksmuseum, Amsterdam · Public domain"
+  },
+  "a29": {
+   "title": "The Belt of Agabus",
+   "when": "c. AD 57",
+   "subtitle": "Hands and feet tied with a belt",
+   "story": [
+    "Paul and his companions sailed to Tyre, found the disciples there, and stayed seven days. Moved by the Spirit, the disciples in Tyre told Paul not to go up to Jerusalem. On the day they left, the disciples, with their wives and children, walked with them out of the city. They all knelt on the beach and prayed, and then said goodbye to one another.",
+    "In Caesarea they stayed at the house of Philip the evangelist, who had been chosen with Stephen as one of the seven servants. After many days, the prophet Agabus, who had once foretold the famine, came down from Judea. Agabus took Paul's belt, tied his own hands and feet with it, and said, “The Holy Spirit says: This is how the Jews in Jerusalem will tie up the owner of this belt and hand him over to the Gentiles.”",
+    "Paul's companions and the people there wept and begged him not to go. Paul answered, “Why are you weeping and breaking my heart? I am ready not only to be tied up in Jerusalem but even to die for the name of the Lord Jesus.” When Paul would not be persuaded, they stopped trying and said, “May the Lord's will be done.”"
+   ],
+   "words": [
+    {
+     "who": "Agabus",
+     "text": "The Holy Spirit says: This is how the Jews in Jerusalem will tie up the owner of this belt and hand him over to the Gentiles."
+    },
+    {
+     "who": "Paul",
+     "text": "Why are you weeping and breaking my heart? I am ready not only to be tied up but even to die for the name of the Lord Jesus."
+    },
+    {
+     "who": "Those with him",
+     "text": "May the Lord's will be done."
+    }
+   ],
+   "note": "Philip the evangelist was one of the seven servants chosen by the church in Jerusalem, and he had four unmarried daughters who prophesied. Agabus had earlier foretold a great famine over the whole world, and it came true in the days of Emperor Claudius.",
+   "reflect": "Are there times when I must follow the Lord's will even if people I love are against it?",
+   "quiz": {
+    "q": "What did Agabus use to tie his own hands and feet to show what would happen to Paul?",
+    "options": [
+     "A rope",
+     "An iron chain",
+     "Paul's belt",
+     "Paul's cloak"
+    ],
+    "explain": "Agabus took Paul's belt, tied his own hands and feet, and gave the message of the Holy Spirit (Acts 21:11)."
+   },
+   "credit": "Jan Luyken, Paul Watches Agabus Bind Himself with Paul's Belt, 1700 · Rijksmuseum, Amsterdam · Public domain"
+  },
+  "a30": {
+   "title": "Seized in the Temple",
+   "when": "c. AD 57",
+   "subtitle": "A city set boiling by one rumor",
+   "story": [
+    "The brothers in Jerusalem welcomed the group gladly. The next day Paul went to see James, who led the church, and all the elders were there. Paul told them one by one the things God had done among the Gentiles. They praised God and said, “Brother, there are tens of thousands of Jewish believers, and they are all eager to keep the law. They have heard that you teach the Jews who live among the Gentiles to abandon the law of Moses and not to circumcise their children.”",
+    "The elders said, “There are four men here who have made a vow, a special promise to God. Go through the purification rite with them and pay for them to shave their heads. Then everyone will know that you yourself live by the law.” Paul went through the purification rite with the four men and went into the temple. When the seven days of purification were almost over, some Jews from the province of Asia saw Paul in the temple.",
+    "They stirred up the crowd and shouted, “Men of Israel, help! This man has brought Greeks into the temple!” They had seen Trophimus of Ephesus, a Gentile believer, in the city with Paul earlier, and they assumed Paul had brought him in. As the crowd dragged Paul out of the temple and tried to kill him, the commander of a thousand Roman soldiers came running with his troops and had Paul bound with two chains."
+   ],
+   "words": [
+    {
+     "who": "The elders in Jerusalem",
+     "text": "Brother, look. There are tens of thousands of Jews who believe, and they are all eager to keep the law."
+    },
+    {
+     "who": "The Jews from Asia",
+     "text": "Men of Israel, help! This is the man who teaches everyone everywhere against our people and our law and this place, and he has even brought Greeks into the temple!"
+    },
+    {
+     "who": "The crowd",
+     "text": "Away with him!"
+    }
+   ],
+   "note": "The low wall around the inner courts of the temple carried a warning that any Gentile who crossed it would be put to death. Stones carved with that warning were found in Jerusalem in the nineteenth and twentieth centuries.",
+   "reflect": "Am I judging someone based only on what I have heard and not checked?",
+   "quiz": {
+    "q": "Whom did the Jews from Asia think Paul had brought into the temple?",
+    "options": [
+     "Timothy",
+     "Trophimus of Ephesus",
+     "Luke",
+     "Barnabas"
+    ],
+    "explain": "They had seen Trophimus of Ephesus in the city with Paul and assumed Paul had brought him into the temple (Acts 21:29)."
+   },
+   "credit": "Jan Luyken, Paul Seized by Roman Soldiers in Jerusalem, 1708 · Rijksmuseum, Amsterdam · Public domain"
+  },
+  "a31": {
+   "title": "The Story Told from the Stairs",
+   "when": "c. AD 57",
+   "subtitle": "The Damascus story told again from the steps",
+   "story": [
+    "As the soldiers were about to take Paul into the barracks, Paul said to the commander, “May I say something to you?” The commander was surprised and asked, “Do you speak Greek? Aren't you that Egyptian who started a revolt some time ago?” Paul answered, “I am a Jew from Tarsus in Cilicia. Please let me speak to the people.” The commander gave him permission.",
+    "Paul stood on the steps and motioned with his hand, and the crowd grew quiet. Speaking in Hebrew, Paul told them how he had studied under Gamaliel, the famous teacher of the law, how he had persecuted the Way of Jesus, and how he had heard the voice of Jesus of Nazareth on the road to Damascus. Paul said, “Later, when I came back to Jerusalem and was praying in the temple, the Lord said to me, ‘Go. I will send you far away to the Gentiles.’”",
+    "The crowd shouted, “Rid the earth of him!” The commander ordered Paul to be questioned under the whip. As the soldiers tied him up, Paul asked the centurion, “Is it lawful for you to whip a Roman citizen who has not even had a trial?” The commander came and asked, “Are you a Roman citizen?” Paul answered, “Yes, I am.” The commander said, “I paid a great deal of money for my citizenship.” Paul said, “But I was born a citizen.”"
+   ],
+   "words": [
+    {
+     "who": "Paul",
+     "text": "I am a Jew. I was born in Tarsus in Cilicia and brought up in this city, and I was trained strictly in the law of our ancestors under Gamaliel."
+    },
+    {
+     "who": "Jesus",
+     "text": "I am Jesus of Nazareth, whom you are persecuting."
+    },
+    {
+     "who": "Jesus",
+     "text": "Go. I will send you far away to the Gentiles."
+    },
+    {
+     "who": "Paul",
+     "text": "Is it right for you to whip a Roman citizen, and without even a trial?"
+    }
+   ],
+   "note": "The Antonia Fortress was built by Herod at the northwest corner of the temple. Roman troops were stationed there, looking down on the temple courts. A flight of steps led up from the temple courts to the fortress.",
+   "reflect": "Whom could I tell the story of how I came to believe in Jesus?",
+   "quiz": {
+    "q": "Why did Paul escape being whipped?",
+    "options": [
+     "He was the commander's friend",
+     "The high priest defended him",
+     "The crowd went away",
+     "He was born a Roman citizen"
+    ],
+    "explain": "The commander had paid a lot of money for his citizenship, but Paul was a Roman citizen by birth. Those who were about to question him quickly pulled back (Acts 22:28–29)."
+   },
+   "credit": "Gustave Doré, Paul Addresses the Crowd after His Arrest, 1866 · Public domain"
+  },
+  "a32": {
+   "title": "The Plot His Nephew Overheard",
+   "when": "c. AD 57",
+   "subtitle": "A life saved by a young nephew",
+   "story": [
+    "The commander wanted to find out why Paul was being accused, so he called the Council together and stood Paul before them. Paul knew that the Council was made up of Sadducees, who did not believe in the resurrection, and Pharisees, who did. He called out, “Brothers, I am a Pharisee. I am on trial because of my hope that the dead will rise.” The Council split in two and began to quarrel, so the commander had his soldiers take Paul back to the barracks.",
+    "That night the Lord stood beside Paul and said, “Take courage. As you have testified about me in Jerusalem, so you must testify in Rome.” In the morning more than forty Jews swore an oath not to eat or drink until they had killed Paul. Their plan was to ask the commander to bring Paul before the Council again and to ambush him on the way.",
+    "The son of Paul's sister heard about the plot. He went into the barracks and told Paul. Paul called a centurion and had him take the young man to the commander. When the young man told him of the plot, the commander said, “Don't tell anyone that you reported this to me.” That night the commander sent Paul with four hundred and seventy soldiers to Felix, the Roman governor of Judea, in Caesarea."
+   ],
+   "words": [
+    {
+     "who": "Paul",
+     "text": "Brothers, I am a Pharisee, the son of a Pharisee. I am on trial because of my hope that the dead will rise."
+    },
+    {
+     "who": "Jesus",
+     "text": "Take courage. As you have testified about me in Jerusalem, so you must testify in Rome."
+    },
+    {
+     "who": "The commander",
+     "text": "Don't tell anyone that you reported this to me."
+    }
+   ],
+   "note": "It is more than a hundred kilometers from Jerusalem to Caesarea. The troops marched by night as far as Antipatris, and the next day only the horsemen went on with Paul. In the letter the commander sent to the governor, his name is given as Claudius Lysias.",
+   "reflect": "Do I believe God uses even the small courage of ordinary people?",
+   "quiz": {
+    "q": "Who heard about the plot of the forty men and went into the barracks to tell Paul?",
+    "options": [
+     "The son of Paul's sister",
+     "A centurion",
+     "Paul's sister",
+     "The commander"
+    ],
+    "explain": "The son of Paul's sister heard about the ambush, went into the barracks, and told Paul (Acts 23:16)."
+   },
+   "credit": "After Johann Jakob von Sandrart, Paul's Nephew Warns of the Plot to Kill Him, 1697 · Rijksmuseum, Amsterdam · Public domain"
+  },
+  "a33": {
+   "title": "The Words That Frightened Felix",
+   "when": "c. AD 57–59",
+   "subtitle": "Righteousness, self-control, and the judgment to come",
+   "story": [
+    "Five days later the high priest Ananias came down to Caesarea with some elders and a lawyer named Tertullus. Tertullus brought charges against Paul before Governor Felix. He said, “This man is like a plague. He stirs up riots among the Jews all over the world. He is a ringleader of the Nazarene sect, and he even tried to defile the temple.”",
+    "Paul answered, “It is no more than twelve days since I went up to Jerusalem to worship. No one found me arguing with anyone or stirring up a crowd, in the temple or in the synagogues. But I do worship the God of our ancestors as a follower of the Way, which they call a sect. And I have the hope that both the righteous and the wicked will rise again.” Felix put off the case, saying he would decide when Lysias the commander came down.",
+    "A few days later Felix came with his wife Drusilla, who was Jewish, and sent for Paul. As Paul talked about righteousness, self-control, and the judgment to come, Felix became afraid and said, “That's enough for now. Go. When I find time, I will send for you again.” Felix hoped Paul would give him a bribe, so he sent for him often and talked with him. Two years went by like this. Then Felix, wanting to please the Jews, left Paul in prison when he stepped down as governor."
+   ],
+   "words": [
+    {
+     "who": "Paul",
+     "text": "Like them, I have put my hope in God that both the righteous and the wicked will rise again."
+    },
+    {
+     "who": "Paul",
+     "text": "So I always try to keep my conscience clear before God and people."
+    },
+    {
+     "who": "Felix",
+     "text": "That's enough for now. Go. When I find time, I will send for you again."
+    }
+   ],
+   "note": "The Roman historian Tacitus says that Felix was a freed slave who rose to become governor. His wife Drusilla was the daughter of Herod Agrippa I and the sister of King Agrippa and Bernice, who appear in the next scene. This high priest Ananias is a different person from Ananias the disciple in Damascus.",
+   "reflect": "Do I know what I need to repent of, yet keep putting it off?",
+   "quiz": {
+    "q": "Felix became afraid and said, “Go for now,” when Paul was talking about what?",
+    "options": [
+     "The temple sacrifices and feasts",
+     "Righteousness, self-control, and the judgment to come",
+     "Roman law and citizenship",
+     "The light he saw on the Damascus road"
+    ],
+    "explain": "When Paul talked about righteousness, self-control, and the coming judgment, Felix became afraid and told him to go for now (Acts 24:25)."
+   },
+   "credit": "After Johann Jakob von Sandrart, Paul before Felix and Drusilla, 1697 · Rijksmuseum, Amsterdam · Public domain"
+  },
+  "a34": {
+   "title": "I Appeal to Caesar",
+   "when": "c. AD 59",
+   "subtitle": "Like me, except for these chains",
+   "story": [
+    "When the new governor, Festus, arrived, the chief priests asked him to have Paul brought up to Jerusalem. They planned to lie in wait and kill him on the way. Festus held the trial in Caesarea. They brought many serious charges, but they could not prove any of them. Festus asked Paul, “Are you willing to go up to Jerusalem and be tried there?” Paul answered, “I appeal to Caesar, the Roman emperor.”",
+    "Festus said, “You have appealed to Caesar. To Caesar you will go.” A few days later King Agrippa, who ruled lands north of Judea, came with his sister Bernice to pay their respects to Festus. Some time later the two entered the audience hall with great pomp. Before the king, Paul told about the light and the voice he met on the Damascus road. Festus shouted, “Paul, you are out of your mind! Your great learning is driving you mad.”",
+    "Paul said, “I am not out of my mind, most excellent Festus. What I am saying is true and reasonable. King Agrippa, do you believe the prophets? I know you do.” Agrippa said, “Do you think that in such a short time you can persuade me to be a Christian?” Paul said, “Short time or long, I pray to God that not only you but all who hear me today may become what I am, except for these chains.”"
+   ],
+   "words": [
+    {
+     "who": "Paul",
+     "text": "King Agrippa, I was not disobedient to the vision from heaven."
+    },
+    {
+     "who": "Paul",
+     "text": "Short time or long, I pray to God that not only you but all who hear me today may become what I am, except for these chains."
+    },
+    {
+     "who": "Agrippa",
+     "text": "This man could have been set free if he had not appealed to Caesar."
+    }
+   ],
+   "note": "A Roman citizen could refuse a trial before a provincial governor and ask to be tried by the emperor himself. Agrippa II was the last king of the house of Herod. At that time he also had the power to appoint and remove the high priest in charge of the temple.",
+   "reflect": "Even in a hostile place, can I confess Jesus without shame?",
+   "quiz": {
+    "q": "What did King Agrippa say to Festus about Paul?",
+    "options": [
+     "This man deserves to die",
+     "Send this man to Jerusalem",
+     "This man is out of his mind",
+     "He could have been set free if he had not appealed to Caesar"
+    ],
+    "explain": "Agrippa told Festus that this man could have been set free if he had not appealed to Caesar (Acts 26:32). It was Festus who said Paul was out of his mind (Acts 26:24)."
+   },
+   "credit": "Nikolai Bodarevsky, Paul before Agrippa, 1875 · Public domain"
+  },
+  "a35": {
+   "title": "The Northeaster",
+   "when": "c. AD 59",
+   "subtitle": "Days without sun or stars",
+   "story": [
+    "Paul and some other prisoners were handed over to Julius, a centurion of the Imperial Regiment, and put on a ship. Aristarchus, a man from Thessalonica, went with them. Julius treated Paul kindly and let him visit his friends in Sidon. At Myra they changed to a ship from Alexandria bound for Italy, but the wind was against them. The ship crept along slowly and barely reached Fair Havens on the south side of Crete.",
+    "The Day of Atonement, when the Jews fast, had already passed, and it was the dangerous season for sailing. Paul said to them, “Men, I can see that this voyage will bring great harm, not only to the cargo and the ship but to our own lives.” But the centurion trusted the captain and the owner of the ship more than Paul. Fair Havens was not a good harbor to spend the winter in, so most of them wanted to sail on to Phoenix, a harbor on the west of the same island.",
+    "When a gentle south wind began to blow, they thought they had what they wanted, and they pulled up anchor. Before long a violent wind called the Northeaster swept down from the island. The ship could not head into the wind and was driven along. They wrapped ropes around the hull to hold it together. The next day they threw cargo overboard, and on the third day the ship's gear. For many days neither sun nor stars appeared, and all hope of being saved was lost."
+   ],
+   "words": [
+    {
+     "who": "Paul",
+     "text": "Men, I can see that this voyage will bring great harm and loss, not only to the cargo and the ship but to our own lives."
+    },
+    {
+     "who": "Luke",
+     "text": "For many days neither sun nor stars appeared, and the great storm kept raging, until we gave up all hope of being saved."
+    }
+   ],
+   "note": "The fast was the Day of Atonement in the autumn. After that, the winds on the Mediterranean grew strong and sailing became dangerous, and in winter the sea lanes were almost closed. The Greek name Euraquilo joins the words for east wind and north wind. It was a fierce northeaster.",
+   "reflect": "Am I making a risky choice just because things look good right now?",
+   "quiz": {
+    "q": "What was the name of the fierce wind that struck the ship after it left Fair Havens?",
+    "options": [
+     "Euraquilo",
+     "Sirocco",
+     "Dioscuri",
+     "Phoenix"
+    ],
+    "explain": "Before long a violent wind called Euraquilo, the Northeaster, rushed down from the island (Acts 27:14). Phoenix was the harbor on Crete where they hoped to spend the winter (Acts 27:12)."
+   },
+   "credit": "After Johann Jakob von Sandrart, Paul in the Storm at Sea, 1697 · Rijksmuseum, Amsterdam · Public domain"
+  },
+  "a36": {
+   "title": "Not One Life Will Be Lost",
+   "when": "c. AD 59",
+   "subtitle": "All two hundred seventy-six reach land",
+   "story": [
+    "When everyone had gone a long time without food, Paul stood up and said, “Now take heart. Only the ship will be lost. Not one of your lives will be lost. Last night an angel of the God I serve stood beside me and said, ‘Do not be afraid, Paul. You must stand before Caesar. God has given you the lives of everyone sailing with you.’”",
+    "On the fourteenth night the sailors sensed they were nearing land, and they dropped four anchors from the stern. Then they tried to slip away secretly in the lifeboat. Paul said to the centurion and the soldiers, “Unless these men stay with the ship, you cannot be saved.” The soldiers cut the ropes of the lifeboat. Just before dawn Paul took bread, gave thanks to God in front of them all, broke it, and began to eat. Then they were all encouraged and ate too.",
+    "There were two hundred seventy-six people on board. When day came, they saw a bay with a sandy beach, but the ship struck a place where two currents met and ran aground, and the stern was broken apart. The soldiers wanted to kill the prisoners so none would swim away and escape, but the centurion stopped them because he wanted to save Paul. Those who could swim jumped overboard first, and the rest held on to planks. In the end everyone reached land safely."
+   ],
+   "words": [
+    {
+     "who": "The angel",
+     "text": "Do not be afraid, Paul. You must stand before Caesar. God has given you the lives of everyone sailing with you."
+    },
+    {
+     "who": "Paul",
+     "text": "So take heart, men. I trust God. It will happen just as he told me."
+    },
+    {
+     "who": "Paul",
+     "text": "Unless these men stay with the ship, you cannot be saved."
+    }
+   ],
+   "note": "Luke tells this voyage using the word “we,” showing that he was on the ship too. The story is so detailed that it records soundings of the depth going from twenty fathoms to fifteen. It is one of the most detailed accounts of a voyage in the ancient world.",
+   "reflect": "When everything is shaking, can I hold on to God's promise?",
+   "quiz": {
+    "q": "When the ship broke apart, who stopped the soldiers from killing the prisoners?",
+    "options": [
+     "The captain",
+     "Luke",
+     "Julius the centurion",
+     "Aristarchus"
+    ],
+    "explain": "The soldiers planned to kill the prisoners, but the centurion stopped them because he wanted to save Paul (Acts 27:42–43). That centurion was Julius (Acts 27:1)."
+   },
+   "credit": "Unknown artist, Paul Forbids the Sailors to Leave the Ship, 1873 · The Story of the Bible from Genesis to Revelation · Public domain"
+  },
+  "a37": {
+   "title": "The Hand That Shook Off a Viper",
+   "when": "c. AD 59–60",
+   "subtitle": "A viper dropped into the fire",
+   "story": [
+    "Once they were on land, they learned that the island was called Malta. It was raining and cold, but the islanders showed them unusual kindness. They built a fire and welcomed them all. Paul gathered a bundle of sticks and put them on the fire. A viper, driven out by the heat, came out and fastened itself on Paul's hand.",
+    "The islanders said to one another, “This man must be a murderer. He escaped from the sea, but Justice will not let him live.” Paul shook the creature off into the fire and suffered no harm. The people waited a long time, expecting him to swell up or suddenly fall down dead. When nothing happened to him, they changed their minds and said he was a god.",
+    "Nearby was an estate belonging to Publius, the chief official of the island. Publius welcomed them and treated them kindly for three days. Publius's father was lying sick with fever and dysentery. Paul went in to see him, prayed, laid his hands on him, and healed him. After this, the other sick people on the island came and were healed. The islanders honored them in many ways, and when they sailed, they put on board the things they needed."
+   ],
+   "words": [
+    {
+     "who": "The islanders",
+     "text": "This man must be a murderer. He escaped from the sea, but Justice will not let him live."
+    },
+    {
+     "who": "Luke",
+     "text": "Paul shook the creature off into the fire and suffered no harm."
+    }
+   ],
+   "note": "Melita is today's Malta, a small island south of Sicily. The title “chief official of the island,” given to Publius, also appears on an old inscription found on Malta. A bay on the northeast of the island has long been remembered as the place where Paul came ashore.",
+   "reflect": "Does my heart rise and fall every time people's opinion of me changes?",
+   "quiz": {
+    "q": "Whom did Paul heal by praying and laying hands on him?",
+    "options": [
+     "Julius the centurion",
+     "The father of Publius",
+     "The owner of the ship",
+     "The captain of the ship"
+    ],
+    "explain": "The father of Publius was sick in bed with fever and dysentery. Paul went in, prayed, laid his hands on him, and healed him (Acts 28:8)."
+   },
+   "credit": "Laurent de La Hyre, Saint Paul Shipwrecked on Malta, 1630 · Public domain"
+  },
+  "a38": {
+   "title": "Brothers Waiting at the Forum of Appius",
+   "when": "c. AD 60",
+   "subtitle": "The Rome he had longed to see",
+   "story": [
+    "Three months later they set sail in an Alexandrian ship that had wintered at the island. Its figurehead was the twin gods, the Dioscuri. They stayed three days at Syracuse, went on by Rhegium, and with a south wind came to Puteoli. There they found brothers and stayed with them seven days. And at last they walked toward Rome.",
+    "The brothers in Rome heard the news and set out. They came as far as the Forum of Appius and the Three Taverns to meet them. When Paul, a prisoner, saw their faces, he thanked God and took courage. About three years earlier, Paul had written from Corinth to these very people. Paul wrote, “I long to see you.”",
+    "In that letter Paul said he wanted to visit Rome joyfully on his way to Spain and to rest with them. It was not the way Paul had pictured it, but God really did bring Paul to Rome. When they entered Rome, Paul was allowed to live by himself. A soldier always stayed beside him to guard him."
+   ],
+   "words": [
+    {
+     "who": "Luke",
+     "text": "The brothers there heard about us and came as far as the Forum of Appius and the Three Taverns to meet us. When Paul saw them, he thanked God and took courage."
+    },
+    {
+     "who": "Paul",
+     "text": "I long to see you so that I may share some spiritual gift with you to make you strong."
+    },
+    {
+     "who": "Paul",
+     "text": "Pray that by God's will I may come to you with joy and be refreshed together with you."
+    }
+   ],
+   "note": "The Forum of Appius was a market town on the Appian Way, the road running south from Rome, about sixty kilometers from the city. Three Taverns means “three inns,” and it lay about fifty kilometers from Rome.",
+   "reflect": "Can I be the first to go to a weary person and give them strength?",
+   "quiz": {
+    "q": "Where did the brothers from Rome come out to meet Paul?",
+    "options": [
+     "The Forum of Appius and the Three Taverns",
+     "Puteoli and Rhegium",
+     "Syracuse and Malta",
+     "Fair Havens and Phoenix"
+    ],
+    "explain": "The brothers came as far as the Forum of Appius and the Three Taverns to meet him, and when Paul saw them he thanked God and took courage (Acts 28:15)."
+   },
+   "credit": "Unknown artist, Paul Reaches Rome in Chains, 1873 · The Story of the Bible from Genesis to Revelation · Public domain"
+  },
+  "a39": {
+   "title": "Two Years in a Rented House",
+   "when": "c. AD 60–62",
+   "subtitle": "A man in chains, a word unchained",
+   "story": [
+    "Three days after arriving in Rome, Paul called together the leaders of the Jews and said, “Though I have done nothing against our people or the customs of our ancestors, I was made a prisoner. It is because of the hope of Israel that I am bound with this chain.” They set a day, and many people came to where Paul was staying. From morning till evening Paul explained about Jesus from the law of Moses and the Prophets. Some believed, and some did not.",
+    "For two whole years Paul stayed in his own rented house and welcomed everyone who came to see him. He proclaimed the kingdom of God very boldly and without hindrance. Around that time the church in Philippi sent Epaphroditus to bring Paul a gift. Epaphroditus fell ill and nearly died, but he recovered. Paul sent him back to Philippi with a letter.",
+    "Paul wrote in the letter, “What has happened to me has actually helped the gospel spread. The whole imperial guard has come to know that I am in chains for Christ. For me, to live is Christ, and to die is gain. Rejoice in the Lord always. I will say it again: rejoice.” A man in chains was sending joy to the church in Philippi."
+   ],
+   "words": [
+    {
+     "who": "Paul",
+     "text": "Brothers, I want you to know that what has happened to me has actually helped the gospel spread."
+    },
+    {
+     "who": "Paul",
+     "text": "For me, to live is Christ, and to die is gain."
+    },
+    {
+     "who": "Paul",
+     "text": "Rejoice in the Lord always. I will say it again: rejoice."
+    },
+    {
+     "who": "Luke",
+     "text": "Paul proclaimed the kingdom of God very boldly and without hindrance, and he taught about the Lord Jesus Christ."
+    }
+   ],
+   "note": "Philippians is a letter Paul wrote while in prison. Here we follow the old view that he wrote it in his rented house in Rome. Some scholars think he wrote it while imprisoned in Ephesus or Caesarea.",
+   "reflect": "Am I using my circumstances as an excuse to put off what I could do today?",
+   "quiz": {
+    "q": "Who brought the gift from the church in Philippi to Paul in Rome and then fell ill?",
+    "options": [
+     "Timothy",
+     "Tychicus",
+     "Aristarchus",
+     "Epaphroditus"
+    ],
+    "explain": "Paul writes that he received what the Philippians sent through Epaphroditus, and that Epaphroditus was ill and nearly died, but God had mercy on him (Phil 4:18; 2:25–27)."
+   },
+   "credit": "Bible card, Saint Paul in Rome, 1900s · Public domain"
+  },
+  "a40": {
+   "title": "A Letter for Onesimus",
+   "when": "c. AD 61",
+   "subtitle": "From useless to useful",
+   "story": [
+    "A man named Onesimus came to Paul, who was a prisoner in Rome. He was a slave from the house of Philemon, of the church in Colossae, and he had been away from his master for some time. Through Paul in his chains, Onesimus came to faith. Paul wanted to keep him by his side, but he decided not to do anything without Philemon's consent. So he sent Onesimus back to his master with a short letter.",
+    "Paul wrote to Philemon, “Onesimus was once useless to you, but now he is useful both to you and to me. Welcome him now not as a slave but as a dear brother. If he owes you anything, charge it to me. I, Paul, am writing this with my own hand. I will pay it back.”",
+    "Paul also wrote letters to the churches in Colossae and Ephesus. In Colossians he wrote that in Christ there is no slave or free, and in Ephesians he wrote that we are saved by grace through faith. The letters were carried by Tychicus, a coworker from Asia. Onesimus went with him to Colossae. Paul introduced Onesimus to the church in Colossae like this: “Onesimus, our faithful and dear brother, who is one of you.”"
+   ],
+   "words": [
+    {
+     "who": "Paul",
+     "text": "Welcome him now not as a slave, but as more than a slave: a dear brother."
+    },
+    {
+     "who": "Paul",
+     "text": "If he has wronged you or owes you anything, charge it to me. I, Paul, am writing this with my own hand. I will pay it back."
+    },
+    {
+     "who": "Paul",
+     "text": "You have been saved by grace through faith. This is not from yourselves; it is the gift of God."
+    },
+    {
+     "who": "Paul",
+     "text": "Tychicus will tell you all my news. Onesimus, our faithful and dear brother, is coming with him."
+    }
+   ],
+   "note": "The name Onesimus means “useful” in Greek. Paul made a play on that name. Here we follow the old view that these three letters were written in Rome, though some think they were written in Ephesus.",
+   "reflect": "Am I keeping someone tied to their past wrongs?",
+   "quiz": {
+    "q": "Who went to Colossae with Onesimus and brought news of Paul?",
+    "options": [
+     "Titus",
+     "Philemon",
+     "Tychicus",
+     "Epaphras"
+    ],
+    "explain": "Paul wrote that Tychicus would tell them everything about him, and that he was sending Onesimus with him (Col 4:7–9). The letter to the Ephesians was also sent with Tychicus (Eph 6:21–22)."
+   },
+   "credit": "Gustave Doré, Saint Paul in Prison Hands His Letter to Tychicus · Public domain"
+  },
+  "a41": {
+   "title": "Titus Left Behind on Crete",
+   "when": "c. AD 63–64",
+   "subtitle": "Titus on an island, Timothy in a city",
+   "story": [
+    "The book of Acts ends in the rented house in Rome, but the letters to Timothy and Titus show Paul traveling freely again. As Paul left for Macedonia, he told young Timothy to stay in Ephesus. He was to correct people who taught a different doctrine or got lost in endless family records.",
+    "Some time later Paul sent Timothy a letter. Paul wrote, “Christ Jesus came into the world to save sinners, and I am the worst of them. Don't let anyone look down on you because you are young. Be an example to the believers in speech, in conduct, in love, in faith, and in purity.”",
+    "Paul left Titus on the island of Crete. Paul wrote to Titus, “I left you in Crete to set right what was still unfinished and to appoint elders in every town.” At the end of the letter he told Titus to hurry to Nicopolis when he sent Artemas or Tychicus, because he had decided to spend the winter there. He also asked Titus to send Zenas the lawyer and Apollos, who had taught in Corinth, on their way with everything they needed."
+   ],
+   "words": [
+    {
+     "who": "Paul",
+     "text": "Here is a saying you can trust, worthy of everyone's welcome: Christ Jesus came into the world to save sinners. And I am the worst of them."
+    },
+    {
+     "who": "Paul",
+     "text": "Don't let anyone look down on you because you are young. Be an example to the believers in speech, in conduct, in love, in faith, and in purity."
+    },
+    {
+     "who": "Paul",
+     "text": "I left you in Crete to set right what was still unfinished and to appoint elders in every town, as I told you."
+    }
+   ],
+   "note": "Acts says nothing about Paul working on Crete. So many scholars think Paul was released after his two years in Rome and traveled again. Nicopolis is thought to be a city on the northwest coast of Greece.",
+   "reflect": "Am I raising up people of faith who can carry on the work I have been given?",
+   "quiz": {
+    "q": "Why did Paul leave Titus on Crete?",
+    "options": [
+     "To set right what was unfinished and appoint elders in every town",
+     "To find a ship bound for Rome",
+     "To collect a gift for the church in Jerusalem",
+     "To bring Mark"
+    ],
+    "explain": "Paul wrote to Titus that he had left him in Crete to set right what was lacking and to appoint elders in every town (Titus 1:5)."
+   },
+   "credit": "Unknown artist, Initial P: Saint Paul Giving a Letter to a Bishop, c. 1280–1290 · J. Paul Getty Museum, Los Angeles · Public domain"
+  },
+  "a42": {
+   "title": "The Good Fight Fought to the End",
+   "when": "c. AD 66–67",
+   "subtitle": "Looking toward the crown of righteousness",
+   "story": [
+    "When he wrote his last letter, Paul was in chains in Rome. Paul wrote to Timothy, “My life is already being poured out like wine on the altar, and the time of my departure is near. I have fought the good fight, I have finished the race, I have kept the faith. Now the crown of righteousness is waiting for me. On that day the Lord will give it to me, and not only to me but to all who long for his coming.”",
+    "He was lonely. Demas had loved this world and gone off to Thessalonica. Crescens had gone to Galatia, and Titus to Dalmatia. Only Luke was with Paul. Paul wrote, “Bring Mark with you. He is a help to me in my work.” It was the same Mark over whom Paul and Barnabas had parted ways. Paul also asked him to bring the cloak he had left in Troas, and the books, especially the parchments.",
+    "Paul wrote, “At my first defense in court, no one stood by me. Everyone deserted me. May it not be held against them. But the Lord stood beside me and gave me strength. Through me he made sure the message was fully proclaimed, so that all the Gentiles might hear it.” Paul asked once more: “Do your best to come before winter.”"
+   ],
+   "words": [
+    {
+     "who": "Paul",
+     "text": "I have fought the good fight, I have finished the race, I have kept the faith."
+    },
+    {
+     "who": "Paul",
+     "text": "Now the crown of righteousness is waiting for me. The Lord, the righteous Judge, will give it to me on that day."
+    },
+    {
+     "who": "Paul",
+     "text": "Everyone deserted me, but the Lord stood beside me and gave me strength."
+    },
+    {
+     "who": "Paul",
+     "text": "Do your best to come before winter."
+    }
+   ],
+   "note": "Second Timothy is thought to be the last of Paul's letters. The account of Paul's martyrdom in Rome is an old tradition from outside the Bible, so this journey closes the story with Paul's own confession.",
+   "core": "Paul's last hope was not pride in what he had achieved. It was the crown of righteousness that the Lord, the righteous Judge, would give him (2 Tim 4:7–8).",
+   "reflect": "At the end of my life, will I be able to say that the Lord was with me?",
+   "quiz": {
+    "q": "Whom did Paul ask Timothy to bring, saying he was a help in his work?",
+    "options": [
+     "Demas",
+     "Crescens",
+     "Tychicus",
+     "Mark"
+    ],
+    "explain": "Paul wrote, “Bring Mark with you, for he is useful to me in my work” (2 Tim 4:11). Demas had left because he loved the world, and Tychicus had been sent to Ephesus (2 Tim 4:10, 12)."
+   },
+   "credit": "Rembrandt, Saint Paul in Prison, 1627 · Staatsgalerie Stuttgart · Public domain"
+  }
+ },
+ "letters": {
+  "gal": {
+   "name": "Galatians",
+   "to": "The churches of Galatia",
+   "when": "c. AD 48–49",
+   "carrier": "",
+   "why": "After Paul left, some people came to the churches of Galatia and taught that Gentile believers had to be circumcised and keep the law to be saved. When the believers were shaken by this and began turning to a different gospel, Paul was shocked and grieved, and he wrote this letter.",
+   "heart": "A person is made right with God not by keeping the law but by faith in Christ, and in that faith we are truly free.",
+   "verses": [
+    "I have been crucified with Christ. It is no longer I who live, but Christ who lives in me. I live by faith in the Son of God, who loved me and gave himself for me.",
+    "Christ has set us free so that we may be free. So stand firm, and do not put on the yoke of slavery again.",
+    "The fruit the Spirit produces is love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, and self-control."
+   ],
+   "view": "Some think it was written during the third journey, after the Jerusalem council, in Ephesus or Macedonia, around AD 53–57."
+  },
+  "1th": {
+   "name": "1 Thessalonians",
+   "to": "The church in Thessalonica",
+   "when": "c. AD 50–51",
+   "carrier": "",
+   "why": "Paul had to leave Thessalonica in a hurry because of persecution. Worried, he sent Timothy, and when Timothy came back with news of their faith and love, Paul was glad and wrote this letter. They were grieving because they did not know what would happen to believers who had already died, so he also gave them that hope.",
+   "heart": "To a church that kept the faith in suffering, Paul gives encouragement to live holy lives while hoping for the day the Lord comes again.",
+   "verses": [
+    "Because we cared for you so deeply, we were glad to share with you not only the gospel of God but our very lives, because you had become so dear to us.",
+    "Do not grieve like people who have no hope. If we believe that Jesus died and rose again, then God will bring with him those who have fallen asleep in Jesus.",
+    "Always be joyful. Never stop praying. Give thanks in everything. This is God's will for you in Christ Jesus."
+   ],
+   "view": ""
+  },
+  "2th": {
+   "name": "2 Thessalonians",
+   "to": "The church in Thessalonica",
+   "when": "c. AD 51",
+   "carrier": "",
+   "why": "The believers in Thessalonica were shaken by talk that the day of the Lord had already come, and some stopped working and lived idly. Paul wrote this letter to tell them what must happen before that day comes, and to urge them to live quietly and do their own work.",
+   "heart": "Do not be shaken about the day the Lord will come. Hold firmly to the teaching you received, and live today faithfully.",
+   "verses": [
+    "The Lord is faithful. He will make you strong and guard you from the evil one.",
+    "Even when we were with you, we told you this: anyone who will not work should not eat.",
+    "May the Lord of peace himself give you peace at all times and in every way. May the Lord be with you all."
+   ],
+   "view": ""
+  },
+  "1co": {
+   "name": "1 Corinthians",
+   "to": "The church in Corinth",
+   "when": "c. AD 54–55",
+   "carrier": "",
+   "why": "While Paul was in Ephesus, people from Chloe's household told him that the church in Corinth had split into groups. The Corinthians also sent him a letter asking about things like marriage and food offered to idols. Paul wrote this letter, answering these matters one by one.",
+   "heart": "To a divided, quarreling church, Paul says: become one body in the gospel of the cross and in love.",
+   "verses": [
+    "The message of the cross sounds foolish to those who are perishing, but to us who are being saved it is the power of God.",
+    "Love is patient and kind. Love does not envy, does not boast, is not proud. It is not rude, does not seek its own way, is not easily angered, and does not keep a record of wrongs.",
+    "Christ died for our sins as the Scriptures said, he was buried, and he was raised on the third day as the Scriptures said."
+   ],
+   "view": ""
+  },
+  "2co": {
+   "name": "2 Corinthians",
+   "to": "The church in Corinth and all the believers in Achaia",
+   "when": "c. AD 56",
+   "carrier": "Titus and two brothers",
+   "why": "After sending the church in Corinth a letter written with tears, Paul waited anxiously. When he met Titus in Macedonia and heard the good news that the believers were sorry, Paul wrote this letter to share his comfort, to answer those who doubted his calling as an apostle, and to ask them to get ready their gift for the believers in Jerusalem.",
+   "heart": "A treasure held in people as weak as clay jars: God's power is made perfect in weakness.",
+   "verses": [
+    "We have this treasure in jars of clay, to show that this great power comes from God and not from us.",
+    "If anyone is in Christ, he is a new creation. The old has gone. Look, the new has come.",
+    "The Lord said to me, “My grace is enough for you, for my power is made perfect in weakness.” So I will boast all the more gladly about my weakness, so that the power of Christ may rest on me."
+   ],
+   "view": ""
+  },
+  "rom": {
+   "name": "Romans",
+   "to": "The believers in Rome",
+   "when": "c. AD 57",
+   "carrier": "Phoebe, a servant of the church in Cenchreae",
+   "why": "Paul had long wanted to go to Rome. He planned to deliver the gift collected by the believers in Macedonia and Achaia to Jerusalem, and then go on to Spain by way of Rome. So he sent this letter to the believers in Rome, whom he had never met, carefully laying out the gospel he preached.",
+   "heart": "Jews and Gentiles alike are all under sin, but anyone who believes in Jesus Christ is made right before God.",
+   "verses": [
+    "I am not ashamed of the gospel. It is the power of God that saves everyone who believes, first the Jew and then the Greek.",
+    "While we were still sinners, Christ died for us. In this way God showed his love for us.",
+    "Neither death nor life, neither angels nor rulers, neither things present nor things to come, nothing at all can separate us from the love of God that is in Christ Jesus our Lord."
+   ],
+   "view": ""
+  },
+  "php": {
+   "name": "Philippians",
+   "to": "The believers in Philippi",
+   "when": "c. AD 61–62",
+   "carrier": "Epaphroditus",
+   "why": "The church in Philippi sent Epaphroditus with a gift for Paul in prison. Epaphroditus became so ill at Paul's side that he nearly died, but he recovered. Paul sent him back with this letter to say thank you, and to urge them to be of one mind and to rejoice in the Lord.",
+   "heart": "Even in chains we can rejoice in Christ, and in every situation he is our strength.",
+   "verses": [
+    "For me, to live is Christ, and to die is gain.",
+    "Do not worry about anything. In everything, pray, and with thanksgiving tell God what you need. Then the peace of God, which is beyond all human understanding, will guard your hearts.",
+    "I can do all things through him who gives me strength."
+   ],
+   "view": "Some think it was written while Paul was imprisoned in Ephesus or Caesarea."
+  },
+  "phm": {
+   "name": "Philemon",
+   "to": "Philemon of Colossae and the church that meets in his house",
+   "when": "c. AD 61",
+   "carrier": "Onesimus and Tychicus",
+   "why": "Onesimus, a slave who had left Philemon, met Paul in prison and became a believer. Paul sent Onesimus back to his master Philemon with this short letter, asking him to welcome Onesimus now not as a slave but as a dear brother.",
+   "heart": "The gospel turns even master and slave into brothers.",
+   "verses": [
+    "Onesimus was once useless to you, but now he has become useful both to you and to me.",
+    "Welcome him now not as a slave, but as more than a slave: a dear brother.",
+    "If he has wronged you or owes you anything, charge it to me."
+   ],
+   "view": "Some think it was written while Paul was imprisoned in Ephesus."
+  },
+  "col": {
+   "name": "Colossians",
+   "to": "The believers in Colossae",
+   "when": "c. AD 61",
+   "carrier": "Tychicus and Onesimus",
+   "why": "Epaphras, who had brought the gospel to Colossae, told Paul news of the church. Teachings had crept in there about human philosophy, rules about food, and the worship of angels. Paul wrote this letter to remind them that Christ alone is enough.",
+   "heart": "All the fullness of God is in Christ, who was before all creation, so in him we lack nothing.",
+   "verses": [
+    "He is before all things, and in him all things hold together.",
+    "In Christ all the fullness of God lives in bodily form, and in him you too have been made full.",
+    "Whatever you do, do it with all your heart, as for the Lord and not for people."
+   ],
+   "view": "Some think it was written while Paul was imprisoned in Ephesus or Caesarea."
+  },
+  "eph": {
+   "name": "Ephesians",
+   "to": "The believers in Ephesus",
+   "when": "c. AD 61",
+   "carrier": "Tychicus",
+   "why": "This letter was not written to settle a quarrel. Paul wrote it to show how rich the grace is that God has given in Christ, how God has joined Jews and Gentiles into one body, and to urge them to live in a way worthy of that calling.",
+   "heart": "Those saved by grace have become one body in Christ, so live as one, in a way worthy of that calling.",
+   "verses": [
+    "You have been saved by grace, through faith. This is not from yourselves; it is the gift of God. It is not from works, so no one can boast.",
+    "Always be humble and gentle. Be patient and bear with one another in love. Work hard to keep the unity the Spirit gives, bound together by peace.",
+    "Be strong in the Lord and in his mighty power. Put on the full armor God gives you, so that you can stand against the devil's schemes."
+   ],
+   "view": "Some think it was written while Paul was imprisoned in Ephesus or Caesarea. Some old manuscripts leave out the words “in Ephesus,” so some see it as a letter passed around among several churches."
+  },
+  "1ti": {
+   "name": "1 Timothy",
+   "to": "Timothy in Ephesus",
+   "when": "c. AD 63",
+   "carrier": "",
+   "why": "On his way to Macedonia, Paul left Timothy in Ephesus and gave him the task of stopping those who taught a different doctrine. Paul wrote this letter to show how people should live in the church, the household of God, and what kind of people should be chosen as overseers and deacons.",
+   "heart": "To a young worker: guard the true teaching and fight the good fight of faith.",
+   "verses": [
+    "Christ Jesus came into the world to save sinners. This saying can be trusted and deserves to be welcomed by everyone. And I am the worst of sinners.",
+    "Don't let anyone look down on you because you are young. Instead, be an example to the believers in speech, in conduct, in love, in faith, and in purity.",
+    "Fight the good fight of faith. Take hold of eternal life, to which you were called."
+   ],
+   "view": "The letter does not say where it was written. Because Paul says he left Timothy behind when he went to Macedonia (1 Tim 1:3), it is placed in Macedonia, and the map marks Philippi in Macedonia. Since it comes after the end of Acts, some date it differently."
+  },
+  "tit": {
+   "name": "Titus",
+   "to": "Titus on Crete",
+   "when": "c. AD 63–64",
+   "carrier": "",
+   "why": "Paul left Titus on Crete and gave him the task of setting right what was unfinished and appointing elders in every town. There were people there deceiving others with empty talk. In this letter Paul told Titus what kind of people to appoint as elders and how the believers should devote themselves to doing good.",
+   "heart": "The grace of God that saved us shapes us into people eager to do good.",
+   "verses": [
+    "The grace of God that brings salvation to all people has appeared. It teaches us to turn away from ungodliness and worldly desires, and to live self-controlled, upright, and godly lives in this world.",
+    "God saved us not because of anything right we had done, but because of his mercy. The Holy Spirit washed us, gave us new birth, and made us new.",
+    "This saying can be trusted. Speak about these things with confidence, so that those who believe in God will be careful to devote themselves to doing good."
+   ],
+   "view": "The letter does not say where it was written. Since Paul planned to spend the winter in Nicopolis (Titus 3:12), it is thought he wrote it on the way from Macedonia to Nicopolis. The map marks Philippi in Macedonia. Some date it differently."
+  },
+  "2ti": {
+   "name": "2 Timothy",
+   "to": "Timothy",
+   "when": "c. AD 66–67",
+   "carrier": "",
+   "why": "Imprisoned again in Rome, Paul knew the time of his death was near. Only Luke was still with him. Paul asked Timothy, his dear son, to hurry and come before winter and to bring the cloak and books he had left behind. He left his last charge: guard the gospel and endure hardship.",
+   "heart": "An old apostle who has run to the end hands the baton of the gospel to the next generation.",
+   "verses": [
+    "The spirit God has given us is not a spirit of fear, but of power, love, and self-control.",
+    "All Scripture is breathed out by God. It is useful for teaching, for showing what is wrong, for correcting, and for training in right living.",
+    "I have fought the good fight, I have finished the race, I have kept the faith. Now the crown of righteousness is waiting for me."
+   ],
+   "view": ""
+  }
+ }
+}

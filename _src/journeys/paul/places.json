@@ -1,0 +1,153 @@
+{
+ "jerusalem": {
+  "name": "예루살렘",
+  "lat": 31.778,
+  "lng": 35.235,
+  "region": "유대"
+ },
+ "temple": {
+  "name": "성전 뜰",
+  "lat": 31.7781,
+  "lng": 35.2354,
+  "region": "유대",
+  "jlm": true
+ },
+ "antonia": {
+  "name": "안토니아 요새",
+  "lat": 31.7799,
+  "lng": 35.2347,
+  "region": "유대",
+  "jlm": true
+ },
+ "damascusroad": {
+  "name": "다메섹 가는 길",
+  "lat": 33.35,
+  "lng": 36.12,
+  "region": "수리아",
+  "approx": true
+ },
+ "damascus": {
+  "name": "다메섹",
+  "lat": 33.511,
+  "lng": 36.306,
+  "region": "수리아"
+ },
+ "antioch": {
+  "name": "수리아 안디옥",
+  "lat": 36.202,
+  "lng": 36.16,
+  "region": "수리아"
+ },
+ "paphos": {
+  "name": "바보",
+  "lat": 34.757,
+  "lng": 32.406,
+  "region": "구브로"
+ },
+ "pantioch": {
+  "name": "비시디아 안디옥",
+  "lat": 38.306,
+  "lng": 31.189,
+  "region": "갈라디아"
+ },
+ "lystra": {
+  "name": "루스드라",
+  "lat": 37.578,
+  "lng": 32.453,
+  "region": "갈라디아"
+ },
+ "derbe": {
+  "name": "더베",
+  "lat": 37.35,
+  "lng": 33.36,
+  "region": "갈라디아",
+  "approx": true
+ },
+ "troas": {
+  "name": "드로아",
+  "lat": 39.757,
+  "lng": 26.159,
+  "region": "아시아"
+ },
+ "philippi": {
+  "name": "빌립보",
+  "lat": 41.013,
+  "lng": 24.286,
+  "region": "마게도냐"
+ },
+ "thessalonica": {
+  "name": "데살로니가",
+  "lat": 40.64,
+  "lng": 22.944,
+  "region": "마게도냐"
+ },
+ "athens": {
+  "name": "아테네",
+  "lat": 37.972,
+  "lng": 23.723,
+  "region": "아가야"
+ },
+ "corinth": {
+  "name": "고린도",
+  "lat": 37.906,
+  "lng": 22.879,
+  "region": "아가야"
+ },
+ "ephesus": {
+  "name": "에베소",
+  "lat": 37.939,
+  "lng": 27.341,
+  "region": "아시아"
+ },
+ "miletus": {
+  "name": "밀레도",
+  "lat": 37.531,
+  "lng": 27.278,
+  "region": "아시아"
+ },
+ "caesarea": {
+  "name": "가이사랴",
+  "lat": 32.5,
+  "lng": 34.892,
+  "region": "유대"
+ },
+ "cretesea": {
+  "name": "그레데 앞바다",
+  "lat": 34.85,
+  "lng": 24.4,
+  "region": "바다",
+  "approx": true
+ },
+ "adria": {
+  "name": "아드리아 바다",
+  "lat": 35.8,
+  "lng": 15.6,
+  "region": "바다",
+  "approx": true
+ },
+ "malta": {
+  "name": "멜리데",
+  "lat": 35.948,
+  "lng": 14.418,
+  "region": "멜리데"
+ },
+ "appii": {
+  "name": "압비오 광장",
+  "lat": 41.43,
+  "lng": 13.08,
+  "region": "이탈리아",
+  "approx": true
+ },
+ "rome": {
+  "name": "로마",
+  "lat": 41.89,
+  "lng": 12.49,
+  "region": "이탈리아"
+ },
+ "crete": {
+  "name": "그레데",
+  "lat": 35.06,
+  "lng": 24.95,
+  "region": "그레데"
+ }
+}

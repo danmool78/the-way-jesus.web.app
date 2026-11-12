@@ -159,6 +159,13 @@ const RELIEF_SOUTH = { lat0: 27.2, lat1: 30.15, lng0: 31.25, lng1: 37.4 };
 const RELIEF_MESO = { lat0: 26.9, lat1: 37.6, lng0: 35.6, lng1: 46.2 };
 // 그 위에 바벨론 둘레만 고운 바탕(assets/relief-babylon.webp — 장면 무대 높이로 내려가면 넓은 바탕은 뭉개진다) — _src/relief.py의 BABYLON과 같게
 const RELIEF_BABYLON = { lat0: 31.95, lat1: 33.15, lng0: 43.65, lng1: 45.2 };
+// 지중해 동쪽·가운데 바탕(assets/relief-med.webp, 바울 여정 — journey.map.med — 에서만) — _src/relief.py의 MED와 같게.
+// 바다는 투명하게 비어 있어 밑에 바다색을 깔고, 레반트·애굽 자리(MED_HOLE)도 비어 있어 원래 바탕·벡터 바다가 비친다. 그래서 다른 그림·바다 위에 얹는다
+const RELIEF_MED = { lat0: 30.5, lat1: 43.0, lng0: 11.0, lng1: 38.0 };
+// 그 밑의 넓고 거친 바탕(assets/relief-med-wide.webp) — 예루살렘에서 로마까지를 한 화면에 담을 때 위아래가 비지 않게. _src/relief.py의 MED_WIDE와 같게
+const RELIEF_MED_WIDE = { lat0: 24.5, lat1: 48.5, lng0: 8.0, lng1: 41.0 };
+// 그 위에 바울의 장소 둘레만 고운 타일(assets/relief-med-hi/, 있는 타일은 tiles.json) — _src/relief.py의 MED_HI_와 같게
+const RELIEF_MED_HI = { ...RELIEF_MED, tile: 256, dir: 'relief-med-hi', below: 3, group: '#reliefMedHi', have: new Set() };
 // 프롤로그의 에덴 둘레 바탕(assets/relief-east.webp) — _src/relief.py의 EAST와 같게
 const RELIEF_EAST = { lat0: 29.2, lat1: 32.8, lng0: 44.6, lng1: 49.9 };
 // 확대했을 때만 불러오는 정밀 타일(assets/relief-hi/행_열.webp) — _src/relief.py의 HI와 같게
@@ -207,15 +214,24 @@ function buildMap() {
   const [sx0, sy0] = px([RELIEF_SOUTH.lat1, RELIEF_SOUTH.lng0]), [sx1, sy1] = px([RELIEF_SOUTH.lat0, RELIEF_SOUTH.lng1]);
   const [mx0, my0] = px([RELIEF_MESO.lat1, RELIEF_MESO.lng0]), [mx1, my1] = px([RELIEF_MESO.lat0, RELIEF_MESO.lng1]), jmap = DATA.journey?.map;
   const [bx0, by0] = px([RELIEF_BABYLON.lat1, RELIEF_BABYLON.lng0]), [bx1, by1] = px([RELIEF_BABYLON.lat0, RELIEF_BABYLON.lng1]);
+  const [dx0, dy0] = px([RELIEF_MED.lat1, RELIEF_MED.lng0]), [dx1, dy1] = px([RELIEF_MED.lat0, RELIEF_MED.lng1]);
+  const [vx0, vy0] = px([RELIEF_MED_WIDE.lat1, RELIEF_MED_WIDE.lng0]), [vx1, vy1] = px([RELIEF_MED_WIDE.lat0, RELIEF_MED_WIDE.lng1]);
+  // 지중해 지도(바울): 그림 밑에 까는 바다와 레반트의 벡터 바다를 한 그라데이션(지도 좌표)으로 칠해, 두 바다가 만나는 자리에 이음매가 없게
+  const seaFill = jmap?.med ? 'url(#seaMed)' : 'url(#seaGrad)';
+  // 지중해 전체를 볼 때 갈릴리 바다·사해·요단 강 이름이 예루살렘 둘레에 겹쳐 쌓인다 — 멀리서는 숨긴다 (.zoom-far .lv)
+  const lv = jmap?.med ? ' lv' : '';
+  if (jmap?.med) fetch(`assets/${RELIEF_MED_HI.dir}/tiles.json`).then(r => r.json()).then(a => { RELIEF_MED_HI.have = new Set(a); applyView(); }).catch(() => {});
   map.setAttribute('viewBox', `0 0 ${W} ${H}`);
   map.innerHTML = `
   <defs>
     <linearGradient id="seaGrad" x1="0" x2="1"><stop offset="0" stop-color="var(--sea-deep)"/><stop offset="1" stop-color="var(--sea)"/></linearGradient>
+    ${jmap?.med ? `<linearGradient id="seaMed" gradientUnits="userSpaceOnUse" x1="${dx0}" x2="${px([0, 36.2])[0]}" y1="0" y2="0"><stop offset="0" stop-color="var(--sea-deep)"/><stop offset="1" stop-color="var(--sea)"/></linearGradient>` : ''}
     <radialGradient id="oasis"><stop offset="0" stop-color="var(--oasis)" stop-opacity=".75"/><stop offset=".6" stop-color="var(--oasis)" stop-opacity=".4"/><stop offset="1" stop-color="var(--oasis)" stop-opacity="0"/></radialGradient>
     <filter id="lakeSoft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3.2"/></filter>
     <filter id="waterEdge" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur in="SourceAlpha" stdDeviation="4" result="b"/><feComposite in="SourceAlpha" in2="b" operator="arithmetic" k2="1" k3="-1" result="edge"/><feFlood flood-color="#21474f" flood-opacity=".5"/><feComposite in2="edge" operator="in"/><feComposite in2="SourceGraphic" operator="over"/></filter>
   </defs>
   <rect x="${-W * 2}" y="${-H * 2}" width="${W * 12}" height="${H * 5}" fill="var(--land)"/>
+  ${jmap?.med ? `<rect x="${vx0}" y="${vy0}" width="${vx1 - vx0}" height="${vy1 - vy0}" fill="${seaFill}"/>` : ''}
   ${jmap?.meso ? `<image href="assets/relief-meso.webp" class="relief" x="${mx0}" y="${my0}" width="${mx1 - mx0}" height="${my1 - my0}" preserveAspectRatio="none"/>
   <image href="assets/relief-babylon.webp" class="relief" x="${bx0}" y="${by0}" width="${bx1 - bx0}" height="${by1 - by0}" preserveAspectRatio="none"/>` : ''}
   <image href="assets/relief-west.webp" class="relief" x="${wx0}" y="${wy0}" width="${wx1 - wx0}" height="${wy1 - wy0}" preserveAspectRatio="none"/>
@@ -231,7 +247,10 @@ function buildMap() {
   <path d="${smooth(GEO.jordanN)}" class="riverbank"/>
   <path d="${smooth(GEO.jordanS)}" class="riverbank"/>
   ${OASES.map(([a, b, r]) => `<circle cx="${px([a, b])[0]}" cy="${px([a, b])[1]}" r="${r}" fill="url(#oasis)"/>`).join('')}
-  <path d="${sea}" fill="url(#seaGrad)" class="sea"/>
+  <path d="${sea}" fill="${seaFill}" class="sea"/>
+  ${jmap?.med ? `<image href="assets/relief-med-wide.webp" class="relief" x="${vx0}" y="${vy0}" width="${vx1 - vx0}" height="${vy1 - vy0}" preserveAspectRatio="none"/>
+  <image href="assets/relief-med.webp" class="relief" x="${dx0}" y="${dy0}" width="${dx1 - dx0}" height="${dy1 - dy0}" preserveAspectRatio="none"/>
+  <g id="reliefMedHi" class="relief"></g>` : ''}
   ${jmap?.meso ? `<path d="${smooth(GEO.cyprus, true)}" class="isle"/>` : ''}
   <path d="${smooth(GEO.coast)}" class="coast"/>
   <path d="${smooth(GEO.galilee, true)}" class="lake" filter="url(#waterEdge)"/>
@@ -239,7 +258,7 @@ function buildMap() {
   <path d="${smooth(GEO.hula, true)}" class="lake"/>
   ${['mareotis', 'manzala', 'sirbonis', 'bitter'].map(k => `<path d="${smooth(GEO[k], true)}" class="lake"/>`).join('')}
   ${(DATA.journey?.map?.waters || []).map(w => `<path d="${smooth(w.d, true)}" class="lake old ${w.cls || ''}"/>`).join('')}
-  ${DATA.journey?.map?.south ? '' : `<path d="${smooth(GEO.suez, true)}" fill="url(#seaGrad)" class="sea"/>`}
+  ${DATA.journey?.map?.south ? '' : `<path d="${smooth(GEO.suez, true)}" fill="${seaFill}" class="sea"/>`}
   ${['nile', 'canopic', 'rosetta', 'damietta', 'pelusiac'].map(k => `<path d="${smooth(GEO[k])}" class="river nile"/>`).join('')}
   <path d="${smooth(GEO.jordanN)}" class="river jordan"/>
   <path d="${smooth(GEO.jordanS)}" class="river jordan"/>
@@ -247,17 +266,17 @@ function buildMap() {
     <path d="${smooth(GEO.kidron)}" class="valley"/>
     <path d="${smooth(GEO.hinnom)}" class="valley"/>
   </g>
- ${LANDMARKS.map(L => { const [a, b] = px([L.lat1, L.lng0]), [c, d] = px([L.lat0, L.lng1]); return `<g class="lmk" data-cx="${(a + c) / 2}" data-cy="${(b + d) / 2}" data-w="${c - a}"><image class="landmark" data-src="assets/egypt-${L.id}.webp" x="${a}" y="${b - L.top}" width="${c - a}" height="${d - b + L.top}" preserveAspectRatio="none"/></g>`; }).join('')}
+ ${jmap?.med ? '' : LANDMARKS.map(L => { const [a, b] = px([L.lat1, L.lng0]), [c, d] = px([L.lat0, L.lng1]); return `<g class="lmk" data-cx="${(a + c) / 2}" data-cy="${(b + d) / 2}" data-w="${c - a}"><image class="landmark" data-src="assets/egypt-${L.id}.webp" x="${a}" y="${b - L.top}" width="${c - a}" height="${d - b + L.top}" preserveAspectRatio="none"/></g>`; }).join('')}
   <image id="city3d" class="city3d" x="${cx0}" y="${cy0 - CITY3D.top}" width="${cx1 - cx0}" height="${cy1 - cy0 + CITY3D.top}" preserveAspectRatio="none"/>
-  ${lbl(tm('지 중 해'), px([32.35, 34.48]), 'sea-lbl')}
-  ${lbl(tm('갈릴리 바다'), px([32.80, 35.60]), 'water-lbl')}
-  ${lbl(tm('사해'), px([31.42, 35.49]), 'water-lbl')}
-  ${lbl(tm('요단 강'), px([32.40, 35.585]), 'water-lbl river-lbl')}
+  ${jmap?.med ? '' : lbl(tm('지 중 해'), px([32.35, 34.48]), 'sea-lbl')}
+  ${lbl(tm('갈릴리 바다'), px([32.80, 35.60]), 'water-lbl' + lv)}
+  ${lbl(tm('사해'), px([31.42, 35.49]), 'water-lbl' + lv)}
+  ${lbl(tm('요단 강'), px([32.40, 35.585]), 'water-lbl river-lbl' + lv)}
   ${REGIONS.map(([n, a, b]) => lbl(tm(n), px([a, b]), 'region')).join('')}
   ${(DATA.journey?.map?.labels || []).map(([n, a, b, c]) => lbl(tm(n), px([a, b]), c || 'region')).join('')}
   ${REFCITIES.map(([n, a, b]) => `<g class="lbl refcity" transform="translate(${px([a, b]).join(',')})"><circle r="2.2"/><text x="5" y="3">${esc(tm(n))}</text></g>`).join('')}
-  ${lbl(tm('나일 강'), px([29.7, 31.33]), 'water-lbl river-lbl')}
-  ${lbl(tm('수에즈 만'), px([29.55, 32.66]), 'water-lbl river-lbl')}
+  ${jmap?.med ? '' : lbl(tm('나일 강'), px([29.7, 31.33]), 'water-lbl river-lbl')}
+  ${jmap?.med ? '' : lbl(tm('수에즈 만'), px([29.55, 32.66]), 'water-lbl river-lbl')}
   ${lbl(tm('메소포타미아'), px([32.05, 46.0]), 'region meso')}
   ${lbl(tm('유프라테스 강'), px([30.88, 45.95]), 'water-lbl river-lbl meso')}
   ${lbl(tm('티그리스 강'), px([32.3, 46.7]), 'water-lbl river-lbl meso')}
@@ -265,6 +284,7 @@ function buildMap() {
   <path class="offmap" fill-rule="evenodd" d="${offmapD(DRAWN)}"/>
   <g id="routes"><path id="nextHint" class="nexthint"/></g>
   <g id="markers"></g>
+  ${DATA.journey?.letters ? '<g id="letterRoutes"></g>' : ''}
   <g id="walker" class="walker"><circle class="wglow" r="18"/><g class="wfig"><circle class="wbody" r="8"/><text class="wicon" y="4.5">✦</text></g></g>`;
   // 장소 마커
   const g = $('#markers', map);
@@ -341,6 +361,9 @@ function applyView() {
   }
   map.classList.toggle('zoom-city', u < 0.06);
   map.classList.toggle('zoom-near', u < 0.6);
+  map.classList.toggle('zoom-far', u > 4);
+  map.classList.toggle('zoom-vfar', u > 20); // 지중해 전체(바울): 참고 도시는 숨기고, 휴대폰처럼 아주 멀면 지역 이름도
+  map.classList.toggle('zoom-xfar', u > 45);
   showHiRelief(x, y, w, h, u);
   // 예루살렘 도성 그림: 가까이 들어갔을 때만 받아서(약 200KB) 서서히 보인다
   const city = $('#city3d', map);
@@ -368,13 +391,15 @@ function applyView() {
 // 보이는 범위의 정밀 타일(단위당 3.2픽셀)을, 도성까지 들어가면 초정밀 타일(25.6픽셀)을 얹는다.
 // 타일은 다 받은 뒤 서서히 나타나고, 한 번 만든 타일은 숨겼다 다시 쓴다
 const hiTiles = new Map();
+const hiLayers = () => DATA?.journey?.map?.med ? [RELIEF_HI, RELIEF_HI_W, RELIEF_CITY, RELIEF_MED_HI] : [RELIEF_HI, RELIEF_HI_W, RELIEF_CITY];
 function reliefTiles(L, x, y, w, h, u, show) {
   const T = L.tile, [ox, oy] = px([L.lat1, L.lng0]), keys = [];
-  if (u >= L.below) return keys;
+  if (u >= L.below || L.have?.size === 0) return keys;
   const cols = Math.ceil((L.lng1 - L.lng0) * COS * K / T), rows = Math.ceil((L.lat1 - L.lat0) * K / T);
   const c0 = Math.max(0, Math.floor((x - ox) / T)), c1 = Math.min(cols - 1, Math.floor((x + w - ox) / T));
   const r0 = Math.max(0, Math.floor((y - oy) / T)), r1 = Math.min(rows - 1, Math.floor((y + h - oy) / T));
   for (let r = r0; r <= r1; r++) for (let c = c0; c <= c1; c++) {
+    if (L.have && !L.have.has(`${r}_${c}`)) continue; // 드문드문 있는 타일(지중해 — 장소 둘레만)
     const k = `${L.dir}/${r}_${c}`; keys.push(k);
     if (hiTiles.has(k)) continue;
     const im = document.createElementNS(svgNS, 'image');
@@ -386,12 +411,12 @@ function reliefTiles(L, x, y, w, h, u, show) {
     Object.entries({ x: ox + c * T, y: oy + r * T, width: T + lap, height: T + lap }).forEach(([a, v]) => im.setAttribute(a, v));
     im.setAttribute('preserveAspectRatio', 'none');
     if (!show) im.style.display = 'none';
-    $(L === RELIEF_CITY ? '#reliefCity' : '#reliefHi', map).appendChild(im); hiTiles.set(k, im);
+    $(L.group || (L === RELIEF_CITY ? '#reliefCity' : '#reliefHi'), map).appendChild(im); hiTiles.set(k, im);
   }
   return keys;
 }
 function showHiRelief(x, y, w, h, u) {
-  const want = new Set([RELIEF_HI, RELIEF_HI_W, RELIEF_CITY].flatMap(L => reliefTiles(L, x, y, w, h, u, true)));
+  const want = new Set(hiLayers().flatMap(L => reliefTiles(L, x, y, w, h, u, true)));
   hiTiles.forEach((im, k) => { im.style.display = want.has(k) ? '' : 'none'; });
 }
 // 확대가 시작될 때 도착할 화면의 타일을 미리 받아 둔다 — 다 들어왔을 때 이미 준비되어 있게
@@ -401,7 +426,7 @@ function preloadRelief(t) {
   let { x, y, w, h } = t;
   const ar = r.width / r.height;
   if (w / h > ar) { const nh = w / ar; y -= (nh - h) / 2; h = nh; } else { const nw = h * ar; x -= (nw - w) / 2; w = nw; }
-  [RELIEF_HI, RELIEF_HI_W, RELIEF_CITY].forEach(L => reliefTiles(L, x, y, w, h, w / r.width, false));
+  hiLayers().forEach(L => reliefTiles(L, x, y, w, h, w / r.width, false));
 }
 
 function frame(ids, ms = 1300, reserve = true) {
@@ -763,6 +788,8 @@ function renderScene() {
   <div class="ctabs" role="tablist">${tabs.map(([k, n]) => `<button role="tab" data-tab="${k}" class="${k === cardTab ? 'active' : ''}">${esc(n)}</button>`).join('')}</div>
   <section class="pane" data-pane="story" aria-label="${esc(t('storyLabel'))}">
     <div class="story">${e.story.map((s, i) => i === e.prayer ? `<div class="prayer-para"><h4>${esc(t('prayerOpen'))}</h4><p data-para="${i}">${esc(s)}</p></div>` : `<p data-para="${i}">${esc(s)}</p>`).join('')}</div>
+    ${e.core ? `<aside class="core"><h4>${esc(t('coreHead'))}</h4><p>${esc(e.core)}</p></aside>` : ''}
+    ${letterBox(e)}
     ${e.note ? `<aside class="note"><h4>${esc(t('noteHead'))}</h4><p>${esc(e.note)}</p></aside>` : ''}
     ${e.reflect ? `<aside class="reflect"><h4>${esc(t('reflectHead'))}</h4><p>${esc(e.reflect)}</p></aside>` : ''}
     ${e.psalm ? `<aside class="psalm-link" hidden><h4>${esc(t('psalmHead'))}</h4><button type="button"><span class="pl-play" aria-hidden="true">▶</span><b></b></button><p class="fine">${esc(t('psalmNote'))}</p></aside>` : ''}
@@ -794,6 +821,7 @@ function renderScene() {
   if (e.img) { $('#heroBtn').onclick = () => openViewer(e); $('#viewBtn').onclick = () => openViewer(e); }
   $$('.ctabs button', $('#scene')).forEach(b => b.onclick = () => showTab(b.dataset.tab));
   $('#toHarmony')?.addEventListener('click', () => setView('harmony'));
+  letterWire($('#scene'));
   showTab(cardTab);
   updateQuizBtn();
 }
@@ -968,6 +996,7 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
   if (walking && i === idx + 1) return; // 이미 그곳으로 걷는 중
   if (!keepSpeech) stopSpeech(true);
   cancelWalk();
+  showLetters([]); // 앞 장면의 편지 길은 떠날 때 거둔다
   const prev = idx;
   const prevPlace = $('#scene').innerHTML ? evAt(prev).place : null;
   // 에덴과 본 지도 사이(프롤로그와 첫 장면 등)는 이어 걷지 않는다: 다음 장면을 처음 연 것처럼 새로 시작한다 (jump)
@@ -975,7 +1004,7 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
   const stepped = i === prev + 1 && prevPlace !== null && !jump;
   const arrive = () => {
     idx = i; setHere(evAt(i), startOf(evAt(i))); window.stageHide = false;
-    renderScene(); psalmBox(evAt(i)); paintScene(evAt(i)); updateMap(prev, { camera: !stepped || fitMode === 'all', jump }); updateTrack(); if (i >= 0) markVisited(EVENTS[i].id);
+    renderScene(); showLetters(evAt(i).letters || []); psalmBox(evAt(i)); paintScene(evAt(i)); updateMap(prev, { camera: !stepped || fitMode === 'all', jump }); updateTrack(); if (i >= 0) markVisited(EVENTS[i].id);
     window.__stageScene = evAt(i); // stage.js가 늦게 로드돼도 따라잡도록
     dispatchEvent(new CustomEvent('stage:scene', { detail: { ev: evAt(i) } }));
     bgmFollow(); // 읽는 중에 장면이 바뀌면 그 장면의 곡으로 겹쳐 바꾼다
@@ -1633,6 +1662,100 @@ function renderHarmony() {
 
 /* ---------- 퀴즈 ---------- */
 let quizRun = null;
+/* ---------- 바울의 편지 (journey.letters, 원본 _src/journeys/paul/letters.json) ----------
+   장면 카드의 '이 자리에서 쓴 편지'·'훗날 이 교회에 보낸 편지', 지도의 편지 길(쓴 곳 → 받는 곳 점선), 머리의 편지 탭이 같은 자료를 쓴다.
+   이 여정의 중심이 편지라서(PLAN.md) 걷다가 편지를 만나고, 편지에서 그 장면과 길로 되돌아갈 수 있게 서로 잇는다 */
+const letterList = () => DATA.journey?.letters || [];
+const letterOf = id => letterList().find(l => l.id === id);
+const SCROLL_ICON = '<svg class="lt-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 7h16M4 17h16M8 10.5h8M8 13.5h8"/></svg>';
+const letterVerses = l => `<ul class="lt-verses">${l.verses.map(v => `<li><p>${esc(v.text)}</p><cite>${esc(v.ref)}</cite></li>`).join('')}</ul>`;
+const letterRoute = l => `${esc(PLACES[l.from]?.name || l.from)} <span aria-hidden="true">→</span> ${esc(l.to.name)}`;
+function letterBox(e) {
+  if (!letterList().length) return '';
+  const here = (e.letters || []).map(letterOf).filter(Boolean), later = (e.later || []).map(letterOf).filter(Boolean);
+  return (here.length ? `<aside class="letters-here"><h4>${SCROLL_ICON}${esc(t('lettersHere'))}</h4>${here.map(l => `<div class="lt">
+      <b class="lt-name">${esc(l.name)}</b>
+      <p class="lt-route">${letterRoute(l)}</p>
+      <p class="lt-meta">${esc(l.when)}${l.carrier ? ` · ${esc(t('letterCarrier', { c: l.carrier }))}` : ''}</p>
+      <p class="lt-heart">${esc(l.heart)}</p>
+      ${letterVerses(l)}
+      <button type="button" class="lt-btn" data-lroute="${l.id}">${esc(t('letterRoute'))}</button>
+    </div>`).join('')}</aside>` : '')
+    + (later.length ? `<aside class="letters-later"><h4>${esc(t('lettersLater'))}</h4><div class="lt-chips">${later.map(l => `<button type="button" data-lopen="${l.id}">${esc(l.name)} <span aria-hidden="true">›</span></button>`).join('')}</div></aside>` : '');
+}
+// 카드·편지 탭의 단추: 편지 길 보기(지도에서 두 끝을 담아), 편지 열기(편지 탭의 그 편지로)
+function letterWire(root) {
+  $$('[data-lroute]', root).forEach(b => b.onclick = () => letterOnMap(b.dataset.lroute));
+  $$('[data-lopen]', root).forEach(b => b.onclick = () => openLetter(b.dataset.lopen));
+}
+function letterOnMap(id) {
+  if ($('#journey').hidden) setView('journey');
+  // 휴대폰에서 끝까지 펼친 시트는 지도를 다 덮는다 — 반으로 내려 길이 보이게
+  if (innerWidth <= 900 && $('#scene').classList.contains('full')) setCard('open', true);
+  requestAnimationFrame(() => showLetters([id], true));
+}
+function openLetter(id) {
+  setView('letters');
+  const el = $(`#lt-${CSS.escape(id)}`); if (!el) return;
+  el.scrollIntoView({ block: 'start' });
+  el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
+}
+// 지도의 편지 길: 쓴 곳에서 받는 곳까지 가는 점선 곡선(걷는 길과 다른 먹빛), 끝에 두루마리 표지와 편지·받는 이 이름.
+// 받는 곳이 같은 편지(데살로니가전·후서, 빌레몬서·골로새서)는 길 하나에 이름을 함께 단다. fit이면 두 끝이 다 보이게 카메라를 옮긴다
+function showLetters(ids, fit) {
+  const g = $('#letterRoutes', map); if (!g) return;
+  const groups = new Map();
+  ids.map(letterOf).filter(Boolean).forEach(l => { const k = `${l.from}|${l.to.lat},${l.to.lng}`; if (groups.has(k)) groups.get(k).push(l); else groups.set(k, [l]); });
+  const pts = [], all = [...groups.values()], ends = all.map(ls => px([ls[0].to.lat, ls[0].to.lng]));
+  // 받는 곳끼리 가까우면(로마에서 보낸 에베소서와 골로새서, 약 2° 사이) 멀리서 볼 때 이름이 겹친다 — 서쪽 것은 왼쪽으로, 동쪽 것은 오른쪽으로 펼친다
+  const side = ends.map(([x, y], n) => { const o = ends.find(([a, b], m) => m !== n && Math.hypot(a - x, b - y) < 3000); return o ? (o[0] > x ? 'end' : 'start') : 'middle'; });
+  g.innerHTML = all.map((ls, n) => {
+    const l = ls[0], [x1, y1] = P(PLACES[l.from]), [x2, y2] = ends[n], dx = x2 - x1, dy = y2 - y1, tx = { end: 6, start: -6, middle: 0 }[side[n]];
+    const bend = (n % 2 ? -1 : 1) * 0.16, cx = (x1 + x2) / 2 - dy * bend, cy = (y1 + y2) / 2 + dx * bend, d = `M${x1},${y1} Q${cx},${cy} ${x2},${y2}`;
+    pts.push([x1, y1], [x2, y2]);
+    const tos = [...new Set(ls.map(x => x.to.name))];
+    // 이름은 표지 위에 — 받는 곳(데살로니가·고린도 등)은 대개 핀이 있어 오른쪽에는 핀 이름이, 아래로는 이웃 핀(루스드라 등)이 선다
+    return `<path class="lr-halo" d="${d}"/><path class="lr" d="${d}"/>
+      <g class="lbl lr-end" data-x="${x2}" data-y="${y2}"><circle class="lr-dot" r="3.2"/>
+        <g class="lr-scroll" transform="translate(-9,-25) scale(.75)"><rect x="3" y="2" width="18" height="20" rx="2"/><path d="M3 6h18M3 18h18M7 10h10M7 14h10"/></g>
+        ${tos.map((s, k) => `<text class="lr-to" x="${tx}" y="${-31 - (tos.length - 1 - k) * 13}" style="text-anchor:${side[n]}">${esc(s)}</text>`).join('')}
+        <text class="lr-name" x="${tx}" y="${-31 - tos.length * 13 - 2}" style="text-anchor:${side[n]}">${esc(ls.map(x => x.name).join(' · '))}</text>
+      </g>`;
+  }).join('');
+  // 받는 곳이 지금 장면 자리(그레데의 디도서, a41)면 표지와 이름이 3D 무대 한가운데를 가린다 — 무대가 서 있는 동안은 감춘다(.stage-on .lbl.close)
+  const ce = evAt(idx), hp = ce && PLACES[here(ce)];
+  if (hp) { const [hx, hy] = P(hp); $$('.lr-end', g).forEach(l => l.classList.toggle('close', Math.hypot(+l.dataset.x - hx, +l.dataset.y - hy) < 60)); }
+  applyView(); // 새 표지를 지금 확대에 맞는 크기로
+  if (!fit || !pts.length) return;
+  const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
+  const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys), pad = Math.max(x1 - x0, y1 - y0, 300) * (innerWidth <= 900 ? .4 : .3); // 휴대폰은 왼쪽 위에 장소 칩이 있어 조금 더 넉넉히
+  animateTo(reserveCard({ x: x0 - pad, y: y0 - pad * 1.4, w: x1 - x0 + pad * 2, h: y1 - y0 + pad * 2.4 }), 1300); // 위로 조금 더 — 받는 곳 이름이 표지 위에 선다
+}
+function renderLetters() {
+  const ls = letterList(); if (!ls.length) return;
+  let html = '', lastP = null;
+  ls.forEach((l, n) => {
+    const i = EVENTS.findIndex(e => e.id === l.scene), e = EVENTS[i], per = PERIODS[e.p];
+    if (lastP !== e.p) { html += `<h3 class="psep" style="--c:${per.color}">${esc(per.name)}${per.name.includes(per.span) ? '' : ` <small>${esc(per.span)}</small>`}</h3>`; lastP = e.p; }
+    html += `<article class="lcard" id="lt-${l.id}" style="--c:${per.color}">
+      <header>
+        <small class="lc-no">${esc(t('letterCount', { n: n + 1 }))} · ${esc(l.when)}</small>
+        <h3>${esc(l.name)}</h3>
+        <p class="lt-route">${letterRoute(l)}</p>
+        ${l.carrier ? `<p class="lt-meta">${esc(t('letterCarrier', { c: l.carrier }))}</p>` : ''}
+      </header>
+      <h4>${esc(t('letterHeart'))}</h4><p class="lt-heart">${esc(l.heart)}</p>
+      <h4>${esc(t('letterWhy'))}</h4><p class="lc-why">${esc(l.why)}</p>
+      <h4>${esc(t('letterVerses'))}</h4>${letterVerses(l)}
+      ${l.view ? `<p class="lc-view"><b>${esc(t('letterView'))}</b>${esc(l.view)}</p>` : ''}
+      <footer class="lc-btns"><button type="button" class="lc-go" data-goto="${i}">${esc(t('letterToScene'))} <span aria-hidden="true">→</span></button><button type="button" class="lt-btn" data-lroute="${l.id}">${esc(t('letterOnMap'))}</button></footer>
+    </article>`;
+  });
+  $('#letterList').innerHTML = html;
+  $$('#letterList [data-goto]').forEach(b => b.onclick = () => { setView('journey'); go(+b.dataset.goto); });
+  letterWire($('#letterList'));
+}
+
 /* ---------- 하루 한 장 31일 잠언 (journey.daily) ----------
    오늘 날짜의 장(1–31)을 펴 두고, 고른 구절 셋과 아버지의 한마디를 보인다. 아래 31칸에서 다른 장으로 옮겨 가고,
    '읽었어요'는 이 기기에만 이 달의 기록으로 남긴다(다음 달이 되면 새로 — 한 달에 잠언을 한 번 걷는다) */
@@ -1791,6 +1914,7 @@ function setView(v) {
   if (v === 'harmony') renderHarmony();
   if (v === 'quiz') renderQuizHome();
   if (v === 'daily') renderDaily();
+  if (v === 'letters') renderLetters();
   if (v === 'journey') requestAnimationFrame(applyView);
   scrollTo(0, 0);
 }
@@ -1820,6 +1944,7 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   }
   buildMap(); renderTrack();
   map.classList.toggle('jflood', !!jm?.jordanFlood);
+  map.classList.toggle('medmap', !!jm?.med);
   window.journeyMap = jm || null; // 3D 지형(terrain.js)도 여정의 바탕(시내 반도)을 깐다
   // 장면 주소(#e05, 프롤로그는 #e00)가 있으면 그 장면, 없으면 지난번 장면, 처음 온 사람은 프롤로그부터
   const hashIdx = () => d.prologue && location.hash === '#' + d.prologue.id ? -1 : EVENTS.findIndex(e => '#' + e.id === location.hash);
@@ -1881,6 +2006,7 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   };
   $('#music').hidden = !EVENTS.some(e => e.music);
   $('.tabs [data-view="daily"]').hidden = !d.journey?.daily; // 하루 한 장 (잠언)
+  $('.tabs [data-view="letters"]').hidden = !d.journey?.letters; // 편지 (바울)
   $('#music').onclick = () => { bgmPref = !bgmPref; try { localStorage.setItem(BGM.key, bgmPref ? 'on' : 'off'); } catch { /* 이번 방문만 */ } bgmFollow(); };
   $('#quizBtn').onclick = openSceneQuiz;
   $('#closeQuiz').onclick = () => $('#quizDlg').close();

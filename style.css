@@ -164,6 +164,8 @@ html:not(:lang(ko)):not(:lang(zh)):not(:lang(ja)) .river-lbl text{writing-mode:h
 .refcity circle{fill:#8f7c5c}
 .refcity text{font-size:10.5px;fill:#4f4330;text-anchor:start;stroke:rgba(245,236,212,.92);stroke-width:3px}
 .zoom-city .region,.zoom-city .refcity,.zoom-city .sea-lbl{opacity:0}
+.zoom-far .lv{opacity:0} /* 지중해 지도(바울)를 멀리서 볼 때 레반트의 작은 물 이름 */
+.medmap.zoom-vfar .refcity,.medmap.zoom-xfar .region,.medmap.zoom-xfar .pin:not(.now) text{opacity:0} /* 지중해 전체를 한 화면에: 이름이 서로 겹친다 */
 .landmark{opacity:0;transition:opacity .8s;pointer-events:none}
 .landmark.ready{opacity:1}
 .nilebank{stroke-width:9;opacity:.6}
@@ -306,6 +308,10 @@ html:not(:lang(ko)):not(:lang(zh)):not(:lang(ja)) .river-lbl text{writing-mode:h
 .word cite{font-style:normal}
 .say{margin-left:auto;border:1px solid var(--line);background:none;border-radius:999px;width:32px;height:32px;font-size:13px}
 .say:hover{border-color:var(--gold)}
+/* 복음의 중심(바울 여정, 장면 몇 곳): 설명과 같은 상자에 여정 색 테두리 — 교리 요점 한두 문장 */
+.core{margin:10px 22px;padding:4px 20px 14px;border-radius:14px;border:1px solid rgba(var(--gold-rgb),.45);background:rgba(var(--gold-rgb),.07)}
+.core h4{font-size:12px;letter-spacing:.2em;color:var(--gold);margin:14px 0 12px;font-weight:700}
+.core p{margin:0;line-height:1.75;color:#e6dac2;font-size:14.5px}
 .note,.reflect{margin:10px 22px;padding:4px 20px 14px;border-radius:14px;border:1px solid var(--line);background:var(--panel)}
 .note p,.reflect p{margin:0;line-height:1.75;color:#d7cbb4;font-size:14.5px}
 .reflect{background:linear-gradient(135deg,color-mix(in srgb,var(--period) 18%,var(--panel)),var(--panel))}
@@ -799,3 +805,48 @@ body.intro-open .intro,body.intro-open .intro *{animation-play-state:running}
 .psalm-link button{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;border:0;border-radius:10px;background:rgba(var(--gold-deep-rgb),.16);color:inherit;font:600 15px var(--serif);text-align:left;cursor:pointer}
 .psalm-link .pl-play{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--gold-hi);color:#1a140e;font-size:12px;flex:none}
 .psalm-link .fine{margin:8px 0 0}
+/* 바울의 편지 (journey.letters): 장면 카드의 '이 자리에서 쓴 편지'·'훗날 이 교회에 보낸 편지', 편지 탭, 지도의 편지 길 — app.js letterBox·renderLetters·showLetters */
+.letters-here{margin:10px 22px;padding:4px 20px 8px;border-radius:14px;border:1px solid rgba(var(--gold-deep-rgb),.4);background:linear-gradient(160deg,rgba(var(--gold-deep-rgb),.12),rgba(var(--gold-deep-rgb),.03) 60%)}
+.letters-here h4,.letters-later h4,.lcard h4{display:flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.2em;color:var(--gold);margin:14px 0 12px;font-weight:700}
+.lt-ico{width:16px;height:16px;flex:none;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round}
+.lt+.lt{border-top:1px dashed rgba(var(--gold-rgb),.25);margin-top:6px;padding-top:14px}
+.lt-name{display:block;font-family:var(--serif);font-size:21px;color:var(--gold2);letter-spacing:.02em}
+.lt-route{margin:4px 0 0;font-size:13.5px;color:var(--ink)}
+.lt-route span{color:var(--gold);margin:0 3px}
+.lt-meta{margin:3px 0 0;font-size:12.5px;color:var(--muted)}
+.lt-heart{margin:12px 0 10px;font-family:var(--serif);font-size:17px;line-height:1.7;color:#f3e6c8}
+.lt-verses{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.lt-verses li{padding:9px 12px 8px;border-left:2px solid rgba(var(--gold-rgb),.5);background:rgba(0,0,0,.14);border-radius:2px 10px 10px 2px}
+.lt-verses p{margin:0;font-family:var(--serif);font-size:15px;line-height:1.7;color:#e9dcc1}
+.lt-verses cite{display:block;margin-top:3px;font-style:normal;font-size:11.5px;color:var(--gold2)}
+.lt-btn{display:inline-flex;align-items:center;gap:6px;margin:12px 0 8px;border:1px solid rgba(var(--gold-rgb),.45);background:none;border-radius:999px;padding:7px 14px;font-size:12.5px;color:var(--gold2);cursor:pointer}
+.lt-btn::before{content:'';width:18px;height:0;border-top:2px dashed currentColor} /* 지도의 편지 길처럼 점선 */
+.lt-btn:hover{border-color:var(--gold);background:rgba(var(--gold-rgb),.08)}
+.letters-later{margin:10px 22px;padding:2px 16px 12px;border-radius:14px;border:1px solid var(--line);background:var(--panel)}
+.letters-later h4{margin:12px 0 8px}
+.lt-chips{display:flex;flex-wrap:wrap;gap:8px}
+.lt-chips button{border:1px solid rgba(var(--gold-rgb),.35);background:rgba(var(--gold-rgb),.06);border-radius:999px;padding:6px 13px;font:600 14px var(--serif);color:var(--gold2);cursor:pointer}
+.lt-chips button:hover{border-color:var(--gold)}
+.lcard{padding:18px 22px 8px;border-left:3px solid var(--c);background:var(--panel);border-radius:4px 14px 14px 4px;margin-bottom:14px;scroll-margin-top:70px}
+.lcard header h3{font-family:var(--serif);font-size:26px;margin:4px 0 2px;color:#fbefd5}
+.lc-no{font-size:12px;color:var(--c);letter-spacing:.04em;font-weight:600}
+.lcard .lt-heart{margin-top:0}
+.lc-why{margin:0;line-height:1.75;color:#d7cbb4;font-size:14.5px}
+.lc-view{margin:14px 0 0;padding:10px 14px;border:1px dashed var(--line);border-radius:10px;font-size:13px;line-height:1.65;color:var(--muted)}
+.lc-view b{display:block;font-size:11.5px;letter-spacing:.14em;color:var(--faint);margin-bottom:2px}
+.lc-btns{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;margin-top:6px}
+.lc-go{border:0;background:none;color:var(--gold);font-size:13px;padding:10px 0;cursor:pointer}
+.lcard.flash{animation:lflash 1.6s ease-out}
+@keyframes lflash{0%,30%{box-shadow:0 0 0 2px var(--gold),0 0 28px rgba(var(--gold-rgb),.35)}100%{box-shadow:0 0 0 0 transparent}}
+@media (min-width:901px){.lcard{padding:22px 28px 10px}.lcard .lt-verses{grid-template-columns:repeat(3,1fr)}}
+/* 지도의 편지 길: 걷는 길(시기 색 실선)과 달리 먹빛 점선이 받는 곳 쪽으로 흘러간다 */
+.lr-halo{fill:none;stroke:rgba(250,242,222,.55);stroke-width:calc(var(--u,1) * 4.5px);stroke-linecap:round}
+.lr{fill:none;stroke:#7a2f17;stroke-width:calc(var(--u,1) * 2px);stroke-linecap:round;stroke-dasharray:calc(var(--u,1) * 7px) calc(var(--u,1) * 6px);animation:lrflow 1.4s linear infinite}
+@keyframes lrflow{to{stroke-dashoffset:calc(var(--u,1) * -13px)}}
+#letterRoutes{pointer-events:none;animation:lrin .6s ease-out}
+@keyframes lrin{from{opacity:0}}
+.lr-dot{fill:#7a2f17;stroke:#faf2de;stroke-width:1.4}
+.lr-scroll rect{fill:#f6ebcf;stroke:#7a2f17;stroke-width:1.6}
+.lr-scroll path{fill:none;stroke:#7a2f17;stroke-width:1.4;stroke-linecap:round}
+.lr-end .lr-name{font-size:13px;font-weight:700;fill:#6a2812;stroke:rgba(250,242,222,.95);stroke-width:3.4px}
+.lr-end .lr-to{font-size:11px;fill:#3b2a14;stroke:rgba(250,242,222,.92);stroke-width:3px}

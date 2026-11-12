@@ -35,6 +35,7 @@
 - 다국어: `data.<언어>.json`도 build.py가 만든다. 번역 원본은 `_src/i18n/` — `ko.json`(뽑기: `python3 _src/i18n/extract.py`)을 옮긴 `<언어>.json`과 화면 글씨 `ui.<언어>.json`. 새 언어는 app.js의 `LANGS`에도 더한다. 말씀은 기존 성경 번역을 베끼지 않고 새로 옮긴다
 - `stage.js`, `stage/` — 3D 무대. **연출 가이드: `_src/STAGE.md`** (합의한 연출 원칙 포함 — 반드시 읽을 것)
 - `assets/relief.webp`, `assets/relief-west.webp`(애굽 쪽), `assets/relief-hi/`, `assets/relief-hi-w/`(애굽 쪽), `assets/relief-city/` — 지형 음영과 확대용 정밀·도성 타일 (`_src/relief.py`로 생성)
+- `assets/relief-med.webp`, `assets/relief-med-wide.webp`, `assets/relief-med-hi/`(장소 둘레만, 목록 tiles.json) — 바울 여정(`journey.map.med`)에서만 까는 지중해 바탕. 바다를 지도의 바다색(seaMed)으로 칠하고 레반트·애굽 자리는 투명하게 비워 원래 바탕이 비친다. `python3 _src/relief.py <캐시> med`. 뱃길은 skeleton의 장면 `via`로 해안·섬을 피한다
 - `assets/jerusalem.webp` — 예루살렘 3D 도성 그림. 모형은 `stage/jerusalem.js`, 다시 그리기는 `node _src/tools/jerusalem.mjs`
 - `assets/egypt-*.webp` — 애굽 표지 그림(기자·파로스 등대·헬리오폴리스). 모형은 `stage/egypt.js`, 다시 그리기는 `node _src/tools/jerusalem.mjs <url> giza`
 - `terrain.js`, `assets/terrain/` — 3D 지형 모드. 지역별(갈릴리·유대·애굽, 모세 여정에서만 시내·네게브) 높이·색 그림을 장소 가까이 갈 때 불러온다. 지역 밖은 2D 음영을 평면으로 깐다. 자료는 `python3 _src/terrain.py <고도 캐시> [지역…]`로 만든다(시내·네게브는 정밀 타일이 없어 색을 고도에서 바로 칠한다)

@@ -39,6 +39,10 @@ const BASES = [{ src: 'assets/relief.webp', lat0: 29.15, lat1: 34.6, lng0: 33.0,
 const SOUTH = { src: 'assets/relief-south.webp', lat0: 27.2, lat1: 30.15, lng0: 31.25, lng1: 37.4, y: 0.02, cut: 29.8 };
 // 시리아 사막·메소포타미아 바탕(열왕기 여정, app.js의 RELIEF_MESO): 다른 바탕 밑에 넓게 — 바벨론은 3D 지형 지역이 없어 이 판 위에 무대만 선다
 const MESO = { src: 'assets/relief-meso.webp', lat0: 26.9, lat1: 37.6, lng0: 35.6, lng1: 46.2, y: -0.1 };
+// 지중해 바탕(바울 여정, app.js의 RELIEF_MED_WIDE·RELIEF_MED): 바다와 레반트 자리가 투명한 그림이라 다른 바탕·바다 위에(top) 얹고, 그 밑에 넓은 바다 판을 깐다.
+// 투명한 곳이 밑의 바탕을 가리지 않게 깊이를 쓰지 않고 맨 나중에 그린다 (지형 지역이 없어 이 판 위에 무대만 선다)
+const MED_WIDE = { src: 'assets/relief-med-wide.webp', lat0: 24.5, lat1: 48.5, lng0: 8.0, lng1: 41.0, y: 0.08, top: 1 };
+const MED = { src: 'assets/relief-med.webp', lat0: 30.5, lat1: 43.0, lng0: 11.0, lng1: 38.0, y: 0.09, top: 2 };
 const BABYLON = { src: 'assets/relief-babylon.webp', lat0: 31.95, lat1: 33.15, lng0: 43.65, lng1: 45.2, y: -0.08 }; // 바벨론 둘레의 고운 바탕 (app.js의 RELIEF_BABYLON)
 // 그때 지중해는 시리아 해안을 따라 길리기아까지 (app.js buildMap의 north와 같게)
 const NORTH = [[36.05, 32.6], [36.15, 33.4], [36.35, 33.95], [36.6, 34.3], [36.8, 34.65], [36.57, 35.37], [36.75, 35.8], [36.92, 36.15], [36.6, 36.18], [36.4, 35.9], [36.08, 35.93], [35.85, 35.83], [35.52, 35.75]];
@@ -117,6 +121,7 @@ async function build() {
   land.rotation.x = -Math.PI / 2; land.position.y = -8; land.receiveShadow = true; scene.add(land);
   if (window.journeyMap?.south && !BASES.includes(SOUTH)) BASES.push(SOUTH);
   if (window.journeyMap?.meso && !BASES.includes(MESO)) BASES.unshift(MESO, BABYLON);
+  if (window.journeyMap?.med && !BASES.includes(MED)) BASES.push(MED_WIDE, MED);
   await Promise.all(BASES.map(async b => { b.tex = mapTex(await loadImg(b.src)); }));
   addWalker(); addLabels(); addStars();
   decorate();
@@ -253,13 +258,20 @@ function decorate() {
       const e = 0.05, x0 = Math.max(r.X0, bx0 + e), x1 = Math.min(r.X1, bx1 - e), z0 = Math.max(r.Z0, cz + e), z1 = Math.min(r.Z1, bz1 - e); // 구멍이 판 가장자리에 닿으면 삼각형 나누기가 깨져 살짝 안쪽으로
       if (x1 - x0 > 0.01 && z1 - z0 > 0.01) sh.holes.push(new THREE.Path([[x0, z0], [x0, z1], [x1, z1], [x1, z0]].map(([x, z]) => new THREE.Vector2(x, z))));
     });
-    const m = flat(sh, greyable(new THREE.MeshStandardMaterial({ map: b.tex, transparent: true, roughness: 1, side: THREE.DoubleSide })), b.y);
+    const m = flat(sh, greyable(new THREE.MeshStandardMaterial({ map: b.tex, transparent: true, roughness: 1, side: THREE.DoubleSide, depthWrite: !b.top })), b.y);
+    if (b.top) {
+      // 지중해 판은 아주 커서(2만 단위 넘게) 삼각형 두 개로는 밉맵 단계가 틀어져 가까이서도 온통 바다색으로 보였다 — 잘게 나눈 판으로
+      m.renderOrder = b.top;
+      m.geometry.dispose();
+      m.geometry = new THREE.PlaneGeometry(bx1 - bx0, bz1 - bz0, 96, 48).translate((bx0 + bx1) / 2, (bz0 + bz1) / 2, 0);
+    }
     const p = m.geometry.attributes.position, uv = m.geometry.attributes.uv;
     for (let i = 0; i < p.count; i++) uv.setXY(i, (p.getX(i) - bx0) / (bx1 - bx0), 1 - (p.getY(i) - bz0) / (bz1 - bz0));
   });
   // 지중해와 수에즈 만 (바탕 그림 위에 — 2D 지도도 바다를 그림 위에 덮는다)
   const seaM = new THREE.MeshStandardMaterial({ color: '#7ea6ad', roughness: 0.4, metalness: 0.1, envMap: env, envMapIntensity: 0.7, side: THREE.DoubleSide });
   flat(new THREE.Shape([...(window.journeyMap?.meso ? NORTH : []), [35.2, 36.0], [34.2, 35.65], ...GEO.coast, ...SINAI, [36, 26]].map(V2)), seaM, 0.05);
+  if (window.journeyMap?.med) { const [x0, z0] = px([MED_WIDE.lat1, MED_WIDE.lng0]), [x1, z1] = px([MED_WIDE.lat0, MED_WIDE.lng1]); flat(new THREE.Shape([[x0, z0], [x1, z0], [x1, z1], [x0, z1]].map(([x, z]) => new THREE.Vector2(x, z))), seaM, -0.2); } // 지중해 그림의 투명한 바다 밑
   if (window.journeyMap?.meso) flat(new THREE.Shape(GEO.cyprus.map(V2)), greyable(new THREE.MeshStandardMaterial({ color: '#e3d5b4', roughness: 1, side: THREE.DoubleSide })), 0.07); // 키프로스 (2D의 .isle)
   if (!window.journeyMap?.south) flat(new THREE.Shape(GEO.suez.map(V2)), seaM, 0.05); // 시내 반도 바탕에는 홍해의 두 만이 이미 바다로 칠해져 있다 (2D와 같게)
   // 호수: 2D 지도처럼 물가 점들을 매끄러운 곡선으로. 수면 고도가 정해진 호수는 그 높이에

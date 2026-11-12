@@ -233,6 +233,87 @@ const TYPES = {
   gedaliah: { robe: '#8a7350', trim: '#5a4a36', mantle: '#6a7a6a', hair: '#3a2a1c', beard: true, sash: '#5a4a36', skin: 1 }, // 총독 그달리야
   exile:    { robe: '#7a6a58', trim: '#4a3e32', mantle: '#5a5048', hair: '#2e1d12', beard: true, hood: '#a89a80', band: '#4a3e32', skin: 1 }, // 사로잡혀 가는 유다 사람
   exileW:   { robe: '#6a5a4e', trim: '#4a3e32', mantle: '#8a7e6a', veil: true, inner: '#d8d0c0', skin: 1, soft: true, slim: true, sash: '#4a3e32' },
+  // ---- 바울 여정 ----
+  // 한눈에 가른다: 유대 사람은 긴 옷·머릿수건·수염, 헬라 사람은 머릿수건 없이 짧은 머리에 밝은 빛깔의 겉옷(히마티온)·수염 없는 젊은이가 많고,
+  // 로마의 관리는 흰 토가(toga — 왼어깨에서 오른허리로 비스듬히 두른 천, 높은 관리는 자줏빛 단 togaStripe), 로마 군사는 붉은 옷·볏 달린 투구(helmet).
+  // 바울은 나이마다 바꿔 낀다: 젊은 바리새인 sauly(a01–a02 길 위) → 눈먼 saulB(흐린 눈, a02–a03) → 사도 paul(지팡이, 황토 겉옷) → 늙은 paulO(흰 머리, 로마 여정)
+  sauly:    { robe: '#d9cfb6', trim: '#2f4f6a', mantle: '#2f4f6a', hair: '#2b1b10', beard: true, hood: '#efe8d8', band: '#2f4f6a', sash: '#2f4f6a', skin: 1, height: 0.95 }, // 젊은 바리새인 사울: 흰 속옷에 남청 겉옷, 짧은 수염 (행 7:58 '사울이라는 젊은이')
+  saulB:    { robe: '#d9cfb6', trim: '#2f4f6a', mantle: '#2f4f6a', hair: '#2b1b10', beard: true, hood: '#efe8d8', band: '#2f4f6a', sash: '#2f4f6a', skin: 1, height: 0.95, eye: '#d8d4cc' }, // 눈이 먼 사울 (행 9:8 — 흐린 눈)
+  paul:     { robe: '#b8a07a', trim: '#6b4a2a', mantle: '#9a5a2a', hair: '#2b1b10', beard: true, sash: '#6b4a2a', staff: true, skin: 1, height: 0.95 }, // 길 떠나는 사도 바울: 수수한 옷에 황토 겉옷, 나그네의 지팡이
+  paulS:    { robe: '#b8a07a', trim: '#6b4a2a', mantle: '#9a5a2a', hair: '#2b1b10', beard: true, sash: '#6b4a2a', skin: 1, height: 0.95 }, // 지팡이 없는 바울 (손에 두루마리·편지를 들거나 앉을 때, 광주리에 탈 때)
+  paulO:    { robe: '#b8a07a', trim: '#6b4a2a', mantle: '#9a5a2a', hair: '#d4cec2', beard: true, sash: '#6b4a2a', staff: true, skin: 1, height: 0.94 }, // 늙은 바울 (가이사랴·로마 — 흰 머리와 수염)
+  barnabas: { robe: '#e3d6b8', trim: '#4f6a3a', mantle: '#4f6a3a', hair: '#5a3a22', beard: true, long: true, sash: '#4f6a3a', skin: 2, height: 1.02 }, // 구브로 출신 레위 사람 바나바: 흰 속옷에 올리브 초록 겉옷, 바울보다 큰 키 (루스드라에서 제우스라 불림)
+  stephen:  { robe: '#f1ebdc', trim: '#3e7a6a', mantle: '#3e7a6a', hair: '#3a2616', beard: true, sash: '#3e7a6a', skin: 2, height: 0.94 }, // 예루살렘 교회의 일꾼 스데반: 헬라 말 하는 젊은 유대인, 흰 옷에 청록 겉옷
+  ananias:  { robe: '#8a7350', trim: '#5a4128', mantle: '#c8b48c', hair: '#b8b0a2', beard: true, hood: '#e0d4b8', band: '#5a4128', sash: '#5a4128', skin: 1 }, // 다메섹의 제자 아나니아: 희끗한 머리, 머릿수건
+  judasD:   { robe: '#7a5a48', trim: '#4a3a2e', mantle: '#a89a7c', hair: '#2b1b10', beard: true, sash: '#4a3a2e', skin: 2 }, // 곧은 길의 집주인 유다
+  councilor: { robe: '#e3dccb', trim: '#5a4a7a', mantle: '#5a4a7a', hair: '#8a8274', beard: true, turban: '#efe8d8', sash: '#5a4a7a', skin: 1 }, // 공의회 의원 (흰 관, 보랏빛 겉옷)
+  witness:  { robe: '#8b6f50', trim: '#5b4630', mantle: '#6e5a40', hair: '#2b1b10', beard: true, hood: '#cdbb94', band: '#5b4630', sash: '#5b4630', skin: 1 }, // 스데반을 고발한 증인·무리
+  templeguard: { robe: '#5a6b7d', trim: '#3a4656', hair: '#2b1b10', beard: true, cap: '#7a5a34', sash: '#3a4656', skin: 1 }, // 대제사장이 딸려 보낸 사람 (성전 경비 — 다메섹 길의 동행)
+  jamesL:   { robe: '#ece6d8', trim: '#6a6a5a', mantle: '#8a8270', hair: '#5a4a3a', beard: true, long: true, sash: '#6a6a5a', skin: 1 }, // 주님의 동생 야고보 (예루살렘 교회의 기둥 — 흰 아마옷)
+  hellenist: { robe: '#d8c8a8', trim: '#7a3a2a', mantle: '#7a3a2a', hair: '#2b1b10', beard: true, hood: '#e8dcc0', band: '#7a3a2a', sash: '#7a3a2a', skin: 2 }, // 헬라 말 하는 유대인
+  greek:    { robe: '#e8e0cc', trim: '#3a6a8a', mantle: '#3a6a8a', hair: '#3a2a1c', sash: '#3a6a8a', skin: 2 }, // 헬라 사람 (안디옥의 이방 신자 — 머릿수건 없이 짧은 머리, 수염 없음)
+  greek2:   { robe: '#d8c49a', trim: '#8a3a4a', mantle: '#8a3a4a', hair: '#1d140c', beard: true, sash: '#8a3a4a', skin: 1 },
+  greekW:   { robe: '#c88a6a', trim: '#d6a93a', mantle: '#e6dcc4', veil: true, inner: '#f6efe2', skin: 2, soft: true, slim: true, sash: '#d6a93a' }, // 헬라 여인
+  simeon:   { robe: '#d8ccb0', trim: '#6a4a2a', mantle: '#6a4a2a', hair: '#140e0a', beard: true, sash: '#6a4a2a', skin: 3 }, // 니게르라 하는 시므온 (짙은 얼굴)
+  lucius:   { robe: '#c9b48c', trim: '#2f5a5a', mantle: '#2f5a5a', hair: '#1d140c', beard: true, sash: '#2f5a5a', skin: 3 }, // 구레네 사람 루기오
+  manaen:   { robe: '#f1e7cf', trim: '#d6a93a', mantle: '#6b2a5e', hair: '#8a8274', beard: true, sash: '#d6a93a', skin: 2 }, // 헤롯과 함께 자란 마나엔 (값진 옷)
+  agabus:   { robe: '#7a6a58', trim: '#3e3224', mantle: '#5a4a3a', hair: '#bdb6a8', beard: true, long: true, hood: '#c8bfa8', band: '#3e3224', staff: true, skin: 1 }, // 선지자 아가보
+  mark:     { robe: '#d8ccb0', trim: '#6a7a8a', mantle: '#6a7a8a', hair: '#3a2616', sash: '#6a7a8a', skin: 2, height: 0.88 }, // 마가라 하는 요한 (수염 없는 젊은이)
+  proconsul: { robe: '#f6f2e8', trim: '#6b2a5e', mantle: '#f6f2e8', toga: '#f6f2e8', togaStripe: '#6b2a5e', hair: '#2b1b10', sash: '#f6f2e8', skin: 2 }, // 구브로 총독 서기오 바울: 자줏빛 단의 토가 (수염 없는 로마 사람)
+  elymas:   { robe: '#3a2e3e', trim: '#8a6a3a', mantle: '#241c28', hair: '#140e0a', beard: true, hood: '#2a2230', band: '#8a6a3a', sash: '#8a6a3a', skin: 2 }, // 마술사 엘루마 (짙은 자줏빛 옷과 두건 — 어둡지만 형체가 보이게)
+  lictor:   { robe: '#e8e0cc', trim: '#9d3328', hair: '#2b1b10', sash: '#9d3328', skin: 2 }, // 총독 곁의 로마 수행원
+  ruler:    { robe: '#efe8d8', trim: '#2f4f8a', mantle: '#efe8d8', hair: '#bfb7aa', beard: true, hood: '#efe8d8', band: '#2f4f8a', sash: '#2f4f8a', skin: 1 }, // 회당장 (흰 겉옷에 청색 띠 — 기도 숄)
+  jewD:     { robe: '#6e5a40', trim: '#3e5470', mantle: '#3e5470', hair: '#2b1b10', beard: true, hood: '#d9cfb6', band: '#3e5470', sash: '#3e5470', skin: 1 }, // 디아스포라의 유대인 (회당의 무리, 반대하는 사람)
+  noblewoman: { robe: '#7a2a4a', trim: '#d6a93a', mantle: '#e0c890', veil: true, inner: '#f6efe2', skin: 2, soft: true, slim: true, sash: '#d6a93a' }, // 귀부인 (행 13:50)
+  lame:     { robe: '#9a8a70', trim: '#6a5a48', hair: '#3a2a1c', beard: true, sash: '#6a5a48', skin: 1 }, // 루스드라의 앉은뱅이 (해진 옷)
+  lycaonian: { robe: '#a8784a', trim: '#5a3a22', mantle: '#c9a26a', hair: '#2b1b10', beard: true, sash: '#5a3a22', skin: 3 }, // 루스드라 사람 (흙빛 옷)
+  lycaonianW: { robe: '#8a5a3a', trim: '#c9a24a', mantle: '#c9a26a', veil: true, inner: '#efe6d4', skin: 3, soft: true, slim: true, sash: '#c9a24a' },
+  zeuspriest: { robe: '#f6f2e8', trim: '#c9a24a', mantle: '#f6f2e8', hair: '#cfc8bb', beard: true, wreath: '#5f8a3a', sash: '#c9a24a', skin: 2 }, // 제우스 신전의 제사장: 흰 옷에 화관
+  nabatean: { robe: '#7a3a2a', trim: '#d6a93a', hair: '#140e0a', beard: true, turban: '#c9a86a', spear: true, sash: '#d6a93a', skin: 3 }, // 나바테아 왕 아레다의 고관이 세운 파수꾼 (붉은 갈색 옷, 황토 머릿수건, 창 — 고후 11:32)
+  townsman: { robe: '#9a7a5a', trim: '#5a4a36', mantle: '#c8b48c', hair: '#2b1b10', beard: true, hood: '#e0d4b8', band: '#5a4a36', sash: '#5a4a36', skin: 2 }, // 다메섹의 제자·성 사람
+  elderC:   { robe: '#8a7350', trim: '#5a4a36', mantle: '#6a7a6a', hair: '#9a948a', beard: true, sash: '#5a4a36', skin: 2 }, // 세운 장로 (갈라디아의 교회)
+  // 뒤 묶음(a12–a42)에서 쓸 사람들
+  silas:    { robe: '#d8ccb0', trim: '#5a3a5a', mantle: '#5a3a5a', hair: '#2b1b10', beard: true, sash: '#5a3a5a', staff: true, skin: 2 }, // 실라 (예루살렘 교회의 지도자, 로마 시민 — 자줏빛 겉옷)
+  timothy:  { robe: '#e8e0cc', trim: '#3a6a8a', mantle: '#3a6a8a', hair: '#3a2616', sash: '#3a6a8a', skin: 2, height: 0.88 }, // 디모데 (헬라 아버지의 아들 — 수염 없는 젊은이)
+  luke:     { robe: '#c9b48c', trim: '#2f5a4a', mantle: '#2f5a4a', hair: '#4a3a2a', beard: true, sash: '#2f5a4a', skin: 2 }, // 의사 누가
+  lydia:    { robe: '#6b2a5e', trim: '#d6a93a', mantle: '#d8c49a', veil: true, inner: '#f6efe2', skin: 2, soft: true, slim: true, sash: '#d6a93a' }, // 자색 옷감 장수 루디아
+  slavegirl: { robe: '#a89a80', trim: '#6a5c48', hair: '#2b1b10', long: true, soft: true, slim: true, sash: '#6a5c48', skin: 1, height: 0.8 }, // 귀신 들린 여종 (빌립보)
+  jailer:   { robe: '#6a5a46', trim: '#3a2e22', mantle: '#4a4a3a', hair: '#1d140c', beard: true, sash: '#3a2e22', sword: true, skin: 2 }, // 빌립보의 간수
+  magistrate: { robe: '#f6f2e8', trim: '#9d3328', mantle: '#f6f2e8', toga: '#f6f2e8', togaStripe: '#9d3328', hair: '#3a2a1c', sash: '#f6f2e8', skin: 2 }, // 로마 식민시의 관리 (붉은 단 토가)
+  governor: { robe: '#f6f2e8', trim: '#6b2a5e', mantle: '#f6f2e8', toga: '#f6f2e8', togaStripe: '#6b2a5e', hair: '#8a8274', sash: '#f6f2e8', skin: 2 }, // 총독 (갈리오·벨릭스·베스도 — 희끗한 머리의 토가)
+  tribune:  { robe: '#9d3328', trim: '#d6a93a', mantle: '#6b2a20', hair: '#2b1b10', helmet: true, armor: '#b08a3a', sword: true, sash: '#d6a93a', skin: 2 }, // 천부장 (놋 흉갑·볏 투구·칼)
+  philosopher: { robe: '#ece6d8', trim: '#8a8270', mantle: '#d8ccb0', hair: '#d9d4c8', beard: true, long: true, sash: '#8a8270', skin: 2 }, // 아덴의 철학자 (흰 머리, 수수한 히마티온)
+  philosopher2: { robe: '#d8c8a8', trim: '#5a5a6a', mantle: '#5a5a6a', hair: '#3a2a1c', beard: true, sash: '#5a5a6a', skin: 1 },
+  ephesian: { robe: '#c97a3a', trim: '#7a3a1a', mantle: '#e8d0a0', hair: '#2b1b10', beard: true, sash: '#7a3a1a', skin: 2 }, // 에베소 사람 (은장색 데메드리오의 무리)
+  sailor:   { robe: '#8a9aa8', trim: '#3a4a5a', hair: '#2b1b10', beard: true, hood: '#c8bfa8', band: '#3a4a5a', sash: '#3a4a5a', skin: 3 }, // 사공 (짧은 머릿수건)
+  islander: { robe: '#a8906a', trim: '#5a4a36', hair: '#1d140c', beard: true, sash: '#5a4a36', skin: 3 }, // 멜리데 섬 사람
+  agrippa:  { robe: '#5a2a5e', trim: '#d6a93a', mantle: '#a8312a', hair: '#2b1b10', crown: true, sash: '#d6a93a', skin: 2 }, // 아그립바 왕
+  bernice:  { robe: '#6b2a5e', trim: '#d6a93a', mantle: '#e0c890', veil: true, inner: '#f6efe2', crown: true, skin: 2, soft: true, slim: true, sash: '#d6a93a' }, // 버니게
+  // 바울 b 묶음
+  aquila:   { robe: '#8a6a48', trim: '#3a2e22', mantle: '#4a3e34', hair: '#2b1b10', beard: true, hood: '#d9cfb6', band: '#3a2e22', sash: '#3a2e22', skin: 2 }, // 천막 깁는 아굴라 (본도 출신 유대 사람 — 염소털 빛 겉옷)
+  priscilla: { robe: '#3e5a6a', trim: '#c9a24a', mantle: '#c8b48c', veil: true, inner: '#efe6d4', skin: 2, soft: true, slim: true, sash: '#c9a24a' }, // 브리스길라
+  eunice:   { robe: '#5a6a4a', trim: '#c9a24a', mantle: '#d8c8a8', veil: true, inner: '#efe6d4', skin: 2, soft: true, slim: true, sash: '#c9a24a' }, // 디모데의 어머니 유니게 (믿는 유대 여인)
+  lois:     { robe: '#6a5e50', trim: '#8a7a5a', mantle: '#8a8274', veil: true, inner: '#e0dcd2', skin: 2, soft: true, slim: true, sash: '#8a7a5a', height: 0.84 }, // 할머니 로이스 (잿빛 겉옷)
+  paulOS:   { robe: '#b8a07a', trim: '#6b4a2a', mantle: '#9a5a2a', hair: '#d4cec2', beard: true, sash: '#6b4a2a', skin: 1, height: 0.94 }, // 지팡이 없는 늙은 바울 (옥에서 편지를 쓸 때 — 앉은 사람 곁에 지팡이만 서 있었다)
+  macedonian: { robe: '#d8c49a', trim: '#7a3a2a', mantle: '#7a3a2a', hair: '#3a2a1c', beard: true, cap: '#c8b48c', sash: '#7a3a2a', skin: 2 }, // 환상 속의 마게도냐 사람 (납작한 펠트 모자 — 빛의 실루엣으로만 쓴다)
+  // 바울 c 묶음
+  titus:    { robe: '#e8e0cc', trim: '#7a5a2a', mantle: '#b8863a', hair: '#3a2616', sash: '#7a5a2a', staff: true, skin: 2 }, // 헬라 사람 디도 (수염 없이, 겨잣빛 겉옷 — 고린도에서 돌아온 나그네)
+  tertius:  { robe: '#ece6d8', trim: '#5a6a7a', mantle: '#8a9aa8', hair: '#4a3a2a', beard: true, sash: '#5a6a7a', skin: 2 }, // 받아 적는 더디오 (롬 16:22)
+  phoebe:   { robe: '#4a6a7a', trim: '#d6a93a', mantle: '#e6dcc4', veil: true, inner: '#f6efe2', skin: 2, soft: true, slim: true, sash: '#d6a93a' }, // 겐그레아 교회의 일꾼 뵈뵈
+  eutychus: { robe: '#e8dcc4', trim: '#8a6a48', hair: '#3a2616', sash: '#8a6a48', skin: 2, height: 0.86 }, // 창턱에 앉은 청년 유두고 (수염 없는 젊은이)
+  nephew:   { robe: '#c8b48c', trim: '#2f4f6a', mantle: '#2f4f6a', hair: '#2b1b10', sash: '#2f4f6a', skin: 1, height: 0.86 }, // 바울의 누이의 아들 (수염 없는 젊은이, 바울 집안의 남청)
+  demetrius: { robe: '#c97a3a', trim: '#5a3a1a', mantle: '#8a8a88', hair: '#2b1b10', beard: true, sash: '#5a3a1a', skin: 2 }, // 은장색 데메드리오 (잿빛 은장이 앞치마 같은 겉옷)
+  // 바울 d 묶음
+  festus:   { robe: '#f6f2e8', trim: '#9d3328', mantle: '#f6f2e8', toga: '#f6f2e8', togaStripe: '#9d3328', hair: '#3a2a1c', sash: '#f6f2e8', skin: 2 }, // 새 총독 베스도 (검은 머리, 붉은 단 토가 — 희끗한 벨릭스와 가른다)
+  drusilla: { robe: '#2f5a6a', trim: '#d6a93a', mantle: '#e6d4a8', veil: true, inner: '#f6efe2', skin: 2, soft: true, slim: true, sash: '#d6a93a' }, // 벨릭스의 아내 드루실라 (유대 왕가의 여인)
+  tertullus: { robe: '#ece6d8', trim: '#5a5a6a', mantle: '#ece6d8', toga: '#ece6d8', hair: '#2b1b10', sash: '#ece6d8', skin: 2 }, // 변호사 더둘로 (단 없는 토가)
+  aristarchus: { robe: '#d8ccb0', trim: '#8a5a2a', mantle: '#8a5a2a', hair: '#3a2616', beard: true, sash: '#8a5a2a', skin: 2 }, // 데살로니가 사람 아리스다고
+  shipowner: { robe: '#e8dcc0', trim: '#2f4f6a', mantle: '#2f4f6a', hair: '#5a4a3a', beard: true, sash: '#d6a93a', skin: 2 }, // 선주 (남빛 겉옷에 금빛 띠)
+  publius:  { robe: '#f6f2e8', trim: '#6b2a5e', mantle: '#f6f2e8', toga: '#f6f2e8', togaStripe: '#6b2a5e', hair: '#8a8274', sash: '#f6f2e8', skin: 2 }, // 멜리데 섬의 으뜸가는 사람 보블리오
+  islanderW: { robe: '#8a6a4a', trim: '#c9a24a', mantle: '#a8906a', veil: true, inner: '#efe6d4', skin: 3, soft: true, slim: true, sash: '#c9a24a' }, // 멜리데 섬 여인
+  epaphroditus: { robe: '#e0d4b8', trim: '#6a3a5a', mantle: '#6a3a5a', hair: '#3a2616', beard: true, sash: '#6a3a5a', staff: true, skin: 2 }, // 빌립보 교회가 보낸 에바브로디도 (루디아의 자줏빛을 닮은 겉옷)
+  onesimus: { robe: '#a8906a', trim: '#5a4a36', hair: '#1d140c', sash: '#5a4a36', skin: 3, height: 0.88 }, // 빌레몬의 종 오네시모 (겉옷 없이 짧은 옷, 수염 없는 젊은이)
+  tychicus: { robe: '#e8e0cc', trim: '#3a6a5a', mantle: '#3a6a5a', hair: '#3a2a1c', beard: true, sash: '#3a6a5a', staff: true, skin: 2 }, // 아시아 사람 두기고 (편지를 가져가는 나그네)
 };
 
 // 깃털 한 장: 길이 방향 +y
@@ -494,6 +575,16 @@ function makePerson(type) {
     mesh(lathe([[0.104 + r, 0.42], [0.106 + r, 0.5], [0.116 + r, 0.6], [0.108 + r, 0.645], [0.08, 0.684], [0.05, 0.7]], 32),
       new THREE.MeshStandardMaterial({ map: tx, metalness: 0.55, roughness: 0.4, side: THREE.DoubleSide }), upper);
   }
+  // 바울 여정 — 로마의 토가(toga: 천 색): 왼어깨에서 가슴을 지나 오른허리로 비스듬히 두른 두꺼운 천(sinus)과 왼어깨 앞으로 늘어진 자락.
+  // 높은 관리는 천 가장자리에 자줏빛·붉은 단(togaStripe — 토가 프라이텍스타). 허리띠는 천 밑에 숨는다
+  if (t.toga && !t.bare) {
+    const tm = mat(t.toga, { ...DS, roughness: 0.9 }), tilt = new THREE.Group();
+    tilt.position.set(0, 0.555, 0); tilt.rotation.z = slim ? 0.7 : 0.72; upper.add(tilt);
+    mesh(new THREE.TorusGeometry(0.118, 0.026, 8, 36), tm, tilt, [0, 0, 0], [1.38, 1.06, 1]).rotation.x = Math.PI / 2;
+    if (t.togaStripe) mesh(new THREE.TorusGeometry(0.118, 0.008, 6, 36), mat(t.togaStripe, { roughness: 0.7 }), tilt, [0, -0.024, 0], [1.42, 1.1, 1]).rotation.x = Math.PI / 2;
+    const fall = mesh(new THREE.BoxGeometry(0.06, 0.34, 0.02), tm, upper, [0.06, 0.48, 0.112]); fall.rotation.z = 0.08; // 왼어깨에서 앞으로 늘어진 자락
+    if (t.togaStripe) mesh(new THREE.BoxGeometry(0.012, 0.34, 0.022), mat(t.togaStripe, { roughness: 0.7 }), upper, [0.09, 0.48, 0.113]).rotation.z = 0.08;
+  }
   // 칼집(sword): 왼쪽 허리에 찬 칼 — 손에 뽑아 든 칼은 item 'sword'
   if (t.sword) {
     const sh = new THREE.Group(); sh.position.set(B.waist[0] + 0.012, B.waist[1] - 0.02, 0.02); sh.rotation.set(0.35, 0, 0.12); upper.add(sh);
@@ -624,6 +715,12 @@ function makePerson(type) {
   if (t.helmet) {
     mesh(sphere(0.094, 20, 10, 0, Math.PI * 2, 0, Math.PI * 0.55), mat('#a88a4a', { metalness: 0.5, roughness: 0.4 }), head, [0, 0.01, 0]);
     mesh(new THREE.BoxGeometry(0.02, 0.06, 0.15), mat('#9d3328'), head, [0, 0.11, -0.01]);
+  }
+  // 바울 여정 — 화관(wreath: 잎 색): 이마를 두른 잎 고리 (루스드라 제우스 신전의 제사장)
+  if (t.wreath) {
+    const wm = mat(t.wreath, { roughness: 0.8 });
+    mesh(new THREE.TorusGeometry(0.09, 0.008, 6, 28), wm, head, [0, 0.045, -0.004], [1, 1, 1.04]).rotation.x = Math.PI / 2 - 0.12;
+    for (let i = 0; i < 16; i++) { const a = i / 16 * Math.PI * 2; const l = mesh(sphere(0.016, 6, 4), wm, head, [Math.sin(a) * 0.092, 0.05 - Math.cos(a) * 0.01, Math.cos(a) * 0.095 - 0.004], [1.6, 0.6, 0.8]); l.rotation.y = a; l.castShadow = false; }
   }
   // 다윗 여정 — 둥근 투구(cap: 색, capMetal이면 놋): 이스라엘 병사의 가죽 투구, 골리앗의 놋 투구 (로마 투구의 붉은 볏 없이)
   if (t.cap) {

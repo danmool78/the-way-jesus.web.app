@@ -3,7 +3,7 @@
  {"id": "moses", "ready": true, "title": "nextJ1h", "desc": "nextJ1"},
  {"id": "david", "ready": true, "title": "nextJ2h", "desc": "nextJ2"},
  {"id": "kings", "ready": true, "title": "nextJ3h", "desc": "nextJ3"},
- {"id": "paul", "ready": false, "title": "nextJ4h", "desc": "nextJ4"},
+ {"id": "paul", "ready": true, "title": "nextJ4h", "desc": "nextJ4"},
  {"id": "psalms", "ready": true, "title": "nextJ5h", "desc": "nextJ5"},
  {"id": "proverbs", "ready": true, "title": "nextJ6h", "desc": "nextJ6"},
  {"id": "goodnews", "ready": true, "title": "seriesGoodH", "desc": "seriesGood"}

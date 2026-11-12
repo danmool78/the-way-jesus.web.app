@@ -4,7 +4,7 @@ AWS Open Data의 Terrarium 고도 타일(SRTM 등, Mapzen 제공)을 받아
 app.js 지도와 같은 등장방형(위경도 선형) 격자로 다시 표본화한 뒤,
 양피지 톤의 고도 채색 + 북서쪽 빛의 음영을 입힌다.
 
-  python _src/relief.py <타일 캐시 폴더> [east|south|west|meso]   (그 바탕만)
+  python _src/relief.py <타일 캐시 폴더> [east|south|west|meso|med]   (그 바탕만)
 
 EXTENT를 바꾸면 app.js의 RELIEF도 같이 바꿀 것.
 """
@@ -62,6 +62,182 @@ TIGRIS = [(38.0, 40.2), (37.5, 41.6), (37.32, 42.19), (36.34, 43.13), (35.47, 43
 BABYLONIA = [(34.25, 43.75), (33.55, 43.45), (33.05, 43.95), (32.45, 44.15), (31.85, 44.35), (31.3, 44.95), (31.1, 45.6), (31.4, 46.2), (32.3, 46.2),
              (32.7, 45.6), (33.35, 44.85), (34.0, 44.4), (34.35, 44.0)]
 
+# 지중해 동쪽·가운데 바탕(바울 여정 — journey.map.med): 예루살렘에서 로마까지. app.js의 RELIEF_MED와 같게.
+# 다른 바탕들은 바다를 땅색으로 지우고 벡터 바다를 덮지만, 이 넓은 바다의 섬·반도를 손으로 그릴 수는 없어서
+# 고도 자료의 해안선 그대로 바다를 투명하게 비운다(지도는 그 밑에 바다색을 깐다). 레반트·애굽(HOLE)도 투명하게 비워
+# 그 밑의 원래 바탕(relief·relief-west, 정밀 타일, 벡터 바다·호수·강)이 그대로 보이게 한다
+MED = dict(lat0=30.5, lat1=43.0, lng0=11.0, lng1=38.0)
+MED_PPU, MED_Z = .16, 8  # 약 700m 한 픽셀 — 1.5MB 안으로
+# 그 밑에 더 넓고 거친 바탕(assets/relief-med-wide.webp): 예루살렘에서 로마까지를 한 화면(거의 정사각형인 빈 자리)에 담으면
+# 위아래로 그림 밖이 보여서, 남북으로 넉넉히 (멀리서만 보는 곳이라 지도 단위당 0.05픽셀). app.js의 RELIEF_MED_WIDE와 같게
+MED_WIDE = dict(lat0=24.5, lat1=48.5, lng0=8.0, lng1=41.0)  # 동쪽은 휴대폰에서 예루살렘 이름까지 들어오게
+MED_WIDE_PPU, MED_WIDE_Z = .05, 6
+# 장면 둘레를 가까이 볼 때 얹는 고운 타일(assets/relief-med-hi/행_열.webp, 바울의 장소 둘레에만 — tiles.json에 목록). app.js의 RELIEF_MED_HI와 같게
+MED_HI_UNITS, MED_HI_Z = 256, 11  # 512픽셀 → 지도 단위당 2픽셀
+MED_HI_REACH = (.62, .6)  # 장소 둘레 (경도, 위도)° — 휴대폰 세로 화면의 장면 보기까지 덮게
+# 비워 두는 자리: [(북, 서, 남, 동)] — 원래 바탕이 불투명한 곳 안쪽으로 (가장자리의 투명한 띠를 피해서)
+MED_HOLE = [(34.25, 33.75, 29.55, 37.0), (31.6, 29.75, 29.55, 37.0)]  # 남쪽은 relief·relief-west의 아래 끝(29.15, 흐린 띠 위)까지
+MED_HOLE_SOFT = .12
+
+
+def med_hole(lat, lng):
+    """레반트·애굽 자리에서 1(비움) → 바깥 0, 경계는 부드럽게"""
+    LA, LO = lat[:, None], lng[None, :]
+    s = lambda d: np.clip(d / MED_HOLE_SOFT + .5, 0, 1)
+    return np.maximum.reduce([s(n - LA) * s(LO - w) * s(e - LO) * s(LA - so) for n, w, so, e in MED_HOLE])
+
+
+def open_sea(dem):
+    """바다와 이어진 해수면 아래 땅(=바다)만 True. 카타라 분지(해수면 아래 133m) 같은 내륙의 낮은 땅이 바다 구멍으로 뚫리지 않게.
+    지중해 한가운데에서 시작해 해수면 아래로만 번져 간다 (넓은 바탕의 거친 격자에서)"""
+    low = dem <= 0
+    m = np.zeros_like(low)
+    # 씨앗: 지중해(이오니아 바다)와, 거친 격자에서 좁은 해협·운하로 이어지지 않는 바다들(마르마라·흑해·아조프·홍해)
+    for a, g in [(36.0, 18.0), (40.75, 28.0), (43.0, 34.0), (46.0, 36.5), (26.0, 35.5), (28.5, 34.7), (28.8, 33.0)]:
+        iy = int((MED_WIDE['lat1'] - a) / (MED_WIDE['lat1'] - MED_WIDE['lat0']) * low.shape[0])
+        ix = int((g - MED_WIDE['lng0']) / (MED_WIDE['lng1'] - MED_WIDE['lng0']) * low.shape[1])
+        assert low[iy, ix], (a, g)
+        m[iy, ix] = True
+    while True:
+        n = m.copy()
+        n[1:] |= m[:-1]; n[:-1] |= m[1:]; n[:, 1:] |= m[:, :-1]; n[:, :-1] |= m[:, 1:]
+        n &= low
+        if (n == m).all():
+            return m
+        m = n
+
+
+def coast_km(land, km_px):
+    """바다까지의 거리(km) 어림: 둘레의 바다 비율을 반지름을 늘려 가며 본다 (scipy 없이)"""
+    sea = (~land).astype(np.float32)
+    d = np.full(land.shape, np.inf, np.float32)
+    r = 1
+    while r < 400:
+        f = blur(sea, r)
+        d = np.where(np.isinf(d) & (f > .004), r, d)
+        r *= 2
+    d = np.where(np.isinf(d), 400, d)
+    d = np.where(land, d, 0)
+    return blur(d, 6) * km_px
+
+
+def med_rain(dem, land, lat, km_px):
+    """지중해 둘레의 연 강수량(mm) 어림: 위도(남쪽 리비아·애굽 해안은 메마르다) × 고도 × 바다에서의 거리 × 비그늘.
+    비그늘은 바다에서 먼 내륙에서만 — 해안 평야(밤빌리아)가 뒤의 높은 산 때문에 메마르게 칠해지지 않게"""
+    sm = blur(np.maximum(dem, 0), 3)
+    d = coast_km(land, km_px)
+    base = np.interp(lat, [30.5, 31.5, 32.5, 34.0, 36.0, 38.0, 40.0, 43.0], [40, 120, 260, 400, 440, 470, 540, 700])[:, None]
+    oro = np.minimum(1 + sm / 1000 * .6, 1.45)
+    ridge = sm.copy()
+    s = 1
+    while s < 90 / km_px:  # 둘레 약 90km 안의 가장 높은 능선 (사방)
+        for ax in (0, 1):
+            a = np.moveaxis(ridge, ax, 0)
+            a[s:] = np.maximum(a[s:], a[:-s]); a[:-s] = np.maximum(a[:-s], a[s:].copy())
+        s *= 2
+    shadow = np.exp(-np.maximum(ridge - sm, 0) / 1100)
+    far = 1 - np.exp(-d / 70)
+    cont = np.exp(-np.maximum(d - 40, 0) / (260 + np.maximum(lat - 40, 0)[:, None] * 150))  # 북쪽(도나우 평원)은 바다에서 멀어도 비가 온다
+    return blur(base * oro * (1 - far + far * shadow) * cont, 4)
+
+
+def med_paint(dem, land, rain, lat, lng, zf, fade=0):
+    """땅은 다른 바탕과 같은 고도 채색·식생·음영. 바다는 지도의 바다(app.js의 seaMed — 경도 11°의 --sea-deep에서 36.2°의 --sea로)와 같은 색으로 칠한다:
+    투명하게 비우면 밑에 깔린 더 거친 바탕의 해안이 번져 보였다. 해안에는 지도의 해안선(.coast)처럼 옅은 띠를 1픽셀"""
+    lf = land.astype(np.float32)
+    rgb = paint(np.where(land, dem, 0), rain, lf, shading(np.where(land, dem, 0), lat, lng, zf))
+    soft = blur(lf, 1)  # 해안의 계단을 조금 누그러뜨린다
+    rim = np.clip((soft - lf) * 3, 0, 1) * (~land)  # 바다 쪽 바로 바깥 한 픽셀
+    rgb = np.where(rim[..., None] > 0, np.array([246, 239, 220], np.float32), rgb)
+    t = np.clip((lng - 11.0) / (36.2 - 11.0), 0, 1)[None, :, None]
+    sea = np.array([111, 151, 160], np.float32) * (1 - t) + np.array([143, 178, 180], np.float32) * t
+    a = (lf + rim * .55 * (1 - lf))[..., None]
+    rgb = rgb * a + sea * (1 - a)
+    alpha = 1 - med_hole(lat, lng)
+    if fade:  # 가장자리를 투명하게 풀어 밑의 넓은 바탕으로 이어지게 (해상도·비 어림이 달라 경계가 줄로 보이지 않게)
+        ramp = lambda n: np.clip(np.minimum(np.arange(n), np.arange(n)[::-1]) / (fade * n), 0, 1)
+        alpha = alpha * np.outer(ramp(len(lat)), ramp(len(lng)))
+    return np.dstack([rgb, alpha * 255]).astype(np.uint8)
+
+
+def med_grid(e, ppu):
+    w = round((e['lng1'] - e['lng0']) * COS * 1000 * ppu)
+    h = round((e['lat1'] - e['lat0']) * 1000 * ppu)
+    return (e['lat1'] - (np.arange(h) + .5) / h * (e['lat1'] - e['lat0']), e['lng0'] + (np.arange(w) + .5) / w * (e['lng1'] - e['lng0']), w, h)
+
+
+def med(cache):
+    # 1) 넓은 바탕 — 바다와 이어진 물도 여기서 정한다
+    W_ = MED_WIDE
+    wlat, wlng, ww, wh = med_grid(W_, MED_WIDE_PPU)
+    wdem = sample(mosaic_for(cache, W_, MED_WIDE_Z), MED_WIDE_Z, wlat, wlng)
+    sea = open_sea(wdem)
+    near = sea.copy()  # 해안 둘레 몇 픽셀은 늘 고운 고도대로 (거친 격자에서 해안이 땅으로 잡혀도 바다를 메우지 않게)
+    for _ in range(3):
+        near[1:] |= near[:-1]; near[:-1] |= near[1:]; near[:, 1:] |= near[:, :-1]; near[:, :-1] |= near[:, 1:]
+
+    def is_land(dem, lat, lng):
+        iy = np.clip(((W_['lat1'] - lat) / (W_['lat1'] - W_['lat0']) * wh).astype(int), 0, wh - 1)
+        ix = np.clip(((lng - W_['lng0']) / (W_['lng1'] - W_['lng0']) * ww).astype(int), 0, ww - 1)
+        return (dem > 0) | ~near[iy[:, None], ix[None, :]]
+
+    def one(e, lat, lng, w, h, dem, out, zf, fade=0):
+        land = is_land(dem, lat, lng)
+        km_px = (e['lng1'] - e['lng0']) / w * 111.32 * COS
+        rain = med_rain(dem, land, lat, km_px)
+        Image.fromarray(med_paint(dem, land, rain, lat, lng, zf, fade), 'RGBA').save(out, 'WEBP', quality=72, method=6)
+        print(f'{out} {w}x{h} {out.stat().st_size // 1024}KB')
+        return rain
+
+    one(W_, wlat, wlng, ww, wh, wdem, OUT.parent / 'relief-med-wide.webp', 4.5)
+    # 2) 지중해 바탕
+    e = MED
+    lat, lng, w, h = med_grid(e, MED_PPU)
+    dem = sample(mosaic_for(cache, e, MED_Z), MED_Z, lat, lng)
+    rain = one(e, lat, lng, w, h, dem, OUT.parent / 'relief-med.webp', 3.2, fade=.03)
+    # 고운 타일: 바울의 장소(레반트 밖) 둘레만
+    import json
+    places = json.loads((Path(__file__).parent / 'journeys' / 'paul' / 'places.json').read_text())
+    T, P = MED_HI_UNITS, HI_TILE_PX
+    ox, oy = 0, 0  # 타일 격자는 MED의 북서쪽 모서리에서
+    cols = math.ceil((e['lng1'] - e['lng0']) * COS * 1000 / T)
+    rows = math.ceil((e['lat1'] - e['lat0']) * 1000 / T)
+    want = set()
+    for p in places.values():
+        if p.get('region') == '바다' or med_hole(np.array([p['lat']]), np.array([p['lng']]))[0, 0] > 0:
+            continue
+        c0 = int(((p['lng'] - MED_HI_REACH[0]) - e['lng0']) * COS * 1000 // T)
+        c1 = int(((p['lng'] + MED_HI_REACH[0]) - e['lng0']) * COS * 1000 // T)
+        r0 = int((e['lat1'] - (p['lat'] + MED_HI_REACH[1])) * 1000 // T)
+        r1 = int((e['lat1'] - (p['lat'] - MED_HI_REACH[1])) * 1000 // T)
+        want |= {(r, c) for r in range(max(0, r0), min(rows - 1, r1) + 1) for c in range(max(0, c0), min(cols - 1, c1) + 1)}
+    hi = OUT.parent / 'relief-med-hi'
+    hi.mkdir(exist_ok=True)
+    for f in hi.glob('*.webp'):
+        f.unlink()
+    have, total = [], 0
+    for r, c in sorted(want):
+        u = (np.arange(-1, P + 1) + .5) / P * T
+        tlng = e['lng0'] + (c * T + u) / (COS * 1000)
+        tlat = e['lat1'] - (r * T + u) / 1000
+        ext = dict(lat0=tlat.min(), lat1=tlat.max(), lng0=tlng.min(), lng1=tlng.max())
+        tdem = sample(mosaic_for(cache, ext, MED_HI_Z), MED_HI_Z, tlat, tlng)
+        tland = is_land(tdem, tlat, tlng)
+        if not tland.any():
+            continue  # 바다뿐인 타일은 만들지 않는다 (밑의 바탕도 같은 바다색)
+        fx = np.interp(tlng, lng, np.arange(w)); fy = np.interp(tlat, lat[::-1], np.arange(h)[::-1])
+        FX, FY = np.meshgrid(fx, fy)
+        ix, iy = np.clip(np.floor(FX).astype(int), 0, w - 2), np.clip(np.floor(FY).astype(int), 0, h - 2)
+        ax, ay = FX - ix, FY - iy
+        train = (rain[iy, ix] * (1 - ax) + rain[iy, ix + 1] * ax) * (1 - ay) + (rain[iy + 1, ix] * (1 - ax) + rain[iy + 1, ix + 1] * ax) * ay
+        img = med_paint(tdem, tland, train, tlat, tlng, 1.8)[1:-1, 1:-1]
+        f = hi / f'{r}_{c}.webp'
+        Image.fromarray(img, 'RGBA').save(f, 'WEBP', quality=70, method=6)
+        total += f.stat().st_size
+        have.append(f'{r}_{c}')
+    (hi / 'tiles.json').write_text(json.dumps(have, separators=(',', ':')))
+    print(f'{hi} {len(have)} tiles, {total // 1024}KB')
+
 
 def desert_tint(rgb, dem, lat, lng):
     LA, LO = lat[:, None], lng[None, :]
@@ -112,9 +288,15 @@ def tile_xy(lat, lng, z):
 
 def fetch(cache, z, x, y):
     f = cache / f'{z}_{x}_{y}.png'
-    if not f.exists():
-        with urllib.request.urlopen(URL.format(z=z, x=x, y=y), timeout=60) as r:
-            f.write_bytes(r.read())
+    for k in range(5):  # 많이 받을 때 가끔 연결이 끊긴다 — 몇 번 다시
+        if f.exists():
+            break
+        try:
+            with urllib.request.urlopen(URL.format(z=z, x=x, y=y), timeout=60) as r:
+                f.write_bytes(r.read())
+        except OSError:
+            if k == 4:
+                raise
     a = np.asarray(Image.open(io.BytesIO(f.read_bytes())).convert('RGB'), dtype=np.float32)
     return a[..., 0] * 256 + a[..., 1] + a[..., 2] / 256 - 32768
 
@@ -353,6 +535,9 @@ def main(cache, only=None):
     cache = Path(cache)
     cache.mkdir(parents=True, exist_ok=True)
     e = EXTENT
+    if only == 'med':  # 바울 여정의 지중해 바탕과 장소 둘레의 고운 타일만 (`... med`)
+        med(cache)
+        return
     if only == 'meso':  # 시리아 사막·메소포타미아 바탕과 바벨론 둘레의 고운 바탕만 (`... meso`)
         base(cache, MESO, OUT.parent / 'relief-meso.webp', lines=(), meso=True, ppu=.24, z=9)
         base(cache, BABYLON, OUT.parent / 'relief-babylon.webp', lines=(), meso=True, ppu=1.0, z=10)

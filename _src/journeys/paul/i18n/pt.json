@@ -1,0 +1,1899 @@
+{
+ "periods": {
+  "a1": {
+   "name": "O chamado",
+   "span": "34 – 46 d.C."
+  },
+  "a2": {
+   "name": "A primeira viagem",
+   "span": "47 – 49 d.C."
+  },
+  "a3": {
+   "name": "A segunda viagem",
+   "span": "50 – 52 d.C."
+  },
+  "a4": {
+   "name": "A terceira viagem",
+   "span": "53 – 57 d.C."
+  },
+  "a5": {
+   "name": "Em correntes",
+   "span": "57 – 59 d.C."
+  },
+  "a6": {
+   "name": "Rumo a Roma",
+   "span": "59 – 67 d.C."
+  }
+ },
+ "places": {
+  "jerusalem": {
+   "name": "Jerusalém",
+   "region": "Judeia"
+  },
+  "temple": {
+   "name": "Pátio do templo",
+   "region": "Judeia"
+  },
+  "antonia": {
+   "name": "Fortaleza Antônia",
+   "region": "Judeia"
+  },
+  "damascusroad": {
+   "name": "Caminho de Damasco",
+   "region": "Síria"
+  },
+  "damascus": {
+   "name": "Damasco",
+   "region": "Síria"
+  },
+  "antioch": {
+   "name": "Antioquia da Síria",
+   "region": "Síria"
+  },
+  "paphos": {
+   "name": "Pafos",
+   "region": "Chipre"
+  },
+  "pantioch": {
+   "name": "Antioquia da Pisídia",
+   "region": "Galácia"
+  },
+  "lystra": {
+   "name": "Listra",
+   "region": "Galácia"
+  },
+  "derbe": {
+   "name": "Derbe",
+   "region": "Galácia"
+  },
+  "troas": {
+   "name": "Trôade",
+   "region": "Ásia"
+  },
+  "philippi": {
+   "name": "Filipos",
+   "region": "Macedônia"
+  },
+  "thessalonica": {
+   "name": "Tessalônica",
+   "region": "Macedônia"
+  },
+  "athens": {
+   "name": "Atenas",
+   "region": "Acaia"
+  },
+  "corinth": {
+   "name": "Corinto",
+   "region": "Acaia"
+  },
+  "ephesus": {
+   "name": "Éfeso",
+   "region": "Ásia"
+  },
+  "miletus": {
+   "name": "Mileto",
+   "region": "Ásia"
+  },
+  "caesarea": {
+   "name": "Cesareia",
+   "region": "Judeia"
+  },
+  "cretesea": {
+   "name": "Mar ao largo de Creta",
+   "region": "Mar"
+  },
+  "adria": {
+   "name": "Mar Adriático",
+   "region": "Mar"
+  },
+  "malta": {
+   "name": "Malta",
+   "region": "Malta"
+  },
+  "appii": {
+   "name": "Fórum de Ápio",
+   "region": "Itália"
+  },
+  "rome": {
+   "name": "Roma",
+   "region": "Itália"
+  },
+  "crete": {
+   "name": "Creta",
+   "region": "Creta"
+  }
+ },
+ "events": {
+  "a01": {
+   "title": "Diante das pedras de Estêvão",
+   "when": "c. 34 d.C.",
+   "subtitle": "O jovem que guardou as capas dos que atiravam pedras",
+   "story": [
+    "Os homens do Sinédrio, o conselho supremo dos judeus, não conseguiam conter a raiva e rangiam os dentes. Estêvão, um servo da igreja de Jerusalém, tinha dito a eles que eram os que mataram Jesus, o Justo. Mas Estêvão, cheio do Espírito Santo, olhou para o céu. Estêvão disse: Vejam, estou vendo o céu aberto e o Filho do Homem em pé à direita de Deus.",
+    "Eles taparam os ouvidos, gritaram e avançaram todos juntos contra Estêvão e o arrastaram para fora da cidade. As testemunhas que iam atirar as primeiras pedras tiraram as capas e as deixaram aos pés de um jovem chamado Saulo. Enquanto as pedras voavam, Estêvão orou: Senhor Jesus, recebe o meu espírito.",
+    "Estêvão caiu de joelhos e clamou em alta voz: Senhor, não leves em conta este pecado contra eles. Depois de dizer isso, Estêvão adormeceu e morreu. Saulo aprovou a morte de Estêvão. Naquele dia começou uma grande perseguição contra a igreja de Jerusalém, e Saulo entrava de casa em casa, arrastava homens e mulheres e os entregava à prisão."
+   ],
+   "words": [
+    {
+     "who": "Estêvão",
+     "text": "Vejam, estou vendo o céu aberto e o Filho do Homem em pé à direita de Deus."
+    },
+    {
+     "who": "Estêvão",
+     "text": "Senhor Jesus, recebe o meu espírito."
+    },
+    {
+     "who": "Estêvão",
+     "text": "Senhor, não leves em conta este pecado contra eles."
+    }
+   ],
+   "note": "Estêvão era um dos sete homens escolhidos pela igreja de Jerusalém para cuidar das viúvas. Os cristãos espalhados pela perseguição anunciavam a palavra por onde passavam, e assim o evangelho, ao contrário do que se esperava, se espalhou para além de Jerusalém.",
+   "reflect": "Consigo orar também por quem me feriu?",
+   "quiz": {
+    "q": "Aos pés de que jovem as testemunhas deixaram as capas antes de apedrejar Estêvão?",
+    "options": [
+     "Pedro",
+     "Gamaliel",
+     "Saulo",
+     "Filipe"
+    ],
+    "explain": "As testemunhas deixaram as roupas aos pés de um jovem chamado Saulo, e Saulo aprovou a morte de Estêvão (At 7:58; 8:1)."
+   },
+   "credit": "Benjamin West, Devout Men Taking the Body of Saint Stephen, 1776 · Museu de Belas Artes de Boston · Domínio público"
+  },
+  "a02": {
+   "title": "A luz no caminho de Damasco",
+   "when": "c. 34 d.C.",
+   "subtitle": "O nome que o perseguidor ouviu",
+   "story": [
+    "Saulo ainda respirava ameaças de morte contra os discípulos do Senhor. Ele foi ao sumo sacerdote e pediu cartas para as sinagogas de Damasco. Se encontrasse alguém deste Caminho, seguidor de Jesus, homem ou mulher, iria prendê-lo e levá-lo para Jerusalém. Assim Saulo partiu na longa viagem para Damasco.",
+    "Quando já estava perto de Damasco, de repente uma luz do céu brilhou ao redor de Saulo. Saulo caiu por terra. Uma voz lhe disse: Saulo, Saulo, por que você me persegue? Saulo perguntou: Quem és tu, Senhor? O Senhor respondeu: Eu sou Jesus, a quem você persegue.",
+    "O Senhor disse: Levante-se e entre na cidade. Lá alguém lhe dirá o que você deve fazer. Os homens que viajavam com ele ouviram a voz, mas não viram ninguém e ficaram parados, sem palavras. Saulo se levantou e abriu os olhos, mas não conseguia ver nada. Levaram Saulo pela mão até Damasco. Durante três dias ele ficou sem ver, sem comer e sem beber."
+   ],
+   "words": [
+    {
+     "who": "Jesus",
+     "text": "Saulo, Saulo, por que você me persegue?"
+    },
+    {
+     "who": "Saulo",
+     "text": "Quem és tu, Senhor?"
+    },
+    {
+     "who": "Jesus",
+     "text": "Eu sou Jesus, a quem você persegue. Levante-se e entre na cidade. Lá alguém lhe dirá o que você deve fazer."
+    }
+   ],
+   "note": "Damasco é uma cidade antiga, a mais de duzentos quilômetros a nordeste de Jerusalém. Mais tarde Paulo contou esse acontecimento mais duas vezes. Disse que aconteceu ao meio-dia e que aquela luz era mais forte que a do sol.",
+   "core": "A conversão de Saulo não é a história de alguém que descobriu a verdade por conta própria. É um ato da graça: Jesus Cristo ressuscitado foi primeiro ao encontro do perseguidor e o chamou (At 9:3–6; Gl 1:15–16).",
+   "reflect": "Entre as coisas de que tenho certeza de estar certo, há alguma que vai contra a vontade do Senhor?",
+   "quiz": {
+    "q": "Como Saulo passou os três dias em Damasco depois de ver a luz?",
+    "options": [
+     "Pregando de sinagoga em sinagoga",
+     "Escondido na casa de Ananias",
+     "Voltando logo para Jerusalém",
+     "Sem ver, sem comer e sem beber"
+    ],
+    "explain": "Durante três dias Saulo ficou sem ver e não comeu nem bebeu nada (At 9:9)."
+   },
+   "credit": "Caravaggio, The Conversion on the Way to Damascus, c. 1600–1601 · Santa Maria del Popolo, Roma · Domínio público"
+  },
+  "a03": {
+   "title": "Ananias da rua Direita",
+   "when": "c. 34 d.C.",
+   "subtitle": "O homem que venceu o medo e disse “irmão”",
+   "story": [
+    "Em Damasco vivia um discípulo chamado Ananias. O Senhor o chamou numa visão. Ananias respondeu: Eis-me aqui, Senhor. O Senhor disse: Vá à rua chamada Direita e, na casa de Judas, procure um homem de Tarso chamado Saulo. Ele está orando.",
+    "Ananias disse: Senhor, ouvi muita gente falar desse homem e de todo o mal que ele fez aos santos em Jerusalém. E aqui ele recebeu dos chefes dos sacerdotes autoridade para prender todos os que invocam o teu nome. O Senhor disse: Vá! Esse homem é o instrumento que escolhi para levar o meu nome diante dos gentios, dos reis e do povo de Israel.",
+    "Ananias entrou na casa, pôs as mãos sobre Saulo e disse: Irmão Saulo, o Senhor Jesus, que apareceu a você no caminho, me enviou para que você volte a ver e fique cheio do Espírito Santo. Na mesma hora caiu dos olhos de Saulo algo como escamas. Saulo voltou a ver e foi batizado."
+   ],
+   "words": [
+    {
+     "who": "Jesus",
+     "text": "Vá! Esse homem é o instrumento que escolhi para levar o meu nome diante dos gentios, dos reis e do povo de Israel."
+    },
+    {
+     "who": "Ananias",
+     "text": "Irmão Saulo, o Senhor Jesus, que apareceu a você no caminho, me enviou para que você volte a ver e fique cheio do Espírito Santo."
+    },
+    {
+     "who": "Saulo",
+     "text": "Jesus é o Filho de Deus."
+    }
+   ],
+   "note": "A rua Direita era a grande avenida que atravessava em linha reta a antiga cidade de Damasco, da porta leste à porta oeste. Saulo passou alguns dias com os discípulos e logo começou a anunciar Jesus nas sinagogas de Damasco, deixando espantados os que o conheciam.",
+   "reflect": "Quem é a pessoa que mais me custa chamar de irmão?",
+   "quiz": {
+    "q": "Qual era o nome da rua onde o Senhor mandou Ananias procurar Saulo?",
+    "options": [
+     "Rua Direita",
+     "Caminho do Rei",
+     "Caminho do Mar",
+     "Rua do Templo"
+    ],
+    "explain": "O Senhor mandou Ananias ir à rua chamada Direita e procurar, na casa de Judas, Saulo de Tarso (At 9:11)."
+   },
+   "credit": "Pietro da Cortona, Ananias Restoring the Sight of Saint Paul, c. 1631 · Santa Maria della Concezione, Roma · Domínio público"
+  },
+  "a04": {
+   "title": "Descido muralha abaixo num cesto",
+   "when": "c. 37 d.C.",
+   "subtitle": "O homem que se gloriou da sua noite mais humilhante",
+   "story": [
+    "Passaram-se muitos dias. Quanto mais Saulo provava nas sinagogas que Jesus é o Cristo, mais os judeus de Damasco ficavam perturbados. Por fim, eles combinaram matá-lo. O governador do rei Aretas, dos nabateus, que estava em Damasco, também vigiava a cidade para prender Saulo. Dia e noite havia homens de guarda em cada porta.",
+    "Mas Saulo ficou sabendo da conspiração. Certa noite, os discípulos que tinham crido pela pregação de Saulo o colocaram num cesto grande. Eles desceram o cesto devagar por uma janela na muralha. Saulo pisou no escuro, ao pé da muralha alta, e assim escapou de Damasco.",
+    "O homem que tinha vindo para prender os discípulos fugiu escondido dentro de um cesto. Mais tarde, Saulo, mais conhecido pelo nome de Paulo, lembrou justamente essa noite numa carta à igreja de Corinto. Paulo escreveu: Se é preciso que eu me glorie, vou me gloriar na minha fraqueza."
+   ],
+   "words": [
+    {
+     "who": "Paulo",
+     "text": "Se é preciso que eu me glorie, vou me gloriar nas coisas que mostram a minha fraqueza."
+    },
+    {
+     "who": "Paulo",
+     "text": "Em Damasco, o governador do rei Aretas vigiava a cidade para me prender. Mas fui descido num cesto por uma janela da muralha e escapei das mãos dele."
+    },
+    {
+     "who": "O narrador",
+     "text": "De noite, os discípulos que Saulo tinha ensinado o puseram num cesto e o desceram pela muralha."
+    }
+   ],
+   "note": "Na carta aos Gálatas, Paulo conta que, depois da conversão, foi para a Arábia, voltou a Damasco e só três anos depois subiu a Jerusalém. O rei Aretas era o rei dos nabateus, cuja capital era Petra.",
+   "reflect": "Por que tenho tanto medo de que a minha fraqueza apareça?",
+   "quiz": {
+    "q": "Como Saulo escapou de Damasco, fugindo dos que queriam matá-lo?",
+    "options": [
+     "Foi descido num cesto por uma janela da muralha",
+     "Passou pela porta disfarçado de comerciante",
+     "Partiu de barco durante a noite",
+     "Foi escoltado por soldados romanos"
+    ],
+    "explain": "Os discípulos desceram Saulo pela muralha num cesto durante a noite, e o próprio Paulo escreveu que foi descido por uma janela da muralha (At 9:25; 2Co 11:33)."
+   },
+   "credit": "Philips Galle segundo Maarten van Heemskerck, Saint Paul Escaping from Damascus by Night, 1575 · Biblioteca Real da Bélgica · Domínio público"
+  },
+  "a05": {
+   "title": "O homem que Barnabé tomou pela mão",
+   "when": "c. 37 d.C.",
+   "subtitle": "Quem ficou ao lado dele quando todos tinham medo",
+   "story": [
+    "Saulo voltou a Jerusalém e tentou se juntar aos discípulos. Mas todos tinham medo dele. Não acreditavam que ele tinha mesmo se tornado discípulo. Poucos anos antes, ele entrava de casa em casa e arrastava os cristãos para a prisão. As portas não se abriam para ele.",
+    "Então Barnabé, um discípulo generoso nascido em Chipre, tomou Saulo pela mão e o levou aos apóstolos. Barnabé contou com calma como Saulo tinha visto o Senhor no caminho de Damasco e ouvido a sua voz, e como em Damasco tinha pregado com coragem no nome de Jesus. Depois disso Saulo passou a andar com os discípulos em Jerusalém.",
+    "Saulo se encontrou com Pedro e ficou com ele quinze dias. Também viu Tiago, irmão do Senhor, que depois liderou a igreja de Jerusalém. Saulo discutia com coragem com os judeus que falavam grego, e eles tentaram matá-lo. Quando os irmãos souberam disso, levaram Saulo para Cesareia e o mandaram para Tarso, a sua terra natal."
+   ],
+   "words": [
+    {
+     "who": "O narrador",
+     "text": "Barnabé levou Saulo aos apóstolos e contou como Saulo tinha visto o Senhor no caminho e como em Damasco tinha pregado com coragem no nome de Jesus."
+    },
+    {
+     "who": "Paulo",
+     "text": "Subi a Jerusalém para conhecer Cefas e fiquei com ele quinze dias. Não vi nenhum outro apóstolo, a não ser Tiago, o irmão do Senhor."
+    },
+    {
+     "who": "As igrejas da Judeia",
+     "text": "Aquele que antes nos perseguia agora anuncia a fé que ele mesmo queria destruir."
+    }
+   ],
+   "note": "Barnabé era um levita nascido em Chipre, e o seu nome de origem era José. Os apóstolos o chamavam de Barnabé, que quer dizer “filho da consolação”. Foi ele quem vendeu o seu campo e pôs o dinheiro aos pés dos apóstolos. Cefas é o nome de Pedro em aramaico.",
+   "reflect": "Posso ser o primeiro a estender a mão a alguém que todos evitam?",
+   "quiz": {
+    "q": "Para onde os irmãos de Jerusalém mandaram Saulo quando a vida dele correu perigo?",
+    "options": [
+     "Antioquia",
+     "Tarso",
+     "Damasco",
+     "Jope"
+    ],
+    "explain": "Quando os irmãos souberam disso, levaram Saulo para Cesareia e o mandaram para Tarso (At 9:30)."
+   },
+   "credit": "Cornelis Bos, Barnabas Brings Paul to the Apostles, 1546 · Rijksmuseum, Amsterdã · Domínio público"
+  },
+  "a06": {
+   "title": "Onde foram chamados cristãos pela primeira vez",
+   "when": "c. 44 d.C.",
+   "subtitle": "Pessoas que ganharam um nome novo",
+   "story": [
+    "Os cristãos espalhados depois da morte de Estêvão foram até a Fenícia, Chipre e Antioquia, mas anunciavam a palavra somente aos judeus. Alguns deles, de Chipre e de Cirene, chegaram a Antioquia e anunciaram o Senhor Jesus também aos gregos, que não eram judeus. A mão do Senhor estava com eles, e muitos creram e se voltaram para o Senhor.",
+    "Quando a igreja de Jerusalém soube disso, enviou Barnabé a Antioquia. Barnabé viu a graça de Deus que tinha chegado ali e se alegrou. Ele animou todos a permanecerem fiéis ao Senhor de todo o coração. Barnabé foi a Tarso procurar Saulo e o trouxe para Antioquia. Durante um ano inteiro os dois se reuniram com a igreja e ensinaram muita gente.",
+    "Foi em Antioquia que os discípulos foram chamados cristãos pela primeira vez. Naquela época, o profeta Ágabo, que tinha descido de Jerusalém, anunciou pelo Espírito que haveria uma grande fome em todo o mundo. Os discípulos de Antioquia decidiram ajudar os irmãos da Judeia, cada um conforme as suas posses, e enviaram a oferta aos presbíteros da Judeia por meio de Barnabé e Saulo."
+   ],
+   "words": [
+    {
+     "who": "O narrador",
+     "text": "Foi em Antioquia que os discípulos foram chamados cristãos pela primeira vez."
+    },
+    {
+     "who": "O narrador",
+     "text": "Barnabé viu a graça de Deus e se alegrou, e animou todos a permanecerem fiéis ao Senhor de todo o coração."
+    },
+    {
+     "who": "O narrador",
+     "text": "Os discípulos decidiram enviar ajuda aos irmãos que moravam na Judeia, cada um conforme as suas posses."
+    }
+   ],
+   "note": "Antioquia da Síria ficava às margens do rio Orontes e era a terceira maior cidade do Império Romano, depois de Roma e Alexandria. “Cristãos” quer dizer as pessoas que pertencem a Cristo.",
+   "reflect": "Quem olha para a minha vida consegue perceber a quem eu sigo?",
+   "quiz": {
+    "q": "O que o profeta Ágabo anunciou pelo Espírito?",
+    "options": [
+     "Que o templo seria destruído",
+     "Que Saulo seria preso",
+     "Que haveria um grande terremoto",
+     "Que haveria uma grande fome em todo o mundo"
+    ],
+    "explain": "Ágabo anunciou pelo Espírito que haveria uma grande fome em todo o mundo, e isso aconteceu no tempo do imperador Cláudio (At 11:28)."
+   },
+   "credit": "Louis Fabritius Dubourg, Paul and Barnabas Preaching before the Temple, c. 1713–1775 · Rijksmuseum, Amsterdã · Domínio público"
+  },
+  "a07": {
+   "title": "Os dois que o Espírito mandou separar",
+   "when": "c. 47 d.C.",
+   "subtitle": "A igreja que deixou partir dois homens queridos",
+   "story": [
+    "Na igreja de Antioquia havia profetas e mestres: Barnabé, Simeão, chamado Níger, Lúcio de Cirene, Manaém, que tinha sido criado com Herodes, o rei que governava a Galileia, e Saulo. Tinham terras natais e famílias diferentes, mas serviam juntos ao Senhor na mesma igreja.",
+    "Enquanto adoravam o Senhor e jejuavam, o Espírito Santo disse: Separem para mim Barnabé e Saulo, para a obra a que os chamei. Eram os dois homens com quem a igreja tinha aprendido junto por mais de um ano. A igreja obedeceu à palavra do Espírito.",
+    "Depois de jejuar e orar mais uma vez, impuseram as mãos sobre Barnabé e Saulo e os despediram. Enviados pelo Espírito Santo, os dois desceram a Selêucia, o porto à beira-mar. De lá embarcaram e partiram pelo mar rumo a Chipre, a ilha natal de Barnabé."
+   ],
+   "words": [
+    {
+     "who": "O Espírito Santo",
+     "text": "Separem para mim Barnabé e Saulo, para a obra a que os chamei."
+    },
+    {
+     "who": "O narrador",
+     "text": "Depois de jejuar e orar, impuseram as mãos sobre os dois e os despediram."
+    },
+    {
+     "who": "O narrador",
+     "text": "Enviados pelo Espírito Santo, os dois desceram a Selêucia e de lá navegaram para Chipre."
+    }
+   ],
+   "note": "Selêucia era um porto à beira-mar, uns vinte e cinco quilômetros a oeste de Antioquia. Níger é uma palavra latina que quer dizer “negro”, e por isso muitos estudiosos acham que Simeão vinha da África.",
+   "core": "A missão não é uma aventura pessoal. É o Espírito Santo que chama as pessoas, e a igreja as envia em oração (At 13:2–4).",
+   "reflect": "Estou disposto a deixar partir até quem eu amo, quando Deus o chama?",
+   "quiz": {
+    "q": "Quais foram os dois homens que o Espírito Santo mandou a igreja de Antioquia separar?",
+    "options": [
+     "Pedro e João",
+     "Barnabé e Saulo",
+     "Paulo e Silas",
+     "Simeão e Lúcio"
+    ],
+    "explain": "O Espírito Santo disse que separassem Barnabé e Saulo para a obra a que os tinha chamado (At 13:2)."
+   },
+   "credit": "Atribuído a Pieter de Grebber, Paul Preaching on His First Missionary Journey, c. 1610–1652 · Rijksmuseum, Amsterdã · Domínio público"
+  },
+  "a08": {
+   "title": "O mágico que ficou cego diante do procônsul",
+   "when": "c. 47 d.C.",
+   "subtitle": "O dia em que Saulo aparece como Paulo",
+   "story": [
+    "Barnabé e Saulo desembarcaram em Salamina, na ilha de Chipre, e anunciaram a palavra nas sinagogas. João, também chamado Marcos, que tinham trazido de Jerusalém, os ajudava. Eles atravessaram a ilha até Pafos, a cidade portuária no extremo oeste. Ali estava o procônsul Sérgio Paulo. O procônsul, um homem inteligente, chamou os dois porque queria ouvir a palavra de Deus.",
+    "Mas ao lado do procônsul estava um mágico judeu chamado Barjesus. Ele, também chamado Elimas, era um falso profeta. Elimas se opunha aos dois para impedir que o procônsul cresse. Então Saulo, também chamado Paulo, cheio do Espírito Santo, olhou firme para Elimas.",
+    "Paulo disse: Você, cheio de mentira e de maldade, não vai parar de torcer os caminhos retos do Senhor? Agora a mão do Senhor está contra você. Você vai ficar cego e por algum tempo não verá a luz do sol. Na mesma hora caíram sobre Elimas névoa e escuridão, e ele andava tateando, procurando alguém que o guiasse pela mão. Quando o procônsul viu o que tinha acontecido, ficou maravilhado com o ensino do Senhor e creu."
+   ],
+   "words": [
+    {
+     "who": "Paulo",
+     "text": "Você, cheio de mentira e de maldade, não vai parar de torcer os caminhos retos do Senhor?"
+    },
+    {
+     "who": "Paulo",
+     "text": "Agora a mão do Senhor está contra você. Você vai ficar cego e por algum tempo não verá a luz do sol."
+    },
+    {
+     "who": "O narrador",
+     "text": "Quando o procônsul viu o que tinha acontecido, ficou maravilhado com o ensino do Senhor e creu."
+    }
+   ],
+   "note": "Pafos era a capital de Chipre sob o domínio romano, onde morava o procônsul. A partir desta cena, o livro de Atos passa a chamar Saulo pelo nome romano, Paulo, e em vez de “Barnabé e Saulo” começa a escrever “Paulo e os seus companheiros”. O procônsul Sérgio Paulo é outra pessoa, não o apóstolo Paulo.",
+   "reflect": "Será que estou dando ouvidos a palavras que me afastam da Palavra de Deus?",
+   "quiz": {
+    "q": "Qual era o nome do mágico que tentou impedir o procônsul de crer em Pafos?",
+    "options": [
+     "Simão",
+     "Ceva",
+     "Elimas",
+     "Demétrio"
+    ],
+    "explain": "O mágico Elimas, também chamado Barjesus, tentava afastar o procônsul da fé (At 13:6–8)."
+   },
+   "credit": "Raphael, The Conversion of the Proconsul, 1515 · Museu Victoria and Albert, Londres · Domínio público"
+  },
+  "a09": {
+   "title": "A primeira mensagem na sinagoga",
+   "when": "c. 47 d.C.",
+   "subtitle": "Uma luz até os confins da terra",
+   "story": [
+    "Paulo e os companheiros embarcaram no porto de Pafos e foram para Perge. Ali João Marcos os deixou e voltou para Jerusalém. Paulo e Barnabé subiram pelos caminhos da montanha e chegaram a Antioquia da Pisídia, que tinha o mesmo nome que Antioquia da Síria. No sábado, depois da leitura da Lei e dos Profetas na sinagoga, os chefes da sinagoga disseram: Irmãos, se vocês têm uma palavra de encorajamento para o povo, falem.",
+    "Paulo se levantou, fez sinal com a mão e contou a história de Israel. Anunciou que Deus tinha enviado Jesus como Salvador, descendente de Davi, e que os moradores de Jerusalém e os seus líderes pediram a Pilatos que o matasse, mas Deus o ressuscitou. Paulo disse: Todo aquele que crê nele é justificado de tudo aquilo de que vocês não podiam ser justificados pela lei de Moisés.",
+    "No sábado seguinte, quase toda a cidade se reuniu, e os judeus, cheios de inveja, começaram a contradizer. Paulo e Barnabé disseram com coragem: Já que vocês rejeitam a palavra, agora vamos para os gentios. O Senhor nos fez luz para levar a salvação até os confins da terra. Os gentios se alegraram e creram, mas os judeus incitaram as mulheres nobres e os homens importantes da cidade e expulsaram os dois. Em protesto, os dois sacudiram o pó dos pés e foram para Icônio."
+   ],
+   "words": [
+    {
+     "who": "Paulo",
+     "text": "Por meio dele o perdão dos pecados é anunciado a vocês. Todo aquele que crê é justificado nele de tudo aquilo de que vocês não podiam ser justificados pela lei de Moisés."
+    },
+    {
+     "who": "Paulo e Barnabé",
+     "text": "Assim o Senhor nos ordenou: Eu fiz de você luz para os gentios, para levar a salvação até os confins da terra."
+    },
+    {
+     "who": "O narrador",
+     "text": "Os discípulos estavam cheios de alegria e do Espírito Santo."
+    }
+   ],
+   "note": "Antioquia da Pisídia pertencia à província romana da Galácia. Muitos estudiosos acham que a carta que Paulo escreveu mais tarde às igrejas da Galácia foi dirigida às igrejas fundadas nesta primeira viagem.",
+   "core": "A pregação de Paulo não termina num conselho para sermos pessoas boas. Por meio de Jesus, que morreu na cruz e ressuscitou, são anunciados o perdão dos pecados e a justificação (At 13:38–39).",
+   "reflect": "Com quem eu quero muito compartilhar o evangelho que recebi?",
+   "quiz": {
+    "q": "Onde João, chamado Marcos, deixou o grupo e voltou para Jerusalém?",
+    "options": [
+     "Pafos",
+     "Icônio",
+     "Salamina",
+     "Perge"
+    ],
+    "explain": "Quando Paulo e os companheiros navegaram de Pafos e chegaram a Perge, na Panfília, João os deixou e voltou para Jerusalém (At 13:13)."
+   },
+   "credit": "Segundo Johann Jakob von Sandrart, Paul Preaches the Gospel in Antioch, 1697 · Rijksmuseum, Amsterdã · Domínio público"
+  },
+  "a10": {
+   "title": "Chamados de deuses e depois apedrejados",
+   "when": "c. 48 d.C.",
+   "subtitle": "A multidão que adorou e depois pegou pedras",
+   "story": [
+    "Os dois tinham fugido de Icônio quando quase foram apedrejados. Em Listra, enquanto pregavam, estava sentado ali um homem que nunca tinha andado desde que nasceu, ouvindo Paulo falar. Paulo viu que ele tinha fé para ser curado e disse em voz alta: Levante-se e fique firme sobre os seus pés! O homem deu um salto e começou a andar.",
+    "A multidão gritou na língua da Licaônia: Os deuses desceram até nós em forma humana! Chamavam Barnabé de Zeus, e Paulo, que era quem mais falava, de Hermes. O sacerdote do templo de Zeus trouxe touros e coroas de flores e queria oferecer sacrifícios. Quando Barnabé e Paulo souberam disso, ficaram espantados e tristes, rasgaram as roupas e correram para o meio da multidão, gritando: Nós também somos seres humanos como vocês.",
+    "Os dois clamaram que deixassem essas coisas vãs e se voltassem para o Deus vivo, que fez o céu e a terra, e a muito custo impediram o sacrifício. Mas vieram judeus de Antioquia da Pisídia e de Icônio e incitaram a multidão. Apedrejaram Paulo e o arrastaram para fora da cidade, pensando que estava morto. Quando os discípulos o rodearam, Paulo se levantou e entrou na cidade. No dia seguinte partiu com Barnabé para Derbe."
+   ],
+   "words": [
+    {
+     "who": "Paulo",
+     "text": "Levante-se e fique firme sobre os seus pés!"
+    },
+    {
+     "who": "A multidão de Listra",
+     "text": "Os deuses desceram até nós em forma humana!"
+    },
+    {
+     "who": "Barnabé e Paulo",
+     "text": "Nós também somos seres humanos como vocês. Estamos anunciando a boa notícia para que deixem essas coisas vãs e se voltem para o Deus vivo, que fez o céu, a terra, o mar e tudo o que neles há."
+    }
+   ],
+   "note": "Escritos antigos contam uma lenda de Zeus e Hermes que visitaram a terra em forma humana. Mas a Bíblia não diz se foi por causa dessa lenda que o povo de Listra tomou os dois apóstolos por deuses.",
+   "reflect": "Quando as pessoas me elogiam, eu dou a glória a Deus?",
+   "quiz": {
+    "q": "Que nome o povo de Listra deu a Barnabé?",
+    "options": [
+     "Hermes",
+     "Zeus",
+     "Ártemis",
+     "Apolo"
+    ],
+    "explain": "A multidão chamou Barnabé de Zeus, e Paulo de Hermes, porque era ele quem mais falava (At 14:12)."
+   },
+   "credit": "Raphael, The Sacrifice at Lystra, 1515 · Museu Victoria and Albert, Londres · Domínio público"
+  },
+  "a11": {
+   "title": "De volta às mesmas cidades",
+   "when": "c. 48 d.C.",
+   "subtitle": "Refazendo o caminho onde foram apedrejados",
+   "story": [
+    "Paulo e Barnabé anunciaram o evangelho em Derbe e fizeram muitos discípulos. Bastava atravessar as Portas da Cilícia para chegar perto de Tarso, a cidade natal de Paulo. Mas os dois deram meia-volta e entraram de novo em Listra, Icônio e Antioquia, onde tinham sido expulsos e apedrejados.",
+    "Em cada cidade, os dois fortaleciam o coração dos discípulos e os animavam a permanecer na fé. Paulo e Barnabé diziam: Para entrarmos no reino de Deus, precisamos passar por muitas tribulações. Os dois escolheram presbíteros em cada igreja e, depois de jejuar e orar, entregaram os discípulos ao Senhor em quem eles tinham crido.",
+    "Os dois anunciaram a palavra em Perge, desceram a Atália e de lá navegaram de volta para Antioquia, de onde tinham partido. Reuniram a igreja e contaram tudo o que Deus tinha feito com eles e como tinha aberto aos gentios a porta da fé. E ficaram ali muito tempo com os discípulos."
+   ],
+   "words": [
+    {
+     "who": "Paulo e Barnabé",
+     "text": "Para entrarmos no reino de Deus, precisamos passar por muitas tribulações."
+    },
+    {
+     "who": "O narrador",
+     "text": "Os dois escolheram presbíteros em cada igreja e, depois de jejuar e orar, entregaram os discípulos ao Senhor em quem eles tinham crido."
+    },
+    {
+     "who": "O narrador",
+     "text": "Os dois reuniram a igreja e contaram tudo o que Deus tinha feito com eles e como tinha aberto aos gentios a porta da fé."
+    }
+   ],
+   "note": "Derbe ficava a leste de Listra, no extremo da planície da Licaônia. Dali era possível atravessar as Portas da Cilícia, nos montes Tauro, e ir direto para Tarso, mas os dois voltaram pelo mesmo caminho por onde tinham vindo.",
+   "reflect": "Estou voltando para procurar e sustentar quem está passando por dificuldades?",
+   "quiz": {
+    "q": "O que Paulo e Barnabé contaram à igreja quando voltaram a Antioquia?",
+    "options": [
+     "Que Deus tinha aberto aos gentios a porta da fé",
+     "Uma carta enviada pelos apóstolos de Jerusalém",
+     "Um presente enviado pelo procônsul de Chipre",
+     "Uma visão que tiveram em Damasco"
+    ],
+    "explain": "Os dois reuniram a igreja e contaram tudo o que Deus tinha feito com eles e como tinha aberto aos gentios a porta da fé (At 14:27)."
+   },
+   "credit": "Cornelis Bos, Paul Preaching in the Synagogue, 1546 · Rijksmuseum, Amsterdã · Domínio público"
+  },
+  "a12": {
+   "title": "Como somos salvos?",
+   "when": "c. 49 d.C.",
+   "subtitle": "Não ponham fardos sobre a graça",
+   "story": [
+    "Alguns homens desceram da Judeia à igreja de Antioquia e começaram a ensinar. Eles diziam: Se vocês não forem circuncidados segundo o costume de Moisés, não podem ser salvos. Paulo e Barnabé discutiram fortemente com eles. As igrejas da Galácia, fundadas na primeira viagem, também estavam sendo abaladas pelo mesmo ensino. Paulo escreveu a essas igrejas: Estou admirado de que vocês estejam abandonando tão depressa aquele que os chamou pela graça de Cristo, para seguir outro evangelho.",
+    "No fim dessa carta, que outra pessoa escreveu enquanto ele ditava, Paulo acrescentou com a própria mão algumas palavras em letras grandes. Naquela época, a igreja de Antioquia enviou os dois aos apóstolos e presbíteros de Jerusalém. Depois de longa discussão, Pedro disse: Deus deu o Espírito Santo também aos gentios, como deu a nós, e purificou o coração deles pela fé, sem fazer diferença entre nós e eles. Cremos que somos salvos pela graça do Senhor Jesus, do mesmo modo que eles.",
+    "Quando Barnabé e Paulo contaram os sinais e prodígios que Deus tinha feito entre os gentios, toda a assembleia ficou em silêncio, ouvindo. Tiago, irmão do Senhor, que liderava a igreja, disse: Não devemos dificultar a vida dos gentios que se voltam para Deus. Os apóstolos e presbíteros enviaram a Antioquia, junto com os dois, Judas, chamado Barsabás, e Silas, que eram líderes, levando uma carta. A carta dizia que não poriam sobre eles o fardo da circuncisão, e a igreja, ao lê-la, ficou muito alegre."
+   ],
+   "words": [
+    {
+     "who": "Paulo",
+     "text": "Ninguém é justificado pela prática da lei, mas pela fé em Jesus Cristo. Por isso nós também cremos em Cristo Jesus."
+    },
+    {
+     "who": "Pedro",
+     "text": "Cremos que somos salvos pela graça do Senhor Jesus, do mesmo modo que eles."
+    },
+    {
+     "who": "Tiago",
+     "text": "Por isso, a meu ver, não devemos dificultar a vida dos gentios que se voltam para Deus."
+    }
+   ],
+   "note": "Se a carta aos Gálatas foi escrita em Antioquia pouco antes deste concílio, ela é a primeira das cartas de Paulo. Alguns estudiosos acham que foi escrita depois do concílio, em Éfeso ou na Macedônia. A circuncisão era o rito judaico feito no corpo dos homens como sinal de pertencer ao povo de Deus.",
+   "core": "A salvação não é paga com a circuncisão ou com a obediência à lei. Ela vem pela graça do Senhor Jesus Cristo (At 15:11). A fé verdadeira produz bons frutos, mas não somos justificados por causa desses frutos (Gl 2:16; Ef 2:8–10).",
+   "reflect": "Digo que fui salvo pela graça, mas será que não estou me orgulhando das minhas obras?",
+   "quiz": {
+    "q": "Quem disse no concílio de Jerusalém: “Não devemos dificultar a vida dos gentios que se voltam para Deus”?",
+    "options": [
+     "Pedro",
+     "Barnabé",
+     "Tiago",
+     "Silas"
+    ],
+    "explain": "Depois de ouvir Pedro, Barnabé e Paulo, Tiago disse isso, e o concílio enviou essa decisão por carta (At 15:19–20)."
+   },
+   "credit": "Jan Luyken, A Letter Read Aloud to a Great Gathering of Christians, 1712 · Rijksmuseum, Amsterdã · Domínio público"
+  },
+  "a13": {
+   "title": "O dia em que se separou de Barnabé",
+   "when": "c. 50 d.C.",
+   "subtitle": "O mesmo caminho, dois rumos",
+   "story": [
+    "Depois de voltar de Jerusalém e passar algum tempo em Antioquia, Paulo disse a Barnabé: Vamos voltar a todas as cidades onde anunciamos a palavra do Senhor e ver como estão os irmãos. Barnabé queria levar junto João, também chamado Marcos.",
+    "Paulo pensava de outro modo. Marcos era quem os tinha deixado em Perge, na Panfília, na viagem anterior, e não tinha continuado com eles no trabalho até o fim. A discordância entre os dois foi tão forte que eles acabaram se separando. Barnabé levou Marcos e navegou para Chipre.",
+    "Paulo escolheu Silas, que tinha vindo de Jerusalém trazendo a carta. Os irmãos de Antioquia entregaram os dois à graça do Senhor e os despediram, e Paulo e Silas passaram pela Síria e pela Cilícia, fortalecendo as igrejas. Muitos anos depois, preso, Paulo escreveu a Timóteo, o discípulo que ele amava como a um filho: Traga Marcos com você, porque ele me é útil no ministério."
+   ],
+   "words": [
+    {
+     "who": "Paulo",
+     "text": "Vamos voltar a todas as cidades onde anunciamos a palavra do Senhor e visitar os irmãos para ver como estão."
+    },
+    {
+     "who": "O narrador",
+     "text": "Barnabé levou Marcos e navegou para Chipre. Paulo escolheu Silas, e os irmãos entregaram os dois à graça do Senhor e os despediram."
+    },
+    {
+     "who": "Paulo",
+     "text": "Traga Marcos com você, porque ele me é útil no ministério."
+    }
+   ],
+   "note": "Marcos era primo de Barnabé. Mais tarde Paulo pediu à igreja de Colossos que recebesse Marcos se ele fosse até lá, e na carta a Filemom o chamou de meu colaborador.",
+   "reflect": "Numa relação ferida, há algo que eu deveria ser o primeiro a resolver?",
+   "quiz": {
+    "q": "Para onde Barnabé navegou levando Marcos?",
+    "options": [
+     "Chipre",
+     "Panfília",
+     "Cilícia",
+     "Roma"
+    ],
+    "explain": "Depois da forte discussão com Paulo, Barnabé levou Marcos e partiu para Chipre, e Paulo foi com Silas para a Síria e a Cilícia (At 15:39–41)."
+   },
+   "credit": "Rembrandt, Two Old Men Disputing (Peter and Paul), 1628 · Galeria Nacional de Victoria, Melbourne · Domínio público"
+  },
+  "a14": {
+   "title": "O jovem Timóteo",
+   "when": "c. 50 d.C.",
+   "subtitle": "O jovem que herdou a fé da avó e da mãe",
+   "story": [
+    "Paulo e Silas passaram por Derbe e chegaram a Listra. Era a mesma cidade onde Paulo tinha sido apedrejado alguns anos antes. Ali havia um discípulo chamado Timóteo. A mãe dele era uma judia que cria em Jesus, e o pai era grego. Os irmãos de Listra e de Icônio falavam bem dele.",
+    "Paulo quis levar Timóteo com ele. Os judeus daquela região sabiam que o pai de Timóteo era grego e que Timóteo não tinha sido circuncidado. Paulo circuncidou Timóteo, não por causa da salvação, mas para que isso não fosse um obstáculo ao anunciar o evangelho a eles. Mais tarde Paulo escreveu: Para os judeus, tornei-me como judeu, a fim de ganhar os judeus.",
+    "Os três passaram pelas cidades transmitindo o que os apóstolos e presbíteros de Jerusalém tinham decidido. As igrejas eram fortalecidas na fé e cresciam em número a cada dia. Timóteo se tornou o colaborador que Paulo amava como a um filho. Mais tarde Paulo lhe escreveu: Estou certo de que a fé sincera que havia na sua avó Loide e na sua mãe Eunice está também em você."
+   ],
+   "words": [
+    {
+     "who": "Paulo",
+     "text": "Lembro-me da fé sincera que há em você. Essa fé esteve primeiro na sua avó Loide e na sua mãe Eunice, e estou certo de que está também em você."
+    },
+    {
+     "who": "Paulo",
+     "text": "Para os judeus, tornei-me como judeu. Fiz isso para ganhar os judeus."
+    },
+    {
+     "who": "Paulo",
+     "text": "Vocês sabem quem é Timóteo. Como um filho serve ao pai, ele trabalhou comigo pelo evangelho."
+    }
+   ],
+   "note": "Listra fica numa colina ao sul da atual Cônia, na Turquia, e se tornou colônia romana no tempo do imperador Augusto. A Bíblia não diz quando Timóteo ouviu o evangelho pela primeira vez, mas pode ter sido na primeira viagem.",
+   "reflect": "Lembro-me do esforço das pessoas que me passaram a fé?",
+   "quiz": {
+    "q": "Quem era o pai de Timóteo?",
+    "options": [
+     "Um sacerdote judeu",
+     "Um grego",
+     "Um soldado romano",
+     "Um fariseu"
+    ],
+    "explain": "Timóteo era filho de uma judia que cria, e o pai era grego (At 16:1)."
+   },
+   "credit": "Willem Drost, Timothy and His Grandmother Lois, 1650s · Museu Hermitage, São Petersburgo · Domínio público"
+  },
+  "a15": {
+   "title": "A visão do macedônio",
+   "when": "c. 50 d.C.",
+   "subtitle": "Um mar aberto no fim dos caminhos fechados",
+   "story": [
+    "Paulo e os companheiros atravessaram a região da Frígia e da Galácia. Queriam anunciar a palavra na província da Ásia, onde ficava Éfeso, mas o Espírito Santo os impediu. Chegando diante da Mísia, tentaram ir para o norte, para a Bitínia, mas desta vez o Espírito de Jesus não permitiu. Cada vez que um caminho se fechava, eles tinham de mudar de rumo.",
+    "Eles passaram pela Mísia e desceram a Trôade, à beira-mar. Além da cidade se estendia o mar Egeu. Naquela noite Paulo teve uma visão. Um homem da Macedônia estava em pé e lhe implorava. O homem disse: Passe à Macedônia e ajude-nos.",
+    "Depois que Paulo teve essa visão, procuraram logo um jeito de partir para a Macedônia. Entenderam que Deus os tinha chamado para anunciar o evangelho ao povo de lá. Lucas, o autor de Atos, também se juntou ao grupo nessa época, e a partir deste trecho passou a escrever “nós” em vez de “eles”."
+   ],
+   "words": [
+    {
+     "who": "O macedônio",
+     "text": "Passe à Macedônia e ajude-nos."
+    },
+    {
+     "who": "Lucas",
+     "text": "Depois que Paulo teve essa visão, procuramos logo partir para a Macedônia, porque entendemos que Deus nos tinha chamado para anunciar o evangelho aos macedônios."
+    },
+    {
+     "who": "Lucas",
+     "text": "O Espírito Santo os impediu de anunciar a palavra na Ásia. Tentaram ir para a Bitínia, mas o Espírito de Jesus não permitiu."
+    }
+   ],
+   "note": "Trôade era uma colônia romana no litoral do mar Egeu, ao sul da antiga Troia, e era o porto de onde partiam os barcos da Ásia para a Macedônia. Como Atos começa a dizer “nós” a partir daqui, entende-se que o autor, Lucas, entrou no grupo nesse momento.",
+   "reflect": "Mesmo quando o caminho não se abre como eu queria, confio na direção de Deus?",
+   "quiz": {
+    "q": "De onde era o homem que, na visão, pediu a Paulo que passasse para ajudá-los?",
+    "options": [
+     "Bitínia",
+     "Ásia",
+     "Mísia",
+     "Macedônia"
+    ],
+    "explain": "Em Trôade, Paulo teve de noite uma visão: um homem da Macedônia estava em pé e lhe pedia que passasse para ajudá-los (At 16:9)."
+   },
+   "credit": "Segundo Johann Jakob von Sandrart, Paul's Vision of a Man of Macedonia, 1697 · Rijksmuseum, Amsterdã · Domínio público"
+  },
+  "a16": {
+   "title": "Lídia, no lugar de oração à beira do rio",
+   "when": "c. 50 d.C.",
+   "subtitle": "Um coração aberto à beira do rio",
+   "story": [
+    "Partindo de Trôade, o grupo passou por Samotrácia e no dia seguinte chegou a Neápolis, e dali foi para Filipos. Filipos era a principal cidade daquela parte da Macedônia e uma colônia romana. Alguns dias depois, num sábado, saíram da porta da cidade para a beira do rio, pensando que ali haveria um lugar de oração.",
+    "À beira do rio havia mulheres reunidas. Eles se sentaram e lhes anunciaram a palavra. Entre elas estava Lídia, que vinha da cidade de Tiatira. Era comerciante de tecidos de púrpura e temente a Deus. O Senhor abriu o coração de Lídia, e ela prestou atenção ao que Paulo dizia.",
+    "Lídia e as pessoas da sua casa foram batizadas. Lídia insistiu: Se vocês me consideram fiel ao Senhor, venham ficar na minha casa. E eles não puderam recusar. Paulo sempre se lembrou com alegria da igreja de Filipos, que começou assim, e mais tarde, da prisão, lhes enviou uma carta."
+   ],
+   "words": [
+    {
+     "who": "Lucas",
+     "text": "O Senhor abriu o coração de Lídia para que ela prestasse atenção ao que Paulo dizia."
+    },
+    {
+     "who": "Lídia",
+     "text": "Se vocês me consideram fiel ao Senhor, venham ficar na minha casa."
+    },
+    {
+     "who": "Paulo",
+     "text": "Agradeço a Deus todas as vezes que me lembro de vocês, porque desde o primeiro dia até agora vocês têm participado comigo do evangelho."
+    }
+   ],
+   "note": "Filipos recebeu o nome de Filipe II, rei da Macedônia. Depois de uma batalha nessa planície em 42 a.C., veteranos do exército romano se instalaram ali, e a cidade se tornou uma colônia. A oeste da cidade corre o rio Gangites.",
+   "core": "A razão decisiva pela qual Lídia recebeu a palavra foi que o Senhor abriu o coração dela (At 16:14). Precisamos ver juntos o esforço de quem anuncia a palavra e a graça de Deus que abre os corações.",
+   "reflect": "Lembrando o coração que o Senhor abriu em mim, para quem estou abrindo a minha porta?",
+   "quiz": {
+    "q": "O que Lídia vendia?",
+    "options": [
+     "Especiarias",
+     "Tendas",
+     "Tecidos de púrpura",
+     "Azeite de oliva"
+    ],
+    "explain": "Lídia, da cidade de Tiatira, era vendedora de tecidos de púrpura e temente a Deus (At 16:14)."
+   },
+   "credit": "Marie Ellenrieder, The Baptism of Lydia, 1861 · Domínio público"
+  },
+  "a17": {
+   "title": "Hinos à meia-noite e a prisão abalada",
+   "when": "c. 50 d.C.",
+   "subtitle": "Louvor no meio da noite",
+   "story": [
+    "Em Filipos havia uma escrava possuída por um espírito de adivinhação. Durante muitos dias ela seguiu Paulo e os companheiros. A escrava gritava: Estes homens são servos do Deus Altíssimo! Paulo, muito incomodado com aqueles gritos que o espírito provocava, virou-se e disse ao espírito: Em nome de Jesus Cristo, eu ordeno que saia dela. O espírito saiu na mesma hora, e os donos dela, vendo acabar a sua fonte de lucro, arrastaram Paulo e Silas até as autoridades.",
+    "Os dois foram muito açoitados e jogados no cárcere interior. Os pés deles foram presos no tronco. Por volta da meia-noite, Paulo e Silas oravam e cantavam hinos a Deus, e os outros presos escutavam. De repente houve um grande terremoto, todas as portas da prisão se abriram e as correntes de todos se soltaram. O carcereiro, pensando que os presos tinham fugido, puxou a espada para se matar, mas Paulo gritou bem alto: Não faça nenhum mal a si mesmo. Estamos todos aqui!",
+    "O carcereiro, tremendo, caiu aos pés deles, depois os levou para fora e perguntou: Senhores, que devo fazer para ser salvo? Paulo e Silas responderam: Creia no Senhor Jesus, e você e a sua casa serão salvos. Naquela mesma noite, o carcereiro lavou as feridas dos dois e foi batizado com toda a sua casa. Aquela casa, que agora cria em Deus, ficou cheia de alegria."
+   ],
+   "words": [
+    {
+     "who": "Paulo e Silas",
+     "text": "Creia no Senhor Jesus, e você e a sua casa serão salvos."
+    },
+    {
+     "who": "O carcereiro",
+     "text": "Senhores, que devo fazer para ser salvo?"
+    },
+    {
+     "who": "Paulo",
+     "text": "Não faça nenhum mal a si mesmo. Estamos todos aqui!"
+    }
+   ],
+   "note": "No dia seguinte, Paulo revelou que ele e Silas eram cidadãos romanos e que tinham sido açoitados em público sem julgamento. Açoitar um cidadão romano sem julgamento era contra a lei, e por isso as autoridades ficaram com medo e foram pessoalmente pedir desculpas.",
+   "core": "A promessa “você e a sua casa serão salvos” não quer dizer que a família é salva automaticamente. Paulo anunciou a palavra às pessoas da casa, e aquela casa creu em Deus e se alegrou (At 16:31–34).",
+   "reflect": "Consigo louvar a Deus mesmo quando o meu coração está desabando?",
+   "quiz": {
+    "q": "O que Paulo e Silas responderam ao carcereiro que perguntou o que devia fazer para ser salvo?",
+    "options": [
+     "Creia no Senhor Jesus",
+     "Seja circuncidado",
+     "Ofereça sacrifícios no templo",
+     "Guarde a porta da prisão"
+    ],
+    "explain": "Paulo e Silas responderam que, se cresse no Senhor Jesus, ele e a sua casa seriam salvos (At 16:31)."
+   },
+   "credit": "Ilustração de Scenes from the Life of St. Paul, The Conversion of the Jailer at Philippi, 1909 · Domínio público"
+  },
+  "a18": {
+   "title": "Os que examinavam as Escrituras todos os dias",
+   "when": "c. 50 d.C.",
+   "subtitle": "Gente que abria as Escrituras todos os dias",
+   "story": [
+    "O grupo chegou a Tessalônica. Como de costume, Paulo entrou na sinagoga e durante três sábados explicou as Escrituras. Paulo dizia: O Cristo precisava sofrer e ressuscitar dentre os mortos. Este Jesus que eu lhes anuncio é o Cristo. Alguns judeus creram, e também muitos gregos e não poucas mulheres importantes.",
+    "Os judeus, cheios de inveja, juntaram alguns desordeiros da praça, agitaram a cidade e foram em bando à casa de Jasom, que tinha recebido o grupo. Como não encontraram Paulo e Silas, arrastaram Jasom até as autoridades. Eles gritavam: Os homens que têm agitado o mundo chegaram aqui também! Naquela noite os irmãos mandaram Paulo e Silas para Bereia.",
+    "Os bereanos eram mais nobres que os tessalonicenses. Receberam a palavra com grande interesse e examinavam as Escrituras todos os dias para ver se as coisas eram mesmo assim. Muitos creram. Mas os judeus de Tessalônica vieram atrás e agitaram a multidão, e os irmãos mandaram Paulo para o litoral, enquanto Silas e Timóteo ficaram em Bereia. Paulo ficou por muito tempo preocupado com a igreja de Tessalônica, que tinha deixado de repente."
+   ],
+   "words": [
+    {
+     "who": "Paulo",
+     "text": "O Cristo precisava sofrer e ressuscitar dentre os mortos. Este Jesus que eu lhes anuncio é o Cristo."
+    },
+    {
+     "who": "Lucas",
+     "text": "Os bereanos receberam a palavra com grande interesse e examinavam as Escrituras todos os dias para ver se era mesmo assim."
+    },
+    {
+     "who": "Paulo",
+     "text": "Irmãos, ficamos separados de vocês por um pouco de tempo, longe dos olhos, mas não do coração. Fizemos de tudo para ver o rosto de vocês, de tanta saudade."
+    }
+   ],
+   "note": "Tessalônica era a capital da província da Macedônia, uma cidade portuária por onde passava a Via Egnácia, a grande estrada romana. Hoje é Tessalônica, a segunda maior cidade da Grécia. Bereia ficava no pé das montanhas, a sudoeste dela.",
+   "reflect": "Mesmo as passagens que já conheço bem, eu confiro abrindo a Bíblia?",
+   "quiz": {
+    "q": "O que os bereanos faziam todos os dias depois de ouvir Paulo?",
+    "options": [
+     "Guardavam a porta da sinagoga",
+     "Examinavam as Escrituras",
+     "Jejuavam e oravam",
+     "Mandavam mensageiros a Tessalônica"
+    ],
+    "explain": "Os bereanos receberam a palavra com grande interesse e examinavam as Escrituras todos os dias para ver se era assim (At 17:11)."
+   },
+   "credit": "Gustave Doré, Saint Paul Preaching to the Thessalonians, 1866 · Domínio público"
+  },
+  "a19": {
+   "title": "Ao deus desconhecido",
+   "when": "c. 51 d.C.",
+   "subtitle": "Ao deus desconhecido",
+   "story": [
+    "Levado pelos irmãos até Atenas, Paulo esperou ali por Silas e Timóteo. Quando viu que a cidade estava cheia de ídolos por toda parte, o seu espírito se revoltou. Paulo conversava na sinagoga e, todos os dias, na praça com as pessoas que encontrava. Filósofos epicureus e estoicos o levaram ao Areópago, a colina onde se reunia o conselho de Atenas. Os filósofos perguntaram: Que novo ensino é esse de que você fala?",
+    "Paulo ficou em pé no meio do Areópago e disse: Atenienses, andando pela cidade, vi um altar com esta inscrição: Ao deus desconhecido. Aquele que vocês adoram sem conhecer é justamente quem eu venho lhes anunciar. O Deus que fez o mundo e tudo o que nele há não mora em templos feitos por mãos humanas.",
+    "Paulo continuou: Nele vivemos, nos movemos e existimos. Agora Deus ordena que todas as pessoas, em toda parte, se arrependam. Ele marcou um dia em que vai julgar o mundo por meio do homem que escolheu, e deu prova disso a todos ressuscitando-o dentre os mortos. Ao ouvir falar da ressurreição, alguns zombaram e outros disseram que queriam ouvir de novo. Mas Dionísio, membro do Areópago, uma mulher chamada Dâmaris e algumas outras pessoas creram."
+   ],
+   "words": [
+    {
+     "who": "Paulo",
+     "text": "Andando pela cidade e observando os objetos do culto de vocês, encontrei um altar com esta inscrição: Ao deus desconhecido. Aquele que vocês adoram sem conhecer é quem eu lhes anuncio."
+    },
+    {
+     "who": "Paulo",
+     "text": "Deus não está longe de nenhum de nós. Pois nele vivemos, nos movemos e existimos."
+    },
+    {
+     "who": "Paulo",
+     "text": "Deus marcou um dia em que vai julgar o mundo com justiça por meio do homem que escolheu, e deu prova disso a todos ressuscitando-o dentre os mortos."
+    }
+   ],
+   "note": "Areópago quer dizer “colina de Ares”, o deus da guerra. Era uma colina rochosa a noroeste da Acrópole e também o nome do conselho de Atenas que se reunia ali. As palavras que Paulo citou em seguida, “também somos descendência dele”, são um verso do poeta Arato.",
+   "core": "Paulo não aprovou a religião dos gentios como ela era. Ele anunciou o Deus Criador e chamou as pessoas a abandonarem os ídolos, a se arrependerem e a se prepararem para estar diante do Cristo ressuscitado (At 17:24–31).",
+   "reflect": "Eu anuncio o que as pessoas querem ouvir ou o evangelho do arrependimento e da ressurreição?",
+   "quiz": {
+    "q": "O que estava escrito no altar que Paulo viu em Atenas?",
+    "options": [
+     "Ao rei do céu",
+     "A todos os deuses",
+     "À deusa Atena",
+     "Ao deus desconhecido"
+    ],
+    "explain": "Paulo começou o discurso pelo altar com a inscrição “Ao deus desconhecido” e anunciou o Deus que eles adoravam sem conhecer (At 17:23)."
+   },
+   "credit": "Raphael, Saint Paul Preaching in Athens, 1515 · Museu Victoria and Albert, Londres · Domínio público"
+  },
+  "a20": {
+   "title": "Os amigos que costuravam tendas",
+   "when": "c. 51 d.C.",
+   "subtitle": "Amigos que faziam tendas",
+   "story": [
+    "Paulo deixou Atenas e foi para Corinto. Era uma grande cidade, cheia de navios e comerciantes, situada numa estreita faixa de terra entre dois mares. Mais tarde, lembrando aquele tempo, Paulo escreveu à igreja de Corinto: Fui até vocês em fraqueza, com medo e tremendo muito.",
+    "Ali Paulo conheceu um judeu chamado Áquila. Ele era do Ponto, ao sul do mar Negro, e tinha chegado havia pouco da Itália com a sua mulher, Priscila. O imperador Cláudio tinha ordenado que todos os judeus saíssem de Roma. Áquila e a esposa faziam tendas, e Paulo tinha o mesmo ofício.",
+    "Paulo ficou na casa deles e trabalhava com eles. E todo sábado, na sinagoga, procurava convencer judeus e gregos. Desde então, Priscila e Áquila foram colaboradores de Paulo por muito tempo. Mais tarde Paulo escreveu à igreja de Roma: Eles arriscaram a própria vida para salvar a minha."
+   ],
+   "words": [
+    {
+     "who": "Lucas",
+     "text": "Como tinha o mesmo ofício, Paulo ficou com eles e trabalhava com eles. O ofício deles era fazer tendas."
+    },
+    {
+     "who": "Paulo",
+     "text": "Fui até vocês em fraqueza, com medo e tremendo muito."
+    },
+    {
+     "who": "Paulo",
+     "text": "Saudem Priscila e Áquila, meus colaboradores em Cristo Jesus. Eles arriscaram a própria vida para salvar a minha."
+    }
+   ],
+   "note": "A expulsão dos judeus de Roma pelo imperador Cláudio aparece também nos escritos do historiador romano Suetônio e costuma ser datada por volta de 49 d.C. Corinto, num istmo entre dois mares, era a capital da província da Acaia.",
+   "reflect": "No meu trabalho, vivo como alguém que segue Jesus?",
+   "quiz": {
+    "q": "Por que Áquila e Priscila saíram da Itália e foram para Corinto?",
+    "options": [
+     "Para ampliar o comércio",
+     "Para encontrar Paulo",
+     "Porque o imperador Cláudio mandou os judeus saírem de Roma",
+     "Porque a igreja de Jerusalém os enviou"
+    ],
+    "explain": "Eles vieram da Itália para Corinto porque o imperador Cláudio tinha ordenado que todos os judeus saíssem de Roma (At 18:2)."
+   },
+   "credit": "Raphael Sadeler segundo Joos van Winghe, Saint Paul with the Tentmakers Aquila and Priscilla in Corinth, c. 1588–1589 · Museu Boijmans Van Beuningen, Roterdã · Domínio público"
+  },
+  "a21": {
+   "title": "Não tenha medo, continue falando",
+   "when": "c. 51 d.C.",
+   "subtitle": "Eu estou com você",
+   "story": [
+    "Silas e Timóteo desceram da Macedônia. Timóteo trouxe a boa notícia de que a igreja de Tessalônica continuava firme na fé e no amor, mesmo no sofrimento. Paulo, com Silas e Timóteo, enviou uma carta àquela igreja. Paulo escreveu: Agora sim nós vivemos, já que vocês estão firmes no Senhor. Pouco depois, enviou também uma segunda carta a eles, que estavam inquietos a respeito do dia da volta do Senhor.",
+    "Na sinagoga de Corinto a oposição era forte. Paulo sacudiu as roupas em sinal de protesto, disse que dali em diante iria aos gentios e se mudou para a casa de um homem chamado Tício Justo, bem ao lado da sinagoga. Crispo, o chefe da sinagoga, creu no Senhor com toda a sua casa, e muitos coríntios foram batizados. Certa noite, numa visão, o Senhor disse a Paulo: Não tenha medo, continue falando. Eu estou com você.",
+    "Paulo ficou ali um ano e meio, ensinando a palavra. Quando Gálio, enviado por Roma, era procônsul da Acaia, os judeus levaram Paulo ao tribunal. Quando Paulo ia começar a falar, Gálio disse aos judeus: Isto é uma questão de palavras, de nomes e da lei de vocês. Resolvam entre vocês. Não quero ser juiz dessas coisas. Como o Senhor tinha prometido estar com ele, ninguém conseguiu fazer mal a Paulo."
+   ],
+   "words": [
+    {
+     "who": "O Senhor",
+     "text": "Não tenha medo. Continue falando e não se cale. Eu estou com você, e ninguém vai lhe fazer mal, porque tenho muita gente minha nesta cidade."
+    },
+    {
+     "who": "Paulo",
+     "text": "Agora sim nós vivemos, já que vocês estão firmes no Senhor."
+    },
+    {
+     "who": "Paulo",
+     "text": "Não se deixem abalar facilmente nem se assustem com a ideia de que o dia do Senhor já chegou."
+    }
+   ],
+   "note": "Uma inscrição encontrada em Delfos registra a época em que Gálio era procônsul da Acaia, e por isso é possível situar a estada de Paulo em Corinto por volta de 51 d.C. Esse é o ponto de referência mais importante para a cronologia de Paulo.",
+   "reflect": "Diante daquilo sobre o que me calo por medo, creio que o Senhor está comigo?",
+   "quiz": {
+    "q": "Qual procônsul da Acaia se recusou a julgar a acusação contra Paulo em Corinto?",
+    "options": [
+     "Félix",
+     "Gálio",
+     "Festo",
+     "Sérgio Paulo"
+    ],
+    "explain": "O procônsul da Acaia, Gálio, disse que era uma questão de palavras, de nomes e da lei judaica, e se recusou a ser juiz (At 18:14–15)."
+   },
+   "credit": "Valentin de Boulogne, Saint Paul Writing His Epistles, c. 1618–1620 · Museu de Belas Artes de Houston · Domínio público"
+  },
+  "a22": {
+   "title": "Dois anos na escola de Tirano",
+   "when": "c. 53–55 d.C.",
+   "subtitle": "Do salão de Tirano para toda a Ásia",
+   "story": [
+    "Depois de deixar Corinto e passar por Antioquia, Paulo partiu de novo. Em Éfeso encontrou alguns discípulos e lhes perguntou: Vocês receberam o Espírito Santo quando creram? Eles responderam: Nem sequer ouvimos falar que existe o Espírito Santo. Tinham recebido apenas o batismo de João Batista. Quando Paulo lhes anunciou Jesus, foram batizados no nome do Senhor Jesus. Paulo impôs as mãos sobre eles, e o Espírito Santo veio sobre eles. Eram ao todo uns doze homens.",
+    "Durante três meses, Paulo anunciou com coragem o reino de Deus na sinagoga. Mas alguns endureceram o coração e falavam mal do Caminho, o caminho dos seguidores de Jesus, diante da multidão. Paulo se afastou deles, levou os discípulos e ensinava todos os dias na escola de Tirano. Isso durou dois anos, e todos os judeus e gregos que viviam na província da Ásia ouviram a palavra do Senhor.",
+    "Nessa época chegaram notícias preocupantes de Corinto, do outro lado do mar. A igreja estava dividida em grupos que brigavam. A igreja de Corinto também mandou perguntas por escrito. De Éfeso, Paulo escreveu uma carta à igreja de Corinto. Paulo escreveu: Vocês são o corpo de Cristo. Entre a fé, a esperança e o amor, o maior é o amor."
+   ],
+   "words": [
+    {
+     "who": "Paulo",
+     "text": "Vocês receberam o Espírito Santo quando creram?"
+    },
+    {
+     "who": "Os discípulos de Éfeso",
+     "text": "Não, nem sequer ouvimos falar que existe o Espírito Santo."
+    },
+    {
+     "who": "Paulo",
+     "text": "Irmãos, peço a vocês em nome do nosso Senhor Jesus Cristo: falem todos a mesma coisa, não haja divisões entre vocês, e estejam unidos num só pensamento e num só propósito."
+    },
+    {
+     "who": "Paulo",
+     "text": "Agora, pois, permanecem a fé, a esperança e o amor, estes três. Mas o maior deles é o amor."
+    }
+   ],
+   "note": "A escola de Tirano é entendida como o salão de um homem chamado Tirano. Um manuscrito antigo acrescenta que Paulo ensinava ali na hora do descanso do meio-dia. No fim de 1 Coríntios, Paulo escreveu que ficaria em Éfeso até o Pentecostes.",
+   "reflect": "Mesmo na correria do dia, tenho me mantido perto da Palavra?",
+   "quiz": {
+    "q": "Onde Paulo ensinou os discípulos todos os dias durante dois anos depois de deixar a sinagoga?",
+    "options": [
+     "No templo de Ártemis",
+     "Na escola de Tirano",
+     "No teatro de Éfeso",
+     "Na casa de Priscila"
+    ],
+    "explain": "Paulo separou os discípulos e discursava todos os dias na escola de Tirano, e isso durou dois anos (At 19:9–10)."
+   },
+   "credit": "Segundo Johann Jakob von Sandrart, The Sick Healed by Paul's Handkerchiefs, 1697 · Rijksmuseum, Amsterdã · Domínio público"
+  },
+  "a23": {
+   "title": "Os livros de magia queimados",
+   "when": "c. 54 d.C.",
+   "subtitle": "Um nome que não se pode imitar",
+   "story": [
+    "Deus fazia milagres extraordinários pelas mãos de Paulo. Bastava levar aos doentes lenços ou aventais que tinham tocado o corpo de Paulo, e as doenças eram curadas e os espíritos maus saíam. Então alguns judeus que andavam de lugar em lugar expulsando demônios tentaram imitar Paulo. Eles diziam às pessoas possuídas: Eu ordeno a vocês, por Jesus, a quem Paulo anuncia. Os sete filhos de Ceva, um sacerdote judeu, também faziam isso.",
+    "O espírito mau respondeu: Jesus eu conheço, e Paulo eu sei quem é. Mas vocês, quem são? O homem possuído pelo espírito mau pulou sobre eles e dominou todos. Eles fugiram daquela casa nus e feridos. Quando isso se tornou conhecido em toda Éfeso, todos ficaram com medo, e o nome do Senhor Jesus era engrandecido.",
+    "Muitos dos que tinham crido vinham confessar o que tinham feito. Os que praticavam magia trouxeram os seus livros e os queimaram diante de todos. Calculado o preço dos livros, chegou a cinquenta mil moedas de prata. Assim a palavra do Senhor crescia com poder e se espalhava cada vez mais."
+   ],
+   "words": [
+    {
+     "who": "Os judeus que andavam expulsando demônios",
+     "text": "Eu ordeno a vocês, por Jesus, a quem Paulo anuncia."
+    },
+    {
+     "who": "O espírito mau",
+     "text": "Jesus eu conheço, e Paulo eu sei quem é. Mas vocês, quem são?"
+    },
+    {
+     "who": "Lucas",
+     "text": "Assim a palavra do Senhor crescia com poder e se espalhava cada vez mais."
+    }
+   ],
+   "note": "Éfeso era uma cidade famosa por encantamentos e amuletos. Se uma moeda de prata equivalia a um dia de trabalho, cinquenta mil moedas eram uma fortuna que uma pessoa levaria mais de cem anos para juntar.",
+   "reflect": "Que hábito eu preciso abandonar de vez para seguir o Senhor?",
+   "quiz": {
+    "q": "Quem ouviu de um espírito mau a pergunta “Mas vocês, quem são?”",
+    "options": [
+     "Paulo e Silas",
+     "Os ourives de Éfeso",
+     "As autoridades da Ásia",
+     "Os sete filhos de Ceva"
+    ],
+    "explain": "Quando os sete filhos de Ceva, um sacerdote judeu, imitaram Paulo, o espírito mau disse que conhecia Jesus e sabia quem era Paulo, mas perguntou quem eram eles (At 19:14–15)."
+   },
+   "credit": "Eustache Le Sueur, Saint Paul Preaching at Ephesus, 1649 · National Gallery de Londres · Domínio público"
+  },
+  "a24": {
+   "title": "Grande é a Ártemis dos efésios!",
+   "when": "c. 55 d.C.",
+   "subtitle": "O grito que durou duas horas",
+   "story": [
+    "Paulo decidiu ir a Jerusalém passando pela Macedônia e pela Acaia. Paulo disse: Depois de ir lá, preciso ver Roma também. Nessa época, um ourives chamado Demétrio ganhava muito dinheiro fazendo em prata miniaturas do templo de Ártemis, a deusa de Éfeso. Ele reuniu os artesãos e disse: Esse Paulo diz que deuses feitos por mãos humanas não são deuses. Assim o nosso negócio vai à ruína, e o templo da deusa vai ser desprezado.",
+    "Os artesãos ficaram furiosos e gritaram: Grande é a Ártemis dos efésios! A cidade inteira ficou em alvoroço. A multidão agarrou Gaio e Aristarco, macedônios que viajavam com Paulo, e correu para o teatro. Paulo quis se apresentar diante da multidão, mas os discípulos não deixaram. Algumas autoridades da Ásia, amigas de Paulo, também mandaram lhe pedir que não entrasse no teatro.",
+    "A maior parte dos que estavam ali nem sabia por que tinha se reunido. A multidão gritou a mesma coisa durante duas horas. Por fim, o escrivão da cidade acalmou o povo e disse: Estes homens que vocês trouxeram não roubaram nada do templo nem blasfemaram contra a nossa deusa. Se alguém tem uma acusação, os tribunais estão abertos. Tenho medo de que sejamos acusados de tumulto pelo que aconteceu hoje. Assim o escrivão dispersou a assembleia."
+   ],
+   "words": [
+    {
+     "who": "Paulo",
+     "text": "Depois de ir lá, preciso ver Roma também."
+    },
+    {
+     "who": "Demétrio",
+     "text": "Esse Paulo diz que deuses feitos por mãos humanas não são deuses, e assim convenceu e desviou muita gente, não só em Éfeso, mas em quase toda a Ásia."
+    },
+    {
+     "who": "A multidão de Éfeso",
+     "text": "Grande é a Ártemis dos efésios!"
+    },
+    {
+     "who": "O escrivão da cidade",
+     "text": "Estes homens que vocês trouxeram aqui não roubaram nada do templo nem blasfemaram contra a nossa deusa."
+    }
+   ],
+   "note": "O teatro de Éfeso tinha lugar para mais de vinte mil pessoas, e as suas ruínas existem até hoje. O templo de Ártemis em Éfeso era contado entre as sete maravilhas do mundo antigo.",
+   "reflect": "Será que estou me deixando levar pelo clima ao meu redor e apoiando algo errado?",
+   "quiz": {
+    "q": "O que a multidão reunida no teatro gritou durante duas horas?",
+    "options": [
+     "Grande é a Ártemis dos efésios!",
+     "Acabem com Paulo!",
+     "Só César é senhor!",
+     "Defendam o nosso templo!"
+    ],
+    "explain": "Todos gritaram a uma só voz, durante duas horas: Grande é a Ártemis dos efésios! (At 19:34)."
+   },
+   "credit": "Autor desconhecido, View of the Theatre at Ephesus, 1873 · The Story of the Bible from Genesis to Revelation · Domínio público"
+  },
+  "a25": {
+   "title": "A carta escrita com lágrimas",
+   "when": "c. 56 d.C.",
+   "subtitle": "O consolo que Tito trouxe",
+   "story": [
+    "Quando o tumulto acabou, Paulo chamou os discípulos, encorajou-os e se despediu. A caminho da Macedônia, passou por Trôade. Antes disso, Paulo tinha escrito à igreja de Corinto com grande aflição e muitas lágrimas. Em Trôade uma porta se abriu para o evangelho, mas Paulo não tinha paz no coração. Não tinha encontrado Tito, o colaborador grego que ele enviara a Corinto. Paulo deixou Trôade e passou à Macedônia.",
+    "Mesmo na Macedônia não teve descanso. Por fora havia conflitos, por dentro havia temores. Então Tito chegou. Tito contou que a igreja de Corinto tinha saudade de Paulo, estava triste pelo que tinha acontecido e se empenhava por ele. Deus, que consola os abatidos, consolou Paulo com a chegada de Tito.",
+    "Da Macedônia, Paulo escreveu de novo à igreja de Corinto. Paulo escreveu: Temos este tesouro em vasos de barro. Se alguém está em Cristo, é nova criação. Paulo mandou Tito de volta a Corinto e, com ele, um irmão elogiado por muitas igrejas. É provável que a carta tenha ido nas mãos deles. Paulo percorreu várias partes da Macedônia encorajando os cristãos e depois desceu para a Grécia."
+   ],
+   "words": [
+    {
+     "who": "Paulo",
+     "text": "Escrevi a vocês com grande aflição e angústia de coração, com muitas lágrimas. Não queria entristecê-los, mas mostrar o amor que tenho por vocês."
+    },
+    {
+     "who": "Paulo",
+     "text": "Deus, que consola os abatidos, nos consolou com a chegada de Tito."
+    },
+    {
+     "who": "Paulo",
+     "text": "Temos este tesouro em vasos de barro, para mostrar que esse poder extraordinário vem de Deus e não de nós."
+    },
+    {
+     "who": "Paulo",
+     "text": "Se alguém está em Cristo, é nova criação. As coisas antigas já passaram. Vejam: tudo se fez novo."
+    }
+   ],
+   "note": "O livro de Atos não diz em que lugar da Macedônia Paulo escreveu esta carta. No fim de alguns manuscritos antigos está escrito que foi em Filipos. 2 Coríntios é a carta em que Paulo mais abre o coração e mostra as suas fraquezas.",
+   "reflect": "Quem veio ficar ao meu lado e me deu força quando eu estava abatido?",
+   "quiz": {
+    "q": "Por que Paulo não tinha paz em Trôade, mesmo com uma porta aberta para o evangelho?",
+    "options": [
+     "Porque não encontrou barco",
+     "Porque foi expulso da sinagoga",
+     "Porque não encontrou Tito",
+     "Porque estava doente"
+    ],
+    "explain": "Paulo não teve paz no coração porque não encontrou o irmão Tito em Trôade, e por isso foi para a Macedônia (2Co 2:12–13)."
+   },
+   "credit": "Rembrandt, Saint Paul at His Writing Desk, c. 1629–1630 · Museu Nacional Germânico, Nuremberg · Domínio público"
+  },
+  "a26": {
+   "title": "Uma longa carta escrita no inverno de Corinto",
+   "when": "c. 57 d.C.",
+   "subtitle": "Uma carta para Roma, onde ele nunca tinha estado",
+   "story": [
+    "Paulo chegou à Grécia e ficou ali três meses. Ele já tinha escrito à igreja de Corinto que talvez passasse o inverno com eles. Em Corinto, Gaio, um coríntio que Paulo tinha batizado, hospedou Paulo e cuidava de toda a igreja. Ali Paulo escreveu uma longa carta aos cristãos de Roma, onde ele nunca tinha estado. Um irmão chamado Tércio escrevia o que Paulo ditava.",
+    "Paulo escreveu que fazia muitos anos queria ir a Roma, mas o caminho sempre se fechava. Agora estava indo levar aos cristãos pobres de Jerusalém a oferta recolhida pelos cristãos da Macedônia e da Acaia. Depois de terminar isso, disse que passaria por Roma e iria até a Espanha, no extremo oeste. Paulo escreveu que o evangelho é o poder de Deus para a salvação de todo aquele que crê.",
+    "Paulo pediu: Orem comigo para que eu seja livre dos descrentes da Judeia. No fim da carta, Paulo pediu que recebessem bem Febe, serva da igreja de Cencreia. Provavelmente foi Febe quem levou esta carta a Roma. Quando Paulo ia embarcar para a Síria, os judeus tramaram um plano contra ele, e Paulo decidiu voltar pela Macedônia."
+   ],
+   "words": [
+    {
+     "who": "Paulo",
+     "text": "Não me envergonho do evangelho, porque ele é o poder de Deus para a salvação de todo aquele que crê."
+    },
+    {
+     "who": "Paulo",
+     "text": "Nem a morte nem a vida, nem o presente nem o futuro poderão nos separar do amor de Deus que está em Cristo Jesus, nosso Senhor."
+    },
+    {
+     "who": "Paulo",
+     "text": "Quando eu for à Espanha, espero vê-los de passagem e primeiro desfrutar um pouco da companhia de vocês."
+    },
+    {
+     "who": "Tércio",
+     "text": "Eu, Tércio, que escrevi esta carta, também os saúdo no Senhor."
+    }
+   ],
+   "note": "Cencreia era o porto leste de Corinto. No fim de Romanos, Paulo também envia saudações de Erasto, tesoureiro da cidade de Corinto. Em Corinto foi encontrada uma antiga pedra de calçamento com o nome de Erasto gravado.",
+   "reflect": "Por quais pessoas eu oro, e que lugares precisam do evangelho?",
+   "quiz": {
+    "q": "No fim de Romanos, quem se apresenta como aquele que escreveu a carta?",
+    "options": [
+     "Febe",
+     "Tércio",
+     "Timóteo",
+     "Gaio"
+    ],
+    "explain": "Tércio escreveu: Eu, Tércio, que escrevi esta carta, também os saúdo no Senhor (Rm 16:22)."
+   },
+   "credit": "Segundo Johann Jakob von Sandrart, Paul Writes His Letter to the Romans, 1697 · Rijksmuseum, Amsterdã · Domínio público"
+  },
+  "a27": {
+   "title": "Êutico cai da janela",
+   "when": "c. 57 d.C.",
+   "subtitle": "A longa noite no cenáculo iluminado",
+   "story": [
+    "Depois da festa dos pães sem fermento, Paulo e os companheiros embarcaram em Filipos e em cinco dias chegaram a Trôade, onde ficaram sete dias. No primeiro dia da semana, os cristãos se reuniram para partir o pão juntos e participar da ceia do Senhor. Como ia partir no dia seguinte, Paulo falou longamente, e a conversa continuou até a meia-noite. No cenáculo onde estavam reunidos havia muitas lâmpadas acesas.",
+    "Um jovem chamado Êutico estava sentado na janela e caiu num sono profundo. Como Paulo falava muito tempo, o jovem adormeceu e caiu do terceiro andar. Quando o levantaram, estava morto. Paulo desceu, deitou-se sobre o jovem, abraçou-o e disse: Não fiquem assustados. Ele está vivo.",
+    "Paulo subiu de novo, partiu o pão e comeu. Depois conversou longamente até o dia amanhecer e então partiu. As pessoas levaram para casa o jovem que tinha voltado à vida e ficaram muito consoladas."
+   ],
+   "words": [
+    {
+     "who": "Lucas",
+     "text": "No primeiro dia da semana, quando nos reunimos para partir o pão, Paulo, que ia partir no dia seguinte, falou às pessoas, e a conversa se estendeu até a meia-noite."
+    },
+    {
+     "who": "Paulo",
+     "text": "Não fiquem assustados. Ele está vivo."
+    },
+    {
+     "who": "Lucas",
+     "text": "Levaram o jovem vivo e ficaram muito consolados."
+    }
+   ],
+   "note": "A palavra “nós”, que tinha sumido depois da história de Filipos, aparece de novo em Atos 20. Isso é entendido como sinal de que Lucas, o autor do livro, caminhou com Paulo a partir de Filipos. O nome Êutico quer dizer “afortunado”.",
+   "reflect": "Valorizo o tempo de compartilhar a Palavra com outras pessoas de fé?",
+   "quiz": {
+    "q": "De que andar Êutico caiu quando adormeceu na janela?",
+    "options": [
+     "Do segundo andar",
+     "Do quarto andar",
+     "Do telhado",
+     "Do terceiro andar"
+    ],
+    "explain": "Êutico caiu num sono profundo e caiu do terceiro andar (At 20:9)."
+   },
+   "credit": "Ilustradores de Figures de la Bible, Paul Raises Eutychus to Life, 1728 · Domínio público"
+  },
+  "a28": {
+   "title": "Vocês não verão mais o meu rosto",
+   "when": "c. 57 d.C.",
+   "subtitle": "Os presbíteros que choraram e o acompanharam até o navio",
+   "story": [
+    "Paulo tinha pressa de chegar a Jerusalém antes do Pentecostes. Por isso não parou em Éfeso: passou de navio e desembarcou em Mileto. De lá mandou chamar os presbíteros da igreja de Éfeso. Quando eles chegaram, Paulo disse: Vocês sabem que, desde o primeiro dia em que cheguei à Ásia, servi ao Senhor com toda a humildade e com lágrimas.",
+    "Paulo continuou: Agora vou a Jerusalém, preso pelo Espírito. Em cada cidade o Espírito Santo me avisa que prisões e sofrimentos me esperam. Mas, se eu puder completar o trabalho de anunciar o evangelho da graça de Deus, não dou nenhum valor à minha vida. Agora sei que vocês não verão mais o meu rosto.",
+    "Paulo recomendou: Lobos ferozes vão entrar e atacar o rebanho. Fiquem atentos. O próprio Senhor Jesus disse que há mais felicidade em dar do que em receber. Ao terminar de falar, Paulo se ajoelhou e orou com todos eles. Os presbíteros abraçaram Paulo, o beijaram e choraram muito. E o acompanharam até o navio."
+   ],
+   "words": [
+    {
+     "who": "Paulo",
+     "text": "Não dou nenhum valor à minha vida, contanto que eu termine a minha carreira e complete o ministério que recebi do Senhor Jesus: testemunhar o evangelho da graça de Deus."
+    },
+    {
+     "who": "Paulo",
+     "text": "Agora eu entrego vocês a Deus e à palavra da sua graça."
+    },
+    {
+     "who": "Paulo",
+     "text": "Lembrem-se das palavras do próprio Senhor Jesus: Há mais felicidade em dar do que em receber."
+    }
+   ],
+   "note": "Mileto era uma cidade portuária a pouco mais de cinquenta quilômetros ao sul de Éfeso. Ali Paulo lembrou que, durante os três anos em Éfeso, tinha ensinado os cristãos noite e dia, com lágrimas.",
+   "core": "Paulo não deixou a igreja nas mãos da capacidade pessoal dos presbíteros, mas a entregou a Deus e à palavra da sua graça. Os presbíteros cuidam não de um rebanho próprio, mas da igreja que Deus comprou com o seu sangue (At 20:28, 32).",
+   "reflect": "Qual é o caminho de fé que eu quero guardar até o fim?",
+   "quiz": {
+    "q": "Que palavras do Senhor Jesus Paulo pediu aos presbíteros que lembrassem em Mileto?",
+    "options": [
+     "Há mais felicidade em dar do que em receber",
+     "Peçam, e lhes será dado",
+     "Amem-se uns aos outros",
+     "Não tenham medo"
+    ],
+    "explain": "Paulo pediu que se lembrassem das palavras do próprio Senhor Jesus: há mais felicidade em dar do que em receber (At 20:35)."
+   },
+   "credit": "Jan Luyken, Paul Takes Leave of the Elders, 1712 · Rijksmuseum, Amsterdã · Domínio público"
+  },
+  "a29": {
+   "title": "O cinto de Ágabo",
+   "when": "c. 57 d.C.",
+   "subtitle": "Mãos e pés amarrados com um cinto",
+   "story": [
+    "Paulo e os companheiros desembarcaram em Tiro, procuraram os discípulos e ficaram sete dias. Os discípulos de Tiro, movidos pelo Espírito, disseram a Paulo que não subisse a Jerusalém. No dia da partida, eles saíram até fora da cidade com as esposas e os filhos. Todos se ajoelharam na praia, oraram e se despediram.",
+    "Em Cesareia, o grupo ficou na casa de Filipe, o evangelista, que tinha sido escolhido junto com Estêvão como um dos sete servos. Depois de muitos dias, desceu da Judeia o profeta Ágabo, o mesmo que tinha anunciado a fome. Ágabo pegou o cinto de Paulo, amarrou os próprios pés e mãos e disse: Assim diz o Espírito Santo: Desta maneira os judeus de Jerusalém vão amarrar o dono deste cinto e entregá-lo nas mãos dos gentios.",
+    "Os companheiros e o povo do lugar choraram e pediram a Paulo que não fosse. Paulo respondeu: Por que vocês choram e partem o meu coração? Estou pronto não só para ser amarrado, mas também para morrer em Jerusalém pelo nome do Senhor Jesus. Como Paulo não mudava de ideia, pararam de insistir e disseram: Seja feita a vontade do Senhor."
+   ],
+   "words": [
+    {
+     "who": "Ágabo",
+     "text": "Assim diz o Espírito Santo: Desta maneira os judeus de Jerusalém vão amarrar o dono deste cinto e entregá-lo nas mãos dos gentios."
+    },
+    {
+     "who": "Paulo",
+     "text": "Por que vocês choram e partem o meu coração? Estou pronto não só para ser amarrado, mas também para morrer pelo nome do Senhor Jesus."
+    },
+    {
+     "who": "Os que estavam com ele",
+     "text": "Seja feita a vontade do Senhor."
+    }
+   ],
+   "note": "Filipe, o evangelista, era um dos sete servos escolhidos pela igreja de Jerusalém e tinha quatro filhas solteiras que profetizavam. Ágabo já tinha profetizado uma grande fome em todo o mundo, que aconteceu no tempo do imperador Cláudio.",
+   "reflect": "Há momentos em que preciso seguir a vontade do Senhor mesmo quando as pessoas que amo são contra?",
+   "quiz": {
+    "q": "Com que objeto Ágabo amarrou as próprias mãos e pés para mostrar o futuro de Paulo?",
+    "options": [
+     "Uma corda",
+     "Uma corrente",
+     "O cinto de Paulo",
+     "A capa de Paulo"
+    ],
+    "explain": "Ágabo pegou o cinto de Paulo, amarrou as próprias mãos e pés e anunciou a palavra do Espírito Santo (At 21:11)."
+   },
+   "credit": "Jan Luyken, Paul Watches Agabus Bind Himself with Paul's Belt, 1700 · Rijksmuseum, Amsterdã · Domínio público"
+  },
+  "a30": {
+   "title": "Preso no templo",
+   "when": "c. 57 d.C.",
+   "subtitle": "Uma cidade em alvoroço por um boato",
+   "story": [
+    "Os irmãos de Jerusalém receberam o grupo com alegria. No dia seguinte, Paulo foi visitar Tiago, que liderava a igreja, e os presbíteros se reuniram. Paulo contou em detalhes o que Deus tinha feito entre os gentios. Eles deram glória a Deus e disseram: Irmão, há dezenas de milhares de judeus que creram, e todos são zelosos da lei. Eles ouviram dizer que você ensina os judeus que vivem entre os gentios a abandonar a lei de Moisés e a não circuncidar os filhos.",
+    "Os presbíteros disseram: Há quatro homens aqui que fizeram um voto, uma promessa especial a Deus. Junte-se a eles no rito de purificação e pague as despesas para que rapem a cabeça. Assim todos vão saber que você também vive obedecendo à lei. Paulo fez o rito de purificação com os quatro homens e entrou no templo. Quando os sete dias da purificação estavam quase terminando, judeus vindos da província da Ásia viram Paulo no templo.",
+    "Eles agitaram a multidão e gritaram: Israelitas, socorro! Este homem trouxe gregos para dentro do templo! Antes tinham visto na cidade Trófimo de Éfeso, um gentio cristão que tinha vindo com Paulo, e imaginaram isso. Quando a multidão arrastou Paulo para fora do templo e tentava matá-lo, o comandante romano de mil soldados chegou correndo com as tropas e mandou prender Paulo com duas correntes."
+   ],
+   "words": [
+    {
+     "who": "Os presbíteros de Jerusalém",
+     "text": "Veja, irmão, há dezenas de milhares de judeus que creram, e todos são zelosos da lei."
+    },
+    {
+     "who": "Os judeus vindos da Ásia",
+     "text": "Israelitas, socorro! Este é o homem que ensina a todos, em toda parte, contra o nosso povo, contra a lei e contra este lugar, e ainda trouxe gregos para dentro do templo!"
+    },
+    {
+     "who": "A multidão",
+     "text": "Acabem com ele!"
+    }
+   ],
+   "note": "No muro baixo em volta dos pátios internos do templo havia avisos dizendo que o gentio que passasse dali seria morto. Pedras com esse aviso foram encontradas em Jerusalém nos séculos XIX e XX.",
+   "reflect": "Será que estou julgando alguém só com base em boatos não confirmados?",
+   "quiz": {
+    "q": "Quem os judeus da Ásia imaginaram que Paulo tinha levado para dentro do templo?",
+    "options": [
+     "Timóteo",
+     "Trófimo de Éfeso",
+     "Lucas",
+     "Barnabé"
+    ],
+    "explain": "Eles tinham visto Trófimo de Éfeso com Paulo na cidade e pensaram que Paulo o tinha levado para dentro do templo (At 21:29)."
+   },
+   "credit": "Jan Luyken, Paul Seized by Roman Soldiers in Jerusalem, 1708 · Rijksmuseum, Amsterdã · Domínio público"
+  },
+  "a31": {
+   "title": "A história contada do alto da escada",
+   "when": "c. 57 d.C.",
+   "subtitle": "A história de Damasco contada de novo na escadaria",
+   "story": [
+    "Quando os soldados iam levar Paulo para a fortaleza, Paulo disse ao comandante: Posso lhe dizer uma palavra? O comandante, surpreso, perguntou: Você sabe falar grego? Não é você o egípcio que pouco tempo atrás provocou uma revolta? Paulo respondeu: Sou judeu, natural de Tarso, na Cilícia. Deixe-me falar ao povo. O comandante permitiu.",
+    "Paulo ficou de pé na escadaria e fez sinal com a mão, e a multidão se calou. Em hebraico, Paulo contou como tinha estudado aos pés do famoso mestre da lei Gamaliel, como tinha perseguido este Caminho, o caminho dos seguidores de Jesus, e como tinha ouvido a voz de Jesus de Nazaré no caminho de Damasco. Paulo disse: Depois, quando voltei a Jerusalém e estava orando no templo, o Senhor me disse: Vá! Eu vou enviar você para longe, aos gentios.",
+    "A multidão gritou: Tirem esse homem da face da terra! O comandante mandou açoitar Paulo e interrogá-lo. Quando os soldados o amarraram, Paulo perguntou ao centurião: Vocês podem açoitar um cidadão romano que nem foi julgado? O comandante veio e perguntou: Você é cidadão romano? Paulo respondeu: Sou. O comandante disse: Eu paguei muito dinheiro para conseguir esta cidadania. Paulo disse: Eu sou cidadão de nascimento."
+   ],
+   "words": [
+    {
+     "who": "Paulo",
+     "text": "Sou judeu. Nasci em Tarso, na Cilícia, mas fui criado nesta cidade e aprendi com rigor a lei dos nossos antepassados aos pés de Gamaliel."
+    },
+    {
+     "who": "Jesus",
+     "text": "Eu sou Jesus de Nazaré, a quem você persegue."
+    },
+    {
+     "who": "Jesus",
+     "text": "Vá! Eu vou enviar você para longe, aos gentios."
+    },
+    {
+     "who": "Paulo",
+     "text": "É certo açoitar um cidadão romano, e ainda por cima sem julgamento?"
+    }
+   ],
+   "note": "A Fortaleza Antônia foi construída por Herodes no canto noroeste do templo. Ali ficava o exército romano, que vigiava os pátios do templo lá de cima. Havia uma escadaria que subia dos pátios do templo até a fortaleza.",
+   "reflect": "A quem eu poderia contar como passei a crer em Jesus?",
+   "quiz": {
+    "q": "Por que Paulo conseguiu escapar dos açoites?",
+    "options": [
+     "Porque era amigo do comandante",
+     "Porque o sumo sacerdote o defendeu",
+     "Porque a multidão se dispersou",
+     "Porque era cidadão romano de nascimento"
+    ],
+    "explain": "O comandante tinha comprado a cidadania com muito dinheiro, mas Paulo era cidadão romano de nascimento. Os que iam interrogá-lo se afastaram logo (At 22:28–29)."
+   },
+   "credit": "Gustave Doré, Paul Addresses the Crowd after His Arrest, 1866 · Domínio público"
+  },
+  "a32": {
+   "title": "A conspiração que o sobrinho ouviu",
+   "when": "c. 57 d.C.",
+   "subtitle": "A vida salva por um jovem sobrinho",
+   "story": [
+    "Querendo saber por que Paulo era acusado, o comandante reuniu o Sinédrio e pôs Paulo diante dele. Paulo percebeu que no Sinédrio havia saduceus, que não criam na ressurreição, e fariseus, que criam, e gritou: Irmãos, eu sou fariseu. Estou sendo julgado por causa da esperança de que os mortos ressuscitam. O Sinédrio se dividiu em dois e começou a brigar, e o comandante mandou os soldados levarem Paulo para a fortaleza.",
+    "Naquela noite o Senhor ficou ao lado de Paulo e disse: Coragem! Assim como você testemunhou de mim em Jerusalém, precisa testemunhar também em Roma. Quando amanheceu, mais de quarenta judeus juraram não comer nem beber enquanto não matassem Paulo. O plano era pedir ao comandante que trouxesse Paulo de novo ao Sinédrio e atacá-lo no caminho.",
+    "O filho da irmã de Paulo ouviu falar dessa emboscada, entrou na fortaleza e avisou Paulo. Paulo chamou um centurião e pediu que levasse o jovem ao comandante. Quando o jovem contou a conspiração, o comandante disse: Não conte a ninguém que você me informou disso. Naquela noite o comandante mandou Paulo, escoltado por quatrocentos e setenta soldados, a Félix, o governador romano da Judeia, que estava em Cesareia."
+   ],
+   "words": [
+    {
+     "who": "Paulo",
+     "text": "Irmãos, eu sou fariseu, filho de fariseus. Estou sendo julgado por causa da esperança de que os mortos ressuscitam."
+    },
+    {
+     "who": "Jesus",
+     "text": "Coragem! Assim como você testemunhou de mim em Jerusalém, precisa testemunhar também em Roma."
+    },
+    {
+     "who": "O comandante",
+     "text": "Não conte a ninguém que você me informou disso."
+    }
+   ],
+   "note": "De Jerusalém a Cesareia são mais de cem quilômetros. As tropas viajaram de noite até Antipátride, e no dia seguinte só a cavalaria seguiu com Paulo. Na carta que o comandante enviou ao governador, o seu nome aparece como Cláudio Lísias.",
+   "reflect": "Creio que Deus usa até a pequena coragem de uma pessoa comum?",
+   "quiz": {
+    "q": "Quem ouviu a conspiração dos mais de quarenta judeus, entrou na fortaleza e avisou Paulo?",
+    "options": [
+     "O filho da irmã de Paulo",
+     "Um centurião",
+     "A irmã de Paulo",
+     "O comandante"
+    ],
+    "explain": "O filho da irmã de Paulo ouviu falar da emboscada, entrou na fortaleza e avisou Paulo (At 23:16)."
+   },
+   "credit": "Segundo Johann Jakob von Sandrart, Paul's Nephew Warns of the Plot to Kill Him, 1697 · Rijksmuseum, Amsterdã · Domínio público"
+  },
+  "a33": {
+   "title": "A conversa que fez Félix ter medo",
+   "when": "c. 57–59 d.C.",
+   "subtitle": "Justiça, domínio próprio e o juízo que virá",
+   "story": [
+    "Cinco dias depois, o sumo sacerdote Ananias desceu a Cesareia com alguns presbíteros e um advogado chamado Tértulo. Tértulo acusou Paulo diante do governador Félix, dizendo: Este homem é uma peste. Ele provoca tumultos entre os judeus do mundo inteiro, é o líder da seita dos nazarenos e até tentou profanar o templo.",
+    "Paulo respondeu: Faz apenas doze dias que subi a Jerusalém para adorar. Ninguém me viu discutindo com alguém nem agitando o povo, nem no templo nem nas sinagogas. Mas é verdade que sirvo ao Deus dos nossos antepassados seguindo este Caminho, que eles chamam de seita, e tenho a esperança de que haverá ressurreição de justos e de injustos. Félix adiou o julgamento, dizendo que decidiria quando o comandante Lísias descesse.",
+    "Alguns dias depois, Félix veio com a sua mulher, Drusila, que era judia, e mandou chamar Paulo. Quando Paulo falou sobre a justiça, o domínio próprio e o juízo que virá, Félix ficou com medo e disse: Por agora pode ir. Quando eu tiver tempo, vou chamá-lo de novo. Félix esperava receber dinheiro de Paulo e por isso o chamava com frequência para conversar. Assim se passaram dois anos, e Félix deixou o cargo de governador mantendo Paulo preso para agradar aos judeus."
+   ],
+   "words": [
+    {
+     "who": "Paulo",
+     "text": "Assim como eles, tenho em Deus a esperança de que haverá ressurreição de justos e de injustos."
+    },
+    {
+     "who": "Paulo",
+     "text": "Por isso eu também me esforço para ter sempre a consciência limpa diante de Deus e das pessoas."
+    },
+    {
+     "who": "Félix",
+     "text": "Por agora pode ir. Quando eu tiver tempo, vou chamá-lo de novo."
+    }
+   ],
+   "note": "O historiador romano Tácito conta que Félix era um ex-escravo liberto que chegou a governador. A sua mulher, Drusila, era filha de Herodes Agripa I e irmã do rei Agripa e de Berenice, que aparecem na próxima cena. Este sumo sacerdote Ananias é outra pessoa, não o discípulo Ananias de Damasco.",
+   "reflect": "Será que, mesmo sabendo do que preciso me arrepender, estou sempre deixando para depois?",
+   "quiz": {
+    "q": "Sobre o que Paulo falava quando Félix ficou com medo e disse “Por agora pode ir”?",
+    "options": [
+     "Os sacrifícios e as festas do templo",
+     "A justiça, o domínio próprio e o juízo que virá",
+     "A lei romana e a cidadania",
+     "A luz que viu no caminho de Damasco"
+    ],
+    "explain": "Quando Paulo falou sobre a justiça, o domínio próprio e o juízo que virá, Félix ficou com medo e disse que por agora ele podia ir (At 24:25)."
+   },
+   "credit": "Segundo Johann Jakob von Sandrart, Paul before Felix and Drusilla, 1697 · Rijksmuseum, Amsterdã · Domínio público"
+  },
+  "a34": {
+   "title": "Apelo para César",
+   "when": "c. 59 d.C.",
+   "subtitle": "Que fossem como eu, menos estas correntes",
+   "story": [
+    "Quando chegou o novo governador, Festo, os chefes dos sacerdotes pediram que Paulo fosse levado a Jerusalém. O plano era armar uma emboscada no caminho e matá-lo. Festo abriu o julgamento em Cesareia, e eles fizeram muitas acusações graves, mas não conseguiram provar nenhuma. Festo perguntou a Paulo: Você quer subir a Jerusalém e ser julgado lá? Paulo respondeu: Eu apelo para César, o imperador romano.",
+    "Festo disse: Você apelou para César. Para César irá. Alguns dias depois, o rei Agripa, que governava as terras ao norte da Judeia, e a sua irmã Berenice vieram saudar Festo. Pouco depois, os dois entraram na sala de audiências com grande pompa. Diante do rei, Paulo contou da luz e da voz que encontrou no caminho de Damasco. Festo disse em voz alta: Você está louco, Paulo! O muito estudo o deixou louco.",
+    "Paulo disse: Não estou louco, excelentíssimo Festo. O que digo é verdadeiro e sensato. Rei Agripa, o senhor crê nos profetas? Sei que crê. Agripa disse: Em tão pouco tempo você quer me fazer cristão? Paulo disse: Em pouco ou em muito tempo, peço a Deus que não só o senhor, mas todos os que hoje me ouvem se tornem como eu, menos estas correntes."
+   ],
+   "words": [
+    {
+     "who": "Paulo",
+     "text": "Rei Agripa, eu não fui desobediente à visão que veio do céu."
+    },
+    {
+     "who": "Paulo",
+     "text": "Em pouco ou em muito tempo, peço a Deus que não só o senhor, mas todos os que hoje me ouvem se tornem como eu, menos estas correntes."
+    },
+    {
+     "who": "Agripa",
+     "text": "Este homem poderia ser solto, se não tivesse apelado para César."
+    }
+   ],
+   "note": "Um cidadão romano podia recusar o julgamento do governador da província e pedir para ser julgado diretamente pelo imperador. Agripa II foi o último rei da família de Herodes e, naquela época, tinha também o poder de nomear e trocar o sumo sacerdote que cuidava do templo.",
+   "reflect": "Mesmo numa situação desfavorável, consigo confessar Jesus sem me envergonhar?",
+   "quiz": {
+    "q": "O que o rei Agripa disse a Festo sobre Paulo?",
+    "options": [
+     "Este homem merece a morte",
+     "Mandem este homem para Jerusalém",
+     "Este homem está louco",
+     "Poderia ser solto, se não tivesse apelado para César"
+    ],
+    "explain": "Agripa disse a Festo que aquele homem poderia ser solto, se não tivesse apelado para César (At 26:32). Quem disse que Paulo estava louco foi Festo (At 26:24)."
+   },
+   "credit": "Nikolai Bodarevsky, Paul before Agrippa, 1875 · Domínio público"
+  },
+  "a35": {
+   "title": "O vento Euroaquilão",
+   "when": "c. 59 d.C.",
+   "subtitle": "Dias sem sol e sem estrelas",
+   "story": [
+    "Paulo e outros presos foram entregues a Júlio, um centurião do batalhão Imperial, e embarcaram. Aristarco, de Tessalônica, também ia com eles. Júlio tratou Paulo com bondade e deixou que visitasse os amigos em Sidom. Em Mirra, passaram para um navio de Alexandria que ia para a Itália, mas o vento era contrário, e o navio, bem devagar, mal conseguiu chegar a Bons Portos, no sul de Creta.",
+    "Já tinha passado até o Dia da Expiação, quando os judeus jejuam, e era a época perigosa no mar. Paulo disse aos homens: Senhores, vejo que esta viagem vai trazer grande dano, não só para a carga e o navio, mas também para as nossas vidas. Mas o centurião acreditou mais no piloto e no dono do navio do que em Paulo. Bons Portos não era um lugar adequado para passar o inverno, e a maioria quis seguir até Fenice, um porto no oeste da mesma ilha.",
+    "Quando começou a soprar um vento sul suave, pensaram que tinham conseguido o que queriam e levantaram âncora. Pouco depois, um vento violento chamado Euroaquilão desceu da ilha. O navio não conseguia enfrentar o vento e foi arrastado. Passaram cordas em volta do casco para reforçá-lo; no dia seguinte jogaram a carga ao mar e, no terceiro dia, o equipamento do navio. Durante muitos dias não se viram nem o sol nem as estrelas, e acabou toda esperança de salvação."
+   ],
+   "words": [
+    {
+     "who": "Paulo",
+     "text": "Senhores, vejo que esta viagem vai trazer grande dano e perda, não só para a carga e o navio, mas também para as nossas vidas."
+    },
+    {
+     "who": "Lucas",
+     "text": "Durante muitos dias não apareceram nem o sol nem as estrelas, e a grande tempestade não parava. Por fim perdemos toda a esperança de sermos salvos."
+    }
+   ],
+   "note": "O jejum de que se fala é o Dia da Expiação, no outono. Depois dele os ventos do Mediterrâneo ficavam fortes e era perigoso navegar, e no inverno as rotas marítimas quase paravam. Euroaquilão é um nome que junta o vento leste e o vento norte: um forte vento nordeste.",
+   "reflect": "Será que estou fazendo uma escolha arriscada só porque as coisas parecem boas?",
+   "quiz": {
+    "q": "Qual era o nome do vento violento que atingiu o navio depois que saiu de Bons Portos?",
+    "options": [
+     "Euroaquilão",
+     "Siroco",
+     "Dióscuros",
+     "Fenice"
+    ],
+    "explain": "Pouco depois, desceu da ilha um vento violento chamado Euroaquilão (At 27:14). Fenice era o porto de Creta onde eles queriam passar o inverno (At 27:12)."
+   },
+   "credit": "Segundo Johann Jakob von Sandrart, Paul in the Storm at Sea, 1697 · Rijksmuseum, Amsterdã · Domínio público"
+  },
+  "a36": {
+   "title": "Nenhuma vida se perderá",
+   "when": "c. 59 d.C.",
+   "subtitle": "Todos os duzentos e setenta e seis chegam à terra",
+   "story": [
+    "Quando todos estavam havia muito tempo sem comer, Paulo se levantou e disse: Agora fiquem tranquilos. Só o navio vai se perder; nenhuma vida será perdida. Esta noite, um anjo do Deus a quem pertenço e a quem sirvo ficou ao meu lado e disse: Paulo, não tenha medo. Você precisa comparecer diante de César. Deus lhe deu a vida de todos os que navegam com você.",
+    "Na décima quarta noite, os marinheiros perceberam que estavam perto de terra e lançaram quatro âncoras da popa. Depois tentaram fugir escondidos no bote salva-vidas. Paulo disse ao centurião e aos soldados: Se estes homens não ficarem no navio, vocês não poderão se salvar. Os soldados cortaram as cordas do bote. Ao amanhecer, Paulo pegou um pão diante de todos, deu graças a Deus, partiu-o e começou a comer. Então todos se animaram e comeram também.",
+    "No navio havia ao todo duzentas e setenta e seis pessoas. Quando o dia clareou, viram uma enseada com praia, mas o navio encalhou num lugar onde duas correntes se encontravam, e a popa se despedaçou. Os soldados quiseram matar os presos para que nenhum fugisse a nado, mas o centurião, querendo salvar Paulo, os impediu. Os que sabiam nadar pularam primeiro, e os outros se agarraram a tábuas. Por fim, todos chegaram a salvo à terra."
+   ],
+   "words": [
+    {
+     "who": "O anjo",
+     "text": "Paulo, não tenha medo. Você precisa comparecer diante de César. Deus lhe deu a vida de todos os que navegam com você."
+    },
+    {
+     "who": "Paulo",
+     "text": "Por isso, senhores, tenham coragem. Eu creio em Deus. Vai acontecer exatamente como ele me disse."
+    },
+    {
+     "who": "Paulo",
+     "text": "Se estes homens não ficarem no navio, vocês não poderão se salvar."
+    }
+   ],
+   "note": "Lucas conta esta viagem usando “nós”, mostrando que ele também estava no navio. O relato é tão detalhado que registra até a profundidade da água diminuindo de vinte para quinze braças, e é um dos registros de navegação mais minuciosos da Antiguidade.",
+   "reflect": "Quando tudo balança, consigo me agarrar à promessa de Deus?",
+   "quiz": {
+    "q": "Quem impediu os soldados de matar os presos quando o navio se despedaçou?",
+    "options": [
+     "O piloto",
+     "Lucas",
+     "O centurião Júlio",
+     "Aristarco"
+    ],
+    "explain": "Os soldados quiseram matar os presos, mas o centurião, querendo salvar Paulo, os impediu (At 27:42–43). Esse centurião era Júlio (At 27:1)."
+   },
+   "credit": "Autor desconhecido, Paul Forbids the Sailors to Leave the Ship, 1873 · The Story of the Bible from Genesis to Revelation · Domínio público"
+  },
+  "a37": {
+   "title": "A mão que sacudiu a víbora",
+   "when": "c. 59–60 d.C.",
+   "subtitle": "A víbora que caiu no fogo",
+   "story": [
+    "Já em terra, souberam que a ilha se chamava Malta. Chovia e fazia frio, mas os moradores da ilha mostraram uma bondade fora do comum: acenderam uma fogueira e acolheram todos. Paulo juntou um feixe de gravetos e o pôs no fogo, e uma víbora, fugindo do calor, saiu e se prendeu na mão dele.",
+    "Os moradores da ilha diziam uns aos outros: Este homem com certeza é um assassino. Escapou do mar, mas a deusa da justiça não o deixa viver. Paulo sacudiu o animal no fogo e não sofreu nenhum mal. As pessoas ficaram muito tempo observando, esperando que ele inchasse ou caísse morto de repente. Como nada aconteceu, mudaram de ideia e disseram que Paulo era um deus.",
+    "Perto dali ficavam as terras de Públio, o homem principal da ilha. Públio recebeu o grupo e o hospedou com bondade durante três dias. O pai de Públio estava de cama, com febre e disenteria. Paulo entrou, orou, pôs as mãos sobre ele e o curou. Depois disso, os outros doentes da ilha também vieram e foram curados. Os moradores trataram o grupo com muita honra e, quando eles partiram, puseram no navio tudo o que precisavam."
+   ],
+   "words": [
+    {
+     "who": "Os moradores da ilha",
+     "text": "Este homem com certeza é um assassino. Escapou do mar, mas a deusa da justiça não o deixa viver."
+    },
+    {
+     "who": "Lucas",
+     "text": "Paulo sacudiu o animal no fogo e não sofreu nenhum mal."
+    }
+   ],
+   "note": "Malta é uma pequena ilha ao sul da Sicília. O título “homem principal da ilha”, dado a Públio, aparece também em inscrições antigas encontradas em Malta. A tradição diz que Paulo chegou a uma baía no nordeste da ilha.",
+   "reflect": "Será que o meu coração balança cada vez que a opinião das pessoas sobre mim muda?",
+   "quiz": {
+    "q": "Quem Paulo curou, depois de orar e pôr as mãos sobre ele?",
+    "options": [
+     "O centurião Júlio",
+     "O pai de Públio",
+     "O dono do navio",
+     "O piloto do navio"
+    ],
+    "explain": "O pai de Públio estava de cama com febre e disenteria, e Paulo entrou, orou, pôs as mãos sobre ele e o curou (At 28:8)."
+   },
+   "credit": "Laurent de La Hyre, Saint Paul Shipwrecked on Malta, 1630 · Domínio público"
+  },
+  "a38": {
+   "title": "Os irmãos que vieram ao Fórum de Ápio",
+   "when": "c. 60 d.C.",
+   "subtitle": "Roma, para onde ele tanto queria ir",
+   "story": [
+    "Três meses depois, o grupo embarcou num navio de Alexandria que tinha passado o inverno na ilha. Na proa do navio estava o emblema dos deuses gêmeos, os Dióscuros. Ficaram três dias em Siracusa, passaram por Régio e, com o vento sul, chegaram a Putéoli. Ali encontraram irmãos e ficaram com eles sete dias. E finalmente o grupo seguiu a pé rumo a Roma.",
+    "Os irmãos de Roma souberam da notícia e saíram ao encontro deles. Foram até o Fórum de Ápio e as Três Vendas. Ao ver o rosto deles, Paulo, ainda preso, deu graças a Deus e ganhou coragem. Uns três anos antes, Paulo tinha escrito de Corinto justamente para essas pessoas. Paulo escreveu: Tenho muita vontade de ver vocês.",
+    "Naquela carta Paulo escreveu que queria, a caminho da Espanha, passar com alegria por Roma e descansar com eles. Não foi do jeito que Paulo tinha imaginado, mas Deus de fato o levou a Roma. Ao entrar em Roma, Paulo recebeu permissão para morar à parte. Um soldado ficava sempre ao lado dele, vigiando-o."
+   ],
+   "words": [
+    {
+     "who": "Lucas",
+     "text": "Os irmãos de lá souberam de nós e vieram ao nosso encontro até o Fórum de Ápio e as Três Vendas. Ao vê-los, Paulo deu graças a Deus e ganhou coragem."
+    },
+    {
+     "who": "Paulo",
+     "text": "Tenho muita vontade de ver vocês para repartir algum dom espiritual e assim fortalecê-los."
+    },
+    {
+     "who": "Paulo",
+     "text": "Orem para que, pela vontade de Deus, eu vá até vocês com alegria e possa descansar junto com vocês."
+    }
+   ],
+   "note": "O Fórum de Ápio era uma vila com mercado na Via Ápia, a estrada que saía de Roma para o sul, a cerca de sessenta quilômetros de Roma. Três Vendas quer dizer “três estalagens” e ficava a uns cinquenta quilômetros de Roma.",
+   "reflect": "Consigo ser o primeiro a me aproximar de alguém cansado e lhe dar força?",
+   "quiz": {
+    "q": "Até onde os irmãos de Roma foram para encontrar Paulo?",
+    "options": [
+     "Fórum de Ápio e Três Vendas",
+     "Putéoli e Régio",
+     "Siracusa e Malta",
+     "Bons Portos e Fenice"
+    ],
+    "explain": "Os irmãos vieram ao encontro deles até o Fórum de Ápio e as Três Vendas, e Paulo, ao vê-los, deu graças a Deus e ganhou coragem (At 28:15)."
+   },
+   "credit": "Autor desconhecido, Paul Reaches Rome in Chains, 1873 · The Story of the Bible from Genesis to Revelation · Domínio público"
+  },
+  "a39": {
+   "title": "Dois anos numa casa alugada",
+   "when": "c. 60–62 d.C.",
+   "subtitle": "Um homem preso, uma palavra livre",
+   "story": [
+    "Três dias depois de chegar a Roma, Paulo chamou os líderes dos judeus e disse: Não fiz nada contra o nosso povo nem contra os costumes dos nossos antepassados, e mesmo assim fui feito prisioneiro. É por causa da esperança de Israel que estou preso com esta corrente. Marcaram um dia, e muita gente veio à casa onde Paulo estava. Da manhã até a tarde, Paulo explicou sobre Jesus a partir da lei de Moisés e dos Profetas. Alguns creram, e outros não.",
+    "Durante dois anos inteiros, Paulo morou na casa que tinha alugado e recebia todos os que iam vê-lo. E anunciava o reino de Deus com toda a coragem, sem nenhum impedimento. Nessa época, a igreja de Filipos enviou Epafrodito para lhe entregar uma oferta. Epafrodito ficou doente e quase morreu, mas sobreviveu. Paulo o mandou de volta a Filipos com uma carta.",
+    "Paulo escreveu na carta: O que me aconteceu serviu, na verdade, para o avanço do evangelho. Toda a guarda do imperador ficou sabendo que estou preso por causa de Cristo. Para mim, o viver é Cristo, e o morrer é lucro. Alegrem-se sempre no Senhor. Repito: alegrem-se. Um homem preso em correntes enviou alegria à igreja de Filipos."
+   ],
+   "words": [
+    {
+     "who": "Paulo",
+     "text": "Irmãos, quero que vocês saibam que o que me aconteceu serviu, na verdade, para o avanço do evangelho."
+    },
+    {
+     "who": "Paulo",
+     "text": "Para mim, o viver é Cristo, e o morrer é lucro."
+    },
+    {
+     "who": "Paulo",
+     "text": "Alegrem-se sempre no Senhor. Repito: alegrem-se."
+    },
+    {
+     "who": "Lucas",
+     "text": "Paulo anunciava o reino de Deus e ensinava sobre o Senhor Jesus Cristo com toda a coragem, sem nenhum impedimento."
+    }
+   ],
+   "note": "Filipenses é uma carta que Paulo escreveu quando estava preso. Aqui seguimos a antiga opinião de que foi escrita na casa alugada em Roma. Há estudiosos que acham que foi escrita numa prisão em Éfeso ou em Cesareia.",
+   "reflect": "Será que estou usando a minha situação como desculpa para adiar o que posso fazer hoje?",
+   "quiz": {
+    "q": "Quem levou a Paulo, em Roma, a oferta da igreja de Filipos e ficou doente?",
+    "options": [
+     "Timóteo",
+     "Tíquico",
+     "Aristarco",
+     "Epafrodito"
+    ],
+    "explain": "Paulo escreveu que recebeu de Epafrodito o que os filipenses tinham enviado, e conta que ele ficou doente a ponto de morrer, mas Deus teve misericórdia dele (Fp 4:18; 2:25–27)."
+   },
+   "credit": "Cartão bíblico, Saint Paul in Rome, 1900s · Domínio público"
+  },
+  "a40": {
+   "title": "Uma carta por Onésimo",
+   "when": "c. 61 d.C.",
+   "subtitle": "De inútil a útil",
+   "story": [
+    "Um homem chamado Onésimo foi ao encontro de Paulo, preso em Roma. Ele era escravo na casa de Filemom, da igreja de Colossos, e tinha passado um tempo longe do seu senhor. Por meio de Paulo, que estava preso, Onésimo chegou à fé. Paulo queria mantê-lo ao seu lado, mas decidiu não fazer nada sem o consentimento de Filemom. Por isso mandou Onésimo de volta ao seu senhor e escreveu uma carta curta.",
+    "Paulo escreveu a Filemom: Antes Onésimo era inútil para você, mas agora é útil tanto para você como para mim. Agora receba-o não como escravo, mas como irmão amado. Se ele lhe deve alguma coisa, ponha na minha conta. Eu, Paulo, escrevo com a minha própria mão: eu pagarei.",
+    "Paulo escreveu também às igrejas de Colossos e de Éfeso. Em Colossenses escreveu que em Cristo não há escravo nem livre, e em Efésios escreveu que fomos salvos pela graça, por meio da fé. Quem levou as cartas foi Tíquico, um colaborador da Ásia. Onésimo também foi com ele para Colossos. Paulo apresentou Onésimo à igreja de Colossos assim: Onésimo, o irmão fiel e amado, que é um de vocês."
+   ],
+   "words": [
+    {
+     "who": "Paulo",
+     "text": "Agora receba-o não mais como escravo, mas como alguém melhor que um escravo: como irmão amado."
+    },
+    {
+     "who": "Paulo",
+     "text": "Se ele lhe fez algum mal ou lhe deve alguma coisa, ponha na minha conta. Eu, Paulo, escrevo com a minha própria mão: eu pagarei."
+    },
+    {
+     "who": "Paulo",
+     "text": "Vocês foram salvos pela graça, por meio da fé. Isso não vem de vocês: é dom de Deus."
+    },
+    {
+     "who": "Paulo",
+     "text": "Tíquico vai lhes contar tudo sobre mim. Com ele vai também Onésimo, o irmão fiel e amado."
+    }
+   ],
+   "note": "O nome Onésimo quer dizer “útil” em grego, e Paulo fez um jogo de palavras com esse nome. Seguimos a antiga opinião de que estas três cartas foram escritas em Roma; há também quem diga que foram escritas em Éfeso.",
+   "reflect": "Será que estou prendendo alguém apenas aos erros do passado dele?",
+   "quiz": {
+    "q": "Quem foi com Onésimo a Colossos levando notícias de Paulo?",
+    "options": [
+     "Tito",
+     "Filemom",
+     "Tíquico",
+     "Epafras"
+    ],
+    "explain": "Paulo escreveu que Tíquico lhes contaria tudo sobre ele e que enviava Onésimo junto com ele (Cl 4:7–9). A carta aos Efésios também foi enviada por meio de Tíquico (Ef 6:21–22)."
+   },
+   "credit": "Gustave Doré, Saint Paul in Prison Hands His Letter to Tychicus · Domínio público"
+  },
+  "a41": {
+   "title": "Tito, deixado em Creta",
+   "when": "c. 63–64 d.C.",
+   "subtitle": "Tito na ilha, Timóteo na cidade",
+   "story": [
+    "O livro de Atos termina na casa alugada em Roma, mas as cartas a Timóteo e a Tito mostram que Paulo voltou a viajar livremente. Ao partir para a Macedônia, Paulo pediu ao jovem Timóteo que ficasse em Éfeso. Era para corrigir os que ensinavam doutrinas diferentes ou se prendiam a genealogias sem fim.",
+    "Pouco depois, Paulo enviou uma carta a Timóteo. Paulo escreveu: Cristo Jesus veio ao mundo para salvar os pecadores, dos quais eu sou o principal. Não deixe que ninguém o despreze por ser jovem. Seja exemplo para os que creem, na palavra, no procedimento, no amor, na fé e na pureza.",
+    "Paulo deixou Tito na ilha de Creta. Paulo escreveu a Tito: Deixei você em Creta para pôr em ordem o que faltava e para escolher presbíteros em cada cidade. No fim da carta, pediu que, quando enviasse Ártemas ou Tíquico, Tito viesse depressa a Nicópolis, porque tinha decidido passar o inverno lá. Pediu também que ajudasse Zenas, o especialista na lei, e Apolo, que ensinava em Corinto, para que não lhes faltasse nada."
+   ],
+   "words": [
+    {
+     "who": "Paulo",
+     "text": "Esta palavra é digna de confiança e merece ser aceita por todos: Cristo Jesus veio ao mundo para salvar os pecadores, dos quais eu sou o principal."
+    },
+    {
+     "who": "Paulo",
+     "text": "Não deixe que ninguém o despreze por ser jovem. Seja exemplo para os que creem, na palavra, no procedimento, no amor, na fé e na pureza."
+    },
+    {
+     "who": "Paulo",
+     "text": "Deixei você em Creta para pôr em ordem o que faltava e para escolher presbíteros em cada cidade, como eu lhe disse."
+    }
+   ],
+   "note": "O livro de Atos não fala de Paulo trabalhando em Creta. Por isso muitos estudiosos acham que Paulo foi solto depois dos dois anos em Roma e voltou a viajar. Nicópolis é entendida como uma cidade no litoral noroeste da Grécia.",
+   "reflect": "Estou preparando pessoas de fé para continuar o trabalho que recebi?",
+   "quiz": {
+    "q": "Por que Paulo deixou Tito em Creta?",
+    "options": [
+     "Para pôr em ordem o que faltava e escolher presbíteros em cada cidade",
+     "Para arranjar um navio para Roma",
+     "Para recolher a oferta para a igreja de Jerusalém",
+     "Para buscar Marcos"
+    ],
+    "explain": "Paulo escreveu a Tito que o tinha deixado em Creta para pôr em ordem o que faltava e escolher presbíteros em cada cidade (Tt 1:5)."
+   },
+   "credit": "Autor desconhecido, Initial P: Saint Paul Giving a Letter to a Bishop, c. 1280–1290 · Museu J. Paul Getty, Los Angeles · Domínio público"
+  },
+  "a42": {
+   "title": "Combati o bom combate",
+   "when": "c. 66–67 d.C.",
+   "subtitle": "Olhando para a coroa da justiça",
+   "story": [
+    "Quando escreveu a última carta, Paulo estava preso em correntes em Roma. Paulo escreveu a Timóteo: Já estou sendo derramado como vinho sobre o altar, e o tempo da minha partida está próximo. Combati o bom combate, terminei a corrida, guardei a fé. Agora me espera a coroa da justiça. Naquele dia o Senhor a dará não só a mim, mas a todos os que amam a sua vinda.",
+    "Ao seu redor havia solidão. Demas amou este mundo e foi para Tessalônica, Crescente foi para a Galácia, e Tito para a Dalmácia. Só Lucas estava com Paulo. Paulo escreveu: Traga Marcos com você, porque ele me é útil no ministério. Era o mesmo Marcos por causa de quem Paulo e Barnabé tinham se separado. Pediu também que trouxesse a capa e os livros que tinha deixado em Trôade, principalmente os pergaminhos.",
+    "Paulo escreveu: Na minha primeira defesa no tribunal, ninguém ficou ao meu lado; todos me abandonaram. Que isso não lhes seja cobrado. Mas o Senhor ficou ao meu lado e me deu forças. Por meio de mim a mensagem foi anunciada por completo, para que todos os gentios a ouvissem. Paulo pediu mais uma vez: Venha depressa, antes do inverno."
+   ],
+   "words": [
+    {
+     "who": "Paulo",
+     "text": "Combati o bom combate, terminei a corrida, guardei a fé."
+    },
+    {
+     "who": "Paulo",
+     "text": "Agora me espera a coroa da justiça. O Senhor, o justo Juiz, a dará a mim naquele dia."
+    },
+    {
+     "who": "Paulo",
+     "text": "Todos me abandonaram, mas o Senhor ficou ao meu lado e me deu forças."
+    },
+    {
+     "who": "Paulo",
+     "text": "Venha depressa, antes do inverno."
+    }
+   ],
+   "note": "2 Timóteo é considerada a última das cartas de Paulo. A história de que Paulo foi martirizado em Roma é uma antiga tradição de fora da Bíblia; por isso esta jornada termina com esta confissão do próprio Paulo.",
+   "core": "A última esperança de Paulo não é se orgulhar das suas realizações, mas a coroa da justiça que o Senhor, o justo Juiz, lhe dará (2Tm 4:7–8).",
+   "reflect": "No fim da minha vida, poderei confessar que o Senhor esteve comigo?",
+   "quiz": {
+    "q": "Quem Paulo pediu a Timóteo que trouxesse, dizendo que “me é útil no ministério”?",
+    "options": [
+     "Demas",
+     "Crescente",
+     "Tíquico",
+     "Marcos"
+    ],
+    "explain": "Paulo escreveu: Traga Marcos com você, porque ele me é útil no ministério (2Tm 4:11). Demas o abandonou por amar o mundo, e Tíquico foi enviado a Éfeso (2Tm 4:10, 12)."
+   },
+   "credit": "Rembrandt, Saint Paul in Prison, 1627 · Staatsgalerie de Stuttgart · Domínio público"
+  }
+ },
+ "letters": {
+  "gal": {
+   "name": "Gálatas",
+   "to": "As igrejas da Galácia",
+   "when": "c. 48–49 d.C.",
+   "carrier": "",
+   "why": "Depois que Paulo partiu, algumas pessoas foram às igrejas da Galácia ensinando que os gentios que criam também precisavam ser circuncidados e guardar a lei para serem salvos. Os cristãos se deixaram abalar por essas palavras e se voltaram para outro evangelho. Paulo, espantado e aflito, escreveu esta carta.",
+   "heart": "Ninguém é justificado por guardar a lei, mas pela fé em Cristo, e nessa fé há verdadeira liberdade.",
+   "verses": [
+    "Fui crucificado com Cristo. Já não sou eu quem vive, mas Cristo vive em mim. Vivo pela fé no Filho de Deus, que me amou e se entregou por mim.",
+    "Foi para a liberdade que Cristo nos libertou. Por isso fiquem firmes e não se deixem prender de novo ao jugo da escravidão.",
+    "O fruto que o Espírito produz é amor, alegria, paz, paciência, bondade, generosidade, fidelidade, mansidão e domínio próprio."
+   ],
+   "view": "Alguns acham que foi escrita depois do concílio de Jerusalém, durante a terceira viagem, em Éfeso ou na Macedônia, por volta de 53–57 d.C."
+  },
+  "1th": {
+   "name": "1 Tessalonicenses",
+   "to": "A igreja de Tessalônica",
+   "when": "c. 50–51 d.C.",
+   "carrier": "",
+   "why": "Por causa da perseguição, Paulo teve de sair às pressas de Tessalônica. Preocupado, enviou Timóteo, e quando Timóteo voltou contando sobre a fé e o amor deles, Paulo escreveu esta carta com alegria. Também lhes deu esperança, porque estavam tristes sem saber o que acontecia com os cristãos que já tinham morrido.",
+   "heart": "A uma igreja que guardou a fé no sofrimento, Paulo anima a viver em santidade, esperando o dia da volta do Senhor.",
+   "verses": [
+    "Nós os amávamos tanto que estávamos dispostos a lhes dar não só o evangelho de Deus, mas até a nossa própria vida, porque vocês se tornaram muito queridos para nós.",
+    "Não fiquem tristes como os que não têm esperança. Se cremos que Jesus morreu e ressuscitou, Deus também trará com ele os que dormiram em Jesus.",
+    "Alegrem-se sempre. Orem sem cessar. Deem graças em tudo. Esta é a vontade de Deus para vocês em Cristo Jesus."
+   ],
+   "view": ""
+  },
+  "2th": {
+   "name": "2 Tessalonicenses",
+   "to": "A igreja de Tessalônica",
+   "when": "c. 51 d.C.",
+   "carrier": "",
+   "why": "Os cristãos de Tessalônica ficaram abalados com a notícia de que o dia do Senhor já tinha chegado, e alguns deixaram de trabalhar e viviam na ociosidade. Paulo escreveu esta carta para explicar o que aconteceria antes desse dia e para pedir que vivessem em paz, cada um fazendo o seu trabalho.",
+   "heart": "Não se deixem abalar a respeito do dia da volta do Senhor; segurem firme o ensino recebido e vivam o dia de hoje com fidelidade.",
+   "verses": [
+    "O Senhor é fiel. Ele vai fortalecer vocês e guardá-los do Maligno.",
+    "Quando estávamos com vocês, já lhes dissemos: se alguém não quer trabalhar, também não coma.",
+    "Que o Senhor da paz lhes dê paz sempre e de todas as formas. O Senhor esteja com todos vocês."
+   ],
+   "view": ""
+  },
+  "1co": {
+   "name": "1 Coríntios",
+   "to": "A igreja de Corinto",
+   "when": "c. 54–55 d.C.",
+   "carrier": "",
+   "why": "Quando Paulo estava em Éfeso, pessoas da casa de Cloe lhe contaram que a igreja de Corinto estava dividida em grupos. A igreja de Corinto também enviou uma carta com perguntas sobre casamento, carne oferecida aos ídolos e outros assuntos. Paulo escreveu esta carta respondendo a cada uma dessas questões.",
+   "heart": "A uma igreja dividida e cheia de brigas, Paulo diz que sejam um só corpo no evangelho da cruz e no amor.",
+   "verses": [
+    "A mensagem da cruz parece loucura para os que estão se perdendo. Mas para nós, que estamos sendo salvos, é o poder de Deus.",
+    "O amor é paciente e bondoso. O amor não tem inveja, não se vangloria, não se orgulha. Não é grosseiro, não procura os próprios interesses, não se irrita facilmente, não guarda rancor do mal que sofreu.",
+    "Cristo morreu pelos nossos pecados, como dizem as Escrituras, foi sepultado e ressuscitou no terceiro dia, como dizem as Escrituras."
+   ],
+   "view": ""
+  },
+  "2co": {
+   "name": "2 Coríntios",
+   "to": "A igreja de Corinto e todos os cristãos da Acaia",
+   "when": "c. 56 d.C.",
+   "carrier": "Tito e dois irmãos",
+   "why": "Depois de enviar à igreja de Corinto uma carta escrita com lágrimas, Paulo ficou aflito. Quando Tito o encontrou na Macedônia e trouxe a boa notícia de que os cristãos tinham se arrependido, Paulo escreveu esta carta para partilhar o consolo, responder aos que duvidavam do seu apostolado e pedir que preparassem a oferta para ajudar os cristãos de Jerusalém.",
+   "heart": "Um tesouro guardado em pessoas frágeis como vasos de barro: o poder de Deus se aperfeiçoa na fraqueza.",
+   "verses": [
+    "Temos este tesouro em vasos de barro, para mostrar que esse poder extraordinário vem de Deus e não de nós.",
+    "Se alguém está em Cristo, é nova criação. As coisas antigas já passaram. Vejam: tudo se fez novo.",
+    "O Senhor me disse: A minha graça é suficiente para você, pois o meu poder se aperfeiçoa na fraqueza. Por isso, com muito mais alegria vou me gloriar nas minhas fraquezas, para que o poder de Cristo repouse sobre mim."
+   ],
+   "view": ""
+  },
+  "rom": {
+   "name": "Romanos",
+   "to": "Os cristãos de Roma",
+   "when": "c. 57 d.C.",
+   "carrier": "Febe, serva da igreja de Cencreia",
+   "why": "Fazia muito tempo que Paulo queria ir a Roma. Como planejava levar a Jerusalém a oferta recolhida pelos cristãos da Macedônia e da Acaia e depois seguir, passando por Roma, até a Espanha, enviou esta carta aos cristãos de Roma, que ainda não conhecia, explicando passo a passo o evangelho que anunciava.",
+   "heart": "Judeus e gentios, todos estão debaixo do pecado, mas todo aquele que crê em Jesus Cristo é justificado diante de Deus.",
+   "verses": [
+    "Não me envergonho do evangelho, porque ele é o poder de Deus para a salvação de todo aquele que crê: primeiro do judeu, e também do grego.",
+    "Quando ainda éramos pecadores, Cristo morreu por nós. Assim Deus mostrou o seu amor por nós.",
+    "Nem a morte nem a vida, nem anjos nem poderes, nem o presente nem o futuro, nada poderá nos separar do amor de Deus que está em Cristo Jesus, nosso Senhor."
+   ],
+   "view": ""
+  },
+  "php": {
+   "name": "Filipenses",
+   "to": "Os cristãos de Filipos",
+   "when": "c. 61–62 d.C.",
+   "carrier": "Epafrodito",
+   "why": "A igreja de Filipos enviou Epafrodito a Paulo, que estava preso, para lhe entregar uma oferta. Epafrodito ficou doente a ponto de morrer ao lado de Paulo, mas se recuperou. Ao mandá-lo de volta, Paulo escreveu esta carta para agradecer e para pedir que vivessem unidos e se alegrassem no Senhor.",
+   "heart": "Mesmo preso em correntes, é possível se alegrar em Cristo, e em qualquer situação ele é a nossa força.",
+   "verses": [
+    "Para mim, o viver é Cristo, e o morrer é lucro.",
+    "Não andem ansiosos por coisa alguma. Em tudo, pela oração e com ação de graças, apresentem a Deus os seus pedidos. E a paz de Deus, que vai além de todo entendimento humano, guardará o coração de vocês.",
+    "Tudo posso naquele que me dá forças."
+   ],
+   "view": "Alguns acham que foi escrita quando Paulo estava preso em Éfeso ou em Cesareia."
+  },
+  "phm": {
+   "name": "Filemom",
+   "to": "Filemom, de Colossos, e a igreja que se reúne na casa dele",
+   "when": "c. 61 d.C.",
+   "carrier": "Onésimo e Tíquico",
+   "why": "Onésimo, um escravo que tinha deixado Filemom, encontrou Paulo, que estava preso, e se tornou cristão. Ao mandar Onésimo de volta ao seu senhor Filemom, Paulo escreveu esta carta curta pedindo que o recebesse não mais como escravo, mas como irmão amado.",
+   "heart": "O evangelho transforma até senhor e escravo em irmãos.",
+   "verses": [
+    "Antes Onésimo era inútil para você, mas agora é útil tanto para você como para mim.",
+    "Receba-o agora não como escravo, mas como alguém melhor que um escravo: como irmão amado.",
+    "Se ele lhe fez algum mal ou lhe deve alguma coisa, ponha na minha conta."
+   ],
+   "view": "Alguns acham que foi escrita quando Paulo estava preso em Éfeso."
+  },
+  "col": {
+   "name": "Colossenses",
+   "to": "Os cristãos de Colossos",
+   "when": "c. 61 d.C.",
+   "carrier": "Tíquico e Onésimo",
+   "why": "Epafras, que tinha levado o evangelho a Colossos, deu a Paulo notícias da igreja. Tinham entrado ali ensinos como filosofias humanas, regras sobre comida e culto aos anjos. Paulo escreveu esta carta para lembrar que Cristo, e somente ele, basta.",
+   "heart": "Em Cristo, que existe antes de todo o mundo, habita toda a plenitude de Deus, e nele nada nos falta.",
+   "verses": [
+    "Ele existe antes de todas as coisas, e nele tudo se mantém.",
+    "Em Cristo habita corporalmente toda a plenitude da divindade. E vocês também receberam a plenitude nele.",
+    "Tudo o que fizerem, façam de todo o coração, como para o Senhor e não para as pessoas."
+   ],
+   "view": "Alguns acham que foi escrita quando Paulo estava preso em Éfeso ou em Cesareia."
+  },
+  "eph": {
+   "name": "Efésios",
+   "to": "Os cristãos de Éfeso",
+   "when": "c. 61 d.C.",
+   "carrier": "Tíquico",
+   "why": "Esta carta não foi escrita para resolver alguma briga. Paulo a escreveu para mostrar como é abundante a graça que Deus nos deu em Cristo e como ele uniu judeus e gentios num só corpo, e para pedir que vivessem de modo digno desse chamado.",
+   "heart": "Os que foram salvos pela graça se tornaram um só corpo em Cristo; vivam unidos, de modo digno desse chamado.",
+   "verses": [
+    "Vocês foram salvos pela graça, por meio da fé. Isso não vem de vocês: é dom de Deus. Não vem das obras, para que ninguém se orgulhe.",
+    "Sejam sempre humildes e mansos, sejam pacientes e suportem uns aos outros com amor. Esforcem-se para conservar a unidade que o Espírito dá, unidos pelo vínculo da paz.",
+    "Fortaleçam-se no Senhor e no seu grande poder. Vistam toda a armadura que Deus dá, para poderem resistir às ciladas do diabo."
+   ],
+   "view": "Alguns acham que foi escrita quando Paulo estava preso em Éfeso ou em Cesareia. Como alguns manuscritos antigos não trazem o destino “em Éfeso”, há quem a veja como uma carta que circulava entre várias igrejas."
+  },
+  "1ti": {
+   "name": "1 Timóteo",
+   "to": "Timóteo, em Éfeso",
+   "when": "c. 63 d.C.",
+   "carrier": "",
+   "why": "Ao partir para a Macedônia, Paulo deixou Timóteo em Éfeso e lhe confiou a tarefa de deter os que ensinavam doutrinas diferentes. Paulo escreveu esta carta para mostrar como se deve viver na igreja, que é a casa de Deus, e que tipo de pessoas devem ser escolhidas como bispos e diáconos.",
+   "heart": "A um jovem obreiro, Paulo recomenda guardar o ensino correto e combater o bom combate da fé.",
+   "verses": [
+    "Cristo Jesus veio ao mundo para salvar os pecadores. Esta palavra é digna de confiança e merece ser aceita por todos. E eu sou o principal dos pecadores.",
+    "Não deixe que ninguém o despreze por ser jovem. Pelo contrário, seja exemplo para os que creem, na palavra, no procedimento, no amor, na fé e na pureza.",
+    "Combata o bom combate da fé. Tome posse da vida eterna, para a qual você foi chamado."
+   ],
+   "view": "A carta não diz onde foi escrita; seguindo a frase de que Paulo deixou Timóteo ao partir para a Macedônia (1Tm 1:3), consideramos que foi na Macedônia. No mapa, o ponto está em Filipos, na Macedônia. Como é posterior ao fim de Atos, há quem date a carta de outra forma."
+  },
+  "tit": {
+   "name": "Tito",
+   "to": "Tito, em Creta",
+   "when": "c. 63–64 d.C.",
+   "carrier": "",
+   "why": "Paulo deixou Tito em Creta e lhe confiou a tarefa de pôr em ordem o que faltava e escolher presbíteros em cada cidade. Lá havia pessoas que enganavam os outros com conversas vazias. Nesta carta Paulo explicou que tipo de pessoas deviam ser presbíteros e como os cristãos deviam se dedicar às boas obras.",
+   "heart": "A graça de Deus que nos salvou nos transforma em pessoas dedicadas às boas obras.",
+   "verses": [
+    "A graça de Deus, que traz salvação a todas as pessoas, se manifestou. Ela nos ensina a renunciar à impiedade e aos desejos do mundo e a viver neste mundo com domínio próprio, justiça e piedade.",
+    "Deus nos salvou não por causa das obras justas que fizemos, mas por causa da sua misericórdia. O Espírito Santo nos lavou, nos fez nascer de novo e nos renovou.",
+    "Esta palavra é digna de confiança. Fale dessas coisas com firmeza, para que os que creem em Deus se dediquem às boas obras."
+   ],
+   "view": "A carta não diz onde foi escrita. Como Paulo pretendia passar o inverno em Nicópolis (Tt 3:12), entende-se que foi escrita no caminho da Macedônia para Nicópolis. No mapa, o ponto está em Filipos, na Macedônia. Há quem date a carta de outra forma."
+  },
+  "2ti": {
+   "name": "2 Timóteo",
+   "to": "Timóteo",
+   "when": "c. 66–67 d.C.",
+   "carrier": "",
+   "why": "Preso de novo em Roma, Paulo sabia que a hora da sua partida estava perto. Só Lucas tinha ficado com ele. Paulo pediu ao seu filho amado Timóteo que viesse depressa antes do inverno e trouxesse a capa e os livros que tinham ficado para trás, e deixou as últimas recomendações: guardar o evangelho e suportar os sofrimentos.",
+   "heart": "O velho apóstolo, que correu até o fim, passa o bastão do evangelho à geração seguinte.",
+   "verses": [
+    "O Espírito que Deus nos deu não é espírito de medo, mas de poder, de amor e de domínio próprio.",
+    "Toda a Escritura é soprada por Deus e é útil para ensinar, para convencer do erro, para corrigir e para treinar na justiça.",
+    "Combati o bom combate, terminei a corrida, guardei a fé. Agora me está reservada a coroa da justiça."
+   ],
+   "view": ""
+  }
+ }
+}

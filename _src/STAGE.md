@@ -15,6 +15,7 @@
 | `stage/goodnews.js` | 기쁜 소식 여정의 대본(GOODNEWS, g01–g04) |
 | `stage/proverbs.js` | 잠언 여정의 대본(PROVERBS, p01…) — 거리 무대 |
 | `stage/david.js`, `stage/david/` | 다윗 여정의 대본(DAVID, d01–d39) — 묶음마다 파일 하나(`a.js` d01–d10, `b.js` d11–d20, `c.js` d21–d30, `d.js` d31–d39)를 david.js가 합친다. 다윗 여정에만 쓰는 소품은 `stage/david/props.js`(MAKERS에 더함) |
+| `stage/paul.js`, `stage/paul/` | 바울 여정의 대본(PAUL, a01–a42) — 묶음 파일(`a.js` a01–a11 …)을 paul.js가 합친다. 소품은 `stage/paul/props.js` |
 | `stage/street.js` | 거리 무대의 표: 세트 이름 → 만들기(STREETS), 분위기마다 하늘빛(SKIES) |
 | `stage/street/view.js` | 거리 무대를 화면 가득 그리는 쪽(세트 바꾸기·하늘·카메라 자리·카드 비켜 그리기) — stage.js가 `createStreet`로 만들어 쓴다 |
 | `stage/street/kit.js` | 거리 세트의 공통 도구: 축척 `M`, 캔버스 결(돌·회벽·포석·흙), `block`·`many`(InstancedMesh)·`overlay` |
@@ -161,6 +162,18 @@ e02: {
 - **묶음 c(k23–k31, `stage/kings/c.js`, 소품·인물 `stage/kings/props-c.js` — c.js가 import)**: 인물 joashY(관 쓰기 전 아이 요아스 — 관을 씌울 때 joashboy로 바꿔 낀다)·arameanW(나아만의 아내)·shunamhus(수넴 여인의 늙은 남편)·aramK(아람 왕)·eunuch(이세벨 곁의 내시). 소품 strike(땅을 세 번 치는 화살 다발 held/strike/down)·kwindow(창과 덧문이 난 옆벽 shut/open — 비스듬히 rot을 주어야 앞에서 창이 보인다)·chain(손목을 이은 사슬 — 행렬과 같은 speed로 x 방향으로만 걷게)·haze(눈이 어두워짐 — 머리 높이 잿빛 안개 on/off)·axe(손 앞에서 휘두르는 도끼 chop/idle/empty).
 - 요단(k24·k25)의 river 소품은 지도의 요단 줄기 위(x ≈ -0.2)에 둔다 — 핀 오른쪽에 두니 지도의 강과 두 줄기가 되었다. 몸을 담그는 나아만은 흰 속옷(naamanH)에 배역 y를 -0.95/-0.3으로 오르내린다(강바닥 면이 물 밑을 가린다). roomhouse의 다락방은 예전에 높이 0.5라 선 사람의 머리가 지붕을 뚫었다 — 이제 1.0이라 방 안에 선다(k14·k23, 묶음 b의 upperroom을 합쳤다).
 - 수넴의 아이·엘리사의 죽음은 누운 채(sleep) 고요히, 요람·이세벨은 show 0으로 사라짐(화살·내던짐 없음), 아달랴는 호위병 둘과 걸어 나가 사라짐, 비웃던 장관은 앞서 성 안으로 들어가 다시 나오지 않는다.
+
+### 바울 여정 (stage/paul.js, stage/paul/)
+- 묶음마다 파일 하나(`a.js` a01–a11, 뒤로 `b.js` a12–a22, `c.js` a23–a32, `d.js` a33–a42)를 paul.js가 합치고, intro 앞에 처음 자리로 되돌리는 명령을 붙인다(kings.js와 같다). 여정 전용 소품은 `stage/paul/props.js`(더 커지면 `props-b.js`…로 나눈다), 인물은 people.js의 '바울 여정' 묶음. 다윗·열왕기 소품(stonethrow·haze·provisions·kwall·hall·roomhouse…)도 그대로 쓴다. `sheet.mjs`는 a로 시작하는 장면을 `?j=paul`로 연다.
+- 소아시아·헬라·이달리야는 3D 지형 지역 밖이라 3D 모드에서도 무대가 평평한 지중해 바탕 위에 선다(열왕기의 바벨론처럼). 예수 때 예루살렘 도성 모형은 켜져 있다(`noCity` 아님) — a01·a05는 2D에서도 도성 그림 위에 선다.
+- **주님은 모습 없이 빛과 목소리로만**: 다메섹 길(a02)은 `heavenlight`(하늘에서 내리꽂히는 흰 빛 기둥·흰 웅덩이·빛무리, state 'on' | 'speak' — 말씀하실 때 숨 쉬듯 밝아진다). 낮에도 보이게 보통 섞음의 흰빛. 환상(a03)·성령(a07)은 `beam`.
+- **돌로 치는 일은 그리지 않는다**: 스데반(a01)·루스드라(a10)는 `stonethrow`(돌이 날아가 그 사람 앞 땅에 떨어지고 흙먼지) — 맞는 모습·피 없음. 스데반은 빛 속에 무릎 꿇어 기도하다가 고요히 사라진다(누운 모습은 상여처럼 보여 쓰지 않았다). 바울은 `topple`로 쓰러졌다가 제자들이 둘러서면 일어난다.
+- a01 공의회 → 성 밖: 3D에서는 `@at`으로 무대를 동쪽 성벽 밖 기드론 비탈(31.7803, 35.2388)로 옮긴다(e16과 같은 방식). 2D에서는 무대 오른쪽(성전 산 동쪽 골짜기 위)이 돌밭이다.
+- 인물: sauly(젊은 바리새인 사울 — 흰 속옷·남청 겉옷·머릿수건) → saulB(흐린 눈의 눈먼 사울, 같은 자리에서 show로 바꿔 낀다) → paul(길 떠나는 사도: 황토 겉옷·지팡이)·paulS(지팡이 없이 — 광주리·앉을 때·손에 든 것)·paulO(흰 머리), barnabas(올리브 초록 겉옷, 바울보다 큰 키 1.02), stephen(청록 겉옷), ananias, judasD, councilor, witness, templeguard, jamesL, hellenist, greek·greek2·greekW(머릿수건 없는 헬라 사람), simeon·lucius(짙은 얼굴)·manaen, agabus, mark(수염 없는 젊은이), proconsul·magistrate·governor(토가), elymas(짙은 자줏빛 두건), lictor, ruler(회당장), jewD, noblewoman, lame, lycaonian·lycaonianW, zeuspriest(화관), elderC, nabatean(아레다의 파수꾼), townsman. 뒤 묶음용: silas, timothy, luke, lydia, slavegirl, jailer, tribune(놋 흉갑·볏 투구·칼), philosopher·philosopher2, ephesian, sailor, islander, agrippa, bernice. 로마 군사·백부장은 예수 여정의 soldier·centurion.
+- 새 꾸밈: `toga`(천 색 — 왼어깨에서 오른허리로 비스듬히 두른 두꺼운 천과 앞으로 늘어진 자락, `togaStripe`면 자줏빛·붉은 단), `wreath`(잎 색 — 이마를 두른 화관).
+- 소품 (stage/paul/props.js): council(공의회 반원 두 층 돌 의자 — 반원 가운데 (0, 0.15), 앞줄 의원 y 0.12 pose sit, 뒤 가운데 대제사장 자리 y 0.22) · cloakpile(벗어 둔 겉옷, show로 하나씩) · heavenlight · scalefall(눈에서 떨어지는 비늘, 'fall') · pour(머리 위에서 기우는 물병과 물줄기, 'pour' — 세례) · road(가장자리가 풀린 흙길, `len`·`w`) · farcity(먼 성, `dia`) · wallbasket(창 난 높은 성벽: `gate` 자리의 문·탑·횃불, `wx` 자리의 창과 등잔빛, 밧줄 광주리 deck — state 'idle'(낮) | 'up'(창 앞, 등잔) | 'lower'(천천히 내려감) | 'down'. 성벽 위 사람은 y = `h`) · colonnade(기둥 줄 거리 — 뒤 한 줄 기둥과 회랑 지붕·가게 문, 앞줄은 사람을 가려 세우지 않는다) · synahall(회당 안 — 뒤·양옆 두 층 돌 의자, 앞줄 y 0.1, 율법 궤, 낭독대 `bx`) · housechurch(등잔대 둘·깔개·벽감 두루마리·낮은 상 `table`) · bema(총독의 재판석 — 돌 단 heightAt 0.2, 상아 접의자에 앉은 사람은 배역 y 0.36, 뒤 두 기둥) · gtemple(헬라 신전 — 기단·기둥·박공, `altar: [x, z]`의 제단 'fire', `label`이면 제단에 새긴 판 — 아덴의 '알지 못하는 신') · garlandox(화관 두른 소) · ship(상선 — 거위 목 고물대·큰 네모 돛 'sail'|'furled'·앞돛대·키 둘·선실, 물결에 흔들림, deck에 board, `big` 크기·`oars` 노 수·`directional`).
+- makeProp은 `size`를 축마다의 배열로 받는다 — 소품 자체 크기 옵션은 `dia`·`big`처럼 다른 이름으로.
+- 따라다니는 소품은 `on: '배역'`(beam·haze): 빛이 스데반·바울을, 눈을 덮는 안개가 엘루마를 따라간다.
 
 ### 인물 유형 (TYPES)
 jesus, mary, joseph, angel, woman, woman2, mother, anna, john(젊은 제자, 수염 없음), disciple, peter, man, elder, shepherd, magus, magus2, magus3, king, soldier(창), pharisee, child, boyJesus, baptist, tempter, steward, groom, servant, crossed(십자가 위 예수 — 실루엣 전용), thief(실루엣 전용)

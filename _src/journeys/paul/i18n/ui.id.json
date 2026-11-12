@@ -1,0 +1,100 @@
+{
+ "appTag": "Paulus · Injil sampai ke ujung bumi",
+ "docTitle": "Sang Jalan — Paulus | Injil sampai ke ujung bumi",
+ "metaDesc": "Dari cahaya di jalan ke Damsyik sampai rumah sewaan di Roma. Telusuri 42 adegan kisah Paulus di atas peta Alkitab, dan bacalah surat-surat yang ditulisnya di tempat-tempat itu.",
+ "mapAria": "Jalan Paulus dari Yerusalem sampai Roma pada peta Laut Tengah",
+ "introTag": "Dari jalan ke Damsyik sampai Roma, jalan Injil menuju ujung bumi",
+ "introLead": "Jelajahi peta dan ikuti perjalanan Paulus, lalu bacalah surat-surat yang ditulisnya di tempat-tempat itu.",
+ "introF1": "Ikuti tempat-tempatnya, dari Antiokhia dan Efesus, Filipi dan Korintus, sampai menyeberangi laut ke Roma",
+ "introF3": "Dengarkan kisahnya dibacakan, dan bacalah surat-surat Paulus yang ditulis di tempat itu",
+ "landStep2": "Baca kisah dan teks di kartu, lalu tekan ▶ untuk mendengarkannya",
+ "landStep4": "Kumpulkan firman Tuhan dan perkataan Paulus di tab '{words}' dan ingat kembali adegan yang telah dilalui dengan '{quiz}'",
+ "jesus": "Tuhan",
+ "hisWords": "Firman Tuhan dan perkataan Paulus",
+ "wordsHead": "Firman Tuhan dan perkataan Paulus",
+ "wordsIntro": "Firman yang diucapkan Tuhan dan perkataan yang disampaikan Paulus di sepanjang jalannya, dihimpun menurut urutan perjalanan. Setiap perkataan adalah terjemahan baru yang menghidupkan makna aslinya dalam bahasa masa kini.",
+ "odoTitle": "Jarak yang ditempuh sampai adegan ini (perkiraan jalan dan pelayaran antartempat; langkah 75 cm)",
+ "gospels": {
+  "acts": [
+   "Kisah Para Rasul",
+   "Kis"
+  ],
+  "gal": [
+   "Galatia",
+   "Gal"
+  ],
+  "1th": [
+   "1 Tesalonika",
+   "1Tes"
+  ],
+  "2th": [
+   "2 Tesalonika",
+   "2Tes"
+  ],
+  "1co": [
+   "1 Korintus",
+   "1Kor"
+  ],
+  "2co": [
+   "2 Korintus",
+   "2Kor"
+  ],
+  "rom": [
+   "Roma",
+   "Rm"
+  ],
+  "php": [
+   "Filipi",
+   "Flp"
+  ],
+  "phm": [
+   "Filemon",
+   "Flm"
+  ],
+  "col": [
+   "Kolose",
+   "Kol"
+  ],
+  "eph": [
+   "Efesus",
+   "Ef"
+  ],
+  "1ti": [
+   "1 Timotius",
+   "1Tim"
+  ],
+  "tit": [
+   "Titus",
+   "Tit"
+  ],
+  "2ti": [
+   "2 Timotius",
+   "2Tim"
+  ]
+ },
+ "endLead": "Dari jalan ke Damsyik sampai rumah sewaan di Roma — terima kasih telah berjalan bersama kami.",
+ "blessing": "Aku telah mengakhiri pertandingan yang baik, aku telah mencapai garis akhir, dan aku telah memelihara iman. (2Tim 4:7)\nKiranya Dia yang memanggil Paulus di jalan ke Damsyik juga memanggil nama Anda, dan berjalan bersama Anda di jalan itu sampai akhir, di mana pun Anda berada.",
+ "map": {
+  "수 리 아": "SIRIA",
+  "길 리 기 아": "KILIKIA",
+  "갈 라 디 아": "GALATIA",
+  "아 시 아": "ASIA",
+  "마 게 도 냐": "MAKEDONIA",
+  "아 가 야": "AKHAYA",
+  "이 탈 리 아": "ITALIA",
+  "구 브 로": "SIPRUS",
+  "다소": "Tarsus",
+  "이고니온": "Ikonium",
+  "버가": "Perga",
+  "네압볼리": "Neapolis",
+  "베뢰아": "Berea",
+  "겐그레아": "Kengkrea",
+  "로도": "Rodos",
+  "시라구사": "Sirakusa",
+  "레기온": "Regium",
+  "보디올": "Puteoli",
+  "지 중 해": "Laut Tengah",
+  "에 게 해": "Laut Aegea",
+  "흑 해": "Laut Hitam"
+ }
+}
