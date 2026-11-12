@@ -538,29 +538,63 @@ function animateTo(target, ms) {
 }
 
 // 2D 지도 끌기: 손가락·마우스로 끌어 둘러본다 (3D 모드에서는 terrain.js가 맡는다).
-// 6px 넘게 움직여야 끌기로 보고, 그때는 뒤따르는 클릭(핀 누르기)을 삼킨다. 가운데가 전체 경로 땅 밖으로 너무 멀리 나가지 않게 잡는다
+// 6px 넘게 움직여야 끌기로 보고, 그때는 뒤따르는 클릭(핀 누르기)을 삼킨다. 가운데가 전체 경로 땅 밖으로 너무 멀리 나가지 않게 잡는다.
+// 두 손가락이면 벌리고 오므려 확대·축소(손가락 사이 가운데를 붙박고), PC에서는 휠로 — 휴대폰에서 자유롭게 늘려 보고 싶었다(사용자)
 (() => {
-  let drag = null;
+  let drag = null, pinch = null;
+  const pts = new Map(); // 지도에 닿아 있는 손가락들의 마지막 자리
+  const B = () => onEden() ? EDEN : landNow(); // 에덴 장면에서는 그 따로 떨어진 무대 안에서 (먼 바벨론에서는 그곳까지 넓힌 땅 안에서)
+  const clampW = w => Math.min(Math.max(w, 8), B().w * 1.3); // +/− 단추(zoomMap)와 같은 한계
+  // 가운데가 땅 밖으로 너무 멀리 나가지 않게
+  const keep = (x, y, w, h) => { const b = B(), cx = Math.min(b.x + b.w * 1.25, Math.max(b.x - b.w * 0.25, x + w / 2)), cy = Math.min(b.y + b.h * 1.25, Math.max(b.y - b.h * 0.25, y + h / 2)); return { x: cx - w / 2, y: cy - h / 2, w, h }; };
+  const startPinch = () => {
+    const [a, b] = [...pts.values()];
+    pinch = { d: Math.hypot(a.x - b.x, a.y - b.y) || 1, mx: (a.x + b.x) / 2, my: (a.y + b.y) / 2, v: { ...view } };
+    drag = null; cancelAnimationFrame(anim); followWalk = false; map.classList.add('dragging');
+  };
   map.addEventListener('pointerdown', e => {
-    if (window.terrainOn || e.button > 0 || drag) return;
+    if (window.terrainOn || e.button > 0) return;
+    pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pts.size === 2) { startPinch(); try { [...pts.keys()].forEach(id => map.setPointerCapture(id)); } catch {} return; }
+    if (drag || pinch) return;
     drag = { id: e.pointerId, x: e.clientX, y: e.clientY, v: { ...view }, moved: false };
   });
   map.addEventListener('pointermove', e => {
+    if (pts.has(e.pointerId)) pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pinch) {
+      if (pts.size < 2) return;
+      const [a, b] = [...pts.values()], r = map.getBoundingClientRect();
+      const d = Math.hypot(a.x - b.x, a.y - b.y) || 1, mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+      const v = pinch.v, w = clampW(v.w * pinch.d / d), k = w / v.w;
+      // 처음 손가락 가운데 아래 있던 지도 자리가 지금 손가락 가운데 아래 오게 (벌리며 옮기면 따라 움직인다)
+      const u0 = v.w / r.width, u1 = u0 * k, ax = v.x + (pinch.mx - r.left) * u0, ay = v.y + (pinch.my - r.top) * u0;
+      view = keep(ax - (mx - r.left) * u1, ay - (my - r.top) * u1, w, v.h * k);
+      applyView();
+      return;
+    }
     if (!drag || e.pointerId !== drag.id) return;
     if (e.pointerType === 'mouse' && !e.buttons) { drag = null; map.classList.remove('dragging'); return; } // 지도 밖에서 놓아 pointerup을 놓친 경우
     const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
     if (!drag.moved) {
       if (Math.hypot(dx, dy) < 6) return;
-      drag.moved = true; cancelAnimationFrame(anim); followWalk = false; // 걷는 중에 끌면 카메라 따라가기를 멈춘다 map.setPointerCapture(e.pointerId); map.classList.add('dragging');
+      drag.moved = true; cancelAnimationFrame(anim); followWalk = false; // 걷는 중에 끌면 카메라 따라가기를 멈춘다
+      map.setPointerCapture(e.pointerId); map.classList.add('dragging');
     }
     const u = map.viewBox.baseVal.width / map.getBoundingClientRect().width;
-    const B = onEden() ? EDEN : landNow(); // 에덴 장면에서는 그 따로 떨어진 무대 안에서 (먼 바벨론에서는 그곳까지 넓힌 땅 안에서)
-    const { w, h } = drag.v, cx = Math.min(B.x + B.w * 1.25, Math.max(B.x - B.w * 0.25, drag.v.x + w / 2 - dx * u));
-    const cy = Math.min(B.y + B.h * 1.25, Math.max(B.y - B.h * 0.25, drag.v.y + h / 2 - dy * u));
-    view = { x: cx - w / 2, y: cy - h / 2, w, h };
+    const { w, h } = drag.v;
+    view = keep(drag.v.x - dx * u, drag.v.y - dy * u, w, h);
     applyView();
   });
   const end = e => {
+    pts.delete(e.pointerId);
+    if (pinch) {
+      if (pts.size >= 2) { startPinch(); return; }
+      pinch = null; quietUntil = performance.now() + 250;
+      // 한 손가락이 남으면 그 자리부터 이어서 끈다 (튀지 않게)
+      const [id, p] = [...pts.entries()][0] || [];
+      if (id != null) drag = { id, x: p.x, y: p.y, v: { ...view }, moved: true }; else map.classList.remove('dragging');
+      return;
+    }
     if (!drag || e.pointerId !== drag.id) return;
     if (drag.moved) { map.classList.remove('dragging'); quietUntil = performance.now() + 250; }
     drag = null;
@@ -569,6 +603,16 @@ function animateTo(target, ms) {
   let quietUntil = 0;
   map.addEventListener('click', ev => { if (performance.now() < quietUntil) { ev.stopPropagation(); ev.preventDefault(); } }, { capture: true });
   addEventListener('pointerup', end); addEventListener('pointercancel', end); // 지도 밖에서 놓아도 끝나게 (끌기 문턱을 넘기 전엔 포인터를 붙잡지 않았다)
+  // PC 휠(트랙패드 두 손가락 오므리기는 ctrl+휠로 온다): 마우스 자리를 붙박고 늘리고 줄인다
+  map.addEventListener('wheel', e => {
+    if (window.terrainOn) return;
+    e.preventDefault();
+    const r = map.getBoundingClientRect(), w = clampW(view.w * Math.exp(e.deltaY * (e.ctrlKey ? 0.01 : 0.0015))), k = w / view.w, u0 = view.w / r.width;
+    const ax = view.x + (e.clientX - r.left) * u0, ay = view.y + (e.clientY - r.top) * u0;
+    cancelAnimationFrame(anim); followWalk = false;
+    view = keep(ax - (e.clientX - r.left) * u0 * k, ay - (e.clientY - r.top) * u0 * k, w, view.h * k);
+    applyView();
+  }, { passive: false });
 })();
 
 // 2D 지도 확대·축소(+/− 단추, terrain.js의 조작기가 3D가 꺼져 있을 때 부른다). 지금 장소 핀이 화면에 있으면 그 자리를 붙박고 늘리고 줄여
