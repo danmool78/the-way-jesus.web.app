@@ -5,6 +5,8 @@ on:
   schedule:
     - cron: '23 15 * * *'   # 한국 시간 0:23 — 하루가 끝난 뒤
   workflow_dispatch:
+  push:
+    branches: [claude/visit-stats]   # 시험용 — 병합 전에 뺀다
 permissions:
   contents: write
 jobs:
