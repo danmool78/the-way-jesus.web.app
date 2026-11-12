@@ -1584,7 +1584,7 @@ function setListenUI() {
 // 낭독과 함께 켜지고 함께 멈춘다 (자동 여정의 장면 사이에도 낭독이 없으면 쉰다). 딸깍 소리가 나지 않게 0.3초만 오르내린다.
 // 소리 크기는 Web Audio 사슬로만 정한다 (아이폰은 audio 요소의 volume을 무시한다). 낭독 소리는 이 사슬에 넣지 않는다
 const BGM = { key: 'theway-music', level: 0.144, fade: 2.5, out: 5, rest: 3, stop: 4.5 }; // out: 반복·곡 바꿈에 내리고 올리는 시간, rest: 그 사이 쉬는 시간, stop: 낭독이 멈춘 뒤 내려가는 시간(초) — 사용자 요청으로 더 천천히(3·0.3에서) // level: 사용자 요청으로 0.16에서 10% 낮춤
-let bgmCtx = null, bgmPlayers = [], bgmCur = 0, bgmCue = null, bgmLast = null, bgmLoop = null, bgmGo = 0;
+let bgmCtx = null, bgmPlayers = [], bgmCur = 0, bgmCue = null, bgmLast = null, bgmLoop = null, bgmGo = 0, bgmStale = false;
 // 켜고 끈 것은 메모리에 두고 localStorage에는 남겨 두기만 한다 (저장이 막힌 브라우저에서도 이번 방문 동안은 끌 수 있게)
 let bgmPref = (() => { try { return localStorage.getItem(BGM.key) !== 'off'; } catch { return true; } })();
 const bgmOn = () => bgmPref;
@@ -1592,6 +1592,9 @@ function bgmReady() {
   if (bgmCtx) return true;
   const Ctx = window.AudioContext || window.webkitAudioContext;
   if (!Ctx) return false;
+  // 아이폰은 무음(벨소리 끔) 스위치를 켜 두면 Web Audio를 거치는 소리만 막는다 — 낭독(<audio>)은 나오는데 배경음악만 안 나왔다(사용자).
+  // 오디오 세션을 '재생'으로 두면 무음 스위치와 상관없이 함께 나온다 (Safari 16.4+, 다른 브라우저엔 없는 속성이라 그냥 지나간다)
+  try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch {}
   bgmCtx = new Ctx();
   // 곡 안의 큰 대목은 눌러 두고, 말소리 대역(1~4kHz)을 비워 낭독이 그 위로 또렷하게 (리딩북 music.js와 같은 사슬)
   const squeeze = bgmCtx.createDynamicsCompressor();
@@ -1625,14 +1628,42 @@ function bgmReady() {
     const p = { el, gain, fade: null, hold: false }; // hold: 우리가 일부러 멈춘 것 (다시 틀지 않는다)
     return p;
   });
-  // 오디오가 막히면(기기가 'interrupted'·'suspended'로 바꿈) 다시 깨운다. 저절로 안 되면 다음에 화면을 누를 때
-  bgmCtx.onstatechange = () => { if (bgmCtx.state !== 'running' && bgmCue) bgmCtx.resume().catch(() => {}); };
-  addEventListener('pointerdown', () => {
-    if (!bgmCue) return;
-    if (bgmCtx.state !== 'running') bgmCtx.resume().catch(() => {});
-    const p = bgmPlayers[bgmCur]; if (p.el.paused && !p.hold && !p.wait) p.el.play().catch(() => {});
-  }, { passive: true });
+  // 오디오가 막히면(기기가 'interrupted'·'suspended'로 바꿈) 다시 깨운다. 저절로 안 되면 다음에 화면을 누를 때.
+  // 'interrupted'를 한 번 겪은 오디오는 깨워도 소리가 안 나는 채로 남는 일이 있어(아이폰 — 앱을 다시 켜야 나왔다, 사용자) 표시해 두고 새로 만든다
+  bgmCtx.onstatechange = () => {
+    if (bgmCtx.state === 'interrupted') bgmStale = true;
+    if (bgmCtx.state !== 'running' && bgmCue) bgmCtx.resume().catch(() => {});
+  };
+  if (!bgmReady.once) {
+    bgmReady.once = true;
+    // 화면을 누를 때마다 깨운다 — 재생 단추를 누르는 그 손길에도 깨워야 해서 bgmCue(낭독 중)를 따지지 않는다. 막혔던 오디오면 이 손길로 새로 만든다
+    addEventListener('pointerdown', () => {
+      if (!bgmCtx) return;
+      if (bgmStale && bgmCue) { bgmReset(); bgmFollow(); return; }
+      if (bgmCtx.state !== 'running') bgmCtx.resume().catch(() => {});
+      if (!bgmCue) return;
+      const p = bgmPlayers[bgmCur]; if (p.el.paused && !p.hold && !p.wait && !p.el.ended) p.el.play().catch(() => {});
+    }, { passive: true });
+    // 앱을 떠났다 돌아왔는데 오디오가 막혀 있으면 낡은 것으로 본다
+    document.addEventListener('visibilitychange', () => { if (!document.hidden && bgmCtx && bgmCtx.state !== 'running') bgmStale = true; });
+    // 지킴이: 오래 듣다 보면(화면 잠금·전화·알림·다른 앱 소리) 곡이 멈춘 채 다시 안 살아나 배경음악이 끝까지 사라졌다(사용자).
+    // 낭독 중이면 몇 초마다 살펴 깨우고, 멈춘 곡은 다시 틀고, 내려간 채 남은 소리는 올린다
+    setInterval(() => {
+      if (!bgmCtx || !bgmCue || paused || document.hidden) return;
+      if (bgmCtx.state !== 'running') bgmCtx.resume().catch(() => {});
+      const p = bgmPlayers[bgmCur]; if (p.wait || bgmLoop === p.el) return; // 곡 바꿈·반복 사이 쉬는 중은 그대로
+      if (p.el.ended) return; // 반복 사이 쉬는 중('ended'가 곧 다시 튼다)
+      if (p.el.paused) { p.hold = false; p.el.play().catch(() => {}); }
+      if (bgmLevel(p) < BGM.level - 0.01 && !(p.fade && p.fade.to >= BGM.level - 0.01)) { ++bgmGo; bgmRamp(p, BGM.level, BGM.out); }
+    }, 4000);
+  }
   return true;
+}
+// 막혔던 오디오를 버리고 다음 bgmReady에서 새로 만든다 (bgmFollow가 지금 곡을 처음부터 다시 올린다)
+function bgmReset() {
+  bgmPlayers.forEach(p => { p.hold = true; p.el.pause(); p.el.removeAttribute('src'); p.el.load(); });
+  try { bgmCtx.close(); } catch {}
+  ++bgmGo; bgmCtx = null; bgmPlayers = []; bgmCur = 0; bgmCue = null; bgmLast = null; bgmLoop = null; bgmStale = false;
 }
 // 지금 들리는 크기 (gain.value를 제대로 알려 주지 않는 브라우저가 있어 마지막 램프로 셈한다)
 const bgmLevel = p => { const f = p.fade; if (!f) return 0; const k = f.s > 0 ? Math.min(1, (bgmCtx.currentTime - f.at) / f.s) : 1; return f.from + (f.to - f.from) * Math.max(0, k); };
@@ -1670,15 +1701,16 @@ function bgmFollow() {
   // 노래(시편, 다윗 장면의 '이 자리에서 부른 노래')가 나오는 동안은 배경음악을 빨리 내린다 — 둘이 겹쳤다(사용자)
   const cue = bgmOn() && speaking && !song.on && EVENTS ? evAt(idx)?.music : null;
   if (!cue) { if (bgmCue) bgmStop(bgmOn() && !song.on ? BGM.stop : 1); return; } // 음악 단추로 끈 때·노래가 나올 때는 빨리
+  if (bgmStale && bgmCtx && navigator.userActivation?.isActive !== false) bgmReset(); // 새로 만드는 오디오는 손길 안에서라야 켜진다 — 아니면 다음 손길(pointerdown)에서
   if (!bgmReady()) return;
-  if (bgmCtx.state === 'suspended') bgmCtx.resume().catch(() => {});
+  if (bgmCtx.state !== 'running') bgmCtx.resume().catch(() => {}); // iOS는 'suspended'만이 아니라 'interrupted'로도 막힌다
   // 천천히 내려가던 같은 곡이면 이어서 다시 올린다 (낭독을 잠깐 멈췄다 다시 들을 때 곡이 끊겼다 처음부터 나오지 않게)
   if (!bgmCue && cue === bgmLast && bgmLevel(bgmPlayers[bgmCur]) > 0.005) bgmCue = cue;
   if (cue !== bgmCue) { bgmPlay(cue, bgmCue ? BGM.fade : 0.3); return; }
   // 같은 곡이 내려가던 중이면 그 자리에서 다시 올린다 (앞 곡이 다 내려가기를 기다리는 중이면 그대로 둔다)
   const p = bgmPlayers[bgmCur];
   if (p.wait) return;
-  if (p.el.paused) { p.hold = false; p.el.play().catch(() => {}); }
+  if (p.el.paused) { p.hold = false; bgmLoop = null; p.el.play().catch(() => {}); } // 반복 사이에 다시 틀면 '반복 중' 표시도 푼다 (남아 있으면 다음 끝에서 서서히 내리지 못했다)
   if (bgmLevel(p) < BGM.level - 0.01) { ++bgmGo; bgmRamp(p, BGM.level, 0.3); }
 }
 
