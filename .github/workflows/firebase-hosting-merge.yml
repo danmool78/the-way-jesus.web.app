@@ -37,8 +37,11 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A data*.json assets/voice s sitemap.xml
+          # build.py가 만드는 것은 모두 담는다 — land.json(시편 진행률이 노래를 올릴 때마다 바뀐다)·llms.txt와
+          # seo.py가 머리를 다시 쓰는 랜딩·qna·why가 빠져 있어, 그것만 바뀐 때는 담을 것이 없다며 배포가 실패했다
+          git add -A data*.json land.json llms.txt index.html qna*.html why*.html assets/voice s sitemap.xml
           if [ -d j ]; then git add -A j; fi
+          if git diff --cached --quiet; then exit 0; fi
           git commit -m "Rebuild data and narration after an admin edit"
           git pull --rebase -q origin main && git push origin HEAD:main
       # 시편 노래 작업실(studio.html)에서 노래를 R2에 올리면 assets/psalms/<id>.json이 by: pending으로 올라온다: 그 노래를 받아
