@@ -311,5 +311,6 @@
  "letterOnMap": "地図で見る",
  "letterCount": "{n}通目の手紙",
  "inProgress": "{p}% 制作中",
- "seriesPsalms": "{n}編"
+ "seriesPsalms": "{n}編",
+ "songSeek": "曲の位置"
 }

@@ -311,5 +311,6 @@
  "letterOnMap": "Show on the map",
  "letterCount": "Letter {n}",
  "inProgress": "{p}% complete",
- "seriesPsalms": "{n} psalms"
+ "seriesPsalms": "{n} psalms",
+ "songSeek": "Song position"
 }

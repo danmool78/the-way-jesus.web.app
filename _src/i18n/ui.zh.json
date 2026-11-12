@@ -311,5 +311,6 @@
  "letterOnMap": "在地图上查看",
  "letterCount": "第{n}封书信",
  "inProgress": "已完成 {p}%",
- "seriesPsalms": "{n} 篇"
+ "seriesPsalms": "{n} 篇",
+ "songSeek": "歌曲进度"
 }

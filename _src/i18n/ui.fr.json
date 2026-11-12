@@ -311,5 +311,6 @@
  "letterOnMap": "Voir sur la carte",
  "letterCount": "Lettre {n}",
  "inProgress": "{p} % réalisé",
- "seriesPsalms": "{n} psaumes"
+ "seriesPsalms": "{n} psaumes",
+ "songSeek": "Position dans le chant"
 }
