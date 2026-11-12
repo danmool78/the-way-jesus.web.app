@@ -310,5 +310,6 @@
  "letterToScene": "Ke adegan ini",
  "letterOnMap": "Lihat di peta",
  "letterCount": "Surat ke-{n}",
- "inProgress": "{p}% selesai"
+ "inProgress": "{p}% selesai",
+ "seriesPsalms": "{n} mazmur"
 }

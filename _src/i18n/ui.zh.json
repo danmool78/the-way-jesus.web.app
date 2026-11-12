@@ -310,5 +310,6 @@
  "letterToScene": "前往这个场景",
  "letterOnMap": "在地图上查看",
  "letterCount": "第{n}封书信",
- "inProgress": "已完成 {p}%"
+ "inProgress": "已完成 {p}%",
+ "seriesPsalms": "{n} 篇"
 }

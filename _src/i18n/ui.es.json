@@ -310,5 +310,6 @@
  "letterToScene": "Ir a esta escena",
  "letterOnMap": "Ver en el mapa",
  "letterCount": "Carta {n}",
- "inProgress": "{p}% completado"
+ "inProgress": "{p}% completado",
+ "seriesPsalms": "{n} salmos"
 }

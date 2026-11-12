@@ -310,5 +310,6 @@
  "letterToScene": "Go to this scene",
  "letterOnMap": "Show on the map",
  "letterCount": "Letter {n}",
- "inProgress": "{p}% complete"
+ "inProgress": "{p}% complete",
+ "seriesPsalms": "{n} psalms"
 }

@@ -310,5 +310,6 @@
  "letterToScene": "この場面へ",
  "letterOnMap": "地図で見る",
  "letterCount": "{n}通目の手紙",
- "inProgress": "{p}% 制作中"
+ "inProgress": "{p}% 制作中",
+ "seriesPsalms": "{n}編"
 }

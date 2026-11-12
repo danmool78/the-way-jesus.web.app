@@ -151,7 +151,7 @@ function render(lang) {
   const hrefOf = c => c.langHref && lang !== 'ko' ? c.href.replace(/\.html$/, `.${lang}.html`) : c.href;
   document.getElementById('cards').innerHTML = L.cards.filter(c => !c.langs || c.langs.includes(lang)).map((c, i) => `<li class="card ${c.ready ? '' : 'soon'}" data-journey="${c.id}" style="animation-delay:${0.1 + i * 0.07}s">
     <img class="icon" src="${c.icon || (c.id === 'jesus' ? 'assets/icon.svg' : `j/${c.id}/icon.svg`)}" alt="" width="60" height="60">
-    <div class="txt"><b>${esc(t(c.title))}</b><small>${esc(t(c.desc))}</small>${c.n ? `<em>${esc(t('seriesScenes', { n: c.n }))}</em>` : ''}${c.progress ? `<span class="prog"><b><i style="width:${c.progress}%"></i></b><span>${esc(t('inProgress', { p: c.progress }))}</span></span>` : ''}</div>
+    <div class="txt"><b>${esc(t(c.title))}</b><small>${esc(t(c.desc))}</small>${c.n ? `<em>${esc(t(c.id === 'psalms' ? 'seriesPsalms' : 'seriesScenes', { n: c.n }))}</em>` : ''}${c.progress ? `<span class="prog"><b><i style="width:${c.progress}%"></i></b><span>${esc(t('inProgress', { p: c.progress }))}</span></span>` : ''}</div>
     <div class="btns">${c.ready ? `<a class="go" href="${hrefOf(c) || `/app.html?j=${c.id}`}">${esc(t(c.go || 'seriesGo'))} →</a><button type="button" class="share" data-id="${c.id}">${SHARE}<span>${esc(t('shareShort'))}</span></button>`
       : `<span class="go off">${esc(t('soon'))}</span>`}</div></li>`).join('');
   // 단추 글씨는 한 줄로: 언어마다 길이가 달라('Walk this journey →'가 두 줄로 꺾였다) 넘치면 글자를 조금씩 줄인다 (사용자, 2026-11)
