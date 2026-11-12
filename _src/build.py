@@ -206,3 +206,5 @@ json.dump(land, open(os.path.join(root, 'land.json'), 'w', encoding='utf-8'), en
 
 # 검색엔진용 장면 페이지(s/)와 sitemap.xml도 새 data로 다시 만든다
 exec(open(os.path.join(here, 'pages.py'), encoding='utf-8').read(), {'__file__': os.path.join(here, 'pages.py')})
+# 검색엔진·AI 답변엔진용 머리 정보(qna·why·랜딩의 구조화 데이터, llms.txt)
+exec(open(os.path.join(here, 'seo.py'), encoding='utf-8').read(), {'__file__': os.path.join(here, 'seo.py')})

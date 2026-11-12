@@ -9,6 +9,7 @@ SITE = 'https://thewaymap.org'
 out_dir = os.path.join(root, 's')
 os.makedirs(out_dir, exist_ok=True)
 esc = lambda s: html.escape(str(s), quote=True)
+ORG = {'@type': 'Organization', 'name': 'SSSOFT', 'url': 'https://sssoft-idea.web.app/'}  # 만든 곳 (구조화 데이터의 author·publisher)
 # 이 페이지에만 쓰는 글씨 (앱 화면 글씨 ui.<언어>.json에 없는 것)
 PAGE = {
     'ko': {'walk': '지도 위에서 이 장면 걷기', 'all': '예수의 생애 {n}장면 모두 보기', 'listTitle': '예수의 생애 {n}장면 — 일어난 순서대로',
@@ -145,7 +146,13 @@ for JID, JDIR, LIST, OG in JOURNEYS:
             desc = desc[:150] + ('…' if len(desc) > 150 else '')
             img = e['img']['src'] if 'img' in e else OG
             ld = {'@context': 'https://schema.org', '@type': 'Article', 'headline': e['title'], 'description': desc, 'inLanguage': lang,
-                  'image': '%s/%s' % (SITE, img), 'about': {'@type': 'Place', 'name': place}, 'isPartOf': {'@type': 'WebSite', 'name': ui['appName'], 'url': SITE + '/'}}
+                  'image': '%s/%s' % (SITE, img), 'about': {'@type': 'Place', 'name': place}, 'isPartOf': {'@type': 'WebSite', 'name': ui['appName'], 'url': SITE + '/'},
+                  'author': ORG, 'publisher': ORG, 'mainEntityOfPage': '%s/s/%s' % (SITE, fname(e['id'], lang))}
+            # 빵 부스러기(첫 화면 › 여정 장면 목록 › 장면): 검색 결과에 자리가 보이게
+            ld = [ld, {'@context': 'https://schema.org', '@type': 'BreadcrumbList', 'itemListElement': [
+                {'@type': 'ListItem', 'position': 1, 'name': ui['appName'], 'item': SITE + '/'},
+                {'@type': 'ListItem', 'position': 2, 'name': P['listTitle'].format(n=n), 'item': '%s/s/%s' % (SITE, fname(LIST, lang))},
+                {'@type': 'ListItem', 'position': 3, 'name': e['title']}]}]
             b = [head(lang, JL[LIST], e['id'], title, desc, img, ld)]
             b.append('<article>\n<div class="eyebrow">%s%s</div>\n<h1>%s</h1>\n' % (esc(p), '' if pro else ' · %d / %d' % (i + (0 if 'prologue' in D else 1), n), esc(e['title'])))
             if e.get('subtitle'): b.append('<p class="sub">%s</p>\n' % esc(e['subtitle']))

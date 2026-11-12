@@ -8,14 +8,14 @@
 <script>(()=>{const q=new URLSearchParams(location.search);if(q.has('j')||q.has('beat')||location.hash.length>1)location.replace('/app.html'+location.search+location.hash)})()</script>
 <meta name="theme-color" content="#16120e">
 <title>그 길 — 지도 위에서 걷는 성경의 길</title>
-<meta name="description" content="예수의 발자취, 모세와 여호수아의 출애굽. 여정을 골라 성경의 장면을 지도 위에서 만나 보세요. 명화·낭독·3D 무대로 걷는 그 길 시리즈.">
+<meta name="description" content="예수의 발자취에서 모세와 여호수아, 다윗, 열왕기, 바울, 시편, 잠언까지. 성경의 장면을 지도 위에서 걷는 무료 웹앱 — 낭독·명화·3D 무대·말씀·퀴즈, 8개 언어.">
 <link rel="canonical" href="https://thewaymap.org/">
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://thewaymap.org/">
 <meta property="og:title" content="그 길 — 지도 위에서 걷는 성경의 길">
-<meta property="og:description" content="예수의 발자취, 모세와 여호수아의 출애굽. 여정을 골라 성경의 장면을 지도 위에서 만나 보세요.">
+<meta property="og:description" content="예수의 발자취에서 모세와 여호수아, 다윗, 열왕기, 바울, 시편, 잠언까지. 성경의 장면을 지도 위에서 걷는 무료 웹앱 — 낭독·명화·3D 무대·말씀·퀴즈, 8개 언어.">
 <meta property="og:image" content="https://thewaymap.org/assets/og-series.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -88,7 +88,11 @@ footer a{color:var(--muted);font-size:13.5px}
 @keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @media (max-width:600px){.hero{padding-top:58px}.hero h1{font-size:40px}.cards{grid-template-columns:1fr}}
 @media (prefers-reduced-motion: reduce){.hero,.card{animation:none}}
+.scene-lists{margin-top:18px;font-size:12.5px;line-height:2;color:var(--faint);text-align:center}.scene-lists a{color:var(--muted);text-decoration:none}.scene-lists a:hover{color:var(--gold2)} /* 여정별 장면 목록(s/) — 검색엔진이 장면 페이지로 따라 들어가는 글 링크 */
 </style>
+<!--seo-->
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "WebSite", "name": "그 길 — The Way", "alternateName": ["그 길", "The Way", "thewaymap"], "url": "https://thewaymap.org/", "inLanguage": ["ko", "en", "es", "fr", "id", "ja", "pt", "zh"], "description": "지도 위에서 걷는 성경의 길", "publisher": {"@type": "Organization", "name": "SSSOFT", "url": "https://sssoft-idea.web.app/"}}, {"@context": "https://schema.org", "@type": "ItemList", "name": "그 길 시리즈", "itemListElement": [{"@type": "ListItem", "position": 1, "url": "https://thewaymap.org/jesus", "name": "예수", "description": "사복음서로 걷는 예수의 발자취"}, {"@type": "ListItem", "position": 2, "url": "https://thewaymap.org/moses", "name": "모세와 여호수아", "description": "애굽에서 광야를 지나 가나안까지"}, {"@type": "ListItem", "position": 3, "url": "https://thewaymap.org/david", "name": "다윗", "description": "베들레헴의 목동에서 예루살렘의 왕으로"}, {"@type": "ListItem", "position": 4, "url": "https://thewaymap.org/kings", "name": "열왕기", "description": "선지자를 따라 걷는 두 왕국"}, {"@type": "ListItem", "position": 5, "url": "https://thewaymap.org/paul", "name": "바울", "description": "다메섹 길에서 로마까지, 복음이 땅끝까지"}, {"@type": "ListItem", "position": 6, "url": "https://thewaymap.org/psalms", "name": "시편", "description": "광야와 왕궁에서 부른 노래와 기도, 그 자리에서"}, {"@type": "ListItem", "position": 7, "url": "https://thewaymap.org/proverbs", "name": "잠언", "description": "솔로몬의 지혜를 오늘의 길 위에서"}, {"@type": "ListItem", "position": 8, "url": "https://thewaymap.org/goodnews/", "name": "GoodNews (복음)", "description": "하나님의 사랑과 구원, 네 가지 영적 원리"}, {"@type": "ListItem", "position": 9, "url": "https://thewaymap.org/why.html", "name": "왜 기독교인가", "description": "올라가는 종교, 내려오신 하나님, 그리고 교회 — 그림과 도표로"}]}]</script>
+<!--/seo-->
 </head>
 <body>
 <div class="lang"><select id="lang" aria-label="언어"></select></div>
@@ -112,7 +116,10 @@ footer a{color:var(--muted);font-size:13.5px}
   <footer>
     <button class="big" type="button" id="shareAll"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="m8.3 10.8 7.4-4.4M8.3 13.2l7.4 4.4"/></svg><span data-i="shareApp">이 앱 공유하기</span></button>
     <a id="qna" href="qna.html" data-i="qnaHelp">도움말 · 묻고 답하기</a>
-  </footer>
+  <!--seo-lists-->
+<nav class="scene-lists" aria-label="장면 목록">장면 목록 — <a href="s/index.html">예수</a> · <a href="s/moses.html">모세와 여호수아</a> · <a href="s/david.html">다윗</a> · <a href="s/kings.html">열왕기</a> · <a href="s/paul.html">바울</a> · <a href="s/proverbs.html">잠언</a> · <a href="s/goodnews.html">GoodNews (복음)</a></nav>
+<!--/seo-lists-->
+</footer>
 </main>
 <script>
 // 'AI로 만들고 사람이 다듬었습니다' 안내: 화면에 들어온 뒤 5초 지나면 사라진다 (알릴 것은 알리되 계속 남아 있지 않게)
