@@ -311,5 +311,6 @@
  "letterOnMap": "Lihat di peta",
  "letterCount": "Surat ke-{n}",
  "inProgress": "{p}% selesai",
- "seriesPsalms": "{n} mazmur"
+ "seriesPsalms": "{n} mazmur",
+ "songSeek": "Posisi lagu"
 }

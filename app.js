@@ -1363,15 +1363,30 @@ async function songPlay(done, sg) {
   const a = song.audio;
   if (a.src !== info.src) a.src = info.src; // songWarm이 미리 받아 둔 노래면 그대로 (처음부터 다시 받지 않게)
   a.currentTime = 0; a.onended = a.onerror = () => songEnd(tk);
+  songBarOn(a, () => { song.k = -2; sync(); });
   a.play().catch(() => songEnd(tk));
   song.k = -2;
   // 부르는 줄 맞추기: 화면 그리기(rAF)는 다른 창에 가 있는 동안 멈추므로 소리 쪽 시각 알림(timeupdate)으로도 맞추고,
   // 돌아오면 곧바로 다시 맞춘다 (다른 창에 다녀오면 멈췄던 줄이 잠깐 남아 있었다 — 사용자)
-  const sync = () => { if (tk !== song.token) return; document.body.classList.toggle('singing', !(a.duration - a.currentTime < 7)); if (!times) return; // 끝나기 7초 전부터 지도가 서서히 밝아진다
+  const sync = () => { if (tk !== song.token) return; songBarTime(a); document.body.classList.toggle('singing', !(a.duration - a.currentTime < 7)); if (!times) return; // 끝나기 7초 전부터 지도가 서서히 밝아진다
     const now = a.currentTime + 0.15; let k = -1; times.forEach((x, i) => { if (x <= now) k = i; }); if (k !== song.k) { song.k = k; lyricShow(k, want, e.title); } };
   song.sync = sync; a.ontimeupdate = sync;
   const tick = () => { if (tk !== song.token) return; sync(); song.raf = requestAnimationFrame(tick); };
   tick();
+}
+// 노래 재생 막대: 듣고 싶은 곳으로 끌어 옮긴다 (전에는 처음부터 끝까지 들어야만 했다 — 사용자). 가사 줄도 옮긴 자리로 곧바로 맞춘다
+const mmss = x => isFinite(x) ? `${Math.floor(x / 60)}:${String(Math.floor(x % 60)).padStart(2, '0')}` : '0:00';
+let barDrag = false;
+function songBarTime(a) {
+  const bar = $('#songBar'); if (bar.hidden) return;
+  $('.t0', bar).textContent = mmss(a.currentTime); $('.t1', bar).textContent = mmss(a.duration);
+  if (!barDrag && a.duration) $('input', bar).value = Math.round(a.currentTime / a.duration * 1000);
+}
+function songBarOn(a, resync) {
+  const bar = $('#songBar'), r = $('input', bar);
+  r.setAttribute('aria-label', t('songSeek')); r.value = 0; bar.hidden = false; songBarTime(a);
+  r.oninput = () => { barDrag = true; if (a.duration) { $('.t0', bar).textContent = mmss(r.value / 1000 * a.duration); } };
+  r.onchange = () => { barDrag = false; if (a.duration) { a.currentTime = r.value / 1000 * a.duration; resync(); } };
 }
 // 다른 여정(다윗)에서 시편 노래를 틀 때: 제목·가사는 시편 여정의 data에서 (한 번만 받는다)
 let psalmsData = null;
@@ -1397,7 +1412,7 @@ async function songWarm(i) {
 function songOff() {
   cancelAnimationFrame(song.raf); clearTimeout(song.timer); song.timer = 0;
   song.audio.pause(); song.audio.onended = song.audio.onerror = song.audio.ontimeupdate = null; song.sync = null;
-  document.body.classList.remove('singing');
+  document.body.classList.remove('singing'); $('#songBar').hidden = true;
   const ov = $('#lyricsOv'); if (ov) { ov.classList.remove('on'); setTimeout(() => { if (!ov.classList.contains('on')) ov.hidden = true; }, 800); }
   $$('#scene [data-ln].speaking').forEach(p => p.classList.remove('speaking'));
   song.on = false;
