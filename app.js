@@ -1592,6 +1592,9 @@ function bgmReady() {
   if (bgmCtx) return true;
   const Ctx = window.AudioContext || window.webkitAudioContext;
   if (!Ctx) return false;
+  // 아이폰은 무음(벨소리 끔) 스위치를 켜 두면 Web Audio를 거치는 소리만 막는다 — 낭독(<audio>)은 나오는데 배경음악만 안 나왔다(사용자).
+  // 오디오 세션을 '재생'으로 두면 무음 스위치와 상관없이 함께 나온다 (Safari 16.4+, 다른 브라우저엔 없는 속성이라 그냥 지나간다)
+  try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch {}
   bgmCtx = new Ctx();
   // 곡 안의 큰 대목은 눌러 두고, 말소리 대역(1~4kHz)을 비워 낭독이 그 위로 또렷하게 (리딩북 music.js와 같은 사슬)
   const squeeze = bgmCtx.createDynamicsCompressor();
