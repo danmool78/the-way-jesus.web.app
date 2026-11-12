@@ -566,6 +566,17 @@ function animateTo(target, ms) {
   addEventListener('pointerup', end); addEventListener('pointercancel', end); // 지도 밖에서 놓아도 끝나게 (끌기 문턱을 넘기 전엔 포인터를 붙잡지 않았다)
 })();
 
+// 2D 지도 확대·축소(+/− 단추, terrain.js의 조작기가 3D가 꺼져 있을 때 부른다). 지금 장소 핀이 화면에 있으면 그 자리를 붙박고 늘리고 줄여
+// 무대가 옆으로 밀려나지 않게 한다 (끌어서 다른 데를 보고 있으면 보이는 가운데를 기준으로). 도성 그림이 보이는 만큼까지 당기고, 그려진 땅보다 넓게는 물리지 않는다
+window.zoomMap = f => {
+  const B = onEden() ? EDEN : landNow(), e = evAt(idx), [ax0, ay0] = e ? P(PLACES[here(e)]) : [NaN, NaN];
+  const inView = ax0 > view.x && ax0 < view.x + view.w && ay0 > view.y && ay0 < view.y + view.h;
+  const ax = inView ? ax0 : view.x + view.w / 2, ay = inView ? ay0 : view.y + view.h / 2;
+  const k = Math.min(Math.max(view.w * f, 8), B.w * 1.3) / view.w;
+  followWalk = false;
+  animateTo({ x: ax - (ax - view.x) * k, y: ay - (ay - view.y) * k, w: view.w * k, h: view.h * k }, 320);
+};
+
 // 위경도 → 화면(client) 좌표. 3D 무대(stage.js)가 물가·들판 같은 실제 지점에 소품을 세울 때 쓴다
 window.geoToClient = (lat, lng) => {
   const [x, y] = px([lat, lng]), pt = map.createSVGPoint();

@@ -846,6 +846,8 @@ function controls() {
   plainBtn.setAttribute('aria-pressed', String(!!PLAIN.value));
   box.querySelectorAll('.m3tools button').forEach(b => b.onclick = () => {
     const k = b.dataset.k;
+    // 3D가 꺼져 있을 때도 +/−는 보인다(컴퓨터) — 2D 지도를 확대·축소한다 (app.js zoomMap)
+    if (!on) { if (k === 'in' || k === 'out') window.zoomMap?.(k === 'in' ? 0.7 : 1.4); return; }
     if (k === 'plain') {
       PLAIN.value = PLAIN.value ? 0 : 1; plainBtn.setAttribute('aria-pressed', String(!!PLAIN.value));
       try { localStorage.setItem('theway-plain', PLAIN.value ? '1' : '0'); } catch { /* 이번 방문만 */ }
