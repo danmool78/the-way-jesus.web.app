@@ -1336,7 +1336,7 @@ function lyricsHtml(e) {
     if (m) { const n = SECTION[m[1].toLowerCase().replace(/\s*\d+$/, '')] || ''; const h = n && n !== prev ? `<h5>${esc(n)}</h5>` : ''; if (n) prev = n; return h; }
     return x ? `<p data-ln="${k++}">${esc(x)}</p>` : '';
   }).join('');
-  return `<div class="lyrics">${body}</div><p class="fine">${esc(t('lyricsNote', { n: e.song.psalm }))}</p>`;
+  return `<div class="lyrics">${body}</div><p class="fine">${esc(t('lyricsNote', { n: e.song.psalm })).replace(/([.。])\s*(?=\S)/g, '$1<br>')}</p>`;
 }
 function lyricShow(k, want, head) {
   $('#lyricsOv').innerHTML = `<p class="prev">${esc(k > 0 ? want[k - 1] : '')}</p><p class="cur${k < 0 ? ' head' : ''}">${esc(k >= 0 ? want[k] : head)}</p><p class="next">${esc(want[k + 1] || '')}</p>`;
