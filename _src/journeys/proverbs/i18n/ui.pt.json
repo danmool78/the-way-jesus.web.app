@@ -1,0 +1,33 @@
+{
+ "appTag": "Provérbios · Um dia no caminho da sabedoria",
+ "docTitle": "O Caminho — Provérbios | Um dia no caminho da sabedoria",
+ "metaDesc": "Caminhe à altura dos olhos pela porta da cidade, pelo mercado, pelos campos e pelos becos da Jerusalém de Salomão e ouça a sabedoria de Provérbios.",
+ "mapAria": "As ruas da Jerusalém de Salomão",
+ "introTag": "A Jerusalém de Salomão, da manhã à noite",
+ "introLead": "Da porta da cidade ao campo, do mercado aos becos: siga a sabedoria de Provérbios em {n} cenas.",
+ "hisWords": "Palavras",
+ "voicesOfDay": "Palavras",
+ "wordsHead": "As palavras de Provérbios",
+ "wordsIntro": "Aqui estão reunidas as palavras das cenas de Provérbios. Cada uma é uma nova tradução do sentido original para a linguagem de hoje.",
+ "gospels": {
+  "prov": [
+   "Provérbios",
+   "Pv"
+  ]
+ },
+ "endEyebrow": "PROVÉRBIOS",
+ "endTitle": "Você caminhou um dia com a sabedoria",
+ "endLead": "Da porta da cidade até em casa — obrigado por caminhar conosco.",
+ "tabDaily": "Um capítulo por dia",
+ "dailyHead": "Um capítulo por dia: Provérbios em 31 dias",
+ "dailyLead": "Provérbios tem 31 capítulos. Lendo a cada dia o capítulo que corresponde à data de hoje, você percorre o livro inteiro em um mês.",
+ "dailyToday": "Hoje é dia {d} — Provérbios {d}",
+ "dailyCh": "Provérbios {d}",
+ "dailyDone": "Li",
+ "dailyDoneOn": "Lido ✓",
+ "dailyCount": "Este mês você leu {n} capítulos",
+ "dailyFather": "Uma palavra do pai",
+ "dailyAll": "Ver os 31 capítulos",
+ "dailyGo": "Provérbios em 31 dias, um capítulo por dia →",
+ "dailyEnd": "Você terminou a caminhada de um dia. Agora, um capítulo a cada dia: continue caminhando com a sabedoria."
+}
