@@ -1630,11 +1630,22 @@ function bgmReady() {
   });
   // 오디오가 막히면(기기가 'interrupted'·'suspended'로 바꿈) 다시 깨운다. 저절로 안 되면 다음에 화면을 누를 때
   bgmCtx.onstatechange = () => { if (bgmCtx.state !== 'running' && bgmCue) bgmCtx.resume().catch(() => {}); };
+  // 화면을 누를 때마다 깨운다 — 재생 단추를 누르는 그 손길에도 깨워야 해서 bgmCue(낭독 중)를 따지지 않는다
   addEventListener('pointerdown', () => {
-    if (!bgmCue) return;
     if (bgmCtx.state !== 'running') bgmCtx.resume().catch(() => {});
-    const p = bgmPlayers[bgmCur]; if (p.el.paused && !p.hold && !p.wait) p.el.play().catch(() => {});
+    if (!bgmCue) return;
+    const p = bgmPlayers[bgmCur]; if (p.el.paused && !p.hold && !p.wait && !p.el.ended) p.el.play().catch(() => {});
   }, { passive: true });
+  // 지킴이: 오래 듣다 보면(화면 잠금·전화·알림·다른 앱 소리) 오디오가 'interrupted'로 막히거나 곡이 멈춘 채 다시 안 살아나
+  // 배경음악이 끝까지 사라졌다(사용자). 낭독 중이면 몇 초마다 살펴 깨우고, 멈춘 곡은 다시 틀고, 내려간 채 남은 소리는 올린다
+  setInterval(() => {
+    if (!bgmCue || paused || document.hidden) return;
+    if (bgmCtx.state !== 'running') bgmCtx.resume().catch(() => {});
+    const p = bgmPlayers[bgmCur]; if (p.wait || bgmLoop === p.el) return; // 곡 바꿈·반복 사이 쉬는 중은 그대로
+    if (p.el.ended) return; // 반복 사이 쉬는 중('ended'가 곧 다시 튼다)
+    if (p.el.paused) { p.hold = false; p.el.play().catch(() => {}); }
+    if (bgmLevel(p) < BGM.level - 0.01 && !(p.fade && p.fade.to >= BGM.level - 0.01)) { ++bgmGo; bgmRamp(p, BGM.level, BGM.out); }
+  }, 4000);
   return true;
 }
 // 지금 들리는 크기 (gain.value를 제대로 알려 주지 않는 브라우저가 있어 마지막 램프로 셈한다)
@@ -1674,14 +1685,14 @@ function bgmFollow() {
   const cue = bgmOn() && speaking && !song.on && EVENTS ? evAt(idx)?.music : null;
   if (!cue) { if (bgmCue) bgmStop(bgmOn() && !song.on ? BGM.stop : 1); return; } // 음악 단추로 끈 때·노래가 나올 때는 빨리
   if (!bgmReady()) return;
-  if (bgmCtx.state === 'suspended') bgmCtx.resume().catch(() => {});
+  if (bgmCtx.state !== 'running') bgmCtx.resume().catch(() => {}); // iOS는 'suspended'만이 아니라 'interrupted'로도 막힌다
   // 천천히 내려가던 같은 곡이면 이어서 다시 올린다 (낭독을 잠깐 멈췄다 다시 들을 때 곡이 끊겼다 처음부터 나오지 않게)
   if (!bgmCue && cue === bgmLast && bgmLevel(bgmPlayers[bgmCur]) > 0.005) bgmCue = cue;
   if (cue !== bgmCue) { bgmPlay(cue, bgmCue ? BGM.fade : 0.3); return; }
   // 같은 곡이 내려가던 중이면 그 자리에서 다시 올린다 (앞 곡이 다 내려가기를 기다리는 중이면 그대로 둔다)
   const p = bgmPlayers[bgmCur];
   if (p.wait) return;
-  if (p.el.paused) { p.hold = false; p.el.play().catch(() => {}); }
+  if (p.el.paused) { p.hold = false; bgmLoop = null; p.el.play().catch(() => {}); } // 반복 사이에 다시 틀면 '반복 중' 표시도 푼다 (남아 있으면 다음 끝에서 서서히 내리지 못했다)
   if (bgmLevel(p) < BGM.level - 0.01) { ++bgmGo; bgmRamp(p, BGM.level, 0.3); }
 }
 
