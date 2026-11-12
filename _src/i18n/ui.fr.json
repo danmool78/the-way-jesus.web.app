@@ -312,5 +312,6 @@
  "letterCount": "Lettre {n}",
  "inProgress": "{p} % réalisé",
  "seriesPsalms": "{n} psaumes",
- "songSeek": "Position dans le chant"
+ "songSeek": "Position dans le chant",
+ "lost3d": "La 3D a été désactivée faute de mémoire sur l’appareil. Rechargez pour la réactiver"
 }

@@ -312,5 +312,6 @@
  "letterCount": "Letter {n}",
  "inProgress": "{p}% complete",
  "seriesPsalms": "{n} psalms",
- "songSeek": "Song position"
+ "songSeek": "Song position",
+ "lost3d": "3D was turned off because the device ran low on memory. Reload to turn it on again"
 }
