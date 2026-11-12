@@ -77,7 +77,9 @@ const JDIR = JOURNEY === 'jesus' ? '' : `j/${JOURNEY}/`;
 document.documentElement.dataset.journey = JOURNEY; // 여정마다 테마색 (style.css의 [data-journey])
 const journeyUrl = id => `/app.html?j=${id}`; // 다른 여정으로 가는 주소 (언어는 저장된 것을 따른다). 맨 첫 주소(/)는 여정을 고르는 랜딩(index.html)
 // 여정의 공유 주소(/moses — 미리보기 카드를 담은 페이지, _src/tools/share.mjs)와 이름
-const shareOf = id => ({ url: `${location.origin}/${id}`, title: `${t('appName')} — ${t(DATA.journey?.series?.find(s => s.id === id)?.title || 'appName')}` });
+// 공유는 어느 주소(예전 web.app·미리보기)에서 열었든 공식 주소로 보낸다
+const SITE = 'https://thewaymap.org';
+const shareOf = id => ({ url: `${SITE}/${id}`, title: `${t('appName')} — ${t(DATA.journey?.series?.find(s => s.id === id)?.title || 'appName')}` });
 async function shareLink({ url, title }) {
   if (navigator.share) { try { await navigator.share({ title, url }); } catch { /* 공유 창을 닫음 */ } return; }
   try { await navigator.clipboard.writeText(url); toast(t('linkCopied')); } catch { prompt(t('shareApp'), url); }
