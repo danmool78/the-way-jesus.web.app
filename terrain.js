@@ -93,8 +93,17 @@ const mapTex = img => { const t = new THREE.Texture(img); t.colorSpace = THREE.S
 
 /* ---------- 바탕: 하늘·빛·물 반사 ---------- */
 async function build() {
-  renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  // 휴대폰은 그래픽 메모리가 작아, 지형·도성·지중해 그림을 다 올리면 브라우저가 3D를 끊어 버렸다(바울 여정 예루살렘 — 사용자).
+  // 휴대폰에서는 화면 배율을 1.5배까지만, 계단 무늬 다듬기(antialias)는 끈다 — 보기에는 거의 같고 메모리는 절반쯤
+  const phone = matchMedia('(max-width: 900px), (pointer: coarse)').matches;
+  renderer = new THREE.WebGLRenderer({ antialias: !phone, powerPreference: 'high-performance' });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, phone ? 1.5 : 2));
+  // 그래도 끊기면(webglcontextlost) 화면이 죽은 채 멈추지 않게 2D 지도로 돌아가고 알린다. 새로 고침하면 다시 켤 수 있다
+  renderer.domElement.addEventListener('webglcontextlost', e => {
+    e.preventDefault(); setOn(false); const b = $('#mode3d'); if (b) b.disabled = true;
+    let t = document.querySelector('.toast'); if (!t) { t = document.createElement('div'); t.className = 'toast'; t.setAttribute('role', 'status'); document.body.appendChild(t); }
+    t.textContent = window.UI_T?.('lost3d') || '기기 메모리가 부족해 3D를 껐습니다. 새로 고침하면 다시 켤 수 있습니다'; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 5000);
+  });
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
   renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;

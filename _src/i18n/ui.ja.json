@@ -312,5 +312,6 @@
  "letterCount": "{n}通目の手紙",
  "inProgress": "{p}% 制作中",
  "seriesPsalms": "{n}編",
- "songSeek": "曲の位置"
+ "songSeek": "曲の位置",
+ "lost3d": "端末のメモリが足りないため3Dをオフにしました。再読み込みすると再びオンにできます"
 }

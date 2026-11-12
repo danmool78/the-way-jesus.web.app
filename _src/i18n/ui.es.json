@@ -312,5 +312,6 @@
  "letterCount": "Carta {n}",
  "inProgress": "{p}% completado",
  "seriesPsalms": "{n} salmos",
- "songSeek": "Posición de la canción"
+ "songSeek": "Posición de la canción",
+ "lost3d": "Se apagó el 3D porque el dispositivo se quedó sin memoria. Recarga para volver a activarlo"
 }

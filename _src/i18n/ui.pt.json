@@ -312,5 +312,6 @@
  "letterCount": "Carta {n}",
  "inProgress": "{p}% concluído",
  "seriesPsalms": "{n} salmos",
- "songSeek": "Posição da música"
+ "songSeek": "Posição da música",
+ "lost3d": "O 3D foi desligado porque o aparelho ficou sem memória. Recarregue para ligá-lo de novo"
 }

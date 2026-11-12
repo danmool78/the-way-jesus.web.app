@@ -312,5 +312,6 @@
  "letterCount": "第{n}封书信",
  "inProgress": "已完成 {p}%",
  "seriesPsalms": "{n} 篇",
- "songSeek": "歌曲进度"
+ "songSeek": "歌曲进度",
+ "lost3d": "设备内存不足，已关闭 3D。刷新页面即可重新开启"
 }

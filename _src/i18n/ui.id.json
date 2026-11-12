@@ -312,5 +312,6 @@
  "letterCount": "Surat ke-{n}",
  "inProgress": "{p}% selesai",
  "seriesPsalms": "{n} mazmur",
- "songSeek": "Posisi lagu"
+ "songSeek": "Posisi lagu",
+ "lost3d": "3D dimatikan karena memori perangkat tidak cukup. Muat ulang untuk menyalakannya lagi"
 }

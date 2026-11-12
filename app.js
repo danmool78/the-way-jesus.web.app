@@ -27,6 +27,7 @@ const LANG = (() => {
 })();
 // 화면 글씨: data의 ui에서 꺼내고 {이름} 자리에 값을 넣는다. 지도 글씨는 한국어 이름으로 찾는다
 const t = (k, v = {}) => String(DATA?.ui?.[k] ?? k).replace(/\{(\w+)\}/g, (_, x) => v[x] ?? '');
+window.UI_T = t; // terrain.js 같은 다른 모듈도 화면 글씨를 쓰게
 const tm = s => DATA?.ui?.map?.[s] || s;
 function applyStatic() {
   const u = DATA.ui, h = document.documentElement;
