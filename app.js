@@ -296,7 +296,9 @@ function buildMap() {
     m.setAttribute('class', 'pin' + (p.jlm ? ' jlm' : ''));
     m.dataset.place = id; m.dataset.x = x; m.dataset.y = y;
     m.innerHTML = `<circle class="halo" r="15"/><circle class="dot" r="5.5"/><text x="9" y="4">${esc(p.name)}</text>`;
-    m.addEventListener('click', () => { const i = EVENTS.findIndex((e, j) => e.place === id && j > idx) ; go(i >= 0 ? i : EVENTS.findIndex(e => e.place === id)); });
+    m.addEventListener('click', () => {
+      if (song.on && !song.audio.paused) return; // 노래가 나오는 동안은 핀을 눌러도 다른 편으로 넘어가지 않는다 — 지도를 둘러보다 노래가 끊겼다(사용자)
+      const i = EVENTS.findIndex((e, j) => e.place === id && j > idx); go(i >= 0 ? i : EVENTS.findIndex(e => e.place === id)); });
     g.appendChild(m);
   });
   // 경로 (연속된 서로 다른 장소 사이의 곡선)
