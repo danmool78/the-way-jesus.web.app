@@ -1180,12 +1180,33 @@ function voiceWarm() {
   });
 }
 
+// 낭독 동안 소리 장치를 깨워 둔다: 아이폰은 소리가 멎으면 출력을 재웠다가 다음 소리에서 다시 켜는데, 켜지는 동안 문장 첫 글자가
+// 잘리고 늦게 시작했다 — 배경음악이 없는 시편 노래 앞 설명에서 두드러졌다(사용자). 들리지 않는 빈 소리를 계속 틀어 출력을 켜 둔다
+let awake = null, awakeOff = 0;
+function audioAwake() {
+  clearTimeout(awakeOff);
+  try {
+    if (!awake) {
+      const Ctx = window.AudioContext || window.webkitAudioContext; if (!Ctx) return;
+      try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch {}
+      awake = new Ctx();
+      const src = awake.createBufferSource(); src.buffer = awake.createBuffer(1, awake.sampleRate, awake.sampleRate); src.loop = true;
+      src.connect(awake.destination); src.start();
+    }
+    if (awake.state !== 'running') awake.resume().catch(() => {});
+  } catch { /* 없어도 낭독은 된다 */ }
+  // 낭독이 끝나고 1분 동안 다시 듣지 않으면 재운다 (전지)
+  const sleepLater = () => { awakeOff = setTimeout(() => { if (speaking || song.on) return sleepLater(); awake?.suspend().catch(() => {}); }, 60000); };
+  sleepLater();
+}
+
 let warnedNoVoice = false;
 function speakQueue(items, onDone) {
   // items: [{text, el, jesus, pause}] — 문장 단위로 읽으며 해당 문단을 강조한다
   if (document.body.classList.contains('intro-open')) return; // 랜딩 뒤에서는 읽지 않는다
   const token = ++speechToken;
   speechDone = onDone; sceneReading = false;
+  audioAwake();
   const rate = +$('#rate').value * (DATA.journey?.rate || 1); // 여정마다 낭독 빠르기를 곱한다 (GoodNews는 1.1배 — journey.json의 rate)
   pickVoices();
   const useVoice = !!synth && voices.length > 0;
