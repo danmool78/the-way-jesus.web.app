@@ -2057,7 +2057,7 @@ function endJourney(auto) {
   return true;
 }
 function openEnd() {
-  const last = EVENTS[EVENTS.length - 1], w = last.words.find(x => x.j) || last.words[0];
+  const last = EVENTS[EVENTS.length - 1], ew = DATA.journey?.endWord, w = (ew != null && last.words[ew]) || last.words.find(x => x.j) || last.words[0]; // endWord: 끝 화면에 띄울 마지막 장면의 말씀 번호(journey.json) — 첫 말씀이 맺음말로 맞지 않을 때(열왕기: 그달리야의 말이 떴다 — 사용자)
   const miss = missedQuiz(), unseen = EVENTS.filter(e => !visited.has(e.id)), km = odoAt(EVENTS.length - 1);
   const places = new Set(EVENTS.filter(e => visited.has(e.id)).map(e => e.place)).size, allPlaces = new Set(EVENTS.map(e => e.place)).size;
   const nextJ = DATA.journey?.next && DATA.journey.series?.find(j => j.id === DATA.journey.next); // 이어 걸을 여정 (기쁜 소식 → 예수)
