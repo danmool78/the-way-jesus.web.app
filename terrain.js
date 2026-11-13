@@ -845,7 +845,6 @@ function controls() {
       ${tool('plain', t('plainTerrain'))}
       ${tool('tiltUp', t('tiltUp'))}${tool('tiltDown', t('tiltDown'))}
       ${tool('left', t('rotate'))}${tool('right', t('rotate'))}
-      ${tool('in', '+')}${tool('out', '−')}
       ${tool('reset', t('resetView'))}
     </div>`;
   wrap.appendChild(box);

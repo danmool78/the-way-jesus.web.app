@@ -47,7 +47,7 @@ function applyStatic() {
   [['.brand', 'home', 'aria-label'], ['.brand b', 'appName'], ['.brand small', 'appTag'], ['.tabs', 'tabsLabel', 'aria-label'],
     ['[data-view="journey"]', 'tabJourney'], ['[data-view="words"]', 'tabWords'], ['[data-view="quiz"]', 'tabQuiz'],
     ['#progressPill', 'myFootsteps', 'title'], ['#gear', 'settings', 'aria-label'], ['.mapwrap', 'mapLabel', 'aria-label'], ['#map', 'mapAria', 'aria-label'],
-    ['#fitAll', 'fitAll'], ['#fitAll', 'fitAllTitle', 'title'], ['#fitNow', 'fitNowTitle', 'title'],
+    ['#fitAll', 'fitAll'], ['#fitAll', 'fitAllTitle', 'title'], ['#realmBtn', 'realmBtn'], ['#realmBtn', 'realmTitle', 'title'], ['#fitNow', 'fitNowTitle', 'title'],
     ['.dock', 'dockLabel', 'aria-label'], ['#track', 'trackLabel', 'aria-label'], ['#prev', 'prevScene', 'aria-label'], ['#back', 'prevScene', 'aria-label'], ['#skip', 'nextScene', 'aria-label'],
     ['#listen', 'listenScene', 'aria-label'], ['#next', 'walkNext', 'aria-label'], ['#next .lbl', 'walkNext'], ['#next .lbl-s', 'walkShort'], ['.switch', 'autoStart', 'title'],
     ['#rate', 'speedLabel', 'aria-label'], ['#music', 'music', 'aria-label'], ['#music', 'music', 'title'],
@@ -231,6 +231,7 @@ function buildMap() {
   <defs>
     <linearGradient id="seaGrad" x1="0" x2="1"><stop offset="0" stop-color="var(--sea-deep)"/><stop offset="1" stop-color="var(--sea)"/></linearGradient>
     ${jmap?.med ? `<linearGradient id="seaMed" gradientUnits="userSpaceOnUse" x1="${dx0}" x2="${px([0, 36.2])[0]}" y1="0" y2="0"><stop offset="0" stop-color="var(--sea-deep)"/><stop offset="1" stop-color="var(--sea)"/></linearGradient>` : ''}
+    ${jmap?.med ? `<mask id="landMask" maskUnits="userSpaceOnUse" x="${vx0}" y="${vy0}" width="${vx1 - vx0}" height="${vy1 - vy0}"><rect x="${vx0}" y="${vy0}" width="${vx1 - vx0}" height="${vy1 - vy0}" fill="#fff"/><image href="assets/relief-med-mask.png" x="${dx0}" y="${dy0}" width="${dx1 - dx0}" height="${dy1 - dy0}" preserveAspectRatio="none"/><path d="${sea}" fill="#000"/></mask>` : ''}
     <radialGradient id="oasis"><stop offset="0" stop-color="var(--oasis)" stop-opacity=".75"/><stop offset=".6" stop-color="var(--oasis)" stop-opacity=".4"/><stop offset="1" stop-color="var(--oasis)" stop-opacity="0"/></radialGradient>
     <filter id="lakeSoft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3.2"/></filter>
     <filter id="waterEdge" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur in="SourceAlpha" stdDeviation="4" result="b"/><feComposite in="SourceAlpha" in2="b" operator="arithmetic" k2="1" k3="-1" result="edge"/><feFlood flood-color="#21474f" flood-opacity=".5"/><feComposite in2="edge" operator="in"/><feComposite in2="SourceGraphic" operator="over"/></filter>
@@ -252,10 +253,12 @@ function buildMap() {
   <path d="${smooth(GEO.jordanN)}" class="riverbank"/>
   <path d="${smooth(GEO.jordanS)}" class="riverbank"/>
   ${OASES.map(([a, b, r]) => `<circle cx="${px([a, b])[0]}" cy="${px([a, b])[1]}" r="${r}" fill="url(#oasis)"/>`).join('')}
+  ${jmap?.med ? '' : '<g id="realms"></g>'}
   <path d="${sea}" fill="${seaFill}" class="sea"/>
   ${jmap?.med ? `<image href="assets/relief-med-wide.webp" class="relief" x="${vx0}" y="${vy0}" width="${vx1 - vx0}" height="${vy1 - vy0}" preserveAspectRatio="none"/>
   <image href="assets/relief-med.webp" class="relief" x="${dx0}" y="${dy0}" width="${dx1 - dx0}" height="${dy1 - dy0}" preserveAspectRatio="none"/>
-  <g id="reliefMedHi" class="relief"></g>` : ''}
+  <g id="reliefMedHi" class="relief"></g>
+  <g id="realms" mask="url(#landMask)"></g>` : ''}
   ${jmap?.meso ? `<path d="${smooth(GEO.cyprus, true)}" class="isle"/>` : ''}
   <path d="${smooth(GEO.coast)}" class="coast"/>
   <path d="${smooth(GEO.galilee, true)}" class="lake" filter="url(#waterEdge)"/>
@@ -325,6 +328,7 @@ function buildMap() {
     r.appendChild(path);
   });
   new ResizeObserver(() => applyView()).observe(map);
+  drawRealms();
 }
 
 // 지형 그림(relief·relief-west)이 불투명하게 그려진 범위 — 지도는 이 밖(그림 없는 맨바닥)을 보이지 않는다.
@@ -365,6 +369,7 @@ function applyView() {
     sb.firstChild.style.width = Math.round(km / kmPx) + 'px';
     sb.lastChild.textContent = km < 1 ? `${km * 1000} m` : `${km} km`;
     sb.style.bottom = Math.round(r.height - f.b + 14) + 'px'; // 휴대폰은 아래 카드 위로
+    const rk = $('#realmKey'); if (rk) { rk.style.bottom = Math.round(r.height - f.b + 14) + 'px'; rk.style.right = Math.round(r.width - f.r + 14) + 'px'; } // 카드에 가리지 않게 보이는 지도 칸 오른쪽 아래
   }
   map.classList.toggle('zoom-city', u < 0.06);
   map.classList.toggle('zoom-near', u < 0.6);
@@ -643,8 +648,35 @@ function setWalker([x, y]) {
   wk.setAttribute('transform', `translate(${x},${y}) scale(${u})`);
   dispatchEvent(new CustomEvent('walker', { detail: { x, y } })); // 3D 지형 모드의 걷는 사람이 따라온다
 }
+// 시대별 영역(누가 다스렸나): journey.realms(_src/tools/realms.py) — 시대마다 영역 묶음을 깔아 두고, 지금 장면의 시대만 보이게 한다.
+// 시대가 넘어가면 앞 시대가 서서히 사라지고 새 시대가 서서히 나타난다(사용자). 오른쪽 아래 이름표에 다스린 이를 적는다
+let realmOn = (() => { try { return localStorage.getItem('theway-realms') !== 'off'; } catch { return true; } })();
+const realmName = (a, k = 'name') => (a[k] || a.name)[LANG] || (a[k] || a.name).ko;
+function drawRealms() {
+  const R = DATA.journey?.realms, g = $('#realms', map), btn = $('#realmBtn');
+  if (btn) btn.hidden = !R;
+  if (!g || !R) return;
+  g.innerHTML = R.eras.map((er, k) => `<g class="realm-era" data-k="${k}">${er.areas.map(a => `<path class="realm" style="--rc:${a.color}" d="${a.d.map(r => 'M' + r.map(p => px(p).map(v => v.toFixed(1)).join(',')).join('L') + 'Z').join(' ')}"/>`).join('')}</g>`).join('');
+  btn.onclick = () => { realmOn = !realmOn; try { localStorage.setItem('theway-realms', realmOn ? 'on' : 'off'); } catch { /* 이번만 */ } updateRealms(); };
+}
+// 지금 장면의 시대: from 장면에 이르렀거나 지난 마지막 묶음 (프롤로그·에덴은 없음)
+function realmEra() {
+  const R = DATA.journey?.realms; if (!R || idx < 0 || onEden()) return -1;
+  let k = -1; R.eras.forEach((er, n) => { const j = EVENTS.findIndex(x => x.id === er.from); if (j >= 0 && j <= idx) k = n; });
+  return k;
+}
+function updateRealms() {
+  const R = DATA.journey?.realms, key = $('#realmKey'), btn = $('#realmBtn'); if (!R || !key) return;
+  const k = realmOn ? realmEra() : -1;
+  $$('#realms .realm-era', map).forEach(g => g.classList.toggle('on', +g.dataset.k === k));
+  btn.classList.toggle('active', realmOn); btn.setAttribute('aria-pressed', String(realmOn));
+  key.hidden = k < 0;
+  key.classList.toggle('many', k >= 0 && R.eras[k].areas.length > 7); // 바울의 속주처럼 많으면 짧은 이름을 가로로 흘린다
+  if (k >= 0) key.innerHTML = R.eras[k].areas.map(a => `<span><i style="--rc:${a.color}"></i><b class="rk-full">${esc(realmName(a))}</b><b class="rk-short">${esc(realmName(a, 'short'))}</b></span>`).join('') + (R.credit ? `<small>${esc(typeof R.credit === 'object' ? R.credit[LANG] || R.credit.ko : R.credit)}</small>` : '');
+}
 function updateMap(prevIdx, { camera = true, jump = false } = {}) {
   const e = evAt(idx);
+  updateRealms();
   map.classList.toggle('prologue', onEden()); // 에덴 장면: 걷는 사람과 다음 길 표시를 숨긴다
   document.body.classList.toggle('prologue-on', onEden());
   $('.offmap', map).setAttribute('d', offmapD(drawnNow()));

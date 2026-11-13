@@ -61,6 +61,8 @@ Cloudflare 토큰 목록의 다른 'Cloudflare Workers 편집'(2026-10)은 다�
 - 관리자 로그인: **Google로 로그인**(Firebase 인증, 프로젝트 the-way-jesus — 데이터베이스 없음). GitHub 토큰은 Cloudflare Worker `theway-admin`(https://theway-admin.danmool78.workers.dev, 원본 `_src/worker/`, 올리기 `.github/workflows/worker.yml`)에만 두고, 허락된 구글 계정(이메일 SHA-256, wrangler.toml의 ALLOWED)일 때만 이 저장소의 GitHub API를 대신 부른다. 시편 작업실의 노래 올리기도 Worker가 R2 버킷에 바로(R2 열쇠 필요 없음). 토큰으로 들어가는 길은 없앴다(사용자) — 컴퓨터마다 토큰을 넣기 번거로웠다(사용자, 2026-11)
 - 방문 수: 공개 페이지마다 Cloudflare Web Analytics 비컨(쿠키 없음, pages.py의 CF와 손으로 쓰는 페이지 끝). 매일 visits.yml이 stats 가지에 visits.json을 적고 관리자 페이지 맨 위에 어제·7일·30일 방문을 띄운다
 - 글로 읽기: 도움말 '앱 없이 글로만 읽을 수 있나요?'(목록은 seo.py가 `<!--seo-reads-->`에)와 앱 설정의 '글로 읽기'가 s/의 여정별 장면 글 모음으로 잇는다(시편은 없음)
+- 시대별 영역(누가 다스렸나): `_src/tools/realms.py`(shapely)가 `_src/realms/<여정>.json`을 만들고 build.py가 journey.realms로 싣는다(직접 고치지 말 것). 시대마다 영역 묶음(from: 그 시대가 시작하는 장면)을 지도에 옅은 색·점선으로 깔고, 장면이 넘어가 시대가 바뀌면 서서히 바꾼다(사용자, 2026-11). 예수: 헤롯 대왕 → 헤롯 사후 셋 → 로마 총독의 유대(AWMC 헤롯 왕국 경계 `_src/realms/awmc-herods_kingdom.geojson`, ODbL — 출처 밝힘). 다윗·열왕기: 사울 → 헤브론·이스보셋 → 통일 왕국(조공 나라) → 북이스라엘·남유다 → 앗수르 → 바벨론(표준 지도책 따라 어림). 바울: AD 50 무렵 로마 속주 — 지중해 지도는 바탕이 바다까지 칠해져 있어 영역을 그 위에 깔고 육지 가림판 `assets/relief-med-mask.png`(relief-med에서 흙빛만)으로 바다를 자른다. 지도 위 '영역' 단추로 끄고 켜며(theway-realms), 보이는 지도 칸 오른쪽 아래에 이름표(폰은 짧은 이름, 이름이 많으면 폰에서는 감춤). 3D 지형에서는 그리지 않는다
+- 지도 확대·축소는 휠(폰은 두 손가락)로만 — +/− 단추는 뺐다(사용자, 2026-11)
 - `assets/vendor/three.module.min.js` — three.js 0.160.0 (오프라인용으로 저장소에 포함)
 - `_src/` — 원본 데이터와 도구 (배포 제외). `_src/tools/` — 캡처·문장 나누기 도구
 
