@@ -67,6 +67,12 @@
   "lng": 35.33,
   "region": "이스라엘"
  },
+ "beershebaT": {
+  "name": "브엘세바",
+  "lat": 31.245,
+  "lng": 34.84,
+  "region": "유다"
+ },
  "beersheba": {
   "name": "브엘세바 광야",
   "lat": 30.97,

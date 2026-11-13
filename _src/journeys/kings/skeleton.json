@@ -189,7 +189,20 @@
   "title": "로뎀나무 아래",
   "refs": {
    "1ki": "19:1–8"
-  }
+  },
+  "start": "jezreel",
+  "stops": [
+   {
+    "at": "p0.3",
+    "to": "beershebaT",
+    "walk": true
+   },
+   {
+    "at": "p1.1",
+    "to": "beersheba",
+    "walk": true
+   }
+  ]
  },
  {
   "id": "k18",
