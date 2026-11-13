@@ -866,3 +866,6 @@ body.intro-open .intro,body.intro-open .intro *{animation-play-state:running}
 .lr-end .lr-to{font-size:11px;fill:#3b2a14;stroke:rgba(250,242,222,.92);stroke-width:3px}
 /* 폰에서 시트를 끝까지 올리면 지도가 다 가려지므로, 지도 위에 띄우던 가사·재생 막대·말씀도 감춘다 — 카드 글 위로 겹쳐 보였다(사용자) */
 @media (max-width:900px){.journey:has(.scene.full) :is(.lyrics-ov,.songbar,.verse-ov){visibility:hidden}}
+
+/* 시편처럼 만들고 있는 여정: 앱의 시리즈 목록에도 진행 막대와 n% (첫 화면 .prog와 같은 모양, build.py가 다 차면 뺀다) */
+.jprog{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:11.5px;color:var(--gold2)}.jprog b{display:block;width:70px;height:4px;border-radius:2px;background:rgba(var(--gold-rgb),.22);overflow:hidden}.jprog i{display:block;height:100%;background:var(--gold)}
