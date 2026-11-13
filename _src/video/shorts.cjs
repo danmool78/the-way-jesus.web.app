@@ -15,6 +15,7 @@ let n = 0;
 // 자막 띠: 지도 위쪽(머리 아래)에 크게. 두 줄까지, 작은 설명 한 줄
 const CAP_CSS = `#shortCap{position:fixed;left:0;right:0;top:104px;z-index:99999;padding:14px 18px 22px;text-align:center;pointer-events:none;
   background:linear-gradient(rgba(14,10,6,.78),rgba(14,10,6,.55) 70%,rgba(14,10,6,0));font-family:'Noto Sans KR',sans-serif;opacity:0}
+#shortCap.bottom{top:auto;bottom:118px;padding:24px 18px 14px;background:linear-gradient(rgba(14,10,6,0),rgba(14,10,6,.62) 30%,rgba(14,10,6,.85))}
 #shortCap b{display:block;color:#fff;font-size:27px;line-height:1.32;font-weight:800;letter-spacing:-.01em;text-shadow:0 2px 10px rgba(0,0,0,.6);white-space:pre-line}
 #shortCap small{display:block;margin-top:8px;color:#f0d28a;font-size:15px;font-weight:600;letter-spacing:.02em}`;
 
@@ -24,8 +25,11 @@ async function main() {
   const p = await ctx.newPage();
   p.on('pageerror', e => console.log('ERR', e.message));
   await p.clock.install();
+  // 그리기(requestAnimationFrame)는 영상 한 장에 한 번만: 가짜 시계에 맡기면 시간을 넘길 때마다 16ms마다 3D를 다시 그려 한 장에 몇 초씩 걸렸다
+  await p.addInitScript(() => { let q = new Map(), id = 0; window.requestAnimationFrame = f => { q.set(++id, f); return id; }; window.cancelAnimationFrame = i => q.delete(i);
+    window.__flushRaf = () => { const now = performance.now(), cur = [...q.values()]; q = new Map(); cur.forEach(f => { try { f(now); } catch (e) { console.error(e); } }); }; });
   const cdp = await ctx.newCDPSession(p);
-  const tick = ms => p.clock.runFor(ms);
+  const tick = async ms => { await p.clock.runFor(ms); await p.evaluate(() => window.__flushRaf?.()); };
   const settle = async (ms) => { for (let t = 0; t < ms; t += 100) { await tick(100); await p.waitForTimeout(40); } }; // 화면에 담지 않고 흘려보내기(불러오기 등)
   const syncCss = () => p.evaluate(() => { const vt = performance.now(); for (const a of document.getAnimations()) { if (a.__v === undefined) { a.__v = vt - (a.currentTime || 0); a.pause(); } a.currentTime = vt - a.__v; } });
   const grab = async () => { const r = await cdp.send('Page.captureScreenshot', { format: 'jpeg', quality: 92 }); fs.writeFileSync(path.join(DIR, `f${String(n++).padStart(5, '0')}.jpg`), Buffer.from(r.data, 'base64')); };
@@ -44,8 +48,11 @@ async function main() {
   const setCap = cap => p.evaluate(([css, cap]) => {
     if (!document.getElementById('shortCapCss')) { const s = document.createElement('style'); s.id = 'shortCapCss'; s.textContent = css; document.head.appendChild(s); }
     let c = document.getElementById('shortCap'); if (!c) { c = document.createElement('div'); c.id = 'shortCap'; document.body.appendChild(c); }
+    c.className = cap?.at === 'bottom' ? 'bottom' : '';
     c.innerHTML = cap ? `<b></b>${cap.s ? '<small></small>' : ''}` : ''; if (cap) { c.querySelector('b').textContent = cap.t; if (cap.s) c.querySelector('small').textContent = cap.s; }
   }, [CAP_CSS, cap]);
+  // 장면 카드를 아래로 접어(peek) 지도·무대를 크게
+  const peek = () => p.evaluate(() => { const c = document.getElementById('scene'); c.classList.remove('open', 'full'); c.classList.add('peek'); });
   const open = async (u, wait = 5000) => {
     await p.goto(URL + u); await settle(wait);
     await p.evaluate(() => { document.querySelectorAll('.intro').forEach(x => x.remove()); document.body.classList.remove('intro-open'); localStorage.setItem('theway-realms', '1'); });
@@ -54,39 +61,40 @@ async function main() {
 
   // 1) 첫 화면: 예수 여정 전체 경로 — 성경 속 그 길을 지도 위에서
   await open('app.html#e01');
-  await p.click('#fitAll'); await settle(1800);
+  await peek(); await p.click('#fitAll'); await settle(1800);
   await shoot(3.6, { t: '성경 속 그 길을\n지도 위에서 걷는다', s: '그 길 — 예수의 발자취' }, k => k % Math.round(FPS * 0.5) === 0 && p.evaluate(() => window.zoomMap(0.965)));
 
-  // 2) 걷기: 베들레헴에서 애굽으로 — 장면을 따라 실제 길을 걷는다
-  await open('app.html#e04');
-  await shoot(5.4, { t: '사복음서 61장면을\n시간과 장소 순서대로', s: '다음 장소로 — 실제 길을 따라 걷는다' }, k => k === Math.round(FPS * 0.6) && p.click('#next'));
+  // 2) 걷기: 나사렛에서 베들레헴으로 — 장면을 따라 실제 길을 걷는다
+  await open('app.html#e01'); await peek(); await settle(600);
+  await shoot(5.6, { t: '사복음서 61장면을\n시간과 장소 순서대로', s: '다음 장소로 — 실제 길을 따라 걷는다' }, k => k === Math.round(FPS * 0.5) && p.click('#next'));
 
-  // 3) 3D 미니어처 무대: 장면을 열면 그 자리에서 사람들이 움직인다
-  await open('app.html?beat=p0.2#e10', 6000);
-  await p.evaluate(() => window.zoomMap(0.6)); await settle(1200);
-  await shoot(4.6, { t: '장면마다 살아 움직이는\n3D 미니어처 무대', s: '말씀 속 그 순간이 지도 위에' });
-
-  // 4) 3D 지형: 실제 고도 자료로 빚은 땅 — 눕혀 보기
+  // 3) 3D 미니어처 무대: 가버나움 회당 앞의 무리 — 3D 지형 위에 선 무대를 가까이서, 천천히 돌며
+  const tool = k => p.evaluate(k => document.querySelector(`.m3tools button[data-k="${k}"]`)?.click(), k);
   await open('app.html#e33', 5000);
-  await p.click('#mode3d'); await settle(9000);
-  await shoot(5.0, { t: '실제 고도로 빚은\n3D 지형', s: '갈릴리 바다와 산과 골짜기 그대로' }, async (k) => {
-    if (k % 2 === 0) await p.evaluate(() => { const c = document.querySelector('canvas.terrain, #terrain canvas, canvas'); }); // (조작은 아래 드래그로)
-  });
+  await peek(); await p.click('#mode3d'); await settle(12000);
+  // 카드를 접으면 무대가 화면 위쪽(자막 자리)에 서서, 당겨 키운 다음 조금 끌어내려 가운데에 둔다
+  await p.mouse.move(200, 330); for (let k = 0; k < 6; k++) { await p.mouse.wheel(0, -40); await tick(60); } await settle(1500);
+  await p.mouse.move(200, 200); await p.mouse.down(); for (let k = 1; k <= 10; k++) { await p.mouse.move(200, 200 + k * 11); await tick(30); } await p.mouse.up(); await settle(1500);
+  await p.mouse.move(200, 330);
+  await shoot(4.6, { t: '장면마다 살아 움직이는\n3D 미니어처 무대', s: '말씀 속 그 순간이 그 자리에' }, k => (k === 2 || k === Math.round(FPS * 2.2)) && tool('left'));
+
+  // 4) 3D 지형: 같은 자리에서 지평선 쪽으로 눕히며 물러나 — 갈릴리 바다 둘레의 산과 골짜기
+  await shoot(5.4, { t: '실제 고도로 빚은\n3D 지형', s: '갈릴리 바다와 산과 골짜기 그대로' }, async k => { if ([0, 0.4, 0.8, 1.2].some(t => k === Math.round(FPS * t))) await tool('tiltDown'); if (k % 2 === 0) await p.mouse.wheel(0, 26); });
 
   // 5) 명화와 이야기, 성우 낭독
-  await open('app.html#e14', 5000);
+  await open('app.html#e26', 5000);
   await p.evaluate(() => { const c = document.getElementById('scene'); c.classList.remove('peek'); c.classList.add('open', 'full'); });
   await settle(1500);
-  await shoot(4.8, { t: '명화와 함께 읽고\n성우의 낭독으로 듣는다', s: '장면마다 그림 · 이야기 · 말씀 · 대조표' }, (k, u) => k % 4 === 0 && p.evaluate(u => { const s = document.querySelector('#scene .scroll, #scene'); if (s) s.scrollTop = u * 260; }, u));
+  await shoot(4.8, { t: '명화와 함께 읽고\n성우의 낭독으로 듣는다', s: '장면마다 그림 · 이야기 · 말씀 · 대조표', at: 'bottom' });
 
-  // 6) 영역: 장면이 넘어가 시대가 바뀌면 다스린 나라가 바뀐다 (열왕기 — 통일 왕국에서 남북으로)
-  await open('app.html?j=kings#k06', 5000);
-  await p.click('#fitAll'); await settle(2000);
-  await shoot(5.2, { t: '그 시대 누가 다스렸나\n영역이 시대 따라 바뀐다', s: '통일 왕국 → 북이스라엘 · 남유다' }, k => k === Math.round(FPS * 1.2) && p.evaluate(() => { location.hash = '#k07'; }));
+  // 6) 영역: 바울 때의 로마 속주 — 지중해 전체에 색과 점선으로 (장면이 넘어가 시대가 바뀌면 서서히 바뀐다)
+  await open('app.html?j=paul#a20', 5000);
+  await peek(); await p.click('#fitAll'); await settle(2000);
+  await shoot(5.0, { t: '그 시대 누가 다스렸나\n영역 지도', s: '바울 때의 로마 속주 · 헤롯 왕국 · 남북 왕국' }, async k => { await p.evaluate(() => { window.stageHide = true; }); if (k % Math.round(FPS * 0.5) === 0) await p.evaluate(() => window.zoomMap(0.97)); }); // 넓은 지도 위에 고린도 무대가 크게 떠 있어 감춘다
 
   // 7) 그 길 시리즈 — 첫 화면의 여정 카드
   await p.goto(URL); await settle(3500);
-  await shoot(5.0, { t: '예수 · 모세 · 다윗 · 열왕기 · 바울\n시편 · 잠언 · GoodNews', s: '그 길 시리즈 — 같은 지도로 성경 전체를' }, (k, u) => k % 3 === 0 && p.evaluate(u => window.scrollTo(0, u * Math.max(0, document.documentElement.scrollHeight * 0.55 - innerHeight * 0.2)), u));
+  await shoot(5.0, { t: '예수에서 바울까지\n성경 전체를 같은 지도로', s: '모세 · 다윗 · 열왕기 · 바울 · 시편 · 잠언 · GoodNews' }, (k, u) => k % 3 === 0 && p.evaluate(u => window.scrollTo(0, u * Math.max(0, document.documentElement.scrollHeight * 0.55 - innerHeight * 0.2)), u));
 
   // 8) 끝 화면
   await p.goto(URL + '_src/video/shorts-end.html'); await settle(800);
