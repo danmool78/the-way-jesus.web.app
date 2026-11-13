@@ -432,9 +432,11 @@ function placeTerrain(T, dt) {
 
 /* ---------- 루프 ---------- */
 const clock = new THREE.Clock();
-function loop() {
+let lastF = 0;
+function loop(now) {
   requestAnimationFrame(loop);
-  if (!window.terrainDrives) frame(); // 3D 지형 모드에서는 terrain.js가 카메라를 옮긴 직후에 부른다 — 따로 돌면 무대가 한 박자 늦게 따라와 핀에서 벗어나 보였다
+  // 2D 지도 위 무대: 걷거나 지도를 옮기는 중이 아니면 초당 30번만 — 사람들의 몸짓에는 넉넉하고, 늘 60번씩 그리던 몫이 절반으로
+  if (!window.terrainDrives && (document.body.classList.contains('is-walking') || now - (window.mapMoveT || 0) < 150 || now - lastF > 31)) { lastF = now; frame(); } // 3D 지형 모드에서는 terrain.js가 카메라를 옮긴 직후에 부른다 — 따로 돌면 무대가 한 박자 늦게 따라와 핀에서 벗어나 보였다
 }
 window.stageRender = frame; // 3D 지형 루프가 부른다 (stageFrame은 app.js가 쓰는 무대 위치 계산 — 이름이 겹쳐 덮어쓰던 것을 나눔)
 function frame() {

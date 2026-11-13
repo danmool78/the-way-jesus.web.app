@@ -684,13 +684,17 @@ function resize() {
   camera.updateProjectionMatrix();
 }
 
-let last = performance.now(), nearT = 0;
+let last = performance.now(), nearT = 0, inputT = 0;
+['pointerdown', 'pointermove', 'wheel', 'touchmove'].forEach(k => addEventListener(k, () => { inputT = performance.now(); }, { passive: true })); // 끌고 당기는 동안은 매 프레임
 function loop(now) {
   requestAnimationFrame(loop);
   window.terrainDrives = on && ready && !!window.terrainOn; // 무대(stage.js)는 이 루프 안에서 그린다 (지형이 준비된 뒤부터)
   if (!window.terrainDrives || document.body.classList.contains('intro-open')) return; // 랜딩이 떠 있으면 뒤에서 돌지 않게
-  const dt = Math.min(0.25, (now - last) / 1000); last = now; // 느린 기기에서도 카메라가 제때 닿게 넉넉히
   const walking = document.body.classList.contains('is-walking');
+  // 가만히 보고 있을 때(걷기·카메라 이동·손길이 없을 때)는 초당 30번만 그린다 — 화면 가득한 지형을 늘 60번씩 그려 휴대폰이 뜨거워지고 배터리를 먹었다
+  const still = !walking && !cam.goal && now - inputT > 400 && Math.abs(cam.pitch - ui.pitch) < 1e-3 && Math.abs(cam.yaw - ui.yaw) < 1e-3;
+  if (still && now - last < 31) return;
+  const dt = Math.min(0.25, (now - last) / 1000); last = now; // 느린 기기에서도 카메라가 제때 닿게 넉넉히
   // 걷는 동안은 카메라가 걷는 사람을 따라간다
   if (walking && walker.has) cam.goal = { tx: walker.x, tz: walker.z, dist: walkDist };
   if (cam.goal) {
