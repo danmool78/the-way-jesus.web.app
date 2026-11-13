@@ -496,8 +496,11 @@ function frame() {
     ac.update(time, dt);
   });
   if (inTerrain) scaleLights();
-  if (!T) renderer.render(scene, camera);
+  // 지도를 끌거나 당기는 동안에는 캔버스 자리(transform)만 매 프레임 옮기고, 다시 그리기는 초당 30번까지 —
+  // 매 프레임 다시 그리느라 바울 여정처럼 무대가 무거운 장면에서 지도 이동이 버벅였다(사용자)
+  if (!T) { const now = performance.now(); if (now - (window.mapMoveT || 0) > 150 || now - lastDraw > 31) { lastDraw = now; renderer.render(scene, camera); } }
 }
+let lastDraw = 0;
 
 /* ---------- app.js와 연결 ---------- */
 if (canvas) {
