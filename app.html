@@ -260,8 +260,8 @@ button,a,img,svg,nav,header,.btn{-webkit-touch-callout:none;-webkit-user-select:
 </dialog>
 
 <script src="app.js"></script>
-<script type="module" src="stage.js"></script>
-<script type="module" src="terrain.js"></script>
+<!-- 3D 무대·지형(three.js와 대본, 1MB 가까이)은 3D가 없는 여정(시편, journey.json no3d)에서는 받지 않는다 -->
+<script>if (new URLSearchParams(location.search).get('j') !== 'psalms') ['stage.js', 'terrain.js'].forEach(src => { const s = document.createElement('script'); s.type = 'module'; s.src = src; document.body.appendChild(s); });</script>
 <!-- Cloudflare Web Analytics: 쿠키·개인정보 없이 방문 수만 센다 --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f33dcbc61cc949909499f044d7eeae69"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
