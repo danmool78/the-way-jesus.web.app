@@ -511,6 +511,8 @@ function landNow() {
   const x1 = Math.max(LAND.x + LAND.w, ...pts.map(q => q[0] + m * 2.4)), y1 = Math.max(LAND.y + LAND.h, ...pts.map(q => q[1] + m));
   return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 };
 }
+// 확대·축소의 가장 먼 넓이: 장면 둘레 땅의 1.3배와 전체 경로 보기(fitAll — 카드 자리를 비켜 넓힌 땅) 중 큰 쪽, 지금 넓이보다는 줄지 않게
+const maxViewW = () => Math.max((onEden() ? EDEN : landNow()).w * 1.3, onEden() ? 0 : reserveCard({ ...landNow() }).w * 1.02, view.w * 1.001);
 function fitAll() {
   // 시편(무대 없이 가사를 띄우는 여정): 그려진 땅보다 조금 가까이(0.78 — 땅 끝에 붙은 시내산·바벨론도 옮길 틈이 생기게), 지금 장소가 가운데 가사 바로 아래에 오게 옮긴다
   if (DATA.journey?.no3d && EVENTS && !isPro()) {
@@ -551,7 +553,9 @@ function animateTo(target, ms) {
   let drag = null, pinch = null;
   const pts = new Map(); // 지도에 닿아 있는 손가락들의 마지막 자리
   const B = () => onEden() ? EDEN : landNow(); // 에덴 장면에서는 그 따로 떨어진 무대 안에서 (먼 바벨론에서는 그곳까지 넓힌 땅 안에서)
-  const clampW = w => Math.min(Math.max(w, 8), B().w * 1.3); // +/− 단추(zoomMap)와 같은 한계
+  // 가장 멀리는 장면 둘레 땅의 1.3배 — 다만 전체 경로처럼 이미 더 넓게 보고 있으면 그 넓이까지(전엔 휠 한 칸에 확 당겨졌다, 사용자)
+  // 가장 멀리는 전체 경로 보기만큼까지 — 휠·손가락으로도 전체 경로 크기까지 줄일 수 있게(사용자). 이미 더 넓게 보고 있으면 그 넓이에서 조금씩
+  const clampW = w => Math.min(Math.max(w, 8), maxViewW());
   // 가운데가 땅 밖으로 너무 멀리 나가지 않게
   const keep = (x, y, w, h) => { const b = B(), cx = Math.min(b.x + b.w * 1.25, Math.max(b.x - b.w * 0.25, x + w / 2)), cy = Math.min(b.y + b.h * 1.25, Math.max(b.y - b.h * 0.25, y + h / 2)); return { x: cx - w / 2, y: cy - h / 2, w, h }; };
   const startPinch = () => {
@@ -628,7 +632,7 @@ window.zoomMap = f => {
   const B = onEden() ? EDEN : landNow(), e = evAt(idx), [ax0, ay0] = e ? P(PLACES[here(e)]) : [NaN, NaN];
   const inView = ax0 > view.x && ax0 < view.x + view.w && ay0 > view.y && ay0 < view.y + view.h;
   const ax = inView ? ax0 : view.x + view.w / 2, ay = inView ? ay0 : view.y + view.h / 2;
-  const k = Math.min(Math.max(view.w * f, 8), B.w * 1.3) / view.w;
+  const k = Math.min(Math.max(view.w * f, 8), maxViewW()) / view.w;
   followWalk = false;
   animateTo({ x: ax - (ax - view.x) * k, y: ay - (ay - view.y) * k, w: view.w * k, h: view.h * k }, 320);
 };
@@ -656,7 +660,8 @@ function drawRealms() {
   const R = DATA.journey?.realms, g = $('#realms', map), btn = $('#realmBtn');
   if (btn) btn.hidden = !R;
   if (!g || !R) return;
-  g.innerHTML = R.eras.map((er, k) => `<g class="realm-era" data-k="${k}">${er.areas.map(a => `<path class="realm" style="--rc:${a.color}" d="${a.d.map(r => 'M' + r.map(p => px(p).map(v => v.toFixed(1)).join(',')).join('L') + 'Z').join(' ')}"/>`).join('')}</g>`).join('');
+  // 영역마다 그 안쪽 한 점(at)에 짧은 이름을 그 영역 색으로 바로 적는다 — 색만으로는 무엇인지 몰랐다(사용자)
+  g.innerHTML = R.eras.map((er, k) => `<g class="realm-era" data-k="${k}">${er.areas.map(a => `<path class="realm" style="--rc:${a.color}" d="${a.d.map(r => 'M' + r.map(p => px(p).map(v => v.toFixed(1)).join(',')).join('L') + 'Z').join(' ')}"/>`).join('')}${er.areas.filter(a => a.at).map(a => `<g class="lbl realm-name" style="--rc:${a.color}" transform="translate(${px(a.at).join(',')})"><text>${esc(realmName(a, 'short'))}</text></g>`).join('')}</g>`).join('');
   btn.onclick = () => { realmOn = !realmOn; try { localStorage.setItem('theway-realms', realmOn ? 'on' : 'off'); } catch { /* 이번만 */ } updateRealms(); };
 }
 // 지금 장면의 시대: from 장면에 이르렀거나 지난 마지막 묶음 (프롤로그·에덴은 없음)

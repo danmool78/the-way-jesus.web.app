@@ -886,3 +886,5 @@ body.intro-open .intro,body.intro-open .intro *{animation-play-state:running}
 @media (max-width:900px){.realmkey{right:10px;flex-direction:row;flex-wrap:wrap;gap:2px 9px;font-size:10.5px;padding:4px 8px;max-width:64vw}.realmkey small,.realmkey .rk-full{display:none}.realmkey .rk-short{display:inline}.realmkey i{width:8px;height:8px;margin-top:3px}.realmkey span{gap:4px}}
 /* 폰에서 이름이 많은 시대(바울의 속주, 갈라진 왕국과 이웃 나라들)는 이름표가 작은 지도를 덮으므로 감춘다 — 지도의 지역 이름과 색으로 본다(사용자: PC는 범례, 폰은 어렵다) */
 @media (max-width:900px){.realmkey.many{display:none}}
+/* 열두 지파처럼 영역 안에 바로 적는 이름 (지역 이름보다 작고 옅게) */
+.realm-name text{font-size:13.5px;font-weight:700;font-style:italic;letter-spacing:.08em;fill:color-mix(in srgb,var(--rc) 70%,#1a1208);stroke:rgba(248,240,220,.9);stroke-width:3.5px}
