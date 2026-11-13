@@ -134,3 +134,56 @@ for k, v in [('david', david), ('kings', kings)]:
     v = {'_comment': '시대별 영역 — _src/tools/realms.py가 만든다(직접 고치지 말 것). 철기 시대 경계는 어림', **v}
     json.dump(v, open(os.path.join(src, k + '.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
     print('realms %s:' % k, [(e['from'], [a['id'] for a in e['areas']]) for e in v['eras']])
+
+# ---------- 바울: AD 50 무렵 로마 속주 (지중해 지도 — 바다로 넘친 색은 앱이 육지 가림판(relief-med-mask)으로 잘라 낸다) ----------
+NP = {
+ 'judaea': (['유대 (로마 속주)', 'Judea (Roman province)', 'Judea (provincia romana)', 'Judeia (província romana)', 'Judée (province romaine)', '犹太（罗马行省）', 'Yudea (provinsi Romawi)', 'ユダヤ（ローマ属州）'], ['유대', 'Judea', 'Judea', 'Judeia', 'Judée', '犹太', 'Yudea', 'ユダヤ']),
+ 'judaea0': (['유대 (로마 총독)', 'Judea (Roman governor)', 'Judea (gobernador romano)', 'Judeia (governador romano)', 'Judée (gouverneur romain)', '犹太（罗马巡抚）', 'Yudea (wali negeri Romawi)', 'ユダヤ（ローマ総督）'], ['유대', 'Judea', 'Judea', 'Judeia', 'Judée', '犹太', 'Yudea', 'ユダヤ']),
+ 'antipas': (['분봉 왕 헤롯 안디바 (갈릴리·베레아)', 'Herod Antipas, tetrarch (Galilee, Perea)', 'Herodes Antipas, tetrarca (Galilea, Perea)', 'Herodes Antipas, tetrarca (Galileia, Pereia)', 'Hérode Antipas, tétrarque (Galilée, Pérée)', '分封王希律·安提帕（加利利、比利亚）', 'Herodes Antipas, raja wilayah (Galilea, Perea)', '領主ヘロデ・アンティパス（ガリラヤ・ペレア）'],
+             ['헤롯 안디바', 'Herod Antipas', 'Herodes Antipas', 'Herodes Antipas', 'Hérode Antipas', '希律·安提帕', 'Herodes Antipas', 'ヘロデ・アンティパス']),
+ 'syria': (['수리아와 길리기아', 'Syria and Cilicia', 'Siria y Cilicia', 'Síria e Cilícia', 'Syrie et Cilicie', '叙利亚和基利家', 'Siria dan Kilikia', 'シリアとキリキア'], ['수리아·길리기아', 'Syria-Cilicia', 'Siria-Cilicia', 'Síria-Cilícia', 'Syrie-Cilicie', '叙利亚·基利家', 'Siria-Kilikia', 'シリア・キリキア']),
+ 'cyprus': (['구브로', 'Cyprus', 'Chipre', 'Chipre', 'Chypre', '塞浦路斯', 'Siprus', 'キプロス'], None),
+ 'galatia': (['갈라디아 (비시디아·루가오니아 포함)', 'Galatia (with Pisidia and Lycaonia)', 'Galacia (con Pisidia y Licaonia)', 'Galácia (com Pisídia e Licaônia)', 'Galatie (avec Pisidie et Lycaonie)', '加拉太（含彼西底、吕高尼）', 'Galatia (termasuk Pisidia dan Likaonia)', 'ガラテヤ（ピシディア・ルカオニアを含む）'], ['갈라디아', 'Galatia', 'Galacia', 'Galácia', 'Galatie', '加拉太', 'Galatia', 'ガラテヤ']),
+ 'lycia': (['루기아·밤빌리아', 'Lycia and Pamphylia', 'Licia y Panfilia', 'Lícia e Panfília', 'Lycie et Pamphylie', '吕家和旁非利亚', 'Likia dan Pamfilia', 'ルキア・パンフリア'], None),
+ 'cappadocia': (['갑바도기아', 'Cappadocia', 'Capadocia', 'Capadócia', 'Cappadoce', '加帕多家', 'Kapadokia', 'カパドキア'], None),
+ 'asia': (['아시아', 'Asia', 'Asia', 'Ásia', 'Asie', '亚细亚', 'Asia', 'アジア'], None),
+ 'bithynia': (['비두니아·본도', 'Bithynia and Pontus', 'Bitinia y Ponto', 'Bitínia e Ponto', 'Bithynie et Pont', '庇推尼和本都', 'Bitinia dan Pontus', 'ビテニヤ・ポント'], ['비두니아', 'Bithynia', 'Bitinia', 'Bitínia', 'Bithynie', '庇推尼', 'Bitinia', 'ビテニヤ']),
+ 'macedonia': (['마게도냐', 'Macedonia', 'Macedonia', 'Macedônia', 'Macédoine', '马其顿', 'Makedonia', 'マケドニア'], None),
+ 'achaia': (['아가야', 'Achaia', 'Acaya', 'Acaia', 'Achaïe', '亚该亚', 'Akhaya', 'アカイア'], None),
+ 'dalmatia': (['달마디아 (일루리곤)', 'Dalmatia (Illyricum)', 'Dalmacia (Ilírico)', 'Dalmácia (Ilírico)', 'Dalmatie (Illyrie)', '挞马太（以利哩古）', 'Dalmatia (Ilirikum)', 'ダルマテヤ（イルリコ）'], ['달마디아', 'Dalmatia', 'Dalmacia', 'Dalmácia', 'Dalmatie', '挞马太', 'Dalmatia', 'ダルマテヤ']),
+ 'italia': (['이달리야', 'Italy', 'Italia', 'Itália', 'Italie', '意大利', 'Italia', 'イタリア'], None),
+ 'sicilia': (['시실리 (멜리데 포함)', 'Sicily (with Malta)', 'Sicilia (con Malta)', 'Sicília (com Malta)', 'Sicile (avec Malte)', '西西里（含马耳他）', 'Sisilia (termasuk Malta)', 'シチリア（マルタを含む）'], ['시실리', 'Sicily', 'Sicilia', 'Sicília', 'Sicile', '西西里', 'Sisilia', 'シチリア']),
+ 'crete': (['그레데와 구레네', 'Crete and Cyrene', 'Creta y Cirene', 'Creta e Cirene', 'Crète et Cyrénaïque', '克里特和古利奈', 'Kreta dan Kirene', 'クレタとクレネ'], ['그레데', 'Crete', 'Creta', 'Creta', 'Crète', '克里特', 'Kreta', 'クレタ']),
+ 'egypt': (['애굽', 'Egypt', 'Egipto', 'Egito', 'Égypte', '埃及', 'Mesir', 'エジプト'], None),
+}
+G = {
+ 'italia': P([(46.5, 6.6), (46.6, 13.7), (45.6, 13.9), (44.0, 13.5), (42.0, 15.9), (41.0, 18.6), (39.8, 19.0), (37.85, 16.4), (38.2, 15.62), (40.0, 14.6), (41.3, 12.2), (42.5, 10.0), (44.0, 8.0), (44.0, 6.6)]),
+ 'sicilia': unary_union([P([(38.4, 12.0), (38.4, 15.6), (37.8, 15.5), (36.5, 15.3), (36.5, 12.0)]), P([(36.15, 14.0), (36.15, 14.7), (35.7, 14.7), (35.7, 14.0)])]),
+ 'dalmatia': P([(45.6, 13.9), (45.4, 17.0), (44.6, 19.5), (42.6, 20.5), (41.9, 19.3), (42.4, 18.0), (43.5, 15.6), (44.6, 14.4)]),
+ 'macedonia': P([(41.9, 19.3), (42.6, 20.5), (42.3, 22.6), (41.6, 24.0), (41.1, 24.7), (40.6, 24.7), (39.9, 23.9), (39.0, 23.3), (38.95, 22.2), (39.6, 21.0), (40.1, 19.4)]),
+ 'achaia': P([(40.1, 19.4), (39.6, 21.0), (38.95, 22.2), (39.0, 23.3), (38.9, 24.3), (38.3, 24.8), (37.7, 24.3), (36.2, 23.1), (36.2, 21.4), (37.6, 20.4), (38.7, 20.0), (39.6, 19.6)]),
+ 'asia': P([(40.5, 25.6), (40.4, 27.4), (40.25, 29.0), (40.2, 29.8), (39.6, 30.6), (38.7, 30.65), (37.9, 30.3), (37.25, 29.6), (36.85, 28.3), (36.5, 27.2), (36.3, 25.0), (37.4, 24.9), (39.5, 25.0)]),
+ 'bithynia': P([(41.4, 28.8), (41.5, 31.0), (42.1, 33.0), (42.1, 34.6), (41.2, 34.8), (40.6, 33.0), (40.35, 31.3), (40.2, 29.8), (40.25, 29.0)]),
+ 'galatia': P([(42.1, 34.6), (41.7, 36.6), (40.6, 37.8), (39.8, 36.0), (39.0, 34.4), (37.9, 34.0), (37.1, 33.9), (37.0, 32.4), (37.25, 31.7), (37.4, 30.75), (38.7, 30.65), (39.6, 30.6), (40.2, 29.8), (40.35, 31.3), (40.6, 33.0), (41.2, 34.8)]),
+ 'lycia': P([(37.25, 29.6), (37.4, 30.75), (37.25, 31.7), (37.0, 32.4), (36.4, 32.4), (35.9, 30.0), (36.0, 28.6), (36.85, 28.3)]),
+ 'cappadocia': P([(39.8, 36.0), (40.6, 37.8), (40.0, 38.8), (38.4, 38.8), (37.7, 37.4), (37.6, 35.9), (37.35, 34.4), (37.9, 34.0), (39.0, 34.4)]),
+ 'cilicia': P([(37.1, 33.9), (37.35, 34.4), (37.6, 35.9), (37.2, 36.6), (36.5, 36.3), (36.0, 34.6), (36.0, 32.4), (37.0, 32.4)]),
+ 'syria': P([(37.2, 36.6), (37.7, 37.4), (37.4, 38.6), (36.0, 39.0), (34.5, 39.0), (33.5, 37.6), (32.75, 36.7), (32.6, 36.3), (32.4, 35.9), (32.45, 35.57), (32.86, 35.645), (33.12, 35.63), (33.12, 35.22), (33.10, 34.6), (35.0, 35.4), (36.5, 35.6)]),
+ 'cyprus': P([(35.8, 32.1), (35.8, 34.8), (34.4, 34.8), (34.4, 32.1)]),
+ 'crete': unary_union([P([(35.8, 23.3), (35.8, 26.5), (34.75, 26.5), (34.75, 23.3)]), P([(33.1, 19.8), (33.1, 25.0), (30.6, 25.0), (30.6, 19.8)])]),
+ 'egypt': P([(31.8, 25.2), (31.8, 33.8), (31.1, 34.25), (29.4, 32.8), (29.4, 25.2)]),
+}
+syria = unary_union([G['syria'], G['cilicia']]).difference(herod)
+def ap(k, g, color):
+    full, short = NP[k]
+    return {'id': k, 'color': color, 'name': nm(full), 'short': nm(short or full), 'd': ring(g, 0.01)}
+PC = {'italia': '#b5603e', 'sicilia': '#c9a24a', 'dalmatia': '#7a6a52', 'macedonia': '#3f8fa0', 'achaia': '#5f8a4f', 'asia': '#c9a24a', 'bithynia': '#6b8fb5', 'galatia': '#b5603e',
+      'lycia': '#9a6a9a', 'cappadocia': '#5f8a4f', 'syria': '#8f7fb0', 'cyprus': '#c0453a', 'crete': '#6b8fb5', 'egypt': '#b58a3e', 'judaea': '#c0453a', 'judaea0': '#c0453a', 'antipas': '#5f8a4f'}
+REST = lambda: [ap(k, G[k] if k != 'syria' else syria, PC[k]) for k in ['italia', 'sicilia', 'dalmatia', 'macedonia', 'achaia', 'asia', 'bithynia', 'galatia', 'lycia', 'cappadocia', 'syria', 'cyprus', 'crete', 'egypt']]
+paul = {'credit': nm(['로마 속주 경계는 어림 (AWMC·바링턴 지도책 참고)', 'Approximate provincial borders (after AWMC / Barrington Atlas)', 'Fronteras provinciales aproximadas (según AWMC / Barrington Atlas)', 'Fronteiras provinciais aproximadas (segundo AWMC / Barrington Atlas)', 'Frontières provinciales approximatives (d’après AWMC / Barrington Atlas)', '行省边界为大致范围（参照 AWMC、Barrington 地图集）', 'Batas provinsi perkiraan (menurut AWMC / Barrington Atlas)', '属州の境界はおおよそ（AWMC・バリントン地図帳による）']),
+        'eras': [
+  {'from': 'a01', 'areas': [ap('judaea0', judea, PC['judaea']), ap('antipas', antipas, PC['antipas'])] + REST()},   # AD 34: 빌라도 무렵의 유대 총독령, 안디바의 갈릴리·베레아
+  {'from': 'a07', 'areas': [ap('judaea', unary_union([judea, antipas]), PC['judaea'])] + REST()},                  # AD 44 뒤: 갈릴리·베레아까지 로마 속주 유대
+]}
+json.dump({'_comment': '시대별 영역 — _src/tools/realms.py가 만든다(직접 고치지 말 것). AD 50 무렵 로마 속주, 경계는 어림', **paul}, open(os.path.join(src, 'paul.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
+print('realms paul:', [(e['from'], len(e['areas'])) for e in paul['eras']])

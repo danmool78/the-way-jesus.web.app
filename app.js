@@ -231,6 +231,7 @@ function buildMap() {
   <defs>
     <linearGradient id="seaGrad" x1="0" x2="1"><stop offset="0" stop-color="var(--sea-deep)"/><stop offset="1" stop-color="var(--sea)"/></linearGradient>
     ${jmap?.med ? `<linearGradient id="seaMed" gradientUnits="userSpaceOnUse" x1="${dx0}" x2="${px([0, 36.2])[0]}" y1="0" y2="0"><stop offset="0" stop-color="var(--sea-deep)"/><stop offset="1" stop-color="var(--sea)"/></linearGradient>` : ''}
+    ${jmap?.med ? `<mask id="landMask" maskUnits="userSpaceOnUse" x="${vx0}" y="${vy0}" width="${vx1 - vx0}" height="${vy1 - vy0}"><rect x="${vx0}" y="${vy0}" width="${vx1 - vx0}" height="${vy1 - vy0}" fill="#fff"/><image href="assets/relief-med-mask.png" x="${dx0}" y="${dy0}" width="${dx1 - dx0}" height="${dy1 - dy0}" preserveAspectRatio="none"/><path d="${sea}" fill="#000"/></mask>` : ''}
     <radialGradient id="oasis"><stop offset="0" stop-color="var(--oasis)" stop-opacity=".75"/><stop offset=".6" stop-color="var(--oasis)" stop-opacity=".4"/><stop offset="1" stop-color="var(--oasis)" stop-opacity="0"/></radialGradient>
     <filter id="lakeSoft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3.2"/></filter>
     <filter id="waterEdge" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur in="SourceAlpha" stdDeviation="4" result="b"/><feComposite in="SourceAlpha" in2="b" operator="arithmetic" k2="1" k3="-1" result="edge"/><feFlood flood-color="#21474f" flood-opacity=".5"/><feComposite in2="edge" operator="in"/><feComposite in2="SourceGraphic" operator="over"/></filter>
@@ -252,11 +253,12 @@ function buildMap() {
   <path d="${smooth(GEO.jordanN)}" class="riverbank"/>
   <path d="${smooth(GEO.jordanS)}" class="riverbank"/>
   ${OASES.map(([a, b, r]) => `<circle cx="${px([a, b])[0]}" cy="${px([a, b])[1]}" r="${r}" fill="url(#oasis)"/>`).join('')}
-  <g id="realms"></g>
+  ${jmap?.med ? '' : '<g id="realms"></g>'}
   <path d="${sea}" fill="${seaFill}" class="sea"/>
   ${jmap?.med ? `<image href="assets/relief-med-wide.webp" class="relief" x="${vx0}" y="${vy0}" width="${vx1 - vx0}" height="${vy1 - vy0}" preserveAspectRatio="none"/>
   <image href="assets/relief-med.webp" class="relief" x="${dx0}" y="${dy0}" width="${dx1 - dx0}" height="${dy1 - dy0}" preserveAspectRatio="none"/>
-  <g id="reliefMedHi" class="relief"></g>` : ''}
+  <g id="reliefMedHi" class="relief"></g>
+  <g id="realms" mask="url(#landMask)"></g>` : ''}
   ${jmap?.meso ? `<path d="${smooth(GEO.cyprus, true)}" class="isle"/>` : ''}
   <path d="${smooth(GEO.coast)}" class="coast"/>
   <path d="${smooth(GEO.galilee, true)}" class="lake" filter="url(#waterEdge)"/>
@@ -669,6 +671,7 @@ function updateRealms() {
   $$('#realms .realm-era', map).forEach(g => g.classList.toggle('on', +g.dataset.k === k));
   btn.classList.toggle('active', realmOn); btn.setAttribute('aria-pressed', String(realmOn));
   key.hidden = k < 0;
+  key.classList.toggle('many', k >= 0 && R.eras[k].areas.length > 7); // 바울의 속주처럼 많으면 짧은 이름을 가로로 흘린다
   if (k >= 0) key.innerHTML = R.eras[k].areas.map(a => `<span><i style="--rc:${a.color}"></i><b class="rk-full">${esc(realmName(a))}</b><b class="rk-short">${esc(realmName(a, 'short'))}</b></span>`).join('') + (R.credit ? `<small>${esc(typeof R.credit === 'object' ? R.credit[LANG] || R.credit.ko : R.credit)}</small>` : '');
 }
 function updateMap(prevIdx, { camera = true, jump = false } = {}) {

@@ -880,5 +880,8 @@ body.intro-open .intro,body.intro-open .intro *{animation-play-state:running}
 .realmkey i{flex:none;width:10px;height:10px;margin-top:2px;border-radius:2px;background:var(--rc);opacity:.85}
 .realmkey small{font-size:9.5px;color:rgba(243,227,191,.55);margin-top:2px}
 .realmkey b{font-weight:400}.realmkey .rk-short{display:none}
+.realmkey.many{flex-direction:row;flex-wrap:wrap;gap:3px 10px;max-width:min(400px,46vw)}.realmkey.many .rk-full{display:none}.realmkey.many .rk-short{display:inline}.realmkey.many small{flex-basis:100%}
 /* 폰: 작은 지도를 가리지 않게 짧은 이름을 한두 줄로 흘린다 */
 @media (max-width:900px){.realmkey{right:10px;flex-direction:row;flex-wrap:wrap;gap:2px 9px;font-size:10.5px;padding:4px 8px;max-width:64vw}.realmkey small,.realmkey .rk-full{display:none}.realmkey .rk-short{display:inline}.realmkey i{width:8px;height:8px;margin-top:3px}.realmkey span{gap:4px}}
+/* 폰에서 이름이 많은 시대(바울의 속주, 갈라진 왕국과 이웃 나라들)는 이름표가 작은 지도를 덮으므로 감춘다 — 지도의 지역 이름과 색으로 본다(사용자: PC는 범례, 폰은 어렵다) */
+@media (max-width:900px){.realmkey.many{display:none}}
