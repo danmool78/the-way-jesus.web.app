@@ -1068,7 +1068,7 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
     window.__stageScene = evAt(i); // stage.js가 늦게 로드돼도 따라잡도록
     dispatchEvent(new CustomEvent('stage:scene', { detail: { ev: evAt(i) } }));
     bgmFollow(); // 읽는 중에 장면이 바뀌면 그 장면의 곡으로 겹쳐 바꾼다
-    bgmWarm(i); songWarm(i);
+    bgmWarm(i); songWarm(i); try { voiceWarm(); } catch { /* 미리 받기는 덤 */ }
     setOdo(odoAt(Math.max(0, i)));
     history.replaceState(null, '', '#' + evAt(i).id);
     $('#prev').disabled = $('#back').disabled = idx === firstIdx(); $('#next').disabled = $('#skip').disabled = idx === EVENTS.length - 1;
@@ -1144,6 +1144,7 @@ document.addEventListener('visibilitychange', () => {
   if (document.hidden) return;
   if (bgmCtx && bgmCue && bgmCtx.state !== 'running') bgmCtx.resume().catch(() => {});
   if (song.on) { song.k = -2; song.sync?.(); } // 시편: 가사 줄을 지금 부르는 데로 곧바로
+  if (song.on && !paused && song.audio.paused && !song.audio.ended) song.audio.play().catch(() => { paused = true; speaking = false; setListenUI(); }); // 멎어 있으면 다시 (안 되면 '멈춤'으로 보여 누르게)
 });
 
 /* ---------- 낭독 (Web Speech API) ---------- */
@@ -1169,6 +1170,36 @@ const voiceAudio = new Audio();
 const voiceUrl = clip => `assets/voice/ko/${clip}.mp3?v=${voiceIndex[clip] || 0}`;
 // 문장 사이 쉼(ms, 1배속 기준). 녹음은 앞뒤 무음을 덜어 냈으므로 여기서 준다 — 문장 끝은 본디 쉼의 0.9배쯤, 제목 뒤는 넉넉히
 const VOICE_GAP = { sentence: 800, item: 850, intro: 1700 };
+// 장면을 열면 낭독 첫 문장들을 미리 받아 둔다 — 재생을 누르고 첫 소리가 늦게 나왔다(시편 노래 앞 낭독, 사용자)
+const voiceWarmed = new Set();
+function voiceWarm() {
+  if (LANG !== 'ko' || !Object.keys(voiceIndex).length) return;
+  const voice = DATA.journey?.narrator || VOICE_NAME.narr;
+  sceneScript().slice(0, 2).flatMap(it => sentences(it.text).map(x => x.trim()).filter(Boolean)).slice(0, 4).forEach(text => {
+    const clip = voiceKey(voice, text);
+    if (voiceIndex[clip] && !voiceWarmed.has(clip)) { voiceWarmed.add(clip); fetch(voiceUrl(clip), { priority: 'low' }).catch(() => voiceWarmed.delete(clip)); }
+  });
+}
+
+// 낭독 동안 소리 장치를 깨워 둔다: 아이폰은 소리가 멎으면 출력을 재웠다가 다음 소리에서 다시 켜는데, 켜지는 동안 문장 첫 글자가
+// 잘리고 늦게 시작했다 — 배경음악이 없는 시편 노래 앞 설명에서 두드러졌다(사용자). 들리지 않는 빈 소리를 계속 틀어 출력을 켜 둔다
+let awake = null, awakeOff = 0;
+function audioAwake() {
+  clearTimeout(awakeOff);
+  try {
+    if (!awake) {
+      const Ctx = window.AudioContext || window.webkitAudioContext; if (!Ctx) return;
+      try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch {}
+      awake = new Ctx();
+      const src = awake.createBufferSource(); src.buffer = awake.createBuffer(1, awake.sampleRate, awake.sampleRate); src.loop = true;
+      src.connect(awake.destination); src.start();
+    }
+    if (awake.state !== 'running') awake.resume().catch(() => {});
+  } catch { /* 없어도 낭독은 된다 */ }
+  // 낭독이 끝나고 1분 동안 다시 듣지 않으면 재운다 (전지)
+  const sleepLater = () => { awakeOff = setTimeout(() => { if (speaking || song.on) return sleepLater(); awake?.suspend().catch(() => {}); }, 60000); };
+  sleepLater();
+}
 
 let warnedNoVoice = false;
 function speakQueue(items, onDone) {
@@ -1176,6 +1207,7 @@ function speakQueue(items, onDone) {
   if (document.body.classList.contains('intro-open')) return; // 랜딩 뒤에서는 읽지 않는다
   const token = ++speechToken;
   speechDone = onDone; sceneReading = false;
+  audioAwake();
   const rate = +$('#rate').value * (DATA.journey?.rate || 1); // 여정마다 낭독 빠르기를 곱한다 (GoodNews는 1.1배 — journey.json의 rate)
   pickVoices();
   const useVoice = !!synth && voices.length > 0;
@@ -1206,6 +1238,7 @@ function speakQueue(items, onDone) {
   const staged = items.some(it => it.beat);
   const readMs = it => (600 + it.text.length * 140) / rate; // 눈으로 읽는 속도
   let n = 0;
+  const warmed = voiceWarmed; // 이번 듣기에서 미리 받은 문장 (장면을 열 때 voiceWarm이 받아 둔 것 포함)
   speaking = true; setListenUI();
   // 일시정지: 지금 문장을 잠깐 세웠다가 그 자리부터 이어 듣는다 (예전엔 멈추면 장면 처음부터 다시 읽었다 — 사용자)
   // 녹음은 그 자리에서 이어 틀고, 브라우저 음성(이어 읽기가 기기마다 들쭉날쭉)과 눈으로 읽는 시간은 그 문장 처음부터
@@ -1224,6 +1257,7 @@ function speakQueue(items, onDone) {
     if (pane && pane.hidden) showTab(pane.dataset.pane);
     if (it.el) { it.el.classList.add('speaking'); scrollToEl(it.el); }
     showCaption(it);
+    if (n === queue.length && evAt(idx)?.song && song.audio.src && song.audio.preload !== 'auto') song.audio.preload = 'auto'; // 노래 앞 낭독 마지막 문장: 이제 노래를 받기 시작
     if (it.beat) (it.ks || [it.s]).forEach(k => stageBeat(it.beat, k));
     verseFollow(it);
     let done = false, guard;
@@ -1234,17 +1268,21 @@ function speakQueue(items, onDone) {
       // 감시 타이머는 실제로 소리가 나기 시작할 때부터 남은 길이로 잰다 (받는 중·버퍼링 시간은 빼고).
       // 15초가 지나도 시작하지 못하면 그 문장은 건너뛴다
       guard = setTimeout(() => advance(0), 15000);
-      voiceAudio.src = voiceUrl(it.clip);
+      const url = voiceUrl(it.clip);
+      if (!voiceAudio.src.endsWith(url)) voiceAudio.src = url; // 앞 문장이 끝난 쉼 동안 이미 걸어 둔 파일이면 그대로
       voiceAudio.playbackRate = rate;
       voiceAudio.onplaying = () => { clearTimeout(guard); guard = setTimeout(() => advance(0), (voiceIndex[it.clip] - voiceAudio.currentTime * 1000) / rate + 3000); };
       voiceAudio.onwaiting = () => { clearTimeout(guard); guard = setTimeout(() => advance(0), 15000); };
-      voiceAudio.onended = () => advance(gap);
+      // 문장 사이 쉼 동안 다음 문장 파일을 미리 걸어 불러 둔다 — 아이폰은 파일을 바꿀 때마다 여는 데 시간이 걸려, 쉼 뒤에 그만큼
+      // 더 늦게 시작해 문장마다 끊겨 들렸다(시편, 사용자). 불러오는 시간이 쉼 속에 묻힌다
+      voiceAudio.onended = () => { const q = queue[n]; if (q && hasClip(q) && !hold) { voiceAudio.src = voiceUrl(q.clip); voiceAudio.load(); } advance(gap); };
       // 파일을 못 불러오면 그 문장은 눈으로 읽는 속도만큼 기다린다
       voiceAudio.onerror = () => { clearTimeout(guard); guard = setTimeout(() => advance(0), readMs(it)); };
       voiceAudio.play().catch(err => { if (err.name !== 'AbortError') voiceAudio.onerror(); });
       cur = { pause: () => { clearTimeout(guard); voiceAudio.pause(); return () => voiceAudio.play().catch(() => advance(0)); } }; // 다시 틀면 onplaying이 감시 타이머를 새로 건다
-      // 다음 문장 파일을 미리 받아 두어 문장 사이에 불러오는 시간이 끼지 않게
-      if (queue[n]) fetch(voiceUrl(queue[n].clip)).catch(() => {});
+      // 다음 문장 파일들을 미리 받아 두어 문장 사이에 불러오는 시간이 끼지 않게 — 한 문장 앞만 받으니 느린 망에서는 문장마다 끊겨
+      // 늦게 시작하는 것처럼 들렸다(시편, 사용자). 세 문장 앞까지 (이미 받은 것은 캐시에서 바로)
+      queue.slice(n, n + 3).forEach(q => { if (hasClip(q) && !warmed.has(q.clip)) { warmed.add(q.clip); fetch(voiceUrl(q.clip)).catch(() => warmed.delete(q.clip)); } });
       return;
     }
     cur = { pause: () => { clearTimeout(guard); if (useVoice) synth.cancel(); return again(); } };
@@ -1366,7 +1404,7 @@ function pauseSpeech() {
 }
 function resumeSpeech() {
   paused = false; speaking = true; setListenUI();
-  if (song.on) { if (song.held) { song.held = false; songEnd(song.token); } else song.audio.play().catch(() => songEnd(song.token)); }
+  if (song.on) { if (song.held) { song.held = false; songEnd(song.token); } else song.audio.play().catch(err => { if (err?.name === 'NotAllowedError' || err?.name === 'AbortError') { paused = true; speaking = false; setListenUI(); } else songEnd(song.token); }); }
   else speechCtl?.resume();
 }
 function stopAuto() { autoOn = false; clearTimeout(autoTimer); promptThen = null; setListenUI(); }
@@ -1412,6 +1450,9 @@ async function songPlay(done, sg) {
   const a = song.audio;
   if (a.src !== info.src) a.src = info.src; // songWarm이 미리 받아 둔 노래면 그대로 (처음부터 다시 받지 않게)
   a.currentTime = 0; a.onended = a.onerror = () => songEnd(tk);
+  // 우리가 멈추지 않았는데 멈추면(창을 내렸다 올림·전화·잠금 화면 단추 등) 재생 단추를 '멈춤'으로 바꿔 둔다 — 화면은 재생 중인데 소리가 없고,
+  // 단추를 눌러도 노래가 안 나오는 때가 있었다(사용자). 다시 누르면 그 자리에서 이어 튼다
+  a.onpause = () => { if (tk !== song.token || a.ended || paused || barDrag) return; paused = true; speaking = false; setListenUI(); };
   songBarOn(a, () => { song.k = -2; sync(); });
   a.play().catch(() => songEnd(tk));
   song.k = -2;
@@ -1434,7 +1475,11 @@ function songBarTime(a) {
 function songBarOn(a, resync) {
   const bar = $('#songBar'), r = $('input', bar);
   r.setAttribute('aria-label', t('songSeek')); r.value = 0; bar.hidden = false; songBarTime(a);
+  barDrag = false;
   r.oninput = () => { barDrag = true; if (a.duration) { $('.t0', bar).textContent = mmss(r.value / 1000 * a.duration); } };
+  // 손을 떼면 끌기를 끝낸다 — 아이폰은 막대를 건드리기만 하고 값이 안 바뀌면 change가 오지 않아, 끌기 표시가 남은 채
+  // 시간은 가는데 막대가 멈춰 있었다(사용자)
+  if (!songBarOn.once) { songBarOn.once = true; ['pointerup', 'pointercancel', 'touchend', 'touchcancel'].forEach(k => addEventListener(k, () => { if (barDrag) setTimeout(() => { barDrag = false; }, 50); }, { passive: true })); }
   r.onchange = () => { barDrag = false; if (a.duration) { a.currentTime = r.value / 1000 * a.duration; resync(); } };
 }
 // 다른 여정(다윗)에서 시편 노래를 틀 때: 제목·가사는 시편 여정의 data에서 (한 번만 받는다)
@@ -1456,11 +1501,13 @@ async function songWarm(i) {
   const e = evAt(i); if (!e?.song) return;
   const info = await songInfo(e.id);
   if (!info?.src || song.on || evAt(idx) !== e) return;
-  const a = song.audio; if (a.src !== info.src) { a.preload = 'auto'; a.src = info.src; a.load(); }
+  // 처음엔 앞부분만 받는다: 몇 MB짜리 노래를 통째로 받으면 노래 앞 낭독의 문장 파일과 망을 다퉈 낭독이 문장마다 끊겼다(사용자) —
+  // 낭독이 마지막 문장에 들어서면(speakQueue) 그때 다 받기 시작한다
+  const a = song.audio; if (a.src !== info.src) { a.preload = 'metadata'; a.src = info.src; a.load(); }
 }
 function songOff() {
   cancelAnimationFrame(song.raf); clearTimeout(song.timer); song.timer = 0;
-  song.audio.pause(); song.audio.onended = song.audio.onerror = song.audio.ontimeupdate = null; song.sync = null;
+  song.audio.pause(); song.audio.onended = song.audio.onerror = song.audio.ontimeupdate = song.audio.onpause = null; song.sync = null;
   document.body.classList.remove('singing'); $('#songBar').hidden = true;
   const ov = $('#lyricsOv'); if (ov) { ov.classList.remove('on'); setTimeout(() => { if (!ov.classList.contains('on')) ov.hidden = true; }, 800); }
   $$('#scene [data-ln].speaking').forEach(p => p.classList.remove('speaking'));
