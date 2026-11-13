@@ -32,7 +32,7 @@ export default {
   async fetch(req, env) {
     const origin = req.headers.get('Origin') || '';
     const cors = { 'Access-Control-Allow-Origin': ORIGINS.includes(origin) || /^http:\/\/localhost(:\d+)?$/.test(origin) ? origin : ORIGINS[0],
-      'Access-Control-Allow-Methods': 'GET, PUT, POST, PATCH, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'Authorization, Content-Type', 'Access-Control-Max-Age': '86400', Vary: 'Origin' };
+      'Access-Control-Allow-Methods': 'GET, PUT, POST, PATCH, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'Authorization, Content-Type, Accept, X-GitHub-Api-Version', // 관리자 페이지가 GitHub에 보내던 머리말 그대로 — 빠져서 브라우저가 요청을 막았다(Failed to fetch) 'Access-Control-Max-Age': '86400', Vary: 'Origin' };
     if (req.method === 'OPTIONS') return new Response(null, { headers: cors });
     const json = (o, status = 200) => new Response(JSON.stringify(o), { status, headers: { ...cors, 'Content-Type': 'application/json' } });
     const url = new URL(req.url);
