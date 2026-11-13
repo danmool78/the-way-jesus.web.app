@@ -1,13 +1,13 @@
 // 핵심 기능 소개 쇼츠(세로 1080×1920): 실제 앱을 휴대폰 화면으로 띄워 한 프레임씩 찍고, 큰 자막과 배경음악을 입힌다.
 // 쓰는 법: 저장소 맨 위를 http://localhost:8765 로 띄워 두고  node _src/video/shorts.cjs [출력.mp4] [--preview]
-//   --preview: 작게(405×720)·초당 8장으로 빨리 훑어보기
+//   --preview: 작게(405×720)·초당 8장으로 빨리 훑어보기. --fps N: 찍는 장 수(기본 20 — 내보낼 때 30으로 맞춘다)
 // 시간은 Playwright의 가짜 시계로 한 프레임씩 넘긴다 — 3D(소프트웨어 그리기)가 느려도 영상은 고르게 흐른다.
 // CSS 애니메이션·전환은 가짜 시계를 따르지 않아, 프레임마다 멈춰 두고 그 시각으로 직접 맞춘다(syncCss)
 const { chromium } = require('playwright');
 const fs = require('fs'), path = require('path'), { execFileSync } = require('child_process');
 const argv = process.argv.slice(2), PREVIEW = argv.includes('--preview');
 const OUT = argv.find(a => !a.startsWith('--')) || 'shorts.mp4';
-const FPS = PREVIEW ? 8 : 30, DPR = PREVIEW ? 1 : 2, W = 405, H = 720; // 405×720 × 2 = 810×1440 → 1080×1920로 키운다
+const FI = argv.indexOf('--fps'), FPS = FI >= 0 ? +argv.splice(FI, 2)[1] : PREVIEW ? 8 : 20, DPR = PREVIEW ? 1 : 2, W = 405, H = 720; // 405×720 × 2 = 810×1440 → 1080×1920로 키운다
 const URL = 'http://localhost:8765/';
 const DIR = fs.mkdtempSync('/tmp/shorts-'), MUSIC = 'assets/music/glory.mp3';
 let n = 0;
