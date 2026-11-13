@@ -2135,8 +2135,9 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
       <div class="jbtns">${go}${j.ready ? `<button type="button" class="jshare" data-share="${j.id}" aria-label="${esc(t('shareApp'))} — ${esc(t(j.title))}">${share}<span>${esc(t('shareShort'))}</span></button>` : ''}</div></li>`;
   }).join('') + `<li data-journey="why" class="jcard ready"><img class="jicon" src="${DATA.journey?.whyIcon || 'assets/why-icon.webp'}" alt="" width="56" height="56">
       <div class="jtext"><b>${esc(t('whyH'))}</b><small>${esc(t('why'))}</small></div>
-      <div class="jbtns"><a class="jgo" href="${LANG === 'ko' ? 'why.html' : `why.${LANG}.html`}">${esc(t('whyGo'))} →</a></div></li>`; // '왜 기독교인가'는 어느 여정에서 보든 맨 끝에 — 언어마다 why.<언어>.html
-  $$('#seriesList .jshare').forEach(b => b.onclick = () => shareLink(shareOf(b.dataset.share)));
+      <div class="jbtns"><a class="jgo" href="${LANG === 'ko' ? 'why.html' : `why.${LANG}.html`}">${esc(t('whyGo'))} →</a><button type="button" class="jshare" data-share="why" aria-label="${esc(t('shareApp'))} — ${esc(t('whyH'))}">${share}<span>${esc(t('shareShort'))}</span></button></div></li>`; // '왜 기독교인가'는 어느 여정에서 보든 맨 끝에 — 언어마다 why.<언어>.html
+  // '왜 기독교인가'도 공유한다 — 여정이 아니라 페이지라 그 언어의 why 주소로 (전엔 공유 단추가 없었다, 사용자)
+  $$('#seriesList .jshare').forEach(b => b.onclick = () => shareLink(b.dataset.share === 'why' ? { url: `${SITE}/${LANG === 'ko' ? 'why.html' : `why.${LANG}.html`}`, title: `${t('appName')} — ${t('whyH')}` } : shareOf(b.dataset.share)));
   // 첫 시작 화면: 장면 주소로 바로 들어온 때(#e05)와 연출 확인(?beat=)은 건너뛴다
   if (!hashOk && !quick && !new URLSearchParams(location.search).has('beat')) showIntro(fromLast > 0 ? fromLast : -1);
   $('.brand').onclick = ev => { ev.preventDefault(); showIntro(state.last && idx > 0 ? idx : -1); }; // 기록을 지운 뒤에는 처음 온 사람처럼
