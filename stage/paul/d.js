@@ -225,7 +225,7 @@ export const D = {
     env: 'night',
     wide: 1.5,
     props: {
-      shore: ['sand', 2.35, -0.05, { r: 1.3, color: '#d8c49a', stones: 10 }],
+      shore: ['sand', 2.35, -0.05, { r: 1.3, color: '#d8c49a', stones: 10, over: true }],
       sea: ['water', -0.45, 0, { r: 2.2, y: 0.07 }],
       ship: ['stormship', -0.45, 0.0, { big: 1.2, state: 'girded', y: 0.06, speed: 0.16 }],
       anchors: ['anchors', -1.75, 0.0, { y: 0.3 }],

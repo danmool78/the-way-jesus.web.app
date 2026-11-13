@@ -1015,6 +1015,7 @@ Object.assign(MAKERS, {
     const m = new THREE.MeshStandardMaterial({ color: o.color || '#cdb68a', roughness: 1, transparent: true, alphaMap: radialTex('#ffffff', '#000000'), depthWrite: false });
     const d = new THREE.Mesh(new THREE.CircleGeometry(R, 48), m);
     d.rotation.x = -Math.PI / 2; d.position.y = 0.003; d.receiveShadow = true; g.add(d);
+    if (o.over) d.renderOrder = 3; // over: 물(water, 2)보다 나중에 — 바다 쪽 뭍(a36 멜리데)은 물빛에 덮이면 안 된다
     const st = mat('#a08c6e', { roughness: 1, flatShading: true });
     for (let i = 0; i < (o.stones ?? 14); i++) {
       const a = Math.random() * Math.PI * 2, r = Math.sqrt(Math.random()) * R * 0.85;
