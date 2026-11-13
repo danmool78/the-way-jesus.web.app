@@ -6,7 +6,7 @@ const $ = (s, el = document) => el.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 let token = '', files = {}, data = null; // files: 경로 → { raw, json }
 // 구글 로그인(기본): 토큰 대신 Firebase 인증으로 들어가고, GitHub·R2는 관리자 Worker(_src/worker)가 대신 쓴다 —
-// 컴퓨터마다 복잡한 토큰을 넣어야 했다(사용자). 토큰으로 들어가는 길도 남겨 둔다 (Worker가 멈췄을 때)
+// 컴퓨터마다 복잡한 토큰을 넣어야 했다(사용자). 토큰으로 들어가는 길은 없앴다
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 const auth = getAuth(initializeApp({ apiKey: 'AIzaSyA5wjIVA5kc8_Zyar6_-8X7kNVPaQn4j1Y', authDomain: 'the-way-jesus.firebaseapp.com', projectId: 'the-way-jesus', appId: '1:618365957327:web:d42bd6b7e94f79390673ba' })); // 공개 설정값
@@ -58,10 +58,9 @@ async function enter(t, user) {
     if (bad) { token = ''; try { localStorage.removeItem(KEY); } catch { /* 없음 */ } }
     else token = '';
     $('#login').hidden = false; $('#editor').hidden = $('#studio').hidden = $('#search').hidden = $('#logout').hidden = true;
-    msg.className = 'msg bad'; msg.textContent = wasGoogle && err.status === 403 && /허락/.test(err.message) ? '이 구글 계정은 관리자로 허락되지 않았습니다' : err.status === 401 ? '토큰이 맞지 않습니다' : bad ? err.message : `연결하지 못했습니다 (${err.message}) — 토큰은 기억해 두었습니다. 잠시 뒤 새로 고침하면 다시 들어갑니다`;
+    msg.className = 'msg bad'; msg.textContent = wasGoogle && err.status === 403 && /허락/.test(err.message) ? '이 구글 계정은 관리자로 허락되지 않았습니다' : err.status === 401 ? '토큰이 맞지 않습니다' : bad ? err.message : `연결하지 못했습니다 (${err.message}) — 잠시 뒤 새로 고침해 다시 로그인해 주세요`;
   }
 }
-$('#loginForm').onsubmit = e => { e.preventDefault(); enter($('#token').value, $('#user').value); };
 $('#logout').onclick = async () => { try { localStorage.removeItem(KEY); } catch { /* 없음 */ } await signOut(auth).catch(() => {}); location.reload(); };
 $('#gLogin').onclick = async () => {
   const msg = $('#loginMsg'); msg.className = 'msg'; msg.textContent = '구글 로그인 창을 여는 중…';
@@ -317,11 +316,12 @@ async function follow(box, sha) {
   setState(box, `저장됨 ${link} · 배포 상태를 확인하지 못했습니다 (GitHub Actions에서 확인)`);
 }
 
-let saved = null; try { saved = localStorage.getItem(KEY); } catch { /* 없음 */ }
-// 구글로 로그인해 둔 상태면 그대로 들어가고, 아니면 기억한 토큰으로, 둘 다 없으면 로그인 화면
+// 토큰으로 들어가던 예전 방식은 없앴다(사용자) — 남아 있던 토큰은 지운다
+try { localStorage.removeItem(KEY); } catch { /* 없음 */ }
+// 구글로 로그인해 둔 상태면 그대로 들어가고, 아니면 로그인 화면
 let first = true;
 onAuthStateChanged(auth, u => {
   if (u) { enter(null); return; }
   if (!first) return; first = false;
-  if (saved) enter(saved); else $('#login').hidden = false;
+  $('#login').hidden = false;
 });
