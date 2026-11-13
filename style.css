@@ -48,6 +48,7 @@ a.sbtn{display:block;text-decoration:none;color:inherit}
 #map{width:100%;height:100%;display:block;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none;transition:filter 1.6s} /* 끌어서 둘러보기 — 브라우저가 화면을 밀지 않게 */
 #map.dragging{cursor:grabbing}
 .stage3d{position:absolute;left:0;top:0;pointer-events:none;opacity:0;transition:opacity .5s;will-change:transform}
+.stage3d.moving{opacity:0!important;transition:opacity .12s} /* 지도를 옮기는 동안은 무대를 숨긴다 (stage.js frame) */
 /* 장면 분위기의 빛 (stage.js가 .mapwrap에 data-env를 단다). 층마다 opacity만 바꿔 서서히 겹쳐 바뀐다.
    서쪽(왼쪽)은 해 지는 쪽, 동쪽(오른쪽)은 해 뜨는 쪽 — 지도 방위와 맞춘다 */
 .atmos{position:absolute;inset:0;pointer-events:none;overflow:hidden}
