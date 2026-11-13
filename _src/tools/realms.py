@@ -64,3 +64,73 @@ out = {
 }
 json.dump(out, open(os.path.join(src, 'jesus.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
 print('realms jesus:', [(e['from'], [(a['id'], sum(len(r) for r in a['d'])) for a in e['areas']]) for e in out['eras']])
+
+# ---------- 다윗·열왕기: 철기 시대 나라들 (AWMC에는 이 시대 경계가 없어 표준 지도책의 경계를 따라 구역을 찍는다) ----------
+NO = {  # 이름 [ko, en, es, pt, fr, zh, id, ja] — 앞은 긴 이름, 뒤는 짧은 이름(폰)
+ 'saul': (['사울의 이스라엘', 'Israel under Saul', 'Israel bajo Saúl', 'Israel sob Saul', 'Israël sous Saül', '扫罗治下的以色列', 'Israel di bawah Saul', 'サウルのイスラエル'],
+          ['사울', 'Saul', 'Saúl', 'Saul', 'Saül', '扫罗', 'Saul', 'サウル']),
+ 'ishbosheth': (['이스보셋의 이스라엘', "Ish-bosheth's Israel", 'Israel de Is-boset', 'Israel de Isbosete', 'Israël d’Ishbosheth', '伊施波设的以色列', 'Israel di bawah Isyboset', 'イシュ・ボシェテのイスラエル'],
+                ['이스보셋', 'Ish-bosheth', 'Is-boset', 'Isbosete', 'Ishbosheth', '伊施波设', 'Isyboset', 'イシュ・ボシェテ']),
+ 'davidjudah': (['헤브론의 다윗 (유다)', 'David at Hebron (Judah)', 'David en Hebrón (Judá)', 'Davi em Hebrom (Judá)', 'David à Hébron (Juda)', '希伯仑的大卫（犹大）', 'Daud di Hebron (Yehuda)', 'ヘブロンのダビデ（ユダ）'],
+                ['다윗 (유다)', 'David (Judah)', 'David (Judá)', 'Davi (Judá)', 'David (Juda)', '大卫（犹大）', 'Daud (Yehuda)', 'ダビデ（ユダ）']),
+ 'united': (['통일 왕국 이스라엘', 'United kingdom of Israel', 'Reino unido de Israel', 'Reino unido de Israel', 'Royaume uni d’Israël', '统一的以色列王国', 'Kerajaan Israel bersatu', '統一王国イスラエル'],
+            ['통일 이스라엘', 'Israel', 'Israel', 'Israel', 'Israël', '以色列', 'Israel', 'イスラエル']),
+ 'tribute4': (['조공을 바친 나라 (에돔·모압·암몬·아람)', 'Tributary lands (Edom, Moab, Ammon, Aram)', 'Tierras tributarias (Edom, Moab, Amón, Aram)', 'Terras tributárias (Edom, Moabe, Amom, Arã)', 'Pays tributaires (Édom, Moab, Ammon, Aram)', '进贡之地（以东、摩押、亚扪、亚兰）', 'Negeri pembayar upeti (Edom, Moab, Amon, Aram)', '貢ぎ物を納めた国々（エドム・モアブ・アンモン・アラム）'],
+              ['조공 나라', 'Tributaries', 'Tributarios', 'Tributários', 'Tributaires', '进贡之地', 'Pembayar upeti', '朝貢国']),
+ 'tribute3': (['조공을 바친 나라 (에돔·모압·암몬)', 'Tributary lands (Edom, Moab, Ammon)', 'Tierras tributarias (Edom, Moab, Amón)', 'Terras tributárias (Edom, Moabe, Amom)', 'Pays tributaires (Édom, Moab, Ammon)', '进贡之地（以东、摩押、亚扪）', 'Negeri pembayar upeti (Edom, Moab, Amon)', '貢ぎ物を納めた国々（エドム・モアブ・アンモン）'],
+              ['조공 나라', 'Tributaries', 'Tributarios', 'Tributários', 'Tributaires', '进贡之地', 'Pembayar upeti', '朝貢国']),
+ 'israel': (['북이스라엘', 'Israel (northern kingdom)', 'Israel (reino del norte)', 'Israel (reino do norte)', 'Israël (royaume du Nord)', '北国以色列', 'Israel (kerajaan utara)', '北イスラエル王国'],
+            ['북이스라엘', 'Israel', 'Israel', 'Israel', 'Israël', '北以色列', 'Israel', '北イスラエル']),
+ 'judah': (['남유다', 'Judah (southern kingdom)', 'Judá (reino del sur)', 'Judá (reino do sul)', 'Juda (royaume du Sud)', '南国犹大', 'Yehuda (kerajaan selatan)', '南ユダ王国'],
+           ['남유다', 'Judah', 'Judá', 'Judá', 'Juda', '南犹大', 'Yehuda', '南ユダ']),
+ 'philistia': (['블레셋', 'Philistia', 'Filistea', 'Filístia', 'Philistie', '非利士', 'Filistia', 'ペリシテ'], None),
+ 'phoenicia': (['시돈·두로 (베니게)', 'Sidon and Tyre (Phoenicia)', 'Sidón y Tiro (Fenicia)', 'Sidom e Tiro (Fenícia)', 'Sidon et Tyr (Phénicie)', '西顿、推罗（腓尼基）', 'Sidon dan Tirus (Fenisia)', 'シドン・ツロ（フェニキア）'],
+               ['시돈·두로', 'Phoenicia', 'Fenicia', 'Fenícia', 'Phénicie', '腓尼基', 'Fenisia', 'フェニキア']),
+ 'aram': (['아람 (다메섹)', 'Aram (Damascus)', 'Aram (Damasco)', 'Arã (Damasco)', 'Aram (Damas)', '亚兰（大马士革）', 'Aram (Damsyik)', 'アラム（ダマスコ）'],
+          ['아람', 'Aram', 'Aram', 'Arã', 'Aram', '亚兰', 'Aram', 'アラム']),
+ 'ammon': (['암몬', 'Ammon', 'Amón', 'Amom', 'Ammon', '亚扪', 'Amon', 'アンモン'], None),
+ 'moab': (['모압', 'Moab', 'Moab', 'Moabe', 'Moab', '摩押', 'Moab', 'モアブ'], None),
+ 'edom': (['에돔', 'Edom', 'Edom', 'Edom', 'Édom', '以东', 'Edom', 'エドム'], None),
+ 'assyria': (['앗수르 제국 (북이스라엘과 아람을 삼킴)', 'Assyrian Empire (swallowing Israel and Aram)', 'Imperio asirio (absorbe Israel y Aram)', 'Império Assírio (engole Israel e Arã)', 'Empire assyrien (absorbe Israël et Aram)', '亚述帝国（吞并以色列与亚兰）', 'Kekaisaran Asyur (menelan Israel dan Aram)', 'アッシリア帝国（イスラエルとアラムを併合）'],
+             ['앗수르', 'Assyria', 'Asiria', 'Assíria', 'Assyrie', '亚述', 'Asyur', 'アッシリア']),
+ 'babylon': (['바벨론 제국 (유다까지 삼킴)', 'Babylonian Empire (swallowing Judah too)', 'Imperio babilónico (absorbe también Judá)', 'Império Babilônico (engole também Judá)', 'Empire babylonien (absorbe aussi Juda)', '巴比伦帝国（连犹大也吞并）', 'Kekaisaran Babel (menelan Yehuda juga)', 'バビロン帝国（ユダも併合）'],
+             ['바벨론', 'Babylon', 'Babilonia', 'Babilônia', 'Babylone', '巴比伦', 'Babel', 'バビロン']),
+}
+LL = ['ko', 'en', 'es', 'pt', 'fr', 'zh', 'id', 'ja']
+nm = lambda xs: dict(zip(LL, xs))
+# 구역 [위도, 경도] — 바다 쪽으로 넘친 곳은 앱에서 바다가 덮는다
+ISRAEL_W = P([(31.92, 35.53), (31.90, 35.30), (31.92, 35.10), (32.05, 34.88), (32.10, 34.70), (32.62, 34.80), (32.83, 34.90), (32.92, 35.08), (33.08, 35.15), (33.10, 35.35), (33.30, 35.55), (33.30, 35.68), (32.90, 35.64), (32.70, 35.58), (32.40, 35.56), (32.10, 35.55)])
+GILEAD = P([(32.75, 35.60), (32.75, 36.05), (32.45, 36.10), (32.15, 35.95), (31.75, 35.80), (31.75, 35.55), (32.10, 35.55), (32.40, 35.57)])
+JUDAH = P([(31.92, 35.53), (31.88, 35.10), (31.80, 34.95), (31.65, 34.88), (31.50, 34.78), (31.35, 34.70), (31.15, 34.52), (30.85, 34.38), (30.55, 34.45), (30.45, 34.90), (30.75, 35.20), (31.10, 35.38), (31.45, 35.39), (31.75, 35.45)])
+PHILISTIA = P([(32.12, 34.70), (32.05, 34.88), (31.80, 34.95), (31.65, 34.88), (31.50, 34.78), (31.35, 34.70), (31.15, 34.52), (31.20, 34.10), (31.60, 34.30), (31.95, 34.55)]).difference(JUDAH)
+PHOENICIA = P([(32.83, 34.90), (32.92, 35.08), (33.08, 35.15), (33.10, 35.35), (33.30, 35.55), (33.55, 35.70), (34.00, 35.92), (34.45, 36.12), (34.45, 35.70), (34.00, 35.40), (33.55, 35.10), (33.10, 34.90)])
+ARAM = P([(33.30, 35.68), (33.55, 35.70), (34.00, 35.92), (34.45, 36.12), (34.60, 36.60), (34.40, 37.40), (33.30, 37.40), (32.75, 36.70), (32.75, 36.05), (32.75, 35.60), (32.90, 35.64)])
+AMMON = P([(32.15, 35.95), (32.25, 36.45), (31.70, 36.45), (31.70, 35.85), (31.75, 35.80)])
+MOAB = P([(31.75, 35.55), (31.75, 35.80), (31.70, 35.85), (31.70, 36.15), (31.05, 36.25), (31.05, 35.56), (31.45, 35.57)])
+EDOM = P([(31.05, 35.40), (31.05, 36.15), (30.40, 35.95), (29.55, 35.15), (29.55, 34.95), (30.20, 35.10), (30.75, 35.25)]).difference(JUDAH)
+# 앗수르·바벨론 땅: 메소포타미아와 수리아(비옥한 초승달) — 아라비아 사막은 뺀다
+EMPIRE = P([(36.95, 35.6), (36.95, 45.5), (30.9, 45.5), (31.4, 44.3), (32.6, 43.6), (33.8, 42.2), (34.5, 40.8), (34.8, 38.6), (34.6, 37.4), (34.45, 36.12)])
+NORTH = unary_union([ISRAEL_W, GILEAD])
+C = {'united': '#c9a24a', 'saul': '#c9a24a', 'israel': '#5f8a4f', 'ishbosheth': '#5f8a4f', 'judah': '#b5603e', 'davidjudah': '#b5603e', 'philistia': '#8f7fb0',
+     'phoenicia': '#3f8fa0', 'aram': '#6b8fb5', 'ammon': '#b58a3e', 'moab': '#9a6a9a', 'edom': '#c0453a', 'tribute3': '#a98a5a', 'tribute4': '#a98a5a', 'assyria': '#6a4a7a', 'babylon': '#3f5a7a'}
+def ar(k, g):
+    full, short = NO[k]
+    return {'id': k, 'color': C[k], 'name': nm(full), 'short': nm(short or full), 'd': ring(g)}
+NEIGH = lambda *skip: [ar(k, g) for k, g in [('philistia', PHILISTIA), ('phoenicia', PHOENICIA), ('aram', ARAM), ('ammon', AMMON), ('moab', MOAB), ('edom', EDOM)] if k not in skip]
+CREDIT = nm(['경계는 성경 지도책을 따른 어림', 'Approximate borders, after Bible atlases', 'Fronteras aproximadas, según atlas bíblicos', 'Fronteiras aproximadas, segundo atlas bíblicos', 'Frontières approximatives, d’après les atlas bibliques', '边界为参照圣经地图集的大致范围', 'Batas perkiraan, menurut atlas Alkitab', '境界はおおよそ（聖書地図帳による）'])
+david = {'credit': CREDIT, 'eras': [
+  {'from': 'd01', 'areas': [ar('saul', unary_union([NORTH, JUDAH]))] + NEIGH()},
+  {'from': 'd21', 'areas': [ar('davidjudah', JUDAH), ar('ishbosheth', NORTH)] + NEIGH()},     # 헤브론의 다윗과 마하나임의 이스보셋
+  {'from': 'd22', 'areas': [ar('united', unary_union([NORTH, JUDAH]))] + NEIGH()},           # 예루살렘을 차지하고 온 이스라엘의 왕으로
+  {'from': 'd27', 'areas': [ar('united', unary_union([NORTH, JUDAH])), ar('tribute4', unary_union([EDOM, MOAB, AMMON, ARAM]))] + NEIGH('aram', 'ammon', 'moab', 'edom')},  # 삼하 8장
+]}
+kings = {'credit': CREDIT, 'eras': [
+  {'from': 'k01', 'areas': [ar('united', unary_union([NORTH, JUDAH])), ar('tribute3', unary_union([EDOM, MOAB, AMMON]))] + NEIGH('ammon', 'moab', 'edom')},  # 솔로몬 (아람은 르손이 등을 돌렸다 — 왕상 11:24)
+  {'from': 'k07', 'areas': [ar('israel', NORTH), ar('judah', JUDAH)] + NEIGH()},                # 세겜에서 갈라짐
+  {'from': 'k31', 'areas': [ar('assyria', unary_union([EMPIRE, NORTH, ARAM])), ar('judah', JUDAH)] + NEIGH('aram')},   # 사마리아 함락 (BC 722)
+  {'from': 'k40', 'areas': [ar('babylon', unary_union([EMPIRE, NORTH, ARAM, JUDAH, PHILISTIA, PHOENICIA, AMMON, MOAB, EDOM]))]},  # 예루살렘 함락 (BC 586)
+]}
+for k, v in [('david', david), ('kings', kings)]:
+    v = {'_comment': '시대별 영역 — _src/tools/realms.py가 만든다(직접 고치지 말 것). 철기 시대 경계는 어림', **v}
+    json.dump(v, open(os.path.join(src, k + '.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
+    print('realms %s:' % k, [(e['from'], [a['id'] for a in e['areas']]) for e in v['eras']])

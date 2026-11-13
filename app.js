@@ -669,7 +669,7 @@ function updateRealms() {
   $$('#realms .realm-era', map).forEach(g => g.classList.toggle('on', +g.dataset.k === k));
   btn.classList.toggle('active', realmOn); btn.setAttribute('aria-pressed', String(realmOn));
   key.hidden = k < 0;
-  if (k >= 0) key.innerHTML = R.eras[k].areas.map(a => `<span><i style="--rc:${a.color}"></i><b class="rk-full">${esc(realmName(a))}</b><b class="rk-short">${esc(realmName(a, 'short'))}</b></span>`).join('') + (R.credit ? `<small>${esc(R.credit)}</small>` : '');
+  if (k >= 0) key.innerHTML = R.eras[k].areas.map(a => `<span><i style="--rc:${a.color}"></i><b class="rk-full">${esc(realmName(a))}</b><b class="rk-short">${esc(realmName(a, 'short'))}</b></span>`).join('') + (R.credit ? `<small>${esc(typeof R.credit === 'object' ? R.credit[LANG] || R.credit.ko : R.credit)}</small>` : '');
 }
 function updateMap(prevIdx, { camera = true, jump = false } = {}) {
   const e = evAt(idx);
