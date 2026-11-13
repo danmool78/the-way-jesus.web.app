@@ -15,8 +15,14 @@
  "wordsIntro": "Les paroles que Dieu a prononcées et celles que les prophètes ont proclamées sur le chemin des deux royaumes, rassemblées dans l’ordre du voyage. Chacune est une traduction nouvelle du sens original, dans la langue d’aujourd’hui.",
  "odoTitle": "Distance parcourue jusqu’à cette scène (route estimée entre les lieux ; pas de 75 cm)",
  "gospels": {
-  "1ki": ["1 Rois", "1 R"],
-  "2ki": ["2 Rois", "2 R"]
+  "1ki": [
+   "1 Rois",
+   "1 R"
+  ],
+  "2ki": [
+   "2 Rois",
+   "2 R"
+  ]
  },
  "endLead": "Du Temple de Salomon jusqu’aux fleuves de Babylone : merci d’avoir marché avec nous.",
  "blessing": "Dieu est pour nous un refuge et une force, un secours toujours présent dans la détresse. (Ps 46,2)\nQue celui qui était là dans le feu comme dans le murmure doux et léger vous parle aussi sur votre chemin, et qu’il vous relève là où tout s’est effondré.",
@@ -47,5 +53,9 @@
   "힛데겔 강": "Tigre",
   "홍 해": "Mer Rouge",
   "아카바 만": "Golfe d’Aqaba"
- }
+ },
+ "lessons": "Le cœur du roi décide du royaume|Quand le cœur de Salomon s’est tourné vers d’autres dieux, le royaume s’est divisé en deux. Le chemin des rois qui ont suivi les idoles a fini dans la ruine. (1 R 11.9–11)\nLe Dieu qui appelle sans cesse|Dieu a envoyé Élie, Élisée et beaucoup de prophètes, appelant encore et encore : revenez de vos mauvaises voies. (2 R 17.13)\nUne lampe qui ne s’éteint pas|Même quand le royaume est tombé et que le peuple a été déporté, Dieu a tenu sa promesse que David aurait toujours une lampe. (1 R 11.36)",
+ "gospelBridge": "L’un après l’autre, les rois sont tombés, et le royaume semblait finir au bord des fleuves de Babylone. Mais de la lignée de Joïakin, libéré de prison, est venu le Roi qui ne tombera jamais : Jésus (Mt 1.12–16). Il a proclamé : le temps est accompli, le royaume de Dieu est proche. (Mc 1.15)",
+ "invite": "Si l’histoire de Dieu rencontrée sur ce chemin vous est restée au cœur, venez rencontrer Jésus, qui est au centre de cette histoire. Parcourez « Les pas de Jésus » depuis le début et rendez-vous dans une église près de chez vous. Puissiez-vous rencontrer Dieu dans le culte et dans sa parole, être adopté comme son enfant et connaître la joie de l’appeler « Père ». (Rm 8.15)\nIl se tient encore à la porte et vous attend. (Ap 3.20)",
+ "seekerHead": "Pour ceux qui ne le connaissent pas encore"
 }

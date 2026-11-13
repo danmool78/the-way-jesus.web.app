@@ -15,23 +15,65 @@
  "wordsIntro": "The words the Lord spoke and the words Paul proclaimed along Paul's way, gathered in the order of the journey. Every saying is a fresh rendering of the original meaning in today's language.",
  "odoTitle": "Distance walked up to this scene (estimated road and sea distance between places; steps at a 75 cm stride)",
  "gospels": {
-  "acts": ["Acts", "Acts"],
-  "gal": ["Galatians", "Gal"],
-  "1th": ["1 Thessalonians", "1 Thess"],
-  "2th": ["2 Thessalonians", "2 Thess"],
-  "1co": ["1 Corinthians", "1 Cor"],
-  "2co": ["2 Corinthians", "2 Cor"],
-  "rom": ["Romans", "Rom"],
-  "php": ["Philippians", "Phil"],
-  "phm": ["Philemon", "Phlm"],
-  "col": ["Colossians", "Col"],
-  "eph": ["Ephesians", "Eph"],
-  "1ti": ["1 Timothy", "1 Tim"],
-  "tit": ["Titus", "Titus"],
-  "2ti": ["2 Timothy", "2 Tim"]
+  "acts": [
+   "Acts",
+   "Acts"
+  ],
+  "gal": [
+   "Galatians",
+   "Gal"
+  ],
+  "1th": [
+   "1 Thessalonians",
+   "1 Thess"
+  ],
+  "2th": [
+   "2 Thessalonians",
+   "2 Thess"
+  ],
+  "1co": [
+   "1 Corinthians",
+   "1 Cor"
+  ],
+  "2co": [
+   "2 Corinthians",
+   "2 Cor"
+  ],
+  "rom": [
+   "Romans",
+   "Rom"
+  ],
+  "php": [
+   "Philippians",
+   "Phil"
+  ],
+  "phm": [
+   "Philemon",
+   "Phlm"
+  ],
+  "col": [
+   "Colossians",
+   "Col"
+  ],
+  "eph": [
+   "Ephesians",
+   "Eph"
+  ],
+  "1ti": [
+   "1 Timothy",
+   "1 Tim"
+  ],
+  "tit": [
+   "Titus",
+   "Titus"
+  ],
+  "2ti": [
+   "2 Timothy",
+   "2 Tim"
+  ]
  },
  "endLead": "From the Damascus road to a rented house in Rome — thank you for walking with us.",
- "blessing": "I have fought the good fight, I have finished the race, I have kept the faith. (2 Tim 4:7)\nMay the one who called Paul on the Damascus road call your name too, and walk that way with you to the end, wherever you are.",
+ "blessing": "May the grace of the Lord Jesus Christ, the love of God, and the fellowship of the Holy Spirit be with you. (2 Cor 13:14)\nMay the one who called Paul on the Damascus road call you by name too, and walk with you to the end of the road, wherever you are.",
  "map": {
   "수 리 아": "SYRIA",
   "길 리 기 아": "CILICIA",
@@ -54,5 +96,9 @@
   "지 중 해": "Mediterranean Sea",
   "에 게 해": "Aegean Sea",
   "흑 해": "Black Sea"
- }
+ },
+ "lessons": "Saved by grace|A man who persecuted the church became an apostle. We are saved not by our works; it is the gift of God. (Eph 2:8–9)\nStrong when weak|Beaten, imprisoned, shipwrecked, Paul confessed that Christ's power is made perfect in weakness. (2 Cor 12:9)\nA gospel that crosses walls|From Jerusalem to Rome, the gospel bound Jews and Gentiles into one body. It is the power of God for the salvation of everyone who believes. (Rom 1:16)",
+ "gospelBridge": "What Paul preached all his life was the grace that had called him. Christ Jesus came into the world to save sinners, and I am the foremost of them. (1 Tim 1:15)",
+ "invite": "If the story of God you met on this road has stayed with you, come and meet Jesus, who stands at the center of that story. Walk 'The Footsteps of Jesus' from the beginning, and visit a church near you. May you meet God in worship and in his word, be adopted as his child, and know the joy of calling God 'Father.' (Rom 8:15)\nHe is still standing at the door, waiting for you. (Rev 3:20)",
+ "seekerHead": "For those who don’t yet know him"
 }

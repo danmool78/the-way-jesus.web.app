@@ -15,10 +15,22 @@
  "wordsIntro": "Les paroles que Dieu a prononcées et celles de David sur son chemin, rassemblées dans l’ordre du voyage. Chacune est une traduction nouvelle du sens original, dans la langue d’aujourd’hui.",
  "odoTitle": "Distance parcourue par David jusqu’à cette scène (route estimée entre les lieux ; pas de 75 cm)",
  "gospels": {
-  "1sam": ["1 Samuel", "1 S"],
-  "2sam": ["2 Samuel", "2 S"],
-  "1ki": ["1 Rois", "1 R"],
-  "1chr": ["1 Chroniques", "1 Ch"]
+  "1sam": [
+   "1 Samuel",
+   "1 S"
+  ],
+  "2sam": [
+   "2 Samuel",
+   "2 S"
+  ],
+  "1ki": [
+   "1 Rois",
+   "1 R"
+  ],
+  "1chr": [
+   "1 Chroniques",
+   "1 Ch"
+  ]
  },
  "endLead": "Des champs de Bethléem jusqu’au dernier chant de David : merci d’avoir marché avec nous.",
  "blessing": "Le Seigneur est mon berger, je ne manque de rien.\nIl me fait reposer dans de verts pâturages, il me conduit vers des eaux paisibles. (Ps 23,1–2)\nQue celui qui appela le jeune garçon des champs appelle aussi votre nom, et que celui qui était présent dans les nuits de fuite garde votre chemin.",
@@ -38,5 +50,9 @@
   "아스돗": "Ashdod",
   "가사": "Gaza",
   "벧산": "Beth-Shéân"
- }
+ },
+ "lessons": "Dieu regarde au cœur|Le plus jeune berger, oublié parmi ses frères, a été appelé à devenir roi. L’homme regarde à l’apparence, mais Dieu regarde au cœur. (1 S 16.7)\nLe chemin du retour après la chute|David a gravement péché, mais il ne s’est pas caché : il s’est prosterné devant Dieu. Dieu ne méprise pas un cœur brisé et repentant. (Ps 51.19)\nUne promesse plus grande que l’échec humain|La maison de David a été ébranlée jusqu’au bout, mais Dieu n’a jamais repris sa promesse d’affermir son trône pour toujours. (2 S 7.16)",
+ "gospelBridge": "Mille ans plus tard, le fils de cette promesse est né à Bethléem, la ville de David. Comme David le jeune berger, il est un berger qui connaît ses brebis. Je suis le bon berger. Le bon berger donne sa vie pour ses brebis. (Jn 10.11)",
+ "invite": "Si l’histoire de Dieu rencontrée sur ce chemin vous est restée au cœur, venez rencontrer Jésus, qui est au centre de cette histoire. Parcourez « Les pas de Jésus » depuis le début et rendez-vous dans une église près de chez vous. Puissiez-vous rencontrer Dieu dans le culte et dans sa parole, être adopté comme son enfant et connaître la joie de l’appeler « Père ». (Rm 8.15)\nIl se tient encore à la porte et vous attend. (Ap 3.20)",
+ "seekerHead": "Pour ceux qui ne le connaissent pas encore"
 }

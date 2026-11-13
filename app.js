@@ -2057,7 +2057,7 @@ function endJourney(auto) {
   return true;
 }
 function openEnd() {
-  const last = EVENTS[EVENTS.length - 1], w = last.words.find(x => x.j) || last.words[0];
+  const last = EVENTS[EVENTS.length - 1], ew = DATA.journey?.endWord, w = (ew != null && last.words[ew]) || last.words.find(x => x.j) || last.words[0]; // endWord: 끝 화면에 띄울 마지막 장면의 말씀 번호(journey.json) — 첫 말씀이 맺음말로 맞지 않을 때(열왕기: 그달리야의 말이 떴다 — 사용자)
   const miss = missedQuiz(), unseen = EVENTS.filter(e => !visited.has(e.id)), km = odoAt(EVENTS.length - 1);
   const places = new Set(EVENTS.filter(e => visited.has(e.id)).map(e => e.place)).size, allPlaces = new Set(EVENTS.map(e => e.place)).size;
   const nextJ = DATA.journey?.next && DATA.journey.series?.find(j => j.id === DATA.journey.next); // 이어 걸을 여정 (기쁜 소식 → 예수)
@@ -2068,6 +2068,7 @@ function openEnd() {
     <h2>${esc(t('endTitle'))}</h2>
     <p class="endlead">${esc(t('endLead'))}</p>
     <blockquote class="endword"><p>${esc(w.text)}</p><cite>${esc(w.ref)}</cite></blockquote>
+    ${t('lessons') ? `<section class="lessons"><h3>${esc(t('lessonHead'))}</h3><ol>${t('lessons').split('\n').map(x => { const [h, b = ''] = x.split('|'); return `<li><b>${esc(h)}</b>${paras(b)}</li>`; }).join('')}</ol></section>` : ''}
     <div class="endstats">
       <div><b>${visited.size}<small>/${EVENTS.length}</small></b><span>${esc(t('endScenes'))}</span></div>
       <div><b>${places}<small>/${allPlaces}</small></b><span>${esc(t('endPlaces'))}</span></div>
@@ -2081,11 +2082,11 @@ function openEnd() {
     </div>
     <label class="endfav"><span>${esc(t('endFavQ'))}</span>
       <select id="endFav"><option value="">${esc(t('endFavPick'))}</option>${EVENTS.map((e, i) => `<option value="${e.id}" ${state.fav === e.id ? 'selected' : ''}>${i + 1}. ${esc(e.title)}</option>`).join('')}</select></label>
-    <section class="gospel"><h3>${esc(t('gospelHead'))}</h3>${paras(t('gospel'))}</section>
+    <section class="gospel"><h3>${esc(t('gospelHead'))}</h3>${t('gospelBridge') ? `<div class="bridge">${paras(t('gospelBridge'))}</div>` : ''}${paras(t('gospel'))}</section>
     <section class="invite"><h3>${esc(t('seekerHead'))}</h3>${paras(t('invite'))}
       <div class="prayer"><h4>${esc(t('prayerHead'))}</h4><p>${esc(t('prayer'))}</p></div></section>
     <section class="blessing"><h3>${esc(t('believerHead'))}</h3>${paras(t('blessing'))}</section>
-    ${DATA.journey?.sponsor === false ? '' : nextHtml()}
+    ${DATA.journey?.sponsor === false || !DATA.journey?.series?.some(j => !j.ready) ? '' : nextHtml()}
     ${DATA.journey?.daily ? `<p class="endlead">${esc(t('dailyEnd'))}</p><div class="endbtns"><button class="goldbtn" id="endDaily">${esc(t('dailyGo'))}</button></div>` : ''}
     <div class="endbtns">${nextJ ? `<a class="goldbtn" href="${journeyUrl(nextJ.id)}">${esc(t('endNext', { name: t(nextJ.title) }))}</a>` : ''}<button class="${nextJ ? 'textbtn' : 'goldbtn'}" id="endRestart">${esc(t('endRestart'))}</button><button class="textbtn" id="endWords">${esc(t('endWords'))}</button></div>`;
   const dlg = $('#journeyEnd'), close = () => dlg.close();

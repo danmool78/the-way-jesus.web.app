@@ -502,6 +502,15 @@ dialog{position:fixed}
 .endfav select{max-width:100%;background:var(--panel2);border:1px solid #4a3c2c;border-radius:10px;padding:8px 12px}
 .end-dlg h3{font-family:var(--serif);font-size:19px;color:var(--gold2);margin:0 0 12px}
 .end-dlg section p{line-height:1.85;margin:0 0 10px}
+.lessons{text-align:left;margin:0 auto 26px;max-width:520px}
+.lessons h3{text-align:center}
+.lessons ol{list-style:none;margin:0;padding:0;counter-reset:ls}
+.lessons li{counter-increment:ls;position:relative;padding:12px 0 10px 34px;border-bottom:1px solid #3a2f24}
+.lessons li:last-child{border-bottom:0}
+.lessons li::before{content:counter(ls);position:absolute;left:4px;top:13px;width:21px;height:21px;border-radius:50%;border:1px solid rgba(var(--gold-rgb),.55);color:var(--gold2);font-size:12px;line-height:20px;text-align:center}
+.lessons li b{display:block;font-family:var(--serif);font-size:17px;color:var(--gold2);margin-bottom:4px}
+.lessons li p{margin:0;font-size:14.5px;line-height:1.7;color:#e6d8bb}
+.gospel .bridge{margin:0 0 14px;padding:0 0 12px;border-bottom:1px dashed rgba(var(--gold-rgb),.3)}
 .gospel{text-align:left;padding:22px 22px 12px;border-radius:14px;background:rgba(var(--gold-rgb),.07);border:1px solid rgba(var(--gold-rgb),.25);margin:0 0 14px}
 .gospel h3{text-align:center}
 .invite{text-align:left;padding:22px 22px 12px;border-radius:14px;border:1px solid #3a3026;background:rgba(255,255,255,.02);margin:0 0 14px}

@@ -15,23 +15,65 @@
  "wordsIntro": "Aquí se reúnen, en el orden del viaje, las palabras que el Señor pronunció en el camino de Pablo y las que Pablo comunicó. Todas son una reconstrucción traducida de nuevo al lenguaje de hoy, fiel al sentido del texto original.",
  "odoTitle": "Distancia recorrida hasta esta escena (suma aproximada de los caminos y rutas marítimas entre lugares; pasos calculados con una zancada de 75 cm)",
  "gospels": {
-  "acts": ["Hechos", "Hch"],
-  "gal": ["Gálatas", "Gá"],
-  "1th": ["1 Tesalonicenses", "1 Ts"],
-  "2th": ["2 Tesalonicenses", "2 Ts"],
-  "1co": ["1 Corintios", "1 Co"],
-  "2co": ["2 Corintios", "2 Co"],
-  "rom": ["Romanos", "Ro"],
-  "php": ["Filipenses", "Fil"],
-  "phm": ["Filemón", "Flm"],
-  "col": ["Colosenses", "Col"],
-  "eph": ["Efesios", "Ef"],
-  "1ti": ["1 Timoteo", "1 Ti"],
-  "tit": ["Tito", "Tit"],
-  "2ti": ["2 Timoteo", "2 Ti"]
+  "acts": [
+   "Hechos",
+   "Hch"
+  ],
+  "gal": [
+   "Gálatas",
+   "Gá"
+  ],
+  "1th": [
+   "1 Tesalonicenses",
+   "1 Ts"
+  ],
+  "2th": [
+   "2 Tesalonicenses",
+   "2 Ts"
+  ],
+  "1co": [
+   "1 Corintios",
+   "1 Co"
+  ],
+  "2co": [
+   "2 Corintios",
+   "2 Co"
+  ],
+  "rom": [
+   "Romanos",
+   "Ro"
+  ],
+  "php": [
+   "Filipenses",
+   "Fil"
+  ],
+  "phm": [
+   "Filemón",
+   "Flm"
+  ],
+  "col": [
+   "Colosenses",
+   "Col"
+  ],
+  "eph": [
+   "Efesios",
+   "Ef"
+  ],
+  "1ti": [
+   "1 Timoteo",
+   "1 Ti"
+  ],
+  "tit": [
+   "Tito",
+   "Tit"
+  ],
+  "2ti": [
+   "2 Timoteo",
+   "2 Ti"
+  ]
  },
  "endLead": "Del camino de Damasco a la casa alquilada en Roma, gracias por caminar con nosotros.",
- "blessing": "He peleado la buena batalla, he terminado la carrera, me he mantenido en la fe. (2 Ti 4:7)\nQue quien llamó a Pablo en el camino de Damasco te llame también por tu nombre y camine contigo hasta el final, dondequiera que estés.",
+ "blessing": "Que la gracia del Señor Jesucristo, el amor de Dios y la comunión del Espíritu Santo estén contigo. (2 Co 13:14)\nQue el que llamó a Pablo en el camino a Damasco te llame también por tu nombre y camine contigo hasta el final, dondequiera que estés.",
  "map": {
   "수 리 아": "SIRIA",
   "길 리 기 아": "CILICIA",
@@ -54,5 +96,9 @@
   "지 중 해": "MAR MEDITERRÁNEO",
   "에 게 해": "MAR EGEO",
   "흑 해": "MAR NEGRO"
- }
+ },
+ "lessons": "Salvos por gracia|Un hombre que perseguía a la iglesia se convirtió en apóstol. La salvación no viene de nuestras obras: es un regalo de Dios. (Ef 2:8–9)\nFuertes en la debilidad|Azotado, encarcelado y náufrago, Pablo confesó que el poder de Cristo se perfecciona en la debilidad. (2 Co 12:9)\nUn evangelio que cruza muros|De Jerusalén a Roma, el evangelio unió a judíos y gentiles en un solo cuerpo. Es poder de Dios para salvación de todo el que cree. (Ro 1:16)",
+ "gospelBridge": "Lo que Pablo predicó toda su vida fue la gracia que lo había llamado. Cristo Jesús vino al mundo para salvar a los pecadores, de los cuales yo soy el primero. (1 Ti 1:15)",
+ "invite": "Si la historia de Dios que encontraste en este camino se quedó contigo, ven a conocer a Jesús, que está en el centro de esa historia. Recorre 'Las huellas de Jesús' desde el principio y visita una iglesia cercana. Que encuentres a Dios en la adoración y en su palabra, seas adoptado como su hijo y conozcas la alegría de llamarlo 'Padre'. (Ro 8:15)\nÉl todavía está a la puerta, esperándote. (Ap 3:20)",
+ "seekerHead": "Para quien todavía no lo conoce"
 }

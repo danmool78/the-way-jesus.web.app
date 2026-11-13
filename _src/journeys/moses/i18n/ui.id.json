@@ -15,10 +15,22 @@
  "wordsIntro": "Firman yang diucapkan Allah di sepanjang jalan Musa dan Yosua, dihimpun menurut urutan perjalanan. Setiap firman adalah terjemahan baru yang menghidupkan makna aslinya dalam bahasa masa kini.",
  "odoTitle": "Jarak yang ditempuh Israel sampai adegan ini (perkiraan jalan antartempat; langkah 75 cm)",
  "gospels": {
-  "ex": ["Keluaran", "Kel"],
-  "num": ["Bilangan", "Bil"],
-  "deut": ["Ulangan", "Ul"],
-  "josh": ["Yosua", "Yos"]
+  "ex": [
+   "Keluaran",
+   "Kel"
+  ],
+  "num": [
+   "Bilangan",
+   "Bil"
+  ],
+  "deut": [
+   "Ulangan",
+   "Ul"
+  ],
+  "josh": [
+   "Yosua",
+   "Yos"
+  ]
  },
  "endLead": "Dari tungku batu bata di Mesir sampai perjanjian di Sikhem — terima kasih telah berjalan bersama kami.",
  "blessing": "TUHAN memberkati Anda dan melindungi Anda.\nTUHAN menyinari Anda dengan wajah-Nya dan memberi Anda kasih karunia.\nTUHAN menghadapkan wajah-Nya kepada Anda dan memberi Anda damai sejahtera. (Bil 6:24–26)\nKiranya Dia yang setiap hari menurunkan manna di padang gurun memberi makan hari ini Anda, dan Dia yang berjalan di depan dalam tiang awan menuntun jalan Anda.",
@@ -36,5 +48,9 @@
   "비돔": "Pitom",
   "홍 해": "LAUT MERAH",
   "아카바 만": "Teluk Aqaba"
- }
+ },
+ "lessons": "Diselamatkan dulu, ketaatan sebagai jawaban|Allah lebih dulu membawa umat-Nya keluar dari perbudakan, baru kemudian memberi firman-Nya di Sinai. Perintah-perintah bukan syarat untuk diselamatkan, melainkan hidup orang yang telah diselamatkan. (Kel 20:2)\nManna setiap hari|Di padang gurun manna hanya bisa dipungut untuk satu hari. Allah mengajar bahwa manusia hidup bukan dari roti saja, tetapi dari setiap firman yang keluar dari mulut-Nya. (Ul 8:3)\nPilihlah kehidupan|Sungut-sungut dan ketidakpercayaan menahan satu generasi di padang gurun. Allah masih menaruh hidup dan mati di hadapan kita dan berkata: pilihlah kehidupan, dan kasihilah Dia. (Ul 30:19–20)",
+ "gospelBridge": "Pada malam Paskah, darah anak domba di tiang pintu membuat maut lewat. Di padang gurun, siapa pun yang memandang ular tembaga tetap hidup. Yesus berkata bahwa semua itu menunjuk kepada-Nya: sama seperti Musa meninggikan ular di padang gurun, demikian juga Anak Manusia harus ditinggikan. (Yoh 3:14)",
+ "invite": "Jika kisah Allah yang Anda temui di jalan ini tinggal di hati Anda, datanglah mengenal Yesus, yang berdiri di pusat kisah itu. Jalani 'Jejak Langkah Yesus' dari awal, dan kunjungilah gereja di dekat Anda. Kiranya Anda berjumpa dengan Allah dalam ibadah dan firman-Nya, diangkat menjadi anak-Nya, dan mengalami sukacita memanggil Allah 'Bapa'. (Rm 8:15)\nIa masih berdiri di depan pintu, menanti Anda. (Why 3:20)",
+ "seekerHead": "Bagi Anda yang belum mengenal-Nya"
 }

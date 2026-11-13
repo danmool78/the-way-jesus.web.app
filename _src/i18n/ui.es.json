@@ -316,5 +316,8 @@
  "inProgress": "{p}% completado",
  "seriesPsalms": "{n} salmos",
  "songSeek": "Posición de la canción",
- "lost3d": "Se apagó el 3D porque el dispositivo se quedó sin memoria. Recarga para volver a activarlo"
+ "lost3d": "Se apagó el 3D porque el dispositivo se quedó sin memoria. Recarga para volver a activarlo",
+ "lessonHead": "Lo que enseña este camino",
+ "lessons": "El reino de Dios se ha acercado|Jesús sanó a los enfermos y comió con pecadores, mostrando cómo es cuando Dios reina. Ese reino se abre a quienes se vuelven a él y creen. (Mc 1:15)\nÁmense unos a otros|El que lavó los pies de sus discípulos dijo: como yo los he amado, así también ámense unos a otros. (Jn 13:34)\nSígueme|El llamado que hizo a unos pescadores es el mismo para nosotros hoy: negarse a sí mismo, tomar cada día su cruz y seguirlo. (Lc 9:23)",
+ "gospelBridge": ""
 }

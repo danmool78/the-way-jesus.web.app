@@ -15,23 +15,65 @@
  "wordsIntro": "Les paroles que le Seigneur a prononcées sur le chemin de Paul, et celles que Paul a annoncées, rassemblées dans l’ordre du voyage. Chacune est une traduction nouvelle du sens original, dans la langue d’aujourd’hui.",
  "odoTitle": "Distance parcourue jusqu’à cette scène (routes et traversées estimées entre les lieux ; pas de 75 cm)",
  "gospels": {
-  "acts": ["Actes", "Ac"],
-  "gal": ["Galates", "Ga"],
-  "1th": ["1 Thessaloniciens", "1 Th"],
-  "2th": ["2 Thessaloniciens", "2 Th"],
-  "1co": ["1 Corinthiens", "1 Co"],
-  "2co": ["2 Corinthiens", "2 Co"],
-  "rom": ["Romains", "Rm"],
-  "php": ["Philippiens", "Ph"],
-  "phm": ["Philémon", "Phm"],
-  "col": ["Colossiens", "Col"],
-  "eph": ["Éphésiens", "Ep"],
-  "1ti": ["1 Timothée", "1 Tm"],
-  "tit": ["Tite", "Tt"],
-  "2ti": ["2 Timothée", "2 Tm"]
+  "acts": [
+   "Actes",
+   "Ac"
+  ],
+  "gal": [
+   "Galates",
+   "Ga"
+  ],
+  "1th": [
+   "1 Thessaloniciens",
+   "1 Th"
+  ],
+  "2th": [
+   "2 Thessaloniciens",
+   "2 Th"
+  ],
+  "1co": [
+   "1 Corinthiens",
+   "1 Co"
+  ],
+  "2co": [
+   "2 Corinthiens",
+   "2 Co"
+  ],
+  "rom": [
+   "Romains",
+   "Rm"
+  ],
+  "php": [
+   "Philippiens",
+   "Ph"
+  ],
+  "phm": [
+   "Philémon",
+   "Phm"
+  ],
+  "col": [
+   "Colossiens",
+   "Col"
+  ],
+  "eph": [
+   "Éphésiens",
+   "Ep"
+  ],
+  "1ti": [
+   "1 Timothée",
+   "1 Tm"
+  ],
+  "tit": [
+   "Tite",
+   "Tt"
+  ],
+  "2ti": [
+   "2 Timothée",
+   "2 Tm"
+  ]
  },
  "endLead": "Du chemin de Damas jusqu’au logement loué à Rome : merci d’avoir marché avec nous.",
- "blessing": "J’ai combattu le bon combat, j’ai achevé la course, j’ai gardé la foi. (2 Tm 4,7)\nQue celui qui a appelé Paul sur le chemin de Damas appelle aussi votre nom, et qu’il marche avec vous sur ce chemin jusqu’au bout, où que vous soyez.",
+ "blessing": "Que la grâce du Seigneur Jésus-Christ, l’amour de Dieu et la communion du Saint-Esprit soient avec vous. (2 Co 13.13)\nQue celui qui a appelé Paul sur le chemin de Damas vous appelle vous aussi par votre nom et marche avec vous jusqu’au bout, où que vous soyez.",
  "map": {
   "수 리 아": "SYRIE",
   "길 리 기 아": "CILICIE",
@@ -54,5 +96,9 @@
   "지 중 해": "Mer Méditerranée",
   "에 게 해": "Mer Égée",
   "흑 해": "Mer Noire"
- }
+ },
+ "lessons": "Sauvés par grâce|Un homme qui persécutait l’Église est devenu apôtre. Le salut ne vient pas de nos œuvres : c’est le don de Dieu. (Ep 2.8–9)\nFort dans la faiblesse|Battu, emprisonné, naufragé, Paul a confessé que la puissance du Christ s’accomplit dans la faiblesse. (2 Co 12.9)\nUn Évangile qui franchit les murs|De Jérusalem à Rome, l’Évangile a uni Juifs et non-Juifs en un seul corps. Il est la puissance de Dieu pour le salut de quiconque croit. (Rm 1.16)",
+ "gospelBridge": "Ce que Paul a prêché toute sa vie, c’est la grâce qui l’avait appelé. Le Christ Jésus est venu dans le monde pour sauver les pécheurs, dont je suis le premier. (1 Tm 1.15)",
+ "invite": "Si l’histoire de Dieu rencontrée sur ce chemin vous est restée au cœur, venez rencontrer Jésus, qui est au centre de cette histoire. Parcourez « Les pas de Jésus » depuis le début et rendez-vous dans une église près de chez vous. Puissiez-vous rencontrer Dieu dans le culte et dans sa parole, être adopté comme son enfant et connaître la joie de l’appeler « Père ». (Rm 8.15)\nIl se tient encore à la porte et vous attend. (Ap 3.20)",
+ "seekerHead": "Pour ceux qui ne le connaissent pas encore"
 }
