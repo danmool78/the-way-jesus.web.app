@@ -1302,7 +1302,7 @@ function speakQueue(items, onDone) {
     if (n >= queue.length) { speaking = false; setListenUI(); showCaption(null); if (staged) stageBeat('end'); speechDone && speechDone(); return; }
     const it = queue[n++];
     const pane = it.el && it.el.closest('.pane');
-    if (pane && pane.hidden) showTab(pane.dataset.pane);
+    if (pane && pane.hidden && followRead) showTab(pane.dataset.pane); // 본문·비교 탭을 보는 중이면 이야기 탭으로 끌고 가지 않는다(사용자)
     if (it.el) { it.el.classList.add('speaking'); scrollToEl(it.el); }
     showCaption(it);
     if (n === queue.length && evAt(idx)?.song && song.audio.src && song.audio.preload !== 'auto') song.audio.preload = 'auto'; // 노래 앞 낭독 마지막 문장: 이제 노래를 받기 시작
