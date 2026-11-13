@@ -90,6 +90,9 @@ def build(jid, src, out_dir):
                **({'map': meta['map']} if 'map' in meta else {}),
                **({'main': main} if isinstance(main, list) else {}),  # 말하는 이가 여럿인 여정(잠언): 앱이 말씀 카드에 '예수' 대신 그 이름을 쓴다  # 여정의 지도 설정(그린 범위·지역 이름 등)
                **{k: meta[k] for k in ('quick', 'next', 'odo', 'sponsor', 'where', 'rate', 'narrator', 'stageOnly', 'koOnly', 'no3d') if k in meta}}  # quick: 첫 화면 없이 첫 장면부터, next: 끝 화면에서 이어 걸을 여정, odo·sponsor: false면 걸은 거리·후원 안내를 숨김, where: false면 낭독에서 장소·때와 걸어가는 안내를 읽지 않음, narrator: 해설 성우('eleven:<id>' 일레븐랩스), stageOnly: 지도 없이 어두운 바탕에 무대만 크게 (GoodNews)
+    # 시대별 영역(누가 다스렸나): _src/realms/<여정>.json (_src/tools/realms.py가 만든다) — 앱이 장면 시대에 맞춰 지도에 옅게 깔고 서서히 바꾼다
+    rf = os.path.join(here, 'realms', '%s.json' % jid)
+    if os.path.exists(rf): journey['realms'] = {k: v for k, v in loadf(rf).items() if k != '_comment'}
     # 그림 장면(paints)의 그림 해시: app.js paintSrc가 주소 뒤에 붙인다. '왜 기독교인가' 아이콘도 (앱의 시리즈 목록 맨 끝)
     pv = {}
     for e in events:
