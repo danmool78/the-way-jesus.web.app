@@ -787,7 +787,9 @@ function walkTo(i, done) {
   setCard('peek');
   $('#nextHint', map).style.display = 'none';
   banner(`<span class="wk">👣</span><b>${esc(A.name)}</b> → <b>${esc(B.name)}</b><small>${travelText(A, B, to)}</small>`);
-  if (autoOn && DATA.journey?.where !== false) speakQueue([{ text: t('walkSpeak', { a: placeSay(A), b: placeSay(B), ro: ro(placeSay(B)) }) }]); // 녹음(voice.mjs walks)과 같은 글이어야 녹음이 나온다
+  // 화면이 꺼져 있으면 걷기는 곧바로 끝나므로(walkNext), 안내("○○에서 ○○로.")를 다 읽은 뒤에 도착한다 — 다음 장면 낭독이 안내를 덮어 끊었다(사용자)
+  let said = true, arrived = null;
+  if (autoOn && DATA.journey?.where !== false) { said = false; speakQueue([{ text: t('walkSpeak', { a: placeSay(A), b: placeSay(B), ro: ro(placeSay(B)) }) }], () => { said = true; arrived?.(); }); } // 녹음(voice.mjs walks)과 같은 글이어야 녹음이 나온다
   // 아주 먼 길(지도 단위 5000 넘게 — 예루살렘에서 바벨론까지, 다른 여정에는 없다)은 조금 더 길게 걷고, 아래 따라가는 화면도 넓게 잡는다
   const far = Math.hypot(...[0, 1].map(k => P(A)[k] - P(B)[k])) > 5000;
   const total = path.getTotalLength(), dur = reduced() ? 0 : far ? 10000 : Math.min(6500, Math.max(2200, km(A, B, to) * 30));
@@ -815,6 +817,7 @@ function walkTo(i, done) {
     if (k < 1) { walkNext(step); return; }
     $('#walker', map).classList.remove('moving');
     walking = false; document.body.classList.remove('is-walking');
+    if (!said) { arrived = () => { arrived = null; done(); }; setTimeout(() => arrived?.(), 8000); return; } // 안내가 끝나면 (멈추거나 막혀도 8초 뒤엔)
     done();
   };
   walkNext(step);
