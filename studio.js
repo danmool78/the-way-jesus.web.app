@@ -48,6 +48,7 @@ const CSS = `
 .st .sum{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin:0 0 12px}.st .sum b{color:var(--gold2)}
 .st .card.r2{padding:12px 14px;margin:0 0 12px}.st .card.r2 input{max-width:260px}
 .st .r2row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.st [hidden]{display:none!important} /* display:flex가 hidden을 이겨 R2 열쇠를 기억해도 입력 칸이 남았고, 브라우저가 GitHub 아이디·토큰을 거기에 자동으로 채웠다 */
 .st details.song{background:var(--panel);border:1px solid var(--line);border-radius:14px;margin:8px 0;padding:0 14px}
 .st details.song>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:12px 0;flex-wrap:wrap}
 .st details.song>summary::before{content:none}
