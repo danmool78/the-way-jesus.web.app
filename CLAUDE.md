@@ -12,6 +12,21 @@
 - 새 작업은 브랜치 → PR. PR마다 Actions가 미리보기 주소를 단다. 사용자가 보고 병합한다.
 - 비밀키(서비스 계정 json 등)는 저장소에 두지 않는다. `firebase.json`의 ignore에 걸려 있지만 만들지도 말 것.
 
+### GitHub 비밀값 (Settings → Secrets and variables → Actions)
+값은 GitHub에만 있다. 바꾸거나 만료되면 같은 이름으로 다시 넣는다(지우지 말 것 — 모두 쓰는 중).
+
+| 이름 | 하는 일 | 쓰는 곳 | 만드는 곳 |
+|---|---|---|---|
+| `FIREBASE_SERVICE_ACCOUNT_THE_WAY_JESUS` | 사이트 배포 | firebase-hosting-merge.yml(main), firebase-hosting-pull-request.yml(PR 미리보기) | Firebase 서비스 계정 |
+| `GOOGLE_TTS_KEY` | 낭독 녹음(Chirp 3 HD) | firebase-hosting-merge.yml(관리자에서 고친 장면 다시 녹음), voice-run.yml(잠언 등) | Google Cloud API 키 |
+| `GEMINI_API_KEY` | 시편 가사 시간 맞추기(lyricsync.mjs), Gemini 성우 녹음 | firebase-hosting-merge.yml | Google AI Studio |
+| `CF_ACCOUNT_ID` | Cloudflare 계정 번호 | visits.yml, worker.yml | 대시보드 주소의 계정 ID |
+| `CF_API_TOKEN` | 방문 수 읽기(Account Analytics: Read 하나) | visits.yml(매일 stats 가지의 visits.json) | Cloudflare API 토큰 'thewaymap.org' |
+| `CF_WORKERS_TOKEN` | 관리자 Worker 올리기('Cloudflare Workers 편집' 템플릿, 영역 정책 없이) | worker.yml | Cloudflare API 토큰 'thewaymap workers' |
+| `ADMIN_GH_TOKEN` | 관리자 Worker가 대신 GitHub에 저장(이 저장소만, Contents 읽기·쓰기 + Actions 읽기) | worker.yml이 Worker 비밀값 GH_TOKEN으로 넣음 | GitHub fine-grained 토큰 'theway admin worker' — 만료되면 새로 만들어 넣고 worker.yml을 손으로 돌린다 |
+
+Cloudflare 토큰 목록의 다른 'Cloudflare Workers 편집'(2026-10)은 다른 서비스 것 — 건드리지 않는다.
+
 ## 구조
 - `index.html` — 첫 주소의 랜딩(그 길 시리즈의 여정 카드·주제가 뮤직비디오·공유). 가볍게 따로 둔 페이지로, 글씨와 카드는 build.py가 만드는 `land.json`을 읽는다(마지막 카드 GoodNews — 4영리 — 는 다른 세션에서 만드는 `/goodnews/`로 잇는다. 화면 이름은 GoodNews). 예전 주소(`/?j=…`, `/#e05`)는 앱으로 넘긴다
 - `app.html`, `style.css`, `app.js` — 앱 (지도 SVG, 장면 카드, 낭독, 말씀·대조표·퀴즈). 여정은 `app.html?j=<여정>`
@@ -43,6 +58,9 @@
 - `assets/voice/ko/` — 한국어 녹음 낭독(문장별 mp3 + index.json). `GOOGLE_TTS_KEY=… node _src/tools/voice.mjs e01 …`로 만든다. 녹음이 없는 장면은 브라우저 음성으로 읽는다. 다음 장소로 걸어갈 때의 안내("○○에서 ○○로.")는 `voice.mjs walks`로 만든다. **낭독은 제목 줄과 이야기만** — 말씀(본문)은 소리 내어 읽지 않고 참고용 글로만 둔다(2026-11 사용자 결정, 말씀 녹음은 모두 지웠다. 다시 만들지 말 것)
 - `assets/music/<곡>.mp3` — 낭독 밑에 깔리는 배경음악(2분 곡, 끝나면 천천히 줄었다가 처음부터). 장면별 곡 배정과 곡 설명은 `_src/music.json`, 만들기는 `GEMINI_API_KEY=… node _src/tools/music.mjs` (Lyria 3.5 — 예전 30초 곡은 너무 짧았다)
 - `admin.html`, `admin.js` — 관리자 페이지(해설 문단·말씀 고치기, 녹음 듣기). 이 저장소에 쓰기 권한이 있는 GitHub 토큰으로만 들어간다. 저장하면 `_src/content-*.json`을 main에 바로 커밋하고, `firebase-hosting-merge.yml`이 data를 다시 만들고 바뀐 장면의 녹음(`voice.mjs changed`, GitHub 비밀값 `GOOGLE_TTS_KEY`)을 새로 만들어 배포한다. 글마다 목소리를 Gemini 성우로 고를 수 있다(말씀은 words의 `"tts": "gemini"`, 해설 문단은 장면의 `"storyTts": [문단 번호]`, 녹음 열쇠에 `gemini-`가 붙음, GitHub 비밀값 `GEMINI_API_KEY`, 하루 한도가 찬 모델은 건너뛰고 모두 막히면 Google 음성으로 대신)
+- 관리자 로그인: **Google로 로그인**(Firebase 인증, 프로젝트 the-way-jesus — 데이터베이스 없음). GitHub 토큰은 Cloudflare Worker `theway-admin`(https://theway-admin.danmool78.workers.dev, 원본 `_src/worker/`, 올리기 `.github/workflows/worker.yml`)에만 두고, 허락된 구글 계정(이메일 SHA-256, wrangler.toml의 ALLOWED)일 때만 이 저장소의 GitHub API를 대신 부른다. 시편 작업실의 노래 올리기도 Worker가 R2 버킷에 바로(R2 열쇠 필요 없음). 예전 토큰 입력은 '예비'로 접어 둠 — 컴퓨터마다 토큰을 넣기 번거로웠다(사용자, 2026-11)
+- 방문 수: 공개 페이지마다 Cloudflare Web Analytics 비컨(쿠키 없음, pages.py의 CF와 손으로 쓰는 페이지 끝). 매일 visits.yml이 stats 가지에 visits.json을 적고 관리자 페이지 맨 위에 어제·7일·30일 방문을 띄운다
+- 글로 읽기: 도움말 '앱 없이 글로만 읽을 수 있나요?'(목록은 seo.py가 `<!--seo-reads-->`에)와 앱 설정의 '글로 읽기'가 s/의 여정별 장면 글 모음으로 잇는다(시편은 없음)
 - `assets/vendor/three.module.min.js` — three.js 0.160.0 (오프라인용으로 저장소에 포함)
 - `_src/` — 원본 데이터와 도구 (배포 제외). `_src/tools/` — 캡처·문장 나누기 도구
 
