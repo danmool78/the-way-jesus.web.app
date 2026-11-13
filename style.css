@@ -249,9 +249,7 @@ html:not(:lang(ko)):not(:lang(zh)):not(:lang(ja)) .river-lbl text{writing-mode:h
 .mapctl .m3:disabled{opacity:.35;cursor:default;border-color:rgba(var(--gold-rgb),.35)}
 .m3tools{display:none;flex-direction:column;gap:6px}
 .terrain-on .m3tools{display:flex}
-/* 컴퓨터의 2D 지도에도 확대·축소(+/−)는 늘 둔다 — 휠로는 카드가 굴러 지도를 키울 길이 없었다. 나머지 조작은 3D에서만 */
-body:not(.terrain-on) .m3tools{display:flex}
-body:not(.terrain-on) .m3tools button:not([data-k="in"]):not([data-k="out"]){display:none}
+/* 확대·축소 +/− 단추는 뺐다 — 2D·3D 모두 휠(폰은 두 손가락)로 된다(사용자). 나머지 조작은 3D에서만 */
 .stage-only .m3tools{display:none!important}
 .m3tools button{width:34px;height:34px}
 .m3tools svg{width:18px;height:18px}
