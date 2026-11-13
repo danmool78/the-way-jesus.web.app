@@ -342,6 +342,7 @@ const drawnNow = () => onEden() ? EDEN : DRAWN;
 // 그린 범위 밖을 바탕색으로 덮는 구멍 뚫린 사각형
 const offmapD = D => `M${D.x - 1e5},${D.y - 1e5}h${D.w + 2e5}v${D.h + 2e5}h${-D.w - 2e5}Z M${D.x},${D.y}v${D.h}h${D.w}v${-D.h}Z`;
 function applyView() {
+  window.mapMoveT = performance.now(); // 지도가 움직이는 동안은 무대(stage.js)가 매 프레임 따라붙는다
   const r = map.getBoundingClientRect();
   if (!r.width) return;
   // 화면 비율에 맞춰 보이는 영역 확장
@@ -1809,8 +1810,10 @@ function bgmFollow() {
 }
 
 // 장면을 열 때 이 장면과 다음 장면의 곡을 미리 받아 둔다(브라우저 캐시) — 곡이 2분짜리라 처음 누를 때 받는 동안 몇 초씩 조용했다
+// 휴대폰 데이터로 볼 때는 듣는 중일 때만 — 듣지도 않는 사람이 장면을 열 때마다 곡 둘(3MB 남짓)을 받았다. 와이파이·컴퓨터는 전처럼 미리
+function roomyNet() { const c = navigator.connection; if (c?.saveData) return false; if (c?.type) return c.type === 'wifi' || c.type === 'ethernet'; return matchMedia('(pointer: fine)').matches; }
 function bgmWarm(i) {
-  if (!bgmOn()) return;
+  if (!bgmOn() || !(speaking || roomyNet())) return;
   const bgmWarmed = bgmWarm.done ||= new Set(); // (함수에 달아 둔다 — 첫 장면을 여는 때가 이 줄이 실행되기 전일 수 있어)
   [evAt(i), evAt(i + 1)].forEach(e => {
     if (!e?.music || bgmWarmed.has(e.music)) return;
