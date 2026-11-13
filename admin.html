@@ -108,6 +108,9 @@ select.f{width:100%;background:var(--panel2);border:1px solid var(--line);border
   <!-- 들어가기: 이 저장소에 쓰기 권한이 있는 GitHub 토큰이 있어야만 고칠 수 있다 (토큰은 이 브라우저에만 남는다) -->
   <section id="login" class="card login" hidden>
     <h2>관리자 확인</h2>
+    <p class="note">관리자로 허락된 구글 계정으로 들어갑니다. 어느 기기에서든 로그인 한 번이면 됩니다.</p>
+    <button id="gLogin" class="btn" type="button" style="width:100%;padding:12px">Google로 로그인</button>
+    <details style="margin-top:14px"><summary class="note" style="margin:0">GitHub 토큰으로 들어가기 (예비)</summary>
     <p class="note">이 저장소에 쓸 수 있는 GitHub 토큰을 넣으면 들어갈 수 있습니다. 토큰은 이 브라우저에만 저장되고 다른 곳으로 보내지 않습니다(GitHub에만 씀).</p>
     <ol>
       <li><a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub → Fine-grained token 만들기</a></li>
@@ -122,6 +125,7 @@ select.f{width:100%;background:var(--panel2);border:1px solid var(--line);border
       <div class="row"><input id="token" name="password" type="password" placeholder="github_pat_…" autocomplete="current-password"><button id="enter" class="btn" type="submit">들어가기</button></div>
     </form>
     <p class="note">들어가면 브라우저가 "비밀번호를 저장할까요?"라고 묻습니다. 저장해 두면 휴대폰·다른 PC에서도 자동 채우기로 들어갈 수 있습니다.</p>
+    </details>
     <p id="loginMsg" class="msg"></p>
   </section>
   <section id="editor" hidden>

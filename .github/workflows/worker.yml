@@ -1,0 +1,32 @@
+name: Admin worker
+# 관리자 Worker(_src/worker)를 Cloudflare에 올리고, GitHub 토큰을 그 Worker의 비밀값으로 넣는다.
+# 비밀값: CF_WORKERS_TOKEN(Cloudflare Workers 편집 템플릿), CF_ACCOUNT_ID, ADMIN_GH_TOKEN(저장소 Contents 읽기·쓰기, Actions 읽기)
+on:
+  push:
+    branches: [main]
+    paths: ['_src/worker/**', '.github/workflows/worker.yml']
+  workflow_dispatch:
+  # 시험용 — 병합 전에 뺀다
+  pull_request:
+    paths: ['_src/worker/**']
+permissions:
+  contents: read
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: _src/worker
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CF_WORKERS_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy
+        run: npx --yes wrangler@3 deploy
+      - name: Set the GitHub token secret
+        env:
+          GH: ${{ secrets.ADMIN_GH_TOKEN }}
+        run: |
+          if [ -z "$GH" ]; then echo "ADMIN_GH_TOKEN이 없습니다"; exit 1; fi
+          printf '%s' "$GH" | npx --yes wrangler@3 secret put GH_TOKEN
