@@ -1771,7 +1771,7 @@ function bgmReady() {
     // 지킴이: 오래 듣다 보면(화면 잠금·전화·알림·다른 앱 소리) 곡이 멈춘 채 다시 안 살아나 배경음악이 끝까지 사라졌다(사용자).
     // 낭독 중이면 몇 초마다 살펴 깨우고, 멈춘 곡은 다시 틀고, 내려간 채 남은 소리는 올린다
     setInterval(() => {
-      if (!bgmCtx || !bgmCue || paused || document.hidden) return;
+      if (!bgmCtx || !bgmCue || paused) return; // 화면이 꺼져 있어도 살핀다 — 끈 채로 듣는 동안 멎은 곡이 다시 살아나지 않았다(사용자: 중요한 건 오디오)
       if (bgmCtx.state !== 'running') bgmCtx.resume().catch(() => {});
       const p = bgmPlayers[bgmCur]; if (p.wait || bgmLoop === p.el) return; // 곡 바꿈·반복 사이 쉬는 중은 그대로
       if (p.el.ended) return; // 반복 사이 쉬는 중('ended'가 곧 다시 튼다)
