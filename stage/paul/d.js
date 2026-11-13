@@ -246,12 +246,13 @@ export const D = {
       sailor2: ['sailor', -0.55, -0.02, -1.4, { board: 'ship', gaze: false }],
     },
     beats: {
-      enter: [['@env', 'overcast'], ['ship', 'wreck', { x: 0.55, z: 0.0 }], ['anchors', null, { show: 0 }], ['skiff', null, { show: 0 }], ['word', null, { show: 0 }], ['sky', 'none'],
+      enter: [['@env', 'overcast'], ['shore', null, { show: 1 }], ['ship', 'wreck', { x: 0.55, z: 0.0 }], ['anchors', null, { show: 0 }], ['skiff', null, { show: 0 }], ['word', null, { show: 0 }], ['sky', 'none'],
         ['paul', 'pray', { board: null, x: 2.0, z: 0.05, look: -1.4 }], ['luke', 'kneel', { board: null, x: 2.25, z: 0.3, look: -1.2 }], ['ari', 'idle', { board: null, x: 2.3, z: -0.25, look: -1.3 }],
         ['julius', 'idle', { board: null, x: 1.75, z: -0.3, look: -1.2 }], ['soldier', 'idle', { board: null, x: 2.55, z: 0.05, look: -1.3 }], ['sailor', 'sit-ground', { board: null, x: 1.8, z: 0.45, look: -1.0 }],
         ['sailor2', 'kneel', { board: null, x: 2.5, z: 0.4, look: -1.0 }], ...hide('p1', 'p2', 'p3')],
       // 밤바다 — 감아 맨 배, 오래 먹지 못한 사람들 (탄 사람은 다시 태운다)
-      intro: [['@env', 'night'], ['ship', 'girded', { x: -0.45, z: 0.0 }], ['anchors', 'up'], ['skiff', 'down', { show: 0 }], ['word', null, { show: 0 }], ['sky', 'storm'], ...hide('p1', 'p2', 'p3'),
+      // 모래밭(멜리데 바닷가)은 날이 밝을 때(p2.1)에야 — 밤바다 한가운데 배 뒤에 흰 모래밭이 떠 있었다(사용자)
+      intro: [['@env', 'night'], ['shore', null, { show: 0 }], ['ship', 'girded', { x: -0.45, z: 0.0 }], ['anchors', 'up'], ['skiff', 'down', { show: 0 }], ['word', null, { show: 0 }], ['sky', 'storm'], ...hide('p1', 'p2', 'p3'),
         boardAt('paul', 0.0, 0.04, 1.3), boardAt('luke', -0.45, -0.1, 1.3, 'sit-ground'), boardAt('ari', -0.5, 0.14, 1.2, 'sit-ground'), boardAt('julius', 0.35, 0.04, -1.3, 'mourn'),
         boardAt('soldier', 0.55, -0.12, -1.4, 'sit-ground'), boardAt('sailor', 0.62, 0.15, -1.3, 'sit-ground'), boardAt('sailor2', -0.55, -0.02, -1.4, 'cower')],
       // 바울이 일어나 말한다
@@ -282,7 +283,7 @@ export const D = {
       // 이백칠십육 명 — 모두 일어선다
       'p2.0': [...['paul', 'luke', 'ari', 'julius', 'soldier', 'sailor', 'sailor2'].map(n => [n, 'idle', { item: null }]), ['anchors', 'up']],
       // 날이 밝자 모래밭 만 — 배가 모래톱에 박혀 고물이 부서진다
-      'p2.1': [['@env', 'overcast'], ['anchors', 'up'], ['ship', 'girded', { x: 0.55, z: 0.0 }], ['ship', 'wreck', { delay: 5200 }], ['paul', 'point', { look: 1.4, delay: 1000 }],
+      'p2.1': [['@env', 'overcast'], ['shore', null, { show: 1 }], ['anchors', 'up'], ['ship', 'girded', { x: 0.55, z: 0.0 }], ['ship', 'wreck', { delay: 5200 }], ['paul', 'point', { look: 1.4, delay: 1000 }],
         ['luke', 'afraid', { delay: 5400 }], ['ari', 'afraid', { delay: 5600 }], ['sailor', 'afraid', { delay: 5800 }]],
       // 군인들이 죄수들을 — 백부장이 막는다
       'p2.2': [['ship', 'wreck', { x: 0.55, z: 0.0 }], ['soldier', 'rebuke', { look: -1.5 }], ['julius', 'rebuke', { look: 1.3, delay: 1600 }], ['soldier', 'idle', { look: 1.3, delay: 4200 }]],
