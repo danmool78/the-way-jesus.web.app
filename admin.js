@@ -10,7 +10,7 @@ let token = '', files = {}, data = null; // files: 경로 → { raw, json }
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 const auth = getAuth(initializeApp({ apiKey: 'AIzaSyA5wjIVA5kc8_Zyar6_-8X7kNVPaQn4j1Y', authDomain: 'the-way-jesus.firebaseapp.com', projectId: 'the-way-jesus', appId: '1:618365957327:web:d42bd6b7e94f79390673ba' })); // 공개 설정값
-export const WORKER = 'https://theway-admin.WORKERS_SUBDOMAIN.workers.dev';
+export const WORKER = 'https://theway-admin.danmool78.workers.dev';
 let google = false; // 구글로 들어왔으면 true — gh()가 Worker를 거친다
 // 시리즈의 여정: 주소의 ?j=<여정> (없으면 예수). 예수 여정의 원본은 _src/, 다른 여정은 _src/journeys/<여정>/
 // 배포된 data는 예수가 data.json, 다른 여정이 j/<여정>/data.json. 녹음(음성 교체)은 예수 여정만 — 다른 여정은 기기 음성으로 읽는다
