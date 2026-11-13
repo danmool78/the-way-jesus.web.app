@@ -571,7 +571,10 @@ dialog{position:fixed}
   .mapbtn{padding:6px 10px;font-size:11px}
   .odo{top:56px;left:10px;font-size:11px;padding:4px 10px}
   .walkbanner{top:88px;font-size:12.5px;padding:7px 14px;max-width:94vw}
-  .walkbanner small{display:none}
+  /* 거리·걸린 날은 이름 아래 작은 한 줄로 — 전엔 넘칠까 봐 폰에서 숨겼다(사용자: 폰에서도 보이게). 이름이 길면 말줄임 */
+  .walkbanner{flex-wrap:wrap;justify-content:center;row-gap:1px;border-radius:16px;width:max-content} /* 가운데 맞춤(left:50%) 때문에 폭이 화면 절반으로 줄어 낱말마다 줄이 바뀌었다 */
+  .walkbanner b{max-width:36vw;overflow:hidden;text-overflow:ellipsis}
+  .walkbanner small{flex-basis:100%;text-align:center;margin:0;font-size:11px}
   .mapctl{left:auto;right:10px;top:10px;transform:none}
   /* 모바일은 손가락으로 끌고 벌려 보므로 단추는 3D 켜기와 색 끄기만 */
   .terrain-on .m3tools button:not([data-k="plain"]){display:none}
