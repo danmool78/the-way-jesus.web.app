@@ -54,7 +54,9 @@ DECAPOLIS = unary_union([
 def ring(g, tol=0.004, nd=3):  # nd: 좌표 자릿수 (지중해 지도는 둘로 — 1km쯤이면 충분하고 자료가 작아진다)
     g = g.simplify(tol, preserve_topology=True)
     polys = [g] if g.geom_type == 'Polygon' else [p for p in g.geoms if p.area > 0.0005]
-    return [[[round(y, nd), round(x, nd)] for x, y in p.exterior.coords] for p in polys]
+    # 구멍(안쪽 고리)도 함께 싣는다 — 앱은 evenodd로 칠한다. 고린도 만처럼 육지에 둘러싸인 바다가 칠해져 이름이 바다 위에 놓였었다
+    R = lambda cs: [[round(y, nd), round(x, nd)] for x, y in cs]
+    return [R(r.coords) for p in polys for r in [p.exterior] + [i for i in p.interiors if Polygon(i).area > 0.0005]]
 
 antipas = unary_union([Z['galilee'], Z['perea']]).intersection(herod)
 philip = Z['philip'].intersection(herod)
@@ -183,6 +185,11 @@ G = {
  'egypt': P([(31.9, 25.15), (31.75, 29.0), (31.8, 32.4), (31.5, 33.8), (31.1, 34.25), (30.4, 33.2), (29.6, 32.5), (29.3, 31.0), (29.6, 29.3), (30.3, 27.4), (30.9, 25.0)]),  # 서쪽은 구레네와 같은 경계, 남쪽은 사막 쪽으로 둥글게
 }
 syria = unary_union([G['syria'], G['cilicia']]).difference(herod)
+# 헤롯 왕국 가운데 유대·안디바 땅 밖(빌립의 옛 영지·데가볼리)이 비어 있었다(사용자). AD 34 빌립이 죽은 뒤 수리아에 붙었고(a01),
+# 아그립바 1세가 죽은 AD 44 뒤에는 빌립의 영지가 유대 속주로, 데가볼리는 그대로 수리아의 감독 아래(a07)
+philip_p = herod.difference(unary_union([judea, antipas, DECAPOLIS]))
+syria0 = unary_union([syria, herod.difference(unary_union([judea, antipas]))])
+syria1 = unary_union([syria, DECAPOLIS.difference(Z['galilee'])])
 # 바울 지도의 육지 모양: 육지 가림판(assets/relief-med-mask.png — 위도 24.5–48.5·경도 8–41)을 벡터로 바꿔 속주를 해안선에 맞춰 자른다.
 # 그래야 해안을 따라 점선 테두리가 보인다(전엔 바다 쪽 테두리가 가림판에 잘려 이탈리아 둘레에 점선이 없었다 — 사용자). pip install rasterio
 def med_land():
@@ -199,13 +206,13 @@ def ap(k, g, color):
     full, short = NP[k]
     return {'id': k, 'color': color, 'name': nm(full), 'short': nm(short or full), 'd': ring(g.intersection(LAND), 0.015, 2)}
 # 흙빛·초록 지형과 대비되게, 이웃한 속주끼리는 따뜻한 색·차가운 색이 번갈아 (전엔 이탈리아·아가야·시실리가 지형 색에 묻혔다 — 사용자)
-PC = {'italia': '#c0392b', 'sicilia': '#2f7fa8', 'dalmatia': '#7d5ab5', 'macedonia': '#1f8f8f', 'achaia': '#c0392b', 'asia': '#2f6fb5', 'bithynia': '#9a4a9a', 'galatia': '#c0392b',
-      'lycia': '#1f8f8f', 'cappadocia': '#7d5ab5', 'syria': '#2f6fb5', 'cyprus': '#c0392b', 'crete': '#7d5ab5', 'egypt': '#b5603e', 'judaea': '#c0392b', 'judaea0': '#c0392b', 'antipas': '#1f8f8f'}
-REST = lambda: [ap(k, G[k] if k != 'syria' else syria, PC[k]) for k in ['italia', 'sicilia', 'dalmatia', 'macedonia', 'achaia', 'asia', 'bithynia', 'galatia', 'lycia', 'cappadocia', 'syria', 'cyprus', 'crete', 'egypt']]
+PC = {'italia': '#2f6fb5', 'sicilia': '#1f8f8f', 'dalmatia': '#7d5ab5', 'macedonia': '#1f8f8f', 'achaia': '#9a4a9a', 'asia': '#2f6fb5', 'bithynia': '#9a4a9a', 'galatia': '#5a5ab5',
+      'lycia': '#1f8f8f', 'cappadocia': '#1f8f8f', 'syria': '#2f6fb5', 'cyprus': '#7d5ab5', 'crete': '#7d5ab5', 'egypt': '#b5603e', 'judaea': '#c0392b', 'judaea0': '#c0392b', 'antipas': '#1f8f8f'}
+REST = lambda sy: [ap(k, G[k] if k != 'syria' else sy, PC[k]) for k in ['italia', 'sicilia', 'dalmatia', 'macedonia', 'achaia', 'asia', 'bithynia', 'galatia', 'lycia', 'cappadocia', 'syria', 'cyprus', 'crete', 'egypt']]
 paul = {'credit': nm(['로마 속주 경계는 어림 (AWMC·바링턴 지도책 참고)', 'Approximate provincial borders (after AWMC / Barrington Atlas)', 'Fronteras provinciales aproximadas (según AWMC / Barrington Atlas)', 'Fronteiras provinciais aproximadas (segundo AWMC / Barrington Atlas)', 'Frontières provinciales approximatives (d’après AWMC / Barrington Atlas)', '行省边界为大致范围（参照 AWMC、Barrington 地图集）', 'Batas provinsi perkiraan (menurut AWMC / Barrington Atlas)', '属州の境界はおおよそ（AWMC・バリントン地図帳による）']),
         'eras': [
-  {'from': 'a01', 'areas': [ap('judaea0', judea, PC['judaea']), ap('antipas', antipas, PC['antipas'])] + REST()},   # AD 34: 빌라도 무렵의 유대 총독령, 안디바의 갈릴리·베레아
-  {'from': 'a07', 'areas': [ap('judaea', unary_union([judea, antipas]), PC['judaea'])] + REST()},                  # AD 44 뒤: 갈릴리·베레아까지 로마 속주 유대
+  {'from': 'a01', 'areas': [ap('judaea0', judea, PC['judaea']), ap('antipas', antipas, PC['antipas'])] + REST(syria0)},   # AD 34: 빌라도 무렵의 유대 총독령, 안디바의 갈릴리·베레아
+  {'from': 'a07', 'areas': [ap('judaea', unary_union([judea, antipas, philip_p]), PC['judaea'])] + REST(syria1)},                  # AD 44 뒤: 갈릴리·베레아까지 로마 속주 유대
 ]}
 json.dump({'_comment': '시대별 영역 — _src/tools/realms.py가 만든다(직접 고치지 말 것). AD 50 무렵 로마 속주, 경계는 어림', **paul}, open(os.path.join(src, 'paul.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
 print('realms paul:', [(e['from'], len(e['areas'])) for e in paul['eras']])
@@ -282,23 +289,29 @@ print('realms moses:', [(e['from'], [a['id'] for a in e['areas']]) for e in mose
 import re
 from shapely.geometry import Point
 APP = open(os.path.join(here, '..', '..', 'app.js'), encoding='utf-8').read()
-BASE_REGIONS = [(float(a), float(b)) for a, b in re.findall(r"\['[^']+', ([\d.]+), ([\d.]+)\]", APP[APP.index('let REGIONS = ['):APP.index('let REFCITIES')])]
+BASE_REGIONS = [(n, float(a), float(b)) for n, a, b in re.findall(r"\['([^']+)', ([\d.]+), ([\d.]+)\]", APP[APP.index('let REGIONS = ['):APP.index('let REFCITIES')])]
 def marks(j):
     d = os.path.join(here, '..') if j == 'jesus' else os.path.join(here, '..', 'journeys', j)
     pl = json.load(open(os.path.join(d, 'places.json'), encoding='utf-8'))
     pts = [(v['lat'], v['lng']) for v in pl.values() if isinstance(v, dict) and 'lat' in v]
     mp = json.load(open(os.path.join(d, 'journey.json'), encoding='utf-8')).get('map', {}) if j != 'jesus' else {}
-    regs = [(r[1], r[2]) for r in mp.get('regions', BASE_REGIONS and [[0, a, b] for a, b in BASE_REGIONS])] + [(r[1], r[2]) for r in mp.get('labels', [])]
-    return regs, pts
+    named = [(re.sub(r'\s', '', r[0]), r[1], r[2]) for r in mp.get('regions', BASE_REGIONS)] + [(re.sub(r'\s', '', str(r[0])), r[1], r[2]) for r in mp.get('labels', [])]
+    return [(a, b) for _, a, b in named], pts, named
+ALIAS = {'이탈리아': '이달리야'}  # 지도 지역 이름과 속주 이름의 표기가 다른 것
 for fn in ['jesus', 'david', 'kings', 'paul', 'moses']:
     fp = os.path.join(src, fn + '.json'); R = json.load(open(fp, encoding='utf-8'))
-    regs, pts = marks(fn)
+    regs, pts, named = marks(fn)
     for er in R['eras']:
         chosen = []
         for a in er['areas']:
             if fn == 'moses' and 'at' in a: chosen.append(tuple(a['at'])); continue  # 지파는 이미 골라 둠
-            polys = [Polygon([(y, x) for x, y in r]) for r in a['d']]
+            polys = [Polygon([(y, x) for x, y in r]).buffer(0) for r in a['d']]
             big = max(polys, key=lambda p: p.area)
+            big = big.difference(unary_union([q for q in polys if q is not big and big.contains(q.representative_point())] or [Polygon()]))  # 구멍(evenodd)을 뺀다
+            if big.geom_type != 'Polygon': big = max(big.geoms, key=lambda p: p.area)
+            nm_ko = re.sub(r'\s', '', a['short']['ko'])
+            if any(ALIAS.get(n, n) == nm_ko and any(q.contains(Point(ln, la)) for q in polys) for n, la, ln in named):
+                a.pop('at', None); continue
             x0, y0, x1, y1 = big.bounds; st = max(x1 - x0, y1 - y0) / 24
             best, bs = big.representative_point(), -1
             yy = y0

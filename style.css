@@ -875,6 +875,7 @@ body.intro-open .intro,body.intro-open .intro *{animation-play-state:running}
 .realm-era{opacity:0;transition:opacity 2.2s ease}
 .realm-era.on{opacity:1}
 .realm{fill:var(--rc);fill-opacity:.26;stroke:var(--rc);stroke-opacity:.85;stroke-width:1.6;stroke-dasharray:5 4;vector-effect:non-scaling-stroke;stroke-linejoin:round;pointer-events:none}
+#realms[mask] .realm{fill-opacity:.36}  /* 지중해 지도는 흙빛 바탕이 진해 옅은 색이 묻혔다(아가야 — 사용자) */
 .terrain-on #realms{display:none}
 .realmkey{position:absolute;right:14px;bottom:14px;z-index:2;display:flex;flex-direction:column;gap:3px;max-width:min(300px,46vw);padding:7px 10px;border-radius:10px;background:rgba(21,17,13,.72);backdrop-filter:blur(4px);color:#f3e3bf;font-size:11.5px;line-height:1.35;pointer-events:none;transition:bottom .3s}
 .realmkey span{display:flex;gap:7px;align-items:flex-start}

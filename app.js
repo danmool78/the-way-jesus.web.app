@@ -661,7 +661,7 @@ function drawRealms() {
   if (btn) btn.hidden = !R;
   if (!g || !R) return;
   // 영역마다 그 안쪽 한 점(at)에 짧은 이름을 그 영역 색으로 바로 적는다 — 색만으로는 무엇인지 몰랐다(사용자)
-  g.innerHTML = R.eras.map((er, k) => `<g class="realm-era" data-k="${k}">${er.areas.map(a => `<path class="realm" style="--rc:${a.color}" d="${a.d.map(r => 'M' + r.map(p => px(p).map(v => v.toFixed(1)).join(',')).join('L') + 'Z').join(' ')}"/>`).join('')}${er.areas.filter(a => a.at).map(a => `<g class="lbl realm-name" style="--rc:${a.color}" transform="translate(${px(a.at).join(',')})"><text>${esc(realmName(a, 'short'))}</text></g>`).join('')}</g>`).join('');
+  g.innerHTML = R.eras.map((er, k) => `<g class="realm-era" data-k="${k}">${er.areas.map(a => `<path class="realm" fill-rule="evenodd" style="--rc:${a.color}" d="${a.d.map(r => 'M' + r.map(p => px(p).map(v => v.toFixed(1)).join(',')).join('L') + 'Z').join(' ')}"/>`).join('')}${er.areas.filter(a => a.at).map(a => `<g class="lbl realm-name" style="--rc:${a.color}" transform="translate(${px(a.at).join(',')})"><text>${esc(realmName(a, 'short'))}</text></g>`).join('')}</g>`).join('');
   btn.onclick = () => { realmOn = !realmOn; try { localStorage.setItem('theway-realms', realmOn ? 'on' : 'off'); } catch { /* 이번만 */ } updateRealms(); };
 }
 // 지금 장면의 시대: from 장면에 이르렀거나 지난 마지막 묶음 (프롤로그·에덴은 없음)
