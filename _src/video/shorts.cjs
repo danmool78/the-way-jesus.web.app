@@ -64,9 +64,10 @@ async function main() {
   await peek(); await p.click('#fitAll'); await settle(1800);
   await shoot(3.6, { t: '성경 속 그 길을\n지도 위에서 걷는다', s: '그 길 — 예수의 발자취' }, k => k % Math.round(FPS * 0.5) === 0 && p.evaluate(() => window.zoomMap(0.965)));
 
-  // 2) 걷기: 나사렛에서 베들레헴으로 — 장면을 따라 실제 길을 걷는다
-  await open('app.html#e01'); await peek(); await settle(600);
-  await shoot(5.6, { t: '사복음서 61장면을\n시간과 장소 순서대로', s: '다음 장소로 — 실제 길을 따라 걷는다' }, k => k === Math.round(FPS * 0.5) && p.click('#next'));
+  // 2) 걷기: 요단 강 건너편 베다니에서 갈릴리 가나로(낮) — 장면을 따라 실제 길을 걷는다
+  await open('app.html#e10'); await peek(); await settle(600);
+  // 도착하면 카드가 열리며 지도가 다시 잡히므로, 걷는 동안만 담고 도착할 때 끝낸다
+  await shoot(3.3, { t: '사복음서 61장면을\n시간과 장소 순서대로', s: '다음 장소로 — 실제 길을 따라 걷는다' }, k => k === Math.round(FPS * 1.1) && p.click('#next'));
 
   // 3) 3D 미니어처 무대: 가버나움 회당 앞의 무리 — 3D 지형 위에 선 무대를 가까이서, 천천히 돌며
   const tool = k => p.evaluate(k => document.querySelector(`.m3tools button[data-k="${k}"]`)?.click(), k);
