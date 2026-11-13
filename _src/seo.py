@@ -34,7 +34,17 @@ def head_block(base, l, title, desc, image, ld, typ='article'):
             f'<meta property="og:description" content="{e(desc)}"><meta property="og:image" content="{SITE}/{image}"><meta name="twitter:card" content="summary_large_image">\n'
             f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>')
 
+# 묻고 답하기의 '글로만 읽을 수 있나요?': 여정마다 장면 글 모음(s/, pages.py) 링크 — 그 언어 판이 있는 여정만
+def reads(l):
+    U2 = land['ui'].get(l, land['ui']['ko']); out = []
+    for c in land['cards']:
+        base = 's/index' if c['id'] == 'jesus' else 's/%s' % c['id']
+        u = '%s.html' % base if l == 'ko' else '%s.%s.html' % (base, l)
+        if os.path.exists(os.path.join(root, u)): out.append('<li><a href="%s">%s</a></li>' % (u, html.escape(U2.get(c['title'], c['title']))))
+    return '<ul>%s</ul>' % ''.join(out)
+
 for l in LANGS:
+    put(os.path.join(root, fname('qna', l)), reads(l), tag='seo-reads')
     # 묻고 답하기: <details><summary>물음</summary><div class="a">답</div></details>
     p = os.path.join(root, fname('qna', l)); s = open(p, encoding='utf-8').read()
     title, desc = text(re.search(r'<title>(.*?)</title>', s, re.S).group(1)), meta(s, 'description')
