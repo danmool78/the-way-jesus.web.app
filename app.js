@@ -763,7 +763,14 @@ function setOdo(d) {
   el.textContent = t('odo', { d: Math.round(d).toLocaleString(LANG), s: stepsText(d) });
   el.title = t('odoTitle');
 }
-let walking = false, walkAnim = null;
+let walking = false, walkAnim = null, walkT = 0;
+// 걷기 한 걸음 예약: 화면이 꺼지거나 다른 앱으로 가면 화면 그리기(rAF)가 멎어 걷기가 끝나지 않았고, 자동 여정이 거기서 멈췄다(사용자: 화면이 꺼져도 계속).
+// 그럴 때는 걷기를 곧바로 끝까지 마친다 (도착하면 낭독이 이어진다)
+function walkNext(step) {
+  clearTimeout(walkT);
+  walkAnim = requestAnimationFrame(t => { clearTimeout(walkT); step(t); });
+  walkT = setTimeout(() => { if (document.hidden) { cancelAnimationFrame(walkAnim); step(Infinity); } }, 300);
+}
 const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 function banner(html, ms) {
   const b = $('#walkBanner'); b.innerHTML = html; b.classList.add('show');
@@ -805,12 +812,12 @@ function walkTo(i, done) {
     if (followWalk) followCam(pt, far ? span + (stageW - span) * Math.max(0, (e - .7) / .3) ** 2 : span, from0, Math.min(1, (now - t0) / 1400));
     path.style.strokeDashoffset = 1 - e;
     setOdo(odoAt(idx) + (odoAt(i) - odoAt(idx)) * e);
-    if (k < 1) { walkAnim = requestAnimationFrame(step); return; }
+    if (k < 1) { walkNext(step); return; }
     $('#walker', map).classList.remove('moving');
     walking = false; document.body.classList.remove('is-walking');
     done();
   };
-  walkAnim = requestAnimationFrame(step);
+  walkNext(step);
 }
 let followWalk = false;
 // 걷는 사람을 보이는 지도(펼친 카드·하단 시트에 가리지 않는 곳)의 가운데에 둔다. j: 처음 화면에서 따라가는 화면으로 넘어가는 정도(0→1)
@@ -829,7 +836,7 @@ function followCam(pt, span, from0, j) {
 }
 function cancelWalk() {
   if (!walking) return;
-  cancelAnimationFrame(walkAnim); walking = false;
+  cancelAnimationFrame(walkAnim); clearTimeout(walkT); walking = false;
   document.body.classList.remove('is-walking'); $('#walker', map).classList.remove('moving');
 }
 // mode: open(펼침) · peek(제목줄만) · full(모바일에서 글을 읽을 때 지도 위로 끝까지 올린 시트 — open도 함께 단다)
@@ -1074,7 +1081,7 @@ const here = e => (e === evAt(idx) && hereAt) || e.place;
 window.stagePlaceOf = here; // stage.js·terrain.js가 무대를 붙일 장소
 const setHere = (e, k) => { hereAt = k === e.place ? null : k; dispatchEvent(new CustomEvent('stage:here', { detail: { to: here(e) } })); }; // 3D 지형 카메라도 따라간다
 function goStop(e, to, walk) {
-  cancelAnimationFrame(walkAnim); window.stageHide = false;
+  cancelAnimationFrame(walkAnim); clearTimeout(walkT); window.stageHide = false;
   if (walk) return moveWithin(e, here(e), to);
   setHere(e, to); updateMap(idx);
 }
@@ -1091,12 +1098,12 @@ function moveWithin(e, a, b) {
     const pt = { x: ax + (bx - ax) * q, y: ay + (by - ay) * q };
     setWalker([pt.x, pt.y]);
     if (fitMode !== 'all' && !window.terrainOn && dur) followCam(pt, span, from0, Math.min(1, k * 2));
-    if (k < 1) { walkAnim = requestAnimationFrame(step); return; }
+    if (k < 1) { walkNext(step); return; }
     $('#walker', map).classList.remove('moving');
     setHere(e, b); window.stageHide = false;
     updateMap(idx); setCard(cardUser);
   };
-  walkAnim = requestAnimationFrame(step);
+  walkNext(step);
 }
 function go(i, { keepSpeech = false, onArrive } = {}) {
   if (i < firstIdx() || i >= EVENTS.length || i === idx && $('#scene').innerHTML) return;
@@ -1118,6 +1125,7 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
     bgmWarm(i); songWarm(i); try { voiceWarm(); } catch { /* 미리 받기는 덤 */ }
     setOdo(odoAt(Math.max(0, i)));
     history.replaceState(null, '', '#' + evAt(i).id);
+    lockScreen(); // 잠금 화면의 장면 이름도 바꾼다
     $('#prev').disabled = $('#back').disabled = idx === firstIdx(); $('#next').disabled = $('#skip').disabled = idx === EVENTS.length - 1;
     const p = PLACES[startOf(evAt(i))]; // 도착 안내는 걸어 닿은 곳 (장면 안에서 옮겨 가는 장면은 시작하는 곳)
     if (stepped) {
@@ -1670,6 +1678,26 @@ function setListenUI() {
   l.setAttribute('aria-label', speaking ? t('stop') : t('listenScene'));
   $('#auto').checked = autoOn;
   bgmFollow();
+  lockScreen();
+}
+// 잠금 화면·이어폰 조작(Media Session): 화면을 끄고 들을 때 장면 이름이 보이고, 재생·일시정지·다음·이전 장면을 거기서 누른다(사용자: 화면이 꺼져도 계속)
+let lockBound = false;
+function lockScreen() {
+  const ms = navigator.mediaSession; if (!ms) return;
+  try {
+    if (!lockBound) {
+      lockBound = true;
+      const h = (k, f) => { try { ms.setActionHandler(k, f); } catch { /* 그 조작이 없는 브라우저 */ } };
+      h('play', () => { if (!speaking) $('#listen').click(); });
+      h('pause', () => { if (speaking) $('#listen').click(); });
+      h('nexttrack', () => { if (!$('#next').disabled) $('#next').click(); });
+      h('previoustrack', () => { if (!$('#prev').disabled) $('#prev').click(); });
+    }
+    ms.playbackState = speaking ? 'playing' : paused ? 'paused' : 'none';
+    const e = evAt(idx), J = DATA.journey?.series?.find(j => j.id === JOURNEY);
+    if (e && window.MediaMetadata) ms.metadata = new MediaMetadata({ title: e.title, artist: `${t('appName')} · ${J ? t(J.title) : ''}`,
+      artwork: [{ src: JOURNEY === 'jesus' ? 'assets/icon-512.png' : `j/${JOURNEY}/icon-512.png`, sizes: '512x512', type: 'image/png' }] });
+  } catch { /* 없어도 듣기는 된다 */ }
 }
 
 /* ---------- 배경음악 (낭독 밑에) ---------- */
