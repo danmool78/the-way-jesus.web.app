@@ -435,8 +435,8 @@ const clock = new THREE.Clock();
 let lastF = 0;
 function loop(now) {
   requestAnimationFrame(loop);
-  // 2D 지도 위 무대: 걷거나 지도를 옮기는 중이 아니면 초당 30번만 — 사람들의 몸짓에는 넉넉하고, 늘 60번씩 그리던 몫이 절반으로
-  if (!window.terrainDrives && (document.body.classList.contains('is-walking') || now - (window.mapMoveT || 0) < 150 || now - lastF > 31)) { lastF = now; frame(); } // 3D 지형 모드에서는 terrain.js가 카메라를 옮긴 직후에 부른다 — 따로 돌면 무대가 한 박자 늦게 따라와 핀에서 벗어나 보였다
+  // 2D 지도 위 무대: 걷는 중이 아니면 초당 30번만 — 사람들의 몸짓에는 넉넉하고, 늘 60번씩 그리던 몫이 절반으로 (지도를 옮기는 동안은 무대를 숨긴다 — frame)
+  if (!window.terrainDrives && (document.body.classList.contains('is-walking') || now - lastF > 31)) { lastF = now; frame(); } // 3D 지형 모드에서는 terrain.js가 카메라를 옮긴 직후에 부른다 — 따로 돌면 무대가 한 박자 늦게 따라와 핀에서 벗어나 보였다
 }
 window.stageRender = frame; // 3D 지형 루프가 부른다 (stageFrame은 app.js가 쓰는 무대 위치 계산 — 이름이 겹쳐 덮어쓰던 것을 나눔)
 function frame() {
@@ -454,6 +454,10 @@ function frame() {
     canvas.style.opacity = 0;
     placeTerrain(T, dt);
   } else {
+    // 지도를 끌거나 당기는 동안(app.js applyView가 표시)은 무대를 숨기고 그리지 않는다 — 무대를 함께 다시 그리느라 지도 이동이 버벅였다(사용자). 멈추면 다시 서서히
+    const moving = performance.now() - (window.mapMoveT || 0) < 200;
+    canvas.classList.toggle('moving', moving);
+    if (moving) return;
     resize();
     const a = anchor();
     if (!a) { canvas.style.opacity = 0; return; }
@@ -496,11 +500,8 @@ function frame() {
     ac.update(time, dt);
   });
   if (inTerrain) scaleLights();
-  // 지도를 끌거나 당기는 동안에는 캔버스 자리(transform)만 매 프레임 옮기고, 다시 그리기는 초당 30번까지 —
-  // 매 프레임 다시 그리느라 바울 여정처럼 무대가 무거운 장면에서 지도 이동이 버벅였다(사용자)
-  if (!T) { const now = performance.now(); if (now - (window.mapMoveT || 0) > 150 || now - lastDraw > 31) { lastDraw = now; renderer.render(scene, camera); } }
+  if (!T) renderer.render(scene, camera);
 }
-let lastDraw = 0;
 
 /* ---------- app.js와 연결 ---------- */
 if (canvas) {
