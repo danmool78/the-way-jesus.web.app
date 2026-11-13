@@ -161,7 +161,7 @@ NP = {
  'dalmatia': (['달마디아 (일루리곤)', 'Dalmatia (Illyricum)', 'Dalmacia (Ilírico)', 'Dalmácia (Ilírico)', 'Dalmatie (Illyrie)', '挞马太（以利哩古）', 'Dalmatia (Ilirikum)', 'ダルマテヤ（イルリコ）'], ['달마디아', 'Dalmatia', 'Dalmacia', 'Dalmácia', 'Dalmatie', '挞马太', 'Dalmatia', 'ダルマテヤ']),
  'italia': (['이달리야', 'Italy', 'Italia', 'Itália', 'Italie', '意大利', 'Italia', 'イタリア'], None),
  'sicilia': (['시실리 (멜리데 포함)', 'Sicily (with Malta)', 'Sicilia (con Malta)', 'Sicília (com Malta)', 'Sicile (avec Malte)', '西西里（含马耳他）', 'Sisilia (termasuk Malta)', 'シチリア（マルタを含む）'], ['시실리', 'Sicily', 'Sicilia', 'Sicília', 'Sicile', '西西里', 'Sisilia', 'シチリア']),
- 'crete': (['그레데와 구레네', 'Crete and Cyrene', 'Creta y Cirene', 'Creta e Cirene', 'Crète et Cyrénaïque', '克里特和古利奈', 'Kreta dan Kirene', 'クレタとクレネ'], ['그레데', 'Crete', 'Creta', 'Creta', 'Crète', '克里特', 'Kreta', 'クレタ']),
+ 'crete': (['그레데와 구레네', 'Crete and Cyrene', 'Creta y Cirene', 'Creta e Cirene', 'Crète et Cyrénaïque', '克里特和古利奈', 'Kreta dan Kirene', 'クレタとクレネ'], ['그레데·구레네', 'Crete-Cyrene', 'Creta-Cirene', 'Creta-Cirene', 'Crète-Cyrénaïque', '克里特·古利奈', 'Kreta-Kirene', 'クレタ・クレネ']),
  'egypt': (['애굽', 'Egypt', 'Egipto', 'Egito', 'Égypte', '埃及', 'Mesir', 'エジプト'], None),
 }
 G = {
@@ -178,8 +178,9 @@ G = {
  'cilicia': P([(37.1, 33.9), (37.35, 34.4), (37.6, 35.9), (37.2, 36.6), (36.5, 36.3), (36.0, 34.6), (36.0, 32.4), (37.0, 32.4)]),
  'syria': P([(37.2, 36.6), (37.7, 37.4), (37.4, 38.6), (36.0, 39.0), (34.5, 39.0), (33.5, 37.6), (32.75, 36.7), (32.6, 36.3), (32.4, 35.9), (32.45, 35.57), (32.86, 35.645), (33.12, 35.63), (33.12, 35.22), (33.10, 34.6), (35.0, 35.4), (36.5, 35.6)]),
  'cyprus': P([(35.8, 32.1), (35.8, 34.8), (34.4, 34.8), (34.4, 32.1)]),
- 'crete': unary_union([P([(35.8, 23.3), (35.8, 26.5), (34.75, 26.5), (34.75, 23.3)]), P([(33.1, 19.8), (33.1, 25.0), (30.6, 25.0), (30.6, 19.8)])]),
- 'egypt': P([(31.8, 25.2), (31.8, 33.8), (31.1, 34.25), (29.4, 32.8), (29.4, 25.2)]),
+# 구레네: 해안을 따라 사막 쪽으로 150km쯤
+ 'crete': unary_union([P([(35.8, 23.3), (35.8, 26.5), (34.75, 26.5), (34.75, 23.3)]), P([(33.3, 19.9), (33.3, 22.8), (32.5, 24.2), (31.9, 25.15), (30.9, 25.0), (30.7, 23.6), (30.9, 21.6), (31.3, 20.0)])]),
+ 'egypt': P([(31.9, 25.15), (31.75, 29.0), (31.8, 32.4), (31.5, 33.8), (31.1, 34.25), (30.4, 33.2), (29.6, 32.5), (29.3, 31.0), (29.6, 29.3), (30.3, 27.4), (30.9, 25.0)]),  # 서쪽은 구레네와 같은 경계, 남쪽은 사막 쪽으로 둥글게
 }
 syria = unary_union([G['syria'], G['cilicia']]).difference(herod)
 def ap(k, g, color):
