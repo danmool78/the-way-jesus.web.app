@@ -52,7 +52,7 @@ const ro = w => { const c = w.charCodeAt(w.length - 1) - 0xac00; return c >= 0 &
 function walkLines() {
   const out = [];
   if (d.journey?.where === false) return out; // 장소를 읽지 않는 여정(GoodNews)
-  d.events.forEach((e, i) => { const p = d.events[i - 1]; if (p && p.place !== e.place) out.push({ text: ui.walkSpeak.replace('{a}', placeName(p.place)).replace('{b}', placeName(e.place)).replace('{ro}', ro(placeName(e.place))) }); });
+  d.events.forEach((e, i) => { const p = d.events[i - 1], to = e.start || e.place; if (p && p.place !== to) out.push({ text: ui.walkSpeak.replace('{a}', placeName(p.place)).replace('{b}', placeName(to)).replace('{ro}', ro(placeName(to))) }); }); // 다른 곳에서 시작하는 장면(start)은 그곳으로 (app.js walkTo와 같게)
   return out.flatMap(it => sentences(it.text).map(s => s.trim()).filter(Boolean).map(text => ({ text })));
 }
 const voiceOf = s => s.child ? VOICE.child : s.jesus ? VOICE.jesus : s.god ? VOICE.god : VOICE.narr;

@@ -70,6 +70,10 @@
    "name": "Jezreel",
    "region": "Israel"
   },
+  "beershebaT": {
+   "name": "Beersheba",
+   "region": "Judah"
+  },
   "beersheba": {
    "name": "Wilderness of Beersheba",
    "region": "Judah"

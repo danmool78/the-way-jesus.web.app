@@ -306,6 +306,7 @@ export const B = {
   },
 
   /* k17. 로뎀나무 아래 — 브엘세바 남쪽 광야의 모래, 오른쪽에 로뎀나무(broom). 이세벨이 보낸 사람의 말에 엘리야가 두려워 사환을 남겨 두고 홀로 들어간다.
+     무대는 셋으로 옮겨 간다(skeleton의 start·stops): 이스르엘에서 이세벨의 말을 듣고(로뎀나무 없음) → 브엘세바 성읍에 사환을 남겨 두고 → 하룻길 남쪽 광야의 로뎀나무(사용자: 사환은 브엘세바에).
      나무 그늘에 앉아 죽기를 구하고 잠든다. 천사는 모습 없이 빛(beam)으로 — 빛이 어루만지면 머리맡에 구운 빵과 물병(cake)이 놓여 있다. 두 번 먹고, 호렙을 향해 떠난다 */
   k17: {
     env: 'day',
@@ -323,17 +324,19 @@ export const B = {
       runner: ['official', -2.5, 0.1, 1.2, { speed: 0.7 }],
     },
     beats: {
-      enter: [['servant', 'idle', { show: 0 }], ['runner', 'idle', { show: 0 }], ['elijah', 'sit-ground', { x: 0.82, z: -0.02, look: -0.4 }], ['cake', null, { show: 1 }], ['light', null, { show: 1 }]],
-      // 브엘세바 — 이세벨의 사자가 오기 전
-      intro: [['@env', 'day'], ['cake', null, { show: 0 }], ['light', null, { show: 0 }], ['runner', 'idle', { show: 0 }], ['elijah', 'idle', { look: 1.0 }], ['servant', 'idle', { look: -1.0 }]],
+      enter: [['broom', null, { show: 1 }], ['servant', 'idle', { show: 0 }], ['runner', 'idle', { show: 0 }], ['elijah', 'sit-ground', { x: 0.82, z: -0.02, look: -0.4 }], ['cake', null, { show: 1 }], ['light', null, { show: 1 }]],
+      // 이스르엘 — 이세벨의 사자가 오기 전 (로뎀나무는 광야에 가서야)
+      intro: [['@env', 'day'], ['broom', null, { show: 0 }], ['cake', null, { show: 0 }], ['light', null, { show: 0 }], ['runner', 'idle', { show: 0 }], ['elijah', 'idle', { look: 1.0 }], ['servant', 'idle', { look: -1.0 }]],
       // 이세벨이 사람을 보내 말한다
       'p0.1': [['runner', 'idle', { show: 1, x: -1.85, z: 0.15 }], ['runner', 'speak', { to: 'elijah', delay: 1800 }], ['elijah', 'idle', { look: -1.3, delay: 1200 }], ['servant', 'idle', { look: -1.3, delay: 1200 }]],
       'p0.2': [['runner', 'rebuke', { x: -1.85, z: 0.15, look: 1.2 }], ['elijah', 'listen', { look: -1.3 }]],
       // 왕비의 한마디에 일어나 도망친다
       'p0.3': [['runner', 'idle', { x: -2.6, z: 0.05 }], ['runner', 'idle', { show: 0, delay: 1800 }], ['elijah', 'afraid', { look: -1.3 }], ['elijah', 'idle', { x: -0.9, z: 0.45, delay: 2000 }]],
       // 사환을 남겨 두고 홀로 광야로
-      'p1.0': [['runner', 'idle', { show: 0 }], ['servant', 'idle', { x: -1.5, z: 0.45, look: 1.2 }], ['elijah', 'idle', { x: 0.2, z: 0.3 }], ['servant', 'idle', { show: 0, delay: 4000 }]],
-      'p1.1': [['servant', 'idle', { show: 0 }], ['elijah', 'idle', { x: 0.82, z: -0.02, look: -0.4 }]],
+      // 브엘세바 성읍 — 사환은 여기 남고 엘리야만 떠난다
+      'p1.0': [['runner', 'idle', { show: 0 }], ['broom', null, { show: 0 }], ['servant', 'idle', { show: 1, x: -1.5, z: 0.45, look: 1.2 }], ['elijah', 'idle', { x: -1.2, z: 0.3, look: 1.0 }], ['elijah', 'idle', { x: 1.6, z: 0.3, delay: 1500 }]],
+      // 하룻길 남쪽 광야 — 로뎀나무 한 그루
+      'p1.1': [['servant', 'idle', { show: 0 }], ['broom', null, { show: 1 }], ['elijah', 'idle', { x: 0.82, z: -0.02, look: -0.4 }]],
       // 그늘에 주저앉아 죽기를 구한다
       'p1.2': [['elijah', 'sit-ground', { x: 0.82, z: -0.02, look: -0.4 }]],
       'p1.3': [['elijah', 'look-up', { look: -0.2 }], ['elijah', 'sit-ground', { delay: 3000 }]],

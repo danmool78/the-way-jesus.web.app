@@ -70,6 +70,10 @@
    "name": "Jizréel",
    "region": "Israël"
   },
+  "beershebaT": {
+   "name": "Beer-Shéba",
+   "region": "Juda"
+  },
   "beersheba": {
    "name": "Désert de Beer-Shéba",
    "region": "Juda"
