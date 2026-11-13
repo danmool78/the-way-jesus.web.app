@@ -2131,7 +2131,7 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
       : j.ready ? `<a class="jgo" href="${journeyUrl(j.id)}">${esc(t('seriesGo'))} →</a>` : `<button type="button" class="jgo next-open">${esc(t('seriesSoon'))}</button>`;
     return `<li data-journey="${j.id}" class="jcard ${cls}">
       <img class="jicon" src="${j.id === 'jesus' ? 'assets/icon.svg' : `j/${j.id}/icon.svg`}" alt="" width="56" height="56">
-      <div class="jtext"><b>${esc(t(j.title))}</b><small>${esc(t(j.desc))}</small>${here ? `<em>${esc(t('seriesNow'))}</em>` : j.n ? `<em>${esc(t(j.id === 'psalms' ? 'seriesPsalms' : 'seriesScenes', { n: j.n }))}</em>` : ''}</div>
+      <div class="jtext"><b>${esc(t(j.title))}</b><small>${esc(t(j.desc))}</small>${here ? `<em>${esc(t('seriesNow'))}</em>` : j.n ? `<em>${esc(t(j.id === 'psalms' ? 'seriesPsalms' : 'seriesScenes', { n: j.n }))}</em>` : ''}${j.progress ? `<span class="jprog"><b><i style="width:${j.progress}%"></i></b><span>${esc(t('inProgress', { p: j.progress }))}</span></span>` : ''}</div>
       <div class="jbtns">${go}${j.ready ? `<button type="button" class="jshare" data-share="${j.id}" aria-label="${esc(t('shareApp'))} — ${esc(t(j.title))}">${share}<span>${esc(t('shareShort'))}</span></button>` : ''}</div></li>`;
   }).join('') + `<li data-journey="why" class="jcard ready"><img class="jicon" src="${DATA.journey?.whyIcon || 'assets/why-icon.webp'}" alt="" width="56" height="56">
       <div class="jtext"><b>${esc(t('whyH'))}</b><small>${esc(t('why'))}</small></div>

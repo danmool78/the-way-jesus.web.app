@@ -188,6 +188,12 @@ for j in series:  # 원본이 있어 data가 만들어지는 여정 표시 (관�
         else:
             sk = loadf(os.path.join(src_of(j['id']), 'skeleton.json'))
             j['n'] = len(sk) - (1 if sk and sk[0]['id'].endswith('00') else 0)
+# 시편은 노래를 한 편씩 올리는 중이라 'n% 진행 중'을 단다: 노래가 올라온 편(assets/psalms/<id>.json에 src) / 가사가 있는 편. 다 차면 표시가 사라진다.
+# 첫 화면(land.json)과 앱의 '그 길 시리즈' 목록(journey.series) 둘 다 이것을 쓴다 — 전엔 첫 화면에만 붙어 앱 목록엔 안 보였다(사용자)
+for j in series:
+    if j['id'] == 'psalms' and j.get('n'):
+        done = sum(1 for f in glob.glob(os.path.join(root, 'assets', 'psalms', '*.json')) if loadf(f).get('src'))
+        if done < j['n']: j['progress'] = max(1, min(99, round(done * 100 / j['n'])))
 for j in series:
     if j['built']:  # 아직 원본이 없는 여정(준비 중)은 건너뛴다
         build(j['id'], src_of(j['id']), root if j['id'] == 'jesus' else os.path.join(root, 'j', j['id']))
@@ -195,14 +201,9 @@ for j in series:
 # 첫 주소의 랜딩(index.html)이 읽는 land.json: 여정 카드(시리즈 + 마지막에 4영리)와 랜딩 글씨만 언어마다 — 앱의 data.json은 크다
 LAND_KEYS = ['appName', 'hubTag', 'hubLead', 'seriesHead', 'seriesGo', 'seriesScenes', 'shareShort', 'shareApp', 'linkCopied', 'soon',
              'mvGo', 'mvLead', 'mvNote', 'qnaHelp', 'language', 'close', 'goodnewsGo', 'whyGo', 'inProgress', 'seriesPsalms']
-land = {'langs': LANGS, 'cards': [{'id': j['id'], 'title': j['title'], 'desc': j['desc'], 'ready': j['ready'], **({'n': j['n']} if j.get('n') else {})} for j in series if j['id'] != 'goodnews']
+land = {'langs': LANGS, 'cards': [{'id': j['id'], 'title': j['title'], 'desc': j['desc'], 'ready': j['ready'], **({'n': j['n']} if j.get('n') else {}), **({'progress': j['progress']} if j.get('progress') else {})} for j in series if j['id'] != 'goodnews']
         + [{'id': 'goodnews', 'title': 'goodnewsH', 'desc': 'goodnews', 'ready': True, 'href': '/goodnews/', 'go': 'goodnewsGo'},  # 4영리는 따로 만든 페이지(/goodnews/)로
            {'id': 'why', 'title': 'whyH', 'desc': 'why', 'ready': True, 'href': '/why.html', 'langHref': True, 'go': 'whyGo', 'icon': 'assets/why-icon.webp?v=' + hashlib.md5(open(os.path.join(root, 'assets', 'why-icon.webp'), 'rb').read()).hexdigest()[:8]}], 'ui': {}}  # '왜 기독교인가'는 언어마다 why.<언어>.html
-# 시편은 노래를 한 편씩 올리는 중이라 카드에 'n% 진행 중'을 단다: 노래가 올라온 편(assets/psalms/<id>.json에 src) / 가사가 있는 편. 다 차면 표시가 사라진다
-for c in land['cards']:
-    if c['id'] == 'psalms' and c.get('n'):
-        done = sum(1 for f in glob.glob(os.path.join(root, 'assets', 'psalms', '*.json')) if loadf(f).get('src'))
-        if done < c['n']: c['progress'] = max(1, min(99, round(done * 100 / c['n'])))
 for lang in LANGS:
     u = {**ui_ko, **(loadf(os.path.join(here, 'i18n', 'ui.%s.json' % lang)) if lang != 'ko' else {})}
     keys = LAND_KEYS + sorted({c['title'] for c in land['cards']} | {c['desc'] for c in land['cards']})
