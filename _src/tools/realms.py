@@ -51,10 +51,10 @@ DECAPOLIS = unary_union([
  P([(32.86, 35.645), (32.86, 35.80), (32.78, 35.98), (32.62, 36.30), (32.40, 36.10), (32.10, 36.05), (31.88, 36.00), (31.90, 35.86), (32.00, 35.80), (32.25, 35.76), (32.43, 35.70), (32.43, 35.555), (32.625, 35.565), (32.70, 35.585), (32.80, 35.60)]),
 ])
 
-def ring(g, tol=0.004):
+def ring(g, tol=0.004, nd=3):  # nd: 좌표 자릿수 (지중해 지도는 둘로 — 1km쯤이면 충분하고 자료가 작아진다)
     g = g.simplify(tol, preserve_topology=True)
     polys = [g] if g.geom_type == 'Polygon' else [p for p in g.geoms if p.area > 0.0005]
-    return [[[round(y, 3), round(x, 3)] for x, y in p.exterior.coords] for p in polys]
+    return [[[round(y, nd), round(x, nd)] for x, y in p.exterior.coords] for p in polys]
 
 antipas = unary_union([Z['galilee'], Z['perea']]).intersection(herod)
 philip = Z['philip'].intersection(herod)
@@ -183,11 +183,24 @@ G = {
  'egypt': P([(31.9, 25.15), (31.75, 29.0), (31.8, 32.4), (31.5, 33.8), (31.1, 34.25), (30.4, 33.2), (29.6, 32.5), (29.3, 31.0), (29.6, 29.3), (30.3, 27.4), (30.9, 25.0)]),  # 서쪽은 구레네와 같은 경계, 남쪽은 사막 쪽으로 둥글게
 }
 syria = unary_union([G['syria'], G['cilicia']]).difference(herod)
+# 바울 지도의 육지 모양: 육지 가림판(assets/relief-med-mask.png — 위도 24.5–48.5·경도 8–41)을 벡터로 바꿔 속주를 해안선에 맞춰 자른다.
+# 그래야 해안을 따라 점선 테두리가 보인다(전엔 바다 쪽 테두리가 가림판에 잘려 이탈리아 둘레에 점선이 없었다 — 사용자). pip install rasterio
+def med_land():
+    import numpy as np, rasterio.features
+    from PIL import Image as _I
+    from rasterio.transform import from_bounds
+    m = np.array(_I.open(os.path.join(here, '..', '..', 'assets', 'relief-med-mask.png'))) > 128
+    tr = from_bounds(8.0, 24.5, 41.0, 48.5, m.shape[1], m.shape[0])
+    polys = [shape(g) for g, v in rasterio.features.shapes(m.astype('uint8'), mask=m, transform=tr) if v == 1]
+    land = unary_union([p for p in polys if p.area > 0.02]).buffer(0.02).buffer(-0.02)  # 아주 작은 섬은 빼고, 해안선은 대충(사용자: 바다 위에서 대충 잘려도 된다)
+    return land.simplify(0.02, preserve_topology=True)
+LAND = med_land()
 def ap(k, g, color):
     full, short = NP[k]
-    return {'id': k, 'color': color, 'name': nm(full), 'short': nm(short or full), 'd': ring(g, 0.01)}
-PC = {'italia': '#b5603e', 'sicilia': '#c9a24a', 'dalmatia': '#7a6a52', 'macedonia': '#3f8fa0', 'achaia': '#5f8a4f', 'asia': '#c9a24a', 'bithynia': '#6b8fb5', 'galatia': '#b5603e',
-      'lycia': '#9a6a9a', 'cappadocia': '#5f8a4f', 'syria': '#8f7fb0', 'cyprus': '#c0453a', 'crete': '#6b8fb5', 'egypt': '#b58a3e', 'judaea': '#c0453a', 'judaea0': '#c0453a', 'antipas': '#5f8a4f'}
+    return {'id': k, 'color': color, 'name': nm(full), 'short': nm(short or full), 'd': ring(g.intersection(LAND), 0.015, 2)}
+# 흙빛·초록 지형과 대비되게, 이웃한 속주끼리는 따뜻한 색·차가운 색이 번갈아 (전엔 이탈리아·아가야·시실리가 지형 색에 묻혔다 — 사용자)
+PC = {'italia': '#c0392b', 'sicilia': '#2f7fa8', 'dalmatia': '#7d5ab5', 'macedonia': '#1f8f8f', 'achaia': '#c0392b', 'asia': '#2f6fb5', 'bithynia': '#9a4a9a', 'galatia': '#c0392b',
+      'lycia': '#1f8f8f', 'cappadocia': '#7d5ab5', 'syria': '#2f6fb5', 'cyprus': '#c0392b', 'crete': '#7d5ab5', 'egypt': '#b5603e', 'judaea': '#c0392b', 'judaea0': '#c0392b', 'antipas': '#1f8f8f'}
 REST = lambda: [ap(k, G[k] if k != 'syria' else syria, PC[k]) for k in ['italia', 'sicilia', 'dalmatia', 'macedonia', 'achaia', 'asia', 'bithynia', 'galatia', 'lycia', 'cappadocia', 'syria', 'cyprus', 'crete', 'egypt']]
 paul = {'credit': nm(['로마 속주 경계는 어림 (AWMC·바링턴 지도책 참고)', 'Approximate provincial borders (after AWMC / Barrington Atlas)', 'Fronteras provinciales aproximadas (según AWMC / Barrington Atlas)', 'Fronteiras provinciais aproximadas (segundo AWMC / Barrington Atlas)', 'Frontières provinciales approximatives (d’après AWMC / Barrington Atlas)', '行省边界为大致范围（参照 AWMC、Barrington 地图集）', 'Batas provinsi perkiraan (menurut AWMC / Barrington Atlas)', '属州の境界はおおよそ（AWMC・バリントン地図帳による）']),
         'eras': [
