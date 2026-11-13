@@ -91,7 +91,20 @@ async function main() {
   await beatAt(0); await settle(600);
   await shoot(5.4, { t: '장면마다 살아 움직이는\n3D 미니어처 무대', s: '말씀 속 그 순간이 그 자리에' }, async k => { if (k % Math.round(FPS * 0.9) === 0) await beatAt(1 + k / Math.round(FPS * 0.9)); });
 
-  // 4) 3D 지형: 같은 자리에서 지평선 쪽으로 눕히며 물러나 — 갈릴리 바다 둘레의 산과 골짜기
+  // 3-2) 물 위로 오시는 분(e32): 폭풍의 밤 — 물 위에 서신 예수, 배에서 내려 걷다 빠지는 베드로, 바람이 그친다.
+  // 2D 지도 위의 무대로 (3D 지형에서는 호수 수면에 잠겨 예수가 보이지 않는다 — 따로 고칠 것). 예수가 오신 대목(p1.3)부터 시작해 뒤 대목을 넘긴다
+  await open('app.html?beat=p1.3#e32', 5000);
+  await peek(); await p.evaluate(() => { const r = document.getElementById('realmBtn'); if (r?.getAttribute('aria-pressed') === 'true') r.click(); window.zoomMap(0.45); }); await settle(1500);
+  await p.evaluate(() => { view.y -= view.h * 0.22; applyView(); }); await settle(1200); // 무대를 화면 가운데로 (카드 자리를 비우려 위에 올려 둔 것을 내린다)
+  await shoot(5.4, { t: '바다 위를 걸어오시는 예수', s: '폭풍의 밤에서 고요한 새벽까지', at: 'bottom' },
+    k => k % Math.round(FPS * 1.2) === Math.round(FPS * 0.4) && p.evaluate(s => dispatchEvent(new CustomEvent('stage:beat', { detail: { beat: 'p2', s } })), Math.round((k - FPS * 0.4) / (FPS * 1.2))));
+
+  // 4) 3D 지형: 가버나움에서 지평선 쪽으로 눕히며 물러나 — 갈릴리 바다 둘레의 산과 골짜기 (무대만 보이게 다시 연다)
+  await open('app.html#e33', 5000);
+  await p.evaluate(() => { const r = document.getElementById('realmBtn'); if (r?.getAttribute('aria-pressed') === 'true') r.click(); });
+  await p.click('#mode3d'); await settle(800);
+  await p.evaluate(css => { const s = document.createElement('style'); s.textContent = css; document.head.appendChild(s); document.body.classList.add('clean'); dispatchEvent(new Event('resize')); }, CLEAN_CSS);
+  await settle(12000); await p.mouse.move(200, 360);
   await shoot(5.4, { t: '실제 고도로 빚은\n3D 지형', s: '갈릴리 바다와 산과 골짜기 그대로' }, async k => { if ([0, 0.4, 0.8, 1.2].some(t => k === Math.round(FPS * t))) await tool('tiltDown'); if (k % 2 === 0) await p.mouse.wheel(0, 30); });
 
   // 5) 명화와 이야기, 성우 낭독
