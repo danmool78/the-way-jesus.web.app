@@ -10,4 +10,4 @@ bucket_name = "theway"
 
 [vars]
 # 들어올 수 있는 구글 계정 이메일의 SHA-256(소문자) — 쉼표로 여럿. 이메일을 그대로 적지 않으려고 해시로
-ALLOWED = ""
+ALLOWED = "88b40ab6359f98ac9945ec970a4729dc797e27ddb3878f16e6ea91f1611e394a"
