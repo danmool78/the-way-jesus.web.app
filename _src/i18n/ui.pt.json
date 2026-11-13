@@ -316,5 +316,8 @@
  "inProgress": "{p}% concluído",
  "seriesPsalms": "{n} salmos",
  "songSeek": "Posição da música",
- "lost3d": "O 3D foi desligado porque o aparelho ficou sem memória. Recarregue para ligá-lo de novo"
+ "lost3d": "O 3D foi desligado porque o aparelho ficou sem memória. Recarregue para ligá-lo de novo",
+ "lessonHead": "O que este caminho ensina",
+ "lessons": "O reino de Deus está próximo|Jesus curou doentes e comeu com pecadores, mostrando como é quando Deus reina. Esse reino se abre a quem se volta para ele e crê. (Mc 1:15)\nAmem uns aos outros|Aquele que lavou os pés dos discípulos disse: assim como eu os amei, amem também uns aos outros. (Jo 13:34)\nSiga-me|O chamado que ele fez a pescadores é o mesmo para nós hoje: negar a si mesmo, tomar a cruz cada dia e segui-lo. (Lc 9:23)",
+ "gospelBridge": ""
 }

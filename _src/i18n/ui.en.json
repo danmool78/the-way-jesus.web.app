@@ -316,5 +316,8 @@
  "inProgress": "{p}% complete",
  "seriesPsalms": "{n} psalms",
  "songSeek": "Song position",
- "lost3d": "3D was turned off because the device ran low on memory. Reload to turn it on again"
+ "lost3d": "3D was turned off because the device ran low on memory. Reload to turn it on again",
+ "lessonHead": "What this road teaches",
+ "lessons": "The kingdom of God has come near|Jesus healed the sick and ate with sinners, showing what it looks like when God reigns. That kingdom opens to those who turn and believe. (Mark 1:15)\nLove one another|The one who washed his disciples' feet said: as I have loved you, so you must love one another. (John 13:34)\nFollow me|The call he spoke to fishermen is the same for us today: lay yourself down, take up your cross daily, and follow. (Luke 9:23)",
+ "gospelBridge": ""
 }

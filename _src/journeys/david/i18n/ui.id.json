@@ -15,10 +15,22 @@
  "wordsIntro": "Firman yang diucapkan Allah dan perkataan yang diucapkan Daud di sepanjang jalannya, dihimpun menurut urutan perjalanan. Setiap perkataan adalah terjemahan baru yang menghidupkan makna aslinya dalam bahasa masa kini.",
  "odoTitle": "Jarak yang ditempuh Daud sampai adegan ini (perkiraan jalan antartempat; langkah 75 cm)",
  "gospels": {
-  "1sam": ["1 Samuel", "1Sam"],
-  "2sam": ["2 Samuel", "2Sam"],
-  "1ki": ["1 Raja-raja", "1Raj"],
-  "1chr": ["1 Tawarikh", "1Taw"]
+  "1sam": [
+   "1 Samuel",
+   "1Sam"
+  ],
+  "2sam": [
+   "2 Samuel",
+   "2Sam"
+  ],
+  "1ki": [
+   "1 Raja-raja",
+   "1Raj"
+  ],
+  "1chr": [
+   "1 Tawarikh",
+   "1Taw"
+  ]
  },
  "endLead": "Dari padang Betlehem sampai nyanyian terakhir Daud — terima kasih telah berjalan bersama kami.",
  "blessing": "TUHAN gembalaku, tak ada yang kurang padaku.\nIa membiarkan aku berbaring di rumput yang hijau dan membawa aku ke tepi air tempat aku dapat beristirahat. (Mzm 23:1–2)\nKiranya Dia yang memanggil anak gembala di padang juga memanggil nama Anda, dan Dia yang menyertai Daud pada malam-malam pelariannya menjaga jalan Anda.",
@@ -38,5 +50,9 @@
   "아스돗": "Asdod",
   "가사": "Gaza",
   "벧산": "Bet-Sean"
- }
+ },
+ "lessons": "Allah melihat hati|Gembala bungsu yang terlupakan di antara saudara-saudaranya dipanggil menjadi raja. Manusia melihat rupa, tetapi Allah melihat hati. (1Sam 16:7)\nJalan pulang setelah jatuh|Daud berdosa besar, tetapi ia tidak bersembunyi; ia sujud di hadapan Allah. Allah tidak memandang hina hati yang hancur dan menyesal. (Mzm 51:19)\nJanji yang lebih besar dari kegagalan manusia|Keluarga Daud terguncang sampai akhir, tetapi Allah tidak pernah menarik janji-Nya untuk mengokohkan takhtanya selama-lamanya. (2Sam 7:16)",
+ "gospelBridge": "Seribu tahun kemudian, anak yang dijanjikan itu lahir di Betlehem, kota Daud. Seperti Daud si gembala, Ia adalah gembala yang mengenal domba-domba-Nya. Akulah gembala yang baik. Gembala yang baik memberikan nyawanya bagi domba-dombanya. (Yoh 10:11)",
+ "invite": "Jika kisah Allah yang Anda temui di jalan ini tinggal di hati Anda, datanglah mengenal Yesus, yang berdiri di pusat kisah itu. Jalani 'Jejak Langkah Yesus' dari awal, dan kunjungilah gereja di dekat Anda. Kiranya Anda berjumpa dengan Allah dalam ibadah dan firman-Nya, diangkat menjadi anak-Nya, dan mengalami sukacita memanggil Allah 'Bapa'. (Rm 8:15)\nIa masih berdiri di depan pintu, menanti Anda. (Why 3:20)",
+ "seekerHead": "Bagi Anda yang belum mengenal-Nya"
 }

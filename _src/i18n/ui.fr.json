@@ -316,5 +316,8 @@
  "inProgress": "{p} % réalisé",
  "seriesPsalms": "{n} psaumes",
  "songSeek": "Position dans le chant",
- "lost3d": "La 3D a été désactivée faute de mémoire sur l’appareil. Rechargez pour la réactiver"
+ "lost3d": "La 3D a été désactivée faute de mémoire sur l’appareil. Rechargez pour la réactiver",
+ "lessonHead": "Ce que ce chemin enseigne",
+ "lessons": "Le royaume de Dieu est proche|Jésus a guéri les malades et mangé avec les pécheurs, montrant ce qu’est le règne de Dieu. Ce royaume s’ouvre à ceux qui se tournent vers lui et croient. (Mc 1.15)\nAimez-vous les uns les autres|Celui qui a lavé les pieds de ses disciples a dit : comme je vous ai aimés, aimez-vous les uns les autres. (Jn 13.34)\nSuis-moi|L’appel lancé à des pêcheurs est le même pour nous aujourd’hui : renoncer à soi-même, porter sa croix chaque jour et le suivre. (Lc 9.23)",
+ "gospelBridge": ""
 }

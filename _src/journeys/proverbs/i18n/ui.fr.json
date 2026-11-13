@@ -10,7 +10,10 @@
  "wordsHead": "Paroles des Proverbes",
  "wordsIntro": "Les paroles contenues dans les scènes des Proverbes, rassemblées ici. Chacune est une traduction nouvelle du sens original, dans la langue d’aujourd’hui.",
  "gospels": {
-  "prov": ["Proverbes", "Pr"]
+  "prov": [
+   "Proverbes",
+   "Pr"
+  ]
  },
  "endEyebrow": "PROVERBES",
  "endTitle": "Nous avons marché une journée avec la sagesse",
@@ -26,5 +29,10 @@
  "dailyFather": "Le mot du père",
  "dailyAll": "Voir les 31 chapitres",
  "dailyGo": "Les Proverbes en 31 jours →",
- "dailyEnd": "Vous avez fini la marche d’une journée. Désormais, un chapitre chaque jour : marchez sur les pas de la sagesse."
+ "dailyEnd": "Vous avez fini la marche d’une journée. Désormais, un chapitre chaque jour : marchez sur les pas de la sagesse.",
+ "lessons": "Le commencement de la sagesse|La crainte de l’Éternel est le commencement de la connaissance. La sagesse ne commence pas par savoir beaucoup, mais par devant qui l’on vit. (Pr 1.7)\nGarde ton cœur|Plus que tout ce qu’on garde, garde ton cœur, car de lui jaillissent les sources de la vie. (Pr 4.23)\nLes petits choix de chaque jour|De la balance du marché à la maison d’un ami, la sagesse se trouve dans les petits choix de chaque jour. La balance fausse est en horreur à l’Éternel, mais le poids juste lui est agréable. (Pr 11.1)",
+ "gospelBridge": "Les Proverbes dépeignent la Sagesse qui appelle à la porte de la ville. Le Nouveau Testament dit que cette sagesse est devenue une personne et est venue jusqu’à nous. Le Christ est puissance de Dieu et sagesse de Dieu. (1 Co 1.24)",
+ "blessing": "Confie-toi en l’Éternel de tout ton cœur et ne t’appuie pas sur ta propre intelligence ; reconnais-le dans toutes tes voies, et il aplanira tes sentiers. (Pr 3.5–6)\nQue la Sagesse qui appelait à la porte de la ville garde votre journée, du matin jusqu’au soir.",
+ "invite": "Si l’histoire de Dieu rencontrée sur ce chemin vous est restée au cœur, venez rencontrer Jésus, qui est au centre de cette histoire. Parcourez « Les pas de Jésus » depuis le début et rendez-vous dans une église près de chez vous. Puissiez-vous rencontrer Dieu dans le culte et dans sa parole, être adopté comme son enfant et connaître la joie de l’appeler « Père ». (Rm 8.15)\nIl se tient encore à la porte et vous attend. (Ap 3.20)",
+ "seekerHead": "Pour ceux qui ne le connaissent pas encore"
 }

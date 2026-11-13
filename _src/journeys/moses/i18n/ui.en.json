@@ -15,10 +15,22 @@
  "wordsIntro": "The words God spoke along the way of Moses and Joshua, gathered in the order of the journey. Every saying is a fresh rendering of the original meaning in today's language.",
  "odoTitle": "Distance Israel has walked up to this scene (estimated road distance between places; steps at a 75 cm stride)",
  "gospels": {
-  "ex": ["Exodus", "Ex"],
-  "num": ["Numbers", "Num"],
-  "deut": ["Deuteronomy", "Deut"],
-  "josh": ["Joshua", "Josh"]
+  "ex": [
+   "Exodus",
+   "Ex"
+  ],
+  "num": [
+   "Numbers",
+   "Num"
+  ],
+  "deut": [
+   "Deuteronomy",
+   "Deut"
+  ],
+  "josh": [
+   "Joshua",
+   "Josh"
+  ]
  },
  "endLead": "From the brick kilns of Egypt to the covenant at Shechem — thank you for walking with us.",
  "blessing": "May the Lord bless you and keep you.\nMay the Lord make his face shine on you and be gracious to you.\nMay the Lord turn his face toward you and give you peace. (Num 6:24–26)\nMay the one who sent manna every day in the wilderness feed you today, and the one who went ahead in the pillar of cloud guide your way.",
@@ -36,5 +48,9 @@
   "비돔": "Pithom",
   "홍 해": "RED SEA",
   "아카바 만": "Gulf of Aqaba"
- }
+ },
+ "lessons": "Rescue first, obedience in response|God first brought his enslaved people out, and only then gave his word at Sinai. The commandments are not the price of being saved but the life of those who have been saved. (Exod 20:2)\nManna every day|In the wilderness only one day's manna could be gathered. God taught them that people do not live on bread alone but on every word from his mouth. (Deut 8:3)\nChoose life|Grumbling and unbelief kept a whole generation in the wilderness. God still sets life and death before us and says: choose life, and love him. (Deut 30:19–20)",
+ "gospelBridge": "On the night of the Passover, the blood of the lamb on the doorposts made death pass over. In the wilderness, whoever looked at the bronze serpent lived. Jesus said these things pointed to him: just as Moses lifted up the snake in the wilderness, so the Son of Man must be lifted up. (John 3:14)",
+ "invite": "If the story of God you met on this road has stayed with you, come and meet Jesus, who stands at the center of that story. Walk 'The Footsteps of Jesus' from the beginning, and visit a church near you. May you meet God in worship and in his word, be adopted as his child, and know the joy of calling God 'Father.' (Rom 8:15)\nHe is still standing at the door, waiting for you. (Rev 3:20)",
+ "seekerHead": "For those who don’t yet know him"
 }

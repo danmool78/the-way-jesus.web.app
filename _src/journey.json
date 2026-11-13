@@ -1,0 +1,4 @@
+{
+ "_comment": "예수 여정(원본이 _src/ 바로 아래)의 설정 — 다른 여정의 journey.json과 같은 자리. next: 끝 화면에서 이어 걸을 여정",
+ "next": "paul"
+}

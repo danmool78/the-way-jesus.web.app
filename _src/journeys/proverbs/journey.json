@@ -12,5 +12,6 @@
  "odo": false,
  "sponsor": false,
  "where": false,
- "narrator": "Algieba"
+ "narrator": "Algieba",
+ "next": "psalms"
 }
