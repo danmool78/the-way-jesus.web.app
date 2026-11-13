@@ -9,9 +9,14 @@ const argv = process.argv.slice(2), PREVIEW = argv.includes('--preview');
 const OUT = argv.find(a => !a.startsWith('--')) || 'shorts.mp4';
 const FI = argv.indexOf('--fps'), FPS = FI >= 0 ? +argv.splice(FI, 2)[1] : PREVIEW ? 8 : 20, DPR = PREVIEW ? 1 : 2, W = 405, H = 720; // 405×720 × 2 = 810×1440 → 1080×1920로 키운다
 const URL = 'http://localhost:8765/';
-const DIR = fs.mkdtempSync('/tmp/shorts-'), MUSIC = 'assets/music/glory.mp3';
+const DIR = fs.mkdtempSync('/tmp/shorts-');
+// 음악: 시편 8편 '밤하늘'(시편 여정의 첫 노래, R2) — 마지막 후렴 앞(SONG_AT초)부터. 시편 장면의 가사도 영상의 그 시각에 맞춰 띄운다
+const PS8 = JSON.parse(fs.readFileSync('assets/psalms/ps8.json', 'utf8')), MUSIC = PS8.src, SONG_AT = 160;
 let n = 0;
 
+// 3D 무대만 보일 때: 앱의 머리·카드·단추·지도 도구를 숨기고 지도 칸을 화면 가득
+const CLEAN_CSS = `body.clean header.top,body.clean .dock,body.clean .maptools,body.clean .odo,body.clean .scalebar,body.clean .realmkey,body.clean .walkbanner,body.clean .caption,body.clean #scene,body.clean .m3tools,body.clean #mode3d,body.clean .toast{display:none!important}
+body.clean .mapwrap{position:fixed!important;inset:0!important;height:100%!important;width:100%!important}`;
 // 자막 띠: 지도 위쪽(머리 아래)에 크게. 두 줄까지, 작은 설명 한 줄
 const CAP_CSS = `#shortCap{position:fixed;left:0;right:0;top:104px;z-index:99999;padding:14px 18px 22px;text-align:center;pointer-events:none;
   background:linear-gradient(rgba(14,10,6,.78),rgba(14,10,6,.55) 70%,rgba(14,10,6,0));font-family:'Noto Sans KR',sans-serif;opacity:0}
@@ -54,7 +59,8 @@ async function main() {
   // 장면 카드를 아래로 접어(peek) 지도·무대를 크게
   const peek = () => p.evaluate(() => { const c = document.getElementById('scene'); c.classList.remove('open', 'full'); c.classList.add('peek'); });
   const open = async (u, wait = 5000) => {
-    await p.goto(URL + u); await settle(wait);
+    // 주소에서 '#' 뒤만 다르면 페이지를 새로 열지 않고 장면만 바뀐다(앞 토막의 3D·숨김이 남았다) — 매번 새로 열게 표시를 붙인다
+    const [q, h = ''] = u.split('#'); await p.goto(URL + q + (q.includes('?') ? '&' : '?') + 'r=' + n + (h ? '#' + h : '')); await settle(wait);
     await p.evaluate(() => { document.querySelectorAll('.intro').forEach(x => x.remove()); document.body.classList.remove('intro-open'); localStorage.setItem('theway-realms', '1'); });
     await settle(1500);
   };
@@ -69,24 +75,36 @@ async function main() {
   // 도착하면 카드가 열리며 지도가 다시 잡히므로, 걷는 동안만 담고 도착할 때 끝낸다
   await shoot(3.3, { t: '사복음서 61장면을\n시간과 장소 순서대로', s: '다음 장소로 — 실제 길을 따라 걷는다' }, k => k === Math.round(FPS * 1.1) && p.click('#next'));
 
-  // 3) 3D 미니어처 무대: 가버나움 회당 앞의 무리 — 3D 지형 위에 선 무대를 가까이서, 천천히 돌며
+  // 3) 3D 미니어처 무대: 앱 화면(머리·카드·단추)을 걷어내고 무대만 화면 가득 — 가버나움 회당 앞의 무리. 장면의 대목(beat)을 차례로 넘겨 사람들이 움직이게
   const tool = k => p.evaluate(k => document.querySelector(`.m3tools button[data-k="${k}"]`)?.click(), k);
   await open('app.html#e33', 5000);
-  await peek(); await p.click('#mode3d'); await settle(12000);
-  // 카드를 접으면 무대가 화면 위쪽(자막 자리)에 서서, 당겨 키운 다음 조금 끌어내려 가운데에 둔다
-  await p.mouse.move(200, 330); for (let k = 0; k < 6; k++) { await p.mouse.wheel(0, -40); await tick(60); } await settle(1500);
-  await p.mouse.move(200, 200); await p.mouse.down(); for (let k = 1; k <= 10; k++) { await p.mouse.move(200, 200 + k * 11); await tick(30); } await p.mouse.up(); await settle(1500);
-  await p.mouse.move(200, 330);
-  await shoot(4.6, { t: '장면마다 살아 움직이는\n3D 미니어처 무대', s: '말씀 속 그 순간이 그 자리에' }, k => (k === 2 || k === Math.round(FPS * 2.2)) && tool('left'));
+  await p.evaluate(() => { const r = document.getElementById('realmBtn'); if (r?.getAttribute('aria-pressed') === 'true') r.click(); });
+  await p.click('#mode3d'); await settle(800);
+  await p.evaluate(css => { const s = document.createElement('style'); s.textContent = css; document.head.appendChild(s); document.body.classList.add('clean'); dispatchEvent(new Event('resize')); }, CLEAN_CSS);
+  await settle(12000);
+  // 휴대폰 화면의 3D는 카드 자리를 비우려 시선을 위로 올려 두어, 당겨 키운 다음 끌어내려 무대를 가운데에
+  await p.mouse.move(200, 360); for (let k = 0; k < 7; k++) { await p.mouse.wheel(0, -40); await tick(60); } await settle(1500);
+  await p.mouse.move(200, 150); await p.mouse.down(); for (let k = 1; k <= 15; k++) { await p.mouse.move(200, 150 + k * 13); await tick(30); } await p.mouse.up(); await settle(1500);
+  await p.mouse.move(200, 360);
+  const BEATS = ['intro', 'p0.0', 'p0.1', 'p0.2', 'p0.3', 'p1.0', 'p1.1', 'p1.2', 'p1.3', 'p2.0', 'p2.1', 'p2.2'];
+  const beatAt = k => { const b = BEATS[k]; if (!b) return; const [bb, ss] = b.split('.'); return p.evaluate(([bb, ss]) => dispatchEvent(new CustomEvent('stage:beat', { detail: { beat: bb, s: ss === undefined ? undefined : +ss } })), [bb, ss]); };
+  await beatAt(0); await settle(600);
+  await shoot(5.4, { t: '장면마다 살아 움직이는\n3D 미니어처 무대', s: '말씀 속 그 순간이 그 자리에' }, async k => { if (k % Math.round(FPS * 0.9) === 0) await beatAt(1 + k / Math.round(FPS * 0.9)); });
 
   // 4) 3D 지형: 같은 자리에서 지평선 쪽으로 눕히며 물러나 — 갈릴리 바다 둘레의 산과 골짜기
-  await shoot(5.4, { t: '실제 고도로 빚은\n3D 지형', s: '갈릴리 바다와 산과 골짜기 그대로' }, async k => { if ([0, 0.4, 0.8, 1.2].some(t => k === Math.round(FPS * t))) await tool('tiltDown'); if (k % 2 === 0) await p.mouse.wheel(0, 26); });
+  await shoot(5.4, { t: '실제 고도로 빚은\n3D 지형', s: '갈릴리 바다와 산과 골짜기 그대로' }, async k => { if ([0, 0.4, 0.8, 1.2].some(t => k === Math.round(FPS * t))) await tool('tiltDown'); if (k % 2 === 0) await p.mouse.wheel(0, 30); });
 
   // 5) 명화와 이야기, 성우 낭독
   await open('app.html#e26', 5000);
   await p.evaluate(() => { const c = document.getElementById('scene'); c.classList.remove('peek'); c.classList.add('open', 'full'); });
   await settle(1500);
   await shoot(4.8, { t: '명화와 함께 읽고\n성우의 낭독으로 듣는다', s: '장면마다 그림 · 이야기 · 말씀 · 대조표', at: 'bottom' });
+
+  // 5-2) 시편: 노래가 태어난 자리를 따라 — 가사가 지도 위에 크게. 소리는 끄고 노래의 시각만 영상의 음악과 같게 옮긴다
+  await open('app.html?j=psalms', 5000); await peek();
+  await p.evaluate(() => songPlay(null)); await settle(3000);
+  const songAt = () => SONG_AT + n / FPS;
+  await shoot(5.0, { t: '시편은 노래로\n노래가 태어난 자리에서', s: '시편 8편 · 밤하늘' }, () => p.evaluate(t => { const a = song.audio; a.muted = true; a.onpause = null; if (!a.paused) a.pause(); a.currentTime = t; song.sync?.(); }, songAt()));
 
   // 6) 영역: 바울 때의 로마 속주 — 지중해 전체에 색과 점선으로 (장면이 넘어가 시대가 바뀌면 서서히 바뀐다)
   await open('app.html?j=paul#a20', 5000);
@@ -104,7 +122,7 @@ async function main() {
 
   // 묶기: 810×1440 → 1080×1920, 배경음악은 처음 1초 올리고 끝 1.5초 내린다
   const dur = n / FPS;
-  execFileSync('ffmpeg', ['-y', '-v', 'error', '-framerate', String(FPS), '-i', path.join(DIR, 'f%05d.jpg'), '-i', MUSIC,
+  execFileSync('ffmpeg', ['-y', '-v', 'error', '-framerate', String(FPS), '-i', path.join(DIR, 'f%05d.jpg'), '-ss', String(SONG_AT), '-i', MUSIC,
     '-filter_complex', `[0:v]scale=1080:1920:flags=lanczos,format=yuv420p[v];[1:a]atrim=0:${dur},afade=t=in:d=1,afade=t=out:st=${Math.max(0, dur - 1.6)}:d=1.5,volume=0.9[a]`,
     '-map', '[v]', '-map', '[a]', '-c:v', 'libx264', '-preset', 'slow', '-crf', PREVIEW ? '28' : '19', '-r', '30', '-c:a', 'aac', '-b:a', '160k', '-movflags', '+faststart', '-shortest', OUT], { stdio: 'inherit' });
   console.log('완성', OUT, dur.toFixed(1) + '초', n + '장');
