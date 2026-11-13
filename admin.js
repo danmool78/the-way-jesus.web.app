@@ -5,6 +5,13 @@ const REPO = 'danmool78/the-way-jesus.web.app', BRANCH = 'main', KEY = 'theway-a
 const $ = (s, el = document) => el.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 let token = '', files = {}, data = null; // files: 경로 → { raw, json }
+// 구글 로그인(기본): 토큰 대신 Firebase 인증으로 들어가고, GitHub·R2는 관리자 Worker(_src/worker)가 대신 쓴다 —
+// 컴퓨터마다 복잡한 토큰을 넣어야 했다(사용자). 토큰으로 들어가는 길도 남겨 둔다 (Worker가 멈췄을 때)
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+const auth = getAuth(initializeApp({ apiKey: 'AIzaSyA5wjIVA5kc8_Zyar6_-8X7kNVPaQn4j1Y', authDomain: 'the-way-jesus.firebaseapp.com', projectId: 'the-way-jesus', appId: '1:618365957327:web:d42bd6b7e94f79390673ba' })); // 공개 설정값
+export const WORKER = 'https://theway-admin.danmool78.workers.dev';
+let google = false; // 구글로 들어왔으면 true — gh()가 Worker를 거친다
 // 시리즈의 여정: 주소의 ?j=<여정> (없으면 예수). 예수 여정의 원본은 _src/, 다른 여정은 _src/journeys/<여정>/
 // 배포된 data는 예수가 data.json, 다른 여정이 j/<여정>/data.json. 녹음(음성 교체)은 예수 여정만 — 다른 여정은 기기 음성으로 읽는다
 const JOURNEY = (q => /^[a-z]+$/.test(q || '') ? q : 'jesus')(new URLSearchParams(location.search).get('j'));
@@ -12,8 +19,8 @@ const SRC = JOURNEY === 'jesus' ? '_src' : `_src/journeys/${JOURNEY}`, DATA_URL 
 const VOICED = JOURNEY === 'jesus';
 
 async function gh(path, init = {}) {
-  const r = await fetch(`https://api.github.com${path}`, { ...init, cache: 'no-store',
-    headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${token}`, 'X-GitHub-Api-Version': '2022-11-28', ...(init.body ? { 'Content-Type': 'application/json' } : {}) } });
+  const r = await fetch(google ? `${WORKER}/gh${path}` : `https://api.github.com${path}`, { ...init, cache: 'no-store',
+    headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${google ? await auth.currentUser.getIdToken() : token}`, 'X-GitHub-Api-Version': '2022-11-28', ...(init.body ? { 'Content-Type': 'application/json' } : {}) } });
   const j = r.status === 204 ? null : await r.json().catch(() => null);
   if (!r.ok) throw Object.assign(new Error(j?.message || `GitHub ${r.status}`), { status: r.status });
   return j;
@@ -30,7 +37,7 @@ async function readFile(path) {
 
 /* ---------- 들어가기 ---------- */
 async function enter(t, user) {
-  token = t.trim();
+  google = t === null; token = google ? '' : t.trim();
   const msg = $('#loginMsg');
   msg.className = 'msg'; msg.textContent = '확인하는 중…';
   try {
@@ -38,22 +45,29 @@ async function enter(t, user) {
     const [me, repo] = await Promise.all([gh('/user'), gh(`/repos/${REPO}`)]);
     if (user && me.login.toLowerCase() !== user.trim().toLowerCase()) throw new Error(`이 토큰은 ${me.login} 계정의 것입니다`);
     if (!repo.permissions?.push) throw new Error('이 토큰에는 저장소에 쓸 권한이 없습니다');
-    try { localStorage.setItem(KEY, token); } catch { /* 이번 방문만 */ }
+    if (!google) try { localStorage.setItem(KEY, token); } catch { /* 이번 방문만 */ }
     // 크롬은 이 줄로 바로 "비밀번호 저장"을 띄운다 (다른 브라우저는 양식 제출로 알아본다)
-    if (user && window.PasswordCredential) navigator.credentials.store(new PasswordCredential({ id: me.login, password: token })).catch(() => {});
+    if (!google && user && window.PasswordCredential) navigator.credentials.store(new PasswordCredential({ id: me.login, password: token })).catch(() => {});
     await load();
   } catch (err) {
     // 기억한 토큰은 GitHub가 '틀린 토큰'(401)이라고 할 때만 지운다 — 전에는 잠깐의 연결 오류나 요청 한도에도 지워져
     // 들어올 때마다 토큰을 다시 넣어야 했다 (사용자). 그 밖의 오류는 토큰을 남겨 두고 다시 시도하게 한다
-    const bad = err.status === 401 || /권한|계정/.test(err.message || '');
+    const wasGoogle = google;
+    if (google) { google = false; signOut(auth).catch(() => {}); }
+    const bad = !wasGoogle && (err.status === 401 || /권한|계정/.test(err.message || ''));
     if (bad) { token = ''; try { localStorage.removeItem(KEY); } catch { /* 없음 */ } }
     else token = '';
     $('#login').hidden = false; $('#editor').hidden = $('#studio').hidden = $('#search').hidden = $('#logout').hidden = true;
-    msg.className = 'msg bad'; msg.textContent = err.status === 401 ? '토큰이 맞지 않습니다' : bad ? err.message : `연결하지 못했습니다 (${err.message}) — 토큰은 기억해 두었습니다. 잠시 뒤 새로 고침하면 다시 들어갑니다`;
+    msg.className = 'msg bad'; msg.textContent = wasGoogle && err.status === 403 && /허락/.test(err.message) ? '이 구글 계정은 관리자로 허락되지 않았습니다' : err.status === 401 ? '토큰이 맞지 않습니다' : bad ? err.message : `연결하지 못했습니다 (${err.message}) — 토큰은 기억해 두었습니다. 잠시 뒤 새로 고침하면 다시 들어갑니다`;
   }
 }
 $('#loginForm').onsubmit = e => { e.preventDefault(); enter($('#token').value, $('#user').value); };
-$('#logout').onclick = () => { try { localStorage.removeItem(KEY); } catch { /* 없음 */ } location.reload(); };
+$('#logout').onclick = async () => { try { localStorage.removeItem(KEY); } catch { /* 없음 */ } await signOut(auth).catch(() => {}); location.reload(); };
+$('#gLogin').onclick = async () => {
+  const msg = $('#loginMsg'); msg.className = 'msg'; msg.textContent = '구글 로그인 창을 여는 중…';
+  try { await signInWithPopup(auth, new GoogleAuthProvider()); } // 들어오면 아래 onAuthStateChanged가 이어 간다
+  catch (e) { msg.className = 'msg bad'; msg.textContent = e.code === 'auth/popup-closed-by-user' ? '' : `로그인하지 못했습니다 (${e.code || e.message})`; }
+};
 
 /* ---------- 목록 ---------- */
 // 여정 고르기: 원본이 만들어진 여정(built)만 — 원본이 없는 여정을 고르면 불러오지 못해 로그인이 풀린다. 맨 끝에 시편 노래 작업실
@@ -94,7 +108,7 @@ async function load() {
     $('#loginMsg').textContent = '노래 목록을 불러오는 중…';
     const [{ mountStudio }, d] = await Promise.all([import('./studio.js'), fetch('data.json', { cache: 'no-store' }).then(r => r.json())]);
     fillPick(d.journey?.series);
-    await mountStudio($('#studio'), token);
+    await mountStudio($('#studio'), token, google ? { gh, r2Put: async (key, bytes) => { const r = await fetch(`${WORKER}/r2/${key}`, { method: 'PUT', headers: { Authorization: `Bearer ${await auth.currentUser.getIdToken()}`, 'Content-Type': 'audio/mpeg' }, body: bytes }); if (!r.ok) throw new Error(`R2 ${r.status}`); } } : null);
     $('#login').hidden = true; $('#studio').hidden = $('#logout').hidden = false;
     return;
   }
@@ -304,4 +318,10 @@ async function follow(box, sha) {
 }
 
 let saved = null; try { saved = localStorage.getItem(KEY); } catch { /* 없음 */ }
-if (saved) enter(saved); else $('#login').hidden = false;
+// 구글로 로그인해 둔 상태면 그대로 들어가고, 아니면 기억한 토큰으로, 둘 다 없으면 로그인 화면
+let first = true;
+onAuthStateChanged(auth, u => {
+  if (u) { enter(null); return; }
+  if (!first) return; first = false;
+  if (saved) enter(saved); else $('#login').hidden = false;
+});

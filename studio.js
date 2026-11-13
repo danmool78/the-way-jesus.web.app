@@ -10,9 +10,10 @@ const SRC = '_src/journeys/psalms/songs.json', DIR = 'assets/psalms';
 import { R2, r2Sign, sha256 } from './studio-r2.js';
 const $ = (s, el = document) => el.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-let token = '', songs = [], groups = {}, dir = {}, r2 = null;
+let token = '', songs = [], groups = {}, dir = {}, r2 = null, api = null; // api: 구글 로그인이면 관리자 Worker를 거치는 gh·r2Put (admin.js)
 
 async function gh(path, init = {}) {
+  if (api) return api.gh(path, init);
   const r = await fetch(`https://api.github.com${path}`, { ...init, cache: 'no-store',
     headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${token}`, 'X-GitHub-Api-Version': '2022-11-28', ...(init.body ? { 'Content-Type': 'application/json' } : {}) } });
   const j = r.status === 204 ? null : await r.json().catch(() => null);
@@ -26,6 +27,7 @@ const toB64 = s => { const u8 = new TextEncoder().encode(s); let bin = ''; for (
 export const sungLines = lyrics => (lyrics || '').split('\n').map(s => s.trim()).filter(s => s && !/^\[.*\]$/.test(s));
 
 async function r2Put(key, bytes, hash) {
+  if (api) return api.r2Put(key, bytes);
   const { url, headers } = await r2Sign(r2, 'PUT', key, hash, 'audio/mpeg');
   const r = await fetch(url, { method: 'PUT', headers, body: bytes });
   if (!r.ok) throw new Error(`R2 ${r.status}${r.status === 403 ? ' — R2 열쇠를 확인해 주세요' : ''}`);
@@ -68,8 +70,8 @@ const CSS = `
 .st textarea.ed{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 10px;color:var(--ink);font:14px/1.7 var(--sans);resize:vertical;outline:none}.st textarea.ed:focus{border-color:var(--gold)}
 .st textarea.style{font-size:13px;color:var(--muted)}.st .edrow{display:flex;gap:8px;align-items:center;margin:4px 0 6px}.st .edrow .grow{flex:1}
 .st details.song.dirty{border-color:var(--gold)}`;
-export async function mountStudio(root, tok) {
-  token = tok;
+export async function mountStudio(root, tok, via = null) {
+  token = tok; api = via;
   if (!document.getElementById('studioCss')) document.head.insertAdjacentHTML('beforeend', `<style id="studioCss">${CSS}</style>`);
   root.classList.add('st');
   root.innerHTML = `<p class="note">시편 노래 작업실 — ① 스타일과 가사를 복사해 Suno에서 노래를 만든다 → ② 고른 mp3를 올린다(다시 올리면 교체) → ③ 몇 분 뒤 가사 시간이 자동으로 맞춰진다 → ④ 어긋나면 '탭으로 맞추기'로 고친다. 노래는 Cloudflare R2(theway 버킷 psalms/)에서 스트리밍한다.</p>
@@ -79,6 +81,7 @@ export async function mountStudio(root, tok) {
     <div class="sum" id="stSum"></div><div id="stList"></div>`;
   try { r2 = JSON.parse(localStorage.getItem(R2KEY) || 'null'); } catch { r2 = null; }
   bindR2();
+  if (api) $('.card.r2', root).hidden = true; // 구글 로그인: 노래는 Worker가 R2에 바로 올린다
   await load();
 }
 
@@ -222,7 +225,7 @@ async function trimEnd(el, s) {
 async function upload(el, s, file, { bytes: given, keep } = {}) {
   if (!file && !given) return;
   const st = $('.state.up', el);
-  if (!r2) { st.className = 'state up bad'; st.textContent = '먼저 위에서 R2 열쇠를 넣어 주세요'; return; }
+  if (!r2 && !api) { st.className = 'state up bad'; st.textContent = '먼저 위에서 R2 열쇠를 넣어 주세요'; return; }
   if (file?.size > 40 * 1048576) { st.className = 'state up bad'; st.textContent = '파일이 너무 큽니다 (40MB까지)'; return; }
   st.className = 'state up'; st.textContent = '노래 끝을 살피는 중…';
   try {
