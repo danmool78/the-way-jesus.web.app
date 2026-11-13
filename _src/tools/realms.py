@@ -9,7 +9,15 @@ from shapely.geometry import Polygon, shape, mapping
 from shapely.ops import unary_union
 
 here = os.path.dirname(os.path.abspath(__file__)); src = os.path.join(here, '..', 'realms')
-P = lambda pts: Polygon([(b, a) for a, b in pts])  # [위도, 경도] → (x=경도, y=위도)
+def _chaikin(pts, n=2):  # 모서리를 깎아 둥글게 — 손으로 찍은 구역이 자로 그은 네모처럼 보였다(사용자)
+    for _ in range(n):
+        q = []
+        for i in range(len(pts)):
+            (x0, y0), (x1, y1) = pts[i], pts[(i + 1) % len(pts)]
+            q += [(x0 * .75 + x1 * .25, y0 * .75 + y1 * .25), (x0 * .25 + x1 * .75, y0 * .25 + y1 * .75)]
+        pts = q
+    return pts
+P = lambda pts: Polygon(_chaikin([(b, a) for a, b in pts]))  # [위도, 경도] → (x=경도, y=위도), 둥글게
 herod = unary_union([shape(f['geometry']) for f in json.load(open(os.path.join(src, 'awmc-herods_kingdom.geojson')))['features']])
 
 # 이름은 8개 언어 (앱이 지금 언어로 고른다)
@@ -100,12 +108,12 @@ LL = ['ko', 'en', 'es', 'pt', 'fr', 'zh', 'id', 'ja']
 nm = lambda xs: dict(zip(LL, xs))
 # 구역 [위도, 경도] — 바다 쪽으로 넘친 곳은 앱에서 바다가 덮는다
 ISRAEL_W = P([(31.92, 35.53), (31.90, 35.30), (31.92, 35.10), (32.05, 34.88), (32.10, 34.70), (32.62, 34.80), (32.83, 34.90), (32.92, 35.08), (33.08, 35.15), (33.10, 35.35), (33.30, 35.55), (33.30, 35.68), (32.90, 35.64), (32.70, 35.58), (32.40, 35.56), (32.10, 35.55)])
-GILEAD = P([(32.75, 35.60), (32.75, 36.05), (32.45, 36.10), (32.15, 35.95), (31.75, 35.80), (31.75, 35.55), (32.10, 35.55), (32.40, 35.57)])
+GILEAD = P([(32.69, 35.60), (32.73, 35.85), (32.72, 36.10), (32.45, 36.15), (32.15, 35.95), (31.75, 35.80), (31.75, 35.55), (32.10, 35.55), (32.40, 35.57)])
 JUDAH = P([(31.92, 35.53), (31.88, 35.10), (31.80, 34.95), (31.65, 34.88), (31.50, 34.78), (31.35, 34.70), (31.15, 34.52), (30.85, 34.38), (30.55, 34.45), (30.45, 34.90), (30.75, 35.20), (31.10, 35.38), (31.45, 35.39), (31.75, 35.45)])
 PHILISTIA = P([(32.12, 34.70), (32.05, 34.88), (31.80, 34.95), (31.65, 34.88), (31.50, 34.78), (31.35, 34.70), (31.15, 34.52), (31.20, 34.10), (31.60, 34.30), (31.95, 34.55)]).difference(JUDAH)
 PHOENICIA = P([(32.83, 34.90), (32.92, 35.08), (33.08, 35.15), (33.10, 35.35), (33.30, 35.55), (33.55, 35.70), (34.00, 35.92), (34.45, 36.12), (34.45, 35.70), (34.00, 35.40), (33.55, 35.10), (33.10, 34.90)])
-ARAM = P([(33.30, 35.68), (33.55, 35.70), (34.00, 35.92), (34.45, 36.12), (34.60, 36.60), (34.40, 37.40), (33.30, 37.40), (32.75, 36.70), (32.75, 36.05), (32.75, 35.60), (32.90, 35.64)])
-AMMON = P([(32.15, 35.95), (32.25, 36.45), (31.70, 36.45), (31.70, 35.85), (31.75, 35.80)])
+ARAM = P([(33.30, 35.68), (33.55, 35.70), (34.00, 35.92), (34.45, 36.12), (34.60, 36.60), (34.35, 37.10), (33.80, 37.30), (33.20, 37.05), (32.85, 36.75), (32.62, 36.45), (32.72, 36.10), (32.73, 35.85), (32.69, 35.62), (32.90, 35.64)])
+AMMON = P([(32.15, 35.95), (32.30, 36.20), (32.10, 36.50), (31.80, 36.40), (31.70, 36.10), (31.70, 35.85), (31.75, 35.80)])
 MOAB = P([(31.75, 35.55), (31.75, 35.80), (31.70, 35.85), (31.70, 36.15), (31.05, 36.25), (31.05, 35.56), (31.45, 35.57)])
 EDOM = P([(31.05, 35.40), (31.05, 36.15), (30.40, 35.95), (29.55, 35.15), (29.55, 34.95), (30.20, 35.10), (30.75, 35.25)]).difference(JUDAH)
 # 앗수르·바벨론 땅: 메소포타미아와 수리아(비옥한 초승달) — 아라비아 사막은 뺀다
@@ -187,3 +195,111 @@ paul = {'credit': nm(['로마 속주 경계는 어림 (AWMC·바링턴 지도책
 ]}
 json.dump({'_comment': '시대별 영역 — _src/tools/realms.py가 만든다(직접 고치지 말 것). AD 50 무렵 로마 속주, 경계는 어림', **paul}, open(os.path.join(src, 'paul.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
 print('realms paul:', [(e['from'], len(e['areas'])) for e in paul['eras']])
+
+# ---------- 모세와 여호수아: 애굽·가나안 성읍·아모리 왕들 → 요단 동쪽 → 열두 지파 (수 13–19장, 표준 지도책 따라 어림) ----------
+NM = {
+ 'egypt': (['애굽 (신왕국)', 'Egypt (New Kingdom)', 'Egipto (Imperio Nuevo)', 'Egito (Novo Império)', 'Égypte (Nouvel Empire)', '埃及（新王国）', 'Mesir (Kerajaan Baru)', 'エジプト（新王国）'], ['애굽', 'Egypt', 'Egipto', 'Egito', 'Égypte', '埃及', 'Mesir', 'エジプト']),
+ 'canaan': (['가나안 성읍들', 'Canaanite city-states', 'Ciudades-estado cananeas', 'Cidades-Estado cananeias', 'Cités-États cananéennes', '迦南诸城邦', 'Negara-kota Kanaan', 'カナンの町々'],),
+ 'midian': (['미디안', 'Midian', 'Madián', 'Midiã', 'Madian', '米甸', 'Midian', 'ミデヤン'],),
+ 'sihon': (['아모리 왕 시혼 (헤스본)', 'Sihon, king of the Amorites (Heshbon)', 'Sehón, rey de los amorreos (Hesbón)', 'Seom, rei dos amorreus (Hesbom)', 'Sihon, roi des Amoréens (Heshbon)', '亚摩利王西宏（希实本）', 'Sihon, raja orang Amori (Hesybon)', 'アモリ人の王シホン（ヘシュボン）'], ['시혼', 'Sihon', 'Sehón', 'Seom', 'Sihon', '西宏', 'Sihon', 'シホン']),
+ 'og': (['바산 왕 옥', 'Og, king of Bashan', 'Og, rey de Basán', 'Ogue, rei de Basã', 'Og, roi de Basan', '巴珊王噩', 'Og, raja Basan', 'バシャンの王オグ'], ['옥', 'Og', 'Og', 'Ogue', 'Og', '噩', 'Og', 'オグ']),
+ 'israelE': (['이스라엘이 얻은 요단 동쪽 (르우벤·갓·므낫세 반)', 'Israel east of the Jordan (Reuben, Gad, half Manasseh)', 'Israel al este del Jordán (Rubén, Gad, media Manasés)', 'Israel a leste do Jordão (Rúben, Gade, meia Manassés)', 'Israël à l’est du Jourdain (Ruben, Gad, demi-Manassé)', '约旦河东归以色列（流便、迦得、玛拿西半支派）', 'Israel di timur Yordan (Ruben, Gad, setengah Manasye)', 'ヨルダン川東のイスラエル（ルベン・ガド・マナセの半部族）'], ['이스라엘', 'Israel', 'Israel', 'Israel', 'Israël', '以色列', 'Israel', 'イスラエル']),
+}
+TR = ['reuben', 'gad', 'manasseh', 'judah', 'simeon', 'benjamin', 'dan', 'ephraim', 'issachar', 'zebulun', 'naphtali', 'asher']
+TN = dict(zip(TR, zip(
+ ['르우벤', '갓', '므낫세', '유다', '시므온', '베냐민', '단', '에브라임', '잇사갈', '스불론', '납달리', '아셀'],
+ ['Reuben', 'Gad', 'Manasseh', 'Judah', 'Simeon', 'Benjamin', 'Dan', 'Ephraim', 'Issachar', 'Zebulun', 'Naphtali', 'Asher'],
+ ['Rubén', 'Gad', 'Manasés', 'Judá', 'Simeón', 'Benjamín', 'Dan', 'Efraín', 'Isacar', 'Zabulón', 'Neftalí', 'Aser'],
+ ['Rúben', 'Gade', 'Manassés', 'Judá', 'Simeão', 'Benjamim', 'Dã', 'Efraim', 'Issacar', 'Zebulom', 'Naftali', 'Aser'],
+ ['Ruben', 'Gad', 'Manassé', 'Juda', 'Siméon', 'Benjamin', 'Dan', 'Éphraïm', 'Issacar', 'Zabulon', 'Nephtali', 'Aser'],
+ ['流便', '迦得', '玛拿西', '犹大', '西缅', '便雅悯', '但', '以法莲', '以萨迦', '西布伦', '拿弗他利', '亚设'],
+ ['Ruben', 'Gad', 'Manasye', 'Yehuda', 'Simeon', 'Benyamin', 'Dan', 'Efraim', 'Isakhar', 'Zebulon', 'Naftali', 'Asyer'],
+ ['ルベン', 'ガド', 'マナセ', 'ユダ', 'シメオン', 'ベニヤミン', 'ダン', 'エフライム', 'イッサカル', 'ゼブルン', 'ナフタリ', 'アシェル'])))
+EGYPT = P([(31.6, 30.0), (31.6, 32.45), (30.4, 32.45), (29.95, 32.5), (29.3, 32.55), (28.6, 32.85), (27.45, 33.3), (27.45, 30.0)])
+CANAAN = P([(31.3, 34.25), (31.25, 34.9), (31.25, 35.42), (31.76, 35.52), (32.75, 35.58), (33.30, 35.65), (33.60, 35.70), (33.60, 35.25), (33.0, 34.95), (32.0, 34.6), (31.6, 34.35)])
+MIDIAN = P([(29.5, 35.02), (29.5, 36.6), (28.0, 36.6), (27.45, 35.6), (27.45, 35.25), (28.4, 34.9), (29.2, 34.98)])
+SIHON = P([(31.47, 35.57), (31.47, 36.0), (32.25, 36.0), (32.25, 35.57)])
+OG = P([(32.25, 35.57), (32.25, 36.0), (32.30, 36.6), (33.3, 36.6), (33.3, 35.68), (32.95, 35.65), (32.75, 35.62)])
+MOAB_M, AMMON_M = MOAB.difference(SIHON), AMMON.difference(unary_union([SIHON, OG]))
+EDOM_M = P([(31.05, 35.40), (31.05, 36.15), (30.40, 35.95), (29.55, 35.15), (29.55, 35.02), (30.20, 35.10), (30.75, 35.25)])
+# 열두 지파 — 앞에서부터 차례로 빼서 겹치지 않게
+T0 = {
+ 'reuben': P([(31.47, 35.57), (31.47, 36.0), (31.82, 36.0), (31.82, 35.55)]),
+ 'gad': P([(31.82, 35.55), (31.82, 36.0), (32.30, 35.95), (32.40, 35.75), (32.75, 35.62), (32.75, 35.58), (32.40, 35.57)]),
+ 'manasseh': unary_union([P([(32.30, 35.95), (32.40, 35.75), (32.75, 35.62), (32.95, 35.65), (33.3, 35.75), (33.3, 36.6), (32.5, 36.6), (32.3, 36.2)]),
+                          P([(32.10, 35.55), (32.55, 35.57), (32.50, 35.30), (32.55, 35.10), (32.70, 34.97), (32.62, 34.70), (32.15, 34.70), (32.15, 35.05), (32.17, 35.35)])]),
+ 'simeon': P([(31.40, 34.55), (31.40, 35.00), (31.05, 35.10), (30.95, 34.65), (31.15, 34.45)]),
+ 'judah': P([(31.76, 35.52), (31.78, 35.25), (31.80, 35.10), (31.76, 34.98), (31.80, 34.85), (31.87, 34.60), (31.30, 34.15), (31.13, 33.80), (30.68, 34.40), (30.60, 34.90), (30.90, 35.35), (31.25, 35.42), (31.55, 35.45)]),
+ 'benjamin': P([(31.93, 35.56), (31.93, 35.22), (31.88, 35.08), (31.80, 35.10), (31.78, 35.25), (31.76, 35.52)]),
+ 'dan': P([(31.88, 35.08), (31.80, 35.10), (31.76, 34.98), (31.80, 34.85), (31.87, 34.60), (32.12, 34.70), (32.05, 34.95), (31.93, 35.05)]),
+ 'ephraim': P([(31.93, 35.56), (32.10, 35.55), (32.17, 35.35), (32.15, 35.05), (32.12, 34.70), (32.05, 34.95), (31.93, 35.05), (31.88, 35.08), (31.93, 35.22)]),
+ 'issachar': P([(32.55, 35.57), (32.72, 35.57), (32.72, 35.40), (32.65, 35.30), (32.50, 35.30)]),
+ 'zebulun': P([(32.62, 35.12), (32.65, 35.30), (32.72, 35.40), (32.82, 35.38), (32.87, 35.22), (32.80, 35.10), (32.70, 35.05)]),
+ 'naphtali': P([(32.72, 35.57), (33.25, 35.62), (33.30, 35.50), (33.10, 35.40), (32.87, 35.40), (32.82, 35.38), (32.72, 35.40)]),
+ 'asher': P([(32.70, 34.97), (32.80, 35.10), (32.87, 35.22), (32.87, 35.40), (33.10, 35.40), (33.30, 35.50), (33.55, 35.45), (33.55, 35.05), (33.0, 34.90), (32.82, 34.85)]),
+}
+TC = {'reuben': '#c9a24a', 'gad': '#5f8a4f', 'manasseh': '#3f8fa0', 'judah': '#b5603e', 'simeon': '#c98a6a', 'benjamin': '#8f7fb0', 'dan': '#6b8fb5',
+      'ephraim': '#7a9a3e', 'issachar': '#b58a3e', 'zebulun': '#4f9a8a', 'naphtali': '#9a6a9a', 'asher': '#c0453a'}
+taken, TG = None, {}
+for k in ['simeon', 'judah', 'benjamin', 'dan', 'ephraim', 'manasseh', 'issachar', 'zebulun', 'naphtali', 'asher', 'reuben', 'gad']:
+    g = T0[k] if taken is None else T0[k].difference(taken)
+    TG[k] = g; taken = g if taken is None else unary_union([taken, g])
+def am(k, g, color, at=False):
+    v = NM[k]; full = v[0]; short = v[1] if len(v) > 1 else None
+    a = {'id': k, 'color': color, 'name': nm(full), 'short': nm(short or full), 'd': ring(g)}
+    return a
+def tribe(k):
+    g = TG[k]; big = max([g] if g.geom_type == 'Polygon' else list(g.geoms), key=lambda p: p.area); pt = big.representative_point()
+    return {'id': k, 'color': TC[k], 'name': nm(list(TN[k])), 'short': nm(list(TN[k])), 'd': ring(g), 'at': [round(pt.y, 3), round(pt.x, 3)]}
+MCOL = {'egypt': '#b58a3e', 'canaan': '#8f7fb0', 'midian': '#7a6a52', 'sihon': '#6b8fb5', 'og': '#3f8fa0', 'israelE': '#c9a24a'}
+EDOM_A = lambda: {'id': 'edom', 'color': '#c0453a', 'name': nm(NO['edom'][0]), 'short': nm(NO['edom'][0]), 'd': ring(EDOM_M)}
+MOAB_A = lambda: {'id': 'moab', 'color': '#9a6a9a', 'name': nm(NO['moab'][0]), 'short': nm(NO['moab'][0]), 'd': ring(MOAB_M)}
+AMMON_A = lambda: {'id': 'ammon', 'color': '#b58a3e', 'name': nm(NO['ammon'][0]), 'short': nm(NO['ammon'][0]), 'd': ring(AMMON_M)}
+moses = {'credit': CREDIT, 'eras': [
+  {'from': 'm01', 'areas': [am('egypt', EGYPT, MCOL['egypt']), am('canaan', CANAAN, MCOL['canaan']), am('midian', MIDIAN, MCOL['midian']), EDOM_A(), MOAB_A(), AMMON_A(), am('sihon', SIHON, MCOL['sihon']), am('og', OG, MCOL['og'])]},
+  {'from': 'm28', 'areas': [am('egypt', EGYPT, MCOL['egypt']), am('canaan', CANAAN, MCOL['canaan']), am('midian', MIDIAN, MCOL['midian']), EDOM_A(), MOAB_A(), AMMON_A(), am('israelE', unary_union([SIHON, OG]), MCOL['israelE'])]},   # 시혼과 옥을 이기고 (민 21장)
+  {'from': 'm39', 'areas': [tribe(k) for k in TR] + [am('egypt', EGYPT, MCOL['egypt']), am('midian', MIDIAN, MCOL['midian']), EDOM_A(), MOAB_A(), AMMON_A()]},     # 실로에서 나눈 땅 (수 13–19장)
+]}
+json.dump({'_comment': '시대별 영역 — _src/tools/realms.py가 만든다(직접 고치지 말 것). 지파 경계는 어림', **moses}, open(os.path.join(src, 'moses.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
+print('realms moses:', [(e['from'], [a['id'] for a in e['areas']]) for e in moses['eras']])
+
+# ---------- 모든 영역에 이름 자리(at): 색만으로는 무엇인지 몰랐다(사용자) ----------
+# 영역 안에서 지도의 지역 이름·장소 핀·앞서 고른 이름과 가장 덜 겹치는 점을 고른다 (전엔 '빌립의 영지'·'데가볼리' 같은 지역 이름과 같은 자리에 겹쳤다)
+import re
+from shapely.geometry import Point
+APP = open(os.path.join(here, '..', '..', 'app.js'), encoding='utf-8').read()
+BASE_REGIONS = [(float(a), float(b)) for a, b in re.findall(r"\['[^']+', ([\d.]+), ([\d.]+)\]", APP[APP.index('let REGIONS = ['):APP.index('let REFCITIES')])]
+def marks(j):
+    d = os.path.join(here, '..') if j == 'jesus' else os.path.join(here, '..', 'journeys', j)
+    pl = json.load(open(os.path.join(d, 'places.json'), encoding='utf-8'))
+    pts = [(v['lat'], v['lng']) for v in pl.values() if isinstance(v, dict) and 'lat' in v]
+    mp = json.load(open(os.path.join(d, 'journey.json'), encoding='utf-8')).get('map', {}) if j != 'jesus' else {}
+    regs = [(r[1], r[2]) for r in mp.get('regions', BASE_REGIONS and [[0, a, b] for a, b in BASE_REGIONS])] + [(r[1], r[2]) for r in mp.get('labels', [])]
+    return regs, pts
+for fn in ['jesus', 'david', 'kings', 'paul', 'moses']:
+    fp = os.path.join(src, fn + '.json'); R = json.load(open(fp, encoding='utf-8'))
+    regs, pts = marks(fn)
+    for er in R['eras']:
+        chosen = []
+        for a in er['areas']:
+            if fn == 'moses' and 'at' in a: chosen.append(tuple(a['at'])); continue  # 지파는 이미 골라 둠
+            polys = [Polygon([(y, x) for x, y in r]) for r in a['d']]
+            big = max(polys, key=lambda p: p.area)
+            x0, y0, x1, y1 = big.bounds; st = max(x1 - x0, y1 - y0) / 24
+            best, bs = big.representative_point(), -1
+            yy = y0
+            while yy <= y1:
+                xx = x0
+                while xx <= x1:
+                    q = Point(xx, yy)
+                    if big.contains(q):
+                        edge = big.exterior.distance(q)
+                        near = min([((yy - la) ** 2 + ((xx - ln) * .4) ** 2) ** .5 for la, ln in regs + chosen] + [9])  # 지역 이름은 가로로 길어 옆으로 더 멀리 비킨다
+                        pin = min([((yy - la) ** 2 + (xx - ln) ** 2) ** .5 for la, ln in pts] + [9])
+                        sc = min(edge, .6) * 1.2 + min(near, .5) + min(pin, .12) * 2
+                        if sc > bs: bs, best = sc, q
+                    xx += st
+                yy += st
+            a['at'] = [round(best.y, 3), round(best.x, 3)]; chosen.append(tuple(a['at']))
+    json.dump(R, open(fp, 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
+print('at: done')
