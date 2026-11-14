@@ -1123,6 +1123,7 @@ class Actor {
       case 'carry': aL = aR = [-0.4, -0.25, -1.3]; nod = 0.18; carry = true; break;
       case 'ride': kneel = 0.8; aL = aR = [-0.3, -0.2, -1.2]; nod = 0.08; break; // 나귀 등에 걸터앉음
       case 'point': aR = [-1.5, 0.25, 0]; break;
+      case 'seat': // 걸상에 걸터앉음 (모델은 다리를 앞으로 — 회당 e16)
       case 'perch': // 나무 가지에 엎드려 내려다봄 — 인형은 앉은 모습으로 대신한다 (모델은 stage/model-actor.js가 엎드린다)
       case 'sit': kneel = 0.75; aL = aR = [-0.3, -0.15, -0.9]; break;
       case 'rebuke': aR = [-1.95, 0.3, -0.05]; aL = [-0.7, 0.55, -0.25]; lean = 0.04; nod = -0.12; break; // 바람을 꾸짖음

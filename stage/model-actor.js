@@ -14,7 +14,8 @@ const CLIP = { idle: 'idle', listen: 'idle', speak: 'talk', sleep: 'sleep' };
 // 무릎 꿇은 다리만 모델의 'pray'(무릎 꿇고 두 팔을 높이 듦)에서 빌리고 팔은 인형대로 — 인형의 기도는 서서 두 손을 가슴에 모은다
 const KNEEL = new Set(['kneel', 'mourn', 'sit-ground', 'cower']);
 // 걸터앉기: 넓적다리를 앞으로, 정강이는 아래로 (회당에서 앉아 말씀을 읽으심 — 무릎 꿇고 기도하는 자세가 되었다, 사용자 2026-11)
-const SEAT = new Set(['sit', 'sit-speak', 'ride']);
+// 걸터앉기는 앉을 자리가 있을 때만(나귀·높이를 정한 사람·'seat') — 자리 없이 다리를 뻗으니 허공에 떠 앉았다(사용자 2026-11). 그 밖의 '앉기'는 땅에 발뒤꿈치를 깔고
+const SEAT = new Set(['ride', 'seat']), SITS = new Set(['sit', 'sit-speak'])
 const bone = (root, n) => { let f = null; root.traverse(o => { if (!f && o.isBone && new RegExp(`(^|mixamorig)${n}$`).test(o.name)) f = o; }); return f; };
 const DOWN = new THREE.Vector3(0, -1, 0);
 // 밝게: 모델 텍스처는 차분한 색인데 무대 조명은 밝은 단색 인형에 맞춰져 있어 사람만 어둡게 보였다(사용자 2026-11).
@@ -109,9 +110,9 @@ export class StageModel {
     const r = this.p.root, dr = d.p.root, moving = d.goal.distanceTo(d.pos) > 0.02;
     r.position.copy(dr.position); r.rotation.copy(dr.rotation); r.scale.copy(dr.scale); r.visible = dr.visible;
     this.fadeTo(Math.min(1, d.show));
-    const walk = moving && !d.floating, clip = walk ? 'walk' : CLIP[d.pose], kneel = !walk && KNEEL.has(d.pose), ride = !walk && SEAT.has(d.pose), perch = !walk && d.pose === 'perch';
+    const walk = moving && !d.floating, clip = walk ? 'walk' : CLIP[d.pose], kneel = !walk && KNEEL.has(d.pose), onSeat = SITS.has(d.pose) && (d.yT || 0) > 0.05, ride = !walk && (SEAT.has(d.pose) || onSeat), perch = !walk && d.pose === 'perch';
     // 무릎 꿇는 동작('pray')이 없는 모델(순례자·어부 등 엑스트라)은 다리를 직접 접어 발뒤꿈치에 앉힌다 — 동작 없이 서 있었다
-    const seiza = kneel && !this.acts.pray;
+    const seiza = !walk && ((kneel && !this.acts.pray) || (SITS.has(d.pose) && !onSeat));
     this.play(clip || (kneel && !seiza ? 'pray' : 'idle'));
     this.mixer.update(dt);
     // 동작이 없는 자세는 인형의 팔을 따른다 (천천히 들어가고 나온다)
