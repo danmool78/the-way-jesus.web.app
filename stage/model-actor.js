@@ -67,7 +67,7 @@ export class StageModel {
     const dl = this.doll.p.armL.position.x > 0;
     this.arms = [[this.doll.p.armL, dl === (L.up.getWorldPosition(v1).x > 0) ? L : R], [this.doll.p.armR, dl === (L.up.getWorldPosition(v1).x > 0) ? R : L]];
     for (const [, mb] of this.arms) if (mb.hand) mb.hand0 = mb.hand.quaternion.clone(); // 손목의 기본 자세 (곧게 편 손)
-    this.legs = [['Left'], ['Right']].map(([s]) => ({ up: bone(body, s + 'UpLeg'), lo: bone(body, s + 'Leg'), foot: bone(body, s + 'Foot'), toe: bone(body, s + 'ToeBase') }));
+    this.legs = [['Left'], ['Right']].map(([s]) => ({ up: bone(body, s + 'UpLeg'), lo: bone(body, s + 'Leg'), foot: bone(body, s + 'Foot'), toe: bone(body, s + 'ToeBase'), tip: bone(body, s + 'Toe_End') }));
     const hips = bone(body, 'Hips'); this.hipH = hips ? hips.getWorldPosition(v1).y * body.scale.x / (body.scale.x || 1) : 0.5; this.body = body; this.legW = 0;
     this.headB = bone(body, 'Head'); this.neckB = bone(body, 'Neck'); this.spineB = bone(body, 'Spine1') || bone(body, 'Spine'); this.topB = bone(body, 'HeadTop_End');
     this.play('idle', 0);
@@ -137,7 +137,7 @@ export class StageModel {
       else if (kind === 'glow') o.position.set(0, it.p0.y + 0.1, it.p0.z);
     }
   }
-  update(time, dt) { this.pose(time, dt); this.toGround(); this.placeProps(); }
+  update(time, dt) { this.posture(time, dt); this.toGround(); this.placeProps(); }
   // 땅 딛기: 땅에 서거나 앉거나 꿇는 자세면 가장 낮은 무릎·발·발끝이 땅에 닿게 몸 높이를 맞춘다 — 모델마다 동작의 높이가 조금씩 달라
   // 묻히거나(마리아의 무릎 꿇기) 떠 보였다. 높이를 정한 사람·나무 위·누운 사람·걸터앉은 사람·날아 있는 것은 그대로
   toGround() {
@@ -145,12 +145,12 @@ export class StageModel {
     if (d.floating || (d.yT || 0) > 0.05 || ['sleep', 'perch', 'seat', 'ride', 'crucified', 'crucified-dead'].includes(d.pose) || this.body.rotation.x) return;
     const r = this.p.root; r.updateMatrixWorld(true);
     let low = Infinity;
-    for (const l of this.legs) for (const b of [l.lo, l.foot, l.toe]) if (b) low = Math.min(low, b.getWorldPosition(v1).y);
+    for (const l of this.legs) for (const b of [l.lo, l.foot, l.toe, l.tip]) if (b) low = Math.min(low, b.getWorldPosition(v1).y); // 발끝 뼈(Toe_End)까지
     if (low === Infinity) return;
     const k = r.getWorldScale(v2).y, want = r.getWorldPosition(v1).y + 0.012 * k; // 발목 뼈는 발바닥보다 조금 위
     this.body.position.y -= (low - want) / k;
   }
-  pose(time, dt) {
+  posture(time, dt) {
     const d = this.doll; d.update(time, dt);
     const r = this.p.root, dr = d.p.root, moving = d.goal.distanceTo(d.pos) > 0.02;
     r.position.copy(dr.position); r.rotation.copy(dr.rotation);
@@ -180,7 +180,7 @@ export class StageModel {
     // 잠: 잠자는 동작이 없는 모델(베드로 등)은 인형이 눕는 대로 몸을 옆으로 눕힌다 — 서 있는 채 자고 있었다
     const lie = d.pose === 'sleep' && !this.acts.sleep;
     this.body.rotation.z = lie ? d.p.body.rotation.z : 0; this.body.position.x = lie ? d.p.body.position.x : 0;
-    if (lie) this.body.position.y += d.p.body.position.y * 0.6;
+    if (lie) this.body.position.y += d.p.body.position.y * 0.6 + 0.045 * this.hipH; // 옆으로 누운 몸의 두께만큼 띄운다 (다리가 땅에 묻혔다)
     // 가지에 엎드리기(삭개오, 눅 19:4): 발끝을 축으로 앞으로 눕혀 몸이 가지를 따라 놓이고, 두 팔은 가지를 끌어안고, 고개는 들어 아래를 본다
     this.perchW = damp(this.perchW || 0, perch ? 1 : 0, 5, dt);
     this.body.rotation.x = this.perchW * Math.PI * 0.5;
