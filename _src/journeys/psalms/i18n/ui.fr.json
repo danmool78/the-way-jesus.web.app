@@ -20,5 +20,23 @@
  "lessons": "Tout chanter devant Dieu|Les Psaumes ne contiennent pas que la louange : on y trouve aussi la plainte, la peur et la colère. Peuple, confie-toi en lui en tout temps, répands ton cœur devant lui. (Ps 62.8)\nLà où naquirent les chants|Ces chants sont nés au désert, dans les grottes et dans les villes en ruines. Le Seigneur est proche des cœurs brisés, il sauve les esprits abattus. (Ps 34.18)\nLa parole chantée dans le cœur|Les Psaumes sont une parole qu’on lit et une prière qu’on chante. Que la parole du Christ habite en vous avec abondance ; chantez à Dieu, de tout votre cœur reconnaissant, des psaumes, des hymnes et des chants inspirés. (Col 3.16)",
  "gospelBridge": "Sur la croix, Jésus a crié avec les mots d’un psaume : mon Dieu, mon Dieu, pourquoi m’as-tu abandonné ? (Ps 22.1 ; Mt 27.46). Ressuscité, il a dit que tout ce qui était écrit de lui dans la loi de Moïse, dans les prophètes et dans les Psaumes devait s’accomplir. (Lc 24.44)",
  "invite": "Si l’histoire de Dieu rencontrée sur ce chemin vous a touché, venez rencontrer Jésus, qui est au cœur de cette histoire. Parcourez « Les pas de Jésus » depuis le début, et allez dans une église près de chez vous. Nous souhaitons que vous y rencontriez Dieu dans la louange et dans sa parole, et que vous goûtiez la bénédiction d’être adopté comme son enfant, en appelant Dieu « Père ». (Rm 8.15)\nIl se tient encore à la porte et vous attend. (Ap 3.20)",
- "seekerHead": "Pour vous qui ne le connaissez pas encore"
+ "seekerHead": "Pour vous qui ne le connaissez pas encore",
+ "map": {
+  "애 굽": "ÉGYPTE",
+  "고 센": "GOSEN",
+  "시 나 이": "SINAÏ",
+  "미 디 안": "MADIAN",
+  "에 돔": "ÉDOM",
+  "모 압": "MOAB",
+  "가 나 안": "CANAAN",
+  "바 란 광 야": "DÉSERT DE PARAN",
+  "온 (헬리오폴리스)": "On (Héliopolis)",
+  "멤피스": "Memphis",
+  "비돔": "Pitom",
+  "홍 해": "MER ROUGE",
+  "아카바 만": "Golfe d’Aqaba"
+ },
+ "secVerse": "Couplet",
+ "secChorus": "Refrain",
+ "secBridge": "Pont"
 }
