@@ -5,7 +5,7 @@
    - 나머지(축복·손 들기·가리키기·십자가 등)는 서 있는 동작 위에 인형의 팔·팔뚝·머리가 가리키는 쪽으로 모델의 뼈를 돌려 맞춘다
    (뼈마다 축이 달라 각도를 옮기면 엉뚱했다 — 방향으로 맞추면 축을 몰라도 된다) */
 import { THREE, damp } from './kit.js';
-import { Actor } from './people.js';
+import { Actor, TYPES } from './people.js';
 import { clone } from '../assets/vendor/SkeletonUtils.js';
 import { calmClips } from '../game-model.js';
 
@@ -32,8 +32,9 @@ const v1 = new THREE.Vector3(), v2 = new THREE.Vector3(), q1 = new THREE.Quatern
 const dollH = {};
 export function dollHeight(type) {
   if (dollH[type]) return dollH[type];
-  const d = new Actor(type); d.settle(); d.p.root.updateMatrixWorld(true);
-  return (dollH[type] = new THREE.Box3().setFromObject(d.p.root).max.y);
+  // 보통 어른(man)의 키에 그 인형의 키 비율(height)만 곱한다 — 인형 전체 크기로 재니 몸 둘레의 빛(glow, 변화산의 모세·엘리야)까지 들어가 거인이 되었다(사용자 2026-11)
+  if (!dollH.man) { const d = new Actor('man'); d.settle(); d.p.root.updateMatrixWorld(true); dollH.man = new THREE.Box3().setFromObject(d.p.root).max.y; }
+  return (dollH[type] = dollH.man * (TYPES[type]?.height || 1));
 }
 
 // 뼈(b)가 자식 쪽으로 가리키는 방향을 dir(세계 좌표)로 w만큼 돌린다
