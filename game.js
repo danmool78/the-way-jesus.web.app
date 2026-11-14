@@ -243,7 +243,12 @@ function spawnPatrols() {
       if (![...Array(19)].some((_, i) => wet(P[0] + (Q[0] - P[0]) * i / 18, P[1] + (Q[1] - P[1]) * i / 18))) { A = P; B = Q; }
     }
     if (!A) continue;
-    for (let i = 0; i < 2; i++) { const s = G.soldierG ? new ModelActor(G.soldierG, A[0] + i * 1.5, A[1]) : new Actor('soldier', A[0] + i * 1.5, A[1], 0, { gaze: false }); s.big = SCALE; s.realWalk = true; s.speed = 2.2; G.scene.add(s.p.root); G.patrols.push({ s, A, B, to: 1, off: i * 1.5 }); }
+    // 둘이 나란히 붙어 걷는다: 순찰 길에 직각으로 0.8만큼 벌린다 (1.5로 x쪽만 벌리니 따로 다니는 것 같았다 — 사용자 2026-11)
+    const L = Math.hypot(B[0] - A[0], B[1] - A[1]) || 1, nx = -(B[1] - A[1]) / L * 0.4, nz = (B[0] - A[0]) / L * 0.4;
+    for (let i = 0; i < 2; i++) {
+      const o = i ? [-nx, -nz] : [nx, nz], s = G.soldierG ? new ModelActor(G.soldierG, A[0] + o[0], A[1] + o[1]) : new Actor('soldier', A[0] + o[0], A[1] + o[1], 0, { gaze: false });
+      s.big = SCALE * 1.15; s.realWalk = true; s.speed = 2.2; G.scene.add(s.p.root); G.patrols.push({ s, A, B, to: 1, o }); // 병정은 순례자보다 크고 단단하게
+    }
   }
 }
 function updateEvents(dt, me0) {
@@ -276,11 +281,19 @@ function updateEvents(dt, me0) {
   }
   // 로마 병정
   for (const P of G.patrols || []) {
-    const T = P.to ? P.B : P.A; P.s.moveTo(T[0] + P.off, T[1]); P.s.ground = GH(P.s.pos.x, P.s.pos.y);
-    if (Math.hypot(P.s.pos.x - T[0] - P.off, P.s.pos.y - T[1]) < 0.4) P.to = 1 - P.to;
-    P.s.showT = Math.hypot(P.s.pos.x - px, P.s.pos.y - pz) < 40 ? 1 : 0;
-    if (Math.hypot(P.s.pos.x - px, P.s.pos.y - pz) < 2.4 && !(G.checkT > -3)) { G.checkT = 2.8; snd.play('halt'); toast('로마 병정에게 붙잡혔어요!<small>검문을 받느라 잠시 멈춥니다 · 병정을 피해 다니세요</small>', false, 2800); }
+    const T = P.to ? P.B : P.A, d = Math.hypot(P.s.pos.x - px, P.s.pos.y - pz);
+    P.s.ground = GH(P.s.pos.x, P.s.pos.y); P.s.showT = d < 40 ? 1 : 0;
+    // 검문 중: 붙잡은 짝은 그 자리에 서서 나를 본다 (그냥 지나가 버리면 검문 같지 않았다 — 사용자 2026-11)
+    if (G.checkT > 0 && G.checkBy === P.A) { P.s.goal.copy(P.s.pos); P.s.target = G.me; continue; }
+    P.s.target = null; P.s.moveTo(T[0] + P.o[0], T[1] + P.o[1]);
+    if (Math.hypot(P.s.pos.x - T[0] - P.o[0], P.s.pos.y - T[1] - P.o[1]) < 0.4) P.to = 1 - P.to;
+    if (d < 2.4 && !(G.checkT > -3)) {
+      G.checkT = 2.8; G.checkBy = P.A; snd.play('halt'); toast('로마 병정에게 붙잡혔어요!<small>검문을 받느라 잠시 멈춥니다 · 병정을 피해 다니세요</small>', false, 2800);
+      for (const Q of G.patrols) if (Q.A === P.A) { Q.s.goal.copy(Q.s.pos); Q.s.target = G.me; } // 짝도 함께 멈춘다
+      G.me.target = P.s; // 나도 병정을 돌아본다
+    }
   }
+  if (G.checkT > 0 && G.checkT - dt <= 0) G.me.target = null;
   G.checkT -= dt;
 }
 const placeOf = e => G.data.places[e.place];
