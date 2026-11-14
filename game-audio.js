@@ -61,6 +61,8 @@ export function createAudio() {
     wind: () => burst({ type: 'bandpass', f: 280, f2: 900, q: 0.6, vol: 0.2, a: 0.6, d: 2.2 }),       // 모래바람
     halt: () => { burst({ type: 'bandpass', f: 2600, q: 4, vol: 0.12, d: 0.08 }); burst({ type: 'bandpass', f: 2300, q: 4, vol: 0.1, d: 0.1, at: 0.14 }); tone({ f: 130.8, type: 'square', vol: 0.05, d: 0.25, lp: 500 }); }, // 병정의 창·방패
     bonus: () => [523.3, 659.3, 784, 1046.5].forEach((f, i) => tone({ f, type: 'triangle', vol: 0.09, d: 0.4, at: i * 0.08 })), // 시험을 이김·도움
+    twinkle: () => [2093, 2637, 3136].forEach((f, i) => tone({ f, vol: 0.035, d: 0.5, at: i * 0.09 })), // 보물이 가까이서 반짝임
+    treasure: () => { [523.3, 659.3, 784, 1046.5, 1318.5].forEach((f, i) => tone({ f, type: 'triangle', vol: 0.08, d: 0.45, at: i * 0.07 })); bell(1568, 0.4, 0.09, 2); bell(2093, 0.55, 0.06, 2); },
     end: () => { [392, 523.3, 659.3, 784].forEach((f, i) => bell(f, i * 0.18, 0.1, 2)); },
   };
   const play = k => { unlock(); SFX[k]?.(); };
