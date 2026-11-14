@@ -155,7 +155,7 @@ function seamless(clip) {
 }
 const STAND = /(Hips|Spine\d?|Neck|Leg)\.quaternion$/; // UpLeg도 Leg로 끝난다
 const calm = new WeakMap(), BODY = /(Hips|Spine|Neck|Head|Leg|Foot|Toe)[^.]*\./;
-function calmClips(gltf) {
+export function calmClips(gltf) { // 3D 무대(stage/model-actor.js)도 같은 동작을 쓴다
   if (calm.has(gltf)) return calm.get(gltf);
   const by = Object.fromEntries(gltf.animations.map(c => [c.name, c])), t = by.talk, i = by.idle;
   let out = gltf.animations.map(seamless);
