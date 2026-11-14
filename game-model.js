@@ -102,6 +102,27 @@ function makeGear(kind) {
 }
 const HOLD = { staff: 'R', crook: 'R', rod: 'R', spear: 'R', bigspear: 'R', scutum: 'L', shield: 'L', bigshield: 'L', jar: 'top', helmet: 'top' };
 
+// 차분한 말하기: Mixamo 'talk'는 팔 몸짓은 좋은데 엉덩이·허리·고개가 크게 흔들려(고개 29°, 엉덩이 12°) 건들거렸다(사용자 2026-11).
+// 팔·어깨·손은 talk 그대로, 몸통·고개·다리는 가만히 선 idle에서 가져와 한 동작으로 합친다 (모델마다 한 번만)
+const calm = new WeakMap(), BODY = /(Hips|Spine|Neck|Head|Leg|Foot|Toe)[^.]*\./;
+function calmClips(gltf) {
+  if (calm.has(gltf)) return calm.get(gltf);
+  const by = Object.fromEntries(gltf.animations.map(c => [c.name, c])), t = by.talk, i = by.idle;
+  let out = gltf.animations;
+  if (t && i) {
+    const still = i.tracks.filter(k => BODY.test(k.name)), have = new Set(still.map(k => k.name));
+    // idle에서 덜어 낸(움직이지 않는) 뼈는 기본 자세로 못 박는다 — 비워 두면 앞 동작(걷기)의 마지막 자세에 멈춰 있었다
+    for (const k of t.tracks) if (BODY.test(k.name) && !have.has(k.name)) {
+      const [n, prop] = k.name.split('.'), o = gltf.scene.getObjectByName(n); if (!o || !o[prop]) continue;
+      const v = o[prop].toArray(), T = prop === 'quaternion' ? THREE.QuaternionKeyframeTrack : THREE.VectorKeyframeTrack;
+      still.push(new T(k.name, [0], v));
+    }
+    const tracks = [...t.tracks.filter(k => !BODY.test(k.name)), ...still];
+    out = gltf.animations.map(c => c === t ? new THREE.AnimationClip('talk', t.duration, tracks) : c);
+  }
+  calm.set(gltf, out); return out;
+}
+
 export class ModelActor {
   constructor(gltf, x = 0, z = 0, o = {}) {
     const body = clone(gltf.scene); // 뼈대째 복제 — 같은 모델로 여럿(병정 등)을 세울 수 있게
@@ -113,7 +134,7 @@ export class ModelActor {
     this.p = { root: new THREE.Group() }; this.p.root.add(body);
     this.head = bone(body, 'Head');
     this.mixer = new THREE.AnimationMixer(body);
-    this.acts = Object.fromEntries(gltf.animations.map(c => [c.name, this.mixer.clipAction(c)]));
+    this.acts = Object.fromEntries(calmClips(gltf).map(c => [c.name, this.mixer.clipAction(c)]));
     this.cur = null;
     this.pos = new THREE.Vector2(x, z); this.goal = this.pos.clone();
     this.face = 0; this.faceT = 0; this.pose = 'idle'; this.target = null;
