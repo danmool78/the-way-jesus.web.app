@@ -83,7 +83,6 @@ button{font:inherit;color:inherit;cursor:pointer}
 #run.on{background:rgba(217,180,106,.35)}
 @media (hover:hover) and (pointer:fine){#run{display:none}}
 /* 만난 뒤 둘러보다가 준비되면 */
-#goWord{position:fixed;z-index:6;left:50%;transform:translateX(-50%);bottom:calc(150px + env(safe-area-inset-bottom));padding:12px 26px;border-radius:99px;border:0;background:linear-gradient(#f0d79a,#c99a4a);color:#2a1f14;font:700 16px var(--serif);box-shadow:0 6px 20px rgba(0,0,0,.45)}
 #bubble .more{font-style:normal;margin-left:6px;color:#b98b45;font-size:12px}
 #ask{position:fixed;z-index:6;right:calc(12px + env(safe-area-inset-right));bottom:calc(86px + env(safe-area-inset-bottom));padding:8px 12px;border-radius:12px;border:1px solid var(--line);background:var(--panel);font-size:12.5px;color:var(--gold2)}
 /* 등불: 가까울수록 밝게 (--w 0~1) */
@@ -228,7 +227,6 @@ body.meeting #stick,body.meeting #run,body.meeting #arrow{opacity:0!important;po
 <button id="cardsBtn" class="hidden"></button>
 <button id="ask" class="hidden">길 묻기</button>
 <button id="run" class="hidden">달리기</button>
-<button id="goWord" class="hidden">말씀 고르기</button>
 <button id="quit" class="hidden" aria-label="나가기">나가기</button>
 <button id="sound" class="hidden">소리 켬</button>
 
