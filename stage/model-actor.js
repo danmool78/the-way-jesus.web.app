@@ -24,6 +24,17 @@ function dollHeight(type) {
   dollH = new THREE.Box3().setFromObject(d.p.root).max.y; return dollH;
 }
 
+// 뼈(b)가 자식 쪽으로 가리키는 방향을 dir(세계 좌표)로 w만큼 돌린다
+function aimBone(b, child, dir, w = 1) {
+  b.updateWorldMatrix(true, false);
+  const from = child.getWorldPosition(v1).sub(b.getWorldPosition(v2)).normalize();
+  q1.setFromUnitVectors(from, dir);                      // 세계에서 더 돌릴 만큼
+  b.getWorldQuaternion(q2); q1.multiply(q2);               // 새 세계 회전
+  b.parent.getWorldQuaternion(q3).invert(); q3.multiply(q1); // 부모 기준으로
+  b.quaternion.slerp(q3, w);
+  b.updateMatrixWorld(true);
+}
+
 export class StageModel {
   constructor(gltf, type, x = 0, z = 0, face = 0, o = {}) {
     this.doll = new Actor(type, x, z, face, o); // 보이지 않는 길잡이 (장면에 넣지 않는다)
@@ -79,16 +90,7 @@ export class StageModel {
     this.mats.forEach(m => { if (m.alphaHash !== !solid) { m.alphaHash = !solid; m.needsUpdate = true; } m.opacity = solid ? 1 : op; });
     this.op = op;
   }
-  // 뼈(b)가 자식 쪽으로 가리키는 방향을 dir(세계 좌표)로 w만큼 돌린다
-  aim(b, child, dir, w) {
-    b.updateWorldMatrix(true, false);
-    const from = child.getWorldPosition(v1).sub(b.getWorldPosition(v2)).normalize();
-    q1.setFromUnitVectors(from, dir);                    // 세계에서 더 돌릴 만큼
-    b.getWorldQuaternion(q2); q1.multiply(q2);             // 새 세계 회전
-    b.parent.getWorldQuaternion(q3).invert(); q3.multiply(q1); // 부모 기준으로
-    b.quaternion.slerp(q3, w);
-    b.updateMatrixWorld(true);
-  }
+  aim(b, child, dir, w) { aimBone(b, child, dir, w); }
   update(time, dt) {
     const d = this.doll; d.update(time, dt);
     const r = this.p.root, dr = d.p.root, moving = d.goal.distanceTo(d.pos) > 0.02;
@@ -122,4 +124,33 @@ export class StageModel {
     if (this.headB) this.headB.rotation.x += d.p.head.rotation.x * this.w * 0.8;
   }
   dispose() { this.mixer.stopAllAction(); this.p.root.parent?.remove(this.p.root); this.mats.forEach(m => m.dispose()); }
+}
+
+/* 군중 한 사람: 순례자 모델을 한 번만 자세 잡아 세운다 (매 프레임 움직이지 않아 가볍다 — 장면에 수십 명).
+   서 있기는 'idle'의 한 순간, 앉기('sit')는 'pray'의 무릎 꿇은 다리에 'idle'의 팔 (두 팔을 높이 들면 경배하는 듯해서) */
+export function crowdPerson(gltf, height) {
+  const body = clone(gltf.scene);
+  body.updateMatrixWorld(true);
+  const top = bone(body, 'HeadTop_End'), h = top ? top.getWorldPosition(v1).y : 1.7;
+  body.scale.setScalar(height / (h > 0.1 ? h : 1.7));
+  body.traverse(m => { if (m.isMesh) m.frustumCulled = false; });
+  const mixer = new THREE.AnimationMixer(body), clip = n => gltf.animations.find(c => c.name === n);
+  const t0 = Math.random();
+  const legs = ['Left', 'Right'].map(sd => [bone(body, sd + 'UpLeg'), bone(body, sd + 'Leg'), bone(body, sd + 'Foot')]);
+  const idle = clip('idle'), act = idle && mixer.clipAction(idle);
+  act?.play();
+  // 앉기는 무릎 꿇고 발뒤꿈치에 앉은 모습 — 넓적다리는 앞으로, 정강이는 뒤로 눕히고 무릎이 땅에 닿게 몸을 내린다 (순례자 모델엔 앉는 동작이 없다)
+  const pose = sit => {
+    body.position.y = 0;
+    mixer.setTime(idle ? idle.duration * t0 : 0); // 멈추지(stop) 않는다 — 멈추면 뼈가 처음 자세(A자)로 되돌아간다
+    if (!sit) return;
+    body.parent?.updateMatrixWorld(true); body.updateMatrixWorld(true);
+    const q = body.getWorldQuaternion(new THREE.Quaternion()), thigh = new THREE.Vector3(0, -0.35, 1).normalize().applyQuaternion(q), shin = new THREE.Vector3(0, -0.12, -1).normalize().applyQuaternion(q);
+    let knee = Infinity;
+    for (const [u, l, f] of legs) if (u && l && f) { aimBone(u, l, thigh); aimBone(l, f, shin); knee = Math.min(knee, l.getWorldPosition(v1).y); }
+    const w = body.parent ? body.parent.getWorldScale(v2).y : 1;
+    if (knee < Infinity) body.position.y -= (knee - body.parent.getWorldPosition(v1).y) / w - 0.03 * height;
+  };
+  pose(false);
+  return { obj: body, pose };
 }

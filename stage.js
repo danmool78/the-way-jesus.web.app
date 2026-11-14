@@ -4,7 +4,7 @@ import { THREE, damp } from './stage/kit.js';
 import { Actor, TYPES } from './stage/people.js';
 import { StageModel } from './stage/model-actor.js';
 import { model, tinted } from './game-model.js';
-import { makeProp } from './stage/props.js';
+import { makeProp, setCrowd } from './stage/props.js';
 import { SCRIPTS } from './stage/scenes.js';
 import { createStreet } from './stage/street/view.js';
 
@@ -183,6 +183,19 @@ function setScene(ev) {
   if (street.on) street.cam(script.cams, script.cam || Object.keys(script.cams || {})[0], true);
   stageGroup.scale.setScalar(script.scale || 1);
   size = { w: 0, h: 0 }; // 넓은 무대(wide)가 바뀌었을 수 있으니 다시 잰다
+  // 배역마다 쓸 모델 (거리 무대·실루엣은 인형 그대로)
+  const plan = Object.values(script.cast).map(([type, , , , o = {}], i) => !script.street && !o.silhouette && modelOf(type, i));
+  {
+    const crowd = !script.street && Object.values(script.props || {}).some(([k]) => k === 'crowd');
+    const names = [...new Set([...plan.filter(Boolean).map(m => m[0]), ...(crowd ? ['pilgrim-man', 'pilgrim-woman'] : [])])];
+    // 군중: 순례자 모델 남녀에 옷 색 셋씩 (색마다 텍스처를 새로 만드니 몇 가지만)
+    setCrowd(crowd && ready['pilgrim-man'] && ready['pilgrim-woman'] ? {
+      men: [null, '#8b6f50', '#5d6b4a', '#7d4a3a'].map(c => c ? tinted(ready['pilgrim-man'], 'pilgrim-man', c) : ready['pilgrim-man']),
+      women: [null, '#3c5d96', '#a3554a'].map(c => c ? tinted(ready['pilgrim-woman'], 'pilgrim-woman', c) : ready['pilgrim-woman']),
+    } : null);
+    const ev0 = ev, wait = names.length && want(names);
+    wait?.then(() => { if (curEv === ev0 && (atStart || new URLSearchParams(location.search).has('beat'))) setScene(ev0); });
+  }
   Object.entries(script.props || {}).forEach(([name, [kind, x, z, o]]) => {
     const p = makeProp(kind, x, z, o);
     p.terrainHide = o?.terrain === false; // 3D 지형의 도성 모형에 이미 있는 건물 — 무대에 또 세우면 모형 위에 걸쳐 떠 보인다
@@ -193,13 +206,6 @@ function setScene(ev) {
     p.lift = new THREE.Group(); p.lift.add(p.obj); p.kind = kind;
     props[name] = p; stageGroup.add(p.lift);
   });
-  // 배역마다 쓸 모델 (거리 무대·실루엣은 인형 그대로)
-  const plan = Object.values(script.cast).map(([type, , , , o = {}], i) => !script.street && !o.silhouette && modelOf(type, i));
-  {
-    const names = [...new Set(plan.filter(Boolean).map(m => m[0]))];
-    const ev0 = ev, wait = names.length && want(names);
-    wait?.then(() => { if (curEv === ev0 && (atStart || new URLSearchParams(location.search).has('beat'))) setScene(ev0); });
-  }
   Object.entries(script.cast).forEach(([name, [type, x, z, face, o = {}]], i) => {
     const m = plan[i];
     let g = m && ready[m[0]];
