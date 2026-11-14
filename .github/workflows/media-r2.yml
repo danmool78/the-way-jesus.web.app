@@ -1,0 +1,22 @@
+name: Media to R2
+# 낭독·배경음악·영상을 R2에 맞춘다 (저장소에 있는데 R2에 없거나 다른 것만): 처음 옮길 때와, 손으로 다시 맞출 때.
+# 평소에 새로 생기는 파일은 배포 작업(firebase-hosting-merge.yml)이 배포 전에 올린다. 버킷 CORS도 함께 둔다 (_src/tools/r2sync.py)
+on:
+  workflow_dispatch:
+  push:
+    branches-ignore: [main]
+    paths: ['_src/tools/r2sync.py', '.github/workflows/media-r2.yml']
+permissions:
+  contents: read
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CF_WORKERS_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bucket CORS
+        run: python3 _src/tools/r2sync.py cors
+      - name: Upload missing media
+        run: python3 _src/tools/r2sync.py all
