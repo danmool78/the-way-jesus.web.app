@@ -698,6 +698,11 @@ function missionText() {
 // 모델은 그 장면에서 처음 쓸 때 받는다(R2) — 처음부터 다 받으면 무거웠다
 const SPOTS = [[-0.55, 0.65], [1.6, 0.55], [0.15, -0.75], [1.3, -0.7], [-1.1, -0.15]];
 function castFor(i) {
+  // 앞서 걷는 그분과 같은 사람은 곁에 세우지 않는다 — 장면부터 엘리사가 앞서는데 곁에도 엘리사를 넣어 둘이 섰다(k22, 사용자 2026-11)
+  const lead = leadAt(i)?.[1] || JOURNEYS[JID].model, c0 = castOf(i);
+  return c0.filter(n => n.split(':')[0] !== lead);
+}
+function castOf(i) {
   const e = G.events[i], c = CAST[JID]?.[e.id]; if (c) return c;
   const F = FOLLOW[JID], k = F && G.events.findIndex(x => x.id === F.from);
   return F && k >= 0 && i >= k ? [F.pool[i % F.pool.length], F.pool[(i + 1) % F.pool.length]] : [];
