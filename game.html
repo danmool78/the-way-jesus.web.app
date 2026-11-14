@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cut,user-scalable=no">
+<title>그 길 — 순례 게임 | 걸어서 만나는 예수</title>
+<meta name="description" content="이름을 넣고 나만의 순례자를 꾸며, 지도 위를 걸어 예수님이 계신 다음 장면을 찾아가는 게임.">
+<link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
+<meta name="theme-color" content="#15110d">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#15110d;--panel:rgba(29,24,19,.86);--line:rgba(217,180,106,.28);--ink:#f1e8d8;--muted:#b3a58f;--faint:#7f735f;--gold:#d9b46a;--gold2:#f0d79a;--bad:#e07a62;--ok:#8fbf7a;--serif:'Gowun Batang',serif;--sans:'Noto Sans KR',system-ui,sans-serif}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:var(--sans);overflow:hidden;overscroll-behavior:none;touch-action:none}
+button{font:inherit;color:inherit;cursor:pointer}
+#world{position:fixed;inset:0;display:block;width:100%;height:100%}
+.hidden{display:none!important}
+
+/* 순례자 꾸미기 */
+#setup{position:fixed;inset:0;z-index:20;display:grid;grid-template-columns:1fr minmax(320px,420px);background:radial-gradient(ellipse at 30% 40%,#2a2117,#110d09 70%)}
+#setup .stagebox{position:relative;min-height:0}
+#preview{position:absolute;inset:0;width:100%;height:100%}
+#setup .stagebox .nameplate{position:absolute;left:50%;bottom:3%;transform:translateX(-50%);font:700 22px var(--serif);color:var(--gold2);text-shadow:0 2px 8px #000;white-space:nowrap}
+#setup .panel{overflow:auto;padding:22px 22px 28px;background:var(--panel);border-left:1px solid var(--line);touch-action:pan-y}
+#setup h1{margin:0 0 2px;font:700 26px var(--serif);color:var(--gold2)}
+#setup .lead{margin:0 0 16px;color:var(--muted);font-size:13.5px;line-height:1.6;word-break:keep-all}
+.field{margin:0 0 14px}
+.field>label,.field>b{display:block;margin:0 0 6px;font-size:12px;font-weight:600;letter-spacing:.06em;color:var(--muted)}
+#name{width:100%;padding:11px 13px;border-radius:10px;border:1px solid var(--line);background:#0f0c09;color:var(--ink);font:500 16px var(--sans)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:#1d1813;font-size:13px}
+.chips button.on{background:var(--gold);color:#1a140d;border-color:var(--gold);font-weight:700}
+.sw{display:flex;flex-wrap:wrap;gap:8px}
+.sw button{width:30px;height:30px;border-radius:50%;border:2px solid rgba(255,255,255,.15);padding:0}
+.sw button.on{border-color:var(--gold2);box-shadow:0 0 0 2px #110d09,0 0 0 4px var(--gold2)}
+.sw button.none{background:repeating-linear-gradient(45deg,#3a3026 0 4px,#1d1813 4px 8px)}
+.go{width:100%;margin-top:6px;padding:14px;border:0;border-radius:12px;background:linear-gradient(#e6c67e,#c99d4e);color:#1a140d;font:700 16px var(--sans)}
+.go.ghost{margin-top:8px;background:transparent;border:1px solid var(--line);color:var(--gold2);font-weight:500;font-size:14px;padding:11px}
+.back{display:inline-block;margin-top:14px;color:var(--faint);font-size:12.5px;text-decoration:none}
+@media (max-width:760px){#setup{grid-template-columns:1fr;grid-template-rows:38vh 1fr}#setup .panel{border-left:0;border-top:1px solid var(--line)}#setup h1{font-size:22px}}
+
+/* 게임 머리판 */
+#hud{position:fixed;left:0;right:0;top:0;z-index:5;display:flex;gap:10px;align-items:flex-start;padding:max(10px,env(safe-area-inset-top)) 12px 0;pointer-events:none}
+.mission{flex:1;max-width:520px;margin:0 auto;padding:9px 14px 10px;border-radius:14px;background:var(--panel);border:1px solid var(--line);backdrop-filter:blur(6px);text-align:center}
+.mission small{display:block;font-size:11px;letter-spacing:.08em;color:var(--gold)}
+.mission b{display:block;margin-top:2px;font:700 17px/1.35 var(--serif);color:var(--ink);word-break:keep-all;text-wrap:balance}
+.mission .meta{display:flex;justify-content:center;gap:12px;margin-top:5px;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.stat{position:fixed;z-index:5;top:max(10px,env(safe-area-inset-top));padding:7px 10px;border-radius:12px;background:var(--panel);border:1px solid var(--line);font-size:12px;color:var(--muted);text-align:center;pointer-events:none;font-variant-numeric:tabular-nums}
+.stat b{display:block;font-size:15px;color:var(--gold2)}
+#waterBox{left:12px}#dayBox{right:12px}
+#water{display:block;letter-spacing:2px;font-size:16px}
+#water i{display:inline-block;width:11px;height:15px;margin:0 1px;border-radius:5px 5px 6px 6px;background:linear-gradient(#9fd3ef,#3f8fc0);box-shadow:inset 0 2px 0 rgba(255,255,255,.4)}
+#water i.empty{background:#3a3026;box-shadow:none}
+@media (max-width:760px){.mission{margin:0 74px}.mission b{font-size:15px}.stat{padding:6px 8px}}
+
+/* 방향 화살표: 목표가 화면 밖이면 가장자리에 */
+#arrow{position:fixed;z-index:4;width:46px;height:46px;margin:-23px 0 0 -23px;pointer-events:none;transition:opacity .3s}
+#arrow svg{width:100%;height:100%;filter:drop-shadow(0 2px 4px rgba(0,0,0,.6))}
+
+/* 이름표·장소 표 */
+.tag{position:fixed;z-index:3;transform:translate(-50%,-100%);pointer-events:none;white-space:nowrap;font:700 13px var(--serif);color:#fff6df;text-shadow:0 1px 3px #000,0 0 10px rgba(0,0,0,.6)}
+.tag.me{font:600 12px var(--sans);color:var(--gold2)}
+.tag.goal{font-size:15px;color:var(--gold2)}
+.tag.place{font:500 11.5px var(--serif);color:rgba(255,246,223,.75)}
+
+/* 조이스틱 */
+#stick{position:fixed;z-index:6;left:calc(26px + env(safe-area-inset-left));bottom:calc(26px + env(safe-area-inset-bottom));width:124px;height:124px;border-radius:50%;background:rgba(20,16,11,.45);border:1px solid var(--line);touch-action:none}
+#stick i{position:absolute;left:50%;top:50%;width:54px;height:54px;margin:-27px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#f0d79a,#b9893e);box-shadow:0 3px 10px rgba(0,0,0,.5)}
+@media (hover:hover) and (pointer:fine){#stick{opacity:.55}}
+#zoom{position:fixed;z-index:6;right:calc(16px + env(safe-area-inset-right));bottom:calc(30px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:8px}
+#zoom button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--panel);font-size:20px;color:var(--gold2)}
+
+/* 알림 */
+#toast{position:fixed;z-index:8;left:50%;top:32%;transform:translate(-50%,-50%) scale(.9);max-width:88%;padding:14px 20px;border-radius:14px;background:rgba(40,18,12,.92);border:1px solid rgba(224,122,98,.55);color:#ffe7dc;font:700 16px/1.5 var(--serif);text-align:center;word-break:keep-all;text-wrap:balance;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none}
+#toast.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
+#toast.good{background:rgba(20,32,16,.92);border-color:rgba(143,191,122,.6);color:#eaffdf}
+#toast small{display:block;margin-top:4px;font:500 12.5px var(--sans);opacity:.85}
+.shake{animation:shake .5s}
+@keyframes shake{20%{transform:translate(-6px,3px)}40%{transform:translate(5px,-4px)}60%{transform:translate(-4px,2px)}80%{transform:translate(3px,-2px)}}
+#dust{position:fixed;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse at center,rgba(214,180,120,0),rgba(196,152,90,.55));opacity:0;transition:opacity .8s}
+#dust.on{opacity:1}
+
+/* 장면 카드·퀴즈·끝 */
+.sheet{position:fixed;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(8,6,4,.55);backdrop-filter:blur(3px)}
+.card{width:min(460px,100%);max-height:calc(100% - 20px);overflow:auto;border-radius:18px;background:#1d1813;border:1px solid var(--line);box-shadow:0 20px 60px rgba(0,0,0,.6);touch-action:pan-y}
+.card .img{position:relative;aspect-ratio:16/10;background:#2a2117 center/cover}
+.card .img .stars{position:absolute;right:12px;bottom:10px;font-size:22px;letter-spacing:2px;color:#ffd77a;text-shadow:0 2px 6px #000}
+.card .body{padding:16px 18px 18px}
+.card small{display:block;font-size:11.5px;letter-spacing:.08em;color:var(--gold)}
+.card h2{margin:3px 0 2px;font:700 22px/1.35 var(--serif);color:var(--gold2);word-break:keep-all;text-wrap:balance}
+.card .sub{margin:0 0 10px;color:var(--muted);font-size:13.5px;word-break:keep-all}
+.card p.story{margin:0 0 10px;font:16px/1.75 var(--serif);word-break:keep-all}
+.card blockquote{margin:0 0 12px;padding:8px 12px;border-left:3px solid var(--gold);background:rgba(217,180,106,.08);font:15px/1.65 var(--serif);color:var(--ink);word-break:keep-all}
+.card blockquote cite{display:block;margin-top:3px;font:12px var(--sans);color:var(--muted);font-style:normal}
+.card .row{display:flex;gap:8px}
+.card .row .go{margin-top:6px}
+.card .row a.go{text-align:center;text-decoration:none;display:block}
+.card .leg{display:flex;justify-content:space-between;margin:0 0 12px;padding:8px 12px;border-radius:10px;background:#15110d;font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.card .leg b{color:var(--gold2)}
+.quiz .opts{display:grid;gap:8px;margin:12px 0 0}
+.quiz .opts button{padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:#15110d;text-align:left;font-size:15px}
+.quiz .opts button.right{background:#24361c;border-color:var(--ok)}
+.quiz .opts button.wrong{background:#3a1d16;border-color:var(--bad)}
+.quiz .explain{margin:10px 0 0;color:var(--muted);font-size:13.5px;line-height:1.6;word-break:keep-all}
+</style>
+</head>
+<body>
+<canvas id="world"></canvas>
+<div id="dust"></div>
+
+<!-- 순례자 꾸미기: 이름과 인형 (이 기기에만 기억 — theway-game-me) -->
+<section id="setup">
+  <div class="stagebox"><canvas id="preview"></canvas><div class="nameplate" id="plate"></div></div>
+  <div class="panel">
+    <h1>그 길 순례</h1>
+    <p class="lead">나만의 순례자를 꾸미고 지도 위를 걸어, 예수님이 계신 다음 장면을 찾아가세요. 길을 잃으면 벌칙이 있어요.</p>
+    <div class="field"><label for="name">순례자 이름</label><input id="name" maxlength="10" autocomplete="off" placeholder="이름을 넣어 주세요"></div>
+    <div class="field"><b>모습</b><div class="chips" data-k="sex"></div></div>
+    <div class="field"><b>얼굴빛</b><div class="sw" data-k="skin"></div></div>
+    <div class="field"><b>머리카락</b><div class="sw" data-k="hair"></div></div>
+    <div class="field"><b>수염</b><div class="chips" data-k="beard"></div></div>
+    <div class="field"><b>속옷</b><div class="sw" data-k="robe"></div></div>
+    <div class="field"><b>겉옷</b><div class="sw" data-k="mantle"></div></div>
+    <div class="field"><b>머리에</b><div class="chips" data-k="head"></div></div>
+    <div class="field"><b>지팡이</b><div class="chips" data-k="staff"></div></div>
+    <button class="go" id="start">길 떠나기</button>
+    <button class="go ghost hidden" id="restart">처음부터 다시 걷기</button>
+    <a class="back" href="app.html">← 그 길 앱으로</a>
+  </div>
+</section>
+
+<header id="hud" class="hidden">
+  <div class="mission"><small id="mNo"></small><b id="mTitle"></b><div class="meta"><span id="mDist"></span><span id="mWalk"></span></div></div>
+</header>
+<div class="stat hidden" id="waterBox"><span id="water"></span>물병</div>
+<div class="stat hidden" id="dayBox"><b id="days">0</b>일째</div>
+<div id="arrow" class="hidden"><svg viewBox="0 0 46 46"><circle cx="23" cy="23" r="21" fill="rgba(29,24,19,.8)" stroke="#d9b46a" stroke-width="1.5"/><path d="M23 9 L33 29 L23 24 L13 29 Z" fill="#f0d79a"/></svg></div>
+<div id="tags"></div>
+<div id="stick" class="hidden"><i></i></div>
+<div id="zoom" class="hidden"><button id="zin" aria-label="가까이">+</button><button id="zout" aria-label="멀리">−</button></div>
+<div id="toast"></div>
+<div id="sheet" class="sheet hidden"></div>
+
+<script type="module" src="game.js"></script>
+<!-- Cloudflare Web Analytics: 쿠키·개인정보 없이 방문 수만 센다 --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f33dcbc61cc949909499f044d7eeae69"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
