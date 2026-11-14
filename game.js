@@ -652,7 +652,11 @@ async function placeCast() {
   if (tok !== castTok) return; // 그새 다음 장면으로 넘어갔다
   gs.forEach((g, i) => {
     if (!g) return; // 아직 없는 모델(베드로 등)은 건너뛴다
-    const [ox, oz] = SPOTS[i], a = new ModelActor(g, gx + ox, gz + oz);
+    // 물(호숫가 장소)이면 그분 둘레를 돌며 뭍을 찾아 세운다
+    let [ox, oz] = SPOTS[i];
+    const wetAt = (x, z) => { const [la, ln] = toLL(x, z); return Object.values(WATERS).some(w => inPoly(la, ln, w)); }; // 목표 둘레·갈릴리도 물로 친다 (blocked는 둘 다 봐준다)
+    for (let k = 0; k < 12 && wetAt(gx + ox, gz + oz); k++) { const r = Math.hypot(ox, oz), t = Math.atan2(oz, ox) + 0.52; ox = Math.cos(t) * r; oz = Math.sin(t) * r; }
+    const a = new ModelActor(g, gx + ox, gz + oz);
     a.big = SCALE * (SIZE[names[i]] || 1); a.target = G.me; a.showT = 0; a.show = 0;
     G.scene.add(a.p.root); G.cast.push(a);
   });
