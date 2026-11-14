@@ -19,12 +19,13 @@ jobs:
       - name: Upload missing card images
         run: |
           python3 - <<'PY' > /tmp/todo.txt
-          # 이미 있는지 한꺼번에 묻는다 — 한 장씩 차례로 물으니 194장에 9분이 걸렸다(사용자 2026-11: 파일 하나 올리는데 왜 이리 오래)
+          # 이미 있는지 한꺼번에 묻는다. User-Agent를 꼭 붙인다 — 파이썬 기본 이름은 r2.dev가 403으로 막아, 늘 '없다'고 보고
+          # 카드 194장·모델 57개를 매번 다시 올리느라 10분 넘게 걸렸다(사용자 2026-11: 파일 하나 올리는데 왜 이리 오래)
           import json, urllib.request
           from concurrent.futures import ThreadPoolExecutor
           m = json.load(open('assets/cards.json'))
           def missing(kv):
-              try: urllib.request.urlopen(urllib.request.Request(m['base'] + '/' + kv[1], method='HEAD'), timeout=20); return None
+              try: urllib.request.urlopen(urllib.request.Request(m['base'] + '/' + kv[1], method='HEAD', headers={'User-Agent': 'theway-r2-check'}), timeout=20); return None
               except Exception: return kv
           for r in ThreadPoolExecutor(24).map(missing, m['files'].items()):
               if r: print(*r)
@@ -40,7 +41,7 @@ jobs:
           from concurrent.futures import ThreadPoolExecutor
           m = json.load(open('assets/models.json'))
           def missing(kv):
-              try: urllib.request.urlopen(urllib.request.Request(m['base'] + '/' + kv[1], method='HEAD'), timeout=20); return None
+              try: urllib.request.urlopen(urllib.request.Request(m['base'] + '/' + kv[1], method='HEAD', headers={'User-Agent': 'theway-r2-check'}), timeout=20); return None
               except Exception: return kv
           for r in ThreadPoolExecutor(24).map(missing, m['files'].items()):
               if r: print(*r)
