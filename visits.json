@@ -1,8 +1,93 @@
 {
- "updated": "2026-11-13T21:28:00.614Z",
- "days": [],
- "paths": [],
- "countries": [],
- "referers": [],
- "devices": []
+ "updated": "2026-11-14T03:53:29.770Z",
+ "days": [
+  {
+   "date": "2026-11-12",
+   "visits": 0,
+   "views": 20
+  },
+  {
+   "date": "2026-11-13",
+   "visits": 40,
+   "views": 340
+  },
+  {
+   "date": "2026-11-14",
+   "visits": 0,
+   "views": 140
+  }
+ ],
+ "paths": [
+  [
+   "/",
+   40,
+   40
+  ],
+  [
+   "/app.html",
+   0,
+   410
+  ],
+  [
+   "/qna.html",
+   0,
+   10
+  ],
+  [
+   "/s/m20.html",
+   0,
+   10
+  ],
+  [
+   "/s/moses.html",
+   0,
+   10
+  ],
+  [
+   "/s/paul.html",
+   0,
+   10
+  ],
+  [
+   "/s/m15.html",
+   0,
+   10
+  ]
+ ],
+ "countries": [
+  [
+   "KR",
+   40,
+   500
+  ]
+ ],
+ "referers": [
+  [
+   "(없음)",
+   40,
+   40
+  ],
+  [
+   "thewaymap.org",
+   0,
+   180
+  ],
+  [
+   "the-way-jesus.web.app",
+   0,
+   280
+  ]
+ ],
+ "devices": [
+  [
+   "mobile",
+   40,
+   320
+  ],
+  [
+   "desktop",
+   0,
+   180
+  ]
+ ]
 }
