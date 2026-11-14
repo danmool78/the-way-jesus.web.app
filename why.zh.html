@@ -668,7 +668,7 @@ button,a,img,svg,nav,header,.btn{-webkit-touch-callout:none;-webkit-user-select:
 (() => {
   const L = { ko: ['음악 켜기', '음악 끄기'], en: ['Music on', 'Music off'], es: ['Activar música', 'Quitar música'], pt: ['Ligar música', 'Desligar música'],
     fr: ['Activer la musique', 'Couper la musique'], id: ['Nyalakan musik', 'Matikan musik'], ja: ['音楽をオン', '音楽をオフ'], zh: ['打开音乐', '关闭音乐'] };
-  const lb = L[document.documentElement.lang] || L.en, btn = document.getElementById('bgm'), a = new Audio('assets/music/why.mp3');
+  const lb = L[document.documentElement.lang] || L.en, btn = document.getElementById('bgm'), a = new Audio('https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/assets/music/why.mp3');
   a.loop = true; a.preload = 'none'; a.volume = 0;
   // on: 지금 켜 둔 상태(단추가 보여 주는 것). 예전엔 a.paused로 판단했는데, 서서히 줄이는 0.7초 동안은 아직 재생 중이라
   // 그사이 다시 누르면 '켜기'가 또 '끄기'로 처리돼 한 번만 눌리는 것처럼 보였다(사용자, 2026-11)
