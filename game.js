@@ -255,12 +255,14 @@ function meet() {
   G.leader.target = G.me; G.leader.set('speak'); G.me.target = G.leader;
   // 그분이 하신 말씀(j)이 있으면 그분 입으로, 없으면(수태고지처럼 아직 태어나시기 전 등) '이 자리의 말씀'으로 누가 한 말인지 밝혀서
   const own = (e.words || []).find(x => x.j), w = own || (e.words || [])[0];
-  G.meetWord = w ? w.text : e.subtitle || e.title;
-  G.meetT = Math.min(7, 2.6 + G.meetWord.length * 0.05);
-  $('#bubble').innerHTML = `<b>${own ? esc(JOURNEYS[JID].who) : `이 자리의 말씀 · ${esc(w?.who || '')}`}</b>${esc(G.meetWord)}`;
+  // 말씀은 곧 이어지는 '말씀 고르기'에서 맞히게, 말풍선에는 반기는 인사만 (먼저 보여 주면 너무 쉬웠다)
+  const nm = me.name || '순례자', call = /^[가-힣]+$/.test(nm) ? josa(nm, '아', '야') : nm;
+  G.meetWord = `${call}, 잘 찾아왔구나. 여기는 ${placeOf(e).name}.`;
+  G.meetT = 3.2;
+  $('#bubble').innerHTML = `<b>${esc(JOURNEYS[JID].who)}</b>${esc(G.meetWord)}`;
   setTimeout(() => $('#bubble').classList.add('on'), 900);
   document.body.classList.add('meeting');
-  G.met = true; G.newCard = collect(e);
+  G.met = true;
 }
 function bubble() {
   const [x, y] = screen(G.leader.pos.x, SCALE * 1.05, G.leader.pos.y), b = $('#bubble'), half = b.offsetWidth / 2 + 10;
@@ -285,6 +287,47 @@ function arrive() {
   const stars = straight < ARRIVE * 1.5 ? 3 : ratio < 1.35 ? 3 : ratio < 1.9 ? 2 : 1;
   G.stars[G.idx] = Math.max(G.stars[G.idx] || 0, stars);
   G.leader.look(0); G.me.target = null;
+  if (G.met) {
+    G.met = false;
+    pickWord(e, ok => ok ? reveal(e, stars, straight) : missCard(e));
+    return;
+  }
+  cardPlain(e, stars, straight);
+}
+// 말씀 고르기: 만난 자리에서 들은 말씀을 보기 셋 가운데서 고른다 — 맞히면 카드 (사용자 2026-11)
+function pickWord(e, done) {
+  const w = cardWord(e);
+  if (!w) { done(true); return; }
+  const pool = G.events.filter(x => x !== e).map(cardWord).filter(x => x && x.text !== w.text);
+  const opts = [w];
+  while (opts.length < 3 && pool.length) opts.push(pool.splice(Math.floor(Math.random() * pool.length), 1)[0]);
+  opts.sort(() => Math.random() - .5);
+  const s = sheet(`<div class="img" style="background-image:url('assets/img/cards/${e.id}.webp')"></div><div class="body quiz"><small>${G.idx + 1} / ${G.events.length} · ${esc(e.title)}</small>
+    <h2>이 자리에서 들은 말씀은?</h2><p class="sub">맞히면 말씀 카드를 얻어요</p>
+    <div class="opts">${opts.map((o, i) => `<button data-i="${i}">${esc(o.text)}</button>`).join('')}</div><div class="explain"></div></div>`);
+  s.querySelector('.opts').onclick = ev => {
+    const b = ev.target.closest('button'); if (!b || s.querySelector('.right')) return;
+    const ok = opts[+b.dataset.i] === w;
+    s.querySelectorAll('.opts button').forEach((x, i) => { if (opts[i] === w) x.classList.add('right'); else if (x === b) x.classList.add('wrong'); });
+    s.querySelector('.explain').innerHTML = `${esc(w.who || '')} · ${esc(w.ref || '')}<button class="go">${ok ? '카드 받기' : '계속'}</button>`;
+    s.querySelector('.explain .go').onclick = () => done(ok);
+  };
+}
+function missCard(e) {
+  const s = sheet(`<div class="body"><small>${G.idx + 1} / ${G.events.length}</small><h2>아쉬워요, 이번에는 카드를 얻지 못했어요</h2><p class="sub">다시 걸을 때 이 자리의 말씀 카드에 도전할 수 있어요.</p>
+    <div class="row"><a class="go ghost" href="${appLink(e)}" target="_blank" rel="noopener">이 장면 듣기</a><button class="go" id="next">${G.idx + 1 < G.events.length ? '다음 장면으로 →' : '여정 마치기'}</button></div></div>`);
+  s.querySelector('#next').onclick = () => { closeSheet(); G.idx++; save(); G.idx < G.events.length ? startLeg() : finish(); };
+}
+function reveal(e, stars, straight) {
+  {
+    const fresh = collect(e, stars);
+    const v = showCard(tcard(e, G.idx, stars, 'big reveal'),
+      `<div class="row"><a class="go ghost" href="${appLink(e)}" target="_blank" rel="noopener">이 장면 듣기</a><button class="go" id="next">${G.idx + 1 < G.events.length ? '다음 장면으로 →' : '여정 마치기'}</button></div>`,
+      `<p class="gotcard">${fresh ? '새 말씀 카드!' : '이미 모은 카드'}${straight >= ARRIVE * 1.5 ? ` · 걸은 길 ${Math.round(G.legWalked)}km / 곧은 길 ${Math.round(straight)}km` : ''}</p>`);
+    v.querySelector('#next').onclick = () => { closeSheet(); G.idx++; save(); G.idx < G.events.length ? startLeg() : finish(); };
+  }
+}
+function cardPlain(e, stars, straight) {
   const w = (e.words || []).find(x => x.j) || (e.words || [])[0];
   const s = sheet(`${e.img ? `<div class="img" style="background-image:url('${esc(e.img.src)}')"><span class="stars">${'★'.repeat(stars)}${'☆'.repeat(3 - stars)}</span></div>` : ''}
     <div class="body"><small>${G.idx + 1} / ${G.events.length} · ${esc(placeOf(e).name)}</small><h2>${esc(e.title)}</h2><p class="sub">${esc(e.subtitle || '')}</p>
@@ -300,7 +343,7 @@ function finish() {
   const text = `그 길 순례 — ${me.name || '순례자'}, ${josa(J.who, '을', '를')} 따라 ${n}장면 ${km}km를 걸었습니다 ★${st}/${n * 3}\nhttps://thewaymap.org/game.html?j=${JID}`;
   const s = sheet(`<div class="body"><small>${esc(J.name)}</small><h2>여정을 마쳤습니다</h2><p class="sub">${esc(me.name || '순례자')}님, ${n}장면을 모두 찾아 걸었어요.</p>
     <div class="leg"><span>걸은 길 <b>${km}km</b></span><span><b>${Math.floor(G.total / WALK) + 1}</b>일</span><span>★ <b>${st}</b>/${n * 3}</span></div>
-    <p class="sub">말씀 카드 <b>${new Set(store.get(cardKey(), [])).size}</b> / ${n}장을 모았어요.</p>
+    <p class="sub">말씀 카드 <b>${Object.keys(deck()).length}</b> / ${n}장을 모았어요.</p>
     ${G.missed.length ? `<p class="sub">늦어서 놓친 장면 ${G.missed.length}개 — ${G.missed.slice(0, 6).map(i => esc(G.events[i].title)).join(', ')}${G.missed.length > 6 ? ' …' : ''}. 앱에서 들어 보세요.</p>` : `<p class="sub">한 장면도 놓치지 않고 모두 만났어요!</p>`}
     <div class="row"><button class="go ghost" id="share">자랑하기</button><button class="go" id="again">다른 여정 걷기</button></div></div>`);
   s.querySelector('#share').onclick = async () => { try { if (navigator.share) await navigator.share({ text }); else { await navigator.clipboard.writeText(text); toast('복사했어요', true); } } catch { /* 닫음 */ } };
@@ -309,25 +352,46 @@ function finish() {
 // 말씀 카드: 시간 안에 그분을 만난 장면의 말씀을 모은다 (사용자 2026-11). 처음부터 다시 걸어도 지우지 않는다 — 놓친 카드를 채우러 다시 걷게
 const cardKey = () => 'theway-game-cards-' + JID;
 const cardWord = e => (e.words || []).find(x => x.j) || (e.words || [])[0];
-function collect(e) {
-  const have = new Set(store.get(cardKey(), []));
-  const fresh = !have.has(e.id); have.add(e.id); store.set(cardKey(), [...have]); drawCardBtn();
+const deck = () => { const v = store.get(cardKey(), {}); return Array.isArray(v) ? Object.fromEntries(v.map(k => [k, 1])) : v; };
+function collect(e, stars) {
+  const d = deck(), fresh = !d[e.id]; d[e.id] = Math.max(d[e.id] || 0, stars); store.set(cardKey(), d); drawCardBtn();
   return fresh;
 }
-function drawCardBtn() { const n = new Set(store.get(cardKey(), [])).size; $('#cardsBtn').innerHTML = `<b>${n}</b>/${G.events.length} 말씀 카드`; }
+// 트레이딩 카드 앞면: 번호·제목, 그림 창(말씀 카드 그림 assets/img/cards — 아직 없으면 장면 그림), 말씀 상자, 등급(별 — 동·은·금 테두리)
+const RANK = ['', 'bronze', 'silver', 'gold'];
+function tcard(e, i, stars, cls = '') {
+  const w = cardWord(e), p = placeOf(e);
+  return `<div class="tcard ${RANK[stars] || 'bronze'} ${cls}" data-i="${i}"><div class="tin">
+    <div class="thead"><span class="tno">${String(i + 1).padStart(2, '0')}</span><b>${esc(e.title)}</b><span class="tst">${'★'.repeat(stars)}</span></div>
+    <div class="tart"><img src="assets/img/cards/${e.id}.webp" alt="" loading="lazy" onerror="this.onerror=null;this.src='${esc(e.img?.src || '')}'"></div>
+    <div class="tcap">${esc(p.name)} · ${esc(e.when || '')}</div>
+    <div class="tword"><q>${esc(w?.text || e.subtitle || '')}</q><cite>${esc(w?.who || '')}${w?.ref ? ` · ${esc(w.ref)}` : ''}</cite></div>
+    <div class="tfoot"><span>그 길 · ${esc(JOURNEYS[JID].name.replace(' 따라가기', ''))}</span><span>${i + 1}/${G.events.length}</span></div>
+  </div><i class="tholo"></i></div>`;
+}
+// 기울이면 빛이 흐른다 (손가락·마우스 위치로)
+function tilt(root) {
+  root.querySelectorAll('.tcard.big').forEach(c => {
+    const move = ev => { const r = c.getBoundingClientRect(), x = (ev.clientX - r.left) / r.width, y = (ev.clientY - r.top) / r.height;
+      c.style.setProperty('--rx', `${(0.5 - y) * 16}deg`); c.style.setProperty('--ry', `${(x - 0.5) * 18}deg`); c.style.setProperty('--mx', `${x * 100}%`); c.style.setProperty('--my', `${y * 100}%`); };
+    c.addEventListener('pointermove', move); c.addEventListener('pointerleave', () => { c.style.setProperty('--rx', '0deg'); c.style.setProperty('--ry', '0deg'); });
+  });
+}
+function showCard(card, below, head = '') {
+  const s = $('#sheet'); s.innerHTML = `<div class="cardview">${head}${card}${below}</div>`; s.classList.remove('hidden'); G.busy = true; tilt(s); return s;
+}
+function drawCardBtn() { const n = Object.keys(deck()).length; $('#cardsBtn').innerHTML = `<b>${n}</b>/${G.events.length} 말씀 카드`; }
 function openCards() {
-  const have = new Set(store.get(cardKey(), []));
+  const d = deck(), have = new Set(Object.keys(d));
   const s = sheet(`<div class="body"><small>${esc(JOURNEYS[JID].name)}</small><h2>말씀 카드 ${have.size} / ${G.events.length}</h2>
     <p class="sub">시간 안에 ${esc(josa(JOURNEYS[JID].who, '을', '를'))} 만나면 그 자리의 말씀 카드를 얻어요. 놓친 카드는 다시 걸어서 채우세요.</p>
-    <div class="deck">${G.events.map((e, i) => { const w = cardWord(e); return have.has(e.id)
-      ? `<button class="wcard" data-i="${i}"><small>${i + 1}</small><b>${esc(e.title)}</b><q>${esc(w?.text || e.subtitle || '')}</q><cite>${esc(w?.ref || '')}</cite></button>`
-      : `<div class="wcard lock"><small>${i + 1}</small><b>?</b></div>`; }).join('')}</div>
+    <div class="deck">${G.events.map((e, i) => have.has(e.id) ? `<button class="slot">${tcard(e, i, d[e.id], 'mini')}</button>`
+      : `<div class="slot lock"><small>${String(i + 1).padStart(2, '0')}</small><b>?</b></div>`).join('')}</div>
     <button class="go" id="closeCards">계속 걷기</button></div>`);
   s.querySelector('#closeCards').onclick = closeSheet;
-  s.querySelector('.deck').onclick = ev => { const b = ev.target.closest('.wcard[data-i]'); if (!b) return; const e = G.events[+b.dataset.i], w = cardWord(e);
-    sheet(`${e.img ? `<div class="img" style="background-image:url('${esc(e.img.src)}')"></div>` : ''}<div class="body"><small>${+b.dataset.i + 1} · ${esc(placeOf(e).name)}</small><h2>${esc(e.title)}</h2>
-      ${w ? `<blockquote>${esc(w.text)}<cite>${esc(w.who || '')} · ${esc(w.ref || '')}</cite></blockquote>` : ''}
-      <div class="row"><a class="go ghost" href="${appLink(e)}" target="_blank" rel="noopener">이 장면 듣기</a><button class="go" id="backDeck">카드 모음으로</button></div></div>`).querySelector('#backDeck').onclick = openCards; };
+  s.querySelector('.deck').onclick = ev => { const b = ev.target.closest('.tcard[data-i]'); if (!b) return; const i = +b.dataset.i, e = G.events[i];
+    const v = showCard(tcard(e, i, d[e.id], 'big'), `<div class="row"><a class="go ghost" href="${appLink(e)}" target="_blank" rel="noopener">이 장면 듣기</a><button class="go" id="backDeck">카드 모음으로</button></div>`);
+    v.querySelector('#backDeck').onclick = openCards; };
 }
 $('#cardsBtn').onclick = () => { if (!G.busy || !$('#sheet').classList.contains('hidden')) openCards(); };
 const save = () => store.set('theway-game-' + JID, { idx: G.idx, total: G.total, stars: G.stars, missed: G.missed });
