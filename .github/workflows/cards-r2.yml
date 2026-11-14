@@ -1,0 +1,32 @@
+name: Card art to R2
+# 말씀 카드 그림(_src/cards/out — 배포에서 빠지는 곳)을 R2 버킷 theway의 cards/에 올린다: 호스팅 전송량을 아끼려고(사용자 2026-11).
+# 열쇠는 assets/cards.json(내용 해시가 붙은 이름)이 정한다 — 이미 공개 주소에 있는 것은 건너뛴다. 가지마다 돌아 PR 미리보기에서도 그림이 보인다
+on:
+  push:
+    paths: ['_src/cards/out/**', 'assets/cards.json', '.github/workflows/cards-r2.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CF_WORKERS_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Upload missing card images
+        run: |
+          python3 - <<'PY' > /tmp/todo.txt
+          import json, urllib.request
+          m = json.load(open('assets/cards.json'))
+          for k, key in m['files'].items():
+              try:
+                  urllib.request.urlopen(urllib.request.Request(m['base'] + '/' + key, method='HEAD'), timeout=20)
+              except Exception:
+                  print(k, key)
+          PY
+          echo "올릴 그림: $(wc -l < /tmp/todo.txt)장"
+          while read -r k key; do
+            npx --yes wrangler@4 r2 object put "theway/$key" --file "_src/cards/out/$k.webp" --content-type image/webp --cache-control "public, max-age=31536000, immutable" --remote
+          done < /tmp/todo.txt

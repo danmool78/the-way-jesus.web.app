@@ -250,7 +250,7 @@ function quiz() {
 // 만남: 그분이 나를 돌아보며 그 장면의 말씀을 하신다 (말풍선, 누르면 넘김)
 function meet() {
   const e = G.events[G.idx];
-  G.timeT = 0; G.leader.goal.copy(G.leader.pos);
+  G.meetLeft = Math.max(0, G.timeT); G.timeT = 0; G.leader.goal.copy(G.leader.pos);
   G.me.goal.copy(G.me.pos);
   G.leader.target = G.me; G.leader.set('speak'); G.me.target = G.leader;
   // 그분이 하신 말씀(j)이 있으면 그분 입으로, 없으면(수태고지처럼 아직 태어나시기 전 등) '이 자리의 말씀'으로 누가 한 말인지 밝혀서
@@ -302,7 +302,7 @@ function pickWord(e, done) {
   const opts = [w];
   while (opts.length < 3 && pool.length) opts.push(pool.splice(Math.floor(Math.random() * pool.length), 1)[0]);
   opts.sort(() => Math.random() - .5);
-  const s = sheet(`<div class="img" style="background-image:url('assets/img/cards/${e.id}.webp')"></div><div class="body quiz"><small>${G.idx + 1} / ${G.events.length} · ${esc(e.title)}</small>
+  const s = sheet(`<div class="img" style="background-image:url('${esc(cardSrc(e))}')"></div><div class="body quiz"><small>${G.idx + 1} / ${G.events.length} · ${esc(e.title)}</small>
     <h2>이 자리에서 들은 말씀은?</h2><p class="sub">맞히면 말씀 카드를 얻어요</p>
     <div class="opts">${opts.map((o, i) => `<button data-i="${i}">${esc(o.text)}</button>`).join('')}</div><div class="explain"></div></div>`);
   s.querySelector('.opts').onclick = ev => {
@@ -320,10 +320,10 @@ function missCard(e) {
 }
 function reveal(e, stars, straight) {
   {
-    const fresh = collect(e, stars);
-    const v = showCard(tcard(e, G.idx, stars, 'big reveal'),
+    const pts = stars * 100 + Math.round(G.meetLeft || 0) * 10, got = collect(e, stars, pts), fresh = got.fresh;
+    const v = showCard(tcard(e, G.idx, { s: stars, p: pts }, 'big reveal'),
       `<div class="row"><a class="go ghost" href="${appLink(e)}" target="_blank" rel="noopener">이 장면 듣기</a><button class="go" id="next">${G.idx + 1 < G.events.length ? '다음 장면으로 →' : '여정 마치기'}</button></div>`,
-      `<p class="gotcard">${fresh ? '새 말씀 카드!' : '이미 모은 카드'}${straight >= ARRIVE * 1.5 ? ` · 걸은 길 ${Math.round(G.legWalked)}km / 곧은 길 ${Math.round(straight)}km` : ''}</p>`);
+      `<p class="gotcard">${fresh ? '새 말씀 카드!' : got.best ? '최고 기록 갱신!' : '이미 모은 카드'} +${num(pts)}점${straight >= ARRIVE * 1.5 ? ` · 걸은 길 ${Math.round(G.legWalked)}km / 곧은 길 ${Math.round(straight)}km` : ''}</p>`);
     v.querySelector('#next').onclick = () => { closeSheet(); G.idx++; save(); G.idx < G.events.length ? startLeg() : finish(); };
   }
 }
@@ -340,10 +340,10 @@ function cardPlain(e, stars, straight) {
 }
 function finish() {
   const n = G.events.length, st = G.stars.reduce((a, b) => a + (b || 0), 0), km = Math.round(G.total), J = JOURNEYS[JID];
-  const text = `그 길 순례 — ${me.name || '순례자'}, ${josa(J.who, '을', '를')} 따라 ${n}장면 ${km}km를 걸었습니다 ★${st}/${n * 3}\nhttps://thewaymap.org/game.html?j=${JID}`;
+  const text = `그 길 순례 — ${me.name || '순례자'}, ${josa(J.who, '을', '를')} 따라 ${n}장면 ${km}km를 걸었습니다 · 말씀 카드 ${Object.keys(deck()).length}/${n}장 ${num(total(deck()))}점\nhttps://thewaymap.org/game.html?j=${JID}`;
   const s = sheet(`<div class="body"><small>${esc(J.name)}</small><h2>여정을 마쳤습니다</h2><p class="sub">${esc(me.name || '순례자')}님, ${n}장면을 모두 찾아 걸었어요.</p>
     <div class="leg"><span>걸은 길 <b>${km}km</b></span><span><b>${Math.floor(G.total / WALK) + 1}</b>일</span><span>★ <b>${st}</b>/${n * 3}</span></div>
-    <p class="sub">말씀 카드 <b>${Object.keys(deck()).length}</b> / ${n}장을 모았어요.</p>
+    <p class="sub">말씀 카드 <b>${Object.keys(deck()).length}</b> / ${n}장 · 합계 <b>${num(total(deck()))}점</b></p>
     ${G.missed.length ? `<p class="sub">늦어서 놓친 장면 ${G.missed.length}개 — ${G.missed.slice(0, 6).map(i => esc(G.events[i].title)).join(', ')}${G.missed.length > 6 ? ' …' : ''}. 앱에서 들어 보세요.</p>` : `<p class="sub">한 장면도 놓치지 않고 모두 만났어요!</p>`}
     <div class="row"><button class="go ghost" id="share">자랑하기</button><button class="go" id="again">다른 여정 걷기</button></div></div>`);
   s.querySelector('#share').onclick = async () => { try { if (navigator.share) await navigator.share({ text }); else { await navigator.clipboard.writeText(text); toast('복사했어요', true); } } catch { /* 닫음 */ } };
@@ -352,21 +352,29 @@ function finish() {
 // 말씀 카드: 시간 안에 그분을 만난 장면의 말씀을 모은다 (사용자 2026-11). 처음부터 다시 걸어도 지우지 않는다 — 놓친 카드를 채우러 다시 걷게
 const cardKey = () => 'theway-game-cards-' + JID;
 const cardWord = e => (e.words || []).find(x => x.j) || (e.words || [])[0];
-const deck = () => { const v = store.get(cardKey(), {}); return Array.isArray(v) ? Object.fromEntries(v.map(k => [k, 1])) : v; };
-function collect(e, stars) {
-  const d = deck(), fresh = !d[e.id]; d[e.id] = Math.max(d[e.id] || 0, stars); store.set(cardKey(), d); drawCardBtn();
-  return fresh;
+// 카드 점수(사용자 2026-11): 별 하나에 100점 + 만났을 때 남은 시간 1초에 10점. 같은 카드는 더 높은 기록만 남긴다
+const deck = () => { const v = store.get(cardKey(), {}); const d = Array.isArray(v) ? Object.fromEntries(v.map(k => [k, 1])) : v;
+  for (const k in d) if (typeof d[k] === 'number') d[k] = { s: d[k], p: d[k] * 100 }; return d; };
+const total = d => Object.values(d).reduce((t, x) => t + (x.p || 0), 0);
+const num = n => n.toLocaleString('ko-KR');
+function collect(e, stars, pts) {
+  const d = deck(), old = d[e.id], fresh = !old;
+  d[e.id] = { s: Math.max(old?.s || 0, stars), p: Math.max(old?.p || 0, pts) }; store.set(cardKey(), d); drawCardBtn();
+  return { fresh, best: !old || pts > (old.p || 0) };
 }
-// 트레이딩 카드 앞면: 번호·제목, 그림 창(말씀 카드 그림 assets/img/cards — 아직 없으면 장면 그림), 말씀 상자, 등급(별 — 동·은·금 테두리)
+// 카드 그림은 R2에서 (호스팅 전송량을 아끼려고 — assets/cards.json, _src/tools/cards-manifest.py). 아직 없으면 장면 그림
+let CARDS = { base: '', files: {} };
+const cardSrc = e => CARDS.files[e.id] ? `${CARDS.base}/${CARDS.files[e.id]}` : e.img?.src || '';
+// 트레이딩 카드 앞면: 번호·제목, 그림 창(말씀 카드 그림 — 아직 없으면 장면 그림), 말씀 상자, 등급(별 — 동·은·금 테두리)
 const RANK = ['', 'bronze', 'silver', 'gold'];
-function tcard(e, i, stars, cls = '') {
-  const w = cardWord(e), p = placeOf(e);
+function tcard(e, i, c, cls = '') {
+  const w = cardWord(e), p = placeOf(e), stars = c.s || c, pts = c.p;
   return `<div class="tcard ${RANK[stars] || 'bronze'} ${cls}" data-i="${i}"><div class="tin">
     <div class="thead"><span class="tno">${String(i + 1).padStart(2, '0')}</span><b>${esc(e.title)}</b><span class="tst">${'★'.repeat(stars)}</span></div>
-    <div class="tart"><img src="assets/img/cards/${e.id}.webp" alt="" loading="lazy" onerror="this.onerror=null;this.src='${esc(e.img?.src || '')}'"></div>
+    <div class="tart"><img src="${esc(cardSrc(e))}" alt="" loading="lazy" onerror="this.onerror=null;this.src='${esc(e.img?.src || '')}'"></div>
     <div class="tcap">${esc(p.name)} · ${esc(e.when || '')}</div>
     <div class="tword"><q>${esc(w?.text || e.subtitle || '')}</q><cite>${esc(w?.who || '')}${w?.ref ? ` · ${esc(w.ref)}` : ''}</cite></div>
-    <div class="tfoot"><span>그 길 · ${esc(JOURNEYS[JID].name.replace(' 따라가기', ''))}</span><span>${i + 1}/${G.events.length}</span></div>
+    <div class="tfoot"><span>그 길 · ${esc(JOURNEYS[JID].name.replace(' 따라가기', ''))}</span>${pts ? `<b class="tpt">${num(pts)}점</b>` : `<span>${i + 1}/${G.events.length}</span>`}</div>
   </div><i class="tholo"></i></div>`;
 }
 // 기울이면 빛이 흐른다 (손가락·마우스 위치로)
@@ -380,10 +388,10 @@ function tilt(root) {
 function showCard(card, below, head = '') {
   const s = $('#sheet'); s.innerHTML = `<div class="cardview">${head}${card}${below}</div>`; s.classList.remove('hidden'); G.busy = true; tilt(s); return s;
 }
-function drawCardBtn() { const n = Object.keys(deck()).length; $('#cardsBtn').innerHTML = `<b>${n}</b>/${G.events.length} 말씀 카드`; }
+function drawCardBtn() { const d = deck(), n = Object.keys(d).length; $('#cardsBtn').innerHTML = `<b>${n}</b>/${G.events.length} 말씀 카드<small>${num(total(d))}점</small>`; }
 function openCards() {
   const d = deck(), have = new Set(Object.keys(d));
-  const s = sheet(`<div class="body"><small>${esc(JOURNEYS[JID].name)}</small><h2>말씀 카드 ${have.size} / ${G.events.length}</h2>
+  const s = sheet(`<div class="body"><small>${esc(JOURNEYS[JID].name)}</small><h2>말씀 카드 ${have.size} / ${G.events.length} · ${num(total(d))}점</h2>
     <p class="sub">시간 안에 ${esc(josa(JOURNEYS[JID].who, '을', '를'))} 만나면 그 자리의 말씀 카드를 얻어요. 놓친 카드는 다시 걸어서 채우세요.</p>
     <div class="deck">${G.events.map((e, i) => have.has(e.id) ? `<button class="slot">${tcard(e, i, d[e.id], 'mini')}</button>`
       : `<div class="slot lock"><small>${String(i + 1).padStart(2, '0')}</small><b>?</b></div>`).join('')}</div>
@@ -421,7 +429,7 @@ async function begin(fresh) {
   me.name = $('#name').value.trim() || '순례자'; store.set('theway-game-me', me);
   if (fresh) store.set('theway-game-' + JID, null);
   const J = JOURNEYS[JID];
-  G.data = await (await fetch(J.data)).json();
+  [G.data, CARDS] = await Promise.all([fetch(J.data).then(r => r.json()), fetch('assets/cards.json').then(r => r.json()).catch(() => CARDS)]);
   G.events = G.data.events.filter(e => G.data.places[e.place] && !G.data.places[e.place].hidden);
   const saved = store.get('theway-game-' + JID, null);
   G.idx = saved?.idx || 0; G.total = saved?.total || 0; G.stars = saved?.stars || []; G.missed = saved?.missed || [];
@@ -540,5 +548,6 @@ function frame(now) {
   drawTags();
 }
 
+if (new URLSearchParams(location.search).has('debug')) window.__game = { G, me }; // 끝까지 자동으로 걸어 보는 확인용
 setupUI(); resize();
 requestAnimationFrame(frame);

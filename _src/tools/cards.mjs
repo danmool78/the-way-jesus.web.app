@@ -1,7 +1,7 @@
 // 말씀 카드 그림 (순례 게임 game.html의 말씀 카드): 장면마다 한 장, 시네마틱 반평면 일러스트(애니메이션 영화 콘셉트 아트 결 — 사용자가 시안 여섯 가운데 고름, 2026-11).
 // 화풍은 _src/cards/style-ref.png, 예수님 모습은 _src/cards/jesus-ref.png를 참고로 넣어 장마다 맞춘다. 성화(후광·제단화) 결은 쓰지 않는다(사용자).
 // 쓰는 법: GEMINI_API_KEY=… node _src/tools/cards.mjs [여정=jesus] [장면 id…] [--force] [--n 4]
-//   결과: assets/img/cards/<장면>.webp (720px 폭, 3:4). 이미 있는 장은 건너뛴다(--force면 다시)
+//   결과: _src/cards/out/<장면>.webp (720px 폭, 3:4 — 배포에서 빠지고 R2에서 받는다: 그린 뒤 python3 _src/tools/cards-manifest.py, 올리기는 cards-r2.yml). 이미 있는 장은 건너뛴다(--force면 다시)
 //   node _src/tools/cards.mjs refs — 인물 기준 그림(_src/cards/<인물>.png, chars.json)을 먼저 만든다. 장면 글에 그 이름이 나오면
 //   기준 그림을 함께 넣어 얼굴·옷이 장마다 변하지 않게 한다 (사용자 2026-11)
 import { readFile, writeFile, access } from 'node:fs/promises';
@@ -75,7 +75,7 @@ if (refsMode) {
 const evs = [...(data.prologue ? [data.prologue] : []), ...data.events].filter(e => !only.size || only.has(e.id));
 
 async function paint(e) {
-  const out = `assets/img/cards/${e.id}.webp`;
+  const out = `_src/cards/out/${e.id}.webp`;
   if (!force && await exists(out)) return 'skip';
   const words = (e.words || []).slice(0, 2).map(w => `${w.who}: "${w.text}"`).join(' / ');
   const prompt = `${STYLE}\n${LEAD[1] ? JESUS : ''}\n${HINT[e.id] ? 'Moment to paint: ' + HINT[e.id] + '\n' : ''}\nPaint this Bible scene as one moment (the description is in Korean):\n제목: ${e.title}\n부제: ${e.subtitle || ''}\n장소: ${data.places[e.place]?.name || ''}\n이야기: ${(e.story || []).join(' ').slice(0, 900)}\n말씀: ${words}`;
