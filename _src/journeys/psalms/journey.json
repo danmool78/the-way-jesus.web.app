@@ -1,10 +1,9 @@
 {
- "_comment": "시편 — 노래가 태어난 자리를 따라 걷는 길. 한국어 전용(koOnly: 번역 없이, 앱은 이 여정에서 늘 한국어), 장면은 songs.json에서 build.py가 만든다(songs: 노래 앞 낭독 → 노래와 가사). 3D 미니어처 없이 지도와 가사(no3d). 지도는 모세 여정의 것(시내 반도부터 가나안까지)",
+ "_comment": "시편 — 노래가 태어난 자리를 따라 걷는 길. 노래는 한국어로 부르고 다른 언어는 가사 줄마다 뜻을 밑에 띄운다(i18n/extract.py → ko.json을 옮긴 <언어>.json), 장면은 songs.json에서 build.py가 만든다(songs: 노래 앞 낭독 → 노래와 가사). 3D 미니어처 없이 지도와 가사(no3d). 지도는 모세 여정의 것(시내 반도부터 가나안까지)",
  "main": "다윗",
  "harmony": false,
  "voice": false,
  "prologue": false,
- "koOnly": true,
  "songs": true,
  "no3d": true,
  "odo": false,

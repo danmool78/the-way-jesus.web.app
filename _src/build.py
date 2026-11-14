@@ -29,6 +29,13 @@ BOOKS = {
 # 시편: 노래 목록(songs.json — 관리자 페이지의 시편 노래 작업실이 고치는 원본)에서 장면을 만든다. 장면 하나 = 노래 하나:
 # 이야기는 노래 앞 낭독 한 문단, song은 가사(작업실에서 올린 노래와 가사 시간은 앱이 assets/psalms/<id>.json에서 받는다).
 # 말씀 탭 자리에는 후렴 첫머리를 둔다(시편 장·편 표시). 묶음이 시대(periods)
+songs_sung = lambda lyrics: [x.strip() for x in lyrics.split('\n') if x.strip() and not re.match(r'^\[.*\]$', x.strip())]
+def song_hook(lyrics):
+    """말씀 탭 자리에 둘 후렴 첫 두 줄 (없으면 처음 두 줄)"""
+    lines = lyrics.split('\n')
+    sung = [x.strip() for x in lines if x.strip() and not re.match(r'^\[.*\]$', x.strip())]
+    ch = lines.index(next((x for x in lines if x.strip().lower().startswith('[chorus')), lines[0]))
+    return [x.strip() for x in lines[ch + 1:] if x.strip() and not x.strip().startswith('[')][:2] or sung[:2]
 SONG_COLORS = ['#c8963e', '#b5503f', '#7d6aa8', '#c9a227', '#3f8fa0', '#8c6a62', '#a83f3f', '#d6a441']
 def songs_scenes(src):
     groups = src['groups']
@@ -37,10 +44,7 @@ def songs_scenes(src):
     for s in src['songs']:
         if not s.get('lyrics'):
             continue
-        lines = s['lyrics'].split('\n')
-        sung = [x.strip() for x in lines if x.strip() and not re.match(r'^\[.*\]$', x.strip())]
-        ch = lines.index(next((x for x in lines if x.strip().lower().startswith('[chorus')), lines[0]))
-        hook = [x.strip() for x in lines[ch + 1:] if x.strip() and not x.strip().startswith('[')][:2] or sung[:2]
+        hook = song_hook(s['lyrics'])
         skeleton.append({'id': s['id'], 'p': 's%s' % s['group'], 'when': '시편 %s편' % s['psalm'], 'year': 0, 'place': s['place'], 'title': '%s편 · %s' % (s['psalm'], s['title']), 'refs': {}})
         content[s['id']] = {'id': s['id'], 'subtitle': s['setting'], 'story': [s['intro']], 'song': {'psalm': s['psalm'], 'lyrics': s['lyrics']},
                             'words': [{'who': '시편', 'text': ' '.join(hook), 'ref': '시 %s편' % s['psalm']}]}
@@ -127,7 +131,9 @@ def build(jid, src, out_dir):
     print('[%s]' % jid, len(events), 'events,', sum(1 for e in events if 'img' in e), 'with images')
 
     # 번역본: 한국어 데이터를 바탕으로 글만 갈아 끼운다. 빠진 글은 한국어로 남겨 두고 알려 준다
-    # 한국어 전용 여정(시편, koOnly)은 번역본을 만들지 않는다 — 앱이 이 여정에서는 늘 한국어로 연다
+    # 한국어 전용 여정(koOnly)은 번역본을 만들지 않는다 — 앱이 이 여정에서는 늘 한국어로 연다
+    # 시편(songs)의 번역본(i18n/<언어>.json, extract.py가 뽑은 ko.json을 옮긴 것): 노래는 한국어 그대로 부르고, 제목·배경·노래 앞 낭독·묶음·자리 이름과
+    # 가사 줄마다의 뜻(song.tr: {한국어 줄: 옮긴 줄} — 앱이 부르는 줄 밑에 작게 띄운다)만 갈아 끼운다 (사용자 2026-11)
     ui_tr = lambda lang: loadf(os.path.join(here, 'i18n', 'ui.%s.json' % lang))
     for lang in ([] if meta.get('koOnly') else LANGS[1:]):
         f = os.path.join(src, 'i18n', lang + '.json')
@@ -135,12 +141,32 @@ def build(jid, src, out_dir):
         o = copy.deepcopy(out)
         miss += [k for k in ui_ko if k not in ui_tr(lang) and k != 'langs']
         o['ui'] = ui_for(lang)
+        songs_tr = tr.get('songs') is not None
         for p in o['periods']:
+            if songs_tr:  # 시편의 묶음(s1…) — 번역본의 groups
+                g = tr.get('groups', {}).get(p['id'][1:])
+                if g: p.update(name=g, span=tr['fmt']['span'])
+                else: miss.append(p['id'])
+                continue
             p.update(tr.get('periods', {}).get(p['id'], {}) or miss.append(p['id']) or {})
         for k, v in o['places'].items():
             v.update(tr.get('places', {}).get(k, {}) or miss.append(k) or {})
         books = dict(zip(BOOKS['ko'], BOOKS[lang]))
         for e in o['events'] + ([o['prologue']] if 'prologue' in o else []):
+            if 'song' in e:
+                t, f, n = tr.get('songs', {}).get(e['id']), tr.get('fmt', {}), e['song']['psalm']
+                if not t:
+                    miss.append(e['id']); continue
+                lines = t['lines']
+                e['title'] = f['title'].replace('{n}', n).replace('{t}', t['title'])
+                e['when'], e['subtitle'], e['story'] = f['when'].replace('{n}', n), t['setting'], [t['intro']]
+                e['song']['tr'] = lines
+                hook = song_hook(e['song']['lyrics'])
+                for w in e['words']:
+                    w.update(who=f['who'], text=' '.join(lines.get(x, x) for x in hook), ref=f['ref'].replace('{n}', n))
+                gone = [x for x in songs_sung(e['song']['lyrics']) if x not in lines]
+                if gone: miss.append('%s:%d줄' % (e['id'], len(gone)))  # 작업실에서 가사를 고친 줄 — extract.py로 다시 뽑아 옮긴다
+                continue
             t = tr.get('events', {}).get(e['id'])
             if not t:
                 miss.append(e['id']); continue
