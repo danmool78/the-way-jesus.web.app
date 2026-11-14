@@ -1127,6 +1127,14 @@ function moveWithin(e, a, b) {
   };
   walkNext(step);
 }
+// 여정·장면별 방문 수 (관리자 페이지에서 어느 여정을 얼마나, 어디까지 보는지 보려고 — 사용자 2026-11).
+// 쿠키·개인정보 없이 여정·장면·언어만 관리자 Worker로 보낸다(나라는 Worker가 Cloudflare로 안다). 운영 주소에서만, 한 번 연 장면은 다시 세지 않는다
+const HIT = 'https://theway-admin.danmool78.workers.dev/hit', hitSeen = new Set();
+function hit(k, s = '') {
+  if (!['thewaymap.org', 'www.thewaymap.org', 'the-way-jesus.web.app'].includes(location.hostname) || hitSeen.has(k + s)) return;
+  hitSeen.add(k + s);
+  try { navigator.sendBeacon(HIT, new Blob([JSON.stringify({ k, j: JOURNEY, s, l: LANG })], { type: 'text/plain' })); } catch { /* 세지 못해도 그만 */ }
+}
 function go(i, { keepSpeech = false, onArrive } = {}) {
   if (i < firstIdx() || i >= EVENTS.length || i === idx && $('#scene').innerHTML) return;
   if (walking && i === idx + 1) return; // 이미 그곳으로 걷는 중
@@ -1141,6 +1149,7 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
   const arrive = () => {
     idx = i; stopsWalked.clear(); setHere(evAt(i), startOf(evAt(i))); window.stageHide = false;
     renderScene(); showLetters(evAt(i).letters || []); psalmBox(evAt(i)); paintScene(evAt(i)); updateMap(prev, { camera: !stepped || fitMode === 'all', jump }); updateTrack(); if (i >= 0) markVisited(EVENTS[i].id);
+    hit('open'); hit('scene', evAt(i).id);
     window.__stageScene = evAt(i); // stage.js가 늦게 로드돼도 따라잡도록
     dispatchEvent(new CustomEvent('stage:scene', { detail: { ev: evAt(i) } }));
     bgmFollow(); // 읽는 중에 장면이 바뀌면 그 장면의 곡으로 겹쳐 바꾼다

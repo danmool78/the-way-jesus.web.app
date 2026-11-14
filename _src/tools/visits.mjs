@@ -2,7 +2,7 @@
 // GitHub Actions(.github/workflows/visits.yml)가 매일 돌려 stats 가지(배포되지 않는 따로 떨어진 가지)의 visits.json에 올린다.
 // 열쇠: CF_API_TOKEN(Account Analytics: Read 하나만), CF_ACCOUNT_ID — GitHub 비밀값에만 둔다
 // Run: CF_API_TOKEN=… CF_ACCOUNT_ID=… node _src/tools/visits.mjs <출력.json>
-import { writeFileSync } from 'node:fs';
+import { writeFileSync, readFileSync, existsSync } from 'node:fs';
 const SITE = 'f33dcbc61cc949909499f044d7eeae69'; // 페이지에 넣은 비컨의 사이트 표시(공개값)
 const { CF_API_TOKEN: TOKEN, CF_ACCOUNT_ID: ACCOUNT } = process.env;
 if (!TOKEN || !ACCOUNT) { console.error('CF_API_TOKEN, CF_ACCOUNT_ID가 필요합니다'); process.exit(1); }
@@ -17,7 +17,7 @@ const query = `query ($a: string!, $f: AccountRumPageloadEventsAdaptiveGroupsFil
   viewer { accounts(filter: { accountTag: $a }) {
     ${group('days', 'date', 40, 'date_ASC')}
     ${group('paths', 'requestPath', 15)}
-    ${group('countries', 'countryName', 15)}
+    ${group('countries', 'countryName', 40)}
     ${group('referers', 'refererHost', 15)}
     ${group('devices', 'deviceType', 5)}
   } } }`;
@@ -37,6 +37,30 @@ const stats = {
   referers: (acc.referers || []).map(g => row(g, 'refererHost')),
   devices: (acc.devices || []).map(g => row(g, 'deviceType')),
 };
+
+// 여정·장면별 (앱이 Worker /hit로 보낸 기록, Analytics Engine theway_hits) — 쓰는 열쇠는 같은 CF_API_TOKEN(Account Analytics: Read)
+// blob1 종류(open|scene) · blob2 여정 · blob3 장면 · blob4 언어 · blob5 나라 코드. 표본으로 줄여 담을 수 있어 _sample_interval을 더한다
+const sql = async q => {
+  const r = await fetch(`https://api.cloudflare.com/client/v4/accounts/${ACCOUNT}/analytics_engine/sql`, { method: 'POST', headers: { Authorization: `Bearer ${TOKEN}` }, body: q });
+  const t = await r.text(); if (!r.ok) throw new Error(`${r.status} ${t.slice(0, 300)}`);
+  return JSON.parse(t).data.map(x => ({ ...x, n: Number(x.n) }));
+};
+const W = `FROM theway_hits WHERE timestamp > NOW() - INTERVAL '30' DAY`;
+try {
+  const opens = await sql(`SELECT blob2 AS j, blob5 AS c, SUM(_sample_interval) AS n ${W} AND blob1 = 'open' GROUP BY j, c ORDER BY n DESC LIMIT 2000`);
+  const scenes = await sql(`SELECT blob2 AS j, blob3 AS s, SUM(_sample_interval) AS n ${W} AND blob1 = 'scene' GROUP BY j, s LIMIT 5000`);
+  const langs = await sql(`SELECT blob4 AS l, SUM(_sample_interval) AS n ${W} AND blob1 = 'open' GROUP BY l ORDER BY n DESC LIMIT 20`);
+  // 장면 이름과 차례는 저장소의 data에서 (관리자 페이지가 여정마다 data를 받지 않게)
+  const order = j => { const f = j === 'jesus' ? 'data.json' : `j/${j}/data.json`; if (!existsSync(f)) return [];
+    const d = JSON.parse(readFileSync(f, 'utf8')); return [...(d.prologue ? [d.prologue] : []), ...d.events].map(e => [e.id, e.title]); };
+  const ids = [...new Set(opens.map(x => x.j))];
+  stats.journeys = ids.map(j => {
+    const mine = opens.filter(x => x.j === j), got = Object.fromEntries(scenes.filter(x => x.j === j).map(x => [x.s, x.n]));
+    return { id: j, opens: mine.reduce((t, x) => t + x.n, 0), countries: mine.map(x => [x.c, x.n]),
+      scenes: order(j).map(([id, title]) => [id, title, got[id] || 0]) };
+  }).sort((a, b) => b.opens - a.opens);
+  stats.langs = langs.map(x => [x.l || '(없음)', x.n]);
+} catch (e) { console.warn('::warning::여정별 기록을 읽지 못함 —', e.message); }
 writeFileSync(out, JSON.stringify(stats, null, 1) + '\n');
 const sum = stats.days.reduce((s, d) => s + d.visits, 0);
 console.log(`visits: 30일 방문 ${sum}, ${stats.days.length}일 → ${out}`);

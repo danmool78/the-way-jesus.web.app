@@ -70,15 +70,33 @@ $('#gLogin').onclick = async () => {
 
 /* ---------- 목록 ---------- */
 // 여정 고르기: 원본이 만들어진 여정(built)만 — 원본이 없는 여정을 고르면 불러오지 못해 로그인이 풀린다. 맨 끝에 시편 노래 작업실
+const JNAMES = { jesus: '예수', moses: '모세와 여호수아', david: '다윗', kings: '열왕기', paul: '바울', proverbs: '잠언', goodnews: '복음', psalms: '시편' };
 function fillPick(series) {
-  const pick = $('#journeyPick'), names = { jesus: '예수', moses: '모세와 여호수아', david: '다윗', kings: '열왕기', paul: '바울', proverbs: '잠언', goodnews: '복음', psalms: '시편' };
-  pick.innerHTML = (series || [{ id: 'jesus' }]).filter(j => j.built !== false && j.id !== 'psalms').map(j => `<option value="${j.id}"${j.id === JOURNEY ? ' selected' : ''}>${esc(names[j.id] || j.id)}${j.ready ? '' : ' (준비 중)'}</option>`).join('')
+  const pick = $('#journeyPick');
+  pick.innerHTML = (series || [{ id: 'jesus' }]).filter(j => j.built !== false && j.id !== 'psalms').map(j => `<option value="${j.id}"${j.id === JOURNEY ? ' selected' : ''}>${esc(JNAMES[j.id] || j.id)}${j.ready ? '' : ' (준비 중)'}</option>`).join('')
     + `<option value="psalms"${JOURNEY === 'psalms' ? ' selected' : ''}>시편 노래 작업실</option>`;
   pick.hidden = false;
   pick.onchange = () => { location.search = pick.value === 'jesus' ? '' : `?j=${pick.value}`; };
 }
 /* ---------- 방문 수 ---------- */
 // 대시보드에 안 가도 보게(사용자): 매일 Actions가 stats 가지에 적는 visits.json을 읽어 맨 위에 띄운다. 로봇은 빠진 수(자바스크립트를 실행한 방문만)
+// 나라 코드(KR) → 우리말 이름. 이름으로 오면 그대로
+const nation = (() => { let dn = null; try { dn = new Intl.DisplayNames(['ko'], { type: 'region' }); } catch { /* 옛 브라우저 */ }
+  return c => /^[A-Z]{2}$/.test(c) && c !== 'XX' ? (dn?.of(c) || c) : c === 'XX' ? '알 수 없음' : c; })();
+const LNAMES = { ko: '한국어', en: '영어', es: '스페인어', pt: '포르투갈어', fr: '프랑스어', zh: '중국어', id: '인도네시아어', ja: '일본어' };
+// 여정별: 연 횟수(앱이 Worker /hit로 보낸 기록), 나라, 장면마다 몇 번 열었는지(어디까지 따라오는지) — 세기 시작한 뒤의 기록만
+function journeysHtml(v) {
+  const js = v.journeys || [], num = x => x.toLocaleString('ko-KR');
+  if (!js.length) return '<p class="note">여정별 기록: 아직 없습니다 (앱이 여정·장면을 열 때부터 세고, 매일 0시 넘어 모읍니다)</p>';
+  const max = Math.max(1, ...js.map(j => j.opens));
+  return `<h4 class="jh">여정별 (앱에서 연 횟수)</h4><div class="jrows">${js.map(j => {
+    const sc = j.scenes || [], smax = Math.max(1, ...sc.map(x => x[2])), first = sc.find(x => x[2])?.[2] || 0, last = sc.at(-1)?.[2] || 0;
+    return `<div class="jrow"><p><b>${esc(JNAMES[j.id] || j.id)}</b><span class="jbar"><i style="width:${j.opens / max * 100}%"></i></span><em>${num(j.opens)}</em></p>
+      <small>${j.countries.slice(0, 6).map(([c, n]) => `${esc(nation(c))} ${num(n)}`).join(' · ')}</small>
+      ${sc.length ? `<div class="reach" title="장면마다 연 횟수 — 오른쪽으로 갈수록 끝까지 따라온 사람">${sc.map(([id, title, n]) => `<i style="height:${Math.max(n ? 4 : 1, n / smax * 100)}%" title="${esc(id)} ${esc(title)} · ${num(n)}"></i>`).join('')}</div>
+      <small>첫 장면 ${num(first)} → 마지막 장면 ${num(last)}${first ? ` (${Math.round(last / first * 100)}%)` : ''} · 가장 많이 연 장면: ${esc([...sc].sort((a, b) => b[2] - a[2])[0]?.[1] || '')}</small>` : ''}</div>`;
+  }).join('')}</div>`;
+}
 async function showVisits() {
   const box = $('#visits');
   let v;
@@ -88,15 +106,16 @@ async function showVisits() {
   const today = new Date(Date.now() + 9 * 36e5).toISOString().slice(0, 10); // 한국 날짜
   const past = d.filter(x => x.date < today), yday = past.at(-1);
   const max = Math.max(1, ...d.map(x => x.visits));
-  const top = (h, rows, f = x => x) => rows?.length ? `<div><h4>${h}</h4>${rows.slice(0, 8).map(([k, vis]) => `<p><span>${esc(f(k))}</span><em>${num(vis)}</em></p>`).join('')}</div>` : '';
+  const top = (h, rows, f = x => x, k = 8) => rows?.length ? `<div><h4>${h}</h4>${rows.slice(0, k).map(([k, vis]) => `<p><span>${esc(f(k))}</span><em>${num(vis)}</em></p>`).join('')}</div>` : '';
   box.innerHTML = `<div class="nums">
       <div><b>${num(yday?.visits || 0)}</b><small>어제 방문${yday ? ` (${yday.date.slice(5).replace('-', '/')})` : ''}</small></div>
       <div><b>${num(n(7))}</b><small>최근 7일</small></div>
       <div><b>${num(n(30))}</b><small>최근 30일 · 페이지 보기 ${num(d.reduce((s, x) => s + x.views, 0))}</small></div>
     </div>
     <div class="bars" title="최근 30일 날마다 방문">${d.map(x => `<i style="height:${Math.max(2, x.visits / max * 100)}%" title="${x.date} · ${num(x.visits)}명"></i>`).join('')}</div>
-    <details><summary><span class="note" style="margin:0">많이 본 페이지 · 나라 · 들어온 곳 (30일) — ${new Date(v.updated).toLocaleString('ko-KR', { dateStyle: 'short', timeStyle: 'short' })} 기준</span></summary>
-      <div class="tops">${top('페이지', v.paths)}${top('나라', v.countries)}${top('들어온 곳', v.referers, k => k === '(없음)' ? '직접·앱' : k)}${top('기기', v.devices)}</div>
+    <details open><summary><span class="note" style="margin:0">자세히 (30일) — ${new Date(v.updated).toLocaleString('ko-KR', { dateStyle: 'short', timeStyle: 'short' })} 기준</span></summary>
+      ${journeysHtml(v)}
+      <div class="tops">${top('나라', v.countries, nation, 20)}${top('들어온 곳', v.referers, k => k === '(없음)' ? '직접·앱' : k, 12)}${top('페이지', v.paths, x => x, 12)}${top('기기', v.devices, k => ({ mobile: '휴대폰', desktop: '컴퓨터', tablet: '태블릿' })[k] || k)}${top('앱 언어', v.langs, k => LNAMES[k] || k)}</div>
     </details>`;
   box.hidden = false;
 }
