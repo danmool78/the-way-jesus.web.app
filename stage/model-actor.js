@@ -103,7 +103,9 @@ export class StageModel {
     r.position.copy(dr.position); r.rotation.copy(dr.rotation); r.scale.copy(dr.scale); r.visible = dr.visible;
     this.fadeTo(Math.min(1, d.show));
     const walk = moving && !d.floating, clip = walk ? 'walk' : CLIP[d.pose], kneel = !walk && KNEEL.has(d.pose), ride = !walk && SEAT.has(d.pose), perch = !walk && d.pose === 'perch';
-    this.play(clip || (kneel ? 'pray' : 'idle'));
+    // 무릎 꿇는 동작('pray')이 없는 모델(순례자·어부 등 엑스트라)은 다리를 직접 접어 발뒤꿈치에 앉힌다 — 동작 없이 서 있었다
+    const seiza = kneel && !this.acts.pray;
+    this.play(clip || (kneel && !seiza ? 'pray' : 'idle'));
     this.mixer.update(dt);
     // 동작이 없는 자세는 인형의 팔을 따른다 (천천히 들어가고 나온다)
     this.w = damp(this.w, clip || perch ? 0 : 1, 6, dt);
@@ -120,6 +122,14 @@ export class StageModel {
       for (const [, mb] of this.arms) if (mb.up && mb.lo && mb.hand) { this.aim(mb.up, mb.lo, hug, this.perchW); this.aim(mb.lo, mb.hand, fore, this.perchW); }
       if (this.headB) this.headB.rotation.x -= 0.9 * this.perchW;
       if (this.w < 0.01 && this.legW < 0.01) return;
+    }
+    this.seizaW = damp(this.seizaW || 0, seiza ? 1 : 0, 6, dt);
+    if (this.seizaW > 0.01) {
+      r.updateMatrixWorld(true);
+      const qr = r.getWorldQuaternion(new THREE.Quaternion()), thigh = new THREE.Vector3(0, -0.35, 1).normalize().applyQuaternion(qr), shin = new THREE.Vector3(0, -0.12, -1).normalize().applyQuaternion(qr);
+      let knee = Infinity;
+      for (const l of this.legs) if (l.up && l.lo && l.foot) { this.aim(l.up, l.lo, thigh, this.seizaW); this.aim(l.lo, l.foot, shin, this.seizaW); knee = Math.min(knee, l.lo.getWorldPosition(v1).y); }
+      if (knee < Infinity) this.body.position.y -= (knee - r.getWorldPosition(v2).y) / r.getWorldScale(v1).y - 0.03 * this.hipH;
     }
     if (this.w < 0.01 && this.legW < 0.01) return;
     r.updateMatrixWorld(true); dr.updateMatrixWorld(true);

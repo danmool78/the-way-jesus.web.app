@@ -670,7 +670,7 @@ export const SCRIPTS = {
         ['attendant', 'idle', { x: 0.22, z: -0.12, look: -0.6, item: 'scroll' }], ['elder', 'sit-ground', { x: -0.6, z: 0.38, look: 0.8 }], ['man', 'sit-ground', { x: 0.45, z: 0.4, look: -0.8 }], ['phar', 'sit-ground', { x: -0.85, z: 0.05, look: 0.9 }]],
       'p0.1': [['jesus', 'idle', { x: -0.12, z: 0.02, look: 0.6 }], ['attendant', 'idle', { item: null, delay: 2600 }], ['jesus', 'idle', { item: 'scroll', look: 0, delay: 2600 }]],
       'p0.3': [['jesus', 'speak', { look: 0 }]],
-      'p1.0': [['jesus', 'idle', { item: null }], ['attendant', 'idle', { item: 'scroll' }], ['jesus', 'sit-ground', { delay: 1200 }],
+      'p1.0': [['jesus', 'idle', { item: null }], ['attendant', 'idle', { item: 'scroll' }], ['jesus', 'sit', { delay: 1200 }],
         ['elder', 'sit-ground', { look: 0.6 }], ['man', 'sit-ground', { look: -0.6 }], ['phar', 'sit-ground', { look: 0.8 }]],
       'p1.2': [['jesus', 'speak'], ['man', 'shrug', { delay: 3500 }]],
       'p1.4': [['phar', 'speak', { look: 1.0 }]],
