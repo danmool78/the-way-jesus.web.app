@@ -5,7 +5,7 @@
   python3 _src/tools/r2sync.py changed <git 기준> — 그 기준 이후 바뀐 파일만 (배포 작업이 쓴다)
   python3 _src/tools/r2sync.py cors           — 버킷 CORS(우리 사이트에서 웹 오디오로 배경음악을 틀게)
 열쇠: 환경변수 CLOUDFLARE_API_TOKEN·CLOUDFLARE_ACCOUNT_ID (GitHub 비밀값 CF_WORKERS_TOKEN·CF_ACCOUNT_ID — 저장소에 두지 않는다)"""
-import glob, hashlib, json, os, subprocess, sys, urllib.request, urllib.parse
+import glob, hashlib, json, os, subprocess, sys, time, urllib.request, urllib.parse
 from concurrent.futures import ThreadPoolExecutor
 
 BUCKET, PUB = 'theway', 'https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev'
@@ -27,17 +27,19 @@ def put(path):
     data = open(path, 'rb').read()
     req = urllib.request.Request(API + '/objects/' + urllib.parse.quote(path, safe='/'), data=data, method='PUT', headers={
         'Authorization': 'Bearer ' + TOKEN, 'Content-Type': KIND[os.path.splitext(path)[1]], 'Cache-Control': CACHE(path)})
-    for a in range(3):
+    # Cloudflare API는 5분에 1200번까지라 많이 올리면 429가 온다 — 기다렸다 다시
+    for a in range(10):
         try:
             urllib.request.urlopen(req, timeout=120); return True
         except Exception as e:
             err = e
+            time.sleep(30 if getattr(e, 'code', 0) == 429 else 3)
     print('::warning::못 올림', path, err); return False
 def sync(paths, check=True):
     def one(p):
         if check and remote_etag(p) == hashlib.md5(open(p, 'rb').read()).hexdigest(): return 0
         return 1 if put(p) else -1
-    with ThreadPoolExecutor(16) as ex: res = list(ex.map(one, paths))
+    with ThreadPoolExecutor(4) as ex: res = list(ex.map(one, paths))
     print('R2: %d개 중 %d개 올림, %d개 실패' % (len(paths), res.count(1), res.count(-1)))
     if res.count(-1): sys.exit(1)
 
