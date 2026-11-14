@@ -77,6 +77,10 @@ function applyStatic() {
 // (목록과 준비 여부는 data의 journey.series — _src/series.json). 이름은 영문 소문자만 받는다
 const JOURNEY = (q => /^[a-z]+$/.test(q || '') ? q : 'jesus')(new URLSearchParams(location.search).get('j'));
 const JDIR = JOURNEY === 'jesus' ? '' : `j/${JOURNEY}/`;
+// 한 장면만 보기(?one): 순례 게임이 '이 장면 듣기'로 게임 위에 띄운다. 버튼 없이 그 장면 연출만 하고 끝나면 게임에 알린다 —
+// 다음 장면으로 걷거나 앱의 진행 기록을 바꾸지 않는다 (사용자 2026-11)
+const ONE = new URLSearchParams(location.search).has('one');
+if (ONE) document.documentElement.classList.add('one');
 document.documentElement.dataset.journey = JOURNEY; // 여정마다 테마색 (style.css의 [data-journey])
 const journeyUrl = id => `/app.html?j=${id}`; // 다른 여정으로 가는 주소 (언어는 저장된 것을 따른다). 맨 첫 주소(/)는 여정을 고르는 랜딩(index.html)
 // 여정의 공유 주소(/moses — 미리보기 카드를 담은 페이지, _src/tools/share.mjs)와 이름
@@ -94,7 +98,7 @@ const LANG_NAMES = { ko: '한국어', en: 'English', es: 'Español', pt: 'Portug
 const store = {
   key: JOURNEY === 'jesus' ? 'theway-progress-v1' : `theway-progress-${JOURNEY}`, // 여정마다 따로 (예수 여정은 예전 열쇠 그대로)
   load() { try { return JSON.parse(localStorage.getItem(this.key)) || {}; } catch { return {}; } },
-  save() { try { localStorage.setItem(this.key, JSON.stringify(state)); } catch { /* 사생활 보호 모드 등 */ } }
+  save() { if (ONE) return; try { localStorage.setItem(this.key, JSON.stringify(state)); } catch { /* 사생활 보호 모드 등 */ } }
 };
 const state = Object.assign({ visited: [], quiz: {}, last: null }, store.load());
 const visited = new Set(state.visited);
@@ -502,7 +506,7 @@ function frameStage(i, ms = 1300, mode = 'open') {
   if (!st || !r.width) return false;
   const [cx, cy] = st.at ? px(st.at) : P(PLACES[here(e)]);
   const min = i < 0 ? 1500 : PLACES[here(e)].jlm || here(e) === 'jerusalem' ? 14 : 300; // 프롤로그는 에덴 둘레(두 강과 만)가 다 보이게 멀리서
-  const u = reserveCard({ x: 0, y: 0, w: min, h: min }).w / r.width; // 이 확대에서 화면 1px 당 지도 단위
+  const u = reserveCard({ x: 0, y: 0, w: min * (ONE ? .6 : 1), h: min * (ONE ? .6 : 1) }).w / r.width; // 한 장면만 보기는 카드가 없으니 무대에 더 다가간다 // 이 확대에서 화면 1px 당 지도 단위
   const f = freeArea(mode), fx = (f.l + f.r) / 2, fy = (f.t + f.b) / 2;
   // 핀 + 무대 어긋남(dx,dy)이 빈 영역의 가운데에 오도록 보기 상자를 놓는다
   animateTo({ x: cx - (fx - st.dx) * u, y: cy - (fy - st.dy) * u, w: r.width * u, h: r.height * u }, ms);
@@ -1132,12 +1136,14 @@ function moveWithin(e, a, b) {
 // 쿠키·개인정보 없이 여정·장면·언어만 관리자 Worker로 보낸다(나라는 Worker가 Cloudflare로 안다). 운영 주소에서만, 한 번 연 장면은 다시 세지 않는다
 const HIT = 'https://theway-admin.danmool78.workers.dev/hit', hitSeen = new Set();
 function hit(k, s = '') {
+  if (ONE) return; // 게임에서 띄운 장면은 앱 방문으로 세지 않는다
   if (!['thewaymap.org', 'www.thewaymap.org', 'the-way-jesus.web.app'].includes(location.hostname) || hitSeen.has(k + s)) return;
   hitSeen.add(k + s);
   try { navigator.sendBeacon(HIT, new Blob([JSON.stringify({ k, j: JOURNEY, s, l: LANG })], { type: 'text/plain' })); } catch { /* 세지 못해도 그만 */ }
 }
 function go(i, { keepSpeech = false, onArrive } = {}) {
   if (i < firstIdx() || i >= EVENTS.length || i === idx && $('#scene').innerHTML) return;
+  if (ONE && $('#scene').innerHTML) return; // 한 장면만 보기: 처음 연 장면에서 움직이지 않는다
   if (walking && i === idx + 1) return; // 이미 그곳으로 걷는 중
   if (!keepSpeech) stopSpeech(true);
   cancelWalk();
@@ -1367,7 +1373,7 @@ function speakQueue(items, onDone) {
       voiceAudio.onended = () => { const q = queue[n]; if (q && hasClip(q) && !hold) { voiceAudio.src = voiceUrl(q.clip); voiceAudio.load(); } advance(gap); };
       // 파일을 못 불러오면 그 문장은 눈으로 읽는 속도만큼 기다린다
       voiceAudio.onerror = () => { clearTimeout(guard); guard = setTimeout(() => advance(0), readMs(it)); };
-      voiceAudio.play().catch(err => { if (err.name !== 'AbortError') voiceAudio.onerror(); });
+      voiceAudio.play().catch(err => { if (ONE && err.name === 'NotAllowedError') { oneBlocked(); return; } if (err.name !== 'AbortError') voiceAudio.onerror(); });
       cur = { pause: () => { clearTimeout(guard); voiceAudio.pause(); return () => voiceAudio.play().catch(() => advance(0)); } }; // 다시 틀면 onplaying이 감시 타이머를 새로 건다
       // 다음 문장 파일들을 미리 받아 두어 문장 사이에 불러오는 시간이 끼지 않게 — 한 문장 앞만 받으니 느린 망에서는 문장마다 끊겨
       // 늦게 시작하는 것처럼 들렸다(시편, 사용자). 세 문장 앞까지 (이미 받은 것은 캐시에서 바로)
@@ -1457,6 +1463,15 @@ function sceneScript() {
   // storyTts: 관리자 페이지에서 Gemini 성우로 고른 해설 문단 번호들
   e.story.forEach((s, i) => items.push({ text: s, el: $(`[data-para="${i}"]`, sc), gemini: (e.storyTts || []).includes(i), pause: 350, beat: 'p' + i, sn: e.sn?.[i] }));
   return items;
+}
+// 한 장면만 보기: 열리면 곧 낭독·무대를 틀고, 끝나면 게임(부모 창)에 알려 닫게 한다
+function oneStart() { setTimeout(() => speakScene(() => setTimeout(() => parent.postMessage('theway-one-done', '*'), 1200)), 900); }
+// 브라우저가 소리를 막으면(아이폰은 창 안에서 한 번 눌러야 한다) 화면 한가운데 재생 표시 하나만 — 누르면 처음부터
+function oneBlocked() {
+  stopSpeech(true);
+  let b = $('#onePlay');
+  if (!b) { b = document.createElement('button'); b.id = 'onePlay'; b.type = 'button'; b.setAttribute('aria-label', t('listenScene')); b.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>'; document.body.append(b); }
+  b.hidden = false; b.onclick = () => { b.hidden = true; speakScene(() => setTimeout(() => parent.postMessage('theway-one-done', '*'), 1200)); };
 }
 function speakScene(onDone) { followRead = true; speakQueue(sceneScript(), evAt(idx)?.song ? () => songPlay(onDone) : onDone); sceneReading = true; } // 시편: 노래 앞 낭독이 끝나면 노래
 const stageBeat = (beat, s) => {
@@ -2107,6 +2122,7 @@ function renderStamps() {
 const missedQuiz = () => EVENTS.filter(e => state.quiz[e.id] !== true);
 // auto: 듣기·자동 여정이 끝나서 부른 것이면 이미 마친 적이 있을 때 띄우지 않는다. 띄웠으면 true
 function endJourney(auto) {
+  if (ONE) return true;
   if (auto && state.ended) return false;
   if (!state.ended) { state.ended = Date.now(); store.save(); }
   openEnd();
@@ -2243,7 +2259,8 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   // '왜 기독교인가'도 공유한다 — 여정이 아니라 페이지라 그 언어의 why 주소로 (전엔 공유 단추가 없었다, 사용자)
   $$('#seriesList .jshare').forEach(b => b.onclick = () => shareLink(b.dataset.share === 'why' ? { url: `${SITE}/${LANG === 'ko' ? 'why.html' : `why.${LANG}.html`}`, title: `${t('appName')} — ${t('whyH')}` } : shareOf(b.dataset.share)));
   // 첫 시작 화면: 장면 주소로 바로 들어온 때(#e05)와 연출 확인(?beat=)은 건너뛴다
-  if (!hashOk && !quick && !new URLSearchParams(location.search).has('beat')) showIntro(fromLast > 0 ? fromLast : -1);
+  if (!hashOk && !quick && !new URLSearchParams(location.search).has('beat') && !ONE) showIntro(fromLast > 0 ? fromLast : -1);
+  if (ONE) oneStart();
   $('.brand').onclick = ev => { ev.preventDefault(); showIntro(state.last && idx > 0 ? idx : -1); }; // 기록을 지운 뒤에는 처음 온 사람처럼
 
   $('#prev').onclick = $('#back').onclick = () => go(idx - 1);
