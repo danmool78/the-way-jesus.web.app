@@ -109,7 +109,25 @@ button{font:inherit;color:inherit;cursor:pointer}
 .tcard{--rx:0deg;--ry:0deg;--mx:50%;--my:50%;--edge:linear-gradient(135deg,#7a4a26,#d9955a 30%,#6e3f1f 55%,#c98a4e 80%,#5a3418);position:relative;width:100%;aspect-ratio:63/88;border-radius:4.6%/3.3%;padding:3.2%;background:var(--edge);box-shadow:0 14px 40px rgba(0,0,0,.55);transform:perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));transition:transform .25s ease-out;container-type:inline-size}
 .tcard.silver{--edge:linear-gradient(135deg,#8d969e,#eef2f4 28%,#7b848c 52%,#dfe5ea 78%,#6a737a)}
 .tcard.gold{--edge:linear-gradient(135deg,#9a6a1c,#ffe9a6 26%,#b8862a 50%,#fff2c4 74%,#8a5c14)}
-.tin{position:relative;height:100%;display:flex;flex-direction:column;border-radius:3.4%/2.4%;overflow:hidden;background:linear-gradient(#1b2433,#121822);color:#f4ecdc}
+.tin{position:relative;height:100%;transform-style:preserve-3d;transform:perspective(1400px) rotateY(0);transition:transform .6s cubic-bezier(.3,.7,.3,1)}
+.tcard.flipped .tin{transform:perspective(1400px) rotateY(180deg)}
+.tcard.big{cursor:pointer}
+/* 앞뒤 면: 앞면은 그림 전체(3:4가 카드 비율과 거의 같아 거의 잘리지 않는다), 뒷면은 그 그림을 흐리고 어둡게 깔고 말씀 */
+.tface{position:absolute;inset:0;display:flex;flex-direction:column;border-radius:3.4%/2.4%;overflow:hidden;background:linear-gradient(#1b2433,#121822);color:#f4ecdc;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.tback{transform:rotateY(180deg)}
+.tfront .tbg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.tfront .thead{position:relative;padding-bottom:7cqw;background:linear-gradient(rgba(9,13,20,.88) 35%,rgba(9,13,20,0));text-shadow:0 1px 4px rgba(0,0,0,.6)}
+.tlow{position:relative;margin-top:auto;padding-top:9cqw;background:linear-gradient(rgba(9,13,20,0),rgba(9,13,20,.85) 55%)}
+.tlow .tcap{background:rgba(9,13,20,.35);color:#e6dcc4}
+.tturn{position:absolute;right:3.4cqw;top:15cqw;display:none;padding:1.2cqw 2.8cqw;border-radius:99px;background:rgba(9,13,20,.55);font:600 3.2cqw var(--sans);color:#f3e6c4}
+.tcard.big .tturn{display:block}
+.tback::before{content:'';position:absolute;inset:-12%;background:var(--bg) center/cover;filter:blur(10px) brightness(.32) saturate(.8)}
+.tback>*{position:relative}
+.tback .tword{margin:auto 4cqw 0;padding:4.5cqw 4.4cqw}
+.tback .tword q{display:block;-webkit-line-clamp:unset;font-size:5cqw;line-height:1.6}
+.tback .tcap{margin-top:3cqw}
+.tback .tfoot{margin-top:auto}
+.tcard.flipped .tholo{opacity:.06!important} /* 뒷면은 글을 읽어야 하니 무지개 빛을 거의 끈다 */
 .thead{display:flex;align-items:center;gap:3cqw;padding:2.6cqw 3.4cqw 2.2cqw}
 .tno{flex:none;font:700 4.2cqw var(--sans);color:#151b26;background:#e9d9b0;border-radius:99px;padding:.5cqw 2cqw}
 .thead b{flex:1;min-width:0;font:700 5.2cqw/1.2 var(--serif);word-break:keep-all;text-wrap:balance;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden} /* 긴 제목은 두 줄로 (말줄임 대신) */
@@ -130,7 +148,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 @keyframes legend{to{background-position:200% 200%}}
 .ttcard .tno{background:#f3ead6}.ttcard.rare .tst{color:#a9cbff}.ttcard.common .tst{color:#a8e0c8}.ttcard.legend .tst{color:#ffb3f0}
 .ttcard.rare .tholo{opacity:.35}.ttcard.legend .tholo{opacity:.6}
-.ttcard .tin{background:linear-gradient(#1d1830,#121022)}
+.ttcard .tface{background:linear-gradient(#1d1830,#121022)}
 .thd{margin:14px 0 2px;font:700 17px var(--serif);color:var(--gold2)}
 .deck .slot.tlock{padding:6px;gap:4px}.deck .slot.tlock i{font:normal 10.5px/1.35 var(--sans);color:var(--muted);text-align:center;word-break:keep-all}
 .deck .slot.tlock em{font:normal 700 10px var(--sans);color:#ffd77a}

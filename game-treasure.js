@@ -54,13 +54,17 @@ export function hideTreasures(list, places, toXZ, blocked) {
 }
 
 // 보물 카드 (희귀도별 테두리 — CSS .ttcard.common/.rare/.legend)
+// 앞뒤 카드 (사용자 2026-11): 카드 틀 안에 말씀 상자까지 넣으니 그림이 절반쯤만 보여 주인공이 잘렸다 —
+// 앞면은 그림 전체에 제목·별만, 뒷면은 그 그림을 어둡게 깔고 말씀·장소·점수. 카드 모음에서는 앞면
+export function flipCard(esc, cls, attr, src, alt, head, cap, word, foot, turn) {
+  const fb = alt && alt !== src ? `this.onerror=null;this.src='${esc(alt)}'` : `this.style.visibility='hidden'`;
+  return `<div class="${cls}" ${attr}><div class="tin">
+    <div class="tface tfront"><img class="tbg" src="${esc(src)}" alt="" loading="lazy" onerror="${fb}">${head}<div class="tlow"><div class="tcap">${cap}</div>${foot}</div><span class="tturn">↻ ${turn}</span></div>
+    <div class="tface tback" style="--bg:url('${esc(src)}')">${head}<div class="tword">${word}</div><div class="tcap">${cap}</div>${foot}</div>
+  </div><i class="tholo"></i></div>`;
+}
 export function treasureCard(t, src, cls = '', esc = s => s) {
   const r = RARITY[t.rarity];
-  return `<div class="tcard ttcard ${t.rarity} ${cls}"><div class="tin">
-    <div class="thead"><span class="tno">보물</span><b>${esc(t.name)}</b><span class="tst">${esc(r.name)}</span></div>
-    <div class="tart"><img src="${esc(src)}" alt="" loading="lazy" onerror="this.style.visibility='hidden'"></div>
-    <div class="tcap">${esc(t.clue)}</div>
-    <div class="tword"><q>${esc(t.text)}</q><cite>${esc(t.ref)}</cite></div>
-    <div class="tfoot"><span>그 길 · 숨겨진 보물</span><b class="tpt">${r.pts}점</b></div>
-  </div><i class="tholo"></i></div>`;
+  return flipCard(esc, `tcard ttcard ${t.rarity} ${cls}`, '', src, '', `<div class="thead"><span class="tno">보물</span><b>${esc(t.name)}</b><span class="tst">${esc(r.name)}</span></div>`,
+    esc(t.clue), `<q>${esc(t.text)}</q><cite>${esc(t.ref)}</cite>`, `<div class="tfoot"><span>그 길 · 숨겨진 보물</span><b class="tpt">${r.pts}점</b></div>`, '이야기');
 }

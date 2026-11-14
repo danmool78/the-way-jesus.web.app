@@ -8,7 +8,7 @@ import { TYPES, SKIN, Actor } from './stage/people.js';
 import { createWorld, LAKE_LEVEL } from './game-world.js';
 import { makeProp } from './stage/props.js';
 import { createAudio } from './game-audio.js';
-import { TREASURES, RARITY, hideTreasures, treasureCard } from './game-treasure.js';
+import { TREASURES, RARITY, hideTreasures, treasureCard, flipCard } from './game-treasure.js';
 import { model, tinted, ModelActor } from './game-model.js';
 import { CAST, FOLLOW, SIZE, LEADS, GEAR, BOAT, SETS } from './game-cast.js';
 
@@ -556,17 +556,15 @@ const cardSrc = e => CARDS.files[e.id] ? `${CARDS.base}/${CARDS.files[e.id]}` : 
 const RANK = ['', 'bronze', 'silver', 'gold'];
 function tcard(e, i, c, cls = '') {
   const w = cardWord(e), p = placeOf(e), stars = c.s || c, pts = c.p;
-  return `<div class="tcard ${RANK[stars] || 'bronze'} ${cls}" data-i="${i}"><div class="tin">
-    <div class="thead"><span class="tno">${String(i + 1).padStart(2, '0')}</span><b>${esc(e.title)}</b><span class="tst">${'★'.repeat(stars)}</span></div>
-    <div class="tart"><img src="${esc(cardSrc(e))}" alt="" loading="lazy" onerror="this.onerror=null;this.src='${esc(e.img?.src || '')}'"></div>
-    <div class="tcap">${esc(p.name)} · ${esc(e.when || '')}</div>
-    <div class="tword"><q>${esc(w?.text || e.subtitle || '')}</q><cite>${esc(w?.who || '')}${w?.ref ? ` · ${esc(w.ref)}` : ''}</cite></div>
-    <div class="tfoot"><span>그 길 · ${esc(JOURNEYS[JID].name.replace(' 따라가기', ''))}</span>${pts ? `<b class="tpt">${num(pts)}점</b>` : `<span>${i + 1}/${G.events.length}</span>`}</div>
-  </div><i class="tholo"></i></div>`;
+  const head = `<div class="thead"><span class="tno">${String(i + 1).padStart(2, '0')}</span><b>${esc(e.title)}</b><span class="tst">${'★'.repeat(stars)}</span></div>`;
+  const foot = `<div class="tfoot"><span>그 길 · ${esc(JOURNEYS[JID].name.replace(' 따라가기', ''))}</span>${pts ? `<b class="tpt">${num(pts)}점</b>` : `<span>${i + 1}/${G.events.length}</span>`}</div>`;
+  return flipCard(esc, `tcard ${RANK[stars] || 'bronze'} ${cls}`, `data-i="${i}"`, cardSrc(e), e.img?.src || '', head, `${esc(p.name)} · ${esc(e.when || '')}`,
+    `<q>${esc(w?.text || e.subtitle || '')}</q><cite>${esc(w?.who || '')}${w?.ref ? ` · ${esc(w.ref)}` : ''}</cite>`, foot, '말씀');
 }
-// 기울이면 빛이 흐른다 (손가락·마우스 위치로)
+// 기울이면 빛이 흐른다 (손가락·마우스 위치로). 큰 카드는 누르면 뒤집혀 말씀이 보인다
 function tilt(root) {
   root.querySelectorAll('.tcard.big').forEach(c => {
+    c.addEventListener('click', () => { c.classList.toggle('flipped'); snd.play?.('flip'); });
     const move = ev => { const r = c.getBoundingClientRect(), x = (ev.clientX - r.left) / r.width, y = (ev.clientY - r.top) / r.height;
       c.style.setProperty('--rx', `${(0.5 - y) * 16}deg`); c.style.setProperty('--ry', `${(x - 0.5) * 18}deg`); c.style.setProperty('--mx', `${x * 100}%`); c.style.setProperty('--my', `${y * 100}%`); };
     c.addEventListener('pointermove', move); c.addEventListener('pointerleave', () => { c.style.setProperty('--rx', '0deg'); c.style.setProperty('--ry', '0deg'); });
