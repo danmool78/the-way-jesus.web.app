@@ -1,9 +1,10 @@
 name: Card art to R2
+# 순례 게임의 3D 인물 모델(_src/models/*.glb → assets/models.json의 열쇠)도 같은 버킷 models/에 함께 올린다
 # 말씀 카드 그림(_src/cards/out — 배포에서 빠지는 곳)을 R2 버킷 theway의 cards/에 올린다: 호스팅 전송량을 아끼려고(사용자 2026-11).
 # 열쇠는 assets/cards.json(내용 해시가 붙은 이름)이 정한다 — 이미 공개 주소에 있는 것은 건너뛴다. 가지마다 돌아 PR 미리보기에서도 그림이 보인다
 on:
   push:
-    paths: ['_src/cards/out/**', 'assets/cards.json', '.github/workflows/cards-r2.yml']
+    paths: ['_src/cards/out/**', 'assets/cards.json', '_src/models/**', 'assets/models.json', '.github/workflows/cards-r2.yml']
   workflow_dispatch:
 permissions:
   contents: read
@@ -30,3 +31,18 @@ jobs:
           while read -r k key; do
             npx --yes wrangler@4 r2 object put "theway/$key" --file "_src/cards/out/$k.webp" --content-type image/webp --cache-control "public, max-age=31536000, immutable" --remote
           done < /tmp/todo.txt
+      - name: Upload missing 3D models
+        run: |
+          python3 - <<'PY' > /tmp/todo-m.txt
+          import json, urllib.request
+          m = json.load(open('assets/models.json'))
+          for k, key in m['files'].items():
+              try:
+                  urllib.request.urlopen(urllib.request.Request(m['base'] + '/' + key, method='HEAD'), timeout=20)
+              except Exception:
+                  print(k, key)
+          PY
+          echo "올릴 모델: $(wc -l < /tmp/todo-m.txt)개"
+          while read -r k key; do
+            npx --yes wrangler@4 r2 object put "theway/$key" --file "_src/models/$k.glb" --content-type model/gltf-binary --cache-control "public, max-age=31536000, immutable" --remote
+          done < /tmp/todo-m.txt
