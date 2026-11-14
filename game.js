@@ -126,6 +126,8 @@ function setupUI() {
   markJ();
   refresh();
   $('#start').onclick = () => begin(false);
+  // 게임을 시작하지 않고도 고른 여정의 카드 모음을 본다 (사용자 2026-11)
+  $('#seeCards').onclick = async () => { await loadJourney(); openCards(); };
   $('#restart').onclick = () => begin(true);
 }
 let JID = JOURNEYS[new URLSearchParams(location.search).get('j')] ? new URLSearchParams(location.search).get('j') : 'jesus';
@@ -279,6 +281,16 @@ $('#ask').onclick = () => {
   if (G.busy || !G.me) return;
   if (!G.named) { G.named = true; G.asks += 0.6; missionText(); toast(`${esc(placeOf(G.events[G.idx]).name)}(으)로 가세요<small>지도에서 이름을 찾아보세요 · 이 장면 카드 점수가 ${ASK * 0.6}점 줄어요</small>`, true, 3000); return; }
   G.asks++; G.askT = 5; toast(`이쪽으로 가세요<small>이 장면 카드 점수가 ${ASK}점 줄어요</small>`, true, 2200);
+};
+// 나가기: 언제든 (진행은 마지막으로 만난 장면까지 저장되어 있어 '이어 걷기'로 돌아온다 — 사용자 2026-11)
+$('#quit').onclick = () => {
+  const was = G.busy, s = sheet(`<div class="body"><small>${esc(JOURNEYS[JID].name)}</small><h2>잠깐 쉬어 갈까요?</h2>
+    <p class="sub">${G.idx + 1}번째 장면을 찾아가는 중이에요. 나가도 지금까지 만난 장면과 카드는 그대로 남고, 다음에 이어 걸을 수 있어요.</p>
+    <div class="row"><button class="go ghost" id="qCards">말씀 카드</button><button class="go ghost" id="qHome">처음 화면</button></div>
+    <div class="row"><a class="go ghost" href="${JID === 'jesus' ? 'app.html' : 'app.html?j=' + JID}">그 길 앱으로</a><button class="go" id="qBack">계속 걷기</button></div></div>`);
+  s.querySelector('#qBack').onclick = () => { closeSheet(); G.busy = was; };
+  s.querySelector('#qCards').onclick = () => openCards();
+  s.querySelector('#qHome').onclick = () => { location.href = `game.html?j=${JID}`; };
 };
 $('#zin').onclick = () => setZoom(1 / 1.35); $('#zout').onclick = () => setZoom(1.35);
 addEventListener('wheel', e => { if (G.me && $('#sheet').classList.contains('hidden')) setZoom(e.deltaY > 0 ? 1.12 : 1 / 1.12); }, { passive: true });
@@ -476,13 +488,13 @@ function openCards() {
     <p class="sub">시간 안에 ${esc(josa(JOURNEYS[JID].who, '을', '를'))} 만나면 그 자리의 말씀 카드를 얻어요. 놓친 카드는 다시 걸어서 채우세요.</p>
     <div class="deck">${G.events.map((e, i) => have.has(e.id) ? `<button class="slot">${tcard(e, i, d[e.id], 'mini')}</button>`
       : `<div class="slot lock"><small>${String(i + 1).padStart(2, '0')}</small><b>?</b></div>`).join('')}</div>
-    <button class="go" id="closeCards">계속 걷기</button></div>`);
+    <button class="go" id="closeCards">${G.me ? "계속 걷기" : "닫기"}</button></div>`);
   s.querySelector('#closeCards').onclick = closeSheet;
   s.querySelector('.deck').onclick = ev => { const b = ev.target.closest('.tcard[data-i]'); if (!b) return; const i = +b.dataset.i, e = G.events[i];
     const v = showCard(tcard(e, i, d[e.id], 'big'), `<div class="row"><a class="go ghost" href="${appLink(e)}" target="_blank" rel="noopener">이 장면 듣기</a><button class="go" id="backDeck">카드 모음으로</button></div>`);
     v.querySelector('#backDeck').onclick = openCards; };
 }
-$('#cardsBtn').onclick = () => { if (!G.busy || !$('#sheet').classList.contains('hidden')) openCards(); };
+$('#cardsBtn').onclick = () => openCards();
 const save = () => store.set('theway-game-' + JID, { idx: G.idx, total: G.total, stars: G.stars, missed: G.missed });
 
 /* ---------- 한 구간 ---------- */
@@ -514,16 +526,21 @@ function startLeg(walkFrom) {
   if (G.legStraight < ARRIVE) { G.busy = true; G.timeT = 0; G.meetLeft = 6; G.met = true; setTimeout(arrive, 400); }
 }
 
+// 여정의 장면·장소와 카드 그림 목록 (시작 화면에서 카드 모음만 볼 때도)
+async function loadJourney() {
+  if (G.data && G.dataJ === JID) return;
+  [G.data, CARDS] = await Promise.all([fetch(JOURNEYS[JID].data).then(r => r.json()), fetch('assets/cards.json').then(r => r.json()).catch(() => CARDS)]);
+  G.dataJ = JID; G.events = G.data.events.filter(e => G.data.places[e.place] && !G.data.places[e.place].hidden);
+}
 async function begin(fresh) {
   me.name = $('#name').value.trim() || '순례자'; store.set('theway-game-me', me);
   if (fresh) store.set('theway-game-' + JID, null);
   const J = JOURNEYS[JID];
-  [G.data, CARDS] = await Promise.all([fetch(J.data).then(r => r.json()), fetch('assets/cards.json').then(r => r.json()).catch(() => CARDS)]);
-  G.events = G.data.events.filter(e => G.data.places[e.place] && !G.data.places[e.place].hidden);
+  await loadJourney();
   const saved = store.get('theway-game-' + JID, null);
   G.idx = saved?.idx || 0; G.total = saved?.total || 0; G.stars = saved?.stars || []; G.missed = saved?.missed || [];
   $('#setup').classList.add('hidden');
-  for (const s of ['#hud', '#waterBox', '#dayBox', '#arrow', '#stick', '#zoom', '#cardsBtn', '#ask']) $(s).classList.remove('hidden');
+  for (const s of ['#hud', '#waterBox', '#dayBox', '#arrow', '#stick', '#zoom', '#cardsBtn', '#ask', '#quit']) $(s).classList.remove('hidden');
   G.r = renderer($('#world'));
   buildWorld(J);
   playerType();
