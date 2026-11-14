@@ -80,7 +80,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 #sound{position:fixed;z-index:6;left:calc(12px + env(safe-area-inset-left));top:calc(max(10px,env(safe-area-inset-top)) + 104px);padding:7px 11px;border-radius:12px;border:1px solid var(--line);background:var(--panel);font-size:12px;color:var(--muted)}
 #sound.off{opacity:.6;text-decoration:line-through}
 /* 달리기: 폰에서 누르는 동안 (PC는 Shift — 마우스가 있는 화면에서는 감춘다) */
-#run{position:fixed;z-index:6;left:calc(160px + env(safe-area-inset-left));bottom:calc(40px + env(safe-area-inset-bottom));width:62px;height:62px;border-radius:50%;border:1px solid var(--line);background:rgba(20,16,11,.55);color:var(--gold2);font-size:12.5px;touch-action:none;user-select:none;-webkit-user-select:none}
+#run{position:fixed;z-index:6;left:calc(160px + env(safe-area-inset-left));bottom:calc(40px + env(safe-area-inset-bottom));width:62px;height:62px;border-radius:50%;border:1px solid var(--line);background:rgba(20,16,11,.55);color:var(--gold2);font-size:12.5px;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;transition:background .15s}
 #run.on{background:rgba(217,180,106,.35)}
 @media (hover:hover) and (pointer:fine){#run{display:none}}
 /* 만난 뒤 둘러보다가 준비되면 */

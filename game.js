@@ -931,11 +931,13 @@ function frame(now) {
   G.coolT -= dt; G.slowT -= dt; G.legT += dt;
   const me0 = G.me, dir = !G.busy && !(G.checkT > 0) && inputDir();
   if (!G.busy) updateEvents(dt, me0);
+  // 달리기 단추 불빛은 누르고 있는 동안 그대로 — 걸을 때만 바꾸니 손을 뗀 뒤 다음 걸음에서야 꺼져 번쩍였다(사용자 2026-11)
+  const runOn = !!G.runOn; if (runOn !== G.runLit) { G.runLit = runOn; $('#run').classList.toggle('on', runOn); }
   if (dir) {
     // 달리기 (사용자 2026-11): PC는 Shift를 누른 채, 폰은 달리기 단추를 누르는 동안 1.8배. 배 위에서는 달리지 않는다
     const boat = onGalilee(me0.pos.x, me0.pos.y), run = !boat && (keys.has('shift') || G.runOn);
     const sp = G.speed * (G.slowT > 0 ? 0.45 : 1) * (boat ? 0.65 : 1) * (run ? 1.8 : 1), step = sp * dt;
-    me0.walkRate = run ? 2.6 : 1.5; $('#run').classList.toggle('on', run);
+    me0.walkRate = run ? 2.6 : 1.5;
     // 이미 물·가장자리 안에 서 있으면(물 위 장면에서 이어 걷기 등) 어느 쪽으로든 나올 수 있게 — 갇혀 물병만 잃었다(사용자 2026-11)
     let nx = me0.pos.x + dir[0] * step, nz = me0.pos.y + dir[1] * step, hit = blocked(me0.pos.x, me0.pos.y) ? null : blocked(nx, nz);
     if (hit) { // 물가에서는 옆으로 미끄러져 따라가게
