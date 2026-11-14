@@ -8,6 +8,7 @@ import { TYPES, SKIN, Actor } from './stage/people.js';
 import { createWorld, LAKE_LEVEL } from './game-world.js';
 import { makeProp } from './stage/props.js';
 import { createAudio } from './game-audio.js';
+import { TREASURES, RARITY, hideTreasures, treasureCard } from './game-treasure.js';
 
 const $ = s => document.querySelector(s);
 const snd = createAudio(); // 배경음악·발소리·배 소리·효과음 (game-audio.js)
@@ -376,7 +377,7 @@ function quiz() {
 // 만남: 그분이 나를 돌아보며 그 장면의 말씀을 하신다 (말풍선, 누르면 넘김)
 function meet() {
   const e = G.events[G.idx];
-  G.meetLeft = Math.max(0, G.timeT); G.timeT = 0; G.leader.goal.copy(G.leader.pos);
+  G.grade = gradeNow(); G.meetLeft = Math.max(0, G.timeT); G.timeT = 0; G.leader.goal.copy(G.leader.pos);
   G.me.goal.copy(G.me.pos);
   G.leader.target = G.me; G.leader.set('speak'); G.me.target = G.leader;
   // 그분이 하신 말씀(j)이 있으면 그분 입으로, 없으면(수태고지처럼 아직 태어나시기 전 등) '이 자리의 말씀'으로 누가 한 말인지 밝혀서
@@ -397,19 +398,16 @@ function bubble() {
   b.style.left = left + 'px'; b.style.top = Math.max(b.offsetHeight + 24, y) + 'px'; b.style.setProperty('--tx', `${Math.max(-half + 24, Math.min(half - 24, x - left))}px`);
 }
 addEventListener('pointerdown', e => { if (G.meetT > 0.4 && !e.target.closest('#stick')) G.meetT = 0.01; });
-// 늦음: 그분은 이미 다음 자리로 떠나셨다 — 그 장면은 놓치고 다음 장면으로
-function late() {
-  G.met = false;
-  const e = G.events[G.idx], from = [G.leader.pos.x, G.leader.pos.y];
-  G.missed.push(G.idx); G.stars[G.idx] = G.stars[G.idx] || 0; snd.play('late');
-  G.idx++; save();
-  if (G.idx >= G.events.length) { finish(); return; }
-  toast(`늦었어요! ${esc(josa(JOURNEYS[JID].who, '은', '는'))} 벌써 다음 자리로 떠나셨어요<small>놓친 장면: ${esc(e.title)} · 새 단서를 보고 그 자리를 찾아가세요</small>`, false, 3600);
-  startLeg(from);
+// 모래시계 (사용자 2026-11): 늦어도 장면을 놓치지 않는다 — 그분은 그 자리에서 기다리시고, 얼마나 빨리 닿았는지가 카드 등급이 된다.
+// 제한 시간 안이면 금, 그 뒤 제한 시간의 60%까지는 은, 그보다 늦으면 동. 등급이 내려갈 때 알린다
+const gradeNow = () => G.timeT >= 0 ? 3 : G.timeT >= -G.timeMax * 0.6 ? 2 : 1;
+function tickTime(dt) {
+  const g0 = gradeNow(); G.timeT -= dt; const g1 = gradeNow();
+  if (g1 < g0) { snd.play('late'); toast(g1 === 2 ? '금 카드 시간이 지났어요<small>서두르면 아직 은 카드를 받을 수 있어요</small>' : `은 카드 시간도 지났어요<small>그래도 ${esc(josa(JOURNEYS[JID].who, '은', '는'))} 그 자리에서 기다리세요 · 동 카드</small>`, false, 3000); }
 }
 function arrive() {
   const e = G.events[G.idx], straight = G.legStraight, ratio = straight > 1 ? G.legWalked / straight : 1;
-  const stars = straight < SAME * 1.5 ? 3 : ratio < 1.35 ? 3 : ratio < 1.9 ? 2 : 1;
+  const stars = G.grade || 3; // 모래시계 등급 (금 3 · 은 2 · 동 1)
   G.stars[G.idx] = Math.max(G.stars[G.idx] || 0, stars);
   G.leader.look(0); G.me.target = null;
   if (G.met) {
@@ -472,7 +470,7 @@ function finish() {
   const s = sheet(`<div class="body"><small>${esc(J.name)}</small><h2>여정을 마쳤습니다</h2><p class="sub">${esc(me.name || '순례자')}님, ${n}장면을 모두 찾아 걸었어요.</p>
     <div class="leg"><span>걸은 길 <b>${km}km</b></span><span><b>${Math.floor(G.total / WALK) + 1}</b>일</span><span>★ <b>${st}</b>/${n * 3}</span></div>
     <p class="sub">말씀 카드 <b>${Object.keys(deck()).length}</b> / ${n}장 · 합계 <b>${num(total(deck()))}점</b></p>
-    ${G.missed.length ? `<p class="sub">늦어서 놓친 장면 ${G.missed.length}개 — ${G.missed.slice(0, 6).map(i => esc(G.events[i].title)).join(', ')}${G.missed.length > 6 ? ' …' : ''}. 앱에서 들어 보세요.</p>` : `<p class="sub">한 장면도 놓치지 않고 모두 만났어요!</p>`}
+    <p class="sub">이번 길의 카드 — 금 <b>${G.stars.filter(x => x === 3).length}</b> · 은 <b>${G.stars.filter(x => x === 2).length}</b> · 동 <b>${G.stars.filter(x => x === 1).length}</b> · 보물 <b>${G.foundRun || 0}</b>개</p>
     <div class="row"><button class="go ghost" id="share">자랑하기</button><button class="go" id="again">다른 여정 걷기</button></div></div>`);
   s.querySelector('#share').onclick = async () => { try { if (navigator.share) await navigator.share({ text }); else { await navigator.clipboard.writeText(text); toast('복사했어요', true); } } catch { /* 닫음 */ } };
   s.querySelector('#again').onclick = () => { store.set('theway-game-' + JID, null); location.href = `game.html?j=${JID}`; };
@@ -516,22 +514,67 @@ function tilt(root) {
 function showCard(card, below, head = '') {
   const s = $('#sheet'); s.innerHTML = `<div class="cardview">${head}${card}${below}</div>`; s.classList.remove('hidden'); G.busy = true; tilt(s); return s;
 }
-function drawCardBtn() { const d = deck(), n = Object.keys(d).length; $('#cardsBtn').innerHTML = `<b>${n}</b>/${G.events.length} 말씀 카드<small>${num(total(d))}점</small>`; }
+function drawCardBtn() { const d = deck(), n = Object.keys(d).length, tn = Object.keys(tdeck()).length; $('#cardsBtn').innerHTML = `<b>${n}</b>/${G.events.length} 말씀 카드<small>${num(total(d) + tpoints())}점${tn ? ` · 보물 ${tn}` : ''}</small>`; }
+// 보물: 찾은 것은 여정마다 이 기기에 (theway-game-treasure-<여정> — {보물: 찾은 횟수}), 이번 길에 숨긴 자리는 진행 기록(hide)에
+const TLIST_ALL = TREASURES; let TLIST = [];
+const tkey = () => 'theway-game-treasure-' + JID;
+const tdeck = () => store.get(tkey(), {}) || {};
+const tpoints = () => TLIST.reduce((n, t) => n + (tdeck()[t.id] ? RARITY[t.rarity].pts : 0), 0);
+const tsrc = t => CARDS.files['t-' + t.id] ? `${CARDS.base}/${CARDS.files['t-' + t.id]}` : '';
+// 반짝임: 둥글게 번지는 빛 한 장(희귀도마다 색) — 가까이(2.5km) 와야 보인다
+const TGLOW = { common: '#ffe7a8', rare: '#9fd2ff', legend: '#ffb3f0' };
+let glowTex = null;
+function glowSprite(color) {
+  if (!glowTex) { const c = document.createElement('canvas'); c.width = c.height = 64; const x = c.getContext('2d'), g = x.createRadialGradient(32, 32, 0, 32, 32, 32);
+    g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(0.25, 'rgba(255,255,255,.7)'); g.addColorStop(1, 'rgba(255,255,255,0)'); x.fillStyle = g; x.fillRect(0, 0, 64, 64); glowTex = new THREE.CanvasTexture(c); }
+  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
+  sp.visible = false; return sp;
+}
+function placeTreasures() {
+  G.tfx = {};
+  for (const h of G.hide || []) { const t = TLIST.find(x => x.id === h.id); if (!t) continue; const sp = glowSprite(TGLOW[t.rarity]); G.scene.add(sp); G.tfx[h.id] = sp; }
+}
+function updateTreasures(px, pz, t) {
+  for (const h of G.hide || []) {
+    const sp = G.tfx?.[h.id]; if (!sp) continue;
+    const d = Math.hypot(h.x - px, h.z - pz), vis = d < 2.5;
+    sp.visible = vis;
+    if (vis) { const k = 0.75 + Math.sin(t * 5 + h.x) * 0.25; sp.position.set(h.x, GH(h.x, h.z) + 0.35 + Math.sin(t * 2) * 0.06, h.z); sp.scale.setScalar(0.9 * k); sp.material.opacity = Math.min(1, (2.5 - d) / 0.8) * (0.6 + 0.4 * k); }
+    if (vis && !h.near) { h.near = true; snd.play('twinkle'); }
+    if (d < 0.7 && !G.busy) { foundTreasure(h); return; }
+  }
+}
+function foundTreasure(h) {
+  const t = TLIST.find(x => x.id === h.id), sp = G.tfx[h.id];
+  if (sp) { G.scene.remove(sp); sp.material.dispose(); delete G.tfx[h.id]; } // 반짝임 재질만 버린다 (빛 그림은 함께 쓴다)
+  G.hide = G.hide.filter(x => x !== h); G.foundRun = (G.foundRun || 0) + 1;
+  const d = tdeck(), fresh = !d[t.id]; d[t.id] = (d[t.id] || 0) + 1; store.set(tkey(), d); save(); drawCardBtn();
+  snd.play('treasure');
+  const v = showCard(treasureCard(t, tsrc(t), 'big reveal', esc), `<div class="row"><button class="go" id="tBack">계속 걷기</button></div>`,
+    `<p class="gotcard">숨겨진 보물을 찾았어요! · ${RARITY[t.rarity].name}${fresh ? ` · +${RARITY[t.rarity].pts}점` : ' · 이미 찾은 보물'}</p>`);
+  v.querySelector('#tBack').onclick = closeSheet;
+}
 function openCards() {
   const d = deck(), have = new Set(Object.keys(d));
   const s = sheet(`<div class="body"><small>${esc(JOURNEYS[JID].name)}</small><h2>말씀 카드 ${have.size} / ${G.events.length} · ${num(total(d))}점</h2>
     ${store.get(temptKey(), 0) ? `<p class="sub tempt">시험을 이긴 카드 <b>${store.get(temptKey(), 0)}</b>장 — 유혹하는 뱀을 지나쳐 얻었어요</p>` : ''}
-    <p class="sub">시간 안에 ${esc(josa(JOURNEYS[JID].who, '을', '를'))} 만나면 그 자리의 말씀 카드를 얻어요. 놓친 카드는 다시 걸어서 채우세요.</p>
+    <p class="sub">${esc(josa(JOURNEYS[JID].who, '을', '를'))} 만나 그 자리의 말씀을 맞히면 카드를 얻어요. 빨리 닿을수록 금 카드 — 은·동 카드는 다시 걸어 금으로 바꾸세요.</p>
     <div class="deck">${G.events.map((e, i) => have.has(e.id) ? `<button class="slot">${tcard(e, i, d[e.id], 'mini')}</button>`
       : `<div class="slot lock"><small>${String(i + 1).padStart(2, '0')}</small><b>?</b></div>`).join('')}</div>
+    ${TLIST.length ? `<h3 class="thd">숨겨진 보물 ${Object.keys(tdeck()).length} / ${TLIST.length}</h3>
+    <p class="sub">비유와 이야기 속 보물이 걸을 때마다 새로 숨어요. 가까이 가면 반짝여요 — 전설 보물은 가끔만 나타나요.</p>
+    <div class="deck tdeck">${TLIST.map(t => tdeck()[t.id] ? `<button class="slot" data-t="${t.id}">${treasureCard(t, tsrc(t), 'mini', esc)}</button>`
+      : `<div class="slot lock tlock ${t.rarity}"><small>${RARITY[t.rarity].name}</small><b>?</b><i>${esc(t.clue)}</i>${(G.hide || []).some(h => h.id === t.id) ? '<em>이번 길에 숨어 있어요</em>' : ''}</div>`).join('')}</div>` : ''}
     <button class="go" id="closeCards">${G.me ? "계속 걷기" : "닫기"}</button></div>`);
   s.querySelector('#closeCards').onclick = closeSheet;
+  s.querySelector('.tdeck')?.addEventListener('click', ev => { const b = ev.target.closest('[data-t]'); if (!b) return; const t = TLIST.find(x => x.id === b.dataset.t);
+    const v = showCard(treasureCard(t, tsrc(t), 'big', esc), `<div class="row"><button class="go" id="backDeck">카드 모음으로</button></div>`); v.querySelector('#backDeck').onclick = openCards; });
   s.querySelector('.deck').onclick = ev => { const b = ev.target.closest('.tcard[data-i]'); if (!b) return; const i = +b.dataset.i, e = G.events[i];
     const v = showCard(tcard(e, i, d[e.id], 'big'), `<div class="row"><a class="go ghost" href="${appLink(e)}" data-listen>이 장면 듣기</a><button class="go" id="backDeck">카드 모음으로</button></div>`);
     v.querySelector('#backDeck').onclick = openCards; };
 }
 $('#cardsBtn').onclick = () => openCards();
-const save = () => store.set('theway-game-' + JID, { idx: G.idx, total: G.total, stars: G.stars, missed: G.missed });
+const save = () => store.set('theway-game-' + JID, { idx: G.idx, total: G.total, stars: G.stars, hide: (G.hide || []).map(({ id, x, z }) => ({ id, x, z })) });
 
 /* ---------- 한 구간 ---------- */
 // 시간 안에 닿으면 그분을 3D로 가까이 만나고(meet), 늦으면 그분은 벌써 다음 장면 자리로 걸어가신다 —
@@ -590,13 +633,14 @@ function startLeg(walkFrom) {
   snd.music(e.music); // 앱에서 이 장면에 까는 곡 그대로
   G.busy = false;
   // 같은 자리에서 이어지는 장면: 다시 반기는 인사 없이 곧바로 말씀 고르기로 (사용자 2026-11). 남은 시간 점수는 6초로 친다
-  if (G.legStraight < SAME) { G.busy = true; G.timeT = 0; G.meetLeft = 6; G.met = true; setTimeout(arrive, 400); }
+  if (G.legStraight < SAME) { G.busy = true; G.timeT = 0; G.meetLeft = 6; G.met = true; G.grade = 3; setTimeout(arrive, 400); }
 }
 
 // 여정의 장면·장소와 카드 그림 목록 (시작 화면에서 카드 모음만 볼 때도)
 async function loadJourney() {
   if (G.data && G.dataJ === JID) return;
   [G.data, CARDS] = await Promise.all([fetch(JOURNEYS[JID].data).then(r => r.json()), fetch('assets/cards.json').then(r => r.json()).catch(() => CARDS)]);
+  TLIST = TLIST_ALL[JID] || [];
   G.dataJ = JID; G.events = G.data.events.filter(e => G.data.places[e.place] && !G.data.places[e.place].hidden);
 }
 async function begin(fresh) {
@@ -606,13 +650,14 @@ async function begin(fresh) {
   const J = JOURNEYS[JID];
   await loadJourney();
   const saved = store.get('theway-game-' + JID, null);
-  G.idx = saved?.idx || 0; G.total = saved?.total || 0; G.stars = saved?.stars || []; G.missed = saved?.missed || [];
+  G.idx = saved?.idx || 0; G.total = saved?.total || 0; G.stars = saved?.stars || []; G.missed = [];
+  G.hide = saved?.hide || hideTreasures(TLIST, G.data.places, toXZ, (x, z) => { const [la, ln] = toLL(x, z); return Object.values(WATERS).some(p => inPoly(la, ln, p)); });
   $('#setup').classList.add('hidden');
   for (const s of ['#hud', '#waterBox', '#dayBox', '#arrow', '#stick', '#cardsBtn', '#ask', '#quit', '#sound']) $(s).classList.remove('hidden');
   // 꾸미기 화면의 미리보기는 이제 그리지 않으니 인형과 렌더러를 놓아 준다
   if (pv.actor) { bin(pv.actor.p.root, pv.scene); pv.actor = null; } pv.r.dispose();
   G.r = renderer($('#world'));
-  buildWorld(J);
+  buildWorld(J); placeTreasures();
   playerType();
   // 출발: 처음이면 첫 장면에서 조금 떨어진 곳, 이어 걷기면 앞 장면 자리
   const ref = G.events[Math.max(0, G.idx - 1)], [rx, rz] = toXZ(placeOf(ref).lat, placeOf(ref).lng);
@@ -722,14 +767,14 @@ function frame(now) {
   // 밤낮은 실제로 논 시간으로 6분에 한 바퀴 (걸은 거리로 돌리니 몇 초마다 밤낮이 바뀌었다 — 사용자 2026-11). 아침에서 시작
   G.clock = (G.clock || 0) + dt;
   G.world?.setTime((G.clock / 360 + 0.22) % 1);
-  drawPrints(me0.pos.x, me0.pos.y);
+  drawPrints(me0.pos.x, me0.pos.y); updateTreasures(me0.pos.x, me0.pos.y, t);
   const dp = Math.hypot(...(goalXZ() || [0, 0]).map((v, i) => v - (i ? me0.pos.y : me0.pos.x)));
   G.askT -= dt;
   if (!G.named && dp < 5) { G.named = true; missionText(); }
   // 카메라: 북쪽이 위, 비스듬히 내려다보며 따라간다
   if (!G.zoomFix) G.zoom = fitZoom(); // 확인용(?debug)만 G.zoomFix로 높이를 바꾼다
   const cx = me0.pos.x, cz = me0.pos.y, h = G.zoom;
-  if (!G.busy && G.timeT > 0) { G.timeT -= dt; if (G.timeT <= 0) late(); }
+  if (!G.busy && !(G.meetT > 0)) tickTime(dt);
   if (G.meetT > 0) { // 만남: 둘 사이로 내려앉아 비스듬히
     G.meetT -= dt;
     const mx = (cx + G.leader.pos.x) / 2, mz = (cz + G.leader.pos.y) / 2, k = 1 - Math.exp(-dt * 2.2);
@@ -751,7 +796,9 @@ function frame(now) {
   // 남은 거리 대신 등불: 곧은 길 대비 얼마나 가까워졌는지로 밝기만 (숫자를 주면 답이 너무 빤했다 — 사용자 2026-11)
   const warm = Math.max(0, Math.min(1, 1 - Math.hypot(gx - cx, gz - cz) / Math.max(G.legStraight || 1, 40)));
   const lamp = $('#mDist'); lamp.textContent = warm > .85 ? '아주 가까워요' : warm > .6 ? '가까워요' : warm > .3 ? '조금 더' : '멀어요'; lamp.style.setProperty('--w', warm.toFixed(2));
-  const tb = $('#mTime'); tb.hidden = !(G.timeT > 0); tb.textContent = `⏳ ${Math.ceil(G.timeT)}초`; tb.classList.toggle('hurry', G.timeT < 6);
+  const tb = $('#mTime'), gr = gradeNow(), left = gr === 3 ? G.timeT : gr === 2 ? G.timeT + G.timeMax * 0.6 : 0;
+  tb.hidden = G.busy; tb.textContent = gr === 1 ? '⏳ 동 카드' : `⏳ ${Math.ceil(left)}초 · ${gr === 3 ? '금' : '은'}`;
+  tb.className = ['', 'bronze', 'silver', 'gold'][gr]; tb.classList.toggle('hurry', gr > 1 && left < 6);
   $('#mWalk').textContent = `걸은 길 ${Math.round(G.total)}km`;
   $('#days').textContent = Math.floor(G.total / WALK) + 1;
   G.r.render(G.scene, G.cam);

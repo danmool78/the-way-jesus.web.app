@@ -13,6 +13,7 @@ const argv = process.argv.slice(2), force = argv.includes('--force');
 const ni = argv.indexOf('--n'), N = ni >= 0 ? +argv[ni + 1] : 4;
 const rest = argv.filter((a, i) => !a.startsWith('--') && argv[i - 1] !== '--n');
 const refsMode = rest[0] === 'refs' && rest.shift();
+const treasureMode = rest[0] === 'treasures' && rest.shift(); // 보물 카드 그림 (_src/cards/treasures.json → out/t-<id>.webp)
 const J = rest[0] && !/\d/.test(rest[0]) ? rest.shift() : 'jesus', only = new Set(rest);
 const CHARS = Object.fromEntries(Object.entries(JSON.parse(await readFile('_src/cards/chars.json', 'utf8'))).filter(([k]) => k !== '_comment'));
 const data = JSON.parse(await readFile(J === 'jesus' ? 'data.json' : `j/${J}/data.json`, 'utf8'));
@@ -70,6 +71,15 @@ if (refsMode) {
   await Promise.all(Array.from({ length: N }, async () => { while (i < ks.length) { const k = ks[i++], out = `_src/cards/${k}.png`;
     if (!force && await exists(out)) { console.log(k, 'skip'); continue; }
     console.log(k, await gen([b64(refs[0]), { text: `${STYLE}\n\nCharacter reference sheet for a recurring Bible character, used to keep the face and clothes identical across many illustrations. One person standing alone, full body, facing three-quarters toward the viewer, neutral calm expression, plain softly lit background:\n${CHARS[k].desc}` }], out)); } }));
+  process.exit(0);
+}
+if (treasureMode) {
+  // 물건 하나를 가까이서 — 이야기 속 그 물건이 주인공인 정물 같은 한 장 (사람은 손이나 뒷모습 정도만)
+  const T = JSON.parse(await readFile('_src/cards/treasures.json', 'utf8')).filter(t => !only.size || only.has(t.id));
+  let k = 0;
+  await Promise.all(Array.from({ length: N }, async () => { while (k < T.length) { const t = T[k++], out = `_src/cards/out/t-${t.id}.webp`;
+    if (!force && await exists(out)) { console.log(t.id, 'skip'); continue; }
+    console.log(t.id, await gen([b64(refs[0]), { text: `${STYLE}\n\nA treasure card: one precious object from a parable or story of Jesus, shown close up as the hero of the image, softly lit like a jewel in a cinematic still life, with a hint of its setting behind it. People may appear only as hands or distant silhouettes, never as the focus.\nObject and setting: ${t.prompt}` }], out)); } }));
   process.exit(0);
 }
 const evs = [...(data.prologue ? [data.prologue] : []), ...data.events].filter(e => !only.size || only.has(e.id));

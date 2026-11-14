@@ -116,6 +116,21 @@ button{font:inherit;color:inherit;cursor:pointer}
 .tfoot{display:flex;justify-content:space-between;padding:2cqw 3.6cqw 2.6cqw;font:500 2.9cqw var(--sans);color:#8f9bb0;letter-spacing:.04em}
 .tholo{position:absolute;inset:0;border-radius:inherit;pointer-events:none;mix-blend-mode:color-dodge;opacity:.0;transition:opacity .3s;background:radial-gradient(circle at var(--mx) var(--my),rgba(255,255,255,.55),transparent 42%),linear-gradient(115deg,transparent 20%,rgba(255,120,200,.35) 38%,rgba(120,220,255,.35) 50%,rgba(255,240,120,.35) 62%,transparent 80%);background-size:100% 100%,200% 200%;background-position:center,var(--mx) var(--my)}
 .tcard.silver .tholo{opacity:.25}.tcard.gold .tholo{opacity:.4}
+/* 보물 카드: 희귀도별 보석 테두리 — 보통(비취)·귀함(사파이어)·전설(무지개, 늘 빛이 흐름) */
+.ttcard.common{--edge:linear-gradient(135deg,#2f6b5a,#a8e0c8 28%,#2a5e50 52%,#8fd0b6 78%,#20483d)}
+.ttcard.rare{--edge:linear-gradient(135deg,#1d3f8a,#a9cbff 26%,#2a4fa8 50%,#d6e6ff 74%,#183375)}
+.ttcard.legend{--edge:linear-gradient(135deg,#ff7ac8,#ffd36e 20%,#7af0c8 40%,#7ab8ff 60%,#c77aff 80%,#ff7ac8);background-size:200% 200%;animation:legend 4s linear infinite}
+@keyframes legend{to{background-position:200% 200%}}
+.ttcard .tno{background:#f3ead6}.ttcard.rare .tst{color:#a9cbff}.ttcard.common .tst{color:#a8e0c8}.ttcard.legend .tst{color:#ffb3f0}
+.ttcard.rare .tholo{opacity:.35}.ttcard.legend .tholo{opacity:.6}
+.ttcard .tin{background:linear-gradient(#1d1830,#121022)}
+.thd{margin:14px 0 2px;font:700 17px var(--serif);color:var(--gold2)}
+.deck .slot.tlock{padding:6px;gap:4px}.deck .slot.tlock i{font:normal 10.5px/1.35 var(--sans);color:var(--muted);text-align:center;word-break:keep-all}
+.deck .slot.tlock em{font:normal 700 10px var(--sans);color:#ffd77a}
+.deck .slot.tlock.rare{border-color:#4a6aa8}.deck .slot.tlock.legend{border-color:#b06ab0}
+.deck .slot.tlock.rare small{color:#a9cbff}.deck .slot.tlock.legend small{color:#ffb3f0}
+/* 장(카드 모음·장면 카드)을 위아래로 넘길 때 스크롤바가 눈에 거슬려 감춘다 (사용자 2026-11) */
+#sheet *{scrollbar-width:none}#sheet *::-webkit-scrollbar{display:none}
 .tcard.big:hover .tholo{opacity:.9}
 .tcard.reveal{animation:reveal 1s cubic-bezier(.2,.8,.2,1)}
 @keyframes reveal{0%{transform:perspective(900px) rotateY(180deg) scale(.6);opacity:0}60%{opacity:1}100%{transform:perspective(900px) rotateY(0) scale(1)}}
@@ -125,7 +140,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .deck .slot.lock small{position:absolute;left:8px;top:6px;font-size:10.5px;color:var(--faint)}
 .deck .slot.lock b{font-size:28px;color:#3a3026}
 /* 알림 */
-#mTime{color:var(--gold2);font-weight:700}#mTime.hurry{color:#ff9a7a;animation:pulse .8s infinite}
+#mTime{color:var(--gold2);font-weight:700}#mTime.gold{color:#ffd77a}#mTime.silver{color:#dfe5ea}#mTime.bronze{color:#d9955a}#mTime.hurry{color:#ff9a7a;animation:pulse .8s infinite}
 @keyframes pulse{50%{opacity:.45}}
 /* 만남의 말풍선: 그분 머리 위에 */
 #bubble{position:fixed;z-index:7;width:max-content;max-width:min(300px,78vw);transform:translate(-50%,calc(-100% - 14px)) scale(.92);padding:11px 15px 12px;border-radius:16px;background:#fbf3e0;color:#2a1f14;font:500 15.5px/1.6 var(--serif);word-break:keep-all;text-wrap:balance;box-shadow:0 8px 28px rgba(0,0,0,.45);opacity:0;transition:opacity .4s,transform .4s;pointer-events:none}
