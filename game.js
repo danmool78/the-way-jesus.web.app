@@ -10,6 +10,7 @@ import { makeProp } from './stage/props.js';
 import { createAudio } from './game-audio.js';
 import { TREASURES, RARITY, hideTreasures, treasureCard, flipCard } from './game-treasure.js';
 import { model, tinted, ModelActor } from './game-model.js';
+import { buildNav } from './game-nav.js';
 import { CAST, FOLLOW, SIZE, LEADS, GEAR, BOAT, SETS } from './game-cast.js';
 
 const $ = s => document.querySelector(s);
@@ -322,6 +323,8 @@ function group(i = G.idx) {
   return { k: i - a + 1, n: b - a + 1 };
 }
 const nextLabel = () => { if (G.idx + 1 >= G.events.length) return '여정 마치기'; const g = group(); return g.k < g.n ? `이 자리의 다음 일 (${g.k + 1}/${g.n}) →` : '다음 장면으로 →'; };
+// 목적지까지 걸어야 할 거리 (길 거리가 없으면 직선)
+const navD = (x, z) => { const g = goalXZ(); if (!g) return 0; const d = G.nav?.dist(x, z); return d < Infinity ? d : Math.hypot(g[0] - x, g[1] - z); };
 const goalXZ = () => { const e = G.events[G.idx]; return e && toXZ(placeOf(e).lat, placeOf(e).lng); };
 // 그분과 곁의 사람이 설 자리(그분은 여기서 0.6 동쪽): 장소 핀이 물 안이면(갈릴리 물 경계가 거칠어 가버나움 핀이 호수 안에 든다)
 // 그분이 호수 위에 서 계셨다 — 핀 둘레를 넓혀 가며 가장 가까운 뭍을 찾는다. 바다 위 장면(BOAT — 배·물 위를 걸으심)은 그대로.
@@ -497,7 +500,7 @@ function tickTime(dt) {
   if (g1 < g0) { snd.play('late'); toast(g1 === 2 ? '금 카드 시간이 지났어요<small>서두르면 아직 은 카드를 받을 수 있어요</small>' : `은 카드 시간도 지났어요<small>그래도 ${esc(josa(JOURNEYS[JID].who, '은', '는'))} 그 자리에서 기다리세요 · 동 카드</small>`, false, 3000); }
 }
 function arrive() {
-  const e = G.events[G.idx], straight = G.legStraight, ratio = straight > 1 ? G.legWalked / straight : 1;
+  const e = G.events[G.idx], straight = G.legPath || G.legStraight, ratio = straight > 1 ? G.legWalked / straight : 1;
   const stars = G.grade || 3; // 모래시계 등급 (금 3 · 은 2 · 동 1)
   G.stars[G.idx] = Math.max(G.stars[G.idx] || 0, stars);
   G.leader.look(0); G.me.target = null;
@@ -810,11 +813,14 @@ function startLeg(walkFrom) {
   G.trail = makeTrail(sx, sz, walkFrom); // 발자국도 그분이 서신 자리로
   G.legStart = [G.me.pos.x, G.me.pos.y]; G.legWalked = 0; G.legT = 0; G.lostT = 0; G.asks = 0; G.askT = 0;
   G.legStraight = Math.hypot(gx - G.me.pos.x, gz - G.me.pos.y);
-  G.prevD = G.legStraight;
+  // 길 거리: 바다·호수를 돌아가는 실제 걸음으로 잰다 (game-nav.js) — 길 잃음·길 묻기·제한 시간·등불·별이 모두 이것으로
+  G.nav = G.legStraight < SAME ? null : buildNav({ from: [G.me.pos.x, G.me.pos.y], to: [gx, gz], walkable: (x, z) => !blocked(x, z) });
+  G.legPath = Math.max(G.legStraight, navD(G.me.pos.x, G.me.pos.y));
+  G.prevD = G.legPath;
   // 걸음은 늘 같은 빠르기 — 실제 땅의 거리만큼 걷고 그만큼 시간을 더 준다 (사용자 2026-11: 먼 길도 20초에 닿게 하니 땅과 상관없이 날아다녔다)
   G.speed = PACE;
   // 제한 시간: 곧장 걸으면 걸릴 시간의 1.7배 + 6초. 그분은 그 시간의 절반쯤에 다음 자리에 닿으시게 걸으신다
-  G.timeMax = G.timeT = G.legStraight / G.speed * 2.3 + 10; // 목적지를 지도에서 찾아야 하니 넉넉히
+  G.timeMax = G.timeT = G.legPath / G.speed * 2.3 + 10; // 목적지를 지도에서 찾아야 하니 넉넉히
   if (walkFrom) G.leader.speed = Math.max(4, Math.hypot(gx - walkFrom[0], gz - walkFrom[1]) / (G.timeMax * 0.5));
   $('#mNo').textContent = `${G.idx + 1} / ${G.events.length} · ${josa(whoNow(), '이', '가')} 계신 곳`;
   G.named = false; missionText(); G.bonus = 0; spawnLegEvents();
@@ -893,7 +899,9 @@ function drawTags() {
     el.className = 'tag ' + t.cls; el.textContent = t.text; el.style.left = x + 'px'; el.style.top = y + 'px';
   });
   // 화살표: 내 둘레 원 위에서 목표 쪽을 가리킨다
-  const [mx, my] = screen(G.me.pos.x, G.me.ground + SCALE * .5, G.me.pos.y), [tx, ty] = screen(gx, GH(gx, gz), gz), a = Math.atan2(ty - my, tx - mx);
+  // 길 묻기는 바다를 돌아가는 길을 따라 조금 앞의 자리를 가리킨다 (곧장 목적지를 가리키니 바다 쪽이었다)
+  const [wx, wz] = G.nav ? G.nav.ahead(G.me.pos.x, G.me.pos.y, 12) : [gx, gz];
+  const [mx, my] = screen(G.me.pos.x, G.me.ground + SCALE * .5, G.me.pos.y), [tx, ty] = screen(wx, GH(wx, wz), wz), a = Math.atan2(ty - my, tx - mx);
   const near2 = dGoal < ARRIVE * 2.5;
   const ar = $('#arrow'), lure = G.lureT > 0 && !(G.askT > 0);
   ar.classList.toggle('lure', lure);
@@ -940,7 +948,7 @@ function frame(now) {
       me0.speed = sp; me0.goal.set(me0.pos.x + (nx - me0.pos.x) * 2, me0.pos.y + (nz - me0.pos.y) * 2);
       G.legWalked += moved; G.total += moved;
       // 길 잃음: 목표에서 멀어지는 쪽으로 오래 걸으면
-      const [gx, gz] = goalXZ(), d = Math.hypot(gx - nx, gz - nz);
+      const d = navD(nx, nz);
       if (d > G.prevD + 1e-3) G.lostT += dt; else G.lostT = Math.max(0, G.lostT - dt * 1.5);
       G.prevD = d;
       if (G.lostT > 3.2 && G.legT > 2) penalty('lost');
@@ -1006,7 +1014,7 @@ function frame(now) {
   }
   const [gx, gz] = goalXZ() || [cx, cz];
   // 남은 거리 대신 등불: 곧은 길 대비 얼마나 가까워졌는지로 밝기만 (숫자를 주면 답이 너무 빤했다 — 사용자 2026-11)
-  const warm = Math.max(0, Math.min(1, 1 - Math.hypot(gx - cx, gz - cz) / Math.max(G.legStraight || 1, 40)));
+  const warm = Math.max(0, Math.min(1, 1 - navD(cx, cz) / Math.max(G.legPath || 1, 40)));
   const lamp = $('#mDist'); lamp.textContent = warm > .85 ? '아주 가까워요' : warm > .6 ? '가까워요' : warm > .3 ? '조금 더' : '멀어요'; lamp.style.setProperty('--w', warm.toFixed(2));
   const tb = $('#mTime'), gr = gradeNow(), left = gr === 3 ? G.timeT : gr === 2 ? G.timeT + G.timeMax * 0.6 : 0;
   tb.hidden = G.busy; tb.textContent = gr === 1 ? '⏳ 동 카드' : `⏳ ${Math.ceil(left)}초 · ${gr === 3 ? '금' : '은'}`;
