@@ -150,13 +150,14 @@ export function createWorld({ scene, renderer, toXZ, regions: want, places, jour
   }
 
   /* ---------- 살아 있는 풍경 ---------- */
-  const life = [];
+  const life = [], flocks = [];
   function buildLife() {
     const ks = Object.entries(places).filter(([k, p]) => !p.hidden && p.lat != null && k !== 'sea');
     // 양 떼: 마을 둘레의 들판을 천천히 거닌다
     for (let f = 0; f < Math.min(8, ks.length); f++) {
       const [, p] = ks[Math.floor(rnd() * ks.length)], [x0, z0] = toXZ(p.lat, p.lng), cx = x0 + (rnd() - 0.5) * 16, cz = z0 + (rnd() - 0.5) * 16;
       if (wet(cx, cz)) continue;
+      flocks.push([cx + 2.2, cz + 1.4]); // 양 떼마다 목자 하나가 설 자리 (game.js)
       for (let i = 0; i < 5; i++) {
         const P = makeProp('sheep', cx + (rnd() - 0.5) * 3, cz + (rnd() - 0.5) * 3, { scale: SC * 0.75 }); P.speed = 0.25; P.directional = true;
         life.push({ P, home: [cx, cz], r: 3, wait: rnd() * 6 }); deco.add(P.obj);
@@ -254,5 +255,5 @@ export function createWorld({ scene, renderer, toXZ, regions: want, places, jour
     if (journeyId !== 'david' && journeyId !== 'moses') addModel(buildJerusalem(), JLM, 3); // 인형을 줄이며 도성도 (6배는 베들레헴까지 덮었다)
     if (regs.some(r => r.name === 'egypt')) Object.values(EGYPT).forEach(m => addModel(m.build(), m.extent, 1.5));
   });
-  return { ready, heightAt, update: updateLife, setTime, wells };
+  return { ready, heightAt, update: updateLife, setTime, wells, flocks };
 }

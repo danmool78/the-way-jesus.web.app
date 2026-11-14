@@ -10,6 +10,7 @@ import { makeProp } from './stage/props.js';
 import { createAudio } from './game-audio.js';
 import { TREASURES, RARITY, hideTreasures, treasureCard } from './game-treasure.js';
 import { model, tinted, ModelActor } from './game-model.js';
+import { CAST, FOLLOW, SIZE } from './game-cast.js';
 
 const $ = s => document.querySelector(s);
 const snd = createAudio(); // 배경음악·발소리·배 소리·효과음 (game-audio.js)
@@ -634,6 +635,39 @@ function missionText() {
   $('#mTitle').textContent = G.named ? `${p.name} — ${e.title}` : `${p.region || '어딘가'}의 어느 곳 — ${e.title}`;
   $('#mClue').textContent = e.subtitle || '';
 }
+// 그분 곁에 함께 서는 사람 (game-cast.js): 장면마다 정한 사람, 없으면 제자를 부르신 뒤로는 제자 둘.
+// 모델은 그 장면에서 처음 쓸 때 받는다(R2) — 처음부터 다 받으면 무거웠다
+const SPOTS = [[-0.55, 0.65], [1.6, 0.55], [0.15, -0.75], [1.3, -0.7]];
+function castFor(i) {
+  const e = G.events[i], c = CAST[JID]?.[e.id]; if (c) return c;
+  const F = FOLLOW[JID], k = F && G.events.findIndex(x => x.id === F.from);
+  return F && k >= 0 && i >= k ? [F.pool[i % F.pool.length], F.pool[(i + 1) % F.pool.length]] : [];
+}
+let castTok = 0;
+async function placeCast() {
+  const tok = ++castTok;
+  for (const c of G.cast || []) c.dispose(); G.cast = [];
+  const [gx, gz] = goalXZ(), names = castFor(G.idx).slice(0, SPOTS.length);
+  const gs = await Promise.all(names.map(n => model(n)));
+  if (tok !== castTok) return; // 그새 다음 장면으로 넘어갔다
+  gs.forEach((g, i) => {
+    if (!g) return; // 아직 없는 모델(베드로 등)은 건너뛴다
+    const [ox, oz] = SPOTS[i], a = new ModelActor(g, gx + ox, gz + oz);
+    a.big = SCALE * (SIZE[names[i]] || 1); a.target = G.me; a.showT = 0; a.show = 0;
+    G.scene.add(a.p.root); G.cast.push(a);
+  });
+}
+// 마을 사람: 우물가에 물 긷는 여인, 양 떼 곁에 목자 (예수 여정, 모델이 있을 때만)
+async function placeLocals() {
+  G.locals = [];
+  if (JID !== 'jesus') return;
+  const [w, s] = await Promise.all([model('woman'), model('shepherd')]);
+  const put = (g, list, n) => g && list.slice(0, n).forEach(([x, z], i) => { const a = new ModelActor(g, x + 0.7, z + 0.4); a.big = SCALE; a.face = i; a.look(i); a.p.root.visible = false; G.scene.add(a.p.root); G.locals.push(a); });
+  put(w, G.world.wells, 8); put(s, G.world.flocks || [], 6);
+  // 어부: 갈릴리 물가 마을 (그물을 손질하던 자리)
+  const f = await model('fisherman'), P = G.data.places;
+  put(f, ['capernaum', 'tabgha', 'bethsaida'].filter(k => P[k]).map(k => toXZ(P[k].lat, P[k].lng)), 3);
+}
 function startLeg(walkFrom) {
   const e = G.events[G.idx], [gx, gz] = goalXZ();
   if (walkFrom) { G.leader.pos.set(...walkFrom); G.leader.goal.set(gx + 0.6, gz); G.leader.set('idle'); }
@@ -649,6 +683,7 @@ function startLeg(walkFrom) {
   $('#mNo').textContent = `${G.idx + 1} / ${G.events.length} · ${josa(JOURNEYS[JID].who, '이', '가')} 계신 곳`;
   G.named = false; missionText(); G.bonus = 0; spawnLegEvents();
   snd.music(e.music); // 앱에서 이 장면에 까는 곡 그대로
+  placeCast();
   G.busy = false;
   // 같은 자리에서 이어지는 장면: 다시 반기는 인사 없이 곧바로 말씀 고르기로 (사용자 2026-11). 남은 시간 점수는 6초로 친다
   if (G.legStraight < SAME) { G.busy = true; G.timeT = 0; G.meetLeft = 6; G.met = true; G.grade = 3; setTimeout(arrive, 400); }
@@ -694,7 +729,7 @@ async function begin(fresh) {
   drawWater(); drawCardBtn(); resize();
   toast('땅과 마을을 세우는 중…', true, 6000);
   await G.world.ready; $('#toast').classList.remove('on');
-  spawnPatrols();
+  spawnPatrols(); placeLocals();
   startLeg();
   if (G.idx === 0) toast(`${esc(me.name)}님, ${esc(josa(J.who, '을', '를'))} 따라 걸어요<small>지도에서 장소 이름을 찾아 걸어가세요 · 가까이 가면 그분의 발자국이 보여요</small>`, true, 4200);
 }
@@ -785,6 +820,9 @@ function frame(now) {
   for (const P of G.patrols || []) P.s.update(t, dt);
   if (G.wounded) G.wounded.a.update(t, dt);
   me0.update(t, dt); G.leader.update(t, dt);
+  // 곁에 선 사람은 그분처럼 가까이 가야 보인다. 마을 사람은 가까울 때만 움직인다(멀면 그리지도 셈하지도 않는다)
+  for (const c of G.cast || []) { c.showT = G.leader.showT; c.ground = GH(c.pos.x, c.pos.y); c.update(t, dt); }
+  for (const a of G.locals || []) { const far = Math.hypot(a.pos.x - me0.pos.x, a.pos.y - me0.pos.y) > 14; a.showT = far ? 0 : 1; if (far && a.show < 0.02) { a.p.root.visible = false; continue; } a.ground = GH(a.pos.x, a.pos.y); a.update(t, dt); }
   G.world?.update(t, dt, me0.pos);
   // 하루(30km) 걷는 동안 아침 → 밤 (밤에는 마을 불빛)
   // 밤낮은 실제로 논 시간으로 6분에 한 바퀴 (걸은 거리로 돌리니 몇 초마다 밤낮이 바뀌었다 — 사용자 2026-11). 아침에서 시작
