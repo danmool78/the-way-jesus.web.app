@@ -123,7 +123,10 @@ const EXTRA = {
   women: [['pilgrim-woman'], ['woman'], ['miriam', 'plain'], ['pilgrim-woman', '#3c5d96'], ['zipporah', 'plain'], ['rahab', 'plain'], ['pilgrim-woman', '#a3554a']],
 };
 const dress = ([n, c]) => c === 'plain' ? plain(ready[n], n) : c ? tinted(ready[n], n, c) : ready[n];
+// 3D 모델은 아직 점검 중 — 주소에 ?models가 있을 때만 쓴다. 운영은 예전 인형 (사용자 2026-11: 떠 있고 엉뚱한 곳을 보고 말해서, 다 잡을 때까지)
+const USE_MODELS = new URLSearchParams(location.search).has('models');
 function modelOf(type, i) {
+  if (!USE_MODELS) return null;
   if (OWN[type]) return [OWN[type]];
   if (type === 'disciple') return [DISCIPLES[i % DISCIPLES.length]];
   const T = TYPES[type] || {};
@@ -199,9 +202,9 @@ function setScene(ev) {
     const named = new Set(plan.filter(Boolean).map(m => m[0]));
     const pool = { men: EXTRA.men.filter(([n]) => !named.has(n) || n.startsWith('pilgrim')), women: EXTRA.women.filter(([n]) => !named.has(n) || n.startsWith('pilgrim')) };
     const CROWDM = [...pool.men, ...pool.women].map(([n]) => n);
-    const names = [...new Set([...named, ...(crowd ? CROWDM : [])])];
-    setCrowd(crowd && CROWDM.every(n => ready[n]) ? { men: pool.men.map(dress), women: pool.women.map(dress) } : null);
-    const ev0 = ev, wait = names.length && want(names);
+    const names = USE_MODELS ? [...new Set([...named, ...(crowd ? CROWDM : [])])] : [];
+    setCrowd(USE_MODELS && crowd && CROWDM.every(n => ready[n]) ? { men: pool.men.map(dress), women: pool.women.map(dress) } : null);
+    const ev0 = ev, wait = names.length ? want(names) : null;
     wait?.then(() => { if (curEv === ev0 && (atStart || new URLSearchParams(location.search).has('beat'))) setScene(ev0); });
   }
   Object.entries(script.props || {}).forEach(([name, [kind, x, z, o]]) => {
