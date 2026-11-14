@@ -668,7 +668,9 @@ function frame(now) {
   me0.update(t, dt); G.leader.update(t, dt);
   G.world?.update(t, dt, me0.pos);
   // 하루(30km) 걷는 동안 아침 → 밤 (밤에는 마을 불빛)
-  G.world?.setTime(((G.total % WALK) / WALK + 0.22) % 1);
+  // 밤낮은 실제로 논 시간으로 6분에 한 바퀴 (걸은 거리로 돌리니 몇 초마다 밤낮이 바뀌었다 — 사용자 2026-11). 아침에서 시작
+  G.clock = (G.clock || 0) + dt;
+  G.world?.setTime((G.clock / 360 + 0.22) % 1);
   const dp = Math.hypot(G.pillar.position.x - me0.pos.x, G.pillar.position.z - me0.pos.y), pvis = Math.max(0, Math.min(1, (PILLAR - dp) / (PILLAR * 0.35)));
   G.pillar.material.opacity = (0.16 + Math.sin(t * 2) * 0.06) * pvis; G.pillar.visible = pvis > 0;
   G.askT -= dt;
