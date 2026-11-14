@@ -18,7 +18,7 @@ const v1 = new THREE.Vector3(), v2 = new THREE.Vector3(), q1 = new THREE.Quatern
 
 // 인형 키 (서 있을 때 정수리 높이) — 모델을 이만큼으로 맞춘다
 const dollH = {};
-function dollHeight(type) {
+export function dollHeight(type) {
   if (dollH[type]) return dollH[type];
   const d = new Actor(type); d.settle(); d.p.root.updateMatrixWorld(true);
   return (dollH[type] = new THREE.Box3().setFromObject(d.p.root).max.y);
