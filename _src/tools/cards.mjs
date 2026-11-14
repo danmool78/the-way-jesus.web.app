@@ -15,31 +15,45 @@ const rest = argv.filter((a, i) => !a.startsWith('--') && argv[i - 1] !== '--n')
 const refsMode = rest[0] === 'refs' && rest.shift();
 const treasureMode = rest[0] === 'treasures' && rest.shift(); // 보물 카드 그림 (_src/cards/treasures.json → out/t-<id>.webp)
 const J = rest[0] && !/\d/.test(rest[0]) ? rest.shift() : 'jesus', only = new Set(rest);
-const CHARS = Object.fromEntries(Object.entries(JSON.parse(await readFile('_src/cards/chars.json', 'utf8'))).filter(([k]) => k !== '_comment'));
+// 인물은 그 여정의 사람만 (j가 없으면 예수 여정 — '요셉'이 모세 여정에서 나사렛 요셉으로 그려지지 않게)
+const CHARS = Object.fromEntries(Object.entries(JSON.parse(await readFile('_src/cards/chars.json', 'utf8'))).filter(([k, c]) => k !== '_comment' && (c.j || ['jesus']).includes(J)));
 const data = JSON.parse(await readFile(J === 'jesus' ? 'data.json' : `j/${J}/data.json`, 'utf8'));
-const LEAD = { jesus: ['예수', 'jesus-ref.png', 'Jesus'], moses: ['모세', null, 'Moses'], david: ['다윗', null, 'David'], kings: ['엘리야', null, 'Elijah'] }[J];
+const ORDER = data.events.map(e => e.id); // 나이에 따라 모습이 다른 사람(scenes)을 가리려고
+const LEAD = { jesus: ['예수', 'jesus-ref.png', 'Jesus'] }[J] || []; // 다른 여정의 주인공은 chars.json의 인물로(나이마다 따로)
 
 const STYLE = `Contemporary CINEMATIC SEMI-FLAT ILLUSTRATION like modern animated film concept art, in exactly the rendering style of the first reference image:
 soft gradients, crisp clean shapes, atmospheric depth, a cool blue palette with a single warm light source, stylish and restrained, not painterly oil, not a religious icon.
 Lighting may follow the time of day of the scene, but keep the same cool-and-warm mood and the same level of simplification.
 ONE SINGLE IMAGE of ONE moment — never a comic, never multiple panels, never a grid or storyboard, no speech bubbles. If the story has several events, choose only the single most important moment.
 No halos, no glowing rings around heads, no text, no letters, no captions, no border or frame. Full-bleed artwork filling the frame, portrait 3:4.
-People are first-century Jews of Galilee and Judea (olive skin, dark hair, simple linen and wool garments). Keep the composition clear with one focal point and breathing space.
+${J === 'jesus' ? 'People are first-century Jews of Galilee and Judea (olive skin, dark hair, simple linen and wool garments).' : 'People are ancient Israelites and their neighbours of the Bronze and Iron Age (olive to brown skin, dark hair, simple wool and linen garments; Egyptians, Philistines, Phoenicians, Assyrians and Babylonians in their own dress and armor where the story has them). No Roman soldiers, no first-century clothing, no anachronisms. Nobody wears an off-white tunic with a deep red mantle (that look belongs to Jesus in this series). Angels look like radiant men WITHOUT wings (seraphim and cherubim aside).'} Keep the composition clear with one focal point and breathing space.
+Finish: a polished, high-detail finished frame — clean anatomy and hands, readable faces, believable architecture and landscape of the real place, consistent light; nothing smeared, melted or half-drawn.
 Violence is never shown graphically: suffering is conveyed with restraint, distance and light. God the Father is never drawn as a person.`;
 const JESUS = `Jesus appears only once in the image, and no other person wears his off-white tunic with a deep red mantle. If Jesus appears, he must look exactly like the character in the second reference image (same face, dark shoulder-length hair, short beard, off-white tunic, deep red mantle), and he must be clearly recognizable.
 Exception — on the cross (and when being taken down and buried) Jesus wears NO tunic and NO red mantle: the soldiers divided his garments and cast lots for his tunic (John 19:23-24), so he wears only a simple white loincloth; keep the same face and hair. Show this with restraint and dignity.`;
 
 // 장면마다 꼭 고를 순간 (이야기에 여러 일이 있어 엉뚱한 순간을 고른 장)
 const HINT = {
+  d07: 'In a hall of King Saul, young warrior David plays the harp; Saul on his seat glares at him in jealousy, a spear in his hand. Through a window, women dancing with tambourines in the street. Absolutely NO written words, letters or song lyrics anywhere in the image.',
+  d09: 'At Naioth in Ramah: old Samuel stands with a company of prophets lifting their hands in praise; King Saul has fallen to the ground among them, overcome, his crown and royal mantle lying on the ground beside him — he stays clothed in a plain long tunic. Young warrior David watches from the side.',
+  d23: 'ONE single scene, not two panels: on the road to Jerusalem the new cart with the golden ark tilts as the oxen stumble; Uzzah, who reached out to steady it, has collapsed beside the cart; King David stands frozen in fear and grief. Restrained, no gore.',
+  d30: 'ONE single scene, no inset: at the gate of Hebron, handsome Absalom with very long thick dark hair in a scarlet robe stands on a step, greeting men of Israel and taking their hands, stealing their hearts; a chariot and runners behind him.',
+  d36: 'ONE single scene at dawn: on the threshing floor of Araunah on the hill above Jerusalem, King David kneels in prayer before a newly built stone altar with rising smoke; Araunah the Jebusite and his oxen nearby. Far above the city stands the angel of the LORD as a tall figure made of white light seen from behind or in silhouette, beardless, face not visible, NO wings, lowering a drawn sword — he must not look like Jesus. The city of David below is a small Iron Age hill town of flat-roofed stone houses and walls: NO domes, no towers of later ages.',
+  m05: 'Moses (old, long white hair and beard, brown tunic with a striped golden-ochre and cream mantle, shepherd staff) and his brother Aaron (old, white beard, simple brown and blue robes — not yet in high-priest garments) stand before Pharaoh on his throne. No one in an off-white tunic with a red mantle.',
+  m29: 'The angel of the LORD stands in the narrow vineyard path with a drawn sword: a tall radiant man in white, NO wings. The donkey has lain down under Balaam, and Balaam, a robed Mesopotamian diviner, has just had his eyes opened and bows his face down.',
   e55: 'Choose the moment of "It is finished" at the cross: Jesus on the central cross wearing only a white loincloth, seen from a respectful distance under a darkened sky, two other crosses, Mary his mother and John standing near, women watching from farther away, a Roman centurion looking up. Jesus appears ONLY on the cross — nobody standing below wears an off-white tunic with a red mantle (John is young, clean-shaven, olive-green tunic with an ochre mantle). No halo or glow around any head.',
 };
 const exists = f => access(f).then(() => true, () => false);
+const SIZE = argv.includes('--hi') ? '2K' : '1K'; // --hi: 크게 그려 줄인다 (잔손질이 또렷해진다)
+const LOOK = process.env.CARD_LOOK; // refs: 이 폴더에 <인물>.png(게임 3D 인형을 뜬 정면 그림)가 있으면 옷·머리·색을 그대로 따른다
 const refs = [await readFile('_src/cards/style-ref.png')];
 if (LEAD[1]) refs.push(await readFile('_src/cards/' + LEAD[1]));
 // 장면 글에 나오는 인물 (동명이인은 not으로 거른다) — 많이 나오는 순으로 넷까지
 function castOf(e) {
-  const t = [e.title, e.subtitle, ...(e.story || []), ...(e.words || []).map(w => w.who + ' ' + w.text)].join(' ');
-  return Object.entries(CHARS).map(([k, c]) => [k, c, c.names.reduce((n, x) => n + (t.split(x).length - 1), 0)])
+  const t = [e.title, e.subtitle, ...(e.story || []), ...(e.words || []).map(w => w.who + ' ' + w.text)].join(' '), at = ORDER.indexOf(e.id);
+  const count = (s, x) => s.split(x).length - 1;
+  return Object.entries(CHARS).filter(([, c]) => !c.scenes || (at >= ORDER.indexOf(c.scenes[0]) && at <= ORDER.indexOf(c.scenes[1])))
+    .map(([k, c]) => [k, c, c.names.reduce((n, x) => n + count(t, x), 0) - (c.sub || []).reduce((n, x) => n + count(t, x), 0)])
     .filter(([, c, n]) => n && !(c.not || []).some(x => t.includes(x) && !c.names.some(y => y.includes(x))))
     .sort((a, b) => b[2] - a[2]).slice(0, 4);
 }
@@ -47,7 +61,7 @@ async function gen(parts, out, w = 720) {
   for (let a = 0; a < 3; a++) {
     const res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-image:generateContent', {
       method: 'POST', headers: { 'Content-Type': 'application/json', 'x-goog-api-key': KEY },
-      body: JSON.stringify({ contents: [{ parts }], generationConfig: { responseModalities: ['IMAGE'], imageConfig: { aspectRatio: '3:4', imageSize: '1K' } } }),
+      body: JSON.stringify({ contents: [{ parts }], generationConfig: { responseModalities: ['IMAGE'], imageConfig: { aspectRatio: '3:4', imageSize: SIZE } } }),
     });
     const j = await res.json().catch(() => ({}));
     const img = j.candidates?.[0]?.content?.parts?.find(p => p.inlineData || p.inline_data);
@@ -70,7 +84,9 @@ if (refsMode) {
   let i = 0;
   await Promise.all(Array.from({ length: N }, async () => { while (i < ks.length) { const k = ks[i++], out = `_src/cards/${k}.png`;
     if (!force && await exists(out)) { console.log(k, 'skip'); continue; }
-    console.log(k, await gen([b64(refs[0]), { text: `${STYLE}\n\nCharacter reference sheet for a recurring Bible character, used to keep the face and clothes identical across many illustrations. One person standing alone, full body, facing three-quarters toward the viewer, neutral calm expression, plain softly lit background:\n${CHARS[k].desc}` }], out)); } }));
+    const look = LOOK && await exists(`${LOOK}/${k}.png`) ? await readFile(`${LOOK}/${k}.png`) : null;
+    const lookText = look ? '\nThe second reference image is the same character as a flat game-model sheet: keep exactly that costume, colors, hair and face, but repaint him or her in the cinematic style of the first image.' : '';
+    console.log(k, await gen([b64(refs[0]), ...(look ? [b64(look)] : []), { text: `${STYLE}${lookText}\n\nCharacter reference sheet for a recurring Bible character, used to keep the face and clothes identical across many illustrations. One person standing alone, full body, facing three-quarters toward the viewer, neutral calm expression, plain softly lit background:\n${CHARS[k].desc}` }], out)); } }));
   process.exit(0);
 }
 if (treasureMode) {

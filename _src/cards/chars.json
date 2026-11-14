@@ -1,18 +1,418 @@
 {
- "_comment": "말씀 카드 그림의 인물 기준(얼굴·옷이 장마다 변하지 않게 — 사용자 2026-11). 장면 글에 이름(names)이 나오면 그 인물의 기준 그림(<key>.png, cards.mjs refs로 만든다)을 함께 넣는다. 옷 색은 3D 무대 피규어(stage/people.js)와 맞춤. not: 이 말이 함께 나오면 다른 사람(동명이인)",
- "mary":      { "names": ["마리아"], "not": ["막달라", "마르다", "베다니"], "desc": "Mary of Nazareth, the mother of Jesus: young Galilean Jewish woman with a gentle oval face, dark brown hair under a deep blue mantle worn as a veil over a warm red-brown dress. In later scenes (when Jesus is grown) she is about forty-five with the same face, slightly older." },
- "peter":     { "names": ["베드로", "시몬"], "not": ["구레네", "바리새인 시몬", "나병"], "desc": "Simon Peter: broad-shouldered Galilean fisherman about forty, square face, thick curly grey-streaked dark hair and full grey-streaked beard, brown tunic with a slate-blue mantle." },
- "john":      { "names": ["요한"], "not": ["세례"], "desc": "John son of Zebedee, the youngest disciple: about twenty, clean-shaven, wavy chestnut-brown hair, olive-green tunic with an ochre mantle." },
- "andrew":    { "names": ["안드레"], "desc": "Andrew, Peter's brother: lean fisherman about thirty-five, long narrow face, straight black hair and a thin dark beard, sand-colored tunic with a moss-green mantle." },
- "james":     { "names": ["야고보"], "desc": "James son of Zebedee: sturdy man about thirty, short black curly hair and short black beard, intense eyes, charcoal-grey tunic with a rust-brown mantle." },
- "joseph":    { "names": ["요셉"], "not": ["아리마대"], "desc": "Joseph of Nazareth, the carpenter: kind man about thirty-five, short dark beard, wears a cream headcloth with a brown band, earth-brown tunic and a light tan mantle, strong carpenter's hands." },
- "baptist":   { "names": ["세례 요한", "세례자 요한", "세례요한"], "desc": "John the Baptist: lean, weathered desert prophet about thirty, wild long black hair and untrimmed beard, rough camel-hair garment tied with a leather belt, bare arms." },
- "judas":     { "names": ["가룟 유다", "유다"], "desc": "Judas Iscariot: thin man about thirty-five, sharp features, close-cropped black hair and short neat black beard, dark olive-grey tunic and mantle, a small leather money bag at his belt." },
- "thomas":    { "names": ["도마"], "desc": "Thomas: medium build man about thirty, short curly brown hair and short beard, thoughtful furrowed brow, grey-blue tunic with a beige mantle." },
- "magdalene": { "names": ["막달라"], "desc": "Mary Magdalene: woman about thirty, striking dark eyes, long black hair partly covered by a plum-purple veil, cream dress." },
- "martha":    { "names": ["마르다"], "desc": "Martha of Bethany: capable woman about thirty-five, warm round face, hair under a mustard-yellow headscarf, brown dress with an apron cloth. Her sister Mary of Bethany is younger, slender, with a soft grey veil." },
- "lazarus":   { "names": ["나사로"], "desc": "Lazarus of Bethany: gentle man about thirty-five, pale olive skin, short brown hair and short beard, simple white linen tunic." },
- "nicodemus": { "names": ["니고데모"], "desc": "Nicodemus: dignified older Pharisee about sixty, long white beard, white robe with blue fringed prayer shawl and a blue headband." },
- "pilate":    { "names": ["빌라도"], "desc": "Pontius Pilate: clean-shaven Roman governor about fifty, short grey hair, white toga with a broad purple stripe, stern tired face." },
- "caiaphas":  { "names": ["가야바", "대제사장"], "desc": "Caiaphas the high priest: stern man about fifty, long dark beard with grey, tall white turban with a gold band, white robe under a blue sleeveless ephod-like mantle." }
+ "_comment": "말씀 카드 그림의 인물 기준(얼굴·옷이 장마다 변하지 않게 — 사용자 2026-11). 장면 글에 이름(names)이 나오면 그 인물의 기준 그림(<key>.png, cards.mjs refs로 만든다)을 함께 넣는다. 옷 색은 3D 무대 피규어(stage/people.js)와 맞춤. not: 이 말이 함께 나오면 다른 사람(동명이인) j: 그 여정에서만 쓴다(없으면 예수 여정). scenes: [처음, 끝] 장면에서만(나이에 따라 모습이 다른 사람). sub: 이 말 속에 든 이름은 세지 않는다. 구약 인물 묘사는 게임 3D 인형을 뜬 그림과 같다.",
+ "mary": {
+  "names": [
+   "마리아"
+  ],
+  "not": [
+   "막달라",
+   "마르다",
+   "베다니"
+  ],
+  "desc": "Mary of Nazareth, the mother of Jesus: young Galilean Jewish woman with a gentle oval face, dark brown hair under a deep blue mantle worn as a veil over a warm red-brown dress. In later scenes (when Jesus is grown) she is about forty-five with the same face, slightly older."
+ },
+ "peter": {
+  "names": [
+   "베드로",
+   "시몬"
+  ],
+  "not": [
+   "구레네",
+   "바리새인 시몬",
+   "나병"
+  ],
+  "desc": "Simon Peter: broad-shouldered Galilean fisherman about forty, square face, thick curly grey-streaked dark hair and full grey-streaked beard, brown tunic with a slate-blue mantle."
+ },
+ "john": {
+  "names": [
+   "요한"
+  ],
+  "not": [
+   "세례"
+  ],
+  "desc": "John son of Zebedee, the youngest disciple: about twenty, clean-shaven, wavy chestnut-brown hair, olive-green tunic with an ochre mantle."
+ },
+ "andrew": {
+  "names": [
+   "안드레"
+  ],
+  "desc": "Andrew, Peter's brother: lean fisherman about thirty-five, long narrow face, straight black hair and a thin dark beard, sand-colored tunic with a moss-green mantle."
+ },
+ "james": {
+  "names": [
+   "야고보"
+  ],
+  "desc": "James son of Zebedee: sturdy man about thirty, short black curly hair and short black beard, intense eyes, charcoal-grey tunic with a rust-brown mantle."
+ },
+ "joseph": {
+  "names": [
+   "요셉"
+  ],
+  "not": [
+   "아리마대"
+  ],
+  "desc": "Joseph of Nazareth, the carpenter: kind man about thirty-five, short dark beard, wears a cream headcloth with a brown band, earth-brown tunic and a light tan mantle, strong carpenter's hands."
+ },
+ "baptist": {
+  "names": [
+   "세례 요한",
+   "세례자 요한",
+   "세례요한"
+  ],
+  "desc": "John the Baptist: lean, weathered desert prophet about thirty, wild long black hair and untrimmed beard, rough camel-hair garment tied with a leather belt, bare arms."
+ },
+ "judas": {
+  "names": [
+   "가룟 유다",
+   "유다"
+  ],
+  "desc": "Judas Iscariot: thin man about thirty-five, sharp features, close-cropped black hair and short neat black beard, dark olive-grey tunic and mantle, a small leather money bag at his belt."
+ },
+ "thomas": {
+  "names": [
+   "도마"
+  ],
+  "desc": "Thomas: medium build man about thirty, short curly brown hair and short beard, thoughtful furrowed brow, grey-blue tunic with a beige mantle."
+ },
+ "magdalene": {
+  "names": [
+   "막달라"
+  ],
+  "desc": "Mary Magdalene: woman about thirty, striking dark eyes, long black hair partly covered by a plum-purple veil, cream dress."
+ },
+ "martha": {
+  "names": [
+   "마르다"
+  ],
+  "desc": "Martha of Bethany: capable woman about thirty-five, warm round face, hair under a mustard-yellow headscarf, brown dress with an apron cloth. Her sister Mary of Bethany is younger, slender, with a soft grey veil."
+ },
+ "lazarus": {
+  "names": [
+   "나사로"
+  ],
+  "desc": "Lazarus of Bethany: gentle man about thirty-five, pale olive skin, short brown hair and short beard, simple white linen tunic."
+ },
+ "nicodemus": {
+  "names": [
+   "니고데모"
+  ],
+  "desc": "Nicodemus: dignified older Pharisee about sixty, long white beard, white robe with blue fringed prayer shawl and a blue headband."
+ },
+ "pilate": {
+  "names": [
+   "빌라도"
+  ],
+  "desc": "Pontius Pilate: clean-shaven Roman governor about fifty, short grey hair, white toga with a broad purple stripe, stern tired face."
+ },
+ "caiaphas": {
+  "names": [
+   "가야바",
+   "대제사장"
+  ],
+  "desc": "Caiaphas the high priest: stern man about fifty, long dark beard with grey, tall white turban with a gold band, white robe under a blue sleeveless ephod-like mantle."
+ },
+ "moses": {
+  "names": [
+   "모세"
+  ],
+  "desc": "Moses at about eighty: long white hair and full white beard, deep-set steady eyes, weathered olive skin; a brown wool tunic tied with a rope belt, a long striped golden-ochre and cream mantle over the shoulders, sandals; a shepherd's staff.",
+  "j": [
+   "moses"
+  ],
+  "scenes": [
+   "m04",
+   "m40"
+  ]
+ },
+ "moses-young": {
+  "names": [
+   "모세"
+  ],
+  "desc": "Moses at about forty, a prince of Egypt turned fugitive: dark short beard, short dark hair, strong face; a fine white Egyptian linen tunic with a pleated kilt, a plain travel cloak over it, sandals.",
+  "j": [
+   "moses"
+  ],
+  "scenes": [
+   "m03",
+   "m03"
+  ]
+ },
+ "aaron": {
+  "names": [
+   "아론"
+  ],
+  "desc": "Aaron, Moses' older brother and the first high priest (Exodus 28): an old man about eighty-five, long white beard, wearing the high priest's garments — a white linen robe, a blue robe over it with pomegranate-and-bell hem, a short richly woven gold-blue-purple-scarlet ephod, a breastpiece with twelve colored stones in four rows, and a white linen turban with a gold plate on the front.",
+  "j": [
+   "moses"
+  ]
+ },
+ "pharaoh": {
+  "names": [
+   "바로"
+  ],
+  "desc": "Pharaoh of Egypt in the New Kingdom: man about forty, clean-shaven, kohl-lined eyes, bronze skin, the blue-and-gold striped nemes headcloth with a golden cobra on the brow, a broad jeweled collar of gold and lapis, a pleated white linen kilt with a gold belt, gold armbands, leather sandals; bare chest.",
+  "j": [
+   "moses"
+  ]
+ },
+ "joshua": {
+  "names": [
+   "여호수아"
+  ],
+  "desc": "Joshua son of Nun, Moses' aide and later Israel's commander: strong man about forty, short dark beard, determined eyes; a knee-length bronze-studded leather armor over an ochre wool tunic, a dark red cloak on the shoulders hanging behind, a sword belt with an empty scabbard, leather sandals.",
+  "j": [
+   "moses"
+  ]
+ },
+ "miriam": {
+  "names": [
+   "미리암"
+  ],
+  "desc": "Miriam, sister of Moses, prophetess (Exodus 15:20): woman about eighty-five but lively, long grey hair under a light sand-colored head veil, joyful wise face; a long red-brown wool dress with a woven striped sash, a short cream mantle, sandals.",
+  "j": [
+   "moses"
+  ]
+ },
+ "zipporah": {
+  "names": [
+   "십보라"
+  ],
+  "desc": "Zipporah, Midianite wife of Moses: woman about thirty, darker sun-tanned skin, black hair braided under a dark indigo head cloth with small silver coins on the brow, a long dark blue Bedouin-style dress with red geometric embroidery on the chest, sandals.",
+  "j": [
+   "moses"
+  ]
+ },
+ "jethro": {
+  "names": [
+   "이드로"
+  ],
+  "desc": "Jethro, priest of Midian, Moses' father-in-law: dignified old desert sheikh about seventy, long white beard, tanned skin; a white head cloth held by a dark cord, a long cream robe with a striped brown-and-black wool cloak (abaya) over it, a leather belt, sandals.",
+  "j": [
+   "moses"
+  ]
+ },
+ "rahab": {
+  "names": [
+   "라합"
+  ],
+  "desc": "Rahab of Jericho (Joshua 2): woman about thirty, striking face, dark wavy hair partly covered by a loose saffron head scarf, a long deep-red dress with a woven belt, a simple bead necklace, sandals.",
+  "j": [
+   "moses"
+  ]
+ },
+ "david": {
+  "names": [
+   "다윗"
+  ],
+  "desc": "David the shepherd boy of Bethlehem, about fifteen: ruddy face, bright eyes, curly reddish-brown hair, no beard (1 Samuel 16:12); a plain undyed tunic with a sheepskin over one shoulder, a leather belt with a sling, sandals.",
+  "j": [
+   "david"
+  ],
+  "scenes": [
+   "d01",
+   "d05"
+  ]
+ },
+ "david-warrior": {
+  "names": [
+   "다윗"
+  ],
+  "desc": "David at about twenty-eight, a seasoned warrior and fugitive (same face as the shepherd boy David, ruddy reddish-brown curly hair, bright eyes): short reddish-brown beard, bronze-studded leather armor over a dark ochre tunic, sword belt, dusty brown cloak.",
+  "j": [
+   "david"
+  ],
+  "scenes": [
+   "d06",
+   "d20"
+  ]
+ },
+ "david-king": {
+  "names": [
+   "다윗"
+  ],
+  "desc": "King David at about fifty-five (same face as young David, reddish-brown curly hair now streaked with grey): full reddish-grey beard, gold crown, long royal robe of deep blue with a purple mantle embroidered in gold, gold belt. Dignified, warm face.",
+  "j": [
+   "david"
+  ],
+  "scenes": [
+   "d21",
+   "d39"
+  ]
+ },
+ "samuel": {
+  "names": [
+   "사무엘"
+  ],
+  "desc": "Samuel the prophet and last judge: very old man about eighty, long white beard and white hair, grave holy face; a long robe of undyed white linen with a dark brown prophet's mantle (the little coat his mother made, grown long), a cloth head covering, sandals.",
+  "j": [
+   "david"
+  ]
+ },
+ "saul": {
+  "names": [
+   "사울"
+  ],
+  "desc": "King Saul of Israel: very tall broad-shouldered man about fifty (taller than others by a head, 1 Samuel 9:2), dark beard with grey, troubled stern face; a simple gold circlet crown, a bronze scale armor over a deep purple tunic, a long dark royal cloak behind, leather boots-sandals.",
+  "j": [
+   "david"
+  ]
+ },
+ "jonathan": {
+  "names": [
+   "요나단"
+  ],
+  "desc": "Jonathan, son of King Saul and David's loyal friend: young warrior-prince about twenty-eight, kind brave face, short brown beard; a fine blue robe with a leather cuirass, a quiver strap across the chest (no bow in the hands), a royal cloak behind, sandals.",
+  "j": [
+   "david"
+  ]
+ },
+ "goliath": {
+  "names": [
+   "골리앗"
+  ],
+  "desc": "Goliath of Gath, the Philistine giant (1 Samuel 17): huge muscular man, a giant, heavy brow, black beard; a bronze Philistine feathered-crest helmet, a bronze coat of scale armor, bronze greaves on the legs, a leather kilt, sandals. Proportioned like a giant warrior.",
+  "j": [
+   "david"
+  ]
+ },
+ "joab": {
+  "names": [
+   "요압"
+  ],
+  "desc": "Joab, commander of David's army: hard-faced battle-scarred soldier about forty, short black beard, a bronze helmet with cheek guards, bronze scale armor over a dark red tunic, leather kilt strips, a sword belt with empty scabbard, greaves, sandals.",
+  "j": [
+   "david"
+  ]
+ },
+ "nathan": {
+  "names": [
+   "나단"
+  ],
+  "desc": "Nathan the prophet in King David's court: wise man about sixty, long grey beard, calm grave eyes; a simple undyed wool robe with a long dark brown prophet's mantle, a plain cloth head covering, sandals.",
+  "j": [
+   "david",
+   "kings"
+  ],
+  "sub": [
+   "요나단"
+  ]
+ },
+ "absalom": {
+  "names": [
+   "압살롬"
+  ],
+  "desc": "Absalom, King David's handsome son, famous for his very long thick hair (2 Samuel 14:25-26): young man about twenty-five, flawless face, very long thick dark wavy hair falling to his waist, short beard; a rich scarlet robe embroidered with gold, a gold belt, rings, fine sandals.",
+  "j": [
+   "david"
+  ]
+ },
+ "michal": {
+  "names": [
+   "미갈"
+  ],
+  "desc": "Michal, daughter of King Saul and David's first wife: young princess about twenty-two, beautiful proud face, long black hair with a thin gold band on the brow, a long sky-blue royal dress with gold embroidery, gold bracelets, sandals.",
+  "j": [
+   "david"
+  ]
+ },
+ "solomon": {
+  "names": [
+   "솔로몬"
+  ],
+  "desc": "King Solomon in his glory: man about thirty-five, wise serene face, neatly trimmed dark beard; a golden crown, a long white linen robe with a royal purple mantle embroidered with gold pomegranates, a gold collar, gold belt, fine sandals.",
+  "j": [
+   "david",
+   "kings"
+  ]
+ },
+ "ahijah": {
+  "names": [
+   "아히야"
+  ],
+  "desc": "Ahijah the prophet of Shiloh (1 Kings 11:29-31): old man about seventy, long white beard, deep-set kind eyes; a long undyed wool robe with a NEW bright blue-green outer cloak (the cloak he tore into twelve pieces) draped over the shoulders, a plain cloth head covering, sandals.",
+  "j": [
+   "kings"
+  ]
+ },
+ "jeroboam": {
+  "names": [
+   "여로보암"
+  ],
+  "desc": "King Jeroboam I of northern Israel: ambitious man about forty, sharp face, black beard; a gold circlet crown, a dark green robe with a red embroidered border, a gold belt, a short cloak, sandals.",
+  "j": [
+   "kings"
+  ]
+ },
+ "rehoboam": {
+  "names": [
+   "르호보암"
+  ],
+  "desc": "King Rehoboam of Judah, Solomon's son: arrogant young king about forty-one, short black beard, haughty face; a gold crown, a rich orange-gold robe with a dark blue mantle, a gold belt, rings, sandals.",
+  "j": [
+   "kings"
+  ]
+ },
+ "elijah": {
+  "names": [
+   "엘리야"
+  ],
+  "desc": "Elijah the Tishbite: lean wiry man about fifty, wild long dark-grey hair and a long grey-black beard, fierce dark eyes; a cream linen tunic under a rough shaggy dark-brown goat-hair mantle, a broad leather belt (2 Kings 1:8), sandals.",
+  "j": [
+   "kings"
+  ]
+ },
+ "ahab": {
+  "names": [
+   "아합"
+  ],
+  "desc": "King Ahab of Israel: man about forty-five, heavy-set, black beard with grey, proud sulky face; a gold crown, an ivory-white robe (the ivory palace) with a deep crimson mantle, gold bracelets, sandals.",
+  "j": [
+   "kings"
+  ]
+ },
+ "jezebel": {
+  "names": [
+   "이세벨"
+  ],
+  "desc": "Queen Jezebel, Phoenician princess of Sidon: woman about forty, striking haughty face, painted eyes, dark hair elaborately braided under a jeweled Phoenician headdress; a long Tyrian-purple gown with gold embroidery, heavy gold earrings and necklaces, sandals.",
+  "j": [
+   "kings"
+  ]
+ },
+ "elisha": {
+  "names": [
+   "엘리사"
+  ],
+  "desc": "Elisha the prophet, Elijah's successor, bald-headed (2 Kings 2:23): man about forty, bald head with a short dark beard, kind steady eyes; a plain undyed tunic with a rough dark hair mantle over his shoulders (the mantle of Elijah), a leather belt, sandals.",
+  "j": [
+   "kings"
+  ]
+ },
+ "hezekiah": {
+  "names": [
+   "히스기야"
+  ],
+  "desc": "King Hezekiah of Judah: man about forty, sincere pious face, dark beard; a modest gold crown, a long white robe with a blue mantle and blue-fringed tassels, a gold belt, sandals.",
+  "j": [
+   "kings"
+  ]
+ },
+ "isaiah": {
+  "names": [
+   "이사야"
+  ],
+  "desc": "Isaiah the prophet in Jerusalem: noble man about fifty, grey-black beard, intense eyes; a long robe of fine dark blue wool with a white linen undergarment, a sackcloth sash, a plain head covering, sandals.",
+  "j": [
+   "kings"
+  ]
+ },
+ "josiah": {
+  "names": [
+   "요시야"
+  ],
+  "desc": "King Josiah of Judah, the reforming king: young king about twenty-six, earnest sincere face, short dark beard; a modest gold circlet crown, a long white linen robe with a blue mantle and blue tassels at the corners, a gold belt, sandals.",
+  "j": [
+   "kings"
+  ]
+ }
 }
