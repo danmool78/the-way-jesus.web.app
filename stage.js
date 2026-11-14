@@ -1,9 +1,9 @@
 /* 그 길 — 3D 무대. 장소 핀 위에 장면의 인물을 세우고, 낭독에 맞춰 연기시킨다.
    app.js가 보내는 이벤트: stage:scene {i, ev}, stage:walk {i, ev}, stage:beat {beat, s}, stage:stop */
 import { THREE, damp } from './stage/kit.js';
-import { Actor } from './stage/people.js';
+import { Actor, TYPES } from './stage/people.js';
 import { StageModel } from './stage/model-actor.js';
-import { model } from './game-model.js';
+import { model, tinted } from './game-model.js';
 import { makeProp } from './stage/props.js';
 import { SCRIPTS } from './stage/scenes.js';
 import { createStreet } from './stage/street/view.js';
@@ -105,12 +105,30 @@ function flushPending() {
 const stageGroup = new THREE.Group();
 scene.add(stageGroup);
 
-// 3D 모델로 바꿔 세우는 사람 (실험: 예수님만 — 사용자 2026-11). 무대가 뜰 때 미리 받아 두고, 받기 전이면 예전 인형
-const MODELS = { jesus: 'jesus' }, ready = {};
-for (const [type, name] of Object.entries(MODELS)) model(name).then(g => {
-  if (!g) return; ready[type] = g;
-  if (curEv && (atStart || new URLSearchParams(location.search).has('beat')) && script && !script.street && Object.values(script.cast).some(([t]) => t === type)) setScene(curEv); // 낭독 전이면 바로 바꿔 세운다
-});
+// 3D 모델로 바꿔 세우는 사람 (사용자 2026-11: 인형을 3D 모델로 — 모델이 그리기는 더 가볍다. 삼각형 9천 개·한 번에 그림, 인형은 2만7천 개·수십 번).
+// 이름 있는 사람은 그 사람의 모델, 이름 없는 남녀는 순례자 모델에 인형의 옷 색을 입힌다. 아이·천사·실루엣·빛의 형상은 인형 그대로.
+// 모델은 장면에 필요한 것만 그때 받고(R2, 한 번 받으면 남는다), 다 받기 전이면 인형으로 섰다가 낭독 전이면 바꿔 세운다
+const OWN = { jesus: 'jesus', risen: 'jesus', peter: 'peter', john: 'john', mary: 'mary', joseph: 'joseph', baptist: 'baptist', pharisee: 'pharisee',
+  thomas: 'thomas', martha: 'martha', judas: 'judas', lazarus: 'lazarus', samaritan: 'samaritan', centurion: 'centurion', zacchaeus: 'zacchaeus',
+  pilate: 'pilate', shepherd: 'shepherd', soldier: 'soldier', highpriest: 'caiaphas', elder: 'nicodemus', sadducee: 'nicodemus', woman: 'woman',
+  moses: 'moses', elijah: 'elijah' };
+const MEN = new Set(['man', 'servant', 'traveler', 'healed', 'beggar', 'prodigal', 'levi', 'steward', 'groom', 'rich']);
+const WOMEN = new Set(['woman2', 'mother', 'anna', 'phoenician']);
+const DISCIPLES = ['andrew', 'james']; // 이름 없는 제자는 안드레·야고보 모델을 번갈아
+function modelOf(type, i) {
+  if (OWN[type]) return [OWN[type]];
+  if (type === 'disciple') return [DISCIPLES[i % DISCIPLES.length]];
+  const T = TYPES[type] || {};
+  if (MEN.has(type)) return ['pilgrim-man', T.mantle || T.robe];
+  if (WOMEN.has(type)) return ['pilgrim-woman', T.robe];
+  return null;
+}
+const ready = {}, loading = {};
+function want(names) {
+  const todo = names.filter(n => !(n in ready));
+  todo.forEach(n => { loading[n] ??= model(n).then(g => { ready[n] = g; }); });
+  return todo.length ? Promise.all(todo.map(n => loading[n])) : null;
+}
 function clearCast() {
   cancelPending();
   Object.values(actors).forEach(a => { a.p.root.removeFromParent(); a.dispose?.(); });
@@ -175,8 +193,17 @@ function setScene(ev) {
     p.lift = new THREE.Group(); p.lift.add(p.obj); p.kind = kind;
     props[name] = p; stageGroup.add(p.lift);
   });
-  Object.entries(script.cast).forEach(([name, [type, x, z, face, o = {}]]) => {
-    const g = !script.street && !o.silhouette && ready[type]; // 거리 무대·실루엣은 그대로 인형
+  // 배역마다 쓸 모델 (거리 무대·실루엣은 인형 그대로)
+  const plan = Object.values(script.cast).map(([type, , , , o = {}], i) => !script.street && !o.silhouette && modelOf(type, i));
+  {
+    const names = [...new Set(plan.filter(Boolean).map(m => m[0]))];
+    const ev0 = ev, wait = names.length && want(names);
+    wait?.then(() => { if (curEv === ev0 && (atStart || new URLSearchParams(location.search).has('beat'))) setScene(ev0); });
+  }
+  Object.entries(script.cast).forEach(([name, [type, x, z, face, o = {}]], i) => {
+    const m = plan[i];
+    let g = m && ready[m[0]];
+    if (g && m[1]) g = tinted(g, m[0], m[1]);
     const a = g ? new StageModel(g, type, x, z, face, { solemn: script.solemn, ...o }) : new Actor(type, x, z, face, { solemn: script.solemn, ...o });
     a.realWalk = !!script.street; // 거리 무대: 걷고 돌아보는 방향을 실제대로 (people.js)
     actors[name] = a;

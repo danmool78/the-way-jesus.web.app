@@ -8,7 +8,10 @@ import { THREE, damp } from './kit.js';
 import { Actor } from './people.js';
 import { clone } from '../assets/vendor/SkeletonUtils.js';
 
-const CLIP = { idle: 'idle', listen: 'idle', speak: 'talk', 'sit-speak': 'talk', pray: 'pray', kneel: 'pray', bow: 'pray', mourn: 'pray', sleep: 'sleep' };
+// 팔까지 모델의 동작 그대로 쓰는 자세 (그 밖의 자세는 팔을 인형에 맞춘다)
+const CLIP = { idle: 'idle', listen: 'idle', speak: 'talk', sleep: 'sleep' };
+// 무릎 꿇은 다리만 모델의 'pray'(무릎 꿇고 두 팔을 높이 듦)에서 빌리고 팔은 인형대로 — 인형의 기도는 서서 두 손을 가슴에 모은다
+const KNEEL = new Set(['kneel', 'mourn', 'sit', 'sit-ground', 'sit-speak', 'cower']);
 const bone = (root, n) => { let f = null; root.traverse(o => { if (!f && o.isBone && new RegExp(`(^|mixamorig)${n}$`).test(o.name)) f = o; }); return f; };
 const DOWN = new THREE.Vector3(0, -1, 0);
 const v1 = new THREE.Vector3(), v2 = new THREE.Vector3(), q1 = new THREE.Quaternion(), q2 = new THREE.Quaternion(), q3 = new THREE.Quaternion();
@@ -39,6 +42,8 @@ export class StageModel {
     const R = { up: bone(body, 'RightArm'), lo: bone(body, 'RightForeArm'), hand: bone(body, 'RightHand') };
     const dl = this.doll.p.armL.position.x > 0;
     this.arms = [[this.doll.p.armL, dl === (L.up.getWorldPosition(v1).x > 0) ? L : R], [this.doll.p.armR, dl === (L.up.getWorldPosition(v1).x > 0) ? R : L]];
+    this.legs = [['Left'], ['Right']].map(([s]) => ({ up: bone(body, s + 'UpLeg'), lo: bone(body, s + 'Leg'), foot: bone(body, s + 'Foot') }));
+    const hips = bone(body, 'Hips'); this.hipH = hips ? hips.getWorldPosition(v1).y * body.scale.x / (body.scale.x || 1) : 0.5; this.body = body; this.legW = 0;
     this.headB = bone(body, 'Head'); this.neckB = bone(body, 'Neck'); this.spineB = bone(body, 'Spine1') || bone(body, 'Spine');
     this.play('idle', 0);
   }
@@ -89,13 +94,22 @@ export class StageModel {
     const r = this.p.root, dr = d.p.root, moving = d.goal.distanceTo(d.pos) > 0.02;
     r.position.copy(dr.position); r.rotation.copy(dr.rotation); r.scale.copy(dr.scale); r.visible = dr.visible;
     this.fadeTo(Math.min(1, d.show));
-    const clip = moving && !d.floating ? 'walk' : CLIP[d.pose];
-    this.play(clip || 'idle');
+    const walk = moving && !d.floating, clip = walk ? 'walk' : CLIP[d.pose], kneel = !walk && KNEEL.has(d.pose), ride = !walk && d.pose === 'ride';
+    this.play(clip || (kneel ? 'pray' : 'idle'));
     this.mixer.update(dt);
     // 동작이 없는 자세는 인형의 팔을 따른다 (천천히 들어가고 나온다)
     this.w = damp(this.w, clip ? 0 : 1, 6, dt);
-    if (this.w < 0.01) return;
+    // 나귀 타기: 넓적다리를 앞으로, 정강이는 아래로 하고 몸을 인형처럼 내려 앉힌다 (모델에 앉는 동작이 없다)
+    this.legW = damp(this.legW, ride ? 1 : 0, 6, dt);
+    this.body.position.y = -this.hipH * 0.58 * (d.kneel || 0) * this.legW;
+    if (this.w < 0.01 && this.legW < 0.01) return;
     r.updateMatrixWorld(true); dr.updateMatrixWorld(true);
+    if (this.legW > 0.01) {
+      const qr = r.getWorldQuaternion(new THREE.Quaternion());
+      const thigh = new THREE.Vector3(0, -0.25, 1).normalize().applyQuaternion(qr), shin = new THREE.Vector3(0, -1, 0.15).normalize().applyQuaternion(qr);
+      for (const l of this.legs) if (l.up && l.lo && l.foot) { this.aim(l.up, l.lo, thigh, this.legW); this.aim(l.lo, l.foot, shin, this.legW); }
+    }
+    if (this.w < 0.01) return;
     const qm = r.getWorldQuaternion(q2.clone()), qd = dr.getWorldQuaternion(new THREE.Quaternion()).invert();
     // 인형 root 기준의 팔 방향(아래로 뻗은 팔이 가리키는 쪽)을 모델 root에 옮긴다
     const dirOf = o => DOWN.clone().applyQuaternion(o.getWorldQuaternion(new THREE.Quaternion()).premultiply(qd).premultiply(qm));
