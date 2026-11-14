@@ -104,11 +104,32 @@ const HOLD = { staff: 'R', crook: 'R', rod: 'R', spear: 'R', bigspear: 'R', scut
 
 // 차분한 말하기: Mixamo 'talk'는 팔 몸짓은 좋은데 엉덩이·허리·고개가 크게 흔들려(고개 29°, 엉덩이 12°) 건들거렸다(사용자 2026-11).
 // 팔·어깨·손은 talk 그대로, 몸통·고개·다리는 가만히 선 idle에서 가져와 한 동작으로 합친다 (모델마다 한 번만)
+// 끊김 없는 되풀이: Mixamo 동작은 끝 자세가 첫 자세와 달라 한 바퀴 돌 때마다 뚝 끊겼다(말하기는 오른손이 75° 튀었다 — 사용자 2026-11).
+// 끝의 W초 동안 첫 자세 쪽으로 부드럽게 끌어 마지막 열쇠를 첫 자세와 같게 한다 (걷기처럼 짧은 동작은 W도 짧게)
+const smooth = x => x * x * (3 - 2 * x);
+function seamless(clip) {
+  const dur = clip.duration, W = Math.min(0.6, dur * 0.12);
+  const tracks = clip.tracks.map(k => {
+    const n = k.getValueSize(), T = Array.from(k.times), V = Array.from(k.values);
+    if (T.length < 2) return k;
+    const first = V.slice(0, n), quat = k.ValueTypeName === 'quaternion';
+    if (T[T.length - 1] < dur - W) { T.push(dur - W); V.push(...V.slice(-n)); } // 일찍 끝나는 열쇠(합친 idle)는 그 자세로 버티다가
+    for (let i = 0; i < T.length; i++) {
+      if (T[i] <= dur - W) continue;
+      const a = smooth(Math.min(1, (T[i] - (dur - W)) / W));
+      if (quat) THREE.Quaternion.slerpFlat(V, i * n, V, i * n, first, 0, a);
+      else for (let c = 0; c < n; c++) V[i * n + c] += (first[c] - V[i * n + c]) * a;
+    }
+    if (T[T.length - 1] < dur - 1e-4) { T.push(dur); V.push(...first); } else V.splice(-n, n, ...first);
+    return new k.constructor(k.name, T, V);
+  });
+  return new THREE.AnimationClip(clip.name, dur, tracks);
+}
 const calm = new WeakMap(), BODY = /(Hips|Spine|Neck|Head|Leg|Foot|Toe)[^.]*\./;
 function calmClips(gltf) {
   if (calm.has(gltf)) return calm.get(gltf);
   const by = Object.fromEntries(gltf.animations.map(c => [c.name, c])), t = by.talk, i = by.idle;
-  let out = gltf.animations;
+  let out = gltf.animations.map(seamless);
   if (t && i) {
     const still = i.tracks.filter(k => BODY.test(k.name)), have = new Set(still.map(k => k.name));
     // idle에서 덜어 낸(움직이지 않는) 뼈는 기본 자세로 못 박는다 — 비워 두면 앞 동작(걷기)의 마지막 자세에 멈춰 있었다
@@ -118,7 +139,7 @@ function calmClips(gltf) {
       still.push(new T(k.name, [0], v));
     }
     const tracks = [...t.tracks.filter(k => !BODY.test(k.name)), ...still];
-    out = gltf.animations.map(c => c === t ? new THREE.AnimationClip('talk', t.duration, tracks) : c);
+    out = out.map(c => c.name === 'talk' ? seamless(new THREE.AnimationClip('talk', t.duration, tracks)) : c);
   }
   calm.set(gltf, out); return out;
 }
