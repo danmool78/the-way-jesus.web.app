@@ -419,7 +419,7 @@ function penalty(kind) {
   G.water = Math.max(0, G.water - 1); drawWater(); snd.play(kind === 'lost' ? 'wind' : 'lose');
   document.body.classList.remove('shake'); void document.body.offsetWidth; document.body.classList.add('shake');
   if (kind === 'lost') {
-    G.slowT = 4; $('#dust').classList.add('on'); setTimeout(() => $('#dust').classList.remove('on'), 3200);
+    G.slowT = 4; G.hintT = 3.5; G.hintCool = 20; $('#dust').classList.add('on'); // 모래바람 뒤에는 바른 쪽을 잠깐 보여 준다 setTimeout(() => $('#dust').classList.remove('on'), 3200);
     toast(`${LOST[Math.floor(Math.random() * LOST.length)]}<small>물병 하나를 잃고 잠시 느려집니다 · 단서를 다시 읽고 방향을 잡으세요</small>`);
   } else {
     const msg = kind === 'serpent' ? '뱀에게 물렸어요! 유혹을 따라가면 안 돼요' : kind === 'dead' ? '사해에 빠질 뻔했어요! 소금물이에요' : kind === 'galilee' ? '갈릴리 바다는 걸어서 못 건너요' : '바다는 걸어서 못 건너요';
@@ -816,7 +816,7 @@ function startLeg(walkFrom) {
   // 길 거리: 바다·호수를 돌아가는 실제 걸음으로 잰다 (game-nav.js) — 길 잃음·길 묻기·제한 시간·등불·별이 모두 이것으로
   G.nav = G.legStraight < SAME ? null : buildNav({ from: [G.me.pos.x, G.me.pos.y], to: [gx, gz], walkable: (x, z) => !blocked(x, z) });
   G.legPath = Math.max(G.legStraight, navD(G.me.pos.x, G.me.pos.y));
-  G.prevD = G.legPath;
+  G.prevD = G.legPath; G.bestD = G.legPath; G.stuckT = 0; G.hintT = 0; G.hintCool = 10;
   // 걸음은 늘 같은 빠르기 — 실제 땅의 거리만큼 걷고 그만큼 시간을 더 준다 (사용자 2026-11: 먼 길도 20초에 닿게 하니 땅과 상관없이 날아다녔다)
   G.speed = PACE;
   // 제한 시간: 곧장 걸으면 걸릴 시간의 1.7배 + 6초. 그분은 그 시간의 절반쯤에 다음 자리에 닿으시게 걸으신다
@@ -903,9 +903,9 @@ function drawTags() {
   const [wx, wz] = G.nav ? G.nav.ahead(G.me.pos.x, G.me.pos.y, 12) : [gx, gz];
   const [mx, my] = screen(G.me.pos.x, G.me.ground + SCALE * .5, G.me.pos.y), [tx, ty] = screen(wx, GH(wx, wz), wz), a = Math.atan2(ty - my, tx - mx);
   const near2 = dGoal < ARRIVE * 2.5;
-  const ar = $('#arrow'), lure = G.lureT > 0 && !(G.askT > 0);
+  const ar = $('#arrow'), lure = G.lureT > 0 && !(G.askT > 0) && !(G.hintT > 0);
   ar.classList.toggle('lure', lure);
-  ar.style.opacity = !G.busy && (lure || (!near2 && G.askT > 0)) ? 1 : 0;
+  ar.style.opacity = !G.busy && (lure || (!near2 && (G.askT > 0 || G.hintT > 0))) ? 1 : 0;
   const aa = lure ? G.lureA : a; // 유혹: 엉뚱한 쪽 (지도 좌표의 각을 화면에서 그대로 — 북쪽이 위라 같다)
   ar.style.left = mx + Math.cos(aa) * 78 + 'px'; ar.style.top = my + Math.sin(aa) * 78 + 'px'; ar.style.transform = `rotate(${aa + Math.PI / 2}rad)`;
 }
@@ -949,6 +949,9 @@ function frame(now) {
       G.legWalked += moved; G.total += moved;
       // 길 잃음: 목표에서 멀어지는 쪽으로 오래 걸으면
       const d = navD(nx, nz);
+      // 한참 헤매면 잠깐 바른 쪽을 그냥 가리켜 준다 (사용자 2026-11) — 걷는데 12초 동안 1km도 가까워지지 않으면, 20초에 한 번
+      if (d < G.bestD - 1) { G.bestD = d; G.stuckT = 0; } else G.stuckT += dt;
+      if (G.stuckT > 12 && !(G.hintCool > 0)) { G.stuckT = 0; G.hintT = 3; G.hintCool = 20; toast('이쪽으로 가 보세요<small>화살표가 길을 따라 가리켜요</small>', true, 2400); }
       if (d > G.prevD + 1e-3) G.lostT += dt; else G.lostT = Math.max(0, G.lostT - dt * 1.5);
       G.prevD = d;
       if (G.lostT > 3.2 && G.legT > 2) penalty('lost');
@@ -980,7 +983,7 @@ function frame(now) {
   G.world?.setTime((G.clock / 360 + 0.22) % 1);
   drawPrints(me0.pos.x, me0.pos.y); updateTreasures(me0.pos.x, me0.pos.y, t);
   const dp = Math.hypot(...(goalXZ() || [0, 0]).map((v, i) => v - (i ? me0.pos.y : me0.pos.x)));
-  G.askT -= dt;
+  G.askT -= dt; G.hintT -= dt; G.hintCool -= dt;
   if (!G.named && dp < 5) { G.named = true; missionText(); }
   // 카메라: 북쪽이 위, 비스듬히 내려다보며 따라간다
   if (!G.zoomFix) G.zoom = fitZoom(); // 확인용(?debug)만 G.zoomFix로 높이를 바꾼다
