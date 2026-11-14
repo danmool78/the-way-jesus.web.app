@@ -17,6 +17,14 @@ const KNEEL = new Set(['kneel', 'mourn', 'sit-ground', 'cower']);
 const SEAT = new Set(['sit', 'sit-speak', 'ride']);
 const bone = (root, n) => { let f = null; root.traverse(o => { if (!f && o.isBone && new RegExp(`(^|mixamorig)${n}$`).test(o.name)) f = o; }); return f; };
 const DOWN = new THREE.Vector3(0, -1, 0);
+// 밝게: 모델 텍스처는 차분한 색인데 무대 조명은 밝은 단색 인형에 맞춰져 있어 사람만 어둡게 보였다(사용자 2026-11).
+// 그림 색 그대로 은은하게 스스로 빛나게(emissiveMap) 그늘을 들어 올린다 — 재질은 원본마다 한 번만 바꿔 함께 쓴다
+const LIFT = 0.32, lit = new Map();
+function brighten(m) {
+  if (!m.map) return m;
+  if (!lit.has(m)) { const n = m.clone(); n.emissive = new THREE.Color(1, 1, 1); n.emissiveMap = m.map; n.emissiveIntensity = LIFT; lit.set(m, n); }
+  return lit.get(m);
+}
 const v1 = new THREE.Vector3(), v2 = new THREE.Vector3(), q1 = new THREE.Quaternion(), q2 = new THREE.Quaternion(), q3 = new THREE.Quaternion();
 
 // 인형 키 (서 있을 때 정수리 높이) — 모델을 이만큼으로 맞춘다
@@ -46,7 +54,7 @@ export class StageModel {
     const top = bone(body, 'HeadTop_End'), h = top ? top.getWorldPosition(v1).y : 1.7;
     body.scale.setScalar(dollHeight(type) * 0.97 / (h > 0.1 ? h : 1.7));
     this.mats = [];
-    body.traverse(m => { if (m.isMesh) { m.frustumCulled = false; m.material = m.material.clone(); this.mats.push(m.material); } });
+    body.traverse(m => { if (m.isMesh) { m.frustumCulled = false; m.material = brighten(m.material).clone(); this.mats.push(m.material); } });
     this.p = { root: new THREE.Group() }; this.p.root.add(body);
     this.mixer = new THREE.AnimationMixer(body);
     this.acts = Object.fromEntries(calmClips(gltf).map(c => [c.name, this.mixer.clipAction(c)])); // 차분한 말하기·끊김 없는 되풀이·곧게 서기 (game-model.js)
@@ -159,7 +167,7 @@ export function crowdPerson(gltf, height) {
   body.updateMatrixWorld(true);
   const top = bone(body, 'HeadTop_End'), h = top ? top.getWorldPosition(v1).y : 1.7;
   body.scale.setScalar(height / (h > 0.1 ? h : 1.7));
-  body.traverse(m => { if (m.isMesh) m.frustumCulled = false; });
+  body.traverse(m => { if (m.isMesh) { m.frustumCulled = false; m.material = brighten(m.material); } });
   const mixer = new THREE.AnimationMixer(body), clips = calmClips(gltf), clip = n => clips.find(c => c.name === n);
   const t0 = Math.random();
   const legs = ['Left', 'Right'].map(sd => [bone(body, sd + 'UpLeg'), bone(body, sd + 'Leg'), bone(body, sd + 'Foot')]);
