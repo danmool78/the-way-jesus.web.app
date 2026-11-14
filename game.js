@@ -133,10 +133,12 @@ const G = {
   r: null, scene: new THREE.Scene(), cam: new THREE.PerspectiveCamera(42, 1, 0.5, 4000),
   data: null, events: [], idx: 0, me: null, leader: null, pillar: null,
   zoom: 46, walked: 0, total: 0, legStart: null, legWalked: 0, water: 3, stars: [],
-  lostT: 0, prevD: 0, slowT: 0, coolT: 0, seaT: 0, legT: 0, busy: true, speed: 9,
+  lostT: 0, prevD: 0, slowT: 0, coolT: 0, seaT: 0, legT: 0, busy: true, speed: 9, timeT: 0, timeMax: 0, meetT: 0, missed: [],
 };
+G.camLook = new THREE.Vector3();
 const SCALE = 4.2; // 인형 크기 (지도 위에서 보이게 키운다)
-const ARRIVE = 5;  // 이만큼(km) 다가가면 도착
+const ARRIVE = 5;
+const SEE = 7;     // 이만큼 다가가야 그분이 보인다  // 이만큼(km) 다가가면 도착
 const WALK = 30;   // 하루에 걷는 거리(km) — '몇 일째'
 
 function waterMesh(poly, color) {
@@ -245,18 +247,52 @@ function quiz() {
     };
   };
 }
+// 만남: 그분이 나를 돌아보며 그 장면의 말씀을 하신다 (말풍선, 누르면 넘김)
+function meet() {
+  const e = G.events[G.idx];
+  G.timeT = 0; G.leader.goal.copy(G.leader.pos);
+  G.me.goal.copy(G.me.pos);
+  G.leader.target = G.me; G.leader.set('speak'); G.me.target = G.leader;
+  // 그분이 하신 말씀(j)이 있으면 그분 입으로, 없으면(수태고지처럼 아직 태어나시기 전 등) '이 자리의 말씀'으로 누가 한 말인지 밝혀서
+  const own = (e.words || []).find(x => x.j), w = own || (e.words || [])[0];
+  G.meetWord = w ? w.text : e.subtitle || e.title;
+  G.meetT = Math.min(7, 2.6 + G.meetWord.length * 0.05);
+  $('#bubble').innerHTML = `<b>${own ? esc(JOURNEYS[JID].who) : `이 자리의 말씀 · ${esc(w?.who || '')}`}</b>${esc(G.meetWord)}`;
+  setTimeout(() => $('#bubble').classList.add('on'), 900);
+  document.body.classList.add('meeting');
+  G.met = true; G.newCard = collect(e);
+}
+function bubble() {
+  const [x, y] = screen(G.leader.pos.x, SCALE * 1.05, G.leader.pos.y), b = $('#bubble'), half = b.offsetWidth / 2 + 10;
+  // 화면 밖으로 잘리지 않게 (꼬리는 가운데에 그대로)
+  const left = Math.min(innerWidth - half, Math.max(half, x));
+  b.style.left = left + 'px'; b.style.top = Math.max(b.offsetHeight + 24, y) + 'px'; b.style.setProperty('--tx', `${Math.max(-half + 24, Math.min(half - 24, x - left))}px`);
+}
+addEventListener('pointerdown', e => { if (G.meetT > 0.4 && !e.target.closest('#stick,#zoom')) G.meetT = 0.01; });
+// 늦음: 그분은 이미 다음 자리로 떠나셨다 — 그 장면은 놓치고 다음 장면으로
+function late() {
+  G.met = false;
+  const e = G.events[G.idx], from = [G.leader.pos.x, G.leader.pos.y];
+  G.missed.push(G.idx); G.stars[G.idx] = G.stars[G.idx] || 0;
+  G.idx++; save();
+  if (G.idx >= G.events.length) { finish(); return; }
+  const nx = G.events[G.idx];
+  toast(`늦었어요! ${esc(josa(JOURNEYS[JID].who, '은', '는'))} 벌써 ${esc(placeOf(nx).name)}(으)로 떠나셨어요<small>놓친 장면: ${esc(e.title)} · 따라가서 만나세요</small>`, false, 3600);
+  startLeg(from);
+}
 function arrive() {
   const e = G.events[G.idx], straight = G.legStraight, ratio = straight > 1 ? G.legWalked / straight : 1;
   const stars = straight < ARRIVE * 1.5 ? 3 : ratio < 1.35 ? 3 : ratio < 1.9 ? 2 : 1;
   G.stars[G.idx] = Math.max(G.stars[G.idx] || 0, stars);
-  G.leader.set('speak'); G.leader.look(0);
+  G.leader.look(0); G.me.target = null;
   const w = (e.words || []).find(x => x.j) || (e.words || [])[0];
   const s = sheet(`${e.img ? `<div class="img" style="background-image:url('${esc(e.img.src)}')"><span class="stars">${'★'.repeat(stars)}${'☆'.repeat(3 - stars)}</span></div>` : ''}
     <div class="body"><small>${G.idx + 1} / ${G.events.length} · ${esc(placeOf(e).name)}</small><h2>${esc(e.title)}</h2><p class="sub">${esc(e.subtitle || '')}</p>
     ${straight >= ARRIVE * 1.5 ? `<div class="leg"><span>걸은 길 <b>${Math.round(G.legWalked)}km</b></span><span>곧은 길 ${Math.round(straight)}km</span><span>${'★'.repeat(stars)}</span></div>` : ''}
     <p class="story">${esc(firstSentences(e.story?.[0] || ''))}</p>
-    ${w ? `<blockquote>${esc(w.text)}<cite>${esc(w.who || '')} · ${esc(w.ref || '')}</cite></blockquote>` : ''}
+    ${w ? `${G.met ? `<small class="got">${G.newCard ? '새 말씀 카드를 얻었어요!' : '이미 모은 말씀 카드'}</small>` : ''}<blockquote class="${G.met ? 'won' : ''}">${esc(w.text)}<cite>${esc(w.who || '')} · ${esc(w.ref || '')}</cite></blockquote>` : ''}
     <div class="row"><a class="go ghost" href="${appLink(e)}" target="_blank" rel="noopener">이 장면 듣기</a><button class="go" id="next">${G.idx + 1 < G.events.length ? '다음 장면으로 →' : '여정 마치기'}</button></div></div>`);
+  G.met = false;
   s.querySelector('#next').onclick = () => { closeSheet(); G.idx++; save(); G.idx < G.events.length ? startLeg() : finish(); };
 }
 function finish() {
@@ -264,25 +300,57 @@ function finish() {
   const text = `그 길 순례 — ${me.name || '순례자'}, ${josa(J.who, '을', '를')} 따라 ${n}장면 ${km}km를 걸었습니다 ★${st}/${n * 3}\nhttps://thewaymap.org/game.html?j=${JID}`;
   const s = sheet(`<div class="body"><small>${esc(J.name)}</small><h2>여정을 마쳤습니다</h2><p class="sub">${esc(me.name || '순례자')}님, ${n}장면을 모두 찾아 걸었어요.</p>
     <div class="leg"><span>걸은 길 <b>${km}km</b></span><span><b>${Math.floor(G.total / WALK) + 1}</b>일</span><span>★ <b>${st}</b>/${n * 3}</span></div>
+    <p class="sub">말씀 카드 <b>${new Set(store.get(cardKey(), [])).size}</b> / ${n}장을 모았어요.</p>
+    ${G.missed.length ? `<p class="sub">늦어서 놓친 장면 ${G.missed.length}개 — ${G.missed.slice(0, 6).map(i => esc(G.events[i].title)).join(', ')}${G.missed.length > 6 ? ' …' : ''}. 앱에서 들어 보세요.</p>` : `<p class="sub">한 장면도 놓치지 않고 모두 만났어요!</p>`}
     <div class="row"><button class="go ghost" id="share">자랑하기</button><button class="go" id="again">다른 여정 걷기</button></div></div>`);
   s.querySelector('#share').onclick = async () => { try { if (navigator.share) await navigator.share({ text }); else { await navigator.clipboard.writeText(text); toast('복사했어요', true); } } catch { /* 닫음 */ } };
   s.querySelector('#again').onclick = () => { store.set('theway-game-' + JID, null); location.href = `game.html?j=${JID}`; };
 }
-const save = () => store.set('theway-game-' + JID, { idx: G.idx, total: G.total, stars: G.stars });
+// 말씀 카드: 시간 안에 그분을 만난 장면의 말씀을 모은다 (사용자 2026-11). 처음부터 다시 걸어도 지우지 않는다 — 놓친 카드를 채우러 다시 걷게
+const cardKey = () => 'theway-game-cards-' + JID;
+const cardWord = e => (e.words || []).find(x => x.j) || (e.words || [])[0];
+function collect(e) {
+  const have = new Set(store.get(cardKey(), []));
+  const fresh = !have.has(e.id); have.add(e.id); store.set(cardKey(), [...have]); drawCardBtn();
+  return fresh;
+}
+function drawCardBtn() { const n = new Set(store.get(cardKey(), [])).size; $('#cardsBtn').innerHTML = `<b>${n}</b>/${G.events.length} 말씀 카드`; }
+function openCards() {
+  const have = new Set(store.get(cardKey(), []));
+  const s = sheet(`<div class="body"><small>${esc(JOURNEYS[JID].name)}</small><h2>말씀 카드 ${have.size} / ${G.events.length}</h2>
+    <p class="sub">시간 안에 ${esc(josa(JOURNEYS[JID].who, '을', '를'))} 만나면 그 자리의 말씀 카드를 얻어요. 놓친 카드는 다시 걸어서 채우세요.</p>
+    <div class="deck">${G.events.map((e, i) => { const w = cardWord(e); return have.has(e.id)
+      ? `<button class="wcard" data-i="${i}"><small>${i + 1}</small><b>${esc(e.title)}</b><q>${esc(w?.text || e.subtitle || '')}</q><cite>${esc(w?.ref || '')}</cite></button>`
+      : `<div class="wcard lock"><small>${i + 1}</small><b>?</b></div>`; }).join('')}</div>
+    <button class="go" id="closeCards">계속 걷기</button></div>`);
+  s.querySelector('#closeCards').onclick = closeSheet;
+  s.querySelector('.deck').onclick = ev => { const b = ev.target.closest('.wcard[data-i]'); if (!b) return; const e = G.events[+b.dataset.i], w = cardWord(e);
+    sheet(`${e.img ? `<div class="img" style="background-image:url('${esc(e.img.src)}')"></div>` : ''}<div class="body"><small>${+b.dataset.i + 1} · ${esc(placeOf(e).name)}</small><h2>${esc(e.title)}</h2>
+      ${w ? `<blockquote>${esc(w.text)}<cite>${esc(w.who || '')} · ${esc(w.ref || '')}</cite></blockquote>` : ''}
+      <div class="row"><a class="go ghost" href="${appLink(e)}" target="_blank" rel="noopener">이 장면 듣기</a><button class="go" id="backDeck">카드 모음으로</button></div></div>`).querySelector('#backDeck').onclick = openCards; };
+}
+$('#cardsBtn').onclick = () => { if (!G.busy || !$('#sheet').classList.contains('hidden')) openCards(); };
+const save = () => store.set('theway-game-' + JID, { idx: G.idx, total: G.total, stars: G.stars, missed: G.missed });
 
 /* ---------- 한 구간 ---------- */
-function startLeg() {
+// 시간 안에 닿으면 그분을 3D로 가까이 만나고(meet), 늦으면 그분은 벌써 다음 장면 자리로 걸어가신다 —
+// 나는 그 장면을 놓치고 다음 장면으로 간다. 걸어가시는 길 위에서 따라잡아도 만남이다 (사용자 2026-11)
+function startLeg(walkFrom) {
   const e = G.events[G.idx], [gx, gz] = goalXZ();
-  G.leader.pos.set(gx + 0.6, gz); G.leader.goal.copy(G.leader.pos); G.leader.set('idle');
+  if (walkFrom) { G.leader.pos.set(...walkFrom); G.leader.goal.set(gx + 0.6, gz); G.leader.set('idle'); }
+  else { G.leader.pos.set(gx + 0.6, gz); G.leader.goal.copy(G.leader.pos); G.leader.set('idle'); }
   G.pillar.position.set(gx, 45, gz);
   G.legStart = [G.me.pos.x, G.me.pos.y]; G.legWalked = 0; G.legT = 0; G.lostT = 0;
   G.legStraight = Math.hypot(gx - G.me.pos.x, gz - G.me.pos.y);
   G.prevD = G.legStraight;
   G.speed = Math.max(9, G.legStraight / 16); // 먼 길(바벨론 포로길 등)도 20초 남짓에 걷게
+  // 제한 시간: 곧장 걸으면 걸릴 시간의 1.7배 + 6초. 그분은 그 시간의 절반쯤에 다음 자리에 닿으시게 걸으신다
+  G.timeMax = G.timeT = G.legStraight / G.speed * 1.7 + 6;
+  if (walkFrom) G.leader.speed = Math.max(4, Math.hypot(gx - walkFrom[0], gz - walkFrom[1]) / (G.timeMax * 0.5));
   $('#mNo').textContent = `${G.idx + 1} / ${G.events.length} · ${josa(JOURNEYS[JID].who, '이', '가')} 계신 곳`;
   $('#mTitle').textContent = `${placeOf(e).name} — ${e.title}`;
   G.busy = false;
-  if (G.legStraight < ARRIVE) { G.busy = true; setTimeout(arrive, 700); } // 같은 자리에서 이어지는 장면
+  if (G.legStraight < ARRIVE) { G.busy = true; G.timeT = 0; setTimeout(meet, 500); } // 같은 자리에서 이어지는 장면
 }
 
 async function begin(fresh) {
@@ -292,9 +360,9 @@ async function begin(fresh) {
   G.data = await (await fetch(J.data)).json();
   G.events = G.data.events.filter(e => G.data.places[e.place] && !G.data.places[e.place].hidden);
   const saved = store.get('theway-game-' + JID, null);
-  G.idx = saved?.idx || 0; G.total = saved?.total || 0; G.stars = saved?.stars || [];
+  G.idx = saved?.idx || 0; G.total = saved?.total || 0; G.stars = saved?.stars || []; G.missed = saved?.missed || [];
   $('#setup').classList.add('hidden');
-  for (const s of ['#hud', '#waterBox', '#dayBox', '#arrow', '#stick', '#zoom']) $(s).classList.remove('hidden');
+  for (const s of ['#hud', '#waterBox', '#dayBox', '#arrow', '#stick', '#zoom', '#cardsBtn']) $(s).classList.remove('hidden');
   G.r = renderer($('#world'));
   buildWorld(J);
   playerType();
@@ -305,7 +373,7 @@ async function begin(fresh) {
   G.me = new Actor('player', sx, sz, 0, { gaze: false }); G.me.realWalk = true; G.me.big = SCALE;
   G.leader = new Actor(J.leader, 0, 0, 0, { gaze: false }); G.leader.realWalk = true; G.leader.big = SCALE; G.leader.target = G.me;
   G.scene.add(G.me.p.root, G.leader.p.root);
-  drawWater(); resize(); startLeg();
+  drawWater(); drawCardBtn(); resize(); startLeg();
   if (G.idx === 0) toast(`${esc(me.name)}님, ${esc(josa(J.who, '을', '를'))} 따라 걸어요<small>빛기둥이 서 있는 곳으로 · 조이스틱이나 방향키로 움직입니다</small>`, true, 4200);
 }
 
@@ -372,17 +440,36 @@ function frame(now) {
       if (d > G.prevD + 1e-3) G.lostT += dt; else G.lostT = Math.max(0, G.lostT - dt * 1.5);
       G.prevD = d;
       if (G.lostT > 3.2 && G.legT > 2) penalty('lost');
-      if (d < ARRIVE) { G.busy = true; me0.goal.copy(me0.pos); save(); setTimeout(arrive, 350); }
+      const dl = Math.hypot(G.leader.pos.x - nx, G.leader.pos.y - nz);
+      if (d < ARRIVE || dl < ARRIVE * 0.8) { G.busy = true; me0.goal.copy(me0.pos); save(); meet(); }
     }
   } else me0.goal.copy(me0.pos);
+  // 그분은 가까이(몇십 미터 — 이 지도에서는 인형 키의 몇 배) 가야 보인다. 멀리서는 빛기둥(그 장면의 자리)만 (사용자 2026-11)
+  const near = Math.hypot(G.leader.pos.x - me0.pos.x, G.leader.pos.y - me0.pos.y) < SEE || G.meetT > 0 || G.busy;
+  G.leader.showT = near ? 1 : 0;
   me0.update(t, dt); G.leader.update(t, dt);
   G.pillar.material.opacity = 0.16 + Math.sin(t * 2) * 0.06;
   // 카메라: 북쪽이 위, 비스듬히 내려다보며 따라간다
   const cx = me0.pos.x, cz = me0.pos.y, h = G.zoom;
-  G.cam.position.lerp(v3.set(cx, h, cz + h * 0.78), 1 - Math.exp(-dt * 5));
-  G.cam.lookAt(G.cam.position.x, 0, G.cam.position.z - h * 0.78);
+  if (!G.busy && G.timeT > 0) { G.timeT -= dt; if (G.timeT <= 0) late(); }
+  if (G.meetT > 0) { // 만남: 둘 사이로 내려앉아 비스듬히
+    G.meetT -= dt;
+    const mx = (cx + G.leader.pos.x) / 2, mz = (cz + G.leader.pos.y) / 2, k = 1 - Math.exp(-dt * 2.2);
+    let px = -(G.leader.pos.y - cz), pz = G.leader.pos.x - cx; const pl = Math.hypot(px, pz) || 1; px /= pl; pz /= pl;
+    if (pz < 0) { px = -px; pz = -pz; } // 남쪽(화면 아래)에서 보게
+    // 세로 폰 화면은 옆이 좁아 더 물러선다 — 둘이 화면에 다 들어오게
+    const back = SCALE * 3.4 / Math.min(1, G.cam.aspect * 1.45);
+    G.cam.position.lerp(v3.set(mx + px * back, SCALE * 1.5 + back * 0.18, mz + pz * back), k);
+    G.camLook.lerp(v3.set(mx, SCALE * 0.55, mz), k); G.cam.lookAt(G.camLook);
+    bubble();
+    if (G.meetT <= 0) { $('#bubble').classList.remove('on'); document.body.classList.remove('meeting'); arrive(); }
+  } else {
+    G.cam.position.lerp(v3.set(cx, h, cz + h * 0.78), 1 - Math.exp(-dt * 5));
+    G.camLook.set(G.cam.position.x, 0, G.cam.position.z - h * 0.78); G.cam.lookAt(G.camLook);
+  }
   const [gx, gz] = goalXZ() || [cx, cz];
   $('#mDist').textContent = `남은 길 ${Math.round(Math.hypot(gx - cx, gz - cz))}km`;
+  const tb = $('#mTime'); tb.hidden = !(G.timeT > 0); tb.textContent = `⏳ ${Math.ceil(G.timeT)}초`; tb.classList.toggle('hurry', G.timeT < 6);
   $('#mWalk').textContent = `걸은 길 ${Math.round(G.total)}km`;
   $('#days').textContent = Math.floor(G.total / WALK) + 1;
   G.r.render(G.scene, G.cam);
