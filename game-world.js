@@ -86,6 +86,9 @@ export function createWorld({ scene, renderer, toXZ, regions: want, places, jour
     // 마을은 사람이 사는 곳에만, 서로 7km 안이면 하나만 — 갈릴리 바닷가처럼 장소가 몰린 곳에서 집이 겹겹이 쌓여
     // 호수와 이름을 다 덮었다(PC 화면, 사용자 2026-11). 산·들판·바다·광야 같은 곳은 집 없이 둔다
     // 이름에 '광야'가 없어도 광야·진 친 곳(모세 여정의 머문 자리들), 굴·숲·샘·타작마당, 지방 이름(베레아)도 집 없이 (사용자 2026-11)
+    // 강 위(물길 반폭 + 여유)에도 집·나무를 두지 않는다 — 나일 물길 위에 집이 섰다(2026-11)
+    const rv = Object.entries(RIVERS).map(([k, l]) => [RIVER_W[k] ?? 0.4, l.map(([la, ln]) => toXZ(la, ln))]);
+    const onRiver = (x, z) => rv.some(([w, P]) => P.some((p, i) => { if (!i) return false; const q = P[i - 1], dx = p[0] - q[0], dz = p[1] - q[1], L = dx * dx + dz * dz || 1, t = Math.max(0, Math.min(1, ((x - q[0]) * dx + (z - q[1]) * dz) / L)); return Math.hypot(x - q[0] - dx * t, z - q[1] - dz * t) < w + 0.5; }));
     const wild = /바다|바닷가|산$|산 |언덕|들판|광야|강$|강 |강가|한가운데|동굴|굴$|숲|샘|시냇가|타작마당|평지|길$|물가|호수|사막|골짜기|베레아|미디안|마라|르비딤|기브롯|가데스|부논|숙곳|싯딤/;
     Object.entries(places).forEach(([k, p], n) => {
       if (p.hidden || k === 'sea' || p.lat == null || wild.test(p.name)) return;
@@ -97,15 +100,15 @@ export function createWorld({ scene, renderer, toXZ, regions: want, places, jour
       const big = /성|도성|가버나움|세겜|여리고|가이사랴|애굽|헤브론/.test(p.name) ? 1.4 : 1;
       // 우물은 마을 어귀(집들이 서는 둘레 바깥)에 두고, 그 둘레에는 집을 짓지 않는다 — 한가운데 두니 집 상자에 가려 보이지 않았다(사용자)
       let wa = rnd() * 6.283, wd = 4.2 * Math.sqrt(big), well = n % 3 === 0 ? [x0 + Math.cos(wa) * wd, z0 + Math.sin(wa) * wd] : null;
-      if (well && wet(...well)) well = null;
+      if (well && (wet(...well) || onRiver(...well))) well = null;
       // 집은 작게, 마을 가운데 가까이 (집이 인형만큼 커서 마을이 산처럼 보였다). 물 위에는 짓지 않는다
       const cnt = Math.round((5 + rnd() * 4) * big);
       for (let i = 0; i < cnt; i++) {
         const a = rnd() * 6.283, d = (0.8 + rnd() * 2.2) * Math.sqrt(big), x = x0 + Math.cos(a) * d, z = z0 + Math.sin(a) * d;
-        if (wet(x, z) || well && Math.hypot(x - well[0], z - well[1]) < 2.4) continue;
+        if (wet(x, z) || onRiver(x, z) || well && Math.hypot(x - well[0], z - well[1]) < 2.4) continue;
         spots.push([x, z, (0.7 + rnd() * 0.5) * SC * 0.38, rnd() * 3]);
       }
-      for (let i = 0; i < 5; i++) { const a = rnd() * 6.283, d = 3.4 + rnd() * 3, x = x0 + Math.cos(a) * d, z = z0 + Math.sin(a) * d; if (wet(x, z) || well && Math.hypot(x - well[0], z - well[1]) < 2) continue; trees.push([x, z, (0.5 + rnd() * 0.5) * SC * 0.26]); }
+      for (let i = 0; i < 5; i++) { const a = rnd() * 6.283, d = 3.4 + rnd() * 3, x = x0 + Math.cos(a) * d, z = z0 + Math.sin(a) * d; if (wet(x, z) || onRiver(x, z) || well && Math.hypot(x - well[0], z - well[1]) < 2) continue; trees.push([x, z, (0.5 + rnd() * 0.5) * SC * 0.26]); }
       // 마을마다 불빛 하나 (밤에 보인다), 셋에 하나꼴로 우물
       lights.push([x0, z0]);
       if (well) wells.push(well);
@@ -147,13 +150,14 @@ export function createWorld({ scene, renderer, toXZ, regions: want, places, jour
   }
 
   /* ---------- 살아 있는 풍경 ---------- */
-  const life = [];
+  const life = [], flocks = [];
   function buildLife() {
     const ks = Object.entries(places).filter(([k, p]) => !p.hidden && p.lat != null && k !== 'sea');
     // 양 떼: 마을 둘레의 들판을 천천히 거닌다
     for (let f = 0; f < Math.min(8, ks.length); f++) {
       const [, p] = ks[Math.floor(rnd() * ks.length)], [x0, z0] = toXZ(p.lat, p.lng), cx = x0 + (rnd() - 0.5) * 16, cz = z0 + (rnd() - 0.5) * 16;
       if (wet(cx, cz)) continue;
+      flocks.push([cx + 2.2, cz + 1.4]); // 양 떼마다 목자 하나가 설 자리 (game.js)
       for (let i = 0; i < 5; i++) {
         const P = makeProp('sheep', cx + (rnd() - 0.5) * 3, cz + (rnd() - 0.5) * 3, { scale: SC * 0.75 }); P.speed = 0.25; P.directional = true;
         life.push({ P, home: [cx, cz], r: 3, wait: rnd() * 6 }); deco.add(P.obj);
@@ -251,5 +255,5 @@ export function createWorld({ scene, renderer, toXZ, regions: want, places, jour
     if (journeyId !== 'david' && journeyId !== 'moses') addModel(buildJerusalem(), JLM, 3); // 인형을 줄이며 도성도 (6배는 베들레헴까지 덮었다)
     if (regs.some(r => r.name === 'egypt')) Object.values(EGYPT).forEach(m => addModel(m.build(), m.extent, 1.5));
   });
-  return { ready, heightAt, update: updateLife, setTime, wells };
+  return { ready, heightAt, update: updateLife, setTime, wells, flocks };
 }

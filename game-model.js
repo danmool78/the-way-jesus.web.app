@@ -8,7 +8,7 @@ import { clone } from './assets/vendor/SkeletonUtils.js';
 const BASE_H = 0.91; // 지금 인형(big = 1)의 키 — 모델 키(1.7m)를 이만큼으로 맞춰 big·SCALE을 그대로 쓴다
 const damp = (a, b, k, dt) => a + (b - a) * (1 - Math.exp(-k * dt));
 const wrapA = a => Math.atan2(Math.sin(a), Math.cos(a));
-const POSE = { idle: 'idle', speak: 'talk', talk: 'talk', pray: 'pray', sleep: 'sleep' };
+const POSE = { idle: 'idle', speak: 'talk', talk: 'talk', pray: 'pray', sleep: 'sleep', kneel: 'kneel' };
 const cache = new Map();
 // 뼈 찾기: GLTFLoader가 이름의 ':'를 지워 'mixamorig:Head'가 'mixamorigHead'가 된다
 const bone = (root, n) => { let f = null; root.traverse(o => { if (!f && o.isBone && new RegExp(`(^|:|mixamorig)${n}$`).test(o.name)) f = o; }); return f; };
@@ -18,8 +18,48 @@ export async function loadModel(url) {
   return cache.get(url);
 }
 
+// 모델 목록(assets/models.json)과 이름으로 받기 — 없거나 못 받으면 null (그때는 예전 인형)
+let list = null;
+export async function model(name) {
+  try {
+    list ??= fetch('assets/models.json').then(r => r.json());
+    const M = await list, key = M.files[name];
+    return key ? await loadModel(`${M.base}/${key}`) : null;
+  } catch (err) { console.warn('model', name, err); return null; }
+}
+
+// 옷 색 바꾸기 (순례자 꾸미기): 텍스처에서 그 옷의 색상 범위만 골라 고른 색으로 칠한다 — 밝고 어두운 결은 남긴다.
+// [색상 아래·위(도), 최소 채도, 원래 옷의 평균 채도·밝기] — 텍스처를 재어 정했다(남자 순례자 겉옷 청회색, 여자 순례자 속옷 장밋빛)
+const TINT = { 'pilgrim-man': [195, 222, 0.12, 0.23, 0.45], 'pilgrim-woman': [335, 365, 0.25, 0.51, 0.67] };
+const tints = new Map();
+const hsv = (r, g, b) => { const mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn; let h = 0;
+  if (d) h = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; return [(h * 60 + 360) % 360, mx ? d / mx : 0, mx]; };
+const rgb = (h, s, v) => { const f = n => { const k = (n + h / 60) % 6; return v - v * s * Math.max(0, Math.min(k, 4 - k, 1)); }; return [f(5), f(3), f(1)]; };
+export function tinted(gltf, name, hex) {
+  const T = TINT[name]; if (!T || !hex) return gltf;
+  const key = name + hex; if (tints.has(key)) return tints.get(key);
+  const [h0, h1, smin, sAvg, vAvg] = T, c = new THREE.Color(hex), [th, ts, tv] = hsv(c.r, c.g, c.b);
+  let tex = null;
+  gltf.scene.traverse(o => { if (!tex && o.isMesh && o.material.map) tex = o.material.map; });
+  if (!tex) return gltf;
+  const img = tex.image, cv = document.createElement('canvas'); cv.width = img.width; cv.height = img.height;
+  const x = cv.getContext('2d', { willReadFrequently: true }); x.drawImage(img, 0, 0);
+  const D = x.getImageData(0, 0, cv.width, cv.height), d = D.data;
+  for (let i = 0; i < d.length; i += 4) {
+    const [h, s, v] = hsv(d[i] / 255, d[i + 1] / 255, d[i + 2] / 255), hh = h1 > 360 && h < h1 - 360 ? h + 360 : h; // 빨강 둘레는 0°를 넘나든다
+    if (hh < h0 || hh > h1 || s < smin || v < 0.12) continue;
+    const [r, g, b] = rgb(th, Math.min(1, ts * s / sAvg), Math.min(1, tv * v / vAvg));
+    d[i] = r * 255; d[i + 1] = g * 255; d[i + 2] = b * 255;
+  }
+  x.putImageData(D, 0, 0);
+  const nt = new THREE.CanvasTexture(cv); nt.flipY = tex.flipY; nt.colorSpace = tex.colorSpace; nt.wrapS = tex.wrapS; nt.wrapT = tex.wrapT; nt.anisotropy = 4;
+  const scene = clone(gltf.scene);
+  scene.traverse(o => { if (o.isMesh && o.material.map) { o.material = o.material.clone(); o.material.map = nt; } });
+  const out = { scene, animations: gltf.animations }; tints.set(key, out); return out;
+}
+
 export class ModelActor {
-  constructor(gltf, x = 0, z = 0) {
+  constructor(gltf, x = 0, z = 0, o = {}) {
     const body = clone(gltf.scene); // 뼈대째 복제 — 같은 모델로 여럿(병정 등)을 세울 수 있게
     // 키는 정수리 뼈(HeadTop_End) 높이로 잰다 — 뼈대 노드의 배율(Mixamo 0.01 등) 때문에 상자로 재면 엉뚱했다
     body.updateMatrixWorld(true);
@@ -37,7 +77,7 @@ export class ModelActor {
     // 베개: 누워 잘 때 머리 밑에 (막 4:38 — 배 고물에서 베개를 베고 주무셨다, 사용자 2026-11)
     this.pillow = new THREE.Mesh(new THREE.CapsuleGeometry(0.05, 0.14, 4, 12), new THREE.MeshStandardMaterial({ color: '#efe2c2', roughness: 1 }));
     this.pillow.rotation.z = Math.PI / 2; this.pillow.scale.set(1, 1, 0.6); this.pillow.visible = false;
-    this.p.root.add(this.pillow);
+    this.p.root.add(this.pillow); this.noPillow = !!o.noPillow; // 길가에 쓰러진 사람은 베개 없이
     this.play('idle', 0);
   }
   play(name, fade = 0.35) {
@@ -64,7 +104,7 @@ export class ModelActor {
     r.position.set(this.pos.x, this.ground, this.pos.y); r.rotation.y = this.face;
     r.scale.setScalar((0.94 + 0.06 * this.show) * this.big); r.visible = this.show > 0.05;
     // 베개는 잘 때만, 머리 밑 땅 위에
-    const sleep = !moving && this.pose === 'sleep'; this.pillow.visible = sleep;
+    const sleep = !moving && this.pose === 'sleep' && !this.noPillow; this.pillow.visible = sleep;
     if (sleep && this.head) { r.updateMatrixWorld(true); const v = this.head.getWorldPosition(new THREE.Vector3()); r.worldToLocal(v); this.pillow.position.set(v.x, 0.035, v.z); this.pillow.rotation.y = Math.atan2(v.x, v.z); }
   }
   dispose() {

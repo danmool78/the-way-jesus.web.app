@@ -1,6 +1,23 @@
 {
 "base": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev",
 "files": {
-"jesus": "models/jesus-e4ab1ea8eb.glb"
+"andrew": "models/andrew-5ced34cb21.glb",
+"baptist": "models/baptist-323288b0cc.glb",
+"david": "models/david-b76f02bbec.glb",
+"elijah": "models/elijah-66a281bd66.glb",
+"fisherman": "models/fisherman-a45b37229f.glb",
+"james": "models/james-a8d86a1800.glb",
+"jesus": "models/jesus-e4ab1ea8eb.glb",
+"john": "models/john-46d6b58537.glb",
+"magdalene": "models/magdalene-0efa15d267.glb",
+"mary": "models/mary-f8e21614f8.glb",
+"moses": "models/moses-a0061788d9.glb",
+"peter": "models/peter-f0f8d2aacc.glb",
+"pilgrim-man": "models/pilgrim-man-0ff8f9a1a3.glb",
+"pilgrim-woman": "models/pilgrim-woman-8fd0bc2c6e.glb",
+"shepherd": "models/shepherd-cf3d3c3fe2.glb",
+"soldier": "models/soldier-ba18ff0678.glb",
+"woman": "models/woman-c45517a6c3.glb",
+"zacchaeus": "models/zacchaeus-bc35f81a12.glb"
 }
 }
