@@ -109,6 +109,11 @@ const HOLD = { staff: 'R', crook: 'R', rod: 'R', spear: 'R', bigspear: 'R', scut
 const smooth = x => x * x * (3 - 2 * x);
 function seamless(clip) {
   const dur = clip.duration, W = Math.min(0.6, dur * 0.12);
+  // 이미 이어지는 동작(걷기 — 끝과 처음이 같다)은 그대로: 끌어당기면 한 바퀴 끝에서 걸음이 잠깐 느려졌다
+  const gap = Math.max(0, ...clip.tracks.filter(k => k.ValueTypeName === 'quaternion' && k.times.length > 1).map(k => {
+    const v = k.values, n = v.length - 4; return 2 * Math.acos(Math.min(1, Math.abs(v[0] * v[n] + v[1] * v[n + 1] + v[2] * v[n + 2] + v[3] * v[n + 3]))) * 57.3;
+  }));
+  if (gap < 0.5) return clip;
   const tracks = clip.tracks.map(k => {
     const n = k.getValueSize(), T = Array.from(k.times), V = Array.from(k.values);
     if (T.length < 2) return k;
