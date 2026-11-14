@@ -67,7 +67,7 @@ export class StageModel {
     const dl = this.doll.p.armL.position.x > 0;
     this.arms = [[this.doll.p.armL, dl === (L.up.getWorldPosition(v1).x > 0) ? L : R], [this.doll.p.armR, dl === (L.up.getWorldPosition(v1).x > 0) ? R : L]];
     for (const [, mb] of this.arms) if (mb.hand) mb.hand0 = mb.hand.quaternion.clone(); // 손목의 기본 자세 (곧게 편 손)
-    this.legs = [['Left'], ['Right']].map(([s]) => ({ up: bone(body, s + 'UpLeg'), lo: bone(body, s + 'Leg'), foot: bone(body, s + 'Foot') }));
+    this.legs = [['Left'], ['Right']].map(([s]) => ({ up: bone(body, s + 'UpLeg'), lo: bone(body, s + 'Leg'), foot: bone(body, s + 'Foot'), toe: bone(body, s + 'ToeBase') }));
     const hips = bone(body, 'Hips'); this.hipH = hips ? hips.getWorldPosition(v1).y * body.scale.x / (body.scale.x || 1) : 0.5; this.body = body; this.legW = 0;
     this.headB = bone(body, 'Head'); this.neckB = bone(body, 'Neck'); this.spineB = bone(body, 'Spine1') || bone(body, 'Spine');
     this.play('idle', 0);
@@ -110,12 +110,23 @@ export class StageModel {
   update(time, dt) {
     const d = this.doll; d.update(time, dt);
     const r = this.p.root, dr = d.p.root, moving = d.goal.distanceTo(d.pos) > 0.02;
-    r.position.copy(dr.position); r.rotation.copy(dr.rotation); r.scale.copy(dr.scale); r.visible = dr.visible;
+    r.position.copy(dr.position); r.rotation.copy(dr.rotation);
+    // 말하거나 듣는 사람은 상대 쪽으로 몸을 온전히 돌린다 — 미니어처 인형은 얼굴이 보이게 앞쪽(±1.15)까지만 돌았는데,
+    // 사람 비율의 모델이 그대로 따르니 엉뚱한 곳을 보고 말했다(사용자 2026-11). 걷거나 눕거나 엎드린 때는 인형 그대로
+    { const t = d.talkTo || d.target, keep = moving || d.floating || ['sleep', 'perch', 'mourn', 'crucified', 'crucified-dead', 'ride', 'carry-pole'].includes(d.pose);
+      let want = dr.rotation.y;
+      if (t && t.showT > 0.5 && !keep) want = Math.atan2(t.pos.x - d.pos.x, t.pos.y - d.pos.y);
+      this.yaw ??= want; this.yaw += Math.atan2(Math.sin(want - this.yaw), Math.cos(want - this.yaw)) * (1 - Math.exp(-6 * dt));
+      r.rotation.y = this.yaw; } r.scale.copy(dr.scale); r.visible = dr.visible;
     this.fadeTo(Math.min(1, d.show));
     const walk = moving && !d.floating, clip = walk ? 'walk' : CLIP[d.pose], kneel = !walk && KNEEL.has(d.pose), onSeat = SITS.has(d.pose) && (d.yT || 0) > 0.05, ride = !walk && (SEAT.has(d.pose) || onSeat), perch = !walk && d.pose === 'perch';
     // 무릎 꿇는 동작('pray')이 없는 모델(순례자·어부 등 엑스트라)은 다리를 직접 접어 발뒤꿈치에 앉힌다 — 동작 없이 서 있었다
     const seiza = !walk && ((kneel && !this.acts.pray) || (SITS.has(d.pose) && !onSeat));
     this.play(clip || (kneel && !seiza ? 'pray' : 'idle'));
+    // 손으로 돌린 뼈는 매 화면 기본 자세에서 다시 시작한다 — 동작에 기록이 없는 뼈(줄인 모델의 다리·손목)는 한 번 접으면 그대로 남아,
+    // 앉았다 일어선 사람이 무릎을 굽힌 채 떠 있었다(사용자 2026-11)
+    if (!this.rest) { this.rest = []; const add = b => b && this.rest.push([b, b.quaternion.clone()]); this.legs.forEach(l => [l.up, l.lo, l.foot].forEach(add)); this.arms.forEach(([, m]) => [m.up, m.lo, m.hand].forEach(add)); add(this.headB); }
+    for (const [b, q] of this.rest) b.quaternion.copy(q);
     this.mixer.update(dt);
     // 동작이 없는 자세는 인형의 팔을 따른다 (천천히 들어가고 나온다)
     this.w = damp(this.w, clip || perch ? 0 : 1, 6, dt);
@@ -138,7 +149,7 @@ export class StageModel {
       r.updateMatrixWorld(true);
       const qr = r.getWorldQuaternion(new THREE.Quaternion()), thigh = new THREE.Vector3(0, -0.35, 1).normalize().applyQuaternion(qr), shin = new THREE.Vector3(0, -0.12, -1).normalize().applyQuaternion(qr);
       let knee = Infinity;
-      for (const l of this.legs) if (l.up && l.lo && l.foot) { this.aim(l.up, l.lo, thigh, this.seizaW); this.aim(l.lo, l.foot, shin, this.seizaW); knee = Math.min(knee, l.lo.getWorldPosition(v1).y); }
+      for (const l of this.legs) if (l.up && l.lo && l.foot) { this.aim(l.up, l.lo, thigh, this.seizaW); this.aim(l.lo, l.foot, shin, this.seizaW); for (const b of [l.lo, l.foot, l.toe]) if (b) knee = Math.min(knee, b.getWorldPosition(v1).y); } // 무릎·발·발끝 가운데 가장 낮은 곳을 땅에 (무릎만 맞추니 발끝이 묻혔다)
       if (knee < Infinity) this.body.position.y -= (knee - r.getWorldPosition(v2).y) / r.getWorldScale(v1).y - 0.03 * this.hipH;
     }
     if (this.w < 0.01 && this.legW < 0.01) return;
