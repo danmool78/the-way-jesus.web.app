@@ -12,10 +12,10 @@ import { calmClips } from '../game-model.js';
 // 팔까지 모델의 동작 그대로 쓰는 자세 (그 밖의 자세는 팔을 인형에 맞춘다)
 const CLIP = { idle: 'idle', listen: 'idle', speak: 'talk', sleep: 'sleep' };
 // 무릎 꿇은 다리만 모델의 'pray'(무릎 꿇고 두 팔을 높이 듦)에서 빌리고 팔은 인형대로 — 인형의 기도는 서서 두 손을 가슴에 모은다
-const KNEEL = new Set(['kneel', 'mourn', 'sit-ground', 'cower']);
+const KNEEL = new Set(['kneel', 'mourn', 'cower']); // 땅에 앉기(sit-ground)는 무릎 꿇기가 아니다 — 앉아 가르치시는 예수님이 무릎 꿇고 기도하는 다리를 빌려 시도 때도 없이 꿇으셨다(사용자 2026-11)
 // 걸터앉기: 넓적다리를 앞으로, 정강이는 아래로 (회당에서 앉아 말씀을 읽으심 — 무릎 꿇고 기도하는 자세가 되었다, 사용자 2026-11)
 // 걸터앉기는 앉을 자리가 있을 때만(나귀·높이를 정한 사람·'seat') — 자리 없이 다리를 뻗으니 허공에 떠 앉았다(사용자 2026-11). 그 밖의 '앉기'는 땅에 발뒤꿈치를 깔고
-const SEAT = new Set(['ride', 'seat']), SITS = new Set(['sit', 'sit-speak'])
+const SEAT = new Set(['ride', 'seat']), SITS = new Set(['sit', 'sit-speak', 'sit-ground'])
 const bone = (root, n) => { let f = null; root.traverse(o => { if (!f && o.isBone && new RegExp(`(^|mixamorig)${n}$`).test(o.name)) f = o; }); return f; };
 const DOWN = new THREE.Vector3(0, -1, 0);
 // 밝게: 모델 텍스처는 차분한 색인데 무대 조명은 밝은 단색 인형에 맞춰져 있어 사람만 어둡게 보였다(사용자 2026-11).
@@ -69,7 +69,7 @@ export class StageModel {
     for (const [, mb] of this.arms) if (mb.hand) mb.hand0 = mb.hand.quaternion.clone(); // 손목의 기본 자세 (곧게 편 손)
     this.legs = [['Left'], ['Right']].map(([s]) => ({ up: bone(body, s + 'UpLeg'), lo: bone(body, s + 'Leg'), foot: bone(body, s + 'Foot'), toe: bone(body, s + 'ToeBase') }));
     const hips = bone(body, 'Hips'); this.hipH = hips ? hips.getWorldPosition(v1).y * body.scale.x / (body.scale.x || 1) : 0.5; this.body = body; this.legW = 0;
-    this.headB = bone(body, 'Head'); this.neckB = bone(body, 'Neck'); this.spineB = bone(body, 'Spine1') || bone(body, 'Spine');
+    this.headB = bone(body, 'Head'); this.neckB = bone(body, 'Neck'); this.spineB = bone(body, 'Spine1') || bone(body, 'Spine'); this.topB = bone(body, 'HeadTop_End');
     this.play('idle', 0);
   }
   // 대본이 쓰는 것들은 인형에게 넘긴다
@@ -121,11 +121,12 @@ export class StageModel {
     this.fadeTo(Math.min(1, d.show));
     const walk = moving && !d.floating, clip = walk ? 'walk' : CLIP[d.pose], kneel = !walk && KNEEL.has(d.pose), onSeat = SITS.has(d.pose) && (d.yT || 0) > 0.05, ride = !walk && (SEAT.has(d.pose) || onSeat), perch = !walk && d.pose === 'perch';
     // 무릎 꿇는 동작('pray')이 없는 모델(순례자·어부 등 엑스트라)은 다리를 직접 접어 발뒤꿈치에 앉힌다 — 동작 없이 서 있었다
-    const seiza = !walk && ((kneel && !this.acts.pray) || (SITS.has(d.pose) && !onSeat));
+    // 땅에 앉기는 양반다리, 무릎 꿇기(꿇는 동작이 없는 모델)는 발뒤꿈치를 깔고
+    const cross = !walk && SITS.has(d.pose) && !onSeat, seiza = !walk && ((kneel && !this.acts.pray) || cross);
     this.play(clip || (kneel && !seiza ? 'pray' : 'idle'));
     // 손으로 돌린 뼈는 매 화면 기본 자세에서 다시 시작한다 — 동작에 기록이 없는 뼈(줄인 모델의 다리·손목)는 한 번 접으면 그대로 남아,
     // 앉았다 일어선 사람이 무릎을 굽힌 채 떠 있었다(사용자 2026-11)
-    if (!this.rest) { this.rest = []; const add = b => b && this.rest.push([b, b.quaternion.clone()]); this.legs.forEach(l => [l.up, l.lo, l.foot].forEach(add)); this.arms.forEach(([, m]) => [m.up, m.lo, m.hand].forEach(add)); add(this.headB); }
+    if (!this.rest) { this.rest = []; const add = b => b && this.rest.push([b, b.quaternion.clone()]); this.legs.forEach(l => [l.up, l.lo, l.foot].forEach(add)); this.arms.forEach(([, m]) => [m.up, m.lo, m.hand].forEach(add)); [this.headB, this.neckB, this.spineB].forEach(add); }
     for (const [b, q] of this.rest) b.quaternion.copy(q);
     this.mixer.update(dt);
     // 동작이 없는 자세는 인형의 팔을 따른다 (천천히 들어가고 나온다)
@@ -147,9 +148,14 @@ export class StageModel {
     this.seizaW = damp(this.seizaW || 0, seiza ? 1 : 0, 6, dt);
     if (this.seizaW > 0.01) {
       r.updateMatrixWorld(true);
-      const qr = r.getWorldQuaternion(new THREE.Quaternion()), thigh = new THREE.Vector3(0, -0.35, 1).normalize().applyQuaternion(qr), shin = new THREE.Vector3(0, -0.12, -1).normalize().applyQuaternion(qr);
+      const qr = r.getWorldQuaternion(new THREE.Quaternion());
       let knee = Infinity;
-      for (const l of this.legs) if (l.up && l.lo && l.foot) { this.aim(l.up, l.lo, thigh, this.seizaW); this.aim(l.lo, l.foot, shin, this.seizaW); for (const b of [l.lo, l.foot, l.toe]) if (b) knee = Math.min(knee, b.getWorldPosition(v1).y); } // 무릎·발·발끝 가운데 가장 낮은 곳을 땅에 (무릎만 맞추니 발끝이 묻혔다)
+      for (const l of this.legs) if (l.up && l.lo && l.foot) {
+        const sd = r.worldToLocal(l.up.getWorldPosition(v1)).x > 0 ? 1 : -1; // 몸의 어느 쪽 다리인지
+        // 양반다리: 넓적다리는 앞으로 벌려 눕히고 정강이는 안쪽으로 엇갈리게 / 꿇어앉기: 넓적다리는 앞으로, 정강이는 뒤로
+        const thigh = (cross ? new THREE.Vector3(sd * 0.75, -0.12, 0.65) : new THREE.Vector3(0, -0.35, 1)).normalize().applyQuaternion(qr);
+        const shin = (cross ? new THREE.Vector3(-sd * 0.85, -0.08, 0.45) : new THREE.Vector3(0, -0.12, -1)).normalize().applyQuaternion(qr);
+        this.aim(l.up, l.lo, thigh, this.seizaW); this.aim(l.lo, l.foot, shin, this.seizaW); for (const b of [l.lo, l.foot, l.toe]) if (b) knee = Math.min(knee, b.getWorldPosition(v1).y); } // 무릎·발·발끝 가운데 가장 낮은 곳을 땅에 (무릎만 맞추니 발끝이 묻혔다)
       if (knee < Infinity) this.body.position.y -= (knee - r.getWorldPosition(v2).y) / r.getWorldScale(v1).y - 0.03 * this.hipH;
     }
     if (this.w < 0.01 && this.legW < 0.01) return;
@@ -162,7 +168,13 @@ export class StageModel {
     if (this.w < 0.01) return;
     const qm = r.getWorldQuaternion(q2.clone()), qd = dr.getWorldQuaternion(new THREE.Quaternion()).invert();
     // 인형 root 기준의 팔 방향(아래로 뻗은 팔이 가리키는 쪽)을 모델 root에 옮긴다
-    const dirOf = o => DOWN.clone().applyQuaternion(o.getWorldQuaternion(new THREE.Quaternion()).premultiply(qd).premultiply(qm));
+    const dirOf = (o, v = DOWN) => v.clone().applyQuaternion(o.getWorldQuaternion(new THREE.Quaternion()).premultiply(qd).premultiply(qm));
+    // 몸통과 고개도 인형이 가리키는 쪽으로 — 팔만 따르니 절하기·엎드려 울기에서 꼿꼿이 서 있고, 하늘을 우러러도 고개가 들리지 않았다(사용자 2026-11)
+    const UP = new THREE.Vector3(0, 1, 0);
+    const mourn = d.pose === 'mourn', qb = r.getWorldQuaternion(new THREE.Quaternion());
+    // 엎드려 울기: 인형은 몸이 짧아 조금만 숙여도 얼굴이 손에 닿지만 사람 비율의 모델은 훨씬 깊이 숙여야 한다
+    if (this.spineB && this.neckB) this.aim(this.spineB, this.neckB, mourn ? new THREE.Vector3(0, 0.55, 0.85).normalize().applyQuaternion(qb) : dirOf(d.p.torso, UP), this.w);
+    if (this.headB && this.topB) this.aim(this.headB, this.topB, dirOf(d.p.head, UP), this.w);
     // 땅에 앉거나 무릎 꿇으면 두 손을 넓적다리 위에 가지런히 얹는다 — 인형의 '가슴 앞에 모은 손'을 따르니 손목이 비틀려 무릎 위에서 엉켰다(사용자 2026-11).
     // 엎드려 우는 자세(mourn)는 인형대로
     const lap = this.seizaW > 0.5 && d.pose !== 'mourn';
@@ -174,10 +186,14 @@ export class StageModel {
       const lo = lap ? new THREE.Vector3(-side * 0.18, -0.25, 1).normalize().applyQuaternion(qr) : dirOf(da.userData.elbow);
       this.aim(mb.up, mb.lo, up, this.w);
       this.aim(mb.lo, mb.hand, lo, this.w);
+      if (mourn && this.headB) { // 두 손으로 얼굴을 감싼다: 팔뚝이 팔꿈치에서 얼굴 앞으로
+        const face = this.headB.getWorldPosition(new THREE.Vector3()).add(new THREE.Vector3(side * -0.02, -0.03, 0.09).multiplyScalar(r.getWorldScale(v2).y / 0.5 * 0.5).applyQuaternion(qb));
+        this.aim(mb.up, mb.lo, new THREE.Vector3(side * 0.15, -0.55, 0.8).normalize().applyQuaternion(qb), this.w);
+        this.aim(mb.lo, mb.hand, face.sub(mb.lo.getWorldPosition(v1)).normalize(), this.w);
+      }
       mb.hand.quaternion.slerp(mb.hand0, this.w); // 손목은 곧게 (서 있는 동작의 꺾인 손목이 남아 어색했다)
     });
     // 고개: 인형이 숙이거나 드는 만큼 (십자가 위에서 고개를 떨굼, 하늘을 우러름)
-    if (this.headB) this.headB.rotation.x += d.p.head.rotation.x * this.w * 0.8;
   }
   dispose() { this.mixer.stopAllAction(); this.p.root.parent?.remove(this.p.root); this.mats.forEach(m => m.dispose()); }
 }
