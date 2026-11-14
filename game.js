@@ -418,11 +418,25 @@ function meet() {
   // 말씀은 곧 이어지는 '말씀 고르기'에서 맞히게, 말풍선에는 반기는 인사만 (먼저 보여 주면 너무 쉬웠다)
   const nm = me.name || '순례자', call = /^[가-힣]+$/.test(nm) ? josa(nm, '아', '야') : nm;
   G.meetWord = `${call}, 잘 찾아왔구나. 여기는 ${placeOf(e).name}.`;
-  G.meetT = 3.2; snd.play('meet');
-  $('#bubble').innerHTML = `<b>${esc(whoNow())}</b>${esc(G.meetWord)}`;
+  // 인사 뒤에 이 자리에서 있었던 일을 두세 마디 더 (assets/game-talk — 사용자 2026-11: '여기는 ○○' 하고 바로 카드가 뜨니 주변을 볼 새도 없었다)
+  G.talk = [G.meetWord, ...(TALK[e.id] || [])]; G.talkI = 0;
+  sayLine(); G.meetT += 0.9; snd.play('meet');
   setTimeout(() => $('#bubble').classList.add('on'), 900);
   document.body.classList.add('meeting');
   G.met = true;
+}
+// 말풍선 한 마디: 글 길이만큼 머문다 (누르면 넘긴다)
+function sayLine() {
+  const s = G.talk[G.talkI];
+  $('#bubble').innerHTML = `<b>${esc(whoNow())}</b>${esc(s)}${G.talkI < G.talk.length - 1 ? '<i class="more">▸</i>' : ''}`;
+  G.meetT = 1.8 + s.length * 0.075;
+}
+// 다 듣고 나면 바로 카드로 가지 않고 둘레를 걸어 볼 수 있다. 준비되면 '말씀 고르기' (그분은 그 자리에서 기다리신다)
+function lookAround() {
+  $('#bubble').classList.remove('on'); document.body.classList.remove('meeting');
+  G.looking = true; G.busy = false; G.leader.set('idle'); G.me.target = null;
+  $('#goWord').classList.remove('hidden');
+  toast('둘레를 천천히 둘러보세요<small>준비되면 \'말씀 고르기\'를 누르세요</small>', true, 3200);
 }
 function bubble() {
   const [x, y] = screen(G.leader.pos.x, G.leader.ground + SCALE * 1.05, G.leader.pos.y), b = $('#bubble'), half = b.offsetWidth / 2 + 10;
@@ -522,7 +536,7 @@ function collect(e, stars, pts) {
   return { fresh, best: !old || pts > (old.p || 0) };
 }
 // 카드 그림은 R2에서 (호스팅 전송량을 아끼려고 — assets/cards.json, _src/tools/cards-manifest.py). 아직 없으면 장면 그림
-let CARDS = { base: '', files: {} };
+let CARDS = { base: '', files: {} }, TALK = {};
 const cardSrc = e => CARDS.files[e.id] ? `${CARDS.base}/${CARDS.files[e.id]}` : e.img?.src || '';
 // 트레이딩 카드 앞면: 번호·제목, 그림 창(말씀 카드 그림 — 아직 없으면 장면 그림), 말씀 상자, 등급(별 — 동·은·금 테두리)
 const RANK = ['', 'bronze', 'silver', 'gold'];
@@ -607,6 +621,8 @@ function openCards() {
     v.querySelector('#backDeck').onclick = openCards; };
 }
 $('#cardsBtn').onclick = () => openCards();
+$('#goWord').onclick = () => { if (!G.looking) return; G.looking = false; G.busy = true; $('#goWord').classList.add('hidden'); G.me.goal.copy(G.me.pos); arrive(); };
+{ const r = $('#run'), on = v => e => { e.preventDefault(); G.runOn = v; }; r.addEventListener('pointerdown', on(true)); for (const ev of ['pointerup', 'pointercancel', 'pointerleave']) r.addEventListener(ev, on(false)); }
 const save = () => store.set('theway-game-' + JID, { idx: G.idx, total: G.total, stars: G.stars, hide: (G.hide || []).map(({ id, x, z }) => ({ id, x, z })) });
 
 /* ---------- 한 구간 ---------- */
@@ -709,6 +725,7 @@ async function swapLeader() {
 }
 function startLeg(walkFrom) {
   const e = G.events[G.idx], [gx, gz] = goalXZ();
+  G.looking = false; $('#goWord').classList.add('hidden');
   swapLeader();
   if (walkFrom) { G.leader.pos.set(...walkFrom); G.leader.goal.set(gx + 0.6, gz); G.leader.set('idle'); }
   else { G.leader.pos.set(gx + 0.6, gz); G.leader.goal.copy(G.leader.pos); G.leader.set('idle'); }
@@ -733,7 +750,7 @@ function startLeg(walkFrom) {
 // 여정의 장면·장소와 카드 그림 목록 (시작 화면에서 카드 모음만 볼 때도)
 async function loadJourney() {
   if (G.data && G.dataJ === JID) return;
-  [G.data, CARDS] = await Promise.all([fetch(JOURNEYS[JID].data).then(r => r.json()), fetch('assets/cards.json').then(r => r.json()).catch(() => CARDS)]);
+  [G.data, CARDS, TALK] = await Promise.all([fetch(JOURNEYS[JID].data).then(r => r.json()), fetch('assets/cards.json').then(r => r.json()).catch(() => CARDS), fetch(`assets/game-talk/${JID}.json`).then(r => r.json()).catch(() => ({}))]);
   TLIST = TLIST_ALL[JID] || [];
   G.dataJ = JID; G.events = G.data.events.filter(e => G.data.places[e.place] && !G.data.places[e.place].hidden);
 }
@@ -747,7 +764,7 @@ async function begin(fresh) {
   G.idx = saved?.idx || 0; G.total = saved?.total || 0; G.stars = saved?.stars || []; G.missed = [];
   G.hide = saved?.hide || hideTreasures(TLIST, G.data.places, toXZ, (x, z) => { const [la, ln] = toLL(x, z); return Object.values(WATERS).some(p => inPoly(la, ln, p)); });
   $('#setup').classList.add('hidden');
-  for (const s of ['#hud', '#waterBox', '#dayBox', '#arrow', '#stick', '#cardsBtn', '#ask', '#quit', '#sound']) $(s).classList.remove('hidden');
+  for (const s of ['#hud', '#waterBox', '#dayBox', '#arrow', '#stick', '#run', '#cardsBtn', '#ask', '#quit', '#sound']) $(s).classList.remove('hidden');
   // 꾸미기 화면의 미리보기는 이제 그리지 않으니 인형과 렌더러를 놓아 준다
   if (pv.actor) { if (pv.actor.dispose) pv.actor.dispose(); else bin(pv.actor.p.root, pv.scene); pv.actor = null; } pv.r.dispose(); // 모델은 나와 함께 쓰니 몸은 버리지 않는다
   G.r = renderer($('#world'));
@@ -829,7 +846,10 @@ function frame(now) {
   const me0 = G.me, dir = !G.busy && !(G.checkT > 0) && inputDir();
   if (!G.busy) updateEvents(dt, me0);
   if (dir) {
-    const boat = onGalilee(me0.pos.x, me0.pos.y), sp = G.speed * (G.slowT > 0 ? 0.45 : 1) * (boat ? 0.65 : 1), step = sp * dt;
+    // 달리기 (사용자 2026-11): PC는 Shift를 누른 채, 폰은 달리기 단추를 누르는 동안 1.8배. 배 위에서는 달리지 않는다
+    const boat = onGalilee(me0.pos.x, me0.pos.y), run = !boat && (keys.has('shift') || G.runOn);
+    const sp = G.speed * (G.slowT > 0 ? 0.45 : 1) * (boat ? 0.65 : 1) * (run ? 1.8 : 1), step = sp * dt;
+    me0.walkRate = run ? 2.6 : 1.5; $('#run').classList.toggle('on', run);
     // 이미 물·가장자리 안에 서 있으면(물 위 장면에서 이어 걷기 등) 어느 쪽으로든 나올 수 있게 — 갇혀 물병만 잃었다(사용자 2026-11)
     let nx = me0.pos.x + dir[0] * step, nz = me0.pos.y + dir[1] * step, hit = blocked(me0.pos.x, me0.pos.y) ? null : blocked(nx, nz);
     if (hit) { // 물가에서는 옆으로 미끄러져 따라가게
@@ -847,11 +867,11 @@ function frame(now) {
       G.prevD = d;
       if (G.lostT > 3.2 && G.legT > 2) penalty('lost');
       // 만남은 그 장면의 자리에서만 — 늦게 닿은 앞 자리(두로)에서 떠나시는 그분을 따라잡으면 다음 장면(데가볼리)의 문제가 나와 어리둥절했다(사용자 2026-11)
-      if (d < ARRIVE) { G.busy = true; me0.goal.copy(me0.pos); save(); meet(); }
+      if (d < ARRIVE && !G.looking) { G.busy = true; me0.goal.copy(me0.pos); save(); meet(); }
     }
   } else me0.goal.copy(me0.pos);
   // 그분은 가까이(SEE — 이 지도에서는 인형 키의 두 배 남짓) 가야 보인다. 멀리서는 발자국만 (사용자 2026-11)
-  const near = Math.hypot(G.leader.pos.x - me0.pos.x, G.leader.pos.y - me0.pos.y) < SEE || G.meetT > 0 || G.busy;
+  const near = Math.hypot(G.leader.pos.x - me0.pos.x, G.leader.pos.y - me0.pos.y) < SEE || G.meetT > 0 || G.busy || G.looking;
   G.leader.showT = near ? 1 : 0;
   const H = (x, z) => Math.max(0, G.world?.heightAt(x, z) || 0);
   const sailing = onGalilee(me0.pos.x, me0.pos.y);
@@ -876,8 +896,11 @@ function frame(now) {
   if (!G.named && dp < 5) { G.named = true; missionText(); }
   // 카메라: 북쪽이 위, 비스듬히 내려다보며 따라간다
   if (!G.zoomFix) G.zoom = fitZoom(); // 확인용(?debug)만 G.zoomFix로 높이를 바꾼다
-  const cx = me0.pos.x, cz = me0.pos.y, h = G.zoom;
-  if (!G.busy && !(G.meetT > 0)) tickTime(dt);
+  // 만난 뒤 둘러보는 동안은 가까이 — 사람과 마을이 보이게 (멀리 있으면 인형이 점 같았다)
+  // 그분과 나 둘 다 보이게 둘 사이를 비춘다
+  const L = G.leader.pos, lk = G.looking ? 0.5 : 0, dl = G.looking ? Math.hypot(L.x - me0.pos.x, L.y - me0.pos.y) : 0;
+  const cx = me0.pos.x + (L.x - me0.pos.x) * lk, cz = me0.pos.y + (L.y - me0.pos.y) * lk, h = G.looking ? Math.min(G.zoom, Math.max(7.5, dl * 2.2)) : G.zoom;
+  if (!G.busy && !(G.meetT > 0) && !G.looking) tickTime(dt); // 만난 뒤 둘러보는 동안은 모래시계가 멈춘다
   if (G.meetT > 0) { // 만남: 둘 사이로 내려앉아 비스듬히
     G.meetT -= dt;
     const mx = (cx + G.leader.pos.x) / 2, mz = (cz + G.leader.pos.y) / 2, k = 1 - Math.exp(-dt * 2.2);
@@ -889,7 +912,7 @@ function frame(now) {
     G.cam.position.lerp(v3.set(mx + px * back, gy + SCALE * 1.5 + back * 0.18, mz + pz * back), k);
     G.camLook.lerp(v3.set(mx, gy + SCALE * 0.55, mz), k); G.cam.lookAt(G.camLook);
     bubble();
-    if (G.meetT <= 0) { $('#bubble').classList.remove('on'); document.body.classList.remove('meeting'); arrive(); }
+    if (G.meetT <= 0) { if (++G.talkI < G.talk.length) sayLine(); else lookAround(); }
   } else {
     const gy = me0.ground; // 솟은 땅을 걸을 때 카메라도 따라 오른다
     G.cam.position.lerp(v3.set(cx, gy + h, cz + h * 0.78), 1 - Math.exp(-dt * 5));
