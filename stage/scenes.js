@@ -650,7 +650,7 @@ export const SCRIPTS = {
   e16: {
     wide: 1.4,
     props: {
-      syn: ['synagogue', -0.15, -0.3],
+      syn: ['synagogue', -0.15, -0.3, { seat: [0.03, 0.2] }], // 예수님이 앉으시는 돌 자리 (사용자 2026-11)
       folk: ['crowd', -0.15, -0.3, { y: 0.1, state: 'sit', spots: [[-0.88, -0.25], [-0.88, 0.05], [-0.88, 0.32], [0.88, -0.25], [0.88, 0.05], [0.88, 0.32]] }],
       // 2D 무대의 벼랑. 3D 지형에서는 실제 낭떠러지 산(나사렛 남쪽 약 2km)으로 무대를 옮기므로(@at) 숨긴다
       cliff: ['hill', 1.9, -0.25, { w: 0.6, h: 0.3, d: 0.5, terrain: false }],
@@ -670,7 +670,7 @@ export const SCRIPTS = {
         ['attendant', 'idle', { x: 0.22, z: -0.12, look: -0.6, item: 'scroll' }], ['elder', 'sit-ground', { x: -0.6, z: 0.38, look: 0.8 }], ['man', 'sit-ground', { x: 0.45, z: 0.4, look: -0.8 }], ['phar', 'sit-ground', { x: -0.85, z: 0.05, look: 0.9 }]],
       'p0.1': [['jesus', 'idle', { x: -0.12, z: 0.02, look: 0.6 }], ['attendant', 'idle', { item: null, delay: 2600 }], ['jesus', 'idle', { item: 'scroll', look: 0, delay: 2600 }]],
       'p0.3': [['jesus', 'speak', { look: 0 }]],
-      'p1.0': [['jesus', 'idle', { item: null }], ['attendant', 'idle', { item: 'scroll' }], ['jesus', 'sit', { delay: 1200 }],
+      'p1.0': [['jesus', 'idle', { item: null }], ['attendant', 'idle', { item: 'scroll' }], ['jesus', 'sit', { z: -0.1, delay: 1200 }],
         ['elder', 'sit-ground', { look: 0.6 }], ['man', 'sit-ground', { look: -0.6 }], ['phar', 'sit-ground', { look: 0.8 }]],
       'p1.2': [['jesus', 'speak'], ['man', 'shrug', { delay: 3500 }]],
       'p1.4': [['phar', 'speak', { look: 1.0 }]],
