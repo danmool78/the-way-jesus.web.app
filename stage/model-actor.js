@@ -7,6 +7,7 @@
 import { THREE, damp } from './kit.js';
 import { Actor } from './people.js';
 import { clone } from '../assets/vendor/SkeletonUtils.js';
+import { calmClips } from '../game-model.js';
 
 // 팔까지 모델의 동작 그대로 쓰는 자세 (그 밖의 자세는 팔을 인형에 맞춘다)
 const CLIP = { idle: 'idle', listen: 'idle', speak: 'talk', sleep: 'sleep' };
@@ -46,7 +47,7 @@ export class StageModel {
     body.traverse(m => { if (m.isMesh) { m.frustumCulled = false; m.material = m.material.clone(); this.mats.push(m.material); } });
     this.p = { root: new THREE.Group() }; this.p.root.add(body);
     this.mixer = new THREE.AnimationMixer(body);
-    this.acts = Object.fromEntries(gltf.animations.map(c => [c.name, this.mixer.clipAction(c)]));
+    this.acts = Object.fromEntries(calmClips(gltf).map(c => [c.name, this.mixer.clipAction(c)])); // 차분한 말하기·끊김 없는 되풀이·곧게 서기 (game-model.js)
     this.cur = null; this.w = 0; this.op = -1;
     // 인형의 왼팔·오른팔이 모델의 어느 팔인지는 자리(x)로 맞춘다 (서로 앞을 보는 쪽이 같다)
     const L = { up: bone(body, 'LeftArm'), lo: bone(body, 'LeftForeArm'), hand: bone(body, 'LeftHand') };
