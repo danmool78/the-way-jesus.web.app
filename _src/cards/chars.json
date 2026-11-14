@@ -1,0 +1,18 @@
+{
+ "_comment": "말씀 카드 그림의 인물 기준(얼굴·옷이 장마다 변하지 않게 — 사용자 2026-11). 장면 글에 이름(names)이 나오면 그 인물의 기준 그림(<key>.png, cards.mjs refs로 만든다)을 함께 넣는다. 옷 색은 3D 무대 피규어(stage/people.js)와 맞춤. not: 이 말이 함께 나오면 다른 사람(동명이인)",
+ "mary":      { "names": ["마리아"], "not": ["막달라", "마르다", "베다니"], "desc": "Mary of Nazareth, the mother of Jesus: young Galilean Jewish woman with a gentle oval face, dark brown hair under a deep blue mantle worn as a veil over a warm red-brown dress. In later scenes (when Jesus is grown) she is about forty-five with the same face, slightly older." },
+ "peter":     { "names": ["베드로", "시몬"], "not": ["구레네", "바리새인 시몬", "나병"], "desc": "Simon Peter: broad-shouldered Galilean fisherman about forty, square face, thick curly grey-streaked dark hair and full grey-streaked beard, brown tunic with a slate-blue mantle." },
+ "john":      { "names": ["요한"], "not": ["세례"], "desc": "John son of Zebedee, the youngest disciple: about twenty, clean-shaven, wavy chestnut-brown hair, olive-green tunic with an ochre mantle." },
+ "andrew":    { "names": ["안드레"], "desc": "Andrew, Peter's brother: lean fisherman about thirty-five, long narrow face, straight black hair and a thin dark beard, sand-colored tunic with a moss-green mantle." },
+ "james":     { "names": ["야고보"], "desc": "James son of Zebedee: sturdy man about thirty, short black curly hair and short black beard, intense eyes, charcoal-grey tunic with a rust-brown mantle." },
+ "joseph":    { "names": ["요셉"], "not": ["아리마대"], "desc": "Joseph of Nazareth, the carpenter: kind man about thirty-five, short dark beard, wears a cream headcloth with a brown band, earth-brown tunic and a light tan mantle, strong carpenter's hands." },
+ "baptist":   { "names": ["세례 요한", "세례자 요한", "세례요한"], "desc": "John the Baptist: lean, weathered desert prophet about thirty, wild long black hair and untrimmed beard, rough camel-hair garment tied with a leather belt, bare arms." },
+ "judas":     { "names": ["가룟 유다", "유다"], "desc": "Judas Iscariot: thin man about thirty-five, sharp features, close-cropped black hair and short neat black beard, dark olive-grey tunic and mantle, a small leather money bag at his belt." },
+ "thomas":    { "names": ["도마"], "desc": "Thomas: medium build man about thirty, short curly brown hair and short beard, thoughtful furrowed brow, grey-blue tunic with a beige mantle." },
+ "magdalene": { "names": ["막달라"], "desc": "Mary Magdalene: woman about thirty, striking dark eyes, long black hair partly covered by a plum-purple veil, cream dress." },
+ "martha":    { "names": ["마르다"], "desc": "Martha of Bethany: capable woman about thirty-five, warm round face, hair under a mustard-yellow headscarf, brown dress with an apron cloth. Her sister Mary of Bethany is younger, slender, with a soft grey veil." },
+ "lazarus":   { "names": ["나사로"], "desc": "Lazarus of Bethany: gentle man about thirty-five, pale olive skin, short brown hair and short beard, simple white linen tunic." },
+ "nicodemus": { "names": ["니고데모"], "desc": "Nicodemus: dignified older Pharisee about sixty, long white beard, white robe with blue fringed prayer shawl and a blue headband." },
+ "pilate":    { "names": ["빌라도"], "desc": "Pontius Pilate: clean-shaven Roman governor about fifty, short grey hair, white toga with a broad purple stripe, stern tired face." },
+ "caiaphas":  { "names": ["가야바", "대제사장"], "desc": "Caiaphas the high priest: stern man about fifty, long dark beard with grey, tall white turban with a gold band, white robe under a blue sleeveless ephod-like mantle." }
+}
