@@ -153,6 +153,7 @@ function seamless(clip) {
   });
   return new THREE.AnimationClip(clip.name, dur, tracks);
 }
+const STAND = /(Hips|Spine\d?|Neck|Leg)\.quaternion$/; // UpLeg도 Leg로 끝난다
 const calm = new WeakMap(), BODY = /(Hips|Spine|Neck|Head|Leg|Foot|Toe)[^.]*\./;
 function calmClips(gltf) {
   if (calm.has(gltf)) return calm.get(gltf);
@@ -169,6 +170,13 @@ function calmClips(gltf) {
     const tracks = [...t.tracks.filter(k => !BODY.test(k.name)), ...still];
     out = out.map(c => c.name === 'talk' ? seamless(new THREE.AnimationClip('talk', t.duration, tracks)) : c);
   }
+  // 곧게 서기: Mixamo idle은 엉덩이(11°)·허리(12°)를 뒤로 젖혀 배가 나온 자세였다(사용자 2026-11 — 원래 3D 디자인은 그렇지 않다).
+  // 서 있거나 말할 때는 엉덩이·허리·목·다리를 기본 자세(모델을 뜬 그대로)로 세운다 — 팔·손·고개의 움직임은 그대로
+  const rest = {}; gltf.scene.traverse(o => { if (o.isBone) rest[o.name] = o.quaternion.toArray(); });
+  out = out.map(c => c.name !== 'idle' && c.name !== 'talk' ? c : new THREE.AnimationClip(c.name, c.duration, c.tracks.map(k => {
+    const n = k.name.split('.')[0];
+    return STAND.test(k.name) && rest[n] ? new THREE.QuaternionKeyframeTrack(k.name, [0], rest[n]) : k;
+  })));
   calm.set(gltf, out); return out;
 }
 
