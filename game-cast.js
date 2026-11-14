@@ -70,7 +70,7 @@ const OT_EXTRA = {
     m40: ['pilgrim-man:#7a6248', 'pilgrim-woman:#5b6e7a', 'pilgrim-man:#4e5b6b'],
   },
   david: {
-    d01: ['shepherd'],
+    // d01은 혼자 양을 지키던 소년(삼상 16:11) — 목자 모델의 줄무늬 머릿수건이 파라오 두건처럼 보였다(사용자 2026-11)
     d04: ['pilgrim-man:#6b3a24:bearer'], d05: ['pilgrim-man:#6b3a24:bearer'], // 골리앗 앞에 방패 든 자(삼상 17:7, 41)
     d07: ['pilgrim-woman:#5b6e7a', 'pilgrim-woman:#6b2f4a'], // 노래하며 맞은 여인들(삼상 18:6–7)
     d11: ['pilgrim-man:#e2d8c0'], // 제사장 아히멜렉(세마포 에봇)
