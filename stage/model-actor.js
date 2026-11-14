@@ -12,7 +12,9 @@ import { calmClips } from '../game-model.js';
 // 팔까지 모델의 동작 그대로 쓰는 자세 (그 밖의 자세는 팔을 인형에 맞춘다)
 const CLIP = { idle: 'idle', listen: 'idle', speak: 'talk', sleep: 'sleep' };
 // 무릎 꿇은 다리만 모델의 'pray'(무릎 꿇고 두 팔을 높이 듦)에서 빌리고 팔은 인형대로 — 인형의 기도는 서서 두 손을 가슴에 모은다
-const KNEEL = new Set(['kneel', 'mourn', 'sit', 'sit-ground', 'sit-speak', 'cower']);
+const KNEEL = new Set(['kneel', 'mourn', 'sit-ground', 'cower']);
+// 걸터앉기: 넓적다리를 앞으로, 정강이는 아래로 (회당에서 앉아 말씀을 읽으심 — 무릎 꿇고 기도하는 자세가 되었다, 사용자 2026-11)
+const SEAT = new Set(['sit', 'sit-speak', 'ride']);
 const bone = (root, n) => { let f = null; root.traverse(o => { if (!f && o.isBone && new RegExp(`(^|mixamorig)${n}$`).test(o.name)) f = o; }); return f; };
 const DOWN = new THREE.Vector3(0, -1, 0);
 const v1 = new THREE.Vector3(), v2 = new THREE.Vector3(), q1 = new THREE.Quaternion(), q2 = new THREE.Quaternion(), q3 = new THREE.Quaternion();
@@ -75,6 +77,8 @@ export class StageModel {
   get big() { return this.doll.big; } set big(v) { this.doll.big = v; }
   get speed() { return this.doll.speed; } set speed(v) { this.doll.speed = v; }
   get realWalk() { return this.doll.realWalk; } set realWalk(v) { this.doll.realWalk = v; }
+  // 무대가 읽는 것: 높이를 정한 사람(단 위·십자가 위)은 3D 지형에서 사람을 키울 때 그 높이도 함께 올린다 — 없으면 단 위의 사람 발이 바닥에 묻혔다
+  get fixedY() { return this.doll.fixedY; } get floating() { return this.doll.floating; } get kneel() { return this.doll.kneel; }
   set(p) { this.doll.set(p); }
   moveTo(x, z) { this.doll.moveTo(x, z); }
   look(d) { this.doll.look(d); }
@@ -97,12 +101,14 @@ export class StageModel {
     const r = this.p.root, dr = d.p.root, moving = d.goal.distanceTo(d.pos) > 0.02;
     r.position.copy(dr.position); r.rotation.copy(dr.rotation); r.scale.copy(dr.scale); r.visible = dr.visible;
     this.fadeTo(Math.min(1, d.show));
-    const walk = moving && !d.floating, clip = walk ? 'walk' : CLIP[d.pose], kneel = !walk && KNEEL.has(d.pose), ride = !walk && d.pose === 'ride', perch = !walk && d.pose === 'perch';
-    this.play(clip || (kneel ? 'pray' : 'idle'));
+    const walk = moving && !d.floating, clip = walk ? 'walk' : CLIP[d.pose], kneel = !walk && KNEEL.has(d.pose), ride = !walk && SEAT.has(d.pose), perch = !walk && d.pose === 'perch';
+    // 무릎 꿇는 동작('pray')이 없는 모델(순례자·어부 등 엑스트라)은 다리를 직접 접어 발뒤꿈치에 앉힌다 — 동작 없이 서 있었다
+    const seiza = kneel && !this.acts.pray;
+    this.play(clip || (kneel && !seiza ? 'pray' : 'idle'));
     this.mixer.update(dt);
     // 동작이 없는 자세는 인형의 팔을 따른다 (천천히 들어가고 나온다)
     this.w = damp(this.w, clip || perch ? 0 : 1, 6, dt);
-    // 나귀 타기: 넓적다리를 앞으로, 정강이는 아래로 하고 몸을 인형처럼 내려 앉힌다 (모델에 앉는 동작이 없다)
+    // 걸터앉기·나귀 타기: 넓적다리를 앞으로, 정강이는 아래로 하고 몸을 인형처럼 내려 앉힌다 (모델에 앉는 동작이 없다)
     this.legW = damp(this.legW, ride ? 1 : 0, 6, dt);
     this.body.position.y = -this.hipH * 0.58 * (d.kneel || 0) * this.legW;
     // 가지에 엎드리기(삭개오, 눅 19:4): 발끝을 축으로 앞으로 눕혀 몸이 가지를 따라 놓이고, 두 팔은 가지를 끌어안고, 고개는 들어 아래를 본다
@@ -115,6 +121,14 @@ export class StageModel {
       for (const [, mb] of this.arms) if (mb.up && mb.lo && mb.hand) { this.aim(mb.up, mb.lo, hug, this.perchW); this.aim(mb.lo, mb.hand, fore, this.perchW); }
       if (this.headB) this.headB.rotation.x -= 0.9 * this.perchW;
       if (this.w < 0.01 && this.legW < 0.01) return;
+    }
+    this.seizaW = damp(this.seizaW || 0, seiza ? 1 : 0, 6, dt);
+    if (this.seizaW > 0.01) {
+      r.updateMatrixWorld(true);
+      const qr = r.getWorldQuaternion(new THREE.Quaternion()), thigh = new THREE.Vector3(0, -0.35, 1).normalize().applyQuaternion(qr), shin = new THREE.Vector3(0, -0.12, -1).normalize().applyQuaternion(qr);
+      let knee = Infinity;
+      for (const l of this.legs) if (l.up && l.lo && l.foot) { this.aim(l.up, l.lo, thigh, this.seizaW); this.aim(l.lo, l.foot, shin, this.seizaW); knee = Math.min(knee, l.lo.getWorldPosition(v1).y); }
+      if (knee < Infinity) this.body.position.y -= (knee - r.getWorldPosition(v2).y) / r.getWorldScale(v1).y - 0.03 * this.hipH;
     }
     if (this.w < 0.01 && this.legW < 0.01) return;
     r.updateMatrixWorld(true); dr.updateMatrixWorld(true);
@@ -146,7 +160,7 @@ export function crowdPerson(gltf, height) {
   const top = bone(body, 'HeadTop_End'), h = top ? top.getWorldPosition(v1).y : 1.7;
   body.scale.setScalar(height / (h > 0.1 ? h : 1.7));
   body.traverse(m => { if (m.isMesh) m.frustumCulled = false; });
-  const mixer = new THREE.AnimationMixer(body), clip = n => gltf.animations.find(c => c.name === n);
+  const mixer = new THREE.AnimationMixer(body), clips = calmClips(gltf), clip = n => clips.find(c => c.name === n);
   const t0 = Math.random();
   const legs = ['Left', 'Right'].map(sd => [bone(body, sd + 'UpLeg'), bone(body, sd + 'Leg'), bone(body, sd + 'Foot')]);
   const idle = clip('idle'), act = idle && mixer.clipAction(idle);

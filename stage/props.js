@@ -739,7 +739,12 @@ Object.assign(MAKERS, {
     // 두루마리를 넣어 두는 궤(벽 가운데)와 낭독대
     mesh(new THREE.BoxGeometry(0.22, 0.22, 0.08), mat('#7a5634'), g, [0, 0.2, -0.38]);
     mesh(new THREE.BoxGeometry(0.14, 0.18, 0.1), wood(), g, [0.05, 0.12, -0.12]);
-    return new Prop(g);
+    // o.seat: [x, z] — 말씀을 읽고 앉아 가르치는 돌 자리 (눅 4:20 '앉으시니'). 앉은 사람의 엉덩이 높이에 맞춘 돌 걸상과 낮은 등받이
+    if (o.seat) { const [sx, sz] = o.seat; mesh(new THREE.BoxGeometry(0.22, 0.2, 0.15), stone, g, [sx, 0.15, sz]).castShadow = true; mesh(new THREE.BoxGeometry(0.22, 0.16, 0.04), stone, g, [sx, 0.33, sz - 0.07]); }
+    const P = new Prop(g);
+    // 바닥(두께 0.05) 위에 선다 — 3D 모델로 바꾸니 발이 바닥에 묻혔다(인형은 긴 옷자락이 가렸다, 사용자 2026-11)
+    P.heightAt = (x, z) => { const u = (x - g.position.x) / g.scale.x, v = (z - g.position.z) / g.scale.z; return P.show > 0.5 && Math.abs(u) < 1.0 && v > -0.45 && v < 0.65 ? 0.05 * g.scale.y : 0; };
+    return P;
   },
 
   // 그물: 바닥에 펼친 그물망. state 'full'이면 은빛 고기가 가득 차 불룩해진다
