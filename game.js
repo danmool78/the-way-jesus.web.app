@@ -7,8 +7,10 @@ import { THREE } from './stage/kit.js';
 import { TYPES, SKIN, Actor } from './stage/people.js';
 import { createWorld, LAKE_LEVEL } from './game-world.js';
 import { makeProp } from './stage/props.js';
+import { createAudio } from './game-audio.js';
 
 const $ = s => document.querySelector(s);
+const snd = createAudio(); // 배경음악·발소리·배 소리·효과음 (game-audio.js)
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 // 받침에 따라 조사를 고른다 (모세가·예수님이, 모세를·다윗을)
 const josa = (w, a, b) => { const c = (w || '').charCodeAt(w.length - 1) - 0xac00; return w + (c >= 0 && c < 11172 && c % 28 ? a : b); };
@@ -88,6 +90,12 @@ const lights = scene => {
 };
 
 /* 미리보기: 꾸미는 동안 인형이 천천히 돈다 */
+// 3D 부품 버리기: 장면에서 빼고 그 안의 모양·재질·그림을 GPU에서도 놓아 준다 — 빼기만 하면 장면마다 쌓여 메모리가 샜다.
+// 여럿이 같이 쓰는 재질이면 three.js가 다음에 그릴 때 다시 올리므로 버려도 안전하다
+function bin(obj, scene) {
+  if (!obj) return; (scene || obj.parent)?.remove(obj);
+  obj.traverse(o => { o.geometry?.dispose(); const m = o.material; for (const x of Array.isArray(m) ? m : m ? [m] : []) { x.map?.dispose(); x.dispose(); } });
+}
 const pv = { r: renderer($('#preview')), scene: new THREE.Scene(), cam: new THREE.PerspectiveCamera(30, 1, 0.05, 20), actor: null };
 lights(pv.scene);
 pv.cam.position.set(0, 0.62, 2.4); pv.cam.lookAt(0, 0.48, 0);
@@ -95,7 +103,7 @@ const floor = new THREE.Mesh(new THREE.CircleGeometry(0.5, 48), new THREE.MeshSt
 floor.rotation.x = -Math.PI / 2; pv.scene.add(floor);
 function rebuildPreview() {
   playerType();
-  if (pv.actor) pv.scene.remove(pv.actor.p.root);
+  if (pv.actor) bin(pv.actor.p.root, pv.scene); // 모습을 바꿀 때마다 새 인형 — 앞 인형은 버린다
   pv.actor = new Actor('player', 0, 0, 0, { gaze: false }); pv.actor.realWalk = true;
   pv.scene.add(pv.actor.p.root);
   $('#plate').textContent = me.name || '';
@@ -192,7 +200,7 @@ const TEMPT = [['사람이 떡으로만 살 것이 아니요 하나님의 입에
   ['주 너의 하나님께 경배하고 다만 그분만 섬겨라.', '마 4:10'], ['마귀를 대적하라. 그러면 너희를 피할 것이다.', '약 4:7'], ['하나님은 감당하지 못할 시험 당함을 허락하지 않으신다. 피할 길을 내신다.', '고전 10:13']];
 const temptKey = () => 'theway-game-tempt-' + JID;
 function spawnLegEvents() {
-  for (const k of ['serpent', 'wounded']) if (G[k]) { G.scene.remove(G[k].obj || G[k].a.p.root); G[k] = null; }
+  for (const k of ['serpent', 'wounded']) if (G[k]) { bin(G[k].obj || G[k].a.p.root, G.scene); G[k] = null; }
   const [gx, gz] = goalXZ(), [sx, sz] = [G.me.pos.x, G.me.pos.y], L = G.legStraight;
   if (L < 25) return;
   const at = (f, off) => { const dx = (gx - sx) / L, dz = (gz - sz) / L; return [sx + (gx - sx) * f - dz * off, sz + (gz - sz) * f + dx * off]; };
@@ -217,20 +225,20 @@ function spawnPatrols() {
 function updateEvents(dt, me0) {
   const px = me0.pos.x, pz = me0.pos.y, [gx, gz] = goalXZ();
   // 우물
-  for (const [wx, wz] of G.world?.wells || []) if (Math.hypot(wx - px, wz - pz) < 4 && G.water < 3 && !(G.wellT > 0)) { G.water = 3; drawWater(); G.wellT = 12; toast('우물에서 물을 길었어요<small>물병 셋이 다시 찼습니다</small>', true); }
+  for (const [wx, wz] of G.world?.wells || []) if (Math.hypot(wx - px, wz - pz) < 4 && G.water < 3 && !(G.wellT > 0)) { G.water = 3; drawWater(); G.wellT = 12; snd.play('well'); toast('우물에서 물을 길었어요<small>물병 셋이 다시 찼습니다</small>', true); }
   G.wellT -= dt;
   // 뱀
   const S = G.serpent;
   if (S && !S.done) {
     const d = Math.hypot(S.x - px, S.z - pz);
     S.obj.rotation.y += dt * 0.8;
-    if (!S.warned && d < 12) { S.warned = true; G.lureT = 4.5; const ang = Math.atan2(gz - pz, gx - px) + (Math.random() < 0.5 ? 1.9 : -1.9); G.lureA = ang; toast('뱀이 속삭여요: "이쪽이 지름길이야…"<small>빨간 화살표는 유혹이에요 · 뱀에게 닿지 말고 지나가세요</small>', false, 3800); }
-    if (d < 2.6) { S.done = true; G.scene.remove(S.obj); G.coolT = 0; penalty('serpent'); }
+    if (!S.warned && d < 12) { S.warned = true; G.lureT = 4.5; snd.play('hiss'); const ang = Math.atan2(gz - pz, gx - px) + (Math.random() < 0.5 ? 1.9 : -1.9); G.lureA = ang; toast('뱀이 속삭여요: "이쪽이 지름길이야…"<small>빨간 화살표는 유혹이에요 · 뱀에게 닿지 말고 지나가세요</small>', false, 3800); }
+    if (d < 2.6) { S.done = true; bin(S.obj, G.scene); G.coolT = 0; penalty('serpent'); }
     else if (S.warned && Math.hypot(gx - px, gz - pz) < S.d0 - 6) { // 뱀을 지나쳤다
-      S.done = true; G.scene.remove(S.obj);
+      S.done = true; bin(S.obj, G.scene);
       const n = (store.get(temptKey(), 0) || 0) + 1; store.set(temptKey(), n);
       const [t, r] = TEMPT[(n - 1) % TEMPT.length];
-      G.bonus += 50; toast(`시험을 이겼어요! +50점<small>"${esc(t)}" (${r}) · 시험을 이긴 카드 ${n}장</small>`, true, 4200); drawCardBtn();
+      G.bonus += 50; snd.play('bonus'); toast(`시험을 이겼어요! +50점<small>"${esc(t)}" (${r}) · 시험을 이긴 카드 ${n}장</small>`, true, 4200); drawCardBtn();
     }
   }
   G.lureT -= dt;
@@ -240,14 +248,14 @@ function updateEvents(dt, me0) {
     const d = Math.hypot(W.x - px, W.z - pz); W.a.ground = GH(W.x, W.z);
     if (d < 5 && !W.told) { W.told = true; toast('길가에 강도 만난 사람이 쓰러져 있어요<small>곁에 멈춰 서 있으면 도울 수 있어요 (시간이 들어요)</small>', false, 3600); }
     if (d < 5 && !inputDir()) W.still += dt; else W.still = Math.max(0, W.still - dt);
-    if (W.still > 2.2) { W.helped = true; W.a.set('idle'); G.bonus += 100; toast('가서 너도 이와 같이 하라 (눅 10:37)<small>쓰러진 이를 도왔어요 · 이 장면 카드 +100점</small>', true, 4000); }
+    if (W.still > 2.2) { W.helped = true; W.a.set('idle'); G.bonus += 100; snd.play('bonus'); toast('가서 너도 이와 같이 하라 (눅 10:37)<small>쓰러진 이를 도왔어요 · 이 장면 카드 +100점</small>', true, 4000); }
   }
   // 로마 병정
   for (const P of G.patrols || []) {
     const T = P.to ? P.B : P.A; P.s.moveTo(T[0] + P.off, T[1]); P.s.ground = GH(P.s.pos.x, P.s.pos.y);
     if (Math.hypot(P.s.pos.x - T[0] - P.off, P.s.pos.y - T[1]) < 0.4) P.to = 1 - P.to;
     P.s.showT = Math.hypot(P.s.pos.x - px, P.s.pos.y - pz) < 40 ? 1 : 0;
-    if (Math.hypot(P.s.pos.x - px, P.s.pos.y - pz) < 2.4 && !(G.checkT > -3)) { G.checkT = 2.8; toast('로마 병정에게 붙잡혔어요!<small>검문을 받느라 잠시 멈춥니다 · 병정을 피해 다니세요</small>', false, 2800); }
+    if (Math.hypot(P.s.pos.x - px, P.s.pos.y - pz) < 2.4 && !(G.checkT > -3)) { G.checkT = 2.8; snd.play('halt'); toast('로마 병정에게 붙잡혔어요!<small>검문을 받느라 잠시 멈춥니다 · 병정을 피해 다니세요</small>', false, 2800); }
   }
   G.checkT -= dt;
 }
@@ -302,7 +310,7 @@ $('#quit').onclick = () => {
     <div class="row"><a class="go ghost" href="${JID === 'jesus' ? 'app.html' : 'app.html?j=' + JID}">그 길 앱으로</a><button class="go" id="qBack">계속 걷기</button></div></div>`);
   s.querySelector('#qBack').onclick = () => { closeSheet(); G.busy = was; };
   s.querySelector('#qCards').onclick = () => openCards();
-  s.querySelector('#qHome').onclick = () => { location.href = `game.html?j=${JID}`; };
+  s.querySelector('#qHome').onclick = () => { snd.close(); location.href = `game.html?j=${JID}`; };
 };
 
 /* ---------- 알림·벌칙 ---------- */
@@ -316,7 +324,7 @@ const LOST = ['모래바람이 불어와 길을 잃었어요!', '광야에서 �
 function penalty(kind) {
   if (G.coolT > 0 || G.busy) return;
   G.coolT = 3.5; G.lostT = 0;
-  G.water = Math.max(0, G.water - 1); drawWater();
+  G.water = Math.max(0, G.water - 1); drawWater(); snd.play(kind === 'lost' ? 'wind' : 'lose');
   document.body.classList.remove('shake'); void document.body.offsetWidth; document.body.classList.add('shake');
   if (kind === 'lost') {
     G.slowT = 4; $('#dust').classList.add('on'); setTimeout(() => $('#dust').classList.remove('on'), 3200);
@@ -336,10 +344,13 @@ document.addEventListener('click', ev => {
   const a = ev.target.closest('a[data-listen]'); if (!a) return;
   ev.preventDefault();
   const id = a.getAttribute('href').split('#')[1]; // 한 장면만 보기(?one): 버튼 없이 연출만, 끝나면 저절로 닫힌다
-  const v = $('#listen'); v.querySelector('iframe').src = `app.html?j=${JID}&one&lang=ko#${id}`; v.classList.remove('hidden');
+  const v = $('#listen'); v.querySelector('iframe').src = `app.html?j=${JID}&one&lang=ko#${id}`; v.classList.remove('hidden'); snd.hold(true); snd.boat(0, false, false);
 });
 addEventListener('message', ev => { if (ev.origin === location.origin && ev.data === 'theway-one-done') $('#listenClose').click(); });
-$('#listenClose').onclick = () => { const v = $('#listen'); v.classList.add('hidden'); v.querySelector('iframe').src = 'about:blank'; };
+$('#listenClose').onclick = () => { const v = $('#listen'); v.classList.add('hidden'); v.querySelector('iframe').src = 'about:blank'; snd.hold(false); };
+// 소리 켜고 끄기 (이 기기에 기억 — theway-game-sound)
+const drawSound = () => { $('#sound').textContent = snd.on ? '소리 켬' : '소리 끔'; $('#sound').classList.toggle('off', !snd.on); };
+$('#sound').onclick = () => { snd.unlock(); snd.setOn(!snd.on); drawSound(); }; drawSound();
 const firstSentences = (t, n = 2) => (t.match(/[^.!?。]+[.!?。]+["”’]?/g) || [t]).slice(0, n).join(' ').trim();
 const appLink = e => `${JID === 'jesus' ? 'app.html' : `app.html?j=${JID}`}#${e.id}`;
 function quiz() {
@@ -348,7 +359,7 @@ function quiz() {
   const s = sheet(`<div class="body quiz"><small>물병이 다 떨어졌어요 · 말씀으로 다시 채우기</small><h2>${esc(q.q)}</h2><div class="opts">${q.options.map((o, i) => `<button data-i="${i}">${esc(o)}</button>`).join('')}</div><div class="explain"></div></div>`);
   s.querySelector('.opts').onclick = ev => {
     const b = ev.target.closest('button'); if (!b || s.querySelector('.right')) return;
-    const ok = +b.dataset.i === q.answer;
+    const ok = +b.dataset.i === q.answer; snd.play(ok ? 'right' : 'wrong');
     s.querySelectorAll('.opts button').forEach((x, i) => { if (i === q.answer) x.classList.add('right'); else if (x === b) x.classList.add('wrong'); });
     s.querySelector('.explain').innerHTML = `${esc(q.explain || '')}<button class="go">${ok ? '물병을 채우고 계속 걷기' : '이번 길의 처음으로 돌아가기'}</button>`;
     s.querySelector('.explain .go').onclick = () => {
@@ -369,7 +380,7 @@ function meet() {
   // 말씀은 곧 이어지는 '말씀 고르기'에서 맞히게, 말풍선에는 반기는 인사만 (먼저 보여 주면 너무 쉬웠다)
   const nm = me.name || '순례자', call = /^[가-힣]+$/.test(nm) ? josa(nm, '아', '야') : nm;
   G.meetWord = `${call}, 잘 찾아왔구나. 여기는 ${placeOf(e).name}.`;
-  G.meetT = 3.2;
+  G.meetT = 3.2; snd.play('meet');
   $('#bubble').innerHTML = `<b>${esc(JOURNEYS[JID].who)}</b>${esc(G.meetWord)}`;
   setTimeout(() => $('#bubble').classList.add('on'), 900);
   document.body.classList.add('meeting');
@@ -386,7 +397,7 @@ addEventListener('pointerdown', e => { if (G.meetT > 0.4 && !e.target.closest('#
 function late() {
   G.met = false;
   const e = G.events[G.idx], from = [G.leader.pos.x, G.leader.pos.y];
-  G.missed.push(G.idx); G.stars[G.idx] = G.stars[G.idx] || 0;
+  G.missed.push(G.idx); G.stars[G.idx] = G.stars[G.idx] || 0; snd.play('late');
   G.idx++; save();
   if (G.idx >= G.events.length) { finish(); return; }
   const nx = G.events[G.idx];
@@ -419,7 +430,7 @@ function pickWord(e, done) {
     <div class="opts">${opts.map((o, i) => `<button data-i="${i}">${esc(o.text)}</button>`).join('')}</div><div class="explain"></div></div>`);
   s.querySelector('.opts').onclick = ev => {
     const b = ev.target.closest('button'); if (!b || s.querySelector('.right')) return;
-    const ok = opts[+b.dataset.i] === w;
+    const ok = opts[+b.dataset.i] === w; snd.play(ok ? 'right' : 'wrong');
     s.querySelectorAll('.opts button').forEach((x, i) => { if (opts[i] === w) x.classList.add('right'); else if (x === b) x.classList.add('wrong'); });
     s.querySelector('.explain').innerHTML = `${esc(w.who || '')} · ${esc(w.ref || '')}<button class="go">${ok ? '카드 받기' : '계속'}</button>`;
     s.querySelector('.explain .go').onclick = () => done(ok);
@@ -432,6 +443,7 @@ function missCard(e) {
 }
 function reveal(e, stars, straight) {
   {
+    snd.play('card');
     const pts = Math.max(10, stars * 100 + Math.round(G.meetLeft || 0) * 10 - G.asks * ASK + (G.bonus || 0)), got = collect(e, stars, pts), fresh = got.fresh;
     const v = showCard(tcard(e, G.idx, { s: stars, p: pts }, 'big reveal'),
       `<div class="row"><a class="go ghost" href="${appLink(e)}" data-listen>이 장면 듣기</a><button class="go" id="next">${nextLabel()}</button></div>`,
@@ -451,6 +463,7 @@ function cardPlain(e, stars, straight) {
   s.querySelector('#next').onclick = () => { closeSheet(); G.idx++; save(); G.idx < G.events.length ? startLeg() : finish(); };
 }
 function finish() {
+  snd.play('end');
   const n = G.events.length, st = G.stars.reduce((a, b) => a + (b || 0), 0), km = Math.round(G.total), J = JOURNEYS[JID];
   const text = `그 길 순례 — ${me.name || '순례자'}, ${josa(J.who, '을', '를')} 따라 ${n}장면 ${km}km를 걸었습니다 · 말씀 카드 ${Object.keys(deck()).length}/${n}장 ${num(total(deck()))}점\nhttps://thewaymap.org/game.html?j=${JID}`;
   const s = sheet(`<div class="body"><small>${esc(J.name)}</small><h2>여정을 마쳤습니다</h2><p class="sub">${esc(me.name || '순례자')}님, ${n}장면을 모두 찾아 걸었어요.</p>
@@ -541,6 +554,7 @@ function startLeg(walkFrom) {
   if (walkFrom) G.leader.speed = Math.max(4, Math.hypot(gx - walkFrom[0], gz - walkFrom[1]) / (G.timeMax * 0.5));
   $('#mNo').textContent = `${G.idx + 1} / ${G.events.length} · ${josa(JOURNEYS[JID].who, '이', '가')} 계신 곳`;
   G.named = false; missionText(); G.bonus = 0; spawnLegEvents();
+  snd.music(e.music); // 앱에서 이 장면에 까는 곡 그대로
   G.busy = false;
   // 같은 자리에서 이어지는 장면: 다시 반기는 인사 없이 곧바로 말씀 고르기로 (사용자 2026-11). 남은 시간 점수는 6초로 친다
   if (G.legStraight < ARRIVE) { G.busy = true; G.timeT = 0; G.meetLeft = 6; G.met = true; setTimeout(arrive, 400); }
@@ -553,6 +567,7 @@ async function loadJourney() {
   G.dataJ = JID; G.events = G.data.events.filter(e => G.data.places[e.place] && !G.data.places[e.place].hidden);
 }
 async function begin(fresh) {
+  snd.unlock(); // 시작 단추를 누른 이 순간에 소리를 깨운다 (아이폰)
   me.name = $('#name').value.trim() || '순례자'; store.set('theway-game-me', me);
   if (fresh) store.set('theway-game-' + JID, null);
   const J = JOURNEYS[JID];
@@ -560,7 +575,9 @@ async function begin(fresh) {
   const saved = store.get('theway-game-' + JID, null);
   G.idx = saved?.idx || 0; G.total = saved?.total || 0; G.stars = saved?.stars || []; G.missed = saved?.missed || [];
   $('#setup').classList.add('hidden');
-  for (const s of ['#hud', '#waterBox', '#dayBox', '#arrow', '#stick', '#cardsBtn', '#ask', '#quit']) $(s).classList.remove('hidden');
+  for (const s of ['#hud', '#waterBox', '#dayBox', '#arrow', '#stick', '#cardsBtn', '#ask', '#quit', '#sound']) $(s).classList.remove('hidden');
+  // 꾸미기 화면의 미리보기는 이제 그리지 않으니 인형과 렌더러를 놓아 준다
+  if (pv.actor) { bin(pv.actor.p.root, pv.scene); pv.actor = null; } pv.r.dispose();
   G.r = renderer($('#world'));
   buildWorld(J);
   playerType();
@@ -642,7 +659,7 @@ function frame(now) {
     }
     if (hit) { me0.goal.copy(me0.pos); if (hit !== 'edge') { G.seaT += dt; if (G.seaT > 0.5 && G.legT > 1.5) { G.seaT = 0; penalty(hit); } } }
     else {
-      G.seaT = 0;
+      G.seaT = 0; G.stepped = true;
       const moved = Math.hypot(nx - me0.pos.x, nz - me0.pos.y);
       me0.speed = sp; me0.goal.set(me0.pos.x + (nx - me0.pos.x) * 2, me0.pos.y + (nz - me0.pos.y) * 2);
       G.legWalked += moved; G.total += moved;
@@ -660,6 +677,7 @@ function frame(now) {
   G.leader.showT = near ? 1 : 0;
   const H = (x, z) => Math.max(0, G.world?.heightAt(x, z) || 0);
   const sailing = onGalilee(me0.pos.x, me0.pos.y);
+  snd.walk(dt, G.stepped && !sailing, G.slowT > 0); snd.boat(dt, sailing && !G.busy, G.stepped); G.stepped = false;
   me0.ground = sailing ? LAKE_LEVEL.galilee + 0.3 : H(me0.pos.x, me0.pos.y); G.leader.ground = H(G.leader.pos.x, G.leader.pos.y);
   if (sailing && !G.boat) { G.boat = makeProp('boat', 0, 0, { scale: SCALE * 0.9 }).obj; G.scene.add(G.boat); toast('배를 타고 갈릴리 바다를 건너요', true, 2000); }
   if (G.boat) { G.boat.visible = sailing; if (sailing) { G.boat.position.set(me0.pos.x, LAKE_LEVEL.galilee, me0.pos.y); G.boat.rotation.y = -me0.face + Math.PI / 2; } }

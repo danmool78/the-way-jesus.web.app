@@ -216,7 +216,8 @@ export function createWorld({ scene, renderer, toXZ, regions: want, places, jour
   sun.position.set(-3, 6, 4); scene.add(hemi, sun);
   const DAY = new THREE.Color('#2a2218'), NIGHT = new THREE.Color('#0d1222'), DUSK = new THREE.Color('#4a2c22'), sky = new THREE.Color();
   function setTime(f) { // f: 하루 가운데 위치 0~1 (0 = 새벽)
-    const day = Math.max(0, Math.sin(f * Math.PI * 2 - 0.3) * 1.15 + 0.6), // +0.6: 밤은 하루의 3분의 1쯤만 dusk = Math.max(0, 1 - Math.abs(f - 0.5) * 8) + Math.max(0, 1 - Math.abs(f - 0.02) * 10) * 0.6;
+    // +0.6: 밤은 하루의 3분의 1쯤만
+    const day = Math.max(0, Math.sin(f * Math.PI * 2 - 0.3) * 1.15 + 0.6), dusk = Math.max(0, 1 - Math.abs(f - 0.5) * 8) + Math.max(0, 1 - Math.abs(f - 0.02) * 10) * 0.6;
     const k = Math.min(1, day);
     hemi.intensity = 0.85 + 0.75 * k; sun.intensity = 0.55 + 1.65 * k; // 밤도 길과 땅이 보일 만큼은 밝게 (너무 어두웠다 — PC 캡처)
     hemi.color.setRGB(0.75 + 0.25 * k, 0.8 + 0.16 * k, 0.95 - 0.1 * k); sun.color.setRGB(1, 0.75 + 0.2 * k, 0.6 + 0.3 * k);
