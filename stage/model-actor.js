@@ -66,6 +66,7 @@ export class StageModel {
     const R = { up: bone(body, 'RightArm'), lo: bone(body, 'RightForeArm'), hand: bone(body, 'RightHand') };
     const dl = this.doll.p.armL.position.x > 0;
     this.arms = [[this.doll.p.armL, dl === (L.up.getWorldPosition(v1).x > 0) ? L : R], [this.doll.p.armR, dl === (L.up.getWorldPosition(v1).x > 0) ? R : L]];
+    for (const [, mb] of this.arms) if (mb.hand) mb.hand0 = mb.hand.quaternion.clone(); // 손목의 기본 자세 (곧게 편 손)
     this.legs = [['Left'], ['Right']].map(([s]) => ({ up: bone(body, s + 'UpLeg'), lo: bone(body, s + 'Leg'), foot: bone(body, s + 'Foot') }));
     const hips = bone(body, 'Hips'); this.hipH = hips ? hips.getWorldPosition(v1).y * body.scale.x / (body.scale.x || 1) : 0.5; this.body = body; this.legW = 0;
     this.headB = bone(body, 'Head'); this.neckB = bone(body, 'Neck'); this.spineB = bone(body, 'Spine1') || bone(body, 'Spine');
@@ -151,11 +152,19 @@ export class StageModel {
     const qm = r.getWorldQuaternion(q2.clone()), qd = dr.getWorldQuaternion(new THREE.Quaternion()).invert();
     // 인형 root 기준의 팔 방향(아래로 뻗은 팔이 가리키는 쪽)을 모델 root에 옮긴다
     const dirOf = o => DOWN.clone().applyQuaternion(o.getWorldQuaternion(new THREE.Quaternion()).premultiply(qd).premultiply(qm));
-    for (const [da, mb] of this.arms) {
-      if (!mb.up || !mb.lo || !mb.hand) continue;
-      this.aim(mb.up, mb.lo, dirOf(da), this.w);
-      this.aim(mb.lo, mb.hand, dirOf(da.userData.elbow), this.w);
-    }
+    // 땅에 앉거나 무릎 꿇으면 두 손을 넓적다리 위에 가지런히 얹는다 — 인형의 '가슴 앞에 모은 손'을 따르니 손목이 비틀려 무릎 위에서 엉켰다(사용자 2026-11).
+    // 엎드려 우는 자세(mourn)는 인형대로
+    const lap = this.seizaW > 0.5 && d.pose !== 'mourn';
+    const qr = lap && r.getWorldQuaternion(new THREE.Quaternion());
+    this.arms.forEach(([da, mb], i) => {
+      if (!mb.up || !mb.lo || !mb.hand) return;
+      const side = r.worldToLocal(mb.up.getWorldPosition(v1)).x > 0 ? 1 : -1; // 몸의 어느 쪽 팔인지 (몸 기준)
+      const up = lap ? new THREE.Vector3(side * 0.12, -1, 0.42).normalize().applyQuaternion(qr) : dirOf(da);
+      const lo = lap ? new THREE.Vector3(-side * 0.18, -0.25, 1).normalize().applyQuaternion(qr) : dirOf(da.userData.elbow);
+      this.aim(mb.up, mb.lo, up, this.w);
+      this.aim(mb.lo, mb.hand, lo, this.w);
+      mb.hand.quaternion.slerp(mb.hand0, this.w); // 손목은 곧게 (서 있는 동작의 꺾인 손목이 남아 어색했다)
+    });
     // 고개: 인형이 숙이거나 드는 만큼 (십자가 위에서 고개를 떨굼, 하늘을 우러름)
     if (this.headB) this.headB.rotation.x += d.p.head.rotation.x * this.w * 0.8;
   }
