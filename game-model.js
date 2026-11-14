@@ -98,6 +98,7 @@ export class ModelActor {
     if (moving) want = Math.atan2(d.x, d.y);
     this.face = damp(this.face, this.face + wrapA(want - this.face), 6, dt);
     this.play(moving ? 'walk' : POSE[this.pose] || 'idle');
+    if (this.acts.walk) this.acts.walk.timeScale = this.walkRate || 1; // 빨리 걷는 이는 발도 빨리 (발이 땅에서 미끄러져 보이지 않게)
     this.mixer.update(dt);
     this.show = damp(this.show, this.showT, 4, dt);
     const r = this.p.root;

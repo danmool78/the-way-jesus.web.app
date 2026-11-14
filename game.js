@@ -162,6 +162,7 @@ const G = {
 };
 G.camLook = new THREE.Vector3();
 // 그 자리의 땅 높이 (입체 땅, game-world.js) — 이름표·발자국을 땅 위에
+const PACE = 3.2; // 순례자의 걸음 (km/초): 나사렛→베들레헴 140km는 40초 남짓, 애굽 길은 몇 분
 const GH = (x, z) => Math.max(0, G.world?.heightAt(x, z) || 0);
 const SCALE = 1.4; // 인형 크기 (지도 위에서 보이게 키운다 — 4.2는 호수·마을에 비해 너무 컸다, PC 캡처 2026-11)
 // 그분은 아주 가까이(3km — 인형 키의 두 배 남짓) 가야 보이고, 2.5km 안에 들어서야 만난다 (사용자 2026-11 — 멀리서 보이면 쉬웠다)
@@ -715,7 +716,8 @@ function startLeg(walkFrom) {
   G.legStart = [G.me.pos.x, G.me.pos.y]; G.legWalked = 0; G.legT = 0; G.lostT = 0; G.asks = 0; G.askT = 0;
   G.legStraight = Math.hypot(gx - G.me.pos.x, gz - G.me.pos.y);
   G.prevD = G.legStraight;
-  G.speed = Math.max(9, G.legStraight / 16); // 먼 길(바벨론 포로길 등)도 20초 남짓에 걷게
+  // 걸음은 늘 같은 빠르기 — 실제 땅의 거리만큼 걷고 그만큼 시간을 더 준다 (사용자 2026-11: 먼 길도 20초에 닿게 하니 땅과 상관없이 날아다녔다)
+  G.speed = PACE;
   // 제한 시간: 곧장 걸으면 걸릴 시간의 1.7배 + 6초. 그분은 그 시간의 절반쯤에 다음 자리에 닿으시게 걸으신다
   G.timeMax = G.timeT = G.legStraight / G.speed * 2.3 + 10; // 목적지를 지도에서 찾아야 하니 넉넉히
   if (walkFrom) G.leader.speed = Math.max(4, Math.hypot(gx - walkFrom[0], gz - walkFrom[1]) / (G.timeMax * 0.5));
@@ -762,7 +764,7 @@ async function begin(fresh) {
   const lname = leadAt(G.idx)?.[1] || J.model; // 이어 걷기면 그 장면의 사람으로 (여호수아·왕 다윗 등)
   const lead = lname && await model(lname) && new ModelActor(await model(lname));
   G.leader = lead || new Actor(J.leader, 0, 0, 0, { gaze: false }); G.leaderName = lead ? lname : null;
-  G.me = await pilgrim(sx, sz); G.me.realWalk = true; G.me.big = SCALE;
+  G.me = await pilgrim(sx, sz); G.me.realWalk = true; G.me.big = SCALE; G.me.walkRate = 1.5;
   [G.soldierG, G.manG] = await Promise.all([model('soldier'), model('pilgrim-man')]); // 병정·길가의 쓰러진 사람
   G.leader.realWalk = true; G.leader.big = SCALE; G.leader.target = G.me;
   G.scene.add(G.me.p.root, G.leader.p.root);
