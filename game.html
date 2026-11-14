@@ -71,14 +71,14 @@ button{font:inherit;color:inherit;cursor:pointer}
 #stick{position:fixed;z-index:6;left:calc(26px + env(safe-area-inset-left));bottom:calc(26px + env(safe-area-inset-bottom));width:124px;height:124px;border-radius:50%;background:rgba(20,16,11,.45);border:1px solid var(--line);touch-action:none}
 #stick i{position:absolute;left:50%;top:50%;width:54px;height:54px;margin:-27px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#f0d79a,#b9893e);box-shadow:0 3px 10px rgba(0,0,0,.5)}
 @media (hover:hover) and (pointer:fine){#stick{opacity:.55}}
-#zoom{position:fixed;z-index:6;right:calc(16px + env(safe-area-inset-right));bottom:calc(30px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:8px}
-#zoom button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--panel);font-size:20px;color:var(--gold2)}
 
 /* 말씀 카드 */
-#cardsBtn{position:fixed;z-index:6;right:calc(12px + env(safe-area-inset-right));bottom:calc(140px + env(safe-area-inset-bottom));padding:7px 11px;border-radius:12px;border:1px solid var(--line);background:var(--panel);font-size:12px;color:var(--muted)}
+#cardsBtn{position:fixed;z-index:6;right:calc(12px + env(safe-area-inset-right));bottom:calc(30px + env(safe-area-inset-bottom));padding:7px 11px;border-radius:12px;border:1px solid var(--line);background:var(--panel);font-size:12px;color:var(--muted)}
 #cardsBtn b{color:var(--gold2);font-size:14px}
 #quit{position:fixed;z-index:6;left:calc(12px + env(safe-area-inset-left));top:calc(max(10px,env(safe-area-inset-top)) + 64px);padding:7px 11px;border-radius:12px;border:1px solid var(--line);background:var(--panel);font-size:12px;color:var(--muted)}
-#ask{position:fixed;z-index:6;right:calc(12px + env(safe-area-inset-right));bottom:calc(196px + env(safe-area-inset-bottom));padding:8px 12px;border-radius:12px;border:1px solid var(--line);background:var(--panel);font-size:12.5px;color:var(--gold2)}
+#sound{position:fixed;z-index:6;left:calc(12px + env(safe-area-inset-left));top:calc(max(10px,env(safe-area-inset-top)) + 104px);padding:7px 11px;border-radius:12px;border:1px solid var(--line);background:var(--panel);font-size:12px;color:var(--muted)}
+#sound.off{opacity:.6;text-decoration:line-through}
+#ask{position:fixed;z-index:6;right:calc(12px + env(safe-area-inset-right));bottom:calc(86px + env(safe-area-inset-bottom));padding:8px 12px;border-radius:12px;border:1px solid var(--line);background:var(--panel);font-size:12.5px;color:var(--gold2)}
 /* 등불: 가까울수록 밝게 (--w 0~1) */
 #mDist{--w:0;padding-left:16px;position:relative}
 #mDist::before{content:'';position:absolute;left:0;top:50%;width:10px;height:10px;margin-top:-5px;border-radius:50%;background:#ffd77a;opacity:calc(.2 + var(--w) * .8);box-shadow:0 0 calc(2px + var(--w) * 14px) calc(var(--w) * 4px) rgba(255,215,122,calc(var(--w) * .9))}
@@ -129,7 +129,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 @keyframes pulse{50%{opacity:.45}}
 /* 만남의 말풍선: 그분 머리 위에 */
 #bubble{position:fixed;z-index:7;width:max-content;max-width:min(300px,78vw);transform:translate(-50%,calc(-100% - 14px)) scale(.92);padding:11px 15px 12px;border-radius:16px;background:#fbf3e0;color:#2a1f14;font:500 15.5px/1.6 var(--serif);word-break:keep-all;text-wrap:balance;box-shadow:0 8px 28px rgba(0,0,0,.45);opacity:0;transition:opacity .4s,transform .4s;pointer-events:none}
-body.meeting #stick,body.meeting #zoom,body.meeting #arrow{opacity:0!important;pointer-events:none}
+body.meeting #stick,body.meeting #arrow{opacity:0!important;pointer-events:none}
 #bubble.on{opacity:1;transform:translate(-50%,calc(-100% - 14px)) scale(1)}
 #bubble::after{content:'';position:absolute;left:calc(50% + var(--tx,0px));bottom:-9px;margin-left:-9px;border:9px solid transparent;border-bottom:0;border-top-color:#fbf3e0}
 #bubble b{display:block;font:700 11.5px var(--sans);letter-spacing:.06em;color:#9b6b2a;margin-bottom:2px}
@@ -206,7 +206,8 @@ body.meeting #stick,body.meeting #zoom,body.meeting #arrow{opacity:0!important;p
 <button id="cardsBtn" class="hidden"></button>
 <button id="ask" class="hidden">길 묻기</button>
 <button id="quit" class="hidden" aria-label="나가기">나가기</button>
-<div id="zoom" class="hidden"><button id="zin" aria-label="가까이">+</button><button id="zout" aria-label="멀리">−</button></div>
+<button id="sound" class="hidden">소리 켬</button>
+
 <div id="toast"></div>
 <div id="bubble"></div>
 <div id="sheet" class="sheet hidden"></div>
