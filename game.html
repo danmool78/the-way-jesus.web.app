@@ -78,6 +78,13 @@ button{font:inherit;color:inherit;cursor:pointer}
 #quit{position:fixed;z-index:6;left:calc(12px + env(safe-area-inset-left));top:calc(max(10px,env(safe-area-inset-top)) + 64px);padding:7px 11px;border-radius:12px;border:1px solid var(--line);background:var(--panel);font-size:12px;color:var(--muted)}
 #sound{position:fixed;z-index:6;left:calc(12px + env(safe-area-inset-left));top:calc(max(10px,env(safe-area-inset-top)) + 104px);padding:7px 11px;border-radius:12px;border:1px solid var(--line);background:var(--panel);font-size:12px;color:var(--muted)}
 #sound.off{opacity:.6;text-decoration:line-through}
+/* 달리기: 폰에서 누르는 동안 (PC는 Shift — 마우스가 있는 화면에서는 감춘다) */
+#run{position:fixed;z-index:6;left:calc(160px + env(safe-area-inset-left));bottom:calc(40px + env(safe-area-inset-bottom));width:62px;height:62px;border-radius:50%;border:1px solid var(--line);background:rgba(20,16,11,.55);color:var(--gold2);font-size:12.5px;touch-action:none;user-select:none;-webkit-user-select:none}
+#run.on{background:rgba(217,180,106,.35)}
+@media (hover:hover) and (pointer:fine){#run{display:none}}
+/* 만난 뒤 둘러보다가 준비되면 */
+#goWord{position:fixed;z-index:6;left:50%;transform:translateX(-50%);bottom:calc(150px + env(safe-area-inset-bottom));padding:12px 26px;border-radius:99px;border:0;background:linear-gradient(#f0d79a,#c99a4a);color:#2a1f14;font:700 16px var(--serif);box-shadow:0 6px 20px rgba(0,0,0,.45)}
+#bubble .more{font-style:normal;margin-left:6px;color:#b98b45;font-size:12px}
 #ask{position:fixed;z-index:6;right:calc(12px + env(safe-area-inset-right));bottom:calc(86px + env(safe-area-inset-bottom));padding:8px 12px;border-radius:12px;border:1px solid var(--line);background:var(--panel);font-size:12.5px;color:var(--gold2)}
 /* 등불: 가까울수록 밝게 (--w 0~1) */
 #mDist{--w:0;padding-left:16px;position:relative}
@@ -108,7 +115,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .thead b{flex:1;min-width:0;font:700 5.2cqw/1.2 var(--serif);word-break:keep-all;text-wrap:balance;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden} /* 긴 제목은 두 줄로 (말줄임 대신) */
 .tst{flex:none;font-size:4.4cqw;color:#ffd77a;letter-spacing:.3cqw}
 .tart{position:relative;margin:0 3cqw;flex:1;min-height:0;border-radius:2cqw;overflow:hidden;box-shadow:inset 0 0 0 .6cqw rgba(255,255,255,.18)}
-.tart img{width:100%;height:100%;object-fit:cover;display:block}
+.tart img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;display:block} /* 그림 크기가 카드를 늘리지 않게 — 카드 그림이 아직 없는 여정(모세 등)은 세로로 긴 장면 그림이 들어가 카드가 길어졌다 */
 .tcap{margin:1.6cqw 3cqw 0;padding:1cqw 2.4cqw;border-radius:1.4cqw;background:rgba(233,217,176,.12);font:500 3.3cqw var(--sans);color:#c9bfa8;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tword{margin:1.8cqw 3cqw 0;padding:2.6cqw 3.2cqw;border-radius:2cqw;background:#f3ead6;color:#2a2116}
 .tword q{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;quotes:none;font:500 4.3cqw/1.5 var(--serif);word-break:keep-all;text-wrap:balance}
@@ -144,7 +151,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 @keyframes pulse{50%{opacity:.45}}
 /* 만남의 말풍선: 그분 머리 위에 */
 #bubble{position:fixed;z-index:7;width:max-content;max-width:min(300px,78vw);transform:translate(-50%,calc(-100% - 14px)) scale(.92);padding:11px 15px 12px;border-radius:16px;background:#fbf3e0;color:#2a1f14;font:500 15.5px/1.6 var(--serif);word-break:keep-all;text-wrap:balance;box-shadow:0 8px 28px rgba(0,0,0,.45);opacity:0;transition:opacity .4s,transform .4s;pointer-events:none}
-body.meeting #stick,body.meeting #arrow{opacity:0!important;pointer-events:none}
+body.meeting #stick,body.meeting #run,body.meeting #arrow{opacity:0!important;pointer-events:none}
 #bubble.on{opacity:1;transform:translate(-50%,calc(-100% - 14px)) scale(1)}
 #bubble::after{content:'';position:absolute;left:calc(50% + var(--tx,0px));bottom:-9px;margin-left:-9px;border:9px solid transparent;border-bottom:0;border-top-color:#fbf3e0}
 #bubble b{display:block;font:700 11.5px var(--sans);letter-spacing:.06em;color:#9b6b2a;margin-bottom:2px}
@@ -220,6 +227,8 @@ body.meeting #stick,body.meeting #arrow{opacity:0!important;pointer-events:none}
 <div id="stick" class="hidden"><i></i></div>
 <button id="cardsBtn" class="hidden"></button>
 <button id="ask" class="hidden">길 묻기</button>
+<button id="run" class="hidden">달리기</button>
+<button id="goWord" class="hidden">말씀 고르기</button>
 <button id="quit" class="hidden" aria-label="나가기">나가기</button>
 <button id="sound" class="hidden">소리 켬</button>
 
