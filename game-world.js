@@ -76,15 +76,18 @@ export function createWorld({ scene, renderer, toXZ, regions: want, places, jour
       const [x0, z0] = toXZ(p.lat, p.lng);
       if (journeyId !== 'david' && Math.hypot(x0 - cityBox.cx, z0 - cityBox.cz) < cityBox.r) return; // 예루살렘은 도성 모형이 대신 (다윗 때는 예수 때 도성이 아니라 마을로)
       const big = /성|도성|가버나움|세겜|여리고|가이사랴|애굽|헤브론/.test(p.name) ? 1.6 : 1;
+      // 우물은 마을 어귀(집들이 서는 둘레 바깥)에 두고, 그 둘레에는 집을 짓지 않는다 — 한가운데 두니 집 상자에 가려 보이지 않았다(사용자)
+      const wa = rnd() * 6.283, wd = 5.6 * Math.sqrt(big), well = n % 3 === 0 ? [x0 + Math.cos(wa) * wd, z0 + Math.sin(wa) * wd] : null;
       const cnt = Math.round((6 + rnd() * 5) * big);
       for (let i = 0; i < cnt; i++) {
         const a = rnd() * 6.283, d = (1.2 + rnd() * 3.2) * Math.sqrt(big), x = x0 + Math.cos(a) * d, z = z0 + Math.sin(a) * d;
+        if (well && Math.hypot(x - well[0], z - well[1]) < 3) continue;
         spots.push([x, z, (0.7 + rnd() * 0.5) * SC * 0.55, rnd() * 3]);
       }
-      for (let i = 0; i < 6; i++) { const a = rnd() * 6.283, d = 4 + rnd() * 4, x = x0 + Math.cos(a) * d, z = z0 + Math.sin(a) * d; trees.push([x, z, (0.5 + rnd() * 0.5) * SC * 0.3]); }
+      for (let i = 0; i < 6; i++) { const a = rnd() * 6.283, d = 4 + rnd() * 4, x = x0 + Math.cos(a) * d, z = z0 + Math.sin(a) * d; if (well && Math.hypot(x - well[0], z - well[1]) < 2.5) continue; trees.push([x, z, (0.5 + rnd() * 0.5) * SC * 0.3]); }
       // 마을마다 불빛 하나 (밤에 보인다), 셋에 하나꼴로 우물
       lights.push([x0, z0]);
-      if (n % 3 === 0) wells.push([x0 + 3.5, z0 + 2.5]);
+      if (well) wells.push(well);
     });
     const hm = new THREE.InstancedMesh(houseGeo, houseM, spots.length), rm = new THREE.InstancedMesh(roofGeo, roofM, spots.length), o = new THREE.Object3D(), c = new THREE.Color();
     spots.forEach(([x, z, s, ry], i) => {
