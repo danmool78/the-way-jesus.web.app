@@ -248,8 +248,8 @@ export function createWorld({ scene, renderer, toXZ, regions: want, places, jour
 
   const ready = Promise.all(regs.map(r => loadRegion(r).catch(() => null))).then(() => {
     buildRivers(); buildVillages(); buildLife();
-    if (journeyId !== 'david' && journeyId !== 'moses') addModel(buildJerusalem(), JLM, 6);
-    if (regs.some(r => r.name === 'egypt')) Object.values(EGYPT).forEach(m => addModel(m.build(), m.extent, 2));
+    if (journeyId !== 'david' && journeyId !== 'moses') addModel(buildJerusalem(), JLM, 3); // 인형을 줄이며 도성도 (6배는 베들레헴까지 덮었다)
+    if (regs.some(r => r.name === 'egypt')) Object.values(EGYPT).forEach(m => addModel(m.build(), m.extent, 1.5));
   });
   return { ready, heightAt, update: updateLife, setTime, wells };
 }
