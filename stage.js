@@ -122,6 +122,8 @@ const EXTRA = {
     ['elisha', 'plain'], ['isaiah', 'plain'], ['pilgrim-man', '#5d6b4a'], ['ahijah', 'plain']],
   women: [['pilgrim-woman'], ['woman'], ['miriam', 'plain'], ['pilgrim-woman', '#3c5d96'], ['zipporah', 'plain'], ['rahab', 'plain'], ['pilgrim-woman', '#a3554a']],
 };
+// 엑스트라 모델은 무대가 뜰 때 미리 받아 둔다 — 장면마다 그때 받으니 군중이 잠깐 예전 인형으로 섰다가 바뀌었다
+if (new URLSearchParams(location.search).has('models')) setTimeout(() => want([...new Set([...EXTRA.men, ...EXTRA.women].map(([n]) => n))]), 0);
 const dress = ([n, c]) => c === 'plain' ? plain(ready[n], n) : c ? tinted(ready[n], n, c) : ready[n];
 // 3D 모델은 아직 점검 중 — 주소에 ?models가 있을 때만 쓴다. 운영은 예전 인형 (사용자 2026-11: 떠 있고 엉뚱한 곳을 보고 말해서, 다 잡을 때까지)
 const USE_MODELS = new URLSearchParams(location.search).has('models');
