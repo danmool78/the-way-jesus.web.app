@@ -58,6 +58,48 @@ export function tinted(gltf, name, hex) {
   const out = { scene, animations: gltf.animations }; tints.set(key, out); return out;
 }
 
+// 손에 드는 것 (사용자 2026-11): 지팡이·창·방패·물동이를 코드로 만든다. 크기는 모델 키(BASE_H)에 맞춘 몸 둘레 단위.
+// 뼈에 자식으로 달면 뼈의 배율·축(Mixamo 손은 손가락 쪽이 +Y)이 모델마다 달라 막대가 눕거나 엉뚱한 데로 돌아,
+// 매 화면 손 뼈의 자리만 따라가고 방향은 몸 기준으로 세운다 — 걸을 때 손을 흔들면 지팡이도 함께 앞뒤로 간다
+const mat = (color, o = {}) => new THREE.MeshStandardMaterial({ color, roughness: 0.85, ...o });
+function makeGear(kind) {
+  const g = new THREE.Group();
+  const rod = (len, r, color) => { const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r * 1.15, len, 6), mat(color)); m.position.y = len / 2; return m; };
+  if (kind === 'staff' || kind === 'crook' || kind === 'rod') { // 지팡이: 손에서 아래로 땅까지, 위로 조금 (목자는 끝이 굽은 막대)
+    const L = kind === 'crook' ? 0.98 : 1.0; g.add(rod(L, 0.012, '#6b4a2b'));
+    if (kind === 'crook') { const h = new THREE.Mesh(new THREE.TorusGeometry(0.045, 0.011, 5, 12, Math.PI * 1.25), mat('#6b4a2b')); h.position.set(-0.045, L, 0); g.add(h); }
+    g.userData.ground = true;
+  } else if (kind === 'spear' || kind === 'bigspear') { // 창: 손 위로 머리를 넘게, 쇠 날
+    const k = kind === 'bigspear' ? 1.3 : 1, L = 1.22 * k; g.add(rod(L, 0.01 * k, '#5a4128')); // 골리앗의 창 자루는 베틀 채 같았다(삼상 17:7)
+    const tip = new THREE.Mesh(new THREE.ConeGeometry(0.022 * k, 0.12 * k, 5), mat('#b9b7ad', { metalness: 0.6, roughness: 0.4 }));
+    tip.position.y = L + 0.06 * k; g.add(tip);
+    g.userData.ground = true;
+  } else if (kind === 'scutum') { // 로마 병정의 긴 네모 방패(붉은 바탕, 쇠 돌기)
+    const b = new THREE.Mesh(new THREE.BoxGeometry(0.26, 0.4, 0.02), mat('#8c2a1e')); g.add(b);
+    const back = new THREE.Mesh(new THREE.BoxGeometry(0.27, 0.41, 0.012), mat('#5b3d24')); back.position.z = -0.012; g.add(back); // 뒷면은 나무
+    for (const y of [-0.2, 0.2]) { const e = new THREE.Mesh(new THREE.BoxGeometry(0.27, 0.014, 0.026), mat('#c8a24a', { metalness: 0.4 })); e.position.y = y; g.add(e); } // 위아래 놋 테
+    const boss = new THREE.Mesh(new THREE.SphereGeometry(0.035, 10, 6, 0, Math.PI * 2, 0, Math.PI / 2), mat('#c8a24a', { metalness: 0.5 })); boss.rotation.x = Math.PI / 2; boss.position.z = 0.01; g.add(boss);
+    g.userData.face = true;
+  } else if (kind === 'shield' || kind === 'bigshield') { // 둥근 방패(구약의 병사·요압·골리앗) — 가죽 바탕에 놋 테
+    const R = kind === 'bigshield' ? 0.19 : 0.15;
+    const d = new THREE.Mesh(new THREE.CylinderGeometry(R, R, 0.02, 18), [mat('#6b4a2c'), mat('#7a5a36'), mat('#4e3420')]); d.rotation.x = Math.PI / 2; g.add(d); // 앞은 가죽, 뒤는 어두운 나무
+    const rim = new THREE.Mesh(new THREE.TorusGeometry(R, 0.012, 5, 22), mat('#b08a3e', { metalness: 0.5 })); g.add(rim);
+    const boss = new THREE.Mesh(new THREE.SphereGeometry(R * 0.25, 10, 6, 0, Math.PI * 2, 0, Math.PI / 2), mat('#b08a3e', { metalness: 0.5 })); boss.rotation.x = Math.PI / 2; boss.position.z = 0.01; g.add(boss);
+    g.userData.face = true;
+  } else if (kind === 'helmet') { // 놋 투구: 순례자 모델로 세운 구약 병사가 순례자와 똑같아 보여서 (정수리에 씌운다)
+    const h = new THREE.Mesh(new THREE.SphereGeometry(0.068, 14, 8, 0, Math.PI * 2, 0, Math.PI / 2), mat('#a07c3a', { metalness: 0.55, roughness: 0.45 }));
+    h.scale.set(1, 0.95, 1.08); h.position.y = -0.045; g.add(h);
+    const crest = new THREE.Mesh(new THREE.BoxGeometry(0.012, 0.03, 0.12), mat('#7a5a2a', { metalness: 0.4 })); crest.position.y = 0.02; g.add(crest);
+    g.userData.top = true;
+  } else if (kind === 'jar') { // 물동이: 머리에 이고 (요 4:28 — 여인이 물동이를 버려두고)
+    const pts = [[0, 0], [0.05, 0.005], [0.075, 0.05], [0.07, 0.1], [0.035, 0.135], [0.03, 0.16], [0.042, 0.17]].map(([x, y]) => new THREE.Vector2(x, y));
+    const j = new THREE.Mesh(new THREE.LatheGeometry(pts, 14), mat('#b4693e', { side: THREE.DoubleSide })); g.add(j);
+  }
+  g.userData.kind = kind;
+  return g;
+}
+const HOLD = { staff: 'R', crook: 'R', rod: 'R', spear: 'R', bigspear: 'R', scutum: 'L', shield: 'L', bigshield: 'L', jar: 'top', helmet: 'top' };
+
 export class ModelActor {
   constructor(gltf, x = 0, z = 0, o = {}) {
     const body = clone(gltf.scene); // 뼈대째 복제 — 같은 모델로 여럿(병정 등)을 세울 수 있게
@@ -78,7 +120,14 @@ export class ModelActor {
     this.pillow = new THREE.Mesh(new THREE.CapsuleGeometry(0.05, 0.14, 4, 12), new THREE.MeshStandardMaterial({ color: '#efe2c2', roughness: 1 }));
     this.pillow.rotation.z = Math.PI / 2; this.pillow.scale.set(1, 1, 0.6); this.pillow.visible = false;
     this.p.root.add(this.pillow); this.noPillow = !!o.noPillow; // 길가에 쓰러진 사람은 베개 없이
+    this.hands = { R: bone(body, 'RightHand'), L: bone(body, 'LeftHand'), top: bone(body, 'HeadTop_End') };
+    this.gear = [];
     this.play('idle', 0);
+  }
+  // 손에 들려 주기 (game-cast.js의 GEAR): ['staff'] 등 — 같은 쪽 손에 둘을 주지 않는다
+  hold(list = []) {
+    for (const k of list) { const b = this.hands[HOLD[k]]; if (!b) continue; const m = makeGear(k); m.userData.bone = b; this.p.root.add(m); this.gear.push(m); }
+    return this;
   }
   play(name, fade = 0.35) {
     const a = this.acts[name] || this.acts.idle; if (!a || a === this.cur) return;
@@ -106,10 +155,22 @@ export class ModelActor {
     r.scale.setScalar((0.94 + 0.06 * this.show) * this.big); r.visible = this.show > 0.05;
     // 베개는 잘 때만, 머리 밑 땅 위에
     const sleep = !moving && this.pose === 'sleep' && !this.noPillow; this.pillow.visible = sleep;
+    // 손에 든 것: 손 뼈 자리를 몸 기준 좌표로 옮겨 따라가게 (방향은 몸 기준으로 곧게)
+    if (this.gear.length && r.visible) {
+      r.updateMatrixWorld(true);
+      for (const g of this.gear) {
+        const v = g.userData.bone.getWorldPosition(new THREE.Vector3()); r.worldToLocal(v); g.position.copy(v);
+        if (g.userData.ground) g.position.y = 0; // 지팡이·창은 땅을 짚고 손을 따라간다 (손 높이에 매달면 걸을 때 공중에 떴다)
+        if (g.userData.kind === 'jar') g.position.y += 0.005;
+        if (g.userData.top && this.head) { const q = this.head.getWorldQuaternion(new THREE.Quaternion()), rq = r.getWorldQuaternion(new THREE.Quaternion()).invert(); g.quaternion.copy(rq.multiply(q)); } // 투구는 고개를 따라 돈다
+        if (g.userData.face) { const a = Math.atan2(v.x, v.z * 0.4); g.rotation.y = a; g.position.x += Math.sign(v.x) * 0.03; } // 방패는 바깥을 보게
+      }
+    }
     if (sleep && this.head) { r.updateMatrixWorld(true); const v = this.head.getWorldPosition(new THREE.Vector3()); r.worldToLocal(v); this.pillow.position.set(v.x, 0.035, v.z); this.pillow.rotation.y = Math.atan2(v.x, v.z); }
   }
   dispose() {
     this.mixer.stopAllAction(); this.p.root.parent?.remove(this.p.root);
+    for (const g of this.gear) g.traverse(o => { if (o.isMesh) { o.geometry.dispose(); for (const m of [].concat(o.material)) m.dispose(); } });
     this.pillow.geometry.dispose(); this.pillow.material.dispose(); // 몸은 같은 모델끼리 함께 쓰므로 버리지 않는다
   }
 }

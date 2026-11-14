@@ -10,7 +10,7 @@ import { makeProp } from './stage/props.js';
 import { createAudio } from './game-audio.js';
 import { TREASURES, RARITY, hideTreasures, treasureCard } from './game-treasure.js';
 import { model, tinted, ModelActor } from './game-model.js';
-import { CAST, FOLLOW, SIZE, LEADS } from './game-cast.js';
+import { CAST, FOLLOW, SIZE, LEADS, GEAR, BOAT, SETS } from './game-cast.js';
 
 const $ = s => document.querySelector(s);
 const snd = createAudio(); // 배경음악·발소리·배 소리·효과음 (game-audio.js)
@@ -108,7 +108,7 @@ floor.rotation.x = -Math.PI / 2; pv.scene.add(floor);
 const pName = () => me.sex === 'f' ? 'pilgrim-woman' : 'pilgrim-man';
 async function pilgrim(x = 0, z = 0) {
   const g = await model(pName());
-  if (g) return new ModelActor(tinted(g, pName(), me.robe), x, z);
+  if (g) return new ModelActor(tinted(g, pName(), me.robe), x, z).hold(GEAR[pName()]);
   playerType(); return new Actor('player', x, z, 0, { gaze: false });
 }
 let pvTok = 0;
@@ -163,7 +163,13 @@ const G = {
 G.camLook = new THREE.Vector3();
 // 그 자리의 땅 높이 (입체 땅, game-world.js) — 이름표·발자국을 땅 위에
 const PACE = 3.2; // 순례자의 걸음 (km/초): 나사렛→베들레헴 140km는 40초 남짓, 애굽 길은 몇 분
-const GH = (x, z) => Math.max(0, G.world?.heightAt(x, z) || 0);
+// 사람이 설 높이: 땅 그대로 — 0 밑을 잘라 쓰니 해수면 아래인 갈릴리 물가·요단 골짜기·여리고에서 사람이 땅 위에 떠 있었다.
+// 물(바다·호수) 위에서만 수면 높이로 (물 위를 걸으신 자리, 홍해를 건너는 자리)
+const GH = (x, z) => {
+  const h = G.world?.heightAt(x, z) || 0, [la, ln] = toLL(x, z);
+  for (const [k, p] of Object.entries(WATERS)) if (inPoly(la, ln, p)) return Math.max(h, LAKE_LEVEL[k] ?? 0.05);
+  return h;
+};
 const SCALE = 1.4; // 인형 크기 (지도 위에서 보이게 키운다 — 4.2는 호수·마을에 비해 너무 컸다, PC 캡처 2026-11)
 // 그분은 아주 가까이(3km — 인형 키의 두 배 남짓) 가야 보이고, 2.5km 안에 들어서야 만난다 (사용자 2026-11 — 멀리서 보이면 쉬웠다)
 const ARRIVE = 2.5;
@@ -231,6 +237,14 @@ function spawnLegEvents() {
     if (!blocked(x, z)) { const a = G.manG ? new ModelActor(tinted(G.manG, 'pilgrim-man', '#8b6f50'), x, z, { noPillow: true }) : new Actor('man', x, z, 0, { gaze: false }); a.big = SCALE; a.set('sleep'); a.realWalk = true; G.scene.add(a.p.root); G.wounded = { a, x, z, still: 0, helped: false, told: false }; }
   }
 }
+// 병정: 예수 여정은 로마 병정(창과 긴 네모 방패), 구약 여정은 로마 병정이 시대에 맞지 않아(사용자 2026-11)
+// 남자 순례자 모델의 겉옷을 검붉게 칠하고 창과 둥근 방패를 들린 그 시대 병사로
+const roman = () => JID === 'jesus';
+function soldierAt(x, z) {
+  if (roman() && G.soldierG) return new ModelActor(G.soldierG, x, z).hold(GEAR.soldier);
+  if (!roman() && G.manG) return new ModelActor(tinted(G.manG, 'pilgrim-man', '#8a3324'), x, z).hold(['spear', 'shield', 'helmet']);
+  return new Actor('soldier', x, z, 0, { gaze: false });
+}
 function spawnPatrols() {
   // 큰 성읍(예루살렘·가버나움·여리고·가이사랴 등) 둘레를 둘씩 오가는 로마 병정
   G.patrols = [];
@@ -247,7 +261,7 @@ function spawnPatrols() {
     // 둘이 나란히 붙어 걷는다: 순찰 길에 직각으로 0.8만큼 벌린다 (1.5로 x쪽만 벌리니 따로 다니는 것 같았다 — 사용자 2026-11)
     const L = Math.hypot(B[0] - A[0], B[1] - A[1]) || 1, nx = -(B[1] - A[1]) / L * 0.4, nz = (B[0] - A[0]) / L * 0.4;
     for (let i = 0; i < 2; i++) {
-      const o = i ? [-nx, -nz] : [nx, nz], s = G.soldierG ? new ModelActor(G.soldierG, A[0] + o[0], A[1] + o[1]) : new Actor('soldier', A[0] + o[0], A[1] + o[1], 0, { gaze: false });
+      const o = i ? [-nx, -nz] : [nx, nz], s = soldierAt(A[0] + o[0], A[1] + o[1]);
       s.big = SCALE * 1.15; s.realWalk = true; s.speed = 2.2; G.scene.add(s.p.root); G.patrols.push({ s, A, B, to: 1, o }); // 병정은 순례자보다 크고 단단하게
     }
   }
@@ -289,7 +303,7 @@ function updateEvents(dt, me0) {
     P.s.target = null; P.s.moveTo(T[0] + P.o[0], T[1] + P.o[1]);
     if (Math.hypot(P.s.pos.x - T[0] - P.o[0], P.s.pos.y - T[1] - P.o[1]) < 0.4) P.to = 1 - P.to;
     if (d < 2.4 && !(G.checkT > -3)) {
-      G.checkT = 2.8; G.checkBy = P.A; snd.play('halt'); toast('로마 병정에게 붙잡혔어요!<small>검문을 받느라 잠시 멈춥니다 · 병정을 피해 다니세요</small>', false, 2800);
+      G.checkT = 2.8; G.checkBy = P.A; snd.play('halt'); toast(roman() ? '로마 병정에게 붙잡혔어요!<small>검문을 받느라 잠시 멈춥니다 · 병정을 피해 다니세요</small>' : '성을 지키는 병사에게 붙잡혔어요!<small>검문을 받느라 잠시 멈춥니다 · 병사를 피해 다니세요</small>', false, 2800);
       for (const Q of G.patrols) if (Q.A === P.A) { Q.s.goal.copy(Q.s.pos); Q.s.target = G.me; } // 짝도 함께 멈춘다
       G.me.target = P.s; // 나도 병정을 돌아본다
     }
@@ -651,27 +665,54 @@ function missionText() {
 }
 // 그분 곁에 함께 서는 사람 (game-cast.js): 장면마다 정한 사람, 없으면 제자를 부르신 뒤로는 제자 둘.
 // 모델은 그 장면에서 처음 쓸 때 받는다(R2) — 처음부터 다 받으면 무거웠다
-const SPOTS = [[-0.55, 0.65], [1.6, 0.55], [0.15, -0.75], [1.3, -0.7]];
+const SPOTS = [[-0.55, 0.65], [1.6, 0.55], [0.15, -0.75], [1.3, -0.7], [-1.1, -0.15]];
 function castFor(i) {
   const e = G.events[i], c = CAST[JID]?.[e.id]; if (c) return c;
   const F = FOLLOW[JID], k = F && G.events.findIndex(x => x.id === F.from);
   return F && k >= 0 && i >= k ? [F.pool[i % F.pool.length], F.pool[(i + 1) % F.pool.length]] : [];
 }
 let castTok = 0;
+// 물 위인가 — 목표 둘레·갈릴리도 물로 친다 (blocked는 둘 다 봐준다)
+const wetAt = (x, z) => { const [la, ln] = toLL(x, z); return Object.values(WATERS).some(w => inPoly(la, ln, w)); };
+// 배 위의 사람이 설 높이: 장면의 배(G.castBoat) 안이면 갑판, 아니면 땅·수면
+const BOAT_K = SCALE * 1.4; // 배 배율 — 셋이 탈 만큼 (순례자가 타는 배는 SCALE * 0.9)
+function standY(x, z) {
+  const B = G.castBoat;
+  if (B && ((x - B.x) / (0.85 * BOAT_K)) ** 2 + ((z - B.z) / (0.28 * BOAT_K)) ** 2 < 1) return LAKE_LEVEL.galilee + 0.06 * BOAT_K;
+  return GH(x, z);
+}
 async function placeCast() {
   const tok = ++castTok;
   for (const c of G.cast || []) c.dispose(); G.cast = [];
-  const [gx, gz] = goalXZ(), names = castFor(G.idx).slice(0, SPOTS.length);
-  const gs = await Promise.all(names.map(n => model(n)));
+  if (G.castBoat) { bin(G.castBoat.obj, G.scene); G.castBoat = null; }
+  for (const o of G.castSet || []) bin(o, G.scene); G.castSet = [];
+  const [gx, gz] = goalXZ(), names = castFor(G.idx).slice(0, SPOTS.length), boat = BOAT[JID]?.[G.events[G.idx].id];
+  // 이름 뒤에 ':색'이 붙으면 평범한 사람(순례자 모델)의 옷을 그 색으로 칠해 세운 엑스트라 — 새 모델을 만들지 않는다
+  const gs = await Promise.all(names.map(async n => { const [b, c] = n.split(':'), g = await model(b); return g && c ? tinted(g, b, c) : g; }));
   if (tok !== castTok) return; // 그새 다음 장면으로 넘어갔다
+  // 갈릴리 바다 위의 장면: 배를 띄워 제자들을 태운다 (물 위에 서 있었다 — 사용자 2026-11)
+  if (boat) {
+    const bx = gx + boat.at[0], bz = gz + boat.at[1], obj = makeProp('boat', 0, 0, { scale: BOAT_K }).obj;
+    obj.position.set(bx, LAKE_LEVEL.galilee, bz); G.scene.add(obj); G.castBoat = { obj, x: bx, z: bz };
+  }
+  for (const [k, x, z] of SETS[JID]?.[G.events[G.idx].id] || []) {
+    const o = makeProp(k, 0, 0, { scale: 1.05 * 1.7 }).obj; o.position.set(gx + x, GH(gx + x, gz + z), gz + z); o.visible = false; G.scene.add(o); G.castSet.push(o); // 마을 우물과 같은 크기
+  }
+  let seat = 0;
   gs.forEach((g, i) => {
     if (!g) return; // 아직 없는 모델(베드로 등)은 건너뛴다
-    // 물(호숫가 장소)이면 그분 둘레를 돌며 뭍을 찾아 세운다
     let [ox, oz] = SPOTS[i];
-    const wetAt = (x, z) => { const [la, ln] = toLL(x, z); return Object.values(WATERS).some(w => inPoly(la, ln, w)); }; // 목표 둘레·갈릴리도 물로 친다 (blocked는 둘 다 봐준다)
-    for (let k = 0; k < 12 && wetAt(gx + ox, gz + oz); k++) { const r = Math.hypot(ox, oz), t = Math.atan2(oz, ox) + 0.52; ox = Math.cos(t) * r; oz = Math.sin(t) * r; }
-    const a = new ModelActor(g, gx + ox, gz + oz);
-    a.big = SCALE * (SIZE[names[i]] || 1); a.target = G.me; a.showT = 0; a.show = 0;
+    if (boat) { // 배 안 자리, 또는 정해 둔 물 위 자리
+      const w = boat.water?.[names[i]], s = boat.seats[seat];
+      if (w) [ox, oz] = w; else if (s) { seat++; [ox, oz] = [boat.at[0] + s[0] * BOAT_K / 1.4, boat.at[1] + s[1] * BOAT_K / 1.4]; } else return;
+    }
+    // 물(호숫가 장소)이면 그분 둘레를 돌며 뭍을 찾아 세운다
+    const dry = (x, z) => !wetAt(x, z) && !G.world?.onRiver?.(x, z, 0.25); // 요단 강 물길 위에 세례 요한·안드레가 섰다
+    if (!boat) for (let k = 0; k < 12 && !dry(gx + ox, gz + oz); k++) { const r = Math.hypot(ox, oz), t = Math.atan2(oz, ox) + 0.52; ox = Math.cos(t) * r; oz = Math.sin(t) * r; }
+    const lie = names[i].endsWith(':lie'); // 누운 사람(베데스다의 병자 — 자리에 누워 있었다, 요 5:6)
+    const a = new ModelActor(g, gx + ox, gz + oz, { noPillow: true }).hold(GEAR[names[i]]);
+    a.big = SCALE * (SIZE[names[i]] || 1); a.target = lie ? null : G.me; a.showT = 0; a.show = 0;
+    if (lie) { a.set('sleep'); a.face = a.faceT = 1.2; }
     if (names[i] === 'goliath') a.set('taunt'); // 골리앗은 가슴을 치며 이스라엘을 모욕한다(삼상 17:10)
     G.scene.add(a.p.root); G.cast.push(a);
   });
@@ -681,8 +722,10 @@ async function placeLocals() {
   G.locals = [];
   if (JID !== 'jesus') return;
   const [w, s] = await Promise.all([model('woman'), model('shepherd')]);
-  const put = (g, list, n) => g && list.slice(0, n).forEach(([x, z], i) => { const a = new ModelActor(g, x + 0.7, z + 0.4); a.big = SCALE; a.face = i; a.look(i); a.p.root.visible = false; G.scene.add(a.p.root); G.locals.push(a); });
-  put(w, G.world.wells, 8); put(s, G.world.flocks || [], 6);
+  // 물가 마을(타브가 등)은 그 자리가 물이라 어부가 호수 위에 섰다 — 둘레를 돌며 뭍을 찾는다
+  const land = (x, z) => { for (let r = 0.8; r < 4; r += 0.6) for (let k = 0; k < 12; k++) { const a = 0.52 + k * 0.52, X = x + Math.cos(a) * r, Z = z + Math.sin(a) * r; if (!wetAt(X, Z) && !G.world.onRiver(X, Z, 0.25)) return [X, Z]; } return null; };
+  const put = (g, list, n, gear) => g && list.slice(0, n).forEach(([x0, z0], i) => { const xz = land(x0, z0); if (!xz) return; const [x, z] = xz; const a = new ModelActor(g, x, z).hold(gear); a.big = SCALE; a.face = i; a.look(i); a.p.root.visible = false; G.scene.add(a.p.root); G.locals.push(a); });
+  put(w, G.world.wells, 8, GEAR.woman); put(s, G.world.flocks || [], 6, GEAR.shepherd);
   // 어부: 갈릴리 물가 마을 (그물을 손질하던 자리)
   const f = await model('fisherman'), P = G.data.places;
   put(f, ['capernaum', 'tabgha', 'bethsaida'].filter(k => P[k]).map(k => toXZ(P[k].lat, P[k].lng)), 3);
@@ -701,7 +744,7 @@ async function swapLeader() {
   if (!name || name === G.leaderName) return;
   const tok = ++leadTok, g = await model(name);
   if (!g || tok !== leadTok || !G.leader) return;
-  const o = G.leader, a = new ModelActor(g, o.pos.x, o.pos.y);
+  const o = G.leader, a = new ModelActor(g, o.pos.x, o.pos.y).hold(GEAR[name]);
   a.goal.copy(o.goal); a.speed = o.speed; a.pose = o.pose; a.target = o.target; a.face = o.face;
   a.big = o.big; a.realWalk = true; a.showT = o.showT; a.show = o.show; a.ground = o.ground;
   if (o.dispose) o.dispose(); else bin(o.p.root, G.scene);
@@ -762,10 +805,10 @@ async function begin(fresh) {
   // 그분: 3D 모델(glb, R2)이 있으면 그것으로, 못 받으면 예전 인형으로 (사용자 2026-11).
   // 모델을 다 받은 뒤에 나(G.me)를 세운다 — 매 화면이 G.me가 있으면 그분도 있다고 보고 그린다
   const lname = leadAt(G.idx)?.[1] || J.model; // 이어 걷기면 그 장면의 사람으로 (여호수아·왕 다윗 등)
-  const lead = lname && await model(lname) && new ModelActor(await model(lname));
+  const lead = lname && await model(lname) && new ModelActor(await model(lname)).hold(GEAR[lname]);
   G.leader = lead || new Actor(J.leader, 0, 0, 0, { gaze: false }); G.leaderName = lead ? lname : null;
   G.me = await pilgrim(sx, sz); G.me.realWalk = true; G.me.big = SCALE; G.me.walkRate = 1.5;
-  [G.soldierG, G.manG] = await Promise.all([model('soldier'), model('pilgrim-man')]); // 병정·길가의 쓰러진 사람
+  [G.soldierG, G.manG] = await Promise.all([roman() ? model('soldier') : null, model('pilgrim-man')]); // 병정·길가의 쓰러진 사람
   G.leader.realWalk = true; G.leader.big = SCALE; G.leader.target = G.me;
   G.scene.add(G.me.p.root, G.leader.p.root);
   drawWater(); drawCardBtn(); resize();
@@ -853,17 +896,18 @@ function frame(now) {
   // 그분은 가까이(SEE — 이 지도에서는 인형 키의 두 배 남짓) 가야 보인다. 멀리서는 발자국만 (사용자 2026-11)
   const near = Math.hypot(G.leader.pos.x - me0.pos.x, G.leader.pos.y - me0.pos.y) < SEE || G.meetT > 0 || G.busy;
   G.leader.showT = near ? 1 : 0;
-  const H = (x, z) => Math.max(0, G.world?.heightAt(x, z) || 0);
   const sailing = onGalilee(me0.pos.x, me0.pos.y);
   snd.walk(dt, G.stepped && !sailing, G.slowT > 0); snd.boat(dt, sailing && !G.busy, G.stepped); G.stepped = false;
-  me0.ground = sailing ? LAKE_LEVEL.galilee + 0.3 : H(me0.pos.x, me0.pos.y); G.leader.ground = H(G.leader.pos.x, G.leader.pos.y);
+  me0.ground = sailing ? LAKE_LEVEL.galilee + 0.3 : GH(me0.pos.x, me0.pos.y); G.leader.ground = standY(G.leader.pos.x, G.leader.pos.y);
   if (sailing && !G.boat) { G.boat = makeProp('boat', 0, 0, { scale: SCALE * 0.9 }).obj; G.scene.add(G.boat); toast('배를 타고 갈릴리 바다를 건너요', true, 2000); }
   if (G.boat) { G.boat.visible = sailing; if (sailing) { G.boat.position.set(me0.pos.x, LAKE_LEVEL.galilee, me0.pos.y); G.boat.rotation.y = -me0.face + Math.PI / 2; } }
   for (const P of G.patrols || []) P.s.update(t, dt);
   if (G.wounded) G.wounded.a.update(t, dt);
   me0.update(t, dt); G.leader.update(t, dt);
   // 곁에 선 사람은 그분처럼 가까이 가야 보인다. 마을 사람은 가까울 때만 움직인다(멀면 그리지도 셈하지도 않는다)
-  for (const c of G.cast || []) { c.showT = G.leader.showT; c.ground = GH(c.pos.x, c.pos.y); c.update(t, dt); }
+  for (const c of G.cast || []) { c.showT = G.leader.showT; c.ground = standY(c.pos.x, c.pos.y); c.update(t, dt); }
+  if (G.castBoat) G.castBoat.obj.visible = G.leader.show > 0.05;
+  for (const o of G.castSet || []) o.visible = G.leader.show > 0.05;
   for (const a of G.locals || []) { const far = Math.hypot(a.pos.x - me0.pos.x, a.pos.y - me0.pos.y) > 14; a.showT = far ? 0 : 1; if (far && a.show < 0.02) { a.p.root.visible = false; continue; } a.ground = GH(a.pos.x, a.pos.y); a.update(t, dt); }
   G.world?.update(t, dt, me0.pos);
   // 하루(30km) 걷는 동안 아침 → 밤 (밤에는 마을 불빛)

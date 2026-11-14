@@ -39,6 +39,9 @@ export function createWorld({ scene, renderer, toXZ, regions: want, places, jour
     const r = TREG[name], [X0, Z0] = toXZ(r.lat1, r.lng0), [X1, Z1] = toXZ(r.lat0, r.lng1);
     return { name, ...r, X0, Z0, X1, Z1, H: null };
   });
+  // 강 위인가 (집·나무·사람을 물길 위에 두지 않으려고)
+  const rv = Object.entries(RIVERS).map(([k, l]) => [RIVER_W[k] ?? 0.4, l.map(([la, ln]) => toXZ(la, ln))]);
+  const onRiver = (x, z, m = 0.5) => rv.some(([w, P]) => P.some((p, i) => { if (!i) return false; const q = P[i - 1], dx = p[0] - q[0], dz = p[1] - q[1], L = dx * dx + dz * dz || 1, t = Math.max(0, Math.min(1, ((x - q[0]) * dx + (z - q[1]) * dz) / L)); return Math.hypot(x - q[0] - dx * t, z - q[1] - dz * t) < w + m; })); // m: 물길 반폭 밖 여유
   const regionAt = (x, z) => regs.find(r => r.H && x >= r.X0 && x <= r.X1 && z >= r.Z0 && z <= r.Z1);
   function heightAt(x, z) {
     const r = regionAt(x, z); if (!r) return 0;
@@ -87,8 +90,6 @@ export function createWorld({ scene, renderer, toXZ, regions: want, places, jour
     // 호수와 이름을 다 덮었다(PC 화면, 사용자 2026-11). 산·들판·바다·광야 같은 곳은 집 없이 둔다
     // 이름에 '광야'가 없어도 광야·진 친 곳(모세 여정의 머문 자리들), 굴·숲·샘·타작마당, 지방 이름(베레아)도 집 없이 (사용자 2026-11)
     // 강 위(물길 반폭 + 여유)에도 집·나무를 두지 않는다 — 나일 물길 위에 집이 섰다(2026-11)
-    const rv = Object.entries(RIVERS).map(([k, l]) => [RIVER_W[k] ?? 0.4, l.map(([la, ln]) => toXZ(la, ln))]);
-    const onRiver = (x, z) => rv.some(([w, P]) => P.some((p, i) => { if (!i) return false; const q = P[i - 1], dx = p[0] - q[0], dz = p[1] - q[1], L = dx * dx + dz * dz || 1, t = Math.max(0, Math.min(1, ((x - q[0]) * dx + (z - q[1]) * dz) / L)); return Math.hypot(x - q[0] - dx * t, z - q[1] - dz * t) < w + 0.5; }));
     const wild = /바다|바닷가|산$|산 |언덕|들판|광야|강$|강 |강가|한가운데|동굴|굴$|숲|샘|시냇가|타작마당|평지|길$|물가|호수|사막|골짜기|베레아|미디안|마라|르비딤|기브롯|가데스|부논|숙곳|싯딤/;
     Object.entries(places).forEach(([k, p], n) => {
       if (p.hidden || k === 'sea' || p.lat == null || wild.test(p.name)) return;
@@ -255,5 +256,5 @@ export function createWorld({ scene, renderer, toXZ, regions: want, places, jour
     if (journeyId !== 'david' && journeyId !== 'moses') addModel(buildJerusalem(), JLM, 3); // 인형을 줄이며 도성도 (6배는 베들레헴까지 덮었다)
     if (regs.some(r => r.name === 'egypt')) Object.values(EGYPT).forEach(m => addModel(m.build(), m.extent, 1.5));
   });
-  return { ready, heightAt, update: updateLife, setTime, wells, flocks };
+  return { ready, heightAt, update: updateLife, setTime, wells, flocks, onRiver };
 }
