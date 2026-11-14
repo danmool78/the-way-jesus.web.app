@@ -977,7 +977,13 @@ function frame(now) {
     G.camLook.lerp(v3.set(mx, gy + SCALE * 0.55, mz), k); G.cam.lookAt(G.camLook);
     bubble();
     // 이야기를 다 들으면 곧바로 말씀 고르기로 — 둘러보기를 두었더니 걸을 수도 없고 그새 병정이 검문했다(사용자 2026-11: 그만큼 이야기 나누면 카드를 띄워도 된다)
-    if (G.meetT <= 0) { if (++G.talkI < G.talk.length) sayLine(); else { $('#bubble').classList.remove('on'); document.body.classList.remove('meeting'); arrive(); } }
+    // 마지막 말이 끝나면 말풍선을 거두고 2초 숨을 고른 뒤에 띄운다 (바로 뜨니 급했다 — 사용자 2026-11)
+    // 카메라는 그대로 둘 곁에 머문다 (G.talkI가 talk 길이를 넘으면 숨 고르는 중)
+    if (G.meetT <= 0) {
+      if (++G.talkI < G.talk.length) sayLine();
+      else if (G.talkI === G.talk.length) { $('#bubble').classList.remove('on'); G.meetT = 2; }
+      else { document.body.classList.remove('meeting'); arrive(); }
+    }
   } else {
     const gy = me0.ground; // 솟은 땅을 걸을 때 카메라도 따라 오른다
     G.cam.position.lerp(v3.set(cx, gy + h, cz + h * 0.78), 1 - Math.exp(-dt * 5));
