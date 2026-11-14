@@ -357,13 +357,26 @@ const keys = new Set(), stick = { x: 0, y: 0 };
 addEventListener('keydown', e => { if (e.target.tagName === 'INPUT') return; keys.add(e.key.toLowerCase()); if (e.key.startsWith('Arrow')) e.preventDefault(); });
 addEventListener('keyup', e => keys.delete(e.key.toLowerCase()));
 addEventListener('blur', () => keys.clear());
+// 조종기 (사용자 2026-11): 버튼이 없는 화면 아무 데나 누르면 그 자리에 조종기가 생긴다. 달리기 단추 없이 끄는 세기로 —
+// 조금 끌면 천천히, 원 끝까지 끌면 걷기, 원 밖으로 더 끌면 달린다. 두 번째 손가락이 닿으면 조종기를 놓고 확대·축소로
 (() => {
-  const el = $('#stick'), knob = el.querySelector('i'); let id = null;
-  const move = e => { const r = el.getBoundingClientRect(), R = r.width / 2; let dx = e.clientX - r.left - R, dy = e.clientY - r.top - R; const d = Math.hypot(dx, dy); if (d > R) { dx *= R / d; dy *= R / d; } stick.x = dx / R; stick.y = dy / R; knob.style.transform = `translate(${dx}px,${dy}px)`; };
-  el.addEventListener('pointerdown', e => { id = e.pointerId; el.setPointerCapture(id); move(e); });
-  el.addEventListener('pointermove', e => { if (e.pointerId === id) move(e); });
-  const up = e => { if (e.pointerId !== id) return; id = null; stick.x = stick.y = 0; knob.style.transform = ''; };
-  el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up);
+  const el = $('#stick'), knob = el.querySelector('i'), w = $('#world'); let id = null, ox = 0, oy = 0;
+  const R = () => el.offsetWidth / 2;
+  const move = e => {
+    const r = R(); let dx = e.clientX - ox, dy = e.clientY - oy; const d = Math.hypot(dx, dy), m = d / r, max = r * 1.45;
+    stick.x = d ? dx / d * Math.min(1, m) : 0; stick.y = d ? dy / d * Math.min(1, m) : 0; stick.k = m; G.runDrag = m > 1.15;
+    if (d > max) { dx *= max / d; dy *= max / d; }
+    knob.style.transform = `translate(${dx}px,${dy}px)`; el.classList.toggle('run', G.runDrag);
+  };
+  const up = e => { if (e.pointerId !== id) return; id = null; stick.x = stick.y = stick.k = 0; G.runDrag = false; knob.style.transform = ''; el.classList.remove('live', 'run'); el.style.left = el.style.top = el.style.bottom = ''; };
+  w.addEventListener('pointerdown', e => {
+    if (id !== null || !G.me || G.busy) return;
+    id = e.pointerId; ox = e.clientX; oy = e.clientY; const r = R();
+    el.style.left = ox - r + 'px'; el.style.top = oy - r + 'px'; el.style.bottom = 'auto'; el.classList.add('live'); move(e);
+  });
+  addEventListener('pointermove', e => { if (e.pointerId === id) move(e); });
+  addEventListener('pointerup', up); addEventListener('pointercancel', up);
+  stick.cancel = () => id !== null && up({ pointerId: id });
 })();
 function inputDir() {
   let x = stick.x, z = stick.y;
@@ -385,7 +398,7 @@ addEventListener('wheel', e => { if (!G.me || !$('#setup').classList.contains('h
   const pts = new Map(); let d0 = 0;
   const dist = () => { const [a, b] = [...pts.values()]; return Math.hypot(a.x - b.x, a.y - b.y); };
   const w = $('#world');
-  w.addEventListener('pointerdown', e => { pts.set(e.pointerId, { x: e.clientX, y: e.clientY }); if (pts.size === 2) d0 = dist(); });
+  w.addEventListener('pointerdown', e => { pts.set(e.pointerId, { x: e.clientX, y: e.clientY }); if (pts.size === 2) { d0 = dist(); stick.cancel?.(); } });
   w.addEventListener('pointermove', e => { if (!pts.has(e.pointerId)) return; pts.set(e.pointerId, { x: e.clientX, y: e.clientY }); if (pts.size === 2 && d0 > 0) { const d = dist(); zoomBy(d0 / d); d0 = d; } });
   for (const ev of ['pointerup', 'pointercancel', 'pointerleave']) w.addEventListener(ev, e => { pts.delete(e.pointerId); d0 = 0; });
 }
@@ -666,7 +679,6 @@ function openCards() {
     v.querySelector('#backDeck').onclick = openCards; };
 }
 $('#cardsBtn').onclick = () => openCards();
-{ const r = $('#run'), on = v => e => { e.preventDefault(); G.runOn = v; }; r.addEventListener('pointerdown', on(true)); for (const ev of ['pointerup', 'pointercancel', 'pointerleave']) r.addEventListener(ev, on(false)); }
 const save = () => store.set('theway-game-' + JID, { idx: G.idx, total: G.total, stars: G.stars, hide: (G.hide || []).map(({ id, x, z }) => ({ id, x, z })) });
 
 /* ---------- 한 구간 ---------- */
@@ -848,7 +860,7 @@ async function begin(fresh) {
   G.idx = saved?.idx || 0; G.total = saved?.total || 0; G.stars = saved?.stars || []; G.missed = [];
   G.hide = saved?.hide || hideTreasures(TLIST, G.data.places, toXZ, (x, z) => { const [la, ln] = toLL(x, z); return Object.values(WATERS).some(p => inPoly(la, ln, p)); });
   $('#setup').classList.add('hidden');
-  for (const s of ['#hud', '#waterBox', '#dayBox', '#arrow', '#stick', '#run', '#cardsBtn', '#ask', '#quit', '#sound']) $(s).classList.remove('hidden');
+  for (const s of ['#hud', '#waterBox', '#dayBox', '#arrow', '#stick', '#cardsBtn', '#ask', '#quit', '#sound']) $(s).classList.remove('hidden');
   // 꾸미기 화면의 미리보기는 이제 그리지 않으니 인형과 렌더러를 놓아 준다
   if (pv.actor) { if (pv.actor.dispose) pv.actor.dispose(); else bin(pv.actor.p.root, pv.scene); pv.actor = null; } pv.r.dispose(); // 모델은 나와 함께 쓰니 몸은 버리지 않는다
   G.r = renderer($('#world'));
@@ -933,9 +945,10 @@ function frame(now) {
   if (!G.busy) updateEvents(dt, me0);
   if (dir) {
     // 달리기 (사용자 2026-11): PC는 Shift를 누른 채, 폰은 달리기 단추를 누르는 동안 1.8배. 배 위에서는 달리지 않는다
-    const boat = onGalilee(me0.pos.x, me0.pos.y), run = !boat && (keys.has('shift') || G.runOn);
-    const sp = G.speed * (G.slowT > 0 ? 0.45 : 1) * (boat ? 0.65 : 1) * (run ? 1.8 : 1), step = sp * dt;
-    me0.walkRate = run ? 2.6 : 1.5; $('#run').classList.toggle('on', run);
+    const boat = onGalilee(me0.pos.x, me0.pos.y), run = !boat && (keys.has('shift') || G.runDrag);
+    const soft = stick.k && !run ? Math.min(1, Math.max(0.4, stick.k)) : 1; // 조금만 끌면 천천히
+    const sp = G.speed * (G.slowT > 0 ? 0.45 : 1) * (boat ? 0.65 : 1) * (run ? 1.8 : soft), step = sp * dt;
+    me0.walkRate = run ? 2.6 : 1.5 * soft;
     // 이미 물·가장자리 안에 서 있으면(물 위 장면에서 이어 걷기 등) 어느 쪽으로든 나올 수 있게 — 갇혀 물병만 잃었다(사용자 2026-11)
     let nx = me0.pos.x + dir[0] * step, nz = me0.pos.y + dir[1] * step, hit = blocked(me0.pos.x, me0.pos.y) ? null : blocked(nx, nz);
     if (hit) { // 물가에서는 옆으로 미끄러져 따라가게
