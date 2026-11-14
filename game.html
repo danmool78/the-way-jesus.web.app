@@ -65,7 +65,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 .tag{position:fixed;z-index:3;transform:translate(-50%,-100%);pointer-events:none;white-space:nowrap;font:700 13px var(--serif);color:#fff6df;text-shadow:0 1px 3px #000,0 0 10px rgba(0,0,0,.6)}
 .tag.me{font:600 12px var(--sans);color:var(--gold2)}
 .tag.goal{font-size:15px;color:var(--gold2)}
-.tag.place{font:500 11.5px var(--serif);color:rgba(255,246,223,.75)}
+/* 지명: 밝은 모래 위에서 옅은 글씨가 묻혀 안 보였다(폰, 사용자 2026-11) — 어두운 바탕 띠에 또렷하게 */
+.tag.place{font:600 13px var(--serif);color:#fff3d6;background:rgba(29,24,19,.62);padding:2px 8px 3px;border-radius:99px;text-shadow:none;letter-spacing:.01em}
 
 /* 조이스틱 */
 #stick{position:fixed;z-index:6;left:calc(26px + env(safe-area-inset-left));bottom:calc(26px + env(safe-area-inset-bottom));width:124px;height:124px;border-radius:50%;background:rgba(20,16,11,.45);border:1px solid var(--line);touch-action:none}
