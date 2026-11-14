@@ -92,6 +92,7 @@ def head(lang, langs, base, title, desc, image, ld):
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(desc)}">
 <link rel="canonical" href="{url}">{alts}
+<link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta property="og:type" content="article"><meta property="og:url" content="{url}"><meta property="og:title" content="{esc(title)}">
