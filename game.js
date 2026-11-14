@@ -404,8 +404,7 @@ function late() {
   G.missed.push(G.idx); G.stars[G.idx] = G.stars[G.idx] || 0; snd.play('late');
   G.idx++; save();
   if (G.idx >= G.events.length) { finish(); return; }
-  const nx = G.events[G.idx];
-  toast(`늦었어요! ${esc(josa(JOURNEYS[JID].who, '은', '는'))} 벌써 ${esc(placeOf(nx).name)}(으)로 떠나셨어요<small>놓친 장면: ${esc(e.title)} · 따라가서 만나세요</small>`, false, 3600);
+  toast(`늦었어요! ${esc(josa(JOURNEYS[JID].who, '은', '는'))} 벌써 다음 자리로 떠나셨어요<small>놓친 장면: ${esc(e.title)} · 새 단서를 보고 그 자리를 찾아가세요</small>`, false, 3600);
   startLeg(from);
 }
 function arrive() {
@@ -536,7 +535,7 @@ const save = () => store.set('theway-game-' + JID, { idx: G.idx, total: G.total,
 
 /* ---------- 한 구간 ---------- */
 // 시간 안에 닿으면 그분을 3D로 가까이 만나고(meet), 늦으면 그분은 벌써 다음 장면 자리로 걸어가신다 —
-// 나는 그 장면을 놓치고 다음 장면으로 간다. 걸어가시는 길 위에서 따라잡아도 만남이다 (사용자 2026-11)
+// 나는 그 장면을 놓치고 다음 장면으로 간다. 길 위에서 따라잡아도 만남은 다음 장면의 자리에 닿아야 (사용자 2026-11)
 // 미션 글: 처음엔 장소 이름 없이 지방과 장면만(단서) — 어디인지 맞혀 찾아가게 (다 알려 주면 너무 쉬웠다, 사용자 2026-11).
 // 길을 물으면(첫 번째) 장소 이름을, 그다음부터는 방향을 잠깐 알려 준다. 5km 안으로 다가가도 이름이 드러난다
 // 그분이 걸어오신 발자국 길: 앞 장면 쪽에서 목적지까지 마지막 TRACK km를 구불구불하게 (물은 건너뛴다)
@@ -702,8 +701,8 @@ function frame(now) {
       if (d > G.prevD + 1e-3) G.lostT += dt; else G.lostT = Math.max(0, G.lostT - dt * 1.5);
       G.prevD = d;
       if (G.lostT > 3.2 && G.legT > 2) penalty('lost');
-      const dl = Math.hypot(G.leader.pos.x - nx, G.leader.pos.y - nz);
-      if (d < ARRIVE || dl < ARRIVE * 0.8) { G.busy = true; me0.goal.copy(me0.pos); save(); meet(); }
+      // 만남은 그 장면의 자리에서만 — 늦게 닿은 앞 자리(두로)에서 떠나시는 그분을 따라잡으면 다음 장면(데가볼리)의 문제가 나와 어리둥절했다(사용자 2026-11)
+      if (d < ARRIVE) { G.busy = true; me0.goal.copy(me0.pos); save(); meet(); }
     }
   } else me0.goal.copy(me0.pos);
   // 그분은 가까이(SEE — 이 지도에서는 인형 키의 두 배 남짓) 가야 보인다. 멀리서는 발자국만 (사용자 2026-11)
