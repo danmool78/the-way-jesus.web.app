@@ -10,7 +10,7 @@ import { makeProp } from './stage/props.js';
 import { createAudio } from './game-audio.js';
 import { TREASURES, RARITY, hideTreasures, treasureCard } from './game-treasure.js';
 import { model, tinted, ModelActor } from './game-model.js';
-import { CAST, FOLLOW, SIZE } from './game-cast.js';
+import { CAST, FOLLOW, SIZE, LEADS } from './game-cast.js';
 
 const $ = s => document.querySelector(s);
 const snd = createAudio(); // 배경음악·발소리·배 소리·효과음 (game-audio.js)
@@ -405,7 +405,7 @@ function meet() {
   const nm = me.name || '순례자', call = /^[가-힣]+$/.test(nm) ? josa(nm, '아', '야') : nm;
   G.meetWord = `${call}, 잘 찾아왔구나. 여기는 ${placeOf(e).name}.`;
   G.meetT = 3.2; snd.play('meet');
-  $('#bubble').innerHTML = `<b>${esc(JOURNEYS[JID].who)}</b>${esc(G.meetWord)}`;
+  $('#bubble').innerHTML = `<b>${esc(whoNow())}</b>${esc(G.meetWord)}`;
   setTimeout(() => $('#bubble').classList.add('on'), 900);
   document.body.classList.add('meeting');
   G.met = true;
@@ -628,7 +628,7 @@ function drawPrints(px, pz) {
     fm.updateMatrix(); P.setMatrixAt(n++, fm.matrix);
   }
   P.count = n; P.instanceMatrix.needsUpdate = true;
-  if (n > 4 && !G.trailTold) { G.trailTold = true; toast(`${esc(JOURNEYS[JID].who)}의 발자국이에요!<small>발자국을 따라가면 그분이 계신 곳이 나와요</small>`, true, 3400); }
+  if (n > 4 && !G.trailTold) { G.trailTold = true; toast(`${esc(whoNow())}의 발자국이에요!<small>발자국을 따라가면 그분이 계신 곳이 나와요</small>`, true, 3400); }
 }
 function missionText() {
   const e = G.events[G.idx], p = placeOf(e);
@@ -658,6 +658,7 @@ async function placeCast() {
     for (let k = 0; k < 12 && wetAt(gx + ox, gz + oz); k++) { const r = Math.hypot(ox, oz), t = Math.atan2(oz, ox) + 0.52; ox = Math.cos(t) * r; oz = Math.sin(t) * r; }
     const a = new ModelActor(g, gx + ox, gz + oz);
     a.big = SCALE * (SIZE[names[i]] || 1); a.target = G.me; a.showT = 0; a.show = 0;
+    if (names[i] === 'goliath') a.set('taunt'); // 골리앗은 가슴을 치며 이스라엘을 모욕한다(삼상 17:10)
     G.scene.add(a.p.root); G.cast.push(a);
   });
 }
@@ -672,8 +673,29 @@ async function placeLocals() {
   const f = await model('fisherman'), P = G.data.places;
   put(f, ['capernaum', 'tabgha', 'bethsaida'].filter(k => P[k]).map(k => toXZ(P[k].lat, P[k].lng)), 3);
 }
+// 이 장면에서 앞서 걷는 사람 (game-cast.js LEADS): 모세 → 여호수아, 소년 → 용사 → 왕 다윗, 열왕기의 선지자들
+function leadAt(i) {
+  let r = null;
+  for (const l of LEADS[JID] || []) { const k = G.events.findIndex(x => x.id === l[0]); if (k >= 0 && k <= i) r = l; }
+  return r;
+}
+const whoNow = () => leadAt(G.idx)?.[2] || JOURNEYS[JID].who;
+// 장면이 넘어가 앞서 걷는 사람이 바뀌면 모델만 갈아 끼운다 — 자리·가는 곳·걸음은 그대로
+let leadTok = 0;
+async function swapLeader() {
+  const l = leadAt(G.idx), name = l?.[1] || JOURNEYS[JID].model;
+  if (!name || name === G.leaderName) return;
+  const tok = ++leadTok, g = await model(name);
+  if (!g || tok !== leadTok || !G.leader) return;
+  const o = G.leader, a = new ModelActor(g, o.pos.x, o.pos.y);
+  a.goal.copy(o.goal); a.speed = o.speed; a.pose = o.pose; a.target = o.target; a.face = o.face;
+  a.big = o.big; a.realWalk = true; a.showT = o.showT; a.show = o.show; a.ground = o.ground;
+  if (o.dispose) o.dispose(); else bin(o.p.root, G.scene);
+  G.leader = a; G.leaderName = name; G.scene.add(a.p.root);
+}
 function startLeg(walkFrom) {
   const e = G.events[G.idx], [gx, gz] = goalXZ();
+  swapLeader();
   if (walkFrom) { G.leader.pos.set(...walkFrom); G.leader.goal.set(gx + 0.6, gz); G.leader.set('idle'); }
   else { G.leader.pos.set(gx + 0.6, gz); G.leader.goal.copy(G.leader.pos); G.leader.set('idle'); }
   G.trail = makeTrail(gx, gz, walkFrom);
@@ -684,7 +706,7 @@ function startLeg(walkFrom) {
   // 제한 시간: 곧장 걸으면 걸릴 시간의 1.7배 + 6초. 그분은 그 시간의 절반쯤에 다음 자리에 닿으시게 걸으신다
   G.timeMax = G.timeT = G.legStraight / G.speed * 2.3 + 10; // 목적지를 지도에서 찾아야 하니 넉넉히
   if (walkFrom) G.leader.speed = Math.max(4, Math.hypot(gx - walkFrom[0], gz - walkFrom[1]) / (G.timeMax * 0.5));
-  $('#mNo').textContent = `${G.idx + 1} / ${G.events.length} · ${josa(JOURNEYS[JID].who, '이', '가')} 계신 곳`;
+  $('#mNo').textContent = `${G.idx + 1} / ${G.events.length} · ${josa(whoNow(), '이', '가')} 계신 곳`;
   G.named = false; missionText(); G.bonus = 0; spawnLegEvents();
   snd.music(e.music); // 앱에서 이 장면에 까는 곡 그대로
   placeCast();
@@ -724,8 +746,9 @@ async function begin(fresh) {
   if (blocked(sx, sz) || onGalilee(sx, sz)) outer: for (let r = 2; r < 80; r += 2) for (let k = 0; k < 16; k++) { const a = k / 16 * 6.283, x = sx + Math.cos(a) * r, z = sz + Math.sin(a) * r; if (!blocked(x, z) && !onGalilee(x, z)) { sx = x; sz = z; break outer; } }
   // 그분: 3D 모델(glb, R2)이 있으면 그것으로, 못 받으면 예전 인형으로 (사용자 2026-11).
   // 모델을 다 받은 뒤에 나(G.me)를 세운다 — 매 화면이 G.me가 있으면 그분도 있다고 보고 그린다
-  const lead = J.model && await model(J.model) && new ModelActor(await model(J.model));
-  G.leader = lead || new Actor(J.leader, 0, 0, 0, { gaze: false });
+  const lname = leadAt(G.idx)?.[1] || J.model; // 이어 걷기면 그 장면의 사람으로 (여호수아·왕 다윗 등)
+  const lead = lname && await model(lname) && new ModelActor(await model(lname));
+  G.leader = lead || new Actor(J.leader, 0, 0, 0, { gaze: false }); G.leaderName = lead ? lname : null;
   G.me = await pilgrim(sx, sz); G.me.realWalk = true; G.me.big = SCALE;
   [G.soldierG, G.manG] = await Promise.all([model('soldier'), model('pilgrim-man')]); // 병정·길가의 쓰러진 사람
   G.leader.realWalk = true; G.leader.big = SCALE; G.leader.target = G.me;
