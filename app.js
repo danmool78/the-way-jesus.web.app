@@ -1530,7 +1530,9 @@ async function songPlay(done, sg) {
   // 단추를 눌러도 노래가 안 나오는 때가 있었다(사용자). 다시 누르면 그 자리에서 이어 튼다
   a.onpause = () => { if (tk !== song.token || a.ended || paused || barDrag) return; paused = true; speaking = false; setListenUI(); };
   songBarOn(a, () => { song.k = -2; sync(); });
-  a.play().catch(() => songEnd(tk));
+  // 휴대폰이 손길 없는 재생을 막으면(NotAllowedError) 노래를 건너뛰지 않고 '멈춤'으로 세워 둔다 — 한 번 누르면 그 노래가 나온다.
+  // 지난 편으로 돌아가 다시 들으면 설명만 하고 노래를 건너뛰었다(사용자). 막힌 것이 아닌 다른 실패(파일 없음 등)만 다음으로
+  a.play().catch(err => { if (tk !== song.token) return; if (err?.name === 'NotAllowedError' || err?.name === 'AbortError') { paused = true; speaking = false; setListenUI(); } else songEnd(tk); });
   song.k = -2;
   // 부르는 줄 맞추기: 화면 그리기(rAF)는 다른 창에 가 있는 동안 멈추므로 소리 쪽 시각 알림(timeupdate)으로도 맞추고,
   // 돌아오면 곧바로 다시 맞춘다 (다른 창에 다녀오면 멈췄던 줄이 잠깐 남아 있었다 — 사용자)
