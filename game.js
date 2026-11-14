@@ -143,17 +143,21 @@ let JID = JOURNEYS[new URLSearchParams(location.search).get('j')] ? new URLSearc
 /* ---------- 게임 세계 ---------- */
 const G = {
   r: null, scene: new THREE.Scene(), cam: new THREE.PerspectiveCamera(42, 1, 0.5, 4000),
-  data: null, events: [], idx: 0, me: null, leader: null, pillar: null,
+  data: null, events: [], idx: 0, me: null, leader: null, prints: null, trail: null,
   zoom: 46, walked: 0, total: 0, legStart: null, legWalked: 0, water: 3, stars: [],
   lostT: 0, prevD: 0, slowT: 0, coolT: 0, seaT: 0, legT: 0, busy: true, speed: 9, timeT: 0, timeMax: 0, meetT: 0, missed: [], askT: 0, asks: 0,
 };
 G.camLook = new THREE.Vector3();
-// 그 자리의 땅 높이 (입체 땅, game-world.js) — 이름표·빛기둥을 땅 위에
+// 그 자리의 땅 높이 (입체 땅, game-world.js) — 이름표·발자국을 땅 위에
 const GH = (x, z) => Math.max(0, G.world?.heightAt(x, z) || 0);
 const SCALE = 1.4; // 인형 크기 (지도 위에서 보이게 키운다 — 4.2는 호수·마을에 비해 너무 컸다, PC 캡처 2026-11)
-const ARRIVE = 5;
-const SEE = 7;
-const PILLAR = 18; // 빛기둥은 이만큼(km) 안에 와야 보인다
+// 그분은 아주 가까이(3km — 인형 키의 두 배 남짓) 가야 보이고, 2.5km 안에 들어서야 만난다 (사용자 2026-11 — 멀리서 보이면 쉬웠다)
+const ARRIVE = 2.5;
+const SEE = 3;
+const SAME = 5; // 이만큼 붙은 장면은 같은 자리로 친다 (걷지 않고 카드를 이어 받는다)
+// 발자국 (빛기둥 대신 — 빛기둥은 너무 빤한 힌트였다, 사용자 2026-11): 목적지 TRACK km 안쪽에만 그분이 걸어가신 굽은 발자국이 있고,
+// 내 둘레 PRINT_R km 안의 것만 보인다. 그 언저리까지는 단서로 찾아가고, 발자국을 만나면 따라간다
+const TRACK = 10, PRINT_R = 2.8, PRINT_GAP = 0.5, MAXP = 90;
 const ASK = 50;    // '길 묻기' 한 번에 깎이는 카드 점수     // 이만큼 다가가야 그분이 보인다  // 이만큼(km) 다가가면 도착
 const WALK = 30;   // 하루에 걷는 거리(km) — '몇 일째'
 
@@ -176,17 +180,17 @@ function buildWorld(j) {
   });
   for (const [k, p] of Object.entries(WATERS)) { const w = waterMesh(p, k === 'sea' || k === 'suez' || k === 'aqaba' ? '#4f7f99' : '#5f93ad'); w.position.y = LAKE_LEVEL[k] ?? 0.05; S.add(w); }
   G.world = createWorld({ scene: S, renderer: G.r, toXZ, regions: j.terrain, places: G.data.places, journeyId: JID, wet: (x, z) => { const [la, ln] = toLL(x, z); return Object.values(WATERS).some(p => inPoly(la, ln, p)); } });
-  // 목표를 알리는 빛기둥
-  G.pillar = new THREE.Mesh(new THREE.CylinderGeometry(1.4, 1.4, 90, 24, 1, true),
-    new THREE.MeshBasicMaterial({ color: '#ffdf9a', transparent: true, opacity: .22, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide }));
-  S.add(G.pillar);
+  // 발자국: 납작한 타원 하나를 여러 번(InstancedMesh) — 한 번 만들어 장면마다 자리만 바꿔 쓴다
+  const fg = new THREE.CircleGeometry(1, 14); fg.rotateX(-Math.PI / 2); fg.scale(0.11, 1, 0.24);
+  G.prints = new THREE.InstancedMesh(fg, new THREE.MeshBasicMaterial({ color: '#4a2f1a', transparent: true, opacity: .72, depthWrite: false }), MAXP);
+  G.prints.count = 0; G.prints.frustumCulled = false; G.prints.renderOrder = 6; S.add(G.prints);
 }
 // 걸을 수 있는 곳: 음영 그림이 있는 땅이고 물이 아닌 곳 (목표 둘레는 물이어도 들어간다 — 홍해를 건너고 물 위를 걸으신 자리)
 function blocked(x, z) {
   const [lat, lng] = toLL(x, z), J = JOURNEYS[JID];
   if (!J.bases.some(b => { const B = BASES[b]; return lat > B.lat0 + .02 && lat < B.lat1 - .02 && lng > B.lng0 + .02 && lng < B.lng1 - .02; })) return 'edge';
   const g = goalXZ();
-  if (g && Math.hypot(x - g[0], z - g[1]) < ARRIVE * 2.2) return null;
+  if (g && Math.hypot(x - g[0], z - g[1]) < SAME * 2.2) return null;
   for (const [k, p] of Object.entries(WATERS)) if (k !== 'galilee' && inPoly(lat, lng, p)) return k; // 갈릴리 바다는 배를 타고 건넌다
   return null;
 }
@@ -262,7 +266,7 @@ function updateEvents(dt, me0) {
 const placeOf = e => G.data.places[e.place];
 // 같은 자리에서 이어지는 장면 묶음 (가버나움 e17–e20처럼): 걷지 않고 카드를 잇달아 받는다 — 몇 번째인지 알려 주려고
 const xzOf = e => toXZ(placeOf(e).lat, placeOf(e).lng);
-const near = (a, b) => { const [ax, az] = xzOf(a), [bx, bz] = xzOf(b); return Math.hypot(ax - bx, az - bz) < ARRIVE; };
+const near = (a, b) => { const [ax, az] = xzOf(a), [bx, bz] = xzOf(b); return Math.hypot(ax - bx, az - bz) < SAME; };
 function group(i = G.idx) {
   let a = i, b = i; const ev = G.events;
   while (a > 0 && near(ev[a - 1], ev[a])) a--;
@@ -295,7 +299,7 @@ function inputDir() {
   return d < 0.15 ? null : [x / Math.max(1, d), z / Math.max(1, d)];
 }
 // 카메라 높이는 고정 — 확대·축소 없이 늘 같은 비율로 (사용자 2026-11). 화면의 좁은 쪽으로 폰은 반경 8km, PC는 12km쯤 보이게:
-// 인형·소품은 지형에 견주어 작게(호수·마을을 덮지 않게) 두고, 빛기둥(18km)은 화면 가장자리 너머에서 막 드러난다
+// 인형·소품은 지형에 견주어 작게(호수·마을을 덮지 않게) 둔다
 const fitZoom = () => G.cam.aspect < 1 ? 8 / (0.487 * G.cam.aspect) : 12 / 0.487;
 $('#ask').onclick = () => {
   if (G.busy || !G.me) return;
@@ -328,7 +332,7 @@ function penalty(kind) {
   document.body.classList.remove('shake'); void document.body.offsetWidth; document.body.classList.add('shake');
   if (kind === 'lost') {
     G.slowT = 4; $('#dust').classList.add('on'); setTimeout(() => $('#dust').classList.remove('on'), 3200);
-    toast(`${LOST[Math.floor(Math.random() * LOST.length)]}<small>물병 하나를 잃고 잠시 느려집니다 · 빛기둥 쪽으로 가세요</small>`);
+    toast(`${LOST[Math.floor(Math.random() * LOST.length)]}<small>물병 하나를 잃고 잠시 느려집니다 · 단서를 다시 읽고 방향을 잡으세요</small>`);
   } else {
     const msg = kind === 'serpent' ? '뱀에게 물렸어요! 유혹을 따라가면 안 돼요' : kind === 'dead' ? '사해에 빠질 뻔했어요! 소금물이에요' : kind === 'galilee' ? '갈릴리 바다는 걸어서 못 건너요' : '바다는 걸어서 못 건너요';
     toast(`${msg}<small>물병 하나를 잃었습니다 · 물가를 따라 돌아가세요</small>`);
@@ -400,13 +404,12 @@ function late() {
   G.missed.push(G.idx); G.stars[G.idx] = G.stars[G.idx] || 0; snd.play('late');
   G.idx++; save();
   if (G.idx >= G.events.length) { finish(); return; }
-  const nx = G.events[G.idx];
-  toast(`늦었어요! ${esc(josa(JOURNEYS[JID].who, '은', '는'))} 벌써 ${esc(placeOf(nx).name)}(으)로 떠나셨어요<small>놓친 장면: ${esc(e.title)} · 따라가서 만나세요</small>`, false, 3600);
+  toast(`늦었어요! ${esc(josa(JOURNEYS[JID].who, '은', '는'))} 벌써 다음 자리로 떠나셨어요<small>놓친 장면: ${esc(e.title)} · 새 단서를 보고 그 자리를 찾아가세요</small>`, false, 3600);
   startLeg(from);
 }
 function arrive() {
   const e = G.events[G.idx], straight = G.legStraight, ratio = straight > 1 ? G.legWalked / straight : 1;
-  const stars = straight < ARRIVE * 1.5 ? 3 : ratio < 1.35 ? 3 : ratio < 1.9 ? 2 : 1;
+  const stars = straight < SAME * 1.5 ? 3 : ratio < 1.35 ? 3 : ratio < 1.9 ? 2 : 1;
   G.stars[G.idx] = Math.max(G.stars[G.idx] || 0, stars);
   G.leader.look(0); G.me.target = null;
   if (G.met) {
@@ -447,7 +450,7 @@ function reveal(e, stars, straight) {
     const pts = Math.max(10, stars * 100 + Math.round(G.meetLeft || 0) * 10 - G.asks * ASK + (G.bonus || 0)), got = collect(e, stars, pts), fresh = got.fresh;
     const v = showCard(tcard(e, G.idx, { s: stars, p: pts }, 'big reveal'),
       `<div class="row"><a class="go ghost" href="${appLink(e)}" data-listen>이 장면 듣기</a><button class="go" id="next">${nextLabel()}</button></div>`,
-      `<p class="gotcard">${fresh ? '새 말씀 카드!' : got.best ? '최고 기록 갱신!' : '이미 모은 카드'} +${num(pts)}점${straight >= ARRIVE * 1.5 ? ` · 걸은 길 ${Math.round(G.legWalked)}km / 곧은 길 ${Math.round(straight)}km` : ''}</p>`);
+      `<p class="gotcard">${fresh ? '새 말씀 카드!' : got.best ? '최고 기록 갱신!' : '이미 모은 카드'} +${num(pts)}점${straight >= SAME * 1.5 ? ` · 걸은 길 ${Math.round(G.legWalked)}km / 곧은 길 ${Math.round(straight)}km` : ''}</p>`);
     v.querySelector('#next').onclick = () => { closeSheet(); G.idx++; save(); G.idx < G.events.length ? startLeg() : finish(); };
   }
 }
@@ -455,7 +458,7 @@ function cardPlain(e, stars, straight) {
   const w = (e.words || []).find(x => x.j) || (e.words || [])[0];
   const s = sheet(`${e.img ? `<div class="img" style="background-image:url('${esc(e.img.src)}')"><span class="stars">${'★'.repeat(stars)}${'☆'.repeat(3 - stars)}</span></div>` : ''}
     <div class="body"><small>${G.idx + 1} / ${G.events.length} · ${esc(placeOf(e).name)}</small><h2>${esc(e.title)}</h2><p class="sub">${esc(e.subtitle || '')}</p>
-    ${straight >= ARRIVE * 1.5 ? `<div class="leg"><span>걸은 길 <b>${Math.round(G.legWalked)}km</b></span><span>곧은 길 ${Math.round(straight)}km</span><span>${'★'.repeat(stars)}</span></div>` : ''}
+    ${straight >= SAME * 1.5 ? `<div class="leg"><span>걸은 길 <b>${Math.round(G.legWalked)}km</b></span><span>곧은 길 ${Math.round(straight)}km</span><span>${'★'.repeat(stars)}</span></div>` : ''}
     <p class="story">${esc(firstSentences(e.story?.[0] || ''))}</p>
     ${w ? `${G.met ? `<small class="got">${G.newCard ? '새 말씀 카드를 얻었어요!' : '이미 모은 말씀 카드'}</small>` : ''}<blockquote class="${G.met ? 'won' : ''}">${esc(w.text)}<cite>${esc(w.who || '')} · ${esc(w.ref || '')}</cite></blockquote>` : ''}
     <div class="row"><a class="go ghost" href="${appLink(e)}" data-listen>이 장면 듣기</a><button class="go" id="next">${nextLabel()}</button></div></div>`);
@@ -532,9 +535,39 @@ const save = () => store.set('theway-game-' + JID, { idx: G.idx, total: G.total,
 
 /* ---------- 한 구간 ---------- */
 // 시간 안에 닿으면 그분을 3D로 가까이 만나고(meet), 늦으면 그분은 벌써 다음 장면 자리로 걸어가신다 —
-// 나는 그 장면을 놓치고 다음 장면으로 간다. 걸어가시는 길 위에서 따라잡아도 만남이다 (사용자 2026-11)
+// 나는 그 장면을 놓치고 다음 장면으로 간다. 길 위에서 따라잡아도 만남은 다음 장면의 자리에 닿아야 (사용자 2026-11)
 // 미션 글: 처음엔 장소 이름 없이 지방과 장면만(단서) — 어디인지 맞혀 찾아가게 (다 알려 주면 너무 쉬웠다, 사용자 2026-11).
-// 길을 물으면(첫 번째) 장소 이름을, 그다음부터는 방향을 잠깐 알려 준다. 빛기둥이 보일 만큼 다가가도 이름이 드러난다
+// 길을 물으면(첫 번째) 장소 이름을, 그다음부터는 방향을 잠깐 알려 준다. 5km 안으로 다가가도 이름이 드러난다
+// 그분이 걸어오신 발자국 길: 앞 장면 쪽에서 목적지까지 마지막 TRACK km를 구불구불하게 (물은 건너뛴다)
+function makeTrail(gx, gz, from) {
+  const prev = G.events[G.idx - 1], [fx, fz] = from || (prev ? xzOf(prev) : [G.me.pos.x, G.me.pos.y]);
+  let dx = fx - gx, dz = fz - gz, L = Math.hypot(dx, dz);
+  if (L < SAME) { const a = Math.random() * 6.283; dx = Math.cos(a); dz = Math.sin(a); L = 1; } // 같은 자리·처음: 아무 쪽에서
+  dx /= L; dz /= L;
+  const len = Math.min(TRACK, Math.max(L * 0.9, 6)), n = Math.round(len / PRINT_GAP), ph = Math.random() * 6.283, amp = 1.1 + Math.random() * 0.8, out = [];
+  let px = gx + dx * len, pz = gz + dz * len;
+  for (let i = 0; i <= n; i++) {
+    const u = i / n, w = Math.sin(u * Math.PI * 2.4 + ph) * amp * Math.pow(1 - u, 0.8); // 목적지에 가까울수록 곧게
+    const x = gx + dx * len * (1 - u) - dz * w, z = gz + dz * len * (1 - u) + dx * w;
+    const a = Math.atan2(x - px, z - pz); px = x; pz = z;
+    if (i && blocked(x, z) && Math.hypot(x - gx, z - gz) > SAME * 2.2) continue;
+    out.push([x, z, a, i % 2 ? 1 : -1]);
+  }
+  return out;
+}
+const fm = new THREE.Object3D();
+function drawPrints(px, pz) {
+  const P = G.prints; if (!P) return;
+  let n = 0;
+  if (!G.busy) for (const [x, z, a, side] of G.trail || []) {
+    const d = Math.hypot(x - px, z - pz); if (d > PRINT_R || n >= MAXP) continue;
+    const k = Math.min(1, (PRINT_R - d) / 0.6); // 가장자리에서 서서히
+    fm.position.set(x + Math.cos(a) * 0.13 * side, GH(x, z) + 0.03, z - Math.sin(a) * 0.13 * side); fm.rotation.set(0, a, 0); fm.scale.setScalar(k);
+    fm.updateMatrix(); P.setMatrixAt(n++, fm.matrix);
+  }
+  P.count = n; P.instanceMatrix.needsUpdate = true;
+  if (n > 4 && !G.trailTold) { G.trailTold = true; toast(`${esc(JOURNEYS[JID].who)}의 발자국이에요!<small>발자국을 따라가면 그분이 계신 곳이 나와요</small>`, true, 3400); }
+}
 function missionText() {
   const e = G.events[G.idx], p = placeOf(e);
   $('#mTitle').textContent = G.named ? `${p.name} — ${e.title}` : `${p.region || '어딘가'}의 어느 곳 — ${e.title}`;
@@ -544,7 +577,7 @@ function startLeg(walkFrom) {
   const e = G.events[G.idx], [gx, gz] = goalXZ();
   if (walkFrom) { G.leader.pos.set(...walkFrom); G.leader.goal.set(gx + 0.6, gz); G.leader.set('idle'); }
   else { G.leader.pos.set(gx + 0.6, gz); G.leader.goal.copy(G.leader.pos); G.leader.set('idle'); }
-  G.pillar.position.set(gx, GH(gx, gz) + 45, gz);
+  G.trail = makeTrail(gx, gz, walkFrom);
   G.legStart = [G.me.pos.x, G.me.pos.y]; G.legWalked = 0; G.legT = 0; G.lostT = 0; G.asks = 0; G.askT = 0;
   G.legStraight = Math.hypot(gx - G.me.pos.x, gz - G.me.pos.y);
   G.prevD = G.legStraight;
@@ -557,7 +590,7 @@ function startLeg(walkFrom) {
   snd.music(e.music); // 앱에서 이 장면에 까는 곡 그대로
   G.busy = false;
   // 같은 자리에서 이어지는 장면: 다시 반기는 인사 없이 곧바로 말씀 고르기로 (사용자 2026-11). 남은 시간 점수는 6초로 친다
-  if (G.legStraight < ARRIVE) { G.busy = true; G.timeT = 0; G.meetLeft = 6; G.met = true; setTimeout(arrive, 400); }
+  if (G.legStraight < SAME) { G.busy = true; G.timeT = 0; G.meetLeft = 6; G.met = true; setTimeout(arrive, 400); }
 }
 
 // 여정의 장면·장소와 카드 그림 목록 (시작 화면에서 카드 모음만 볼 때도)
@@ -595,7 +628,7 @@ async function begin(fresh) {
   await G.world.ready; $('#toast').classList.remove('on');
   spawnPatrols();
   startLeg();
-  if (G.idx === 0) toast(`${esc(me.name)}님, ${esc(josa(J.who, '을', '를'))} 따라 걸어요<small>지도에서 장소 이름을 찾아 걸어가세요 · 가까이 가면 빛기둥이 보여요</small>`, true, 4200);
+  if (G.idx === 0) toast(`${esc(me.name)}님, ${esc(josa(J.who, '을', '를'))} 따라 걸어요<small>지도에서 장소 이름을 찾아 걸어가세요 · 가까이 가면 그분의 발자국이 보여요</small>`, true, 4200);
 }
 
 /* ---------- 이름표·화살표 ---------- */
@@ -606,11 +639,11 @@ function drawTags() {
   const list = [];
   const [gx, gz] = goalXZ() || [0, 0], e = G.events[G.idx];
   list.push({ cls: 'me', text: me.name, pos: [G.me.pos.x, G.me.ground + SCALE * 1.15, G.me.pos.y] });
-  // 목적지는 따로 드러내지 않는다 — 다른 장소와 같은 이름표로 지도에서 찾게 (빛기둥 둘레에 오면 그때 크게, 사용자 2026-11)
+  // 목적지는 따로 드러내지 않는다 — 다른 장소와 같은 이름표로 지도에서 찾게 (4km 안에 오면 그때 크게, 사용자 2026-11)
   const dGoal = Math.hypot(gx - G.me.pos.x, gz - G.me.pos.y);
-  if (e && dGoal < PILLAR * 0.5) list.push({ cls: 'goal', text: placeOf(e).name, pos: [gx, GH(gx, gz) + SCALE * 1.25, gz] });
+  if (e && dGoal < 4) list.push({ cls: 'goal', text: placeOf(e).name, pos: [gx, GH(gx, gz) + SCALE * 1.25, gz] });
   // 둘레의 다른 장소 이름 (여정에 나오는 곳만, 가까운 순서로 몇 개)
-  const seen = new Set(e && dGoal < PILLAR * 0.5 ? [e.place] : []), near = [];
+  const seen = new Set(e && dGoal < 4 ? [e.place] : []), near = [];
   for (const ev of G.events) { if (seen.has(ev.place)) continue; seen.add(ev.place); const p = placeOf(ev), [x, z] = toXZ(p.lat, p.lng); const d = Math.hypot(x - G.me.pos.x, z - G.me.pos.y); if (d < G.zoom * 1.6) near.push({ d, cls: 'place', text: p.name, pos: [x, GH(x, z) + 0.3, z] }); }
   near.sort((a, b) => a.d - b.d).slice(0, 14).forEach(t => list.push(t));
   while (tagEls.length < list.length) { const d = document.createElement('div'); tags.append(d); tagEls.push(d); }
@@ -668,11 +701,11 @@ function frame(now) {
       if (d > G.prevD + 1e-3) G.lostT += dt; else G.lostT = Math.max(0, G.lostT - dt * 1.5);
       G.prevD = d;
       if (G.lostT > 3.2 && G.legT > 2) penalty('lost');
-      const dl = Math.hypot(G.leader.pos.x - nx, G.leader.pos.y - nz);
-      if (d < ARRIVE || dl < ARRIVE * 0.8) { G.busy = true; me0.goal.copy(me0.pos); save(); meet(); }
+      // 만남은 그 장면의 자리에서만 — 늦게 닿은 앞 자리(두로)에서 떠나시는 그분을 따라잡으면 다음 장면(데가볼리)의 문제가 나와 어리둥절했다(사용자 2026-11)
+      if (d < ARRIVE) { G.busy = true; me0.goal.copy(me0.pos); save(); meet(); }
     }
   } else me0.goal.copy(me0.pos);
-  // 그분은 가까이(몇십 미터 — 이 지도에서는 인형 키의 몇 배) 가야 보인다. 멀리서는 빛기둥(그 장면의 자리)만 (사용자 2026-11)
+  // 그분은 가까이(SEE — 이 지도에서는 인형 키의 두 배 남짓) 가야 보인다. 멀리서는 발자국만 (사용자 2026-11)
   const near = Math.hypot(G.leader.pos.x - me0.pos.x, G.leader.pos.y - me0.pos.y) < SEE || G.meetT > 0 || G.busy;
   G.leader.showT = near ? 1 : 0;
   const H = (x, z) => Math.max(0, G.world?.heightAt(x, z) || 0);
@@ -689,10 +722,10 @@ function frame(now) {
   // 밤낮은 실제로 논 시간으로 6분에 한 바퀴 (걸은 거리로 돌리니 몇 초마다 밤낮이 바뀌었다 — 사용자 2026-11). 아침에서 시작
   G.clock = (G.clock || 0) + dt;
   G.world?.setTime((G.clock / 360 + 0.22) % 1);
-  const dp = Math.hypot(G.pillar.position.x - me0.pos.x, G.pillar.position.z - me0.pos.y), pvis = Math.max(0, Math.min(1, (PILLAR - dp) / (PILLAR * 0.35)));
-  G.pillar.material.opacity = (0.16 + Math.sin(t * 2) * 0.06) * pvis; G.pillar.visible = pvis > 0;
+  drawPrints(me0.pos.x, me0.pos.y);
+  const dp = Math.hypot(...(goalXZ() || [0, 0]).map((v, i) => v - (i ? me0.pos.y : me0.pos.x)));
   G.askT -= dt;
-  if (!G.named && pvis > 0.85) { G.named = true; missionText(); }
+  if (!G.named && dp < 5) { G.named = true; missionText(); }
   // 카메라: 북쪽이 위, 비스듬히 내려다보며 따라간다
   if (!G.zoomFix) G.zoom = fitZoom(); // 확인용(?debug)만 G.zoomFix로 높이를 바꾼다
   const cx = me0.pos.x, cz = me0.pos.y, h = G.zoom;
