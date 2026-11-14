@@ -326,6 +326,20 @@ function buildMap() {
     path.dataset.i = i;
     r.appendChild(path);
   });
+  // 장면 안에서 걸어 옮겨 가는 길(stops의 walk) — 걷는 사람만 움직이고 길은 그리지 않았다(사용자: 엘리야가 도망갈 때 선이 없다)
+  EVENTS.forEach((e, i) => {
+    let from = startOf(e);
+    (e.stops || []).forEach(st => {
+      const a = PLACES[from], b = PLACES[st.to]; from = st.to;
+      if (!st.walk || !a || !b || a === b || a.hidden || b.hidden) return;
+      const [x1, y1] = P(a), [x2, y2] = P(b), dx = x2 - x1, dy = y2 - y1, cx = (x1 + x2) / 2 - dy * .12, cy = (y1 + y2) / 2 + dx * .12;
+      const path = document.createElementNS(svgNS, 'path');
+      path.setAttribute('d', `M${x1},${y1} Q${cx},${cy} ${x2},${y2}`); path.setAttribute('pathLength', '1');
+      path.setAttribute('class', 'route stop'); path.style.setProperty('--c', PERIODS[e.p].color);
+      path.dataset.i = i; path.dataset.to = st.to;
+      r.appendChild(path);
+    });
+  });
   new ResizeObserver(() => applyView()).observe(map);
   drawRealms();
 }
@@ -703,7 +717,8 @@ function updateMap(prevIdx, { camera = true, jump = false } = {}) {
     l.classList.toggle('close', !!m && Math.hypot(+m[1] - hx, +m[2] - hy) < 60);
   });
   $$('.route', map).forEach(r => {
-    r.classList.toggle('done', +r.dataset.i <= idx);
+    // 장면 안의 길은 그 장면에서 걸어간 뒤에야 (앞 장면이면 다 걸은 것)
+    r.classList.toggle('done', r.dataset.to ? +r.dataset.i < idx || (+r.dataset.i === idx && stopsWalked.has(r.dataset.to)) : +r.dataset.i <= idx);
     r.classList.toggle('last', +r.dataset.i === idx);
     r.classList.remove('walking'); r.style.strokeDashoffset = '';
   });
@@ -1078,7 +1093,7 @@ function updateTrack() {
 // 장면 안의 이동 (장면의 start·stops): 이야기가 장면의 장소 아닌 곳에서 시작하거나, 낭독 중에 다른 곳으로 옮겨 가는 장면.
 // start: 장면을 시작하는 곳(걸어 들어오는 곳). stops: [{ at: 문장 키(p1.3 등), to: 장소, walk: 걸어가면 true — 아니면 그곳으로 장면만 바꾼다 }].
 // 낭독이 끝나면(end) 장면의 장소로 돌아온다. 예: m03 애굽 → 미디안, e05 베들레헴 → 애굽 → (학살) 베들레헴, e06 애굽 → 나사렛
-let hereAt = null; // 지금 무대·걷는 사람·카메라가 선 곳 (null이면 장면의 장소)
+let hereAt = null, stopsWalked = new Set(); // stopsWalked: 이 장면에서 걸어간 장면 안의 길 (지도에 그어 둔다) // 지금 무대·걷는 사람·카메라가 선 곳 (null이면 장면의 장소)
 const startOf = e => e.start || e.place;
 const here = e => (e === evAt(idx) && hereAt) || e.place;
 window.stagePlaceOf = here; // stage.js·terrain.js가 무대를 붙일 장소
@@ -1086,6 +1101,7 @@ const setHere = (e, k) => { hereAt = k === e.place ? null : k; dispatchEvent(new
 function goStop(e, to, walk) {
   cancelAnimationFrame(walkAnim); clearTimeout(walkT); window.stageHide = false;
   if (walk) return moveWithin(e, here(e), to);
+  if (to === startOf(e)) stopsWalked.clear(); // 처음 자리로 돌아가면(다시 듣기) 장면 안의 길도 지운다
   setHere(e, to); updateMap(idx);
 }
 function moveWithin(e, a, b) {
@@ -1096,14 +1112,17 @@ function moveWithin(e, a, b) {
   banner(`<span class="wk">👣</span><b>${esc(A.name)}</b> → <b>${esc(B.name)}</b>`, dur + 1200);
   const from0 = { ...view }, span = Math.min(1400, Math.max(300, Math.hypot(bx - ax, by - ay) * .9)), t0 = performance.now();
   $('#walker', map).classList.add('moving');
+  const path = $(`.route.stop[data-i="${idx}"][data-to="${b}"]`, map); // 걷는 동안 길을 그어 간다 (걷는 사람도 그 곡선을 따라)
+  path?.classList.add('walking');
   const step = now => {
     const k = dur ? Math.min(1, (now - t0) / dur) : 1, q = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
-    const pt = { x: ax + (bx - ax) * q, y: ay + (by - ay) * q };
+    const pt = path ? path.getPointAtLength(q * path.getTotalLength()) : { x: ax + (bx - ax) * q, y: ay + (by - ay) * q };
+    if (path) path.style.strokeDashoffset = 1 - q;
     setWalker([pt.x, pt.y]);
     if (fitMode !== 'all' && !window.terrainOn && dur) followCam(pt, span, from0, Math.min(1, k * 2));
     if (k < 1) { walkNext(step); return; }
     $('#walker', map).classList.remove('moving');
-    setHere(e, b); window.stageHide = false;
+    stopsWalked.add(b); setHere(e, b); window.stageHide = false;
     updateMap(idx); setCard(cardUser);
   };
   walkNext(step);
@@ -1120,7 +1139,7 @@ function go(i, { keepSpeech = false, onArrive } = {}) {
   const jump = prevPlace !== null && onEden(prev) !== onEden(i);
   const stepped = i === prev + 1 && prevPlace !== null && !jump;
   const arrive = () => {
-    idx = i; setHere(evAt(i), startOf(evAt(i))); window.stageHide = false;
+    idx = i; stopsWalked.clear(); setHere(evAt(i), startOf(evAt(i))); window.stageHide = false;
     renderScene(); showLetters(evAt(i).letters || []); psalmBox(evAt(i)); paintScene(evAt(i)); updateMap(prev, { camera: !stepped || fitMode === 'all', jump }); updateTrack(); if (i >= 0) markVisited(EVENTS[i].id);
     window.__stageScene = evAt(i); // stage.js가 늦게 로드돼도 따라잡도록
     dispatchEvent(new CustomEvent('stage:scene', { detail: { ev: evAt(i) } }));
