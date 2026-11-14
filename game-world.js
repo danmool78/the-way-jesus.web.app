@@ -140,6 +140,9 @@ export function createWorld({ scene, renderer, toXZ, regions: want, places, jour
   }
   let lampPts = null;
   // 앱의 3D 모형(지도 단위 1 = 1/1000도)을 km로 옮겨 세운다. 인형이 크게 서 있어 모형도 boost배 키운다 (가운데를 제자리에 두고)
+  // 도성 모형이 덮는 땅 [가운데 x, z, 반너비, 반깊이] — 모형은 실제 크기의 boost배라 사람이 성벽 사이에 묻혔다. 그 안에는 세우지 않는다
+  let city = null;
+  const cityRect = (E, boost) => { const [x0, z0] = toXZ(E.lat1, E.lng0), [x1, z1] = toXZ(E.lat0, E.lng1); return [(x0 + x1) / 2, (z0 + z1) / 2, (x1 - x0) * boost / 2, (z1 - z0) * boost / 2]; };
   function addModel(group, E, boost) {
     const [x0, z0] = toXZ(E.lat1, E.lng0), [x1, z1] = toXZ(E.lat0, E.lng1), cx = (x0 + x1) / 2, cz = (z0 + z1) / 2;
     const unit = 0.1113 * boost, w = (x1 - x0) / 0.1113, dz = (z1 - z0) / 0.1113;
@@ -253,8 +256,8 @@ export function createWorld({ scene, renderer, toXZ, regions: want, places, jour
 
   const ready = Promise.all(regs.map(r => loadRegion(r).catch(() => null))).then(() => {
     buildRivers(); buildVillages(); buildLife();
-    if (journeyId !== 'david' && journeyId !== 'moses') addModel(buildJerusalem(), JLM, 3); // 인형을 줄이며 도성도 (6배는 베들레헴까지 덮었다)
+    if (journeyId !== 'david' && journeyId !== 'moses') { addModel(buildJerusalem(), JLM, 3); city = cityRect(JLM, 3); } // 인형을 줄이며 도성도 (6배는 베들레헴까지 덮었다)
     if (regs.some(r => r.name === 'egypt')) Object.values(EGYPT).forEach(m => addModel(m.build(), m.extent, 1.5));
   });
-  return { ready, heightAt, update: updateLife, setTime, wells, flocks, onRiver };
+  return { ready, heightAt, update: updateLife, setTime, wells, flocks, onRiver, get city() { return city; } };
 }

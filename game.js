@@ -324,17 +324,29 @@ function group(i = G.idx) {
 const nextLabel = () => { if (G.idx + 1 >= G.events.length) return '여정 마치기'; const g = group(); return g.k < g.n ? `이 자리의 다음 일 (${g.k + 1}/${g.n}) →` : '다음 장면으로 →'; };
 const goalXZ = () => { const e = G.events[G.idx]; return e && toXZ(placeOf(e).lat, placeOf(e).lng); };
 // 그분과 곁의 사람이 설 자리(그분은 여기서 0.6 동쪽): 장소 핀이 물 안이면(갈릴리 물 경계가 거칠어 가버나움 핀이 호수 안에 든다)
-// 그분이 호수 위에 서 계셨다 — 핀 둘레를 넓혀 가며 가장 가까운 뭍을 찾는다. 바다 위 장면(BOAT — 배·물 위를 걸으심)은 그대로
+// 그분이 호수 위에 서 계셨다 — 핀 둘레를 넓혀 가며 가장 가까운 뭍을 찾는다. 바다 위 장면(BOAT — 배·물 위를 걸으심)은 그대로.
+// 예루살렘 도성 모형 안의 장소(성전·다락방·골고다 등)는 모형이 사람보다 훨씬 작아 성벽 사이에 발이 묻혔다 — 가장 가까운 성벽 밖으로(사용자 2026-11)
+const CITY_M = 0.9; // 성벽 밖 여유 (곁의 사람 자리까지)
+const inCity = (x, z, m = 0.25) => { const c = G.world?.city; return !!c && Math.abs(x - c[0]) < c[2] + m && Math.abs(z - c[1]) < c[3] + m; };
+const canStand = (x, z) => !wetAt(x, z) && !G.world?.onRiver?.(x, z, 0.25) && !inCity(x, z);
 function standXZ() {
-  const [gx, gz] = goalXZ(), e = G.events[G.idx];
+  if (G.standFor === G.idx && G.standAt) return G.standAt;
+  let [gx, gz] = goalXZ(); const e = G.events[G.idx], c = G.world?.city;
   if (BOAT[JID]?.[e.id]) return [gx, gz];
-  const dry = (x, z) => !wetAt(x, z) && !G.world?.onRiver?.(x, z, 0.25);
-  if (dry(gx, gz) && dry(gx + 0.6, gz)) return [gx, gz];
-  for (let r = 0.4; r < 4; r += 0.4) for (let k = 0; k < 16; k++) {
-    const a = k / 16 * 6.283, x = gx + Math.cos(a) * r, z = gz + Math.sin(a) * r;
-    if (dry(x, z) && dry(x + 0.6, z)) return [x, z];
+  if (c && inCity(gx, gz) || c && inCity(gx + 0.6, gz)) { // 가까운 성벽 쪽으로 밀어낸다 (동쪽 감람산 쪽 장소는 동쪽으로)
+    const dx = gx - c[0], dz = gz - c[1], ex = c[2] - Math.abs(dx), ez = c[3] - Math.abs(dz);
+    if (ex < ez) gx = c[0] + Math.sign(dx || 1) * (c[2] + CITY_M) - (dx < 0 ? 0.6 : 0); // 서쪽이면 그분(+0.6)까지 성벽 밖에
+    else gz = c[1] + Math.sign(dz || 1) * (c[3] + CITY_M);
   }
-  return [gx, gz];
+  let at = [gx, gz];
+  if (!(canStand(gx, gz) && canStand(gx + 0.6, gz))) {
+    out: for (let r = 0.4; r < 4; r += 0.4) for (let k = 0; k < 16; k++) {
+      const a = k / 16 * 6.283, x = gx + Math.cos(a) * r, z = gz + Math.sin(a) * r;
+      if (canStand(x, z) && canStand(x + 0.6, z)) { at = [x, z]; break out; }
+    }
+  }
+  if (G.world?.city) { G.standFor = G.idx; G.standAt = at; } // 땅을 다 세운 뒤에만 기억
+  return at;
 }
 
 /* ---------- 입력: 방향키·WASD·조이스틱 ---------- */
@@ -736,7 +748,7 @@ async function placeCast() {
       if (w) [ox, oz] = w; else if (s) { seat++; [ox, oz] = [boat.at[0] + s[0] * BOAT_K / 1.4, boat.at[1] + s[1] * BOAT_K / 1.4]; } else return;
     }
     // 물(호숫가 장소)이면 그분 둘레를 돌며 뭍을 찾아 세운다
-    const dry = (x, z) => !wetAt(x, z) && !G.world?.onRiver?.(x, z, 0.25); // 요단 강 물길 위에 세례 요한·안드레가 섰다
+    const dry = canStand; // 요단 강 물길 위에 세례 요한·안드레가 섰다, 도성 모형 안에서는 성벽에 묻혔다
     if (!boat) for (let k = 0; k < 12 && !dry(gx + ox, gz + oz); k++) { const r = Math.hypot(ox, oz), t = Math.atan2(oz, ox) + 0.52; ox = Math.cos(t) * r; oz = Math.sin(t) * r; }
     // 방패 든 자: 앞사람(골리앗) 앞, 나 쪽으로 나와 선다 — 방패 든 자가 앞서 행하더라(삼상 17:7)
     const prev = G.cast[G.cast.length - 1];
@@ -786,10 +798,10 @@ function startLeg(walkFrom) {
   const e = G.events[G.idx], [gx, gz] = goalXZ();
   G.looking = false; $('#goWord').classList.add('hidden');
   swapLeader();
-  const [sx, sz] = standXZ();
+  G.standFor = -1; const [sx, sz] = standXZ();
   if (walkFrom) { G.leader.pos.set(...walkFrom); G.leader.goal.set(sx + 0.6, sz); G.leader.set('idle'); }
   else { G.leader.pos.set(sx + 0.6, sz); G.leader.goal.copy(G.leader.pos); G.leader.set('idle'); }
-  G.trail = makeTrail(gx, gz, walkFrom);
+  G.trail = makeTrail(sx, sz, walkFrom); // 발자국도 그분이 서신 자리로
   G.legStart = [G.me.pos.x, G.me.pos.y]; G.legWalked = 0; G.legT = 0; G.lostT = 0; G.asks = 0; G.askT = 0;
   G.legStraight = Math.hypot(gx - G.me.pos.x, gz - G.me.pos.y);
   G.prevD = G.legStraight;
@@ -927,7 +939,8 @@ function frame(now) {
       G.prevD = d;
       if (G.lostT > 3.2 && G.legT > 2) penalty('lost');
       // 만남은 그 장면의 자리에서만 — 늦게 닿은 앞 자리(두로)에서 떠나시는 그분을 따라잡으면 다음 장면(데가볼리)의 문제가 나와 어리둥절했다(사용자 2026-11)
-      if (d < ARRIVE && !G.looking) { G.busy = true; me0.goal.copy(me0.pos); save(); meet(); }
+      const [ax, az] = standXZ(); // 그분이 성벽 밖·뭍으로 옮겨 서셨으면 그 자리에서 만난다
+      if (Math.hypot(ax + 0.3 - nx, az - nz) < ARRIVE && !G.looking) { G.busy = true; me0.goal.copy(me0.pos); save(); meet(); }
     }
   } else me0.goal.copy(me0.pos);
   // 그분은 가까이(SEE — 이 지도에서는 인형 키의 두 배 남짓) 가야 보인다. 멀리서는 발자국만 (사용자 2026-11)
@@ -992,6 +1005,6 @@ function frame(now) {
   drawTags();
 }
 
-if (new URLSearchParams(location.search).has('debug')) window.__game = { G, me, toXZ, goalXZ, steer: (x, z) => { stick.x = x; stick.y = z; }, startLeg: (...a) => startLeg(...a), wetAt: (x, z) => wetAt(x, z) }; // 끝까지 자동으로 걸어 보는 확인용
+if (new URLSearchParams(location.search).has('debug')) window.__game = { G, me, toXZ, goalXZ, steer: (x, z) => { stick.x = x; stick.y = z; }, startLeg: (...a) => startLeg(...a), wetAt: (x, z) => wetAt(x, z), standXZ: () => standXZ() }; // 끝까지 자동으로 걸어 보는 확인용
 setupUI(); resize();
 requestAnimationFrame(frame);
