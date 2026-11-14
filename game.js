@@ -470,13 +470,6 @@ function sayLine() {
   $('#bubble').innerHTML = `<b>${esc(whoNow())}</b>${esc(s)}${G.talkI < G.talk.length - 1 ? '<i class="more">▸</i>' : ''}`;
   G.meetT = 1.8 + s.length * 0.075;
 }
-// 다 듣고 나면 바로 카드로 가지 않고 둘레를 걸어 볼 수 있다. 준비되면 '말씀 고르기' (그분은 그 자리에서 기다리신다)
-function lookAround() {
-  $('#bubble').classList.remove('on'); document.body.classList.remove('meeting');
-  G.looking = true; G.busy = false; G.leader.set('idle'); G.me.target = null;
-  $('#goWord').classList.remove('hidden');
-  toast('둘레를 천천히 둘러보세요<small>준비되면 \'말씀 고르기\'를 누르세요</small>', true, 3200);
-}
 function bubble() {
   const [x, y] = screen(G.leader.pos.x, G.leader.ground + SCALE * 1.05, G.leader.pos.y), b = $('#bubble'), half = b.offsetWidth / 2 + 10;
   // 화면 밖으로 잘리지 않게 (꼬리는 가운데에 그대로)
@@ -660,7 +653,6 @@ function openCards() {
     v.querySelector('#backDeck').onclick = openCards; };
 }
 $('#cardsBtn').onclick = () => openCards();
-$('#goWord').onclick = () => { if (!G.looking) return; G.looking = false; G.busy = true; $('#goWord').classList.add('hidden'); G.me.goal.copy(G.me.pos); arrive(); };
 { const r = $('#run'), on = v => e => { e.preventDefault(); G.runOn = v; }; r.addEventListener('pointerdown', on(true)); for (const ev of ['pointerup', 'pointercancel', 'pointerleave']) r.addEventListener(ev, on(false)); }
 const save = () => store.set('theway-game-' + JID, { idx: G.idx, total: G.total, stars: G.stars, hide: (G.hide || []).map(({ id, x, z }) => ({ id, x, z })) });
 
@@ -796,7 +788,6 @@ async function swapLeader() {
 }
 function startLeg(walkFrom) {
   const e = G.events[G.idx], [gx, gz] = goalXZ();
-  G.looking = false; $('#goWord').classList.add('hidden');
   swapLeader();
   G.standFor = -1; const [sx, sz] = standXZ();
   if (walkFrom) { G.leader.pos.set(...walkFrom); G.leader.goal.set(sx + 0.6, sz); G.leader.set('idle'); }
@@ -940,11 +931,11 @@ function frame(now) {
       if (G.lostT > 3.2 && G.legT > 2) penalty('lost');
       // 만남은 그 장면의 자리에서만 — 늦게 닿은 앞 자리(두로)에서 떠나시는 그분을 따라잡으면 다음 장면(데가볼리)의 문제가 나와 어리둥절했다(사용자 2026-11)
       const [ax, az] = standXZ(); // 그분이 성벽 밖·뭍으로 옮겨 서셨으면 그 자리에서 만난다
-      if (Math.hypot(ax + 0.3 - nx, az - nz) < ARRIVE && !G.looking) { G.busy = true; me0.goal.copy(me0.pos); save(); meet(); }
+      if (Math.hypot(ax + 0.3 - nx, az - nz) < ARRIVE) { G.busy = true; me0.goal.copy(me0.pos); save(); meet(); }
     }
   } else me0.goal.copy(me0.pos);
   // 그분은 가까이(SEE — 이 지도에서는 인형 키의 두 배 남짓) 가야 보인다. 멀리서는 발자국만 (사용자 2026-11)
-  const near = Math.hypot(G.leader.pos.x - me0.pos.x, G.leader.pos.y - me0.pos.y) < SEE || G.meetT > 0 || G.busy || G.looking;
+  const near = Math.hypot(G.leader.pos.x - me0.pos.x, G.leader.pos.y - me0.pos.y) < SEE || G.meetT > 0 || G.busy;
   G.leader.showT = near ? 1 : 0;
   const sailing = onGalilee(me0.pos.x, me0.pos.y);
   snd.walk(dt, G.stepped && !sailing, G.slowT > 0); snd.boat(dt, sailing && !G.busy, G.stepped); G.stepped = false;
@@ -972,9 +963,8 @@ function frame(now) {
   if (!G.zoomFix) G.zoom = fitZoom(); // 확인용(?debug)만 G.zoomFix로 높이를 바꾼다
   // 만난 뒤 둘러보는 동안은 가까이 — 사람과 마을이 보이게 (멀리 있으면 인형이 점 같았다)
   // 그분과 나 둘 다 보이게 둘 사이를 비춘다
-  const L = G.leader.pos, lk = G.looking ? 0.5 : 0, dl = G.looking ? Math.hypot(L.x - me0.pos.x, L.y - me0.pos.y) : 0;
-  const cx = me0.pos.x + (L.x - me0.pos.x) * lk, cz = me0.pos.y + (L.y - me0.pos.y) * lk, h = G.looking ? Math.min(G.zoom, Math.max(7.5, dl * 2.2)) : G.zoom;
-  if (!G.busy && !(G.meetT > 0) && !G.looking) tickTime(dt); // 만난 뒤 둘러보는 동안은 모래시계가 멈춘다
+  const cx = me0.pos.x, cz = me0.pos.y, h = G.zoom;
+  if (!G.busy && !(G.meetT > 0)) tickTime(dt);
   if (G.meetT > 0) { // 만남: 둘 사이로 내려앉아 비스듬히
     G.meetT -= dt;
     const mx = (cx + G.leader.pos.x) / 2, mz = (cz + G.leader.pos.y) / 2, k = 1 - Math.exp(-dt * 2.2);
@@ -986,7 +976,14 @@ function frame(now) {
     G.cam.position.lerp(v3.set(mx + px * back, gy + SCALE * 1.5 + back * 0.18, mz + pz * back), k);
     G.camLook.lerp(v3.set(mx, gy + SCALE * 0.55, mz), k); G.cam.lookAt(G.camLook);
     bubble();
-    if (G.meetT <= 0) { if (++G.talkI < G.talk.length) sayLine(); else lookAround(); }
+    // 이야기를 다 들으면 곧바로 말씀 고르기로 — 둘러보기를 두었더니 걸을 수도 없고 그새 병정이 검문했다(사용자 2026-11: 그만큼 이야기 나누면 카드를 띄워도 된다)
+    // 마지막 말이 끝나면 말풍선을 거두고 2초 숨을 고른 뒤에 띄운다 (바로 뜨니 급했다 — 사용자 2026-11)
+    // 카메라는 그대로 둘 곁에 머문다 (G.talkI가 talk 길이를 넘으면 숨 고르는 중)
+    if (G.meetT <= 0) {
+      if (++G.talkI < G.talk.length) sayLine();
+      else if (G.talkI === G.talk.length) { $('#bubble').classList.remove('on'); G.meetT = 2; }
+      else { document.body.classList.remove('meeting'); arrive(); }
+    }
   } else {
     const gy = me0.ground; // 솟은 땅을 걸을 때 카메라도 따라 오른다
     G.cam.position.lerp(v3.set(cx, gy + h, cz + h * 0.78), 1 - Math.exp(-dt * 5));
