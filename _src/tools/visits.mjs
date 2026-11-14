@@ -3,7 +3,8 @@
 // 열쇠: CF_API_TOKEN(Account Analytics: Read 하나만), CF_ACCOUNT_ID — GitHub 비밀값에만 둔다
 // Run: CF_API_TOKEN=… CF_ACCOUNT_ID=… node _src/tools/visits.mjs <출력.json>
 import { writeFileSync, readFileSync, existsSync } from 'node:fs';
-const SITE = 'f33dcbc61cc949909499f044d7eeae69'; // 페이지에 넣은 비컨의 사이트 표시(공개값)
+// 사이트는 주소(host)로 가린다 — 비컨에 넣은 값(token)은 GraphQL의 siteTag와 다른 값이라 siteTag로 거르니 늘 0이었다(2026-11)
+const HOSTS = ['thewaymap.org', 'www.thewaymap.org', 'the-way-jesus.web.app', 'the-way-jesus.firebaseapp.com'];
 const { CF_API_TOKEN: TOKEN, CF_ACCOUNT_ID: ACCOUNT } = process.env;
 if (!TOKEN || !ACCOUNT) { console.error('CF_API_TOKEN, CF_ACCOUNT_ID가 필요합니다'); process.exit(1); }
 const out = process.argv[2] || 'visits.json';
@@ -21,7 +22,7 @@ const query = `query ($a: string!, $f: AccountRumPageloadEventsAdaptiveGroupsFil
     ${group('referers', 'refererHost', 15)}
     ${group('devices', 'deviceType', 5)}
   } } }`;
-const variables = { a: ACCOUNT, f: { AND: [{ date_geq: day(from), date_leq: day(now) }, { siteTag: SITE }, { bot: 0 }] } };
+const variables = { a: ACCOUNT, f: { AND: [{ date_geq: day(from), date_leq: day(now) }, { requestHost_in: HOSTS }, { bot: 0 }] } };
 
 const r = await fetch('https://api.cloudflare.com/client/v4/graphql', {
   method: 'POST', headers: { Authorization: `Bearer ${TOKEN}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ query, variables }) });
@@ -53,7 +54,7 @@ try {
   // 장면 이름과 차례는 저장소의 data에서 (관리자 페이지가 여정마다 data를 받지 않게)
   const order = j => { const f = j === 'jesus' ? 'data.json' : `j/${j}/data.json`; if (!existsSync(f)) return [];
     const d = JSON.parse(readFileSync(f, 'utf8')); return [...(d.prologue ? [d.prologue] : []), ...d.events].map(e => [e.id, e.title]); };
-  const ids = [...new Set(opens.map(x => x.j))];
+  const ids = [...new Set(opens.map(x => x.j))].filter(j => j === 'jesus' || existsSync(`j/${j}/data.json`)); // 없는 여정 이름(시험으로 보낸 것 등)은 뺀다
   stats.journeys = ids.map(j => {
     const mine = opens.filter(x => x.j === j), got = Object.fromEntries(scenes.filter(x => x.j === j).map(x => [x.s, x.n]));
     return { id: j, opens: mine.reduce((t, x) => t + x.n, 0), countries: mine.map(x => [x.c, x.n]),
