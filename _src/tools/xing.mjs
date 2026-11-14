@@ -19,6 +19,9 @@ for (const f of (await readdir(DIR)).filter(f => f.endsWith('.json'))) {
     const r = await fetch(info.src); if (!r.ok) throw new Error('받기 ' + r.status);
     const src = join(tmp, id + '.mp3'), out = join(tmp, id + '-x.mp3');
     await writeFile(src, Buffer.from(await r.arrayBuffer()));
+    // 작업실에 AAC(mp4) 파일이 mp3 이름으로 올라온 곡도 있다 — mp4는 표본마다 자리가 적힌 표가 있어 위치가 정확하니 표시만 한다
+    const codec = execFileSync('ffprobe', ['-v', 'error', '-select_streams', 'a:0', '-show_entries', 'stream=codec_name', '-of', 'csv=p=0', src]).toString().trim();
+    if (codec !== 'mp3') { await writeFile(p, JSON.stringify({ ...info, seek: true }, null, 1) + '\n'); console.log(`${id}: ${codec} — 자리 표가 필요 없음`); continue; }
     // 소리만(표지 그림은 빼고) 그대로 다시 담으며 Xing 헤더(자리 표)를 쓴다 — 그림이 함께 있으면 ffmpeg가 헤더를 쓰지 않았다
     execFileSync('ffmpeg', ['-v', 'error', '-y', '-i', src, '-map', '0:a', '-c', 'copy', '-map_metadata', '-1', '-write_xing', '1', out]);
     const buf = await readFile(out);
