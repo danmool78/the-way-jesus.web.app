@@ -70,9 +70,11 @@ function makeGear(kind) {
     if (kind === 'crook') { const h = new THREE.Mesh(new THREE.TorusGeometry(0.045, 0.011, 5, 12, Math.PI * 1.25), mat('#6b4a2b')); h.position.set(-0.045, L, 0); g.add(h); }
     g.userData.ground = true;
   } else if (kind === 'spear' || kind === 'bigspear') { // 창: 손 위로 머리를 넘게, 쇠 날
-    const k = kind === 'bigspear' ? 1.3 : 1, L = 1.22 * k; g.add(rod(L, 0.01 * k, '#5a4128')); // 골리앗의 창 자루는 베틀 채 같았다(삼상 17:7)
-    const tip = new THREE.Mesh(new THREE.ConeGeometry(0.022 * k, 0.12 * k, 5), mat('#b9b7ad', { metalness: 0.6, roughness: 0.4 }));
-    tip.position.y = L + 0.06 * k; g.add(tip);
+    // 길이는 키의 1.15배쯤(몸 배율 big이 함께 키운다 — 골리앗은 이미 1.6배라 길이를 또 곱하니 키의 두 배 가까이 됐다, 사용자 2026-11).
+    // 골리앗의 창은 자루만 굵게 — 베틀 채 같았다(삼상 17:7)
+    const k = kind === 'bigspear' ? 1.8 : 1, L = 1.05; g.add(rod(L, 0.01 * k, '#5a4128'));
+    const tip = new THREE.Mesh(new THREE.ConeGeometry(0.02 * Math.sqrt(k), 0.1 * Math.sqrt(k), 5), mat('#b9b7ad', { metalness: 0.6, roughness: 0.4 }));
+    tip.position.y = L + 0.05 * Math.sqrt(k); g.add(tip);
     g.userData.ground = true;
   } else if (kind === 'scutum') { // 로마 병정의 긴 네모 방패(붉은 바탕, 쇠 돌기)
     const b = new THREE.Mesh(new THREE.BoxGeometry(0.26, 0.4, 0.02), mat('#8c2a1e')); g.add(b);

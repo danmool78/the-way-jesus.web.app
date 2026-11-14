@@ -62,7 +62,8 @@ export const LEADS = {
 // 제자를 부르신 뒤(e17부터)에는 정해 둔 사람이 없는 장면에도 제자 둘이 따른다
 export const FOLLOW = { jesus: { from: 'e17', pool: ['john', 'andrew', 'james', 'peter'] } };
 // 키가 다른 사람 (삭개오는 키가 작았다 — 눅 19:3)
-export const SIZE = { zacchaeus: 0.82, goliath: 1.6, saul: 1.1 }; // 골리앗은 거인, 사울은 키가 머리 하나만큼 컸다(삼상 9:2)
+// 골리앗은 여섯 규빗 한 뼘(삼상 17:4 — 약 2.9m, 보통 사람 1.7m의 1.7배), 사울은 모든 백성보다 어깨 위만큼 더 컸다(삼상 9:2 — 30cm 남짓)
+export const SIZE = { zacchaeus: 0.82, goliath: 1.7, saul: 1.18 };
 // 손에 드는 것 (game-model.js makeGear): 사람마다 하나둘. 순례자·목자·모세의 지팡이, 병정의 창과 방패, 우물가 여인의 물동이
 export const GEAR = {
   'pilgrim-man': ['staff'], 'pilgrim-woman': ['staff'], shepherd: ['crook'], jethro: ['crook'], david: ['crook'],
