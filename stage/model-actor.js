@@ -49,8 +49,7 @@ export class StageModel {
     body.traverse(m => { if (m.isMesh) { m.frustumCulled = false; m.material = m.material.clone(); this.mats.push(m.material); } });
     this.p = { root: new THREE.Group() }; this.p.root.add(body);
     this.mixer = new THREE.AnimationMixer(body);
-    // 게임과 같은 다듬은 동작: 말할 때 몸은 가만히 팔만, 서 있을 때 허리를 곧게, 끝과 처음이 이어지게 (game-model.js calmClips)
-    this.acts = Object.fromEntries(calmClips(gltf).map(c => [c.name, this.mixer.clipAction(c)]));
+    this.acts = Object.fromEntries(calmClips(gltf).map(c => [c.name, this.mixer.clipAction(c)])); // 차분한 말하기·끊김 없는 되풀이·곧게 서기 (game-model.js)
     this.cur = null; this.w = 0; this.op = -1;
     // 인형의 왼팔·오른팔이 모델의 어느 팔인지는 자리(x)로 맞춘다 (서로 앞을 보는 쪽이 같다)
     const L = { up: bone(body, 'LeftArm'), lo: bone(body, 'LeftForeArm'), hand: bone(body, 'LeftHand') };
