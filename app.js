@@ -20,7 +20,6 @@ window.curEvent = () => evAt(idx); // 3D 지형(terrain.js)이 지금 장면을 
 // LANGS는 번역이 다 된 언어만 (data.<언어>.json이 있는 것) — 새 언어를 올릴 때 여기에 더한다
 const LANGS = ['ko', 'en', 'es', 'pt', 'fr', 'zh', 'id', 'ja'];
 const LANG = (() => {
-  if (['psalms'].includes(new URLSearchParams(location.search).get('j'))) return 'ko'; // 한국어 전용 여정(시편, journey.json koOnly) — 번역본이 없다
   const ok = l => l && LANGS.includes(l) ? l : null, pick = l => ok(String(l || '').toLowerCase().split('-')[0]);
   let saved = null; try { saved = localStorage.getItem('theway-lang'); } catch { /* 사생활 보호 모드 */ }
   return pick(new URLSearchParams(location.search).get('lang')) || pick(saved) || (navigator.languages || [navigator.language]).map(pick).find(Boolean) || 'en';
@@ -1500,18 +1499,30 @@ function stopAuto() { autoOn = false; clearTimeout(autoTimer); promptThen = null
 // 아직 올리지 않은 노래는 '준비 중'을 잠깐 보이고 넘어간다. 가사의 [Verse] 같은 표시는 노래 만들 때만 쓰고 화면에는 '후렴' 같은 작은 이름으로
 const song = { audio: new Audio(), on: false, token: 0, raf: 0, k: -2, done: null, timer: 0 };
 const songLines = lyrics => (lyrics || '').split('\n').map(s => s.trim()).filter(s => s && !/^\[.*\]$/.test(s));
-const SECTION = { verse: '절', chorus: '후렴', 'final chorus': '후렴', bridge: '브리지' };
+const SECTION = { verse: 'secVerse', chorus: 'secChorus', 'final chorus': 'secChorus', bridge: 'secBridge' }; // 화면 글씨는 시편 ui.<언어>.json
 function lyricsHtml(e) {
   let k = 0, prev = '';
   const body = e.song.lyrics.split('\n').map(x => x.trim()).map(x => {
     const m = x.match(/^\[(.*)\]$/);
-    if (m) { const n = SECTION[m[1].toLowerCase().replace(/\s*\d+$/, '')] || ''; const h = n && n !== prev ? `<h5>${esc(n)}</h5>` : ''; if (n) prev = n; return h; }
-    return x ? `<p data-ln="${k++}">${esc(x)}</p>` : '';
+    if (m) { const n = SECTION[m[1].toLowerCase().replace(/\s*\d+$/, '')] ? t(SECTION[m[1].toLowerCase().replace(/\s*\d+$/, '')]) : ''; const h = n && n !== prev ? `<h5>${esc(n)}</h5>` : ''; if (n) prev = n; return h; }
+    // 다른 언어: 노래는 한국어 그대로, 줄마다 밑에 그 언어의 뜻을 작게 (build.py가 song.tr에 {한국어 줄: 옮긴 줄})
+    return x ? `<p data-ln="${k++}">${esc(x)}${e.song.tr?.[x] ? `<span class="tr" lang="${LANG}">${esc(e.song.tr[x])}</span>` : ''}</p>` : '';
   }).join('');
   return `<div class="lyrics">${body}</div><p class="fine">${esc(t('lyricsNote', { n: e.song.psalm })).replace(/([.。])\s*(?=\S)/g, '$1<br>')}</p>`;
 }
-function lyricShow(k, want, head) {
-  $('#lyricsOv').innerHTML = `<p class="prev">${esc(k > 0 ? want[k - 1] : '')}</p><p class="cur${k < 0 ? ' head' : ''}">${esc(k >= 0 ? want[k] : head)}</p><p class="next">${esc(want[k + 1] || '')}</p>`;
+// 부르는 줄은 한 줄에 들어가게 글씨를 조금까지 줄이고(78%까지), 그래도 넘치면 두 줄을 고르게 나눈다(text-wrap: balance) —
+// 긴 줄이 낱말 하나만 다음 줄로 넘어가면 보기 흉하다(사용자). 번역 줄(.tr)도 같이
+function fitLine(el) {
+  if (!el?.textContent) return;
+  el.style.fontSize = ''; el.style.whiteSpace = 'nowrap';
+  const base = parseFloat(getComputedStyle(el).fontSize), w = el.clientWidth, need = el.scrollWidth;
+  if (need > w) el.style.fontSize = `${Math.max(base * .78, base * w / need)}px`;
+  if (el.scrollWidth > w) el.style.whiteSpace = '';
+}
+function lyricShow(k, want, head, tr) {
+  const ko = k >= 0 ? want[k] : head, sub = tr && k >= 0 ? tr[ko] || '' : '';
+  $('#lyricsOv').innerHTML = `<p class="prev">${esc(k > 0 ? want[k - 1] : '')}</p><p class="cur${k < 0 ? ' head' : ''}">${esc(ko)}</p>${tr ? `<p class="tr" lang="${LANG}">${esc(sub)}</p>` : ''}<p class="next">${esc(want[k + 1] || '')}</p>`;
+  $$('#lyricsOv .cur, #lyricsOv .tr').forEach(fitLine);
   $$('#scene [data-ln]').forEach(p => p.classList.toggle('speaking', +p.dataset.ln === k));
   const el = k >= 0 && $(`#scene [data-ln="${k}"]`);
   if (el && followRead) { const pane = el.closest('.pane'); if (pane?.hidden) showTab(pane.dataset.pane); scrollToEl(el); } // 사람이 다른 곳을 보고 있으면 가사 탭으로 끌고 가지 않는다
@@ -1519,13 +1530,13 @@ function lyricShow(k, want, head) {
 // sg: 틀 노래 { id: assets/psalms/<id>.json, title, lyrics } — 없으면 지금 장면의 노래(시편 여정)
 async function songPlay(done, sg) {
   const ev = evAt(idx);
-  const e = sg || (ev?.song && { id: ev.id, title: ev.title, lyrics: ev.song.lyrics });
+  const e = sg || (ev?.song && { id: ev.id, title: ev.title, lyrics: ev.song.lyrics, tr: ev.song.tr });
   if (!e) { done && done(); return; }
   const tk = ++song.token, ov = $('#lyricsOv'), want = songLines(e.lyrics);
   song.on = true; song.done = done; speaking = true; setListenUI();
   ov.hidden = false; requestAnimationFrame(() => ov.classList.add('on'));
   document.body.classList.add('singing'); // 지도를 어둡게 (style.css .singing)
-  lyricShow(-1, want, e.title);
+  lyricShow(-1, want, e.title, e.tr);
   const info = await songInfo(e.id);
   if (tk !== song.token) return;
   if (!info?.src) { lyricShow(-1, [], t('songPending')); song.timer = setTimeout(() => songEnd(tk), 4000); return; }
@@ -1546,7 +1557,7 @@ async function songPlay(done, sg) {
   // 부르는 줄 맞추기: 화면 그리기(rAF)는 다른 창에 가 있는 동안 멈추므로 소리 쪽 시각 알림(timeupdate)으로도 맞추고,
   // 돌아오면 곧바로 다시 맞춘다 (다른 창에 다녀오면 멈췄던 줄이 잠깐 남아 있었다 — 사용자)
   const sync = () => { if (tk !== song.token) return; songBarTime(a); document.body.classList.toggle('singing', !(a.duration - a.currentTime < 7)); if (!times) return; // 끝나기 7초 전부터 지도가 서서히 밝아진다
-    const now = a.currentTime + 0.15; let k = -1; times.forEach((x, i) => { if (x <= now) k = i; }); if (k !== song.k) { song.k = k; lyricShow(k, want, e.title); } };
+    const now = a.currentTime + 0.15; let k = -1; times.forEach((x, i) => { if (x <= now) k = i; }); if (k !== song.k) { song.k = k; lyricShow(k, want, e.title, e.tr); } };
   song.sync = sync; a.ontimeupdate = sync;
   const tick = () => { if (tk !== song.token) return; sync(); song.raf = requestAnimationFrame(tick); };
   tick();
@@ -1571,8 +1582,8 @@ function songBarOn(a, resync) {
 }
 // 다른 여정(다윗)에서 시편 노래를 틀 때: 제목·가사는 시편 여정의 data에서 (한 번만 받는다)
 let psalmsData = null;
-const psalmSong = id => (psalmsData ||= fetch('j/psalms/data.json').then(r => r.json()).catch(() => { psalmsData = null; return null; }))
-  .then(d => { const x = d?.events.find(v => v.id === id); return x && { id, title: x.title, lyrics: x.song.lyrics, psalm: x.song.psalm }; });
+const psalmSong = id => (psalmsData ||= fetch(`j/psalms/data${LANG === 'ko' ? '' : '.' + LANG}.json`).then(r => r.json()).catch(() => { psalmsData = null; return null; }))
+  .then(d => { const x = d?.events.find(v => v.id === id); return x && { id, title: x.title, lyrics: x.song.lyrics, psalm: x.song.psalm, tr: x.song.tr }; });
 // 카드의 '이 자리에서 부른 노래': 노래가 올라가 있을 때만 보인다 (시편 여정에서 사용자가 한 편씩 만든다)
 async function psalmBox(e) {
   const box = $('#scene .psalm-link'); if (!box || !e.psalm) return;

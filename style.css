@@ -804,6 +804,8 @@ body.intro-open .intro,body.intro-open .intro *{animation-play-state:running}
 @media (max-width:900px){.songbar{bottom:calc(48% + 12px);width:88%}.journey:has(.scene.peek) .songbar{bottom:78px}} /* 폰은 아래 시트(지도 높이의 48%, 접으면 64px) 바로 위에 — 시트 위로 겹쳤다 */
 .lyrics-ov p{margin:0;font-family:var(--serif);color:#fbf1d8;text-shadow:0 1px 3px rgba(0,0,0,.6),0 0 24px rgba(0,0,0,.45);word-break:keep-all;transition:opacity .4s}
 .lyrics-ov .cur{font-weight:700;font-size:clamp(24px,3.6vw,40px);line-height:1.45;margin:.35em 0}
+.lyrics-ov p{text-wrap:balance} /* 넘쳐 두 줄이 되면 고르게 나눈다 — 낱말 하나만 넘어가 보기 흉했다 (app.js fitLine) */
+.lyrics-ov .tr{font-family:var(--sans);font-weight:500;font-size:clamp(15px,1.9vw,20px);line-height:1.4;color:#f0d79a;margin:-.15em 0 .5em;min-height:1.4em;word-break:normal;overflow-wrap:normal;hyphens:none}
 .lyrics-ov .cur.head{font-size:clamp(18px,2.4vw,26px);color:#f0d79a}
 .lyrics-ov .prev,.lyrics-ov .next{font-size:clamp(15px,1.8vw,20px);line-height:1.5;opacity:.72;min-height:1.5em}
 /* 노래하는 동안은 바탕 상자 없이 지도를 어둡게 가라앉혀 가사가 떠오르게 (둥근 얼룩·띠는 어설퍼 보였다 — 사용자) */
@@ -818,6 +820,8 @@ body.intro-open .intro,body.intro-open .intro *{animation-play-state:running}
 /* 가사: 부르는 동안에는 지금 줄만 밝게 — 네모 상자 대신 왼쪽 금빛 줄과 오른쪽으로 사라지는 은은한 빛, 다른 줄은 한 걸음 물러난다 */
 .lyrics p{position:relative;margin:0;width:95%;padding:3px 12px 3px 14px;font:16px/1.75 var(--serif);transform-origin:left center;transition:color .4s,opacity .4s,transform .4s,background .4s,text-shadow .4s}
 .lyrics:has(p.speaking) p:not(.speaking){opacity:.5}
+.lyrics p .tr{display:block;font:13px/1.5 var(--sans);color:var(--faint);text-wrap:balance;margin-bottom:3px} /* 다른 언어: 줄마다 밑에 뜻 (app.js lyricsHtml) */
+.lyrics p.speaking .tr{color:inherit;opacity:.85}
 .lyrics p.speaking{color:var(--gold2)!important;background:linear-gradient(90deg,rgba(var(--gold-rgb),.16),rgba(var(--gold-rgb),0) 75%);box-shadow:none;text-shadow:0 0 16px rgba(var(--gold-rgb),.5);transform:scale(1.05)} /* 이야기 글의 .speaking(둘레 상자)을 덮어쓴다 */
 .lyrics p.speaking::before{content:'';position:absolute;left:0;top:20%;bottom:20%;width:3px;border-radius:2px;background:linear-gradient(var(--gold2),rgba(var(--gold-rgb),.4));box-shadow:0 0 8px rgba(var(--gold-rgb),.7)}
 .no-3d #mode3d{display:none}
