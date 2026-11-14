@@ -373,7 +373,19 @@ function inputDir() {
 }
 // 카메라 높이는 고정 — 확대·축소 없이 늘 같은 비율로 (사용자 2026-11). 화면의 좁은 쪽으로 폰은 반경 8km, PC는 12km쯤 보이게:
 // 인형·소품은 지형에 견주어 작게(호수·마을을 덮지 않게) 둔다
-const fitZoom = () => G.cam.aspect < 1 ? 8 / (0.487 * G.cam.aspect) : 12 / 0.487;
+const fitZoom = () => (G.cam.aspect < 1 ? 8 / (0.487 * G.cam.aspect) : 12 / 0.487) * G.zoomK;
+// 지도 확대·축소 (사용자 2026-11): PC는 휠, 폰은 두 손가락. 내 둘레를 0.35배(사람이 크게)부터 2.2배(넓은 지도)까지, 이 기기에 기억
+G.zoomK = Math.min(2.2, Math.max(0.35, store.get('theway-game-zoom', 1) || 1));
+const zoomBy = f => { G.zoomK = Math.min(2.2, Math.max(0.35, G.zoomK * f)); store.set('theway-game-zoom', +G.zoomK.toFixed(3)); };
+addEventListener('wheel', e => { if (!G.me || !$('#setup').classList.contains('hidden') || e.target.closest('.sheet,#sheet,.card,.cardview')) return; e.preventDefault(); zoomBy(Math.exp(e.deltaY * 0.0015)); }, { passive: false });
+{ // 두 손가락: 지도(#world) 위에서 벌리고 오므린다 — 조이스틱·단추를 누르는 손가락은 세지 않는다
+  const pts = new Map(); let d0 = 0;
+  const dist = () => { const [a, b] = [...pts.values()]; return Math.hypot(a.x - b.x, a.y - b.y); };
+  const w = $('#world');
+  w.addEventListener('pointerdown', e => { pts.set(e.pointerId, { x: e.clientX, y: e.clientY }); if (pts.size === 2) d0 = dist(); });
+  w.addEventListener('pointermove', e => { if (!pts.has(e.pointerId)) return; pts.set(e.pointerId, { x: e.clientX, y: e.clientY }); if (pts.size === 2 && d0 > 0) { const d = dist(); zoomBy(d0 / d); d0 = d; } });
+  for (const ev of ['pointerup', 'pointercancel', 'pointerleave']) w.addEventListener(ev, e => { pts.delete(e.pointerId); d0 = 0; });
+}
 $('#ask').onclick = () => {
   if (G.busy || !G.me) return;
   if (!G.named) { G.named = true; G.asks += 0.6; missionText(); toast(`${esc(placeOf(G.events[G.idx]).name)}(으)로 가세요<small>지도에서 이름을 찾아보세요 · 이 장면 카드 점수가 ${ASK * 0.6}점 줄어요</small>`, true, 3000); return; }
