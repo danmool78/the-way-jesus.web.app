@@ -2,6 +2,7 @@
 // 컴퓨터마다 복잡한 토큰을 넣어야 했다(사용자) — 열쇠는 이 Worker에만 두고, 로그인한 사람이 허락된 구글 계정일 때만 대신 쓴다.
 //   GET/PUT/… /gh/<GitHub API 경로>  → 이 저장소에 한해 api.github.com으로 (열쇠: GH_TOKEN 비밀값)
 //   PUT /r2/psalms/<파일>            → R2 버킷 theway에 바로 (BUCKET 연결 — 열쇠 필요 없음)
+//   POST /hit (공개)                 → 여정·장면 방문 기록을 Analytics Engine(theway_hits)에 — 관리자 페이지의 여정별 방문
 // 로그인 확인: Firebase 인증(프로젝트 the-way-jesus)의 ID 토큰을 구글 공개 열쇠로 검증하고, 이메일의 SHA-256이 ALLOWED에 있는지 본다
 // (이메일을 저장소에 그대로 적지 않으려고 해시로). 올리기: .github/workflows/worker.yml
 const PROJECT = 'the-way-jesus', REPO = 'danmool78/the-way-jesus.web.app';
@@ -37,6 +38,14 @@ export default {
     if (req.method === 'OPTIONS') return new Response(null, { headers: cors });
     const json = (o, status = 200) => new Response(JSON.stringify(o), { status, headers: { ...cors, 'Content-Type': 'application/json' } });
     const url = new URL(req.url);
+    // 공개: 앱이 여정·장면을 열 때 보내는 방문 기록(app.js hit) → Workers Analytics Engine(HITS). 로그인 없이 받는다.
+    // 쿠키·주소·기기 정보는 적지 않는다 — 여정·장면·언어와, Cloudflare가 아는 나라 코드만. 우리 사이트에서 온 것만 센다
+    if (url.pathname === '/hit' && req.method === 'POST') {
+      const b = await req.text().then(JSON.parse).catch(() => ({})), w = (x, n = 12) => String(x || '').replace(/[^\w-]/g, '').slice(0, n);
+      if (ORIGINS.includes(origin) && /^[a-z]+$/.test(b.j || '') && ['open', 'scene'].includes(b.k))
+        env.HITS?.writeDataPoint({ blobs: [b.k, w(b.j), w(b.s), w(b.l, 5), req.cf?.country || 'XX'], doubles: [1], indexes: [w(b.j)] });
+      return new Response(null, { status: 204, headers: cors });
+    }
     try { await verify((req.headers.get('Authorization') || '').replace(/^Bearer\s+/i, ''), env); }
     catch (e) { return json({ message: e.status === 403 ? '허락된 계정이 아닙니다' : '로그인이 필요합니다' }, e.status || 401); }
 
