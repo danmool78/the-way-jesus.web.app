@@ -2,6 +2,8 @@
    app.js가 보내는 이벤트: stage:scene {i, ev}, stage:walk {i, ev}, stage:beat {beat, s}, stage:stop */
 import { THREE, damp } from './stage/kit.js';
 import { Actor } from './stage/people.js';
+import { StageModel } from './stage/model-actor.js';
+import { model } from './game-model.js';
 import { makeProp } from './stage/props.js';
 import { SCRIPTS } from './stage/scenes.js';
 import { createStreet } from './stage/street/view.js';
@@ -103,9 +105,15 @@ function flushPending() {
 const stageGroup = new THREE.Group();
 scene.add(stageGroup);
 
+// 3D 모델로 바꿔 세우는 사람 (실험: 예수님만 — 사용자 2026-11). 무대가 뜰 때 미리 받아 두고, 받기 전이면 예전 인형
+const MODELS = { jesus: 'jesus' }, ready = {};
+for (const [type, name] of Object.entries(MODELS)) model(name).then(g => {
+  if (!g) return; ready[type] = g;
+  if (curEv && (atStart || new URLSearchParams(location.search).has('beat')) && script && !script.street && Object.values(script.cast).some(([t]) => t === type)) setScene(curEv); // 낭독 전이면 바로 바꿔 세운다
+});
 function clearCast() {
   cancelPending();
-  Object.values(actors).forEach(a => a.p.root.removeFromParent());
+  Object.values(actors).forEach(a => { a.p.root.removeFromParent(); a.dispose?.(); });
   Object.values(props).forEach(p => p.lift.removeFromParent());
   actors = {}; props = {};
 }
@@ -168,7 +176,8 @@ function setScene(ev) {
     props[name] = p; stageGroup.add(p.lift);
   });
   Object.entries(script.cast).forEach(([name, [type, x, z, face, o = {}]]) => {
-    const a = new Actor(type, x, z, face, { solemn: script.solemn, ...o });
+    const g = !script.street && !o.silhouette && ready[type]; // 거리 무대·실루엣은 그대로 인형
+    const a = g ? new StageModel(g, type, x, z, face, { solemn: script.solemn, ...o }) : new Actor(type, x, z, face, { solemn: script.solemn, ...o });
     a.realWalk = !!script.street; // 거리 무대: 걷고 돌아보는 방향을 실제대로 (people.js)
     actors[name] = a;
     (o.board ? props[o.board].deck : stageGroup).add(a.p.root);
