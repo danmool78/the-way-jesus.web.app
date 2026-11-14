@@ -143,6 +143,9 @@ body.meeting #stick,body.meeting #zoom,body.meeting #arrow{opacity:0!important;p
 #dust.on{opacity:1}
 
 /* 장면 카드·퀴즈·끝 */
+#listen{position:fixed;inset:0;z-index:40;background:#000}
+#listen iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+#listenClose{position:absolute;z-index:1;right:calc(10px + env(safe-area-inset-right));top:calc(max(10px,env(safe-area-inset-top)));width:32px;height:32px;border-radius:50%;border:0;background:rgba(0,0,0,.35);color:rgba(255,255,255,.75);font-size:20px;line-height:1}
 .sheet{position:fixed;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(8,6,4,.55);backdrop-filter:blur(3px)}
 .card{width:min(460px,100%);max-height:calc(100% - 20px);overflow-y:auto;overflow-x:hidden;border-radius:18px;background:#1d1813;border:1px solid var(--line);box-shadow:0 20px 60px rgba(0,0,0,.6);touch-action:pan-y}
 .card .img{position:relative;aspect-ratio:16/10;background:#2a2117 center/cover}
@@ -207,6 +210,7 @@ body.meeting #stick,body.meeting #zoom,body.meeting #arrow{opacity:0!important;p
 <div id="toast"></div>
 <div id="bubble"></div>
 <div id="sheet" class="sheet hidden"></div>
+<div id="listen" class="hidden"><iframe title="이 장면 듣기" allow="autoplay; fullscreen"></iframe><button id="listenClose" aria-label="닫기">×</button></div>
 
 <script type="module" src="game.js"></script>
 <!-- Cloudflare Web Analytics: 쿠키·개인정보 없이 방문 수만 센다 --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f33dcbc61cc949909499f044d7eeae69"}'></script><!-- End Cloudflare Web Analytics -->

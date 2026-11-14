@@ -902,3 +902,11 @@ body.intro-open .intro,body.intro-open .intro *{animation-play-state:running}
 @media (max-width:900px){.realmkey.many{display:none}}
 /* 열두 지파처럼 영역 안에 바로 적는 이름 (지역 이름보다 작고 옅게) */
 .realm-name text{font-size:13.5px;font-weight:700;font-style:italic;letter-spacing:.08em;fill:color-mix(in srgb,var(--rc) 70%,#1a1208);stroke:rgba(248,240,220,.9);stroke-width:3.5px}
+
+/* 한 장면만 보기(?one, 순례 게임 위): 지도와 무대·자막만 — 머리·카드·조작 줄·지도 도구를 모두 감춘다 */
+.one .top,.one .dock,.one .mapctl,.one #scene,.one .maptools,.one .odo,.one .scalebar,.one .realmkey,.one .walkbanner{display:none!important}
+.one .journey{height:100dvh}
+.one .caption{right:0;left:0;bottom:calc(22px + env(safe-area-inset-bottom));max-width:calc(100% - 24px)}
+#onePlay{position:fixed;z-index:50;left:50%;top:50%;width:84px;height:84px;margin:-42px 0 0 -42px;border-radius:50%;border:1px solid rgba(255,255,255,.3);background:rgba(20,16,12,.8);color:#f3e6c8;display:grid;place-items:center}
+#onePlay svg{width:40px;height:40px}
+#onePlay[hidden]{display:none}
