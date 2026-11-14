@@ -24,7 +24,8 @@ for (const f of (await readdir(DIR)).filter(f => f.endsWith('.json'))) {
     const buf = await readFile(out);
     if (buf.subarray(0, 8192).indexOf('Xing') < 0 && buf.subarray(0, 8192).indexOf('Info') < 0) throw new Error('헤더가 붙지 않음');
     const hash = createHash('sha256').update(buf).digest('hex'), key = `psalms/${id}-${hash.slice(0, 10)}.mp3`;
-    execFileSync('npx', ['--yes', 'wrangler@3', 'r2', 'object', 'put', `${BUCKET}/${key}`, '--file', out, '--content-type', 'audio/mpeg', '--remote'], { stdio: 'inherit' });
+    // wrangler 3에는 --remote가 없고 4는 기본이 로컬이라, 4에 --remote를 준다 (3으로 돌렸다가 Unknown argument로 실패)
+    execFileSync('npx', ['--yes', 'wrangler@4', 'r2', 'object', 'put', `${BUCKET}/${key}`, '--file', out, '--content-type', 'audio/mpeg', '--remote'], { stdio: 'inherit' });
     // 올라간 것을 공개 주소로 확인한 뒤에야 바꾼다
     const chk = await fetch(`${base}/${key}`, { method: 'HEAD' }); if (!chk.ok) throw new Error('올린 파일이 보이지 않음 ' + chk.status);
     await writeFile(p, JSON.stringify({ ...info, src: `${base}/${key}`, audio: hash, seek: true }, null, 1) + '\n');
