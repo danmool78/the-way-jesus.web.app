@@ -705,6 +705,6 @@ function frame(now) {
   drawTags();
 }
 
-if (new URLSearchParams(location.search).has('debug')) window.__game = { G, me, toXZ, startLeg: (...a) => startLeg(...a) }; // 끝까지 자동으로 걸어 보는 확인용
+if (new URLSearchParams(location.search).has('debug')) window.__game = { G, me, toXZ, goalXZ, steer: (x, z) => { stick.x = x; stick.y = z; }, startLeg: (...a) => startLeg(...a) }; // 끝까지 자동으로 걸어 보는 확인용
 setupUI(); resize();
 requestAnimationFrame(frame);
