@@ -40,8 +40,8 @@ export function createWorld({ scene, renderer, toXZ, regions: want, places, jour
     const sw = hImg.width, sh = hImg.height, cv = document.createElement('canvas'); cv.width = sw; cv.height = sh;
     const cx = cv.getContext('2d', { willReadFrequently: true }); cx.drawImage(hImg, 0, 0);
     const d = cx.getImageData(0, 0, sw, sh).data;
-    // 폰에서도 가볍게: 두 칸에 하나씩만 꼭짓점으로
-    const step = 2, hw = Math.floor((sw - 1) / step) + 1, hh = Math.floor((sh - 1) / step) + 1, H = new Float32Array(hw * hh);
+    // 폰에서도 가볍게: 세 칸에 하나씩만 꼭짓점으로 (약 200m 간격 — 이 배율에서는 충분히 매끄럽다)
+    const step = 3, hw = Math.floor((sw - 1) / step) + 1, hh = Math.floor((sh - 1) / step) + 1, H = new Float32Array(hw * hh);
     const band = 0.07, ease = v => v * v * (3 - 2 * v), F = r.fade;
     for (let j = 0; j < hh; j++) for (let i = 0; i < hw; i++) {
       const k = (j * step * sw + i * step) * 4, v = d[k] * 256 + d[k + 1];
