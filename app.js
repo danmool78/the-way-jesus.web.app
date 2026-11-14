@@ -1253,7 +1253,10 @@ let voiceIndex = {};
 if (LANG === 'ko') fetch('assets/voice/ko/index.json').then(r => r.ok ? r.json() : {}).then(j => { voiceIndex = j; }).catch(() => {});
 const voiceAudio = new Audio();
 // 녹음 파일은 오래 캐시한다(immutable). 같은 열쇠로 다시 녹음하면 길이가 달라지므로, 길이를 주소에 붙여 새 파일을 받게 한다
-const voiceUrl = clip => `assets/voice/ko/${clip}.mp3?v=${voiceIndex[clip] || 0}`;
+// 큰 소리 파일(낭독·배경음악)은 호스팅이 아니라 R2에서 받는다 — 호스팅 전송량을 아끼려고(사용자 2026-11, _src/tools/r2sync.py).
+// 목록(index.json)은 작아 그대로 호스팅에서
+const MEDIA = 'https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/';
+const voiceUrl = clip => `${MEDIA}assets/voice/ko/${clip}.mp3?v=${voiceIndex[clip] || 0}`;
 // 문장 사이 쉼(ms, 1배속 기준). 녹음은 앞뒤 무음을 덜어 냈으므로 여기서 준다 — 문장 끝은 본디 쉼의 0.9배쯤, 제목 뒤는 넉넉히
 const VOICE_GAP = { sentence: 800, item: 850, intro: 1700 };
 // 장면을 열면 낭독 첫 문장들을 미리 받아 둔다 — 재생을 누르고 첫 소리가 늦게 나왔다(시편 노래 앞 낭독, 사용자)
@@ -1749,7 +1752,7 @@ function bgmReady() {
   const room = bgmCtx.createBiquadFilter(); room.type = 'peaking'; room.frequency.value = 2000; room.Q.value = 0.8; room.gain.value = -8;
   squeeze.connect(room).connect(bgmCtx.destination);
   bgmPlayers = [0, 1].map(() => {
-    const el = new Audio(); el.preload = 'auto';
+    const el = new Audio(); el.preload = 'auto'; el.crossOrigin = 'anonymous'; // R2(다른 출처)의 곡을 웹 오디오로 다듬으려면 CORS로 받아야 한다
     const gain = bgmCtx.createGain(); gain.gain.value = 0;
     bgmCtx.createMediaElementSource(el).connect(gain).connect(squeeze);
     // 반복: 겹쳐 이으면 이음매가 어긋나 들리는 곡이 많아, 끝에서 서서히 0으로 내리고 잠깐 쉰 다음 처음부터 서서히 올린다
@@ -1828,7 +1831,7 @@ function bgmPlay(cue, s = BGM.fade) {
   setTimeout(() => { if (from !== bgmPlayers[bgmCur]) { from.hold = true; from.el.pause(); } }, (wait || s) * 1000 + 100);
   bgmCur = 1 - bgmCur; bgmCue = cue; bgmLoop = null;
   // cue는 '곡?v=해시'(build.py) — 해시가 바뀌면 다시 받는다
-  const [name, ver] = cue.split('?'), src = `assets/music/${name}.mp3${ver ? '?' + ver : ''}`;
+  const [name, ver] = cue.split('?'), src = `${MEDIA}assets/music/${name}.mp3${ver ? '?' + ver : ''}`;
   if (!to.el.src.endsWith(src)) to.el.src = src;
   to.hold = true; to.el.pause(); to.el.currentTime = 0; to.wait = !!wait;
   const start = () => { to.wait = false; if (go !== bgmGo) return; to.hold = false; to.el.play().catch(() => {}); bgmRamp(to, BGM.level, wait ? BGM.out : s); };
@@ -1871,7 +1874,7 @@ function bgmWarm(i) {
     if (!e?.music || bgmWarmed.has(e.music)) return;
     bgmWarmed.add(e.music);
     const [name, ver] = e.music.split('?');
-    fetch(`assets/music/${name}.mp3${ver ? '?' + ver : ''}`, { priority: 'low' }).catch(() => bgmWarmed.delete(e.music));
+    fetch(`${MEDIA}assets/music/${name}.mp3${ver ? '?' + ver : ''}`, { priority: 'low' }).catch(() => bgmWarmed.delete(e.music));
   });
 }
 

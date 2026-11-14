@@ -77,6 +77,16 @@ jobs:
           git commit -m "Sync psalm lyrics to the uploaded songs"
           # 맞추는 사이 작업실에서 노래를 또 바꿨으면 이 결과는 낡았다 — 버리고 배포는 그대로 (뒤따르는 배포가 새 노래를 맞춘다)
           if git pull --rebase -q origin main; then git push origin HEAD:main; else git rebase --abort; git reset -q --hard HEAD~1; echo "새로 올라온 노래가 있어 이번 맞춤은 건너뜀"; fi
+      # 낭독·배경음악·영상은 배포에서 빼고 R2에서 받는다(호스팅 전송량, _src/tools/r2sync.py): 이번에 새로 생기거나 바뀐 것(위에서 새로 녹음한 것 포함)을
+      # 배포 전에 R2에 올린다. 앞 커밋을 찾지 못하면 전부 견줘 없는 것만
+      - name: Upload new media to R2
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_WORKERS_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          BEFORE: ${{ github.event.before }}
+        run: |
+          git fetch -q --deepen=200 origin main || true
+          if git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then python3 _src/tools/r2sync.py changed "$BEFORE"; else python3 _src/tools/r2sync.py all; fi
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}

@@ -133,12 +133,14 @@ const G = {
   r: null, scene: new THREE.Scene(), cam: new THREE.PerspectiveCamera(42, 1, 0.5, 4000),
   data: null, events: [], idx: 0, me: null, leader: null, pillar: null,
   zoom: 46, walked: 0, total: 0, legStart: null, legWalked: 0, water: 3, stars: [],
-  lostT: 0, prevD: 0, slowT: 0, coolT: 0, seaT: 0, legT: 0, busy: true, speed: 9, timeT: 0, timeMax: 0, meetT: 0, missed: [],
+  lostT: 0, prevD: 0, slowT: 0, coolT: 0, seaT: 0, legT: 0, busy: true, speed: 9, timeT: 0, timeMax: 0, meetT: 0, missed: [], askT: 0, asks: 0,
 };
 G.camLook = new THREE.Vector3();
 const SCALE = 4.2; // 인형 크기 (지도 위에서 보이게 키운다)
 const ARRIVE = 5;
-const SEE = 7;     // 이만큼 다가가야 그분이 보인다  // 이만큼(km) 다가가면 도착
+const SEE = 7;
+const PILLAR = 30; // 빛기둥은 이만큼(km) 안에 와야 보인다
+const ASK = 50;    // '길 묻기' 한 번에 깎이는 카드 점수     // 이만큼 다가가야 그분이 보인다  // 이만큼(km) 다가가면 도착
 const WALK = 30;   // 하루에 걷는 거리(km) — '몇 일째'
 
 function waterMesh(poly, color) {
@@ -200,6 +202,7 @@ function inputDir() {
   return d < 0.15 ? null : [x / Math.max(1, d), z / Math.max(1, d)];
 }
 const setZoom = k => { G.zoom = Math.min(170, Math.max(16, G.zoom * k)); };
+$('#ask').onclick = () => { if (G.busy || !G.me) return; G.asks++; G.askT = 5; toast(`이쪽으로 가세요<small>길을 물으면 이 장면 카드 점수가 ${ASK}점 줄어요</small>`, true, 2200); };
 $('#zin').onclick = () => setZoom(1 / 1.35); $('#zout').onclick = () => setZoom(1.35);
 addEventListener('wheel', e => { if (G.me && $('#sheet').classList.contains('hidden')) setZoom(e.deltaY > 0 ? 1.12 : 1 / 1.12); }, { passive: true });
 
@@ -320,7 +323,7 @@ function missCard(e) {
 }
 function reveal(e, stars, straight) {
   {
-    const pts = stars * 100 + Math.round(G.meetLeft || 0) * 10, got = collect(e, stars, pts), fresh = got.fresh;
+    const pts = Math.max(10, stars * 100 + Math.round(G.meetLeft || 0) * 10 - G.asks * ASK), got = collect(e, stars, pts), fresh = got.fresh;
     const v = showCard(tcard(e, G.idx, { s: stars, p: pts }, 'big reveal'),
       `<div class="row"><a class="go ghost" href="${appLink(e)}" target="_blank" rel="noopener">이 장면 듣기</a><button class="go" id="next">${G.idx + 1 < G.events.length ? '다음 장면으로 →' : '여정 마치기'}</button></div>`,
       `<p class="gotcard">${fresh ? '새 말씀 카드!' : got.best ? '최고 기록 갱신!' : '이미 모은 카드'} +${num(pts)}점${straight >= ARRIVE * 1.5 ? ` · 걸은 길 ${Math.round(G.legWalked)}km / 곧은 길 ${Math.round(straight)}km` : ''}</p>`);
@@ -412,17 +415,18 @@ function startLeg(walkFrom) {
   if (walkFrom) { G.leader.pos.set(...walkFrom); G.leader.goal.set(gx + 0.6, gz); G.leader.set('idle'); }
   else { G.leader.pos.set(gx + 0.6, gz); G.leader.goal.copy(G.leader.pos); G.leader.set('idle'); }
   G.pillar.position.set(gx, 45, gz);
-  G.legStart = [G.me.pos.x, G.me.pos.y]; G.legWalked = 0; G.legT = 0; G.lostT = 0;
+  G.legStart = [G.me.pos.x, G.me.pos.y]; G.legWalked = 0; G.legT = 0; G.lostT = 0; G.asks = 0; G.askT = 0;
   G.legStraight = Math.hypot(gx - G.me.pos.x, gz - G.me.pos.y);
   G.prevD = G.legStraight;
   G.speed = Math.max(9, G.legStraight / 16); // 먼 길(바벨론 포로길 등)도 20초 남짓에 걷게
   // 제한 시간: 곧장 걸으면 걸릴 시간의 1.7배 + 6초. 그분은 그 시간의 절반쯤에 다음 자리에 닿으시게 걸으신다
-  G.timeMax = G.timeT = G.legStraight / G.speed * 1.7 + 6;
+  G.timeMax = G.timeT = G.legStraight / G.speed * 2.3 + 10; // 목적지를 지도에서 찾아야 하니 넉넉히
   if (walkFrom) G.leader.speed = Math.max(4, Math.hypot(gx - walkFrom[0], gz - walkFrom[1]) / (G.timeMax * 0.5));
   $('#mNo').textContent = `${G.idx + 1} / ${G.events.length} · ${josa(JOURNEYS[JID].who, '이', '가')} 계신 곳`;
   $('#mTitle').textContent = `${placeOf(e).name} — ${e.title}`;
   G.busy = false;
-  if (G.legStraight < ARRIVE) { G.busy = true; G.timeT = 0; setTimeout(meet, 500); } // 같은 자리에서 이어지는 장면
+  // 같은 자리에서 이어지는 장면: 다시 반기는 인사 없이 곧바로 말씀 고르기로 (사용자 2026-11). 남은 시간 점수는 6초로 친다
+  if (G.legStraight < ARRIVE) { G.busy = true; G.timeT = 0; G.meetLeft = 6; G.met = true; setTimeout(arrive, 400); }
 }
 
 async function begin(fresh) {
@@ -434,7 +438,7 @@ async function begin(fresh) {
   const saved = store.get('theway-game-' + JID, null);
   G.idx = saved?.idx || 0; G.total = saved?.total || 0; G.stars = saved?.stars || []; G.missed = saved?.missed || [];
   $('#setup').classList.add('hidden');
-  for (const s of ['#hud', '#waterBox', '#dayBox', '#arrow', '#stick', '#zoom', '#cardsBtn']) $(s).classList.remove('hidden');
+  for (const s of ['#hud', '#waterBox', '#dayBox', '#arrow', '#stick', '#zoom', '#cardsBtn', '#ask']) $(s).classList.remove('hidden');
   G.r = renderer($('#world'));
   buildWorld(J);
   playerType();
@@ -446,7 +450,7 @@ async function begin(fresh) {
   G.leader = new Actor(J.leader, 0, 0, 0, { gaze: false }); G.leader.realWalk = true; G.leader.big = SCALE; G.leader.target = G.me;
   G.scene.add(G.me.p.root, G.leader.p.root);
   drawWater(); drawCardBtn(); resize(); startLeg();
-  if (G.idx === 0) toast(`${esc(me.name)}님, ${esc(josa(J.who, '을', '를'))} 따라 걸어요<small>빛기둥이 서 있는 곳으로 · 조이스틱이나 방향키로 움직입니다</small>`, true, 4200);
+  if (G.idx === 0) toast(`${esc(me.name)}님, ${esc(josa(J.who, '을', '를'))} 따라 걸어요<small>지도에서 장소 이름을 찾아 걸어가세요 · 가까이 가면 빛기둥이 보여요</small>`, true, 4200);
 }
 
 /* ---------- 이름표·화살표 ---------- */
@@ -457,11 +461,13 @@ function drawTags() {
   const list = [];
   const [gx, gz] = goalXZ() || [0, 0], e = G.events[G.idx];
   list.push({ cls: 'me', text: me.name, pos: [G.me.pos.x, SCALE * 1.15, G.me.pos.y] });
-  if (e) list.push({ cls: 'goal', text: placeOf(e).name, pos: [gx, SCALE * 1.25, gz] });
+  // 목적지는 따로 드러내지 않는다 — 다른 장소와 같은 이름표로 지도에서 찾게 (빛기둥 둘레에 오면 그때 크게, 사용자 2026-11)
+  const dGoal = Math.hypot(gx - G.me.pos.x, gz - G.me.pos.y);
+  if (e && dGoal < PILLAR * 0.5) list.push({ cls: 'goal', text: placeOf(e).name, pos: [gx, SCALE * 1.25, gz] });
   // 둘레의 다른 장소 이름 (여정에 나오는 곳만, 가까운 순서로 몇 개)
-  const seen = new Set([e?.place]), near = [];
+  const seen = new Set(e && dGoal < PILLAR * 0.5 ? [e.place] : []), near = [];
   for (const ev of G.events) { if (seen.has(ev.place)) continue; seen.add(ev.place); const p = placeOf(ev), [x, z] = toXZ(p.lat, p.lng); const d = Math.hypot(x - G.me.pos.x, z - G.me.pos.y); if (d < G.zoom * 1.6) near.push({ d, cls: 'place', text: p.name, pos: [x, 0.3, z] }); }
-  near.sort((a, b) => a.d - b.d).slice(0, 8).forEach(t => list.push(t));
+  near.sort((a, b) => a.d - b.d).slice(0, 14).forEach(t => list.push(t));
   while (tagEls.length < list.length) { const d = document.createElement('div'); tags.append(d); tagEls.push(d); }
   tagEls.forEach((el, i) => {
     const t = list[i]; if (!t) { el.hidden = true; return; }
@@ -470,8 +476,8 @@ function drawTags() {
   });
   // 화살표: 내 둘레 원 위에서 목표 쪽을 가리킨다
   const [mx, my] = screen(G.me.pos.x, SCALE * .5, G.me.pos.y), [tx, ty] = screen(gx, 0, gz), a = Math.atan2(ty - my, tx - mx);
-  const near2 = Math.hypot(gx - G.me.pos.x, gz - G.me.pos.y) < ARRIVE * 2.5;
-  const ar = $('#arrow'); ar.style.opacity = near2 || G.busy ? 0 : 1;
+  const near2 = dGoal < ARRIVE * 2.5;
+  const ar = $('#arrow'); ar.style.opacity = near2 || G.busy || !(G.askT > 0) ? 0 : 1;
   ar.style.left = mx + Math.cos(a) * 78 + 'px'; ar.style.top = my + Math.sin(a) * 78 + 'px'; ar.style.transform = `rotate(${a + Math.PI / 2}rad)`;
 }
 
@@ -520,7 +526,9 @@ function frame(now) {
   const near = Math.hypot(G.leader.pos.x - me0.pos.x, G.leader.pos.y - me0.pos.y) < SEE || G.meetT > 0 || G.busy;
   G.leader.showT = near ? 1 : 0;
   me0.update(t, dt); G.leader.update(t, dt);
-  G.pillar.material.opacity = 0.16 + Math.sin(t * 2) * 0.06;
+  const dp = Math.hypot(G.pillar.position.x - me0.pos.x, G.pillar.position.z - me0.pos.y), pvis = Math.max(0, Math.min(1, (PILLAR - dp) / (PILLAR * 0.35)));
+  G.pillar.material.opacity = (0.16 + Math.sin(t * 2) * 0.06) * pvis; G.pillar.visible = pvis > 0;
+  G.askT -= dt;
   // 카메라: 북쪽이 위, 비스듬히 내려다보며 따라간다
   const cx = me0.pos.x, cz = me0.pos.y, h = G.zoom;
   if (!G.busy && G.timeT > 0) { G.timeT -= dt; if (G.timeT <= 0) late(); }
@@ -540,7 +548,9 @@ function frame(now) {
     G.camLook.set(G.cam.position.x, 0, G.cam.position.z - h * 0.78); G.cam.lookAt(G.camLook);
   }
   const [gx, gz] = goalXZ() || [cx, cz];
-  $('#mDist').textContent = `남은 길 ${Math.round(Math.hypot(gx - cx, gz - cz))}km`;
+  // 남은 거리 대신 등불: 곧은 길 대비 얼마나 가까워졌는지로 밝기만 (숫자를 주면 답이 너무 빤했다 — 사용자 2026-11)
+  const warm = Math.max(0, Math.min(1, 1 - Math.hypot(gx - cx, gz - cz) / Math.max(G.legStraight || 1, 40)));
+  const lamp = $('#mDist'); lamp.textContent = warm > .85 ? '아주 가까워요' : warm > .6 ? '가까워요' : warm > .3 ? '조금 더' : '멀어요'; lamp.style.setProperty('--w', warm.toFixed(2));
   const tb = $('#mTime'); tb.hidden = !(G.timeT > 0); tb.textContent = `⏳ ${Math.ceil(G.timeT)}초`; tb.classList.toggle('hurry', G.timeT < 6);
   $('#mWalk').textContent = `걸은 길 ${Math.round(G.total)}km`;
   $('#days').textContent = Math.floor(G.total / WALK) + 1;
