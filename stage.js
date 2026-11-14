@@ -255,7 +255,7 @@ if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__st
       if (!a.doll || a.showT < 0.5 || a.p.root.parent !== stageGroup) continue; // 모델만, 보이는 사람만, 배·나귀 위는 빼고
       stageGroup.updateMatrixWorld(true);
       let low = Infinity; a.p.root.traverse(o => { if (o.isBone && /(Foot|ToeBase|Toe_End|Leg)$/.test(o.name)) low = Math.min(low, stageGroup.worldToLocal(o.getWorldPosition(v)).y); });
-      const gap = low - (a.ground + a.y), r = { name, pose: a.pose, gap: +gap.toFixed(3) };
+      const gap = (low - (a.ground + a.y)) / (a.big || 1), r = { name, pose: a.pose, gap: +gap.toFixed(3), big: +(a.big || 1).toFixed(2) }; // 지형 안에서는 사람을 키우니(big) 그만큼 나눈다
       const t = a.talkTo || ((a.pose === 'speak' || a.pose === 'sit-speak') && a.target);
       if (t && t.showT > 0) { const want = Math.atan2(t.pos.x - a.pos.x, t.pos.y - a.pos.y); const f = a.p.root.rotation.y; r.off = +Math.abs(Math.atan2(Math.sin(want - f), Math.cos(want - f))).toFixed(2); r.to = Object.keys(actors).find(k => actors[k] === t); }
       out.push(r);
