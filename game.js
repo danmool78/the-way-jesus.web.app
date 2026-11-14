@@ -9,7 +9,7 @@ import { createWorld, LAKE_LEVEL } from './game-world.js';
 import { makeProp } from './stage/props.js';
 import { createAudio } from './game-audio.js';
 import { TREASURES, RARITY, hideTreasures, treasureCard } from './game-treasure.js';
-import { loadModel, ModelActor } from './game-model.js';
+import { model, tinted, ModelActor } from './game-model.js';
 
 const $ = s => document.querySelector(s);
 const snd = createAudio(); // 배경음악·발소리·배 소리·효과음 (game-audio.js)
@@ -103,11 +103,22 @@ lights(pv.scene);
 pv.cam.position.set(0, 0.62, 2.4); pv.cam.lookAt(0, 0.48, 0);
 const floor = new THREE.Mesh(new THREE.CircleGeometry(0.5, 48), new THREE.MeshStandardMaterial({ color: '#3a2e22', roughness: 1 }));
 floor.rotation.x = -Math.PI / 2; pv.scene.add(floor);
-function rebuildPreview() {
-  playerType();
-  if (pv.actor) bin(pv.actor.p.root, pv.scene); // 모습을 바꿀 때마다 새 인형 — 앞 인형은 버린다
-  pv.actor = new Actor('player', 0, 0, 0, { gaze: false }); pv.actor.realWalk = true;
-  pv.scene.add(pv.actor.p.root);
+// 순례자: 3D 모델(형제·자매)이 있으면 그것을 고른 옷 색으로 칠해 쓰고, 없으면 예전 인형 (사용자 2026-11)
+const pName = () => me.sex === 'f' ? 'pilgrim-woman' : 'pilgrim-man';
+async function pilgrim(x = 0, z = 0) {
+  const g = await model(pName());
+  if (g) return new ModelActor(tinted(g, pName(), me.robe), x, z);
+  playerType(); return new Actor('player', x, z, 0, { gaze: false });
+}
+let pvTok = 0;
+async function rebuildPreview() {
+  const tok = ++pvTok, a = await pilgrim(); if (tok !== pvTok) return; // 빨리 바꿔 누르면 마지막 것만
+  if (pv.actor) { if (pv.actor.dispose) pv.actor.dispose(); else bin(pv.actor.p.root, pv.scene); } // 앞 인형은 버린다
+  pv.actor = a; a.realWalk = true; pv.scene.add(a.p.root);
+  // 모델이면 꾸밀 것은 모습과 옷 색뿐 — 나머지(얼굴빛·머리·수염·겉옷·머리에·지팡이)는 모델에 그려져 있다
+  const m = a instanceof ModelActor;
+  for (const k of ['skin', 'hair', 'beard', 'mantle', 'head', 'staff']) $(`#setup [data-k=${k}]`).closest('.field').hidden = m || (k === 'beard' && me.sex === 'f');
+  $('#setup [data-k=robe]').closest('.field').querySelector('b').textContent = m ? '옷 색' : '속옷';
   $('#plate').textContent = me.name || '';
 }
 function setupUI() {
@@ -122,7 +133,6 @@ function setupUI() {
     mark();
   }
   const refresh = () => {
-    $('#setup [data-k=beard]').closest('.field').hidden = me.sex === 'f';
     store.set('theway-game-me', me); rebuildPreview();
   };
   $('#name').value = me.name;
@@ -206,7 +216,7 @@ const TEMPT = [['사람이 떡으로만 살 것이 아니요 하나님의 입에
   ['주 너의 하나님께 경배하고 다만 그분만 섬겨라.', '마 4:10'], ['마귀를 대적하라. 그러면 너희를 피할 것이다.', '약 4:7'], ['하나님은 감당하지 못할 시험 당함을 허락하지 않으신다. 피할 길을 내신다.', '고전 10:13']];
 const temptKey = () => 'theway-game-tempt-' + JID;
 function spawnLegEvents() {
-  for (const k of ['serpent', 'wounded']) if (G[k]) { bin(G[k].obj || G[k].a.p.root, G.scene); G[k] = null; }
+  for (const k of ['serpent', 'wounded']) if (G[k]) { if (G[k].a?.dispose) G[k].a.dispose(); else bin(G[k].obj || G[k].a.p.root, G.scene); G[k] = null; }
   const [gx, gz] = goalXZ(), [sx, sz] = [G.me.pos.x, G.me.pos.y], L = G.legStraight;
   if (L < 25) return;
   const at = (f, off) => { const dx = (gx - sx) / L, dz = (gz - sz) / L; return [sx + (gx - sx) * f - dz * off, sz + (gz - sz) * f + dx * off]; };
@@ -216,7 +226,7 @@ function spawnLegEvents() {
   }
   if (Math.random() < 0.4) { // 쓰러진 사람: 길 가장자리
     const [x, z] = at(0.6 + Math.random() * 0.2, (Math.random() < 0.5 ? -1 : 1) * 2.5);
-    if (!blocked(x, z)) { const a = new Actor('man', x, z, 0, { gaze: false }); a.big = SCALE; a.set('sleep'); a.realWalk = true; G.scene.add(a.p.root); G.wounded = { a, x, z, still: 0, helped: false, told: false }; }
+    if (!blocked(x, z)) { const a = G.manG ? new ModelActor(tinted(G.manG, 'pilgrim-man', '#8b6f50'), x, z, { noPillow: true }) : new Actor('man', x, z, 0, { gaze: false }); a.big = SCALE; a.set('sleep'); a.realWalk = true; G.scene.add(a.p.root); G.wounded = { a, x, z, still: 0, helped: false, told: false }; }
   }
 }
 function spawnPatrols() {
@@ -224,8 +234,15 @@ function spawnPatrols() {
   G.patrols = [];
   const big = Object.values(G.data.places).filter(p => !p.hidden && /예루살렘|가버나움|여리고|가이사랴|사마리아|세겜|헤브론/.test(p.name)).slice(0, 5);
   for (const p of big) {
-    const [x0, z0] = toXZ(p.lat, p.lng), a = Math.random() * 6.28, A = [x0 + Math.cos(a) * 9, z0 + Math.sin(a) * 9], B = [x0 - Math.cos(a) * 9, z0 - Math.sin(a) * 9];
-    for (let i = 0; i < 2; i++) { const s = new Actor('soldier', A[0] + i * 1.5, A[1], 0, { gaze: false }); s.big = SCALE; s.realWalk = true; s.speed = 2.2; G.scene.add(s.p.root); G.patrols.push({ s, A, B, to: 1, off: i * 1.5 }); }
+    // 순찰 길은 물(바다·호수)을 건너지 않는 방향으로만 — 아무 쪽으로나 정하니 가버나움·가이사랴 병정이 물 위를 걸었다(사용자 2026-11)
+    const [x0, z0] = toXZ(p.lat, p.lng), wet = (x, z) => { const [la, ln] = toLL(x, z); return Object.values(WATERS).some(w => inPoly(la, ln, w)); };
+    let A = null, B = null;
+    for (let k = 0, a0 = Math.random() * 6.28; k < 12 && !A; k++) {
+      const a = a0 + k * 0.52, P = [x0 + Math.cos(a) * 9, z0 + Math.sin(a) * 9], Q = [x0 - Math.cos(a) * 9, z0 - Math.sin(a) * 9];
+      if (![...Array(19)].some((_, i) => wet(P[0] + (Q[0] - P[0]) * i / 18, P[1] + (Q[1] - P[1]) * i / 18))) { A = P; B = Q; }
+    }
+    if (!A) continue;
+    for (let i = 0; i < 2; i++) { const s = G.soldierG ? new ModelActor(G.soldierG, A[0] + i * 1.5, A[1]) : new Actor('soldier', A[0] + i * 1.5, A[1], 0, { gaze: false }); s.big = SCALE; s.realWalk = true; s.speed = 2.2; G.scene.add(s.p.root); G.patrols.push({ s, A, B, to: 1, off: i * 1.5 }); }
   }
 }
 function updateEvents(dt, me0) {
@@ -656,7 +673,7 @@ async function begin(fresh) {
   $('#setup').classList.add('hidden');
   for (const s of ['#hud', '#waterBox', '#dayBox', '#arrow', '#stick', '#cardsBtn', '#ask', '#quit', '#sound']) $(s).classList.remove('hidden');
   // 꾸미기 화면의 미리보기는 이제 그리지 않으니 인형과 렌더러를 놓아 준다
-  if (pv.actor) { bin(pv.actor.p.root, pv.scene); pv.actor = null; } pv.r.dispose();
+  if (pv.actor) { if (pv.actor.dispose) pv.actor.dispose(); else bin(pv.actor.p.root, pv.scene); pv.actor = null; } pv.r.dispose(); // 모델은 나와 함께 쓰니 몸은 버리지 않는다
   G.r = renderer($('#world'));
   buildWorld(J); placeTreasures();
   playerType();
@@ -668,13 +685,10 @@ async function begin(fresh) {
   if (blocked(sx, sz) || onGalilee(sx, sz)) outer: for (let r = 2; r < 80; r += 2) for (let k = 0; k < 16; k++) { const a = k / 16 * 6.283, x = sx + Math.cos(a) * r, z = sz + Math.sin(a) * r; if (!blocked(x, z) && !onGalilee(x, z)) { sx = x; sz = z; break outer; } }
   // 그분: 3D 모델(glb, R2)이 있으면 그것으로, 못 받으면 예전 인형으로 (사용자 2026-11).
   // 모델을 다 받은 뒤에 나(G.me)를 세운다 — 매 화면이 G.me가 있으면 그분도 있다고 보고 그린다
-  let lead = null;
-  if (J.model) try {
-    const M = await fetch('assets/models.json').then(r => r.json()), key = M.files[J.model];
-    if (key) lead = new ModelActor(await loadModel(`${M.base}/${key}`));
-  } catch (err) { console.warn('model', err); }
+  const lead = J.model && await model(J.model) && new ModelActor(await model(J.model));
   G.leader = lead || new Actor(J.leader, 0, 0, 0, { gaze: false });
-  G.me = new Actor('player', sx, sz, 0, { gaze: false }); G.me.realWalk = true; G.me.big = SCALE;
+  G.me = await pilgrim(sx, sz); G.me.realWalk = true; G.me.big = SCALE;
+  [G.soldierG, G.manG] = await Promise.all([model('soldier'), model('pilgrim-man')]); // 병정·길가의 쓰러진 사람
   G.leader.realWalk = true; G.leader.big = SCALE; G.leader.target = G.me;
   G.scene.add(G.me.p.root, G.leader.p.root);
   drawWater(); drawCardBtn(); resize();

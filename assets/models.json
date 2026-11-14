@@ -1,6 +1,9 @@
 {
 "base": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev",
 "files": {
-"jesus": "models/jesus-e4ab1ea8eb.glb"
+"jesus": "models/jesus-e4ab1ea8eb.glb",
+"pilgrim-man": "models/pilgrim-man-0ff8f9a1a3.glb",
+"pilgrim-woman": "models/pilgrim-woman-8fd0bc2c6e.glb",
+"soldier": "models/soldier-ba18ff0678.glb"
 }
 }
