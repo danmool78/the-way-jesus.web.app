@@ -186,7 +186,7 @@ for JID, JDIR, LIST, OG in JOURNEYS:
         b.append('</div>\n' + series_nav(lang) + langline(JL[LIST], LIST, lang) + '</main>\n' + CF + '\n</body>\n</html>\n')
         open(os.path.join(out_dir, fname(LIST, lang)), 'w', encoding='utf-8').write(''.join(b))
 
-# sitemap.xml: 첫 화면·여정 공유 주소·묻고 답하기·왜 기독교인가·여정별 장면 목록·장면 페이지(그림 함께) — 언어별 짝은 hreflang으로.
+# sitemap.xml: 첫 화면·묻고 답하기·왜 기독교인가·여정별 장면 목록·장면 페이지(그림 함께) — 언어별 짝은 hreflang으로.
 # 날짜(lastmod)는 빼서 빌드마다 바뀌지 않게
 def entry(path_of, img=None, langs=None):
     langs = langs or LANGS
@@ -195,8 +195,7 @@ def entry(path_of, img=None, langs=None):
     return ''.join('<url><loc>%s/%s</loc>%s%s</url>\n' % (SITE, path_of(l), alts, im) for l in langs)
 sm = ['<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n',
       '<url><loc>%s/</loc><image:image><image:loc>%s/assets/og-series.jpg</image:loc></image:image></url>\n' % (SITE, SITE)]
-sm += ['<url><loc>%s/%s</loc><image:image><image:loc>%s/%s</image:loc></image:image></url>\n' % (SITE, j['id'], SITE, 'assets/og.jpg' if j['id'] == 'jesus' else 'j/%s/og.jpg' % j['id'])
-       for j in ko['journey']['series'] if j.get('ready') and os.path.exists(os.path.join(root, j['id'], 'index.html'))]  # 여정마다의 공유 주소(/moses 등)
+# 여정 공유 주소(/moses 등)는 싣지 않는다 — 열면 앱으로 넘어가는 미리보기 카드라 색인되지 않고, 크롤링만 헛되이 썼다(Search Console 301, 2026-11)
 sm += [entry(lambda l: fname('qna', l)), entry(lambda l: fname('why', l), 'assets/img/why/mountain.webp')]
 sm += [entry(lambda l, b=b: 's/' + fname(b, l), None, JL[b]) for _, _, b, _ in JOURNEYS]
 sm += [entry(lambda l, b=b: 's/' + fname(b, l), imgs.get(b) if imgs.get(b, '').startswith('assets/img/') else None, JL[b]) for b in urls]
