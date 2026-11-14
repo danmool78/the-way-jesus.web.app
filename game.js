@@ -169,7 +169,7 @@ const SEE = 3;
 const SAME = 5; // 이만큼 붙은 장면은 같은 자리로 친다 (걷지 않고 카드를 이어 받는다)
 // 발자국 (빛기둥 대신 — 빛기둥은 너무 빤한 힌트였다, 사용자 2026-11): 목적지 TRACK km 안쪽에만 그분이 걸어가신 굽은 발자국이 있고,
 // 내 둘레 PRINT_R km 안의 것만 보인다. 그 언저리까지는 단서로 찾아가고, 발자국을 만나면 따라간다
-const TRACK = 10, PRINT_R = 2.8, PRINT_GAP = 0.5, MAXP = 90;
+const TRACK = 10, PRINT_R = 2.8, PRINT_GAP = 0.3, MAXP = 140; // 발은 키(약 1.3)의 6분의 1쯤 — 작게 하는 대신 촘촘히 (컸을 때는 사람보다 커 보였다, 사용자 2026-11)
 const ASK = 50;    // '길 묻기' 한 번에 깎이는 카드 점수     // 이만큼 다가가야 그분이 보인다  // 이만큼(km) 다가가면 도착
 const WALK = 30;   // 하루에 걷는 거리(km) — '몇 일째'
 
@@ -193,8 +193,8 @@ function buildWorld(j) {
   for (const [k, p] of Object.entries(WATERS)) { const w = waterMesh(p, k === 'sea' || k === 'suez' || k === 'aqaba' ? '#4f7f99' : '#5f93ad'); w.position.y = LAKE_LEVEL[k] ?? 0.05; S.add(w); }
   G.world = createWorld({ scene: S, renderer: G.r, toXZ, regions: j.terrain, places: G.data.places, journeyId: JID, wet: (x, z) => { const [la, ln] = toLL(x, z); return Object.values(WATERS).some(p => inPoly(la, ln, p)); } });
   // 발자국: 납작한 타원 하나를 여러 번(InstancedMesh) — 한 번 만들어 장면마다 자리만 바꿔 쓴다
-  const fg = new THREE.CircleGeometry(1, 14); fg.rotateX(-Math.PI / 2); fg.scale(0.11, 1, 0.24);
-  G.prints = new THREE.InstancedMesh(fg, new THREE.MeshBasicMaterial({ color: '#4a2f1a', transparent: true, opacity: .72, depthWrite: false }), MAXP);
+  const fg = new THREE.CircleGeometry(1, 14); fg.rotateX(-Math.PI / 2); fg.scale(0.05, 1, 0.11);
+  G.prints = new THREE.InstancedMesh(fg, new THREE.MeshBasicMaterial({ color: '#3a2412', transparent: true, opacity: .85, depthWrite: false }), MAXP);
   G.prints.count = 0; G.prints.frustumCulled = false; G.prints.renderOrder = 6; S.add(G.prints);
 }
 // 걸을 수 있는 곳: 음영 그림이 있는 땅이고 물이 아닌 곳 (목표 둘레는 물이어도 들어간다 — 홍해를 건너고 물 위를 걸으신 자리)
@@ -623,7 +623,7 @@ function drawPrints(px, pz) {
   if (!G.busy) for (const [x, z, a, side] of G.trail || []) {
     const d = Math.hypot(x - px, z - pz); if (d > PRINT_R || n >= MAXP) continue;
     const k = Math.min(1, (PRINT_R - d) / 0.6); // 가장자리에서 서서히
-    fm.position.set(x + Math.cos(a) * 0.13 * side, GH(x, z) + 0.03, z - Math.sin(a) * 0.13 * side); fm.rotation.set(0, a, 0); fm.scale.setScalar(k);
+    fm.position.set(x + Math.cos(a) * 0.07 * side, GH(x, z) + 0.03, z - Math.sin(a) * 0.07 * side); fm.rotation.set(0, a, 0); fm.scale.setScalar(k);
     fm.updateMatrix(); P.setMatrixAt(n++, fm.matrix);
   }
   P.count = n; P.instanceMatrix.needsUpdate = true;
