@@ -51,8 +51,9 @@ export default {
     }
     if (url.pathname.startsWith('/r2/') && req.method === 'PUT') {
       const key = decodeURIComponent(url.pathname.slice(4));
-      if (!/^psalms\/[\w.-]+\.mp3$/.test(key)) return json({ message: 'bad key' }, 400);
-      await env.BUCKET.put(key, req.body, { httpMetadata: { contentType: 'audio/mpeg' } });
+      if (!/^psalms\/[\w.-]+\.(mp3|m4a)$/.test(key)) return json({ message: 'bad key' }, 400);
+      // 노래는 mp4(AAC, .m4a)로도 올린다 — 일시정지 뒤 위치가 정확하다
+      await env.BUCKET.put(key, req.body, { httpMetadata: { contentType: key.endsWith('.m4a') ? 'audio/mp4' : 'audio/mpeg' } });
       return json({ ok: true, key });
     }
     return json({ message: 'not found' }, 404);

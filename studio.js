@@ -1,4 +1,4 @@
-/* 그 길 — 시편 노래 작업실: 노래마다 Suno에 넣을 스타일·가사를 복사하고, 만든 mp3를 올리거나 바꾸고, 가사 시간을 맞춘다.
+/* 그 길 — 시편 노래 작업실: 노래마다 Suno에 넣을 스타일·가사를 복사하고, 만든 노래(mp4/m4a 권장, mp3도)를 올리거나 바꾸고, 가사 시간을 맞춘다.
    원본은 _src/journeys/psalms/songs.json. 노래는 Cloudflare R2(버킷 theway, 공개 주소로 스트리밍)의 psalms/<id>-<내용 해시>.mp3 —
    올릴 때마다 주소가 달라 바꾼 노래가 캐시에 걸리지 않는다. 어느 파일이 지금 노래인지와 가사 시간은 저장소의 assets/psalms/<id>.json
    ({ src: 노래 주소, audio: 내용 해시, by: 'pending'|'auto'|'tap', lines: [{ t: 초, text }] }).
@@ -26,9 +26,13 @@ const toB64 = s => { const u8 = new TextEncoder().encode(s); let bin = ''; for (
 // 가사에서 부르는 줄만: [Verse] 같은 표시와 빈 줄은 뺀다 (lyricsync.mjs·app.js와 같은 규칙)
 export const sungLines = lyrics => (lyrics || '').split('\n').map(s => s.trim()).filter(s => s && !/^\[.*\]$/.test(s));
 
+// 노래는 mp4(AAC)로 올린다 — mp4는 표본마다 자리가 적힌 표가 있어 아이폰이 일시정지 뒤에도 위치를 정확히 셈한다
+// (Suno mp3는 VBR에 헤더가 없어 가사 싱크가 틀어졌다 — 사용자, 2026-11). mp3도 받는다. 이름이 아니라 파일 머리('ftyp')로 가린다
+const isMp4 = b => b.length > 8 && String.fromCharCode(...b.subarray(4, 8)) === 'ftyp';
+const typeOf = key => key.endsWith('.m4a') ? 'audio/mp4' : 'audio/mpeg';
 async function r2Put(key, bytes, hash) {
-  if (api) return api.r2Put(key, bytes);
-  const { url, headers } = await r2Sign(r2, 'PUT', key, hash, 'audio/mpeg');
+  if (api) return api.r2Put(key, bytes, typeOf(key));
+  const { url, headers } = await r2Sign(r2, 'PUT', key, hash, typeOf(key));
   const r = await fetch(url, { method: 'PUT', headers, body: bytes });
   if (!r.ok) throw new Error(`R2 ${r.status}${r.status === 403 ? ' — R2 열쇠를 확인해 주세요' : ''}`);
 }
@@ -75,7 +79,7 @@ export async function mountStudio(root, tok, via = null) {
   token = tok; api = via;
   if (!document.getElementById('studioCss')) document.head.insertAdjacentHTML('beforeend', `<style id="studioCss">${CSS}</style>`);
   root.classList.add('st');
-  root.innerHTML = `<p class="note">시편 노래 작업실 — ① 스타일과 가사를 복사해 Suno에서 노래를 만든다 → ② 고른 mp3를 올린다(다시 올리면 교체) → ③ 몇 분 뒤 가사 시간이 자동으로 맞춰진다 → ④ 어긋나면 '탭으로 맞추기'로 고친다. 노래는 Cloudflare R2(theway 버킷 psalms/)에서 스트리밍한다.</p>
+  root.innerHTML = `<p class="note">시편 노래 작업실 — ① 스타일과 가사를 복사해 Suno에서 노래를 만든다 → ② 고른 노래를 올린다 — Suno에서 mp4(m4a)로 받아 올리면 일시정지 뒤에도 가사가 맞는다(mp3도 됨, 다시 올리면 교체) → ③ 몇 분 뒤 가사 시간이 자동으로 맞춰진다 → ④ 어긋나면 '탭으로 맞추기'로 고친다. 노래는 Cloudflare R2(theway 버킷 psalms/)에서 스트리밍한다.</p>
     <div class="card r2"><b>R2 열쇠</b> <span id="r2State" class="state"></span> <button id="r2Forget" class="ghost" hidden>잊기</button>
       <form id="r2Form" class="r2row" hidden><input id="r2Id" class="f" type="text" placeholder="Access Key ID" autocomplete="off" spellcheck="false"><input id="r2Secret" class="f" type="password" placeholder="Secret Access Key" autocomplete="off"><button class="btn" type="submit">기억하기</button></form>
       <p class="note" style="margin:6px 0 0">Cloudflare R2 → API 토큰(버킷 theway, 개체 읽기·쓰기)의 두 값. 노래를 올릴 때만 필요하고, 이 기기에만 기억합니다.</p></div>
@@ -133,7 +137,7 @@ async function fill(el, s) {
     <div class="box"><h3>Suno 스타일<span class="grow"></span><button class="ghost" data-label="스타일 복사" data-c="style">스타일 복사</button></h3><textarea class="ed style" rows="3">${esc(s.style || '')}</textarea></div>
     <div class="box"><h3>가사<span class="grow"></span><button class="ghost" data-label="가사 복사" data-c="lyrics">가사 복사</button></h3><textarea class="ed lyrics" rows="18">${esc(s.lyrics || '')}</textarea></div>
     <div class="row edrow"><span class="state edstate"></span><span class="grow"></span><button class="ghost edundo" hidden>되돌리기</button><button class="btn edsave" disabled>저장</button></div>
-    <div class="box"><h3>노래 파일<span class="grow"></span>${info ? '<button class="ghost trim" title="소리가 나는 채로 잘려 끝나면 끝 3초를 서서히 줄입니다">끝 다듬기</button>' : ''}<label class="btn" style="cursor:pointer">${info ? 'mp3 바꾸기' : 'mp3 올리기'}<input type="file" accept="audio/mpeg,.mp3" hidden></label></h3>
+    <div class="box"><h3>노래 파일<span class="grow"></span>${info ? '<button class="ghost trim" title="소리가 나는 채로 잘려 끝나면 끝 3초를 서서히 줄입니다">끝 다듬기</button>' : ''}<label class="btn" style="cursor:pointer">${info ? '노래 바꾸기' : '노래 올리기'}<input type="file" accept="audio/mp4,audio/x-m4a,.m4a,.mp4,audio/mpeg,.mp3" hidden></label></h3>
       <div class="state up">${info ? `올린 노래: <a href="${esc(info.src)}" target="_blank" rel="noopener">${esc(info.src.split('/').pop())}</a>` : '아직 올리지 않았습니다'}</div>
       ${info ? `<audio controls preload="none" src="${esc(info.src)}"></audio>` : ''}</div>
     <div class="box sync" hidden></div>`;
@@ -234,7 +238,7 @@ async function upload(el, s, file, { bytes: given, keep } = {}) {
     if (!given) { const soft = await softEnd(bytes).catch(() => null); if (soft) { bytes = soft; st.textContent = '끝을 부드럽게 다듬었습니다 · R2에 올리는 중…'; } }
     if (!st.textContent.includes('R2')) st.textContent = 'R2에 올리는 중…';
     const hash = await sha256(bytes);
-    const key = `${R2.prefix}${s.id}-${hash.slice(0, 10)}.mp3`;
+    const key = `${R2.prefix}${s.id}-${hash.slice(0, 10)}.${isMp4(bytes) ? 'm4a' : 'mp3'}`;
     await r2Put(key, bytes, hash);
     // 지금 노래가 이것임을 저장소에 적는다 — 배포 작업이 이 노래를 듣고 가사 시간을 맞춘다
     await readDir();
