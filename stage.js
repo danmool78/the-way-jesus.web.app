@@ -1,8 +1,10 @@
 /* 그 길 — 3D 무대. 장소 핀 위에 장면의 인물을 세우고, 낭독에 맞춰 연기시킨다.
    app.js가 보내는 이벤트: stage:scene {i, ev}, stage:walk {i, ev}, stage:beat {beat, s}, stage:stop */
 import { THREE, damp } from './stage/kit.js';
-import { Actor } from './stage/people.js';
-import { makeProp } from './stage/props.js';
+import { Actor, TYPES } from './stage/people.js';
+import { StageModel } from './stage/model-actor.js';
+import { model, tinted, plain } from './game-model.js';
+import { makeProp, setCrowd } from './stage/props.js';
 import { SCRIPTS } from './stage/scenes.js';
 import { createStreet } from './stage/street/view.js';
 
@@ -103,9 +105,41 @@ function flushPending() {
 const stageGroup = new THREE.Group();
 scene.add(stageGroup);
 
+// 3D 모델로 바꿔 세우는 사람 (사용자 2026-11: 인형을 3D 모델로 — 모델이 그리기는 더 가볍다. 삼각형 9천 개·한 번에 그림, 인형은 2만7천 개·수십 번).
+// 이름 있는 사람은 그 사람의 모델, 이름 없는 남녀는 순례자 모델에 인형의 옷 색을 입힌다. 아이·천사·실루엣·빛의 형상은 인형 그대로.
+// 모델은 장면에 필요한 것만 그때 받고(R2, 한 번 받으면 남는다), 다 받기 전이면 인형으로 섰다가 낭독 전이면 바꿔 세운다
+const OWN = { jesus: 'jesus', risen: 'jesus', peter: 'peter', john: 'john', mary: 'mary', joseph: 'joseph', baptist: 'baptist', pharisee: 'pharisee',
+  thomas: 'thomas', martha: 'martha', judas: 'judas', lazarus: 'lazarus', samaritan: 'samaritan', centurion: 'centurion', zacchaeus: 'zacchaeus',
+  pilate: 'pilate', shepherd: 'shepherd', soldier: 'soldier', highpriest: 'caiaphas', elder: 'nicodemus', sadducee: 'nicodemus', woman: 'woman',
+  moses: 'moses', elijah: 'elijah' };
+const MEN = new Set(['man', 'servant', 'traveler', 'healed', 'beggar', 'prodigal', 'levi', 'steward', 'groom', 'rich']);
+const WOMEN = new Set(['woman2', 'mother', 'anna', 'phoenician']);
+const DISCIPLES = ['andrew', 'james']; // 이름 없는 제자는 안드레·야고보 모델을 번갈아
+// 엑스트라(이름 없는 남녀·군중): 여러 사람을 섞는다 (사용자 2026-11: 순례자로만 하지 말고, 다른 시대 사람도 — 왕은 빼고, 수수하게 입은 사람을
+// 평범한 색 옷으로). [모델, 옷] — 옷이 'plain'이면 화려한 색을 바래게, 색이면 그 색으로 (순례자만), 없으면 그대로
+const EXTRA = {
+  men: [['pilgrim-man'], ['fisherman'], ['shepherd'], ['jethro', 'plain'], ['samuel', 'plain'], ['pilgrim-man', '#7d4a3a'], ['nathan', 'plain'],
+    ['elisha', 'plain'], ['isaiah', 'plain'], ['pilgrim-man', '#5d6b4a'], ['ahijah', 'plain']],
+  women: [['pilgrim-woman'], ['woman'], ['miriam', 'plain'], ['pilgrim-woman', '#3c5d96'], ['zipporah', 'plain'], ['rahab', 'plain'], ['pilgrim-woman', '#a3554a']],
+};
+const dress = ([n, c]) => c === 'plain' ? plain(ready[n], n) : c ? tinted(ready[n], n, c) : ready[n];
+function modelOf(type, i) {
+  if (OWN[type]) return [OWN[type]];
+  if (type === 'disciple') return [DISCIPLES[i % DISCIPLES.length]];
+  const T = TYPES[type] || {};
+  if (MEN.has(type)) return i % 3 ? EXTRA.men[i % EXTRA.men.length] : ['pilgrim-man', T.mantle || T.robe];
+  if (WOMEN.has(type)) return i % 3 ? EXTRA.women[i % EXTRA.women.length] : ['pilgrim-woman', T.robe];
+  return null;
+}
+const ready = {}, loading = {};
+function want(names) {
+  const todo = names.filter(n => !(n in ready));
+  todo.forEach(n => { loading[n] ??= model(n).then(g => { ready[n] = g; }); });
+  return todo.length ? Promise.all(todo.map(n => loading[n])) : null;
+}
 function clearCast() {
   cancelPending();
-  Object.values(actors).forEach(a => a.p.root.removeFromParent());
+  Object.values(actors).forEach(a => { a.p.root.removeFromParent(); a.dispose?.(); });
   Object.values(props).forEach(p => p.lift.removeFromParent());
   actors = {}; props = {};
 }
@@ -157,6 +191,19 @@ function setScene(ev) {
   if (street.on) street.cam(script.cams, script.cam || Object.keys(script.cams || {})[0], true);
   stageGroup.scale.setScalar(script.scale || 1);
   size = { w: 0, h: 0 }; // 넓은 무대(wide)가 바뀌었을 수 있으니 다시 잰다
+  // 배역마다 쓸 모델 (거리 무대·실루엣은 인형 그대로)
+  const plan = Object.values(script.cast).map(([type, , , , o = {}], i) => !script.street && !o.silhouette && modelOf(type, i));
+  {
+    const crowd = !script.street && Object.values(script.props || {}).some(([k]) => k === 'crowd');
+    // 군중: 엑스트라를 섞되 이 장면에 이름으로 나오는 사람은 빼고 (사무엘이 이름으로 선 장면의 군중에 또 사무엘이 서지 않게)
+    const named = new Set(plan.filter(Boolean).map(m => m[0]));
+    const pool = { men: EXTRA.men.filter(([n]) => !named.has(n) || n.startsWith('pilgrim')), women: EXTRA.women.filter(([n]) => !named.has(n) || n.startsWith('pilgrim')) };
+    const CROWDM = [...pool.men, ...pool.women].map(([n]) => n);
+    const names = [...new Set([...named, ...(crowd ? CROWDM : [])])];
+    setCrowd(crowd && CROWDM.every(n => ready[n]) ? { men: pool.men.map(dress), women: pool.women.map(dress) } : null);
+    const ev0 = ev, wait = names.length && want(names);
+    wait?.then(() => { if (curEv === ev0 && (atStart || new URLSearchParams(location.search).has('beat'))) setScene(ev0); });
+  }
   Object.entries(script.props || {}).forEach(([name, [kind, x, z, o]]) => {
     const p = makeProp(kind, x, z, o);
     p.terrainHide = o?.terrain === false; // 3D 지형의 도성 모형에 이미 있는 건물 — 무대에 또 세우면 모형 위에 걸쳐 떠 보인다
@@ -167,8 +214,10 @@ function setScene(ev) {
     p.lift = new THREE.Group(); p.lift.add(p.obj); p.kind = kind;
     props[name] = p; stageGroup.add(p.lift);
   });
-  Object.entries(script.cast).forEach(([name, [type, x, z, face, o = {}]]) => {
-    const a = new Actor(type, x, z, face, { solemn: script.solemn, ...o });
+  Object.entries(script.cast).forEach(([name, [type, x, z, face, o = {}]], i) => {
+    const m = plan[i];
+    const g = m && ready[m[0]] && dress(m);
+    const a = g ? new StageModel(g, type, x, z, face, { solemn: script.solemn, ...o }) : new Actor(type, x, z, face, { solemn: script.solemn, ...o });
     a.realWalk = !!script.street; // 거리 무대: 걷고 돌아보는 방향을 실제대로 (people.js)
     actors[name] = a;
     (o.board ? props[o.board].deck : stageGroup).add(a.p.root);

@@ -56,7 +56,7 @@ const TYPES = {
   lazarus:  { robe: '#f2ede2', trim: '#d8d0c0', hood: '#f2ede2', hair: '#3b2616', skin: 2, height: 0.97 }, // 수의에 감긴 나사로
   rich:     { robe: '#2f6a5a', trim: '#d6a93a', mantle: '#d8c49a', hair: '#2b1b10', sash: '#d6a93a', skin: 2 }, // 부자 청년 (수염 없는 젊은이, 값진 옷)
   beggar:   { robe: '#8a7c66', trim: '#6a5c48', mantle: '#6a5c48', hair: '#3a2a1c', beard: true, skin: 1 }, // 눈먼 바디매오
-  zacchaeus: { robe: '#7a3b2e', trim: '#d6a93a', mantle: '#c9a26a', hair: '#2b1b10', beard: true, sash: '#d6a93a', skin: 2, height: 0.8 }, // 키 작은 세리장
+  zacchaeus: { robe: '#7a3b2e', trim: '#d6a93a', mantle: '#c9a26a', hair: '#2b1b10', beard: true, sash: '#d6a93a', skin: 2, height: 0.75 }, // 키 작은 세리장 (사용자 2026-11: 아이보다 크고 어른보다 작게)
   judas:    { robe: '#8a7a3a', trim: '#5a4a24', mantle: '#4a3e2a', hair: '#1d140c', beard: true, sash: '#5a4a24', skin: 1 }, // 가룟 유다
   sadducee: { robe: '#e9dfc8', trim: '#7a2a5e', mantle: '#7a2a5e', hair: '#2b1b10', beard: true, sash: '#7a2a5e', skin: 2 }, // 사두개인 (부유한 제사장 가문)
   highpriest: { robe: '#f1ece0', trim: '#d6a93a', mantle: '#3c5d96', hair: '#d9d4c8', beard: true, turban: '#efe8d8', sash: '#a3554a', skin: 2, height: 0.98 }, // 대제사장 가야바
@@ -1123,6 +1123,7 @@ class Actor {
       case 'carry': aL = aR = [-0.4, -0.25, -1.3]; nod = 0.18; carry = true; break;
       case 'ride': kneel = 0.8; aL = aR = [-0.3, -0.2, -1.2]; nod = 0.08; break; // 나귀 등에 걸터앉음
       case 'point': aR = [-1.5, 0.25, 0]; break;
+      case 'perch': // 나무 가지에 엎드려 내려다봄 — 인형은 앉은 모습으로 대신한다 (모델은 stage/model-actor.js가 엎드린다)
       case 'sit': kneel = 0.75; aL = aR = [-0.3, -0.15, -0.9]; break;
       case 'rebuke': aR = [-1.95, 0.3, -0.05]; aL = [-0.7, 0.55, -0.25]; lean = 0.04; nod = -0.12; break; // 바람을 꾸짖음
       case 'break': { // 빵을 떼어 나눔: 두 손을 앞에 모았다 벌린다

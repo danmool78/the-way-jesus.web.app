@@ -1,5 +1,9 @@
 /* 3D 무대 소품: 구유·양·배·물결·군중·바구니·언덕·십자가·무덤·빛 */
 import { THREE, mat, DS, lathe, folds, mesh, sphere, glowTexture, damp } from './kit.js';
+import { crowdPerson, dollHeight } from './model-actor.js';
+// 군중을 순례자 3D 모델로 (stage.js가 받아 옷 색을 입혀 넣어 준다 — { men: [gltf…], women: [gltf…] }). 없으면 예전의 작은 사람들
+let CROWD = null;
+export const setCrowd = c => { CROWD = c; };
 
 // 소품: show(나타남)와 state(상태)를 가지며, 매 프레임 update로 움직인다
 class Prop {
@@ -284,6 +288,18 @@ const MAKERS = {
     const robes = ['#8b6f50', '#a58a5c', '#7d6446', '#b9a07a', '#6e5a40', '#9c7b56', '#c2a77a', '#8e6d4e', '#a3554a', '#5d6b4a', '#4f6a7d'];
     const heads = ['#e9dfc8', '#cdbb94', '#d8c9a6', '#3c5d96', '#efe6d4', '#b89b6c'];
     const skins = ['#c99a74', '#b9845d', '#d6ad89', '#a87451'];
+    if (CROWD) {
+      const people = (o.spots || []).map(([x, z], i) => {
+        const list = i % 3 === 2 ? CROWD.women : CROWD.men, g0 = list[(i * 7 + (i % 3)) % list.length]; // 이웃끼리 같은 사람이 겹치지 않게 건너뛰며
+        // 키는 무대의 다른 어른(인형 man)과 같게 — 예전의 작은 사람들 크기로 세우니 어른이 아이처럼 작았다 (사용자 2026-11)
+        const s = 0.94 + Math.random() * 0.1, f = crowdPerson(g0, dollHeight('man') * 0.97 * s);
+        f.obj.position.set(x, 0, z);
+        f.obj.rotation.y = (o.face ?? Math.atan2(-x, -z)) + (Math.random() - 0.5) * 0.5;
+        g.add(f.obj); return f;
+      });
+      let was = null;
+      return new Prop(g, (P) => { const sit = P.state === 'sit'; if (sit !== was) { was = sit; people.forEach(f => f.pose(sit)); } }, { state: o.state || 'stand' });
+    }
     const folk = (o.spots || []).map(([x, z], i) => {
       const p = new THREE.Group(), body = new THREE.Group();
       p.position.set(x, 0, z);

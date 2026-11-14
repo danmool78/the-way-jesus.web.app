@@ -35,6 +35,29 @@ const tints = new Map();
 const hsv = (r, g, b) => { const mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn; let h = 0;
   if (d) h = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; return [(h * 60 + 360) % 360, mx ? d / mx : 0, mx]; };
 const rgb = (h, s, v) => { const f = n => { const k = (n + h / 60) % 6; return v - v * s * Math.max(0, Math.min(k, 4 - k, 1)); }; return [f(5), f(3), f(1)]; };
+// 수수하게: 다른 시대 인물을 엑스트라로 쓸 때 화려한 옷 색(청록 겉옷·보랏빛 등)을 바래게 한다 (사용자 2026-11: 평범한 색깔 옷으로).
+// 살갗(주황 둘레의 색상)은 두고, 채도가 높은 색만 낮춘다
+const plains = new Map();
+export function plain(gltf, key) {
+  if (plains.has(key)) return plains.get(key);
+  let tex = null;
+  gltf.scene.traverse(o => { if (!tex && o.isMesh && o.material.map) tex = o.material.map; });
+  if (!tex) return gltf;
+  const img = tex.image, cv = document.createElement('canvas'); cv.width = img.width; cv.height = img.height;
+  const x = cv.getContext('2d', { willReadFrequently: true }); x.drawImage(img, 0, 0);
+  const D = x.getImageData(0, 0, cv.width, cv.height), d = D.data;
+  for (let i = 0; i < d.length; i += 4) {
+    const [h, s, v] = hsv(d[i] / 255, d[i + 1] / 255, d[i + 2] / 255);
+    if (s < 0.3 || (h > 8 && h < 42)) continue; // 이미 수수하거나 살갗·갈색
+    const [r, g, b] = rgb(h, 0.16, v * 0.92);
+    d[i] = r * 255; d[i + 1] = g * 255; d[i + 2] = b * 255;
+  }
+  x.putImageData(D, 0, 0);
+  const nt = new THREE.CanvasTexture(cv); nt.flipY = tex.flipY; nt.colorSpace = tex.colorSpace; nt.wrapS = tex.wrapS; nt.wrapT = tex.wrapT; nt.anisotropy = 4;
+  const scene = clone(gltf.scene);
+  scene.traverse(o => { if (o.isMesh && o.material.map) { o.material = o.material.clone(); o.material.map = nt; } });
+  const out = { scene, animations: gltf.animations }; plains.set(key, out); return out;
+}
 export function tinted(gltf, name, hex) {
   const T = TINT[name]; if (!T || !hex) return gltf;
   const key = name + hex; if (tints.has(key)) return tints.get(key);
