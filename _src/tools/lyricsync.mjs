@@ -15,14 +15,14 @@ const only = process.argv.slice(2);
 const sungLines = lyrics => (lyrics || '').split('\n').map(s => s.trim()).filter(s => s && !/^\[.*\]$/.test(s));
 const dur = f => +execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', f]).toString().trim();
 
-async function ask(model, b64, lines) {
+async function ask(model, b64, lines, mime) {
   const prompt = `이 노래는 아래 한국어 가사를 위에서부터 차례로 부른 것이다. 가사 줄마다 그 줄을 부르기 시작하는 시각(노래 처음부터 초, 소수 첫째 자리)을 찾아라.
 같은 줄이 여러 번 나오면 목록에 적힌 순서대로 차례로 대응시켜라. 노래에서 부르지 않은 줄은 start를 null로.
 JSON 배열로만 답하라: [{"i": 줄 번호, "start": 초}, …]
 
 ${lines.map((l, i) => `${i}: ${l}`).join('\n')}`;
   const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, { method: 'POST', headers: { 'x-goog-api-key': KEY, 'content-type': 'application/json' },
-    body: JSON.stringify({ contents: [{ parts: [{ inlineData: { mimeType: 'audio/mpeg', data: b64 } }, { text: prompt }] }], generationConfig: { responseMimeType: 'application/json', temperature: 0 } }) });
+    body: JSON.stringify({ contents: [{ parts: [{ inlineData: { mimeType: mime, data: b64 } }, { text: prompt }] }], generationConfig: { responseMimeType: 'application/json', temperature: 0 } }) });
   const j = await r.json().catch(() => ({}));
   if (!r.ok) throw Error(`${model}: ${j.error?.message || r.status}`);
   return JSON.parse(j.candidates?.[0]?.content?.parts?.map(p => p.text).join('') || '[]');
@@ -60,9 +60,10 @@ for (const s of songs) {
   if (!r.ok) { console.warn(`::warning::${s.id} 노래를 받지 못했습니다 (${r.status} ${info.src})`); continue; }
   const buf = Buffer.from(await r.arrayBuffer()), mp3 = `${tmp}/${s.id}.mp3`;
   await writeFile(mp3, buf);
-  const len = dur(mp3), b64 = buf.toString('base64');
+  // 노래는 mp4(AAC)로도 올라온다 — 이름이 아니라 파일 머리('ftyp')로 가린다
+  const len = dur(mp3), b64 = buf.toString('base64'), mime = buf.subarray(4, 8).toString() === 'ftyp' ? 'audio/mp4' : 'audio/mpeg';
   let raw = null;
-  for (const m of MODELS) { try { raw = await ask(m, b64, lines); break; } catch (e) { console.warn(e.message); } }
+  for (const m of MODELS) { try { raw = await ask(m, b64, lines, mime); break; } catch (e) { console.warn(e.message); } }
   if (!raw) { console.warn(`::warning::${s.id} 가사 시간을 맞추지 못했습니다 (작업실에서 탭으로 맞춰 주세요)`); continue; }
   const found = raw.filter(x => typeof x?.start === 'number').length;
   const t = tidy(raw, lines.length, len);

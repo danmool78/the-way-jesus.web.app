@@ -107,7 +107,7 @@ async function load() {
     $('#loginMsg').textContent = '노래 목록을 불러오는 중…';
     const [{ mountStudio }, d] = await Promise.all([import('./studio.js'), fetch('data.json', { cache: 'no-store' }).then(r => r.json())]);
     fillPick(d.journey?.series);
-    await mountStudio($('#studio'), token, google ? { gh, r2Put: async (key, bytes) => { const r = await fetch(`${WORKER}/r2/${key}`, { method: 'PUT', headers: { Authorization: `Bearer ${await auth.currentUser.getIdToken()}`, 'Content-Type': 'audio/mpeg' }, body: bytes }); if (!r.ok) throw new Error(`R2 ${r.status}`); } } : null);
+    await mountStudio($('#studio'), token, google ? { gh, r2Put: async (key, bytes, type = 'audio/mpeg') => { const r = await fetch(`${WORKER}/r2/${key}`, { method: 'PUT', headers: { Authorization: `Bearer ${await auth.currentUser.getIdToken()}`, 'Content-Type': type }, body: bytes }); if (!r.ok) throw new Error(`R2 ${r.status}`); } } : null);
     $('#login').hidden = true; $('#studio').hidden = $('#logout').hidden = false;
     return;
   }
