@@ -1,6 +1,6 @@
 {
- "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps52-402bec2164.mp3",
- "audio": "402bec2164360e7e51e5841e302871a2e796ded1a12316064d34dd5a5197a5e0",
+ "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps52-8e8ab3141f.mp3",
+ "audio": "8e8ab3141fa3ace8c1c3c453c90dc181b59ba1a51f5191af958d9d1408cfa304",
  "by": "auto",
  "lines": [
   {
@@ -99,5 +99,6 @@
    "t": 143.5,
    "text": "주의 성도들 앞에서 주를 기다리리라"
   }
- ]
+ ],
+ "seek": true
 }

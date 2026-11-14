@@ -1,6 +1,6 @@
 {
- "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps29-e141bc1550.mp3",
- "audio": "e141bc155010ba858ed022250b41ce2527e0c4c0e7569755d2feb50e63cfbe8c",
+ "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps29-1155ff552d.mp3",
+ "audio": "1155ff552dd1a31965d72800ec4163c5e1986a3cf9672c18bda569f896147716",
  "by": "auto",
  "lines": [
   {
@@ -95,5 +95,6 @@
    "t": 171,
    "text": "평강의 복을 주시리"
   }
- ]
+ ],
+ "seek": true
 }

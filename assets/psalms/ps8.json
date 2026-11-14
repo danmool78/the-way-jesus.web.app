@@ -1,6 +1,6 @@
 {
- "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps8-c339a69820.mp3",
- "audio": "c339a69820823d46151e1eda9d8ded61bb4abff1c5fb5e0e93b7345185d3266c",
+ "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps8-91b3731467.mp3",
+ "audio": "91b3731467857f6a7d9a0075aca330a902d4d594b4b4fa4128b32a0d51d3b261",
  "by": "tap",
  "lines": [
   {
@@ -99,5 +99,6 @@
    "t": 200.1,
    "text": "온 땅에 가득한 주의 아름다운 이름"
   }
- ]
+ ],
+ "seek": true
 }

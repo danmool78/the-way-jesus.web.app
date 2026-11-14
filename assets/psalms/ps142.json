@@ -1,6 +1,6 @@
 {
- "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps142-d510ec0706.mp3",
- "audio": "d510ec0706299ec3ae93a91f2f820f008403766d02ffd573d776f695b6c019d7",
+ "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps142-a155bce4cf.mp3",
+ "audio": "a155bce4cfa61b70bd20537e3bf95b01a3f6e6391c132d38d2af54ee3cff726b",
  "by": "auto",
  "lines": [
   {
@@ -87,5 +87,6 @@
    "t": 163.5,
    "text": "주는 나의 피난처 나의 몫이시라"
   }
- ]
+ ],
+ "seek": true
 }

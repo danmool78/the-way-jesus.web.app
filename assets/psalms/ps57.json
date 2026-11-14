@@ -1,6 +1,6 @@
 {
- "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps57-43b756d8db.mp3",
- "audio": "43b756d8dbce9640c34764c7bc3a50d55c4d730ad31335df8cfa2b4b2669096e",
+ "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps57-f41e879a41.mp3",
+ "audio": "f41e879a4169962416d50dedb6ad747cc1db8e9d9c177cf7e3056a0a78af7f6d",
  "by": "auto",
  "lines": [
   {
@@ -91,5 +91,6 @@
    "t": 167.7,
    "text": "내가 새벽을 깨우리로다"
   }
- ]
+ ],
+ "seek": true
 }

@@ -1,6 +1,6 @@
 {
- "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps23-06f602629e.mp3",
- "audio": "06f602629ee54a0d3fe33b979e8dcae2c8bb738496f3d960fa5321123439fc5a",
+ "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps23-a11d979444.mp3",
+ "audio": "a11d979444294d78c2a09d03e4faa1a47780cedee6b2507ecdbebf981c517038",
  "by": "auto",
  "lines": [
   {
@@ -79,5 +79,6 @@
    "t": 121,
    "text": "여호와의 집에 영원히 살리라"
   }
- ]
+ ],
+ "seek": true
 }

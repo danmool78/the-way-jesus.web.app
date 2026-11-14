@@ -1,6 +1,6 @@
 {
- "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps34-5960370c87.mp3",
- "audio": "5960370c872e76b2ac1ee29df0c1bee56dd713b1bf0075c5d10012c1821295f9",
+ "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps34-be3fd09e97.mp3",
+ "audio": "be3fd09e977c2d2fe2f1f0ea2cce5208f1abb71171d044da672bc0fb66f53131",
  "by": "auto",
  "lines": [
   {
@@ -99,5 +99,6 @@
    "t": 125.5,
    "text": "그에게 피하는 사람은 복이 있도다"
   }
- ]
+ ],
+ "seek": true
 }

@@ -1,6 +1,6 @@
 {
- "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps51-d7e7d3ecd5.mp3",
- "audio": "d7e7d3ecd5bceed0bb5a3b11ae6c8b706296842e94069a22bd8aebdc367cc94c",
+ "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps51-383dc3be33.mp3",
+ "audio": "383dc3be333429bcf5610c3c6fa00850f7cacd1555652ff71d71e887f4a78400",
  "by": "auto",
  "lines": [
   {
@@ -107,5 +107,6 @@
    "t": 237,
    "text": "내 안에 정한 마음 지으소서"
   }
- ]
+ ],
+ "seek": true
 }

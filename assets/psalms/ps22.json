@@ -1,6 +1,6 @@
 {
- "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps22-7327b1ea2c.mp3",
- "audio": "7327b1ea2cdf96825c893b9007bd56d6ffaee278f909047ebadfc0c71e4c5650",
+ "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps22-e62dad0400.mp3",
+ "audio": "e62dad04003a66d3f25ae522226fda75fd034b83b0d509119edcbfd1e55d512e",
  "by": "auto",
  "lines": [
   {
@@ -107,5 +107,6 @@
    "t": 193.5,
    "text": "주께서 이루셨네"
   }
- ]
+ ],
+ "seek": true
 }

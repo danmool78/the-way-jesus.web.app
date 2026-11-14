@@ -1,6 +1,6 @@
 {
- "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps68-b910c809b9.mp3",
- "audio": "b910c809b9a41175587ea4be62db269e2135c3977ce121f64b3aff42a53775a4",
+ "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps68-f348b2bb9d.mp3",
+ "audio": "f348b2bb9df88d130bbbcde408473df06c31af79eececb4a780549320c0589bc",
  "by": "auto",
  "lines": [
   {
@@ -111,5 +111,6 @@
    "t": 157.5,
    "text": "하나님을 찬송하라"
   }
- ]
+ ],
+ "seek": true
 }

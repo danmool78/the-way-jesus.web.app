@@ -1,6 +1,6 @@
 {
- "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps59-aa11c2778e.mp3",
- "audio": "aa11c2778ee40693d5a6e0e39ea76c33807e3a82ab938dcd1d40263b47ede9ba",
+ "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps59-8f2ae3d02a.mp3",
+ "audio": "8f2ae3d02a31562d2119024a8a41550214d8a818b1a2fe7077121f4a778857a8",
  "by": "auto",
  "lines": [
   {
@@ -91,5 +91,6 @@
    "t": 153,
    "text": "나의 힘이시여 주를 찬송하리"
   }
- ]
+ ],
+ "seek": true
 }

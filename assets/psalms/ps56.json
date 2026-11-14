@@ -1,6 +1,6 @@
 {
- "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps56-61e27706f5.mp3",
- "audio": "61e27706f5df5a9b706ede5db5e8563559c3ffc7ddaa6f421bbd228571bb08c5",
+ "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps56-19f8dc8ad4.mp3",
+ "audio": "19f8dc8ad44f1486c5c464ab5601604dbe2816d260269603c52b4e49fa1210e8",
  "by": "auto",
  "lines": [
   {
@@ -91,5 +91,6 @@
    "t": 163.5,
    "text": "생명의 빛 가운데 주 앞에서 다니리라"
   }
- ]
+ ],
+ "seek": true
 }

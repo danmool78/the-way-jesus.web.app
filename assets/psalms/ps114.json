@@ -1,6 +1,6 @@
 {
- "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps114-266c73d6ca.mp3",
- "audio": "266c73d6ca118987abe205a584d586cfd35bb9c41af441e525d509e14aa72694",
+ "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps114-bb49fe0832.mp3",
+ "audio": "bb49fe0832fc30a17440efb5056bec7594c51b07817a51c70d60b8b2fd693b38",
  "by": "auto",
  "lines": [
   {
@@ -87,5 +87,6 @@
    "t": 122.5,
    "text": "야곱의 하나님 앞에서"
   }
- ]
+ ],
+ "seek": true
 }

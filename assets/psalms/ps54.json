@@ -1,6 +1,6 @@
 {
- "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps54-052bebc52b.mp3",
- "audio": "052bebc52b39cf468c1fbaf2f6fa9e7074d4782b7cd777cdf64dd25fce3eadc8",
+ "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps54-4884eea1a4.mp3",
+ "audio": "4884eea1a44c2c9bca531025d25cf1123581f9e33da0d067aa2ed6a65c17ebd9",
  "by": "auto",
  "lines": [
   {
@@ -79,5 +79,6 @@
    "t": 138,
    "text": "주의 이름이 선하심이라"
   }
- ]
+ ],
+ "seek": true
 }

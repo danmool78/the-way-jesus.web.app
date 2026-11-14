@@ -1,6 +1,6 @@
 {
- "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps19-17b3c5b6f9.mp3",
- "audio": "17b3c5b6f93b0ee85d2f01552ab608d54050acd317b9b9db7d36db7b2adfe155",
+ "src": "https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/psalms/ps19-54d94dd756.mp3",
+ "audio": "54d94dd756d9b6e581dc5cb1784b4438cb04a11e66c59f4e9fa125966d149ece",
  "by": "auto",
  "lines": [
   {
@@ -99,5 +99,6 @@
    "t": 161.5,
    "text": "나의 반석 나의 구속자"
   }
- ]
+ ],
+ "seek": true
 }
