@@ -3,6 +3,7 @@
 "files": {
 "andrew": "models/andrew-5ced34cb21.glb",
 "baptist": "models/baptist-323288b0cc.glb",
+"caiaphas": "models/caiaphas-26dc8fa403.glb",
 "centurion": "models/centurion-f467b19434.glb",
 "david": "models/david-b76f02bbec.glb",
 "elijah": "models/elijah-66a281bd66.glb",
@@ -11,8 +12,10 @@
 "jesus": "models/jesus-e4ab1ea8eb.glb",
 "john": "models/john-46d6b58537.glb",
 "joseph": "models/joseph-2e0f126f9d.glb",
+"judas": "models/judas-7eb1b65fe4.glb",
 "lazarus": "models/lazarus-52b0041a69.glb",
 "magdalene": "models/magdalene-0efa15d267.glb",
+"martha": "models/martha-e383763bb2.glb",
 "mary-bethany": "models/mary-bethany-08c3da6492.glb",
 "mary": "models/mary-f8e21614f8.glb",
 "moses": "models/moses-a0061788d9.glb",
