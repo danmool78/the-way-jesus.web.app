@@ -3,7 +3,7 @@
 import { THREE, damp } from './stage/kit.js';
 import { Actor, TYPES } from './stage/people.js';
 import { StageModel } from './stage/model-actor.js';
-import { model, tinted } from './game-model.js';
+import { model, tinted, plain } from './game-model.js';
 import { makeProp, setCrowd } from './stage/props.js';
 import { SCRIPTS } from './stage/scenes.js';
 import { createStreet } from './stage/street/view.js';
@@ -115,12 +115,20 @@ const OWN = { jesus: 'jesus', risen: 'jesus', peter: 'peter', john: 'john', mary
 const MEN = new Set(['man', 'servant', 'traveler', 'healed', 'beggar', 'prodigal', 'levi', 'steward', 'groom', 'rich']);
 const WOMEN = new Set(['woman2', 'mother', 'anna', 'phoenician']);
 const DISCIPLES = ['andrew', 'james']; // 이름 없는 제자는 안드레·야고보 모델을 번갈아
+// 엑스트라(이름 없는 남녀·군중): 여러 사람을 섞는다 (사용자 2026-11: 순례자로만 하지 말고, 다른 시대 사람도 — 왕은 빼고, 수수하게 입은 사람을
+// 평범한 색 옷으로). [모델, 옷] — 옷이 'plain'이면 화려한 색을 바래게, 색이면 그 색으로 (순례자만), 없으면 그대로
+const EXTRA = {
+  men: [['pilgrim-man'], ['fisherman'], ['shepherd'], ['jethro', 'plain'], ['samuel', 'plain'], ['pilgrim-man', '#7d4a3a'], ['nathan', 'plain'],
+    ['elisha', 'plain'], ['isaiah', 'plain'], ['pilgrim-man', '#5d6b4a'], ['ahijah', 'plain']],
+  women: [['pilgrim-woman'], ['woman'], ['miriam', 'plain'], ['pilgrim-woman', '#3c5d96'], ['zipporah', 'plain'], ['rahab', 'plain'], ['pilgrim-woman', '#a3554a']],
+};
+const dress = ([n, c]) => c === 'plain' ? plain(ready[n], n) : c ? tinted(ready[n], n, c) : ready[n];
 function modelOf(type, i) {
   if (OWN[type]) return [OWN[type]];
   if (type === 'disciple') return [DISCIPLES[i % DISCIPLES.length]];
   const T = TYPES[type] || {};
-  if (MEN.has(type)) return ['pilgrim-man', T.mantle || T.robe];
-  if (WOMEN.has(type)) return ['pilgrim-woman', T.robe];
+  if (MEN.has(type)) return i % 3 ? EXTRA.men[i % EXTRA.men.length] : ['pilgrim-man', T.mantle || T.robe];
+  if (WOMEN.has(type)) return i % 3 ? EXTRA.women[i % EXTRA.women.length] : ['pilgrim-woman', T.robe];
   return null;
 }
 const ready = {}, loading = {};
@@ -187,12 +195,12 @@ function setScene(ev) {
   const plan = Object.values(script.cast).map(([type, , , , o = {}], i) => !script.street && !o.silhouette && modelOf(type, i));
   {
     const crowd = !script.street && Object.values(script.props || {}).some(([k]) => k === 'crowd');
-    const names = [...new Set([...plan.filter(Boolean).map(m => m[0]), ...(crowd ? ['pilgrim-man', 'pilgrim-woman'] : [])])];
-    // 군중: 순례자 모델 남녀에 옷 색 셋씩 (색마다 텍스처를 새로 만드니 몇 가지만)
-    setCrowd(crowd && ready['pilgrim-man'] && ready['pilgrim-woman'] ? {
-      men: [null, '#8b6f50', '#5d6b4a', '#7d4a3a'].map(c => c ? tinted(ready['pilgrim-man'], 'pilgrim-man', c) : ready['pilgrim-man']),
-      women: [null, '#3c5d96', '#a3554a'].map(c => c ? tinted(ready['pilgrim-woman'], 'pilgrim-woman', c) : ready['pilgrim-woman']),
-    } : null);
+    // 군중: 엑스트라를 섞되 이 장면에 이름으로 나오는 사람은 빼고 (사무엘이 이름으로 선 장면의 군중에 또 사무엘이 서지 않게)
+    const named = new Set(plan.filter(Boolean).map(m => m[0]));
+    const pool = { men: EXTRA.men.filter(([n]) => !named.has(n) || n.startsWith('pilgrim')), women: EXTRA.women.filter(([n]) => !named.has(n) || n.startsWith('pilgrim')) };
+    const CROWDM = [...pool.men, ...pool.women].map(([n]) => n);
+    const names = [...new Set([...named, ...(crowd ? CROWDM : [])])];
+    setCrowd(crowd && CROWDM.every(n => ready[n]) ? { men: pool.men.map(dress), women: pool.women.map(dress) } : null);
     const ev0 = ev, wait = names.length && want(names);
     wait?.then(() => { if (curEv === ev0 && (atStart || new URLSearchParams(location.search).has('beat'))) setScene(ev0); });
   }
@@ -208,8 +216,7 @@ function setScene(ev) {
   });
   Object.entries(script.cast).forEach(([name, [type, x, z, face, o = {}]], i) => {
     const m = plan[i];
-    let g = m && ready[m[0]];
-    if (g && m[1]) g = tinted(g, m[0], m[1]);
+    const g = m && ready[m[0]] && dress(m);
     const a = g ? new StageModel(g, type, x, z, face, { solemn: script.solemn, ...o }) : new Actor(type, x, z, face, { solemn: script.solemn, ...o });
     a.realWalk = !!script.street; // 거리 무대: 걷고 돌아보는 방향을 실제대로 (people.js)
     actors[name] = a;

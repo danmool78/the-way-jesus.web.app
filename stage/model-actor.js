@@ -17,11 +17,11 @@ const DOWN = new THREE.Vector3(0, -1, 0);
 const v1 = new THREE.Vector3(), v2 = new THREE.Vector3(), q1 = new THREE.Quaternion(), q2 = new THREE.Quaternion(), q3 = new THREE.Quaternion();
 
 // 인형 키 (서 있을 때 정수리 높이) — 모델을 이만큼으로 맞춘다
-let dollH = 0;
+const dollH = {};
 function dollHeight(type) {
-  if (dollH) return dollH;
+  if (dollH[type]) return dollH[type];
   const d = new Actor(type); d.settle(); d.p.root.updateMatrixWorld(true);
-  dollH = new THREE.Box3().setFromObject(d.p.root).max.y; return dollH;
+  return (dollH[type] = new THREE.Box3().setFromObject(d.p.root).max.y);
 }
 
 // 뼈(b)가 자식 쪽으로 가리키는 방향을 dir(세계 좌표)로 w만큼 돌린다
@@ -96,14 +96,25 @@ export class StageModel {
     const r = this.p.root, dr = d.p.root, moving = d.goal.distanceTo(d.pos) > 0.02;
     r.position.copy(dr.position); r.rotation.copy(dr.rotation); r.scale.copy(dr.scale); r.visible = dr.visible;
     this.fadeTo(Math.min(1, d.show));
-    const walk = moving && !d.floating, clip = walk ? 'walk' : CLIP[d.pose], kneel = !walk && KNEEL.has(d.pose), ride = !walk && d.pose === 'ride';
+    const walk = moving && !d.floating, clip = walk ? 'walk' : CLIP[d.pose], kneel = !walk && KNEEL.has(d.pose), ride = !walk && d.pose === 'ride', perch = !walk && d.pose === 'perch';
     this.play(clip || (kneel ? 'pray' : 'idle'));
     this.mixer.update(dt);
     // 동작이 없는 자세는 인형의 팔을 따른다 (천천히 들어가고 나온다)
-    this.w = damp(this.w, clip ? 0 : 1, 6, dt);
+    this.w = damp(this.w, clip || perch ? 0 : 1, 6, dt);
     // 나귀 타기: 넓적다리를 앞으로, 정강이는 아래로 하고 몸을 인형처럼 내려 앉힌다 (모델에 앉는 동작이 없다)
     this.legW = damp(this.legW, ride ? 1 : 0, 6, dt);
     this.body.position.y = -this.hipH * 0.58 * (d.kneel || 0) * this.legW;
+    // 가지에 엎드리기(삭개오, 눅 19:4): 발끝을 축으로 앞으로 눕혀 몸이 가지를 따라 놓이고, 두 팔은 가지를 끌어안고, 고개는 들어 아래를 본다
+    this.perchW = damp(this.perchW || 0, perch ? 1 : 0, 5, dt);
+    this.body.rotation.x = this.perchW * Math.PI * 0.5;
+    this.body.position.y += this.perchW * this.hipH * 0.12;
+    if (this.perchW > 0.01) {
+      r.updateMatrixWorld(true);
+      const qr = r.getWorldQuaternion(new THREE.Quaternion()), hug = new THREE.Vector3(0, -1, 0.25).normalize().applyQuaternion(qr), fore = new THREE.Vector3(0, -0.6, 0.6).normalize().applyQuaternion(qr);
+      for (const [, mb] of this.arms) if (mb.up && mb.lo && mb.hand) { this.aim(mb.up, mb.lo, hug, this.perchW); this.aim(mb.lo, mb.hand, fore, this.perchW); }
+      if (this.headB) this.headB.rotation.x -= 0.9 * this.perchW;
+      if (this.w < 0.01 && this.legW < 0.01) return;
+    }
     if (this.w < 0.01 && this.legW < 0.01) return;
     r.updateMatrixWorld(true); dr.updateMatrixWorld(true);
     if (this.legW > 0.01) {

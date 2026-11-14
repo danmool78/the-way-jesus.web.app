@@ -290,7 +290,7 @@ const MAKERS = {
     const skins = ['#c99a74', '#b9845d', '#d6ad89', '#a87451'];
     if (CROWD) {
       const people = (o.spots || []).map(([x, z], i) => {
-        const list = i % 3 === 2 ? CROWD.women : CROWD.men, g0 = list[i % list.length];
+        const list = i % 3 === 2 ? CROWD.women : CROWD.men, g0 = list[(i * 7 + (i % 3)) % list.length]; // 이웃끼리 같은 사람이 겹치지 않게 건너뛰며
         const s = 0.82 + Math.random() * 0.2, f = crowdPerson(g0, 0.74 * s);
         f.obj.position.set(x, 0, z);
         f.obj.rotation.y = (o.face ?? Math.atan2(-x, -z)) + (Math.random() - 0.5) * 0.5;
