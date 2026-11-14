@@ -85,10 +85,12 @@ export function createWorld({ scene, renderer, toXZ, regions: want, places, jour
     const spots = [], trees = [], built = [];
     // 마을은 사람이 사는 곳에만, 서로 7km 안이면 하나만 — 갈릴리 바닷가처럼 장소가 몰린 곳에서 집이 겹겹이 쌓여
     // 호수와 이름을 다 덮었다(PC 화면, 사용자 2026-11). 산·들판·바다·광야 같은 곳은 집 없이 둔다
-    const wild = /바다|바닷가|산$|산 |언덕|들판|광야|강$|강가|한가운데|동굴|길$|물가|호수|사막|골짜기/;
+    // 이름에 '광야'가 없어도 광야·진 친 곳(모세 여정의 머문 자리들), 굴·숲·샘·타작마당, 지방 이름(베레아)도 집 없이 (사용자 2026-11)
+    const wild = /바다|바닷가|산$|산 |산\)|언덕|들판|광야|강$|강 |강가|한가운데|동굴|굴$|숲|샘|시냇가|타작마당|평지|길$|물가|호수|사막|골짜기|베레아|미디안|마라|르비딤|기브롯|가데스|부논|숙곳|싯딤/;
     Object.entries(places).forEach(([k, p], n) => {
       if (p.hidden || k === 'sea' || p.lat == null || wild.test(p.name)) return;
       const [x0, z0] = toXZ(p.lat, p.lng);
+      if (regs.some(r => r.wild && x0 >= r.X0 && x0 <= r.X1 && z0 >= r.Z0 && z0 <= r.Z1)) return; // 시내·네게브 광야 지역에는 마을이 없다
       if (wet(x0, z0) || built.some(([x, z]) => Math.hypot(x - x0, z - z0) < 7)) return;
       if (journeyId !== 'david' && Math.hypot(x0 - cityBox.cx, z0 - cityBox.cz) < cityBox.r) return; // 예루살렘은 도성 모형이 대신 (다윗 때는 예수 때 도성이 아니라 마을로)
       built.push([x0, z0]);
