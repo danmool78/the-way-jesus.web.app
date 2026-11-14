@@ -9,6 +9,7 @@ import { createWorld, LAKE_LEVEL } from './game-world.js';
 import { makeProp } from './stage/props.js';
 import { createAudio } from './game-audio.js';
 import { TREASURES, RARITY, hideTreasures, treasureCard } from './game-treasure.js';
+import { loadModel, ModelActor } from './game-model.js';
 
 const $ = s => document.querySelector(s);
 const snd = createAudio(); // 배경음악·발소리·배 소리·효과음 (game-audio.js)
@@ -20,7 +21,7 @@ const store = { get: (k, d) => { try { return JSON.parse(localStorage.getItem(k)
 /* ---------- 여정 ---------- */
 // 지도 위를 걷는 여정만 (바울은 뱃길이 많아, 시편·잠언·GoodNews는 지도를 걷지 않아 뺀다)
 const JOURNEYS = {
-  jesus: { name: '예수님 따라가기', who: '예수님', data: 'data.json', leader: 'jesus', bases: ['main', 'west'], terrain: ['galilee', 'judea', 'shephelah', 'carmel', 'egypt'] },
+  jesus: { name: '예수님 따라가기', who: '예수님', data: 'data.json', leader: 'jesus', model: 'jesus', bases: ['main', 'west'], terrain: ['galilee', 'judea', 'shephelah', 'carmel', 'egypt'] },
   moses: { name: '모세 따라가기', who: '모세', data: 'j/moses/data.json', leader: 'mosesE', bases: ['main', 'west', 'south'], terrain: ['galilee', 'judea', 'shephelah', 'carmel', 'egypt', 'sinai', 'negev'] },
   david: { name: '다윗 따라가기', who: '다윗', data: 'j/david/data.json', leader: 'davidW', bases: ['main', 'west'], terrain: ['galilee', 'judea', 'shephelah', 'carmel'] },
   kings: { name: '엘리야와 두 왕국', who: '선지자', data: 'j/kings/data.json', leader: 'elijah', bases: ['meso', 'main', 'west', 'south'], terrain: ['galilee', 'judea', 'shephelah', 'carmel', 'sinai', 'negev'] },
@@ -665,8 +666,16 @@ async function begin(fresh) {
   if (G.idx === 0) for (const [dx, dz] of [[0, 22], [16, 16], [-16, 16], [20, 0], [-20, 0], [0, -22]]) if (!blocked(rx + dx, rz + dz)) { sx = rx + dx; sz = rz + dz; break; }
   // 출발 자리가 물 위면(갈릴리 바다 한가운데의 장면 다음 등) 가장 가까운 뭍으로
   if (blocked(sx, sz) || onGalilee(sx, sz)) outer: for (let r = 2; r < 80; r += 2) for (let k = 0; k < 16; k++) { const a = k / 16 * 6.283, x = sx + Math.cos(a) * r, z = sz + Math.sin(a) * r; if (!blocked(x, z) && !onGalilee(x, z)) { sx = x; sz = z; break outer; } }
+  // 그분: 3D 모델(glb, R2)이 있으면 그것으로, 못 받으면 예전 인형으로 (사용자 2026-11).
+  // 모델을 다 받은 뒤에 나(G.me)를 세운다 — 매 화면이 G.me가 있으면 그분도 있다고 보고 그린다
+  let lead = null;
+  if (J.model) try {
+    const M = await fetch('assets/models.json').then(r => r.json()), key = M.files[J.model];
+    if (key) lead = new ModelActor(await loadModel(`${M.base}/${key}`));
+  } catch (err) { console.warn('model', err); }
+  G.leader = lead || new Actor(J.leader, 0, 0, 0, { gaze: false });
   G.me = new Actor('player', sx, sz, 0, { gaze: false }); G.me.realWalk = true; G.me.big = SCALE;
-  G.leader = new Actor(J.leader, 0, 0, 0, { gaze: false }); G.leader.realWalk = true; G.leader.big = SCALE; G.leader.target = G.me;
+  G.leader.realWalk = true; G.leader.big = SCALE; G.leader.target = G.me;
   G.scene.add(G.me.p.root, G.leader.p.root);
   drawWater(); drawCardBtn(); resize();
   toast('땅과 마을을 세우는 중…', true, 6000);

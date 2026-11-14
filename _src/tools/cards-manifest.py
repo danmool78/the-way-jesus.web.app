@@ -11,3 +11,11 @@ for f in sorted(glob.glob(os.path.join(root, '_src', 'cards', 'out', '*.webp')))
     files[k] = 'cards/%s-%s.webp' % (k, hashlib.sha256(open(f, 'rb').read()).hexdigest()[:10])
 json.dump({'base': BASE, 'files': files}, open(os.path.join(root, 'assets', 'cards.json'), 'w'), ensure_ascii=False, indent=0)
 print('assets/cards.json:', len(files), 'cards')
+
+# 순례 게임의 3D 인물 모델 (_src/models/*.glb → R2 models/<이름>-<해시10>.glb) — 같은 워크플로가 올린다
+models = {}
+for f in sorted(glob.glob(os.path.join(root, '_src', 'models', '*.glb'))):
+    k = os.path.basename(f)[:-4]
+    models[k] = 'models/%s-%s.glb' % (k, hashlib.sha256(open(f, 'rb').read()).hexdigest()[:10])
+json.dump({'base': BASE, 'files': models}, open(os.path.join(root, 'assets', 'models.json'), 'w'), ensure_ascii=False, indent=0)
+print('assets/models.json:', len(models), 'models')
