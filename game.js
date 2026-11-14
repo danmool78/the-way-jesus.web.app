@@ -142,7 +142,7 @@ const G = {
 G.camLook = new THREE.Vector3();
 // 그 자리의 땅 높이 (입체 땅, game-world.js) — 이름표·빛기둥을 땅 위에
 const GH = (x, z) => Math.max(0, G.world?.heightAt(x, z) || 0);
-const SCALE = 4.2; // 인형 크기 (지도 위에서 보이게 키운다)
+const SCALE = 1.4; // 인형 크기 (지도 위에서 보이게 키운다 — 4.2는 호수·마을에 비해 너무 컸다, PC 캡처 2026-11)
 const ARRIVE = 5;
 const SEE = 7;
 const PILLAR = 18; // 빛기둥은 이만큼(km) 안에 와야 보인다
@@ -167,7 +167,7 @@ function buildWorld(j) {
     S.add(m);
   });
   for (const [k, p] of Object.entries(WATERS)) { const w = waterMesh(p, k === 'sea' || k === 'suez' || k === 'aqaba' ? '#4f7f99' : '#5f93ad'); w.position.y = LAKE_LEVEL[k] ?? 0.05; S.add(w); }
-  G.world = createWorld({ scene: S, renderer: G.r, toXZ, regions: j.terrain, places: G.data.places, journeyId: JID });
+  G.world = createWorld({ scene: S, renderer: G.r, toXZ, regions: j.terrain, places: G.data.places, journeyId: JID, wet: (x, z) => { const [la, ln] = toLL(x, z); return Object.values(WATERS).some(p => inPoly(la, ln, p)); } });
   // 목표를 알리는 빛기둥
   G.pillar = new THREE.Mesh(new THREE.CylinderGeometry(1.4, 1.4, 90, 24, 1, true),
     new THREE.MeshBasicMaterial({ color: '#ffdf9a', transparent: true, opacity: .22, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide }));
@@ -252,6 +252,16 @@ function updateEvents(dt, me0) {
   G.checkT -= dt;
 }
 const placeOf = e => G.data.places[e.place];
+// 같은 자리에서 이어지는 장면 묶음 (가버나움 e17–e20처럼): 걷지 않고 카드를 잇달아 받는다 — 몇 번째인지 알려 주려고
+const xzOf = e => toXZ(placeOf(e).lat, placeOf(e).lng);
+const near = (a, b) => { const [ax, az] = xzOf(a), [bx, bz] = xzOf(b); return Math.hypot(ax - bx, az - bz) < ARRIVE; };
+function group(i = G.idx) {
+  let a = i, b = i; const ev = G.events;
+  while (a > 0 && near(ev[a - 1], ev[a])) a--;
+  while (b < ev.length - 1 && near(ev[b + 1], ev[b])) b++;
+  return { k: i - a + 1, n: b - a + 1 };
+}
+const nextLabel = () => { if (G.idx + 1 >= G.events.length) return '여정 마치기'; const g = group(); return g.k < g.n ? `이 자리의 다음 일 (${g.k + 1}/${g.n}) →` : '다음 장면으로 →'; };
 const goalXZ = () => { const e = G.events[G.idx]; return e && toXZ(placeOf(e).lat, placeOf(e).lng); };
 
 /* ---------- 입력: 방향키·WASD·조이스틱 ---------- */
@@ -276,7 +286,9 @@ function inputDir() {
   const d = Math.hypot(x, z);
   return d < 0.15 ? null : [x / Math.max(1, d), z / Math.max(1, d)];
 }
-const setZoom = k => { G.zoom = Math.min(170, Math.max(16, G.zoom * k)); };
+// 카메라 높이는 고정 — 확대·축소 없이 늘 같은 비율로 (사용자 2026-11). 화면의 좁은 쪽으로 폰은 반경 8km, PC는 12km쯤 보이게:
+// 인형·소품은 지형에 견주어 작게(호수·마을을 덮지 않게) 두고, 빛기둥(18km)은 화면 가장자리 너머에서 막 드러난다
+const fitZoom = () => G.cam.aspect < 1 ? 8 / (0.487 * G.cam.aspect) : 12 / 0.487;
 $('#ask').onclick = () => {
   if (G.busy || !G.me) return;
   if (!G.named) { G.named = true; G.asks += 0.6; missionText(); toast(`${esc(placeOf(G.events[G.idx]).name)}(으)로 가세요<small>지도에서 이름을 찾아보세요 · 이 장면 카드 점수가 ${ASK * 0.6}점 줄어요</small>`, true, 3000); return; }
@@ -292,8 +304,6 @@ $('#quit').onclick = () => {
   s.querySelector('#qCards').onclick = () => openCards();
   s.querySelector('#qHome').onclick = () => { location.href = `game.html?j=${JID}`; };
 };
-$('#zin').onclick = () => setZoom(1 / 1.35); $('#zout').onclick = () => setZoom(1.35);
-addEventListener('wheel', e => { if (G.me && $('#sheet').classList.contains('hidden')) setZoom(e.deltaY > 0 ? 1.12 : 1 / 1.12); }, { passive: true });
 
 /* ---------- 알림·벌칙 ---------- */
 let toastT = 0;
@@ -371,7 +381,7 @@ function bubble() {
   const left = Math.min(innerWidth - half, Math.max(half, x));
   b.style.left = left + 'px'; b.style.top = Math.max(b.offsetHeight + 24, y) + 'px'; b.style.setProperty('--tx', `${Math.max(-half + 24, Math.min(half - 24, x - left))}px`);
 }
-addEventListener('pointerdown', e => { if (G.meetT > 0.4 && !e.target.closest('#stick,#zoom')) G.meetT = 0.01; });
+addEventListener('pointerdown', e => { if (G.meetT > 0.4 && !e.target.closest('#stick')) G.meetT = 0.01; });
 // 늦음: 그분은 이미 다음 자리로 떠나셨다 — 그 장면은 놓치고 다음 장면으로
 function late() {
   G.met = false;
@@ -390,6 +400,7 @@ function arrive() {
   G.leader.look(0); G.me.target = null;
   if (G.met) {
     G.met = false;
+    const g = group(); if (g.n > 1 && g.k === 1) toast(`${esc(placeOf(e).name)}에서 일어난 일이 ${g.n}가지예요<small>걷지 않고 이 자리에서 카드를 이어 받아요</small>`, true, 3200);
     pickWord(e, ok => ok ? reveal(e, stars, straight) : missCard(e));
     return;
   }
@@ -403,7 +414,7 @@ function pickWord(e, done) {
   const opts = [w];
   while (opts.length < 3 && pool.length) opts.push(pool.splice(Math.floor(Math.random() * pool.length), 1)[0]);
   opts.sort(() => Math.random() - .5);
-  const s = sheet(`<div class="img" style="background-image:url('${esc(cardSrc(e))}')"></div><div class="body quiz"><small>${G.idx + 1} / ${G.events.length} · ${esc(e.title)}</small>
+  const s = sheet(`<div class="img" style="background-image:url('${esc(cardSrc(e))}')"></div><div class="body quiz"><small>${G.idx + 1} / ${G.events.length} · ${esc(e.title)}${(g => g.n > 1 ? ` · 이 자리의 일 ${g.k}/${g.n}` : '')(group())}</small>
     <h2>이 자리에서 들은 말씀은?</h2><p class="sub">맞히면 말씀 카드를 얻어요</p>
     <div class="opts">${opts.map((o, i) => `<button data-i="${i}">${esc(o.text)}</button>`).join('')}</div><div class="explain"></div></div>`);
   s.querySelector('.opts').onclick = ev => {
@@ -416,14 +427,14 @@ function pickWord(e, done) {
 }
 function missCard(e) {
   const s = sheet(`<div class="body"><small>${G.idx + 1} / ${G.events.length}</small><h2>아쉬워요, 이번에는 카드를 얻지 못했어요</h2><p class="sub">다시 걸을 때 이 자리의 말씀 카드에 도전할 수 있어요.</p>
-    <div class="row"><a class="go ghost" href="${appLink(e)}" data-listen>이 장면 듣기</a><button class="go" id="next">${G.idx + 1 < G.events.length ? '다음 장면으로 →' : '여정 마치기'}</button></div></div>`);
+    <div class="row"><a class="go ghost" href="${appLink(e)}" data-listen>이 장면 듣기</a><button class="go" id="next">${nextLabel()}</button></div></div>`);
   s.querySelector('#next').onclick = () => { closeSheet(); G.idx++; save(); G.idx < G.events.length ? startLeg() : finish(); };
 }
 function reveal(e, stars, straight) {
   {
     const pts = Math.max(10, stars * 100 + Math.round(G.meetLeft || 0) * 10 - G.asks * ASK + (G.bonus || 0)), got = collect(e, stars, pts), fresh = got.fresh;
     const v = showCard(tcard(e, G.idx, { s: stars, p: pts }, 'big reveal'),
-      `<div class="row"><a class="go ghost" href="${appLink(e)}" data-listen>이 장면 듣기</a><button class="go" id="next">${G.idx + 1 < G.events.length ? '다음 장면으로 →' : '여정 마치기'}</button></div>`,
+      `<div class="row"><a class="go ghost" href="${appLink(e)}" data-listen>이 장면 듣기</a><button class="go" id="next">${nextLabel()}</button></div>`,
       `<p class="gotcard">${fresh ? '새 말씀 카드!' : got.best ? '최고 기록 갱신!' : '이미 모은 카드'} +${num(pts)}점${straight >= ARRIVE * 1.5 ? ` · 걸은 길 ${Math.round(G.legWalked)}km / 곧은 길 ${Math.round(straight)}km` : ''}</p>`);
     v.querySelector('#next').onclick = () => { closeSheet(); G.idx++; save(); G.idx < G.events.length ? startLeg() : finish(); };
   }
@@ -435,7 +446,7 @@ function cardPlain(e, stars, straight) {
     ${straight >= ARRIVE * 1.5 ? `<div class="leg"><span>걸은 길 <b>${Math.round(G.legWalked)}km</b></span><span>곧은 길 ${Math.round(straight)}km</span><span>${'★'.repeat(stars)}</span></div>` : ''}
     <p class="story">${esc(firstSentences(e.story?.[0] || ''))}</p>
     ${w ? `${G.met ? `<small class="got">${G.newCard ? '새 말씀 카드를 얻었어요!' : '이미 모은 말씀 카드'}</small>` : ''}<blockquote class="${G.met ? 'won' : ''}">${esc(w.text)}<cite>${esc(w.who || '')} · ${esc(w.ref || '')}</cite></blockquote>` : ''}
-    <div class="row"><a class="go ghost" href="${appLink(e)}" data-listen>이 장면 듣기</a><button class="go" id="next">${G.idx + 1 < G.events.length ? '다음 장면으로 →' : '여정 마치기'}</button></div></div>`);
+    <div class="row"><a class="go ghost" href="${appLink(e)}" data-listen>이 장면 듣기</a><button class="go" id="next">${nextLabel()}</button></div></div>`);
   G.met = false;
   s.querySelector('#next').onclick = () => { closeSheet(); G.idx++; save(); G.idx < G.events.length ? startLeg() : finish(); };
 }
@@ -549,7 +560,7 @@ async function begin(fresh) {
   const saved = store.get('theway-game-' + JID, null);
   G.idx = saved?.idx || 0; G.total = saved?.total || 0; G.stars = saved?.stars || []; G.missed = saved?.missed || [];
   $('#setup').classList.add('hidden');
-  for (const s of ['#hud', '#waterBox', '#dayBox', '#arrow', '#stick', '#zoom', '#cardsBtn', '#ask', '#quit']) $(s).classList.remove('hidden');
+  for (const s of ['#hud', '#waterBox', '#dayBox', '#arrow', '#stick', '#cardsBtn', '#ask', '#quit']) $(s).classList.remove('hidden');
   G.r = renderer($('#world'));
   buildWorld(J);
   playerType();
@@ -650,7 +661,7 @@ function frame(now) {
   const H = (x, z) => Math.max(0, G.world?.heightAt(x, z) || 0);
   const sailing = onGalilee(me0.pos.x, me0.pos.y);
   me0.ground = sailing ? LAKE_LEVEL.galilee + 0.3 : H(me0.pos.x, me0.pos.y); G.leader.ground = H(G.leader.pos.x, G.leader.pos.y);
-  if (sailing && !G.boat) { G.boat = makeProp('boat', 0, 0, { scale: SCALE * 1.4 }).obj; G.scene.add(G.boat); toast('배를 타고 갈릴리 바다를 건너요', true, 2000); }
+  if (sailing && !G.boat) { G.boat = makeProp('boat', 0, 0, { scale: SCALE * 0.9 }).obj; G.scene.add(G.boat); toast('배를 타고 갈릴리 바다를 건너요', true, 2000); }
   if (G.boat) { G.boat.visible = sailing; if (sailing) { G.boat.position.set(me0.pos.x, LAKE_LEVEL.galilee, me0.pos.y); G.boat.rotation.y = -me0.face + Math.PI / 2; } }
   for (const P of G.patrols || []) P.s.update(t, dt);
   if (G.wounded) G.wounded.a.update(t, dt);
@@ -663,6 +674,7 @@ function frame(now) {
   G.askT -= dt;
   if (!G.named && pvis > 0.85) { G.named = true; missionText(); }
   // 카메라: 북쪽이 위, 비스듬히 내려다보며 따라간다
+  if (!G.zoomFix) G.zoom = fitZoom(); // 확인용(?debug)만 G.zoomFix로 높이를 바꾼다
   const cx = me0.pos.x, cz = me0.pos.y, h = G.zoom;
   if (!G.busy && G.timeT > 0) { G.timeT -= dt; if (G.timeT <= 0) late(); }
   if (G.meetT > 0) { // 만남: 둘 사이로 내려앉아 비스듬히

@@ -34,7 +34,7 @@ const RIVERS = {
 const RIVER_W = { jordanN: 0.35, jordanS: 0.45, nile: 0.9 }, RIVER_SRC = { jordanN: 0.25 };
 const rnd = (() => { let s = 7; return () => (s = (s * 16807) % 2147483647) / 2147483647; })(); // 늘 같은 배치
 
-export function createWorld({ scene, renderer, toXZ, regions: want, places, journeyId }) {
+export function createWorld({ scene, renderer, toXZ, regions: want, places, journeyId, wet = () => false }) {
   const regs = want.map(name => {
     const r = TREG[name], [X0, Z0] = toXZ(r.lat1, r.lng0), [X1, Z1] = toXZ(r.lat0, r.lng1);
     return { name, ...r, X0, Z0, X1, Z1, H: null };
@@ -73,7 +73,7 @@ export function createWorld({ scene, renderer, toXZ, regions: want, places, jour
 
   /* ---------- 마을 디오라마 ---------- */
   const deco = new THREE.Group(); scene.add(deco);
-  const SC = 3.2; // 소품 배율 (인형과 어울리게)
+  const SC = 1.05; // 소품 배율 (인형과 어울리게 — 인형을 줄이며 함께 줄였다)
   const houseGeo = new THREE.BoxGeometry(1, 1, 1), roofGeo = new THREE.BoxGeometry(1.08, 0.06, 1.08);
   const houseM = new THREE.MeshStandardMaterial({ color: '#d8c49c', roughness: 0.95 }), roofM = new THREE.MeshStandardMaterial({ color: '#a98f68', roughness: 1 });
   const treeGeo = new THREE.IcosahedronGeometry(1, 0), treeM = new THREE.MeshStandardMaterial({ color: '#7d8f55', roughness: 1, flatShading: true, emissive: '#2a3418', emissiveIntensity: 0.5 });
@@ -82,44 +82,54 @@ export function createWorld({ scene, renderer, toXZ, regions: want, places, jour
   const wells = [];  // 물병을 채우는 우물 [x, z]
   const cityBox = (() => { const [x0, z0] = toXZ(JLM.lat1, JLM.lng0), [x1, z1] = toXZ(JLM.lat0, JLM.lng1), cx = (x0 + x1) / 2, cz = (z0 + z1) / 2; return { cx, cz, r: Math.max(x1 - x0, z1 - z0) * 1.6 }; })();
   function buildVillages() {
-    const spots = [], trees = [];
+    const spots = [], trees = [], built = [];
+    // 마을은 사람이 사는 곳에만, 서로 7km 안이면 하나만 — 갈릴리 바닷가처럼 장소가 몰린 곳에서 집이 겹겹이 쌓여
+    // 호수와 이름을 다 덮었다(PC 화면, 사용자 2026-11). 산·들판·바다·광야 같은 곳은 집 없이 둔다
+    const wild = /바다|바닷가|산$|산 |언덕|들판|광야|강$|강가|한가운데|동굴|길$|물가|호수|사막|골짜기/;
     Object.entries(places).forEach(([k, p], n) => {
-      if (p.hidden || k === 'sea' || p.lat == null) return;
+      if (p.hidden || k === 'sea' || p.lat == null || wild.test(p.name)) return;
       const [x0, z0] = toXZ(p.lat, p.lng);
+      if (wet(x0, z0) || built.some(([x, z]) => Math.hypot(x - x0, z - z0) < 7)) return;
       if (journeyId !== 'david' && Math.hypot(x0 - cityBox.cx, z0 - cityBox.cz) < cityBox.r) return; // 예루살렘은 도성 모형이 대신 (다윗 때는 예수 때 도성이 아니라 마을로)
-      const big = /성|도성|가버나움|세겜|여리고|가이사랴|애굽|헤브론/.test(p.name) ? 1.6 : 1;
+      built.push([x0, z0]);
+      const big = /성|도성|가버나움|세겜|여리고|가이사랴|애굽|헤브론/.test(p.name) ? 1.4 : 1;
       // 우물은 마을 어귀(집들이 서는 둘레 바깥)에 두고, 그 둘레에는 집을 짓지 않는다 — 한가운데 두니 집 상자에 가려 보이지 않았다(사용자)
-      const wa = rnd() * 6.283, wd = 5.6 * Math.sqrt(big), well = n % 3 === 0 ? [x0 + Math.cos(wa) * wd, z0 + Math.sin(wa) * wd] : null;
-      const cnt = Math.round((6 + rnd() * 5) * big);
+      let wa = rnd() * 6.283, wd = 4.2 * Math.sqrt(big), well = n % 3 === 0 ? [x0 + Math.cos(wa) * wd, z0 + Math.sin(wa) * wd] : null;
+      if (well && wet(...well)) well = null;
+      // 집은 작게, 마을 가운데 가까이 (집이 인형만큼 커서 마을이 산처럼 보였다). 물 위에는 짓지 않는다
+      const cnt = Math.round((5 + rnd() * 4) * big);
       for (let i = 0; i < cnt; i++) {
-        const a = rnd() * 6.283, d = (1.2 + rnd() * 3.2) * Math.sqrt(big), x = x0 + Math.cos(a) * d, z = z0 + Math.sin(a) * d;
-        if (well && Math.hypot(x - well[0], z - well[1]) < 3) continue;
-        spots.push([x, z, (0.7 + rnd() * 0.5) * SC * 0.55, rnd() * 3]);
+        const a = rnd() * 6.283, d = (0.8 + rnd() * 2.2) * Math.sqrt(big), x = x0 + Math.cos(a) * d, z = z0 + Math.sin(a) * d;
+        if (wet(x, z) || well && Math.hypot(x - well[0], z - well[1]) < 2.4) continue;
+        spots.push([x, z, (0.7 + rnd() * 0.5) * SC * 0.38, rnd() * 3]);
       }
-      for (let i = 0; i < 6; i++) { const a = rnd() * 6.283, d = 4 + rnd() * 4, x = x0 + Math.cos(a) * d, z = z0 + Math.sin(a) * d; if (well && Math.hypot(x - well[0], z - well[1]) < 2.5) continue; trees.push([x, z, (0.5 + rnd() * 0.5) * SC * 0.3]); }
+      for (let i = 0; i < 5; i++) { const a = rnd() * 6.283, d = 3.4 + rnd() * 3, x = x0 + Math.cos(a) * d, z = z0 + Math.sin(a) * d; if (wet(x, z) || well && Math.hypot(x - well[0], z - well[1]) < 2) continue; trees.push([x, z, (0.5 + rnd() * 0.5) * SC * 0.26]); }
       // 마을마다 불빛 하나 (밤에 보인다), 셋에 하나꼴로 우물
       lights.push([x0, z0]);
       if (well) wells.push(well);
     });
     const hm = new THREE.InstancedMesh(houseGeo, houseM, spots.length), rm = new THREE.InstancedMesh(roofGeo, roofM, spots.length), o = new THREE.Object3D(), c = new THREE.Color();
     spots.forEach(([x, z, s, ry], i) => {
-      const y = Math.max(0, heightAt(x, z));
+      const y = heightAt(x, z);
       o.position.set(x, y + s * 0.42, z); o.rotation.set(0, ry, 0); o.scale.set(s, s * 0.85, s * (0.8 + rnd() * 0.4)); o.updateMatrix(); hm.setMatrixAt(i, o.matrix);
       hm.setColorAt(i, c.set('#d8c49c').multiplyScalar(0.85 + rnd() * 0.25));
       o.position.y = y + s * 0.85 + 0.02; o.scale.y = 1; o.updateMatrix(); rm.setMatrixAt(i, o.matrix);
     });
     const tm = new THREE.InstancedMesh(treeGeo, treeM, trees.length), km = new THREE.InstancedMesh(trunkGeo, trunkM, trees.length);
     trees.forEach(([x, z, s], i) => {
-      const y = Math.max(0, heightAt(x, z));
+      const y = heightAt(x, z);
       o.rotation.set(0, rnd() * 6, 0); o.position.set(x, y + s * 1.1, z); o.scale.set(s, s * 0.85, s); o.updateMatrix(); tm.setMatrixAt(i, o.matrix);
       tm.setColorAt(i, c.set('#7d8f55').multiplyScalar(0.8 + rnd() * 0.35));
       o.position.set(x, y + s * 0.4, z); o.scale.set(s, s * 0.8, s); o.updateMatrix(); km.setMatrixAt(i, o.matrix);
     });
     deco.add(hm, rm, tm, km);
-    wells.forEach(([x, z]) => { const P = makeProp('well', x, z, { scale: SC * 2.2 }); P.obj.position.y = Math.max(0, heightAt(x, z)); deco.add(P.obj); });
+    wells.forEach(([x, z]) => { const P = makeProp('well', x, z, { scale: SC * 1.7 }); P.obj.position.y = heightAt(x, z); deco.add(P.obj); });
     // 불빛: 밤에 밝아지는 작은 점들
-    const lg = new THREE.BufferGeometry(); lg.setAttribute('position', new THREE.Float32BufferAttribute(lights.flatMap(([x, z]) => [x, Math.max(0, heightAt(x, z)) + 1.6, z]), 3));
-    lampPts = new THREE.Points(lg, new THREE.PointsMaterial({ color: '#ffcf7a', size: 1.6, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending }));
+    const lg = new THREE.BufferGeometry(); lg.setAttribute('position', new THREE.Float32BufferAttribute(lights.flatMap(([x, z]) => [x, heightAt(x, z) + 1.4, z]), 3));
+    // 둥글게 번지는 빛 (그냥 점은 네모로 그려져 흰 종이처럼 보였다 — 사용자 캡처)
+    const gc = document.createElement('canvas'); gc.width = gc.height = 64; const gx = gc.getContext('2d'), gr = gx.createRadialGradient(32, 32, 0, 32, 32, 32);
+    gr.addColorStop(0, 'rgba(255,230,170,1)'); gr.addColorStop(0.35, 'rgba(255,190,90,.55)'); gr.addColorStop(1, 'rgba(255,170,60,0)'); gx.fillStyle = gr; gx.fillRect(0, 0, 64, 64);
+    lampPts = new THREE.Points(lg, new THREE.PointsMaterial({ map: new THREE.CanvasTexture(gc), color: '#ffffff', size: 2.2, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending }));
     deco.add(lampPts);
   }
   let lampPts = null;
@@ -141,8 +151,9 @@ export function createWorld({ scene, renderer, toXZ, regions: want, places, jour
     // 양 떼: 마을 둘레의 들판을 천천히 거닌다
     for (let f = 0; f < Math.min(8, ks.length); f++) {
       const [, p] = ks[Math.floor(rnd() * ks.length)], [x0, z0] = toXZ(p.lat, p.lng), cx = x0 + (rnd() - 0.5) * 16, cz = z0 + (rnd() - 0.5) * 16;
+      if (wet(cx, cz)) continue;
       for (let i = 0; i < 5; i++) {
-        const P = makeProp('sheep', cx + (rnd() - 0.5) * 3, cz + (rnd() - 0.5) * 3, { scale: SC * 1.1 }); P.speed = 0.25; P.directional = true;
+        const P = makeProp('sheep', cx + (rnd() - 0.5) * 3, cz + (rnd() - 0.5) * 3, { scale: SC * 0.75 }); P.speed = 0.25; P.directional = true;
         life.push({ P, home: [cx, cz], r: 3, wait: rnd() * 6 }); deco.add(P.obj);
       }
     }
@@ -150,14 +161,16 @@ export function createWorld({ scene, renderer, toXZ, regions: want, places, jour
     for (let c = 0; c < 3 && ks.length > 3; c++) {
       const a = ks[Math.floor(rnd() * ks.length)][1], b = ks[Math.floor(rnd() * ks.length)][1], A = toXZ(a.lat, a.lng), B = toXZ(b.lat, b.lng);
       if (Math.hypot(A[0] - B[0], A[1] - B[1]) < 25) continue;
+      // 물을 건너는 길이면 대상을 두지 않는다 (낙타가 갈릴리 바다 위를 걸었다)
+      if ([...Array(24)].some((_, i) => wet(A[0] + (B[0] - A[0]) * i / 23, A[1] + (B[1] - A[1]) * i / 23))) continue;
       for (let i = 0; i < 3; i++) {
-        const P = makeProp('camel', A[0] - i * 2.5, A[1], { scale: SC * 0.8 }); P.speed = 1.6; P.directional = true;
-        life.push({ P, route: [A, B], leg: 1, lag: i * 2.5 }); deco.add(P.obj);
+        const P = makeProp('camel', A[0] - i * 1.6, A[1], { scale: SC * 0.5 }); P.speed = 1.6; P.directional = true;
+        life.push({ P, route: [A, B], leg: 1, lag: i * 1.6 }); deco.add(P.obj);
       }
     }
     // 갈릴리 바다의 고기잡이배
     if (regs.some(r => r.name === 'galilee')) [[32.84, 35.57], [32.80, 35.6], [32.87, 35.6]].forEach(([la, ln]) => {
-      const [x, z] = toXZ(la, ln), P = makeProp('boat', x, z, { scale: SC * 1.4 }); P.speed = 0.4;
+      const [x, z] = toXZ(la, ln), P = makeProp('boat', x, z, { scale: SC * 0.75 }); P.speed = 0.4;
       P.obj.position.y = LAKE_LEVEL.galilee; life.push({ P, home: [x, z], r: 3, wait: rnd() * 5, boat: true }); deco.add(P.obj);
     });
     // 새 떼: 하늘을 맴도는 작은 V자들
@@ -181,14 +194,15 @@ export function createWorld({ scene, renderer, toXZ, regions: want, places, jour
         L.wait = 3 + rnd() * 6; P.goal.set(L.home[0] + (rnd() - 0.5) * 2 * L.r, L.home[1] + (rnd() - 0.5) * 2 * L.r);
       }
       P.update(t, dt, ENV);
-      P.obj.position.y = L.boat ? LAKE_LEVEL.galilee : Math.max(0, heightAt(P.obj.position.x, P.obj.position.z));
+      P.obj.position.y = L.boat ? LAKE_LEVEL.galilee : heightAt(P.obj.position.x, P.obj.position.z);
     }
     if (birds && me) { // 내 둘레 하늘에서 맴돈다
       const p = birds.geometry.attributes.position, off = birds.userData.off;
       for (let i = 0; i < 30; i++) {
         const [ph, ox, oz, sp] = off[i], a = t * 0.25 * sp + ph, fl = Math.sin(t * 6 * sp + ph) * 0.25;
         const cx = me.x + ox + Math.cos(a) * 14, cz = me.y + oz + Math.sin(a) * 14, cy = 9 + Math.sin(a * 2) * 1.5;
-        p.setXYZ(i * 4, cx - 0.4, cy + fl, cz - 0.2); p.setXYZ(i * 4 + 1, cx, cy, cz + 0.1); p.setXYZ(i * 4 + 2, cx, cy, cz + 0.1); p.setXYZ(i * 4 + 3, cx + 0.4, cy + fl, cz - 0.2);
+        // 인형을 줄이며 새도 작게 (날개 반폭 0.18km)
+        p.setXYZ(i * 4, cx - 0.18, cy + fl * 0.5, cz - 0.09); p.setXYZ(i * 4 + 1, cx, cy, cz + 0.05); p.setXYZ(i * 4 + 2, cx, cy, cz + 0.05); p.setXYZ(i * 4 + 3, cx + 0.18, cy + fl * 0.5, cz - 0.09);
       }
       p.needsUpdate = true;
     }
@@ -202,7 +216,7 @@ export function createWorld({ scene, renderer, toXZ, regions: want, places, jour
   function setTime(f) { // f: 하루 가운데 위치 0~1 (0 = 새벽)
     const day = Math.max(0, Math.sin(f * Math.PI * 2 - 0.3) * 1.15), dusk = Math.max(0, 1 - Math.abs(f - 0.5) * 8) + Math.max(0, 1 - Math.abs(f - 0.02) * 10) * 0.6;
     const k = Math.min(1, day);
-    hemi.intensity = 0.45 + 1.15 * k; sun.intensity = 0.25 + 1.95 * k;
+    hemi.intensity = 0.85 + 0.75 * k; sun.intensity = 0.55 + 1.65 * k; // 밤도 길과 땅이 보일 만큼은 밝게 (너무 어두웠다 — PC 캡처)
     hemi.color.setRGB(0.75 + 0.25 * k, 0.8 + 0.16 * k, 0.95 - 0.1 * k); sun.color.setRGB(1, 0.75 + 0.2 * k, 0.6 + 0.3 * k);
     sky.copy(NIGHT).lerp(DAY, k).lerp(DUSK, Math.min(0.6, dusk * 0.6));
     scene.background = sky; if (scene.fog) scene.fog.color.copy(sky);
