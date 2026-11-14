@@ -71,6 +71,7 @@ export class StageModel {
     const hips = bone(body, 'Hips'); this.hipH = hips ? hips.getWorldPosition(v1).y * body.scale.x / (body.scale.x || 1) : 0.5; this.body = body; this.legW = 0;
     this.headB = bone(body, 'Head'); this.neckB = bone(body, 'Neck'); this.spineB = bone(body, 'Spine1') || bone(body, 'Spine'); this.topB = bone(body, 'HeadTop_End');
     this.play('idle', 0);
+    this.takeProps();
   }
   // 대본이 쓰는 것들은 인형에게 넘긴다
   get pos() { return this.doll.pos; } get goal() { return this.doll.goal; }
@@ -107,7 +108,49 @@ export class StageModel {
     this.op = op;
   }
   aim(b, child, dir, w) { aimBone(b, child, dir, w); }
-  update(time, dt) {
+  // 손에 드는 것: 인형의 것(빵·아기·바구니·두루마리·지팡이·창·뿔·칼…)을 그대로 가져와 모델의 손에 옮겨 붙인다 —
+  // 보이고 감추는 것은 인형이 자세에 따라 그대로 정한다. 한 손 것은 그 손에, 두 손으로 받쳐 드는 것은 두 손 사이에, 지팡이·창은 손 옆 땅에
+  takeProps() {
+    const P = this.doll.p, elbowL = P.armL.userData.elbow, elbowR = P.armR.userData.elbow;
+    this.props = [];
+    const take = (o, kind, side) => { if (!o) return; o.removeFromParent(); this.p.root.add(o); this.props.push({ o, kind, side, q0: o.quaternion.clone(), p0: o.position.clone() }); };
+    for (const [e, side] of [[elbowL, 0], [elbowR, 1]]) [...e.children].forEach(o => { if (o.isGroup || o === P.armL.userData.loaf || o === P.armR.userData.loaf) take(o, 'hand', side); });
+    [...Object.values(P.items || {}), P.baby].forEach(o => take(o, 'both'));
+    if (P.staff) take(P.staff, 'staff', 1);
+    if (P.glow) take(P.glow, 'glow');
+  }
+  placeProps() {
+    if (!this.props?.length) return;
+    const r = this.p.root, dr = this.doll.p.root; r.updateMatrixWorld(true); dr.updateMatrixWorld(true);
+    const inv = r.matrixWorld.clone().invert(), qr = r.getWorldQuaternion(new THREE.Quaternion()), qd = dr.getWorldQuaternion(new THREE.Quaternion()).invert();
+    const handAt = i => { const m = this.arms[i][1]; return m.hand ? m.hand.getWorldPosition(new THREE.Vector3()).applyMatrix4(inv) : null; };
+    for (const it of this.props) {
+      const { o, kind, side } = it;
+      if (!o.visible) continue;
+      if (kind === 'hand') { // 인형 팔뚝의 방향 그대로 (모델 팔뚝을 그 방향으로 맞춰 두었다)
+        const h = handAt(side); if (!h) continue; o.position.copy(h);
+        const e = this.doll.p[side ? 'armR' : 'armL'].userData.elbow;
+        o.quaternion.copy(qr).invert().multiply(qr).multiply(qd).multiply(e.getWorldQuaternion(new THREE.Quaternion())).multiply(it.q0);
+      } else if (kind === 'both') { const a = handAt(0), b = handAt(1); if (!a || !b) continue; o.position.copy(a).add(b).multiplyScalar(0.5); o.position.y += 0.02; o.position.z += 0.02; o.quaternion.copy(it.q0); }
+      else if (kind === 'staff') { // 손 옆에 세워 땅을 짚는다. 눕거나 나무 위·엎드려 울 때는 내려놓는다(허공에 서 있었다)
+        const h = handAt(1); if (!h || ['sleep', 'perch', 'mourn'].includes(this.doll.pose)) { o.visible = false; continue; } o.position.set(h.x, 0, h.z); }
+      else if (kind === 'glow') o.position.set(0, it.p0.y + 0.1, it.p0.z);
+    }
+  }
+  update(time, dt) { this.pose(time, dt); this.toGround(); this.placeProps(); }
+  // 땅 딛기: 땅에 서거나 앉거나 꿇는 자세면 가장 낮은 무릎·발·발끝이 땅에 닿게 몸 높이를 맞춘다 — 모델마다 동작의 높이가 조금씩 달라
+  // 묻히거나(마리아의 무릎 꿇기) 떠 보였다. 높이를 정한 사람·나무 위·누운 사람·걸터앉은 사람·날아 있는 것은 그대로
+  toGround() {
+    const d = this.doll;
+    if (d.floating || (d.yT || 0) > 0.05 || ['sleep', 'perch', 'seat', 'ride', 'crucified', 'crucified-dead'].includes(d.pose) || this.body.rotation.x) return;
+    const r = this.p.root; r.updateMatrixWorld(true);
+    let low = Infinity;
+    for (const l of this.legs) for (const b of [l.lo, l.foot, l.toe]) if (b) low = Math.min(low, b.getWorldPosition(v1).y);
+    if (low === Infinity) return;
+    const k = r.getWorldScale(v2).y, want = r.getWorldPosition(v1).y + 0.012 * k; // 발목 뼈는 발바닥보다 조금 위
+    this.body.position.y -= (low - want) / k;
+  }
+  pose(time, dt) {
     const d = this.doll; d.update(time, dt);
     const r = this.p.root, dr = d.p.root, moving = d.goal.distanceTo(d.pos) > 0.02;
     r.position.copy(dr.position); r.rotation.copy(dr.rotation);
@@ -134,6 +177,10 @@ export class StageModel {
     // 걸터앉기·나귀 타기: 넓적다리를 앞으로, 정강이는 아래로 하고 몸을 인형처럼 내려 앉힌다 (모델에 앉는 동작이 없다)
     this.legW = damp(this.legW, ride ? 1 : 0, 6, dt);
     this.body.position.y = -this.hipH * 0.58 * (d.kneel || 0) * this.legW;
+    // 잠: 잠자는 동작이 없는 모델(베드로 등)은 인형이 눕는 대로 몸을 옆으로 눕힌다 — 서 있는 채 자고 있었다
+    const lie = d.pose === 'sleep' && !this.acts.sleep;
+    this.body.rotation.z = lie ? d.p.body.rotation.z : 0; this.body.position.x = lie ? d.p.body.position.x : 0;
+    if (lie) this.body.position.y += d.p.body.position.y * 0.6;
     // 가지에 엎드리기(삭개오, 눅 19:4): 발끝을 축으로 앞으로 눕혀 몸이 가지를 따라 놓이고, 두 팔은 가지를 끌어안고, 고개는 들어 아래를 본다
     this.perchW = damp(this.perchW || 0, perch ? 1 : 0, 5, dt);
     this.body.rotation.x = this.perchW * Math.PI * 0.5;
