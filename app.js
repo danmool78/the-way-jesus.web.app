@@ -1499,12 +1499,12 @@ function stopAuto() { autoOn = false; clearTimeout(autoTimer); promptThen = null
 // 아직 올리지 않은 노래는 '준비 중'을 잠깐 보이고 넘어간다. 가사의 [Verse] 같은 표시는 노래 만들 때만 쓰고 화면에는 '후렴' 같은 작은 이름으로
 const song = { audio: new Audio(), on: false, token: 0, raf: 0, k: -2, done: null, timer: 0 };
 const songLines = lyrics => (lyrics || '').split('\n').map(s => s.trim()).filter(s => s && !/^\[.*\]$/.test(s));
-const SECTION = { verse: '절', chorus: '후렴', 'final chorus': '후렴', bridge: '브리지' };
+const SECTION = { verse: 'secVerse', chorus: 'secChorus', 'final chorus': 'secChorus', bridge: 'secBridge' }; // 화면 글씨는 시편 ui.<언어>.json
 function lyricsHtml(e) {
   let k = 0, prev = '';
   const body = e.song.lyrics.split('\n').map(x => x.trim()).map(x => {
     const m = x.match(/^\[(.*)\]$/);
-    if (m) { const n = SECTION[m[1].toLowerCase().replace(/\s*\d+$/, '')] || ''; const h = n && n !== prev ? `<h5>${esc(n)}</h5>` : ''; if (n) prev = n; return h; }
+    if (m) { const n = SECTION[m[1].toLowerCase().replace(/\s*\d+$/, '')] ? t(SECTION[m[1].toLowerCase().replace(/\s*\d+$/, '')]) : ''; const h = n && n !== prev ? `<h5>${esc(n)}</h5>` : ''; if (n) prev = n; return h; }
     // 다른 언어: 노래는 한국어 그대로, 줄마다 밑에 그 언어의 뜻을 작게 (build.py가 song.tr에 {한국어 줄: 옮긴 줄})
     return x ? `<p data-ln="${k++}">${esc(x)}${e.song.tr?.[x] ? `<span class="tr" lang="${LANG}">${esc(e.song.tr[x])}</span>` : ''}</p>` : '';
   }).join('');

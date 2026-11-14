@@ -154,7 +154,7 @@ def build(jid, src, out_dir):
         books = dict(zip(BOOKS['ko'], BOOKS[lang]))
         for e in o['events'] + ([o['prologue']] if 'prologue' in o else []):
             if 'song' in e:
-                t, f, n = tr.get('songs', {}).get(e['id']), tr.get('fmt', {}), e['song']['psalm']
+                t, f, n = tr.get('songs', {}).get(e['id']), tr.get('fmt', {}), str(e['song']['psalm'])
                 if not t:
                     miss.append(e['id']); continue
                 lines = t['lines']
