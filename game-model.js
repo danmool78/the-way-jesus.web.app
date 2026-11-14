@@ -173,10 +173,13 @@ export function calmClips(gltf) {
   }
   // 곧게 서기: Mixamo idle은 엉덩이(11°)·허리(12°)를 뒤로 젖혀 배가 나온 자세였다(사용자 2026-11 — 원래 3D 디자인은 그렇지 않다).
   // 서 있거나 말할 때는 엉덩이·허리·목·다리를 기본 자세(모델을 뜬 그대로)로 세운다 — 팔·손·고개의 움직임은 그대로
-  const rest = {}; gltf.scene.traverse(o => { if (o.isBone) rest[o.name] = o.quaternion.toArray(); });
+  const rest = {}, restP = {}; gltf.scene.traverse(o => { if (o.isBone) { rest[o.name] = o.quaternion.toArray(); restP[o.name] = o.position.toArray(); } });
   out = out.map(c => c.name !== 'idle' && c.name !== 'talk' ? c : new THREE.AnimationClip(c.name, c.duration, c.tracks.map(k => {
     const n = k.name.split('.')[0];
-    return STAND.test(k.name) && rest[n] ? new THREE.QuaternionKeyframeTrack(k.name, [0], rest[n]) : k;
+    if (STAND.test(k.name) && rest[n]) return new THREE.QuaternionKeyframeTrack(k.name, [0], rest[n]);
+    // 엉덩이 높이도 기본 자세로 — 다리만 곧게 펴고 엉덩이는 무릎 굽힌 idle의 낮은 높이에 두니 발이 땅에 묻혔다 (사용자 2026-11)
+    if (/Hips\.position$/.test(k.name) && restP[n]) return new THREE.VectorKeyframeTrack(k.name, [0], restP[n]);
+    return k;
   })));
   calm.set(gltf, out); return out;
 }
