@@ -323,6 +323,19 @@ function group(i = G.idx) {
 }
 const nextLabel = () => { if (G.idx + 1 >= G.events.length) return '여정 마치기'; const g = group(); return g.k < g.n ? `이 자리의 다음 일 (${g.k + 1}/${g.n}) →` : '다음 장면으로 →'; };
 const goalXZ = () => { const e = G.events[G.idx]; return e && toXZ(placeOf(e).lat, placeOf(e).lng); };
+// 그분과 곁의 사람이 설 자리(그분은 여기서 0.6 동쪽): 장소 핀이 물 안이면(갈릴리 물 경계가 거칠어 가버나움 핀이 호수 안에 든다)
+// 그분이 호수 위에 서 계셨다 — 핀 둘레를 넓혀 가며 가장 가까운 뭍을 찾는다. 바다 위 장면(BOAT — 배·물 위를 걸으심)은 그대로
+function standXZ() {
+  const [gx, gz] = goalXZ(), e = G.events[G.idx];
+  if (BOAT[JID]?.[e.id]) return [gx, gz];
+  const dry = (x, z) => !wetAt(x, z) && !G.world?.onRiver?.(x, z, 0.25);
+  if (dry(gx, gz) && dry(gx + 0.6, gz)) return [gx, gz];
+  for (let r = 0.4; r < 4; r += 0.4) for (let k = 0; k < 16; k++) {
+    const a = k / 16 * 6.283, x = gx + Math.cos(a) * r, z = gz + Math.sin(a) * r;
+    if (dry(x, z) && dry(x + 0.6, z)) return [x, z];
+  }
+  return [gx, gz];
+}
 
 /* ---------- 입력: 방향키·WASD·조이스틱 ---------- */
 const keys = new Set(), stick = { x: 0, y: 0 };
@@ -702,7 +715,7 @@ async function placeCast() {
   for (const c of G.cast || []) c.dispose(); G.cast = [];
   if (G.castBoat) { bin(G.castBoat.obj, G.scene); G.castBoat = null; }
   for (const o of G.castSet || []) bin(o, G.scene); G.castSet = [];
-  const [gx, gz] = goalXZ(), names = castFor(G.idx).slice(0, SPOTS.length), boat = BOAT[JID]?.[G.events[G.idx].id];
+  const [gx, gz] = standXZ(), names = castFor(G.idx).slice(0, SPOTS.length), boat = BOAT[JID]?.[G.events[G.idx].id];
   // 이름 뒤에 ':색'이 붙으면 평범한 사람(순례자 모델)의 옷을 그 색으로 칠해 세운 엑스트라 — 새 모델을 만들지 않는다
   const gs = await Promise.all(names.map(async n => { const [b, c] = n.split(':'), g = await model(b); return g && c ? tinted(g, b, c) : g; }));
   if (tok !== castTok) return; // 그새 다음 장면으로 넘어갔다
@@ -725,6 +738,9 @@ async function placeCast() {
     // 물(호숫가 장소)이면 그분 둘레를 돌며 뭍을 찾아 세운다
     const dry = (x, z) => !wetAt(x, z) && !G.world?.onRiver?.(x, z, 0.25); // 요단 강 물길 위에 세례 요한·안드레가 섰다
     if (!boat) for (let k = 0; k < 12 && !dry(gx + ox, gz + oz); k++) { const r = Math.hypot(ox, oz), t = Math.atan2(oz, ox) + 0.52; ox = Math.cos(t) * r; oz = Math.sin(t) * r; }
+    // 방패 든 자: 앞사람(골리앗) 앞, 나 쪽으로 나와 선다 — 방패 든 자가 앞서 행하더라(삼상 17:7)
+    const prev = G.cast[G.cast.length - 1];
+    if (names[i].endsWith(':bearer') && prev) { const dx = G.me.pos.x - prev.pos.x, dz = G.me.pos.y - prev.pos.y, L = Math.hypot(dx, dz) || 1; ox = prev.pos.x + (dx * 0.85 - dz * 0.3) / L - gx; oz = prev.pos.y + (dz * 0.85 + dx * 0.3) / L - gz; } // 거인 몸에 겹치지 않게 조금 비켜
     const lie = names[i].endsWith(':lie'); // 누운 사람(베데스다의 병자 — 자리에 누워 있었다, 요 5:6)
     const a = new ModelActor(g, gx + ox, gz + oz, { noPillow: true }).hold(GEAR[names[i]]);
     a.big = SCALE * (SIZE[names[i]] || 1); a.target = lie ? null : G.me; a.showT = 0; a.show = 0;
@@ -770,8 +786,9 @@ function startLeg(walkFrom) {
   const e = G.events[G.idx], [gx, gz] = goalXZ();
   G.looking = false; $('#goWord').classList.add('hidden');
   swapLeader();
-  if (walkFrom) { G.leader.pos.set(...walkFrom); G.leader.goal.set(gx + 0.6, gz); G.leader.set('idle'); }
-  else { G.leader.pos.set(gx + 0.6, gz); G.leader.goal.copy(G.leader.pos); G.leader.set('idle'); }
+  const [sx, sz] = standXZ();
+  if (walkFrom) { G.leader.pos.set(...walkFrom); G.leader.goal.set(sx + 0.6, sz); G.leader.set('idle'); }
+  else { G.leader.pos.set(sx + 0.6, sz); G.leader.goal.copy(G.leader.pos); G.leader.set('idle'); }
   G.trail = makeTrail(gx, gz, walkFrom);
   G.legStart = [G.me.pos.x, G.me.pos.y]; G.legWalked = 0; G.legT = 0; G.lostT = 0; G.asks = 0; G.askT = 0;
   G.legStraight = Math.hypot(gx - G.me.pos.x, gz - G.me.pos.y);
@@ -975,6 +992,6 @@ function frame(now) {
   drawTags();
 }
 
-if (new URLSearchParams(location.search).has('debug')) window.__game = { G, me, toXZ, goalXZ, steer: (x, z) => { stick.x = x; stick.y = z; }, startLeg: (...a) => startLeg(...a) }; // 끝까지 자동으로 걸어 보는 확인용
+if (new URLSearchParams(location.search).has('debug')) window.__game = { G, me, toXZ, goalXZ, steer: (x, z) => { stick.x = x; stick.y = z; }, startLeg: (...a) => startLeg(...a), wetAt: (x, z) => wetAt(x, z) }; // 끝까지 자동으로 걸어 보는 확인용
 setupUI(); resize();
 requestAnimationFrame(frame);

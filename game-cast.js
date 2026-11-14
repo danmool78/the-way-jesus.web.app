@@ -40,18 +40,64 @@ Object.assign(CAST, {
     m23: ['joshua'], m24: ['aaron'], m25: ['aaron'], m26: ['aaron'], m31: ['joshua'], m32: ['joshua'], m33: ['rahab'], m35: ['rahab'], m39: ['samuel'],
   },
   david: {
-    d02: ['samuel', 'shepherd'], d03: ['saul'], d04: ['saul', 'goliath'], d05: ['goliath'], d06: ['jonathan'], d07: ['saul', 'michal'], d08: ['michal'], d09: ['samuel'],
+    d02: ['samuel', 'pilgrim-man:#6b5a3e', 'pilgrim-man:#4e5b6b'], d03: ['saul'], d04: ['saul', 'goliath'], d05: ['goliath'], d06: ['jonathan'], d07: ['saul', 'michal'], d08: ['michal'], d09: ['samuel'],
     d10: ['jonathan'], d15: ['jonathan'], d16: ['saul'], d18: ['saul', 'joab'], d21: ['joab'], d24: ['michal'], d25: ['nathan'],
     d27: ['joab'], d29: ['nathan'], d30: ['absalom'], d32: ['joab'], d33: ['joab'], d34: ['joab'], d35: ['joab'],
     d36: ['joab'], d37: ['nathan', 'solomon'], d38: ['solomon'], d39: ['solomon'],
   },
   kings: {
     k01: ['solomon'], k02: ['solomon'], k03: ['solomon'], k04: ['solomon'], k05: ['solomon'],
-    k06: ['jeroboam'], k07: ['rehoboam', 'jeroboam'], k08: ['jeroboam'], k09: ['jeroboam'], k10: ['jeroboam'], k11: ['rehoboam'],
+    k06: ['jeroboam'], k07: ['rehoboam', 'jeroboam'], k08: ['jeroboam'], k09: ['jeroboam'], k10: ['pilgrim-woman:#5d5640'], k11: ['rehoboam'],
     k12: ['ahab'], k15: ['ahab'], k16: ['ahab'], k19: ['elisha'], k20: ['ahab', 'jezebel'], k21: ['ahab'], k22: ['elisha'],
     k32: ['hezekiah'], k33: ['hezekiah'], k34: ['hezekiah'], k35: ['hezekiah'], k36: ['hezekiah'], k37: ['hezekiah'], k38: ['josiah'], k39: ['josiah'],
   },
 });
+// 구약 여정의 엑스트라 (사용자 2026-11): 모델이 없는 사람은 순례자 모델의 옷 색만 바꿔 세운다 — 정해 둔 사람 뒤에 덧붙는다.
+// 이름:색:bearer는 앞사람 바로 앞에 서고, :lie는 눕는다. 밧세바(d28)처럼 그리지 않을 장면은 비운다
+const OT_EXTRA = {
+  moses: {
+    m01: ['pilgrim-man:#7a6a52', 'pilgrim-man:#5d5640'], // 벽돌 굽는 히브리 종들
+    m02: ['pilgrim-woman:#c9a24a'], // 바로의 딸(출 2:5)
+    m07: ['pilgrim-man:#6b5a3e', 'pilgrim-woman:#7a5a3a'], // 어린양을 잡는 집
+    m09: ['pilgrim-man:#6b5a3e', 'pilgrim-woman:#5b6e7a'], m10: ['pilgrim-woman:#5b6e7a', 'pilgrim-woman:#7a5a3a'], // 소고 치며 춤추는 여인들(출 15:20)
+    m11: ['pilgrim-man:#7a6248', 'pilgrim-woman:#6f5a7a'], m12: ['pilgrim-woman:#7a5a3a', 'pilgrim-man:#5d5640'], m13: ['aaron', 'pilgrim-man:#7a6248'],
+    m14: ['pilgrim-man:#6b2f2f'], // 모세의 손을 붙든 훌(출 17:12)
+    m19: ['pilgrim-man:#7a6248', 'pilgrim-woman:#6f5a7a'], m22: ['pilgrim-man:#5d5640'],
+    m23: ['pilgrim-man:#4e5b6b'], // 갈렙(민 14:6)
+    m27: ['pilgrim-man:#7a6248:lie', 'pilgrim-woman:#5b6e7a'], // 뱀에 물려 쓰러진 사람
+    m29: ['pilgrim-man:#4a3a66'], // 발람
+    m30: ['pilgrim-man:#7a6248', 'pilgrim-woman:#5b6e7a'], m37: ['pilgrim-man:#6b5a3e', 'pilgrim-woman:#6f5a7a'],
+    m40: ['pilgrim-man:#7a6248', 'pilgrim-woman:#5b6e7a', 'pilgrim-man:#4e5b6b'],
+  },
+  david: {
+    d01: ['shepherd'],
+    d04: ['pilgrim-man:#6b3a24:bearer'], d05: ['pilgrim-man:#6b3a24:bearer'], // 골리앗 앞에 방패 든 자(삼상 17:7, 41)
+    d07: ['pilgrim-woman:#5b6e7a', 'pilgrim-woman:#6b2f4a'], // 노래하며 맞은 여인들(삼상 18:6–7)
+    d11: ['pilgrim-man:#e2d8c0'], // 제사장 아히멜렉(세마포 에봇)
+    d12: ['pilgrim-man:#6b2f4a'], // 가드 왕 아기스
+    d13: ['pilgrim-man:#5e2f22', 'pilgrim-man:#5d5640', 'pilgrim-man:#4d453c'], d14: ['pilgrim-man:#5e2f22', 'pilgrim-man:#4d453c'], // 다윗과 함께한 사람들
+    d17: ['pilgrim-woman:#7a2e4a'], // 아비가일
+    d19: ['pilgrim-man:#5e2f22', 'pilgrim-man:#4d453c'], d22: ['joab'],
+    d24: ['pilgrim-man:#7a6248', 'pilgrim-woman:#5b6e7a'], d26: ['pilgrim-man:#4e5b6b'], // 므비보셋
+    d31: ['pilgrim-man:#5d5640', 'pilgrim-woman:#6f5a7a'], d32: ['pilgrim-man:#6b3a24'], // 돌 던지는 시므이
+    d36: ['pilgrim-man:#7a6248'], // 아라우나
+  },
+  kings: {
+    k02: ['pilgrim-woman:#5b6e7a', 'pilgrim-woman:#6b2f4a'], // 두 어머니
+    k04: ['pilgrim-woman:#c9a24a'], // 스바 여왕
+    k14: ['pilgrim-woman:#3a3434'], // 사르밧 과부
+    k15: ['pilgrim-man:#8a6a2a', 'pilgrim-man:#7e6026'], // 바알 선지자들
+    k23: ['pilgrim-woman:#6b2f4a'], // 수넴 여인
+    k24: ['pilgrim-man:#4a3a66'], // 나아만
+    k25: ['pilgrim-man:#7a6248', 'pilgrim-man:#5d5640'], // 선지자의 제자들
+    k26: ['pilgrim-man:#7d7462'], // 엘리사의 사환
+    k27: ['pilgrim-man:#8a7d66', 'pilgrim-man:#7d7462'], // 성문 밖 나병 환자들
+    k29: ['pilgrim-man:#e2d8c0'], // 제사장 여호야다
+    k33: ['pilgrim-man:#5e2f22'], // 앗수르의 랍사게
+    k41: ['pilgrim-man:#5d5640', 'pilgrim-woman:#6f5a7a', 'pilgrim-woman:#5b6e7a'], // 바벨론 강가의 포로들
+  },
+};
+for (const [j, m] of Object.entries(OT_EXTRA)) for (const [id, l] of Object.entries(m)) CAST[j][id] = [...new Set([...(CAST[j][id] || []), ...l])];
 // 앞서 걷는 그분이 장면에 따라 바뀐다: [이 장면부터, 모델, 화면 이름] (사용자 2026-11 — 소년·청년·왕 다윗을 나눈다)
 // 모세가 죽은 뒤로는 여호수아, 열왕기는 시대마다 선지자(솔로몬 때는 나단 모델로 선지자 자리, 나라가 갈라질 때는 아히야)
 export const LEADS = {
@@ -68,7 +114,7 @@ export const SIZE = { zacchaeus: 0.82, goliath: 1.7, saul: 1.18 };
 export const GEAR = {
   'pilgrim-man': ['staff'], 'pilgrim-woman': ['staff'], shepherd: ['crook'], jethro: ['crook'], david: ['crook'],
   moses: ['rod'], aaron: ['rod'], elijah: ['staff'], elisha: ['staff'], baptist: ['staff'], samuel: ['staff'],
-  soldier: ['spear', 'scutum'], goliath: ['bigspear', 'bigshield'], joab: ['spear', 'shield'], saul: ['spear'], joshua: ['spear'], 'david-warrior': ['shield'],
+  soldier: ['spear', 'scutum'], goliath: ['bigspear'], 'pilgrim-man:#6b3a24:bearer': ['bigshield', 'helmet'], 'pilgrim-man:#5e2f22': ['spear'], joab: ['spear', 'shield'], saul: ['spear'], joshua: ['spear'], 'david-warrior': ['shield'],
   samaritan: ['jar'], woman: ['jar'],
 };
 // 갈릴리 바다 위의 장면: 제자들은 배에 탄다(물 위에 서 있으면 안 된다). at = 배 가운데(목표 자리 기준), seats = 배 안 자리(배 기준, 앞에서부터),
