@@ -106,7 +106,7 @@ const stageGroup = new THREE.Group();
 scene.add(stageGroup);
 
 // 3D 모델로 바꿔 세우는 사람 (사용자 2026-11: 인형을 3D 모델로 — 모델이 그리기는 더 가볍다. 삼각형 9천 개·한 번에 그림, 인형은 2만7천 개·수십 번).
-// 이름 있는 사람은 그 사람의 모델, 이름 없는 남녀는 순례자 모델에 인형의 옷 색을 입힌다. 아이·천사·실루엣·빛의 형상은 인형 그대로.
+// 이름 있는 사람은 그 사람의 모델, 이름 없는 남녀는 순례자 모델에 인형의 옷 색을 입힌다. 소년은 소년 다윗 모델, 소녀는 소녀 모델, 천사·실루엣·빛의 형상은 인형 그대로.
 // 모델은 장면에 필요한 것만 그때 받고(R2, 한 번 받으면 남는다), 다 받기 전이면 인형으로 섰다가 낭독 전이면 바꿔 세운다
 const OWN = { jesus: 'jesus', risen: 'jesus', peter: 'peter', john: 'john', mary: 'mary', joseph: 'joseph', baptist: 'baptist', pharisee: 'pharisee',
   thomas: 'thomas', martha: 'martha', judas: 'judas', lazarus: 'lazarus', samaritan: 'samaritan', centurion: 'centurion', zacchaeus: 'zacchaeus',
@@ -114,6 +114,7 @@ const OWN = { jesus: 'jesus', risen: 'jesus', peter: 'peter', john: 'john', mary
   moses: 'moses', elijah: 'elijah' };
 const MEN = new Set(['man', 'servant', 'traveler', 'healed', 'beggar', 'prodigal', 'levi', 'steward', 'groom', 'rich']);
 const WOMEN = new Set(['woman2', 'mother', 'anna', 'phoenician']);
+const BOYS = new Set(['child', 'boyJesus']);
 const DISCIPLES = ['andrew', 'james']; // 이름 없는 제자는 안드레·야고보 모델을 번갈아
 // 엑스트라(이름 없는 남녀·군중): 여러 사람을 섞는다 (사용자 2026-11: 순례자로만 하지 말고, 다른 시대 사람도 — 왕은 빼고, 수수하게 입은 사람을
 // 평범한 색 옷으로). [모델, 옷] — 옷이 'plain'이면 화려한 색을 바래게, 색이면 그 색으로 (순례자만), 없으면 그대로
@@ -132,6 +133,8 @@ function modelOf(type, i) {
   if (OWN[type]) return [OWN[type]];
   if (type === 'disciple') return [DISCIPLES[i % DISCIPLES.length]];
   const T = TYPES[type] || {};
+  if (BOYS.has(type)) return ['david', 'plain']; // 소년은 소년 다윗 모델에 수수한 옷 (사용자 2026-11)
+  if (type === 'girl') return ['girl']; // 갈릴리 시골 소녀 (야이로의 딸 등)
   if (MEN.has(type)) return i % 3 ? EXTRA.men[i % EXTRA.men.length] : ['pilgrim-man', T.mantle || T.robe];
   if (WOMEN.has(type)) return i % 3 ? EXTRA.women[i % EXTRA.women.length] : ['pilgrim-woman', T.robe];
   return null;
@@ -150,9 +153,10 @@ function clearCast() {
 }
 /* 동작 명령: [이름, 자세(또는 소품 상태), 옵션]
    이름이 '@env'면 분위기 전환. 옵션: x, z, y, look, show, item, board('배 이름' 또는 null), delay(ms), to(말을 건네는 상대) */
+const SITTING = new Set(['sit', 'sit-ground', 'sit-speak', 'seat']);
 function apply(cmds, instant = false) {
   (cmds || []).forEach(cmd => {
-    const [name, pose, o = {}] = cmd;
+    let [name, pose, o = {}] = cmd;
     if (o.delay && !instant) {
       const tk = token, job = { at: performance.now() + o.delay, cmd: [name, pose, { ...o, delay: 0 }] };
       job.id = setTimeout(() => { pending.delete(job); if (tk === token) apply([job.cmd]); }, o.delay);
@@ -164,7 +168,11 @@ function apply(cmds, instant = false) {
     if (name === '@at') { moveAt = pose ? { ll: pose, x: o.x || 0, z: o.z || 0 } : null; if (instant) atSnap = true; return; }
     const a = actors[name], p = props[name];
     if (a) {
-      if (pose) { a.set(pose); a.talkTo = o.to ? actors[o.to] : null; }
+      // 앉아 있던 사람이 자리를 옮기지 않고 말하거나 듣기만 하면 앉은 채로 — 대본의 'speak'·'listen'이 서는 동작이라 혼자 앉았다가 벌떡 일어났다(사용자 2026-11)
+      const still = o.x === undefined && o.z === undefined, stay = SITTING.has(a.pose) && still;
+      if (still && a.pose === 'kneel' && pose === 'pray') pose = 'kneel'; // 무릎 꿇고 기도하다가 일어서서 기도하지 않게 (겟세마네)
+      const want = stay && pose === 'speak' ? 'sit-speak' : stay && pose === 'listen' ? (a.sitAs || 'sit') : pose;
+      if (want) { if (SITTING.has(want) && want !== 'sit-speak') a.sitAs = want; a.set(want); a.talkTo = o.to ? actors[o.to] : null; }
       if ('board' in o) (o.board ? props[o.board].deck : stageGroup).add(a.p.root);
       if (o.x !== undefined || o.z !== undefined) a.moveTo(o.x ?? a.goal.x, o.z ?? a.goal.y);
       if ('board' in o) a.pos.copy(a.goal); // 타고 내릴 때는 그 자리로 바로 (좌표 기준이 바뀌므로 걸어가지 않는다)
