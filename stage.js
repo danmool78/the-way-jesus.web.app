@@ -231,7 +231,7 @@ function setScene(ev) {
     const named = new Set(plan.filter(Boolean).map(m => m[0]));
     const pool = { men: EXTRA.men.filter(([n]) => !named.has(n) || n.startsWith('pilgrim')), women: EXTRA.women.filter(([n]) => !named.has(n) || n.startsWith('pilgrim')) };
     const CROWDM = [...pool.men, ...pool.women].map(([n]) => n);
-    const names = USE_MODELS ? [...new Set([...named, ...(crowd ? CROWDM : [])])] : [];
+    const names = USE_MODELS ? [...new Set([...named, ...(crowd ? CROWDM : []), ...(named.size ? ['pilgrim-man', 'jesus'] : [])])] : []; // 동작을 빌려 줄 모델도 함께 — 늦게 받으면 요셉이 잠자기 동작 없이 통나무처럼 누웠다
     setCrowd(USE_MODELS && crowd && CROWDM.every(n => ready[n]) ? { men: pool.men.map(dress), women: pool.women.map(dress) } : null);
     const ev0 = ev, wait = names.length ? want(names) : null;
     wait?.then(() => { if (curEv === ev0 && (atStart || new URLSearchParams(location.search).has('beat'))) setScene(ev0); });
