@@ -59,16 +59,24 @@ function withBorrowed(gltf, body, borrow = {}) {
   for (const [n, donor] of need) {
     const c = donor.animations.find(c => c.name === n); if (!c) continue;
     const hr = bone(gltf.scene, 'Hips')?.position.length(), hd = bone(donor.scene, 'Hips')?.position.length(), k = hr && hd ? hr / hd : 1;
+    // 뼈 각도는 '기본 자세에서 얼마나 돌았나'로 옮긴다 — 모델마다 뼈의 기본 방향이 달라, 남의 각도를 그대로 넣으니 천사의 손목·팔이 꼬였다(사용자 2026-11)
+    const qa = new THREE.Quaternion(), qb = new THREE.Quaternion();
     anims.push(new THREE.AnimationClip(n, c.duration, c.tracks.filter(t => gltf.scene.getObjectByName(t.name.split('.')[0])).map(t => {
-      if (!/Hips\.position$/.test(t.name)) return t;
-      const u = t.clone(); u.values = u.values.map(v => v * k); return u;
-    })));
+      const [bn, prop] = t.name.split('.'), u = t.clone();
+      if (/Hips/.test(bn) && prop === 'position') { u.values = u.values.map(v => v * k); return u; }
+      if (prop !== 'quaternion') return null; // 다른 뼈의 위치·크기는 빼고 이 모델의 뼈 길이 그대로 — 남의 뼈 길이가 들어가 천사의 팔이 늘어났다(사용자 2026-11)
+      const rd = donor.scene.getObjectByName(bn)?.quaternion, rr = gltf.scene.getObjectByName(bn)?.quaternion; if (!rd || !rr) return t;
+      const inv = rd.clone().invert();
+      for (let i = 0; i < u.values.length; i += 4) { qa.fromArray(u.values, i); qb.copy(rr).multiply(inv.clone().multiply(qa)); qb.toArray(u.values, i); }
+      return u;
+    }).filter(Boolean)));
   }
   have[key] = { scene: gltf.scene, animations: anims }; merged.set(gltf, have); return have[key];
 }
 export class StageModel {
   constructor(gltf, type, x = 0, z = 0, face = 0, o = {}) {
     this.doll = new Actor(type, x, z, face, o); // 보이지 않는 길잡이 (장면에 넣지 않는다)
+    this.type = type;
     const body = clone(gltf.scene);
     body.updateMatrixWorld(true);
     const top = bone(body, 'HeadTop_End'), h = top ? top.getWorldPosition(v1).y : 1.7;
@@ -93,6 +101,7 @@ export class StageModel {
     const dl = this.doll.p.armL.position.x > 0;
     this.arms = [[this.doll.p.armL, dl === (L.up.getWorldPosition(v1).x > 0) ? L : R], [this.doll.p.armR, dl === (L.up.getWorldPosition(v1).x > 0) ? R : L]];
     for (const [, mb] of this.arms) if (mb.hand) mb.hand0 = mb.hand.quaternion.clone(); // 손목의 기본 자세 (곧게 편 손)
+    for (const [, mb] of this.arms) if (mb.hand) mb.tip = mb.hand.children.find(c => c.isBone && /HandMiddle1$/.test(c.name)) || null; // 손바닥 가운데 (손 방향)
     this.legs = [['Left'], ['Right']].map(([s]) => ({ up: bone(body, s + 'UpLeg'), lo: bone(body, s + 'Leg'), foot: bone(body, s + 'Foot'), toe: bone(body, s + 'ToeBase'), tip: bone(body, s + 'Toe_End') }));
     const hips = bone(body, 'Hips'); this.hipH = hips ? hips.getWorldPosition(v1).y * body.scale.x / (body.scale.x || 1) : 0.5; this.body = body; this.legW = 0;
     this.headB = bone(body, 'Head'); this.neckB = bone(body, 'Neck'); this.spineB = bone(body, 'Spine1') || bone(body, 'Spine'); this.topB = bone(body, 'HeadTop_End');
@@ -283,6 +292,8 @@ export class StageModel {
         this.aim(mb.lo, mb.hand, face.sub(mb.lo.getWorldPosition(v1)).normalize(), this.w);
       }
       mb.hand.quaternion.slerp(mb.hand0, this.w); // 손목은 곧게 (서 있는 동작의 꺾인 손목이 남아 어색했다)
+      // 손은 팔뚝을 곧게 잇는다 — 기본 손목 각도가 꺾인 모델(천사)은 손을 들면 손이 옆으로 꺾여 깃발처럼 섰다(사용자 2026-11)
+      if (mb.tip) this.aim(mb.hand, mb.tip, mb.hand.getWorldPosition(v1).sub(mb.lo.getWorldPosition(v2)).normalize(), this.w * 0.85);
     });
     // 고개: 인형이 숙이거나 드는 만큼 (십자가 위에서 고개를 떨굼, 하늘을 우러름)
   }
