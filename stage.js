@@ -3,7 +3,7 @@
 import { THREE, damp } from './stage/kit.js';
 import { Actor, TYPES } from './stage/people.js';
 import { StageModel } from './stage/model-actor.js';
-import { model, tinted, plain } from './game-model.js';
+import { model, tinted, plain, restyle } from './game-model.js';
 import { makeProp, setCrowd } from './stage/props.js';
 import { SCRIPTS } from './stage/scenes.js';
 import { createStreet } from './stage/street/view.js';
@@ -106,31 +106,39 @@ const stageGroup = new THREE.Group();
 scene.add(stageGroup);
 
 // 3D 모델로 바꿔 세우는 사람 (사용자 2026-11: 인형을 3D 모델로 — 모델이 그리기는 더 가볍다. 삼각형 9천 개·한 번에 그림, 인형은 2만7천 개·수십 번).
-// 이름 있는 사람은 그 사람의 모델, 이름 없는 남녀는 순례자 모델에 인형의 옷 색을 입힌다. 소년은 소년 다윗 모델, 소녀는 소녀 모델, 천사·실루엣·빛의 형상은 인형 그대로.
+// 이름 있는 사람은 그 사람의 모델, 이름 없는 남녀는 순례자 모델에 인형의 옷 색을 입힌다. 소년은 소년 다윗 모델, 소녀는 소녀 모델, 헤롯·동방박사·경비병 등은 비슷한 구약 인물 모델(LIKE), 천사는 천사 모델,·실루엣·빛의 형상은 인형 그대로.
 // 모델은 장면에 필요한 것만 그때 받고(R2, 한 번 받으면 남는다), 다 받기 전이면 인형으로 섰다가 낭독 전이면 바꿔 세운다
 const OWN = { jesus: 'jesus', risen: 'jesus', peter: 'peter', john: 'john', mary: 'mary', joseph: 'joseph', baptist: 'baptist', pharisee: 'pharisee',
   thomas: 'thomas', martha: 'martha', judas: 'judas', lazarus: 'lazarus', samaritan: 'samaritan', centurion: 'centurion', zacchaeus: 'zacchaeus',
-  pilate: 'pilate', shepherd: 'shepherd', soldier: 'soldier', highpriest: 'caiaphas', elder: 'nicodemus', sadducee: 'nicodemus', woman: 'woman',
-  moses: 'moses', elijah: 'elijah' };
+  pilate: 'pilate', shepherd: 'shepherd', soldier: 'soldier', highpriest: 'caiaphas', elder: 'nicodemus', woman: 'woman',
+  moses: 'moses', elijah: 'elijah', angel: 'angel', whiteman: 'angel' }; // 천사(가브리엘·목자들에게 나타난 천사·무덤의 흰 옷 입은 이)
 const MEN = new Set(['man', 'servant', 'traveler', 'healed', 'beggar', 'prodigal', 'levi', 'steward', 'groom', 'rich']);
 const WOMEN = new Set(['woman2', 'mother', 'anna', 'phoenician']);
 const BOYS = new Set(['child', 'boyJesus']);
+// 모델이 따로 없는 배역은 비슷한 사람의 모델에 옷을 맞춰 입힌다 (사용자 2026-11: 다 만들 수는 없으니 있는 것에서) — 'plain'은 화려한 색을 바래게
+// 옷은 restyle로 색상을 돌리고 살갗 밝기도 달리 — 구약 여정의 그 사람과 같아 보이지 않게(사용자 2026-11)
+const LIKE = { king: ['rehoboam', { hue: 150, skin: 1.05 }], magus: ['jethro', { hue: 200, sat: 1.4, skin: 0.8 }], magus2: ['nathan', { hue: 90, sat: 1.5, skin: 1.1 }], magus3: ['absalom', { hue: 250, skin: 0.62 }], // 헤롯은 오만한 왕, 동방박사는 사막 족장·현자·젊은 귀공자(먼 나라 사람이라 살갗도 저마다)
+  official: ['jeroboam', { plain: true, skin: 0.9 }], youth: ['jonathan', { plain: true, hue: 40, skin: 1.08 }], guard: ['joab', { hue: 30, sat: 0.6, skin: 0.95 }], // 왕의 신하, 나인 성 과부의 아들, 성전 경비병
+  wild: ['pilgrim-man', { plain: true, skin: 0.72 }], sadducee: ['nicodemus', { hue: 160, skin: 1.08 }] }; // 거라사의 귀신 들린 사람(해진 옷, 햇볕에 그을림), 사두개인(바리새인 니고데모와 달리)
 const DISCIPLES = ['andrew', 'james']; // 이름 없는 제자는 안드레·야고보 모델을 번갈아
 // 엑스트라(이름 없는 남녀·군중): 여러 사람을 섞는다 (사용자 2026-11: 순례자로만 하지 말고, 다른 시대 사람도 — 왕은 빼고, 수수하게 입은 사람을
 // 평범한 색 옷으로). [모델, 옷] — 옷이 'plain'이면 화려한 색을 바래게, 색이면 그 색으로 (순례자만), 없으면 그대로
 const EXTRA = {
-  men: [['pilgrim-man'], ['fisherman'], ['shepherd'], ['jethro', 'plain'], ['samuel', 'plain'], ['pilgrim-man', '#7d4a3a'], ['nathan', 'plain'],
-    ['elisha', 'plain'], ['isaiah', 'plain'], ['pilgrim-man', '#5d6b4a'], ['ahijah', 'plain']],
-  women: [['pilgrim-woman'], ['woman'], ['miriam', 'plain'], ['pilgrim-woman', '#3c5d96'], ['zipporah', 'plain'], ['rahab', 'plain'], ['pilgrim-woman', '#a3554a']],
+  men: [['pilgrim-man'], ['fisherman'], ['shepherd'], ['jethro', { plain: true, skin: 0.85 }], ['samuel', { plain: true, skin: 1.1 }], ['pilgrim-man', '#7d4a3a'], ['nathan', { plain: true, hue: 30, skin: 0.8 }],
+    ['elisha', { plain: true, skin: 1.08 }], ['isaiah', { plain: true, hue: 200, skin: 0.9 }], ['pilgrim-man', '#5d6b4a'], ['ahijah', { plain: true, skin: 0.78 }]],
+  women: [['pilgrim-woman'], ['woman'], ['miriam', { plain: true, skin: 1.08 }], ['pilgrim-woman', '#3c5d96'], ['zipporah', { plain: true, hue: 120, skin: 0.85 }], ['rahab', { plain: true, hue: 60, skin: 1.05 }], ['pilgrim-woman', '#a3554a']],
 };
 // 엑스트라 모델은 무대가 뜰 때 미리 받아 둔다 — 장면마다 그때 받으니 군중이 잠깐 예전 인형으로 섰다가 바뀌었다
-if (new URLSearchParams(location.search).has('models')) setTimeout(() => want([...new Set([...EXTRA.men, ...EXTRA.women].map(([n]) => n))]), 0);
-const dress = ([n, c]) => c === 'plain' ? plain(ready[n], n) : c ? tinted(ready[n], n, c) : ready[n];
+if (new URLSearchParams(location.search).has('models')) setTimeout(() => want([...new Set([...EXTRA.men, ...EXTRA.women].map(([n]) => n)), 'jesus']), 0);
+// 동작을 빌려 줄 모델: 잠자기는 남자 순례자, 무릎 꿇고 기도는 예수님 모델에서 (같은 Mixamo 뼈대)
+const BORROW = () => ({ sleep: ready['pilgrim-man'], pray: ready.jesus, idle: ready.jesus, talk: ready.jesus }); // 천사 모델은 걷기만 있어 서기·말하기도
+const dress = ([n, c]) => c === 'plain' ? plain(ready[n], n) : c && typeof c === 'object' ? restyle(ready[n], n, c) : c ? tinted(ready[n], n, c) : ready[n];
 // 3D 모델은 아직 점검 중 — 주소에 ?models가 있을 때만 쓴다. 운영은 예전 인형 (사용자 2026-11: 떠 있고 엉뚱한 곳을 보고 말해서, 다 잡을 때까지)
 const USE_MODELS = new URLSearchParams(location.search).has('models');
 function modelOf(type, i) {
   if (!USE_MODELS) return null;
   if (OWN[type]) return [OWN[type]];
+  if (LIKE[type]) return LIKE[type];
   if (type === 'disciple') return [DISCIPLES[i % DISCIPLES.length]];
   const T = TYPES[type] || {};
   if (BOYS.has(type)) return ['david', 'plain']; // 소년은 소년 다윗 모델에 수수한 옷 (사용자 2026-11)
@@ -241,7 +249,7 @@ function setScene(ev) {
   Object.entries(script.cast).forEach(([name, [type, x, z, face, o = {}]], i) => {
     const m = plan[i];
     const g = m && ready[m[0]] && dress(m);
-    const a = g ? new StageModel(g, type, x, z, face, { solemn: script.solemn, ...o }) : new Actor(type, x, z, face, { solemn: script.solemn, ...o });
+    const a = g ? new StageModel(g, type, x, z, face, { solemn: script.solemn, borrow: BORROW(), ...o }) : new Actor(type, x, z, face, { solemn: script.solemn, ...o });
     a.realWalk = !!script.street; // 거리 무대: 걷고 돌아보는 방향을 실제대로 (people.js)
     actors[name] = a;
     (o.board ? props[o.board].deck : stageGroup).add(a.p.root);
@@ -275,13 +283,41 @@ if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__st
       stageGroup.updateMatrixWorld(true);
       let low = Infinity; a.p.root.traverse(o => { if (o.isBone && /(Foot|ToeBase|Toe_End|Leg)$/.test(o.name)) low = Math.min(low, stageGroup.worldToLocal(o.getWorldPosition(v)).y); });
       const gap = (low - (a.ground + a.y)) / (a.big || 1), r = { name, pose: a.pose, gap: +gap.toFixed(3), big: +(a.big || 1).toFixed(2) }; // 지형 안에서는 사람을 키우니(big) 그만큼 나눈다
+      if (inTerrain && !a.y && !a.yT) { const w = new THREE.Vector3(a.pos.x, low + 5, a.pos.y).applyMatrix4(stageGroup.matrixWorld), h = groundHit(w); // 그려진 땅(지형 그물·도성 단)에 직접 대어 본다
+        if (h !== null) r.hit = +((low - stageGroup.worldToLocal(new THREE.Vector3(w.x, h, w.z)).y) / (a.big || 1)).toFixed(3); }
       const t = a.talkTo || ((a.pose === 'speak' || a.pose === 'sit-speak') && a.target);
       if (t && t.showT > 0) { const want = Math.atan2(t.pos.x - a.pos.x, t.pos.y - a.pos.y); const f = a.p.root.rotation.y; r.off = +Math.abs(Math.atan2(Math.sin(want - f), Math.cos(want - f))).toFixed(2); r.to = Object.keys(actors).find(k => actors[k] === t); }
       out.push(r);
     }
     return out;
   },
+  // 소품이 땅에서 뜨거나 묻혔는지: 보이는 소품의 맨 아래와 그 자리 땅 높이의 차 (일부러 띄운 것 — y를 준 것, 하늘의 것 — 은 뺀다)
+  props() {
+    const out = [], box = new THREE.Box3(), inv = new THREE.Matrix4();
+    stageGroup.updateMatrixWorld(true); inv.copy(stageGroup.matrixWorld).invert();
+    for (const [name, p] of Object.entries(props)) {
+      if (!p.obj.visible || (p.show ?? 1) < 0.5 || p.obj.position.y > 0.01 || SKY.has(p.kind) || p.lift.parent !== stageGroup) continue;
+      box.setFromObject(p.obj).applyMatrix4(inv); if (box.isEmpty()) continue;
+      const cx = (box.min.x + box.max.x) / 2, cz = (box.min.z + box.max.z) / 2, g = Math.max(groundAt(cx, cz), floorAt(cx, cz, p));
+      const r = { name, kind: p.kind, gap: +((box.min.y - g) / (bigNow || 1)).toFixed(3), size: +((box.max.y - box.min.y) / (bigNow || 1)).toFixed(2) };
+      // 지형 안에서는 그려진 땅(지형 그물)에 직접 쏘아 본다 — 계산한 땅 높이와 그려진 땅이 어긋나도 잡히게
+      if (inTerrain) { const w = new THREE.Vector3(cx, box.max.y + 5, cz).applyMatrix4(stageGroup.matrixWorld), hit = groundHit(w, [p]);
+        if (hit !== null) r.hit = +((box.min.y - stageGroup.worldToLocal(new THREE.Vector3(w.x, hit, w.z)).y) / (bigNow || 1)).toFixed(3); }
+      out.push(r);
+    }
+    return out;
+  },
 };
+const gRay = new THREE.Raycaster();
+function groundHit(w, skip) { // 무대 밖의 지형 그물만 (나무·집 묶음·무대는 빼고)
+  const T = window.terrain3d; if (!T) return null;
+  const meshes = []; T.scene.traverse(o => { if (o.userData.ground) meshes.push(o); }); // 지형 그물과 도성의 성전 단 (terrain.js가 표시)
+  Object.values(props).forEach(p => { if (p.heightAt && p.obj.visible && !skip?.includes(p)) p.obj.traverse(o => { if (o.isMesh) meshes.push(o); }); }); // 사람이 올라서는 소품(언덕·회당 바닥·배)도
+  gRay.set(w, new THREE.Vector3(0, -1, 0)); const sides = meshes.map(m => m.material.side); meshes.forEach(m => { m.material.side = THREE.DoubleSide; }); // 성전 단 윗면이 아래를 향해 그려져 있어도 맞게
+  const h = gRay.intersectObjects(meshes, false)[0]; meshes.forEach((m, i) => { m.material.side = sides[i]; });
+  return h ? h.point.y : null;
+}
+const SKY = new Set(['star', 'host', 'beam', 'rain', 'dove', 'cloud', 'glory', 'bird', 'birds', 'light', 'smoke', 'water', 'sea', 'fire', 'glow', 'darkness', 'veil', 'angel']);
 // 낭독 전에 서 있는 모습: 대표 순간(enter) 위에 낭독의 처음 상태(intro)를 얹는다. 예전에는 enter(이야기 중간이나 끝의 모습)로 서 있다가
 // ▶를 누르면 intro로 한꺼번에 바뀌어, 다른 장면이 차려져 있다가 치워지고 시작하는 것처럼 보였다(사용자, 2026-11)
 let atStart = false; // 낭독 전 모습(setStart) 그대로인가 — 그러면 ▶의 intro는 사람을 지웠다 다시 세우지 않고 그대로 이어 간다
@@ -470,7 +506,7 @@ function leaveTerrain() {
   inTerrain = false;
   scene.add(stageGroup); holder.removeFromParent();
   stageGroup.traverse(o => { if (o.isPointLight && o.userData.d0 !== undefined) { o.distance = o.userData.d0; o.intensity = o.userData.raw; delete o.userData.d0; delete o.userData.raw; } });
-  Object.values(props).forEach(p => { p.lift.position.set(0, 0, 0); if (p.fade !== 'scale') p.obj.scale.copy(p.base); });
+  Object.values(props).forEach(p => { p.lift.position.set(0, 0, 0); if (p.fade !== 'scale') p.obj.scale.copy(p.base); if (p.skirt) p.skirt.visible = false; });
   Object.values(actors).forEach(a => { a.big = 1; });
 }
 // 지형 위 (무대 좌표) 지점의 땅 높이 — 무대 바닥 중심과의 차이를 무대 단위로
@@ -488,12 +524,13 @@ const skyC = new THREE.Color(), toneH = new THREE.Color(), toneS = new THREE.Col
 const groundAt = (x, z) => inTerrain ? (window.terrain3d.heightAt(base.x + x * base.k, base.z + z * base.k) - base.y) / base.k : 0;
 let bigNow = 1;
 // 바닥이 있는 소품(궁 안, floor) 위라면 그 바닥의 받침 높이 — 3D 지형 위에서 바닥 위의 가구와 왕좌에 앉은 사람이 바닥에 묻히지 않게 (2D에서는 0)
-const floorAt = (x, z, self) => Math.max(0, ...Object.values(props).filter(f => f.floor && f !== self && f.heightAt(x, z) > 0).map(f => f.lift.position.y));
+// 바닥 소품이 없으면 -∞ — 예전엔 0(무대 가운데 땅 높이)을 바닥으로 쳐서 가운데보다 낮은 비탈의 소품(베들레헴 들판의 양·소)이 가운데 높이에 떠 있었다
+const floorAt = (x, z, self) => Math.max(-Infinity, ...Object.values(props).filter(f => f.floor && f !== self && f.heightAt(x, z) > 0).map(f => f.lift.position.y));
 // 땅에 붙은 소품: 지형과 같은 고정 축척에 둔다. 나머지(사람 곁의 십자가·배·짐승·상·바구니…)는 사람과 함께 커진다
 // 바닥이 평평한 건물: 가운데 땅 높이에 앉히면 비탈 위쪽이 땅에 묻힌다(골짜기 바닥의 실로암 못) — 바닥 네 귀퉁이 가운데 가장 높은 땅에 앉힌다
 const FLAT = new Set(['pool', 'house', 'well', 'synagogue', 'temple', 'gate', 'walls', 'cliffshrine']);
 // 땅에 까는 얇은 판(모래·풀밭): 가운데 땅 높이에 두면 비탈 아래쪽에 선 사람의 다리를 판이 덮어 발만 보였다(가드 성문, 2026-11) — 가장 낮은 귀퉁이에 깐다(높은 쪽은 지형 밑으로 숨는다)
-const COVER = new Set(['sand', 'grass', 'field', 'flowers']);
+const COVER = new Set(['sand', 'grass', 'field', 'flowers', 'rocks']); // 바위도 낮은 쪽에 — 비탈 위쪽이 조금 묻히는 편이 떠 있는 것보다 낫다
 const FIXED = new Set(['water', 'grass', 'hill', 'tomb', 'temple', 'house', 'rocks', 'figtree', 'synagogue', 'well', 'pool', 'flowers', 'gate', 'field', 'cliffshrine', 'palm', 'walls', 'olive', 'star', 'host', 'rain']);
 // '@at' 명령: 3D 지형에서만 무대 바닥을 다른 실제 지점으로 옮긴다 — 무대 (x, z) 자리가 그 위경도에 오도록.
 // 나사렛 회당에서 낭떠러지로 끌고 가는 대목처럼, 이야기가 근처의 실제 지형으로 옮겨 갈 때. 2D 무대는 그대로 둔다
@@ -574,6 +611,12 @@ function frame() {
       p.lift.position.x = stay ? (home.x - base.x) / base.k : 0; p.lift.position.z = stay ? (home.z - base.z) / base.k : 0;
       const ox = p.obj.position.x + p.lift.position.x, oz = p.obj.position.z + p.lift.position.z, f = p.foot;
       const corners = () => [groundAt(ox, oz), groundAt(ox + f[0], oz + f[2]), groundAt(ox + f[1], oz + f[2]), groundAt(ox + f[0], oz + f[3]), groundAt(ox + f[1], oz + f[3])];
+      if (FLAT.has(p.kind)) { // 비탈에서는 내리막 쪽 바닥 밑이 비어 떠 보였다(실로암 못·여관) — 가장 낮은 귀퉁이까지 돌 기단을 받친다
+        const c = corners(), drop = Math.max(...c) - Math.min(...c);
+        if (!p.skirt) { p.skirt = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshStandardMaterial({ color: '#b9a888', roughness: 0.95 })); p.skirt.receiveShadow = true; p.lift.add(p.skirt); }
+        p.skirt.visible = drop > 0.01 && p.obj.visible; p.skirt.scale.set((f[1] - f[0]) * 0.98, drop + 0.02, (f[3] - f[2]) * 0.98);
+        p.skirt.position.set(p.obj.position.x + (f[0] + f[1]) / 2, -drop / 2, p.obj.position.z + (f[2] + f[3]) / 2);
+      }
       p.lift.position.y = FLAT.has(p.kind) || p.floor ? Math.max(...corners())
         : COVER.has(p.kind) ? Math.min(...corners())
         : Math.max(groundAt(ox, oz), floorAt(ox, oz, p));
