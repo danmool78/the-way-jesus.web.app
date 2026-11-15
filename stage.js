@@ -249,7 +249,8 @@ function setScene(ev) {
   Object.entries(script.cast).forEach(([name, [type, x, z, face, o = {}]], i) => {
     const m = plan[i];
     const g = m && ready[m[0]] && dress(m);
-    const a = g ? new StageModel(g, type, x, z, face, { solemn: script.solemn, borrow: BORROW(), ...o }) : new Actor(type, x, z, face, { solemn: script.solemn, ...o });
+    const angel = type === 'angel' || type === 'whiteman'; // 천사는 빌린 동작 없이 A자 그대로, 걸을 때만 제 걷기
+    const a = g ? new StageModel(g, type, x, z, face, { solemn: script.solemn, borrow: angel ? {} : BORROW(), still: angel, ...o }) : new Actor(type, x, z, face, { solemn: script.solemn, ...o });
     a.realWalk = !!script.street; // 거리 무대: 걷고 돌아보는 방향을 실제대로 (people.js)
     actors[name] = a;
     (o.board ? props[o.board].deck : stageGroup).add(a.p.root);

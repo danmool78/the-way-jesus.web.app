@@ -72,6 +72,7 @@ export class StageModel {
   constructor(gltf, type, x = 0, z = 0, face = 0, o = {}) {
     this.doll = new Actor(type, x, z, face, o); // 보이지 않는 길잡이 (장면에 넣지 않는다)
     this.type = type;
+    this.still = !!o.still; // 아무 동작 없이 모델을 뜬 A자 자세 그대로 — 걷지도 않고 미끄러지듯 옮겨 간다 (천사: 날개와 팔이 한 그물이라 팔을 돌리면 꼬였다, 사용자 2026-11)
     const body = clone(gltf.scene);
     body.updateMatrixWorld(true);
     const top = bone(body, 'HeadTop_End'), h = top ? top.getWorldPosition(v1).y : 1.7;
@@ -89,6 +90,7 @@ export class StageModel {
     this.pillow.rotation.z = Math.PI / 2; this.pillow.scale.set(1, 1, 0.6); this.pillow.visible = false; this.pillowY = H * 0.022;
     this.p.root.add(this.pillow);
     this.cur = null; this.w = 0; this.op = -1;
+    if (o.still) this.acts = {};
     this.march = MARCH.has(type); this.stride = Math.random(); this.pace = 0.9 + Math.random() * 0.2;
     // 인형의 왼팔·오른팔이 모델의 어느 팔인지는 자리(x)로 맞춘다 (서로 앞을 보는 쪽이 같다)
     const L = { up: bone(body, 'LeftArm'), lo: bone(body, 'LeftForeArm'), hand: bone(body, 'LeftHand') };
@@ -125,7 +127,9 @@ export class StageModel {
   look(d) { this.doll.look(d); }
   settle() { const s = this.show; for (let i = 0; i < 60; i++) this.update(i * 0.05, 0.05); this.show = s; this.fadeTo(Math.min(1, s)); }
   play(name, fade = 0.35) {
-    const a = this.acts[name] || this.acts.idle; if (!a || a === this.cur) return;
+    const a = this.acts[name] || this.acts.idle;
+    if (!a) { if (this.cur) { this.cur.fadeOut(fade); this.cur = null; } return; } // 서 있는 동작이 없는 모델(천사)은 뜬 자세(A자) 그대로
+    if (a === this.cur) return;
     a.reset().setEffectiveWeight(1).play();
     // 여럿이 함께 걸을 때 발이 똑같이 맞으면 행진 같다 — 보통 사람은 걸음의 시작과 빠르기를 저마다 조금씩 달리, 병정만 발을 맞춘다(사용자 2026-11)
     if (name === 'walk' && !this.march) { a.time = this.stride * a.getClip().duration; a.timeScale = this.pace; } else a.timeScale = 1;
@@ -211,10 +215,11 @@ export class StageModel {
     if (!this.rest) { this.rest = []; const add = b => b && this.rest.push([b, b.quaternion.clone()]); this.legs.forEach(l => [l.up, l.lo, l.foot].forEach(add)); this.arms.forEach(([, m]) => [m.up, m.lo, m.hand].forEach(add)); [this.headB, this.neckB, this.spineB].forEach(add); }
     for (const [b, q] of this.rest) b.quaternion.copy(q);
     this.mixer.update(dt);
+    if (this.still) return; // 천사: 몸도 팔도 돌리지 않는다
     // 동작이 없는 자세는 인형의 팔을 따른다 (천천히 들어가고 나온다)
     // 아기·물건을 두 팔로 안은 사람(carry)은 걸을 때도 팔을 인형대로 — 걷기 동작대로 두 팔을 흔들어 아기가 배에 붙어 있었다(사용자 2026-11)
     const hold = HOLD.has(d.pose);
-    this.w = damp(this.w, (clip && !(walk && hold)) || perch ? 0 : 1, 6, dt);
+    this.w = damp(this.w, this.still || (clip && !(walk && hold)) || perch ? 0 : 1, 6, dt); // still: 팔을 돌리지 않는 모델(천사)
     // 걸터앉기·나귀 타기: 넓적다리를 앞으로, 정강이는 아래로 하고 몸을 인형처럼 내려 앉힌다 (모델에 앉는 동작이 없다)
     this.legW = damp(this.legW, ride ? 1 : 0, 6, dt);
     this.body.position.y = -this.hipH * 0.58 * (d.kneel || 0) * this.legW;
