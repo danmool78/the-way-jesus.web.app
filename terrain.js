@@ -77,11 +77,11 @@ function heightAt(x, z) { // 지도 단위 좌표의 지형 높이 (불러온 �
 // 무대 인물·소품이 서는 높이: 땅, 호수면(배는 물 위에), 도성 모형의 성전 단 윗면 가운데 높은 것
 const inPoly = ([x, z], P) => { let c = false; for (let i = 0, j = P.length - 1; i < P.length; j = i++) if ((P[i][1] > z) !== (P[j][1] > z) && x < (P[j][0] - P[i][0]) * (z - P[i][1]) / (P[j][1] - P[i][1]) + P[i][0]) c = !c; return c; };
 let pools = null, decks = null, cityDeckTop = null; // cityDeckTop: 그려진 성전 단 윗면의 실제 높이 (어림한 높이가 그려진 단보다 높아 성전 뜰의 사람들이 떠 있었다)
-function standAt(x, z) {
+function standAt(x, z, noDeck = false) {
   let h = heightAt(x, z);
   pools ??= LAKES.filter(([, m]) => m !== undefined).map(([k, m]) => ({ P: GEO[k].map(p => px(p)), top: lv(m) + 0.25 }));
   pools.forEach(L => { if (h < L.top && inPoly([x, z], L.P)) h = L.top; });
-  if (city) {
+  if (city && !noDeck) {
     decks ??= DECKS.map(d => { const P = d.ll.map(p => px(p)), xs = P.map(p => p[0]), zs = P.map(p => p[1]); // 모형 조각은 가운데 땅 높이만큼 올렸다 (addModel)
       return { P, top: cityDeckTop ?? heightAt((Math.min(...xs) + Math.max(...xs)) / 2, (Math.min(...zs) + Math.max(...zs)) / 2) + d.top }; });
     decks.forEach(d => { if (h < d.top && inPoly([x, z], d.P)) h = d.top; });
@@ -135,7 +135,9 @@ async function build() {
   addWalker(); addLabels(); addStars();
   decorate();
   // 3D 무대(stage.js)가 이 장면 안에 서도록 여는 창구: 같은 카메라·깊이로 그리고, 땅 높이에 발을 붙인다
-  window.terrain3d = { scene, camera, cam, heightAt: standAt, zoomAt, sceneDist };
+  // 무대(사람·소품)는 도성 성전 단을 밟지 않는다 — 사람을 도성보다 훨씬 크게 키워 세우니 작은 단 위에 걸친 사람만 단 높이로 솟아 떠 보였다(e03 안나, 사용자 2026-11).
+  // 단 높이 차는 키운 사람에 비해 아주 작아 땅에 그대로 서도 묻혀 보이지 않는다. 호수 위(배)는 그대로
+  window.terrain3d = { scene, camera, cam, heightAt: (x, z) => standAt(x, z, true), zoomAt, sceneDist };
   ready = true;
 }
 
@@ -460,7 +462,7 @@ function addModel(group, E, scale) {
   if (E === JLM) { city = true; const cw = Math.max(ex - ox, ez - oz); group.traverse(o => { if (!o.isMesh) return;
     o.material = [].concat(o.material).map(m => Object.assign(m.clone(), { transparent: true })); if (o.material.length === 1) o.material = o.material[0];
     o.renderOrder = 2; // 도성 색 판(renderOrder 1, 깊이를 안 씀)보다 나중에 — 옅게 할 때 깊이를 끄니 색 판이 성 위를 덮어 성이 통째로 사라졌다
-    box.setFromObject(o); cityParts.push({ m: o, mats: [].concat(o.material), big: !o.isInstancedMesh && Math.max(box.max.x - box.min.x, box.max.z - box.min.z) > cw * 0.12, a: 1 }); if (cityParts.at(-1).big && o.geometry.type === 'ExtrudeGeometry') { o.userData.ground = true; cityDeckTop = box.max.y; } }); } // big: 성전 바닥 단 (사람이 그 위에 선다)
+    box.setFromObject(o); cityParts.push({ m: o, mats: [].concat(o.material), big: !o.isInstancedMesh && Math.max(box.max.x - box.min.x, box.max.z - box.min.z) > cw * 0.12, a: 1 }); if (cityParts.at(-1).big && o.geometry.type === 'ExtrudeGeometry') cityDeckTop = box.max.y; }); } // big: 성전 바닥 단 (사람이 그 위에 선다)
   models.push([ox, oz, ex, ez]); // 모형 둘레는 땅을 고르지 않는다 (level)
   group.traverse(o => { if (o.isInstancedMesh) { if (E !== JLM) clutterInstanced(o, false); } }); // 표지의 대추야자는 무대 자리에서 비킨다 — 도성의 집은 치우지 않고 성과 함께 옅게(다 치우니 맨땅이었다)
 }

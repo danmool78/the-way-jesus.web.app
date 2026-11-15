@@ -301,7 +301,7 @@ if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__st
       const cx = (box.min.x + box.max.x) / 2, cz = (box.min.z + box.max.z) / 2, g = Math.max(groundAt(cx, cz), floorAt(cx, cz, p));
       const r = { name, kind: p.kind, gap: +((box.min.y - g) / (bigNow || 1)).toFixed(3), size: +((box.max.y - box.min.y) / (bigNow || 1)).toFixed(2) };
       // 지형 안에서는 그려진 땅(지형 그물)에 직접 쏘아 본다 — 계산한 땅 높이와 그려진 땅이 어긋나도 잡히게
-      if (inTerrain) { const w = new THREE.Vector3(cx, box.max.y + 5, cz).applyMatrix4(stageGroup.matrixWorld), hit = groundHit(w);
+      if (inTerrain) { const w = new THREE.Vector3(cx, box.max.y + 5, cz).applyMatrix4(stageGroup.matrixWorld), hit = groundHit(w, [p]);
         if (hit !== null) r.hit = +((box.min.y - stageGroup.worldToLocal(new THREE.Vector3(w.x, hit, w.z)).y) / (bigNow || 1)).toFixed(3); }
       out.push(r);
     }
@@ -309,9 +309,10 @@ if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__st
   },
 };
 const gRay = new THREE.Raycaster();
-function groundHit(w) { // 무대 밖의 지형 그물만 (나무·집 묶음·무대는 빼고)
+function groundHit(w, skip) { // 무대 밖의 지형 그물만 (나무·집 묶음·무대는 빼고)
   const T = window.terrain3d; if (!T) return null;
-  const meshes = []; T.scene.traverse(o => { if (o.userData.ground) meshes.push(o); }); // 지형 그물과 도성의 성전 단만 (terrain.js가 표시)
+  const meshes = []; T.scene.traverse(o => { if (o.userData.ground) meshes.push(o); }); // 지형 그물과 도성의 성전 단 (terrain.js가 표시)
+  Object.values(props).forEach(p => { if (p.heightAt && p.obj.visible && !skip?.includes(p)) p.obj.traverse(o => { if (o.isMesh) meshes.push(o); }); }); // 사람이 올라서는 소품(언덕·회당 바닥·배)도
   gRay.set(w, new THREE.Vector3(0, -1, 0)); const sides = meshes.map(m => m.material.side); meshes.forEach(m => { m.material.side = THREE.DoubleSide; }); // 성전 단 윗면이 아래를 향해 그려져 있어도 맞게
   const h = gRay.intersectObjects(meshes, false)[0]; meshes.forEach((m, i) => { m.material.side = sides[i]; });
   return h ? h.point.y : null;
@@ -505,7 +506,7 @@ function leaveTerrain() {
   inTerrain = false;
   scene.add(stageGroup); holder.removeFromParent();
   stageGroup.traverse(o => { if (o.isPointLight && o.userData.d0 !== undefined) { o.distance = o.userData.d0; o.intensity = o.userData.raw; delete o.userData.d0; delete o.userData.raw; } });
-  Object.values(props).forEach(p => { p.lift.position.set(0, 0, 0); if (p.fade !== 'scale') p.obj.scale.copy(p.base); });
+  Object.values(props).forEach(p => { p.lift.position.set(0, 0, 0); if (p.fade !== 'scale') p.obj.scale.copy(p.base); if (p.skirt) p.skirt.visible = false; });
   Object.values(actors).forEach(a => { a.big = 1; });
 }
 // 지형 위 (무대 좌표) 지점의 땅 높이 — 무대 바닥 중심과의 차이를 무대 단위로
@@ -529,7 +530,7 @@ const floorAt = (x, z, self) => Math.max(-Infinity, ...Object.values(props).filt
 // 바닥이 평평한 건물: 가운데 땅 높이에 앉히면 비탈 위쪽이 땅에 묻힌다(골짜기 바닥의 실로암 못) — 바닥 네 귀퉁이 가운데 가장 높은 땅에 앉힌다
 const FLAT = new Set(['pool', 'house', 'well', 'synagogue', 'temple', 'gate', 'walls', 'cliffshrine']);
 // 땅에 까는 얇은 판(모래·풀밭): 가운데 땅 높이에 두면 비탈 아래쪽에 선 사람의 다리를 판이 덮어 발만 보였다(가드 성문, 2026-11) — 가장 낮은 귀퉁이에 깐다(높은 쪽은 지형 밑으로 숨는다)
-const COVER = new Set(['sand', 'grass', 'field', 'flowers']);
+const COVER = new Set(['sand', 'grass', 'field', 'flowers', 'rocks']); // 바위도 낮은 쪽에 — 비탈 위쪽이 조금 묻히는 편이 떠 있는 것보다 낫다
 const FIXED = new Set(['water', 'grass', 'hill', 'tomb', 'temple', 'house', 'rocks', 'figtree', 'synagogue', 'well', 'pool', 'flowers', 'gate', 'field', 'cliffshrine', 'palm', 'walls', 'olive', 'star', 'host', 'rain']);
 // '@at' 명령: 3D 지형에서만 무대 바닥을 다른 실제 지점으로 옮긴다 — 무대 (x, z) 자리가 그 위경도에 오도록.
 // 나사렛 회당에서 낭떠러지로 끌고 가는 대목처럼, 이야기가 근처의 실제 지형으로 옮겨 갈 때. 2D 무대는 그대로 둔다
@@ -610,6 +611,12 @@ function frame() {
       p.lift.position.x = stay ? (home.x - base.x) / base.k : 0; p.lift.position.z = stay ? (home.z - base.z) / base.k : 0;
       const ox = p.obj.position.x + p.lift.position.x, oz = p.obj.position.z + p.lift.position.z, f = p.foot;
       const corners = () => [groundAt(ox, oz), groundAt(ox + f[0], oz + f[2]), groundAt(ox + f[1], oz + f[2]), groundAt(ox + f[0], oz + f[3]), groundAt(ox + f[1], oz + f[3])];
+      if (FLAT.has(p.kind)) { // 비탈에서는 내리막 쪽 바닥 밑이 비어 떠 보였다(실로암 못·여관) — 가장 낮은 귀퉁이까지 돌 기단을 받친다
+        const c = corners(), drop = Math.max(...c) - Math.min(...c);
+        if (!p.skirt) { p.skirt = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshStandardMaterial({ color: '#b9a888', roughness: 0.95 })); p.skirt.receiveShadow = true; p.lift.add(p.skirt); }
+        p.skirt.visible = drop > 0.01 && p.obj.visible; p.skirt.scale.set((f[1] - f[0]) * 0.98, drop + 0.02, (f[3] - f[2]) * 0.98);
+        p.skirt.position.set(p.obj.position.x + (f[0] + f[1]) / 2, -drop / 2, p.obj.position.z + (f[2] + f[3]) / 2);
+      }
       p.lift.position.y = FLAT.has(p.kind) || p.floor ? Math.max(...corners())
         : COVER.has(p.kind) ? Math.min(...corners())
         : Math.max(groundAt(ox, oz), floorAt(ox, oz, p));
