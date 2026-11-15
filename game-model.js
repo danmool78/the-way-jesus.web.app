@@ -206,6 +206,8 @@ function seamless(clip) {
   });
   return new THREE.AnimationClip(clip.name, dur, tracks);
 }
+const ARM_W = [0.4, 0.3]; // 위팔, 팔뚝을 기본 자세 쪽으로 끄는 비율
+const armW = name => !name.endsWith('.quaternion') ? 0 : /Hand(Thumb|Index|Middle|Ring|Pinky)\d\.|Hand\./.test(name) ? 1 : /ForeArm\./.test(name) ? ARM_W[1] : /Arm\./.test(name) ? ARM_W[0] : 0;
 const STAND = /(Hips|Leg)\.quaternion$/; // UpLeg도 Leg로 끝난다
 // 허리는 기본 자세로 되돌리지 않는다 — 모델마다 기본 자세의 허리가 idle과 20~28° 달라(안드레·사마리아 여인·십보라·삭개오)
 // 되돌리면 팔이 앞으로 들려 이상했다(사용자 2026-11). idle의 허리는 그대로 두고, 첫 자세에서 몸통(허리→목)이
@@ -258,6 +260,13 @@ export function calmClips(gltf) {
     if (/Hips\.position$/.test(k.name) && restP[n]) return new THREE.VectorKeyframeTrack(k.name, [0], restP[n]);
     return k;
   }))));
+  // 팔·손은 A자 기본 자세 쪽으로 조금 (사용자 2026-11): 보내 준 A자 모델은 팔·손이 멀쩡한데, Mixamo idle은 팔을 몸에 붙여 내려
+  // 소매·겉옷 속으로 팔이 묻히고 손목이 꺾여 손이 기형처럼 보였다. 서 있는 동작만 — 위팔·팔뚝은 기본 자세 쪽으로 ARM_W만큼, 손·손가락은 기본 자세 그대로
+  out = out.map(c => c.name !== 'idle' ? c : new THREE.AnimationClip(c.name, c.duration, c.tracks.map(k => {
+    const n = k.name.split('.')[0], w = armW(k.name); if (!w || !rest[n]) return k;
+    const V = Array.from(k.values); for (let i = 0; i < V.length; i += 4) THREE.Quaternion.slerpFlat(V, i, V, i, rest[n], 0, w);
+    return new THREE.QuaternionKeyframeTrack(k.name, Array.from(k.times), V);
+  })));
   calm.set(gltf, out); return out;
 }
 
