@@ -512,7 +512,7 @@ const appLink = e => `${JID === 'jesus' ? 'app.html' : `app.html?j=${JID}`}#${e.
 function wiseCut(s, i) {
   if (!G.fx.cut || i < 0) return;
   const b = s.querySelectorAll('.opts button')[i]; if (!b) return;
-  b.disabled = true; b.classList.add('cut'); b.insertAdjacentHTML('beforeend', `<em>📜 ${esc(josa(myChar().name, '이', '가'))} 지웠어요</em>`);
+  b.disabled = true; b.classList.add('cut'); b.innerHTML = `<s>${b.innerHTML}</s>`; b.insertAdjacentHTML('beforeend', `<em>📜 ${esc(josa(myChar().name, '이', '가'))} 지웠어요</em>`);
 }
 function quiz() {
   const e = G.events[G.idx], q = e.quiz;

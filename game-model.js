@@ -233,12 +233,13 @@ export class ModelActor {
     this.p.root.add(this.pillow); this.noPillow = !!o.noPillow; // 길가에 쓰러진 사람은 베개 없이
     this.hands = { R: bone(body, 'RightHand'), L: bone(body, 'LeftHand'), top: bone(body, 'HeadTop_End') };
     // 지팡이·창을 쥐는 손 (사용자 2026-11): 손목 자리에 세우면 늘어진 팔뚝을 꿰뚫었고, 손 앞에 세우면 들고 있지 않아 보였다.
-    // 팔꿈치를 직각으로 들어 팔뚝을 앞으로 눕히고, 반쯤 쥔 손 가운데로 막대가 지나가게 한다. 손가락은 건드리지 않는다
-    // (오므리게 꺾었더니 기형처럼 보였다 — 모델의 손 모양 그대로). Mixamo 팔뚝은 제 X축으로 굽는다
+    // 팔꿈치를 직각으로 들어 팔뚝을 앞으로 눕히고, 손가락을 C자로 둥글게 굽혀 엄지와 만든 고리 속으로 막대가 지나가게 한다.
+    // 손가락을 한 번에 크게 꺾으면 기형처럼 보였다 — 세 마디를 0.6씩만. Mixamo 팔뚝·손가락은 제 X축으로 굽는다
     this.grip = {};
     for (const [k, S] of [['R', 'Right'], ['L', 'Left']]) {
-      const g = { fore: bone(body, S + 'ForeArm'), pts: ['HandMiddle2', 'HandMiddle4', 'HandThumb4'].map(n => bone(body, S + n)), on: false };
-      if (g.fore && g.pts.every(Boolean)) { g.base = g.fore.quaternion.clone(); this.grip[k] = g; } // 움직이지 않는 뼈는 동작 기록을 덜어 두어(glbslim) 믹서가 되돌려 주지 않으니 처음 자세를 기억해 둔다
+      const g = { fore: bone(body, S + 'ForeArm'), pts: ['HandMiddle2', 'HandMiddle4', 'HandThumb4'].map(n => bone(body, S + n)), on: false,
+        fingers: ['Middle1', 'Middle2', 'Middle3', 'Pinky1', 'Pinky2', 'Pinky3'].map(n => bone(body, S + 'Hand' + n)).filter(Boolean) };
+      if (g.fore && g.pts.every(Boolean)) { g.bones = [g.fore, ...g.fingers]; g.base = g.bones.map(b => b.quaternion.clone()); this.grip[k] = g; } // 움직이지 않는 뼈는 동작 기록을 덜어 두어(glbslim) 믹서가 되돌려 주지 않으니 처음 자세를 기억해 둔다
     }
     this.gear = [];
     this.play('idle', 0);
@@ -269,10 +270,13 @@ export class ModelActor {
     this.face = damp(this.face, this.face + wrapA(want - this.face), 6, dt);
     this.play(moving ? 'walk' : POSE[this.pose] || 'idle');
     if (this.acts.walk) this.acts.walk.timeScale = this.walkRate || 1; // 빨리 걷는 이는 발도 빨리 (발이 땅에서 미끄러져 보이지 않게)
-    for (const g of Object.values(this.grip)) if (g.on) g.fore.quaternion.copy(g.base);
+    for (const g of Object.values(this.grip)) if (g.on) g.bones.forEach((b, i) => b.quaternion.copy(g.base[i]));
     this.mixer.update(dt);
     // 동작 위에 팔꿈치 굽힘을 덧입힌다 (걸을 때는 덜 — 걷기가 이미 팔꿈치를 굽힌다)
-    if (!(this.pose === 'sleep' && !moving)) for (const g of Object.values(this.grip)) if (g.on) g.fore.quaternion.multiply(QB.setFromAxisAngle(AX, g.k ?? (moving ? 1.0 : 1.35)));
+    if (!(this.pose === 'sleep' && !moving)) for (const g of Object.values(this.grip)) if (g.on) {
+      g.fore.quaternion.multiply(QB.setFromAxisAngle(AX, g.k ?? (moving ? 1.0 : 1.35)));
+      QB.setFromAxisAngle(AX, 0.6); for (const f of g.fingers) f.quaternion.multiply(QB); // 손가락은 마디마다 조금씩 둥글게 — 엄지와 C자 고리를 이뤄 막대를 감싼다 (사용자가 보여 준 손 모양)
+    }
     this.show = damp(this.show, this.showT, 4, dt);
     const r = this.p.root;
     r.position.set(this.pos.x, this.ground, this.pos.y); r.rotation.y = this.face;
