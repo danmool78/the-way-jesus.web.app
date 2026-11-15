@@ -15,6 +15,7 @@ const CLIP = { idle: 'idle', listen: 'idle', speak: 'talk', sleep: 'sleep' };
 const KNEEL = new Set(['kneel', 'mourn', 'cower']); // 땅에 앉기(sit-ground)는 무릎 꿇기가 아니다 — 앉아 가르치시는 예수님이 무릎 꿇고 기도하는 다리를 빌려 시도 때도 없이 꿇으셨다(사용자 2026-11)
 // 걸터앉기: 넓적다리를 앞으로, 정강이는 아래로 (회당에서 앉아 말씀을 읽으심 — 무릎 꿇고 기도하는 자세가 되었다, 사용자 2026-11)
 // 걸터앉기는 앉을 자리가 있을 때만(나귀·높이를 정한 사람·'seat') — 자리 없이 다리를 뻗으니 허공에 떠 앉았다(사용자 2026-11). 그 밖의 '앉기'는 땅에 발뒤꿈치를 깔고
+const WING = { scale: 1.0, y: -0.28, back: 0.12, turn: 0 }; // 날개를 붙이는 자리 (몸 모델 단위, 캡처로 맞춤)
 const MARCH = new Set(['soldier', 'guard', 'centurion']); // 발을 맞춰 걷는 사람들
 const HOLD = new Set(['carry', 'carry-pole', 'offer', 'hold']); // 두 팔로 안거나 받쳐 드는 자세
 const SEAT = new Set(['ride', 'seat']), SITS = new Set(['sit', 'sit-speak', 'sit-ground'])
@@ -72,7 +73,7 @@ export class StageModel {
   constructor(gltf, type, x = 0, z = 0, face = 0, o = {}) {
     this.doll = new Actor(type, x, z, face, o); // 보이지 않는 길잡이 (장면에 넣지 않는다)
     this.type = type;
-    this.still = !!o.still; // 아무 동작 없이 모델을 뜬 A자 자세 그대로 — 걷지도 않고 미끄러지듯 옮겨 간다 (천사: 날개와 팔이 한 그물이라 팔을 돌리면 꼬였다, 사용자 2026-11)
+    this.still = !!o.still; // 아무 동작 없이 모델을 뜬 자세 그대로
     const body = clone(gltf.scene);
     body.updateMatrixWorld(true);
     const top = bone(body, 'HeadTop_End'), h = top ? top.getWorldPosition(v1).y : 1.7;
@@ -101,6 +102,8 @@ export class StageModel {
     this.legs = [['Left'], ['Right']].map(([s]) => ({ up: bone(body, s + 'UpLeg'), lo: bone(body, s + 'Leg'), foot: bone(body, s + 'Foot'), toe: bone(body, s + 'ToeBase'), tip: bone(body, s + 'Toe_End') }));
     const hips = bone(body, 'Hips'); this.hipH = hips ? hips.getWorldPosition(v1).y * body.scale.x / (body.scale.x || 1) : 0.5; this.body = body; this.legW = 0;
     this.headB = bone(body, 'Head'); this.neckB = bone(body, 'Neck'); this.spineB = bone(body, 'Spine1') || bone(body, 'Spine'); this.topB = bone(body, 'HeadTop_End');
+    // 날개(천사): 뼈 없는 따로 뜬 모델을 등(Spine2) 자리에 매 화면 붙인다 — 몸통만 따라가고 팔과는 상관없다
+    if (o.wings) { this.wings = clone(o.wings.scene); this.wings.traverse(m => { if (m.isMesh) { m.frustumCulled = false; m.material = brighten(m.material).clone(); this.mats.push(m.material); } }); this.p.root.add(this.wings); this.wingB = bone(body, 'Spine2') || this.spineB; }
     this.play('idle', 0);
     this.takeProps();
   }
@@ -172,7 +175,15 @@ export class StageModel {
       else if (kind === 'glow') o.position.set(0, it.p0.y + 0.1, it.p0.z);
     }
   }
-  update(time, dt) { this.posture(time, dt); this.toGround(); this.placeProps(); this.placePillow(); }
+  update(time, dt) { this.posture(time, dt); this.toGround(); this.placeProps(); this.placePillow(); this.placeWings(); }
+  placeWings() {
+    if (!this.wings || !this.wingB) return;
+    const r = this.p.root; r.updateMatrixWorld(true);
+    const k = this.body.scale.x, v = r.worldToLocal(this.wingB.getWorldPosition(v1));
+    this.wings.scale.setScalar(k * WING.scale); // 날개 모델은 미터 단위(높이 0.95) — 몸 모델(1.7m)과 같은 배율로
+    this.wings.position.set(v.x, v.y + k * WING.y, v.z - k * WING.back); // 등뼈에서 조금 아래·뒤 (견갑골)
+    this.wings.rotation.set(0, WING.turn, 0);
+  }
   placePillow() {
     const on = this.doll.pose === 'sleep' && !!this.acts.sleep && this.doll.goal.distanceTo(this.doll.pos) <= 0.02 && this.headB; this.pillow.visible = !!on;
     if (!on) return;

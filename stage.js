@@ -232,7 +232,7 @@ function setScene(ev) {
     const named = new Set(plan.filter(Boolean).map(m => m[0]));
     const pool = { men: EXTRA.men.filter(([n]) => !named.has(n) || n.startsWith('pilgrim')), women: EXTRA.women.filter(([n]) => !named.has(n) || n.startsWith('pilgrim')) };
     const CROWDM = [...pool.men, ...pool.women].map(([n]) => n);
-    const names = USE_MODELS ? [...new Set([...named, ...(crowd ? CROWDM : []), ...(named.size ? ['pilgrim-man', 'jesus'] : [])])] : []; // 동작을 빌려 줄 모델도 함께 — 늦게 받으면 요셉이 잠자기 동작 없이 통나무처럼 누웠다
+    const names = USE_MODELS ? [...new Set([...named, ...(crowd ? CROWDM : []), ...(named.size ? ['pilgrim-man', 'jesus'] : []), ...(named.has('angel') ? ['wings'] : [])])] : []; // 동작을 빌려 줄 모델도 함께 — 늦게 받으면 요셉이 잠자기 동작 없이 통나무처럼 누웠다
     setCrowd(USE_MODELS && crowd && CROWDM.every(n => ready[n]) ? { men: pool.men.map(dress), women: pool.women.map(dress) } : null);
     const ev0 = ev, wait = names.length ? want(names) : null;
     wait?.then(() => { if (curEv === ev0 && (atStart || new URLSearchParams(location.search).has('beat'))) setScene(ev0); });
@@ -250,8 +250,9 @@ function setScene(ev) {
   Object.entries(script.cast).forEach(([name, [type, x, z, face, o = {}]], i) => {
     const m = plan[i];
     const g = m && ready[m[0]] && dress(m);
-    const angel = type === 'angel' || type === 'whiteman'; // 천사는 빌린 동작 없이 A자 그대로, 걸을 때만 제 걷기
-    const a = g ? new StageModel(g, type, x, z, face, { solemn: script.solemn, borrow: angel ? {} : BORROW(), still: angel, ...o }) : new Actor(type, x, z, face, { solemn: script.solemn, ...o });
+    // 천사는 날개 없는 몸 모델에 따로 뜬 날개를 등에 붙인다 — 날개와 팔이 한 그물이던 모델은 팔을 움직이면 날개가 꼬였다(사용자 2026-11)
+    const angel = type === 'angel' || type === 'whiteman';
+    const a = g ? new StageModel(g, type, x, z, face, { solemn: script.solemn, borrow: BORROW(), wings: angel && ready.wings, ...o }) : new Actor(type, x, z, face, { solemn: script.solemn, ...o });
     a.realWalk = !!script.street; // 거리 무대: 걷고 돌아보는 방향을 실제대로 (people.js)
     actors[name] = a;
     (o.board ? props[o.board].deck : stageGroup).add(a.p.root);
