@@ -68,6 +68,24 @@ button{font:inherit;color:inherit;cursor:pointer}
 .acts .row2{display:flex;gap:8px;margin-top:8px}.acts .row2 .go{margin:0;flex:1;font-size:13.5px;padding:10px;box-shadow:none}
 .acts .back{margin-top:8px}
 .field{margin:0 0 14px}
+/* 인물 고르기: 얼굴 칸, 아직 못 만난 사람은 흐리게 자물쇠 */
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:7px}
+.cgrid button{position:relative;padding:0;border-radius:12px;border:1px solid var(--line);background:#1d1813;overflow:hidden}
+.cgrid img{display:block;width:100%;height:auto;aspect-ratio:1}
+.cgrid span{position:absolute;left:0;right:0;bottom:0;padding:9px 2px 3px;font-size:10.5px;line-height:1.2;color:#fff3d6;background:linear-gradient(transparent,rgba(10,7,4,.9));white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cgrid button.on{border-color:var(--gold2);box-shadow:0 0 0 2px var(--gold2)}
+.cgrid button.lock img{filter:grayscale(1) brightness(.35)}
+.cgrid button.lock::after{content:'🔒';position:absolute;top:4px;right:5px;font-size:12px;opacity:.85}
+.cinfo{margin-top:10px;padding:11px 13px;border-radius:12px;background:rgba(0,0,0,.25);border:1px solid var(--line)}
+.cinfo>b{display:block;font:700 15px var(--serif);color:var(--gold2);margin-bottom:6px}
+.cinfo .bars{display:grid;grid-template-columns:1fr 1fr;gap:4px 14px}
+.cinfo .bars div{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.cinfo .bars small{font-size:11.5px;color:var(--muted)}
+.cinfo .bars i{display:flex;gap:2px}
+.cinfo .bars u{display:block;width:12px;height:6px;border-radius:2px;background:var(--gold2)}
+.cinfo .bars u.o{background:rgba(255,255,255,.12)}
+.cinfo p{margin:8px 0 0;font-size:12.5px;line-height:1.55;color:var(--ink);word-break:keep-all}
+.cinfo p.lockhint{color:var(--gold);font-size:12px}
 .field>label,.field>b{display:block;margin:0 0 6px;font-size:12px;font-weight:600;letter-spacing:.06em;color:var(--muted)}
 #name{width:100%;padding:11px 13px;border-radius:10px;border:1px solid var(--line);background:#0f0c09;color:var(--ink);font:500 16px var(--sans)}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
@@ -275,8 +293,9 @@ body.meeting #stick,body.meeting #arrow{opacity:0!important;pointer-events:none}
       <div class="jinfo" id="jinfo"></div>
     </div>
     <div class="tab hidden" id="tabMe">
+      <div class="field"><b>인물</b><div class="cgrid" id="cpick"></div><div class="cinfo" id="cinfo"></div></div>
       <div class="field"><label for="name">순례자 이름</label><input id="name" maxlength="10" autocomplete="off" placeholder="이름을 넣어 주세요"></div>
-      <div class="field"><b>모습</b><div class="chips" data-k="sex"></div></div>
+      <div class="field" hidden><b>모습</b><div class="chips" data-k="sex"></div></div>
       <div class="field"><b>얼굴빛</b><div class="sw" data-k="skin"></div></div>
       <div class="field"><b>머리카락</b><div class="sw" data-k="hair"></div></div>
       <div class="field"><b>수염</b><div class="chips" data-k="beard"></div></div>

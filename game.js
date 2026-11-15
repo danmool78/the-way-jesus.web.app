@@ -11,6 +11,7 @@ import { createAudio } from './game-audio.js';
 import { TREASURES, RARITY, hideTreasures, treasureCard, flipCard } from './game-treasure.js';
 import { model, tinted, ModelActor } from './game-model.js';
 import { buildNav } from './game-nav.js';
+import { CHARS, STATS, effects, unlockedBy } from './game-chars.js';
 import { CAST, FOLLOW, SIZE, LEADS, GEAR, BOAT, SETS } from './game-cast.js';
 
 const $ = s => document.querySelector(s);
@@ -117,9 +118,12 @@ const floor = new THREE.Mesh(new THREE.CircleGeometry(0.62, 48), new THREE.MeshB
 floor.rotation.x = -Math.PI / 2; pv.scene.add(floor);
 // 순례자: 3D 모델(형제·자매)이 있으면 그것을 고른 옷 색으로 칠해 쓰고, 없으면 예전 인형 (사용자 2026-11)
 const pName = () => me.sex === 'f' ? 'pilgrim-woman' : 'pilgrim-man';
+// 고른 인물 (game-chars.js) — 순례자 형제·자매만 옷 색을 칠한다. 능력치는 길을 떠날 때 G.fx로
+const myChar = () => CHARS.find(c => c.id === me.char) || CHARS.find(c => c.id === pName());
+const isPilgrim = () => myChar().id.startsWith('pilgrim');
 async function pilgrim(x = 0, z = 0) {
-  const g = await model(pName());
-  if (g) return new ModelActor(tinted(g, pName(), me.robe), x, z).hold(GEAR[pName()]);
+  const id = myChar().id, g = await model(id);
+  if (g) return new ModelActor(isPilgrim() ? tinted(g, id, me.robe) : g, x, z).hold(GEAR[id]);
   playerType(); return new Actor('player', x, z, 0, { gaze: false });
 }
 let pvTok = 0;
@@ -172,6 +176,20 @@ function setupUI() {
   // 탭: 여정 / 꾸미기
   document.querySelector('#setup .tabs').onclick = e => { const b = e.target.closest('button'); if (!b) return; document.querySelectorAll('#setup .tabs button').forEach(x => x.classList.toggle('on', x === b)); $('#tabJ').classList.toggle('hidden', b.dataset.tab !== 'j'); $('#tabMe').classList.toggle('hidden', b.dataset.tab !== 'me'); };
   $('#plate').textContent = me.name || '순례자';
+  // 인물 고르기 (game-chars.js) — 그 사람을 만난 장면의 카드를 얻으면 풀린다
+  const info = (c, lockHint) => `<b>${esc(c.name)}${lockHint ? ' 🔒' : ''}</b><div class="bars">${STATS.map((n, i) => `<div><small>${n}</small><i>${'<u></u>'.repeat(c.st[i])}${'<u class="o"></u>'.repeat(5 - c.st[i])}</i></div>`).join('')}</div><p>${esc(c.sp)}</p>${lockHint ? `<p class="lockhint">${lockHint}</p>` : ''}`;
+  const drawChars = () => {
+    $('#cpick').innerHTML = CHARS.map(c => { const u = unlockedBy(c, CAST, cardsOf);
+      return `<button data-c="${c.id}" class="${u.ok ? '' : 'lock'} ${myChar().id === c.id ? 'on' : ''}" title="${esc(c.name)}"><img src="assets/game-chars/${c.id}.webp" alt="" width="64" height="64"><span>${esc(c.name.replace('순례자 ', ''))}</span></button>`; }).join('');
+    const c = myChar(); $('#cinfo').innerHTML = info(c);
+    $('#setup [data-k=robe]').closest('.field').hidden = !isPilgrim();
+    $('#rank').textContent = `${c.name} · ${RANKS.filter(([n]) => sum('cards') >= n).pop()[1]}`;
+  };
+  // 아직 못 만난 사람: 고르지는 않고, 능력치와 어디서 만나면 풀리는지만 보여 준다
+  $('#cpick').onclick = e => { const b = e.target.closest('button'); if (!b) return; const c = CHARS.find(x => x.id === b.dataset.c), u = unlockedBy(c, CAST, cardsOf);
+    if (!u.ok) { const J = JOURNEYS[u.hint?.j], ev = u.hint && `${u.hint.sc}`; $('#cinfo').innerHTML = info(c, J ? `${esc(J.name)}에서 ${esc(josa(c.name, '을', '를'))} 만나는 장면의 말씀 카드를 얻으면 함께 걸을 수 있어요` : '여정에서 만나면 함께 걸을 수 있어요'); $('#cinfo').scrollIntoView({ block: 'nearest', behavior: 'smooth' }); return; }
+    me.char = c.id; if (c.id.startsWith('pilgrim')) me.sex = c.id === 'pilgrim-woman' ? 'f' : 'm'; store.set('theway-game-me', me); drawChars(); rebuildPreview(); };
+  drawChars();
   $('#jpick').onclick = e => { const b = e.target.closest('button'); if (!b) return; JID = b.dataset.j; markJ(); };
   markJ();
   refresh();
@@ -190,7 +208,7 @@ const G = {
   zoom: 46, walked: 0, total: 0, legStart: null, legWalked: 0, water: 3, stars: [],
   lostT: 0, prevD: 0, slowT: 0, coolT: 0, seaT: 0, legT: 0, busy: true, speed: 9, timeT: 0, timeMax: 0, meetT: 0, missed: [], askT: 0, asks: 0,
 };
-G.camLook = new THREE.Vector3();
+G.camLook = new THREE.Vector3(); G.fx = effects(null); G.waterMax = 3;
 // 그 자리의 땅 높이 (입체 땅, game-world.js) — 이름표·발자국을 땅 위에
 const PACE = 3.2; // 순례자의 걸음 (km/초): 나사렛→베들레헴 140km는 40초 남짓, 애굽 길은 몇 분
 // 사람이 설 높이: 땅 그대로 — 0 밑을 잘라 쓰니 해수면 아래인 갈릴리 물가·요단 골짜기·여리고에서 사람이 땅 위에 떠 있었다.
@@ -299,7 +317,7 @@ function spawnPatrols() {
 function updateEvents(dt, me0) {
   const px = me0.pos.x, pz = me0.pos.y, [gx, gz] = goalXZ();
   // 우물
-  for (const [wx, wz] of G.world?.wells || []) if (Math.hypot(wx - px, wz - pz) < 4 && G.water < 3 && !(G.wellT > 0)) { G.water = 3; drawWater(); G.wellT = 12; snd.play('well'); toast('우물에서 물을 길었어요<small>물병 셋이 다시 찼습니다</small>', true); }
+  for (const [wx, wz] of G.world?.wells || []) if (Math.hypot(wx - px, wz - pz) < 4 && G.water < G.waterMax && !(G.wellT > 0)) { G.water = G.waterMax; drawWater(); G.wellT = 12; snd.play('well'); toast('우물에서 물을 길었어요<small>물병이 다시 가득 찼습니다</small>', true); }
   G.wellT -= dt;
   // 뱀
   const S = G.serpent;
@@ -333,7 +351,7 @@ function updateEvents(dt, me0) {
     P.s.target = null; P.s.moveTo(T[0] + P.o[0], T[1] + P.o[1]);
     if (Math.hypot(P.s.pos.x - T[0] - P.o[0], P.s.pos.y - T[1] - P.o[1]) < 0.4) P.to = 1 - P.to;
     if (d < 2.4 && !(G.checkT > -3)) {
-      G.checkT = 2.8; G.checkBy = P.A; snd.play('halt'); toast(roman() ? '로마 병정에게 붙잡혔어요!<small>검문을 받느라 잠시 멈춥니다 · 병정을 피해 다니세요</small>' : '성을 지키는 병사에게 붙잡혔어요!<small>검문을 받느라 잠시 멈춥니다 · 병사를 피해 다니세요</small>', false, 2800);
+      G.checkT = G.fx.check; G.checkBy = P.A; snd.play('halt'); toast(roman() ? '로마 병정에게 붙잡혔어요!<small>검문을 받느라 잠시 멈춥니다 · 병정을 피해 다니세요</small>' : '성을 지키는 병사에게 붙잡혔어요!<small>검문을 받느라 잠시 멈춥니다 · 병사를 피해 다니세요</small>', false, 2800);
       for (const Q of G.patrols) if (Q.A === P.A) { Q.s.goal.copy(Q.s.pos); Q.s.target = G.me; } // 짝도 함께 멈춘다
       G.me.target = P.s; // 나도 병정을 돌아본다
     }
@@ -434,7 +452,7 @@ addEventListener('wheel', e => { if (!G.me || !$('#setup').classList.contains('h
 $('#ask').onclick = () => {
   if (G.busy || !G.me) return;
   if (!G.named) { G.named = true; G.asks += 0.6; missionText(); toast(`${esc(placeOf(G.events[G.idx]).name)}(으)로 가세요<small>지도에서 이름을 찾아보세요 · 이 장면 카드 점수가 ${ASK * 0.6}점 줄어요</small>`, true, 3000); return; }
-  G.asks++; G.askT = 5; toast(`이쪽으로 가세요<small>이 장면 카드 점수가 ${ASK}점 줄어요</small>`, true, 2200);
+  const k = G.fx.fx === 'ask' ? 0.5 : 1; G.asks += k; G.askT = 5; toast(`이쪽으로 가세요<small>이 장면 카드 점수가 ${ASK * k}점 줄어요</small>`, true, 2200);
 };
 // 나가기: 언제든 (진행은 마지막으로 만난 장면까지 저장되어 있어 '이어 걷기'로 돌아온다 — 사용자 2026-11)
 $('#quit').onclick = () => {
@@ -453,7 +471,7 @@ function toast(html, good = false, ms = 2600) {
   const t = $('#toast'); t.innerHTML = html; t.classList.toggle('good', good); t.classList.add('on');
   clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), ms);
 }
-function drawWater() { $('#water').innerHTML = [0, 1, 2].map(i => `<i class="${i < G.water ? '' : 'empty'}"></i>`).join(''); }
+function drawWater() { $('#water').innerHTML = [...Array(G.waterMax || 3).keys()].map(i => `<i class="${i < G.water ? '' : 'empty'}"></i>`).join(''); }
 const LOST = ['모래바람이 불어와 길을 잃었어요!', '광야에서 방향을 잃었어요!', '엉뚱한 길로 너무 멀리 왔어요!'];
 function penalty(kind) {
   if (G.coolT > 0 || G.busy) return;
@@ -461,12 +479,14 @@ function penalty(kind) {
   G.water = Math.max(0, G.water - 1); drawWater(); snd.play(kind === 'lost' ? 'wind' : 'lose');
   document.body.classList.remove('shake'); void document.body.offsetWidth; document.body.classList.add('shake');
   if (kind === 'lost') {
-    G.slowT = 4; G.hintT = 3.5; G.hintCool = 20; $('#dust').classList.add('on'); // 모래바람 뒤에는 바른 쪽을 잠깐 보여 준다 setTimeout(() => $('#dust').classList.remove('on'), 3200);
+    G.slowT = 4; G.hintT = 3.5; G.hintCool = G.fx.hintCool; $('#dust').classList.add('on'); setTimeout(() => $('#dust').classList.remove('on'), 3200); // 모래바람 뒤에는 바른 쪽을 잠깐 보여 준다
     toast(`${LOST[Math.floor(Math.random() * LOST.length)]}<small>물병 하나를 잃고 잠시 느려집니다 · 단서를 다시 읽고 방향을 잡으세요</small>`);
   } else {
     const msg = kind === 'serpent' ? '뱀에게 물렸어요! 유혹을 따라가면 안 돼요' : kind === 'dead' ? '사해에 빠질 뻔했어요! 소금물이에요' : kind === 'galilee' ? '갈릴리 바다는 걸어서 못 건너요' : '바다는 걸어서 못 건너요';
     toast(`${msg}<small>물병 하나를 잃었습니다 · 물가를 따라 돌아가세요</small>`);
   }
+  // 나사로: 물병이 처음 바닥나면 한 병이 다시 찬다
+  if (G.water === 0 && G.fx.fx === 'revive' && !G.revived) { G.revived = true; G.water = 1; drawWater(); setTimeout(() => toast('나사로야, 나오라 — 물병 하나가 다시 찼어요', true, 2600), 1600); return; }
   if (G.water === 0) setTimeout(quiz, 1400);
 }
 
@@ -489,7 +509,7 @@ const firstSentences = (t, n = 2) => (t.match(/[^.!?。]+[.!?。]+["”’]?/g) 
 const appLink = e => `${JID === 'jesus' ? 'app.html' : `app.html?j=${JID}`}#${e.id}`;
 function quiz() {
   const e = G.events[G.idx], q = e.quiz;
-  if (!q) { G.water = 3; drawWater(); return; }
+  if (!q) { G.water = G.waterMax; drawWater(); return; }
   const s = sheet(`<div class="body quiz"><small>물병이 다 떨어졌어요 · 말씀으로 다시 채우기</small><h2>${esc(q.q)}</h2><div class="opts">${q.options.map((o, i) => `<button data-i="${i}">${esc(o)}</button>`).join('')}</div><div class="explain"></div></div>`);
   s.querySelector('.opts').onclick = ev => {
     const b = ev.target.closest('button'); if (!b || s.querySelector('.right')) return;
@@ -497,8 +517,8 @@ function quiz() {
     s.querySelectorAll('.opts button').forEach((x, i) => { if (i === q.answer) x.classList.add('right'); else if (x === b) x.classList.add('wrong'); });
     s.querySelector('.explain').innerHTML = `${esc(q.explain || '')}<button class="go">${ok ? '물병을 채우고 계속 걷기' : '이번 길의 처음으로 돌아가기'}</button>`;
     s.querySelector('.explain .go').onclick = () => {
-      G.water = 3; drawWater(); closeSheet();
-      if (ok) toast('맞았어요! 물병 셋이 다시 찼습니다', true);
+      G.water = G.waterMax; drawWater(); closeSheet();
+      if (ok) toast('맞았어요! 물병이 다시 가득 찼습니다', true);
       else { const [x, z] = G.legStart; G.me.pos.set(x, z); G.me.goal.set(x, z); G.legWalked = 0; toast('이번 길의 처음에서 다시 출발합니다', true); }
     };
   };
@@ -671,11 +691,11 @@ function placeTreasures() {
 function updateTreasures(px, pz, t) {
   for (const h of G.hide || []) {
     const sp = G.tfx?.[h.id]; if (!sp) continue;
-    const d = Math.hypot(h.x - px, h.z - pz), vis = d < 2.5;
+    const d = Math.hypot(h.x - px, h.z - pz), vis = d < 2.5 * (G.fx?.eye || 1);
     sp.visible = vis;
     if (vis) { const k = 0.75 + Math.sin(t * 5 + h.x) * 0.25; sp.position.set(h.x, GH(h.x, h.z) + 0.35 + Math.sin(t * 2) * 0.06, h.z); sp.scale.setScalar(0.9 * k); sp.material.opacity = Math.min(1, (2.5 - d) / 0.8) * (0.6 + 0.4 * k); }
     if (vis && !h.near) { h.near = true; snd.play('twinkle'); }
-    if (d < 0.7 && !G.busy) { foundTreasure(h); return; }
+    if (d < 0.7 * (G.fx?.eye || 1) && !G.busy) { foundTreasure(h); return; }
   }
 }
 function foundTreasure(h) {
@@ -756,7 +776,7 @@ const SPOTS = [[-0.55, 0.65], [1.6, 0.55], [0.15, -0.75], [1.3, -0.7], [-1.1, -0
 function castFor(i) {
   // 앞서 걷는 그분과 같은 사람은 곁에 세우지 않는다 — 장면부터 엘리사가 앞서는데 곁에도 엘리사를 넣어 둘이 섰다(k22, 사용자 2026-11)
   const lead = leadAt(i)?.[1] || JOURNEYS[JID].model, c0 = castOf(i);
-  return c0.filter(n => n.split(':')[0] !== lead);
+  return c0.filter(n => { const b = n.split(':')[0]; return b !== lead && (b.startsWith('pilgrim') || b !== myChar().id); }); // 내가 고른 인물도 곁에 또 서지 않게
 }
 function castOf(i) {
   const e = G.events[i], c = CAST[JID]?.[e.id]; if (c) return c;
@@ -859,7 +879,7 @@ function startLeg(walkFrom) {
   G.legPath = Math.max(G.legStraight, navD(G.me.pos.x, G.me.pos.y));
   G.prevD = G.legPath; G.bestD = G.legPath; G.stuckT = 0; G.hintT = 0; G.hintCool = 10;
   // 걸음은 늘 같은 빠르기 — 실제 땅의 거리만큼 걷고 그만큼 시간을 더 준다 (사용자 2026-11: 먼 길도 20초에 닿게 하니 땅과 상관없이 날아다녔다)
-  G.speed = PACE;
+  G.speed = PACE * (G.fx?.speed || 1); G.revived = false; // 인물의 걸음 능력치
   // 제한 시간: 곧장 걸으면 걸릴 시간의 1.7배 + 6초. 그분은 그 시간의 절반쯤에 다음 자리에 닿으시게 걸으신다
   G.timeMax = G.timeT = G.legPath / G.speed * 2.3 + 10; // 목적지를 지도에서 찾아야 하니 넉넉히
   if (walkFrom) G.leader.speed = Math.max(4, Math.hypot(gx - walkFrom[0], gz - walkFrom[1]) / (G.timeMax * 0.5));
@@ -907,7 +927,8 @@ async function begin(fresh) {
   const lname = leadAt(G.idx)?.[1] || J.model; // 이어 걷기면 그 장면의 사람으로 (여호수아·왕 다윗 등)
   const lead = lname && await model(lname) && new ModelActor(await model(lname)).hold(GEAR[lname]);
   G.leader = lead || new Actor(J.leader, 0, 0, 0, { gaze: false }); G.leaderName = lead ? lname : null;
-  G.me = await pilgrim(sx, sz); G.me.realWalk = true; G.me.big = SCALE; G.me.walkRate = 1.5;
+  G.fx = effects(myChar()); G.waterMax = G.fx.water; G.water = G.waterMax;
+  G.me = await pilgrim(sx, sz); G.me.realWalk = true; G.me.big = SCALE * (SIZE[myChar().id] || 1); G.me.walkRate = 1.5;
   [G.soldierG, G.manG] = await Promise.all([roman() ? model('soldier') : null, model('pilgrim-man')]); // 병정·길가의 쓰러진 사람
   G.leader.realWalk = true; G.leader.big = SCALE; G.leader.target = G.me;
   G.scene.add(G.me.p.root, G.leader.p.root);
@@ -977,7 +998,7 @@ function frame(now) {
     // 달리기 (사용자 2026-11): PC는 Shift를 누른 채, 폰은 달리기 단추를 누르는 동안 1.8배. 배 위에서는 달리지 않는다
     const boat = onGalilee(me0.pos.x, me0.pos.y), run = !boat && (keys.has('shift') || G.runDrag);
     const soft = stick.k && !run ? Math.min(1, Math.max(0.4, stick.k)) : 1; // 조금만 끌면 천천히
-    const sp = G.speed * (G.slowT > 0 ? 0.45 : 1) * (boat ? 0.65 : 1) * (run ? 1.8 : soft), step = sp * dt;
+    const sp = G.speed * (G.slowT > 0 ? (G.fx.fx === 'wild' ? 0.75 : 0.45) : 1) * (boat ? (G.fx.fx === 'boat' ? 0.95 : 0.65) : 1) * (run ? 1.8 : soft), step = sp * dt;
     me0.walkRate = run ? 2.6 : 1.5 * soft;
     // 이미 물·가장자리 안에 서 있으면(물 위 장면에서 이어 걷기 등) 어느 쪽으로든 나올 수 있게 — 갇혀 물병만 잃었다(사용자 2026-11)
     let nx = me0.pos.x + dir[0] * step, nz = me0.pos.y + dir[1] * step, hit = blocked(me0.pos.x, me0.pos.y) ? null : blocked(nx, nz);
@@ -994,7 +1015,7 @@ function frame(now) {
       const d = navD(nx, nz);
       // 한참 헤매면 잠깐 바른 쪽을 그냥 가리켜 준다 (사용자 2026-11) — 걷는데 12초 동안 1km도 가까워지지 않으면, 20초에 한 번
       if (d < G.bestD - 1) { G.bestD = d; G.stuckT = 0; } else G.stuckT += dt;
-      if (G.stuckT > 12 && !(G.hintCool > 0)) { G.stuckT = 0; G.hintT = 3; G.hintCool = 20; toast('이쪽으로 가 보세요<small>화살표가 길을 따라 가리켜요</small>', true, 2400); }
+      if (G.stuckT > G.fx.stuck && !(G.hintCool > 0)) { G.stuckT = 0; G.hintT = 3; G.hintCool = G.fx.hintCool; toast('이쪽으로 가 보세요<small>화살표가 길을 따라 가리켜요</small>', true, 2400); }
       if (d > G.prevD + 1e-3) G.lostT += dt; else G.lostT = Math.max(0, G.lostT - dt * 1.5);
       G.prevD = d;
       if (G.lostT > 3.2 && G.legT > 2) penalty('lost');
@@ -1004,7 +1025,7 @@ function frame(now) {
     }
   } else me0.goal.copy(me0.pos);
   // 그분은 가까이(SEE — 이 지도에서는 인형 키의 두 배 남짓) 가야 보인다. 멀리서는 발자국만 (사용자 2026-11)
-  const near = Math.hypot(G.leader.pos.x - me0.pos.x, G.leader.pos.y - me0.pos.y) < SEE || G.meetT > 0 || G.busy;
+  const near = Math.hypot(G.leader.pos.x - me0.pos.x, G.leader.pos.y - me0.pos.y) < SEE * G.fx.eye || G.meetT > 0 || G.busy;
   G.leader.showT = near ? 1 : 0;
   const sailing = onGalilee(me0.pos.x, me0.pos.y);
   snd.walk(dt, G.stepped && !sailing, G.slowT > 0); snd.boat(dt, sailing && !G.busy, G.stepped); G.stepped = false;
