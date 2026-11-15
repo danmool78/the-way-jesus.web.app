@@ -456,21 +456,29 @@ function addModel(group, E, scale) {
     } else if (o.isMesh) { box.setFromObject(o); box.getCenter(c); lifts.push([o, heightAt(c.x, c.z) / scale]); }
   });
   lifts.forEach(([o, h]) => { o.position.y += h; o.castShadow = o.receiveShadow = true; });
-  if (E === JLM) { city = true; cityMats = []; group.traverse(o => { if (o.isMesh) [].concat(o.material).forEach(m => { m.transparent = true; cityMats.push(m); }); }); cityHold = holder; }
+  if (E === JLM) { city = true; group.traverse(o => { if (!o.isMesh || o.isInstancedMesh) return; // 집 묶음(instanced)은 clutter가 무대 자리에서 치운다
+    o.material = [].concat(o.material).map(m => Object.assign(m.clone(), { transparent: true })); if (o.material.length === 1) o.material = o.material[0];
+    box.setFromObject(o); cityParts.push({ m: o, mats: [].concat(o.material), x0: box.min.x, z0: box.min.z, x1: box.max.x, z1: box.max.z, a: 1 }); }); }
   models.push([ox, oz, ex, ez]); // 모형 둘레는 땅을 고르지 않는다 (level)
   group.traverse(o => { if (o.isInstancedMesh) clutterInstanced(o, false); }); // 도성의 집·나무, 표지의 대추야자도 무대 자리에서는 비킨다
 }
 // 무대가 서는 자리의 집·나무는 잠시 치운다. 무대는 지도 위에 겹쳐 그리는 그림이라, 그 밑의 집·나무가 인물 사이로 삐져나와 보인다.
 // 치우는 넓이는 무대 그림의 크기(화면 px)를 그 자리의 지도 단위로 바꾼 것 — 당기고 물러나면 따라 바뀐다
-let city = false, cityHold = null, cityMats = [], cityA = 1;
-// 성 안 장면의 무대가 서면 도성 모형을 서서히 감춘다 — 모형의 성벽·성전·집이 무대 사람들 사이로 솟아 겹쳤다.
-// 땅의 도성 색 판은 그대로 두고, 무대의 기물과 연기만 남는다(사용자 2026-11). 무대가 끝나면 다시 나타난다
-function fadeCity(on) {
-  if (!cityHold) return;
-  const to = on ? 0 : 1; if (Math.abs(cityA - to) < 0.002) return;
-  cityA += (to - cityA) * 0.07; if (Math.abs(cityA - to) < 0.01) cityA = to;
-  cityMats.forEach(m => { m.opacity = cityA; m.depthWrite = cityA > 0.98; });
-  cityHold.visible = cityA > 0.01;
+let city = false;
+// 성 안 장면의 무대가 서면 무대 자리에 걸친 도성 모형의 성벽·건물만 서서히 감춘다 — 사람들 사이로 솟아 겹쳤다.
+// 성 전체를 감추니 성전 바닥까지 사라져 맨땅이라 이상했다(사용자 2026-11): 무대보다 훨씬 넓은 판(성전 바닥 단)은 그대로, 나머지 성은 옅게 비쳐 남긴다
+const cityParts = [];
+function fadeCity(on, cx, cz, r) {
+  const R = r * 1.3;
+  cityParts.forEach(c => {
+    const dx = Math.max(c.x0 - cx, 0, cx - c.x1), dz = Math.max(c.z0 - cz, 0, cz - c.z1);
+    const big = Math.max(c.x1 - c.x0, c.z1 - c.z0) >= r * 3, near = dx * dx + dz * dz < R * R;
+    const to = !on || big ? 1 : near ? 0.15 : 0.4; // 성은 옅게 비쳐 남는다(사용자 2026-11) — 무대에 걸친 것은 거의 사라지게
+    if (Math.abs(c.a - to) < 0.002) return;
+    c.a += (to - c.a) * 0.07; if (Math.abs(c.a - to) < 0.01) c.a = to;
+    c.mats.forEach(m => { m.opacity = c.a; m.depthWrite = c.a > 0.98; });
+    c.m.visible = c.a > 0.01;
+  });
 }
 const clutter = { inst: [], meshes: [] }, ZERO = new THREE.Matrix4().makeScale(0, 0, 0), M4 = new THREE.Matrix4();
 function clutterInstanced(o, follow = true, near = 1) { // follow: 땅을 고를 때 높이를 따라간다 (모형 안의 것은 모형과 함께 제자리)
@@ -525,7 +533,7 @@ function clearStageSpot() {
     const D = camera.position.distanceTo(v3.set(cx, heightAt(cx, cz), cz)), H = wrap.clientHeight || 1;
     r = f.r ?? f.rpx * 2 * D * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) / H; // r: 지형 안에 선 무대가 알려 주는 지도 단위 반지름
   }
-  fadeCity(stageOn && isCity(window.stagePlaceOf?.(curEvent()) || curEvent().place));
+  fadeCity(stageOn, cx, cz, r);
   if (cleared && Math.abs(cleared.cx - cx) < 0.01 && Math.abs(cleared.cz - cz) < 0.01 && Math.abs(cleared.r - r) <= cleared.r * 0.08) return;
   if (!leveled || Math.hypot(leveled.cx - cx, leveled.cz - cz) > Math.max(r, leveled.r) * 0.25 || Math.abs(leveled.r - r) > leveled.r * 0.08) level(cx, cz, r);
   cleared = { cx, cz, r };
