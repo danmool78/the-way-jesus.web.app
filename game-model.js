@@ -58,6 +58,31 @@ export function plain(gltf, key) {
   scene.traverse(o => { if (o.isMesh && o.material.map) { o.material = o.material.clone(); o.material.map = nt; } });
   const out = { scene, animations: gltf.animations }; plains.set(key, out); return out;
 }
+// 다른 배역으로 다시 쓸 때 같은 사람으로 보이지 않게(사용자 2026-11): 옷 색의 색상을 hue°만큼 돌리고(채도 sat배), 살갗은 밝기를 skin배.
+// 'plain'처럼 화려한 색을 바래게 하려면 plain: true. 살갗은 색상 8–42°·중간 채도·밝은 곳으로 가른다
+const styles = new Map();
+export function restyle(gltf, key, { hue = 0, sat = 1, skin = 1, plain: pl = false } = {}) {
+  const id = key + '|' + hue + '|' + sat + '|' + skin + '|' + pl; if (styles.has(id)) return styles.get(id);
+  let tex = null;
+  gltf.scene.traverse(o => { if (!tex && o.isMesh && o.material.map) tex = o.material.map; });
+  if (!tex) return gltf;
+  const img = tex.image, cv = document.createElement('canvas'); cv.width = img.width; cv.height = img.height;
+  const x = cv.getContext('2d', { willReadFrequently: true }); x.drawImage(img, 0, 0);
+  const D = x.getImageData(0, 0, cv.width, cv.height), d = D.data;
+  for (let i = 0; i < d.length; i += 4) {
+    let [h, s, v] = hsv(d[i] / 255, d[i + 1] / 255, d[i + 2] / 255);
+    const skinny = h > 8 && h < 42 && s > 0.18 && s < 0.7 && v > 0.3;
+    if (skinny) { if (skin === 1) continue; v = Math.min(1, v * skin); }
+    else if (s >= 0.15) { h = (h + hue + 360) % 360; s = Math.min(1, pl ? Math.min(s, 0.18) : s * sat); if (pl) v *= 0.92; }
+    else continue;
+    const [r, g, b] = rgb(h, s, v); d[i] = r * 255; d[i + 1] = g * 255; d[i + 2] = b * 255;
+  }
+  x.putImageData(D, 0, 0);
+  const nt = new THREE.CanvasTexture(cv); nt.flipY = tex.flipY; nt.colorSpace = tex.colorSpace; nt.wrapS = tex.wrapS; nt.wrapT = tex.wrapT; nt.anisotropy = 4;
+  const scene = clone(gltf.scene);
+  scene.traverse(o => { if (o.isMesh && o.material.map) { o.material = o.material.clone(); o.material.map = nt; } });
+  const out = { scene, animations: gltf.animations }; styles.set(id, out); return out;
+}
 export function tinted(gltf, name, hex) {
   const T = TINT[name]; if (!T || !hex) return gltf;
   const key = name + hex; if (tints.has(key)) return tints.get(key);

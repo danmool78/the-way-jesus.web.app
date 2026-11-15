@@ -76,14 +76,14 @@ function heightAt(x, z) { // 지도 단위 좌표의 지형 높이 (불러온 �
 }
 // 무대 인물·소품이 서는 높이: 땅, 호수면(배는 물 위에), 도성 모형의 성전 단 윗면 가운데 높은 것
 const inPoly = ([x, z], P) => { let c = false; for (let i = 0, j = P.length - 1; i < P.length; j = i++) if ((P[i][1] > z) !== (P[j][1] > z) && x < (P[j][0] - P[i][0]) * (z - P[i][1]) / (P[j][1] - P[i][1]) + P[i][0]) c = !c; return c; };
-let pools = null, decks = null;
+let pools = null, decks = null, cityDeckTop = null; // cityDeckTop: 그려진 성전 단 윗면의 실제 높이 (어림한 높이가 그려진 단보다 높아 성전 뜰의 사람들이 떠 있었다)
 function standAt(x, z) {
   let h = heightAt(x, z);
   pools ??= LAKES.filter(([, m]) => m !== undefined).map(([k, m]) => ({ P: GEO[k].map(p => px(p)), top: lv(m) + 0.25 }));
   pools.forEach(L => { if (h < L.top && inPoly([x, z], L.P)) h = L.top; });
   if (city) {
     decks ??= DECKS.map(d => { const P = d.ll.map(p => px(p)), xs = P.map(p => p[0]), zs = P.map(p => p[1]); // 모형 조각은 가운데 땅 높이만큼 올렸다 (addModel)
-      return { P, top: heightAt((Math.min(...xs) + Math.max(...xs)) / 2, (Math.min(...zs) + Math.max(...zs)) / 2) + d.top }; });
+      return { P, top: cityDeckTop ?? heightAt((Math.min(...xs) + Math.max(...xs)) / 2, (Math.min(...zs) + Math.max(...zs)) / 2) + d.top }; });
     decks.forEach(d => { if (h < d.top && inPoly([x, z], d.P)) h = d.top; });
   }
   return h;
@@ -183,6 +183,7 @@ async function loadRegion(r) {
   geo.computeVertexNormals();
   r.mesh = new THREE.Mesh(geo, greyable(new THREE.MeshStandardMaterial({ map: mapTex(cImg), roughness: 0.95 })));
   r.mesh.receiveShadow = r.mesh.castShadow = true;
+  r.mesh.userData.ground = true; // 무대 점검(stage.js groundHit)이 그려진 땅으로 쏘아 보는 것
   scene.add(r.mesh); seams(r);
   if (!r.wild) { addTrees(r); addVillages(r); } else addPalms(r); // 광야에는 나무·마을이 없다 (색 그림의 바닷가 물빛을 풀빛으로 읽어 나무가 줄지어 섰다)
   if (r.name === 'galilee') addBoats();
@@ -459,7 +460,7 @@ function addModel(group, E, scale) {
   if (E === JLM) { city = true; const cw = Math.max(ex - ox, ez - oz); group.traverse(o => { if (!o.isMesh) return;
     o.material = [].concat(o.material).map(m => Object.assign(m.clone(), { transparent: true })); if (o.material.length === 1) o.material = o.material[0];
     o.renderOrder = 2; // 도성 색 판(renderOrder 1, 깊이를 안 씀)보다 나중에 — 옅게 할 때 깊이를 끄니 색 판이 성 위를 덮어 성이 통째로 사라졌다
-    box.setFromObject(o); cityParts.push({ m: o, mats: [].concat(o.material), big: !o.isInstancedMesh && Math.max(box.max.x - box.min.x, box.max.z - box.min.z) > cw * 0.25, a: 1 }); }); } // big: 성전 바닥 단
+    box.setFromObject(o); cityParts.push({ m: o, mats: [].concat(o.material), big: !o.isInstancedMesh && Math.max(box.max.x - box.min.x, box.max.z - box.min.z) > cw * 0.25, a: 1 }); if (cityParts.at(-1).big) { o.userData.ground = true; cityDeckTop = Math.max(cityDeckTop ?? -Infinity, box.max.y); } }); } // big: 성전 바닥 단 (사람이 그 위에 선다)
   models.push([ox, oz, ex, ez]); // 모형 둘레는 땅을 고르지 않는다 (level)
   group.traverse(o => { if (o.isInstancedMesh) { if (E !== JLM) clutterInstanced(o, false); } }); // 표지의 대추야자는 무대 자리에서 비킨다 — 도성의 집은 치우지 않고 성과 함께 옅게(다 치우니 맨땅이었다)
 }

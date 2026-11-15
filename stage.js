@@ -3,7 +3,7 @@
 import { THREE, damp } from './stage/kit.js';
 import { Actor, TYPES } from './stage/people.js';
 import { StageModel } from './stage/model-actor.js';
-import { model, tinted, plain } from './game-model.js';
+import { model, tinted, plain, restyle } from './game-model.js';
 import { makeProp, setCrowd } from './stage/props.js';
 import { SCRIPTS } from './stage/scenes.js';
 import { createStreet } from './stage/street/view.js';
@@ -106,31 +106,33 @@ const stageGroup = new THREE.Group();
 scene.add(stageGroup);
 
 // 3D 모델로 바꿔 세우는 사람 (사용자 2026-11: 인형을 3D 모델로 — 모델이 그리기는 더 가볍다. 삼각형 9천 개·한 번에 그림, 인형은 2만7천 개·수십 번).
-// 이름 있는 사람은 그 사람의 모델, 이름 없는 남녀는 순례자 모델에 인형의 옷 색을 입힌다. 소년은 소년 다윗 모델, 소녀는 소녀 모델, 헤롯·동방박사·경비병 등은 비슷한 구약 인물 모델(LIKE), 천사·실루엣·빛의 형상은 인형 그대로.
+// 이름 있는 사람은 그 사람의 모델, 이름 없는 남녀는 순례자 모델에 인형의 옷 색을 입힌다. 소년은 소년 다윗 모델, 소녀는 소녀 모델, 헤롯·동방박사·경비병 등은 비슷한 구약 인물 모델(LIKE), 천사는 천사 모델,·실루엣·빛의 형상은 인형 그대로.
 // 모델은 장면에 필요한 것만 그때 받고(R2, 한 번 받으면 남는다), 다 받기 전이면 인형으로 섰다가 낭독 전이면 바꿔 세운다
 const OWN = { jesus: 'jesus', risen: 'jesus', peter: 'peter', john: 'john', mary: 'mary', joseph: 'joseph', baptist: 'baptist', pharisee: 'pharisee',
   thomas: 'thomas', martha: 'martha', judas: 'judas', lazarus: 'lazarus', samaritan: 'samaritan', centurion: 'centurion', zacchaeus: 'zacchaeus',
-  pilate: 'pilate', shepherd: 'shepherd', soldier: 'soldier', highpriest: 'caiaphas', elder: 'nicodemus', sadducee: 'nicodemus', woman: 'woman',
-  moses: 'moses', elijah: 'elijah' };
+  pilate: 'pilate', shepherd: 'shepherd', soldier: 'soldier', highpriest: 'caiaphas', elder: 'nicodemus', woman: 'woman',
+  moses: 'moses', elijah: 'elijah', angel: 'angel', whiteman: 'angel' }; // 천사(가브리엘·목자들에게 나타난 천사·무덤의 흰 옷 입은 이)
 const MEN = new Set(['man', 'servant', 'traveler', 'healed', 'beggar', 'prodigal', 'levi', 'steward', 'groom', 'rich']);
 const WOMEN = new Set(['woman2', 'mother', 'anna', 'phoenician']);
 const BOYS = new Set(['child', 'boyJesus']);
 // 모델이 따로 없는 배역은 비슷한 사람의 모델에 옷을 맞춰 입힌다 (사용자 2026-11: 다 만들 수는 없으니 있는 것에서) — 'plain'은 화려한 색을 바래게
-const LIKE = { king: ['rehoboam'], magus: ['jethro'], magus2: ['nathan'], magus3: ['absalom'], // 헤롯은 오만한 왕, 동방박사는 사막 족장·현자·젊은 귀공자
-  official: ['jeroboam', 'plain'], youth: ['jonathan', 'plain'], guard: ['joab', 'plain'] }; // 왕의 신하, 나인 성 과부의 아들, 성전 경비병
+// 옷은 restyle로 색상을 돌리고 살갗 밝기도 달리 — 구약 여정의 그 사람과 같아 보이지 않게(사용자 2026-11)
+const LIKE = { king: ['rehoboam', { hue: 150, skin: 1.05 }], magus: ['jethro', { hue: 200, sat: 1.4, skin: 0.8 }], magus2: ['nathan', { hue: 90, sat: 1.5, skin: 1.1 }], magus3: ['absalom', { hue: 250, skin: 0.62 }], // 헤롯은 오만한 왕, 동방박사는 사막 족장·현자·젊은 귀공자(먼 나라 사람이라 살갗도 저마다)
+  official: ['jeroboam', { plain: true, skin: 0.9 }], youth: ['jonathan', { plain: true, hue: 40, skin: 1.08 }], guard: ['joab', { hue: 30, sat: 0.6, skin: 0.95 }], // 왕의 신하, 나인 성 과부의 아들, 성전 경비병
+  wild: ['pilgrim-man', { plain: true, skin: 0.72 }], sadducee: ['nicodemus', { hue: 160, skin: 1.08 }] }; // 거라사의 귀신 들린 사람(해진 옷, 햇볕에 그을림), 사두개인(바리새인 니고데모와 달리)
 const DISCIPLES = ['andrew', 'james']; // 이름 없는 제자는 안드레·야고보 모델을 번갈아
 // 엑스트라(이름 없는 남녀·군중): 여러 사람을 섞는다 (사용자 2026-11: 순례자로만 하지 말고, 다른 시대 사람도 — 왕은 빼고, 수수하게 입은 사람을
 // 평범한 색 옷으로). [모델, 옷] — 옷이 'plain'이면 화려한 색을 바래게, 색이면 그 색으로 (순례자만), 없으면 그대로
 const EXTRA = {
-  men: [['pilgrim-man'], ['fisherman'], ['shepherd'], ['jethro', 'plain'], ['samuel', 'plain'], ['pilgrim-man', '#7d4a3a'], ['nathan', 'plain'],
-    ['elisha', 'plain'], ['isaiah', 'plain'], ['pilgrim-man', '#5d6b4a'], ['ahijah', 'plain']],
-  women: [['pilgrim-woman'], ['woman'], ['miriam', 'plain'], ['pilgrim-woman', '#3c5d96'], ['zipporah', 'plain'], ['rahab', 'plain'], ['pilgrim-woman', '#a3554a']],
+  men: [['pilgrim-man'], ['fisherman'], ['shepherd'], ['jethro', { plain: true, skin: 0.85 }], ['samuel', { plain: true, skin: 1.1 }], ['pilgrim-man', '#7d4a3a'], ['nathan', { plain: true, hue: 30, skin: 0.8 }],
+    ['elisha', { plain: true, skin: 1.08 }], ['isaiah', { plain: true, hue: 200, skin: 0.9 }], ['pilgrim-man', '#5d6b4a'], ['ahijah', { plain: true, skin: 0.78 }]],
+  women: [['pilgrim-woman'], ['woman'], ['miriam', { plain: true, skin: 1.08 }], ['pilgrim-woman', '#3c5d96'], ['zipporah', { plain: true, hue: 120, skin: 0.85 }], ['rahab', { plain: true, hue: 60, skin: 1.05 }], ['pilgrim-woman', '#a3554a']],
 };
 // 엑스트라 모델은 무대가 뜰 때 미리 받아 둔다 — 장면마다 그때 받으니 군중이 잠깐 예전 인형으로 섰다가 바뀌었다
 if (new URLSearchParams(location.search).has('models')) setTimeout(() => want([...new Set([...EXTRA.men, ...EXTRA.women].map(([n]) => n)), 'jesus']), 0);
 // 동작을 빌려 줄 모델: 잠자기는 남자 순례자, 무릎 꿇고 기도는 예수님 모델에서 (같은 Mixamo 뼈대)
-const BORROW = () => ({ sleep: ready['pilgrim-man'], pray: ready.jesus });
-const dress = ([n, c]) => c === 'plain' ? plain(ready[n], n) : c ? tinted(ready[n], n, c) : ready[n];
+const BORROW = () => ({ sleep: ready['pilgrim-man'], pray: ready.jesus, idle: ready.jesus, talk: ready.jesus }); // 천사 모델은 걷기만 있어 서기·말하기도
+const dress = ([n, c]) => c === 'plain' ? plain(ready[n], n) : c && typeof c === 'object' ? restyle(ready[n], n, c) : c ? tinted(ready[n], n, c) : ready[n];
 // 3D 모델은 아직 점검 중 — 주소에 ?models가 있을 때만 쓴다. 운영은 예전 인형 (사용자 2026-11: 떠 있고 엉뚱한 곳을 보고 말해서, 다 잡을 때까지)
 const USE_MODELS = new URLSearchParams(location.search).has('models');
 function modelOf(type, i) {
@@ -309,8 +311,9 @@ if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__st
 const gRay = new THREE.Raycaster();
 function groundHit(w) { // 무대 밖의 지형 그물만 (나무·집 묶음·무대는 빼고)
   const T = window.terrain3d; if (!T) return null;
-  const meshes = []; T.scene.traverse(o => { if (o.isMesh && !o.isInstancedMesh && o.visible && !(o.material?.transparent && o.material.opacity < 0.3)) { let q = o; while (q && q !== stageGroup) q = q.parent; if (!q) meshes.push(o); } });
-  gRay.set(w, new THREE.Vector3(0, -1, 0)); const h = gRay.intersectObjects(meshes, false)[0];
+  const meshes = []; T.scene.traverse(o => { if (o.userData.ground) meshes.push(o); }); // 지형 그물과 도성의 성전 단만 (terrain.js가 표시)
+  gRay.set(w, new THREE.Vector3(0, -1, 0)); const sides = meshes.map(m => m.material.side); meshes.forEach(m => { m.material.side = THREE.DoubleSide; }); // 성전 단 윗면이 아래를 향해 그려져 있어도 맞게
+  const h = gRay.intersectObjects(meshes, false)[0]; meshes.forEach((m, i) => { m.material.side = sides[i]; });
   return h ? h.point.y : null;
 }
 const SKY = new Set(['star', 'host', 'beam', 'rain', 'dove', 'cloud', 'glory', 'bird', 'birds', 'light', 'smoke', 'water', 'sea', 'fire', 'glow', 'darkness', 'veil', 'angel']);
