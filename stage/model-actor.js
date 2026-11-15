@@ -27,7 +27,7 @@ function brighten(m) {
   if (!lit.has(m)) { const n = m.clone(); n.emissive = new THREE.Color(1, 1, 1); n.emissiveMap = m.map; n.emissiveIntensity = LIFT; lit.set(m, n); }
   return lit.get(m);
 }
-const v1 = new THREE.Vector3(), v2 = new THREE.Vector3(), q1 = new THREE.Quaternion(), q2 = new THREE.Quaternion(), q3 = new THREE.Quaternion();
+const v1 = new THREE.Vector3(), v2 = new THREE.Vector3(), v3 = new THREE.Vector3(), q1 = new THREE.Quaternion(), q2 = new THREE.Quaternion(), q3 = new THREE.Quaternion();
 
 // 인형 키 (서 있을 때 정수리 높이) — 모델을 이만큼으로 맞춘다
 const dollH = {};
@@ -244,7 +244,13 @@ export class StageModel {
     if (this.legW > 0.01) {
       const qr = r.getWorldQuaternion(new THREE.Quaternion());
       const thigh = new THREE.Vector3(0, -0.25, 1).normalize().applyQuaternion(qr), shin = new THREE.Vector3(0, -1, 0.15).normalize().applyQuaternion(qr);
-      for (const l of this.legs) if (l.up && l.lo && l.foot) { this.aim(l.up, l.lo, thigh, this.legW); this.aim(l.lo, l.foot, shin, this.legW); }
+      const ks = r.getWorldScale(v3).y, ground = r.getWorldPosition(v2).y - (d.y || 0) * ks + 0.01 * ks; // 발이 닿을 땅: root는 땅에서 앉는 높이(y)만큼 올라가 있다
+      for (const l of this.legs) if (l.up && l.lo && l.foot) {
+        this.aim(l.up, l.lo, thigh, this.legW); this.aim(l.lo, l.foot, shin, this.legW);
+        // 의자가 모델의 정강이보다 낮으면 발이 바닥을 뚫었다(왕좌의 헤롯) — 정강이를 뒤로 접어 발끝이 바닥 위에 오게
+        const ky = l.lo.getWorldPosition(v1).y, low = Math.min(l.foot.getWorldPosition(v3).y, l.toe ? l.toe.getWorldPosition(v3).y : Infinity);
+        if (low < ground && ky > ground) { const t = Math.max(0.05, (ky - ground) / (ky - low)), back = new THREE.Vector3(0, -t, -Math.sqrt(1 - t * t)).applyQuaternion(qr); this.aim(l.lo, l.foot, back, this.legW); }
+      }
     }
     if (this.w < 0.01) return;
     const qm = r.getWorldQuaternion(q2.clone()), qd = dr.getWorldQuaternion(new THREE.Quaternion()).invert();
