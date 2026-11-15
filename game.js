@@ -100,9 +100,14 @@ function bin(obj, scene) {
   if (!obj) return; (scene || obj.parent)?.remove(obj);
   obj.traverse(o => { o.geometry?.dispose(); const m = o.material; for (const x of Array.isArray(m) ? m : m ? [m] : []) { x.map?.dispose(); x.dispose(); } });
 }
+// 내 순례자를 손가락·마우스로 끌어 돌려 본다 — 놓고 2.5초 뒤부터 다시 천천히 돈다
+{ const c = $('#preview'); let x0 = 0, r0 = 0;
+  c.addEventListener('pointerdown', e => { pv.drag = true; x0 = e.clientX; r0 = pv.rot || 0; c.setPointerCapture(e.pointerId); });
+  c.addEventListener('pointermove', e => { if (pv.drag) pv.rot = r0 + (e.clientX - x0) * 0.012; });
+  const end = () => { pv.drag = false; pv.dragEnd = performance.now(); }; c.addEventListener('pointerup', end); c.addEventListener('pointercancel', end); }
 const pv = { r: renderer($('#preview'), true), scene: new THREE.Scene(), cam: new THREE.PerspectiveCamera(30, 1, 0.05, 20), actor: null };
 lights(pv.scene);
-pv.cam.position.set(0, 0.62, 2.4); pv.cam.lookAt(0, 0.48, 0);
+pv.cam.position.set(0, 0.6, 2.4); pv.cam.lookAt(0, 0.4, 0); // 아래에 이름표 자리를 남긴다
 // 발밑: 가장자리가 스러지는 따뜻한 빛 원 (어두운 원판은 허공에 뜬 접시 같았다)
 const floorTex = (() => { const c = document.createElement('canvas'); c.width = c.height = 256; const x = c.getContext('2d'), g = x.createRadialGradient(128, 128, 0, 128, 128, 128);
   g.addColorStop(0, 'rgba(240,205,140,.55)'); g.addColorStop(.35, 'rgba(200,160,100,.32)'); g.addColorStop(1, 'rgba(120,90,50,0)'); x.fillStyle = g; x.fillRect(0, 0, 256, 256);
@@ -143,21 +148,30 @@ function setupUI() {
     store.set('theway-game-me', me); rebuildPreview();
   };
   $('#name').value = me.name;
-  $('#name').oninput = () => { me.name = $('#name').value.trim(); $('#plate').textContent = me.name; store.set('theway-game-me', me); };
-  // 여정 고르기
-  const jp = document.createElement('div'); jp.className = 'field';
-  // 여정마다 아이콘·장면 수·모은 카드 (사용자 2026-11: 글자 단추만 있어 허접했다)
-  const NSC = { jesus: 61, moses: 40, david: 39, kings: 41 }, icon = k => k === 'jesus' ? 'assets/icon.svg' : `j/${k}/icon.svg`;
-  const got = k => Object.keys(store.get('theway-game-cards-' + k, {}) || {}).length;
-  jp.innerHTML = `<b>누구를 따라 걸을까요</b><div class="jcards" id="jpick">${Object.entries(JOURNEYS).map(([k, j]) => `<button data-j="${k}"><img src="${icon(k)}" alt="" width="34" height="34"><span><b>${esc(j.name.replace(' 따라가기', ''))}</b><i>${NSC[k]}곳 · 카드 ${got(k)}장</i><u style="--p:${Math.round(got(k) / NSC[k] * 100)}%"></u></span></button>`).join('')}</div>`;
-  $('#setup .lead').after(jp);
-  // 뒤에 까는 그림: 여정마다 대표 장면의 카드 그림 (R2, assets/cards.json)
+  $('#name').oninput = () => { me.name = $('#name').value.trim(); $('#plate').textContent = me.name || '순례자'; store.set('theway-game-me', me); };
+  // 로비 (사용자 2026-11): 여정마다 대표 카드 그림·진행도, 내 전체 기록과 칭호, 마지막으로 걷던 여정
+  const NSC = { jesus: 61, moses: 40, david: 39, kings: 41 };
   const BACK = { jesus: 'e08', moses: 'm09', david: 'd05', kings: 'k15' };
+  const cardsOf = k => { const v = store.get('theway-game-cards-' + k, {}) || {}; return Array.isArray(v) ? Object.fromEntries(v.map(x => [x, { s: 1, p: 100 }])) : v; };
+  const prog = k => { const sv = store.get('theway-game-' + k, null), c = cardsOf(k), cs = Object.values(c);
+    return { at: sv?.idx || 0, km: Math.round(sv?.total || 0), cards: cs.length, stars: cs.reduce((n, x) => n + (typeof x === 'number' ? x : x.s || 0), 0), pts: cs.reduce((n, x) => n + (typeof x === 'number' ? x * 100 : x.p || 0), 0), tre: Object.keys(store.get('theway-game-treasure-' + k, {}) || {}).length }; };
+  const all = Object.keys(JOURNEYS).map(prog), sum = f => all.reduce((n, x) => n + x[f], 0);
+  const RANKS = [[0, '새내기 순례자'], [5, '길 위의 순례자'], [20, '말씀을 품은 순례자'], [60, '먼 길의 순례자'], [120, '그 길의 증인']];
+  $('#rank').textContent = RANKS.filter(([n]) => sum('cards') >= n).pop()[1];
+  $('#purse').innerHTML = `<span>말씀 카드 <b>${num(sum('cards'))}</b></span><span>보물 <b>${num(sum('tre'))}</b></span><span>점수 <b>${num(sum('pts'))}</b></span>`;
+  $('#jpick').innerHTML = Object.entries(JOURNEYS).map(([k, j]) => { const g = prog(k), pc = Math.round(Math.max(g.at, g.cards) / NSC[k] * 100);
+    return `<button data-j="${k}">${g.at ? '<em>이어 걷기</em>' : ''}<div class="in"><b>${esc(j.name.replace(' 따라가기', ''))}</b><i>${g.at || g.cards ? `${g.at}/${NSC[k]} 장면 · 카드 ${g.cards}장` : `${NSC[k]}곳 · 처음 걷기`}</i><u style="--p:${pc}%"></u></div></button>`; }).join('');
   const cardsList = fetch('assets/cards.json').then(r => r.json()).catch(() => null);
+  cardsList.then(M => M && document.querySelectorAll('#jpick button').forEach(b => { const f = M.files[BACK[b.dataset.j]]; if (f) b.style.backgroundImage = `url(${M.base}/${f})`; }));
   const backdrop = async () => { const M = await cardsList, k = M?.files?.[BACK[JID]], el = $('#backdrop'); if (!k) return; const url = `${M.base}/${k}`; el.classList.remove('on'); const im = new Image(); im.onload = () => { el.style.backgroundImage = `url(${url})`; el.classList.add('on'); }; im.src = url; };
   const markJ = () => { document.querySelectorAll('#jpick button').forEach(b => b.classList.toggle('on', b.dataset.j === JID));
-    const J = JOURNEYS[JID]; $('#jIcon').src = icon(JID); backdrop();
-    $('#jLead').textContent = `${josa(J.who, '을', '를')} 따라 ${NSC[JID]}곳을 걸어요. 단서를 읽고 지도에서 다음 장면을 찾아가 말씀 카드를 모으세요.`; const s = store.get('theway-game-' + JID, null); $('#start').textContent = s?.idx ? `이어 걷기 (${s.idx + 1}번째 장면부터)` : '길 떠나기'; $('#restart').classList.toggle('hidden', !s?.idx); };
+    const J = JOURNEYS[JID], g = prog(JID); backdrop();
+    $('#jinfo').innerHTML = `<h3>${esc(J.name)}</h3><p>${esc(josa(J.who, '을', '를'))} 따라 ${NSC[JID]}곳을 걸어요. 단서를 읽고 지도에서 다음 장면을 찾아가 말씀 카드를 모으세요.</p>
+      <div class="st"><div><b>${g.at}<small>/${NSC[JID]}</small></b><small>지난 장면</small></div><div><b>${g.cards}</b><small>카드</small></div><div><b>${g.stars}</b><small>별</small></div><div><b>${num(g.km)}</b><small>걸은 km</small></div></div>`;
+    $('#start').innerHTML = g.at ? `이어 걷기<small>${g.at + 1}번째 장면부터 · ${esc(J.name.replace(' 따라가기', ''))}</small>` : `길 떠나기<small>${esc(J.name)}</small>`; $('#restart').classList.toggle('hidden', !g.at); };
+  // 탭: 여정 / 꾸미기
+  document.querySelector('#setup .tabs').onclick = e => { const b = e.target.closest('button'); if (!b) return; document.querySelectorAll('#setup .tabs button').forEach(x => x.classList.toggle('on', x === b)); $('#tabJ').classList.toggle('hidden', b.dataset.tab !== 'j'); $('#tabMe').classList.toggle('hidden', b.dataset.tab !== 'me'); };
+  $('#plate').textContent = me.name || '순례자';
   $('#jpick').onclick = e => { const b = e.target.closest('button'); if (!b) return; JID = b.dataset.j; markJ(); };
   markJ();
   refresh();
@@ -166,7 +180,8 @@ function setupUI() {
   $('#seeCards').onclick = async () => { await loadJourney(); openCards(); };
   $('#restart').onclick = () => begin(true);
 }
-let JID = JOURNEYS[new URLSearchParams(location.search).get('j')] ? new URLSearchParams(location.search).get('j') : 'jesus';
+// 고른 여정: 주소의 ?j=, 없으면 마지막으로 걷던 여정 (사용자 2026-11)
+let JID = [new URLSearchParams(location.search).get('j'), store.get('theway-game-last', null), 'jesus'].find(k => JOURNEYS[k]);
 
 /* ---------- 게임 세계 ---------- */
 const G = {
@@ -868,6 +883,7 @@ async function begin(fresh) {
   snd.unlock(); // 시작 단추를 누른 이 순간에 소리를 깨운다 (아이폰)
   me.name = $('#name').value.trim() || '순례자'; store.set('theway-game-me', me);
   if (fresh) store.set('theway-game-' + JID, null);
+  store.set('theway-game-last', JID);
   const J = JOURNEYS[JID];
   await loadJourney();
   const saved = store.get('theway-game-' + JID, null);
@@ -950,7 +966,7 @@ function frame(now) {
   requestAnimationFrame(frame);
   const dt = Math.min(0.05, (now - last) / 1000); last = now; const t = now / 1000;
   if (!$('#setup').classList.contains('hidden')) {
-    if (pv.actor) { pv.actor.update(t, dt); pv.actor.p.root.rotation.y = t * 0.6; }
+    if (pv.actor) { pv.actor.update(t, dt); if (!pv.drag && now - (pv.dragEnd || 0) > 2500) pv.rot = (pv.rot || 0) + dt * 0.5; pv.actor.p.root.rotation.y = pv.rot || 0; }
     pv.r.render(pv.scene, pv.cam); return;
   }
   if (!G.me) return;

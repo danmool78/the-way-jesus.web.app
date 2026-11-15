@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cut,user-scalable=no">
 <title>그 길 — 순례 게임 | 걸어서 만나는 예수</title>
 <meta name="description" content="이름을 넣고 나만의 순례자를 꾸며, 지도 위를 걸어 예수님이 계신 다음 장면을 찾아가는 게임.">
+<link rel="icon" href="assets/game-icon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
 <meta name="theme-color" content="#15110d">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,30 +18,55 @@ button{font:inherit;color:inherit;cursor:pointer}
 #world{position:fixed;inset:0;display:block;width:100%;height:100%}
 .hidden{display:none!important}
 
-/* 순례자 꾸미기 */
-#setup{position:fixed;inset:0;z-index:20;display:grid;grid-template-columns:1fr minmax(320px,420px);background:radial-gradient(ellipse at 30% 40%,#2a2117,#110d09 70%)}
-#setup .stagebox{position:relative;min-height:0;overflow:hidden;background:#120e0a}
-/* 시작 화면 (사용자 2026-11: 검은 빈 무대가 허접했다) — 고른 여정의 카드 그림을 흐리게 깔고, 순례자 뒤에 빛 */
-#setup .backdrop{position:absolute;inset:-24px;background:#120e0a center/cover no-repeat;filter:blur(3px) brightness(.48) saturate(.9);transform:scale(1.04);transition:opacity .6s;opacity:0}
+/* 로비 (사용자 2026-11: 진행도도, 마지막 여정도, 게임 아이콘도 없고 캐릭터도 못 돌려 게임 로비 같지 않았다)
+   고른 여정의 카드 그림을 화면 전체에 흐리게 깔고, 위에 로고와 내 기록, 가운데 내 순례자(끌어서 돌림), 옆에 여정·꾸미기 */
+#setup{position:fixed;inset:0;z-index:20;display:grid;grid-template-columns:1fr minmax(340px,440px);grid-template-rows:auto 1fr;background:#120e0a;overflow:hidden}
+#setup .backdrop{position:absolute;inset:-30px;background:#120e0a center/cover no-repeat;filter:blur(4px) brightness(.42) saturate(.95);transform:scale(1.05);transition:opacity .7s;opacity:0}
 #setup .backdrop.on{opacity:1}
-#setup .stagebox::after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 42% 55% at 50% 52%,rgba(240,205,140,.22),rgba(0,0,0,0) 70%),radial-gradient(ellipse at center,rgba(0,0,0,0) 45%,rgba(10,7,4,.85) 100%)}
-#setup .brand{display:flex;gap:12px;align-items:center;margin:0 0 8px}
-#setup .brand img{width:52px;height:52px;border-radius:13px;box-shadow:0 0 22px rgba(217,180,106,.3);flex:none}
-#setup .brand small{display:block;font-size:11px;letter-spacing:.08em;color:var(--faint)}
-.jcards{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.jcards button{display:flex;gap:9px;align-items:center;padding:9px 10px;border-radius:12px;border:1px solid var(--line);background:#1d1813;text-align:left;min-width:0}
-.jcards button img{width:34px;height:34px;border-radius:9px;flex:none}
-.jcards button span{min-width:0;display:block}
-.jcards button b{display:block;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.jcards button i{display:block;font-style:normal;font-size:11px;color:var(--faint);margin-top:2px}
-.jcards button u{display:block;height:3px;margin-top:5px;border-radius:2px;background:rgba(255,255,255,.08);text-decoration:none;overflow:hidden}
-.jcards button u::before{content:'';display:block;height:100%;width:var(--p,0%);background:var(--gold2)}
-.jcards button.on{border-color:var(--gold);background:linear-gradient(rgba(217,180,106,.18),rgba(217,180,106,.06));box-shadow:0 0 0 1px var(--gold) inset}
-#preview{position:absolute;inset:0;width:100%;height:100%;z-index:1}
-#setup .stagebox .nameplate{position:absolute;z-index:1;left:50%;bottom:3%;transform:translateX(-50%);font:700 22px var(--serif);color:var(--gold2);text-shadow:0 2px 8px #000;white-space:nowrap}
-#setup .panel{overflow:auto;padding:22px 22px 28px;background:var(--panel);border-left:1px solid var(--line);touch-action:pan-y}
-#setup h1{margin:0 0 2px;font:700 26px var(--serif);color:var(--gold2)}
-#setup .lead{margin:0 0 16px;color:var(--muted);font-size:13.5px;line-height:1.6;word-break:keep-all}
+#setup::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 35% 55%,rgba(0,0,0,0) 30%,rgba(10,7,4,.8) 100%)}
+.ltop{grid-column:1/-1;position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:max(12px,env(safe-area-inset-top)) 18px 6px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo img{width:46px;height:46px;border-radius:12px;box-shadow:0 4px 18px rgba(0,0,0,.5),0 0 0 1px rgba(240,215,154,.35)}
+.logo small{display:block;font-size:10.5px;letter-spacing:.12em;color:var(--muted)}
+.logo b{display:block;font:700 22px var(--serif);color:var(--gold2);text-shadow:0 2px 10px rgba(0,0,0,.6)}
+.purse{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.purse span{display:flex;align-items:center;gap:5px;padding:6px 11px;border-radius:99px;background:rgba(20,16,11,.72);border:1px solid var(--line);font-size:12.5px;color:var(--muted);backdrop-filter:blur(6px)}
+.purse b{color:var(--gold2);font-size:14px}
+#setup .stagebox{position:relative;z-index:1;min-height:0}
+#setup .stagebox::before{content:'';position:absolute;left:50%;top:50%;width:min(70%,560px);aspect-ratio:1;transform:translate(-50%,-48%);border-radius:50%;background:radial-gradient(circle,rgba(240,205,140,.24),rgba(240,205,140,0) 65%);pointer-events:none}
+#preview{position:absolute;inset:0;width:100%;height:100%;z-index:1;touch-action:none;cursor:grab}
+#preview:active{cursor:grabbing}
+#setup .plate{position:absolute;z-index:2;left:50%;bottom:4%;transform:translateX(-50%);text-align:center;pointer-events:none;white-space:nowrap}
+#setup .plate b{display:block;font:700 24px var(--serif);color:var(--gold2);text-shadow:0 2px 10px #000}
+#setup .plate small{display:inline-block;margin-top:4px;padding:3px 10px;border-radius:99px;background:rgba(20,16,11,.7);border:1px solid var(--line);font-size:11.5px;color:var(--gold)}
+#setup .spin{position:absolute;z-index:2;right:14px;bottom:12px;font-size:11.5px;color:var(--faint);pointer-events:none}
+#setup .panel{position:relative;z-index:2;display:flex;flex-direction:column;min-height:0;margin:0 14px 14px 0;border-radius:18px;background:rgba(24,19,14,.82);border:1px solid var(--line);backdrop-filter:blur(10px);box-shadow:0 20px 50px rgba(0,0,0,.45);overflow:hidden}
+.tabs{display:flex;gap:4px;padding:10px 10px 0}
+.tabs button{flex:1;padding:10px;border:0;border-radius:11px 11px 0 0;background:transparent;color:var(--muted);font:700 14px var(--sans)}
+.tabs button.on{background:rgba(217,180,106,.14);color:var(--gold2);box-shadow:inset 0 -2px 0 var(--gold)}
+.tab{flex:1;min-height:0;overflow:auto;padding:14px 16px 6px;touch-action:pan-y}
+.jcards{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.jcards button{position:relative;display:block;height:118px;padding:0;border-radius:14px;border:1px solid var(--line);overflow:hidden;text-align:left;background:#1d1813 center/cover no-repeat;box-shadow:0 6px 16px rgba(0,0,0,.35)}
+.jcards button::after{content:'';position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.05) 25%,rgba(12,9,6,.92))}
+.jcards button .in{position:absolute;z-index:1;left:10px;right:10px;bottom:9px}
+.jcards button b{display:block;font:700 15px var(--serif);color:#fff3d6;text-shadow:0 1px 6px #000}
+.jcards button i{display:block;font-style:normal;font-size:11px;color:#d8c9ad;margin-top:1px}
+.jcards button u{display:block;height:4px;margin-top:6px;border-radius:2px;background:rgba(255,255,255,.18);overflow:hidden;text-decoration:none}
+.jcards button u::before{content:'';display:block;height:100%;width:var(--p,0%);background:linear-gradient(90deg,#d9b46a,#f0d79a)}
+.jcards button em{position:absolute;z-index:1;top:8px;left:8px;padding:2px 8px;border-radius:99px;background:rgba(217,180,106,.92);color:#1a140d;font:700 10.5px var(--sans);font-style:normal}
+.jcards button.on{border-color:var(--gold2);box-shadow:0 0 0 2px var(--gold2),0 8px 22px rgba(0,0,0,.5)}
+.jinfo{margin:12px 0 4px;padding:12px 14px;border-radius:14px;background:rgba(0,0,0,.25);border:1px solid var(--line)}
+.jinfo h3{margin:0 0 3px;font:700 17px var(--serif);color:var(--gold2)}
+.jinfo p{margin:0 0 10px;font-size:12.5px;line-height:1.6;color:var(--muted);word-break:keep-all}
+.jinfo .st{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center}
+.jinfo .st div{padding:7px 2px;border-radius:10px;background:rgba(255,255,255,.04)}
+.jinfo .st b{display:block;font-size:16px;color:var(--ink)}
+.jinfo .st small{font-size:10.5px;color:var(--faint)}
+.acts{padding:10px 16px max(14px,env(safe-area-inset-bottom));border-top:1px solid var(--line);background:rgba(18,14,10,.6)}
+.acts .go{margin-top:0;font-size:17px;padding:15px;box-shadow:0 6px 20px rgba(217,180,106,.25)}
+.acts .go small{display:block;font:500 11.5px var(--sans);opacity:.75;margin-top:1px}
+.acts .row2{display:flex;gap:8px;margin-top:8px}.acts .row2 .go{margin:0;flex:1;font-size:13.5px;padding:10px;box-shadow:none}
+.acts .back{margin-top:8px}
 .field{margin:0 0 14px}
 .field>label,.field>b{display:block;margin:0 0 6px;font-size:12px;font-weight:600;letter-spacing:.06em;color:var(--muted)}
 #name{width:100%;padding:11px 13px;border-radius:10px;border:1px solid var(--line);background:#0f0c09;color:var(--ink);font:500 16px var(--sans)}
@@ -54,8 +80,13 @@ button{font:inherit;color:inherit;cursor:pointer}
 .go{width:100%;margin-top:6px;padding:14px;border:0;border-radius:12px;background:linear-gradient(#e6c67e,#c99d4e);color:#1a140d;font:700 16px var(--sans)}
 .go.ghost{margin-top:8px;background:transparent;border:1px solid var(--line);color:var(--gold2);font-weight:500;font-size:14px;padding:11px}
 .back{display:inline-block;margin-top:14px;color:var(--faint);font-size:12.5px;text-decoration:none}
-@media (max-width:760px){#start{position:sticky;bottom:max(12px,env(safe-area-inset-bottom));z-index:2;box-shadow:0 -10px 24px 6px var(--panel),0 6px 18px rgba(0,0,0,.5)}/* 폰: '길 떠나기'가 한참 아래라 늘 아래에 붙여 둔다 */
-#setup{grid-template-columns:1fr;grid-template-rows:34vh 1fr}#setup .panel{border-left:0;border-top:1px solid var(--line)}#setup h1{font-size:22px}}
+@media (max-width:760px){
+  #setup{grid-template-columns:1fr;grid-template-rows:auto 36vh 1fr}
+  .ltop{padding:max(10px,env(safe-area-inset-top)) 12px 2px}.logo img{width:38px;height:38px}.logo b{font-size:18px}.purse span{padding:4px 8px;font-size:11px}.purse b{font-size:12.5px}
+  #setup .panel{margin:0 8px 8px}#setup .plate b{font-size:20px}#setup .spin{display:none}
+  .jcards button{height:92px}.tab{padding:10px 12px 4px}.tabs button{padding:8px}
+  .acts{padding:8px 12px max(10px,env(safe-area-inset-bottom))}.acts .go{padding:11px;font-size:16px}.acts .row2{margin-top:6px}.acts .row2 .go{padding:7px;font-size:12.5px}.acts .back{display:none}
+}
 
 /* 게임 머리판 */
 #hud{position:fixed;left:0;right:0;top:0;z-index:5;display:flex;gap:10px;align-items:flex-start;padding:max(10px,env(safe-area-inset-top)) 12px 0;pointer-events:none}
@@ -231,23 +262,34 @@ body.meeting #stick,body.meeting #arrow{opacity:0!important;pointer-events:none}
 
 <!-- 순례자 꾸미기: 이름과 인형 (이 기기에만 기억 — theway-game-me) -->
 <section id="setup">
-  <div class="stagebox"><div class="backdrop" id="backdrop"></div><canvas id="preview"></canvas><div class="nameplate" id="plate"></div></div>
+  <div class="backdrop" id="backdrop"></div>
+  <header class="ltop">
+    <div class="logo"><img src="assets/game-icon.svg" alt="" width="46" height="46"><div><small>그 길 시리즈</small><b>그 길 순례</b></div></div>
+    <div class="purse" id="purse"></div>
+  </header>
+  <div class="stagebox"><canvas id="preview"></canvas><div class="plate"><b id="plate"></b><small id="rank"></small></div><div class="spin">↻ 끌어서 돌려 보기</div></div>
   <div class="panel">
-    <div class="brand"><img id="jIcon" src="assets/icon.svg" alt="" width="52" height="52"><div><small>그 길 시리즈 · 순례 게임</small><h1>그 길 순례</h1></div></div>
-    <p class="lead" id="jLead">나만의 순례자를 꾸미고 지도 위를 걸어, 예수님이 계신 다음 장면을 찾아가세요. 길을 잃으면 벌칙이 있어요.</p>
-    <div class="field"><label for="name">순례자 이름</label><input id="name" maxlength="10" autocomplete="off" placeholder="이름을 넣어 주세요"></div>
-    <div class="field"><b>모습</b><div class="chips" data-k="sex"></div></div>
-    <div class="field"><b>얼굴빛</b><div class="sw" data-k="skin"></div></div>
-    <div class="field"><b>머리카락</b><div class="sw" data-k="hair"></div></div>
-    <div class="field"><b>수염</b><div class="chips" data-k="beard"></div></div>
-    <div class="field"><b>속옷</b><div class="sw" data-k="robe"></div></div>
-    <div class="field"><b>겉옷</b><div class="sw" data-k="mantle"></div></div>
-    <div class="field"><b>머리에</b><div class="chips" data-k="head"></div></div>
-    <div class="field"><b>지팡이</b><div class="chips" data-k="staff"></div></div>
-    <button class="go" id="start">길 떠나기</button>
-    <button class="go ghost hidden" id="restart">처음부터 다시 걷기</button>
-    <button class="go ghost" id="seeCards">모은 말씀 카드 보기</button>
-    <a class="back" href="app.html">← 그 길 앱으로</a>
+    <nav class="tabs"><button data-tab="j" class="on">여정</button><button data-tab="me">꾸미기</button></nav>
+    <div class="tab" id="tabJ">
+      <div class="jcards" id="jpick"></div>
+      <div class="jinfo" id="jinfo"></div>
+    </div>
+    <div class="tab hidden" id="tabMe">
+      <div class="field"><label for="name">순례자 이름</label><input id="name" maxlength="10" autocomplete="off" placeholder="이름을 넣어 주세요"></div>
+      <div class="field"><b>모습</b><div class="chips" data-k="sex"></div></div>
+      <div class="field"><b>얼굴빛</b><div class="sw" data-k="skin"></div></div>
+      <div class="field"><b>머리카락</b><div class="sw" data-k="hair"></div></div>
+      <div class="field"><b>수염</b><div class="chips" data-k="beard"></div></div>
+      <div class="field"><b>속옷</b><div class="sw" data-k="robe"></div></div>
+      <div class="field"><b>겉옷</b><div class="sw" data-k="mantle"></div></div>
+      <div class="field"><b>머리에</b><div class="chips" data-k="head"></div></div>
+      <div class="field"><b>지팡이</b><div class="chips" data-k="staff"></div></div>
+    </div>
+    <div class="acts">
+      <button class="go" id="start">길 떠나기</button>
+      <div class="row2"><button class="go ghost hidden" id="restart">처음부터</button><button class="go ghost" id="seeCards">카드 모음</button></div>
+      <a class="back" href="app.html">← 그 길 앱으로</a>
+    </div>
   </div>
 </section>
 
