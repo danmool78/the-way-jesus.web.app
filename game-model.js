@@ -208,7 +208,9 @@ function seamless(clip) {
 }
 const ARM_W = [0.4, 0.3]; // 위팔, 팔뚝을 기본 자세 쪽으로 끄는 비율
 const armW = name => !name.endsWith('.quaternion') ? 0 : /Hand(Thumb|Index|Middle|Ring|Pinky)\d\.|Hand\./.test(name) ? 1 : /ForeArm\./.test(name) ? ARM_W[1] : /Arm\./.test(name) ? ARM_W[0] : 0;
-const STAND = /(Hips|Leg)\.quaternion$/; // UpLeg도 Leg로 끝난다
+const STAND = /(Hips|Leg|Shoulder)\.quaternion$/;
+// 쇄골(Shoulder)도 모델을 뜬 그대로 — Mixamo 동작이 쇄골을 안쪽 아래로 당겨 어깨가 오므라들고 좁아졌다(사용자 2026-11: 어깨 너비는 변하면 안 된다).
+// 서 있기·말하기는 아래 STAND로, 걷기 등 다른 동작도 같은 자리에서 쇄골만 기본 자세로 // UpLeg도 Leg로 끝난다
 // 허리는 기본 자세로 되돌리지 않는다 — 모델마다 기본 자세의 허리가 idle과 20~28° 달라(안드레·사마리아 여인·십보라·삭개오)
 // 되돌리면 팔이 앞으로 들려 이상했다(사용자 2026-11). idle의 허리는 그대로 두고, 첫 자세에서 몸통(허리→목)이
 // 곧게 서도록 허리 첫 뼈(Spine)만 한 번 돌려 배가 나오지 않게 한다 — 허리 위(가슴·팔·고개)는 idle 그대로 따라온다
@@ -266,6 +268,9 @@ export function calmClips(gltf) {
     const n = k.name.split('.')[0], w = armW(k.name); if (!w || !rest[n]) return k;
     const V = Array.from(k.values); for (let i = 0; i < V.length; i += 4) THREE.Quaternion.slerpFlat(V, i, V, i, rest[n], 0, w);
     return new THREE.QuaternionKeyframeTrack(k.name, Array.from(k.times), V);
+  })));
+  out = out.map(c => c.name === 'idle' || c.name === 'talk' ? c : new THREE.AnimationClip(c.name, c.duration, c.tracks.map(k => {
+    const n = k.name.split('.')[0]; return /Shoulder\.quaternion$/.test(k.name) && rest[n] ? new THREE.QuaternionKeyframeTrack(k.name, [0], rest[n]) : k;
   })));
   calm.set(gltf, out); return out;
 }
