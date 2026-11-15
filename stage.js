@@ -224,7 +224,8 @@ function setScene(ev) {
   stageGroup.scale.setScalar(script.scale || 1);
   size = { w: 0, h: 0 }; // 넓은 무대(wide)가 바뀌었을 수 있으니 다시 잰다
   // 배역마다 쓸 모델 (거리 무대·실루엣은 인형 그대로)
-  const plan = Object.values(script.cast).map(([type, , , , o = {}], i) => !script.street && !o.silhouette && modelOf(type, i));
+  // dolls: 그 장면의 사람은 인형 그대로 (에덴 프롤로그의 아담·하와는 하나님이 지어 주신 가죽옷 — 순례자 모델이 지금 옷처럼 보였다, 사용자 2026-11). 천사만 모델로
+  const plan = Object.values(script.cast).map(([type, , , , o = {}], i) => !script.street && !o.silhouette && !(script.dolls && type !== 'angel') && modelOf(type, i));
   {
     const crowd = !script.street && Object.values(script.props || {}).some(([k]) => k === 'crowd');
     // 군중: 엑스트라를 섞되 이 장면에 이름으로 나오는 사람은 빼고 (사무엘이 이름으로 선 장면의 군중에 또 사무엘이 서지 않게)
