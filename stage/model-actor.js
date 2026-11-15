@@ -60,6 +60,23 @@ export class StageModel {
     this.p = { root: new THREE.Group() }; this.p.root.add(body);
     this.mixer = new THREE.AnimationMixer(body);
     this.acts = Object.fromEntries(calmClips(gltf).map(c => [c.name, this.mixer.clipAction(c)])); // 차분한 말하기·끊김 없는 되풀이·곧게 서기 (game-model.js)
+    // 없는 동작(잠자기·무릎 꿇고 기도)은 같은 Mixamo 뼈대의 다른 모델에서 빌린다 — 요셉이 잘 때 인형처럼 몸을 통째로 눕혀 어색했다(사용자 2026-11).
+    // 뼈 회전은 그대로, 엉덩이 위치만 두 모델의 엉덩이 높이 비로 맞춘다
+    for (const [n, donor] of Object.entries(o.borrow || {})) {
+      if (this.acts[n] || !donor) continue;
+      const c = calmClips(donor).find(c => c.name === n); if (!c) continue;
+      const hr = bone(body, 'Hips')?.position.length(), hd = bone(donor.scene, 'Hips')?.position.length(), k = hr && hd ? hr / hd : 1;
+      const tracks = c.tracks.filter(t => body.getObjectByName(t.name.split('.')[0])).map(t => {
+        if (!/Hips\.position$/.test(t.name)) return t;
+        const u = t.clone(); u.values = u.values.map(v => v * k); return u;
+      });
+      this.acts[n] = this.mixer.clipAction(new THREE.AnimationClip(n, c.duration, tracks));
+    }
+    // 베개: 누워 잘 때 머리 밑에 (막 4:38, 사용자 2026-11)
+    const H = dollHeight(type);
+    this.pillow = new THREE.Mesh(new THREE.CapsuleGeometry(H * 0.032, H * 0.09, 4, 12), new THREE.MeshStandardMaterial({ color: '#efe2c2', roughness: 1 }));
+    this.pillow.rotation.z = Math.PI / 2; this.pillow.scale.set(1, 1, 0.6); this.pillow.visible = false; this.pillowY = H * 0.022;
+    this.p.root.add(this.pillow);
     this.cur = null; this.w = 0; this.op = -1;
     // 인형의 왼팔·오른팔이 모델의 어느 팔인지는 자리(x)로 맞춘다 (서로 앞을 보는 쪽이 같다)
     const L = { up: bone(body, 'LeftArm'), lo: bone(body, 'LeftForeArm'), hand: bone(body, 'LeftHand') };
@@ -137,7 +154,13 @@ export class StageModel {
       else if (kind === 'glow') o.position.set(0, it.p0.y + 0.1, it.p0.z);
     }
   }
-  update(time, dt) { this.posture(time, dt); this.toGround(); this.placeProps(); }
+  update(time, dt) { this.posture(time, dt); this.toGround(); this.placeProps(); this.placePillow(); }
+  placePillow() {
+    const on = this.doll.pose === 'sleep' && !!this.acts.sleep && !this.doll.moving && this.headB; this.pillow.visible = !!on;
+    if (!on) return;
+    const r = this.p.root; r.updateMatrixWorld(true); const v = this.headB.getWorldPosition(v1); r.worldToLocal(v);
+    this.pillow.position.set(v.x, this.pillowY, v.z); this.pillow.rotation.y = Math.atan2(v.x, v.z);
+  }
   // 땅 딛기: 땅에 서거나 앉거나 꿇는 자세면 가장 낮은 무릎·발·발끝이 땅에 닿게 몸 높이를 맞춘다 — 모델마다 동작의 높이가 조금씩 달라
   // 묻히거나(마리아의 무릎 꿇기) 떠 보였다. 높이를 정한 사람·나무 위·누운 사람·걸터앉은 사람·날아 있는 것은 그대로
   toGround() {
@@ -242,7 +265,7 @@ export class StageModel {
     });
     // 고개: 인형이 숙이거나 드는 만큼 (십자가 위에서 고개를 떨굼, 하늘을 우러름)
   }
-  dispose() { this.mixer.stopAllAction(); this.p.root.parent?.remove(this.p.root); this.mats.forEach(m => m.dispose()); }
+  dispose() { this.mixer.stopAllAction(); this.p.root.parent?.remove(this.p.root); this.mats.forEach(m => m.dispose()); this.pillow.geometry.dispose(); this.pillow.material.dispose(); }
 }
 
 /* 군중 한 사람: 순례자 모델을 한 번만 자세 잡아 세운다 (매 프레임 움직이지 않아 가볍다 — 장면에 수십 명).
