@@ -15,6 +15,7 @@ const CLIP = { idle: 'idle', listen: 'idle', speak: 'talk', sleep: 'sleep' };
 const KNEEL = new Set(['kneel', 'mourn', 'cower']); // 땅에 앉기(sit-ground)는 무릎 꿇기가 아니다 — 앉아 가르치시는 예수님이 무릎 꿇고 기도하는 다리를 빌려 시도 때도 없이 꿇으셨다(사용자 2026-11)
 // 걸터앉기: 넓적다리를 앞으로, 정강이는 아래로 (회당에서 앉아 말씀을 읽으심 — 무릎 꿇고 기도하는 자세가 되었다, 사용자 2026-11)
 // 걸터앉기는 앉을 자리가 있을 때만(나귀·높이를 정한 사람·'seat') — 자리 없이 다리를 뻗으니 허공에 떠 앉았다(사용자 2026-11). 그 밖의 '앉기'는 땅에 발뒤꿈치를 깔고
+const WING = { scale: 1.0, y: -0.28, back: 0.12, turn: 0 }; // 날개를 붙이는 자리 (몸 모델 단위, 캡처로 맞춤)
 const MARCH = new Set(['soldier', 'guard', 'centurion']); // 발을 맞춰 걷는 사람들
 const HOLD = new Set(['carry', 'carry-pole', 'offer', 'hold']); // 두 팔로 안거나 받쳐 드는 자세
 const SEAT = new Set(['ride', 'seat']), SITS = new Set(['sit', 'sit-speak', 'sit-ground'])
@@ -72,6 +73,7 @@ export class StageModel {
   constructor(gltf, type, x = 0, z = 0, face = 0, o = {}) {
     this.doll = new Actor(type, x, z, face, o); // 보이지 않는 길잡이 (장면에 넣지 않는다)
     this.type = type;
+    this.still = !!o.still; // 아무 동작 없이 모델을 뜬 자세 그대로
     const body = clone(gltf.scene);
     body.updateMatrixWorld(true);
     const top = bone(body, 'HeadTop_End'), h = top ? top.getWorldPosition(v1).y : 1.7;
@@ -89,6 +91,7 @@ export class StageModel {
     this.pillow.rotation.z = Math.PI / 2; this.pillow.scale.set(1, 1, 0.6); this.pillow.visible = false; this.pillowY = H * 0.022;
     this.p.root.add(this.pillow);
     this.cur = null; this.w = 0; this.op = -1;
+    if (o.still) this.acts = {};
     this.march = MARCH.has(type); this.stride = Math.random(); this.pace = 0.9 + Math.random() * 0.2;
     // 인형의 왼팔·오른팔이 모델의 어느 팔인지는 자리(x)로 맞춘다 (서로 앞을 보는 쪽이 같다)
     const L = { up: bone(body, 'LeftArm'), lo: bone(body, 'LeftForeArm'), hand: bone(body, 'LeftHand') };
@@ -99,6 +102,8 @@ export class StageModel {
     this.legs = [['Left'], ['Right']].map(([s]) => ({ up: bone(body, s + 'UpLeg'), lo: bone(body, s + 'Leg'), foot: bone(body, s + 'Foot'), toe: bone(body, s + 'ToeBase'), tip: bone(body, s + 'Toe_End') }));
     const hips = bone(body, 'Hips'); this.hipH = hips ? hips.getWorldPosition(v1).y * body.scale.x / (body.scale.x || 1) : 0.5; this.body = body; this.legW = 0;
     this.headB = bone(body, 'Head'); this.neckB = bone(body, 'Neck'); this.spineB = bone(body, 'Spine1') || bone(body, 'Spine'); this.topB = bone(body, 'HeadTop_End');
+    // 날개(천사): 뼈 없는 따로 뜬 모델을 등(Spine2) 자리에 매 화면 붙인다 — 몸통만 따라가고 팔과는 상관없다
+    if (o.wings) { this.wings = clone(o.wings.scene); this.wings.traverse(m => { if (m.isMesh) { m.frustumCulled = false; m.material = brighten(m.material).clone(); this.mats.push(m.material); } }); this.p.root.add(this.wings); this.wingB = bone(body, 'Spine2') || this.spineB; }
     this.play('idle', 0);
     this.takeProps();
   }
@@ -125,7 +130,9 @@ export class StageModel {
   look(d) { this.doll.look(d); }
   settle() { const s = this.show; for (let i = 0; i < 60; i++) this.update(i * 0.05, 0.05); this.show = s; this.fadeTo(Math.min(1, s)); }
   play(name, fade = 0.35) {
-    const a = this.acts[name] || this.acts.idle; if (!a || a === this.cur) return;
+    const a = this.acts[name] || this.acts.idle;
+    if (!a) { if (this.cur) { this.cur.fadeOut(fade); this.cur = null; } return; } // 서 있는 동작이 없는 모델(천사)은 뜬 자세(A자) 그대로
+    if (a === this.cur) return;
     a.reset().setEffectiveWeight(1).play();
     // 여럿이 함께 걸을 때 발이 똑같이 맞으면 행진 같다 — 보통 사람은 걸음의 시작과 빠르기를 저마다 조금씩 달리, 병정만 발을 맞춘다(사용자 2026-11)
     if (name === 'walk' && !this.march) { a.time = this.stride * a.getClip().duration; a.timeScale = this.pace; } else a.timeScale = 1;
@@ -168,7 +175,15 @@ export class StageModel {
       else if (kind === 'glow') o.position.set(0, it.p0.y + 0.1, it.p0.z);
     }
   }
-  update(time, dt) { this.posture(time, dt); this.toGround(); this.placeProps(); this.placePillow(); }
+  update(time, dt) { this.posture(time, dt); this.toGround(); this.placeProps(); this.placePillow(); this.placeWings(); }
+  placeWings() {
+    if (!this.wings || !this.wingB) return;
+    const r = this.p.root; r.updateMatrixWorld(true);
+    const k = this.body.scale.x, v = r.worldToLocal(this.wingB.getWorldPosition(v1));
+    this.wings.scale.setScalar(k * WING.scale); // 날개 모델은 미터 단위(높이 0.95) — 몸 모델(1.7m)과 같은 배율로
+    this.wings.position.set(v.x, v.y + k * WING.y, v.z - k * WING.back); // 등뼈에서 조금 아래·뒤 (견갑골)
+    this.wings.rotation.set(0, WING.turn, 0);
+  }
   placePillow() {
     const on = this.doll.pose === 'sleep' && !!this.acts.sleep && this.doll.goal.distanceTo(this.doll.pos) <= 0.02 && this.headB; this.pillow.visible = !!on;
     if (!on) return;
@@ -211,10 +226,11 @@ export class StageModel {
     if (!this.rest) { this.rest = []; const add = b => b && this.rest.push([b, b.quaternion.clone()]); this.legs.forEach(l => [l.up, l.lo, l.foot].forEach(add)); this.arms.forEach(([, m]) => [m.up, m.lo, m.hand].forEach(add)); [this.headB, this.neckB, this.spineB].forEach(add); }
     for (const [b, q] of this.rest) b.quaternion.copy(q);
     this.mixer.update(dt);
+    if (this.still) return; // 천사: 몸도 팔도 돌리지 않는다
     // 동작이 없는 자세는 인형의 팔을 따른다 (천천히 들어가고 나온다)
     // 아기·물건을 두 팔로 안은 사람(carry)은 걸을 때도 팔을 인형대로 — 걷기 동작대로 두 팔을 흔들어 아기가 배에 붙어 있었다(사용자 2026-11)
     const hold = HOLD.has(d.pose);
-    this.w = damp(this.w, (clip && !(walk && hold)) || perch ? 0 : 1, 6, dt);
+    this.w = damp(this.w, this.still || (clip && !(walk && hold)) || perch ? 0 : 1, 6, dt); // still: 팔을 돌리지 않는 모델(천사)
     // 걸터앉기·나귀 타기: 넓적다리를 앞으로, 정강이는 아래로 하고 몸을 인형처럼 내려 앉힌다 (모델에 앉는 동작이 없다)
     this.legW = damp(this.legW, ride ? 1 : 0, 6, dt);
     this.body.position.y = -this.hipH * 0.58 * (d.kneel || 0) * this.legW;

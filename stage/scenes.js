@@ -26,6 +26,7 @@ export const SCRIPTS = {
      타락 전의 아담과 하와는 빛 속의 실루엣으로만, 범죄한 뒤에는 어두운 실루엣으로, 마지막에 가죽옷을 입은 모습으로 동산 동쪽(오른쪽)으로 떠난다.
      하나님은 모습 없이 빛(presence)으로만, 뱀은 가지에 감긴 어두운 그림자로만 (연출 원칙 2). 생명나무로 가는 길은 그룹과 불칼이 지킨다 */
   e00: {
+    dolls: true, // 아담·하와는 인형(가죽옷) 그대로 — 모델로 바꾸지 않는다
     env: 'glory', wide: 1.25, at: [31.0, 47.43], // 에덴: 창 2:10–14의 힛데겔(티그리스)·유브라데(유프라테스)가 만나는 메소포타미아 남쪽 (전승의 자리, 정확한 곳은 알 수 없다)
     props: {
       grass: ['grass', 0, 0.05, { r: 1.9 }],
@@ -2314,7 +2315,7 @@ export const SCRIPTS = {
       'p0.3': [['peter', 'bow'], ['johnD', 'look-up', { delay: 2500 }]],
       'p1.0': [['peter', 'idle', { x: -2.1, z: 0.0 }], ['johnD', 'idle', { x: -2.2, z: 0.3 }], ['peter', 'idle', { show: 0, delay: 4500 }], ['johnD', 'idle', { show: 0, delay: 4500 }],
         ['mary', 'idle', { x: 0.35, z: 0.1, look: 1.0, delay: 1500 }], ['mary', 'mourn', { delay: 5000 }]],
-      'p1.1': [['mary', 'bow', { look: 1.0 }], ['beam', null, { show: 1 }], ['angel1', 'sit-ground', { show: 1 }], ['angel2', 'sit-ground', { show: 1 }]],
+      'p1.1': [['mary', 'bow', { look: 1.0 }], ['beam', null, { show: 1 }], ['angel1', 'sit', { show: 1, y: 0.16 }], ['angel2', 'sit', { show: 1, y: 0.16 }]], // 무덤 곁 돌에 걸터앉아 다리를 내린다(요 20:12) — 땅에 양반다리로 앉히니 긴 겉옷이 두 발 사이로 늘어났다
       'p1.5': [['mary', 'idle', { look: -1.2 }], ['jesus', 'idle', { show: 1, x: -0.1, z: -0.05, look: 1.0 }]],
       'p2.0': [['@env', 'day'], ['jesus', 'speak', { look: 1.0 }]],
       'p2.2': [['mary', 'kneel', { x: 0.3, z: 0.1, look: -1.0 }], ['mary', 'speak', { delay: 2500 }]],
