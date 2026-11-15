@@ -92,6 +92,9 @@ export class StageModel {
     this.p.root.add(this.pillow);
     this.cur = null; this.w = 0; this.op = -1;
     if (o.still) this.acts = {};
+    // 무릎 꿇는 동작('pray')은 앉았다(1.9초까지)·꿇은 채(4.6초까지)·일어남이 한 번에 들어 있어, 되풀이하면 꿇었다 일어났다를 거듭했다
+    // (스데반·다메섹 길의 바울, 사용자 2026-11) — 꿇은 채 머무는 가운데 토막만 되풀이한다
+    if (this.acts.pray) { const c = this.acts.pray.getClip(); if (c.duration > 5) this.acts.pray = this.mixer.clipAction(THREE.AnimationUtils.subclip(c, 'pray-hold', 57, 138, 30)); }
     this.march = MARCH.has(type); this.stride = Math.random(); this.pace = 0.9 + Math.random() * 0.2;
     // 인형의 왼팔·오른팔이 모델의 어느 팔인지는 자리(x)로 맞춘다 (서로 앞을 보는 쪽이 같다)
     const L = { up: bone(body, 'LeftArm'), lo: bone(body, 'LeftForeArm'), hand: bone(body, 'LeftHand') };
@@ -187,8 +190,13 @@ export class StageModel {
   placePillow() {
     const on = this.doll.pose === 'sleep' && !!this.acts.sleep && this.doll.goal.distanceTo(this.doll.pos) <= 0.02 && this.headB; this.pillow.visible = !!on;
     if (!on) return;
-    const r = this.p.root; r.updateMatrixWorld(true); const v = this.headB.getWorldPosition(v1); r.worldToLocal(v);
-    this.pillow.position.set(v.x, this.pillowY, v.z); this.pillow.rotation.y = Math.atan2(v.x, v.z);
+    // 잠자는 동작은 머리를 땅에서 들고 있어(옆으로 누워 팔을 괸 모습), 땅에 둔 납작한 베개와 머리 사이가 떠 보였다(사용자 2026-11) —
+    // 머리 가운데 바로 밑에, 둥글게 만 겉옷 뭉치를 땅에서 머리 밑까지 차도록 키워 둔다
+    const r = this.p.root; r.updateMatrixWorld(true);
+    const a = r.worldToLocal(this.headB.getWorldPosition(v1)), t = this.topB ? r.worldToLocal(this.topB.getWorldPosition(v2)) : a.clone();
+    const c = a.clone().add(t).multiplyScalar(0.5), rad = a.distanceTo(t) * 0.45, d = this.pillowY / 0.022 * 0.064; // c: 머리 가운데, d: 베개 기본 두께
+    const bottom = c.y - rad, k = THREE.MathUtils.clamp(bottom / d, 1, 2.8);
+    this.pillow.scale.set(k, 1.1, 0.75 * k); this.pillow.position.set(c.x, Math.max(d * k / 2, bottom - d * k / 2), c.z); this.pillow.rotation.y = Math.atan2(c.x, c.z);
   }
   // 땅 딛기: 땅에 서거나 앉거나 꿇는 자세면 가장 낮은 무릎·발·발끝이 땅에 닿게 몸 높이를 맞춘다 — 모델마다 동작의 높이가 조금씩 달라
   // 묻히거나(마리아의 무릎 꿇기) 떠 보였다. 높이를 정한 사람·나무 위·누운 사람·걸터앉은 사람·날아 있는 것은 그대로

@@ -329,6 +329,13 @@ if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__st
     const bind = i => new THREE.Vector3().setFromMatrixPosition(M.copy(S.boneInverses[i]).invert());
     const r = (x, y) => { const i = ix(x), k = ix(y); return S.bones[i].getWorldPosition(v).distanceTo(S.bones[k].getWorldPosition(w)) / (bind(i).distanceTo(bind(k)) * sc); };
     return { n, up: +r('LeftArm', 'LeftForeArm').toFixed(2), lo: +r('LeftForeArm', 'LeftHand').toFixed(2) }; }); },
+  // 누운 사람의 머리와 베개 자리 (점검)
+  sleepers() { const v = new THREE.Vector3(), w = new THREE.Vector3(), u = new THREE.Vector3(); return Object.entries(actors).filter(([, a]) => a.pillow?.visible).map(([n, a]) => {
+    a.p.root.updateMatrixWorld(true); a.headB.getWorldPosition(v); a.pillow.getWorldPosition(w); a.p.root.getWorldPosition(u); const k = a.p.root.getWorldScale(new THREE.Vector3()).y;
+    let sk = null; a.body.traverse(o => { if (o.isSkinnedMesh && !sk) sk = o; }); sk.computeBoundingBox(); const bb = sk.boundingBox.clone().applyMatrix4(sk.matrixWorld);
+    const pr = q => { const x = q.clone().project(camera), r = canvas.getBoundingClientRect(); return [Math.round(r.left + (x.x + 1) / 2 * r.width), Math.round(r.top + (1 - x.y) / 2 * r.height)]; };
+    return { n, sh: pr(v), sp: pr(w), mesh: [bb.min.y, bb.max.y, bb.min.z, bb.max.z].map(x => +x.toFixed(3)), head: [v.x, v.y, v.z].map(x => +x.toFixed(3)), pillow: [w.x, w.y, w.z].map(x => +x.toFixed(3)), root: [u.x, u.y, u.z].map(x => +x.toFixed(3)), k: +k.toFixed(3) }; }); },
+  hipsY(n) { const a = actors[n]; if (!a?.body) return null; let h = null; a.body.traverse(o => { if (!h && o.isBone && /Hips$/.test(o.name)) h = o; }); return +h.getWorldPosition(new THREE.Vector3()).y.toFixed(3); },
   goAll(dx) { Object.values(actors).forEach(a => a.moveTo(a.goal.x + dx, a.goal.y)); },
   walkers() { return Object.entries(actors).filter(([, a]) => a.cur?.getClip().name === 'walk').map(([n, a]) => ({ n, t: +(a.cur.time / a.cur.getClip().duration).toFixed(2), pace: +a.cur.timeScale.toFixed(2) })); },
   // 소품이 땅에서 뜨거나 묻혔는지: 보이는 소품의 맨 아래와 그 자리 땅 높이의 차 (일부러 띄운 것 — y를 준 것, 하늘의 것 — 은 뺀다)
