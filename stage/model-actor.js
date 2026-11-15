@@ -64,12 +64,12 @@ function withBorrowed(gltf, body, borrow = {}) {
     anims.push(new THREE.AnimationClip(n, c.duration, c.tracks.filter(t => gltf.scene.getObjectByName(t.name.split('.')[0])).map(t => {
       const [bn, prop] = t.name.split('.'), u = t.clone();
       if (/Hips/.test(bn) && prop === 'position') { u.values = u.values.map(v => v * k); return u; }
-      if (prop !== 'quaternion') return t;
+      if (prop !== 'quaternion') return null; // 다른 뼈의 위치·크기는 빼고 이 모델의 뼈 길이 그대로 — 남의 뼈 길이가 들어가 천사의 팔이 늘어났다(사용자 2026-11)
       const rd = donor.scene.getObjectByName(bn)?.quaternion, rr = gltf.scene.getObjectByName(bn)?.quaternion; if (!rd || !rr) return t;
       const inv = rd.clone().invert();
       for (let i = 0; i < u.values.length; i += 4) { qa.fromArray(u.values, i); qb.copy(rr).multiply(inv.clone().multiply(qa)); qb.toArray(u.values, i); }
       return u;
-    })));
+    }).filter(Boolean)));
   }
   have[key] = { scene: gltf.scene, animations: anims }; merged.set(gltf, have); return have[key];
 }
