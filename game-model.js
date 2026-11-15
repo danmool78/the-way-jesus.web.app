@@ -216,13 +216,18 @@ function upright(gltf, clip) {
   const sp = bone(sc, 'Spine'), nk = bone(sc, 'Neck'); if (!sp || !nk) return clip;
   const t = nk.getWorldPosition(new THREE.Vector3()).sub(sp.getWorldPosition(new THREE.Vector3())).normalize();
   const pw = sp.parent.getWorldQuaternion(new THREE.Quaternion()), q = new THREE.Quaternion().setFromUnitVectors(t, new THREE.Vector3(0, 1, 0));
-  const X = pw.clone().invert().multiply(q).multiply(pw), name = sp.name + '.quaternion';
+  // 몸통을 세운 만큼 팔과 목은 거꾸로 돌려 원래 동작의 방향을 지킨다 — 그러지 않으면 몸통과 함께 젖혀져
+  // 팔이 앞으로 들리고 고개가 위를 보았다(사용자 2026-11, 안드레). 세계 회전 q를 되돌리는 부모 좌표의 회전
+  const fix = { [sp.name]: pw.clone().invert().multiply(q).multiply(pw) };
+  for (const n of ['LeftArm', 'RightArm', 'Neck']) { const b = bone(sc, n); if (!b) continue; const pa = b.parent.getWorldQuaternion(new THREE.Quaternion()); fix[b.name] = pa.clone().invert().multiply(q.clone().invert()).multiply(pa); }
+  const byName = Object.fromEntries(Object.keys(fix).map(n => [n + '.quaternion', n]));
   mixer.stopAllAction();
-  const tracks = clip.tracks.some(k => k.name === name) ? clip.tracks : [...clip.tracks, new THREE.QuaternionKeyframeTrack(name, [0], sp.quaternion.toArray())]; // 덜어 낸 뼈면 지금 자세로 하나 만든다
+  const tracks = [...clip.tracks];
+  for (const [tn, n] of Object.entries(byName)) if (!tracks.some(k => k.name === tn)) tracks.push(new THREE.QuaternionKeyframeTrack(tn, [0], sc.getObjectByName(n).quaternion.toArray())); // 덜어 낸 뼈면 지금 자세로 하나 만든다
   return new THREE.AnimationClip(clip.name, clip.duration, tracks.map(k => {
-    if (k.name !== name) return k;
+    const n = byName[k.name]; if (!n) return k;
     const V = Array.from(k.values), Q = new THREE.Quaternion();
-    for (let i = 0; i < V.length; i += 4) { Q.fromArray(V, i).premultiply(X); Q.toArray(V, i); }
+    for (let i = 0; i < V.length; i += 4) { Q.fromArray(V, i).premultiply(fix[n]); Q.toArray(V, i); }
     return new THREE.QuaternionKeyframeTrack(k.name, Array.from(k.times), V);
   }));
 }
