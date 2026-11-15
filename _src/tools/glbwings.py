@@ -23,11 +23,12 @@ def main(src, dst):
         d = B - A; t = np.clip(((P - A) @ d) / (d @ d + 1e-9), 0, 1); return np.linalg.norm(P - (A + t[:, None] * d), axis=1)
     arm_d = np.full(len(P), 9.0)
     for side in ('Left', 'Right'):
-        chain = [jp[ix[side + k]] for k in ('Shoulder', 'Arm', 'ForeArm', 'Hand', 'HandMiddle1')]
-        arm_d = np.minimum(arm_d, np.min([segd(chain[i], chain[i + 1]) for i in range(4)], axis=0))
+        chain = [jp[ix[side + k]] for k in ('Shoulder', 'Arm', 'ForeArm', 'Hand', 'HandMiddle1', 'HandMiddle2', 'HandMiddle3', 'HandMiddle4') if side + k in ix]
+        arm_d = np.minimum(arm_d, np.min([segd(chain[i], chain[i + 1]) for i in range(len(chain) - 1)], axis=0))
+        arm_d = np.where(np.linalg.norm(P - jp[ix[side + 'Hand']], axis=1) < 0.13, 0, arm_d)  # 손 둘레(손가락 끝까지)는 늘 팔 쪽 — 손가락이 등에 묶여 늘어났다
     back = jp[ix['Spine2']][2]  # 등뼈의 앞뒤 자리
     x, y, z = P[:, 0], P[:, 1], P[:, 2]
-    wing = ((z < back - 0.1) & (arm_d > 0.08) & (y > 0.55)) | ((z < back - 0.14) & (np.abs(x) > 0.12) & (y > 0.55))
+    wing = (z < back - 0.07) & (arm_d > 0.045) & (y > 0.55)  # 몸 뒤쪽에서 팔 줄기(소매·손)와 떨어진 것
     s2 = ix['Spine2']
     J[wing] = 0; J[wing, 0] = s2; W[wing] = 0; W[wing, 0] = 1
     b[jo:jo + J.nbytes] = J.astype(J.dtype).tobytes(); b[wo:wo + W.nbytes] = W.astype('<f4').tobytes()

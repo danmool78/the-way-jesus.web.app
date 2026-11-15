@@ -164,7 +164,10 @@ function clearCast() {
 const SITTING = new Set(['sit', 'sit-ground', 'sit-speak', 'seat']), KNEELING = new Set(['kneel', 'mourn', 'cower']);
 // 앉거나 무릎 꿇은 사람이 자리를 옮기지 않고 말하거나 손짓·기도·쳐다보기만 하면 그 자세 그대로 — 대본의 동작들이 모두 선 자세라
 // 혼자 앉았다가 벌떡 일어나 말하고 다시 앉았다(사용자 2026-11). 일부러 일어서는 것은 'idle'·'stand'·'bow'(일어나 이르시되)·'raise'(뛰어 일어남)로 쓴다
+const ANGEL = new Set(['angel', 'whiteman']);
 function lowPose(a, pose, o) {
+  // 천사는 두 팔을 높이 들지 않는다 — 등의 날개가 손 가까이 붙어 있어 팔을 쳐들면 날개 끝이 손에 끌려 늘어났다(사용자 2026-11). 축복·외침은 말하는 손짓으로
+  if (a.doll && ANGEL.has(a.type) && ['bless', 'raise', 'point'].includes(pose)) return 'speak';
   if (!pose || o.x !== undefined || o.z !== undefined) return pose;
   if (SITTING.has(a.pose)) {
     if (['speak', 'bless', 'point', 'shrug'].includes(pose)) return 'sit-speak';
