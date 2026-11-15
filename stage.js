@@ -153,7 +153,21 @@ function clearCast() {
 }
 /* 동작 명령: [이름, 자세(또는 소품 상태), 옵션]
    이름이 '@env'면 분위기 전환. 옵션: x, z, y, look, show, item, board('배 이름' 또는 null), delay(ms), to(말을 건네는 상대) */
-const SITTING = new Set(['sit', 'sit-ground', 'sit-speak', 'seat']);
+const SITTING = new Set(['sit', 'sit-ground', 'sit-speak', 'seat']), KNEELING = new Set(['kneel', 'mourn', 'cower']);
+// 앉거나 무릎 꿇은 사람이 자리를 옮기지 않고 말하거나 손짓·기도·쳐다보기만 하면 그 자세 그대로 — 대본의 동작들이 모두 선 자세라
+// 혼자 앉았다가 벌떡 일어나 말하고 다시 앉았다(사용자 2026-11). 일부러 일어서는 것은 'idle'·'stand'·'bow'(일어나 이르시되)·'raise'(뛰어 일어남)로 쓴다
+function lowPose(a, pose, o) {
+  if (!pose || o.x !== undefined || o.z !== undefined) return pose;
+  if (SITTING.has(a.pose)) {
+    if (['speak', 'bless', 'point', 'shrug'].includes(pose)) return 'sit-speak';
+    if (['listen', 'look-up', 'pray', 'afraid'].includes(pose)) return a.sitAs || 'sit';
+  }
+  if (KNEELING.has(a.pose)) {
+    if (['speak', 'pray', 'look-up', 'listen'].includes(pose)) return a.pose === 'kneel' || pose === 'look-up' ? 'kneel' : a.pose; // 엎드렸다가 눈을 들어 보면 무릎 꿇고 고개를 든다
+    if (pose === 'afraid') return a.pose;
+  }
+  return pose;
+}
 function apply(cmds, instant = false) {
   (cmds || []).forEach(cmd => {
     let [name, pose, o = {}] = cmd;
@@ -168,10 +182,7 @@ function apply(cmds, instant = false) {
     if (name === '@at') { moveAt = pose ? { ll: pose, x: o.x || 0, z: o.z || 0 } : null; if (instant) atSnap = true; return; }
     const a = actors[name], p = props[name];
     if (a) {
-      // 앉아 있던 사람이 자리를 옮기지 않고 말하거나 듣기만 하면 앉은 채로 — 대본의 'speak'·'listen'이 서는 동작이라 혼자 앉았다가 벌떡 일어났다(사용자 2026-11)
-      const still = o.x === undefined && o.z === undefined, stay = SITTING.has(a.pose) && still;
-      if (still && a.pose === 'kneel' && pose === 'pray') pose = 'kneel'; // 무릎 꿇고 기도하다가 일어서서 기도하지 않게 (겟세마네)
-      const want = stay && pose === 'speak' ? 'sit-speak' : stay && pose === 'listen' ? (a.sitAs || 'sit') : pose;
+      const want = lowPose(a, pose, o);
       if (want) { if (SITTING.has(want) && want !== 'sit-speak') a.sitAs = want; a.set(want); a.talkTo = o.to ? actors[o.to] : null; }
       if ('board' in o) (o.board ? props[o.board].deck : stageGroup).add(a.p.root);
       if (o.x !== undefined || o.z !== undefined) a.moveTo(o.x ?? a.goal.x, o.z ?? a.goal.y);

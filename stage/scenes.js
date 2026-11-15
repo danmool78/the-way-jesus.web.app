@@ -398,7 +398,7 @@ export const SCRIPTS = {
       'p0.4': [['@env', 'dusk'], ['jesus', 'kneel'], ['tempter', 'idle', { show: 1, delay: 2500 }]],
       'p1.0': [['tempter', 'point', { look: 1.2 }]],
       'p1.1': [['tempter', 'raise', { look: 0.9 }]],
-      'p2.0': [['jesus', 'speak', { look: -1.0 }]],
+      'p2.0': [['jesus', 'idle', { look: -1.0 }], ['jesus', 'speak', { delay: 900 }]], // 일어서서 '기록되었으되' — 무릎 꿇은 채 답하지 않게
       'p2.3': [['jesus', 'rebuke', { look: -1.0 }], ['tempter', 'idle', { show: 0, delay: 1200 }], ['angel1', 'kneel', { show: 1, y: 0, delay: 2500 }], ['angel2', 'bless', { show: 1, y: 0, delay: 2800 }], ['jesus', 'pray', { look: 0, delay: 3500 }]],
       w0: [['tempter', 'point', { show: 1 }], ['jesus', 'speak', { look: -1.0 }]],
       w1: [['jesus', 'rebuke', { look: -1.0 }], ['tempter', 'idle', { show: 0, delay: 1500 }]],
@@ -925,7 +925,7 @@ export const SCRIPTS = {
       'p0.0': [['jesus', 'idle', { x: 0, z: -0.3, look: 0 }], ['jesus', 'pray', { delay: 4500 }]],
       'p0.1': [['@env', 'night'], ['jesus', 'kneel']],
       'p0.2': [['jesus', 'pray']],
-      'p1.0': [['@env', 'calm'], ['many', null, { show: 1 }], ['jesus', 'look-up', { delay: 1500 }], ['jesus', 'speak', { delay: 4000 }]],
+      'p1.0': [['@env', 'calm'], ['many', null, { show: 1 }], ['jesus', 'idle', { delay: 1500 }], ['jesus', 'look-up', { delay: 2000 }], ['jesus', 'speak', { delay: 4000 }]], // 밤새 기도하시고 일어나 제자들을 부르신다
       'p1.2': [['twelve', null, { show: 1 }], ['peter', 'idle', { show: 1 }], ['johnD', 'idle', { show: 1 }]],
       'p1.3': [['jesus', 'bless']],
       'p2.0': [['jesus', 'speak'], ['peter', 'kneel', { look: 2.8, delay: 1500 }], ['johnD', 'kneel', { look: -2.8, delay: 4000 }]],
