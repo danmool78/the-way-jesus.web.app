@@ -101,6 +101,7 @@ export class StageModel {
     const dl = this.doll.p.armL.position.x > 0;
     this.arms = [[this.doll.p.armL, dl === (L.up.getWorldPosition(v1).x > 0) ? L : R], [this.doll.p.armR, dl === (L.up.getWorldPosition(v1).x > 0) ? R : L]];
     for (const [, mb] of this.arms) if (mb.hand) mb.hand0 = mb.hand.quaternion.clone(); // 손목의 기본 자세 (곧게 편 손)
+    for (const [, mb] of this.arms) if (mb.hand) mb.tip = mb.hand.children.find(c => c.isBone && /HandMiddle1$/.test(c.name)) || null; // 손바닥 가운데 (손 방향)
     this.legs = [['Left'], ['Right']].map(([s]) => ({ up: bone(body, s + 'UpLeg'), lo: bone(body, s + 'Leg'), foot: bone(body, s + 'Foot'), toe: bone(body, s + 'ToeBase'), tip: bone(body, s + 'Toe_End') }));
     const hips = bone(body, 'Hips'); this.hipH = hips ? hips.getWorldPosition(v1).y * body.scale.x / (body.scale.x || 1) : 0.5; this.body = body; this.legW = 0;
     this.headB = bone(body, 'Head'); this.neckB = bone(body, 'Neck'); this.spineB = bone(body, 'Spine1') || bone(body, 'Spine'); this.topB = bone(body, 'HeadTop_End');
@@ -291,6 +292,8 @@ export class StageModel {
         this.aim(mb.lo, mb.hand, face.sub(mb.lo.getWorldPosition(v1)).normalize(), this.w);
       }
       mb.hand.quaternion.slerp(mb.hand0, this.w); // 손목은 곧게 (서 있는 동작의 꺾인 손목이 남아 어색했다)
+      // 손은 팔뚝을 곧게 잇는다 — 기본 손목 각도가 꺾인 모델(천사)은 손을 들면 손이 옆으로 꺾여 깃발처럼 섰다(사용자 2026-11)
+      if (mb.tip) this.aim(mb.hand, mb.tip, mb.hand.getWorldPosition(v1).sub(mb.lo.getWorldPosition(v2)).normalize(), this.w * 0.85);
     });
     // 고개: 인형이 숙이거나 드는 만큼 (십자가 위에서 고개를 떨굼, 하늘을 우러름)
   }
