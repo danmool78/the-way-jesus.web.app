@@ -35,7 +35,7 @@ def main(src, dst):
     wing = np.zeros(len(P), bool)
     for r in np.unique(roots):
         m = roots == r; c = P[m].mean(0)
-        if c[2] < back - 0.09 and c[1] > 0.5: wing |= m
+        if c[2] < back - 0.09 and (c[1] > 0.5 or abs(c[0]) > 0.3): wing |= m  # 허리 아래는 옆으로 멀리 나간 날개 끝만 (옷자락 뒷자락은 몸 가까이)
     s2 = ix['Spine2']
     J[wing] = 0; J[wing, 0] = s2; W[wing] = 0; W[wing, 0] = 1
     b[jo:jo + J.nbytes] = J.astype(J.dtype).tobytes(); b[wo:wo + W.nbytes] = W.astype('<f4').tobytes()
