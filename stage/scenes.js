@@ -1626,8 +1626,8 @@ export const SCRIPTS = {
   /* 40. 실로암에서 눈을 뜨다 — 예루살렘 거리와 오른쪽 실로암 못. 진흙을 바르는 대목은 손을 얹는 몸짓으로만.
      더듬어 못에 가서 씻고 돌아온다. 바리새인들의 심문, 두려워하는 부모, 마지막에 엎드려 믿는 사람 */
   e40: {
-    // 무대 가운데는 아랫도시 거리, 오른쪽 못 소품은 지도 3D 도성의 실로암 못 자리에 고정
-    wide: 1.4, at: [31.7704, 35.2326],
+    // 무대 가운데는 남쪽 성벽 바로 밖 빈 땅(성벽 위에 서 있었다, 사용자 2026-11), 오른쪽 못 소품은 지도 3D 도성의 실로암 못 자리에 고정
+    wide: 1.4, at: [31.7697, 35.2331],
     props: {
       pool: ['pool', 1.25, -0.45, { w: 0.8, d: 0.32, geo: [31.7706, 35.2351] }],
     },
@@ -1648,7 +1648,7 @@ export const SCRIPTS = {
       'p0.5': [['jesus', 'speak', { look: -0.8 }]],
       'p0.6': [['jesus', 'speak', { look: 1.0 }]],
       'p1.0': [['jesus', 'idle', { x: -0.55, z: 0.12, look: 1.0 }], ['jesus', 'bless', { delay: 1500 }], ['blind', 'idle', { look: 1.0, delay: 4000 }]],
-      'p1.1': [['blind', 'idle', { x: 1.0, z: -0.2, look: 1.0 }], ['blind', 'bow', { delay: 4500 }]],
+      'p1.1': [['blind', 'idle', { x: 1.0, z: 0.2, look: 1.0 }], ['blind', 'bow', { delay: 4500 }]], // 못 쪽 성벽 모서리 바로 밖 (성벽 위에 섰다)
       'p1.2': [['blind', 'look-up', { look: -0.6 }], ['blind', 'idle', { x: 0.4, z: 0.1, look: -1.0, delay: 3000 }]],
       'p2.0': [['jesus', 'idle', { show: 0 }], ['peter', 'idle', { show: 0 }], ['johnD', 'idle', { show: 0 }],
         ['phar1', 'speak', { show: 1, x: 0.95, z: 0.2, look: -1.0 }], ['phar2', 'idle', { show: 1, x: 1.15, z: -0.02, look: -1.0 }], ['father', 'afraid', { show: 1, x: 1.45, z: 0.38, look: -1.0 }], ['mother', 'cower', { show: 1, x: 1.65, z: 0.2, look: -1.0 }]],

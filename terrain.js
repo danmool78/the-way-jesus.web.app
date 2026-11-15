@@ -456,15 +456,15 @@ function addModel(group, E, scale) {
     } else if (o.isMesh) { box.setFromObject(o); box.getCenter(c); lifts.push([o, heightAt(c.x, c.z) / scale]); }
   });
   lifts.forEach(([o, h]) => { o.position.y += h; o.castShadow = o.receiveShadow = true; });
-  if (E === JLM) { city = true; group.traverse(o => { if (!o.isMesh || o.isInstancedMesh) return; // 집 묶음(instanced)은 clutter가 무대 자리에서 치운다
+  if (E === JLM) { city = true; group.traverse(o => { if (!o.isMesh) return; // 집 묶음(instanced)은 무대 바로 밑만 clutter가 치우고 나머지는 함께 옅게
     o.material = [].concat(o.material).map(m => Object.assign(m.clone(), { transparent: true })); if (o.material.length === 1) o.material = o.material[0];
-    box.setFromObject(o); cityParts.push({ m: o, mats: [].concat(o.material), x0: box.min.x, z0: box.min.z, x1: box.max.x, z1: box.max.z, a: 1 }); }); }
+    box.setFromObject(o); cityParts.push({ m: o, mats: [].concat(o.material), inst: o.isInstancedMesh, x0: box.min.x, z0: box.min.z, x1: box.max.x, z1: box.max.z, a: 1 }); }); }
   models.push([ox, oz, ex, ez]); // 모형 둘레는 땅을 고르지 않는다 (level)
-  group.traverse(o => { if (o.isInstancedMesh) clutterInstanced(o, false); }); // 도성의 집·나무, 표지의 대추야자도 무대 자리에서는 비킨다
+  group.traverse(o => { if (o.isInstancedMesh) clutterInstanced(o, false, E === JLM ? 0.55 : 1); }); // 도성의 집·나무, 표지의 대추야자도 무대 자리에서는 비킨다 — 도성의 집은 사람 바로 밑만(둘레를 다 치우니 맨땅이었다)
 }
 // 무대가 서는 자리의 집·나무는 잠시 치운다. 무대는 지도 위에 겹쳐 그리는 그림이라, 그 밑의 집·나무가 인물 사이로 삐져나와 보인다.
 // 치우는 넓이는 무대 그림의 크기(화면 px)를 그 자리의 지도 단위로 바꾼 것 — 당기고 물러나면 따라 바뀐다
-let city = false;
+let city = false, routeK = 1;
 // 성 안 장면의 무대가 서면 무대 자리에 걸친 도성 모형의 성벽·건물만 서서히 감춘다 — 사람들 사이로 솟아 겹쳤다.
 // 성 전체를 감추니 성전 바닥까지 사라져 맨땅이라 이상했다(사용자 2026-11): 무대보다 훨씬 넓은 판(성전 바닥 단)은 그대로, 나머지 성은 옅게 비쳐 남긴다
 const cityParts = [];
@@ -472,8 +472,8 @@ function fadeCity(on, cx, cz, r) {
   const R = r * 1.3;
   cityParts.forEach(c => {
     const dx = Math.max(c.x0 - cx, 0, cx - c.x1), dz = Math.max(c.z0 - cz, 0, cz - c.z1);
-    const big = Math.max(c.x1 - c.x0, c.z1 - c.z0) >= r * 3, near = dx * dx + dz * dz < R * R;
-    const to = !on || big ? 1 : near ? 0.15 : 0.4; // 성은 옅게 비쳐 남는다(사용자 2026-11) — 무대에 걸친 것은 거의 사라지게
+    const big = !c.inst && Math.max(c.x1 - c.x0, c.z1 - c.z0) >= r * 3, near = !c.inst && dx * dx + dz * dz < R * R;
+    const to = !on || big ? 1 : near ? 0.3 : 0.6; // 성은 옅게 비쳐 남는다(사용자 2026-11) — 무대에 걸친 것은 더 옅게. 너무 지우니 맨땅 같아 조금 더 보이게
     if (Math.abs(c.a - to) < 0.002) return;
     c.a += (to - c.a) * 0.07; if (Math.abs(c.a - to) < 0.01) c.a = to;
     c.mats.forEach(m => { m.opacity = c.a; m.depthWrite = c.a > 0.98; });
@@ -746,7 +746,9 @@ function loop(now) {
   // 지나온 길만 밝게, 지금 걷는 길은 금빛으로, 아직 가지 않은 길은 흐리게
   // 아주 가까이(도성 안)에서는 길을 옅게 — 굵은 길이 건물을 덮지 않게
   const near = THREE.MathUtils.clamp((cam.dist - 40) / 90, 0.15, 1);
-  routes.forEach(l => { const i = l.userData.i; l.material.opacity = (i <= idx ? 0.9 : walking && i === idx + 1 ? 1 : 0.18) * near; });
+  // 장면을 보는 동안(무대가 서 있고 걷지 않을 때)은 길을 서서히 감춘다 — 움직이지도 않는데 넓은 길 띠가 무대를 덮었다(사용자 2026-11)
+  routeK += ((document.body.classList.contains('stage-on') && !walking ? 0 : 1) - routeK) * 0.06;
+  routes.forEach(l => { const i = l.userData.i; l.material.opacity = (i <= idx ? 0.9 : walking && i === idx + 1 ? 1 : 0.18) * near * routeK; l.visible = routeK > 0.01; });
   clearStageSpot();
   // 장면의 밤·폭풍·새벽: 3D 무대가 서 있으면 그 분위기를 해·하늘빛으로(stage.js의 stageTone), 아니면 2D 지도처럼 색조 필터로
   const tn = window.stageTone;
