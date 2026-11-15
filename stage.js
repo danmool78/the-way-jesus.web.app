@@ -111,7 +111,8 @@ scene.add(stageGroup);
 const OWN = { jesus: 'jesus', risen: 'jesus', peter: 'peter', john: 'john', mary: 'mary', joseph: 'joseph', baptist: 'baptist', pharisee: 'pharisee',
   thomas: 'thomas', martha: 'martha', judas: 'judas', lazarus: 'lazarus', samaritan: 'samaritan', centurion: 'centurion', zacchaeus: 'zacchaeus',
   pilate: 'pilate', shepherd: 'shepherd', soldier: 'soldier', highpriest: 'caiaphas', elder: 'nicodemus', woman: 'woman',
-  moses: 'moses', elijah: 'elijah', angel: 'angel', whiteman: 'angel' }; // 천사(가브리엘·목자들에게 나타난 천사·무덤의 흰 옷 입은 이)
+  moses: 'moses', elijah: 'elijah', angel: 'angel', whiteman: 'angel',
+  paul: 'paul', paulS: 'paul', paulO: 'paul', paulOS: 'paul', barnabas: 'barnabas', silas: 'silas', timothy: 'timothy', lydia: 'lydia' }; // 바울 여정 (바울은 시기별 배역 모두 같은 모델) // 천사(가브리엘·목자들에게 나타난 천사·무덤의 흰 옷 입은 이)
 const MEN = new Set(['man', 'servant', 'traveler', 'healed', 'beggar', 'prodigal', 'levi', 'steward', 'groom', 'rich']);
 const WOMEN = new Set(['woman2', 'mother', 'anna', 'phoenician']);
 const BOYS = new Set(['child', 'boyJesus']);
