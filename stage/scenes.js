@@ -1563,8 +1563,8 @@ export const SCRIPTS = {
         ['peter', 'idle', { x: -2.0, z: 0.25, look: 1.2 }], ['johnD', 'idle', { x: -2.1, z: -0.05, look: 1.2 }], ['james', 'idle', { x: -2.25, z: 0.3, look: 1.2 }], ['andrew', 'idle', { x: -2.35, z: 0.05, look: 1.2 }]],
       'p0.0': [['jesus', 'idle', { x: -0.35, z: -0.05, look: 0.8 }], ['peter', 'idle', { x: 0.9, z: 0.25, look: 1.0 }], ['johnD', 'idle', { x: 1.2, z: 0.05, look: -1.0 }], ['james', 'idle', { x: 1.3, z: 0.35, look: -1.0 }], ['andrew', 'idle', { x: 0.7, z: 0.0, look: 1.0 }],
         ['peter', 'speak', { delay: 3500 }], ['johnD', 'speak', { delay: 5500 }]],
-      'p0.1': [['jesus', 'sit-ground', { look: 0.8 }], ['peter', 'idle', { x: 0.3, z: 0.15, look: -1.0 }], ['johnD', 'idle', { x: 0.35, z: -0.18, look: -1.0 }], ['james', 'idle', { x: 0.0, z: 0.42, look: -0.4 }], ['andrew', 'idle', { x: -0.55, z: 0.35, look: 0.5 }],
-        ['peter', 'sit-ground', { delay: 1600 }], ['johnD', 'sit-ground', { delay: 1800 }], ['james', 'sit-ground', { delay: 2000 }], ['andrew', 'sit-ground', { delay: 2200 }]], // 앉으신 예수님 둘레로 불러 모아 함께 앉는다(막 9:35) — 예수님 혼자 앉아 계셨다
+      'p0.1': [['jesus', 'idle', { look: 0.8 }], ['jesus', 'sit-ground', { delay: 1700 }], ['peter', 'idle', { x: 0.3, z: 0.15, look: -1.0 }], ['johnD', 'idle', { x: 0.35, z: -0.18, look: -1.0 }], ['james', 'idle', { x: 0.0, z: 0.42, look: -0.4 }], ['andrew', 'idle', { x: -0.55, z: 0.35, look: 0.5 }],
+        ['peter', 'sit-ground', { delay: 1600 }], ['johnD', 'sit-ground', { delay: 1700 }], ['james', 'sit-ground', { delay: 1800 }], ['andrew', 'sit-ground', { delay: 1800 }]], // 제자들을 불러 모으시고 다 함께 앉는다(막 9:35) — 예수님 혼자 먼저 앉으셨다
       'p0.2': [['jesus', 'speak', { look: 0.8 }]],
       'p0.3': [['peter', 'sit-ground'], ['johnD', 'sit-ground'], ['james', 'sit-ground'], ['andrew', 'sit-ground']], // 고개 숙이기(bow)는 서는 동작이라 앉은 채로
       'p1.0': [['jesus', 'sit-ground'], ['peter', 'sit-ground'], ['johnD', 'sit-ground'], ['james', 'sit-ground'], ['andrew', 'sit-ground'], ['child', 'idle', { show: 1, x: 1.2, z: 0.15 }], ['child', 'idle', { x: -0.05, z: 0.05, look: -0.8, delay: 1500 }]],

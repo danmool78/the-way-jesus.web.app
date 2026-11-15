@@ -106,7 +106,7 @@ const stageGroup = new THREE.Group();
 scene.add(stageGroup);
 
 // 3D 모델로 바꿔 세우는 사람 (사용자 2026-11: 인형을 3D 모델로 — 모델이 그리기는 더 가볍다. 삼각형 9천 개·한 번에 그림, 인형은 2만7천 개·수십 번).
-// 이름 있는 사람은 그 사람의 모델, 이름 없는 남녀는 순례자 모델에 인형의 옷 색을 입힌다. 소년은 소년 다윗 모델, 소녀·천사·실루엣·빛의 형상은 인형 그대로.
+// 이름 있는 사람은 그 사람의 모델, 이름 없는 남녀는 순례자 모델에 인형의 옷 색을 입힌다. 소년은 소년 다윗 모델, 소녀는 소녀 모델, 천사·실루엣·빛의 형상은 인형 그대로.
 // 모델은 장면에 필요한 것만 그때 받고(R2, 한 번 받으면 남는다), 다 받기 전이면 인형으로 섰다가 낭독 전이면 바꿔 세운다
 const OWN = { jesus: 'jesus', risen: 'jesus', peter: 'peter', john: 'john', mary: 'mary', joseph: 'joseph', baptist: 'baptist', pharisee: 'pharisee',
   thomas: 'thomas', martha: 'martha', judas: 'judas', lazarus: 'lazarus', samaritan: 'samaritan', centurion: 'centurion', zacchaeus: 'zacchaeus',
@@ -133,7 +133,8 @@ function modelOf(type, i) {
   if (OWN[type]) return [OWN[type]];
   if (type === 'disciple') return [DISCIPLES[i % DISCIPLES.length]];
   const T = TYPES[type] || {};
-  if (BOYS.has(type)) return ['david', 'plain']; // 소년은 소년 다윗 모델에 수수한 옷 (사용자 2026-11) — 소녀 모델은 없어 인형 그대로
+  if (BOYS.has(type)) return ['david', 'plain']; // 소년은 소년 다윗 모델에 수수한 옷 (사용자 2026-11)
+  if (type === 'girl') return ['girl']; // 갈릴리 시골 소녀 (야이로의 딸 등)
   if (MEN.has(type)) return i % 3 ? EXTRA.men[i % EXTRA.men.length] : ['pilgrim-man', T.mantle || T.robe];
   if (WOMEN.has(type)) return i % 3 ? EXTRA.women[i % EXTRA.women.length] : ['pilgrim-woman', T.robe];
   return null;
