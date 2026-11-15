@@ -11,7 +11,7 @@ import { createAudio } from './game-audio.js';
 import { TREASURES, RARITY, hideTreasures, treasureCard, flipCard } from './game-treasure.js';
 import { model, tinted, ModelActor } from './game-model.js';
 import { buildNav } from './game-nav.js';
-import { CHARS, STATS, effects, unlockedBy } from './game-chars.js';
+import { CHARS, STRENGTHS, effects, unlockedBy } from './game-chars.js';
 import { CAST, FOLLOW, SIZE, LEADS, GEAR, BOAT, SETS } from './game-cast.js';
 
 const $ = s => document.querySelector(s);
@@ -177,10 +177,11 @@ function setupUI() {
   document.querySelector('#setup .tabs').onclick = e => { const b = e.target.closest('button'); if (!b) return; document.querySelectorAll('#setup .tabs button').forEach(x => x.classList.toggle('on', x === b)); $('#tabJ').classList.toggle('hidden', b.dataset.tab !== 'j'); $('#tabMe').classList.toggle('hidden', b.dataset.tab !== 'me'); };
   $('#plate').textContent = me.name || '순례자';
   // 인물 고르기 (game-chars.js) — 그 사람을 만난 장면의 카드를 얻으면 풀린다
-  const info = (c, lockHint) => `<b>${esc(c.name)}${lockHint ? ' 🔒' : ''}</b><div class="bars">${STATS.map((n, i) => `<div><small>${n}</small><i>${'<u></u>'.repeat(c.st[i])}${'<u class="o"></u>'.repeat(5 - c.st[i])}</i></div>`).join('')}</div><p>${esc(c.sp)}</p>${lockHint ? `<p class="lockhint">${lockHint}</p>` : ''}`;
+  const info = (c, lockHint) => { const S = STRENGTHS[c.st];
+    return `<b>${esc(c.name)}${lockHint ? ' 🔒' : ''}</b>${S ? `<div class="badge"><i>${S.icon}</i><div><strong>${S.name}</strong><small>${S.desc}</small></div></div>` : ''}<p>${esc(c.sp)}</p>${lockHint ? `<p class="lockhint">${lockHint}</p>` : ''}`; };
   const drawChars = () => {
     $('#cpick').innerHTML = CHARS.map(c => { const u = unlockedBy(c, CAST, cardsOf);
-      return `<button data-c="${c.id}" class="${u.ok ? '' : 'lock'} ${myChar().id === c.id ? 'on' : ''}" title="${esc(c.name)}"><img src="assets/game-chars/${c.id}.webp" alt="" width="64" height="64"><span>${esc(c.name.replace('순례자 ', ''))}</span></button>`; }).join('');
+      return `<button data-c="${c.id}" class="${u.ok ? '' : 'lock'} ${myChar().id === c.id ? 'on' : ''}" title="${esc(c.name)}"><img src="assets/game-chars/${c.id}.webp" alt="" width="64" height="64">${STRENGTHS[c.st] ? `<i class="st" title="${STRENGTHS[c.st].name}">${STRENGTHS[c.st].icon}</i>` : ''}<span>${esc(c.name.replace('순례자 ', ''))}</span></button>`; }).join('');
     const c = myChar(); $('#cinfo').innerHTML = info(c);
     $('#setup [data-k=robe]').closest('.field').hidden = !isPilgrim();
     $('#rank').textContent = `${c.name} · ${RANKS.filter(([n]) => sum('cards') >= n).pop()[1]}`;
@@ -225,7 +226,7 @@ const SEE = 3;
 const SAME = 5; // 이만큼 붙은 장면은 같은 자리로 친다 (걷지 않고 카드를 이어 받는다)
 // 발자국 (빛기둥 대신 — 빛기둥은 너무 빤한 힌트였다, 사용자 2026-11): 목적지 TRACK km 안쪽에만 그분이 걸어가신 굽은 발자국이 있고,
 // 내 둘레 PRINT_R km 안의 것만 보인다. 그 언저리까지는 단서로 찾아가고, 발자국을 만나면 따라간다
-const TRACK = 10, PRINT_R = 2.8, PRINT_GAP = 0.3, MAXP = 140; // 발은 키(약 1.3)의 6분의 1쯤 — 작게 하는 대신 촘촘히 (컸을 때는 사람보다 커 보였다, 사용자 2026-11)
+const TRACK = 10, PRINT_R = 2.8, PRINT_GAP = 0.3, MAXP = 220; // 발은 키(약 1.3)의 6분의 1쯤 — 작게 하는 대신 촘촘히 (컸을 때는 사람보다 커 보였다, 사용자 2026-11)
 const ASK = 50;    // '길 묻기' 한 번에 깎이는 카드 점수     // 이만큼 다가가야 그분이 보인다  // 이만큼(km) 다가가면 도착
 const WALK = 30;   // 하루에 걷는 거리(km) — '몇 일째'
 
@@ -507,10 +508,17 @@ const drawSound = () => { $('#sound').textContent = snd.on ? '소리 켬' : '소
 $('#sound').onclick = () => { snd.unlock(); snd.setOn(!snd.on); drawSound(); }; drawSound();
 const firstSentences = (t, n = 2) => (t.match(/[^.!?。]+[.!?。]+["”’]?/g) || [t]).slice(0, n).join(' ').trim();
 const appLink = e => `${JID === 'jesus' ? 'app.html' : `app.html?j=${JID}`}#${e.id}`;
+// 지혜(game-chars.js): 틀린 보기 하나를 지워 둔다 — 없애지 않고 그어 두어 장점이 일하는 게 보이게
+function wiseCut(s, i) {
+  if (!G.fx.cut || i < 0) return;
+  const b = s.querySelectorAll('.opts button')[i]; if (!b) return;
+  b.disabled = true; b.classList.add('cut'); b.insertAdjacentHTML('beforeend', `<em>📜 ${esc(josa(myChar().name, '이', '가'))} 지웠어요</em>`);
+}
 function quiz() {
   const e = G.events[G.idx], q = e.quiz;
   if (!q) { G.water = G.waterMax; drawWater(); return; }
   const s = sheet(`<div class="body quiz"><small>물병이 다 떨어졌어요 · 말씀으로 다시 채우기</small><h2>${esc(q.q)}</h2><div class="opts">${q.options.map((o, i) => `<button data-i="${i}">${esc(o)}</button>`).join('')}</div><div class="explain"></div></div>`);
+  wiseCut(s, (q.answer + 1 + Math.floor(Math.random() * (q.options.length - 1))) % q.options.length);
   s.querySelector('.opts').onclick = ev => {
     const b = ev.target.closest('button'); if (!b || s.querySelector('.right')) return;
     const ok = +b.dataset.i === q.answer; snd.play(ok ? 'right' : 'wrong');
@@ -585,6 +593,7 @@ function pickWord(e, done) {
   const s = sheet(`<div class="img" style="background-image:url('${esc(cardSrc(e))}')"></div><div class="body quiz"><small>${G.idx + 1} / ${G.events.length} · ${esc(e.title)}${(g => g.n > 1 ? ` · 이 자리의 일 ${g.k}/${g.n}` : '')(group())}</small>
     <h2>이 자리에서 들은 말씀은?</h2><p class="sub">맞히면 말씀 카드를 얻어요</p>
     <div class="opts">${opts.map((o, i) => `<button data-i="${i}">${esc(o.text)}</button>`).join('')}</div><div class="explain"></div></div>`);
+  wiseCut(s, opts.findIndex(o => o !== w));
   s.querySelector('.opts').onclick = ev => {
     const b = ev.target.closest('button'); if (!b || s.querySelector('.right')) return;
     const ok = opts[+b.dataset.i] === w; snd.play(ok ? 'right' : 'wrong');
@@ -757,8 +766,8 @@ function drawPrints(px, pz) {
   const P = G.prints; if (!P) return;
   let n = 0;
   if (!G.busy) for (const [x, z, a, side] of G.trail || []) {
-    const d = Math.hypot(x - px, z - pz); if (d > PRINT_R || n >= MAXP) continue;
-    const k = Math.min(1, (PRINT_R - d) / 0.6); // 가장자리에서 서서히
+    const R = PRINT_R * (G.fx?.trail || 1), d = Math.hypot(x - px, z - pz); if (d > R || n >= MAXP) continue; // 방향감각이 좋은 사람은 더 멀리까지
+    const k = Math.min(1, (R - d) / 0.6); // 가장자리에서 서서히
     fm.position.set(x + Math.cos(a) * 0.07 * side, GH(x, z) + 0.03, z - Math.sin(a) * 0.07 * side); fm.rotation.set(0, a, 0); fm.scale.setScalar(k);
     fm.updateMatrix(); P.setMatrixAt(n++, fm.matrix);
   }
@@ -1025,7 +1034,7 @@ function frame(now) {
     }
   } else me0.goal.copy(me0.pos);
   // 그분은 가까이(SEE — 이 지도에서는 인형 키의 두 배 남짓) 가야 보인다. 멀리서는 발자국만 (사용자 2026-11)
-  const near = Math.hypot(G.leader.pos.x - me0.pos.x, G.leader.pos.y - me0.pos.y) < SEE * G.fx.eye || G.meetT > 0 || G.busy;
+  const near = Math.hypot(G.leader.pos.x - me0.pos.x, G.leader.pos.y - me0.pos.y) < SEE || G.meetT > 0 || G.busy;
   G.leader.showT = near ? 1 : 0;
   const sailing = onGalilee(me0.pos.x, me0.pos.y);
   snd.walk(dt, G.stepped && !sailing, G.slowT > 0); snd.boat(dt, sailing && !G.busy, G.stepped); G.stepped = false;
@@ -1092,6 +1101,6 @@ function frame(now) {
   drawTags();
 }
 
-if (new URLSearchParams(location.search).has('debug')) window.__game = { G, me, toXZ, goalXZ, steer: (x, z) => { stick.x = x; stick.y = z; }, startLeg: (...a) => startLeg(...a), wetAt: (x, z) => wetAt(x, z), standXZ: () => standXZ() }; // 끝까지 자동으로 걸어 보는 확인용
+if (new URLSearchParams(location.search).has('debug')) window.__game = { G, me, pv, toXZ, goalXZ, steer: (x, z) => { stick.x = x; stick.y = z; }, startLeg: (...a) => startLeg(...a), wetAt: (x, z) => wetAt(x, z), standXZ: () => standXZ() }; // 끝까지 자동으로 걸어 보는 확인용
 setupUI(); resize();
 requestAnimationFrame(frame);

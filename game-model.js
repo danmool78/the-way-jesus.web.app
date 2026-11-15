@@ -148,7 +148,9 @@ function makeGear(kind) {
   g.userData.kind = kind;
   return g;
 }
-const HOLD = { staff: 'R', crook: 'R', rod: 'R', spear: 'R', bigspear: 'R', scutum: 'L', shield: 'L', bigshield: 'L', jar: 'top', helmet: 'top' };
+const QB = new THREE.Quaternion(), AX = new THREE.Vector3(1, 0, 0);
+// 지팡이는 왼손에 (사용자 2026-11: 왼손의 반쯤 쥔 모양이 막대를 쥐기에 알맞았다), 창은 오른손 — 방패가 왼손이라
+const HOLD = { staff: 'L', crook: 'L', rod: 'L', spear: 'R', bigspear: 'R', scutum: 'L', shield: 'L', bigshield: 'L', jar: 'top', helmet: 'top' };
 
 // 차분한 말하기: Mixamo 'talk'는 팔 몸짓은 좋은데 엉덩이·허리·고개가 크게 흔들려(고개 29°, 엉덩이 12°) 건들거렸다(사용자 2026-11).
 // 팔·어깨·손은 talk 그대로, 몸통·고개·다리는 가만히 선 idle에서 가져와 한 동작으로 합친다 (모델마다 한 번만)
@@ -230,12 +232,20 @@ export class ModelActor {
     this.pillow.rotation.z = Math.PI / 2; this.pillow.scale.set(1, 1, 0.6); this.pillow.visible = false;
     this.p.root.add(this.pillow); this.noPillow = !!o.noPillow; // 길가에 쓰러진 사람은 베개 없이
     this.hands = { R: bone(body, 'RightHand'), L: bone(body, 'LeftHand'), top: bone(body, 'HeadTop_End') };
+    // 지팡이·창을 쥐는 손 (사용자 2026-11): 손목 자리에 세우면 늘어진 팔뚝을 꿰뚫었고, 손 앞에 세우면 들고 있지 않아 보였다.
+    // 팔꿈치를 직각으로 들어 팔뚝을 앞으로 눕히고, 반쯤 쥔 손 가운데로 막대가 지나가게 한다. 손가락은 건드리지 않는다
+    // (오므리게 꺾었더니 기형처럼 보였다 — 모델의 손 모양 그대로). Mixamo 팔뚝은 제 X축으로 굽는다
+    this.grip = {};
+    for (const [k, S] of [['R', 'Right'], ['L', 'Left']]) {
+      const g = { fore: bone(body, S + 'ForeArm'), pts: ['HandMiddle2', 'HandMiddle4', 'HandThumb4'].map(n => bone(body, S + n)), on: false };
+      if (g.fore && g.pts.every(Boolean)) { g.base = g.fore.quaternion.clone(); this.grip[k] = g; } // 움직이지 않는 뼈는 동작 기록을 덜어 두어(glbslim) 믹서가 되돌려 주지 않으니 처음 자세를 기억해 둔다
+    }
     this.gear = [];
     this.play('idle', 0);
   }
   // 손에 들려 주기 (game-cast.js의 GEAR): ['staff'] 등 — 같은 쪽 손에 둘을 주지 않는다
   hold(list = []) {
-    for (const k of list) { const b = this.hands[HOLD[k]]; if (!b) continue; const m = makeGear(k); m.userData.bone = b; this.p.root.add(m); this.gear.push(m); }
+    for (const k of list) { const b = this.hands[HOLD[k]]; if (!b) continue; const m = makeGear(k); m.userData.bone = b; const gr = m.userData.ground && this.grip[HOLD[k]]; if (gr) { m.userData.grip = gr; gr.on = true; } this.p.root.add(m); this.gear.push(m); }
     return this;
   }
   play(name, fade = 0.35) {
@@ -259,7 +269,10 @@ export class ModelActor {
     this.face = damp(this.face, this.face + wrapA(want - this.face), 6, dt);
     this.play(moving ? 'walk' : POSE[this.pose] || 'idle');
     if (this.acts.walk) this.acts.walk.timeScale = this.walkRate || 1; // 빨리 걷는 이는 발도 빨리 (발이 땅에서 미끄러져 보이지 않게)
+    for (const g of Object.values(this.grip)) if (g.on) g.fore.quaternion.copy(g.base);
     this.mixer.update(dt);
+    // 동작 위에 팔꿈치 굽힘을 덧입힌다 (걸을 때는 덜 — 걷기가 이미 팔꿈치를 굽힌다)
+    if (!(this.pose === 'sleep' && !moving)) for (const g of Object.values(this.grip)) if (g.on) g.fore.quaternion.multiply(QB.setFromAxisAngle(AX, g.k ?? (moving ? 1.0 : 1.35)));
     this.show = damp(this.show, this.showT, 4, dt);
     const r = this.p.root;
     r.position.set(this.pos.x, this.ground, this.pos.y); r.rotation.y = this.face;
@@ -270,7 +283,9 @@ export class ModelActor {
     if (this.gear.length && r.visible) {
       r.updateMatrixWorld(true);
       for (const g of this.gear) {
-        const v = g.userData.bone.getWorldPosition(new THREE.Vector3()); r.worldToLocal(v); g.position.copy(v);
+        const v = g.userData.bone.getWorldPosition(new THREE.Vector3());
+        if (g.userData.grip) { v.set(0, 0, 0); for (const b of g.userData.grip.pts) v.add(b.getWorldPosition(new THREE.Vector3())); v.multiplyScalar(1 / g.userData.grip.pts.length); } // 손 가운데: 반쯤 굽은 가운뎃손가락과 엄지 끝 사이의 빈 곳
+        r.worldToLocal(v); g.position.copy(v);
         if (g.userData.ground) g.position.y = 0; // 지팡이·창은 땅을 짚고 손을 따라간다 (손 높이에 매달면 걸을 때 공중에 떴다)
         if (g.userData.kind === 'jar') g.position.y += 0.005;
         if (g.userData.top && this.head) { const q = this.head.getWorldQuaternion(new THREE.Quaternion()), rq = r.getWorldQuaternion(new THREE.Quaternion()).invert(); g.quaternion.copy(rq.multiply(q)); } // 투구는 고개를 따라 돈다
