@@ -60,15 +60,18 @@ function withBorrowed(gltf, body, borrow = {}) {
     const c = donor.animations.find(c => c.name === n); if (!c) continue;
     const hr = bone(gltf.scene, 'Hips')?.position.length(), hd = bone(donor.scene, 'Hips')?.position.length(), k = hr && hd ? hr / hd : 1;
     anims.push(new THREE.AnimationClip(n, c.duration, c.tracks.filter(t => gltf.scene.getObjectByName(t.name.split('.')[0])).map(t => {
-      if (!/Hips\.position$/.test(t.name)) return t;
-      const u = t.clone(); u.values = u.values.map(v => v * k); return u;
-    })));
+      const [bn, prop] = t.name.split('.'), u = t.clone();
+      if (/Hips/.test(bn) && prop === 'position') { u.values = u.values.map(v => v * k); return u; }
+      if (prop !== 'quaternion') return null; // 다른 뼈의 위치·크기는 빼고 이 모델의 뼈 길이 그대로 — 남의 뼈 길이가 들어가 천사의 팔이 늘어났다(사용자 2026-11)
+      return t; // 같은 Mixamo 뼈대라 각도는 그대로 — '기본 자세에서 돈 만큼'으로 옮기니 웅크려 자던 요셉이 통나무처럼 펴졌다(사용자 2026-11)
+    }).filter(Boolean)));
   }
   have[key] = { scene: gltf.scene, animations: anims }; merged.set(gltf, have); return have[key];
 }
 export class StageModel {
   constructor(gltf, type, x = 0, z = 0, face = 0, o = {}) {
     this.doll = new Actor(type, x, z, face, o); // 보이지 않는 길잡이 (장면에 넣지 않는다)
+    this.type = type;
     const body = clone(gltf.scene);
     body.updateMatrixWorld(true);
     const top = bone(body, 'HeadTop_End'), h = top ? top.getWorldPosition(v1).y : 1.7;

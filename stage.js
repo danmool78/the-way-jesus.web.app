@@ -231,7 +231,7 @@ function setScene(ev) {
     const named = new Set(plan.filter(Boolean).map(m => m[0]));
     const pool = { men: EXTRA.men.filter(([n]) => !named.has(n) || n.startsWith('pilgrim')), women: EXTRA.women.filter(([n]) => !named.has(n) || n.startsWith('pilgrim')) };
     const CROWDM = [...pool.men, ...pool.women].map(([n]) => n);
-    const names = USE_MODELS ? [...new Set([...named, ...(crowd ? CROWDM : [])])] : [];
+    const names = USE_MODELS ? [...new Set([...named, ...(crowd ? CROWDM : []), ...(named.size ? ['pilgrim-man', 'jesus'] : [])])] : []; // 동작을 빌려 줄 모델도 함께 — 늦게 받으면 요셉이 잠자기 동작 없이 통나무처럼 누웠다
     setCrowd(USE_MODELS && crowd && CROWDM.every(n => ready[n]) ? { men: pool.men.map(dress), women: pool.women.map(dress) } : null);
     const ev0 = ev, wait = names.length ? want(names) : null;
     wait?.then(() => { if (curEv === ev0 && (atStart || new URLSearchParams(location.search).has('beat'))) setScene(ev0); });
@@ -292,6 +292,13 @@ if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__st
     return out;
   },
   // 걷는 사람들의 걷기 동작 자리·빠르기 (발이 다 맞는지 점검)
+  // 모델 팔 길이: 지금 자세의 위팔·아래팔 길이 ÷ 뼈대(바인드) 길이 — 1이면 늘어나지 않은 것
+  armLen() { const v = new THREE.Vector3(), w = new THREE.Vector3(), M = new THREE.Matrix4(), s3 = new THREE.Vector3(); return Object.entries(actors).filter(([, a]) => a.doll).map(([n, a]) => {
+    let sk = null; a.body.traverse(o => { if (o.isSkinnedMesh && !sk) sk = o; }); if (!sk) return { n };
+    a.body.updateMatrixWorld(true); const S = sk.skeleton, ix = k => S.bones.findIndex(b => b.name.endsWith(k)), sc = sk.matrixWorld.getMaxScaleOnAxis();
+    const bind = i => new THREE.Vector3().setFromMatrixPosition(M.copy(S.boneInverses[i]).invert());
+    const r = (x, y) => { const i = ix(x), k = ix(y); return S.bones[i].getWorldPosition(v).distanceTo(S.bones[k].getWorldPosition(w)) / (bind(i).distanceTo(bind(k)) * sc); };
+    return { n, up: +r('LeftArm', 'LeftForeArm').toFixed(2), lo: +r('LeftForeArm', 'LeftHand').toFixed(2) }; }); },
   goAll(dx) { Object.values(actors).forEach(a => a.moveTo(a.goal.x + dx, a.goal.y)); },
   walkers() { return Object.entries(actors).filter(([, a]) => a.cur?.getClip().name === 'walk').map(([n, a]) => ({ n, t: +(a.cur.time / a.cur.getClip().duration).toFixed(2), pace: +a.cur.timeScale.toFixed(2) })); },
   // 소품이 땅에서 뜨거나 묻혔는지: 보이는 소품의 맨 아래와 그 자리 땅 높이의 차 (일부러 띄운 것 — y를 준 것, 하늘의 것 — 은 뺀다)
