@@ -531,6 +531,9 @@ function landNow() {
   return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 };
 }
 // 확대·축소의 가장 먼 넓이: 장면 둘레 땅의 1.3배와 전체 경로 보기(fitAll — 카드 자리를 비켜 넓힌 땅) 중 큰 쪽, 지금 넓이보다는 줄지 않게
+// 가장 가까이는 장면을 처음 보여 주는 넓이의 절반까지 — 그보다 당기면 정밀 타일·무대를 크게 다시 그리느라 버벅였다(사용자 2026-11)
+const minViewW = () => { const e = evAt(idx); if (!e || idx < 0) return 8; const city = PLACES[here(e)]?.jlm || here(e) === 'jerusalem', m = city ? 14 : 300;
+  return Math.max(8, reserveCard({ x: 0, y: 0, w: m, h: m }).w * 0.5); };
 const maxViewW = () => Math.max((onEden() ? EDEN : landNow()).w * 1.3, onEden() ? 0 : reserveCard({ ...landNow() }).w * 1.02, view.w * 1.001);
 function fitAll() {
   // 시편(무대 없이 가사를 띄우는 여정): 그려진 땅보다 조금 가까이(0.78 — 땅 끝에 붙은 시내산·바벨론도 옮길 틈이 생기게), 지금 장소가 가운데 가사 바로 아래에 오게 옮긴다
@@ -574,7 +577,7 @@ function animateTo(target, ms) {
   const B = () => onEden() ? EDEN : landNow(); // 에덴 장면에서는 그 따로 떨어진 무대 안에서 (먼 바벨론에서는 그곳까지 넓힌 땅 안에서)
   // 가장 멀리는 장면 둘레 땅의 1.3배 — 다만 전체 경로처럼 이미 더 넓게 보고 있으면 그 넓이까지(전엔 휠 한 칸에 확 당겨졌다, 사용자)
   // 가장 멀리는 전체 경로 보기만큼까지 — 휠·손가락으로도 전체 경로 크기까지 줄일 수 있게(사용자). 이미 더 넓게 보고 있으면 그 넓이에서 조금씩
-  const clampW = w => Math.min(Math.max(w, 8), maxViewW());
+  const clampW = w => Math.min(Math.max(w, Math.min(minViewW(), view.w)), maxViewW()); // 이미 더 가까이 있으면(장면이 그렇게 잡았으면) 그 넓이까지
   // 가운데가 땅 밖으로 너무 멀리 나가지 않게
   const keep = (x, y, w, h) => { const b = B(), cx = Math.min(b.x + b.w * 1.25, Math.max(b.x - b.w * 0.25, x + w / 2)), cy = Math.min(b.y + b.h * 1.25, Math.max(b.y - b.h * 0.25, y + h / 2)); return { x: cx - w / 2, y: cy - h / 2, w, h }; };
   const startPinch = () => {
@@ -651,7 +654,7 @@ window.zoomMap = f => {
   const B = onEden() ? EDEN : landNow(), e = evAt(idx), [ax0, ay0] = e ? P(PLACES[here(e)]) : [NaN, NaN];
   const inView = ax0 > view.x && ax0 < view.x + view.w && ay0 > view.y && ay0 < view.y + view.h;
   const ax = inView ? ax0 : view.x + view.w / 2, ay = inView ? ay0 : view.y + view.h / 2;
-  const k = Math.min(Math.max(view.w * f, 8), maxViewW()) / view.w;
+  const k = Math.min(Math.max(view.w * f, Math.min(minViewW(), view.w)), maxViewW()) / view.w;
   followWalk = false;
   animateTo({ x: ax - (ax - view.x) * k, y: ay - (ay - view.y) * k, w: view.w * k, h: view.h * k }, 320);
 };
