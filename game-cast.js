@@ -37,7 +37,7 @@ Object.assign(CAST, {
   moses: {
     m01: ['pharaoh', 'miriam'], m03: ['jethro', 'zipporah'], m05: ['aaron', 'pharaoh'], m06: ['aaron', 'pharaoh'], m07: ['aaron'], m09: ['aaron'], m10: ['aaron', 'miriam'],
     m12: ['aaron'], m14: ['aaron', 'joshua'], m15: ['jethro', 'zipporah', 'aaron'], m18: ['aaron', 'joshua'], m19: ['aaron'], m21: ['aaron'],
-    m23: ['joshua'], m24: ['aaron'], m25: ['aaron'], m26: ['aaron'], m31: ['joshua'], m32: ['pilgrim-man:#7a6248', 'pilgrim-man:#4e5b6b'], // m32부터는 여호수아가 앞서 걷는다 — 곁에는 백성의 지도자들(수 1:10) m33: ['rahab'], m35: ['rahab'], m39: ['samuel'],
+    m23: ['joshua'], m24: ['aaron'], m25: ['aaron'], m26: ['aaron'], m31: ['joshua'], m32: ['pilgrim-man:#7a6248', 'pilgrim-man:#4e5b6b'], m33: ['rahab'], m35: ['rahab'], m39: ['samuel'], // m32부터는 여호수아가 앞서 걷는다 — 곁에는 백성의 지도자들(수 1:10)
   },
   david: {
     d02: ['samuel', 'pilgrim-man:#6b5a3e', 'pilgrim-man:#4e5b6b'], d03: ['saul'], d04: ['saul', 'goliath'], d05: ['goliath'], d06: ['jonathan'], d07: ['saul', 'michal'], d08: ['michal'], d09: ['samuel'],
