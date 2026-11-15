@@ -19,9 +19,25 @@ button{font:inherit;color:inherit;cursor:pointer}
 
 /* 순례자 꾸미기 */
 #setup{position:fixed;inset:0;z-index:20;display:grid;grid-template-columns:1fr minmax(320px,420px);background:radial-gradient(ellipse at 30% 40%,#2a2117,#110d09 70%)}
-#setup .stagebox{position:relative;min-height:0}
-#preview{position:absolute;inset:0;width:100%;height:100%}
-#setup .stagebox .nameplate{position:absolute;left:50%;bottom:3%;transform:translateX(-50%);font:700 22px var(--serif);color:var(--gold2);text-shadow:0 2px 8px #000;white-space:nowrap}
+#setup .stagebox{position:relative;min-height:0;overflow:hidden;background:#120e0a}
+/* 시작 화면 (사용자 2026-11: 검은 빈 무대가 허접했다) — 고른 여정의 카드 그림을 흐리게 깔고, 순례자 뒤에 빛 */
+#setup .backdrop{position:absolute;inset:-24px;background:#120e0a center/cover no-repeat;filter:blur(3px) brightness(.48) saturate(.9);transform:scale(1.04);transition:opacity .6s;opacity:0}
+#setup .backdrop.on{opacity:1}
+#setup .stagebox::after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 42% 55% at 50% 52%,rgba(240,205,140,.22),rgba(0,0,0,0) 70%),radial-gradient(ellipse at center,rgba(0,0,0,0) 45%,rgba(10,7,4,.85) 100%)}
+#setup .brand{display:flex;gap:12px;align-items:center;margin:0 0 8px}
+#setup .brand img{width:52px;height:52px;border-radius:13px;box-shadow:0 0 22px rgba(217,180,106,.3);flex:none}
+#setup .brand small{display:block;font-size:11px;letter-spacing:.08em;color:var(--faint)}
+.jcards{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.jcards button{display:flex;gap:9px;align-items:center;padding:9px 10px;border-radius:12px;border:1px solid var(--line);background:#1d1813;text-align:left;min-width:0}
+.jcards button img{width:34px;height:34px;border-radius:9px;flex:none}
+.jcards button span{min-width:0;display:block}
+.jcards button b{display:block;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.jcards button i{display:block;font-style:normal;font-size:11px;color:var(--faint);margin-top:2px}
+.jcards button u{display:block;height:3px;margin-top:5px;border-radius:2px;background:rgba(255,255,255,.08);text-decoration:none;overflow:hidden}
+.jcards button u::before{content:'';display:block;height:100%;width:var(--p,0%);background:var(--gold2)}
+.jcards button.on{border-color:var(--gold);background:linear-gradient(rgba(217,180,106,.18),rgba(217,180,106,.06));box-shadow:0 0 0 1px var(--gold) inset}
+#preview{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+#setup .stagebox .nameplate{position:absolute;z-index:1;left:50%;bottom:3%;transform:translateX(-50%);font:700 22px var(--serif);color:var(--gold2);text-shadow:0 2px 8px #000;white-space:nowrap}
 #setup .panel{overflow:auto;padding:22px 22px 28px;background:var(--panel);border-left:1px solid var(--line);touch-action:pan-y}
 #setup h1{margin:0 0 2px;font:700 26px var(--serif);color:var(--gold2)}
 #setup .lead{margin:0 0 16px;color:var(--muted);font-size:13.5px;line-height:1.6;word-break:keep-all}
@@ -38,7 +54,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 .go{width:100%;margin-top:6px;padding:14px;border:0;border-radius:12px;background:linear-gradient(#e6c67e,#c99d4e);color:#1a140d;font:700 16px var(--sans)}
 .go.ghost{margin-top:8px;background:transparent;border:1px solid var(--line);color:var(--gold2);font-weight:500;font-size:14px;padding:11px}
 .back{display:inline-block;margin-top:14px;color:var(--faint);font-size:12.5px;text-decoration:none}
-@media (max-width:760px){#setup{grid-template-columns:1fr;grid-template-rows:38vh 1fr}#setup .panel{border-left:0;border-top:1px solid var(--line)}#setup h1{font-size:22px}}
+@media (max-width:760px){#start{position:sticky;bottom:max(12px,env(safe-area-inset-bottom));z-index:2;box-shadow:0 -10px 24px 6px var(--panel),0 6px 18px rgba(0,0,0,.5)}/* 폰: '길 떠나기'가 한참 아래라 늘 아래에 붙여 둔다 */
+#setup{grid-template-columns:1fr;grid-template-rows:34vh 1fr}#setup .panel{border-left:0;border-top:1px solid var(--line)}#setup h1{font-size:22px}}
 
 /* 게임 머리판 */
 #hud{position:fixed;left:0;right:0;top:0;z-index:5;display:flex;gap:10px;align-items:flex-start;padding:max(10px,env(safe-area-inset-top)) 12px 0;pointer-events:none}
@@ -214,10 +231,10 @@ body.meeting #stick,body.meeting #arrow{opacity:0!important;pointer-events:none}
 
 <!-- 순례자 꾸미기: 이름과 인형 (이 기기에만 기억 — theway-game-me) -->
 <section id="setup">
-  <div class="stagebox"><canvas id="preview"></canvas><div class="nameplate" id="plate"></div></div>
+  <div class="stagebox"><div class="backdrop" id="backdrop"></div><canvas id="preview"></canvas><div class="nameplate" id="plate"></div></div>
   <div class="panel">
-    <h1>그 길 순례</h1>
-    <p class="lead">나만의 순례자를 꾸미고 지도 위를 걸어, 예수님이 계신 다음 장면을 찾아가세요. 길을 잃으면 벌칙이 있어요.</p>
+    <div class="brand"><img id="jIcon" src="assets/icon.svg" alt="" width="52" height="52"><div><small>그 길 시리즈 · 순례 게임</small><h1>그 길 순례</h1></div></div>
+    <p class="lead" id="jLead">나만의 순례자를 꾸미고 지도 위를 걸어, 예수님이 계신 다음 장면을 찾아가세요. 길을 잃으면 벌칙이 있어요.</p>
     <div class="field"><label for="name">순례자 이름</label><input id="name" maxlength="10" autocomplete="off" placeholder="이름을 넣어 주세요"></div>
     <div class="field"><b>모습</b><div class="chips" data-k="sex"></div></div>
     <div class="field"><b>얼굴빛</b><div class="sw" data-k="skin"></div></div>
