@@ -5,7 +5,7 @@
 import json, struct, sys
 import numpy as np
 
-CT = {5126: '<f4', 5121: 'u1', 5123: '<u2'}
+CT = {5126: '<f4', 5121: 'u1', 5123: '<u2', 5125: '<u4'}
 
 def main(src, dst):
     b = bytearray(open(src, 'rb').read())
@@ -19,16 +19,23 @@ def main(src, dst):
     sk = j['skins'][0]; names = [j['nodes'][k]['name'].split(':')[-1] for k in sk['joints']]
     ibm, _ = acc(sk['inverseBindMatrices']); jp = np.array([np.linalg.inv(m.reshape(4, 4).T)[:3, 3] for m in ibm])
     ix = {n: i for i, n in enumerate(names)}
-    def segd(A, B):
-        d = B - A; t = np.clip(((P - A) @ d) / (d @ d + 1e-9), 0, 1); return np.linalg.norm(P - (A + t[:, None] * d), axis=1)
-    arm_d = np.full(len(P), 9.0)
-    for side in ('Left', 'Right'):
-        chain = [jp[ix[side + k]] for k in ('Shoulder', 'Arm', 'ForeArm', 'Hand', 'HandMiddle1', 'HandMiddle2', 'HandMiddle3', 'HandMiddle4') if side + k in ix]
-        arm_d = np.minimum(arm_d, np.min([segd(chain[i], chain[i + 1]) for i in range(len(chain) - 1)], axis=0))
-        arm_d = np.where(np.linalg.norm(P - jp[ix[side + 'Hand']], axis=1) < 0.13, 0, arm_d)  # 손 둘레(손가락 끝까지)는 늘 팔 쪽 — 손가락이 등에 묶여 늘어났다
     back = jp[ix['Spine2']][2]  # 등뼈의 앞뒤 자리
-    x, y, z = P[:, 0], P[:, 1], P[:, 2]
-    wing = (z < back - 0.07) & (arm_d > 0.045) & (y > 0.55)  # 몸 뒤쪽에서 팔 줄기(소매·손)와 떨어진 것
+    # 모델은 텍스처 조각(UV 섬) 수백 개로 이루어져 있다. 꼭짓점 하나하나를 자리로 가르면 손 가까이에서 날개와 손이 섞였다 —
+    # 조각째로 본다: 조각의 평균 자리가 등뼈보다 확실히 뒤에 있으면 날개(날개에는 어떤 동작도 이어지지 않게, 사용자 2026-11)
+    I, _ = acc(j['meshes'][0]['primitives'][0]['indices']); I = I.reshape(-1, 3)
+    par = np.arange(len(P))
+    def f(a):
+        while par[a] != a: par[a] = par[par[a]]; a = par[a]
+        return a
+    for a, b2, c in I:
+        for u, v in ((a, b2), (b2, c)):
+            ru, rv = f(u), f(v)
+            if ru != rv: par[ru] = rv
+    roots = np.array([f(v) for v in range(len(P))])
+    wing = np.zeros(len(P), bool)
+    for r in np.unique(roots):
+        m = roots == r; c = P[m].mean(0)
+        if c[2] < back - 0.09 and c[1] > 0.5: wing |= m
     s2 = ix['Spine2']
     J[wing] = 0; J[wing, 0] = s2; W[wing] = 0; W[wing, 0] = 1
     b[jo:jo + J.nbytes] = J.astype(J.dtype).tobytes(); b[wo:wo + W.nbytes] = W.astype('<f4').tobytes()
