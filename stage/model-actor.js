@@ -59,9 +59,16 @@ function withBorrowed(gltf, body, borrow = {}) {
   for (const [n, donor] of need) {
     const c = donor.animations.find(c => c.name === n); if (!c) continue;
     const hr = bone(gltf.scene, 'Hips')?.position.length(), hd = bone(donor.scene, 'Hips')?.position.length(), k = hr && hd ? hr / hd : 1;
+    // 뼈 각도는 '기본 자세에서 얼마나 돌았나'로 옮긴다 — 모델마다 뼈의 기본 방향이 달라, 남의 각도를 그대로 넣으니 천사의 손목·팔이 꼬였다(사용자 2026-11)
+    const qa = new THREE.Quaternion(), qb = new THREE.Quaternion();
     anims.push(new THREE.AnimationClip(n, c.duration, c.tracks.filter(t => gltf.scene.getObjectByName(t.name.split('.')[0])).map(t => {
-      if (!/Hips\.position$/.test(t.name)) return t;
-      const u = t.clone(); u.values = u.values.map(v => v * k); return u;
+      const [bn, prop] = t.name.split('.'), u = t.clone();
+      if (/Hips/.test(bn) && prop === 'position') { u.values = u.values.map(v => v * k); return u; }
+      if (prop !== 'quaternion') return t;
+      const rd = donor.scene.getObjectByName(bn)?.quaternion, rr = gltf.scene.getObjectByName(bn)?.quaternion; if (!rd || !rr) return t;
+      const inv = rd.clone().invert();
+      for (let i = 0; i < u.values.length; i += 4) { qa.fromArray(u.values, i); qb.copy(rr).multiply(inv.clone().multiply(qa)); qb.toArray(u.values, i); }
+      return u;
     })));
   }
   have[key] = { scene: gltf.scene, animations: anims }; merged.set(gltf, have); return have[key];
