@@ -24,7 +24,7 @@ export async function model(name) {
   try {
     list ??= fetch('assets/models.json').then(r => r.json());
     const M = await list, key = M.files[name];
-    return key ? await loadModel(`${M.base}/${key}`) : null;
+    const g = key ? await loadModel(`${M.base}/${key}`) : null; if (g) g.userData.name = name; return g;
   } catch (err) { console.warn('model', name, err); return null; }
 }
 
@@ -207,7 +207,10 @@ function seamless(clip) {
   return new THREE.AnimationClip(clip.name, dur, tracks);
 }
 const ARM_W = [0.15, 0.1]; // 위팔, 팔뚝을 기본 자세 쪽으로 끄는 비율
-const armW = name => !name.endsWith('.quaternion') ? 0 : /Hand(Thumb|Index|Middle|Ring|Pinky)\d\.|Hand\./.test(name) ? 1 : /ForeArm\./.test(name) ? ARM_W[1] : /Arm\./.test(name) ? ARM_W[0] : 0;
+// 넓은 소매가 A자에서 팔 밑으로 늘어지게 떠진 모델은 팔을 몸에 붙이면 늘어진 자락이 뒤로 접혀 삐죽 나왔다(미리암, 사용자 2026-11) —
+// 그런 모델만 팔을 A자 쪽으로 더 둔다 (모든 동작에)
+const ARM_OPEN = { miriam: [0.55, 0.3] };
+const armW = (name, W = ARM_W) => !name.endsWith('.quaternion') ? 0 : /Hand(Thumb|Index|Middle|Ring|Pinky)\d\.|Hand\./.test(name) ? 1 : /ForeArm\./.test(name) ? W[1] : /Arm\./.test(name) ? W[0] : 0;
 const STAND = /(Hips|Leg)\.quaternion$/;
 // 쇄골(Shoulder)은 모든 동작에서 모델을 뜬 그대로 — Mixamo 동작이 쇄골을 안쪽 아래로 당겨 어깨가 오므라들고 좁아졌다
 // (사용자 2026-11: 어깨 너비는 변하면 안 된다). 쇄골만 되돌리면 위팔이 그 회전을 따라 들리므로(안드레가 두 팔을 벌렸다)
@@ -279,8 +282,9 @@ export function calmClips(gltf) {
   }))));
   // 팔·손은 A자 기본 자세 쪽으로 조금 (사용자 2026-11): 보내 준 A자 모델은 팔·손이 멀쩡한데, Mixamo idle은 팔을 몸에 붙여 내려
   // 소매·겉옷 속으로 팔이 묻히고 손목이 꺾여 손이 기형처럼 보였다. 서 있는 동작만 — 위팔·팔뚝은 기본 자세 쪽으로 ARM_W만큼, 손·손가락은 기본 자세 그대로
-  out = out.map(c => c.name !== 'idle' ? c : new THREE.AnimationClip(c.name, c.duration, c.tracks.map(k => {
-    const n = k.name.split('.')[0], w = armW(k.name); if (!w || !rest[n]) return k;
+  const open = ARM_OPEN[gltf.userData?.name];
+  out = out.map(c => c.name !== 'idle' && !open ? c : new THREE.AnimationClip(c.name, c.duration, c.tracks.map(k => {
+    const n = k.name.split('.')[0], w = c.name === 'idle' ? armW(k.name, open || ARM_W) : /Hand/.test(k.name) ? 0 : armW(k.name, open); if (!w || !rest[n]) return k;
     const V = Array.from(k.values); for (let i = 0; i < V.length; i += 4) THREE.Quaternion.slerpFlat(V, i, V, i, rest[n], 0, w);
     return new THREE.QuaternionKeyframeTrack(k.name, Array.from(k.times), V);
   })));
@@ -309,7 +313,7 @@ export class ModelActor {
     this.p.root.add(this.pillow); this.noPillow = !!o.noPillow; // 길가에 쓰러진 사람은 베개 없이
     this.hands = { R: bone(body, 'RightHand'), L: bone(body, 'LeftHand'), top: bone(body, 'HeadTop_End') };
     // 내린 팔의 팔뚝 비틀기: 엄지가 앞, 손바닥이 허벅지를 보게 (아래 update의 turnThumbs)
-    this.arms = ['Left', 'Right'].map(S => ({ k: S[0], fore: bone(body, S + 'ForeArm'), hand: bone(body, S + 'Hand'), thumb: bone(body, S + 'HandThumb1'), pinky: bone(body, S + 'HandPinky1') })).filter(a => a.fore && a.hand && a.thumb && a.pinky);
+    this.arms = ['Left', 'Right'].map(S => ({ k: S[0], arm: bone(body, S + 'Arm'), fore: bone(body, S + 'ForeArm'), hand: bone(body, S + 'Hand'), thumb: bone(body, S + 'HandThumb1'), pinky: bone(body, S + 'HandPinky1') })).filter(a => a.fore && a.hand && a.thumb && a.pinky);
     // 지팡이·창을 쥐는 손 (사용자 2026-11): 손목 자리에 세우면 늘어진 팔뚝을 꿰뚫었고, 손 앞에 세우면 들고 있지 않아 보였다.
     // 팔꿈치를 직각으로 들어 팔뚝을 앞으로 눕히고, 손가락을 C자로 둥글게 굽혀 엄지와 만든 고리 속으로 막대가 지나가게 한다.
     // 손가락을 한 번에 크게 꺾으면 기형처럼 보였다 — 세 마디를 0.6씩만. Mixamo 팔뚝·손가락은 제 X축으로 굽는다
@@ -343,16 +347,22 @@ export class ModelActor {
     const fwd = VC.set(0, 0, 1).transformDirection(r.matrixWorld);
     for (const a of this.arms) {
       if (this.grip?.[a.k]?.on) continue;
-      const f = a.fore.getWorldPosition(VA), h = a.hand.getWorldPosition(VB), axis = h.clone().sub(f).normalize();
-      const w = Math.min(1, Math.max(0, (-axis.y - 0.4) / 0.4)); if (!w) continue; // 팔뚝이 아래로 늘어진 만큼
-      const t = a.thumb.getWorldPosition(new THREE.Vector3()).sub(a.pinky.getWorldPosition(new THREE.Vector3())); t.addScaledVector(axis, -t.dot(axis)); // 새끼 쪽에서 엄지 쪽으로 — 엄지 뿌리만 보면 모델마다 손바닥 가운데 가까이 붙어 있어 방향을 잘못 잡았다(안드레)
-      const want = fwd.clone().addScaledVector(axis, -fwd.dot(axis));
-      if (t.lengthSq() < 1e-10 || want.lengthSq() < 1e-10) continue;
-      t.normalize(); want.normalize();
-      const ang = Math.atan2(axis.dot(t.clone().cross(want)), t.dot(want)) * w;
-      const pw = a.fore.parent.getWorldQuaternion(QW1), q = QW2.setFromAxisAngle(axis, ang);
-      a.fore.quaternion.premultiply(pw.clone().invert().multiply(q).multiply(pw));
-      a.fore.updateMatrixWorld(true);
+      // 비틀기를 팔뚝 한 곳에서 다 하면 소매가 팔꿈치에서 꼬여 삐죽 튀어나왔다(미리암, 사용자 2026-11) —
+      // 실제 팔처럼 위팔(제 축)과 팔뚝에 반씩 나눈다
+      for (const [b, end, part] of [[a.arm, a.fore, 0.5], [a.fore, a.hand, 1]]) {
+        if (!b) continue;
+        const f = b.getWorldPosition(VA), h = end.getWorldPosition(VB), axis = h.clone().sub(f).normalize();
+        const fa = a.fore.getWorldPosition(new THREE.Vector3()), fh = a.hand.getWorldPosition(new THREE.Vector3());
+        const w = Math.min(1, Math.max(0, (-(fh.y - fa.y) / fh.distanceTo(fa) - 0.4) / 0.4)); if (!w) break; // 팔뚝이 아래로 늘어진 만큼
+        const t = a.thumb.getWorldPosition(new THREE.Vector3()).sub(a.pinky.getWorldPosition(new THREE.Vector3())); t.addScaledVector(axis, -t.dot(axis)); // 새끼 쪽에서 엄지 쪽으로 — 엄지 뿌리만 보면 모델마다 손바닥 가운데 가까이 붙어 있어 방향을 잘못 잡았다(안드레)
+        const want = fwd.clone().addScaledVector(axis, -fwd.dot(axis));
+        if (t.lengthSq() < 1e-10 || want.lengthSq() < 1e-10) break;
+        t.normalize(); want.normalize();
+        const ang = Math.atan2(axis.dot(t.clone().cross(want)), t.dot(want)) * w * part;
+        const pw = b.parent.getWorldQuaternion(QW1), q = QW2.setFromAxisAngle(axis, ang);
+        b.quaternion.premultiply(pw.clone().invert().multiply(q).multiply(pw));
+        b.updateMatrixWorld(true);
+      }
     }
   }
   play(name, fade = 0.35) {
