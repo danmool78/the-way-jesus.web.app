@@ -251,8 +251,8 @@ function setScene(ev) {
     const m = plan[i];
     const g = m && ready[m[0]] && dress(m);
     // 천사는 날개 없는 몸 모델에 따로 뜬 날개를 등에 붙인다 — 날개와 팔이 한 그물이던 모델은 팔을 움직이면 날개가 꼬였다(사용자 2026-11)
-    const angel = type === 'angel' || type === 'whiteman';
-    const a = g ? new StageModel(g, type, x, z, face, { solemn: script.solemn, borrow: BORROW(), wings: angel && ready.wings, ...o }) : new Actor(type, x, z, face, { solemn: script.solemn, ...o });
+    // 승천 때의 '흰 옷 입은 두 사람'(whiteman, 행 1:10)은 날개 없이 — 성경이 사람으로 그린다
+    const a = g ? new StageModel(g, type, x, z, face, { solemn: script.solemn, borrow: BORROW(), wings: type === 'angel' && ready.wings, ...o }) : new Actor(type, x, z, face, { solemn: script.solemn, ...o });
     a.realWalk = !!script.street; // 거리 무대: 걷고 돌아보는 방향을 실제대로 (people.js)
     actors[name] = a;
     (o.board ? props[o.board].deck : stageGroup).add(a.p.root);
