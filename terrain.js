@@ -458,6 +458,7 @@ function addModel(group, E, scale) {
   lifts.forEach(([o, h]) => { o.position.y += h; o.castShadow = o.receiveShadow = true; });
   if (E === JLM) { city = true; const cw = Math.max(ex - ox, ez - oz); group.traverse(o => { if (!o.isMesh) return;
     o.material = [].concat(o.material).map(m => Object.assign(m.clone(), { transparent: true })); if (o.material.length === 1) o.material = o.material[0];
+    o.renderOrder = 2; // 도성 색 판(renderOrder 1, 깊이를 안 씀)보다 나중에 — 옅게 할 때 깊이를 끄니 색 판이 성 위를 덮어 성이 통째로 사라졌다
     box.setFromObject(o); cityParts.push({ m: o, mats: [].concat(o.material), big: !o.isInstancedMesh && Math.max(box.max.x - box.min.x, box.max.z - box.min.z) > cw * 0.25, a: 1 }); }); } // big: 성전 바닥 단
   models.push([ox, oz, ex, ez]); // 모형 둘레는 땅을 고르지 않는다 (level)
   group.traverse(o => { if (o.isInstancedMesh) { if (E !== JLM) clutterInstanced(o, false); } }); // 표지의 대추야자는 무대 자리에서 비킨다 — 도성의 집은 치우지 않고 성과 함께 옅게(다 치우니 맨땅이었다)
