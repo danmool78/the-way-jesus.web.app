@@ -208,9 +208,23 @@ function seamless(clip) {
 }
 const ARM_W = [0.4, 0.3]; // 위팔, 팔뚝을 기본 자세 쪽으로 끄는 비율
 const armW = name => !name.endsWith('.quaternion') ? 0 : /Hand(Thumb|Index|Middle|Ring|Pinky)\d\.|Hand\./.test(name) ? 1 : /ForeArm\./.test(name) ? ARM_W[1] : /Arm\./.test(name) ? ARM_W[0] : 0;
-const STAND = /(Hips|Leg|Shoulder)\.quaternion$/;
-// 쇄골(Shoulder)도 모델을 뜬 그대로 — Mixamo 동작이 쇄골을 안쪽 아래로 당겨 어깨가 오므라들고 좁아졌다(사용자 2026-11: 어깨 너비는 변하면 안 된다).
-// 서 있기·말하기는 아래 STAND로, 걷기 등 다른 동작도 같은 자리에서 쇄골만 기본 자세로 // UpLeg도 Leg로 끝난다
+const STAND = /(Hips|Leg)\.quaternion$/;
+// 쇄골(Shoulder)은 모든 동작에서 모델을 뜬 그대로 — Mixamo 동작이 쇄골을 안쪽 아래로 당겨 어깨가 오므라들고 좁아졌다
+// (사용자 2026-11: 어깨 너비는 변하면 안 된다). 쇄골만 되돌리면 위팔이 그 회전을 따라 들리므로(안드레가 두 팔을 벌렸다)
+// 위팔에는 그만큼 거꾸로 돌려 준다 — 쇄골과 위팔의 부모가 같은 가슴 뼈라 열쇠마다 arm' = rest⁻¹·c(t)·arm(t)이면 팔 방향이 그대로다
+function keepClavicles(clip, rest) {
+  const tr = Object.fromEntries(clip.tracks.map(k => [k.name, k]));
+  const fix = {};
+  for (const S of ['Left', 'Right']) {
+    const c = clip.tracks.find(k => new RegExp(`${S}Shoulder\\.quaternion$`).test(k.name)), a = clip.tracks.find(k => new RegExp(`${S}Arm\\.quaternion$`).test(k.name));
+    const cn = c?.name.split('.')[0]; if (!c || !a || !rest[cn]) continue;
+    const R = new THREE.Quaternion().fromArray(rest[cn]).invert(), ci = c.createInterpolant(), Q = new THREE.Quaternion(), C = new THREE.Quaternion();
+    const V = Array.from(a.values);
+    for (let i = 0; i < a.times.length; i++) { C.fromArray(ci.evaluate(a.times[i])); Q.fromArray(V, i * 4).premultiply(C).premultiply(R); Q.toArray(V, i * 4); }
+    fix[c.name] = new THREE.QuaternionKeyframeTrack(c.name, [0], rest[cn]); fix[a.name] = new THREE.QuaternionKeyframeTrack(a.name, Array.from(a.times), V);
+  }
+  return Object.keys(fix).length ? new THREE.AnimationClip(clip.name, clip.duration, clip.tracks.map(k => fix[k.name] || k)) : clip;
+} // UpLeg도 Leg로 끝난다
 // 허리는 기본 자세로 되돌리지 않는다 — 모델마다 기본 자세의 허리가 idle과 20~28° 달라(안드레·사마리아 여인·십보라·삭개오)
 // 되돌리면 팔이 앞으로 들려 이상했다(사용자 2026-11). idle의 허리는 그대로 두고, 첫 자세에서 몸통(허리→목)이
 // 곧게 서도록 허리 첫 뼈(Spine)만 한 번 돌려 배가 나오지 않게 한다 — 허리 위(가슴·팔·고개)는 idle 그대로 따라온다
@@ -255,6 +269,7 @@ export function calmClips(gltf) {
   // 곧게 서기: Mixamo idle은 엉덩이(11°)·허리(12°)를 뒤로 젖혀 배가 나온 자세였다(사용자 2026-11 — 원래 3D 디자인은 그렇지 않다).
   // 서 있거나 말할 때는 엉덩이·허리·목·다리를 기본 자세(모델을 뜬 그대로)로 세운다 — 팔·손·고개의 움직임은 그대로
   const rest = {}, restP = {}; gltf.scene.traverse(o => { if (o.isBone) { rest[o.name] = o.quaternion.toArray(); restP[o.name] = o.position.toArray(); } });
+  out = out.map(c => keepClavicles(c, rest));
   out = out.map(c => c.name !== 'idle' && c.name !== 'talk' ? c : upright(gltf, new THREE.AnimationClip(c.name, c.duration, c.tracks.map(k => {
     const n = k.name.split('.')[0];
     if (STAND.test(k.name) && rest[n]) return new THREE.QuaternionKeyframeTrack(k.name, [0], rest[n]);
@@ -268,9 +283,6 @@ export function calmClips(gltf) {
     const n = k.name.split('.')[0], w = armW(k.name); if (!w || !rest[n]) return k;
     const V = Array.from(k.values); for (let i = 0; i < V.length; i += 4) THREE.Quaternion.slerpFlat(V, i, V, i, rest[n], 0, w);
     return new THREE.QuaternionKeyframeTrack(k.name, Array.from(k.times), V);
-  })));
-  out = out.map(c => c.name === 'idle' || c.name === 'talk' ? c : new THREE.AnimationClip(c.name, c.duration, c.tracks.map(k => {
-    const n = k.name.split('.')[0]; return /Shoulder\.quaternion$/.test(k.name) && rest[n] ? new THREE.QuaternionKeyframeTrack(k.name, [0], rest[n]) : k;
   })));
   calm.set(gltf, out); return out;
 }
