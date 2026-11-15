@@ -456,16 +456,23 @@ function addModel(group, E, scale) {
     } else if (o.isMesh) { box.setFromObject(o); box.getCenter(c); lifts.push([o, heightAt(c.x, c.z) / scale]); }
   });
   lifts.forEach(([o, h]) => { o.position.y += h; o.castShadow = o.receiveShadow = true; });
-  if (E === JLM) city = true;
-  // 도성 모형의 성벽 조각·건물(집 묶음이 아닌 낱 덩어리)도 무대 자리에 걸치면 치운다 — 성 안 장면의 사람들 사이로 성벽과 건물이 솟아 겹쳤다(사용자 2026-11)
-  group.traverse(o => { if (o.isMesh && !o.isInstancedMesh) { box.setFromObject(o); clutter.boxes.push({ m: o, x0: box.min.x, z0: box.min.z, x1: box.max.x, z1: box.max.z }); } });
+  if (E === JLM) { city = true; cityMats = []; group.traverse(o => { if (o.isMesh) [].concat(o.material).forEach(m => { m.transparent = true; cityMats.push(m); }); }); cityHold = holder; }
   models.push([ox, oz, ex, ez]); // 모형 둘레는 땅을 고르지 않는다 (level)
   group.traverse(o => { if (o.isInstancedMesh) clutterInstanced(o, false); }); // 도성의 집·나무, 표지의 대추야자도 무대 자리에서는 비킨다
 }
 // 무대가 서는 자리의 집·나무는 잠시 치운다. 무대는 지도 위에 겹쳐 그리는 그림이라, 그 밑의 집·나무가 인물 사이로 삐져나와 보인다.
 // 치우는 넓이는 무대 그림의 크기(화면 px)를 그 자리의 지도 단위로 바꾼 것 — 당기고 물러나면 따라 바뀐다
-let city = false;
-const clutter = { inst: [], meshes: [], boxes: [] }, ZERO = new THREE.Matrix4().makeScale(0, 0, 0), M4 = new THREE.Matrix4();
+let city = false, cityHold = null, cityMats = [], cityA = 1;
+// 성 안 장면의 무대가 서면 도성 모형을 서서히 감춘다 — 모형의 성벽·성전·집이 무대 사람들 사이로 솟아 겹쳤다.
+// 땅의 도성 색 판은 그대로 두고, 무대의 기물과 연기만 남는다(사용자 2026-11). 무대가 끝나면 다시 나타난다
+function fadeCity(on) {
+  if (!cityHold) return;
+  const to = on ? 0 : 1; if (Math.abs(cityA - to) < 0.002) return;
+  cityA += (to - cityA) * 0.07; if (Math.abs(cityA - to) < 0.01) cityA = to;
+  cityMats.forEach(m => { m.opacity = cityA; m.depthWrite = cityA > 0.98; });
+  cityHold.visible = cityA > 0.01;
+}
+const clutter = { inst: [], meshes: [] }, ZERO = new THREE.Matrix4().makeScale(0, 0, 0), M4 = new THREE.Matrix4();
 function clutterInstanced(o, follow = true, near = 1) { // follow: 땅을 고를 때 높이를 따라간다 (모형 안의 것은 모형과 함께 제자리)
   o.updateMatrixWorld(true);
   const ms = [], xz = [], m = new THREE.Matrix4(), w = new THREE.Vector3();
@@ -518,13 +525,11 @@ function clearStageSpot() {
     const D = camera.position.distanceTo(v3.set(cx, heightAt(cx, cz), cz)), H = wrap.clientHeight || 1;
     r = f.r ?? f.rpx * 2 * D * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) / H; // r: 지형 안에 선 무대가 알려 주는 지도 단위 반지름
   }
+  fadeCity(stageOn && isCity(window.stagePlaceOf?.(curEvent()) || curEvent().place));
   if (cleared && Math.abs(cleared.cx - cx) < 0.01 && Math.abs(cleared.cz - cz) < 0.01 && Math.abs(cleared.r - r) <= cleared.r * 0.08) return;
   if (!leveled || Math.hypot(leveled.cx - cx, leveled.cz - cz) > Math.max(r, leveled.r) * 0.25 || Math.abs(leveled.r - r) > leveled.r * 0.08) level(cx, cz, r);
   cleared = { cx, cz, r };
   // 무대 밑 땅을 고른 둘레의 나무·집은 고른 땅 높이를 따라 올리고 내린다 (g0: 심을 때의 땅 높이)
-  // 상자가 무대 원에 걸치면 감춘다 — 무대보다 훨씬 넓은 것(성전 바닥 단)은 사람이 그 위에 서니 남긴다
-  clutter.boxes.forEach(c => { const dx = Math.max(c.x0 - cx, 0, cx - c.x1), dz = Math.max(c.z0 - cz, 0, cz - c.z1);
-    c.m.visible = !(dx * dx + dz * dz < r * r && Math.max(c.x1 - c.x0, c.z1 - c.z0) < r * 3); });
   clutter.meshes.forEach(c => { c.m.visible = Math.hypot(c.x - cx, c.z - cz) > r; c.m.position.y = c.y0 + heightAt(c.x, c.z) - c.g0; });
   clutter.inst.forEach(({ o, ms, xz, g0, near }) => { ms.forEach((m, i) => { const [x, z] = xz[i];
     if (Math.hypot(x - cx, z - cz) <= r * near) return o.setMatrixAt(i, ZERO);
