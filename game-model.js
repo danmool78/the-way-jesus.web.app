@@ -206,9 +206,25 @@ function seamless(clip) {
   });
   return new THREE.AnimationClip(clip.name, dur, tracks);
 }
-const ARM_W = [0.4, 0.3]; // 위팔, 팔뚝을 기본 자세 쪽으로 끄는 비율
+const ARM_W = [0.15, 0.1]; // 위팔, 팔뚝을 기본 자세 쪽으로 끄는 비율
 const armW = name => !name.endsWith('.quaternion') ? 0 : /Hand(Thumb|Index|Middle|Ring|Pinky)\d\.|Hand\./.test(name) ? 1 : /ForeArm\./.test(name) ? ARM_W[1] : /Arm\./.test(name) ? ARM_W[0] : 0;
-const STAND = /(Hips|Leg)\.quaternion$/; // UpLeg도 Leg로 끝난다
+const STAND = /(Hips|Leg)\.quaternion$/;
+// 쇄골(Shoulder)은 모든 동작에서 모델을 뜬 그대로 — Mixamo 동작이 쇄골을 안쪽 아래로 당겨 어깨가 오므라들고 좁아졌다
+// (사용자 2026-11: 어깨 너비는 변하면 안 된다). 쇄골만 되돌리면 위팔이 그 회전을 따라 들리므로(안드레가 두 팔을 벌렸다)
+// 위팔에는 그만큼 거꾸로 돌려 준다 — 쇄골과 위팔의 부모가 같은 가슴 뼈라 열쇠마다 arm' = rest⁻¹·c(t)·arm(t)이면 팔 방향이 그대로다
+function keepClavicles(clip, rest) {
+  const tr = Object.fromEntries(clip.tracks.map(k => [k.name, k]));
+  const fix = {};
+  for (const S of ['Left', 'Right']) {
+    const c = clip.tracks.find(k => new RegExp(`${S}Shoulder\\.quaternion$`).test(k.name)), a = clip.tracks.find(k => new RegExp(`${S}Arm\\.quaternion$`).test(k.name));
+    const cn = c?.name.split('.')[0]; if (!c || !a || !rest[cn]) continue;
+    const R = new THREE.Quaternion().fromArray(rest[cn]).invert(), ci = c.createInterpolant(), Q = new THREE.Quaternion(), C = new THREE.Quaternion();
+    const V = Array.from(a.values);
+    for (let i = 0; i < a.times.length; i++) { C.fromArray(ci.evaluate(a.times[i])); Q.fromArray(V, i * 4).premultiply(C).premultiply(R); Q.toArray(V, i * 4); }
+    fix[c.name] = new THREE.QuaternionKeyframeTrack(c.name, [0], rest[cn]); fix[a.name] = new THREE.QuaternionKeyframeTrack(a.name, Array.from(a.times), V);
+  }
+  return Object.keys(fix).length ? new THREE.AnimationClip(clip.name, clip.duration, clip.tracks.map(k => fix[k.name] || k)) : clip;
+} // UpLeg도 Leg로 끝난다
 // 허리는 기본 자세로 되돌리지 않는다 — 모델마다 기본 자세의 허리가 idle과 20~28° 달라(안드레·사마리아 여인·십보라·삭개오)
 // 되돌리면 팔이 앞으로 들려 이상했다(사용자 2026-11). idle의 허리는 그대로 두고, 첫 자세에서 몸통(허리→목)이
 // 곧게 서도록 허리 첫 뼈(Spine)만 한 번 돌려 배가 나오지 않게 한다 — 허리 위(가슴·팔·고개)는 idle 그대로 따라온다
@@ -253,6 +269,7 @@ export function calmClips(gltf) {
   // 곧게 서기: Mixamo idle은 엉덩이(11°)·허리(12°)를 뒤로 젖혀 배가 나온 자세였다(사용자 2026-11 — 원래 3D 디자인은 그렇지 않다).
   // 서 있거나 말할 때는 엉덩이·허리·목·다리를 기본 자세(모델을 뜬 그대로)로 세운다 — 팔·손·고개의 움직임은 그대로
   const rest = {}, restP = {}; gltf.scene.traverse(o => { if (o.isBone) { rest[o.name] = o.quaternion.toArray(); restP[o.name] = o.position.toArray(); } });
+  out = out.map(c => keepClavicles(c, rest));
   out = out.map(c => c.name !== 'idle' && c.name !== 'talk' ? c : upright(gltf, new THREE.AnimationClip(c.name, c.duration, c.tracks.map(k => {
     const n = k.name.split('.')[0];
     if (STAND.test(k.name) && rest[n]) return new THREE.QuaternionKeyframeTrack(k.name, [0], rest[n]);
@@ -291,6 +308,8 @@ export class ModelActor {
     this.pillow.rotation.z = Math.PI / 2; this.pillow.scale.set(1, 1, 0.6); this.pillow.visible = false;
     this.p.root.add(this.pillow); this.noPillow = !!o.noPillow; // 길가에 쓰러진 사람은 베개 없이
     this.hands = { R: bone(body, 'RightHand'), L: bone(body, 'LeftHand'), top: bone(body, 'HeadTop_End') };
+    // 내린 팔의 팔뚝 비틀기: 엄지가 앞, 손바닥이 허벅지를 보게 (아래 update의 turnThumbs)
+    this.arms = ['Left', 'Right'].map(S => ({ k: S[0], fore: bone(body, S + 'ForeArm'), hand: bone(body, S + 'Hand'), thumb: bone(body, S + 'HandThumb1'), pinky: bone(body, S + 'HandPinky1') })).filter(a => a.fore && a.hand && a.thumb && a.pinky);
     // 지팡이·창을 쥐는 손 (사용자 2026-11): 손목 자리에 세우면 늘어진 팔뚝을 꿰뚫었고, 손 앞에 세우면 들고 있지 않아 보였다.
     // 팔꿈치를 직각으로 들어 팔뚝을 앞으로 눕히고, 손가락을 C자로 둥글게 굽혀 엄지와 만든 고리 속으로 막대가 지나가게 한다.
     // 손가락을 한 번에 크게 꺾으면 기형처럼 보였다 — 세 마디를 0.6씩만. Mixamo 팔뚝·손가락은 제 X축으로 굽는다
@@ -316,6 +335,26 @@ export class ModelActor {
     QB.setFromUnitVectors(ax, up); g.hand.quaternion.copy(g.hand.parent.getWorldQuaternion(QW2).invert().multiply(QB.multiply(hw)));
     g.hand.updateMatrixWorld(true);
   }
+  // 팔을 내리면 팔뚝이 안쪽으로 돌아 엄지가 앞을 보고 손바닥이 허벅지를 본다(사용자 2026-11). A자로 뜬 손(손바닥이 아래)을
+  // 그대로 내리면 손등·손바닥이 엉뚱한 쪽을 보았다 — 팔뚝을 제 축으로 돌려(손목은 꺾지 않는다) 엄지를 몸 앞쪽으로.
+  // 팔이 늘어져 있을수록 다 돌리고, 말하며 팔을 들면 덜 (막대를 쥔 손은 grip이 따로 맞춘다)
+  turnThumbs() {
+    const r = this.p.root; r.updateMatrixWorld(true);
+    const fwd = VC.set(0, 0, 1).transformDirection(r.matrixWorld);
+    for (const a of this.arms) {
+      if (this.grip?.[a.k]?.on) continue;
+      const f = a.fore.getWorldPosition(VA), h = a.hand.getWorldPosition(VB), axis = h.clone().sub(f).normalize();
+      const w = Math.min(1, Math.max(0, (-axis.y - 0.4) / 0.4)); if (!w) continue; // 팔뚝이 아래로 늘어진 만큼
+      const t = a.thumb.getWorldPosition(new THREE.Vector3()).sub(a.pinky.getWorldPosition(new THREE.Vector3())); t.addScaledVector(axis, -t.dot(axis)); // 새끼 쪽에서 엄지 쪽으로 — 엄지 뿌리만 보면 모델마다 손바닥 가운데 가까이 붙어 있어 방향을 잘못 잡았다(안드레)
+      const want = fwd.clone().addScaledVector(axis, -fwd.dot(axis));
+      if (t.lengthSq() < 1e-10 || want.lengthSq() < 1e-10) continue;
+      t.normalize(); want.normalize();
+      const ang = Math.atan2(axis.dot(t.clone().cross(want)), t.dot(want)) * w;
+      const pw = a.fore.parent.getWorldQuaternion(QW1), q = QW2.setFromAxisAngle(axis, ang);
+      a.fore.quaternion.premultiply(pw.clone().invert().multiply(q).multiply(pw));
+      a.fore.updateMatrixWorld(true);
+    }
+  }
   play(name, fade = 0.35) {
     const a = this.acts[name] || this.acts.idle; if (!a || a === this.cur) return;
     a.reset().setEffectiveWeight(1).play();
@@ -339,6 +378,7 @@ export class ModelActor {
     if (this.acts.walk) this.acts.walk.timeScale = this.walkRate || 1; // 빨리 걷는 이는 발도 빨리 (발이 땅에서 미끄러져 보이지 않게)
     for (const g of Object.values(this.grip)) if (g.on) g.bones.forEach((b, i) => b.quaternion.copy(g.base[i]));
     this.mixer.update(dt);
+    this.turnThumbs();
     // 동작 위에 팔꿈치 굽힘을 덧입힌다 (걸을 때는 덜 — 걷기가 이미 팔꿈치를 굽힌다)
     if (!(this.pose === 'sleep' && !moving)) for (const g of Object.values(this.grip)) if (g.on) {
       // 손가락이 막대를 감싸 쥐게 (사용자 2026-11): 동작의 손가락 자세 위에 더하면 모델마다 굽힘이 달라 이상했다 —
