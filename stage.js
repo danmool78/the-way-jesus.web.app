@@ -133,6 +133,32 @@ const EXTRA = {
 if (new URLSearchParams(location.search).has('models')) setTimeout(() => want([...new Set([...EXTRA.men, ...EXTRA.women].map(([n]) => n)), 'jesus']), 0);
 // 동작을 빌려 줄 모델: 잠자기는 남자 순례자, 무릎 꿇고 기도는 예수님 모델에서 (같은 Mixamo 뼈대)
 const BORROW = () => ({ sleep: ready['pilgrim-man'], pray: ready.jesus, idle: ready.jesus, talk: ready.jesus }); // 천사 모델은 걷기만 있어 서기·말하기도
+// 바울 여정의 나머지 배역 (사용자 2026-11: 바울 여정도 모두 모델로) — 비슷한 사람의 모델에 옷 색(hue)·살갗(skin)을 달리 입힌다.
+// 로마 관리(토가)는 빌라도, 병사는 병정, 왕과 왕비는 구약의 왕·왕비, 수염 없는 젊은이는 디모데, 사울(회심 전)은 바울 모델 그대로
+Object.assign(LIKE, {
+  sauly: ['paul'], saulB: ['paul'],
+  stephen: ['jonathan', { hue: 140, skin: 1.05 }], councilor: ['nicodemus', { hue: 230 }], witness: ['pilgrim-man', { plain: true, skin: 0.9 }],
+  hellenist: ['isaiah', { hue: 20, skin: 1.02 }], templeguard: ['joab', { hue: 200, sat: 0.7 }], ananias: ['samuel', { hue: 30, skin: 0.95 }],
+  judasD: ['jethro', { plain: true, skin: 0.9 }], townsman: ['pilgrim-man', '#9a7a5a'], jewD: ['elisha', { hue: 180, skin: 1.05 }],
+  nabatean: ['joab', { hue: 330, skin: 0.72 }], jamesL: ['nathan', { hue: 60, skin: 1.05 }], lucius: ['ahijah', { hue: 160, skin: 0.7 }],
+  greek: ['timothy', { hue: 190 }], greek2: ['silas', { hue: 300, skin: 1.08 }], greekW: ['rahab', { hue: 20 }],
+  agabus: ['elijah', { plain: true }], simeon: ['barnabas', { hue: 90, skin: 0.62 }], manaen: ['solomon', { plain: true, skin: 0.95 }],
+  proconsul: ['pilate'], lictor: ['soldier', { sat: 0.5 }], elymas: ['isaiah', { hue: 250, sat: 0.6, skin: 0.9 }],
+  mark: ['timothy', { hue: 230, skin: 1.04 }], ruler: ['nicodemus', { hue: 200, skin: 1.06 }], noblewoman: ['michal', { hue: 300 }],
+  lame: ['pilgrim-man', { plain: true, skin: 0.95 }], lycaonian: ['shepherd', { hue: 20, skin: 0.75 }], lycaonianW: ['zipporah', { hue: 25, skin: 0.8 }],
+  zeuspriest: ['samuel', { hue: 40, skin: 1.05 }], elderC: ['jethro', { hue: 90, skin: 0.95 }], eunice: ['pilgrim-woman', '#5a6a4a'],
+  lois: ['miriam', { plain: true }], macedonian: ['silas', { hue: 20, skin: 1.04 }], slavegirl: ['girl', { plain: true, skin: 1.05 }],
+  magistrate: ['pilate', { hue: 330 }], jailer: ['joab', { plain: true, skin: 0.9 }], philosopher: ['samuel', { hue: 200, skin: 1.08 }],
+  philosopher2: ['isaiah', { hue: 230, skin: 1.08 }], aquila: ['fisherman', { hue: 20, skin: 0.95 }], priscilla: ['pilgrim-woman', '#3e5a6a'],
+  sailor: ['fisherman', { hue: 200, skin: 0.75 }], governor: ['pilate', { hue: 300 }], ephesian: ['pilgrim-man', '#c97a3a'],
+  demetrius: ['jeroboam', { hue: 30, sat: 0.7 }], titus: ['timothy', { hue: 40, skin: 1.02 }], tertius: ['nathan', { hue: 210, skin: 1.03 }],
+  phoebe: ['woman', { hue: 190 }], eutychus: ['david', { plain: true, skin: 1.03 }], tribune: ['centurion', { hue: 20 }],
+  nephew: ['timothy', { hue: 200, skin: 1.06 }], drusilla: ['jezebel', { hue: 180, skin: 1.05 }], tertullus: ['pilate', { plain: true, skin: 1.05 }],
+  festus: ['pilate', { hue: 340, skin: 1.03 }], agrippa: ['ahab', { hue: 280 }], bernice: ['jezebel', { hue: 300 }],
+  aristarchus: ['barnabas', { hue: 20, skin: 1.05 }], shipowner: ['jeroboam', { hue: 210 }], islander: ['shepherd', { plain: true, skin: 0.68 }],
+  islanderW: ['zipporah', { plain: true, skin: 0.72 }], publius: ['pilate', { hue: 250, skin: 0.95 }], epaphroditus: ['silas', { hue: 270 }],
+  onesimus: ['timothy', { plain: true, skin: 0.7 }], tychicus: ['luke', { hue: 140 }],
+});
 const dress = ([n, c]) => c === 'plain' ? plain(ready[n], n) : c && typeof c === 'object' ? restyle(ready[n], n, c) : c ? tinted(ready[n], n, c) : ready[n];
 // 3D 모델은 아직 점검 중 — 주소에 ?models가 있을 때만 쓴다. 운영은 예전 인형 (사용자 2026-11: 떠 있고 엉뚱한 곳을 보고 말해서, 다 잡을 때까지)
 const USE_MODELS = new URLSearchParams(location.search).has('models');
