@@ -81,8 +81,8 @@ function playerType() {
 }
 
 /* ---------- 렌더러 ---------- */
-function renderer(canvas) {
-  const r = new THREE.WebGLRenderer({ canvas, antialias: true });
+function renderer(canvas, alpha = false) {
+  const r = new THREE.WebGLRenderer({ canvas, antialias: true, alpha }); if (alpha) r.setClearColor(0x000000, 0);
   r.setPixelRatio(Math.min(2, devicePixelRatio || 1));
   r.outputColorSpace = THREE.SRGBColorSpace;
   r.toneMapping = THREE.ACESFilmicToneMapping; r.toneMappingExposure = 1.05;
@@ -100,10 +100,15 @@ function bin(obj, scene) {
   if (!obj) return; (scene || obj.parent)?.remove(obj);
   obj.traverse(o => { o.geometry?.dispose(); const m = o.material; for (const x of Array.isArray(m) ? m : m ? [m] : []) { x.map?.dispose(); x.dispose(); } });
 }
-const pv = { r: renderer($('#preview')), scene: new THREE.Scene(), cam: new THREE.PerspectiveCamera(30, 1, 0.05, 20), actor: null };
+const pv = { r: renderer($('#preview'), true), scene: new THREE.Scene(), cam: new THREE.PerspectiveCamera(30, 1, 0.05, 20), actor: null };
 lights(pv.scene);
 pv.cam.position.set(0, 0.62, 2.4); pv.cam.lookAt(0, 0.48, 0);
-const floor = new THREE.Mesh(new THREE.CircleGeometry(0.5, 48), new THREE.MeshStandardMaterial({ color: '#3a2e22', roughness: 1 }));
+// 발밑: 가장자리가 스러지는 따뜻한 빛 원 (어두운 원판은 허공에 뜬 접시 같았다)
+const floorTex = (() => { const c = document.createElement('canvas'); c.width = c.height = 256; const x = c.getContext('2d'), g = x.createRadialGradient(128, 128, 0, 128, 128, 128);
+  g.addColorStop(0, 'rgba(240,205,140,.55)'); g.addColorStop(.35, 'rgba(200,160,100,.32)'); g.addColorStop(1, 'rgba(120,90,50,0)'); x.fillStyle = g; x.fillRect(0, 0, 256, 256);
+  const sh = x.createRadialGradient(128, 128, 0, 128, 128, 34); sh.addColorStop(0, 'rgba(20,12,6,.55)'); sh.addColorStop(1, 'rgba(20,12,6,0)'); x.fillStyle = sh; x.fillRect(0, 0, 256, 256);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; })();
+const floor = new THREE.Mesh(new THREE.CircleGeometry(0.62, 48), new THREE.MeshBasicMaterial({ map: floorTex, transparent: true, depthWrite: false }));
 floor.rotation.x = -Math.PI / 2; pv.scene.add(floor);
 // 순례자: 3D 모델(형제·자매)이 있으면 그것을 고른 옷 색으로 칠해 쓰고, 없으면 예전 인형 (사용자 2026-11)
 const pName = () => me.sex === 'f' ? 'pilgrim-woman' : 'pilgrim-man';
@@ -141,9 +146,18 @@ function setupUI() {
   $('#name').oninput = () => { me.name = $('#name').value.trim(); $('#plate').textContent = me.name; store.set('theway-game-me', me); };
   // 여정 고르기
   const jp = document.createElement('div'); jp.className = 'field';
-  jp.innerHTML = `<b>누구를 따라 걸을까요</b><div class="chips" id="jpick">${Object.entries(JOURNEYS).map(([k, j]) => `<button data-j="${k}">${esc(j.name)}</button>`).join('')}</div>`;
+  // 여정마다 아이콘·장면 수·모은 카드 (사용자 2026-11: 글자 단추만 있어 허접했다)
+  const NSC = { jesus: 61, moses: 40, david: 39, kings: 41 }, icon = k => k === 'jesus' ? 'assets/icon.svg' : `j/${k}/icon.svg`;
+  const got = k => Object.keys(store.get('theway-game-cards-' + k, {}) || {}).length;
+  jp.innerHTML = `<b>누구를 따라 걸을까요</b><div class="jcards" id="jpick">${Object.entries(JOURNEYS).map(([k, j]) => `<button data-j="${k}"><img src="${icon(k)}" alt="" width="34" height="34"><span><b>${esc(j.name.replace(' 따라가기', ''))}</b><i>${NSC[k]}곳 · 카드 ${got(k)}장</i><u style="--p:${Math.round(got(k) / NSC[k] * 100)}%"></u></span></button>`).join('')}</div>`;
   $('#setup .lead').after(jp);
-  const markJ = () => { document.querySelectorAll('#jpick button').forEach(b => b.classList.toggle('on', b.dataset.j === JID)); const s = store.get('theway-game-' + JID, null); $('#start').textContent = s?.idx ? `이어 걷기 (${s.idx + 1}번째 장면부터)` : '길 떠나기'; $('#restart').classList.toggle('hidden', !s?.idx); };
+  // 뒤에 까는 그림: 여정마다 대표 장면의 카드 그림 (R2, assets/cards.json)
+  const BACK = { jesus: 'e08', moses: 'm09', david: 'd05', kings: 'k15' };
+  const cardsList = fetch('assets/cards.json').then(r => r.json()).catch(() => null);
+  const backdrop = async () => { const M = await cardsList, k = M?.files?.[BACK[JID]], el = $('#backdrop'); if (!k) return; const url = `${M.base}/${k}`; el.classList.remove('on'); const im = new Image(); im.onload = () => { el.style.backgroundImage = `url(${url})`; el.classList.add('on'); }; im.src = url; };
+  const markJ = () => { document.querySelectorAll('#jpick button').forEach(b => b.classList.toggle('on', b.dataset.j === JID));
+    const J = JOURNEYS[JID]; $('#jIcon').src = icon(JID); backdrop();
+    $('#jLead').textContent = `${josa(J.who, '을', '를')} 따라 ${NSC[JID]}곳을 걸어요. 단서를 읽고 지도에서 다음 장면을 찾아가 말씀 카드를 모으세요.`; const s = store.get('theway-game-' + JID, null); $('#start').textContent = s?.idx ? `이어 걷기 (${s.idx + 1}번째 장면부터)` : '길 떠나기'; $('#restart').classList.toggle('hidden', !s?.idx); };
   $('#jpick').onclick = e => { const b = e.target.closest('button'); if (!b) return; JID = b.dataset.j; markJ(); };
   markJ();
   refresh();
