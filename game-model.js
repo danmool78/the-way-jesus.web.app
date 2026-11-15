@@ -207,9 +207,9 @@ function seamless(clip) {
   return new THREE.AnimationClip(clip.name, dur, tracks);
 }
 const ARM_W = [0.15, 0.1]; // 위팔, 팔뚝을 기본 자세 쪽으로 끄는 비율
-// 넓은 소매가 A자에서 팔 밑으로 늘어지게 떠진 모델은 팔을 몸에 붙이면 늘어진 자락이 뒤로 접혀 삐죽 나왔다(미리암, 사용자 2026-11) —
-// 그런 모델만 팔을 A자 쪽으로 더 둔다 (모든 동작에)
-const ARM_OPEN = { miriam: [0.55, 0.3] };
+// 미리암(사용자 2026-11): 넓은 소매 뒷자락이 팔꿈치 굽힘을 따라 접혀 팔꿈치 뒤로 삐죽 나왔다 — 팔을 벌리면 다른 사람과 달라
+// 어색했고, 팔꿈치를 곧게 펴니(팔뚝은 기본 자세 그대로) 자락이 접히지 않았다. 모델마다 [위팔, 팔뚝] — 모든 동작에
+const ARM_OPEN = { miriam: [0.25, 1] };
 const armW = (name, W = ARM_W) => !name.endsWith('.quaternion') ? 0 : /Hand(Thumb|Index|Middle|Ring|Pinky)\d\.|Hand\./.test(name) ? 1 : /ForeArm\./.test(name) ? W[1] : /Arm\./.test(name) ? W[0] : 0;
 const STAND = /(Hips|Leg)\.quaternion$/;
 // 쇄골(Shoulder)은 모든 동작에서 모델을 뜬 그대로 — Mixamo 동작이 쇄골을 안쪽 아래로 당겨 어깨가 오므라들고 좁아졌다
