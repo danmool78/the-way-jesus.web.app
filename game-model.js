@@ -24,7 +24,7 @@ export async function model(name) {
   try {
     list ??= fetch('assets/models.json').then(r => r.json());
     const M = await list, key = M.files[name];
-    return key ? await loadModel(`${M.base}/${key}`) : null;
+    const g = key ? await loadModel(`${M.base}/${key}`) : null; if (g) g.userData.name = name; return g;
   } catch (err) { console.warn('model', name, err); return null; }
 }
 
@@ -207,7 +207,10 @@ function seamless(clip) {
   return new THREE.AnimationClip(clip.name, dur, tracks);
 }
 const ARM_W = [0.15, 0.1]; // 위팔, 팔뚝을 기본 자세 쪽으로 끄는 비율
-const armW = name => !name.endsWith('.quaternion') ? 0 : /Hand(Thumb|Index|Middle|Ring|Pinky)\d\.|Hand\./.test(name) ? 1 : /ForeArm\./.test(name) ? ARM_W[1] : /Arm\./.test(name) ? ARM_W[0] : 0;
+// 넓은 소매가 A자에서 팔 밑으로 늘어지게 떠진 모델은 팔을 몸에 붙이면 늘어진 자락이 뒤로 접혀 삐죽 나왔다(미리암, 사용자 2026-11) —
+// 그런 모델만 팔을 A자 쪽으로 더 둔다 (모든 동작에)
+const ARM_OPEN = { miriam: [0.55, 0.3] };
+const armW = (name, W = ARM_W) => !name.endsWith('.quaternion') ? 0 : /Hand(Thumb|Index|Middle|Ring|Pinky)\d\.|Hand\./.test(name) ? 1 : /ForeArm\./.test(name) ? W[1] : /Arm\./.test(name) ? W[0] : 0;
 const STAND = /(Hips|Leg)\.quaternion$/;
 // 쇄골(Shoulder)은 모든 동작에서 모델을 뜬 그대로 — Mixamo 동작이 쇄골을 안쪽 아래로 당겨 어깨가 오므라들고 좁아졌다
 // (사용자 2026-11: 어깨 너비는 변하면 안 된다). 쇄골만 되돌리면 위팔이 그 회전을 따라 들리므로(안드레가 두 팔을 벌렸다)
@@ -279,8 +282,9 @@ export function calmClips(gltf) {
   }))));
   // 팔·손은 A자 기본 자세 쪽으로 조금 (사용자 2026-11): 보내 준 A자 모델은 팔·손이 멀쩡한데, Mixamo idle은 팔을 몸에 붙여 내려
   // 소매·겉옷 속으로 팔이 묻히고 손목이 꺾여 손이 기형처럼 보였다. 서 있는 동작만 — 위팔·팔뚝은 기본 자세 쪽으로 ARM_W만큼, 손·손가락은 기본 자세 그대로
-  out = out.map(c => c.name !== 'idle' ? c : new THREE.AnimationClip(c.name, c.duration, c.tracks.map(k => {
-    const n = k.name.split('.')[0], w = armW(k.name); if (!w || !rest[n]) return k;
+  const open = ARM_OPEN[gltf.userData?.name];
+  out = out.map(c => c.name !== 'idle' && !open ? c : new THREE.AnimationClip(c.name, c.duration, c.tracks.map(k => {
+    const n = k.name.split('.')[0], w = c.name === 'idle' ? armW(k.name, open || ARM_W) : /Hand/.test(k.name) ? 0 : armW(k.name, open); if (!w || !rest[n]) return k;
     const V = Array.from(k.values); for (let i = 0; i < V.length; i += 4) THREE.Quaternion.slerpFlat(V, i, V, i, rest[n], 0, w);
     return new THREE.QuaternionKeyframeTrack(k.name, Array.from(k.times), V);
   })));
