@@ -122,6 +122,8 @@ const EXTRA = {
     ['elisha', 'plain'], ['isaiah', 'plain'], ['pilgrim-man', '#5d6b4a'], ['ahijah', 'plain']],
   women: [['pilgrim-woman'], ['woman'], ['miriam', 'plain'], ['pilgrim-woman', '#3c5d96'], ['zipporah', 'plain'], ['rahab', 'plain'], ['pilgrim-woman', '#a3554a']],
 };
+// 엑스트라 모델은 무대가 뜰 때 미리 받아 둔다 — 장면마다 그때 받으니 군중이 잠깐 예전 인형으로 섰다가 바뀌었다
+if (new URLSearchParams(location.search).has('models')) setTimeout(() => want([...new Set([...EXTRA.men, ...EXTRA.women].map(([n]) => n))]), 0);
 const dress = ([n, c]) => c === 'plain' ? plain(ready[n], n) : c ? tinted(ready[n], n, c) : ready[n];
 // 3D 모델은 아직 점검 중 — 주소에 ?models가 있을 때만 쓴다. 운영은 예전 인형 (사용자 2026-11: 떠 있고 엉뚱한 곳을 보고 말해서, 다 잡을 때까지)
 const USE_MODELS = new URLSearchParams(location.search).has('models');
@@ -242,6 +244,25 @@ function setScene(ev) {
     updateEnvInstant();
   }
 }
+// 모델 점검용(?models&check): 장면의 순간마다 떠 있거나 묻힌 사람, 상대를 보지 않고 말하는 사람을 잰다 (헤드리스로 61장면을 돌려 본다)
+if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__stage = {
+  scene: ev => setScene(ev), beats: () => Object.keys(script?.beats || {}),
+  ready: () => !Object.keys(loading).some(n => !(n in ready)),
+  step(k) { atStart = false; apply(script.beats[k], true); gaze(); Object.values(actors).forEach(a => { a.show = a.showT; for (let i = 0; i < 60; i++) a.update(i * 0.05, 0.05); }); },
+  measure() {
+    const out = [], v = new THREE.Vector3();
+    for (const [name, a] of Object.entries(actors)) {
+      if (!a.doll || a.showT < 0.5 || a.p.root.parent !== stageGroup) continue; // 모델만, 보이는 사람만, 배·나귀 위는 빼고
+      stageGroup.updateMatrixWorld(true);
+      let low = Infinity; a.p.root.traverse(o => { if (o.isBone && /(Foot|ToeBase|Toe_End|Leg)$/.test(o.name)) low = Math.min(low, stageGroup.worldToLocal(o.getWorldPosition(v)).y); });
+      const gap = (low - (a.ground + a.y)) / (a.big || 1), r = { name, pose: a.pose, gap: +gap.toFixed(3), big: +(a.big || 1).toFixed(2) }; // 지형 안에서는 사람을 키우니(big) 그만큼 나눈다
+      const t = a.talkTo || ((a.pose === 'speak' || a.pose === 'sit-speak') && a.target);
+      if (t && t.showT > 0) { const want = Math.atan2(t.pos.x - a.pos.x, t.pos.y - a.pos.y); const f = a.p.root.rotation.y; r.off = +Math.abs(Math.atan2(Math.sin(want - f), Math.cos(want - f))).toFixed(2); r.to = Object.keys(actors).find(k => actors[k] === t); }
+      out.push(r);
+    }
+    return out;
+  },
+};
 // 낭독 전에 서 있는 모습: 대표 순간(enter) 위에 낭독의 처음 상태(intro)를 얹는다. 예전에는 enter(이야기 중간이나 끝의 모습)로 서 있다가
 // ▶를 누르면 intro로 한꺼번에 바뀌어, 다른 장면이 차려져 있다가 치워지고 시작하는 것처럼 보였다(사용자, 2026-11)
 let atStart = false; // 낭독 전 모습(setStart) 그대로인가 — 그러면 ▶의 intro는 사람을 지웠다 다시 세우지 않고 그대로 이어 간다
