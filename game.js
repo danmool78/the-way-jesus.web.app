@@ -242,8 +242,8 @@ function spawnLegEvents() {
 // 남자 순례자 모델의 겉옷을 검붉게 칠하고 창과 둥근 방패를 들린 그 시대 병사로
 const roman = () => JID === 'jesus';
 function soldierAt(x, z) {
-  if (roman() && G.soldierG) return new ModelActor(G.soldierG, x, z).hold(GEAR.soldier);
-  if (!roman() && G.manG) return new ModelActor(tinted(G.manG, 'pilgrim-man', '#8a3324'), x, z).hold(['spear', 'shield', 'helmet']);
+  if (roman() && G.soldierG) return Object.assign(new ModelActor(G.soldierG, x, z).hold(GEAR.soldier), { march: true }); // 병정은 발을 맞춰 걷는다
+  if (!roman() && G.manG) return Object.assign(new ModelActor(tinted(G.manG, 'pilgrim-man', '#8a3324'), x, z).hold(['spear', 'shield', 'helmet']), { march: true });
   return new Actor('soldier', x, z, 0, { gaze: false });
 }
 function spawnPatrols() {

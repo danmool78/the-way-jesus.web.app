@@ -15,6 +15,7 @@ const CLIP = { idle: 'idle', listen: 'idle', speak: 'talk', sleep: 'sleep' };
 const KNEEL = new Set(['kneel', 'mourn', 'cower']); // 땅에 앉기(sit-ground)는 무릎 꿇기가 아니다 — 앉아 가르치시는 예수님이 무릎 꿇고 기도하는 다리를 빌려 시도 때도 없이 꿇으셨다(사용자 2026-11)
 // 걸터앉기: 넓적다리를 앞으로, 정강이는 아래로 (회당에서 앉아 말씀을 읽으심 — 무릎 꿇고 기도하는 자세가 되었다, 사용자 2026-11)
 // 걸터앉기는 앉을 자리가 있을 때만(나귀·높이를 정한 사람·'seat') — 자리 없이 다리를 뻗으니 허공에 떠 앉았다(사용자 2026-11). 그 밖의 '앉기'는 땅에 발뒤꿈치를 깔고
+const MARCH = new Set(['soldier', 'guard', 'centurion']); // 발을 맞춰 걷는 사람들
 const HOLD = new Set(['carry', 'carry-pole', 'offer', 'hold']); // 두 팔로 안거나 받쳐 드는 자세
 const SEAT = new Set(['ride', 'seat']), SITS = new Set(['sit', 'sit-speak', 'sit-ground'])
 const bone = (root, n) => { let f = null; root.traverse(o => { if (!f && o.isBone && new RegExp(`(^|mixamorig)${n}$`).test(o.name)) f = o; }); return f; };
@@ -85,6 +86,7 @@ export class StageModel {
     this.pillow.rotation.z = Math.PI / 2; this.pillow.scale.set(1, 1, 0.6); this.pillow.visible = false; this.pillowY = H * 0.022;
     this.p.root.add(this.pillow);
     this.cur = null; this.w = 0; this.op = -1;
+    this.march = MARCH.has(type); this.stride = Math.random(); this.pace = 0.9 + Math.random() * 0.2;
     // 인형의 왼팔·오른팔이 모델의 어느 팔인지는 자리(x)로 맞춘다 (서로 앞을 보는 쪽이 같다)
     const L = { up: bone(body, 'LeftArm'), lo: bone(body, 'LeftForeArm'), hand: bone(body, 'LeftHand') };
     const R = { up: bone(body, 'RightArm'), lo: bone(body, 'RightForeArm'), hand: bone(body, 'RightHand') };
@@ -122,6 +124,8 @@ export class StageModel {
   play(name, fade = 0.35) {
     const a = this.acts[name] || this.acts.idle; if (!a || a === this.cur) return;
     a.reset().setEffectiveWeight(1).play();
+    // 여럿이 함께 걸을 때 발이 똑같이 맞으면 행진 같다 — 보통 사람은 걸음의 시작과 빠르기를 저마다 조금씩 달리, 병정만 발을 맞춘다(사용자 2026-11)
+    if (name === 'walk' && !this.march) { a.time = this.stride * a.getClip().duration; a.timeScale = this.pace; } else a.timeScale = 1;
     if (this.cur) this.cur.crossFadeTo(a, fade, false); this.cur = a;
   }
   // 나타나고 사라질 때: 인형처럼 점묘 투명도(alphaHash)

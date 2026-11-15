@@ -291,6 +291,9 @@ if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__st
     }
     return out;
   },
+  // 걷는 사람들의 걷기 동작 자리·빠르기 (발이 다 맞는지 점검)
+  goAll(dx) { Object.values(actors).forEach(a => a.moveTo(a.goal.x + dx, a.goal.y)); },
+  walkers() { return Object.entries(actors).filter(([, a]) => a.cur?.getClip().name === 'walk').map(([n, a]) => ({ n, t: +(a.cur.time / a.cur.getClip().duration).toFixed(2), pace: +a.cur.timeScale.toFixed(2) })); },
   // 소품이 땅에서 뜨거나 묻혔는지: 보이는 소품의 맨 아래와 그 자리 땅 높이의 차 (일부러 띄운 것 — y를 준 것, 하늘의 것 — 은 뺀다)
   props() {
     const out = [], box = new THREE.Box3(), inv = new THREE.Matrix4();

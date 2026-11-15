@@ -241,6 +241,8 @@ export class ModelActor {
   play(name, fade = 0.35) {
     const a = this.acts[name] || this.acts.idle; if (!a || a === this.cur) return;
     a.reset().setEffectiveWeight(1).play();
+    // 함께 걷는 사람들의 발이 똑같이 맞지 않게 — 걸음의 시작과 빠르기를 저마다 조금씩(병정은 march로 맞춘다, 사용자 2026-11)
+    if (name === 'walk' && !this.march) { this.stride ??= Math.random(); this.pace ??= 0.9 + Math.random() * 0.2; a.time = this.stride * a.getClip().duration; a.timeScale = this.pace; } else a.timeScale = 1;
     if (this.cur) this.cur.crossFadeTo(a, fade, false); this.cur = a;
   }
   set(pose) { this.pose = pose; }
