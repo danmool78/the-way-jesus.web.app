@@ -109,18 +109,19 @@ export function tinted(gltf, name, hex) {
 // 손에 드는 것 (사용자 2026-11): 지팡이·창·방패·물동이를 코드로 만든다. 크기는 모델 키(BASE_H)에 맞춘 몸 둘레 단위.
 // 뼈에 자식으로 달면 뼈의 배율·축(Mixamo 손은 손가락 쪽이 +Y)이 모델마다 달라 막대가 눕거나 엉뚱한 데로 돌아,
 // 매 화면 손 뼈의 자리만 따라가고 방향은 몸 기준으로 세운다 — 걸을 때 손을 흔들면 지팡이도 함께 앞뒤로 간다
+const ROD = 0.0075; // 지팡이·창 자루 반지름 (몸 기준 단위 — 굵었다, 사용자 2026-11)
 const mat = (color, o = {}) => new THREE.MeshStandardMaterial({ color, roughness: 0.85, ...o });
 function makeGear(kind) {
   const g = new THREE.Group();
   const rod = (len, r, color) => { const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r * 1.15, len, 6), mat(color)); m.position.y = len / 2; return m; };
   if (kind === 'staff' || kind === 'crook' || kind === 'rod') { // 지팡이: 손에서 아래로 땅까지, 위로 조금 (목자는 끝이 굽은 막대)
-    const L = kind === 'crook' ? 0.98 : 1.0; g.add(rod(L, 0.012, '#6b4a2b'));
-    if (kind === 'crook') { const h = new THREE.Mesh(new THREE.TorusGeometry(0.045, 0.011, 5, 12, Math.PI * 1.25), mat('#6b4a2b')); h.position.set(-0.045, L, 0); g.add(h); }
+    const L = kind === 'crook' ? 0.98 : 1.0; g.add(rod(L, ROD, '#6b4a2b'));
+    if (kind === 'crook') { const h = new THREE.Mesh(new THREE.TorusGeometry(0.045, ROD * 0.95, 5, 12, Math.PI * 1.25), mat('#6b4a2b')); h.position.set(-0.045, L, 0); g.add(h); }
     g.userData.ground = true;
   } else if (kind === 'spear' || kind === 'bigspear') { // 창: 손 위로 머리를 넘게, 쇠 날
     // 길이는 키의 1.15배쯤(몸 배율 big이 함께 키운다 — 골리앗은 이미 1.6배라 길이를 또 곱하니 키의 두 배 가까이 됐다, 사용자 2026-11).
     // 골리앗의 창은 자루만 굵게 — 베틀 채 같았다(삼상 17:7)
-    const k = kind === 'bigspear' ? 1.8 : 1, L = 1.05; g.add(rod(L, 0.01 * k, '#5a4128'));
+    const k = kind === 'bigspear' ? 1.8 : 1, L = 1.05; g.add(rod(L, ROD * k, '#5a4128'));
     const tip = new THREE.Mesh(new THREE.ConeGeometry(0.02 * Math.sqrt(k), 0.1 * Math.sqrt(k), 5), mat('#b9b7ad', { metalness: 0.6, roughness: 0.4 }));
     tip.position.y = L + 0.05 * Math.sqrt(k); g.add(tip);
     g.userData.ground = true;
@@ -150,6 +151,31 @@ function makeGear(kind) {
 }
 const QB = new THREE.Quaternion(), AX = new THREE.Vector3(1, 0, 0);
 // 지팡이는 왼손에 (사용자 2026-11: 왼손의 반쯤 쥔 모양이 막대를 쥐기에 알맞았다), 창은 오른손 — 방패가 왼손이라
+const QW1 = new THREE.Quaternion(), QW2 = new THREE.Quaternion(), QW3 = new THREE.Quaternion(), VA = new THREE.Vector3(), VB = new THREE.Vector3(), VC = new THREE.Vector3(), VD = new THREE.Vector3();
+const ROD_OUT = 0.15; // 막대가 몸 가운데서 떨어져 설 거리 — 다리(±0.06)·옷자락·막대 굵기 바깥 (몸 기준 단위)
+// 뼈를 돌려 그 자식 뼈 쪽이 몸 기준 방향 dir을 보게 (가장 작은 회전 — 몸 기준 dir은 root 좌표)
+function aim(bone, child, root, dir) {
+  root.updateMatrixWorld(true);
+  const from = child.getWorldPosition(new THREE.Vector3()).sub(bone.getWorldPosition(new THREE.Vector3())).normalize();
+  const to = dir.clone().transformDirection(root.matrixWorld);
+  const pw = bone.parent.getWorldQuaternion(new THREE.Quaternion()), q = new THREE.Quaternion().setFromUnitVectors(from, to);
+  bone.quaternion.premultiply(pw.clone().invert().multiply(q).multiply(pw)); // 세계 회전 q를 부모 좌표로
+  bone.updateMatrixWorld(true);
+}
+const ROD_R = ROD + 0.007; // 막대 반지름 + 손가락 두께의 절반 (몸 기준 단위)
+function wrapAngle(pts, root) {
+  root.updateMatrixWorld(true);
+  const p = pts.map(b => root.worldToLocal(b.getWorldPosition(new THREE.Vector3()))), s = (p[0].distanceTo(p[1]) + p[1].distanceTo(p[2])) / 2;
+  return Math.min(1.5, Math.max(0.5, 2 * Math.asin(Math.min(1, s / (2 * ROD_R)))));
+}
+// 세 점을 지나는 원의 가운데 (세계 좌표로 out에)
+function arcCenter(pts, out) {
+  const [A, B, C] = pts.map(b => b.getWorldPosition(new THREE.Vector3()));
+  const a = A.clone().sub(C), b = B.clone().sub(C), n = a.clone().cross(b), nn = n.lengthSq();
+  if (nn < 1e-12) return out.copy(B);
+  const t = b.clone().multiplyScalar(a.lengthSq()).sub(a.clone().multiplyScalar(b.lengthSq())).cross(n).multiplyScalar(1 / (2 * nn));
+  return out.copy(C).add(t);
+}
 const HOLD = { staff: 'L', crook: 'L', rod: 'L', spear: 'R', bigspear: 'R', scutum: 'L', shield: 'L', bigshield: 'L', jar: 'top', helmet: 'top' };
 
 // 차분한 말하기: Mixamo 'talk'는 팔 몸짓은 좋은데 엉덩이·허리·고개가 크게 흔들려(고개 29°, 엉덩이 12°) 건들거렸다(사용자 2026-11).
@@ -237,9 +263,9 @@ export class ModelActor {
     // 손가락을 한 번에 크게 꺾으면 기형처럼 보였다 — 세 마디를 0.6씩만. Mixamo 팔뚝·손가락은 제 X축으로 굽는다
     this.grip = {};
     for (const [k, S] of [['R', 'Right'], ['L', 'Left']]) {
-      const g = { fore: bone(body, S + 'ForeArm'), pts: ['HandMiddle2', 'HandMiddle4', 'HandThumb4'].map(n => bone(body, S + n)), on: false,
-        fingers: ['Middle1', 'Middle2', 'Middle3', 'Pinky1', 'Pinky2', 'Pinky3'].map(n => bone(body, S + 'Hand' + n)).filter(Boolean) };
-      if (g.fore && g.pts.every(Boolean)) { g.bones = [g.fore, ...g.fingers]; g.base = g.bones.map(b => b.quaternion.clone()); this.grip[k] = g; } // 움직이지 않는 뼈는 동작 기록을 덜어 두어(glbslim) 믹서가 되돌려 주지 않으니 처음 자세를 기억해 둔다
+      const g = { fore: bone(body, S + 'ForeArm'), pts: ['HandMiddle1', 'HandMiddle2', 'HandMiddle3'].map(n => bone(body, S + n)), on: false, hand: bone(body, S + 'Hand'), arm: bone(body, S + 'Arm'),
+        fingers: ['Middle1', 'Middle2', 'Middle3', 'Index1', 'Index2', 'Index3', 'Ring1', 'Ring2', 'Ring3', 'Pinky1', 'Pinky2', 'Pinky3'].map(n => bone(body, S + 'Hand' + n)).filter(Boolean) };
+      if (g.fore && g.hand && g.arm && g.pts.every(Boolean)) { g.bones = [g.arm, g.fore, g.hand, ...g.fingers]; g.base = g.bones.map(b => b.quaternion.clone()); this.grip[k] = g; } // 움직이지 않는 뼈는 동작 기록을 덜어 두어(glbslim) 믹서가 되돌려 주지 않으니 처음 자세를 기억해 둔다
     }
     this.gear = [];
     this.play('idle', 0);
@@ -248,6 +274,14 @@ export class ModelActor {
   hold(list = []) {
     for (const k of list) { const b = this.hands[HOLD[k]]; if (!b) continue; const m = makeGear(k); m.userData.bone = b; const gr = m.userData.ground && this.grip[HOLD[k]]; if (gr) { m.userData.grip = gr; gr.on = true; } this.p.root.add(m); this.gear.push(m); }
     return this;
+  }
+  // 손목을 돌려 손가락이 굽는 축(가운뎃손가락 뿌리 뼈의 X축)이 위를 보게 — 그래야 굽은 손가락이 세로 막대를 감싼다.
+  // 동작마다 손목이 달라 손바닥이 아래를 보면 손가락이 막대 앞에서 허공을 쥐었다
+  align(g) {
+    g.hand.quaternion.copy(g.handA); this.p.root.updateMatrixWorld(true);
+    const hw = g.hand.getWorldQuaternion(QW1), ax = VA.set(1, 0, 0).applyQuaternion(g.fingers[0].getWorldQuaternion(QW2)), up = VB.set(0, Math.sign(ax.y) || 1, 0);
+    QB.setFromUnitVectors(ax, up); g.hand.quaternion.copy(g.hand.parent.getWorldQuaternion(QW2).invert().multiply(QB.multiply(hw)));
+    g.hand.updateMatrixWorld(true);
   }
   play(name, fade = 0.35) {
     const a = this.acts[name] || this.acts.idle; if (!a || a === this.cur) return;
@@ -274,8 +308,26 @@ export class ModelActor {
     this.mixer.update(dt);
     // 동작 위에 팔꿈치 굽힘을 덧입힌다 (걸을 때는 덜 — 걷기가 이미 팔꿈치를 굽힌다)
     if (!(this.pose === 'sleep' && !moving)) for (const g of Object.values(this.grip)) if (g.on) {
-      g.fore.quaternion.multiply(QB.setFromAxisAngle(AX, g.k ?? (moving ? 1.0 : 1.35)));
-      QB.setFromAxisAngle(AX, 0.6); for (const f of g.fingers) f.quaternion.multiply(QB); // 손가락은 마디마다 조금씩 둥글게 — 엄지와 C자 고리를 이뤄 막대를 감싼다 (사용자가 보여 준 손 모양)
+      // 손가락이 막대를 감싸 쥐게 (사용자 2026-11): 동작의 손가락 자세 위에 더하면 모델마다 굽힘이 달라 이상했다 —
+      // 곧게 편 처음 자세에서 마디마다 같은 각도로 굽혀 손가락이 막대 둘레(반지름 + 손가락 두께)의 원을 따르게 한다.
+      // 각도는 마디 길이 s에서: 한 마디가 원의 현이 되도록 θ = 2·asin(s / 2R)
+      g.th ??= wrapAngle(g.pts, this.p.root);
+      QB.setFromAxisAngle(g.fax || AX, g.th); g.fingers.forEach(f => f.quaternion.copy(g.base[g.bones.indexOf(f)]).multiply(QB));
+      (g.handA ??= new THREE.Quaternion()).copy(g.hand.quaternion);
+      // 팔 자세: 위팔은 어깨에서 바깥으로 벌리고(걸을 때 앞뒤로 흔드는 것은 절반쯤 남김), 팔뚝은 팔꿈치에서 직각으로 앞을 향한다.
+      // 팔뚝 뼈만 굽혔더니 동작마다 위팔이 비틀려 있어 팔뚝이 옆으로 꺾였다(사용자 2026-11) — 뼈의 방향을 몸 기준으로 직접 맞춘다.
+      // 걸을 때 막대가 무릎·옷자락을 뚫지 않게 막대가 몸 가운데서 ROD_OUT 밖에 설 때까지 조금씩 더 벌린다
+      const r = this.p.root, side = g === this.grip.L ? 1 : -1;
+      r.updateMatrixWorld(true);
+      const swing = r.worldToLocal(g.fore.getWorldPosition(VC)).z - r.worldToLocal(g.arm.getWorldPosition(VD)).z; // 동작이 흔드는 위팔의 앞뒤
+      const qa = QW3.copy(g.arm.quaternion);
+      for (let t = 0.12; t <= 0.7; t += 0.06) {
+        g.arm.quaternion.copy(qa);
+        aim(g.arm, g.fore, r, VA.set(side * Math.sin(t), -Math.cos(t), swing * 0.5 / 0.15).normalize());
+        aim(g.fore, g.hand, r, VA.set(side * 0.12, -0.08, 1).normalize());
+        this.align(g);
+        if (side * r.worldToLocal(arcCenter(g.pts, VD)).x >= ROD_OUT) break;
+      }
     }
     this.show = damp(this.show, this.showT, 4, dt);
     const r = this.p.root;
@@ -288,7 +340,7 @@ export class ModelActor {
       r.updateMatrixWorld(true);
       for (const g of this.gear) {
         const v = g.userData.bone.getWorldPosition(new THREE.Vector3());
-        if (g.userData.grip) { v.set(0, 0, 0); for (const b of g.userData.grip.pts) v.add(b.getWorldPosition(new THREE.Vector3())); v.multiplyScalar(1 / g.userData.grip.pts.length); } // 손 가운데: 반쯤 굽은 가운뎃손가락과 엄지 끝 사이의 빈 곳
+        if (g.userData.grip) arcCenter(g.userData.grip.pts, v); // 막대는 굽은 가운뎃손가락 세 마디가 그리는 원의 가운데로
         r.worldToLocal(v); g.position.copy(v);
         if (g.userData.ground) g.position.y = 0; // 지팡이·창은 땅을 짚고 손을 따라간다 (손 높이에 매달면 걸을 때 공중에 떴다)
         if (g.userData.kind === 'jar') g.position.y += 0.005;
