@@ -3,6 +3,8 @@
 //   GET/PUT/… /gh/<GitHub API 경로>  → 이 저장소에 한해 api.github.com으로 (열쇠: GH_TOKEN 비밀값)
 //   PUT /r2/psalms/<파일>            → R2 버킷 theway에 바로 (BUCKET 연결 — 열쇠 필요 없음)
 //   POST /hit (공개)                 → 여정·장면 방문 기록을 Analytics Engine(theway_hits)에 — 관리자 페이지의 여정별 방문
+//   GET /f/<models|cards>/<파일> (공개) → R2 버킷의 3D 모델·카드 그림 — r2.dev 공개 주소는 속도 제한이 있어 느린 곳에서 모델이 한참 안 왔다(사용자 2026-11).
+//                                      이름에 내용 해시가 있으니 브라우저가 한 해 동안 다시 받지 않게(immutable)
 // 로그인 확인: Firebase 인증(프로젝트 the-way-jesus)의 ID 토큰을 구글 공개 열쇠로 검증하고, 이메일의 SHA-256이 ALLOWED에 있는지 본다
 // (이메일을 저장소에 그대로 적지 않으려고 해시로). 올리기: .github/workflows/worker.yml
 const PROJECT = 'the-way-jesus', REPO = 'danmool78/the-way-jesus.web.app';
@@ -45,6 +47,14 @@ export default {
       if (ORIGINS.includes(origin) && /^[a-z]+$/.test(b.j || '') && ['open', 'scene'].includes(b.k))
         env.HITS?.writeDataPoint({ blobs: [b.k, w(b.j), w(b.s), w(b.l, 5), req.cf?.country || 'XX'], doubles: [1], indexes: [w(b.j)] });
       return new Response(null, { status: 204, headers: cors });
+    }
+    if (url.pathname.startsWith('/f/') && (req.method === 'GET' || req.method === 'HEAD')) {
+      const key = decodeURIComponent(url.pathname.slice(3));
+      if (!/^(models|cards)\/[\w.-]+\.(glb|webp|png|jpg)$/.test(key)) return new Response('not found', { status: 404 });
+      const obj = await env.BUCKET.get(key);
+      if (!obj) return new Response('not found', { status: 404, headers: { 'Access-Control-Allow-Origin': '*' } });
+      const type = key.endsWith('.glb') ? 'model/gltf-binary' : key.endsWith('.webp') ? 'image/webp' : obj.httpMetadata?.contentType || 'application/octet-stream';
+      return new Response(req.method === 'HEAD' ? null : obj.body, { headers: { 'Content-Type': type, 'Content-Length': String(obj.size), ETag: obj.httpEtag, 'Cache-Control': 'public, max-age=31536000, immutable', 'Access-Control-Allow-Origin': '*' } });
     }
     try { await verify((req.headers.get('Authorization') || '').replace(/^Bearer\s+/i, ''), env); }
     catch (e) { return json({ message: e.status === 403 ? '허락된 계정이 아닙니다' : '로그인이 필요합니다' }, e.status || 401); }
