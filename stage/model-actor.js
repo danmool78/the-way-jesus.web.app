@@ -308,7 +308,7 @@ export class StageModel {
       if (++this.seatT === 20 || this.seatT === 60) { const ws = r.getWorldScale(v2).y, low = seatBottom(this.body, this.hipsB, 0.09 * this.H * ws);
         if (low < Infinity) this.seatDrop = (this.hipsB.getWorldPosition(v2).y - low) / ws; }
       const top = Math.max(0.02, hp.y - (this.seatDrop ?? 0.12 * this.H));
-      this.stone.position.set(hp.x, 0, hp.z - 0.02 * this.hipH); this.stone.scale.set(this.H * 0.16, top, this.H * 0.14); }
+      this.stone.position.set(hp.x, 0, hp.z - 0.05 * this.H); this.stone.scale.set(this.H * 0.28, top, this.H * 0.2); }
     if (this.w < 0.01 && this.legW < 0.01) return;
     r.updateMatrixWorld(true); dr.updateMatrixWorld(true);
     if (this.legW > 0.01) {
@@ -398,7 +398,7 @@ export function crowdPerson(gltf, height) {
     body.updateMatrixWorld(true); const hp = bone(body, 'Hips'); if (!hp) return;
     const bot = seatBottom(body, hp, 0.09 * height * body.parent.getWorldScale(v2).y);
     const lp = body.parent.worldToLocal(hp.getWorldPosition(v1)), top = Math.max(0.02, bot < Infinity ? body.parent.worldToLocal(v2.set(v1.x, bot, v1.z)).y : lp.y - 0.1 * height);
-    stone.position.set(lp.x, 0, lp.z - 0.01 * height); stone.scale.set(0.15 * height, top, 0.13 * height); stone.visible = true;
+    stone.position.set(lp.x, 0, lp.z - 0.05 * height); stone.scale.set(0.28 * height, top, 0.2 * height);  // 넓적하게 — 좁으면 기둥처럼 섰다(사용자) stone.visible = true;
   };
   pose(false);
   return { obj: body, pose };
