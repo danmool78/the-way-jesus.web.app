@@ -1265,8 +1265,8 @@ const voiceAudio = new Audio();
 // 큰 소리 파일(낭독·배경음악)은 호스팅이 아니라 R2에서 받는다 — 호스팅 전송량을 아끼려고(사용자 2026-11, _src/tools/r2sync.py).
 // 목록(index.json)은 작아 그대로 호스팅에서
 // R2 버킷의 낭독·음악·노래는 관리자 Worker를 거쳐 받는다 — r2.dev 공개 주소는 속도 제한이 있어 느린 곳에서 한참 걸렸다(사용자 2026-11)
-const MEDIA = ''; // 낭독·음악은 사이트 호스팅(Firebase)에서 — R2·Worker가 느린 곳에서는 소리가 늦거나 나지 않았다(사용자 2026-11, Blaze 요금제)
-const viaWorker = u => (u || '').replace('https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/', 'https://theway-admin.danmool78.workers.dev/f/'); // 시편 노래 json의 src는 r2.dev 주소로 적혀 있다
+const MEDIA = 'https://theway-admin.danmool78.workers.dev/f/';
+const viaWorker = u => (u || '').replace('https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/', MEDIA); // 시편 노래 json의 src는 r2.dev 주소로 적혀 있다
 const voiceUrl = clip => `${MEDIA}assets/voice/ko/${clip}.mp3?v=${voiceIndex[clip] || 0}`;
 // 문장 사이 쉼(ms, 1배속 기준). 녹음은 앞뒤 무음을 덜어 냈으므로 여기서 준다 — 문장 끝은 본디 쉼의 0.9배쯤, 제목 뒤는 넉넉히
 const VOICE_GAP = { sentence: 800, item: 850, intro: 1700 };
