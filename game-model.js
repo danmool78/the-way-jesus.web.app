@@ -28,7 +28,7 @@ const DONOR = { jesus: 'jesus-moves', lydia: 'pilgrim-woman', 'pilgrim-woman': '
 let list = null;
 export async function model(name) {
   try {
-    list ??= fetch('assets/models.json').then(r => r.json());
+    list ??= fetch('assets/models.json', { cache: 'no-cache' }).then(r => r.json()); // 늘 서버에 확인 — 주소를 바꿨는데 예전 목록(R2 주소)을 쓰는 브라우저가 있었다
     const M = await list, key = M.files[name];
     const g = key ? await loadModel(`${M.base}/${key}`) : null; if (!g) return null;
     g.userData.name = name;
