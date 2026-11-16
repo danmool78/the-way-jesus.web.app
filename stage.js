@@ -330,7 +330,7 @@ function setScene(ev) {
     // 바닥 넓이(소품 자리에서 앞뒤좌우로 얼마나 퍼지나): 바닥이 평평한 건물을 비탈에 앉힐 때 쓴다
     p.obj.updateMatrixWorld(true); const fb = new THREE.Box3().setFromObject(p.obj);
     p.foot = [fb.min.x - p.obj.position.x, fb.max.x - p.obj.position.x, fb.min.z - p.obj.position.z, fb.max.z - p.obj.position.z];
-    p.lift = new THREE.Group(); p.lift.add(p.obj); p.kind = kind;
+    p.lift = new THREE.Group(); p.lift.add(p.obj); p.kind = kind; p.bench = kind === 'crowd' && (o?.y || 0) > 0;
     props[name] = p; stageGroup.add(p.lift);
   });
   Object.entries(script.cast).forEach(([name, [type, x, z, face, o = {}]], i) => {
@@ -785,6 +785,9 @@ function frame() {
         p.skirt.visible = drop > 0.01 && p.obj.visible; p.skirt.scale.set((f[1] - f[0]) * 0.98, drop + 0.02, (f[3] - f[2]) * 0.98);
         p.skirt.position.set(p.obj.position.x + (f[0] + f[1]) / 2, -drop / 2, p.obj.position.z + (f[2] + f[3]) / 2);
       }
+      // 걸상에 앉은 무리(y): 그 걸상이 있는 건물과 같은 높이에, 건물처럼 키우지 않는다 — 땅 높이·배율이 건물과 달라 걸상 위 허공에 떠 앉았다(e16, 사용자 2026-11)
+      if (p.bench) { const host = Object.values(props).find(q => q !== p && FLAT.has(q.kind) && Math.hypot(q.obj.position.x - p.obj.position.x, q.obj.position.z - p.obj.position.z) < 0.05);
+        if (host) { p.lift.position.copy(host.lift.position); return; } }
       p.lift.position.y = FLAT.has(p.kind) || p.floor ? Math.max(...corners())
         : COVER.has(p.kind) ? Math.min(...corners())
         : Math.max(groundAt(ox, oz), floorAt(ox, oz, p));
