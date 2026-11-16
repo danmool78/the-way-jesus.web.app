@@ -113,6 +113,8 @@ Object.assign(MAKERS, {
     return new Prop(g, (P, t, dt) => {
       k = damp(k, P.state === 'pour' ? 1 : 0, 2.5, dt);
       jug.rotation.z = -k * 1.4;
+      // 붓는 동안만 보인다 — 붓기 전에도 머리 위 허공에 물병이 떠 있었다(a03, 사용자 2026-11)
+      jug.visible = k > 0.03; jug.scale.setScalar(Math.max(0.001, Math.min(1, k * 2.5)));
       const top = H + 0.02, bot = H - 0.32; stream.scale.y = top - bot; stream.position.set(0.0, (top + bot) / 2, 0); wm.opacity = k > 0.6 ? (k - 0.6) * 1.8 * P.show : 0;
     }, { state: o.state || 'idle', fade: 'scale' });
   },
