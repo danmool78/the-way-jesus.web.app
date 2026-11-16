@@ -115,7 +115,10 @@ Object.assign(MAKERS, {
       jug.rotation.z = -k * 1.4;
       // 붓는 동안만 보인다 — 붓기 전에도 머리 위 허공에 물병이 떠 있었다(a03, 사용자 2026-11)
       jug.visible = k > 0.03; jug.scale.setScalar(Math.max(0.001, Math.min(1, k * 2.5)));
-      const top = H + 0.02, bot = H - 0.32; stream.scale.y = top - bot; stream.position.set(0.0, (top + bot) / 2, 0); wm.opacity = k > 0.6 ? (k - 0.6) * 1.8 * P.show : 0;
+      // 붓는 사람(by)이 있으면 그 사람의 높이 든 손에 — 아무도 들지 않은 물병이 허공에서 기울었다(사용자 2026-11: 공중부양은 싫다)
+      const h = P.hand?.(); let sx = 0, sy = H;
+      if (h) { g.updateMatrixWorld(true); const l = g.worldToLocal(h); jug.position.set(l.x, l.y + 0.03, l.z); sx = l.x + 0.05 * k; sy = l.y; } else jug.position.set(-0.07, H, 0);
+      const top = sy + 0.02, bot = Math.min(sy - 0.1, H - 0.32); stream.scale.y = top - bot; stream.position.set(sx, (top + bot) / 2, h ? jug.position.z : 0); wm.opacity = k > 0.6 ? (k - 0.6) * 1.8 * P.show : 0;
     }, { state: o.state || 'idle', fade: 'scale' });
   },
 

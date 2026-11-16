@@ -348,7 +348,7 @@ export const B = {
       stones: ['rocks', 0, 0, { spots: [[-0.95, -0.25, 0.07], [-0.3, 0.62, 0.06], [0.55, 0.62, 0.05]] }],
       cloth: ['purple', -0.1, 0.5],
       heart: ['beam', -0.4, 0.28, { r: 0.34, h: 2.2 }],
-      water: ['pour', -1.05, 0.25, { h: 0.8 }],
+      water: ['pour', -1.05, 0.25, { h: 0.8, by: 'paul' }],
     },
     cast: {
       paul: ['paul', 1.35, -0.42, -1.0],
@@ -420,7 +420,7 @@ export const B = {
       jail: ['jail', JX, JZ, { w: 1.9, chains: [-0.72, 0.55], lit: true }],
       stocks: ['stocks', (IN1[0] + IN2[0]) / 2, JZ + 0.06, { len: 0.62 }],
       basin: ['basin', 0.15, 0.62],
-      water: ['pour', 0.6, 0.45, { h: 0.8 }],
+      water: ['pour', 0.6, 0.45, { h: 0.8, by: 'paul' }],
       lamp: ['lamp', 1.1, 0.68],
     },
     cast: {
@@ -728,7 +728,7 @@ export const B = {
       home: ['house', 0.62, -0.6, { door: true, stair: false, wall: '#d6c09a' }],
       seat: ['bema', 1.6, -0.42, { w: 0.9 }],
       night: ['beam', -0.05, 0.3, { r: 0.42, h: 2.4 }],
-      water: ['pour', 0.45, 0.25, { h: 0.8 }],
+      water: ['pour', 0.45, 0.25, { h: 0.8, by: 'paul' }],
       folk: ['crowd', 0, 0, { spots: [[-0.2, 0.62], [0.12, 0.66], [0.42, 0.6]], face: Math.PI, state: 'sit' }],
     },
     cast: {

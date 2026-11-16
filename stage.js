@@ -250,6 +250,8 @@ function swapIn(plan) {
     old.p.root.removeFromParent(); parent?.add(a.p.root); a.op = -1; actors[name] = a; a.update(performance.now() / 1000, 0.016);
   });
   Object.entries(script.props || {}).forEach(([name, [, , , o]]) => { if (o?.on && props[name]) props[name].follow = [].concat(o.on).map(n => actors[n]); });
+  // by: 그 사람이 손에 드는 소품(세례 물병) — 높이 든 손을 따라간다(허공에 떠 있었다, 사용자 2026-11)
+  Object.entries(script.props || {}).forEach(([name, [, , , o]]) => { if (o?.by && props[name]) props[name].hand = () => actors[o.by]?.raisedHand?.() || null; });
 }
 function clearCast() {
   cancelPending();
@@ -374,6 +376,8 @@ function setScene(ev) {
   // 사람을 비추는 빛(on: 배역 이름)은 그 사람을 따라다닌다 — 빛 아래 서 있다가 옮겨 가도 빛만 남지 않게
   // on이 둘이면 두 사람의 한가운데를 따른다 — 앞뒤의 두 제사장이 멘 언약궤
   Object.entries(script.props || {}).forEach(([name, [, , , o]]) => { if (o?.on) props[name].follow = [].concat(o.on).map(n => actors[n]); });
+  // by: 그 사람이 손에 드는 소품(세례 물병) — 높이 든 손을 따라간다(허공에 떠 있었다, 사용자 2026-11)
+  Object.entries(script.props || {}).forEach(([name, [, , , o]]) => { if (o?.by && props[name]) props[name].hand = () => actors[o.by]?.raisedHand?.() || null; });
   // 군중은 무대의 배역이 가까이 오면 비켜선다 (props.js crowd)
   Object.values(props).forEach(p => { if (p.kind === 'crowd') p.avoid = avoidFor; });
   // 모델 천사 위의 빛기둥은 끈다 — 흰 옷의 천사가 빛에 묻혀 하얗게 바랬다. 천사 둘레의 은은한 빛(glow)만으로 충분하다(사용자 2026-11)
@@ -394,6 +398,8 @@ function setScene(ev) {
 // 모델 점검용(?models&check): 장면의 순간마다 떠 있거나 묻힌 사람, 상대를 보지 않고 말하는 사람을 잰다 (헤드리스로 61장면을 돌려 본다)
 if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__stage = {
   scene: ev => setScene(ev), group: () => stageGroup,
+  cmd(list) { atStart = false; apply(list, true); }, // 점검용: 명령을 바로
+  play(k) { atStart = false; beat(k); }, // 점검용: 그 순간을 제 속도(delay 포함)로
   // 점검용 가까이 찍기: 배역 n을 옆(yaw 기준 side 라디안)에서 크게 찍어 그림 주소로
   closeup(n, side = Math.PI / 2, dist = 1.1) { const a = actors[n]; if (!a) return null; const r = a.p.root; r.updateMatrixWorld(true); const c = r.getWorldPosition(new THREE.Vector3()), s = r.getWorldScale(new THREE.Vector3()).y, h = (a.H || 0.9) * s;
     const yaw = r.getWorldQuaternion(new THREE.Quaternion()), dir = new THREE.Vector3(Math.sin(side), 0.25, Math.cos(side)).normalize().applyQuaternion(yaw);
