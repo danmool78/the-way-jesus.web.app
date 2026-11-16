@@ -1,6 +1,7 @@
 /* 3D 무대 소품: 구유·양·배·물결·군중·바구니·언덕·십자가·무덤·빛 */
 import { THREE, mat, DS, lathe, folds, mesh, sphere, glowTexture, damp } from './kit.js';
 import { crowdPerson, dollHeight, MS } from './model-actor.js';
+import { push, personBox } from './collide.js';
 // 군중을 순례자 3D 모델로 (stage.js가 받아 옷 색을 입혀 넣어 준다 — { men: [gltf…], women: [gltf…] }). 없으면 예전의 작은 사람들
 let CROWD = null;
 export const setCrowd = c => { CROWD = c; };
@@ -299,16 +300,22 @@ const MAKERS = {
         g.add(f.obj); return f;
       });
       let was = null;
-      const w = new THREE.Vector3(), q = new THREE.Vector3(), want = new THREE.Vector3();
+      const w = new THREE.Vector3(), want = new THREE.Vector3(), M = new THREE.Matrix4(), Mi = new THREE.Matrix4();
       // y: 걸상 높이 — 그 위에서는 걸터앉는다
       // 비켜서기: 배역(P.avoid — 무대가 넣어 준다)이 가까이 오면 그만큼 밀려났다가 지나가면 제자리로 — 군중 속에 선 사람이 서로 뚫고 섰다(사용자 2026-11)
       return new Prop(g, (P, t, dt) => {
         const sit = P.state === 'sit'; if (sit !== was) { was = sit; people.forEach(f => f.pose(sit, o.y || 0)); }
-        const pts = P.avoid?.(); if (!pts) return;
-        const R = 0.24, loc = pts.map(p => g.worldToLocal(p.clone())); // 무리 기준으로 잰다 — 무리가 돌려 놓여 있으면 세계 방향 그대로 밀어 오히려 다가갔다
-        people.forEach(f => {
-          want.set(0, 0, 0); w.copy(f.home);
-          for (const p of loc) { const dx = w.x - p.x, dz = w.z - p.z, d = Math.hypot(dx, dz); if (d < R) { const s = (R - d) / (d || 1e-6); want.x += (d ? dx : 1) * s; want.z += (d ? dz : 0) * s; } }
+        const av = P.avoid?.(); if (!av) return;
+        // 무리 좌표 ↔ 무대 좌표: 무리가 돌려 놓여 있어도 밀어내는 방향이 맞게
+        av.stage.updateMatrixWorld(true); g.updateMatrixWorld(true); M.copy(av.stage.matrixWorld).invert().multiply(g.matrixWorld); Mi.copy(M).invert();
+        const yaw0 = Math.atan2(-M.elements[2], M.elements[0]), H = dollHeight('man') * MS;
+        const homes = people.map(f => { w.copy(f.home).applyMatrix4(M); return personBox(w.x, w.z, yaw0 + f.obj.rotation.y, H); });
+        people.forEach((f, i) => {
+          const a = homes[i], d = [0, 0];
+          for (const b of av.boxes) { const p = push(a, b); if (p) { d[0] += p[0]; d[1] += p[1]; } }
+          homes.forEach((b, j) => { if (j === i) return; const p = push(a, b); if (p) { d[0] += p[0] / 2; d[1] += p[1] / 2; } }); // 무리 안의 이웃끼리도
+          // 무대 좌표의 밀림을 무리 좌표로 (기준점은 제자리) — 배역이 지나가면 다시 제자리로
+          w.set(a.c[0] + d[0], 0, a.c[1] + d[1]).applyMatrix4(Mi); want.set(w.x - f.home.x, 0, w.z - f.home.z);
           const before = f.off.clone(); f.off.lerp(want, 1 - Math.exp(-4 * (dt || 0.016)));
           f.obj.position.x = f.home.x + f.off.x; f.obj.position.z = f.home.z + f.off.z; if (f.stone?.parent) f.stone.position.add(f.off.clone().sub(before)); // 높이는 그대로 — 앉느라 내린 몸까지 0으로 되돌려 앉은 채 떠 있었다(e16, 사용자 2026-11)
         });
