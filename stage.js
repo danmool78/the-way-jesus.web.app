@@ -292,6 +292,8 @@ function setScene(ev) {
   // 사람을 비추는 빛(on: 배역 이름)은 그 사람을 따라다닌다 — 빛 아래 서 있다가 옮겨 가도 빛만 남지 않게
   // on이 둘이면 두 사람의 한가운데를 따른다 — 앞뒤의 두 제사장이 멘 언약궤
   Object.entries(script.props || {}).forEach(([name, [, , , o]]) => { if (o?.on) props[name].follow = [].concat(o.on).map(n => actors[n]); });
+  // 모델 천사 위의 빛기둥은 끈다 — 흰 옷의 천사가 빛에 묻혀 하얗게 바랬다. 천사 둘레의 은은한 빛(glow)만으로 충분하다(사용자 2026-11)
+  Object.entries(script.props || {}).forEach(([name, [kind, , , o]]) => { if (kind === 'beam' && o?.on && props[name]) props[name].muted = [].concat(o.on).every(n => actors[n]?.doll && ['angel', 'whiteman'].includes(actors[n].type)); });
   setEnv(script.env || 'day', true);
   // 연출 확인용: ?beat=p1.3 이면 그 순간까지의 동작을 즉시 적용한다 (?beat=enter는 대표 순간 그대로)
   const until = new URLSearchParams(location.search).get('beat');
@@ -326,6 +328,32 @@ if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__st
     return out;
   },
   who(n) { const a = actors[n]; if (!a) return null; const d = a.doll || a; return { model: !!a.doll, pose: d.pose, y: d.y, yT: d.yT, floating: d.floating, sleep: !!a.acts?.sleep, mv: d.goal.distanceTo(d.pos), rotx: a.body?.rotation.x, ground: d.ground, rootY: a.p.root.position.y, parent: a.p.root.parent?.type }; },
+  // 되풀이 동작의 이음매: 끝(dur)과 처음(0)의 뼈 각도 차(도) — 큰 뼈 몇 개
+  loopGap(n, clip = 'talk') { const a = actors[n]; const act = a?.acts?.[clip]; if (!act) return null; const c = act.getClip(), q0 = new THREE.Quaternion(), q1 = new THREE.Quaternion(), out = [];
+    for (const k of c.tracks) { if (k.ValueTypeName !== 'quaternion') continue; const it = k.createInterpolant(); q0.fromArray(it.evaluate(0)); q1.fromArray(it.evaluate(c.duration)); const d = q0.angleTo(q1) * 57.3; if (d > 1) out.push([k.name.split('.')[0].replace('mixamorig', ''), +d.toFixed(1)]); }
+    return { dur: +c.duration.toFixed(2), loop: act.loop, n: c.tracks.length, out: out.sort((x, y) => y[1] - x[1]).slice(0, 8) }; },
+  // 튐 찾기: secs초 동안 매 프레임 그 사람 뼈들의 (부모 기준) 회전 변화 — 프레임 사이 가장 크게 바뀐 뼈와 각도, 그 순간의 동작 시각
+  jumps(n, secs = 8) { const a = actors[n]; if (!a?.body) return Promise.resolve(null); const bones = []; a.body.traverse(o => { if (o.isBone) bones.push(o); });
+    let prev = null; const out = [], t0 = performance.now();
+    return new Promise(res => { const tick = () => { const cur = bones.map(b => b.quaternion.clone());
+      if (prev) { let m = 0, w = ''; cur.forEach((q, i) => { const d = q.angleTo(prev[i]) * 57.3; if (d > m) { m = d; w = bones[i].name.replace('mixamorig', ''); } }); out.push([+((performance.now() - t0) / 1000).toFixed(2), +m.toFixed(1), w, +(a.cur?.time || 0).toFixed(2), a.cur?.getClip().name]); }
+      prev = cur; if (performance.now() - t0 < secs * 1000) requestAnimationFrame(tick); else res(out); }; requestAnimationFrame(tick); }); },
+  // 같은 것을 화면 없이: dt씩 직접 돌려(느린 컴퓨터에서도 프레임이 촘촘하게) 뼈 회전·몸 위치가 한 번에 크게 바뀌는 순간
+  jumpsSim(n, secs = 14, dt = 1 / 30) { const a = actors[n]; if (!a?.body) return null; const bones = []; a.body.traverse(o => { if (o.isBone) bones.push(o); });
+    let prev = null, pp = null; const out = [], T0 = performance.now() / 1000;
+    for (let t = 0; t < secs; t += dt) { a.update(T0 + t, dt); const cur = bones.map(b => b.quaternion.clone()), bp = a.body.position.clone();
+      if (prev) { let m = 0, w = ''; cur.forEach((q, i) => { const d = q.angleTo(prev[i]) * 57.3; if (d > m) { m = d; w = bones[i].name.replace('mixamorig', ''); } });
+        out.push([+t.toFixed(2), +m.toFixed(2), w, +(bp.distanceTo(pp) * 1000).toFixed(2), +(a.cur?.time || 0).toFixed(2), a.cur?.getClip().name, a.doll.pose, +(a.w || 0).toFixed(2), Object.entries(a.acts).filter(([, x]) => x.getEffectiveWeight() > 0.01 && x.isRunning()).map(([k, x]) => k + ':' + x.getEffectiveWeight().toFixed(2) + '@' + x.time.toFixed(2)).join(' ')]); }
+      prev = cur; pp = bp; }
+    return out; },
+  keysNear(n, bone, t0, t1, clip = 'talk') { const a = actors[n]; const c = a?.acts?.[clip]?.getClip(); if (!c) return null;
+    return c.tracks.filter(k => k.name.includes(bone)).map(k => [k.name, Array.from(k.times).map((t, i) => [t, i]).filter(([t]) => t >= t0 && t <= t1).map(([t, i]) => [+t.toFixed(3), Array.from(k.values.slice(i * k.getValueSize(), (i + 1) * k.getValueSize())).map(v => +v.toFixed(3))])]); },
+  trackInfo(n, clip = 'talk') { const c = actors[n]?.acts?.[clip]?.getClip(); return c && c.tracks.map(k => [k.name.replace('mixamorig', ''), k.times.length, +k.times[0].toFixed(2), +k.times[k.times.length - 1].toFixed(2)]); },
+  evalAt(n, bone, ts, clip = 'talk') { const c = actors[n]?.acts?.[clip]?.getClip(); const k = c?.tracks.find(k => k.name.includes(bone + '.quaternion')); if (!k) return null; const it = k.createInterpolant(), q0 = new THREE.Quaternion().fromArray(it.evaluate(ts[0]));
+    return { interp: k.getInterpolation(), keys: Array.from(k.times).filter(t => t > 3.8).map(t => +t.toFixed(3)), at: ts.map(t => [t, +(q0.angleTo(new THREE.Quaternion().fromArray(it.evaluate(t))) * 57.3).toFixed(1)]) }; },
+  probe(n, ts) { const a = actors[n], act = a.acts.talk, nb = a.neckB, q0 = []; return ts.map(t => { for (const [b, q] of a.rest) b.quaternion.copy(q); act.time = t; a.mixer.update(0); const q = nb.quaternion.clone(); if (!q0.length) q0.push(q); return [t, +(q.angleTo(q0[0]) * 57.3).toFixed(1), q.toArray().map(v => +v.toFixed(3))]; }); },
+  probe2(n) { const a = actors[n], act = a.acts.talk, c = act.getClip(); const i = c.tracks.findIndex(k => /Neck\.quaternion/.test(k.name)); const ip = act._interpolants[i], k = c.tracks[i];
+    return { name: k.name, times: Array.from(k.times).slice(-6).map(t => +t.toFixed(3)), vals: Array.from(k.values).slice(-12).map(v => +v.toFixed(3)), ip: [3.9, 4.0, 5.0, 5.4].map(t => Array.from(ip.evaluate(t)).map(v => +v.toFixed(3))), ending: ip.settings }; },
   // 겹친 사람: 보이는 모든 사람(배역·군중)의 엉덩이 뼈 자리끼리 너무 가까운 쌍 (무대 좌표)
   crowding(lim = 0.1) { const v = new THREE.Vector3(), P = []; stageGroup.updateMatrixWorld(true);
     stageGroup.traverse(o => { if (!o.isBone || !/Hips$/.test(o.name)) return; let vis = true; for (let q = o; q; q = q.parent) if (!q.visible) { vis = false; break; } if (!vis) return;

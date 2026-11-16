@@ -103,7 +103,7 @@ export const SCRIPTS = {
       'p1.0': [['gabriel', 'speak'], ['mary', 'afraid', { x: 0.45 }]],
       'p1.4': [['gabriel', 'bless']],
       'p1.7': [['mary', 'kneel']],
-      'p2.1': [['@env', 'night'], ['beam', null, { show: 0 }], ['joseph', 'sleep', { show: 1, x: 1.05, z: -0.3 }], ['gabriel', 'idle', { x: 0.62, z: -0.7, look: 1.2 }], ['mary', 'pray', { x: -0.2, look: -0.3 }]],
+      'p2.1': [['@env', 'night'], ['beam', null, { show: 0 }], ['joseph', 'sleep', { show: 1, x: 1.05, z: -0.3 }], ['gabriel', 'idle', { x: 0.42, z: -0.45, look: 1.2 }], ['mary', 'pray', { x: -0.2, look: -0.3 }]],
       'p2.2': [['gabriel', 'speak']],
       'p2.4': [['@env', 'day'], ['joseph', 'idle', { x: 0.75, z: 0.05, look: -1 }], ['gabriel', 'bless', { x: -0.7, z: -0.1, look: 0.9 }], ['mary', 'idle', { x: 0.25, look: -0.8 }]],
       w0: [['@env', 'day'], ['beam', null, { show: 1 }], ['gabriel', 'speak', { x: -0.6, look: 1 }], ['mary', 'listen', { look: -1 }], ['joseph', 'idle', { show: 0 }]],

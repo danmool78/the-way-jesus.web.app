@@ -17,7 +17,7 @@ class Prop {
   }
   set(state) { if (state && state !== this.state) { this.state = state; this.t0 = performance.now() / 1000; } }
   update(time, dt, env) {
-    this.show = damp(this.show, this.showT, 3, dt);
+    this.show = this.muted ? 0 : damp(this.show, this.showT, 3, dt); // muted: 무대가 끈 소품 (모델 천사 위의 빛기둥)
     const pos = this.obj.position;
     if (this.speed) { // 일정한 속도로 미끄러지듯 (배가 물 위를 나아가듯) — 끝에서 살짝 늦춘다
       const dx = this.goal.x - pos.x, dz = this.goal.y - pos.z, d = Math.hypot(dx, dz);
