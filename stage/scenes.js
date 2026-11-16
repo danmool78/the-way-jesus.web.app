@@ -720,7 +720,8 @@ export const SCRIPTS = {
         ['jesus', 'sit', { board: 'boat', x: -0.42, z: 0, look: 0, delay: 3000 }], ['peter', 'idle', { board: 'boat', x: 0.48, z: 0.04, look: -1.0, delay: 3000 }],
         ['boat', null, { geo: [32.858, 35.572], delay: 3200 }], ['jesus', 'speak', { delay: 5000 }]],
       'p1.0': [['jesus', 'speak', { look: 1.0 }]],
-      'p1.3': [['peter', 'shrug'], ['andrew', 'idle', { board: 'boat', x: 0.66, z: -0.08, look: -1.0 }], ['boat', null, { geo: [32.845, 35.578] }], ['net', null, { geo: [32.84, 35.588], delay: 3000 }], ['peter', 'bow', { delay: 3000 }]],
+      // p1.3: 안드레는 뭍에 남는다 — 배에 갑자기 나타나 한 사람이 늘어난 것처럼 보였다(사용자 2026-11)
+      'p1.3': [['peter', 'shrug'], ['boat', null, { geo: [32.845, 35.578] }], ['net', null, { geo: [32.84, 35.588], delay: 3000 }], ['peter', 'bow', { delay: 3000 }]],
       'p1.5': [['net', 'full'], ['peter', 'afraid', { delay: 1500 }], ['boat2', null, { geo: [32.845, 35.6] }], ['james', 'idle', { x: 1.3, z: -0.15, look: -1.0 }], ['johnD', 'idle', { x: 1.6, z: -0.05, look: -1.0 }]],
       'p2.0': [['peter', 'kneel', { x: -0.05, z: 0.04, look: -1.0 }]], // 예수님(-0.42)과 돛대(0.2) 사이 — 예수님 무릎에 붙거나 돛대가 얼굴을 뚫었다(사용자 2026-11)
       'p2.1': [['peter', 'speak']],
