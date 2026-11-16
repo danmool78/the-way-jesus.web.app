@@ -238,6 +238,9 @@ body.meeting #stick,body.meeting #arrow{opacity:0!important;pointer-events:none}
 #bubble::after{content:'';position:absolute;left:calc(50% + var(--tx,0px));bottom:-9px;margin-left:-9px;border:9px solid transparent;border-bottom:0;border-top-color:#fbf3e0}
 #bubble b{display:block;font:700 11.5px var(--sans);letter-spacing:.06em;color:#9b6b2a;margin-bottom:2px}
 /* 불러오는 동안 (길 떠나기를 누른 뒤 첫 장면까지) */
+/* 길게 누를 때 그림 저장 메뉴·글자 고르기가 뜨지 않게 (iOS) */
+body{-webkit-touch-callout:none}
+img,canvas{-webkit-user-drag:none;user-select:none}
 #loading{position:fixed;inset:0;z-index:9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:rgba(20,14,9,.72);color:#f3e2bf;font:700 16px/1.5 var(--serif)}
 #loading.hidden{display:none}
 #loading i{width:46px;height:46px;border-radius:50%;border:4px solid rgba(233,190,110,.25);border-top-color:#e9be6e;animation:spin .9s linear infinite}
