@@ -332,8 +332,10 @@ export class StageModel {
     for (const [b, q] of this.rest) b.quaternion.copy(q);
     this.mixer.update(dt);
     // 빌린 무릎 꿇기(기도) 동작이면 발등을 뒤로 눕혀 바닥에 편다 — 다른 모델의 발 각도라 발끝이 뒤에서 위로 들렸다(e02 목자, 사용자 2026-11)
-    if (this.cur === this.acts.pray && kneel) { const r0 = this.p.root; r0.updateMatrixWorld(true); const back = new THREE.Vector3(0, -0.25, -1).normalize().applyQuaternion(r0.getWorldQuaternion(new THREE.Quaternion()));
-      for (const l of this.legs) if (l.foot && l.toe) { l.foot.updateMatrixWorld(true); this.aim(l.foot, l.toe, back, 1); } }
+    if (this.cur === this.acts.pray && kneel) { const r0 = this.p.root; r0.updateMatrixWorld(true); const back = new THREE.Vector3(0, 0.25, -1).normalize().applyQuaternion(r0.getWorldQuaternion(new THREE.Quaternion()));
+      // 정강이도 땅에 눕힌다 — 빌린 동작은 다리 길이가 달라 무릎에서 정강이가 뒤로 치켜 올라가 발바닥이 하늘을 봤다(사용자 2026-11: 발목을 펴서 발등이 땅에)
+      const flat = new THREE.Vector3(0, -0.04, -1).normalize().applyQuaternion(r0.getWorldQuaternion(new THREE.Quaternion()));
+      for (const l of this.legs) { if (l.lo && l.foot) this.aim(l.lo, l.foot, flat, 1); if (l.foot && l.toe) { l.foot.updateMatrixWorld(true); this.aim(l.foot, l.toe, back, 1); } } }
     if (this.still) return; // 천사: 몸도 팔도 돌리지 않는다
     // 동작이 없는 자세는 인형의 팔을 따른다 (천천히 들어가고 나온다)
     // 아기·물건을 두 팔로 안은 사람(carry)은 걸을 때도 팔을 인형대로 — 걷기 동작대로 두 팔을 흔들어 아기가 배에 붙어 있었다(사용자 2026-11)
@@ -366,10 +368,10 @@ export class StageModel {
         const sd = r.worldToLocal(l.up.getWorldPosition(v1)).x > 0 ? 1 : -1; // 몸의 어느 쪽 다리인지
         // 땅에 앉기: 무릎을 세우고 앉는다(넓적다리는 앞으로 조금 들고, 무릎에서 꺾인 정강이는 땅으로) — 양반다리는 긴 겉옷이 두 다리 사이에 늘어나 무릎이 어디서 접혔는지 보이지 않았다(사용자 2026-11) / 꿇어앉기: 넓적다리는 앞으로, 정강이는 뒤로
         const thigh = (cross ? new THREE.Vector3(sd * 0.22, 0.05, 1) : new THREE.Vector3(0, -0.35, 1)).normalize().applyQuaternion(qr);
-        const shin = (cross ? new THREE.Vector3(sd * 0.04, -1, 0.08) : new THREE.Vector3(0, -0.12, -1)).normalize().applyQuaternion(qr);
+        const shin = (cross ? new THREE.Vector3(sd * 0.04, -1, 0.08) : new THREE.Vector3(0, -0.04, -1)).normalize().applyQuaternion(qr);
         this.aim(l.up, l.lo, thigh, this.seizaW); this.aim(l.lo, l.foot, shin, this.seizaW);
         // 꿇어앉기: 발등을 뒤로 눕혀 바닥에 편다 — 발이 선 자세의 각도 그대로라 뒤로 누운 정강이 끝에서 발끝이 하늘로 섰다(사용자 2026-11)
-        if (!cross && l.toe) this.aim(l.foot, l.toe, new THREE.Vector3(0, -0.3, -1).normalize().applyQuaternion(qr), this.seizaW);
+        if (!cross && l.toe) this.aim(l.foot, l.toe, new THREE.Vector3(0, 0.25, -1).normalize().applyQuaternion(qr), this.seizaW);
         for (const b of [l.lo, l.foot, l.toe]) if (b) knee = Math.min(knee, b.getWorldPosition(v1).y); } // 무릎·발·발끝 가운데 가장 낮은 곳을 땅에 (무릎만 맞추니 발끝이 묻혔다)
       if (knee < Infinity) this.body.position.y -= (knee - r.getWorldPosition(v2).y) / r.getWorldScale(v1).y - 0.03 * this.hipH;
     }
