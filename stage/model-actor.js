@@ -223,7 +223,9 @@ export class StageModel {
         const h = handAt(side); if (!h) continue; o.position.copy(h);
         const e = this.doll.p[side ? 'armR' : 'armL'].userData.elbow;
         o.quaternion.copy(qr).invert().multiply(qr).multiply(qd).multiply(e.getWorldQuaternion(new THREE.Quaternion())).multiply(it.q0);
-      } else if (kind === 'both') { const a = handAt(0), b = handAt(1); if (!a || !b) continue; o.position.copy(a).add(b).multiplyScalar(0.5); o.position.y += 0.02; o.position.z += 0.02; o.quaternion.copy(it.q0); }
+      } else if (kind === 'both') { const a = handAt(0), b = handAt(1); if (!a || !b) continue;
+        // 두 손이 벌어지면(말하며 팔을 펼 때) 한가운데는 가슴 앞 허공 — 두루마리가 가슴에서 튀어나와 보였다(사용자 2026-11). 그땐 오른손에
+        const apart = a.distanceTo(b) > 0.3 * this.H; if (apart) o.position.copy(b); else { o.position.copy(a).add(b).multiplyScalar(0.5); o.position.y += 0.02; o.position.z += 0.02; } o.quaternion.copy(it.q0); }
       else if (kind === 'staff') { // 손 옆에 세워 땅을 짚는다. 눕거나 나무 위·엎드려 울 때는 내려놓는다(허공에 서 있었다)
         const h = handAt(1); if (!h || ['sleep', 'perch', 'mourn'].includes(this.doll.pose)) { o.visible = false; continue; } o.position.set(h.x, 0, h.z); }
       else if (kind === 'glow') o.position.set(0, it.p0.y + 0.1, it.p0.z);
