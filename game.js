@@ -959,6 +959,10 @@ async function begin(fresh) {
   if (fresh) store.set('theway-game-' + JID, null);
   store.set('theway-game-last', JID);
   const J = JOURNEYS[JID];
+  // 불러오는 동안 도는 표시와 지금 하는 일 — 멈춘 화면이 죽은 것 같았다(사용자 2026-11)
+  if (G.starting) return; G.starting = true;
+  const busy = t => { $('#loading').classList.remove('hidden'); $('#loading b').textContent = t; };
+  busy('여정을 펼치는 중…');
   await loadJourney();
   if (J.sail) await loadMask(); // 지중해의 뭍과 바다
   const saved = store.get('theway-game-' + JID, null);
@@ -971,6 +975,7 @@ async function begin(fresh) {
   G.r = renderer($('#world'));
   buildWorld(J); placeTreasures();
   playerType();
+  busy('사람들을 부르는 중…');
   // 출발: 처음이면 첫 장면에서 조금 떨어진 곳, 이어 걷기면 앞 장면 자리
   const ref = G.events[Math.max(0, G.idx - 1)], [rx, rz] = toXZ(placeOf(ref).lat, placeOf(ref).lng);
   let sx = rx, sz = rz;
@@ -988,8 +993,8 @@ async function begin(fresh) {
   G.leader.realWalk = true; G.leader.big = SCALE; G.leader.target = G.me;
   G.scene.add(G.me.p.root, G.leader.p.root);
   drawWater(); drawCardBtn(); resize();
-  toast('땅과 마을을 세우는 중…', true, 6000);
-  await G.world.ready; $('#toast').classList.remove('on');
+  busy('땅과 마을을 세우는 중…');
+  await G.world.ready; $('#loading').classList.add('hidden');
   spawnPatrols(); placeLocals();
   startLeg();
   if (G.idx === 0) toast(`${esc(me.name)}님, ${esc(josa(J.who, '을', '를'))} 따라 걸어요<small>지도에서 장소 이름을 찾아 걸어가세요 · 가까이 가면 그분의 발자국이 보여요</small>`, true, 4200);
