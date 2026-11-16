@@ -57,7 +57,7 @@ const seatStone = (stone, hips, parent, hp, top, H) => {
   stone.userData.hips = hips;
   if (!stone.userData.g) stone.userData.g = [stone.geometry, stone.material];
   [stone.geometry, stone.material] = SEAT_BLOCK ? [BLOCK, BLOCK_M] : stone.userData.g;
-  stone.position.set(hp.x - fd.x * 0.04 * H, 0, hp.z - fd.z * 0.04 * H); stone.rotation.y = Math.atan2(fd.x, fd.z) + (SEAT_BLOCK ? 0 : stone.userData.tw);
+  stone.position.set(hp.x - fd.x * 0.012 * H, 0, hp.z - fd.z * 0.012 * H); stone.rotation.y = Math.atan2(fd.x, fd.z) + (SEAT_BLOCK ? 0 : stone.userData.tw);
   if (SEAT_BLOCK) stone.scale.set(H * 0.2, top, H * 0.2); else stone.scale.set(H * 0.28, top, H * 0.2); stone.visible = true;   // 넓적하게 — 좁으면 기둥처럼 섰다(사용자)
 };
 const newStone = () => { const [g, m] = STONES[stoneN++ % STONES.length], o = new THREE.Mesh(g, m);
