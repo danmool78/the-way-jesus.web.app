@@ -18,13 +18,33 @@ export async function loadModel(url) {
   return cache.get(url);
 }
 
+// 동작을 빌려 올 모델 (여자는 순례자 자매에게서)
+const DONOR = { lydia: 'pilgrim-woman', 'pilgrim-woman': 'pilgrim-woman', miriam: 'pilgrim-woman', zipporah: 'pilgrim-woman', rahab: 'pilgrim-woman', samaritan: 'pilgrim-woman', martha: 'pilgrim-woman', magdalene: 'pilgrim-woman', 'mary-bethany': 'pilgrim-woman', mary: 'pilgrim-woman' };
 // 모델 목록(assets/models.json)과 이름으로 받기 — 없거나 못 받으면 null (그때는 예전 인형)
 let list = null;
 export async function model(name) {
   try {
     list ??= fetch('assets/models.json').then(r => r.json());
     const M = await list, key = M.files[name];
-    const g = key ? await loadModel(`${M.base}/${key}`) : null; if (g) g.userData.name = name; return g;
+    const g = key ? await loadModel(`${M.base}/${key}`) : null; if (!g) return null;
+    g.userData.name = name;
+    // 걷기만 떠 온 모델(바울 여정의 사람들)은 서 있기·말하기가 없어 팔 벌린 A자로 서 있었다(사용자 2026-11) —
+    // 같은 Mixamo 뼈대의 순례자 모델에서 빌린다 (stage/model-actor.js의 withBorrowed와 같은 방식: 뼈 각도만, 엉덩이 높이는 비율로)
+    const need = ['idle', 'talk'].filter(n => !g.animations.some(c => c.name === n)), dn = DONOR[name] || 'pilgrim-man';
+    if (need.length && name !== dn && !g.userData.borrowed) {
+      g.userData.borrowed = true;
+      const d = await model(dn);
+      if (d) for (const n of need) {
+        const c = d.animations.find(c => c.name === n); if (!c) continue;
+        const hr = bone(g.scene, 'Hips')?.position.length(), hd = bone(d.scene, 'Hips')?.position.length(), k = hr && hd ? hr / hd : 1;
+        g.animations.push(new THREE.AnimationClip(n, c.duration, c.tracks.filter(t => g.scene.getObjectByName(t.name.split('.')[0])).map(t => {
+          const [bn, prop] = t.name.split('.');
+          if (/Hips/.test(bn) && prop === 'position') { const u = t.clone(); u.values = u.values.map(v => v * k); return u; }
+          return prop === 'quaternion' ? t : null;
+        }).filter(Boolean)));
+      }
+    }
+    return g;
   } catch (err) { console.warn('model', name, err); return null; }
 }
 
