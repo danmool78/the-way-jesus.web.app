@@ -414,5 +414,60 @@
   "j": [
    "kings"
   ]
+ },
+ "paul": {
+  "names": [
+   "바울",
+   "사울"
+  ],
+  "j": [
+   "paul"
+  ],
+  "desc": "The apostle Paul (also Saul of Tarsus): wiry man about forty-five, bald crown with a fringe of short dark-grey hair, short dark-grey beard, keen dark eyes; a long earth-brown wool tunic with a dark brown sash belt and a small leather pouch, a slate-grey mantle draped over both shoulders and down the back, sandals, often a plain wooden walking staff."
+ },
+ "barnabas": {
+  "names": [
+   "바나바"
+  ],
+  "j": [
+   "paul"
+  ],
+  "desc": "Barnabas of Cyprus: warm broad-faced man about fifty, full dark beard, kind smiling eyes; a cream-white linen head cloth bound with a thin dark band, a long cream-white tunic with a brown belt, an olive-green mantle over the shoulders and down the back, sandals."
+ },
+ "silas": {
+  "names": [
+   "실라"
+  ],
+  "j": [
+   "paul"
+  ],
+  "desc": "Silas: lean man about forty, short black hair, short neat black beard; a long light-grey linen tunic with a brown belt, a crimson mantle fastened on one shoulder and falling down the back like a cape, sandals."
+ },
+ "luke": {
+  "names": [
+   "누가"
+  ],
+  "j": [
+   "paul"
+  ],
+  "desc": "Luke the physician: man about forty, tousled dark hair, short beard, thoughtful face; a long tan wool tunic with a black belt, a rust-red mantle over the shoulders, a leather satchel on a strap across the chest, sandals."
+ },
+ "timothy": {
+  "names": [
+   "디모데"
+  ],
+  "j": [
+   "paul"
+  ],
+  "desc": "Timothy: young man about twenty, curly short dark hair, clean-shaven boyish face; a long plain cream-white tunic tied with a rope belt, a light sky-blue mantle around the shoulders, sandals."
+ },
+ "lydia": {
+  "names": [
+   "루디아"
+  ],
+  "j": [
+   "paul"
+  ],
+  "desc": "Lydia of Thyatira, the seller of purple cloth: dignified woman about thirty-five, dark hair under a long cream-white veil; a rich royal-purple wrap dress with long wide sleeves, a braided tan rope belt, a cream-white undergarment at the neck."
  }
 }
