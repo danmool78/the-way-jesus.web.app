@@ -328,7 +328,7 @@ if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__st
   // 앉은 사람의 엉덩이와 깔고 앉은 돌·의자가 얼마나 어긋났나 (무대 좌표, 사람 키로 나눔)
   seats() { const v = new THREE.Vector3(), w = new THREE.Vector3(), out = []; stageGroup.updateMatrixWorld(true);
     stageGroup.traverse(o => { if (!o.isMesh || !o.visible || !o.userData.tw && o.userData.tw !== 0) return; const hip = o.userData.hips; if (!hip) return;
-      hip.getWorldPosition(v); o.getWorldPosition(w); stageGroup.worldToLocal(v); stageGroup.worldToLocal(w); out.push([+(w.x - v.x).toFixed(3), +(w.z - v.z).toFixed(3)]); }); return out; },
+      hip.getWorldPosition(v); o.getWorldPosition(w); stageGroup.worldToLocal(v); stageGroup.worldToLocal(w); const top = o.scale.y * o.parent.getWorldScale(new THREE.Vector3()).y, hy = hip.getWorldPosition(new THREE.Vector3()).y - o.getWorldPosition(new THREE.Vector3()).y; out.push([+(w.x - v.x).toFixed(3), +(w.z - v.z).toFixed(3), +top.toFixed(3), +hy.toFixed(3)]); }); return out; },
   // 걷는 사람들의 걷기 동작 자리·빠르기 (발이 다 맞는지 점검)
   // 모델 팔 길이: 지금 자세의 위팔·아래팔 길이 ÷ 뼈대(바인드) 길이 — 1이면 늘어나지 않은 것
   armLen() { const v = new THREE.Vector3(), w = new THREE.Vector3(), M = new THREE.Matrix4(), s3 = new THREE.Vector3(); return Object.entries(actors).filter(([, a]) => a.doll).map(([n, a]) => {

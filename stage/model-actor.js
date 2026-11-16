@@ -36,8 +36,11 @@ const STONES = STONE_C.map((c, k) => {
 // 앉은 몸의 엉덩이 밑면(돌 윗면이 될 높이) — 엉덩이 뼈 바로 밑 둘레의 피부 꼭짓점 중 가장 낮은 것. 뼈 높이에서 어림했더니 돌이 엉덩이를 뚫었다(사용자)
 const seatBottom = (body, hips, R) => {
   const h = hips.getWorldPosition(new THREE.Vector3()), v = new THREE.Vector3(); let low = Infinity;
-  body.traverse(o => { if (!o.isSkinnedMesh) return; const n = o.geometry.attributes.position.count, st = Math.max(1, Math.floor(n / 4000));
-    for (let i = 0; i < n; i += st) { o.getVertexPosition(i, v); o.localToWorld(v);
+  // 엉덩이 뼈에 가장 크게 붙은 꼭짓점만 — 늘어진 겉옷 자락(다리 뼈에 붙음)까지 재니 돌이 한참 낮았다
+  body.traverse(o => { if (!o.isSkinnedMesh) return; const n = o.geometry.attributes.position.count, hi = o.skeleton.bones.indexOf(hips);
+    if (hi < 0) return; const si = o.geometry.attributes.skinIndex, sw = o.geometry.attributes.skinWeight;
+    for (let i = 0; i < n; i++) { let best = 0, bi = -1; for (let k = 0; k < 4; k++) { const w = sw.getComponent(i, k); if (w > best) { best = w; bi = si.getComponent(i, k); } }
+      if (bi !== hi) continue; o.getVertexPosition(i, v); o.localToWorld(v);
       if (v.y < h.y && Math.hypot(v.x - h.x, v.z - h.z) < R && v.y < low) low = v.y; } });
   return low;
 };

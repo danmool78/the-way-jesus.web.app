@@ -13,8 +13,12 @@ const cache = new Map();
 // 뼈 찾기: GLTFLoader가 이름의 ':'를 지워 'mixamorig:Head'가 'mixamorigHead'가 된다
 const bone = (root, n) => { let f = null; root.traverse(o => { if (!f && o.isBone && new RegExp(`(^|:|mixamorig)${n}$`).test(o.name)) f = o; }); return f; };
 
+// 멀리 작게 보일 때 텍스처를 한 단계 반 선명하게 읽는다(MAP_BIAS). 조각조각 붙은 텍스처라 흐린 단계에서는 옆 조각(흰 옷 등)의 색이
+// 얼굴에 섞여 흰 점이 보였다(천사·예수님 얼굴, 사용자 2026-11). 모델 재질에만 define을 붙인다 — 복제한 재질(restyle·tinted)에도 따라간다
+if (!THREE.ShaderChunk.map_fragment.includes('MAP_BIAS')) THREE.ShaderChunk.map_fragment = THREE.ShaderChunk.map_fragment.replace('texture2D( map, vMapUv )', '\n#ifdef MAP_BIAS\n texture2D( map, vMapUv, MAP_BIAS )\n#else\n texture2D( map, vMapUv )\n#endif\n');
 export async function loadModel(url) {
-  if (!cache.has(url)) cache.set(url, new GLTFLoader().loadAsync(url));
+  if (!cache.has(url)) cache.set(url, new GLTFLoader().loadAsync(url).then(g => {
+    g.scene.traverse(o => { if (o.isMesh && o.material.map) o.material.defines = { ...o.material.defines, MAP_BIAS: '-1.5' }; }); return g; }));
   return cache.get(url);
 }
 
