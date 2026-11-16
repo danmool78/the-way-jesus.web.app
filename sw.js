@@ -1,4 +1,4 @@
-const CACHE='theway-v5';
+const CACHE='theway-v6'; // 버전을 올리면 예전 저장본을 모두 지운다 — 모델 주소를 바꾼 뒤에도 예전 것을 쓰는 브라우저가 있었다(사용자 2026-11)
 // 페이지(탐색) 요청은 브라우저 HTTP 캐시를 건너 서버에 확인한다 — 첫 화면(/)이 1시간씩 예전 것으로 남던 문제
 // (탐색 요청 객체에는 옵션을 덧붙일 수 없어 주소로 다시 요청한다)
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(['./','app.html','land.json','style.css','app.js','data.json','assets/icon.svg','assets/relief.webp','stage.js','stage/kit.js','stage/people.js','stage/props.js','stage/scenes.js','assets/vendor/three.module.min.js'])));self.skipWaiting()});
