@@ -41,14 +41,20 @@ const seatBottom = (body, hips, R) => {
       if (v.y < h.y && Math.hypot(v.x - h.x, v.z - h.z) < R && v.y < low) low = v.y; } });
   return low;
 };
+// 회당·집 같은 건물이 있는 장면은 돌 대신 네모난 의자(사용자 2026-11: 건물 곁은 정육면체 의자, 산·들은 돌) — 무대가 장면마다 정한다
+const BLOCK = (() => { const g = new THREE.BoxGeometry(1, 1, 1); g.translate(0, 0.5, 0); return g; })(), BLOCK_M = new THREE.MeshStandardMaterial({ color: '#b39b74', roughness: 0.95 });
+let SEAT_BLOCK = false;
+export const seatBlocks = on => { SEAT_BLOCK = !!on; };
 let stoneN = 0;
 // 돌을 앉은 사람 엉덩이 밑, 몸이 보는 쪽의 조금 뒤에 몸과 같은 방향으로 놓는다(부모 좌표 기준 z로 밀었더니 옆으로 비켜났다)
 const fq = new THREE.Quaternion(), fd = new THREE.Vector3();
 const seatStone = (stone, hips, parent, hp, top, H) => {
   hips.getWorldQuaternion(fq).premultiply(parent.getWorldQuaternion(q3).invert()); fd.set(0, 0, 1).applyQuaternion(fq).setY(0);
   if (fd.lengthSq() < 1e-6) fd.set(0, 0, 1); fd.normalize();
-  stone.position.set(hp.x - fd.x * 0.05 * H, 0, hp.z - fd.z * 0.05 * H); stone.rotation.y = Math.atan2(fd.x, fd.z) + stone.userData.tw;
-  stone.scale.set(H * 0.28, top, H * 0.2); stone.visible = true;   // 넓적하게 — 좁으면 기둥처럼 섰다(사용자)
+  if (!stone.userData.g) stone.userData.g = [stone.geometry, stone.material];
+  [stone.geometry, stone.material] = SEAT_BLOCK ? [BLOCK, BLOCK_M] : stone.userData.g;
+  stone.position.set(hp.x - fd.x * 0.05 * H, 0, hp.z - fd.z * 0.05 * H); stone.rotation.y = Math.atan2(fd.x, fd.z) + (SEAT_BLOCK ? 0 : stone.userData.tw);
+  if (SEAT_BLOCK) stone.scale.set(H * 0.2, top, H * 0.2); else stone.scale.set(H * 0.28, top, H * 0.2); stone.visible = true;   // 넓적하게 — 좁으면 기둥처럼 섰다(사용자)
 };
 const newStone = () => { const [g, m] = STONES[stoneN++ % STONES.length], o = new THREE.Mesh(g, m);
   o.userData.tw = (stoneN * 0.61) % 0.5 - 0.25; o.castShadow = o.receiveShadow = true; o.visible = false; return o; };

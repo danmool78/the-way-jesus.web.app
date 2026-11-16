@@ -2,7 +2,7 @@
    app.js가 보내는 이벤트: stage:scene {i, ev}, stage:walk {i, ev}, stage:beat {beat, s}, stage:stop */
 import { THREE, damp } from './stage/kit.js';
 import { Actor, TYPES } from './stage/people.js';
-import { StageModel } from './stage/model-actor.js';
+import { StageModel, seatBlocks } from './stage/model-actor.js';
 import { model, tinted, plain, restyle } from './game-model.js';
 import { makeProp, setCrowd } from './stage/props.js';
 import { SCRIPTS } from './stage/scenes.js';
@@ -239,6 +239,7 @@ function apply(cmds, instant = false) {
     }
   });
 }
+const INDOOR = new Set(['synagogue', 'house', 'temple', 'throne', 'table', 'feast', 'treasury', 'gate', 'booth', 'tabernacle', 'tent', 'walls', 'citywall', 'sukkah', 'palace']);
 function setScene(ev) {
   curEv = ev;
   clearCast();
@@ -250,6 +251,8 @@ function setScene(ev) {
   if (!script) { canvas.style.opacity = 0; map.style.filter = ''; delete wrap.dataset.env; window.stageFoot = null; return; }
   if (street.on) street.cam(script.cams, script.cam || Object.keys(script.cams || {})[0], true);
   stageGroup.scale.setScalar(script.scale || 1);
+  // 건물이 선 장면에서 앉는 사람은 네모난 의자에, 산·들에서는 돌에 (사용자 2026-11)
+  seatBlocks(Object.values(script.props || {}).some(([k]) => INDOOR.has(k)));
   size = { w: 0, h: 0 }; // 넓은 무대(wide)가 바뀌었을 수 있으니 다시 잰다
   // 배역마다 쓸 모델 (거리 무대·실루엣은 인형 그대로)
   // dolls: 그 장면의 사람은 인형 그대로 (에덴 프롤로그의 아담·하와는 하나님이 지어 주신 가죽옷 — 순례자 모델이 지금 옷처럼 보였다, 사용자 2026-11). 천사만 모델로
