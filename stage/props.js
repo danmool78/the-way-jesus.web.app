@@ -294,13 +294,25 @@ const MAKERS = {
         const list = i % 3 === 2 ? CROWD.women : CROWD.men, g0 = list[(i * 7 + (i % 3)) % list.length]; // 이웃끼리 같은 사람이 겹치지 않게 건너뛰며
         // 키는 무대의 다른 어른(인형 man)과 같게 — 예전의 작은 사람들 크기로 세우니 어른이 아이처럼 작았다 (사용자 2026-11)
         const s = 0.94 + Math.random() * 0.1, f = crowdPerson(g0, dollHeight('man') * 0.97 * s);
-        f.obj.position.set(x, 0, z);
+        f.obj.position.set(x, 0, z); f.home = new THREE.Vector3(x, 0, z); f.off = new THREE.Vector3();
         f.obj.rotation.y = (o.face ?? Math.atan2(-x, -z)) + (Math.random() - 0.5) * 0.5;
         g.add(f.obj); return f;
       });
       let was = null;
+      const w = new THREE.Vector3(), q = new THREE.Vector3(), want = new THREE.Vector3();
       // y: 걸상 높이 — 그 위에서는 걸터앉는다
-      return new Prop(g, (P) => { const sit = P.state === 'sit'; if (sit !== was) { was = sit; people.forEach(f => f.pose(sit, o.y || 0)); } }, { state: o.state || 'stand' });
+      // 비켜서기: 배역(P.avoid — 무대가 넣어 준다)이 가까이 오면 그만큼 밀려났다가 지나가면 제자리로 — 군중 속에 선 사람이 서로 뚫고 섰다(사용자 2026-11)
+      return new Prop(g, (P, t, dt) => {
+        const sit = P.state === 'sit'; if (sit !== was) { was = sit; people.forEach(f => f.pose(sit, o.y || 0)); }
+        const pts = P.avoid?.(); if (!pts) return;
+        const R = 0.24, loc = pts.map(p => g.worldToLocal(p.clone())); // 무리 기준으로 잰다 — 무리가 돌려 놓여 있으면 세계 방향 그대로 밀어 오히려 다가갔다
+        people.forEach(f => {
+          want.set(0, 0, 0); w.copy(f.home);
+          for (const p of loc) { const dx = w.x - p.x, dz = w.z - p.z, d = Math.hypot(dx, dz); if (d < R) { const s = (R - d) / (d || 1e-6); want.x += (d ? dx : 1) * s; want.z += (d ? dz : 0) * s; } }
+          const before = f.off.clone(); f.off.lerp(want, 1 - Math.exp(-4 * (dt || 0.016)));
+          f.obj.position.copy(f.home).add(f.off); if (f.stone?.parent) f.stone.position.add(f.off.clone().sub(before));
+        });
+      }, { state: o.state || 'stand' });
     }
     const folk = (o.spots || []).map(([x, z], i) => {
       const p = new THREE.Group(), body = new THREE.Group();
@@ -485,6 +497,7 @@ function beast(o) {
   } else if (o.saddle) mesh(new THREE.BoxGeometry(0.16 * S, 0.02 * S, 0.17 * S), mat(o.saddle), body, [-0.02 * S, H + 0.075 * S, 0]);
   const deck = new THREE.Group();
   deck.position.set(-0.02 * S, H + 0.02 * S, 0);
+  deck.userData.saddle = true; // 점검(겹침)에서 탄 사람은 짐승과 견주지 않는다
   body.add(deck); // 탄 사람은 짐승의 옆으로 걸터앉는다 (바라보는 쪽은 look으로)
   let phase = Math.random() * 6;
   const P = new Prop(g, (P, t, dt) => {

@@ -679,7 +679,7 @@ export const SCRIPTS = {
       // 낭떠러지 산(Mount Precipice): 꼭대기 동쪽 가장자리가 이스르엘 평야 쪽으로 200m 가까이 떨어진다 — 예수가 선 자리(1.85, -0.22)를 그 가장자리에
       'p2.4': [['@at', [32.682, 35.302], { x: 1.85, z: -0.22 }], ['cliff', null, { show: 1 }], ['rocks', null, { show: 1 }], ['folk', null, { show: 0 }],
         ['jesus', 'idle', { x: 1.85, z: -0.22, look: 1.2 }], ['phar', 'idle', { x: 1.45, z: -0.05, look: 1.0 }], ['man', 'idle', { x: 1.6, z: 0.18, look: 0.8 }], ['elder', 'idle', { x: 1.25, z: 0.22, look: 1.0 }]],
-      'p2.6': [['jesus', 'idle', { x: 1.5, z: 0.1, delay: 800 }], ['jesus', 'idle', { x: -1.7, z: 0.4, delay: 2200 }], ['jesus', 'idle', { show: 0, delay: 7500 }],
+      'p2.6': [['jesus', 'idle', { x: 1.5, z: 0.1, delay: 800 }], ['jesus', 'idle', { x: -1.7, z: 0.4, delay: 2200 }], // 홀로 걸어가시는 모습으로 맺는다 (사용자 2026-11)
         ['phar', 'shrug', { look: -1.0, delay: 2500 }], ['man', 'idle', { look: -1.0, delay: 2600 }], ['elder', 'idle', { look: -1.0, delay: 2800 }]],
       w0: [['@at', null], ['cliff', null, { show: 0 }], ['rocks', null, { show: 0 }], ['folk', 'sit', { show: 1 }], ['jesus', 'speak', { show: 1, x: -0.12, z: 0.02, look: 0, item: 'scroll' }], ['attendant', 'idle', { item: null }],
         ['elder', 'sit-ground', { x: -0.6, z: 0.38, look: 0.8 }], ['man', 'sit-ground', { x: 0.45, z: 0.4, look: -0.8 }], ['phar', 'sit-ground', { x: -0.5, z: 0.1, look: 0.9 }]],

@@ -182,6 +182,19 @@ function want(names) {
   todo.forEach(n => { loading[n] ??= model(n).then(g => { ready[n] = g; }); });
   return todo.length ? Promise.all(todo.map(n => loading[n])) : null;
 }
+// 개인 거리: 멈춰 선 두 사람이 SPACE보다 가까우면 둘을 조금씩 떼어 놓는다 — 모델은 인형보다 몸이 커서 대본의 자리 그대로면
+// 서로 뚫고 섰다(e08·e10·e24…, 사용자 2026-11). 누운 사람·탄 사람·십자가·안긴 사람·높이를 정한 사람은 그대로
+const SPACE = 0.19, STAY = new Set(['sleep', 'ride', 'crucified', 'crucified-dead', 'perch', 'carry', 'carry-pole', 'mourn']);
+function spaceOut(dt) {
+  if (!USE_MODELS || !script) return;
+  const L = Object.values(actors).filter(a => a.doll && a.showT > 0.5 && a.p.root.parent === stageGroup && !a.y && !a.yT && !STAY.has(a.pose) && a.goal.distanceTo(a.pos) < 0.02);
+  for (let i = 0; i < L.length; i++) for (let j = i + 1; j < L.length; j++) {
+    const a = L[i], b = L[j], dx = b.pos.x - a.pos.x, dz = b.pos.y - a.pos.y, d = Math.hypot(dx, dz);
+    if (d >= SPACE) continue;
+    const k = Math.min(1, dt * 3) * (SPACE - d) / 2 / (d || 1e-6), ux = d ? dx : 1, uz = d ? dz : 0;
+    a.pos.x -= ux * k; a.pos.y -= uz * k; b.pos.x += ux * k; b.pos.y += uz * k; a.goal.copy(a.pos); b.goal.copy(b.pos);
+  }
+}
 // 낭독 중에 모델이 늦게 도착하면 서 있던 인형을 그 자리에서 모델로 바꿔 끼운다 — 다시 차리면 낭독 중의 움직임이 처음으로 돌아가니,
 // 인형은 그대로 보이지 않는 길잡이로 두고 모델만 덧씌운다 (e04 헤롯·박사, e06 어린 예수님이 인형으로 남았다, 사용자 2026-11)
 function swapIn(plan) {
@@ -308,6 +321,8 @@ function setScene(ev) {
   // 사람을 비추는 빛(on: 배역 이름)은 그 사람을 따라다닌다 — 빛 아래 서 있다가 옮겨 가도 빛만 남지 않게
   // on이 둘이면 두 사람의 한가운데를 따른다 — 앞뒤의 두 제사장이 멘 언약궤
   Object.entries(script.props || {}).forEach(([name, [, , , o]]) => { if (o?.on) props[name].follow = [].concat(o.on).map(n => actors[n]); });
+  // 군중은 무대의 배역이 가까이 오면 비켜선다 (props.js crowd)
+  { const v = new THREE.Vector3(); Object.values(props).forEach(p => { if (p.kind === 'crowd') p.avoid = () => Object.values(actors).filter(a => a.showT > 0.5 && a.p.root.parent === stageGroup).map(a => a.p.root.getWorldPosition(v).clone()); }); }
   // 모델 천사 위의 빛기둥은 끈다 — 흰 옷의 천사가 빛에 묻혀 하얗게 바랬다. 천사 둘레의 은은한 빛(glow)만으로 충분하다(사용자 2026-11)
   Object.entries(script.props || {}).forEach(([name, [kind, , , o]]) => { if (kind === 'beam' && o?.on && props[name]) props[name].muted = [].concat(o.on).every(n => actors[n]?.doll && ['angel', 'whiteman'].includes(actors[n].type)); });
   setEnv(script.env || 'day', true);
@@ -327,7 +342,7 @@ function setScene(ev) {
 if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__stage = {
   scene: ev => setScene(ev), beats: () => Object.keys(script?.beats || {}),
   ready: () => !Object.keys(loading).some(n => !(n in ready)),
-  step(k) { atStart = false; apply(script.beats[k], true); gaze(); Object.values(actors).forEach(a => { a.show = a.showT; for (let i = 0; i < 60; i++) a.update(i * 0.05, 0.05); }); },
+  step(k) { atStart = false; apply(script.beats[k], true); gaze(); Object.values(actors).forEach(a => { a.show = a.showT; for (let i = 0; i < 60; i++) a.update(i * 0.05, 0.05); }); for (let i = 0; i < 60; i++) { spaceOut(0.05); Object.values(actors).forEach(a => a.update(3 + i * 0.05, 0.05)); } Object.values(props).forEach(p => { for (let i = 0; i < 40; i++) p.update(i * 0.05, 0.05, {}); }); },
   measure() {
     const out = [], v = new THREE.Vector3();
     for (const [name, a] of Object.entries(actors)) {
@@ -372,9 +387,12 @@ if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__st
     return { name: k.name, times: Array.from(k.times).slice(-6).map(t => +t.toFixed(3)), vals: Array.from(k.values).slice(-12).map(v => +v.toFixed(3)), ip: [3.9, 4.0, 5.0, 5.4].map(t => Array.from(ip.evaluate(t)).map(v => +v.toFixed(3))), ending: ip.settings }; },
   // 모델이 정해지지 않아 인형으로 남는 배역 (장면별)
   unmapped() { const out = {}; for (const [id, sc] of Object.entries(SCRIPTS)) { if (!sc?.cast || sc.street || sc.dolls) continue; Object.values(sc.cast).forEach(([t, , , , o = {}], i) => { if (!o.silhouette && !modelOf(t, i)) (out[t] ||= []).push(id); }); } return out; },
+  crowdDbg() { const v = new THREE.Vector3(); return Object.entries(props).filter(([, p]) => p.kind === 'crowd').map(([n, p]) => [n, p.obj.children.map(c => [c.type, +c.position.x.toFixed(2), +c.position.z.toFixed(2)]).slice(0, 12), p.avoid().map(q => [+q.x.toFixed(2), +q.z.toFixed(2)]), p.obj.getWorldPosition(v).toArray().map(x => +x.toFixed(2)), p.obj.getWorldScale(v).x]); },
+  ghosts() { const roots = new Set(Object.values(actors).map(a => a.p.root)), out = []; stageGroup.children.forEach(c => { let h = false; c.traverse(o => { if (o.isBone && /Hips$/.test(o.name)) h = true; }); if (h && !roots.has(c) && !Object.values(props).some(p => p.lift === c)) out.push([c.type, c.position.x.toFixed(2), c.position.z.toFixed(2), c.visible]); }); return out; },
+  cupd() { const p = Object.values(props).find(p => p.kind === 'crowd'); let err = null; try { for (let i = 0; i < 40; i++) p.update(i * 0.05, 0.05, {}); } catch (e) { err = e.message; } return [err, p.obj.children.slice(0, 6).map(c => [+c.position.x.toFixed(2), +c.position.z.toFixed(2)])]; },
   // 겹친 사람: 보이는 모든 사람(배역·군중)의 엉덩이 뼈 자리끼리 너무 가까운 쌍 (무대 좌표)
   crowding(lim = 0.1) { const v = new THREE.Vector3(), P = []; stageGroup.updateMatrixWorld(true); Object.entries(actors).forEach(([n, a]) => { a.p.root.userData.who = n; });
-    stageGroup.traverse(o => { if (!o.isBone || !/Hips$/.test(o.name)) return; let vis = true; for (let q = o; q; q = q.parent) if (!q.visible) { vis = false; break; } if (!vis) return;
+    stageGroup.traverse(o => { if (!o.isBone || !/Hips$/.test(o.name)) return; let vis = true; for (let q = o; q; q = q.parent) if (!q.visible || q.userData.deck || q.userData.saddle) { vis = false; break; } if (!vis) return; // 배·나귀에 탄 사람은 빼고
       let n = o; while (n.parent && n.parent !== stageGroup && !n.userData.who) n = n.parent; stageGroup.worldToLocal(o.getWorldPosition(v)); P.push([v.x, v.z, v.y, n.userData.who || '군중']); });
     // 동물(나귀·낙타·소·양 무리 등)도 한 점으로 — 사람이 동물 몸에 파묻혔다(e12, 사용자 2026-11)
     for (const [n, p] of Object.entries(props)) if (['donkey', 'camel', 'ox', 'pig', 'dog', 'jackal', 'sheep'].includes(p.kind) && p.obj.visible && p.show > 0.5) { p.obj.getWorldPosition(v); stageGroup.worldToLocal(v); P.push([v.x, v.z, v.y, n + '(' + p.kind + ')']); }
@@ -438,6 +456,7 @@ function setStart(withIntro = true, instant = true) {
 function updateEnvInstant() { for (let i = 0; i < 200; i++) updateEnv(0.05); }
 function beat(key) {
   if (!script || mode !== 'scene') return;
+  if (key === 'end' && !atStart) return; // 낭독이 끝나도 이야기의 마지막 모습 그대로 (end는 낭독 없이 볼 때의 그림)
   if (key === 'intro') {
     cancelPending(); // 예약된 동작 취소
     if (atStart) return; // 이미 처음 모습으로 서 있다
@@ -737,6 +756,7 @@ function frame() {
   });
   // 지면 높이: 언덕 같은 소품 위에 선 사람은 그 표면에 올라선다 (배에 탄 사람, 높이를 직접 정한 사람은 제외)
   // 3D 지형 안에서는 그 자리의 땅 높이를 따른다. 높이를 정한 사람(십자가 위)은 땅만 따르고, 사람만 키우는 배율도 받지 않는다(십자가와 어긋나지 않게)
+  spaceOut(dt);
   const grounds = Object.values(props).filter(p => p.heightAt);
   Object.values(actors).forEach(ac => {
     const onDeck = ac.p.root.parent !== stageGroup, g0 = onDeck ? 0 : ac.fixedY ? Math.max(groundAt(ac.pos.x, ac.pos.y), floorAt(ac.pos.x, ac.pos.y)) : groundAt(ac.pos.x, ac.pos.y);
@@ -758,7 +778,8 @@ if (canvas) {
     if (s !== undefined && script.beats[`${b}.${s}`]) beat(`${b}.${s}`);
     else if (!s) beat(b);
   });
-  addEventListener('stage:stop', () => { if (!script) return; cancelPending(); setEnv(script.env || 'day'); setStart(true, false); });
+  // 멈추면 마지막 모습 그대로 — 사람들이 처음 자리로 걸어 돌아가는 모습이 여정 중에 보였다(사용자 2026-11). 다시 들으면 intro가 처음 모습으로 차린다
+  addEventListener('stage:stop', () => { if (!script) return; cancelPending(); });
   loop();
   // app.js가 먼저 장면을 열었으면 따라잡는다
   if (window.__stageScene) { setScene(window.__stageScene); window.recenterStage?.(); } // 늦게 로드됐으면 무대 쪽으로 다시 맞춘다

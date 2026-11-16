@@ -438,5 +438,5 @@ export function crowdPerson(gltf, height) {
     seatStone(stone, hp, body.parent, lp, top, height);
   };
   pose(false);
-  return { obj: body, pose };
+  return { obj: body, pose, stone };
 }
