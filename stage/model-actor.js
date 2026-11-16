@@ -298,7 +298,9 @@ export class StageModel {
       this.yaw ??= want; this.yaw += Math.atan2(Math.sin(want - this.yaw), Math.cos(want - this.yaw)) * (1 - Math.exp(-6 * dt));
       r.rotation.y = this.yaw; } r.scale.copy(dr.scale); r.visible = dr.visible;
     this.fadeTo(Math.min(1, d.show));
-    const walk = moving && !d.floating, clip = walk ? 'walk' : CLIP[d.pose], kneel = !walk && KNEEL.has(d.pose), onSeat = SITS.has(d.pose) && (d.yT || 0) > 0.05, ride = !walk && (SEAT.has(d.pose) || onSeat), perch = !walk && d.pose === 'perch';
+    // 두루마리처럼 두 손으로 받쳐 든 채 말하면(읽으면) 손짓 없이 가만히 두 손에 들고 — 말하기 동작의 손짓에 두루마리가 이리저리 흔들렸다(e16, 사용자 2026-11)
+    const reading = d.pose === 'speak' && d.item && !['oilhorn', 'sling', 'sword', 'bow', 'shield', 'hem'].includes(d.item);
+    const walk = moving && !d.floating, clip = walk ? 'walk' : reading ? null : CLIP[d.pose], kneel = !walk && KNEEL.has(d.pose), onSeat = SITS.has(d.pose) && (d.yT || 0) > 0.05, ride = !walk && (SEAT.has(d.pose) || onSeat), perch = !walk && d.pose === 'perch';
     // 무릎 꿇는 동작('pray')이 없는 모델(순례자·어부 등 엑스트라)은 다리를 직접 접어 발뒤꿈치에 앉힌다 — 동작 없이 서 있었다
     // 땅에 앉기는 양반다리, 무릎 꿇기(꿇는 동작이 없는 모델)는 발뒤꿈치를 깔고
     const cross = !walk && SITS.has(d.pose) && !onSeat, seiza = !walk && ((kneel && !this.acts.pray) || cross);
