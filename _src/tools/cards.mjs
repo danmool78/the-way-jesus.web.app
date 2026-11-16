@@ -96,7 +96,7 @@ if (treasureMode) {
   let k = 0;
   await Promise.all(Array.from({ length: N }, async () => { while (k < T.length) { const t = T[k++], out = `_src/cards/out/t-${t.id}.webp`;
     if (!force && await exists(out)) { console.log(t.id, 'skip'); continue; }
-    console.log(t.id, await gen([b64(refs[0]), { text: `${STYLE}\n\nA treasure card: one precious object from a parable or story of Jesus, shown close up as the hero of the image, softly lit like a jewel in a cinematic still life, with a hint of its setting behind it. People may appear only as hands or distant silhouettes, never as the focus.\nObject and setting: ${t.prompt}` }], out)); } }));
+    console.log(t.id, await gen([b64(refs[0]), { text: `${STYLE}\n\nA treasure card: one precious object from a parable or story of Jesus or from the journeys and letters of the apostle Paul, shown close up as the hero of the image, softly lit like a jewel in a cinematic still life, with a hint of its setting behind it. People may appear only as hands or distant silhouettes, never as the focus.\nObject and setting: ${t.prompt}` }], out)); } }));
   process.exit(0);
 }
 const evs = [...(data.prologue ? [data.prologue] : []), ...data.events].filter(e => !only.size || only.has(e.id));
