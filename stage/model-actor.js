@@ -411,7 +411,7 @@ export function crowdPerson(gltf, height) {
   body.updateMatrixWorld(true);
   const top = bone(body, 'HeadTop_End'), h = top ? top.getWorldPosition(v1).y : 1.7;
   body.scale.setScalar(height / (h > 0.1 ? h : 1.7));
-  body.traverse(m => { if (m.isMesh) { m.frustumCulled = false; m.material = brighten(m.material); } });
+  const mats = []; body.traverse(m => { if (m.isMesh) { m.frustumCulled = false; m.material = brighten(m.material).clone(); mats.push(m.material); } }); // 저마다 재질 — 나타날 때 투명도를 따로
   const mixer = new THREE.AnimationMixer(body), clips = calmClips(gltf), clip = n => clips.find(c => c.name === n);
   const t0 = Math.random();
   const legs = ['Left', 'Right'].map(sd => [bone(body, sd + 'UpLeg'), bone(body, sd + 'Leg'), bone(body, sd + 'Foot')]);
@@ -450,5 +450,9 @@ export function crowdPerson(gltf, height) {
     seatStone(stone, hp, body.parent, lp, top, height);
   };
   pose(false);
-  return { obj: body, pose, stone };
+  // 나타나고 사라질 때: 무리 전체를 키우니 사람들이 가운데서 사방으로 날아왔다(사용자 2026-11) — 제자리에서 스르륵(점묘 투명도)
+  let op = -1;
+  let stoneOn = false; // 돌은 거의 다 나타났을 때 함께 (돌 재질은 여럿이 같이 써서 투명하게 하지 않는다)
+  const fade = v => { stone.visible = stoneOn && v > 0.5; if (Math.abs(v - op) < 0.004) return; const solid = v > 0.995; mats.forEach(m => { if (m.alphaHash !== !solid) { m.alphaHash = !solid; m.needsUpdate = true; } m.opacity = solid ? 1 : v; }); op = v; };
+  return { obj: body, pose: (...a) => { pose(...a); stoneOn = stone.visible; }, stone, fade };
 }

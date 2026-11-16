@@ -312,7 +312,9 @@ function setScene(ev) {
     // 배역(과 동작을 빌려 줄 모델)을 먼저 받고, 군중은 그다음에 — 느린 곳에서 군중 모델 열 몇 개가 배역 앞에 줄을 섰다(사용자 2026-11)
     const names = USE_MODELS ? [...new Set([...named, ...(named.size ? ['pilgrim-man', 'jesus-moves'] : []), ...(named.has('angel') ? ['wings'] : [])])] : []; // 동작을 빌려 줄 모델도 함께 — 늦게 받으면 요셉이 잠자기 동작 없이 통나무처럼 누웠다
     const crowdNames = USE_MODELS && crowd ? [...new Set(CROWDM)] : [];
-    const crowdSet = () => USE_MODELS && crowd && CROWDM.every(n => ready[n]) ? { men: pool.men.map(dress), women: pool.women.map(dress) } : null;
+    // 같은 모델이 무리에 또 나오면(k번째) 옷 색상을 돌리고 살갗 밝기를 달리 한다 (props.js crowd)
+    const CHUES = [0, 150, 45, 220, 300, 95], CSKIN = [1, 0.86, 1.1, 0.94, 1.05, 0.8];
+    const crowdSet = () => USE_MODELS && crowd && CROWDM.every(n => ready[n]) ? { men: pool.men, women: pool.women, dress: (e, k) => k ? restyle(ready[e[0]], e[0], { hue: CHUES[k % 6], sat: 0.95, skin: CSKIN[k % 6] }) : dress(e) } : null;
     setCrowd(crowdSet());
     const ev0 = ev, wait = names.length ? want(names) : null;
     const thenCrowd = () => { const w = crowdNames.length ? want(crowdNames) : null; w?.then(() => { if (curEv !== ev0) return; if (atStart) return setScene(ev0); setCrowd(crowdSet()); rebuildCrowds(); }); };

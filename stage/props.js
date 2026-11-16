@@ -291,8 +291,11 @@ const MAKERS = {
     const heads = ['#e9dfc8', '#cdbb94', '#d8c9a6', '#3c5d96', '#efe6d4', '#b89b6c'];
     const skins = ['#c99a74', '#b9845d', '#d6ad89', '#a87451'];
     if (CROWD) {
+      const used = new Map();
       const people = (o.spots || []).map(([x, z], i) => {
-        const list = i % 3 === 2 ? CROWD.women : CROWD.men, g0 = list[(i * 7 + (i % 3)) % list.length]; // 이웃끼리 같은 사람이 겹치지 않게 건너뛰며
+        const list = i % 3 === 2 ? CROWD.women : CROWD.men, e = list[(i * 7 + (i % 3)) % list.length]; // 이웃끼리 같은 사람이 겹치지 않게 건너뛰며
+        // 같은 모델이 또 나오면 옷 색을 바꿔 입힌다 — 같은 옷의 같은 사람이 둘셋씩 서 있어 쌍둥이 같았다(사용자 2026-11)
+        const k = used.get(e) || 0; used.set(e, k + 1); const g0 = CROWD.dress ? CROWD.dress(e, k) : e;
         // 키는 무대의 다른 어른(인형 man)과 같게 — 예전의 작은 사람들 크기로 세우니 어른이 아이처럼 작았다 (사용자 2026-11)
         const s = 0.94 + Math.random() * 0.1, f = crowdPerson(g0, dollHeight('man') * 0.97 * s * MS);
         f.obj.position.set(x, 0, z); f.home = new THREE.Vector3(x, 0, z); f.off = new THREE.Vector3();
@@ -305,6 +308,7 @@ const MAKERS = {
       // 비켜서기: 배역(P.avoid — 무대가 넣어 준다)이 가까이 오면 그만큼 밀려났다가 지나가면 제자리로 — 군중 속에 선 사람이 서로 뚫고 섰다(사용자 2026-11)
       return new Prop(g, (P, t, dt) => {
         const sit = P.state === 'sit'; if (sit !== was) { was = sit; people.forEach(f => f.pose(sit, o.y || 0)); }
+        people.forEach(f => f.fade?.(P.show));
         const av = P.avoid?.(); if (!av || (sit && o.y > 0)) return; // 걸상에 앉은 무리는 밀지 않는다 — 걸상 밖으로 밀려나 허공에 걸터앉았다(e18, 사용자 2026-11)
         // 무리 좌표 ↔ 무대 좌표: 무리가 돌려 놓여 있어도 밀어내는 방향이 맞게
         av.stage.updateMatrixWorld(true); g.updateMatrixWorld(true); M.copy(av.stage.matrixWorld).invert().multiply(g.matrixWorld); Mi.copy(M).invert();
@@ -319,7 +323,7 @@ const MAKERS = {
           const before = f.off.clone(); f.off.lerp(want, 1 - Math.exp(-4 * (dt || 0.016)));
           f.obj.position.x = f.home.x + f.off.x; f.obj.position.z = f.home.z + f.off.z; if (f.stone?.parent) f.stone.position.add(f.off.clone().sub(before)); // 높이는 그대로 — 앉느라 내린 몸까지 0으로 되돌려 앉은 채 떠 있었다(e16, 사용자 2026-11)
         });
-      }, { state: o.state || 'stand' });
+      }, { state: o.state || 'stand', fade: 'opacity' });
     }
     const folk = (o.spots || []).map(([x, z], i) => {
       const p = new THREE.Group(), body = new THREE.Group();
