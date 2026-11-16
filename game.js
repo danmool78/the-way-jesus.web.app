@@ -882,11 +882,26 @@ async function placeCast() {
     if (names[i].endsWith(':bearer') && prev) { const dx = G.me.pos.x - prev.pos.x, dz = G.me.pos.y - prev.pos.y, L = Math.hypot(dx, dz) || 1; ox = prev.pos.x + (dx * 0.85 - dz * 0.3) / L - gx; oz = prev.pos.y + (dz * 0.85 + dx * 0.3) / L - gz; } // 거인 몸에 겹치지 않게 조금 비켜
     const lie = names[i].endsWith(':lie'); // 누운 사람(베데스다의 병자 — 자리에 누워 있었다, 요 5:6)
     const a = new ModelActor(g, gx + ox, gz + oz, { noPillow: true }).hold(GEAR[names[i]]);
-    a.big = SCALE * (SIZE[names[i]] || 1); a.target = lie ? null : G.me; a.showT = 0; a.show = 0;
+    a.big = SCALE * (SIZE[names[i]] || 1); a.target = lie ? null : G.me; a.lie = lie; a.showT = 0; a.show = 0;
     if (lie) { a.set('sleep'); a.face = a.faceT = 1.2; }
     if (names[i] === 'goliath') a.set('taunt'); // 골리앗은 가슴을 치며 이스라엘을 모욕한다(삼상 17:10)
     G.scene.add(a.p.root); G.cast.push(a);
   });
+}
+// 곁의 사람이 살아 있게 (사용자 2026-11 — 아무 몸짓 없이 서 있었다): 내가 다가오면 나를 반겨 보고,
+// 그분이 이야기를 시작하면 그분 쪽으로 돌아선다. 몇 초마다 한 번씩 곁의 사람을 보거나 나를 돌아보거나 고개를 끄덕인다
+function castLook(c, t, dt) {
+  const talking = G.meetT > 0 && G.talk && G.talkI < G.talk.length;
+  const ai = c.ai ??= { next: t + 1 + Math.random() * 3, who: null, until: 0 };
+  if (t > ai.next) {
+    ai.next = t + 2.5 + Math.random() * 3.5;
+    const others = G.cast.filter(o => o !== c && !o.lie), r = Math.random();
+    if (r < 0.3 && others.length) { ai.who = others[Math.floor(Math.random() * others.length)]; ai.until = t + 1.4 + Math.random(); } // 곁의 사람을 본다
+    else if (talking && r < 0.45) { ai.who = G.me; ai.until = t + 1.2; } // 이야기 도중 나를 돌아본다
+    else if (talking && r < 0.75) c.nod?.(); // 고개를 끄덕인다
+  }
+  const base = talking ? G.leader : G.me;
+  c.target = ai.who && t < ai.until ? ai.who : base;
 }
 // 마을 사람: 우물가에 물 긷는 여인, 양 떼 곁에 목자 (예수 여정, 모델이 있을 때만)
 async function placeLocals() {
@@ -1122,7 +1137,7 @@ function frame(now) {
   if (G.wounded) G.wounded.a.update(t, dt);
   me0.update(t, dt); G.leader.update(t, dt);
   // 곁에 선 사람은 그분처럼 가까이 가야 보인다. 마을 사람은 가까울 때만 움직인다(멀면 그리지도 셈하지도 않는다)
-  for (const c of G.cast || []) { c.showT = G.leader.showT; c.ground = standY(c.pos.x, c.pos.y); c.update(t, dt); }
+  for (const c of G.cast || []) { c.showT = G.leader.showT; c.ground = standY(c.pos.x, c.pos.y); if (!c.lie) castLook(c, t, dt); c.update(t, dt); }
   if (G.castBoat) G.castBoat.obj.visible = G.leader.show > 0.05;
   for (const o of G.castSet || []) o.visible = G.leader.show > 0.05;
   for (const a of G.locals || []) { const far = Math.hypot(a.pos.x - me0.pos.x, a.pos.y - me0.pos.y) > 14; a.showT = far ? 0 : 1; if (far && a.show < 0.02) { a.p.root.visible = false; continue; } a.ground = GH(a.pos.x, a.pos.y); a.update(t, dt); }
