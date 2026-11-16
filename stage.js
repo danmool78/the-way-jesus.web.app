@@ -800,7 +800,7 @@ function frame() {
   // 지면 높이: 언덕 같은 소품 위에 선 사람은 그 표면에 올라선다 (배에 탄 사람, 높이를 직접 정한 사람은 제외)
   // 3D 지형 안에서는 그 자리의 땅 높이를 따른다. 높이를 정한 사람(십자가 위)은 땅만 따르고, 사람만 키우는 배율도 받지 않는다(십자가와 어긋나지 않게)
   spaceOut(dt);
-  const grounds = Object.values(props).filter(p => p.heightAt);
+  const grounds = Object.values(props).filter(p => p.heightAt && !(p.terrainHide && inTerrain)); // 3D 지형에서 숨긴 언덕(진짜 산으로 옮긴 e16 벼랑)은 밟지 않는다 — 보이지 않는 언덕 위에 떠 섰다(사용자 2026-11)
   Object.values(actors).forEach(ac => {
     const onDeck = ac.p.root.parent !== stageGroup, g0 = onDeck ? 0 : ac.fixedY ? Math.max(groundAt(ac.pos.x, ac.pos.y), floorAt(ac.pos.x, ac.pos.y)) : groundAt(ac.pos.x, ac.pos.y);
     ac.ground = ac.fixedY || onDeck ? g0 + (ac.fixedY && inTerrain ? ac.y * (bigNow - 1) : 0) : Math.max(g0, ...grounds.map(p => { const h = p.heightAt(ac.pos.x, ac.pos.y); return h > 0 ? p.lift.position.y + h : -Infinity; }));
