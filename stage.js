@@ -165,8 +165,8 @@ Object.assign(LIKE, {
   onesimus: ['timothy', { plain: true, skin: 0.7 }], tychicus: ['luke', { hue: 140 }],
 });
 const dress = ([n, c]) => c === 'plain' ? plain(ready[n], n) : c && typeof c === 'object' ? restyle(ready[n], n, c) : c ? tinted(ready[n], n, c) : ready[n];
-// 3D 모델은 아직 점검 중 — 주소에 ?models가 있을 때만 쓴다. 운영은 예전 인형 (사용자 2026-11: 떠 있고 엉뚱한 곳을 보고 말해서, 다 잡을 때까지)
-const USE_MODELS = new URLSearchParams(location.search).has('models');
+// 예수 여정은 모델이 기본(사용자 2026-11) — 다른 여정은 아직 ?models가 있을 때만. ?dolls면 예전 인형으로
+const USE_MODELS = (q => !q.has('dolls') && (q.has('models') || (q.get('j') || 'jesus') === 'jesus'))(new URLSearchParams(location.search));
 function modelOf(type, i) {
   if (!USE_MODELS) return null;
   if (OWN[type]) return [OWN[type]];
