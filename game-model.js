@@ -19,7 +19,7 @@ export async function loadModel(url) {
 }
 
 // 동작을 빌려 올 모델 (여자는 순례자 자매에게서)
-const DONOR = { lydia: 'pilgrim-woman', 'pilgrim-woman': 'pilgrim-woman', miriam: 'pilgrim-woman', zipporah: 'pilgrim-woman', rahab: 'pilgrim-woman', samaritan: 'pilgrim-woman', martha: 'pilgrim-woman', magdalene: 'pilgrim-woman', 'mary-bethany': 'pilgrim-woman', mary: 'pilgrim-woman' };
+const DONOR = { jesus: 'jesus-moves', lydia: 'pilgrim-woman', 'pilgrim-woman': 'pilgrim-woman', miriam: 'pilgrim-woman', zipporah: 'pilgrim-woman', rahab: 'pilgrim-woman', samaritan: 'pilgrim-woman', martha: 'pilgrim-woman', magdalene: 'pilgrim-woman', 'mary-bethany': 'pilgrim-woman', mary: 'pilgrim-woman' };
 // 모델 목록(assets/models.json)과 이름으로 받기 — 없거나 못 받으면 null (그때는 예전 인형)
 let list = null;
 export async function model(name) {
@@ -30,7 +30,7 @@ export async function model(name) {
     g.userData.name = name;
     // 걷기만 떠 온 모델(바울 여정의 사람들)은 서 있기·말하기가 없어 팔 벌린 A자로 서 있었다(사용자 2026-11) —
     // 같은 Mixamo 뼈대의 순례자 모델에서 빌린다 (stage/model-actor.js의 withBorrowed와 같은 방식: 뼈 각도만, 엉덩이 높이는 비율로)
-    const need = ['idle', 'talk'].filter(n => !g.animations.some(c => c.name === n)), dn = DONOR[name] || 'pilgrim-man';
+    const need = ['idle', 'talk', 'sleep', 'pray'].filter(n => !g.animations.some(c => c.name === n)), dn = DONOR[name] || 'pilgrim-man'; // 예수님(새 모델)은 예전 모델의 동작을 — 배에서 주무시는 것까지
     if (need.length && name !== dn && !g.userData.borrowed) {
       g.userData.borrowed = true;
       const d = await model(dn);

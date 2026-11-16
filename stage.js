@@ -130,9 +130,10 @@ const EXTRA = {
   women: [['pilgrim-woman'], ['woman'], ['miriam', { plain: true, skin: 1.08 }], ['pilgrim-woman', '#3c5d96'], ['zipporah', { plain: true, hue: 120, skin: 0.85 }], ['rahab', { plain: true, hue: 60, skin: 1.05 }], ['pilgrim-woman', '#a3554a']],
 };
 // 엑스트라 모델은 무대가 뜰 때 미리 받아 둔다 — 장면마다 그때 받으니 군중이 잠깐 예전 인형으로 섰다가 바뀌었다
-if (new URLSearchParams(location.search).has('models')) setTimeout(() => want([...new Set([...EXTRA.men, ...EXTRA.women].map(([n]) => n)), 'jesus']), 0);
+if (new URLSearchParams(location.search).has('models')) setTimeout(() => want([...new Set([...EXTRA.men, ...EXTRA.women].map(([n]) => n)), 'jesus-moves']), 0);
 // 동작을 빌려 줄 모델: 잠자기는 남자 순례자, 무릎 꿇고 기도는 예수님 모델에서 (같은 Mixamo 뼈대)
-const BORROW = () => ({ sleep: ready['pilgrim-man'], pray: ready.jesus, idle: ready.jesus, talk: ready.jesus }); // 천사 모델은 걷기만 있어 서기·말하기도
+// 동작은 예전 예수님 모델(jesus-moves — 무릎 꿇기·서기·말하기·잠자기가 든 것)에서 — 새 예수님 모델(2026-11)은 걷기만 떠 왔다
+const BORROW = () => ({ sleep: ready['pilgrim-man'], pray: ready['jesus-moves'], idle: ready['jesus-moves'], talk: ready['jesus-moves'] }); // 천사 모델은 걷기만 있어 서기·말하기도
 // 바울 여정의 나머지 배역 (사용자 2026-11: 바울 여정도 모두 모델로) — 비슷한 사람의 모델에 옷 색(hue)·살갗(skin)을 달리 입힌다.
 // 로마 관리(토가)는 빌라도, 병사는 병정, 왕과 왕비는 구약의 왕·왕비, 수염 없는 젊은이는 디모데, 사울(회심 전)은 바울 모델 그대로
 Object.assign(LIKE, {
@@ -259,7 +260,7 @@ function setScene(ev) {
     const named = new Set(plan.filter(Boolean).map(m => m[0]));
     const pool = { men: EXTRA.men.filter(([n]) => !named.has(n) || n.startsWith('pilgrim')), women: EXTRA.women.filter(([n]) => !named.has(n) || n.startsWith('pilgrim')) };
     const CROWDM = [...pool.men, ...pool.women].map(([n]) => n);
-    const names = USE_MODELS ? [...new Set([...named, ...(crowd ? CROWDM : []), ...(named.size ? ['pilgrim-man', 'jesus'] : []), ...(named.has('angel') ? ['wings'] : [])])] : []; // 동작을 빌려 줄 모델도 함께 — 늦게 받으면 요셉이 잠자기 동작 없이 통나무처럼 누웠다
+    const names = USE_MODELS ? [...new Set([...named, ...(crowd ? CROWDM : []), ...(named.size ? ['pilgrim-man', 'jesus-moves'] : []), ...(named.has('angel') ? ['wings'] : [])])] : []; // 동작을 빌려 줄 모델도 함께 — 늦게 받으면 요셉이 잠자기 동작 없이 통나무처럼 누웠다
     setCrowd(USE_MODELS && crowd && CROWDM.every(n => ready[n]) ? { men: pool.men.map(dress), women: pool.women.map(dress) } : null);
     const ev0 = ev, wait = names.length ? want(names) : null;
     wait?.then(() => { if (curEv === ev0 && (atStart || new URLSearchParams(location.search).has('beat'))) setScene(ev0); });
