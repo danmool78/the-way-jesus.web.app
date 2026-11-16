@@ -44,8 +44,7 @@ function parts(obj) {
 // 물건의 네모들을 무대 좌표로 (물건이 움직이고 돌아도 매번 따라간다)
 const p3 = new THREE.Vector3(), ax = new THREE.Vector3(), az = new THREE.Vector3();
 export function propBoxes(obj, stage) {
-  if (!obj.visible) return [];
-  stage.updateMatrixWorld(true); obj.updateMatrixWorld(true);
+  if (!obj.visible) return []; // 행렬은 지난 화면에 그린 것을 그대로 쓴다 — 물건마다 무대 전체를 다시 계산하니 화면이 버벅였다(사용자 2026-11)
   m.copy(stage.matrixWorld).invert().multiply(obj.matrixWorld);
   ax.setFromMatrixColumn(m, 0); az.setFromMatrixColumn(m, 2);
   const sx = Math.hypot(ax.x, ax.z), sz = Math.hypot(az.x, az.z), yaw = Math.atan2(-ax.z, ax.x);

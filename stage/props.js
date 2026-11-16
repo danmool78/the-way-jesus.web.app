@@ -313,7 +313,7 @@ const MAKERS = {
         people.forEach(f => f.fade?.(P.show));
         const av = P.avoid?.(); if (!av || (sit && o.y > 0)) return; // 걸상에 앉은 무리는 밀지 않는다 — 걸상 밖으로 밀려나 허공에 걸터앉았다(e18, 사용자 2026-11)
         // 무리 좌표 ↔ 무대 좌표: 무리가 돌려 놓여 있어도 밀어내는 방향이 맞게
-        av.stage.updateMatrixWorld(true); g.updateMatrixWorld(true); M.copy(av.stage.matrixWorld).invert().multiply(g.matrixWorld); Mi.copy(M).invert();
+        M.copy(av.stage.matrixWorld).invert().multiply(g.matrixWorld); Mi.copy(M).invert(); // 행렬은 지난 화면 것 그대로 (매번 다시 재면 무거웠다)
         const yaw0 = Math.atan2(-M.elements[2], M.elements[0]), H = dollHeight('man') * MS;
         const homes = people.map(f => { w.copy(f.home).applyMatrix4(M); return personBox(w.x, w.z, yaw0 + f.obj.rotation.y, H); });
         people.forEach((f, i) => {

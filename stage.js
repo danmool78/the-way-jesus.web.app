@@ -190,7 +190,9 @@ function want(names) {
 // 누운 사람·탄 사람·십자가·안긴 사람·높이를 정한 사람(걸상·단 위)은 그대로
 const STAY = new Set(['sleep', 'ride', 'crucified', 'crucified-dead', 'perch', 'carry', 'carry-pole', 'mourn']);
 const actorBox = a => personBox(a.pos.x, a.pos.y, a.p.root.rotation.y, (a.H || 0.9) * (a.big || 1));
-const solidBoxes = () => Object.values(props).filter(p => SOLID.has(p.kind) && p.show > 0.5).flatMap(p => propBoxes(p.obj, stageGroup));
+// 한 화면에 한 번만 잰다 (배역·군중마다 다시 재니 화면이 버벅였다)
+let solidCache = null, solidAt = -1, frameNo = 0;
+const solidBoxes = () => { if (solidAt !== frameNo) { solidAt = frameNo; solidCache = Object.values(props).filter(p => SOLID.has(p.kind) && p.show > 0.5).flatMap(p => propBoxes(p.obj, stageGroup)); } return solidCache; };
 function spaceOut(dt) {
   if (!USE_MODELS || !script) return;
   const L = Object.values(actors).filter(a => a.doll && a.showT > 0.5 && a.p.root.parent === stageGroup && !a.y && !a.yT && !STAY.has(a.pose) && a.goal.distanceTo(a.pos) < 0.02);
@@ -214,7 +216,8 @@ function spaceOut(dt) {
   }
 }
 // 군중이 비켜설 네모들: 보이는 배역(탄 사람 빼고)과 단단한 물건 (props.js crowd)
-const avoidFor = () => ({ stage: stageGroup, boxes: [...Object.values(actors).filter(a => a.showT > 0.5 && a.p.root.parent === stageGroup).map(actorBox), ...solidBoxes()] });
+let avoidCache = null, avoidAt = -1;
+const avoidFor = () => { if (avoidAt !== frameNo) { avoidAt = frameNo; avoidCache = { stage: stageGroup, boxes: [...Object.values(actors).filter(a => a.showT > 0.5 && a.p.root.parent === stageGroup).map(actorBox), ...solidBoxes()] }; } return avoidCache; };
 // 낭독 중에 모델이 늦게 도착하면 서 있던 인형을 그 자리에서 모델로 바꿔 끼운다 — 다시 차리면 낭독 중의 움직임이 처음으로 돌아가니,
 // 인형은 그대로 보이지 않는 길잡이로 두고 모델만 덧씌운다 (e04 헤롯·박사, e06 어린 예수님이 인형으로 남았다, 사용자 2026-11)
 // 군중 모델이 낭독 중에 도착하면 군중 소품만 새로 세운다 (보이던 모양·앉음 그대로)
@@ -379,7 +382,7 @@ function setScene(ev) {
 if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__stage = {
   scene: ev => setScene(ev), beats: () => Object.keys(script?.beats || {}),
   ready: () => !Object.keys(loading).some(n => !(n in ready)),
-  step(k) { atStart = false; apply(script.beats[k], true); gaze(); Object.values(actors).forEach(a => { a.show = a.showT; for (let i = 0; i < 60; i++) a.update(i * 0.05, 0.05); }); for (let i = 0; i < 60; i++) { spaceOut(0.05); Object.values(actors).forEach(a => a.update(3 + i * 0.05, 0.05)); } Object.values(props).forEach(p => { for (let i = 0; i < 40; i++) p.update(i * 0.05, 0.05, {}); }); },
+  step(k) { atStart = false; apply(script.beats[k], true); gaze(); Object.values(actors).forEach(a => { a.show = a.showT; for (let i = 0; i < 60; i++) a.update(i * 0.05, 0.05); }); stageGroup.updateMatrixWorld(true); for (let i = 0; i < 60; i++) { frameNo++; spaceOut(0.05); Object.values(actors).forEach(a => a.update(3 + i * 0.05, 0.05)); } Object.values(props).forEach(p => { for (let i = 0; i < 40; i++) p.update(i * 0.05, 0.05, {}); }); },
   measure() {
     const out = [], v = new THREE.Vector3();
     for (const [name, a] of Object.entries(actors)) {
@@ -774,7 +777,7 @@ function frame() {
     canvas.style.transform = `translate(${Math.round(a.x - groundPx.x)}px, ${Math.round(a.y - groundPx.y)}px)`;
     if (moving) return;
   }
-  updateEnv(dt);
+  updateEnv(dt); frameNo++;
   if (inTerrain) unscaleLights();
   placeGeo();
   Object.values(props).forEach(p => {
