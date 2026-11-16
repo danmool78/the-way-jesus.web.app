@@ -305,7 +305,7 @@ const MAKERS = {
       // 비켜서기: 배역(P.avoid — 무대가 넣어 준다)이 가까이 오면 그만큼 밀려났다가 지나가면 제자리로 — 군중 속에 선 사람이 서로 뚫고 섰다(사용자 2026-11)
       return new Prop(g, (P, t, dt) => {
         const sit = P.state === 'sit'; if (sit !== was) { was = sit; people.forEach(f => f.pose(sit, o.y || 0)); }
-        const av = P.avoid?.(); if (!av) return;
+        const av = P.avoid?.(); if (!av || (sit && o.y > 0)) return; // 걸상에 앉은 무리는 밀지 않는다 — 걸상 밖으로 밀려나 허공에 걸터앉았다(e18, 사용자 2026-11)
         // 무리 좌표 ↔ 무대 좌표: 무리가 돌려 놓여 있어도 밀어내는 방향이 맞게
         av.stage.updateMatrixWorld(true); g.updateMatrixWorld(true); M.copy(av.stage.matrixWorld).invert().multiply(g.matrixWorld); Mi.copy(M).invert();
         const yaw0 = Math.atan2(-M.elements[2], M.elements[0]), H = dollHeight('man') * MS;
