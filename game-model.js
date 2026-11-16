@@ -344,9 +344,6 @@ export class ModelActor {
     this.p.root.add(this.pillow); this.noPillow = !!o.noPillow; // 길가에 쓰러진 사람은 베개 없이
     this.hands = { R: bone(body, 'RightHand'), L: bone(body, 'LeftHand'), top: bone(body, 'HeadTop_End') };
     // 내린 팔의 팔뚝 비틀기: 엄지가 앞, 손바닥이 허벅지를 보게 (아래 update의 turnThumbs)
-    // 사람마다 조금씩 다르게 서게 (사용자 2026-11 — 모두 같은 각도로 팔을 내리고 서 있어 인형 같았다): 팔을 벌린 정도·팔꿈치 굽힘이 사람마다, 팔마다 다르다
-    const rr = (a, b) => a + Math.random() * (b - a);
-    this.vary = { L: [rr(-0.04, 0.16), rr(0, 0.45)], R: [rr(-0.04, 0.16), rr(0, 0.45)] };
     this.arms = ['Left', 'Right'].map(S => ({ k: S[0], arm: bone(body, S + 'Arm'), fore: bone(body, S + 'ForeArm'), hand: bone(body, S + 'Hand'), thumb: bone(body, S + 'HandThumb1'), pinky: bone(body, S + 'HandPinky1') })).filter(a => a.fore && a.hand && a.thumb && a.pinky);
     // 지팡이·창을 쥐는 손 (사용자 2026-11): 손목 자리에 세우면 늘어진 팔뚝을 꿰뚫었고, 손 앞에 세우면 들고 있지 않아 보였다.
     // 팔꿈치를 직각으로 들어 팔뚝을 앞으로 눕히고, 손가락을 C자로 둥글게 굽혀 엄지와 만든 고리 속으로 막대가 지나가게 한다.
@@ -376,19 +373,6 @@ export class ModelActor {
   // 팔을 내리면 팔뚝이 안쪽으로 돌아 엄지가 앞을 보고 손바닥이 허벅지를 본다(사용자 2026-11). A자로 뜬 손(손바닥이 아래)을
   // 그대로 내리면 손등·손바닥이 엉뚱한 쪽을 보았다 — 팔뚝을 제 축으로 돌려(손목은 꺾지 않는다) 엄지를 몸 앞쪽으로.
   // 팔이 늘어져 있을수록 다 돌리고, 말하며 팔을 들면 덜 (막대를 쥔 손은 grip이 따로 맞춘다)
-  varyArms(k) {
-    const r = this.p.root; r.updateMatrixWorld(true);
-    const fwd = VC.set(0, 0, 1).transformDirection(r.matrixWorld), right = new THREE.Vector3(1, 0, 0).transformDirection(r.matrixWorld);
-    for (const a of this.arms) {
-      if (this.grip?.[a.k]?.on || !a.arm) continue;
-      const [out, bend] = this.vary[a.k], side = a.k === 'L' ? 1 : -1;
-      for (const [b, axis, ang] of [[a.arm, fwd, side * out * k], [a.fore, right, -bend * k]]) {
-        (this._varyQ ??= []).push([b, b.quaternion.clone()]);
-        const pw = b.parent.getWorldQuaternion(QW1), q = QW2.setFromAxisAngle(axis, ang);
-        b.quaternion.premultiply(pw.clone().invert().multiply(q).multiply(pw)); b.updateMatrixWorld(true);
-      }
-    }
-  }
   turnThumbs(k = 1) {
     const r = this.p.root; r.updateMatrixWorld(true);
     const fwd = VC.set(0, 0, 1).transformDirection(r.matrixWorld);
@@ -417,7 +401,6 @@ export class ModelActor {
     const a = this.acts[name] || this.acts.idle; if (!a || a === this.cur) return;
     a.reset().setEffectiveWeight(1).play();
     // 함께 걷는 사람들의 발이 똑같이 맞지 않게 — 걸음의 시작과 빠르기를 저마다 조금씩(병정은 march로 맞춘다, 사용자 2026-11)
-    if (name === 'idle') { this.idleAt ??= Math.random(); a.time = this.idleAt * a.getClip().duration; } // 서 있는 동작도 사람마다 다른 박자에서
     if (name === 'walk' && !this.march) { this.stride ??= Math.random(); this.pace ??= 0.9 + Math.random() * 0.2; a.time = this.stride * a.getClip().duration; a.timeScale = this.pace; } else a.timeScale = 1;
     if (this.cur) this.cur.crossFadeTo(a, fade, false); this.cur = a;
   }
@@ -436,21 +419,14 @@ export class ModelActor {
     this.play(moving ? 'walk' : POSE[this.pose] || 'idle');
     if (this.acts.walk) this.acts.walk.timeScale = this.walkRate || 1; // 빨리 걷는 이는 발도 빨리 (발이 땅에서 미끄러져 보이지 않게)
     for (const g of Object.values(this.grip)) if (g.on) g.bones.forEach((b, i) => b.quaternion.copy(g.base[i]));
-    if (this._varyQ) { for (const [b, q] of this._varyQ) b.quaternion.copy(q); this._varyQ = null; } // 지난 화면의 팔 다르게 하기를 걷고 (팔뚝 기록이 없는 동작에서는 쌓여 팔이 점점 벌어졌다)
     if (this._nodQ) { this.head.quaternion.copy(this._nodQ); this._nodQ = null; } // 지난 화면의 끄덕임을 걷고 (동작에 고개 기록이 없는 모델은 쌓였다)
-    // 가벼운 손짓(soft): 말하기를 서 있기에 반쯤만 섞는다 — 손을 크게 휘저어 어색했다(사용자 2026-11)
-    if (!moving && POSE[this.pose] === 'talk' && this.soft && this.acts.idle && this.acts.talk && this.cur === this.acts.talk) {
-      const i = this.acts.idle; if (!i.isRunning()) { i.stopFading(); i.enabled = true; i.play(); }
-      i.setEffectiveWeight(1 - this.soft); this.acts.talk.setEffectiveWeight(this.soft);
-    }
     this.mixer.update(dt);
     // 끄덕임: 고개를 두 번 가볍게 숙였다 든다 (곁의 사람이 그분의 말을 들으며)
     if (this.nodT > 0 && this.head) { this.nodT -= dt; const u = 1 - this.nodT / 0.9; this._nodQ = this.head.quaternion.clone(); this.head.quaternion.multiply(QB.setFromAxisAngle(AX, Math.sin(u * Math.PI * 2) ** 2 * 0.22)); }
     // 엄지 돌리기는 팔을 늘어뜨린 서 있기·걷기에만 — 말하기(손바닥을 펴는 손짓)·기도·잠에도 넣으니 손목이 비틀렸다(사용자 2026-11: 동작을 구분해 보정)
     // 다른 동작에서 넘어오는 동안은 그 동작의 무게만큼만
-    const talking = this.acts.talk?.isRunning() && this.acts.talk.getEffectiveWeight() > 0.01; // 손짓하는 동안은 팔을 손대지 않는다 (손목이 비틀렸다)
-    const calm = talking ? 0 : ['idle', 'walk'].reduce((w, n) => w + (this.acts[n] && this.acts[n].isRunning() ? this.acts[n].getEffectiveWeight() : 0), 0);
-    if (calm > 0.01) { this.turnThumbs(Math.min(1, calm)); this.varyArms(Math.min(1, calm)); } // 다르게 하기는 엄지 돌리기 뒤에 — 굽힌 팔에 위팔 비틀기가 들어가면 손이 옆으로 벌어졌다
+    const calm = ['idle', 'walk'].reduce((w, n) => w + (this.acts[n] && this.acts[n].isRunning() ? this.acts[n].getEffectiveWeight() : 0), 0);
+    if (calm > 0.01) this.turnThumbs(Math.min(1, calm));
     // 동작 위에 팔꿈치 굽힘을 덧입힌다 (걸을 때는 덜 — 걷기가 이미 팔꿈치를 굽힌다)
     if (!(this.pose === 'sleep' && !moving)) for (const g of Object.values(this.grip)) if (g.on) {
       // 손가락이 막대를 감싸 쥐게 (사용자 2026-11): 동작의 손가락 자세 위에 더하면 모델마다 굽힘이 달라 이상했다 —
