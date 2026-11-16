@@ -325,6 +325,7 @@ if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__st
     }
     return out;
   },
+  who(n) { const a = actors[n]; if (!a) return null; const d = a.doll || a; return { model: !!a.doll, pose: d.pose, y: d.y, yT: d.yT, floating: d.floating, sleep: !!a.acts?.sleep, mv: d.goal.distanceTo(d.pos), rotx: a.body?.rotation.x, ground: d.ground, rootY: a.p.root.position.y, parent: a.p.root.parent?.type }; },
   // 겹친 사람: 보이는 모든 사람(배역·군중)의 엉덩이 뼈 자리끼리 너무 가까운 쌍 (무대 좌표)
   crowding(lim = 0.1) { const v = new THREE.Vector3(), P = []; stageGroup.updateMatrixWorld(true);
     stageGroup.traverse(o => { if (!o.isBone || !/Hips$/.test(o.name)) return; let vis = true; for (let q = o; q; q = q.parent) if (!q.visible) { vis = false; break; } if (!vis) return;

@@ -204,6 +204,7 @@ const MAKERS = {
     mesh(new THREE.TorusGeometry(0.5, 0.018, 6, 40), dark, rock, [0, 0.16, 0], [1.7, 0.55, 1]).rotation.x = Math.PI / 2;
     const deck = new THREE.Group();
     deck.position.y = 0.06;
+    deck.userData.deck = true; // 배 위에서 앉는 사람은 돌 대신 나무 걸상에 (stage/model-actor.js seatStone)
     rock.add(deck);
     mesh(new THREE.BoxGeometry(1.25, 0.015, 0.36), mat('#8a6440'), rock, [0, 0.06, 0]).receiveShadow = true;
     // 돛대와 접은 돛
