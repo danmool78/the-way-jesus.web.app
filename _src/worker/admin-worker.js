@@ -32,7 +32,7 @@ async function verify(token, env) {
 }
 
 export default {
-  async fetch(req, env) {
+  async fetch(req, env, ctx) {
     const origin = req.headers.get('Origin') || '';
     const cors = { 'Access-Control-Allow-Origin': ORIGINS.includes(origin) || /^http:\/\/localhost(:\d+)?$/.test(origin) ? origin : ORIGINS[0],
       // 허용 머리말: 관리자 페이지가 GitHub에 보내던 그대로 — X-GitHub-Api-Version이 빠져 브라우저가 요청을 막았다(Failed to fetch)
@@ -52,6 +52,9 @@ export default {
       const key = decodeURIComponent(url.pathname.slice(3));
       // 모델·카드 그림·낭독·배경음악·영상·시편 노래 — 음성·영상은 중간부터 듣고 넘기게 부분 받기(Range)도
       if (!/^((models|cards)\/[\w.-]+\.(glb|webp|png|jpg)|assets\/(voice|music|video)\/[\w.\/-]+\.(mp3|mp4|m4a|json)|psalms\/[\w.-]+\.(mp3|m4a))$/.test(key) || key.includes('..')) return new Response('not found', { status: 404 });
+      // Cloudflare 가장자리 캐시에 담아 둔다 — 매번 R2까지 가지 않고 가까운 곳에서 바로 (부분 받기는 캐시가 알아서 잘라 준다)
+      const cache = caches.default, ck = new Request(url.origin + url.pathname, { method: 'GET' });
+      if (req.method === 'GET') { const hit = await cache.match(ck, { ignoreMethod: false }).catch(() => null); if (hit && !req.headers.get('Range')) return hit; }
       const range = req.headers.get('Range'), obj = await env.BUCKET.get(key, range ? { range: req.headers } : {});
       if (!obj) return new Response('not found', { status: 404, headers: { 'Access-Control-Allow-Origin': '*' } });
       const ext = key.split('.').pop(), type = { glb: 'model/gltf-binary', webp: 'image/webp', png: 'image/png', jpg: 'image/jpeg', mp3: 'audio/mpeg', m4a: 'audio/mp4', mp4: 'video/mp4', json: 'application/json' }[ext];
@@ -60,6 +63,7 @@ export default {
       let status = 200, len = obj.size;
       if (range && obj.range) { const r = obj.range, off = 'suffix' in r ? obj.size - r.suffix : r.offset || 0; len = 'suffix' in r ? r.suffix : r.length ?? obj.size - off; status = 206; h['Content-Range'] = `bytes ${off}-${off + len - 1}/${obj.size}`; }
       h['Content-Length'] = String(len);
+      if (req.method === 'GET' && status === 200) { const [b1, b2] = obj.body.tee(); ctx.waitUntil(cache.put(ck, new Response(b2, { headers: h })).catch(() => {})); return new Response(b1, { status, headers: h }); }
       return new Response(req.method === 'HEAD' ? null : obj.body, { status, headers: h });
     }
     try { await verify((req.headers.get('Authorization') || '').replace(/^Bearer\s+/i, ''), env); }
