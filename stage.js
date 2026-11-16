@@ -325,6 +325,11 @@ if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__st
     }
     return out;
   },
+  // 겹친 사람: 보이는 모든 사람(배역·군중)의 엉덩이 뼈 자리끼리 너무 가까운 쌍 (무대 좌표)
+  crowding(lim = 0.1) { const v = new THREE.Vector3(), P = []; stageGroup.updateMatrixWorld(true);
+    stageGroup.traverse(o => { if (!o.isBone || !/Hips$/.test(o.name)) return; let vis = true; for (let q = o; q; q = q.parent) if (!q.visible) { vis = false; break; } if (!vis) return;
+      let n = o; while (n.parent && n.parent !== stageGroup && !n.userData.who) n = n.parent; stageGroup.worldToLocal(o.getWorldPosition(v)); P.push([v.x, v.z, v.y, n.userData.who || n.name || '?']); });
+    const out = []; for (let i = 0; i < P.length; i++) for (let j = i + 1; j < P.length; j++) { const d = Math.hypot(P[i][0] - P[j][0], P[i][1] - P[j][1]); if (d < lim) out.push([+d.toFixed(3), P[i][3], P[j][3], +P[i][0].toFixed(2), +P[i][1].toFixed(2)]); } return { n: P.length, out }; },
   // 앉은 사람의 엉덩이와 깔고 앉은 돌·의자가 얼마나 어긋났나 (무대 좌표, 사람 키로 나눔)
   seats() { const v = new THREE.Vector3(), w = new THREE.Vector3(), out = []; stageGroup.updateMatrixWorld(true);
     stageGroup.traverse(o => { if (!o.isMesh || !o.visible || !o.userData.tw && o.userData.tw !== 0) return; const hip = o.userData.hips; if (!hip) return;
