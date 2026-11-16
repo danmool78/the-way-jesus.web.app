@@ -237,6 +237,11 @@ body.meeting #stick,body.meeting #arrow{opacity:0!important;pointer-events:none}
 #bubble.on{opacity:1;transform:translate(-50%,calc(-100% - 14px)) scale(1)}
 #bubble::after{content:'';position:absolute;left:calc(50% + var(--tx,0px));bottom:-9px;margin-left:-9px;border:9px solid transparent;border-bottom:0;border-top-color:#fbf3e0}
 #bubble b{display:block;font:700 11.5px var(--sans);letter-spacing:.06em;color:#9b6b2a;margin-bottom:2px}
+/* 불러오는 동안 (길 떠나기를 누른 뒤 첫 장면까지) */
+#loading{position:fixed;inset:0;z-index:9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:rgba(20,14,9,.72);color:#f3e2bf;font:700 16px/1.5 var(--serif)}
+#loading.hidden{display:none}
+#loading i{width:46px;height:46px;border-radius:50%;border:4px solid rgba(233,190,110,.25);border-top-color:#e9be6e;animation:spin .9s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 #toast{position:fixed;z-index:8;left:50%;top:32%;transform:translate(-50%,-50%) scale(.9);max-width:88%;padding:14px 20px;border-radius:14px;background:rgba(40,18,12,.92);border:1px solid rgba(224,122,98,.55);color:#ffe7dc;font:700 16px/1.5 var(--serif);text-align:center;word-break:keep-all;text-wrap:balance;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none}
 #toast.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
 #toast.good{background:rgba(20,32,16,.92);border-color:rgba(143,191,122,.6);color:#eaffdf}
@@ -331,6 +336,7 @@ body.meeting #stick,body.meeting #arrow{opacity:0!important;pointer-events:none}
 <button id="sound" class="hidden">소리 켬</button>
 
 <div id="toast"></div>
+<div id="loading" class="hidden"><i></i><b></b></div>
 <div id="bubble"></div>
 <div id="sheet" class="sheet hidden"></div>
 <div id="listen" class="hidden"><iframe title="이 장면 듣기" allow="autoplay; fullscreen"></iframe><button id="listenClose" aria-label="닫기">×</button></div>
