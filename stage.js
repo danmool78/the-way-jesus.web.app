@@ -743,10 +743,10 @@ let bigNow = 1;
 const floorAt = (x, z, self) => Math.max(-Infinity, ...Object.values(props).filter(f => f.floor && f !== self && f.heightAt(x, z) > 0).map(f => f.lift.position.y));
 // 땅에 붙은 소품: 지형과 같은 고정 축척에 둔다. 나머지(사람 곁의 십자가·배·짐승·상·바구니…)는 사람과 함께 커진다
 // 바닥이 평평한 건물: 가운데 땅 높이에 앉히면 비탈 위쪽이 땅에 묻힌다(골짜기 바닥의 실로암 못) — 바닥 네 귀퉁이 가운데 가장 높은 땅에 앉힌다
-const FLAT = new Set(['pool', 'house', 'well', 'synagogue', 'temple', 'gate', 'walls', 'cliffshrine']);
+const FLAT = new Set(['pool', 'house', 'well', 'synagogue', 'temple', 'gate', 'walls', 'cliffshrine', 'council']);
 // 땅에 까는 얇은 판(모래·풀밭): 가운데 땅 높이에 두면 비탈 아래쪽에 선 사람의 다리를 판이 덮어 발만 보였다(가드 성문, 2026-11) — 가장 낮은 귀퉁이에 깐다(높은 쪽은 지형 밑으로 숨는다)
 const COVER = new Set(['sand', 'grass', 'field', 'flowers', 'rocks']); // 바위도 낮은 쪽에 — 비탈 위쪽이 조금 묻히는 편이 떠 있는 것보다 낫다
-const FIXED = new Set(['water', 'grass', 'hill', 'tomb', 'temple', 'house', 'rocks', 'figtree', 'synagogue', 'well', 'pool', 'flowers', 'gate', 'field', 'cliffshrine', 'palm', 'walls', 'olive', 'star', 'host', 'rain']);
+const FIXED = new Set(['water', 'grass', 'hill', 'tomb', 'temple', 'house', 'rocks', 'figtree', 'synagogue', 'well', 'pool', 'flowers', 'gate', 'field', 'cliffshrine', 'palm', 'walls', 'olive', 'star', 'host', 'rain', 'council']);
 // '@at' 명령: 3D 지형에서만 무대 바닥을 다른 실제 지점으로 옮긴다 — 무대 (x, z) 자리가 그 위경도에 오도록.
 // 나사렛 회당에서 낭떠러지로 끌고 가는 대목처럼, 이야기가 근처의 실제 지형으로 옮겨 갈 때. 2D 무대는 그대로 둔다
 let moveAt = null, atSnap = true, lastHere = null;
@@ -852,6 +852,9 @@ function frame() {
     const onDeck = ac.p.root.parent !== stageGroup, g0 = onDeck ? 0 : ac.fixedY ? Math.max(groundAt(ac.pos.x, ac.pos.y), floorAt(ac.pos.x, ac.pos.y)) : groundAt(ac.pos.x, ac.pos.y);
     ac.ground = ac.fixedY || onDeck ? g0 + (ac.fixedY && inTerrain ? ac.y * (bigNow - 1) : 0) : Math.max(g0, ...grounds.map(p => { const h = p.heightAt(ac.pos.x, ac.pos.y); return h > 0 ? p.lift.position.y + h : -Infinity; }));
     ac.big = inTerrain && !onDeck ? bigNow : 1; // 배·나귀에 탄 사람은 그 소품과 함께 커진다
+    // 바닥이 평평한 건물(회당·공의회) 안의 걸상에 앉은 사람(높이를 정한 사람): 건물 받침 높이에, 키우지 않는다 — 건물은 지형 축척 그대로인데
+    // 사람만 키우고 앉는 높이까지 키워 걸상 위 허공에 떠 앉았다(a01 공의회, 사용자 2026-11). 걸터앉은 무리(p.bench)와 같은 셈
+    if (inTerrain && !onDeck && ac.fixedY && ac.y > 0) { const host = grounds.find(p => FLAT.has(p.kind) && p.heightAt(ac.pos.x, ac.pos.y) > 0); if (host) { ac.ground = host.lift.position.y; ac.big = 1; } }
     ac.update(time, dt);
   });
   if (inTerrain) scaleLights();

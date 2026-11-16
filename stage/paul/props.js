@@ -49,7 +49,10 @@ Object.assign(MAKERS, {
     // 대제사장의 자리: 뒤 가운데 한 단 높은 의자
     mesh(new THREE.BoxGeometry(0.3, 0.22, 0.24), st2, g, [0, 0.11, CZ - R * 0.82 - 0.36]);
     mesh(new THREE.BoxGeometry(0.3, 0.3, 0.05), st2, g, [0, 0.37, CZ - R * 0.82 - 0.47]);
-    return new Prop(g);
+    const P = new Prop(g);
+    // 바닥 판(2.6×1.7) 위 — 3D 지형에서 바닥이 평평한 건물처럼 받침을 대고, 그 안의 걸상에 앉은 사람이 건물 높이를 따른다(stage.js)
+    P.heightAt = (x, z) => { const u = (x - g.position.x) / g.scale.x, v = (z - g.position.z) / g.scale.z; return P.show > 0.5 && Math.abs(u) < 1.3 && v > -0.9 && v < 0.8 ? 0.02 * g.scale.y : 0; };
+    return P;
   },
 
   // 겉옷 무더기 (행 7:58): 증인들이 벗어 둔 겉옷이 하나씩 쌓인다 (show가 커지면 하나씩)
