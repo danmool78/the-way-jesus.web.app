@@ -450,12 +450,15 @@ export function crowdPerson(gltf, height) {
   const mixer = new THREE.AnimationMixer(body), clips = calmClips(gltf), clip = n => clips.find(c => c.name === n);
   const t0 = Math.random();
   const legs = ['Left', 'Right'].map(sd => [bone(body, sd + 'UpLeg'), bone(body, sd + 'Leg'), bone(body, sd + 'Foot')]);
+  // 다리 뼈의 처음 자세 — 서 있기 동작에 다리 기록이 없는 모델은 앉느라 접은 다리가 일어서도 그대로 남아, 돌 없이 앉은 채였다(a06, 사용자 2026-11)
+  const legRest = legs.flat().filter(Boolean).map(b => [b, b.quaternion.clone()]);
   const idle = clip('idle'), act = idle && mixer.clipAction(idle);
   act?.play();
   // 앉기: 걸상 위면 걸터앉고, 땅이면 무릎을 세우고 앉는다 (순례자 모델엔 앉는 동작이 없다)
   const stone = newStone();
   const pose = (sit, seat = 0) => {
     body.position.y = 0; stone.visible = false; if (!stone.parent && body.parent) body.parent.add(stone);
+    for (const [b, q] of legRest) b.quaternion.copy(q);
     mixer.setTime(idle ? idle.duration * t0 : 0); // 멈추지(stop) 않는다 — 멈추면 뼈가 처음 자세(A자)로 되돌아간다
     if (!sit) return;
     body.parent?.updateMatrixWorld(true); body.updateMatrixWorld(true);
