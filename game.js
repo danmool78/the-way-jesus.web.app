@@ -310,7 +310,7 @@ function blocked(x, z) {
 const onGalilee = (x, z) => { const k = waterKey(...toLL(x, z)); return k === 'galilee' || (k === 'sea' && !!JOURNEYS[JID].sail); };
 
 /* ---------- 길 위의 사건 (사용자 2026-11) ----------
-   우물: 들르면 물병이 찬다. 유혹하는 뱀: 길 한가운데서 '지름길'로 꾄다 — 닿으면 물려 물병을 잃고, 지나치면 '시험을 이긴 카드'.
+   우물: 들르면 물병이 찬다. 유혹하는 뱀: 길 한가운데서 '지름길'로 꾄다 — 닿으면 물려 물병을 잃고, 지나치면 '유혹을 이긴 횟수'가 하나 는다(카드가 아니다 — '카드'라 하니 무엇인지 헷갈렸다, 사용자 2026-11).
    로마 병정: 큰 성읍 둘레를 순찰 — 마주치면 검문으로 잠시 멈춘다. 길가에 쓰러진 사람: 곁에 멈춰 서면 도와 점수를 더 얻는다(시간은 쓴다).
    갈릴리 바다: 배를 타고 건넌다(조금 느리게) */
 const TEMPT = [['사람이 떡으로만 살 것이 아니요 하나님의 입에서 나오는 모든 말씀으로 살 것이다.', '마 4:4'], ['주 너의 하나님을 시험하지 마라.', '마 4:7'],
@@ -375,7 +375,7 @@ function updateEvents(dt, me0) {
       S.done = true; bin(S.obj, G.scene);
       const n = (store.get(temptKey(), 0) || 0) + 1; store.set(temptKey(), n);
       const [t, r] = TEMPT[(n - 1) % TEMPT.length];
-      G.bonus += 50; snd.play('bonus'); toast(`시험을 이겼어요! +50점<small>"${esc(t)}" (${r}) · 시험을 이긴 카드 ${n}장</small>`, true, 4200); drawCardBtn();
+      G.bonus += 50; snd.play('bonus'); toast(`시험을 이겼어요! +50점<small>"${esc(t)}" (${r}) · 유혹을 이긴 횟수 ${n}번</small>`, true, 4200); drawCardBtn();
     }
   }
   G.lureT -= dt;
@@ -538,8 +538,10 @@ function penalty(kind) {
 }
 
 /* ---------- 장면 카드·퀴즈 ---------- */
-const sheet = html => { const s = $('#sheet'); s.innerHTML = `<div class="card">${html}</div>`; s.classList.remove('hidden'); G.busy = true; return s; };
-const closeSheet = () => { $('#sheet').classList.add('hidden'); G.busy = false; };
+const sheet = html => { G.dismiss = null; const s = $('#sheet'); s.innerHTML = `<div class="card">${html}</div>`; s.classList.remove('hidden'); G.busy = true; return s; };
+const closeSheet = () => { $('#sheet').classList.add('hidden'); G.busy = false; G.dismiss = null; };
+// 바깥(어두운 바탕)을 누르면 닫히는 창: 카드 모음과 거기서 연 카드만 (사용자 2026-11) — 퀴즈·도착 카드는 실수로 닫히면 안 돼 G.dismiss를 두지 않는다
+$('#sheet').addEventListener('click', ev => { const t = ev.target; if (G.dismiss && (t.id === 'sheet' || t.classList.contains('cardview'))) G.dismiss(); });
 // '이 장면 듣기': 새 창 대신 게임 위에 앱을 덮어 띄운다 — 새 창은 닫아야 게임으로 돌아와 번거로웠다(사용자 2026-11)
 document.addEventListener('click', ev => {
   const a = ev.target.closest('a[data-listen]'); if (!a) return;
@@ -722,7 +724,7 @@ function tilt(root) {
   });
 }
 function showCard(card, below, head = '') {
-  const s = $('#sheet'); s.innerHTML = `<div class="cardview">${head}${card}${below}</div>`; s.classList.remove('hidden'); G.busy = true; tilt(s); return s;
+  G.dismiss = null; const s = $('#sheet'); s.innerHTML = `<div class="cardview">${head}${card}${below}</div>`; s.classList.remove('hidden'); G.busy = true; tilt(s); return s;
 }
 function drawCardBtn() { const d = deck(), n = Object.keys(d).length, tn = Object.keys(tdeck()).length; $('#cardsBtn').innerHTML = `<b>${n}</b>/${G.events.length} 말씀 카드<small>${num(total(d) + tpoints())}점${tn ? ` · 보물 ${tn}` : ''}</small>`; }
 // 보물: 찾은 것은 여정마다 이 기기에 (theway-game-treasure-<여정> — {보물: 찾은 횟수}), 이번 길에 숨긴 자리는 진행 기록(hide)에
@@ -767,7 +769,7 @@ function foundTreasure(h) {
 function openCards() {
   const d = deck(), have = new Set(Object.keys(d));
   const s = sheet(`<div class="body"><small>${esc(JOURNEYS[JID].name)}</small><h2>말씀 카드 ${have.size} / ${G.events.length} · ${num(total(d))}점</h2>
-    ${store.get(temptKey(), 0) ? `<p class="sub tempt">시험을 이긴 카드 <b>${store.get(temptKey(), 0)}</b>장 — 유혹하는 뱀을 지나쳐 얻었어요</p>` : ''}
+    ${store.get(temptKey(), 0) ? `<p class="sub tempt">유혹을 이긴 횟수 <b>${store.get(temptKey(), 0)}</b>번 — 뱀이 꾀는 지름길로 가지 않았어요</p>` : ''}
     <p class="sub">${esc(josa(JOURNEYS[JID].who, '을', '를'))} 만나 그 자리의 말씀을 맞히면 카드를 얻어요. 빨리 닿을수록 금 카드 — 은·동 카드는 다시 걸어 금으로 바꾸세요.</p>
     <div class="deck">${G.events.map((e, i) => have.has(e.id) ? `<button class="slot">${tcard(e, i, d[e.id], 'mini')}</button>`
       : `<div class="slot lock"><small>${String(i + 1).padStart(2, '0')}</small><b>?</b></div>`).join('')}</div>
@@ -776,12 +778,12 @@ function openCards() {
     <div class="deck tdeck">${TLIST.map(t => tdeck()[t.id] ? `<button class="slot" data-t="${t.id}">${treasureCard(t, tsrc(t), 'mini', esc)}</button>`
       : `<div class="slot lock tlock ${t.rarity}"><small>${RARITY[t.rarity].name}</small><b>?</b><i>${esc(t.clue)}</i>${(G.hide || []).some(h => h.id === t.id) ? '<em>이번 길에 숨어 있어요</em>' : ''}</div>`).join('')}</div>` : ''}
     <button class="go" id="closeCards">${G.me ? "계속 걷기" : "닫기"}</button></div>`);
-  s.querySelector('#closeCards').onclick = closeSheet;
+  s.querySelector('#closeCards').onclick = G.dismiss = closeSheet;
   s.querySelector('.tdeck')?.addEventListener('click', ev => { const b = ev.target.closest('[data-t]'); if (!b) return; const t = TLIST.find(x => x.id === b.dataset.t);
-    const v = showCard(treasureCard(t, tsrc(t), 'big', esc), `<div class="row"><button class="go" id="backDeck">카드 모음으로</button></div>`); v.querySelector('#backDeck').onclick = openCards; });
+    const v = showCard(treasureCard(t, tsrc(t), 'big', esc), `<div class="row"><button class="go" id="backDeck">카드 모음으로</button></div>`); v.querySelector('#backDeck').onclick = G.dismiss = openCards; });
   s.querySelector('.deck').onclick = ev => { const b = ev.target.closest('.tcard[data-i]'); if (!b) return; const i = +b.dataset.i, e = G.events[i];
     const v = showCard(tcard(e, i, d[e.id], 'big'), `<div class="row"><a class="go ghost" href="${appLink(e)}" data-listen>이 장면 듣기</a><button class="go" id="backDeck">카드 모음으로</button></div>`);
-    v.querySelector('#backDeck').onclick = openCards; };
+    v.querySelector('#backDeck').onclick = G.dismiss = openCards; };
 }
 $('#cardsBtn').onclick = () => openCards();
 const save = () => store.set('theway-game-' + JID, { idx: G.idx, total: G.total, stars: G.stars, hide: (G.hide || []).map(({ id, x, z }) => ({ id, x, z })) });
