@@ -721,13 +721,15 @@ export const SCRIPTS = {
         ['boat', null, { geo: [32.858, 35.572], delay: 3200 }], ['jesus', 'speak', { delay: 5000 }]],
       'p1.0': [['jesus', 'speak', { look: 1.0 }]],
       // p1.3: 안드레는 뭍에 남는다 — 배에 갑자기 나타나 한 사람이 늘어난 것처럼 보였다(사용자 2026-11)
-      'p1.3': [['peter', 'shrug'], ['boat', null, { geo: [32.845, 35.578] }], ['net', null, { geo: [32.84, 35.588], delay: 3000 }], ['peter', 'bow', { delay: 3000 }]],
-      'p1.5': [['net', 'full'], ['peter', 'afraid', { delay: 1500 }], ['boat2', null, { geo: [32.845, 35.6] }], ['james', 'idle', { x: 1.3, z: -0.15, look: -1.0 }], ['johnD', 'idle', { x: 1.6, z: -0.05, look: -1.0 }]],
+      // 야고보와 요한은 자기 배(boat2)에 올라 있다가, 부르자 그 배를 타고 온다(눅 5:7) — 뭍에서 걸어오거나 시몬의 배에 갑자기 나타나지 않게(사용자 2026-11)
+      'p1.3': [['james', 'idle', { show: 0 }], ['johnD', 'idle', { show: 0 }], ['james', 'idle', { board: 'boat2', x: -0.12, z: 0.02, look: -1.0, show: 1, delay: 900 }], ['johnD', 'idle', { board: 'boat2', x: 0.14, z: -0.02, look: -1.0, show: 1, delay: 900 }],
+        ['peter', 'shrug'], ['boat', null, { geo: [32.845, 35.578] }], ['net', null, { geo: [32.84, 35.588], delay: 3000 }], ['peter', 'bow', { delay: 3000 }]],
+      'p1.5': [['net', 'full'], ['peter', 'afraid', { delay: 1500 }], ['boat2', null, { geo: [32.845, 35.6] }]],
       'p2.0': [['peter', 'kneel', { x: -0.05, z: 0.04, look: -1.0 }]], // 예수님(-0.42)과 돛대(0.2) 사이 — 예수님 무릎에 붙거나 돛대가 얼굴을 뚫었다(사용자 2026-11)
       'p2.1': [['peter', 'speak']],
       'p2.4': [['jesus', 'bless', { look: 1.0 }], ['peter', 'kneel']],
       'p2.6': [['boat', null, { geo: [32.859, 35.566] }], ['boat2', null, { geo: [32.862, 35.616] }], ['net', null, { x: 0.55, z: -0.02 }], ['shore', null, { show: 0, delay: 1500 }],
-        ['jesus', 'idle', { board: null, x: -0.35, z: -0.18, look: 1.0, delay: 1500 }], ['peter', 'idle', { board: null, x: 0.1, z: -0.12, look: -1.0, delay: 1700 }], ['andrew', 'idle', { board: null, x: 0.45, z: -0.28, look: -1.0, delay: 1900 }],
+        ['jesus', 'idle', { board: null, x: -0.35, z: -0.18, look: 1.0, delay: 1500 }], ['peter', 'idle', { board: null, x: 0.1, z: -0.12, look: -1.0, delay: 1700 }], ['andrew', 'idle', { board: null, x: 0.45, z: -0.28, look: -1.0, delay: 1900 }], ['james', 'idle', { board: null, x: 0.85, z: -0.2, look: -1.0, delay: 2100 }], ['johnD', 'idle', { board: null, x: 1.1, z: -0.32, look: -1.0, delay: 2300 }],
         ['jesus', 'idle', { x: -1.6, z: -0.3, delay: 4000 }], ['peter', 'idle', { x: -1.25, z: -0.2, delay: 4600 }], ['andrew', 'idle', { x: -1.0, z: -0.35, delay: 5000 }], ['james', 'idle', { x: -0.7, z: -0.15, delay: 5300 }], ['johnD', 'idle', { x: -0.45, z: -0.33, delay: 5600 }]],
       w0: [['shore', null, { show: 0 }], ['boat', null, { geo: [32.859, 35.566] }], ['boat2', null, { geo: [32.862, 35.616] }], ['net', 'full', { x: 0.55, z: -0.02 }],
         ['jesus', 'speak', { show: 1, board: null, x: -0.35, z: -0.18, look: 1.0 }], ['peter', 'listen', { board: null, x: 0.1, z: -0.12, look: -1.0 }], ['andrew', 'listen', { board: null, x: 0.45, z: -0.28, look: -1.0 }],
