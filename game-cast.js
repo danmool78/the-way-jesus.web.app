@@ -51,6 +51,17 @@ Object.assign(CAST, {
     k12: ['ahab'], k15: ['ahab'], k16: ['ahab'], k19: ['elisha'], k20: ['ahab', 'jezebel'], k21: ['ahab'], k22: ['elijah', 'pilgrim-man:#7a6248'], // k22부터 엘리사가 앞서 걷는다 — 곁에는 엘리야와 멀리 선 선지자의 제자들(왕하 2:7)
     k32: ['hezekiah'], k33: ['hezekiah'], k34: ['hezekiah'], k35: ['hezekiah'], k36: ['hezekiah'], k37: ['hezekiah'], k38: ['josiah'], k39: ['josiah'],
   },
+  // 바울과 함께 걸은 사람들 (행 13–28): 첫 여행은 바나바, 둘째 여행부터 실라·디모데, 드로아에서부터 '우리'라 쓴 누가(행 16:10),
+  // 빌립보의 루디아. 모델이 없는 사람은 순례자 모델의 옷 색만 — 아나니아, 아굴라와 브리스길라, 디도, 아리스다고, 오네시모
+  paul: {
+    a03: ['pilgrim-man:#6b5a3e'], a05: ['barnabas'], a06: ['barnabas'], a07: ['barnabas'], a08: ['barnabas'], a09: ['barnabas'], a10: ['barnabas'],
+    a11: ['barnabas'], a12: ['barnabas'], a13: ['silas', 'barnabas'], a14: ['silas', 'timothy'], a15: ['silas', 'timothy', 'luke'],
+    a16: ['lydia', 'silas', 'luke'], a17: ['silas'], a18: ['silas', 'timothy'], a20: ['pilgrim-man:#7a6248', 'pilgrim-woman:#8a5a3a'],
+    a21: ['silas', 'timothy'], a22: ['timothy'], a23: ['timothy'], a24: ['timothy'], a25: ['timothy', 'pilgrim-man:#4e5b6b'], a26: ['timothy'],
+    a27: ['luke', 'timothy'], a28: ['luke'], a29: ['luke'], a30: ['luke'], a31: ['soldier'], a32: ['soldier'], a33: ['luke'], a34: ['luke'],
+    a35: ['luke', 'pilgrim-man:#5d5640'], a36: ['luke', 'pilgrim-man:#5d5640'], a37: ['luke'], a38: ['luke'], a39: ['luke', 'soldier'],
+    a40: ['timothy', 'pilgrim-man:#6b5a3e'], a41: ['pilgrim-man:#4e5b6b'], a42: ['luke'],
+  },
 });
 // 구약 여정의 엑스트라 (사용자 2026-11): 모델이 없는 사람은 순례자 모델의 옷 색만 바꿔 세운다 — 정해 둔 사람 뒤에 덧붙는다.
 // 이름:색:bearer는 앞사람 바로 앞에 서고, :lie는 눕는다. 밧세바(d28)처럼 그리지 않을 장면은 비운다
@@ -116,6 +127,7 @@ export const GEAR = {
   moses: ['rod'], aaron: ['rod'], elijah: ['staff'], elisha: ['staff'], baptist: ['staff'], samuel: ['staff'],
   soldier: ['spear', 'scutum'], goliath: ['bigspear'], 'pilgrim-man:#6b3a24:bearer': ['bigshield', 'helmet'], 'pilgrim-man:#5e2f22': ['spear'], joab: ['spear', 'shield'], saul: ['spear'], joshua: ['spear'], 'david-warrior': ['shield'],
   samaritan: ['jar'], woman: ['jar'],
+  paul: ['staff'], barnabas: ['staff'], silas: ['staff'], // 길 떠나는 사도와 동역자들 — 나그네의 지팡이
 };
 // 갈릴리 바다 위의 장면: 제자들은 배에 탄다(물 위에 서 있으면 안 된다). at = 배 가운데(목표 자리 기준), seats = 배 안 자리(배 기준, 앞에서부터),
 // water = 배 밖 물 위에 서는 사람과 자리 — 물 위로 걸어간 베드로(마 14:29). 그분은 e28에서 배 안(자리 0.6이 배에 든다), e32에서는 물 위
@@ -123,6 +135,11 @@ export const BOAT = {
   jesus: {
     e28: { at: [0.25, 0], seats: [[-0.95, 0], [-0.4, 0.1]] },
     e32: { at: [-1.5, -0.7], seats: [[-0.6, 0], [0.05, 0.1], [0.6, -0.05]], water: { peter: [-0.35, -0.25] } },
+  },
+  // 로마로 가는 배 위 (행 27): 그레데 앞바다의 광풍, 아드리아 바다에서 떡을 떼며 — 바울(자리 0.6)과 누가·아리스다고가 한 배에
+  paul: {
+    a35: { at: [0.25, 0], seats: [[-0.95, 0], [-0.4, 0.1]] },
+    a36: { at: [0.25, 0], seats: [[-0.95, 0], [-0.4, 0.1]] },
   },
 };
 // 장면 자리에 함께 세우는 것 [소품, x, z] (목표 자리 기준) — 수가의 야곱의 우물: 여인이 그 곁에 선다(요 4:6–7)

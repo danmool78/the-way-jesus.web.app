@@ -22,15 +22,20 @@ const josa = (w, a, b) => { const c = (w || '').charCodeAt(w.length - 1) - 0xac0
 const store = { get: (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } }, set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* 사생활 보호 모드 */ } } };
 
 /* ---------- 여정 ---------- */
-// 지도 위를 걷는 여정만 (바울은 뱃길이 많아, 시편·잠언·GoodNews는 지도를 걷지 않아 뺀다)
+// 지도 위를 걷는 여정만 (시편·잠언·GoodNews는 지도를 걷지 않아 뺀다).
+// 바울(sail): 지중해를 배로 건넌다 — 바다에 들어서면 배를 타고 직접 키를 잡는다(사용자 2026-11: 자동 대신 조종)
 const JOURNEYS = {
   jesus: { name: '예수님 따라가기', who: '예수님', data: 'data.json', leader: 'jesus', model: 'jesus', bases: ['main', 'west'], terrain: ['galilee', 'judea', 'shephelah', 'carmel', 'egypt'] },
   moses: { name: '모세 따라가기', who: '모세', data: 'j/moses/data.json', leader: 'mosesE', model: 'moses', bases: ['main', 'west', 'south'], terrain: ['galilee', 'judea', 'shephelah', 'carmel', 'egypt', 'sinai', 'negev'] },
   david: { name: '다윗 따라가기', who: '다윗', data: 'j/david/data.json', leader: 'davidW', model: 'david', bases: ['main', 'west'], terrain: ['galilee', 'judea', 'shephelah', 'carmel'] },
   kings: { name: '엘리야와 두 왕국', who: '선지자', data: 'j/kings/data.json', leader: 'elijah', model: 'elijah', bases: ['meso', 'main', 'west', 'south'], terrain: ['galilee', 'judea', 'shephelah', 'carmel', 'sinai', 'negev'] },
+  paul: { name: '바울과 함께 땅끝까지', who: '바울', data: 'j/paul/data.json', leader: 'paul', model: 'paul', bases: ['medwide', 'med', 'main', 'west'], terrain: ['galilee', 'judea', 'shephelah', 'carmel'], sail: true },
 };
 // 음영 기복도가 덮는 범위 — app.js의 RELIEF*와 같게. 아래에 깔리는 것부터
 const BASES = {
+  // 지중해(바울 여정만, app.js의 RELIEF_MED_WIDE·RELIEF_MED와 같게) — 바다와 레반트 자리가 투명하다(clear). 밑에 바다를 깔고 그 위에 얹는다
+  medwide: { src: 'assets/relief-med-wide.webp', lat0: 24.5, lat1: 48.5, lng0: 8.0, lng1: 41.0, clear: true },
+  med: { src: 'assets/relief-med.webp', lat0: 30.5, lat1: 43.0, lng0: 11.0, lng1: 38.0, clear: true },
   meso: { src: 'assets/relief-meso.webp', lat0: 26.9, lat1: 37.6, lng0: 35.6, lng1: 46.2 },
   south: { src: 'assets/relief-south.webp', lat0: 27.2, lat1: 30.15, lng0: 31.25, lng1: 37.4 },
   west: { src: 'assets/relief-west.webp', lat0: 29.15, lat1: 31.9, lng0: 29.4, lng1: 33.25 },
@@ -53,6 +58,27 @@ const WATERS = {
 const LAT0 = 32, LNG0 = 35, KX = 111.32 * Math.cos(LAT0 * Math.PI / 180), KZ = 110.57;
 const toXZ = (lat, lng) => [(lng - LNG0) * KX, (LAT0 - lat) * KZ];
 const toLL = (x, z) => [LAT0 - z / KZ, LNG0 + x / KX];
+// 물: 여정마다 같은 다각형(WATERS). 바울 여정은 지중해 전체라, 레반트 바탕(main·west) 밖의 바다를 육지 가림판
+// (assets/relief-med-mask.png — 흰색이 육지, 위도 24.5–48.5·경도 8–41)으로 가린다. 레반트 안은 예전 다각형 그대로
+// (지중해 다각형은 경도 26까지 사각으로 덮어 구브로까지 바다로 쳤다)
+const MASK = { src: 'assets/relief-med-mask.png', lat0: 24.5, lat1: 48.5, lng0: 8.0, lng1: 41.0, land: null };
+async function loadMask() {
+  if (MASK.land) return;
+  const im = new Image(); im.src = MASK.src; await im.decode();
+  const c = document.createElement('canvas'); c.width = im.width; c.height = im.height; const x = c.getContext('2d'); x.drawImage(im, 0, 0);
+  const d = x.getImageData(0, 0, im.width, im.height).data, w = im.width, h = im.height, a = new Uint8Array(w * h);
+  for (let i = 0; i < a.length; i++) a[i] = d[i * 4] > 128 ? 1 : 0;
+  MASK.land = (lat, lng) => { const i = Math.floor((lng - MASK.lng0) / (MASK.lng1 - MASK.lng0) * w), j = Math.floor((MASK.lat1 - lat) / (MASK.lat1 - MASK.lat0) * h); return i < 0 || j < 0 || i >= w || j >= h ? true : !!a[j * w + i]; };
+}
+const inBase = (b, la, ln) => { const B = BASES[b]; return la > B.lat0 && la < B.lat1 && ln > B.lng0 && ln < B.lng1; };
+// 그 자리의 물 이름 (없으면 null)
+function waterKey(la, ln) {
+  if (!JOURNEYS[JID]?.sail) { for (const [k, p] of Object.entries(WATERS)) if (inPoly(la, ln, p)) return k; return null; }
+  for (const k of ['galilee', 'dead', 'hula']) if (inPoly(la, ln, WATERS[k])) return k;
+  if (inBase('main', la, ln) || inBase('west', la, ln)) return inPoly(la, ln, WATERS.sea) ? 'sea' : null;
+  return MASK.land && !MASK.land(la, ln) ? 'sea' : null;
+}
+const SEA_Y = 0.03; // 지중해 수면 (바울 여정 — 바탕 그림 밑에 까는 바다)
 const inPoly = (lat, lng, poly) => { let c = false; for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const [ai, bi] = poly[i], [aj, bj] = poly[j]; if ((ai > lat) !== (aj > lat) && lng < (bj - bi) * (lat - ai) / (aj - ai) + bi) c = !c; } return c; };
 
 /* ---------- 순례자 꾸미기 ---------- */
@@ -154,8 +180,9 @@ function setupUI() {
   $('#name').value = me.name;
   $('#name').oninput = () => { me.name = $('#name').value.trim(); $('#plate').textContent = me.name || '순례자'; store.set('theway-game-me', me); };
   // 로비 (사용자 2026-11): 여정마다 대표 카드 그림·진행도, 내 전체 기록과 칭호, 마지막으로 걷던 여정
-  const NSC = { jesus: 61, moses: 40, david: 39, kings: 41 };
-  const BACK = { jesus: 'e08', moses: 'm09', david: 'd05', kings: 'k15' };
+  const NSC = { jesus: 61, moses: 40, david: 39, kings: 41, paul: 42 };
+  const BACK = { jesus: 'e08', moses: 'm09', david: 'd05', kings: 'k15', paul: 'a35' };
+  const BACKIMG = { paul: 'assets/img/a35.webp' }; // 말씀 카드 그림이 아직 없는 여정은 앱의 장면 그림으로
   const cardsOf = k => { const v = store.get('theway-game-cards-' + k, {}) || {}; return Array.isArray(v) ? Object.fromEntries(v.map(x => [x, { s: 1, p: 100 }])) : v; };
   const prog = k => { const sv = store.get('theway-game-' + k, null), c = cardsOf(k), cs = Object.values(c);
     return { at: sv?.idx || 0, km: Math.round(sv?.total || 0), cards: cs.length, stars: cs.reduce((n, x) => n + (typeof x === 'number' ? x : x.s || 0), 0), pts: cs.reduce((n, x) => n + (typeof x === 'number' ? x * 100 : x.p || 0), 0), tre: Object.keys(store.get('theway-game-treasure-' + k, {}) || {}).length }; };
@@ -166,8 +193,8 @@ function setupUI() {
   $('#jpick').innerHTML = Object.entries(JOURNEYS).map(([k, j]) => { const g = prog(k), pc = Math.round(Math.max(g.at, g.cards) / NSC[k] * 100);
     return `<button data-j="${k}">${g.at ? '<em>이어 걷기</em>' : ''}<div class="in"><b>${esc(j.name.replace(' 따라가기', ''))}</b><i>${g.at || g.cards ? `${g.at}/${NSC[k]} 장면 · 카드 ${g.cards}장` : `${NSC[k]}곳 · 처음 걷기`}</i><u style="--p:${pc}%"></u></div></button>`; }).join('');
   const cardsList = fetch('assets/cards.json').then(r => r.json()).catch(() => null);
-  cardsList.then(M => M && document.querySelectorAll('#jpick button').forEach(b => { const f = M.files[BACK[b.dataset.j]]; if (f) b.style.backgroundImage = `url(${M.base}/${f})`; }));
-  const backdrop = async () => { const M = await cardsList, k = M?.files?.[BACK[JID]], el = $('#backdrop'); if (!k) return; const url = `${M.base}/${k}`; el.classList.remove('on'); const im = new Image(); im.onload = () => { el.style.backgroundImage = `url(${url})`; el.classList.add('on'); }; im.src = url; };
+  cardsList.then(M => M && document.querySelectorAll('#jpick button').forEach(b => { const f = M.files[BACK[b.dataset.j]], u = f ? `${M.base}/${f}` : BACKIMG[b.dataset.j]; if (u) b.style.backgroundImage = `url(${u})`; }));
+  const backdrop = async () => { const M = await cardsList, k = M?.files?.[BACK[JID]], el = $('#backdrop'), url = k ? `${M.base}/${k}` : BACKIMG[JID]; if (!url) return; el.classList.remove('on'); const im = new Image(); im.onload = () => { el.style.backgroundImage = `url(${url})`; el.classList.add('on'); }; im.src = url; };
   const markJ = () => { document.querySelectorAll('#jpick button').forEach(b => b.classList.toggle('on', b.dataset.j === JID));
     const J = JOURNEYS[JID], g = prog(JID); backdrop();
     $('#jinfo').innerHTML = `<h3>${esc(J.name)}</h3><p>${esc(josa(J.who, '을', '를'))} 따라 ${NSC[JID]}곳을 걸어요. 단서를 읽고 지도에서 다음 장면을 찾아가 말씀 카드를 모으세요.</p>
@@ -215,13 +242,22 @@ const PACE = 3.2; // 순례자의 걸음 (km/초): 나사렛→베들레헴 140k
 // 사람이 설 높이: 땅 그대로 — 0 밑을 잘라 쓰니 해수면 아래인 갈릴리 물가·요단 골짜기·여리고에서 사람이 땅 위에 떠 있었다.
 // 물(바다·호수) 위에서만 수면 높이로 (물 위를 걸으신 자리, 홍해를 건너는 자리)
 const GH = (x, z) => {
-  const h = G.world?.heightAt(x, z) || 0, [la, ln] = toLL(x, z);
-  for (const [k, p] of Object.entries(WATERS)) if (inPoly(la, ln, p)) return Math.max(h, LAKE_LEVEL[k] ?? 0.05);
-  return h;
+  const h = G.world?.heightAt(x, z) || 0, k = waterKey(...toLL(x, z));
+  return k ? Math.max(h, LAKE_LEVEL[k] ?? (JOURNEYS[JID].sail && k === 'sea' ? SEA_Y : 0.05)) : h;
 };
 const SCALE = 1.4; // 인형 크기 (지도 위에서 보이게 키운다 — 4.2는 호수·마을에 비해 너무 컸다, PC 캡처 2026-11)
 // 그분은 아주 가까이(3km — 인형 키의 두 배 남짓) 가야 보이고, 2.5km 안에 들어서야 만난다 (사용자 2026-11 — 멀리서 보이면 쉬웠다)
 const ARRIVE = 2.5;
+// 바울의 뱃길 (사용자 2026-11 — 자동 대신 직접 키를 잡는다): 지중해에 들어서면 배를 타고, 걷기의 SAIL배로 간다.
+// 그레데 앞바다·아드리아 바다(STORM)를 건널 때는 유라굴로 광풍이 배를 남서쪽(스르디스 쪽, 행 27:17)으로 밀어낸다 — 키를 거슬러 잡아야 한다
+const SAIL = 3.2, STORM = ['a35', 'a36'];
+const isSea = (x, z) => !!JOURNEYS[JID].sail && waterKey(...toLL(x, z)) === 'sea';
+// 이 구간을 곧장 가면 걸릴 시간(초): 바다는 배로 빠르게, 광풍 구간은 느리게
+function legSeconds(sx, sz, gx, gz) {
+  const N = 60, L = Math.hypot(gx - sx, gz - sz); let t = 0;
+  for (let i = 0; i < N; i++) { const u = (i + 0.5) / N, sea = isSea(sx + (gx - sx) * u, sz + (gz - sz) * u); t += L / N / (G.speed * (sea ? SAIL : 1)); }
+  return t * (STORM.includes(G.events[G.idx]?.id) ? 1.8 : 1);
+}
 const SEE = 3;
 const SAME = 5; // 이만큼 붙은 장면은 같은 자리로 친다 (걷지 않고 카드를 이어 받는다)
 // 발자국 (빛기둥 대신 — 빛기둥은 너무 빤한 힌트였다, 사용자 2026-11): 목적지 TRACK km 안쪽에만 그분이 걸어가신 굽은 발자국이 있고,
@@ -243,12 +279,18 @@ function buildWorld(j) {
     const B = BASES[b], [x0, z0] = toXZ(B.lat1, B.lng0), [x1, z1] = toXZ(B.lat0, B.lng1);
     const tex = tl.load(B.src); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = G.r.capabilities.getMaxAnisotropy();
     // 바탕끼리 겹치는 곳은 그리는 차례로 (깊이를 쓰지 않는다 — 0.01 차이로 겹쳐 두면 멀리서 깜박였다)
-    const m = new THREE.Mesh(new THREE.PlaneGeometry(x1 - x0, z1 - z0), new THREE.MeshStandardMaterial({ map: tex, roughness: 1, depthWrite: false }));
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(x1 - x0, z1 - z0), new THREE.MeshStandardMaterial({ map: tex, roughness: 1, depthWrite: false, transparent: !!B.clear }));
     m.rotation.x = -Math.PI / 2; m.position.set((x0 + x1) / 2, 0, (z0 + z1) / 2); m.renderOrder = i - 20;
     S.add(m);
   });
-  for (const [k, p] of Object.entries(WATERS)) { const w = waterMesh(p, k === 'sea' || k === 'suez' || k === 'aqaba' ? '#4f7f99' : '#5f93ad'); w.position.y = LAKE_LEVEL[k] ?? 0.05; S.add(w); }
-  G.world = createWorld({ scene: S, renderer: G.r, toXZ, regions: j.terrain, places: G.data.places, journeyId: JID, wet: (x, z) => { const [la, ln] = toLL(x, z); return Object.values(WATERS).some(p => inPoly(la, ln, p)); } });
+  // 바울: 투명한 지중해 바탕 밑에 바다 한 장 — 레반트 해안 다각형(경도 26까지 사각)은 구브로·소아시아를 덮어 그리지 않는다
+  if (j.sail) {
+    const B = BASES.medwide, [x0, z0] = toXZ(B.lat1, B.lng0), [x1, z1] = toXZ(B.lat0, B.lng1);
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(x1 - x0, z1 - z0), new THREE.MeshStandardMaterial({ color: '#4f7f99', roughness: .4, metalness: .1, depthWrite: false }));
+    m.rotation.x = -Math.PI / 2; m.position.set((x0 + x1) / 2, -0.02, (z0 + z1) / 2); m.renderOrder = -30; S.add(m);
+  }
+  for (const [k, p] of Object.entries(WATERS)) { if (j.sail && k !== 'galilee' && k !== 'dead' && k !== 'hula') continue; const w = waterMesh(p, k === 'sea' || k === 'suez' || k === 'aqaba' ? '#4f7f99' : '#5f93ad'); w.position.y = LAKE_LEVEL[k] ?? 0.05; S.add(w); }
+  G.world = createWorld({ scene: S, renderer: G.r, toXZ, regions: j.terrain, places: G.data.places, journeyId: JID, wet: (x, z) => !!waterKey(...toLL(x, z)) });
   // 발자국: 납작한 타원 하나를 여러 번(InstancedMesh) — 한 번 만들어 장면마다 자리만 바꿔 쓴다
   const fg = new THREE.CircleGeometry(1, 14); fg.rotateX(-Math.PI / 2); fg.scale(0.05, 1, 0.11);
   G.prints = new THREE.InstancedMesh(fg, new THREE.MeshBasicMaterial({ color: '#3a2412', transparent: true, opacity: .85, depthWrite: false }), MAXP);
@@ -260,10 +302,12 @@ function blocked(x, z) {
   if (!J.bases.some(b => { const B = BASES[b]; return lat > B.lat0 + .02 && lat < B.lat1 - .02 && lng > B.lng0 + .02 && lng < B.lng1 - .02; })) return 'edge';
   const g = goalXZ();
   if (g && Math.hypot(x - g[0], z - g[1]) < SAME * 2.2) return null;
-  for (const [k, p] of Object.entries(WATERS)) if (k !== 'galilee' && inPoly(lat, lng, p)) return k; // 갈릴리 바다는 배를 타고 건넌다
+  const k = waterKey(lat, lng);
+  if (k && k !== 'galilee' && !(k === 'sea' && J.sail)) return k; // 갈릴리 바다는 배를 타고 건넌다 (바울은 지중해도)
   return null;
 }
-const onGalilee = (x, z) => { const [lat, lng] = toLL(x, z); return inPoly(lat, lng, WATERS.galilee); };
+// 배를 탈 물인가: 갈릴리 바다, 바울 여정에서는 지중해까지
+const onGalilee = (x, z) => { const k = waterKey(...toLL(x, z)); return k === 'galilee' || (k === 'sea' && !!JOURNEYS[JID].sail); };
 
 /* ---------- 길 위의 사건 (사용자 2026-11) ----------
    우물: 들르면 물병이 찬다. 유혹하는 뱀: 길 한가운데서 '지름길'로 꾄다 — 닿으면 물려 물병을 잃고, 지나치면 '시험을 이긴 카드'.
@@ -279,16 +323,16 @@ function spawnLegEvents() {
   const at = (f, off) => { const dx = (gx - sx) / L, dz = (gz - sz) / L; return [sx + (gx - sx) * f - dz * off, sz + (gz - sz) * f + dx * off]; };
   if (Math.random() < 0.6) { // 뱀: 곧은 길 한가운데 가까이
     const [x, z] = at(0.4 + Math.random() * 0.15, (Math.random() - 0.5) * 3);
-    if (!blocked(x, z)) { const P = makeProp('serpent', x, z, { scale: SCALE * 4 }); P.obj.position.y = GH(x, z); G.scene.add(P.obj); G.serpent = { obj: P.obj, x, z, warned: false, done: false, d0: Math.hypot(gx - x, gz - z) }; }
+    if (!blocked(x, z) && !wetAt(x, z)) { const P = makeProp('serpent', x, z, { scale: SCALE * 4 }); P.obj.position.y = GH(x, z); G.scene.add(P.obj); G.serpent = { obj: P.obj, x, z, warned: false, done: false, d0: Math.hypot(gx - x, gz - z) }; }
   }
   if (Math.random() < 0.4) { // 쓰러진 사람: 길 가장자리
     const [x, z] = at(0.6 + Math.random() * 0.2, (Math.random() < 0.5 ? -1 : 1) * 2.5);
-    if (!blocked(x, z)) { const a = G.manG ? new ModelActor(tinted(G.manG, 'pilgrim-man', '#8b6f50'), x, z, { noPillow: true }) : new Actor('man', x, z, 0, { gaze: false }); a.big = SCALE; a.set('sleep'); a.realWalk = true; G.scene.add(a.p.root); G.wounded = { a, x, z, still: 0, helped: false, told: false }; }
+    if (!blocked(x, z) && !wetAt(x, z)) { const a = G.manG ? new ModelActor(tinted(G.manG, 'pilgrim-man', '#8b6f50'), x, z, { noPillow: true }) : new Actor('man', x, z, 0, { gaze: false }); a.big = SCALE; a.set('sleep'); a.realWalk = true; G.scene.add(a.p.root); G.wounded = { a, x, z, still: 0, helped: false, told: false }; }
   }
 }
 // 병정: 예수 여정은 로마 병정(창과 긴 네모 방패), 구약 여정은 로마 병정이 시대에 맞지 않아(사용자 2026-11)
 // 남자 순례자 모델의 겉옷을 검붉게 칠하고 창과 둥근 방패를 들린 그 시대 병사로
-const roman = () => JID === 'jesus';
+const roman = () => JID === 'jesus' || JID === 'paul'; // 바울 때도 로마 병정
 function soldierAt(x, z) {
   if (roman() && G.soldierG) return Object.assign(new ModelActor(G.soldierG, x, z).hold(GEAR.soldier), { march: true }); // 병정은 발을 맞춰 걷는다
   if (!roman() && G.manG) return Object.assign(new ModelActor(tinted(G.manG, 'pilgrim-man', '#8a3324'), x, z).hold(['spear', 'shield', 'helmet']), { march: true });
@@ -297,10 +341,10 @@ function soldierAt(x, z) {
 function spawnPatrols() {
   // 큰 성읍(예루살렘·가버나움·여리고·가이사랴 등) 둘레를 둘씩 오가는 로마 병정
   G.patrols = [];
-  const big = Object.values(G.data.places).filter(p => !p.hidden && /예루살렘|가버나움|여리고|가이사랴|사마리아|세겜|헤브론/.test(p.name)).slice(0, 5);
+  const big = Object.values(G.data.places).filter(p => !p.hidden && /예루살렘|가버나움|여리고|가이사랴|사마리아|세겜|헤브론|에베소|고린도|빌립보|로마$|안디옥/.test(p.name)).slice(0, JOURNEYS[JID].sail ? 8 : 5);
   for (const p of big) {
     // 순찰 길은 물(바다·호수)을 건너지 않는 방향으로만 — 아무 쪽으로나 정하니 가버나움·가이사랴 병정이 물 위를 걸었다(사용자 2026-11)
-    const [x0, z0] = toXZ(p.lat, p.lng), wet = (x, z) => { const [la, ln] = toLL(x, z); return Object.values(WATERS).some(w => inPoly(la, ln, w)); };
+    const [x0, z0] = toXZ(p.lat, p.lng), wet = wetAt;
     let A = null, B = null;
     for (let k = 0, a0 = Math.random() * 6.28; k < 12 && !A; k++) {
       const a = a0 + k * 0.52, P = [x0 + Math.cos(a) * 9, z0 + Math.sin(a) * 9], Q = [x0 - Math.cos(a) * 9, z0 - Math.sin(a) * 9];
@@ -794,12 +838,12 @@ function castOf(i) {
 }
 let castTok = 0;
 // 물 위인가 — 목표 둘레·갈릴리도 물로 친다 (blocked는 둘 다 봐준다)
-const wetAt = (x, z) => { const [la, ln] = toLL(x, z); return Object.values(WATERS).some(w => inPoly(la, ln, w)); };
+const wetAt = (x, z) => !!waterKey(...toLL(x, z));
 // 배 위의 사람이 설 높이: 장면의 배(G.castBoat) 안이면 갑판, 아니면 땅·수면
 const BOAT_K = SCALE * 1.4; // 배 배율 — 셋이 탈 만큼 (순례자가 타는 배는 SCALE * 0.9)
 function standY(x, z) {
   const B = G.castBoat;
-  if (B && ((x - B.x) / (0.85 * BOAT_K)) ** 2 + ((z - B.z) / (0.28 * BOAT_K)) ** 2 < 1) return LAKE_LEVEL.galilee + 0.06 * BOAT_K;
+  if (B && ((x - B.x) / (0.85 * BOAT_K)) ** 2 + ((z - B.z) / (0.28 * BOAT_K)) ** 2 < 1) return B.y + 0.06 * BOAT_K;
   return GH(x, z);
 }
 async function placeCast() {
@@ -814,7 +858,8 @@ async function placeCast() {
   // 갈릴리 바다 위의 장면: 배를 띄워 제자들을 태운다 (물 위에 서 있었다 — 사용자 2026-11)
   if (boat) {
     const bx = gx + boat.at[0], bz = gz + boat.at[1], obj = makeProp('boat', 0, 0, { scale: BOAT_K }).obj;
-    obj.position.set(bx, LAKE_LEVEL.galilee, bz); G.scene.add(obj); G.castBoat = { obj, x: bx, z: bz };
+    const y = isSea(bx, bz) ? SEA_Y : LAKE_LEVEL.galilee; // 바울의 배는 지중해 수면에
+    obj.position.set(bx, y, bz); G.scene.add(obj); G.castBoat = { obj, x: bx, z: bz, y };
   }
   for (const [k, x, z] of SETS[JID]?.[G.events[G.idx].id] || []) {
     const o = makeProp(k, 0, 0, { scale: 1.05 * 1.7 }).obj; o.position.set(gx + x, GH(gx + x, gz + z), gz + z); o.visible = false; G.scene.add(o); G.castSet.push(o); // 마을 우물과 같은 크기
@@ -890,7 +935,7 @@ function startLeg(walkFrom) {
   // 걸음은 늘 같은 빠르기 — 실제 땅의 거리만큼 걷고 그만큼 시간을 더 준다 (사용자 2026-11: 먼 길도 20초에 닿게 하니 땅과 상관없이 날아다녔다)
   G.speed = PACE * (G.fx?.speed || 1); G.revived = false; // 인물의 걸음 능력치
   // 제한 시간: 곧장 걸으면 걸릴 시간의 1.7배 + 6초. 그분은 그 시간의 절반쯤에 다음 자리에 닿으시게 걸으신다
-  G.timeMax = G.timeT = G.legPath / G.speed * 2.3 + 10; // 목적지를 지도에서 찾아야 하니 넉넉히
+  G.timeMax = G.timeT = legSeconds(G.me.pos.x, G.me.pos.y, gx, gz) * (G.legPath / Math.max(1, G.legStraight)) * 2.3 + 10; // 목적지를 지도에서 찾아야 하니 넉넉히 (바울의 뱃길은 배 빠르기로)
   if (walkFrom) G.leader.speed = Math.max(4, Math.hypot(gx - walkFrom[0], gz - walkFrom[1]) / (G.timeMax * 0.5));
   $('#mNo').textContent = `${G.idx + 1} / ${G.events.length} · ${josa(whoNow(), '이', '가')} 계신 곳`;
   G.named = false; missionText(); G.bonus = 0; spawnLegEvents();
@@ -915,9 +960,10 @@ async function begin(fresh) {
   store.set('theway-game-last', JID);
   const J = JOURNEYS[JID];
   await loadJourney();
+  if (J.sail) await loadMask(); // 지중해의 뭍과 바다
   const saved = store.get('theway-game-' + JID, null);
   G.idx = saved?.idx || 0; G.total = saved?.total || 0; G.stars = saved?.stars || []; G.missed = [];
-  G.hide = saved?.hide || hideTreasures(TLIST, G.data.places, toXZ, (x, z) => { const [la, ln] = toLL(x, z); return Object.values(WATERS).some(p => inPoly(la, ln, p)); });
+  G.hide = saved?.hide || hideTreasures(TLIST, G.data.places, toXZ, (x, z) => wetAt(x, z));
   $('#setup').classList.add('hidden');
   for (const s of ['#hud', '#waterBox', '#dayBox', '#arrow', '#stick', '#cardsBtn', '#ask', '#quit', '#sound']) $(s).classList.remove('hidden');
   // 꾸미기 화면의 미리보기는 이제 그리지 않으니 인형과 렌더러를 놓아 준다
@@ -930,7 +976,7 @@ async function begin(fresh) {
   let sx = rx, sz = rz;
   if (G.idx === 0) for (const [dx, dz] of [[0, 22], [16, 16], [-16, 16], [20, 0], [-20, 0], [0, -22]]) if (!blocked(rx + dx, rz + dz)) { sx = rx + dx; sz = rz + dz; break; }
   // 출발 자리가 물 위면(갈릴리 바다 한가운데의 장면 다음 등) 가장 가까운 뭍으로
-  if (blocked(sx, sz) || onGalilee(sx, sz)) outer: for (let r = 2; r < 80; r += 2) for (let k = 0; k < 16; k++) { const a = k / 16 * 6.283, x = sx + Math.cos(a) * r, z = sz + Math.sin(a) * r; if (!blocked(x, z) && !onGalilee(x, z)) { sx = x; sz = z; break outer; } }
+  if (blocked(sx, sz) || onGalilee(sx, sz) && !isSea(sx, sz)) outer: for (let r = 2; r < 80; r += 2) for (let k = 0; k < 16; k++) { const a = k / 16 * 6.283, x = sx + Math.cos(a) * r, z = sz + Math.sin(a) * r; if (!blocked(x, z) && !onGalilee(x, z)) { sx = x; sz = z; break outer; } }
   // 그분: 3D 모델(glb, R2)이 있으면 그것으로, 못 받으면 예전 인형으로 (사용자 2026-11).
   // 모델을 다 받은 뒤에 나(G.me)를 세운다 — 매 화면이 G.me가 있으면 그분도 있다고 보고 그린다
   const lname = leadAt(G.idx)?.[1] || J.model; // 이어 걷기면 그 장면의 사람으로 (여호수아·왕 다윗 등)
@@ -992,6 +1038,7 @@ function resize() {
 }
 addEventListener('resize', resize);
 let last = performance.now();
+const damp1 = (a, b, k, dt) => a + (b - a) * (1 - Math.exp(-k * dt));
 function frame(now) {
   requestAnimationFrame(frame);
   const dt = Math.min(0.05, (now - last) / 1000); last = now; const t = now / 1000;
@@ -1003,14 +1050,29 @@ function frame(now) {
   G.coolT -= dt; G.slowT -= dt; G.legT += dt;
   const me0 = G.me, dir = !G.busy && !(G.checkT > 0) && inputDir();
   if (!G.busy) updateEvents(dt, me0);
+  // 광풍 (바울 — 그레데 앞바다·아드리아 바다를 건너는 동안): 바람이 쉬지 않고 배를 남서쪽으로 민다. 흔들리며 방향이 조금씩 바뀐다
+  const stormy = !G.busy && STORM.includes(G.events[G.idx]?.id) && isSea(me0.pos.x, me0.pos.y);
+  if (stormy !== !!G.stormOn) {
+    G.stormOn = stormy; $('#dust').classList.toggle('storm', stormy); $('#dust').classList.toggle('on', stormy);
+    if (stormy) { snd.play('wind'); toast('유라굴로 광풍이 몰아쳐요!<small>바람이 배를 남서쪽으로 밀어내요 · 키를 꽉 잡고 거슬러 가세요</small>', false, 3800); }
+  }
+  if (stormy && !(G.checkT > 0)) {
+    G.windA = (G.windA || 0) + dt * 0.35;
+    const a = Math.atan2(1, -1) + Math.sin(G.windA) * 0.45 + Math.sin(G.windA * 2.3) * 0.2, W = G.speed * SAIL * 0.32; // 남서쪽(-x, +z)으로
+    G.windX = Math.cos(a) * W; G.windZ = Math.sin(a) * W;
+    const x = me0.pos.x + G.windX * dt, z = me0.pos.y + G.windZ * dt;
+    if (isSea(x, z)) me0.pos.set(x, z);
+  }
   if (dir) {
     // 달리기 (사용자 2026-11): PC는 Shift를 누른 채, 폰은 달리기 단추를 누르는 동안 1.8배. 배 위에서는 달리지 않는다
     const boat = onGalilee(me0.pos.x, me0.pos.y), run = !boat && (keys.has('shift') || G.runDrag);
     const soft = stick.k && !run ? Math.min(1, Math.max(0.4, stick.k)) : 1; // 조금만 끌면 천천히
-    const sp = G.speed * (G.slowT > 0 ? (G.fx.fx === 'wild' ? 0.75 : 0.45) : 1) * (boat ? (G.fx.fx === 'boat' ? 0.95 : 0.65) : 1) * (run ? 1.8 : soft), step = sp * dt;
+    const sea = boat && isSea(me0.pos.x, me0.pos.y); // 지중해의 배는 걷기보다 훨씬 빠르다 (하루 30km를 걷고, 배는 바람을 타면 100km 넘게 간다)
+    const sp = G.speed * (G.slowT > 0 ? (G.fx.fx === 'wild' ? 0.75 : 0.45) : 1) * (sea ? SAIL * (G.fx.fx === 'boat' ? 1.15 : 1) * (G.stormOn ? 0.6 : 1) : boat ? (G.fx.fx === 'boat' ? 0.95 : 0.65) : 1) * (run ? 1.8 : soft), step = sp * dt;
     me0.walkRate = run ? 2.6 : 1.5 * soft;
     // 이미 물·가장자리 안에 서 있으면(물 위 장면에서 이어 걷기 등) 어느 쪽으로든 나올 수 있게 — 갇혀 물병만 잃었다(사용자 2026-11)
-    let nx = me0.pos.x + dir[0] * step, nz = me0.pos.y + dir[1] * step, hit = blocked(me0.pos.x, me0.pos.y) ? null : blocked(nx, nz);
+    let nx = me0.pos.x + dir[0] * step, nz = me0.pos.y + dir[1] * step;
+    let hit = blocked(me0.pos.x, me0.pos.y) ? null : blocked(nx, nz);
     if (hit) { // 물가에서는 옆으로 미끄러져 따라가게
       if (!blocked(nx, me0.pos.y)) { nz = me0.pos.y; hit = null; } else if (!blocked(me0.pos.x, nz)) { nx = me0.pos.x; hit = null; }
     }
@@ -1038,9 +1100,16 @@ function frame(now) {
   G.leader.showT = near ? 1 : 0;
   const sailing = onGalilee(me0.pos.x, me0.pos.y);
   snd.walk(dt, G.stepped && !sailing, G.slowT > 0); snd.boat(dt, sailing && !G.busy, G.stepped); G.stepped = false;
-  me0.ground = sailing ? LAKE_LEVEL.galilee + 0.3 : GH(me0.pos.x, me0.pos.y); G.leader.ground = standY(G.leader.pos.x, G.leader.pos.y);
-  if (sailing && !G.boat) { G.boat = makeProp('boat', 0, 0, { scale: SCALE * 0.9 }).obj; G.scene.add(G.boat); toast('배를 타고 갈릴리 바다를 건너요', true, 2000); }
-  if (G.boat) { G.boat.visible = sailing; if (sailing) { G.boat.position.set(me0.pos.x, LAKE_LEVEL.galilee, me0.pos.y); G.boat.rotation.y = -me0.face + Math.PI / 2; } }
+  const seaNow = sailing && isSea(me0.pos.x, me0.pos.y), lvl = seaNow ? SEA_Y : LAKE_LEVEL.galilee;
+  me0.ground = sailing ? lvl + 0.3 * (seaNow ? 1.3 : 1) : GH(me0.pos.x, me0.pos.y); G.leader.ground = standY(G.leader.pos.x, G.leader.pos.y);
+  if (sailing && !G.boat) G.boat = makeProp('boat', 0, 0, { scale: SCALE * 0.9 }).obj, G.scene.add(G.boat);
+  if (sailing && !G.sailing) toast(seaNow ? '배에 올랐어요 — 직접 키를 잡고 바다를 건너요<small>뭍에 닿으면 내려서 걸어요</small>' : '배를 타고 갈릴리 바다를 건너요', true, 2400);
+  G.sailing = sailing;
+  if (G.boat) { G.boat.visible = sailing; if (sailing) { G.boat.scale.setScalar(SCALE * (seaNow ? 1.3 : 0.9)); G.boat.position.set(me0.pos.x, lvl + (G.stormOn ? Math.sin(t * 3.1) * 0.08 : 0), me0.pos.y); G.boat.rotation.y = -me0.face + Math.PI / 2; G.boat.rotation.z = G.stormOn ? Math.sin(t * 2.3) * 0.12 : 0; } }
+  // 앞서 가는 바울도 바다 위에서는 배에 (늦게 닿아 바울이 다음 자리로 건너가실 때)
+  const lSea = isSea(G.leader.pos.x, G.leader.pos.y) && !G.castBoat;
+  if (lSea && !G.leadBoat) { G.leadBoat = makeProp('boat', 0, 0, { scale: SCALE * 1.3 }).obj; G.scene.add(G.leadBoat); }
+  if (G.leadBoat) { G.leadBoat.visible = lSea && G.leader.show > 0.05; if (lSea) { G.leadBoat.position.set(G.leader.pos.x, SEA_Y, G.leader.pos.y); G.leadBoat.rotation.y = -G.leader.face + Math.PI / 2; G.leader.ground = SEA_Y + 0.39; } }
   for (const P of G.patrols || []) P.s.update(t, dt);
   if (G.wounded) G.wounded.a.update(t, dt);
   me0.update(t, dt); G.leader.update(t, dt);
@@ -1059,7 +1128,9 @@ function frame(now) {
   G.askT -= dt; G.hintT -= dt; G.hintCool -= dt;
   if (!G.named && dp < 5) { G.named = true; missionText(); }
   // 카메라: 북쪽이 위, 비스듬히 내려다보며 따라간다
-  if (!G.zoomFix) G.zoom = fitZoom(); // 확인용(?debug)만 G.zoomFix로 높이를 바꾼다
+  // 바다 위에서는 멀리 보이게 (배가 빨라 뭍이 금세 지나간다) — 내리면 다시 가까이
+  G.seaZ = damp1(G.seaZ || 1, seaNow ? 2.6 : 1, 1.2, dt);
+  if (!G.zoomFix) G.zoom = fitZoom() * G.seaZ; // 확인용(?debug)만 G.zoomFix로 높이를 바꾼다
   // 만난 뒤 둘러보는 동안은 가까이 — 사람과 마을이 보이게 (멀리 있으면 인형이 점 같았다)
   // 그분과 나 둘 다 보이게 둘 사이를 비춘다
   const cx = me0.pos.x, cz = me0.pos.y, h = G.zoom;
