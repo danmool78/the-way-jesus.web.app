@@ -1,7 +1,7 @@
 // 순례 게임의 소리 (사용자 2026-11): 배경음악 + 발소리 + 배 소리 + 효과음.
 // 배경음악만 파일(앱과 같은 R2의 여정 곡), 나머지는 Web Audio로 그 자리에서 합성한다 — 파일을 더 받지 않아 호스팅 전송량이 들지 않는다.
 // 한 번 울리는 소리는 끝나면(onended) 노드를 모두 끊어 버리고, 배 소리처럼 이어지는 소리는 멈출 때 서서히 줄인 뒤 끊는다.
-const MEDIA = 'https://theway-admin.danmool78.workers.dev/f/';
+const MEDIA = ''; // 낭독·음악은 사이트 호스팅(Firebase)에서 — R2·Worker가 느린 곳에서는 소리가 늦거나 나지 않았다(사용자 2026-11, Blaze 요금제)
 const MUSIC_VOL = 0.3;
 
 export function createAudio() {
