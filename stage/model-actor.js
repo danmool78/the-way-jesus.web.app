@@ -334,8 +334,9 @@ export class StageModel {
     // 빌린 무릎 꿇기(기도) 동작이면 발등을 뒤로 눕혀 바닥에 편다 — 다른 모델의 발 각도라 발끝이 뒤에서 위로 들렸다(e02 목자, 사용자 2026-11)
     if (this.cur === this.acts.pray && kneel) { const r0 = this.p.root; r0.updateMatrixWorld(true); const back = new THREE.Vector3(0, 0.25, -1).normalize().applyQuaternion(r0.getWorldQuaternion(new THREE.Quaternion()));
       // 정강이도 땅에 눕힌다 — 빌린 동작은 다리 길이가 달라 무릎에서 정강이가 뒤로 치켜 올라가 발바닥이 하늘을 봤다(사용자 2026-11: 발목을 펴서 발등이 땅에)
-      const flat = new THREE.Vector3(0, -0.04, -1).normalize().applyQuaternion(r0.getWorldQuaternion(new THREE.Quaternion()));
-      for (const l of this.legs) { if (l.lo && l.foot) this.aim(l.lo, l.foot, flat, 1); if (l.foot && l.toe) { l.foot.updateMatrixWorld(true); this.aim(l.foot, l.toe, back, 1); } } }
+      // 넓적다리는 곧게 세우고 정강이는 땅과 나란히 — 몸과 정강이가 90도(사용자 2026-11: 70도처럼 보였다)
+      const qk = r0.getWorldQuaternion(new THREE.Quaternion()), flat = new THREE.Vector3(0, 0, -1).applyQuaternion(qk), upright = new THREE.Vector3(0, -1, 0.04).normalize().applyQuaternion(qk);
+      for (const l of this.legs) { if (l.up && l.lo) this.aim(l.up, l.lo, upright, 1); if (l.lo && l.foot) this.aim(l.lo, l.foot, flat, 1); if (l.foot && l.toe) { l.foot.updateMatrixWorld(true); this.aim(l.foot, l.toe, back, 1); } } }
     if (this.still) return; // 천사: 몸도 팔도 돌리지 않는다
     // 동작이 없는 자세는 인형의 팔을 따른다 (천천히 들어가고 나온다)
     // 아기·물건을 두 팔로 안은 사람(carry)은 걸을 때도 팔을 인형대로 — 걷기 동작대로 두 팔을 흔들어 아기가 배에 붙어 있었다(사용자 2026-11)
