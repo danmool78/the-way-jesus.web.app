@@ -722,7 +722,7 @@ export const SCRIPTS = {
       'p1.0': [['jesus', 'speak', { look: 1.0 }]],
       // p1.3: 안드레는 뭍에 남는다 — 배에 갑자기 나타나 한 사람이 늘어난 것처럼 보였다(사용자 2026-11)
       // 야고보와 요한은 자기 배(boat2)에 올라 있다가, 부르자 그 배를 타고 온다(눅 5:7) — 뭍에서 걸어오거나 시몬의 배에 갑자기 나타나지 않게(사용자 2026-11)
-      'p1.3': [['james', 'idle', { show: 0 }], ['johnD', 'idle', { show: 0 }], ['james', 'idle', { board: 'boat2', x: -0.12, z: 0.02, look: -1.0, show: 1, delay: 900 }], ['johnD', 'idle', { board: 'boat2', x: 0.14, z: -0.02, look: -1.0, show: 1, delay: 900 }],
+      'p1.3': [['james', 'idle', { show: 0 }], ['johnD', 'idle', { show: 0 }], ['james', 'idle', { board: 'boat2', x: -0.12, z: 0.02, look: -1.0, show: 1, delay: 900 }], ['johnD', 'idle', { board: 'boat2', x: 0.09, z: 0.01, look: -1.0, show: 1, delay: 900 }],
         ['peter', 'shrug'], ['boat', null, { geo: [32.845, 35.578] }], ['net', null, { geo: [32.84, 35.588], delay: 3000 }], ['peter', 'bow', { delay: 3000 }]],
       'p1.5': [['net', 'full'], ['peter', 'afraid', { delay: 1500 }], ['boat2', null, { geo: [32.845, 35.6] }]],
       'p2.0': [['peter', 'kneel', { x: -0.05, z: 0.04, look: -1.0 }]], // 예수님(-0.42)과 돛대(0.2) 사이 — 예수님 무릎에 붙거나 돛대가 얼굴을 뚫었다(사용자 2026-11)
