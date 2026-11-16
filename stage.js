@@ -177,8 +177,8 @@ function unique(m, taken) {
   if (L.some(x => nearLook(x, look))) { look = LOOKS.find(v => !L.some(x => nearLook(x, v))); if (!look) return m; m = [m[0], { hue: look.hue, sat: 0.95, skin: look.skin }]; }
   L.push(look); return m;
 }
-// 예수 여정은 모델이 기본(사용자 2026-11) — 다른 여정은 아직 ?models가 있을 때만. ?dolls면 예전 인형으로
-const USE_MODELS = (q => !q.has('dolls') && (q.has('models') || (q.get('j') || 'jesus') === 'jesus'))(new URLSearchParams(location.search));
+// 예수·바울 여정은 모델이 기본(사용자 2026-11) — 다른 여정은 아직 ?models가 있을 때만. ?dolls면 예전 인형으로
+const USE_MODELS = (q => !q.has('dolls') && (q.has('models') || ['jesus', 'paul'].includes(q.get('j') || 'jesus')))(new URLSearchParams(location.search));
 function modelOf(type, i) {
   if (!USE_MODELS) return null;
   if (OWN[type]) return [OWN[type]];
