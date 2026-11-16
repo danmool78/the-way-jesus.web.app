@@ -18,8 +18,8 @@ const KNEEL = new Set(['kneel', 'mourn', 'cower']); // 땅에 앉기(sit-ground)
 const WING = { scale: 1.0, y: -0.28, back: 0.12, turn: 0 }; // 날개를 붙이는 자리 (몸 모델 단위, 캡처로 맞춤)
 // 앉는 돌: 둥글게 깎인 낮은 돌 (크기 1의 틀 — 사람마다 엉덩이 높이에 맞춰 늘린다)
 // 깔고 앉는 돌 — 모양·빛깔이 다른 여섯 가지를 섞어 쓴다(다 똑같아 보였다, 사용자). 윗면은 평평하게 깎아 앉을 자리로
-// 모델 크기 배율 — 대본의 자리는 작은 인형에 맞춰 짜여 몸이 큰 모델끼리 겹치고 소품을 뚫었다(사용자 2026-11). 주소의 ?mscale=로 견주어 본다
-export const MS = +(new URLSearchParams(location.search).get('mscale') || 1);
+// 모델 크기 배율 — 대본의 자리는 작은 인형에 맞춰 짜여 몸이 큰 모델끼리 겹치고 소품을 뚫었다. 0.9로 줄였다(사용자 2026-11). 주소의 ?mscale=로 견주어 본다
+export const MS = +(new URLSearchParams(location.search).get('mscale') || 0.9);
 const STONE_C = ['#8f8573', '#a39a86', '#7d776b', '#9b8a72', '#b0a58f', '#857d70'];
 const STONES = STONE_C.map((c, k) => {
   let s = 97 + k * 131; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
