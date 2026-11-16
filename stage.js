@@ -125,13 +125,15 @@ const LIKE = { official: ['nicodemus', { hue: 200, sat: 1.3 }], // 왕의 신하
 const DISCIPLES = ['andrew', 'james']; // 이름 없는 제자는 안드레·야고보 모델을 번갈아
 // 엑스트라(이름 없는 남녀·군중): 여러 사람을 섞는다 (사용자 2026-11: 순례자로만 하지 말고, 다른 시대 사람도 — 왕은 빼고, 수수하게 입은 사람을
 // 평범한 색 옷으로). [모델, 옷] — 옷이 'plain'이면 화려한 색을 바래게, 색이면 그 색으로 (순례자만), 없으면 그대로
+// 엑스트라(군중·이름 없는 사람)는 몇 안 되는 모델을 옷 색만 바꿔 쓴다 — 모델마다 1MB라 장면마다 열 몇 개를 받느라 느린 곳에서는
+// 한참 동안 인형으로 서 있었다(사용자 2026-11). 남자 넷·여자 둘
 const EXTRA = {
-  men: [['pilgrim-man'], ['fisherman'], ['shepherd'], ['jethro', { plain: true, skin: 0.85 }], ['samuel', { plain: true, skin: 1.1 }], ['pilgrim-man', '#7d4a3a'], ['nathan', { plain: true, hue: 30, skin: 0.8 }],
-    ['elisha', { plain: true, skin: 1.08 }], ['isaiah', { plain: true, hue: 200, skin: 0.9 }], ['pilgrim-man', '#5d6b4a'], ['ahijah', { plain: true, skin: 0.78 }]],
-  women: [['pilgrim-woman'], ['woman'], ['miriam', { plain: true, skin: 1.08 }], ['pilgrim-woman', '#3c5d96'], ['zipporah', { plain: true, hue: 120, skin: 0.85 }], ['rahab', { plain: true, hue: 60, skin: 1.05 }], ['pilgrim-woman', '#a3554a']],
+  men: [['pilgrim-man'], ['fisherman'], ['shepherd'], ['jethro', { plain: true, skin: 0.85 }], ['pilgrim-man', '#7d4a3a'], ['fisherman', { hue: 40, skin: 1.08 }],
+    ['shepherd', { plain: true, skin: 0.8 }], ['pilgrim-man', '#5d6b4a'], ['jethro', { hue: 200, skin: 1.05 }], ['fisherman', { plain: true, skin: 0.9 }], ['shepherd', { hue: 30, skin: 1.1 }]],
+  women: [['pilgrim-woman'], ['woman'], ['pilgrim-woman', '#3c5d96'], ['woman', { hue: 120, skin: 0.85 }], ['pilgrim-woman', '#a3554a'], ['woman', { plain: true, skin: 1.05 }], ['pilgrim-woman', '#6b4a6e']],
 };
 // 엑스트라 모델은 무대가 뜰 때 미리 받아 둔다 — 장면마다 그때 받으니 군중이 잠깐 예전 인형으로 섰다가 바뀌었다
-if (new URLSearchParams(location.search).has('models')) setTimeout(() => want([...new Set([...EXTRA.men, ...EXTRA.women].map(([n]) => n)), 'jesus-moves']), 0);
+// (예전엔 엑스트라를 페이지가 뜨자마자 다 받았다 — 장면의 배역보다 먼저 줄을 서서 배역이 늦게 왔다. 이제 장면이 배역 다음에 받는다)
 // 동작을 빌려 줄 모델: 잠자기는 남자 순례자, 무릎 꿇고 기도는 예수님 모델에서 (같은 Mixamo 뼈대)
 // 동작은 예전 예수님 모델(jesus-moves — 무릎 꿇기·서기·말하기·잠자기가 든 것)에서 — 새 예수님 모델(2026-11)은 걷기만 떠 왔다
 const BORROW = () => ({ sleep: ready['pilgrim-man'], pray: ready['jesus-moves'], idle: ready['jesus-moves'], talk: ready['jesus-moves'] }); // 천사 모델은 걷기만 있어 서기·말하기도
@@ -197,6 +199,17 @@ function spaceOut(dt) {
 }
 // 낭독 중에 모델이 늦게 도착하면 서 있던 인형을 그 자리에서 모델로 바꿔 끼운다 — 다시 차리면 낭독 중의 움직임이 처음으로 돌아가니,
 // 인형은 그대로 보이지 않는 길잡이로 두고 모델만 덧씌운다 (e04 헤롯·박사, e06 어린 예수님이 인형으로 남았다, 사용자 2026-11)
+// 군중 모델이 낭독 중에 도착하면 군중 소품만 새로 세운다 (보이던 모양·앉음 그대로)
+function rebuildCrowds() {
+  const v = new THREE.Vector3();
+  Object.entries(script.props || {}).forEach(([name, [kind, x, z, o]]) => {
+    if (kind !== 'crowd' || !props[name]) return;
+    const old = props[name], p = makeProp(kind, x, z, o);
+    p.kind = kind; p.terrainHide = old.terrainHide; p.foot = old.foot; p.lift = old.lift; p.show = old.show; p.showT = old.showT; p.set(old.state); p.obj.position.copy(old.obj.position); p.goal.copy(old.goal);
+    old.obj.removeFromParent(); p.lift.add(p.obj); props[name] = p;
+    p.avoid = () => Object.values(actors).filter(a => a.showT > 0.5 && a.p.root.parent === stageGroup).map(a => a.p.root.getWorldPosition(v).clone());
+  });
+}
 function swapIn(plan) {
   Object.entries(script.cast).forEach(([name, [type, , , , o = {}]], i) => {
     const old = actors[name], m = plan[i]; if (!old || old.doll || !m || !ready[m[0]]) return;
@@ -287,10 +300,14 @@ function setScene(ev) {
     const named = new Set(plan.filter(Boolean).map(m => m[0]));
     const pool = { men: EXTRA.men.filter(([n]) => !named.has(n) || n.startsWith('pilgrim')), women: EXTRA.women.filter(([n]) => !named.has(n) || n.startsWith('pilgrim')) };
     const CROWDM = [...pool.men, ...pool.women].map(([n]) => n);
-    const names = USE_MODELS ? [...new Set([...named, ...(crowd ? CROWDM : []), ...(named.size ? ['pilgrim-man', 'jesus-moves'] : []), ...(named.has('angel') ? ['wings'] : [])])] : []; // 동작을 빌려 줄 모델도 함께 — 늦게 받으면 요셉이 잠자기 동작 없이 통나무처럼 누웠다
-    setCrowd(USE_MODELS && crowd && CROWDM.every(n => ready[n]) ? { men: pool.men.map(dress), women: pool.women.map(dress) } : null);
+    // 배역(과 동작을 빌려 줄 모델)을 먼저 받고, 군중은 그다음에 — 느린 곳에서 군중 모델 열 몇 개가 배역 앞에 줄을 섰다(사용자 2026-11)
+    const names = USE_MODELS ? [...new Set([...named, ...(named.size ? ['pilgrim-man', 'jesus-moves'] : []), ...(named.has('angel') ? ['wings'] : [])])] : []; // 동작을 빌려 줄 모델도 함께 — 늦게 받으면 요셉이 잠자기 동작 없이 통나무처럼 누웠다
+    const crowdNames = USE_MODELS && crowd ? [...new Set(CROWDM)] : [];
+    const crowdSet = () => USE_MODELS && crowd && CROWDM.every(n => ready[n]) ? { men: pool.men.map(dress), women: pool.women.map(dress) } : null;
+    setCrowd(crowdSet());
     const ev0 = ev, wait = names.length ? want(names) : null;
-    wait?.then(() => { if (curEv !== ev0) return; if (atStart || new URLSearchParams(location.search).has('beat')) setScene(ev0); else swapIn(plan); });
+    const thenCrowd = () => { const w = crowdNames.length ? want(crowdNames) : null; w?.then(() => { if (curEv !== ev0) return; if (atStart) return setScene(ev0); setCrowd(crowdSet()); rebuildCrowds(); }); };
+    wait ? wait.then(() => { if (curEv !== ev0) return; if (atStart || new URLSearchParams(location.search).has('beat')) setScene(ev0); else { swapIn(plan); thenCrowd(); } }) : thenCrowd();
     // 다음 두 장면의 배역 모델도 미리 받아 둔다 — 장면에 들어선 뒤에야 받기 시작하면 낭독이 이미 시작돼 그 장면엔 인형이 남았다(e04 헤롯·박사, 사용자 2026-11)
     if (USE_MODELS && !script.street) { const ks = Object.keys(SCRIPTS), at = ks.indexOf(ev.id);
       const next = ks.slice(at + 1, at + 3).flatMap(k => { const sc = SCRIPTS[k]; if (!sc?.cast || sc.street) return [];
