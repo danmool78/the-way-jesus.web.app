@@ -1264,7 +1264,9 @@ const voiceAudio = new Audio();
 // 녹음 파일은 오래 캐시한다(immutable). 같은 열쇠로 다시 녹음하면 길이가 달라지므로, 길이를 주소에 붙여 새 파일을 받게 한다
 // 큰 소리 파일(낭독·배경음악)은 호스팅이 아니라 R2에서 받는다 — 호스팅 전송량을 아끼려고(사용자 2026-11, _src/tools/r2sync.py).
 // 목록(index.json)은 작아 그대로 호스팅에서
-const MEDIA = 'https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/';
+// R2 버킷의 낭독·음악·노래는 관리자 Worker를 거쳐 받는다 — r2.dev 공개 주소는 속도 제한이 있어 느린 곳에서 한참 걸렸다(사용자 2026-11)
+const MEDIA = 'https://theway-admin.danmool78.workers.dev/f/';
+const viaWorker = u => (u || '').replace('https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev/', MEDIA); // 시편 노래 json의 src는 r2.dev 주소로 적혀 있다
 const voiceUrl = clip => `${MEDIA}assets/voice/ko/${clip}.mp3?v=${voiceIndex[clip] || 0}`;
 // 문장 사이 쉼(ms, 1배속 기준). 녹음은 앞뒤 무음을 덜어 냈으므로 여기서 준다 — 문장 끝은 본디 쉼의 0.9배쯤, 제목 뒤는 넉넉히
 const VOICE_GAP = { sentence: 800, item: 850, intro: 1700 };
@@ -1567,7 +1569,7 @@ async function songPlay(done, sg) {
   const times = info.by !== 'pending' && info.lines?.length === want.length ? info.lines.map(l => l.t) : null;
   if (!times) lyricShow(-1, [], `${e.title} · ${t('songSyncing')}`);
   const a = song.audio;
-  if (a.src !== info.src) a.src = info.src; // songWarm이 미리 받아 둔 노래면 그대로 (처음부터 다시 받지 않게)
+  if (a.src !== viaWorker(info.src)) a.src = viaWorker(info.src); // songWarm이 미리 받아 둔 노래면 그대로 (처음부터 다시 받지 않게)
   a.currentTime = 0; a.onended = a.onerror = () => songEnd(tk);
   // 우리가 멈추지 않았는데 멈추면(창을 내렸다 올림·전화·잠금 화면 단추 등) 재생 단추를 '멈춤'으로 바꿔 둔다 — 화면은 재생 중인데 소리가 없고,
   // 단추를 눌러도 노래가 안 나오는 때가 있었다(사용자). 다시 누르면 그 자리에서 이어 튼다
@@ -1624,7 +1626,7 @@ async function songWarm(i) {
   if (!info?.src || song.on || evAt(idx) !== e) return;
   // 처음엔 앞부분만 받는다: 몇 MB짜리 노래를 통째로 받으면 노래 앞 낭독의 문장 파일과 망을 다퉈 낭독이 문장마다 끊겼다(사용자) —
   // 낭독이 마지막 문장에 들어서면(speakQueue) 그때 다 받기 시작한다
-  const a = song.audio; if (a.src !== info.src) { a.preload = 'metadata'; a.src = info.src; a.load(); }
+  const a = song.audio; if (a.src !== viaWorker(info.src)) { a.preload = 'metadata'; a.src = viaWorker(info.src); a.load(); }
 }
 function songOff() {
   cancelAnimationFrame(song.raf); clearTimeout(song.timer); song.timer = 0;

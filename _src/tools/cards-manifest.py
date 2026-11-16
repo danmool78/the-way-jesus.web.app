@@ -4,7 +4,7 @@
 쓰는 법: python3 _src/tools/cards-manifest.py"""
 import glob, hashlib, json, os
 root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-BASE = 'https://pub-7d2b46014d5b4769a48e210890df23c4.r2.dev'  # 시편 노래와 같은 그 길 버킷의 공개 주소
+BASE = 'https://theway-admin.danmool78.workers.dev/f'  # 그 길 버킷을 관리자 Worker가 내준다 — r2.dev 공개 주소는 속도 제한이 있어 느렸다(사용자 2026-11)
 files = {}
 for f in sorted(glob.glob(os.path.join(root, '_src', 'cards', 'out', '*.webp'))):
     k = os.path.basename(f)[:-5]
