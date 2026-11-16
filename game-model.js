@@ -396,6 +396,7 @@ export class ModelActor {
       }
     }
   }
+  nod() { if (!(this.nodT > 0)) this.nodT = 0.9; }
   play(name, fade = 0.35) {
     const a = this.acts[name] || this.acts.idle; if (!a || a === this.cur) return;
     a.reset().setEffectiveWeight(1).play();
@@ -418,7 +419,10 @@ export class ModelActor {
     this.play(moving ? 'walk' : POSE[this.pose] || 'idle');
     if (this.acts.walk) this.acts.walk.timeScale = this.walkRate || 1; // 빨리 걷는 이는 발도 빨리 (발이 땅에서 미끄러져 보이지 않게)
     for (const g of Object.values(this.grip)) if (g.on) g.bones.forEach((b, i) => b.quaternion.copy(g.base[i]));
+    if (this._nodQ) { this.head.quaternion.copy(this._nodQ); this._nodQ = null; } // 지난 화면의 끄덕임을 걷고 (동작에 고개 기록이 없는 모델은 쌓였다)
     this.mixer.update(dt);
+    // 끄덕임: 고개를 두 번 가볍게 숙였다 든다 (곁의 사람이 그분의 말을 들으며)
+    if (this.nodT > 0 && this.head) { this.nodT -= dt; const u = 1 - this.nodT / 0.9; this._nodQ = this.head.quaternion.clone(); this.head.quaternion.multiply(QB.setFromAxisAngle(AX, Math.sin(u * Math.PI * 2) ** 2 * 0.22)); }
     // 엄지 돌리기는 팔을 늘어뜨린 서 있기·걷기에만 — 말하기(손바닥을 펴는 손짓)·기도·잠에도 넣으니 손목이 비틀렸다(사용자 2026-11: 동작을 구분해 보정)
     // 다른 동작에서 넘어오는 동안은 그 동작의 무게만큼만
     const calm = ['idle', 'walk'].reduce((w, n) => w + (this.acts[n] && this.acts[n].isRunning() ? this.acts[n].getEffectiveWeight() : 0), 0);
