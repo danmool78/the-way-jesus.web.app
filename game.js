@@ -1167,10 +1167,18 @@ function frame(now) {
     let px = -(G.leader.pos.y - cz), pz = G.leader.pos.x - cx; const pl = Math.hypot(px, pz) || 1; px /= pl; pz /= pl;
     if (pz < 0) { px = -px; pz = -pz; } // 남쪽(화면 아래)에서 보게
     // 세로 폰 화면은 옆이 좁아 더 물러선다 — 둘이 화면에 다 들어오게
-    const back = SCALE * 3.4 / Math.min(1, G.cam.aspect * 1.45);
+    // 곁의 사람까지 모두 화면 가로에 들게 — 둘만 재니 폰에서 곁의 사람이 양옆으로 잘렸다(사용자 2026-11). 화면 가로축(px,pz에 수직)으로 펼쳐진 폭을 재어
+    // 가운데를 그 폭의 가운데로 옮기고, 가로 시야에 들 만큼 물러선다
+    let lo = Infinity, hi = -Infinity;
+    for (const a of [me0, G.leader, ...(G.cast || [])]) { const u = (a.pos.x - mx) * pz - (a.pos.y - mz) * px; lo = Math.min(lo, u); hi = Math.max(hi, u); }
+    const half = (hi - lo) / 2 + SCALE * 0.9, mid = (hi + lo) / 2, cx2 = mx + pz * mid, cz2 = mz - px * mid;
+    const tanH = Math.tan(G.cam.fov * Math.PI / 360) * G.cam.aspect;
+    const back = Math.max(SCALE * 3.4 / Math.min(1, G.cam.aspect * 1.45), half / tanH);
     const gy = (me0.ground + G.leader.ground) / 2;
-    G.cam.position.lerp(v3.set(mx + px * back, gy + SCALE * 1.5 + back * 0.18, mz + pz * back), k);
-    G.camLook.lerp(v3.set(mx, gy + SCALE * 0.55, mz), k); G.cam.lookAt(G.camLook);
+    // 세로 화면은 멀리 물러서는 만큼 더 높이서 내려다본다 — 낮게 물러서니 앞의 언덕이 사람들 다리를 가렸다
+    const tall = G.cam.aspect < 1, lift = tall ? 0.42 : 0.18;
+    G.cam.position.lerp(v3.set(cx2 + px * back, gy + SCALE * 1.5 + back * lift, cz2 + pz * back), k);
+    G.camLook.lerp(v3.set(cx2, gy + SCALE * (tall ? 1.1 : 0.55), cz2), k); G.cam.lookAt(G.camLook);
     bubble();
     // 이야기를 다 들으면 곧바로 말씀 고르기로 — 둘러보기를 두었더니 걸을 수도 없고 그새 병정이 검문했다(사용자 2026-11: 그만큼 이야기 나누면 카드를 띄워도 된다)
     // 마지막 말이 끝나면 말풍선을 거두고 2초 숨을 고른 뒤에 띄운다 (바로 뜨니 급했다 — 사용자 2026-11)
