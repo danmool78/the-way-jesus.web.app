@@ -2401,3 +2401,6 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
 });
 
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+
+// 지도·무대에서 오른쪽 단추를 누르면 브라우저의 '이미지 저장' 메뉴가 떴다 — 지도를 끄는 손짓과 겹쳐 거슬렸다(사용자 2026-11). 지도 칸에서만 막는다
+document.querySelector('.mapwrap')?.addEventListener('contextmenu', e => { if (!e.target.closest('a, input, textarea')) e.preventDefault(); });
