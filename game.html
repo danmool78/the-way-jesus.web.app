@@ -185,12 +185,23 @@ button{font:inherit;color:inherit;cursor:pointer}
 .tlow .tcap{background:rgba(9,13,20,.35);color:#e6dcc4}
 .tturn{position:absolute;right:3.4cqw;top:15cqw;display:none;padding:1.2cqw 2.8cqw;border-radius:99px;background:rgba(9,13,20,.55);font:600 3.2cqw var(--sans);color:#f3e6c4}
 .tcard.big .tturn{display:block}
-.tback::before{content:'';position:absolute;inset:-12%;background:var(--bg) center/cover;filter:blur(10px) brightness(.32) saturate(.8)}
-.tback>*{position:relative}
-.tback .tword{margin:auto 4cqw 0;padding:4.5cqw 4.4cqw}
+/* 뒷면: 여정마다 같은 표지(사용자 2026-11 — 흐린 그림을 깔았더니 허전하고 여정이 드러나지 않았다). 여정 색(--jc)의 어두운 바탕에
+   안쪽 금줄 테두리, 가운데 옅은 여정 아이콘, 맨 위에 아이콘과 여정 이름 */
+.tback{background:radial-gradient(120% 80% at 50% 42%,color-mix(in srgb,var(--jc) 26%,#16120e),#0d0b08 78%)}
+.tback::before{content:'';position:absolute;inset:2.2cqw;border:.45cqw solid color-mix(in srgb,var(--jc) 60%,transparent);border-radius:2.4cqw;box-shadow:inset 0 0 0 1.1cqw rgba(0,0,0,.25),inset 0 0 0 1.5cqw color-mix(in srgb,var(--jc) 22%,transparent);pointer-events:none}
+.tback::after{content:'';position:absolute;left:50%;top:56%;width:78cqw;aspect-ratio:1;transform:translate(-50%,-50%);background:var(--jicon) center/contain no-repeat;opacity:.07;filter:grayscale(.2);pointer-events:none}
+.tback>*{position:relative;z-index:1}
+.tbrand{display:flex;flex-direction:column;align-items:center;gap:1.4cqw;padding:6.5cqw 4cqw 1cqw}
+.tbrand img{width:13cqw;height:13cqw;border-radius:3.2cqw;box-shadow:0 0 5cqw color-mix(in srgb,var(--jc) 45%,transparent)}
+.tbrand span{font:700 3.6cqw var(--serif);letter-spacing:.32em;color:var(--jc);text-indent:.32em}
+.tback .thead{justify-content:center;flex-wrap:wrap;gap:1.6cqw 2.4cqw;padding:1.6cqw 6cqw 0;text-align:center}
+.tback .thead b{flex:0 1 auto;font-size:5.6cqw}
+.tback .thead .tst{flex-basis:100%;text-align:center;color:var(--jc)}
+.tback .tword{margin:auto 6cqw 0;padding:4.5cqw 4.4cqw;background:rgba(243,234,214,.96)}
 .tback .tword q{display:block;-webkit-line-clamp:unset;font-size:5cqw;line-height:1.6}
-.tback .tcap{margin-top:3cqw}
-.tback .tfoot{margin-top:auto}
+.tback .tword cite{color:color-mix(in srgb,var(--jc) 55%,#5a3d1a)}
+.tback .tcap{margin:3cqw 6cqw 0;background:none;color:color-mix(in srgb,var(--jc) 55%,#cfc4ac)}
+.tback .tfoot{margin-top:auto;padding:2cqw 6.5cqw 6cqw}
 .tcard.flipped .tholo{opacity:.06!important} /* 뒷면은 글을 읽어야 하니 무지개 빛을 거의 끈다 */
 .thead{display:flex;align-items:center;gap:3cqw;padding:2.6cqw 3.4cqw 2.2cqw}
 .tno{flex:none;font:700 4.2cqw var(--sans);color:#151b26;background:#e9d9b0;border-radius:99px;padding:.5cqw 2cqw}

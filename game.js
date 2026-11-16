@@ -8,7 +8,7 @@ import { TYPES, SKIN, Actor } from './stage/people.js';
 import { createWorld, LAKE_LEVEL } from './game-world.js';
 import { makeProp } from './stage/props.js';
 import { createAudio } from './game-audio.js';
-import { TREASURES, RARITY, hideTreasures, treasureCard, flipCard } from './game-treasure.js';
+import { TREASURES, RARITY, hideTreasures, treasureCard, flipCard, setBrand } from './game-treasure.js';
 import { model, tinted, ModelActor } from './game-model.js';
 import { buildNav } from './game-nav.js';
 import { CHARS, STRENGTHS, effects, unlockedBy } from './game-chars.js';
@@ -25,11 +25,11 @@ const store = { get: (k, d) => { try { return JSON.parse(localStorage.getItem(k)
 // 지도 위를 걷는 여정만 (시편·잠언·GoodNews는 지도를 걷지 않아 뺀다).
 // 바울(sail): 지중해를 배로 건넌다 — 바다에 들어서면 배를 타고 직접 키를 잡는다(사용자 2026-11: 자동 대신 조종)
 const JOURNEYS = {
-  jesus: { name: '예수님 따라가기', who: '예수님', data: 'data.json', leader: 'jesus', model: 'jesus', bases: ['main', 'west'], terrain: ['galilee', 'judea', 'shephelah', 'carmel', 'egypt'] },
-  moses: { name: '모세 따라가기', who: '모세', data: 'j/moses/data.json', leader: 'mosesE', model: 'moses', bases: ['main', 'west', 'south'], terrain: ['galilee', 'judea', 'shephelah', 'carmel', 'egypt', 'sinai', 'negev'] },
-  david: { name: '다윗 따라가기', who: '다윗', data: 'j/david/data.json', leader: 'davidW', model: 'david', bases: ['main', 'west'], terrain: ['galilee', 'judea', 'shephelah', 'carmel'] },
-  kings: { name: '엘리야와 두 왕국', who: '선지자', data: 'j/kings/data.json', leader: 'elijah', model: 'elijah', bases: ['meso', 'main', 'west', 'south'], terrain: ['galilee', 'judea', 'shephelah', 'carmel', 'sinai', 'negev'] },
-  paul: { name: '바울과 함께 땅끝까지', who: '바울', data: 'j/paul/data.json', leader: 'paul', model: 'paul', bases: ['medwide', 'med', 'main', 'west'], terrain: ['galilee', 'judea', 'shephelah', 'carmel'], sail: true },
+  jesus: { name: '예수님 따라가기', tint: '#e6c275', who: '예수님', data: 'data.json', leader: 'jesus', model: 'jesus', bases: ['main', 'west'], terrain: ['galilee', 'judea', 'shephelah', 'carmel', 'egypt'] },
+  moses: { name: '모세 따라가기', tint: '#dc8f5f', who: '모세', data: 'j/moses/data.json', leader: 'mosesE', model: 'moses', bases: ['main', 'west', 'south'], terrain: ['galilee', 'judea', 'shephelah', 'carmel', 'egypt', 'sinai', 'negev'] },
+  david: { name: '다윗 따라가기', tint: '#a9bf6a', who: '다윗', data: 'j/david/data.json', leader: 'davidW', model: 'david', bases: ['main', 'west'], terrain: ['galilee', 'judea', 'shephelah', 'carmel'] },
+  kings: { name: '엘리야와 두 왕국', tint: '#b99ade', who: '선지자', data: 'j/kings/data.json', leader: 'elijah', model: 'elijah', bases: ['meso', 'main', 'west', 'south'], terrain: ['galilee', 'judea', 'shephelah', 'carmel', 'sinai', 'negev'] },
+  paul: { name: '바울과 함께 땅끝까지', tint: '#70b5da', who: '바울', data: 'j/paul/data.json', leader: 'paul', model: 'paul', bases: ['medwide', 'med', 'main', 'west'], terrain: ['galilee', 'judea', 'shephelah', 'carmel'], sail: true },
 };
 // 음영 기복도가 덮는 범위 — app.js의 RELIEF*와 같게. 아래에 깔리는 것부터
 const BASES = {
@@ -707,7 +707,10 @@ let CARDS = { base: '', files: {} }, TALK = {};
 const cardSrc = e => CARDS.files[e.id] ? `${CARDS.base}/${CARDS.files[e.id]}` : e.img?.src || '';
 // 트레이딩 카드 앞면: 번호·제목, 그림 창(말씀 카드 그림 — 아직 없으면 장면 그림), 말씀 상자, 등급(별 — 동·은·금 테두리)
 const RANK = ['', 'bronze', 'silver', 'gold'];
+// 카드 뒷면의 여정 표지: 아이콘(설치 아이콘 그림)·이름·색 (사용자 2026-11)
+const brand = () => setBrand({ name: JOURNEYS[JID].name, icon: JID === 'jesus' ? 'assets/icon.svg' : `j/${JID}/icon.svg`, c: JOURNEYS[JID].tint });
 function tcard(e, i, c, cls = '') {
+  brand();
   const w = cardWord(e), p = placeOf(e), stars = c.s || c, pts = c.p;
   const head = `<div class="thead"><span class="tno">${String(i + 1).padStart(2, '0')}</span><b>${esc(e.title)}</b><span class="tst">${'★'.repeat(stars)}</span></div>`;
   const foot = `<div class="tfoot"><span>그 길 · ${esc(JOURNEYS[JID].name.replace(' 따라가기', ''))}</span>${pts ? `<b class="tpt">${num(pts)}점</b>` : `<span>${i + 1}/${G.events.length}</span>`}</div>`;
@@ -757,6 +760,7 @@ function updateTreasures(px, pz, t) {
   }
 }
 function foundTreasure(h) {
+  brand();
   const t = TLIST.find(x => x.id === h.id), sp = G.tfx[h.id];
   if (sp) { G.scene.remove(sp); sp.material.dispose(); delete G.tfx[h.id]; } // 반짝임 재질만 버린다 (빛 그림은 함께 쓴다)
   G.hide = G.hide.filter(x => x !== h); G.foundRun = (G.foundRun || 0) + 1;
@@ -767,6 +771,7 @@ function foundTreasure(h) {
   v.querySelector('#tBack').onclick = closeSheet;
 }
 function openCards() {
+  brand();
   const d = deck(), have = new Set(Object.keys(d));
   const s = sheet(`<div class="body"><small>${esc(JOURNEYS[JID].name)}</small><h2>말씀 카드 ${have.size} / ${G.events.length} · ${num(total(d))}점</h2>
     ${store.get(temptKey(), 0) ? `<p class="sub tempt">유혹을 이긴 횟수 <b>${store.get(temptKey(), 0)}</b>번 — 뱀이 꾀는 지름길로 가지 않았어요</p>` : ''}

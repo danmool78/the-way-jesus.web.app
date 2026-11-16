@@ -83,11 +83,14 @@ export function hideTreasures(list, places, toXZ, blocked) {
 // 보물 카드 (희귀도별 테두리 — CSS .ttcard.common/.rare/.legend)
 // 앞뒤 카드 (사용자 2026-11): 카드 틀 안에 말씀 상자까지 넣으니 그림이 절반쯤만 보여 주인공이 잘렸다 —
 // 앞면은 그림 전체에 제목·별만, 뒷면은 그 그림을 어둡게 깔고 말씀·장소·점수. 카드 모음에서는 앞면
+// 카드 뒷면의 여정 표지(사용자 2026-11: 흐린 그림 뒷면은 허전했다 — 여정 이름과 여정마다 같은 디자인). game.js가 여정을 고를 때 setBrand
+let BRAND = { name: '', icon: '', c: '#e6c275' };
+export const setBrand = b => { BRAND = b; };
 export function flipCard(esc, cls, attr, src, alt, head, cap, word, foot, turn) {
   const fb = alt && alt !== src ? `this.onerror=null;this.src='${esc(alt)}'` : `this.style.visibility='hidden'`;
   return `<div class="${cls}" ${attr}><div class="tin">
     <div class="tface tfront"><img class="tbg" src="${esc(src)}" alt="" loading="lazy" onerror="${fb}">${head}<div class="tlow"><div class="tcap">${cap}</div>${foot}</div><span class="tturn">↻ ${turn}</span></div>
-    <div class="tface tback" style="--bg:url('${esc(src)}')">${head}<div class="tword">${word}</div><div class="tcap">${cap}</div>${foot}</div>
+    <div class="tface tback" style="--jc:${BRAND.c};--jicon:url('${esc(BRAND.icon)}')"><div class="tbrand"><img src="${esc(BRAND.icon)}" alt=""><span>${esc(BRAND.name)}</span></div>${head}<div class="tword">${word}</div><div class="tcap">${cap}</div>${foot}</div>
   </div><i class="tholo"></i></div>`;
 }
 export function treasureCard(t, src, cls = '', esc = s => s) {
