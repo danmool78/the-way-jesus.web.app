@@ -295,9 +295,12 @@ export class StageModel {
     const r = this.p.root; r.updateMatrixWorld(true);
     let low = Infinity;
     // 누우면 몸(살)의 가장 낮은 점을 땅에 — 가장 낮은 뼈로 맞추니 살 밖으로 삐져나온 뼈가 있는 모델은 몸이 떠 있었다(e18 시몬의 장모, 사용자 2026-11).
-    // 살 꼭짓점을 매번 훑으면 무거우니 엉덩이 뼈와의 높이 차를 가끔(0.5초마다) 재 두고 그 사이엔 그대로 쓴다
     if (lying) { const hy = this.hipsB.getWorldPosition(v1).y, k = r.getWorldScale(v2).y;
-      if (!this.lieT || --this.lieT <= 0) { this.lieT = 30; let lo = Infinity; this.body.updateMatrixWorld(true); this.body.traverse(o => { if (!o.isSkinnedMesh) return; const n = o.geometry.attributes.position.count, st = Math.max(1, Math.floor(n / 3000)); for (let i = 0; i < n; i += st) { o.getVertexPosition(i, v3); o.localToWorld(v3); lo = Math.min(lo, v3.y); } }); if (lo < Infinity) this.lieDrop = (hy - lo) / k; }
+      // 매 화면 잰다(꼭짓점은 띄엄띄엄) — 0.5초마다 재니 그 사이엔 예전 값이라 누운 사람이 떴다가 내려앉고(배에서 주무시는 예수님, 사용자 2026-11),
+      // 처음 잴 때까지는 짐작값이라 처음에 떠 있었다. 사람(root) 기준 높이로 재서 배가 흔들려도 같은 값
+      { let lo = Infinity; this.body.updateMatrixWorld(true); r.updateMatrixWorld(true); const ri = new THREE.Matrix4().copy(r.matrixWorld).invert();
+        this.body.traverse(o => { if (!o.isSkinnedMesh) return; const n = o.geometry.attributes.position.count, st = Math.max(1, Math.floor(n / 600)); for (let i = 0; i < n; i += st) { o.getVertexPosition(i, v3); o.localToWorld(v3).applyMatrix4(ri); lo = Math.min(lo, v3.y); } });
+        const hl = v2.copy(this.hipsB.getWorldPosition(v2)).applyMatrix4(ri).y; if (lo < Infinity) this.lieDrop = hl - lo; }
       low = hy - (this.lieDrop ?? 0.1) * k; }
     else for (const l of this.legs) for (const b of [l.lo, l.foot, l.toe, l.tip]) if (b) low = Math.min(low, b.getWorldPosition(v1).y); // 발끝 뼈(Toe_End)까지
     if (low === Infinity) return;
