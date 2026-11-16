@@ -118,7 +118,8 @@ const WOMEN = new Set(['woman2', 'mother', 'anna', 'phoenician']);
 const BOYS = new Set(['child', 'boyJesus']);
 // 모델이 따로 없는 배역은 비슷한 사람의 모델에 옷을 맞춰 입힌다 (사용자 2026-11: 다 만들 수는 없으니 있는 것에서) — 'plain'은 화려한 색을 바래게
 // 옷은 restyle로 색상을 돌리고 살갗 밝기도 달리 — 구약 여정의 그 사람과 같아 보이지 않게(사용자 2026-11)
-const LIKE = { king: ['rehoboam', { hue: 150, skin: 1.05 }], magus: ['jethro', { hue: 200, sat: 1.4, skin: 0.8 }], magus2: ['nathan', { hue: 90, sat: 1.5, skin: 1.1 }], magus3: ['absalom', { hue: 250, skin: 0.62 }], // 헤롯은 오만한 왕, 동방박사는 사막 족장·현자·젊은 귀공자(먼 나라 사람이라 살갗도 저마다)
+const LIKE = { official: ['nicodemus', { hue: 200, sat: 1.3 }], // 왕의 신하(요 4:46) — 엑스트라가 뽑히니 신하 같지 않았다
+  king: ['rehoboam', { hue: 150, skin: 1.05 }], magus: ['jethro', { hue: 200, sat: 1.4, skin: 0.8 }], magus2: ['nathan', { hue: 90, sat: 1.5, skin: 1.1 }], magus3: ['absalom', { hue: 250, skin: 0.62 }], // 헤롯은 오만한 왕, 동방박사는 사막 족장·현자·젊은 귀공자(먼 나라 사람이라 살갗도 저마다)
   official: ['jeroboam', { plain: true, skin: 0.9 }], youth: ['jonathan', { plain: true, hue: 40, skin: 1.08 }], guard: ['joab', { hue: 30, sat: 0.6, skin: 0.95 }], // 왕의 신하, 나인 성 과부의 아들, 성전 경비병
   wild: ['pilgrim-man', { plain: true, skin: 0.72 }], sadducee: ['nicodemus', { hue: 160, skin: 1.08 }] }; // 거라사의 귀신 들린 사람(해진 옷, 햇볕에 그을림), 사두개인(바리새인 니고데모와 달리)
 const DISCIPLES = ['andrew', 'james']; // 이름 없는 제자는 안드레·야고보 모델을 번갈아
@@ -369,10 +370,14 @@ if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__st
   probe(n, ts) { const a = actors[n], act = a.acts.talk, nb = a.neckB, q0 = []; return ts.map(t => { for (const [b, q] of a.rest) b.quaternion.copy(q); act.time = t; a.mixer.update(0); const q = nb.quaternion.clone(); if (!q0.length) q0.push(q); return [t, +(q.angleTo(q0[0]) * 57.3).toFixed(1), q.toArray().map(v => +v.toFixed(3))]; }); },
   probe2(n) { const a = actors[n], act = a.acts.talk, c = act.getClip(); const i = c.tracks.findIndex(k => /Neck\.quaternion/.test(k.name)); const ip = act._interpolants[i], k = c.tracks[i];
     return { name: k.name, times: Array.from(k.times).slice(-6).map(t => +t.toFixed(3)), vals: Array.from(k.values).slice(-12).map(v => +v.toFixed(3)), ip: [3.9, 4.0, 5.0, 5.4].map(t => Array.from(ip.evaluate(t)).map(v => +v.toFixed(3))), ending: ip.settings }; },
+  // 모델이 정해지지 않아 인형으로 남는 배역 (장면별)
+  unmapped() { const out = {}; for (const [id, sc] of Object.entries(SCRIPTS)) { if (!sc?.cast || sc.street || sc.dolls) continue; Object.values(sc.cast).forEach(([t, , , , o = {}], i) => { if (!o.silhouette && !modelOf(t, i)) (out[t] ||= []).push(id); }); } return out; },
   // 겹친 사람: 보이는 모든 사람(배역·군중)의 엉덩이 뼈 자리끼리 너무 가까운 쌍 (무대 좌표)
-  crowding(lim = 0.1) { const v = new THREE.Vector3(), P = []; stageGroup.updateMatrixWorld(true);
+  crowding(lim = 0.1) { const v = new THREE.Vector3(), P = []; stageGroup.updateMatrixWorld(true); Object.entries(actors).forEach(([n, a]) => { a.p.root.userData.who = n; });
     stageGroup.traverse(o => { if (!o.isBone || !/Hips$/.test(o.name)) return; let vis = true; for (let q = o; q; q = q.parent) if (!q.visible) { vis = false; break; } if (!vis) return;
-      let n = o; while (n.parent && n.parent !== stageGroup && !n.userData.who) n = n.parent; stageGroup.worldToLocal(o.getWorldPosition(v)); P.push([v.x, v.z, v.y, n.userData.who || n.name || '?']); });
+      let n = o; while (n.parent && n.parent !== stageGroup && !n.userData.who) n = n.parent; stageGroup.worldToLocal(o.getWorldPosition(v)); P.push([v.x, v.z, v.y, n.userData.who || '군중']); });
+    // 동물(나귀·낙타·소·양 무리 등)도 한 점으로 — 사람이 동물 몸에 파묻혔다(e12, 사용자 2026-11)
+    for (const [n, p] of Object.entries(props)) if (['donkey', 'camel', 'ox', 'pig', 'dog', 'jackal', 'sheep'].includes(p.kind) && p.obj.visible && p.show > 0.5) { p.obj.getWorldPosition(v); stageGroup.worldToLocal(v); P.push([v.x, v.z, v.y, n + '(' + p.kind + ')']); }
     const out = []; for (let i = 0; i < P.length; i++) for (let j = i + 1; j < P.length; j++) { const d = Math.hypot(P[i][0] - P[j][0], P[i][1] - P[j][1]); if (d < lim) out.push([+d.toFixed(3), P[i][3], P[j][3], +P[i][0].toFixed(2), +P[i][1].toFixed(2)]); } return { n: P.length, out }; },
   // 앉은 사람의 엉덩이와 깔고 앉은 돌·의자가 얼마나 어긋났나 (무대 좌표, 사람 키로 나눔)
   seats() { const v = new THREE.Vector3(), w = new THREE.Vector3(), out = []; stageGroup.updateMatrixWorld(true);
