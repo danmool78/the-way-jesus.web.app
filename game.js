@@ -1110,7 +1110,8 @@ function frame(now) {
   const lSea = isSea(G.leader.pos.x, G.leader.pos.y) && !G.castBoat;
   if (lSea && !G.leadBoat) { G.leadBoat = makeProp('boat', 0, 0, { scale: SCALE * 1.3 }).obj; G.scene.add(G.leadBoat); }
   if (G.leadBoat) { G.leadBoat.visible = lSea && G.leader.show > 0.05; if (lSea) { G.leadBoat.position.set(G.leader.pos.x, SEA_Y, G.leader.pos.y); G.leadBoat.rotation.y = -G.leader.face + Math.PI / 2; G.leader.ground = SEA_Y + 0.39; } }
-  for (const P of G.patrols || []) P.s.update(t, dt);
+  // 그분을 만나는 동안 둘레(8km)의 순찰 병정은 비켜 선다 — 만남 자리에 창 든 병정이 끼어 막대기 든 사람이 너무 많았다(사용자 2026-11)
+  for (const P of G.patrols || []) { if (P.s.showT !== undefined) P.s.showT = (G.busy || G.meetT > 0) && Math.hypot(P.s.pos.x - G.leader.pos.x, P.s.pos.y - G.leader.pos.y) < 8 ? 0 : 1; P.s.update(t, dt); }
   if (G.wounded) G.wounded.a.update(t, dt);
   me0.update(t, dt); G.leader.update(t, dt);
   // 곁에 선 사람은 그분처럼 가까이 가야 보인다. 마을 사람은 가까울 때만 움직인다(멀면 그리지도 셈하지도 않는다)

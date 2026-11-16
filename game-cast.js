@@ -127,7 +127,7 @@ export const GEAR = {
   moses: ['rod'], aaron: ['rod'], elijah: ['staff'], elisha: ['staff'], baptist: ['staff'], samuel: ['staff'],
   soldier: ['spear', 'scutum'], goliath: ['bigspear'], 'pilgrim-man:#6b3a24:bearer': ['bigshield', 'helmet'], 'pilgrim-man:#5e2f22': ['spear'], joab: ['spear', 'shield'], saul: ['spear'], joshua: ['spear'], 'david-warrior': ['shield'],
   samaritan: ['jar'], woman: ['jar'],
-  paul: ['staff'], barnabas: ['staff'], silas: ['staff'], // 길 떠나는 사도와 동역자들 — 나그네의 지팡이
+  paul: ['staff'], // 길 떠나는 사도의 지팡이 — 동역자들까지 다 들리니 막대기 든 사람이 너무 많았다(사용자 2026-11)
 };
 // 갈릴리 바다 위의 장면: 제자들은 배에 탄다(물 위에 서 있으면 안 된다). at = 배 가운데(목표 자리 기준), seats = 배 안 자리(배 기준, 앞에서부터),
 // water = 배 밖 물 위에 서는 사람과 자리 — 물 위로 걸어간 베드로(마 14:29). 그분은 e28에서 배 안(자리 0.6이 배에 든다), e32에서는 물 위
