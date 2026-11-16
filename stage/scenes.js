@@ -2303,7 +2303,7 @@ export const SCRIPTS = {
     cast: {
       mary: ['woman', -1.8, 0.25, 1.2, { speed: 0.4 }],
       peter: ['peter', -2.0, 0.0, 1.2, { speed: 0.8 }], johnD: ['john', -2.1, 0.35, 1.2, { speed: 0.9 }],
-      angel1: ['angel', 0.75, -0.22, 0.3, { gaze: false }], angel2: ['angel', 1.1, -0.25, -0.3, { gaze: false }],
+      angel1: ['angel', 0.6, 0.24, 0.3, { gaze: false }], angel2: ['angel', 1.12, 0.22, -0.3, { gaze: false }], // 무덤 앞 땅에 돌을 깔고 앉는다 — 높이 0.16에 앉혀 허공에 떠 있었다(사용자 2026-11)
       jesus: ['risen', -0.35, -0.25, 0.6],
     },
     beats: {
@@ -2318,7 +2318,7 @@ export const SCRIPTS = {
       'p0.3': [['peter', 'bow'], ['johnD', 'look-up', { delay: 2500 }]],
       'p1.0': [['peter', 'idle', { x: -2.1, z: 0.0 }], ['johnD', 'idle', { x: -2.2, z: 0.3 }], ['peter', 'idle', { show: 0, delay: 4500 }], ['johnD', 'idle', { show: 0, delay: 4500 }],
         ['mary', 'idle', { x: 0.35, z: 0.1, look: 1.0, delay: 1500 }], ['mary', 'mourn', { delay: 5000 }]],
-      'p1.1': [['mary', 'bow', { look: 1.0 }], ['beam', null, { show: 1 }], ['angel1', 'sit', { show: 1, y: 0.16 }], ['angel2', 'sit', { show: 1, y: 0.16 }]], // 무덤 곁 돌에 걸터앉아 다리를 내린다(요 20:12) — 땅에 양반다리로 앉히니 긴 겉옷이 두 발 사이로 늘어났다
+      'p1.1': [['mary', 'bow', { look: 1.0 }], ['beam', null, { show: 1 }], ['angel1', 'sit', { show: 1, y: 0 }], ['angel2', 'sit', { show: 1, y: 0 }]], // 무덤 곁 돌에 걸터앉아 다리를 내린다(요 20:12) — 땅에 양반다리로 앉히니 긴 겉옷이 두 발 사이로 늘어났다
       'p1.5': [['mary', 'idle', { look: -1.2 }], ['jesus', 'idle', { show: 1, x: -0.1, z: -0.05, look: 1.0 }]],
       'p2.0': [['@env', 'day'], ['jesus', 'speak', { look: 1.0 }]],
       'p2.2': [['mary', 'kneel', { x: 0.3, z: 0.1, look: -1.0 }], ['mary', 'speak', { delay: 2500 }]],
