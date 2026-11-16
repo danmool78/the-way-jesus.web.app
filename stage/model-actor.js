@@ -163,8 +163,8 @@ export class StageModel {
     if (this.acts.pray) { const c = this.acts.pray.getClip(); if (c.duration > 5) this.acts.pray = this.mixer.clipAction(inPlace(THREE.AnimationUtils.subclip(c, 'pray-hold', 57, 138, 30), bone(body, 'Hips')?.position.clone())); }
     this.march = MARCH.has(type); this.stride = Math.random(); this.pace = 0.9 + Math.random() * 0.2;
     // 인형의 왼팔·오른팔이 모델의 어느 팔인지는 자리(x)로 맞춘다 (서로 앞을 보는 쪽이 같다)
-    const L = { up: bone(body, 'LeftArm'), lo: bone(body, 'LeftForeArm'), hand: bone(body, 'LeftHand'), mid: bone(body, 'LeftHandMiddle1') };
-    const R = { up: bone(body, 'RightArm'), lo: bone(body, 'RightForeArm'), hand: bone(body, 'RightHand'), mid: bone(body, 'RightHandMiddle1') };
+    const L = { up: bone(body, 'LeftArm'), lo: bone(body, 'LeftForeArm'), hand: bone(body, 'LeftHand'), mid: bone(body, 'LeftHandMiddle1'), thumb: bone(body, 'LeftHandThumb1') };
+    const R = { up: bone(body, 'RightArm'), lo: bone(body, 'RightForeArm'), hand: bone(body, 'RightHand'), mid: bone(body, 'RightHandMiddle1'), thumb: bone(body, 'RightHandThumb1') };
     const dl = this.doll.p.armL.position.x > 0;
     this.arms = [[this.doll.p.armL, dl === (L.up.getWorldPosition(v1).x > 0) ? L : R], [this.doll.p.armR, dl === (L.up.getWorldPosition(v1).x > 0) ? R : L]];
     for (const [, mb] of this.arms) if (mb.hand) mb.hand0 = mb.hand.quaternion.clone(); // 손목의 기본 자세 (곧게 편 손)
@@ -216,6 +216,24 @@ export class StageModel {
     this.op = op;
   }
   aim(b, child, dir, w) { aimBone(b, child, dir, w); }
+  // 기도하는 한 팔: 팔꿈치는 몸 옆에 내리고, 손목은 가운데(두 손바닥이 맞닿을 자리 — 손 두께만큼 조금 넘겨)로, 손끝은 위로 조금 앞을 향해
+  prayArm(mb, side, r, qb) {
+    const k = this.prayK, w = this.w;
+    this.aim(mb.up, mb.lo, new THREE.Vector3(side * 0.08, -1, 0.3).normalize().applyQuaternion(qb), w);
+    const wrist = this.prayAt.clone().add(new THREE.Vector3(-side * 0.012 * k, 0, 0).applyQuaternion(qb));
+    this.aim(mb.lo, mb.hand, wrist.sub(mb.lo.getWorldPosition(v1)).normalize(), w);
+    if (!mb.mid) return;
+    this.aim(mb.hand, mb.mid, new THREE.Vector3(-side * 0.3, 0.9, 0.4).normalize().applyQuaternion(qb), w);
+    // 손가락 쪽을 축으로 손을 돌려 엄지가 가슴 쪽을 보게 — 그러면 두 손바닥이 마주 본다. 같은 각도로 돌리니 모델마다 손 뼈의 축이 달라
+    // 순례자는 손바닥이 앞을 보았다 — 엄지 방향을 재어 돌린다
+    if (!mb.thumb) return;
+    const hp = mb.hand.getWorldPosition(new THREE.Vector3()), f = mb.mid.getWorldPosition(v1).sub(hp).normalize();
+    const flat = v => v.sub(f.clone().multiplyScalar(v.dot(f))).normalize();
+    const t = flat(mb.thumb.getWorldPosition(v3).sub(hp)), want = flat(new THREE.Vector3(0, 0, -1).applyQuaternion(qb));
+    const ang = Math.atan2(f.dot(t.clone().cross(want)), t.dot(want)), pw = mb.hand.parent.getWorldQuaternion(new THREE.Quaternion());
+    const q = new THREE.Quaternion().setFromAxisAngle(f, ang * w);
+    mb.hand.quaternion.premultiply(pw.clone().invert().multiply(q).multiply(pw));
+  }
   // 손에 드는 것: 인형의 것(빵·아기·바구니·두루마리·지팡이·창·뿔·칼…)을 그대로 가져와 모델의 손에 옮겨 붙인다 —
   // 보이고 감추는 것은 인형이 자세에 따라 그대로 정한다. 한 손 것은 그 손에, 두 손으로 받쳐 드는 것은 두 손 사이에, 지팡이·창은 손 옆 땅에
   takeProps() {
@@ -385,6 +403,10 @@ export class StageModel {
     // 엎드려 우는 자세(mourn)는 인형대로
     const lap = this.seizaW > 0.5 && d.pose !== 'mourn';
     const qr = lap && r.getWorldQuaternion(new THREE.Quaternion());
+    // 서서 기도: 두 손을 가슴 앞 가운데에 모은다 — 인형의 팔 방향을 그대로 옮기니 사람 비율의 팔뚝이 가운데를 지나쳐 두 손이 엇갈렸다(e18 외딴곳의 기도, 사용자 2026-11)
+    const pray = d.pose === 'pray' && !lap && this.arms.every(([, mb]) => mb.up && mb.lo && mb.hand);
+    if (pray) { const [a, b] = this.arms.map(([, mb]) => mb.up.getWorldPosition(new THREE.Vector3())), k = this.H * r.getWorldScale(v2).y;
+      this.prayAt = a.add(b).multiplyScalar(0.5).add(new THREE.Vector3(0, -0.13 * k, 0.19 * k).applyQuaternion(qb)); this.prayK = k; }
     this.arms.forEach(([da, mb], i) => {
       if (!mb.up || !mb.lo || !mb.hand) return;
       const side = r.worldToLocal(mb.up.getWorldPosition(v1)).x > 0 ? 1 : -1; // 몸의 어느 쪽 팔인지 (몸 기준)
@@ -398,6 +420,7 @@ export class StageModel {
         this.aim(mb.lo, mb.hand, face.sub(mb.lo.getWorldPosition(v1)).normalize(), this.w);
       }
       mb.hand.quaternion.slerp(mb.hand0, this.w); // 손목은 곧게 (서 있는 동작의 꺾인 손목이 남아 어색했다)
+      if (pray) this.prayArm(mb, side, r, qb);
     });
     // 고개: 인형이 숙이거나 드는 만큼 (십자가 위에서 고개를 떨굼, 하늘을 우러름)
   }
