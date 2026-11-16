@@ -185,7 +185,7 @@ export const A = {
       homeJ: ['house', 1.5, -0.05, { stair: false, wall: '#d6c09a' }],
       vision: ['beam', -0.95, 0.5, { r: 0.36, h: 2.4 }],
       scales: ['scalefall', 1.25, 0.6, { h: 0.6 }],
-      water: ['pour', 1.25, 0.6, { h: 0.82 }],
+      water: ['pour', 1.25, 0.6, { h: 0.82, by: 'ananias' }],
       basin: ['basin', 1.05, 0.72],
     },
     cast: {

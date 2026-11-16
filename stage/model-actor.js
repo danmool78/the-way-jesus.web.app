@@ -266,6 +266,9 @@ export class StageModel {
       else if (kind === 'glow') o.position.set(0, it.p0.y + 0.1, it.p0.z);
     }
   }
+  // 높이 든 손의 손바닥(세계 좌표) — 소품(세례 물병)을 그 손에 들린다
+  raisedHand() { const hs = this.arms.map(([, m]) => { if (!m.hand) return null; const h = m.hand.getWorldPosition(new THREE.Vector3()); if (m.mid) h.lerp(m.mid.getWorldPosition(new THREE.Vector3()), 0.75); return h; }).filter(Boolean);
+    return hs.length ? hs.reduce((a, b) => (b.y > a.y ? b : a)) : null; }
   update(time, dt) { this.posture(time, dt); this.toGround(); this.placeProps(); this.placePillow(); this.placeWings(); }
   placeWings() {
     if (!this.wings || !this.wingB) return;
