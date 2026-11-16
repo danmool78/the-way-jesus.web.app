@@ -206,12 +206,14 @@ const MAKERS = {
     const deck = new THREE.Group();
     deck.position.y = 0.06;
     deck.userData.deck = true; // 배 위에서 앉는 사람은 돌 대신 나무 걸상에 (stage/model-actor.js seatStone)
+    deck.userData.solids = [[0.2, 0, 0.03, 0.03]]; // 갑판 위의 단단한 것(돛대) — 배에 탄 사람도 직육면체 겹침 막기에서 비켜서게 (stage.js spaceOut)
     rock.add(deck);
     mesh(new THREE.BoxGeometry(1.25, 0.015, 0.36), mat('#8a6440'), rock, [0, 0.06, 0]).receiveShadow = true;
     // 돛대와 접은 돛
-    mesh(new THREE.CylinderGeometry(0.014, 0.018, 1.0, 8), dark, rock, [0.2, 0.55, 0]);
-    mesh(new THREE.CylinderGeometry(0.01, 0.01, 0.62, 6), dark, rock, [0.2, 0.92, 0]).rotation.z = Math.PI / 2 - 0.15;
-    mesh(new THREE.CapsuleGeometry(0.03, 0.5, 4, 8), mat('#e8dcc0'), rock, [0.2, 0.9, 0.02]).rotation.z = Math.PI / 2 - 0.15;
+    // 돛대와 활대는 사람 머리 위로 — 모델은 인형보다 키가 커서 배에 선 베드로의 머리가 활대를 뚫었다(e17, 사용자 2026-11)
+    mesh(new THREE.CylinderGeometry(0.014, 0.018, 1.3, 8), dark, rock, [0.2, 0.7, 0]);
+    mesh(new THREE.CylinderGeometry(0.01, 0.01, 0.62, 6), dark, rock, [0.2, 1.22, 0]).rotation.z = Math.PI / 2 - 0.15;
+    mesh(new THREE.CapsuleGeometry(0.03, 0.5, 4, 8), mat('#e8dcc0'), rock, [0.2, 1.2, 0.02]).rotation.z = Math.PI / 2 - 0.15;
     const P = new Prop(g, (P, t, dt, env) => {
       const wv = env.waveNow || 0;
       rock.rotation.z = Math.sin(t * 1.3) * (0.02 + wv * 0.16);
