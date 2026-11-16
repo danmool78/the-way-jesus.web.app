@@ -423,7 +423,11 @@
   "j": [
    "paul"
   ],
-  "desc": "The apostle Paul (also Saul of Tarsus): wiry man about forty-five, bald crown with a fringe of short dark-grey hair, short dark-grey beard, keen dark eyes; a long earth-brown wool tunic with a dark brown sash belt and a small leather pouch, a slate-grey mantle draped over both shoulders and down the back, sandals, often a plain wooden walking staff."
+  "desc": "The apostle Paul (also Saul of Tarsus): wiry man about forty-five, bald crown with a fringe of short dark-grey hair, short dark-grey beard, keen dark eyes; a long earth-brown wool tunic with a dark brown sash belt and a small leather pouch, a slate-grey mantle draped over both shoulders and down the back, sandals, often a plain wooden walking staff.",
+  "scenes": [
+   "a05",
+   "a42"
+  ]
  },
  "barnabas": {
   "names": [
@@ -469,5 +473,19 @@
    "paul"
   ],
   "desc": "Lydia of Thyatira, the seller of purple cloth: dignified woman about thirty-five, dark hair under a long cream-white veil; a rich royal-purple wrap dress with long wide sleeves, a braided tan rope belt, a cream-white undergarment at the neck."
+ },
+ "saul-young": {
+  "names": [
+   "바울",
+   "사울"
+  ],
+  "j": [
+   "paul"
+  ],
+  "scenes": [
+   "a01",
+   "a04"
+  ],
+  "desc": "Saul of Tarsus as a young Pharisee, about thirty: the SAME face as the apostle Paul (same features, nose, eyes and short beard) but younger, with a full head of thick short dark-brown hair (not bald) and a short dark beard; the same earth-brown wool tunic with a dark brown sash belt and small leather pouch, the same slate-grey mantle over both shoulders, sandals, no staff."
  }
 }
