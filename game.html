@@ -232,11 +232,11 @@ button{font:inherit;color:inherit;cursor:pointer}
 #mTime{color:var(--gold2);font-weight:700}#mTime.gold{color:#ffd77a}#mTime.silver{color:#dfe5ea}#mTime.bronze{color:#d9955a}#mTime.hurry{color:#ff9a7a;animation:pulse .8s infinite}
 @keyframes pulse{50%{opacity:.45}}
 /* 만남의 말풍선: 그분 머리 위에 */
-#bubble{position:fixed;z-index:7;width:max-content;max-width:min(300px,78vw);transform:translate(-50%,calc(-100% - 14px)) scale(.92);padding:11px 15px 12px;border-radius:16px;background:#fbf3e0;color:#2a1f14;font:500 15.5px/1.6 var(--serif);word-break:keep-all;text-wrap:balance;box-shadow:0 8px 28px rgba(0,0,0,.45);opacity:0;transition:opacity .4s,transform .4s;pointer-events:none}
+#bubble{position:fixed;z-index:7;width:max-content;max-width:min(300px,78vw);transform:translate(-50%,calc(-100% - 14px)) scale(.92);padding:11px 15px 12px;border-radius:16px;background:#fbf3e0;color:#2a1f14;font:700 16px/1.55 var(--sans);letter-spacing:-.01em;word-break:keep-all;text-wrap:balance;box-shadow:0 8px 28px rgba(0,0,0,.45);opacity:0;transition:opacity .4s,transform .4s;pointer-events:none}
 body.meeting #stick,body.meeting #arrow{opacity:0!important;pointer-events:none}
 #bubble.on{opacity:1;transform:translate(-50%,calc(-100% - 14px)) scale(1)}
 #bubble::after{content:'';position:absolute;left:calc(50% + var(--tx,0px));bottom:-9px;margin-left:-9px;border:9px solid transparent;border-bottom:0;border-top-color:#fbf3e0}
-#bubble b{display:block;font:700 11.5px var(--sans);letter-spacing:.06em;color:#9b6b2a;margin-bottom:2px}
+#bubble b{display:block;font:800 12px var(--sans);letter-spacing:.06em;color:#9b6b2a;margin-bottom:2px}
 /* 불러오는 동안 (길 떠나기를 누른 뒤 첫 장면까지) */
 /* 길게 누를 때 그림 저장 메뉴·글자 고르기가 뜨지 않게 (iOS) */
 body{-webkit-touch-callout:none}
