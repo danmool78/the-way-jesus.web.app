@@ -194,14 +194,23 @@ const solidBoxes = () => Object.values(props).filter(p => SOLID.has(p.kind) && p
 function spaceOut(dt) {
   if (!USE_MODELS || !script) return;
   const L = Object.values(actors).filter(a => a.doll && a.showT > 0.5 && a.p.root.parent === stageGroup && !a.y && !a.yT && !STAY.has(a.pose) && a.goal.distanceTo(a.pos) < 0.02);
-  if (!L.length) return;
-  const k = Math.min(1, dt * 6), solids = solidBoxes();
+  const k = Math.min(1, dt * 6), solids = L.length ? solidBoxes() : [];
   for (let i = 0; i < L.length; i++) {
     const a = L[i];
     for (const b of solids) { const d = push(actorBox(a), b); if (d) { a.pos.x += d[0] * k; a.pos.y += d[1] * k; } }
     for (let j = i + 1; j < L.length; j++) { const b = L[j], d = push(actorBox(a), actorBox(b)); if (!d) continue;
       a.pos.x += d[0] * k / 2; a.pos.y += d[1] * k / 2; b.pos.x -= d[0] * k / 2; b.pos.y -= d[1] * k / 2; b.goal.copy(b.pos); }
     a.goal.copy(a.pos);
+  }
+  // 배 위: 갑판 좌표에서 돛대와, 같은 배에 탄 사람끼리 — 배는 사람이 올라서는 것이라 위의 검사에서 빠져 베드로가 돛대를 뚫었다(e17, 사용자 2026-11)
+  const decks = new Map();
+  Object.values(actors).forEach(a => { const d = a.p.root.parent; if (a.doll && a.showT > 0.5 && d?.userData.deck && !STAY.has(a.pose) && a.goal.distanceTo(a.pos) < 0.02) (decks.get(d) || decks.set(d, []).get(d)).push(a); });
+  for (const [d, B] of decks) {
+    const mast = (d.userData.solids || []).map(([x, z, hu, hv]) => box(x, z, 0, hu, hv));
+    for (let i = 0; i < B.length; i++) { const a = B[i];
+      for (const m of mast) { const p = push(actorBox(a), m); if (p) { a.pos.x += p[0] * k; a.pos.y += p[1] * k; } }
+      for (let j = i + 1; j < B.length; j++) { const b = B[j], p = push(actorBox(a), actorBox(b)); if (!p) continue; a.pos.x += p[0] * k / 2; a.pos.y += p[1] * k / 2; b.pos.x -= p[0] * k / 2; b.pos.y -= p[1] * k / 2; b.goal.copy(b.pos); }
+      a.goal.copy(a.pos); }
   }
 }
 // 군중이 비켜설 네모들: 보이는 배역(탄 사람 빼고)과 단단한 물건 (props.js crowd)
