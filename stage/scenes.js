@@ -713,9 +713,9 @@ export const SCRIPTS = {
         ['jesus', 'speak', { x: -0.35, z: -0.18, look: 1.0, board: null }], ['peter', 'kneel', { x: 0.1, z: -0.12, look: -1.0, board: null }], ['andrew', 'listen', { x: 0.45, z: -0.28, look: -1.0, board: null }],
         ['james', 'listen', { x: 0.85, z: -0.2, look: -1.0 }], ['johnD', 'listen', { x: 1.1, z: -0.32, look: -1.0 }]],
       intro: [['@env', 'calm'], ['shore', null, { show: 0 }], ['boat', null, { geo: [32.859, 35.566] }], ['boat2', null, { geo: [32.862, 35.616] }], ['net', 'empty', { x: 0.85, z: -0.12 }],
-        ['jesus', 'idle', { show: 1, x: -1.9, z: -0.15, look: 1.2, board: null }], ['peter', 'sit-ground', { x: 0.65, z: -0.15, look: 0.6, board: null }], ['andrew', 'sit-ground', { x: 1.05, z: -0.1, look: -0.8, board: null }],
-        // 물가에 앉아 그물을 손질한다 — 서서 허리를 굽히니 빈손으로 무언가를 들여다보는 것 같았다(사용자 2026-11)
-        ['james', 'sit-ground', { show: 1, x: 1.55, z: -0.2, look: 0.8 }], ['johnD', 'sit-ground', { show: 1, x: 1.8, z: -0.08, look: -1.0 }]],
+        ['jesus', 'idle', { show: 1, x: -1.9, z: -0.15, look: 1.2, board: null }], ['peter', 'idle', { x: 0.65, z: -0.4, look: 0.6, board: null }], ['andrew', 'idle', { x: 1.05, z: -0.36, look: -0.8, board: null }],
+        // 뭍에 서서 그물 곁에 — 물가에 앉히니 3D 지형에서 물 위 돌에 앉았다(사용자 2026-11)
+        ['james', 'idle', { show: 1, x: 1.55, z: -0.44, look: 0.8 }], ['johnD', 'idle', { show: 1, x: 1.8, z: -0.34, look: -1.0 }]],
       'p0.2': [['shore', null, { show: 1 }], ['jesus', 'idle', { x: -0.4, z: -0.1, look: 0.6 }],
         ['jesus', 'sit', { board: 'boat', x: -0.42, z: 0, look: 0, delay: 3000 }], ['peter', 'idle', { board: 'boat', x: 0.48, z: 0.04, look: -1.0, delay: 3000 }],
         ['boat', null, { geo: [32.858, 35.572], delay: 3200 }], ['jesus', 'speak', { delay: 5000 }]],
