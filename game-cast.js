@@ -10,7 +10,7 @@ export const CAST = {
     e13: ['nicodemus'], e14: ['samaritan'], e15: ['pilgrim-man:#4a3a66'], // 왕의 신하(요 4:46)
     e16: ['pilgrim-man:#7a6248', 'pilgrim-woman:#5b6e7a', 'pilgrim-man:#5d5640'], // 고향 회당의 사람들
     e17: ['peter', 'andrew', 'james', 'john'], e18: ['peter', 'andrew'], e20: ['pilgrim-man:#4b3f6e', 'peter', 'john'], // 세리 마태
-    e21: ['pilgrim-man:#8a7d66:lie'], // 서른여덟 해 된 병자, 못 가에 누워 (요 5:5–6 — 제자 없이)
+    e21: ['fisherman:lie'], // 서른여덟 해 된 병자, 못 가에 누워 (요 5:5–6 — 제자 없이). 카드 그림처럼 머리띠·검은 수염의 허름한 사람(어부 모델)
     e22: ['peter', 'john', 'andrew', 'james'],
     e24: ['centurion', 'peter'], e25: ['pilgrim-woman:#3a3434', 'peter', 'john'], // 나인성 과부(검은 상복)
     e26: ['pharisee', 'pilgrim-woman:#7b4a3a', 'peter'], e29: ['pilgrim-man:#4d453c', 'peter', 'john'], // 향유를 부은 여인, 무덤 사이의 사람
