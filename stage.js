@@ -2,7 +2,7 @@
    app.js가 보내는 이벤트: stage:scene {i, ev}, stage:walk {i, ev}, stage:beat {beat, s}, stage:stop */
 import { THREE, damp } from './stage/kit.js';
 import { Actor, TYPES } from './stage/people.js';
-import { StageModel } from './stage/model-actor.js';
+import { StageModel, seatBlocks } from './stage/model-actor.js';
 import { model, tinted, plain, restyle } from './game-model.js';
 import { makeProp, setCrowd } from './stage/props.js';
 import { SCRIPTS } from './stage/scenes.js';
@@ -130,14 +130,15 @@ const EXTRA = {
   women: [['pilgrim-woman'], ['woman'], ['miriam', { plain: true, skin: 1.08 }], ['pilgrim-woman', '#3c5d96'], ['zipporah', { plain: true, hue: 120, skin: 0.85 }], ['rahab', { plain: true, hue: 60, skin: 1.05 }], ['pilgrim-woman', '#a3554a']],
 };
 // 엑스트라 모델은 무대가 뜰 때 미리 받아 둔다 — 장면마다 그때 받으니 군중이 잠깐 예전 인형으로 섰다가 바뀌었다
-if (new URLSearchParams(location.search).has('models')) setTimeout(() => want([...new Set([...EXTRA.men, ...EXTRA.women].map(([n]) => n)), 'jesus']), 0);
+if (new URLSearchParams(location.search).has('models')) setTimeout(() => want([...new Set([...EXTRA.men, ...EXTRA.women].map(([n]) => n)), 'jesus-moves']), 0);
 // 동작을 빌려 줄 모델: 잠자기는 남자 순례자, 무릎 꿇고 기도는 예수님 모델에서 (같은 Mixamo 뼈대)
-const BORROW = () => ({ sleep: ready['pilgrim-man'], pray: ready.jesus, idle: ready.jesus, talk: ready.jesus }); // 천사 모델은 걷기만 있어 서기·말하기도
+// 동작은 예전 예수님 모델(jesus-moves — 무릎 꿇기·서기·말하기·잠자기가 든 것)에서 — 새 예수님 모델(2026-11)은 걷기만 떠 왔다
+const BORROW = () => ({ sleep: ready['pilgrim-man'], pray: ready['jesus-moves'], idle: ready['jesus-moves'], talk: ready['jesus-moves'] }); // 천사 모델은 걷기만 있어 서기·말하기도
 // 바울 여정의 나머지 배역 (사용자 2026-11: 바울 여정도 모두 모델로) — 비슷한 사람의 모델에 옷 색(hue)·살갗(skin)을 달리 입힌다.
 // 로마 관리(토가)는 빌라도, 병사는 병정, 왕과 왕비는 구약의 왕·왕비, 수염 없는 젊은이는 디모데, 사울(회심 전)은 바울 모델 그대로
 Object.assign(LIKE, {
   sauly: ['paul'], saulB: ['paul'],
-  stephen: ['jonathan', { hue: 140, skin: 1.05 }], councilor: ['nicodemus', { hue: 230 }], witness: ['pilgrim-man', { plain: true, skin: 0.9 }],
+  stephen: ['jonathan', { white: true, skin: 1.05 }], councilor: ['nicodemus', { hue: 230 }], witness: ['pilgrim-man', { plain: true, skin: 0.9 }],
   hellenist: ['isaiah', { hue: 20, skin: 1.02 }], templeguard: ['joab', { hue: 200, sat: 0.7 }], ananias: ['samuel', { hue: 30, skin: 0.95 }],
   judasD: ['jethro', { plain: true, skin: 0.9 }], townsman: ['pilgrim-man', '#9a7a5a'], jewD: ['elisha', { hue: 180, skin: 1.05 }],
   nabatean: ['joab', { hue: 330, skin: 0.72 }], jamesL: ['nathan', { hue: 60, skin: 1.05 }], lucius: ['ahijah', { hue: 160, skin: 0.7 }],
@@ -238,6 +239,7 @@ function apply(cmds, instant = false) {
     }
   });
 }
+const INDOOR = new Set(['synagogue', 'house', 'temple', 'throne', 'table', 'feast', 'treasury', 'gate', 'booth', 'tabernacle', 'tent', 'walls', 'citywall', 'sukkah', 'palace']);
 function setScene(ev) {
   curEv = ev;
   clearCast();
@@ -249,6 +251,8 @@ function setScene(ev) {
   if (!script) { canvas.style.opacity = 0; map.style.filter = ''; delete wrap.dataset.env; window.stageFoot = null; return; }
   if (street.on) street.cam(script.cams, script.cam || Object.keys(script.cams || {})[0], true);
   stageGroup.scale.setScalar(script.scale || 1);
+  // 건물이 선 장면에서 앉는 사람은 네모난 의자에, 산·들에서는 돌에 (사용자 2026-11)
+  seatBlocks(script.seats ? script.seats === 'block' : Object.values(script.props || {}).some(([k]) => INDOOR.has(k))); // seats로 장면이 정할 수도 (산 위 설교의 비유 속 작은 집은 멀리 있다)
   size = { w: 0, h: 0 }; // 넓은 무대(wide)가 바뀌었을 수 있으니 다시 잰다
   // 배역마다 쓸 모델 (거리 무대·실루엣은 인형 그대로)
   // dolls: 그 장면의 사람은 인형 그대로 (에덴 프롤로그의 아담·하와는 하나님이 지어 주신 가죽옷 — 순례자 모델이 지금 옷처럼 보였다, 사용자 2026-11). 천사만 모델로
@@ -259,7 +263,7 @@ function setScene(ev) {
     const named = new Set(plan.filter(Boolean).map(m => m[0]));
     const pool = { men: EXTRA.men.filter(([n]) => !named.has(n) || n.startsWith('pilgrim')), women: EXTRA.women.filter(([n]) => !named.has(n) || n.startsWith('pilgrim')) };
     const CROWDM = [...pool.men, ...pool.women].map(([n]) => n);
-    const names = USE_MODELS ? [...new Set([...named, ...(crowd ? CROWDM : []), ...(named.size ? ['pilgrim-man', 'jesus'] : []), ...(named.has('angel') ? ['wings'] : [])])] : []; // 동작을 빌려 줄 모델도 함께 — 늦게 받으면 요셉이 잠자기 동작 없이 통나무처럼 누웠다
+    const names = USE_MODELS ? [...new Set([...named, ...(crowd ? CROWDM : []), ...(named.size ? ['pilgrim-man', 'jesus-moves'] : []), ...(named.has('angel') ? ['wings'] : [])])] : []; // 동작을 빌려 줄 모델도 함께 — 늦게 받으면 요셉이 잠자기 동작 없이 통나무처럼 누웠다
     setCrowd(USE_MODELS && crowd && CROWDM.every(n => ready[n]) ? { men: pool.men.map(dress), women: pool.women.map(dress) } : null);
     const ev0 = ev, wait = names.length ? want(names) : null;
     wait?.then(() => { if (curEv === ev0 && (atStart || new URLSearchParams(location.search).has('beat'))) setScene(ev0); });
@@ -321,6 +325,10 @@ if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__st
     }
     return out;
   },
+  // 앉은 사람의 엉덩이와 깔고 앉은 돌·의자가 얼마나 어긋났나 (무대 좌표, 사람 키로 나눔)
+  seats() { const v = new THREE.Vector3(), w = new THREE.Vector3(), out = []; stageGroup.updateMatrixWorld(true);
+    stageGroup.traverse(o => { if (!o.isMesh || !o.visible || !o.userData.tw && o.userData.tw !== 0) return; const hip = o.userData.hips; if (!hip) return;
+      hip.getWorldPosition(v); o.getWorldPosition(w); stageGroup.worldToLocal(v); stageGroup.worldToLocal(w); const top = o.scale.y * o.parent.getWorldScale(new THREE.Vector3()).y, hy = hip.getWorldPosition(new THREE.Vector3()).y - o.getWorldPosition(new THREE.Vector3()).y; out.push([+(w.x - v.x).toFixed(3), +(w.z - v.z).toFixed(3), +top.toFixed(3), +hy.toFixed(3)]); }); return out; },
   // 걷는 사람들의 걷기 동작 자리·빠르기 (발이 다 맞는지 점검)
   // 모델 팔 길이: 지금 자세의 위팔·아래팔 길이 ÷ 뼈대(바인드) 길이 — 1이면 늘어나지 않은 것
   armLen() { const v = new THREE.Vector3(), w = new THREE.Vector3(), M = new THREE.Matrix4(), s3 = new THREE.Vector3(); return Object.entries(actors).filter(([, a]) => a.doll).map(([n, a]) => {

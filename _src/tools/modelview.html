@@ -1,0 +1,27 @@
+<!doctype html><meta charset="utf-8"><body style="margin:0;background:#8a9">
+<script type="module">
+// 모델 하나를 크게 띄워 보는 점검용 페이지: modelview.html?m=jesus&mip=0&rot=0.5
+import * as THREE from '../../assets/vendor/three.module.min.js';
+import { GLTFLoader } from '../../assets/vendor/GLTFLoader.js';
+const q = new URLSearchParams(location.search), r = new THREE.WebGLRenderer({ antialias: !q.get('id') }); if (q.get('id')) r.outputColorSpace = THREE.LinearSRGBColorSpace; r.setSize(innerWidth, innerHeight); if (!q.get('id')) r.outputColorSpace = THREE.SRGBColorSpace; document.body.append(r.domElement);
+const sc = new THREE.Scene(); sc.add(new THREE.HemisphereLight('#fff', '#776', 1.6)); const dl = new THREE.DirectionalLight('#fff', 1.6); dl.position.set(2, 3, 4); sc.add(dl);
+const cam = new THREE.PerspectiveCamera(30, innerWidth / innerHeight, 0.01, 100);
+new GLTFLoader().load(`../models/${q.get('m') || 'jesus'}.glb`, g => {
+  const o = g.scene; o.rotation.y = +(q.get('rot') || 0); sc.add(o);
+  if (q.get('flat')) o.traverse(m => { if (m.isMesh) { m.material.map = null; m.material.color.set('#fff'); m.material.needsUpdate = true; } });
+  // id: 삼각형마다 번호를 색으로 (어느 삼각형이 얼룩인지 찾기)
+  if (q.get('id')) { sc.background = new THREE.Color(0, 0, 0); o.traverse(m => { if (!m.isMesh) return; const g = m.geometry.toNonIndexed(), n = g.attributes.position.count, c = new Float32Array(n * 3);
+    for (let i = 0; i < n; i++) { const t = Math.floor(i / 3) + 1; c[i * 3] = (t & 255) / 255; c[i * 3 + 1] = ((t >> 8) & 255) / 255; c[i * 3 + 2] = ((t >> 16) & 255) / 255; }
+    g.setAttribute('color', new THREE.BufferAttribute(c, 3)); m.geometry = g; m.material = new THREE.MeshBasicMaterial({ vertexColors: true, side: THREE.DoubleSide }); }); }
+  if (q.get('nomr')) o.traverse(m => { if (m.isMesh) { m.material.metalnessMap = null; m.material.roughnessMap = null; if (q.get('nomr') === '2') m.material.normalMap = null; m.material.metalness = 0; m.material.roughness = 0.9; m.material.needsUpdate = true; } });
+  if (q.get('bias')) o.traverse(m => { if (m.isMesh && m.material.map) { m.material.onBeforeCompile = sh => { sh.fragmentShader = sh.fragmentShader.replace('#include <map_fragment>', THREE.ShaderChunk.map_fragment.replace('texture2D( map, vMapUv )', 'texture2D( map, vMapUv, ' + (+q.get('bias')).toFixed(2) + ' )')); }; m.material.needsUpdate = true; } });
+  if (q.get('bg')) sc.background = new THREE.Color(q.get('bg'));
+  o.traverse(m => { if (m.isMesh && m.material.map && q.get('mip') === '0') { m.material.map.minFilter = THREE.LinearFilter; m.material.map.generateMipmaps = false; m.material.map.needsUpdate = true; } });
+  const b = new THREE.Box3().setFromObject(o), c = b.getCenter(new THREE.Vector3()), h = b.max.y - b.min.y, d = +(q.get('d') || 1);
+  let hd = null, hp = null; o.updateMatrixWorld(true); o.traverse(m => { if (m.isBone && /Head$/.test(m.name) && !hd) hd = m.getWorldPosition(new THREE.Vector3()); if (m.isBone && /Hips$/.test(m.name) && !hp) hp = m.getWorldPosition(new THREE.Vector3()); });
+  const ty = b.min.y + h * (+(q.get('ty') || 0.5));
+  if (q.get('head') && hd) { const k = +q.get('head'); const L = hd.distanceTo(hp); cam.near = L * 0.01; cam.updateProjectionMatrix(); cam.position.set(hd.x + Math.sin(k) * L * 1.1, hd.y + L * 0.12, hd.z + Math.cos(k) * L * 1.1); cam.lookAt(hd.x, hd.y + L * 0.12, hd.z); }
+  else { cam.position.set(c.x, ty, c.z + h * 2.1 * d); cam.lookAt(c.x, ty, c.z); }
+  r.render(sc, cam); document.title = 'ready';
+});
+</script>

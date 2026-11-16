@@ -16,6 +16,55 @@ const KNEEL = new Set(['kneel', 'mourn', 'cower']); // 땅에 앉기(sit-ground)
 // 걸터앉기: 넓적다리를 앞으로, 정강이는 아래로 (회당에서 앉아 말씀을 읽으심 — 무릎 꿇고 기도하는 자세가 되었다, 사용자 2026-11)
 // 걸터앉기는 앉을 자리가 있을 때만(나귀·높이를 정한 사람·'seat') — 자리 없이 다리를 뻗으니 허공에 떠 앉았다(사용자 2026-11). 그 밖의 '앉기'는 땅에 발뒤꿈치를 깔고
 const WING = { scale: 1.0, y: -0.28, back: 0.12, turn: 0 }; // 날개를 붙이는 자리 (몸 모델 단위, 캡처로 맞춤)
+// 앉는 돌: 둥글게 깎인 낮은 돌 (크기 1의 틀 — 사람마다 엉덩이 높이에 맞춰 늘린다)
+// 깔고 앉는 돌 — 모양·빛깔이 다른 여섯 가지를 섞어 쓴다(다 똑같아 보였다, 사용자). 윗면은 평평하게 깎아 앉을 자리로
+const STONE_C = ['#8f8573', '#a39a86', '#7d776b', '#9b8a72', '#b0a58f', '#857d70'];
+const STONES = STONE_C.map((c, k) => {
+  let s = 97 + k * 131; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const g = new THREE.IcosahedronGeometry(0.5, 1), p = g.attributes.position, v = new THREE.Vector3();
+  const w = 0.8 + rnd() * 0.45, d = 0.75 + rnd() * 0.4, cut = 0.22 + rnd() * 0.12;
+  const seen = new Map();   // 같은 자리의 꼭짓점은 같이 움직여야 틈이 안 난다
+  for (let i = 0; i < p.count; i++) {
+    v.fromBufferAttribute(p, i); const key = v.toArray().map(n => n.toFixed(3)).join();
+    if (!seen.has(key)) seen.set(key, 0.82 + rnd() * 0.3);
+    v.multiplyScalar(seen.get(key)); v.x *= w; v.z *= d; v.y = Math.min(v.y, cut + (v.x + v.z) * 0.04);
+    p.setXYZ(i, v.x, v.y, v.z);
+  }
+  g.computeBoundingBox(); const b = g.boundingBox; g.translate(0, -b.min.y, 0); g.scale(1, 1 / (b.max.y - b.min.y), 1); g.computeVertexNormals();
+  return [g, new THREE.MeshStandardMaterial({ color: c, roughness: 1, flatShading: true })];
+});
+// 앉은 몸의 엉덩이 밑면(돌 윗면이 될 높이) — 엉덩이 뼈 바로 밑 둘레의 피부 꼭짓점 중 가장 낮은 것. 뼈 높이에서 어림했더니 돌이 엉덩이를 뚫었다(사용자)
+const seatBottom = (body, hips, R) => {
+  const h = hips.getWorldPosition(new THREE.Vector3()), v = new THREE.Vector3(); let low = Infinity;
+  // 엉덩이 뼈에 가장 크게 붙은 꼭짓점만 — 늘어진 겉옷 자락(다리 뼈에 붙음)까지 재니 돌이 한참 낮았다
+  body.traverse(o => { if (!o.isSkinnedMesh) return; const n = o.geometry.attributes.position.count, hi = o.skeleton.bones.indexOf(hips);
+    if (hi < 0) return; const si = o.geometry.attributes.skinIndex, sw = o.geometry.attributes.skinWeight;
+    for (let i = 0; i < n; i++) { let best = 0, bi = -1; for (let k = 0; k < 4; k++) { const w = sw.getComponent(i, k); if (w > best) { best = w; bi = si.getComponent(i, k); } }
+      if (bi !== hi) continue; o.getVertexPosition(i, v); o.localToWorld(v);
+      if (v.y < h.y && Math.hypot(v.x - h.x, v.z - h.z) < R && v.y < low) low = v.y; } });
+  return low;
+};
+// 회당·집 같은 건물이 있는 장면은 돌 대신 네모난 의자(사용자 2026-11: 건물 곁은 정육면체 의자, 산·들은 돌) — 무대가 장면마다 정한다
+const BLOCK = (() => { const g = new THREE.BoxGeometry(1, 1, 1); g.translate(0, 0.5, 0); return g; })(), BLOCK_M = new THREE.MeshStandardMaterial({ color: '#b39b74', roughness: 0.95 });
+let SEAT_BLOCK = false;
+export const seatBlocks = on => { SEAT_BLOCK = !!on; };
+let stoneN = 0;
+// 돌을 앉은 사람 엉덩이 밑, 몸이 보는 쪽의 조금 뒤에 몸과 같은 방향으로 놓는다(부모 좌표 기준 z로 밀었더니 옆으로 비켜났다)
+const fq = new THREE.Quaternion(), fd = new THREE.Vector3();
+const seatStone = (stone, hips, parent, hp, top, H) => {
+  // 앞쪽 = 엉덩이에서 두 무릎 가운데로 (엉덩이 뼈의 축은 모델마다 달라 의자가 앞으로 밀려났다)
+  const knees = stone.userData.knees || (stone.userData.knees = hips.children.filter(b => /UpLeg$/.test(b.name)).map(b => b.children.find(c => c.isBone)).filter(Boolean));
+  fd.set(0, 0, 0); for (const k of knees) fd.add(parent.worldToLocal(k.getWorldPosition(fq._v || (fq._v = new THREE.Vector3()))));
+  if (knees.length) fd.multiplyScalar(1 / knees.length).sub(hp); fd.setY(0);
+  if (fd.lengthSq() < 1e-8) fd.set(0, 0, 1); fd.normalize();
+  stone.userData.hips = hips;
+  if (!stone.userData.g) stone.userData.g = [stone.geometry, stone.material];
+  [stone.geometry, stone.material] = SEAT_BLOCK ? [BLOCK, BLOCK_M] : stone.userData.g;
+  stone.position.set(hp.x - fd.x * 0.012 * H, 0, hp.z - fd.z * 0.012 * H); stone.rotation.y = Math.atan2(fd.x, fd.z) + (SEAT_BLOCK ? 0 : stone.userData.tw);
+  if (SEAT_BLOCK) stone.scale.set(H * 0.2, top, H * 0.2); else stone.scale.set(H * 0.28, top, H * 0.2); stone.visible = true;   // 넓적하게 — 좁으면 기둥처럼 섰다(사용자)
+};
+const newStone = () => { const [g, m] = STONES[stoneN++ % STONES.length], o = new THREE.Mesh(g, m);
+  o.userData.tw = (stoneN * 0.61) % 0.5 - 0.25; o.castShadow = o.receiveShadow = true; o.visible = false; return o; };
 const MARCH = new Set(['soldier', 'guard', 'centurion']); // 발을 맞춰 걷는 사람들
 const HOLD = new Set(['carry', 'carry-pole', 'offer', 'hold']); // 두 팔로 안거나 받쳐 드는 자세
 const SEAT = new Set(['ride', 'seat']), SITS = new Set(['sit', 'sit-speak', 'sit-ground'])
@@ -73,6 +122,7 @@ export class StageModel {
   constructor(gltf, type, x = 0, z = 0, face = 0, o = {}) {
     this.doll = new Actor(type, x, z, face, o); // 보이지 않는 길잡이 (장면에 넣지 않는다)
     this.type = type;
+    this.H = dollHeight(type);
     this.still = !!o.still; // 아무 동작 없이 모델을 뜬 자세 그대로
     const body = clone(gltf.scene);
     body.updateMatrixWorld(true);
@@ -104,6 +154,7 @@ export class StageModel {
     for (const [, mb] of this.arms) if (mb.hand) mb.hand0 = mb.hand.quaternion.clone(); // 손목의 기본 자세 (곧게 편 손)
     this.legs = [['Left'], ['Right']].map(([s]) => ({ up: bone(body, s + 'UpLeg'), lo: bone(body, s + 'Leg'), foot: bone(body, s + 'Foot'), toe: bone(body, s + 'ToeBase'), tip: bone(body, s + 'Toe_End') }));
     const hips = bone(body, 'Hips'); this.hipH = hips ? hips.getWorldPosition(v1).y * body.scale.x / (body.scale.x || 1) : 0.5; this.body = body; this.legW = 0;
+    this.stone = newStone(); this.p.root.add(this.stone); this.hipsB = bone(body, 'Hips');
     this.headB = bone(body, 'Head'); this.neckB = bone(body, 'Neck'); this.spineB = bone(body, 'Spine1') || bone(body, 'Spine'); this.topB = bone(body, 'HeadTop_End');
     // 날개(천사): 뼈 없는 따로 뜬 모델을 등(Spine2) 자리에 매 화면 붙인다 — 몸통만 따라가고 팔과는 상관없다
     if (o.wings) { this.wings = clone(o.wings.scene); this.wings.traverse(m => { if (m.isMesh) { m.frustumCulled = false; m.material = brighten(m.material).clone(); this.mats.push(m.material); } }); this.p.root.add(this.wings); this.wingB = bone(body, 'Spine2') || this.spineB; }
@@ -264,12 +315,21 @@ export class StageModel {
       let knee = Infinity;
       for (const l of this.legs) if (l.up && l.lo && l.foot) {
         const sd = r.worldToLocal(l.up.getWorldPosition(v1)).x > 0 ? 1 : -1; // 몸의 어느 쪽 다리인지
-        // 양반다리: 넓적다리는 앞으로 벌려 눕히고 정강이는 안쪽으로 엇갈리게 / 꿇어앉기: 넓적다리는 앞으로, 정강이는 뒤로
-        const thigh = (cross ? new THREE.Vector3(sd * 0.75, -0.12, 0.65) : new THREE.Vector3(0, -0.35, 1)).normalize().applyQuaternion(qr);
-        const shin = (cross ? new THREE.Vector3(-sd * 0.85, -0.08, 0.45) : new THREE.Vector3(0, -0.12, -1)).normalize().applyQuaternion(qr);
+        // 땅에 앉기: 무릎을 세우고 앉는다(넓적다리는 앞으로 조금 들고, 무릎에서 꺾인 정강이는 땅으로) — 양반다리는 긴 겉옷이 두 다리 사이에 늘어나 무릎이 어디서 접혔는지 보이지 않았다(사용자 2026-11) / 꿇어앉기: 넓적다리는 앞으로, 정강이는 뒤로
+        const thigh = (cross ? new THREE.Vector3(sd * 0.22, 0.05, 1) : new THREE.Vector3(0, -0.35, 1)).normalize().applyQuaternion(qr);
+        const shin = (cross ? new THREE.Vector3(sd * 0.04, -1, 0.08) : new THREE.Vector3(0, -0.12, -1)).normalize().applyQuaternion(qr);
         this.aim(l.up, l.lo, thigh, this.seizaW); this.aim(l.lo, l.foot, shin, this.seizaW); for (const b of [l.lo, l.foot, l.toe]) if (b) knee = Math.min(knee, b.getWorldPosition(v1).y); } // 무릎·발·발끝 가운데 가장 낮은 곳을 땅에 (무릎만 맞추니 발끝이 묻혔다)
       if (knee < Infinity) this.body.position.y -= (knee - r.getWorldPosition(v2).y) / r.getWorldScale(v1).y - 0.03 * this.hipH;
     }
+    // 땅에 앉을 때는 엉덩이 밑에 돌 하나 — 맨땅에 걸터앉은 듯 엉덩이가 떠 보였다(사용자 2026-11: 돌멩이라도 깔고 앉게)
+    this.stone.visible = cross && this.seizaW > 0.5;
+    if (!this.stone.visible) this.seatT = 0;
+    else { r.updateMatrixWorld(true); const hp = r.worldToLocal(this.hipsB.getWorldPosition(v1));
+      // 자세가 자리 잡은 뒤 한 번만 잰다(꼭짓점 계산이 무거워서)
+      if (++this.seatT === 20 || this.seatT === 60) { const ws = r.getWorldScale(v2).y, low = seatBottom(this.body, this.hipsB, 0.09 * this.H * ws);
+        if (low < Infinity) this.seatDrop = (this.hipsB.getWorldPosition(v2).y - low) / ws; }
+      const top = Math.max(0.02, hp.y - (this.seatDrop ?? 0.12 * this.H));
+      seatStone(this.stone, this.hipsB, r, hp, top, this.H); }
     if (this.w < 0.01 && this.legW < 0.01) return;
     r.updateMatrixWorld(true); dr.updateMatrixWorld(true);
     if (this.legW > 0.01) {
@@ -329,17 +389,37 @@ export function crowdPerson(gltf, height) {
   const legs = ['Left', 'Right'].map(sd => [bone(body, sd + 'UpLeg'), bone(body, sd + 'Leg'), bone(body, sd + 'Foot')]);
   const idle = clip('idle'), act = idle && mixer.clipAction(idle);
   act?.play();
-  // 앉기는 무릎 꿇고 발뒤꿈치에 앉은 모습 — 넓적다리는 앞으로, 정강이는 뒤로 눕히고 무릎이 땅에 닿게 몸을 내린다 (순례자 모델엔 앉는 동작이 없다)
-  const pose = sit => {
-    body.position.y = 0;
+  // 앉기: 걸상 위면 걸터앉고, 땅이면 무릎을 세우고 앉는다 (순례자 모델엔 앉는 동작이 없다)
+  const stone = newStone();
+  const pose = (sit, seat = 0) => {
+    body.position.y = 0; stone.visible = false; if (!stone.parent && body.parent) body.parent.add(stone);
     mixer.setTime(idle ? idle.duration * t0 : 0); // 멈추지(stop) 않는다 — 멈추면 뼈가 처음 자세(A자)로 되돌아간다
     if (!sit) return;
     body.parent?.updateMatrixWorld(true); body.updateMatrixWorld(true);
-    const q = body.getWorldQuaternion(new THREE.Quaternion()), thigh = new THREE.Vector3(0, -0.35, 1).normalize().applyQuaternion(q), shin = new THREE.Vector3(0, -0.12, -1).normalize().applyQuaternion(q);
-    let knee = Infinity;
-    for (const [u, l, f] of legs) if (u && l && f) { aimBone(u, l, thigh); aimBone(l, f, shin); knee = Math.min(knee, l.getWorldPosition(v1).y); }
-    const w = body.parent ? body.parent.getWorldScale(v2).y : 1;
-    if (knee < Infinity) body.position.y -= (knee - body.parent.getWorldPosition(v1).y) / w - 0.03 * height;
+    const q = body.getWorldQuaternion(new THREE.Quaternion());
+    if (seat > 0) { // 걸상(회당·서원의 돌 걸상)에 걸터앉기: 넓적다리는 앞으로 눕히고 정강이는 바닥까지 내린다 — 걸상 위에 꿇어앉아 발이 뒤로 삐져나왔다(사용자 2026-11)
+      const w = body.parent ? body.parent.getWorldScale(v2).y : 1, py = body.parent.getWorldPosition(v1).y;
+      for (const [u, l, f] of legs) if (u && l && f) aimBone(u, l, new THREE.Vector3(0, -0.08, 1).normalize().applyQuaternion(q));
+      let hip = Infinity; for (const [u] of legs) if (u) hip = Math.min(hip, u.getWorldPosition(v1).y);
+      body.position.y -= (hip - py) / w - 0.06 * height; body.updateMatrixWorld(true); // 엉덩이를 걸상 위에
+      for (const [, l, f] of legs) if (l && f) {
+        const k = l.getWorldPosition(v1), L = k.distanceTo(f.getWorldPosition(v3)), drop = Math.min(L * 0.98, k.y - (py - seat * w)); // 무릎에서 바닥까지
+        aimBone(l, f, new THREE.Vector3(0, -drop / L, Math.sqrt(Math.max(0, 1 - (drop / L) ** 2))).applyQuaternion(q));
+      }
+      return;
+    }
+    // 땅에 앉기: 무릎을 세우고 앉는다(무대의 사람들과 같게) — 발뒤꿈치에 꿇어앉으니 모두 무릎 꿇고 있는 것처럼 보였다(사용자 2026-11)
+    let low = Infinity;
+    legs.forEach(([u, l, f], i) => { if (!u || !l || !f) return; const sd = i ? -1 : 1;
+      aimBone(u, l, new THREE.Vector3(sd * 0.22, 0.05, 1).normalize().applyQuaternion(q)); aimBone(l, f, new THREE.Vector3(sd * 0.04, -1, 0.08).normalize().applyQuaternion(q));
+      low = Math.min(low, f.getWorldPosition(v1).y); });
+    const w = body.parent ? body.parent.getWorldScale(v2).y : 1, py = body.parent.getWorldPosition(v1).y;
+    if (low < Infinity) body.position.y -= (low - py) / w - 0.02 * height;
+    // 엉덩이 밑에 돌 하나 (무대 사람과 같게)
+    body.updateMatrixWorld(true); const hp = bone(body, 'Hips'); if (!hp) return;
+    const bot = seatBottom(body, hp, 0.09 * height * body.parent.getWorldScale(v2).y);
+    const lp = body.parent.worldToLocal(hp.getWorldPosition(v1)), top = Math.max(0.02, bot < Infinity ? body.parent.worldToLocal(v2.set(v1.x, bot, v1.z)).y : lp.y - 0.1 * height);
+    seatStone(stone, hp, body.parent, lp, top, height);
   };
   pose(false);
   return { obj: body, pose };

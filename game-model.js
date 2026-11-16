@@ -13,13 +13,17 @@ const cache = new Map();
 // 뼈 찾기: GLTFLoader가 이름의 ':'를 지워 'mixamorig:Head'가 'mixamorigHead'가 된다
 const bone = (root, n) => { let f = null; root.traverse(o => { if (!f && o.isBone && new RegExp(`(^|:|mixamorig)${n}$`).test(o.name)) f = o; }); return f; };
 
+// 멀리 작게 보일 때 텍스처를 한 단계 반 선명하게 읽는다(MAP_BIAS). 조각조각 붙은 텍스처라 흐린 단계에서는 옆 조각(흰 옷 등)의 색이
+// 얼굴에 섞여 흰 점이 보였다(천사·예수님 얼굴, 사용자 2026-11). 모델 재질에만 define을 붙인다 — 복제한 재질(restyle·tinted)에도 따라간다
+if (!THREE.ShaderChunk.map_fragment.includes('MAP_BIAS')) THREE.ShaderChunk.map_fragment = THREE.ShaderChunk.map_fragment.replace('texture2D( map, vMapUv )', '\n#ifdef MAP_BIAS\n texture2D( map, vMapUv, MAP_BIAS )\n#else\n texture2D( map, vMapUv )\n#endif\n');
 export async function loadModel(url) {
-  if (!cache.has(url)) cache.set(url, new GLTFLoader().loadAsync(url));
+  if (!cache.has(url)) cache.set(url, new GLTFLoader().loadAsync(url).then(g => {
+    g.scene.traverse(o => { if (o.isMesh && o.material.map) o.material.defines = { ...o.material.defines, MAP_BIAS: '-1.5' }; }); return g; }));
   return cache.get(url);
 }
 
 // 동작을 빌려 올 모델 (여자는 순례자 자매에게서)
-const DONOR = { lydia: 'pilgrim-woman', 'pilgrim-woman': 'pilgrim-woman', miriam: 'pilgrim-woman', zipporah: 'pilgrim-woman', rahab: 'pilgrim-woman', samaritan: 'pilgrim-woman', martha: 'pilgrim-woman', magdalene: 'pilgrim-woman', 'mary-bethany': 'pilgrim-woman', mary: 'pilgrim-woman' };
+const DONOR = { jesus: 'jesus-moves', lydia: 'pilgrim-woman', 'pilgrim-woman': 'pilgrim-woman', miriam: 'pilgrim-woman', zipporah: 'pilgrim-woman', rahab: 'pilgrim-woman', samaritan: 'pilgrim-woman', martha: 'pilgrim-woman', magdalene: 'pilgrim-woman', 'mary-bethany': 'pilgrim-woman', mary: 'pilgrim-woman' };
 // 모델 목록(assets/models.json)과 이름으로 받기 — 없거나 못 받으면 null (그때는 예전 인형)
 let list = null;
 export async function model(name) {
@@ -30,7 +34,7 @@ export async function model(name) {
     g.userData.name = name;
     // 걷기만 떠 온 모델(바울 여정의 사람들)은 서 있기·말하기가 없어 팔 벌린 A자로 서 있었다(사용자 2026-11) —
     // 같은 Mixamo 뼈대의 순례자 모델에서 빌린다 (stage/model-actor.js의 withBorrowed와 같은 방식: 뼈 각도만, 엉덩이 높이는 비율로)
-    const need = ['idle', 'talk'].filter(n => !g.animations.some(c => c.name === n)), dn = DONOR[name] || 'pilgrim-man';
+    const need = ['idle', 'talk', 'sleep', 'pray'].filter(n => !g.animations.some(c => c.name === n)), dn = DONOR[name] || 'pilgrim-man'; // 예수님(새 모델)은 예전 모델의 동작을 — 배에서 주무시는 것까지
     if (need.length && name !== dn && !g.userData.borrowed) {
       g.userData.borrowed = true;
       const d = await model(dn);
@@ -81,8 +85,9 @@ export function plain(gltf, key) {
 // 다른 배역으로 다시 쓸 때 같은 사람으로 보이지 않게(사용자 2026-11): 옷 색의 색상을 hue°만큼 돌리고(채도 sat배), 살갗은 밝기를 skin배.
 // 'plain'처럼 화려한 색을 바래게 하려면 plain: true. 살갗은 색상 8–42°·중간 채도·밝은 곳으로 가른다
 const styles = new Map();
-export function restyle(gltf, key, { hue = 0, sat = 1, skin = 1, plain: pl = false } = {}) {
-  const id = key + '|' + hue + '|' + sat + '|' + skin + '|' + pl; if (styles.has(id)) return styles.get(id);
+// white: 옷을 흰 옷으로 (스데반, 사용자 2026-11) — 어두운 머리·수염은 그대로 두려고 밝은 곳만 희게
+export function restyle(gltf, key, { hue = 0, sat = 1, skin = 1, plain: pl = false, white = false } = {}) {
+  const id = key + '|' + hue + '|' + sat + '|' + skin + '|' + pl + '|' + white; if (styles.has(id)) return styles.get(id);
   let tex = null;
   gltf.scene.traverse(o => { if (!tex && o.isMesh && o.material.map) tex = o.material.map; });
   if (!tex) return gltf;
@@ -93,6 +98,7 @@ export function restyle(gltf, key, { hue = 0, sat = 1, skin = 1, plain: pl = fal
     let [h, s, v] = hsv(d[i] / 255, d[i + 1] / 255, d[i + 2] / 255);
     const skinny = h > 8 && h < 42 && s > 0.18 && s < 0.7 && v > 0.3;
     if (skinny) { if (skin === 1) continue; v = Math.min(1, v * skin); }
+    else if (white) { if (v < 0.3) continue; s *= 0.1; v = 0.7 + v * 0.3; }
     else if (s >= 0.15) { h = (h + hue + 360) % 360; s = Math.min(1, pl ? Math.min(s, 0.18) : s * sat); if (pl) v *= 0.92; }
     else continue;
     const [r, g, b] = rgb(h, s, v); d[i] = r * 255; d[i + 1] = g * 255; d[i + 2] = b * 255;
