@@ -81,8 +81,9 @@ export function plain(gltf, key) {
 // 다른 배역으로 다시 쓸 때 같은 사람으로 보이지 않게(사용자 2026-11): 옷 색의 색상을 hue°만큼 돌리고(채도 sat배), 살갗은 밝기를 skin배.
 // 'plain'처럼 화려한 색을 바래게 하려면 plain: true. 살갗은 색상 8–42°·중간 채도·밝은 곳으로 가른다
 const styles = new Map();
-export function restyle(gltf, key, { hue = 0, sat = 1, skin = 1, plain: pl = false } = {}) {
-  const id = key + '|' + hue + '|' + sat + '|' + skin + '|' + pl; if (styles.has(id)) return styles.get(id);
+// white: 옷을 흰 옷으로 (스데반, 사용자 2026-11) — 어두운 머리·수염은 그대로 두려고 밝은 곳만 희게
+export function restyle(gltf, key, { hue = 0, sat = 1, skin = 1, plain: pl = false, white = false } = {}) {
+  const id = key + '|' + hue + '|' + sat + '|' + skin + '|' + pl + '|' + white; if (styles.has(id)) return styles.get(id);
   let tex = null;
   gltf.scene.traverse(o => { if (!tex && o.isMesh && o.material.map) tex = o.material.map; });
   if (!tex) return gltf;
@@ -93,6 +94,7 @@ export function restyle(gltf, key, { hue = 0, sat = 1, skin = 1, plain: pl = fal
     let [h, s, v] = hsv(d[i] / 255, d[i + 1] / 255, d[i + 2] / 255);
     const skinny = h > 8 && h < 42 && s > 0.18 && s < 0.7 && v > 0.3;
     if (skinny) { if (skin === 1) continue; v = Math.min(1, v * skin); }
+    else if (white) { if (v < 0.3) continue; s *= 0.1; v = 0.7 + v * 0.3; }
     else if (s >= 0.15) { h = (h + hue + 360) % 360; s = Math.min(1, pl ? Math.min(s, 0.18) : s * sat); if (pl) v *= 0.92; }
     else continue;
     const [r, g, b] = rgb(h, s, v); d[i] = r * 255; d[i + 1] = g * 255; d[i + 2] = b * 255;

@@ -138,7 +138,7 @@ const BORROW = () => ({ sleep: ready['pilgrim-man'], pray: ready['jesus-moves'],
 // 로마 관리(토가)는 빌라도, 병사는 병정, 왕과 왕비는 구약의 왕·왕비, 수염 없는 젊은이는 디모데, 사울(회심 전)은 바울 모델 그대로
 Object.assign(LIKE, {
   sauly: ['paul'], saulB: ['paul'],
-  stephen: ['jonathan', { hue: 140, skin: 1.05 }], councilor: ['nicodemus', { hue: 230 }], witness: ['pilgrim-man', { plain: true, skin: 0.9 }],
+  stephen: ['jonathan', { white: true, skin: 1.05 }], councilor: ['nicodemus', { hue: 230 }], witness: ['pilgrim-man', { plain: true, skin: 0.9 }],
   hellenist: ['isaiah', { hue: 20, skin: 1.02 }], templeguard: ['joab', { hue: 200, sat: 0.7 }], ananias: ['samuel', { hue: 30, skin: 0.95 }],
   judasD: ['jethro', { plain: true, skin: 0.9 }], townsman: ['pilgrim-man', '#9a7a5a'], jewD: ['elisha', { hue: 180, skin: 1.05 }],
   nabatean: ['joab', { hue: 330, skin: 0.72 }], jamesL: ['nathan', { hue: 60, skin: 1.05 }], lucius: ['ahijah', { hue: 160, skin: 0.7 }],
