@@ -449,6 +449,8 @@ const keys = new Set(), stick = { x: 0, y: 0 };
 addEventListener('keydown', e => { if (e.target.tagName === 'INPUT') return; keys.add(e.key.toLowerCase()); if (e.key.startsWith('Arrow')) e.preventDefault(); });
 addEventListener('keyup', e => keys.delete(e.key.toLowerCase()));
 addEventListener('blur', () => keys.clear());
+// 마우스 오른쪽 단추·길게 누르기의 메뉴(이미지 저장·검사)를 띄우지 않는다 — 게임 화면을 누르다 자꾸 떴다(사용자 2026-11). 이름 칸에서는 그대로
+addEventListener('contextmenu', e => { if (!e.target.closest('input,textarea')) e.preventDefault(); });
 // 조종기 (사용자 2026-11): 버튼이 없는 화면 아무 데나 누르면 그 자리에 조종기가 생긴다. 달리기 단추 없이 끄는 세기로 —
 // 조금 끌면 천천히, 원 끝까지 끌면 걷기, 원 밖으로 더 끌면 달린다. 두 번째 손가락이 닿으면 조종기를 놓고 확대·축소로
 (() => {
