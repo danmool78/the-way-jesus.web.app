@@ -3,6 +3,7 @@
 import { THREE, damp } from './stage/kit.js';
 import { Actor, TYPES } from './stage/people.js';
 import { StageModel, seatBlocks } from './stage/model-actor.js';
+import { push, personBox, propBoxes, SOLID, box } from './stage/collide.js';
 import { model, tinted, plain, restyle } from './game-model.js';
 import { makeProp, setCrowd } from './stage/props.js';
 import { SCRIPTS } from './stage/scenes.js';
@@ -184,19 +185,27 @@ function want(names) {
   todo.forEach(n => { loading[n] ??= model(n).then(g => { ready[n] = g; }); });
   return todo.length ? Promise.all(todo.map(n => loading[n])) : null;
 }
-// 개인 거리: 멈춰 선 두 사람이 SPACE보다 가까우면 둘을 조금씩 떼어 놓는다 — 모델은 인형보다 몸이 커서 대본의 자리 그대로면
-// 서로 뚫고 섰다(e08·e10·e24…, 사용자 2026-11). 누운 사람·탄 사람·십자가·안긴 사람·높이를 정한 사람은 그대로
-const SPACE = 0.19, STAY = new Set(['sleep', 'ride', 'crucified', 'crucified-dead', 'perch', 'carry', 'carry-pole', 'mourn']);
+// 겹침 막기(stage/collide.js): 사람·단단한 물건을 바닥의 직육면체로 보고, 멈춰 선 사람이 다른 사람이나 물건과 겹치면 밖으로 밀어낸다.
+// 대본의 자리는 작은 인형에 맞춰져 모델끼리 뚫고 섰고, 상·의자·짐승·집 벽을 뚫었다(사용자 2026-11 — 원 말고 직육면체로).
+// 누운 사람·탄 사람·십자가·안긴 사람·높이를 정한 사람(걸상·단 위)은 그대로
+const STAY = new Set(['sleep', 'ride', 'crucified', 'crucified-dead', 'perch', 'carry', 'carry-pole', 'mourn']);
+const actorBox = a => personBox(a.pos.x, a.pos.y, a.p.root.rotation.y, (a.H || 0.9) * (a.big || 1));
+const solidBoxes = () => Object.values(props).filter(p => SOLID.has(p.kind) && p.show > 0.5).flatMap(p => propBoxes(p.obj, stageGroup));
 function spaceOut(dt) {
   if (!USE_MODELS || !script) return;
   const L = Object.values(actors).filter(a => a.doll && a.showT > 0.5 && a.p.root.parent === stageGroup && !a.y && !a.yT && !STAY.has(a.pose) && a.goal.distanceTo(a.pos) < 0.02);
-  for (let i = 0; i < L.length; i++) for (let j = i + 1; j < L.length; j++) {
-    const a = L[i], b = L[j], dx = b.pos.x - a.pos.x, dz = b.pos.y - a.pos.y, d = Math.hypot(dx, dz);
-    if (d >= SPACE) continue;
-    const k = Math.min(1, dt * 3) * (SPACE - d) / 2 / (d || 1e-6), ux = d ? dx : 1, uz = d ? dz : 0;
-    a.pos.x -= ux * k; a.pos.y -= uz * k; b.pos.x += ux * k; b.pos.y += uz * k; a.goal.copy(a.pos); b.goal.copy(b.pos);
+  if (!L.length) return;
+  const k = Math.min(1, dt * 6), solids = solidBoxes();
+  for (let i = 0; i < L.length; i++) {
+    const a = L[i];
+    for (const b of solids) { const d = push(actorBox(a), b); if (d) { a.pos.x += d[0] * k; a.pos.y += d[1] * k; } }
+    for (let j = i + 1; j < L.length; j++) { const b = L[j], d = push(actorBox(a), actorBox(b)); if (!d) continue;
+      a.pos.x += d[0] * k / 2; a.pos.y += d[1] * k / 2; b.pos.x -= d[0] * k / 2; b.pos.y -= d[1] * k / 2; b.goal.copy(b.pos); }
+    a.goal.copy(a.pos);
   }
 }
+// 군중이 비켜설 네모들: 보이는 배역(탄 사람 빼고)과 단단한 물건 (props.js crowd)
+const avoidFor = () => ({ stage: stageGroup, boxes: [...Object.values(actors).filter(a => a.showT > 0.5 && a.p.root.parent === stageGroup).map(actorBox), ...solidBoxes()] });
 // 낭독 중에 모델이 늦게 도착하면 서 있던 인형을 그 자리에서 모델로 바꿔 끼운다 — 다시 차리면 낭독 중의 움직임이 처음으로 돌아가니,
 // 인형은 그대로 보이지 않는 길잡이로 두고 모델만 덧씌운다 (e04 헤롯·박사, e06 어린 예수님이 인형으로 남았다, 사용자 2026-11)
 // 군중 모델이 낭독 중에 도착하면 군중 소품만 새로 세운다 (보이던 모양·앉음 그대로)
@@ -207,7 +216,7 @@ function rebuildCrowds() {
     const old = props[name], p = makeProp(kind, x, z, o);
     p.kind = kind; p.terrainHide = old.terrainHide; p.foot = old.foot; p.lift = old.lift; p.show = old.show; p.showT = old.showT; p.set(old.state); p.obj.position.copy(old.obj.position); p.goal.copy(old.goal);
     old.obj.removeFromParent(); p.lift.add(p.obj); props[name] = p;
-    p.avoid = () => Object.values(actors).filter(a => a.showT > 0.5 && a.p.root.parent === stageGroup).map(a => a.p.root.getWorldPosition(v).clone());
+    p.avoid = avoidFor;
   });
 }
 function swapIn(plan) {
@@ -339,7 +348,7 @@ function setScene(ev) {
   // on이 둘이면 두 사람의 한가운데를 따른다 — 앞뒤의 두 제사장이 멘 언약궤
   Object.entries(script.props || {}).forEach(([name, [, , , o]]) => { if (o?.on) props[name].follow = [].concat(o.on).map(n => actors[n]); });
   // 군중은 무대의 배역이 가까이 오면 비켜선다 (props.js crowd)
-  { const v = new THREE.Vector3(); Object.values(props).forEach(p => { if (p.kind === 'crowd') p.avoid = () => Object.values(actors).filter(a => a.showT > 0.5 && a.p.root.parent === stageGroup).map(a => a.p.root.getWorldPosition(v).clone()); }); }
+  Object.values(props).forEach(p => { if (p.kind === 'crowd') p.avoid = avoidFor; });
   // 모델 천사 위의 빛기둥은 끈다 — 흰 옷의 천사가 빛에 묻혀 하얗게 바랬다. 천사 둘레의 은은한 빛(glow)만으로 충분하다(사용자 2026-11)
   Object.entries(script.props || {}).forEach(([name, [kind, , , o]]) => { if (kind === 'beam' && o?.on && props[name]) props[name].muted = [].concat(o.on).every(n => actors[n]?.doll && ['angel', 'whiteman'].includes(actors[n].type)); });
   setEnv(script.env || 'day', true);
@@ -411,6 +420,16 @@ if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__st
   lowSkin(n) { const a = actors[n]; if (!a?.body) return null; const v = new THREE.Vector3(); let low = Infinity, lowB = Infinity; a.body.updateMatrixWorld(true);
     a.body.traverse(o => { if (o.isSkinnedMesh) { const c = o.geometry.attributes.position.count; for (let i = 0; i < c; i += 3) { o.getVertexPosition(i, v); o.localToWorld(v); low = Math.min(low, v.y); } } if (o.isBone) lowB = Math.min(lowB, o.getWorldPosition(v).y); });
     const g = a.p.root.getWorldPosition(v).y, k = a.p.root.getWorldScale(new THREE.Vector3()).y; return { skin: +((low - g) / k).toFixed(3), bone: +((lowB - g) / k).toFixed(3), H: a.H, pose: a.pose, hasSleep: !!a.acts?.sleep, cur: a.cur?.getClip().name }; },
+  // 겹침 점검(직육면체, 무대와 같은 기준): 사람끼리·사람과 단단한 물건이 겹친 깊이(0.01 넘는 것만)
+  overlaps() { const E = [], v = new THREE.Vector3(), q = new THREE.Quaternion(), sq = stageGroup.getWorldQuaternion(new THREE.Quaternion()).invert(); stageGroup.updateMatrixWorld(true);
+    Object.entries(actors).forEach(([n, a]) => { if (a.doll && a.showT > 0.5 && a.p.root.parent === stageGroup && !a.y && !a.yT && !STAY.has(a.pose)) E.push([n, actorBox(a), 'p']); });
+    Object.entries(props).forEach(([n, p]) => { if (p.kind === 'crowd' && p.show > 0.5) p.obj.children.forEach((c, i) => { let b = false; c.traverse(o => { if (o.isBone) b = true; }); if (!b) return;
+      stageGroup.worldToLocal(c.getWorldPosition(v)); const yaw = new THREE.Euler().setFromQuaternion(sq.clone().multiply(c.getWorldQuaternion(q)), 'YXZ').y; E.push([n + i, personBox(v.x, v.z, yaw), 'p']); });
+      if (SOLID.has(p.kind) && p.show > 0.5) propBoxes(p.obj, stageGroup).forEach((b, i) => E.push([n + '(' + p.kind + ')', b, 's'])); });
+    const out = []; for (let i = 0; i < E.length; i++) for (let j = i + 1; j < E.length; j++) { if (E[i][2] === 's' && E[j][2] === 's') continue; const d = push(E[i][1], E[j][1]); if (d && Math.hypot(...d) > 0.01) out.push([E[i][0], E[j][0], +Math.hypot(...d).toFixed(3)]); }
+    return out; },
+  actorsDbg() { return actors; },
+  solidCount() { return [solidBoxes().length, Object.values(props).map(p => p.kind).join(',')]; },
   // 겹친 사람: 보이는 모든 사람(배역·군중)의 엉덩이 뼈 자리끼리 너무 가까운 쌍 (무대 좌표)
   crowding(lim = 0.1) { const v = new THREE.Vector3(), P = []; stageGroup.updateMatrixWorld(true); Object.entries(actors).forEach(([n, a]) => { a.p.root.userData.who = n; });
     stageGroup.traverse(o => { if (!o.isBone || !/Hips$/.test(o.name)) return; let vis = true; for (let q = o; q; q = q.parent) if (!q.visible || q.userData.deck || q.userData.saddle) { vis = false; break; } if (!vis) return; // 배·나귀에 탄 사람은 빼고
