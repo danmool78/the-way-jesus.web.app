@@ -124,7 +124,7 @@ function withBorrowed(gltf, body, borrow = {}) {
 }
 export class StageModel {
   constructor(gltf, type, x = 0, z = 0, face = 0, o = {}) {
-    this.doll = new Actor(type, x, z, face, o); // 보이지 않는 길잡이 (장면에 넣지 않는다)
+    this.doll = o.doll || new Actor(type, x, z, face, o); // 보이지 않는 길잡이 (장면에 넣지 않는다) — o.doll: 낭독 중에 모델이 늦게 와서 서 있던 인형을 그대로 길잡이로
     this.type = type;
     this.H = dollHeight(type);
     this.still = !!o.still; // 아무 동작 없이 모델을 뜬 자세 그대로

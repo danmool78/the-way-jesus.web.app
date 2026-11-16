@@ -280,20 +280,20 @@ export const SCRIPTS = {
     props: {
       house: ['house', 0.75, -0.75],
       olive: ['olive', 1.75, -0.6, { scale: 0.9 }], // 나사렛 집 곁의 올리브나무
-      donkey: ['donkey', -1.3, -0.1, { speed: 0.32 }],
+      donkey: ['donkey', -1.55, 0.15, { speed: 0.32 }], // 누운 요셉(모델은 인형보다 길다)과 겹치지 않게 (사용자 2026-11)
     },
     cast: {
       joseph: ['joseph', -0.85, 0.0, 0.5, { speed: 0.32 }],
-      mary: ['mary', -0.55, 0.15, 0.4],
+      mary: ['mary', -0.25, 0.3, -0.6],
       angel: ['angel', -1.3, -0.4, 0.6],
       child: ['child', 0.42, 0.35, -0.8],
     },
     beats: {
       // 장면은 애굽에서 시작한다(skeleton의 start) — 꿈에 천사가 나타나는 밤. 낭독이 p1.1에 이르면 지도가 나사렛까지 걸어간다
-      enter: [['@env', 'night'], ['house', null, { show: 0 }], ['olive', null, { show: 0 }], ['angel', 'speak', { show: 1, y: 0.35, x: -1.3 }], ['donkey', null, { x: -1.3, z: -0.1 }],
-        ['mary', 'carry', { item: null, board: null, x: -0.55, z: 0.15, look: 0.4 }], ['joseph', 'sleep', { x: -0.85, z: 0.0, look: 0.5 }], ['child', 'idle', { show: 0 }]],
-      intro: [['@env', 'night'], ['house', null, { show: 0 }], ['olive', null, { show: 0 }], ['angel', 'idle', { show: 0, y: 1.6, x: -1.3 }], ['donkey', null, { show: 1, x: -1.3, z: -0.1 }], ['child', 'idle', { show: 0 }],
-        ['mary', 'carry', { item: null, board: null, x: -0.55, z: 0.15, look: 0.4 }], ['joseph', 'sleep', { x: -0.85, z: 0.0, look: 0.5 }]],
+      enter: [['@env', 'night'], ['house', null, { show: 0 }], ['olive', null, { show: 0 }], ['angel', 'speak', { show: 1, y: 0.35, x: -1.3 }], ['donkey', null, { x: -1.55, z: 0.15 }],
+        ['mary', 'carry', { item: null, board: null, x: -0.25, z: 0.3, look: -0.6 }], ['joseph', 'sleep', { x: -0.85, z: 0.0, look: 0.5 }], ['child', 'idle', { show: 0 }]],
+      intro: [['@env', 'night'], ['house', null, { show: 0 }], ['olive', null, { show: 0 }], ['angel', 'idle', { show: 0, y: 1.6, x: -1.3 }], ['donkey', null, { show: 1, x: -1.55, z: 0.15 }], ['child', 'idle', { show: 0 }],
+        ['mary', 'carry', { item: null, board: null, x: -0.25, z: 0.3, look: -0.6 }], ['joseph', 'sleep', { x: -0.85, z: 0.0, look: 0.5 }]],
       'p0.1': [['angel', 'speak', { show: 1, y: 0.35 }]],
       'p0.4': [['angel', 'idle', { show: 0 }], ['@env', 'day'], ['joseph', 'idle', { look: 1 }], ['mary', 'ride', { item: 'baby', board: 'donkey', x: 0, z: 0, look: 0, delay: 1200 }],
         ['donkey', null, { x: -0.2, z: 0.2, delay: 1800 }], ['joseph', 'idle', { x: 0.1, z: 0.35, look: -1, delay: 1800 }]],

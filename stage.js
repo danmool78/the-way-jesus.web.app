@@ -181,6 +181,16 @@ function want(names) {
   todo.forEach(n => { loading[n] ??= model(n).then(g => { ready[n] = g; }); });
   return todo.length ? Promise.all(todo.map(n => loading[n])) : null;
 }
+// 낭독 중에 모델이 늦게 도착하면 서 있던 인형을 그 자리에서 모델로 바꿔 끼운다 — 다시 차리면 낭독 중의 움직임이 처음으로 돌아가니,
+// 인형은 그대로 보이지 않는 길잡이로 두고 모델만 덧씌운다 (e04 헤롯·박사, e06 어린 예수님이 인형으로 남았다, 사용자 2026-11)
+function swapIn(plan) {
+  Object.entries(script.cast).forEach(([name, [type, , , , o = {}]], i) => {
+    const old = actors[name], m = plan[i]; if (!old || old.doll || !m || !ready[m[0]]) return;
+    const parent = old.p.root.parent, a = new StageModel(dress(m), type, old.pos.x, old.pos.y, old.face, { solemn: script.solemn, borrow: BORROW(), wings: type === 'angel' && ready.wings, ...o, doll: old });
+    old.p.root.removeFromParent(); parent?.add(a.p.root); a.op = -1; actors[name] = a; a.update(performance.now() / 1000, 0.016);
+  });
+  Object.entries(script.props || {}).forEach(([name, [, , , o]]) => { if (o?.on && props[name]) props[name].follow = [].concat(o.on).map(n => actors[n]); });
+}
 function clearCast() {
   cancelPending();
   Object.values(actors).forEach(a => { a.p.root.removeFromParent(); a.dispose?.(); });
@@ -266,7 +276,12 @@ function setScene(ev) {
     const names = USE_MODELS ? [...new Set([...named, ...(crowd ? CROWDM : []), ...(named.size ? ['pilgrim-man', 'jesus-moves'] : []), ...(named.has('angel') ? ['wings'] : [])])] : []; // 동작을 빌려 줄 모델도 함께 — 늦게 받으면 요셉이 잠자기 동작 없이 통나무처럼 누웠다
     setCrowd(USE_MODELS && crowd && CROWDM.every(n => ready[n]) ? { men: pool.men.map(dress), women: pool.women.map(dress) } : null);
     const ev0 = ev, wait = names.length ? want(names) : null;
-    wait?.then(() => { if (curEv === ev0 && (atStart || new URLSearchParams(location.search).has('beat'))) setScene(ev0); });
+    wait?.then(() => { if (curEv !== ev0) return; if (atStart || new URLSearchParams(location.search).has('beat')) setScene(ev0); else swapIn(plan); });
+    // 다음 두 장면의 배역 모델도 미리 받아 둔다 — 장면에 들어선 뒤에야 받기 시작하면 낭독이 이미 시작돼 그 장면엔 인형이 남았다(e04 헤롯·박사, 사용자 2026-11)
+    if (USE_MODELS && !script.street) { const ks = Object.keys(SCRIPTS), at = ks.indexOf(ev.id);
+      const next = ks.slice(at + 1, at + 3).flatMap(k => { const sc = SCRIPTS[k]; if (!sc?.cast || sc.street) return [];
+        return Object.values(sc.cast).map(([type, , , , o = {}], i) => !o.silhouette && !(sc.dolls && type !== 'angel') && modelOf(type, i)).filter(Boolean).map(m => m[0]).concat(Object.values(sc.cast).some(([t]) => t === 'angel') ? ['wings'] : []); });
+      const rest = [...new Set(next)].filter(n => !ready[n] && !loading[n]); if (rest.length) wait ? wait.then(() => want(rest)) : want(rest); }
   }
   Object.entries(script.props || {}).forEach(([name, [kind, x, z, o]]) => {
     const p = makeProp(kind, x, z, o);
