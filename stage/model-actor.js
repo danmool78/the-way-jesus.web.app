@@ -273,10 +273,14 @@ export class StageModel {
     if (d.floating || (d.yT || 0) > 0.05 || (!lying && ['sleep', 'perch', 'seat', 'ride', 'crucified', 'crucified-dead'].includes(d.pose)) || this.body.rotation.x) return;
     const r = this.p.root; r.updateMatrixWorld(true);
     let low = Infinity;
-    if (lying) { this.body.traverse(b => { if (b.isBone) low = Math.min(low, b.getWorldPosition(v1).y); }); low -= 0.03 * r.getWorldScale(v2).y; } // 뼈는 몸 속에 있어 살갗 두께만큼 아래가 땅
+    // 누우면 몸(살)의 가장 낮은 점을 땅에 — 가장 낮은 뼈로 맞추니 살 밖으로 삐져나온 뼈가 있는 모델은 몸이 떠 있었다(e18 시몬의 장모, 사용자 2026-11).
+    // 살 꼭짓점을 매번 훑으면 무거우니 엉덩이 뼈와의 높이 차를 가끔(0.5초마다) 재 두고 그 사이엔 그대로 쓴다
+    if (lying) { const hy = this.hipsB.getWorldPosition(v1).y, k = r.getWorldScale(v2).y;
+      if (!this.lieT || --this.lieT <= 0) { this.lieT = 30; let lo = Infinity; this.body.updateMatrixWorld(true); this.body.traverse(o => { if (!o.isSkinnedMesh) return; const n = o.geometry.attributes.position.count, st = Math.max(1, Math.floor(n / 3000)); for (let i = 0; i < n; i += st) { o.getVertexPosition(i, v3); o.localToWorld(v3); lo = Math.min(lo, v3.y); } }); if (lo < Infinity) this.lieDrop = (hy - lo) / k; }
+      low = hy - (this.lieDrop ?? 0.1) * k; }
     else for (const l of this.legs) for (const b of [l.lo, l.foot, l.toe, l.tip]) if (b) low = Math.min(low, b.getWorldPosition(v1).y); // 발끝 뼈(Toe_End)까지
     if (low === Infinity) return;
-    const k = r.getWorldScale(v2).y, want = r.getWorldPosition(v1).y + 0.012 * k; // 발목 뼈는 발바닥보다 조금 위
+    const k = r.getWorldScale(v2).y, want = r.getWorldPosition(v1).y + (lying ? 0.004 : 0.012) * k; // 발목 뼈는 발바닥보다 조금 위 (누우면 살이 땅에 바로)
     this.body.position.y -= (low - want) / k;
   }
   posture(time, dt) {
@@ -301,6 +305,9 @@ export class StageModel {
     if (!this.rest) { this.rest = []; const add = b => b && this.rest.push([b, b.quaternion.clone()]); this.legs.forEach(l => [l.up, l.lo, l.foot].forEach(add)); this.arms.forEach(([, m]) => [m.up, m.lo, m.hand].forEach(add)); [this.headB, this.neckB, this.spineB].forEach(add); }
     for (const [b, q] of this.rest) b.quaternion.copy(q);
     this.mixer.update(dt);
+    // 빌린 무릎 꿇기(기도) 동작이면 발등을 뒤로 눕혀 바닥에 편다 — 다른 모델의 발 각도라 발끝이 뒤에서 위로 들렸다(e02 목자, 사용자 2026-11)
+    if (this.cur === this.acts.pray && kneel) { const r0 = this.p.root; r0.updateMatrixWorld(true); const back = new THREE.Vector3(0, -0.25, -1).normalize().applyQuaternion(r0.getWorldQuaternion(new THREE.Quaternion()));
+      for (const l of this.legs) if (l.foot && l.toe) { l.foot.updateMatrixWorld(true); this.aim(l.foot, l.toe, back, 1); } }
     if (this.still) return; // 천사: 몸도 팔도 돌리지 않는다
     // 동작이 없는 자세는 인형의 팔을 따른다 (천천히 들어가고 나온다)
     // 아기·물건을 두 팔로 안은 사람(carry)은 걸을 때도 팔을 인형대로 — 걷기 동작대로 두 팔을 흔들어 아기가 배에 붙어 있었다(사용자 2026-11)
@@ -351,7 +358,7 @@ export class StageModel {
     if (this.legW > 0.01) {
       const qr = r.getWorldQuaternion(new THREE.Quaternion());
       const thigh = new THREE.Vector3(0, -0.25, 1).normalize().applyQuaternion(qr), shin = new THREE.Vector3(0, -1, 0.15).normalize().applyQuaternion(qr);
-      const ks = r.getWorldScale(v3).y, ground = r.getWorldPosition(v2).y - (d.y || 0) * ks + 0.01 * ks; // 발이 닿을 땅: root는 땅에서 앉는 높이(y)만큼 올라가 있다
+      const ks = r.getWorldScale(v3).y, ground = r.getWorldPosition(v2).y - (d.y || 0) * ks + 0.045 * ks; // 발이 닿을 땅: root는 땅에서 앉는 높이(y)만큼 올라가 있다 — 발목 뼈는 발바닥보다 발 두께만큼 위(0.01이면 발이 묻혔다)
       for (const l of this.legs) if (l.up && l.lo && l.foot) {
         this.aim(l.up, l.lo, thigh, this.legW); this.aim(l.lo, l.foot, shin, this.legW);
         // 의자가 모델의 정강이보다 낮으면 발이 바닥을 뚫었다(왕좌의 헤롯) — 정강이를 뒤로 접어 발끝이 바닥 위에 오게
