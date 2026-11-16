@@ -20,7 +20,8 @@ new GLTFLoader().load(`../models/${q.get('m') || 'jesus'}.glb`, g => {
   const b = new THREE.Box3().setFromObject(o), c = b.getCenter(new THREE.Vector3()), h = b.max.y - b.min.y, d = +(q.get('d') || 1);
   let hd = null, hp = null; o.updateMatrixWorld(true); o.traverse(m => { if (m.isBone && /Head$/.test(m.name) && !hd) hd = m.getWorldPosition(new THREE.Vector3()); if (m.isBone && /Hips$/.test(m.name) && !hp) hp = m.getWorldPosition(new THREE.Vector3()); });
   const ty = b.min.y + h * (+(q.get('ty') || 0.5));
-  if (q.get('head') && hd) { const k = +q.get('head'); const L = hd.distanceTo(hp); cam.near = L * 0.01; cam.updateProjectionMatrix(); cam.position.set(hd.x + Math.sin(k) * L * 1.1, hd.y + L * 0.12, hd.z + Math.cos(k) * L * 1.1); cam.lookAt(hd.x, hd.y + L * 0.12, hd.z); }
+  if (q.get('bust') && hd) { const L = hd.distanceTo(hp), k = +q.get('bust'); const dy = +(q.get('dy') || 0.28); cam.position.set(hd.x + Math.sin(+(q.get('rot2') || 0)) * L * k, hd.y - L * dy, hd.z + Math.cos(+(q.get('rot2') || 0)) * L * k); cam.lookAt(hd.x, hd.y - L * dy, hd.z); }
+  else   if (q.get('head') && hd) { const k = +q.get('head'); const L = hd.distanceTo(hp); cam.near = L * 0.01; cam.updateProjectionMatrix(); cam.position.set(hd.x + Math.sin(k) * L * 1.1, hd.y + L * 0.12, hd.z + Math.cos(k) * L * 1.1); cam.lookAt(hd.x, hd.y + L * 0.12, hd.z); }
   else { cam.position.set(c.x, ty, c.z + h * 2.1 * d); cam.lookAt(c.x, ty, c.z); }
   r.render(sc, cam); document.title = 'ready';
 });

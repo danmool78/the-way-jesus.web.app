@@ -349,7 +349,8 @@ if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__st
       if (!a.doll || a.showT < 0.5 || a.p.root.parent !== stageGroup) continue; // 모델만, 보이는 사람만, 배·나귀 위는 빼고
       stageGroup.updateMatrixWorld(true);
       let low = Infinity; a.p.root.traverse(o => { if (o.isBone && /(Foot|ToeBase|Toe_End|Leg)$/.test(o.name)) low = Math.min(low, stageGroup.worldToLocal(o.getWorldPosition(v)).y); });
-      const gap = (low - (a.ground + a.y)) / (a.big || 1), r = { name, pose: a.pose, gap: +gap.toFixed(3), big: +(a.big || 1).toFixed(2) }; // 지형 안에서는 사람을 키우니(big) 그만큼 나눈다
+      if (a.pose === 'sleep') { low = Infinity; a.body.updateMatrixWorld(true); a.body.traverse(o => { if (!o.isSkinnedMesh) return; const c = o.geometry.attributes.position.count; for (let i = 0; i < c; i += 4) { o.getVertexPosition(i, v); o.localToWorld(v); low = Math.min(low, stageGroup.worldToLocal(v).y); } }); } // 누운 사람은 살로 잰다
+      const gap = (low - (a.ground + (['seat', 'sit-speak', 'sit'].includes(a.pose) ? 0 : a.y))) / (a.big || 1), r = { name, pose: a.pose, gap: +gap.toFixed(3), big: +(a.big || 1).toFixed(2) }; // 지형 안에서는 사람을 키우니(big) 그만큼 나눈다
       if (inTerrain && !a.y && !a.yT) { const w = new THREE.Vector3(a.pos.x, low + 5, a.pos.y).applyMatrix4(stageGroup.matrixWorld), h = groundHit(w); // 그려진 땅(지형 그물·도성 단)에 직접 대어 본다
         if (h !== null) r.hit = +((low - stageGroup.worldToLocal(new THREE.Vector3(w.x, h, w.z)).y) / (a.big || 1)).toFixed(3); }
       const t = a.talkTo || ((a.pose === 'speak' || a.pose === 'sit-speak') && a.target);
@@ -390,6 +391,9 @@ if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__st
   crowdDbg() { const v = new THREE.Vector3(); return Object.entries(props).filter(([, p]) => p.kind === 'crowd').map(([n, p]) => [n, p.obj.children.map(c => [c.type, +c.position.x.toFixed(2), +c.position.z.toFixed(2)]).slice(0, 12), p.avoid().map(q => [+q.x.toFixed(2), +q.z.toFixed(2)]), p.obj.getWorldPosition(v).toArray().map(x => +x.toFixed(2)), p.obj.getWorldScale(v).x]); },
   ghosts() { const roots = new Set(Object.values(actors).map(a => a.p.root)), out = []; stageGroup.children.forEach(c => { let h = false; c.traverse(o => { if (o.isBone && /Hips$/.test(o.name)) h = true; }); if (h && !roots.has(c) && !Object.values(props).some(p => p.lift === c)) out.push([c.type, c.position.x.toFixed(2), c.position.z.toFixed(2), c.visible]); }); return out; },
   cupd() { const p = Object.values(props).find(p => p.kind === 'crowd'); let err = null; try { for (let i = 0; i < 40; i++) p.update(i * 0.05, 0.05, {}); } catch (e) { err = e.message; } return [err, p.obj.children.slice(0, 6).map(c => [+c.position.x.toFixed(2), +c.position.z.toFixed(2)])]; },
+  lowSkin(n) { const a = actors[n]; if (!a?.body) return null; const v = new THREE.Vector3(); let low = Infinity, lowB = Infinity; a.body.updateMatrixWorld(true);
+    a.body.traverse(o => { if (o.isSkinnedMesh) { const c = o.geometry.attributes.position.count; for (let i = 0; i < c; i += 3) { o.getVertexPosition(i, v); o.localToWorld(v); low = Math.min(low, v.y); } } if (o.isBone) lowB = Math.min(lowB, o.getWorldPosition(v).y); });
+    const g = a.p.root.getWorldPosition(v).y, k = a.p.root.getWorldScale(new THREE.Vector3()).y; return { skin: +((low - g) / k).toFixed(3), bone: +((lowB - g) / k).toFixed(3), H: a.H, pose: a.pose, hasSleep: !!a.acts?.sleep, cur: a.cur?.getClip().name }; },
   // 겹친 사람: 보이는 모든 사람(배역·군중)의 엉덩이 뼈 자리끼리 너무 가까운 쌍 (무대 좌표)
   crowding(lim = 0.1) { const v = new THREE.Vector3(), P = []; stageGroup.updateMatrixWorld(true); Object.entries(actors).forEach(([n, a]) => { a.p.root.userData.who = n; });
     stageGroup.traverse(o => { if (!o.isBone || !/Hips$/.test(o.name)) return; let vis = true; for (let q = o; q; q = q.parent) if (!q.visible || q.userData.deck || q.userData.saddle) { vis = false; break; } if (!vis) return; // 배·나귀에 탄 사람은 빼고
