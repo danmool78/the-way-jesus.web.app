@@ -580,7 +580,7 @@ function meet() {
   const e = G.events[G.idx];
   G.grade = gradeNow(); G.meetLeft = Math.max(0, G.timeT); G.timeT = 0; G.leader.goal.copy(G.leader.pos);
   G.me.goal.copy(G.me.pos);
-  G.leader.target = G.me; G.leader.set('speak'); G.me.target = G.leader;
+  G.leader.target = G.me; G.leader.set('idle'); // 말씀하실 때도 그냥 서서 — 말하기 동작의 손짓이 왔다 갔다 하며 손이 어색했다(사용자 2026-11) G.me.target = G.leader;
   // 그분이 하신 말씀(j)이 있으면 그분 입으로, 없으면(수태고지처럼 아직 태어나시기 전 등) '이 자리의 말씀'으로 누가 한 말인지 밝혀서
   const own = (e.words || []).find(x => x.j), w = own || (e.words || [])[0];
   // 말씀은 곧 이어지는 '말씀 고르기'에서 맞히게, 말풍선에는 반기는 인사만 (먼저 보여 주면 너무 쉬웠다)
