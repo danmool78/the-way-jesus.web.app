@@ -367,7 +367,10 @@ export class StageModel {
         // 땅에 앉기: 무릎을 세우고 앉는다(넓적다리는 앞으로 조금 들고, 무릎에서 꺾인 정강이는 땅으로) — 양반다리는 긴 겉옷이 두 다리 사이에 늘어나 무릎이 어디서 접혔는지 보이지 않았다(사용자 2026-11) / 꿇어앉기: 넓적다리는 앞으로, 정강이는 뒤로
         const thigh = (cross ? new THREE.Vector3(sd * 0.22, 0.05, 1) : new THREE.Vector3(0, -0.35, 1)).normalize().applyQuaternion(qr);
         const shin = (cross ? new THREE.Vector3(sd * 0.04, -1, 0.08) : new THREE.Vector3(0, -0.12, -1)).normalize().applyQuaternion(qr);
-        this.aim(l.up, l.lo, thigh, this.seizaW); this.aim(l.lo, l.foot, shin, this.seizaW); for (const b of [l.lo, l.foot, l.toe]) if (b) knee = Math.min(knee, b.getWorldPosition(v1).y); } // 무릎·발·발끝 가운데 가장 낮은 곳을 땅에 (무릎만 맞추니 발끝이 묻혔다)
+        this.aim(l.up, l.lo, thigh, this.seizaW); this.aim(l.lo, l.foot, shin, this.seizaW);
+        // 꿇어앉기: 발등을 뒤로 눕혀 바닥에 편다 — 발이 선 자세의 각도 그대로라 뒤로 누운 정강이 끝에서 발끝이 하늘로 섰다(사용자 2026-11)
+        if (!cross && l.toe) this.aim(l.foot, l.toe, new THREE.Vector3(0, -0.3, -1).normalize().applyQuaternion(qr), this.seizaW);
+        for (const b of [l.lo, l.foot, l.toe]) if (b) knee = Math.min(knee, b.getWorldPosition(v1).y); } // 무릎·발·발끝 가운데 가장 낮은 곳을 땅에 (무릎만 맞추니 발끝이 묻혔다)
       if (knee < Infinity) this.body.position.y -= (knee - r.getWorldPosition(v2).y) / r.getWorldScale(v1).y - 0.03 * this.hipH;
     }
     // 땅에 앉을 때는 엉덩이 밑에 돌 하나 — 맨땅에 걸터앉은 듯 엉덩이가 떠 보였다(사용자 2026-11: 돌멩이라도 깔고 앉게)
