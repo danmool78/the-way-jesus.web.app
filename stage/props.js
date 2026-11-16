@@ -1,6 +1,6 @@
 /* 3D 무대 소품: 구유·양·배·물결·군중·바구니·언덕·십자가·무덤·빛 */
 import { THREE, mat, DS, lathe, folds, mesh, sphere, glowTexture, damp } from './kit.js';
-import { crowdPerson, dollHeight } from './model-actor.js';
+import { crowdPerson, dollHeight, MS } from './model-actor.js';
 // 군중을 순례자 3D 모델로 (stage.js가 받아 옷 색을 입혀 넣어 준다 — { men: [gltf…], women: [gltf…] }). 없으면 예전의 작은 사람들
 let CROWD = null;
 export const setCrowd = c => { CROWD = c; };
@@ -293,7 +293,7 @@ const MAKERS = {
       const people = (o.spots || []).map(([x, z], i) => {
         const list = i % 3 === 2 ? CROWD.women : CROWD.men, g0 = list[(i * 7 + (i % 3)) % list.length]; // 이웃끼리 같은 사람이 겹치지 않게 건너뛰며
         // 키는 무대의 다른 어른(인형 man)과 같게 — 예전의 작은 사람들 크기로 세우니 어른이 아이처럼 작았다 (사용자 2026-11)
-        const s = 0.94 + Math.random() * 0.1, f = crowdPerson(g0, dollHeight('man') * 0.97 * s);
+        const s = 0.94 + Math.random() * 0.1, f = crowdPerson(g0, dollHeight('man') * 0.97 * s * MS);
         f.obj.position.set(x, 0, z); f.home = new THREE.Vector3(x, 0, z); f.off = new THREE.Vector3();
         f.obj.rotation.y = (o.face ?? Math.atan2(-x, -z)) + (Math.random() - 0.5) * 0.5;
         g.add(f.obj); return f;
@@ -310,7 +310,7 @@ const MAKERS = {
           want.set(0, 0, 0); w.copy(f.home);
           for (const p of loc) { const dx = w.x - p.x, dz = w.z - p.z, d = Math.hypot(dx, dz); if (d < R) { const s = (R - d) / (d || 1e-6); want.x += (d ? dx : 1) * s; want.z += (d ? dz : 0) * s; } }
           const before = f.off.clone(); f.off.lerp(want, 1 - Math.exp(-4 * (dt || 0.016)));
-          f.obj.position.copy(f.home).add(f.off); if (f.stone?.parent) f.stone.position.add(f.off.clone().sub(before));
+          f.obj.position.x = f.home.x + f.off.x; f.obj.position.z = f.home.z + f.off.z; if (f.stone?.parent) f.stone.position.add(f.off.clone().sub(before)); // 높이는 그대로 — 앉느라 내린 몸까지 0으로 되돌려 앉은 채 떠 있었다(e16, 사용자 2026-11)
         });
       }, { state: o.state || 'stand' });
     }

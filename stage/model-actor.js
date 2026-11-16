@@ -18,6 +18,8 @@ const KNEEL = new Set(['kneel', 'mourn', 'cower']); // 땅에 앉기(sit-ground)
 const WING = { scale: 1.0, y: -0.28, back: 0.12, turn: 0 }; // 날개를 붙이는 자리 (몸 모델 단위, 캡처로 맞춤)
 // 앉는 돌: 둥글게 깎인 낮은 돌 (크기 1의 틀 — 사람마다 엉덩이 높이에 맞춰 늘린다)
 // 깔고 앉는 돌 — 모양·빛깔이 다른 여섯 가지를 섞어 쓴다(다 똑같아 보였다, 사용자). 윗면은 평평하게 깎아 앉을 자리로
+// 모델 크기 배율 — 대본의 자리는 작은 인형에 맞춰 짜여 몸이 큰 모델끼리 겹치고 소품을 뚫었다(사용자 2026-11). 주소의 ?mscale=로 견주어 본다
+export const MS = +(new URLSearchParams(location.search).get('mscale') || 1);
 const STONE_C = ['#8f8573', '#a39a86', '#7d776b', '#9b8a72', '#b0a58f', '#857d70'];
 const STONES = STONE_C.map((c, k) => {
   let s = 97 + k * 131; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
@@ -136,12 +138,12 @@ export class StageModel {
   constructor(gltf, type, x = 0, z = 0, face = 0, o = {}) {
     this.doll = o.doll || new Actor(type, x, z, face, o); // 보이지 않는 길잡이 (장면에 넣지 않는다) — o.doll: 낭독 중에 모델이 늦게 와서 서 있던 인형을 그대로 길잡이로
     this.type = type;
-    this.H = dollHeight(type);
+    this.H = dollHeight(type) * MS;
     this.still = !!o.still; // 아무 동작 없이 모델을 뜬 자세 그대로
     const body = clone(gltf.scene);
     body.updateMatrixWorld(true);
     const top = bone(body, 'HeadTop_End'), h = top ? top.getWorldPosition(v1).y : 1.7;
-    body.scale.setScalar(dollHeight(type) * 0.97 / (h > 0.1 ? h : 1.7));
+    body.scale.setScalar(dollHeight(type) * MS * 0.97 / (h > 0.1 ? h : 1.7));
     this.mats = [];
     body.traverse(m => { if (m.isMesh) { m.frustumCulled = false; m.material = brighten(m.material).clone(); this.mats.push(m.material); } });
     this.p = { root: new THREE.Group() }; this.p.root.add(body);
@@ -150,7 +152,7 @@ export class StageModel {
     // 뼈 회전은 그대로, 엉덩이 위치만 두 모델의 엉덩이 높이 비로 맞춘 뒤 이 모델의 기본 자세로 곧게 세운다(calmClips)
     this.acts = Object.fromEntries(calmClips(withBorrowed(gltf, body, o.borrow)).map(c => [c.name, this.mixer.clipAction(c)])); // 차분한 말하기·끊김 없는 되풀이·곧게 서기 (game-model.js)
     // 베개: 누워 잘 때 머리 밑에 (막 4:38, 사용자 2026-11)
-    const H = dollHeight(type);
+    const H = dollHeight(type) * MS;
     this.pillow = new THREE.Mesh(new THREE.CapsuleGeometry(H * 0.032, H * 0.09, 4, 12), new THREE.MeshStandardMaterial({ color: '#efe2c2', roughness: 1 }));
     this.pillow.rotation.z = Math.PI / 2; this.pillow.scale.set(1, 1, 0.6); this.pillow.visible = false; this.pillowY = H * 0.022;
     this.p.root.add(this.pillow);
@@ -161,8 +163,8 @@ export class StageModel {
     if (this.acts.pray) { const c = this.acts.pray.getClip(); if (c.duration > 5) this.acts.pray = this.mixer.clipAction(inPlace(THREE.AnimationUtils.subclip(c, 'pray-hold', 57, 138, 30), bone(body, 'Hips')?.position.clone())); }
     this.march = MARCH.has(type); this.stride = Math.random(); this.pace = 0.9 + Math.random() * 0.2;
     // 인형의 왼팔·오른팔이 모델의 어느 팔인지는 자리(x)로 맞춘다 (서로 앞을 보는 쪽이 같다)
-    const L = { up: bone(body, 'LeftArm'), lo: bone(body, 'LeftForeArm'), hand: bone(body, 'LeftHand') };
-    const R = { up: bone(body, 'RightArm'), lo: bone(body, 'RightForeArm'), hand: bone(body, 'RightHand') };
+    const L = { up: bone(body, 'LeftArm'), lo: bone(body, 'LeftForeArm'), hand: bone(body, 'LeftHand'), mid: bone(body, 'LeftHandMiddle1') };
+    const R = { up: bone(body, 'RightArm'), lo: bone(body, 'RightForeArm'), hand: bone(body, 'RightHand'), mid: bone(body, 'RightHandMiddle1') };
     const dl = this.doll.p.armL.position.x > 0;
     this.arms = [[this.doll.p.armL, dl === (L.up.getWorldPosition(v1).x > 0) ? L : R], [this.doll.p.armR, dl === (L.up.getWorldPosition(v1).x > 0) ? R : L]];
     for (const [, mb] of this.arms) if (mb.hand) mb.hand0 = mb.hand.quaternion.clone(); // 손목의 기본 자세 (곧게 편 손)
@@ -229,7 +231,8 @@ export class StageModel {
     if (!this.props?.length) return;
     const r = this.p.root, dr = this.doll.p.root; r.updateMatrixWorld(true); dr.updateMatrixWorld(true);
     const inv = r.matrixWorld.clone().invert(), qr = r.getWorldQuaternion(new THREE.Quaternion()), qd = dr.getWorldQuaternion(new THREE.Quaternion()).invert();
-    const handAt = i => { const m = this.arms[i][1]; return m.hand ? m.hand.getWorldPosition(new THREE.Vector3()).applyMatrix4(inv) : null; };
+    // 손바닥 가운데(손목 뼈와 가운뎃손가락 뿌리 사이) — 손목 뼈 자리에 붙이니 두루마리가 손목에 끼어 보였다(사용자 2026-11)
+    const handAt = i => { const m = this.arms[i][1]; if (!m.hand) return null; const h = m.hand.getWorldPosition(new THREE.Vector3()); if (m.mid) h.lerp(m.mid.getWorldPosition(new THREE.Vector3()), 0.75); return h.applyMatrix4(inv); };
     for (const it of this.props) {
       const { o, kind, side } = it;
       if (!o.visible) continue;
@@ -426,7 +429,7 @@ export function crowdPerson(gltf, height) {
       let hip = Infinity; for (const [u] of legs) if (u) hip = Math.min(hip, u.getWorldPosition(v1).y);
       body.position.y -= (hip - py) / w - 0.06 * height; body.updateMatrixWorld(true); // 엉덩이를 걸상 위에
       for (const [, l, f] of legs) if (l && f) {
-        const k = l.getWorldPosition(v1), L = k.distanceTo(f.getWorldPosition(v3)), drop = Math.min(L * 0.98, k.y - (py - seat * w) - 0.05 * height * w); // 무릎에서 바닥까지 — 발목 뼈를 바닥에 대니 발바닥이 발목 높이만큼 묻혔다(사용자)
+        const k = l.getWorldPosition(v1), L = k.distanceTo(f.getWorldPosition(v3)), drop = Math.max(L * 0.55, Math.min(L * 0.98, k.y - (py - seat * w) - 0.05 * height * w)); // 무릎에서 바닥까지 — 발목 뼈를 바닥에 대니 발바닥이 발목 높이만큼 묻혔다(사용자). 낮은 걸상에서 음수가 되면 정강이가 위로 꺾여 뒤로 누운 듯 떠 보였다 — 정강이는 적어도 반쯤 아래로
         aimBone(l, f, new THREE.Vector3(0, -drop / L, Math.sqrt(Math.max(0, 1 - (drop / L) ** 2))).applyQuaternion(q));
       }
       return;
