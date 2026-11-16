@@ -252,7 +252,7 @@ function setScene(ev) {
   if (street.on) street.cam(script.cams, script.cam || Object.keys(script.cams || {})[0], true);
   stageGroup.scale.setScalar(script.scale || 1);
   // 건물이 선 장면에서 앉는 사람은 네모난 의자에, 산·들에서는 돌에 (사용자 2026-11)
-  seatBlocks(Object.values(script.props || {}).some(([k]) => INDOOR.has(k)));
+  seatBlocks(script.seats ? script.seats === 'block' : Object.values(script.props || {}).some(([k]) => INDOOR.has(k))); // seats로 장면이 정할 수도 (산 위 설교의 비유 속 작은 집은 멀리 있다)
   size = { w: 0, h: 0 }; // 넓은 무대(wide)가 바뀌었을 수 있으니 다시 잰다
   // 배역마다 쓸 모델 (거리 무대·실루엣은 인형 그대로)
   // dolls: 그 장면의 사람은 인형 그대로 (에덴 프롤로그의 아담·하와는 하나님이 지어 주신 가죽옷 — 순례자 모델이 지금 옷처럼 보였다, 사용자 2026-11). 천사만 모델로
@@ -325,6 +325,10 @@ if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__st
     }
     return out;
   },
+  // 앉은 사람의 엉덩이와 깔고 앉은 돌·의자가 얼마나 어긋났나 (무대 좌표, 사람 키로 나눔)
+  seats() { const v = new THREE.Vector3(), w = new THREE.Vector3(), out = []; stageGroup.updateMatrixWorld(true);
+    stageGroup.traverse(o => { if (!o.isMesh || !o.visible || !o.userData.tw && o.userData.tw !== 0) return; const hip = o.userData.hips; if (!hip) return;
+      hip.getWorldPosition(v); o.getWorldPosition(w); stageGroup.worldToLocal(v); stageGroup.worldToLocal(w); out.push([+(w.x - v.x).toFixed(3), +(w.z - v.z).toFixed(3)]); }); return out; },
   // 걷는 사람들의 걷기 동작 자리·빠르기 (발이 다 맞는지 점검)
   // 모델 팔 길이: 지금 자세의 위팔·아래팔 길이 ÷ 뼈대(바인드) 길이 — 1이면 늘어나지 않은 것
   armLen() { const v = new THREE.Vector3(), w = new THREE.Vector3(), M = new THREE.Matrix4(), s3 = new THREE.Vector3(); return Object.entries(actors).filter(([, a]) => a.doll).map(([n, a]) => {

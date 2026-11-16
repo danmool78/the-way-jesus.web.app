@@ -49,11 +49,15 @@ let stoneN = 0;
 // 돌을 앉은 사람 엉덩이 밑, 몸이 보는 쪽의 조금 뒤에 몸과 같은 방향으로 놓는다(부모 좌표 기준 z로 밀었더니 옆으로 비켜났다)
 const fq = new THREE.Quaternion(), fd = new THREE.Vector3();
 const seatStone = (stone, hips, parent, hp, top, H) => {
-  hips.getWorldQuaternion(fq).premultiply(parent.getWorldQuaternion(q3).invert()); fd.set(0, 0, 1).applyQuaternion(fq).setY(0);
-  if (fd.lengthSq() < 1e-6) fd.set(0, 0, 1); fd.normalize();
+  // 앞쪽 = 엉덩이에서 두 무릎 가운데로 (엉덩이 뼈의 축은 모델마다 달라 의자가 앞으로 밀려났다)
+  const knees = stone.userData.knees || (stone.userData.knees = hips.children.filter(b => /UpLeg$/.test(b.name)).map(b => b.children.find(c => c.isBone)).filter(Boolean));
+  fd.set(0, 0, 0); for (const k of knees) fd.add(parent.worldToLocal(k.getWorldPosition(fq._v || (fq._v = new THREE.Vector3()))));
+  if (knees.length) fd.multiplyScalar(1 / knees.length).sub(hp); fd.setY(0);
+  if (fd.lengthSq() < 1e-8) fd.set(0, 0, 1); fd.normalize();
+  stone.userData.hips = hips;
   if (!stone.userData.g) stone.userData.g = [stone.geometry, stone.material];
   [stone.geometry, stone.material] = SEAT_BLOCK ? [BLOCK, BLOCK_M] : stone.userData.g;
-  stone.position.set(hp.x - fd.x * 0.05 * H, 0, hp.z - fd.z * 0.05 * H); stone.rotation.y = Math.atan2(fd.x, fd.z) + (SEAT_BLOCK ? 0 : stone.userData.tw);
+  stone.position.set(hp.x - fd.x * 0.04 * H, 0, hp.z - fd.z * 0.04 * H); stone.rotation.y = Math.atan2(fd.x, fd.z) + (SEAT_BLOCK ? 0 : stone.userData.tw);
   if (SEAT_BLOCK) stone.scale.set(H * 0.2, top, H * 0.2); else stone.scale.set(H * 0.28, top, H * 0.2); stone.visible = true;   // 넓적하게 — 좁으면 기둥처럼 섰다(사용자)
 };
 const newStone = () => { const [g, m] = STONES[stoneN++ % STONES.length], o = new THREE.Mesh(g, m);
