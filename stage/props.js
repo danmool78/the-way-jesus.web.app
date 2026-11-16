@@ -293,11 +293,10 @@ const MAKERS = {
     const heads = ['#e9dfc8', '#cdbb94', '#d8c9a6', '#3c5d96', '#efe6d4', '#b89b6c'];
     const skins = ['#c99a74', '#b9845d', '#d6ad89', '#a87451'];
     if (CROWD) {
-      const used = new Map();
       const people = (o.spots || []).map(([x, z], i) => {
         const list = i % 3 === 2 ? CROWD.women : CROWD.men, e = list[(i * 7 + (i % 3)) % list.length]; // 이웃끼리 같은 사람이 겹치지 않게 건너뛰며
-        // 같은 모델이 또 나오면 옷 색을 바꿔 입힌다 — 같은 옷의 같은 사람이 둘셋씩 서 있어 쌍둥이 같았다(사용자 2026-11)
-        const k = used.get(e) || 0; used.set(e, k + 1); const g0 = CROWD.dress ? CROWD.dress(e, k) : e;
+        // 같은 모델이 또 나오면 무대가 다른 차림을 골라 입힌다(stage.js unique — 배역·다른 무리와 함께 센다) — 쌍둥이가 섰다(사용자 2026-11)
+        const g0 = CROWD.dress ? CROWD.dress(e) : e;
         // 키는 무대의 다른 어른(인형 man)과 같게 — 예전의 작은 사람들 크기로 세우니 어른이 아이처럼 작았다 (사용자 2026-11)
         const s = 0.94 + Math.random() * 0.1, f = crowdPerson(g0, dollHeight('man') * 0.97 * s * MS);
         f.obj.position.set(x, 0, z); f.home = new THREE.Vector3(x, 0, z); f.off = new THREE.Vector3();

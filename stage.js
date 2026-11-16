@@ -165,6 +165,18 @@ Object.assign(LIKE, {
   onesimus: ['timothy', { plain: true, skin: 0.7 }], tychicus: ['luke', { hue: 140 }],
 });
 const dress = ([n, c]) => c === 'plain' ? plain(ready[n], n) : c && typeof c === 'object' ? restyle(ready[n], n, c) : c ? tinted(ready[n], n, c) : ready[n];
+// 한 장면에 같은 모델이 또 서면 옷 색상·살갗이 눈에 띄게 다른 차림을 골라 입힌다 — 같은 옷·같은 살갗의 같은 사람이 둘셋씩 섰다(사용자 2026-11).
+// 배역과 군중(여러 무리)을 한 장부(taken: 모델 이름 → 이미 입힌 차림들)로 함께 센다 — 무리마다 따로 세니 두 무리에 쌍둥이가 섰다
+const lookOf = c => c === 'plain' ? { plain: true, hue: 0, skin: 1 } : typeof c === 'string' ? { tint: c } : { hue: c?.hue || 0, skin: c?.skin || 1, plain: !!c?.plain, white: !!c?.white };
+const nearLook = (a, b) => a.tint || b.tint ? a.tint === b.tint : a.plain === b.plain && a.white === b.white && Math.abs((((a.hue - b.hue) % 360) + 540) % 360 - 180) < 30 && Math.abs(a.skin - b.skin) < 0.09;
+const LOOKS = Array.from({ length: 24 }, (_, k) => ({ hue: (k * 137) % 360, skin: [1, 0.86, 1.1, 0.94, 1.05, 0.8, 1.14, 0.9][k % 8], plain: false, white: false }));
+function unique(m, taken) {
+  if (!m) return m;
+  const L = taken.get(m[0]) || []; taken.set(m[0], L);
+  let look = lookOf(m[1]);
+  if (L.some(x => nearLook(x, look))) { look = LOOKS.find(v => !L.some(x => nearLook(x, v))); if (!look) return m; m = [m[0], { hue: look.hue, sat: 0.95, skin: look.skin }]; }
+  L.push(look); return m;
+}
 // 예수 여정은 모델이 기본(사용자 2026-11) — 다른 여정은 아직 ?models가 있을 때만. ?dolls면 예전 인형으로
 const USE_MODELS = (q => !q.has('dolls') && (q.has('models') || (q.get('j') || 'jesus') === 'jesus'))(new URLSearchParams(location.search));
 function modelOf(type, i) {
@@ -314,7 +326,8 @@ function setScene(ev) {
   size = { w: 0, h: 0 }; // 넓은 무대(wide)가 바뀌었을 수 있으니 다시 잰다
   // 배역마다 쓸 모델 (거리 무대·실루엣은 인형 그대로)
   // dolls: 그 장면의 사람은 인형 그대로 (에덴 프롤로그의 아담·하와는 하나님이 지어 주신 가죽옷 — 순례자 모델이 지금 옷처럼 보였다, 사용자 2026-11). 천사만 모델로
-  const plan = Object.values(script.cast).map(([type, , , , o = {}], i) => !script.street && !o.silhouette && !(script.dolls && type !== 'angel') && modelOf(type, i));
+  const taken = new Map(); // 이 장면에 입힌 차림 (배역 먼저, 군중은 그 뒤)
+  const plan = Object.values(script.cast).map(([type, , , , o = {}], i) => !script.street && !o.silhouette && !(script.dolls && type !== 'angel') && unique(modelOf(type, i), taken));
   {
     const crowd = !script.street && Object.values(script.props || {}).some(([k]) => k === 'crowd');
     // 군중: 엑스트라를 섞되 이 장면에 이름으로 나오는 사람은 빼고 (사무엘이 이름으로 선 장면의 군중에 또 사무엘이 서지 않게)
@@ -324,9 +337,9 @@ function setScene(ev) {
     // 배역(과 동작을 빌려 줄 모델)을 먼저 받고, 군중은 그다음에 — 느린 곳에서 군중 모델 열 몇 개가 배역 앞에 줄을 섰다(사용자 2026-11)
     const names = USE_MODELS ? [...new Set([...named, ...(named.size ? ['pilgrim-man', 'jesus-moves'] : []), ...(named.has('angel') ? ['wings'] : [])])] : []; // 동작을 빌려 줄 모델도 함께 — 늦게 받으면 요셉이 잠자기 동작 없이 통나무처럼 누웠다
     const crowdNames = USE_MODELS && crowd ? [...new Set(CROWDM)] : [];
-    // 같은 모델이 무리에 또 나오면(k번째) 옷 색상을 돌리고 살갗 밝기를 달리 한다 (props.js crowd)
-    const CHUES = [0, 150, 45, 220, 300, 95], CSKIN = [1, 0.86, 1.1, 0.94, 1.05, 0.8];
-    const crowdSet = () => USE_MODELS && crowd && CROWDM.every(n => ready[n]) ? { men: pool.men, women: pool.women, dress: (e, k) => k ? restyle(ready[e[0]], e[0], { hue: CHUES[k % 6], sat: 0.95, skin: CSKIN[k % 6] }) : dress(e) } : null;
+    // 군중을 다시 세울 때(모델이 늦게 와 rebuildCrowds)마다 배역만 적힌 장부에서 다시 센다 — 지난번 군중의 차림이 남아 있으면 엉뚱하게 비켜 입었다
+    const book = () => new Map([...taken].map(([k, v]) => [k, [...v]]));
+    const crowdSet = () => { const tk = book(); return USE_MODELS && crowd && CROWDM.every(n => ready[n]) ? { men: pool.men, women: pool.women, dress: e => dress(unique(e, tk)) } : null; };
     setCrowd(crowdSet());
     const ev0 = ev, wait = names.length ? want(names) : null;
     const thenCrowd = () => { const w = crowdNames.length ? want(crowdNames) : null; w?.then(() => { if (curEv !== ev0) return; if (atStart) return setScene(ev0); setCrowd(crowdSet()); rebuildCrowds(); }); };
@@ -380,7 +393,7 @@ function setScene(ev) {
 }
 // 모델 점검용(?models&check): 장면의 순간마다 떠 있거나 묻힌 사람, 상대를 보지 않고 말하는 사람을 잰다 (헤드리스로 61장면을 돌려 본다)
 if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__stage = {
-  scene: ev => setScene(ev), beats: () => Object.keys(script?.beats || {}),
+  scene: ev => setScene(ev), group: () => stageGroup, beats: () => Object.keys(script?.beats || {}),
   ready: () => !Object.keys(loading).some(n => !(n in ready)),
   step(k) { atStart = false; apply(script.beats[k], true); gaze(); Object.values(actors).forEach(a => { a.show = a.showT; for (let i = 0; i < 60; i++) a.update(i * 0.05, 0.05); }); stageGroup.updateMatrixWorld(true); for (let i = 0; i < 60; i++) { frameNo++; spaceOut(0.05); Object.values(actors).forEach(a => a.update(3 + i * 0.05, 0.05)); } Object.values(props).forEach(p => { for (let i = 0; i < 40; i++) p.update(i * 0.05, 0.05, {}); }); },
   measure() {
