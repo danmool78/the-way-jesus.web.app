@@ -17,7 +17,7 @@ class Prop {
   }
   set(state) { if (state && state !== this.state) { this.state = state; this.t0 = performance.now() / 1000; } }
   update(time, dt, env) {
-    this.show = damp(this.show, this.showT, 3, dt);
+    this.show = this.muted ? 0 : damp(this.show, this.showT, 3, dt); // muted: 무대가 끈 소품 (모델 천사 위의 빛기둥)
     const pos = this.obj.position;
     if (this.speed) { // 일정한 속도로 미끄러지듯 (배가 물 위를 나아가듯) — 끝에서 살짝 늦춘다
       const dx = this.goal.x - pos.x, dz = this.goal.y - pos.z, d = Math.hypot(dx, dz);
@@ -204,6 +204,7 @@ const MAKERS = {
     mesh(new THREE.TorusGeometry(0.5, 0.018, 6, 40), dark, rock, [0, 0.16, 0], [1.7, 0.55, 1]).rotation.x = Math.PI / 2;
     const deck = new THREE.Group();
     deck.position.y = 0.06;
+    deck.userData.deck = true; // 배 위에서 앉는 사람은 돌 대신 나무 걸상에 (stage/model-actor.js seatStone)
     rock.add(deck);
     mesh(new THREE.BoxGeometry(1.25, 0.015, 0.36), mat('#8a6440'), rock, [0, 0.06, 0]).receiveShadow = true;
     // 돛대와 접은 돛

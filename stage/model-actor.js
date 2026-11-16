@@ -46,6 +46,7 @@ const seatBottom = (body, hips, R) => {
 };
 // 회당·집 같은 건물이 있는 장면은 돌 대신 네모난 의자(사용자 2026-11: 건물 곁은 정육면체 의자, 산·들은 돌) — 무대가 장면마다 정한다
 const BLOCK = (() => { const g = new THREE.BoxGeometry(1, 1, 1); g.translate(0, 0.5, 0); return g; })(), BLOCK_M = new THREE.MeshStandardMaterial({ color: '#b39b74', roughness: 0.95 });
+const WOOD_M = new THREE.MeshStandardMaterial({ color: '#7a5434', roughness: 0.9 }); // 배 위의 나무 걸상
 let SEAT_BLOCK = false;
 export const seatBlocks = on => { SEAT_BLOCK = !!on; };
 let stoneN = 0;
@@ -59,9 +60,12 @@ const seatStone = (stone, hips, parent, hp, top, H) => {
   if (fd.lengthSq() < 1e-8) fd.set(0, 0, 1); fd.normalize();
   stone.userData.hips = hips;
   if (!stone.userData.g) stone.userData.g = [stone.geometry, stone.material];
-  [stone.geometry, stone.material] = SEAT_BLOCK ? [BLOCK, BLOCK_M] : stone.userData.g;
-  stone.position.set(hp.x - fd.x * 0.012 * H, 0, hp.z - fd.z * 0.012 * H); stone.rotation.y = Math.atan2(fd.x, fd.z) + (SEAT_BLOCK ? 0 : stone.userData.tw);
-  if (SEAT_BLOCK) stone.scale.set(H * 0.2, top, H * 0.2); else stone.scale.set(H * 0.28, top, H * 0.2); stone.visible = true;   // 넓적하게 — 좁으면 기둥처럼 섰다(사용자)
+  // 배 위면 나무 걸상 (배 안에 돌이 깔려 있었다, 사용자 2026-11)
+  let onBoat = false; for (let q = parent; q; q = q.parent) if (q.userData.deck) { onBoat = true; break; }
+  const block = SEAT_BLOCK || onBoat;
+  [stone.geometry, stone.material] = onBoat ? [BLOCK, WOOD_M] : SEAT_BLOCK ? [BLOCK, BLOCK_M] : stone.userData.g;
+  stone.position.set(hp.x - fd.x * 0.012 * H, 0, hp.z - fd.z * 0.012 * H); stone.rotation.y = Math.atan2(fd.x, fd.z) + (block ? 0 : stone.userData.tw);
+  if (block) stone.scale.set(H * 0.2, top, H * 0.2); else stone.scale.set(H * 0.28, top, H * 0.2); stone.visible = true;   // 넓적하게 — 좁으면 기둥처럼 섰다(사용자)
 };
 const newStone = () => { const [g, m] = STONES[stoneN++ % STONES.length], o = new THREE.Mesh(g, m);
   o.userData.tw = (stoneN * 0.61) % 0.5 - 0.25; o.castShadow = o.receiveShadow = true; o.visible = false; return o; };
@@ -120,7 +124,7 @@ function withBorrowed(gltf, body, borrow = {}) {
 }
 export class StageModel {
   constructor(gltf, type, x = 0, z = 0, face = 0, o = {}) {
-    this.doll = new Actor(type, x, z, face, o); // 보이지 않는 길잡이 (장면에 넣지 않는다)
+    this.doll = o.doll || new Actor(type, x, z, face, o); // 보이지 않는 길잡이 (장면에 넣지 않는다) — o.doll: 낭독 중에 모델이 늦게 와서 서 있던 인형을 그대로 길잡이로
     this.type = type;
     this.H = dollHeight(type);
     this.still = !!o.still; // 아무 동작 없이 모델을 뜬 자세 그대로

@@ -103,7 +103,7 @@ export const SCRIPTS = {
       'p1.0': [['gabriel', 'speak'], ['mary', 'afraid', { x: 0.45 }]],
       'p1.4': [['gabriel', 'bless']],
       'p1.7': [['mary', 'kneel']],
-      'p2.1': [['@env', 'night'], ['beam', null, { show: 0 }], ['joseph', 'sleep', { show: 1, x: 1.05, z: -0.3 }], ['gabriel', 'idle', { x: 0.62, z: -0.7, look: 1.2 }], ['mary', 'pray', { x: -0.2, look: -0.3 }]],
+      'p2.1': [['@env', 'night'], ['beam', null, { show: 0 }], ['joseph', 'sleep', { show: 1, x: 1.05, z: -0.3 }], ['gabriel', 'idle', { x: 0.42, z: -0.45, look: 1.2 }], ['mary', 'pray', { x: -0.2, look: -0.3 }]],
       'p2.2': [['gabriel', 'speak']],
       'p2.4': [['@env', 'day'], ['joseph', 'idle', { x: 0.75, z: 0.05, look: -1 }], ['gabriel', 'bless', { x: -0.7, z: -0.1, look: 0.9 }], ['mary', 'idle', { x: 0.25, look: -0.8 }]],
       w0: [['@env', 'day'], ['beam', null, { show: 1 }], ['gabriel', 'speak', { x: -0.6, look: 1 }], ['mary', 'listen', { look: -1 }], ['joseph', 'idle', { show: 0 }]],
@@ -280,20 +280,20 @@ export const SCRIPTS = {
     props: {
       house: ['house', 0.75, -0.75],
       olive: ['olive', 1.75, -0.6, { scale: 0.9 }], // 나사렛 집 곁의 올리브나무
-      donkey: ['donkey', -1.3, -0.1, { speed: 0.32 }],
+      donkey: ['donkey', -1.55, 0.15, { speed: 0.32 }], // 누운 요셉(모델은 인형보다 길다)과 겹치지 않게 (사용자 2026-11)
     },
     cast: {
       joseph: ['joseph', -0.85, 0.0, 0.5, { speed: 0.32 }],
-      mary: ['mary', -0.55, 0.15, 0.4],
+      mary: ['mary', -0.25, 0.3, -0.6],
       angel: ['angel', -1.3, -0.4, 0.6],
       child: ['child', 0.42, 0.35, -0.8],
     },
     beats: {
       // 장면은 애굽에서 시작한다(skeleton의 start) — 꿈에 천사가 나타나는 밤. 낭독이 p1.1에 이르면 지도가 나사렛까지 걸어간다
-      enter: [['@env', 'night'], ['house', null, { show: 0 }], ['olive', null, { show: 0 }], ['angel', 'speak', { show: 1, y: 0.35, x: -1.3 }], ['donkey', null, { x: -1.3, z: -0.1 }],
-        ['mary', 'carry', { item: null, board: null, x: -0.55, z: 0.15, look: 0.4 }], ['joseph', 'sleep', { x: -0.85, z: 0.0, look: 0.5 }], ['child', 'idle', { show: 0 }]],
-      intro: [['@env', 'night'], ['house', null, { show: 0 }], ['olive', null, { show: 0 }], ['angel', 'idle', { show: 0, y: 1.6, x: -1.3 }], ['donkey', null, { show: 1, x: -1.3, z: -0.1 }], ['child', 'idle', { show: 0 }],
-        ['mary', 'carry', { item: null, board: null, x: -0.55, z: 0.15, look: 0.4 }], ['joseph', 'sleep', { x: -0.85, z: 0.0, look: 0.5 }]],
+      enter: [['@env', 'night'], ['house', null, { show: 0 }], ['olive', null, { show: 0 }], ['angel', 'speak', { show: 1, y: 0.35, x: -1.3 }], ['donkey', null, { x: -1.55, z: 0.15 }],
+        ['mary', 'carry', { item: null, board: null, x: -0.25, z: 0.3, look: -0.6 }], ['joseph', 'sleep', { x: -0.85, z: 0.0, look: 0.5 }], ['child', 'idle', { show: 0 }]],
+      intro: [['@env', 'night'], ['house', null, { show: 0 }], ['olive', null, { show: 0 }], ['angel', 'idle', { show: 0, y: 1.6, x: -1.3 }], ['donkey', null, { show: 1, x: -1.55, z: 0.15 }], ['child', 'idle', { show: 0 }],
+        ['mary', 'carry', { item: null, board: null, x: -0.25, z: 0.3, look: -0.6 }], ['joseph', 'sleep', { x: -0.85, z: 0.0, look: 0.5 }]],
       'p0.1': [['angel', 'speak', { show: 1, y: 0.35 }]],
       'p0.4': [['angel', 'idle', { show: 0 }], ['@env', 'day'], ['joseph', 'idle', { look: 1 }], ['mary', 'ride', { item: 'baby', board: 'donkey', x: 0, z: 0, look: 0, delay: 1200 }],
         ['donkey', null, { x: -0.2, z: 0.2, delay: 1800 }], ['joseph', 'idle', { x: 0.1, z: 0.35, look: -1, delay: 1800 }]],
@@ -712,15 +712,16 @@ export const SCRIPTS = {
         ['jesus', 'speak', { x: -0.35, z: -0.18, look: 1.0, board: null }], ['peter', 'kneel', { x: 0.1, z: -0.12, look: -1.0, board: null }], ['andrew', 'listen', { x: 0.45, z: -0.28, look: -1.0, board: null }],
         ['james', 'listen', { x: 0.85, z: -0.2, look: -1.0 }], ['johnD', 'listen', { x: 1.1, z: -0.32, look: -1.0 }]],
       intro: [['@env', 'calm'], ['shore', null, { show: 0 }], ['boat', null, { geo: [32.859, 35.566] }], ['boat2', null, { geo: [32.862, 35.616] }], ['net', 'empty', { x: 0.85, z: -0.12 }],
-        ['jesus', 'idle', { show: 1, x: -1.9, z: -0.15, look: 1.2, board: null }], ['peter', 'bow', { x: 0.65, z: -0.15, look: 0.6, board: null }], ['andrew', 'bow', { x: 1.05, z: -0.1, look: -0.8, board: null }],
-        ['james', 'bow', { show: 1, x: 1.55, z: -0.2, look: 0.8 }], ['johnD', 'bow', { show: 1, x: 1.8, z: -0.08, look: -1.0 }]],
+        ['jesus', 'idle', { show: 1, x: -1.9, z: -0.15, look: 1.2, board: null }], ['peter', 'sit-ground', { x: 0.65, z: -0.15, look: 0.6, board: null }], ['andrew', 'sit-ground', { x: 1.05, z: -0.1, look: -0.8, board: null }],
+        // 물가에 앉아 그물을 손질한다 — 서서 허리를 굽히니 빈손으로 무언가를 들여다보는 것 같았다(사용자 2026-11)
+        ['james', 'sit-ground', { show: 1, x: 1.55, z: -0.2, look: 0.8 }], ['johnD', 'sit-ground', { show: 1, x: 1.8, z: -0.08, look: -1.0 }]],
       'p0.2': [['shore', null, { show: 1 }], ['jesus', 'idle', { x: -0.4, z: -0.1, look: 0.6 }],
         ['jesus', 'sit', { board: 'boat', x: -0.42, z: 0, look: 0, delay: 3000 }], ['peter', 'idle', { board: 'boat', x: 0.35, z: 0.02, look: -1.0, delay: 3000 }],
         ['boat', null, { geo: [32.858, 35.572], delay: 3200 }], ['jesus', 'speak', { delay: 5000 }]],
       'p1.0': [['jesus', 'speak', { look: 1.0 }]],
       'p1.3': [['peter', 'shrug'], ['andrew', 'idle', { board: 'boat', x: 0.62, z: -0.02, look: -1.0 }], ['boat', null, { geo: [32.845, 35.578] }], ['net', null, { geo: [32.84, 35.588], delay: 3000 }], ['peter', 'bow', { delay: 3000 }]],
       'p1.5': [['net', 'full'], ['peter', 'afraid', { delay: 1500 }], ['boat2', null, { geo: [32.845, 35.6] }], ['james', 'idle', { x: 1.3, z: -0.15, look: -1.0 }], ['johnD', 'idle', { x: 1.6, z: -0.05, look: -1.0 }]],
-      'p2.0': [['peter', 'kneel', { x: 0.05, z: 0.02, look: -1.0 }]],
+      'p2.0': [['peter', 'kneel', { x: 0.3, z: 0.02, look: -1.0 }]], // 예수님 무릎 앞에 붙어 있었다 — 조금 떨어져
       'p2.1': [['peter', 'speak']],
       'p2.4': [['jesus', 'bless', { look: 1.0 }], ['peter', 'kneel']],
       'p2.6': [['boat', null, { geo: [32.859, 35.566] }], ['boat2', null, { geo: [32.862, 35.616] }], ['net', null, { x: 0.55, z: -0.02 }], ['shore', null, { show: 0, delay: 1500 }],

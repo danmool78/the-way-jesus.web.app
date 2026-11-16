@@ -292,7 +292,12 @@ export function calmClips(gltf) {
       const v = o[prop].toArray(), T = prop === 'quaternion' ? THREE.QuaternionKeyframeTrack : THREE.VectorKeyframeTrack;
       still.push(new T(k.name, [0], v));
     }
-    const tracks = [...t.tracks.filter(k => !BODY.test(k.name)), ...still];
+    // idle(4초)이 talk(6초)보다 짧으면 몸통 열쇠가 4초에서 끝나 그 뒤가 1.4초 비었다 — 그 빈 구간에서 목·어깨가 한순간 기본 자세로 튀었다
+    // (예수님 말하기, 사용자 2026-11). idle을 talk 길이만큼 되풀이해 채운다
+    const tile = k => { if (k.times.length < 2 || i.duration >= t.duration) return k; const n = k.getValueSize(), T = [], V = [];
+      for (let o = 0; o < t.duration; o += i.duration) for (let j = 0; j < k.times.length; j++) { const tt = k.times[j] + o; if (tt > t.duration || (o > 0 && j === 0 && T.length && tt <= T[T.length - 1])) continue; T.push(tt); for (let c = 0; c < n; c++) V.push(k.values[j * n + c]); }
+      return new k.constructor(k.name, T, V); };
+    const tracks = [...t.tracks.filter(k => !BODY.test(k.name)), ...still.map(tile)];
     out = out.map(c => c.name === 'talk' ? seamless(new THREE.AnimationClip('talk', t.duration, tracks)) : c);
   }
   // 곧게 서기: Mixamo idle은 엉덩이(11°)·허리(12°)를 뒤로 젖혀 배가 나온 자세였다(사용자 2026-11 — 원래 3D 디자인은 그렇지 않다).
