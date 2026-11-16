@@ -1170,7 +1170,7 @@ class Actor {
     // 손에 든 물건: item 이름의 것 하나만 보이고, 서 있거나 무릎 꿇은 동안엔 두 손으로 받쳐 든다
     let holding = false;
     Object.entries(p.items).forEach(([k, g]) => { g.visible = this.item === k || (k === 'basket' && this.pose === 'hold-basket'); holding ||= g.visible; });
-    if (holding && !moving && !HAND.has(this.item) && ['idle', 'listen', 'kneel', 'hold-basket', 'bow'].includes(this.pose)) { aL = aR = [-0.45, -0.3, -1.25]; }
+    if (holding && !moving && !HAND.has(this.item) && ['idle', 'listen', 'kneel', 'hold-basket', 'bow', 'speak'].includes(this.pose)) { aL = aR = [-0.45, -0.3, -1.25]; }
     if (!moving && this.item && HAND.has(this.item) && this.pose === 'idle') { if (this.item === 'bow' || this.item === 'shield') aL = [-0.35, 0.12, -0.5]; else aR = [-0.35, 0.12, -0.5]; } // 손에 쥔 것을 조금 앞으로
     if (!moving) p.feet.forEach(f => { f.position.z = damp(f.position.z, f.userData.z0, 8, dt); });
     const k = 5;
