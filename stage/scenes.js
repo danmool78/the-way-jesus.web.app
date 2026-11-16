@@ -355,12 +355,12 @@ export const SCRIPTS = {
       dove: ['dove', 0.12, 0.05, { y: 2.2 }],
     },
     cast: {
-      john: ['baptist', 0.3, 0.0, -1.0],
+      john: ['baptist', 0.5, 0.0, -1.0], // 모델은 인형보다 커서 예수님과 겹쳤다 — 조금 떨어져 (사용자 2026-11)
       jesus: ['jesus', -2.0, 0.25, 1.2],
     },
     beats: {
-      enter: [['beam', null, { show: 1 }], ['dove', 'rest', { show: 1, y: 1.05 }], ['jesus', 'pray', { x: 0.1, z: 0.08, look: 0 }], ['john', 'kneel', { x: 0.42, z: 0.0, look: -1.1 }]],
-      intro: [['beam', null, { show: 0 }], ['dove', 'fly', { show: 0, y: 2.2 }], ['jesus', 'idle', { x: -2.0, z: 0.25, look: 1.2 }], ['john', 'speak', { x: 0.3, z: 0.0, look: -1.2 }]],
+      enter: [['beam', null, { show: 1 }], ['dove', 'rest', { show: 1, y: 1.05 }], ['jesus', 'pray', { x: 0.1, z: 0.08, look: 0 }], ['john', 'kneel', { x: 0.6, z: 0.0, look: -1.1 }]],
+      intro: [['beam', null, { show: 0 }], ['dove', 'fly', { show: 0, y: 2.2 }], ['jesus', 'idle', { x: -2.0, z: 0.25, look: 1.2 }], ['john', 'speak', { x: 0.5, z: 0.0, look: -1.2 }]],
       'p0.1': [['jesus', 'idle', { x: -0.55, z: 0.25, look: 1.1 }]],
       'p0.3': [['john', 'shrug', { look: -1.1 }]],
       'p1.1': [['jesus', 'speak']],
@@ -453,7 +453,7 @@ export const SCRIPTS = {
     env: 'dusk', wide: 1.4,
     props: {
       feast: ['feast', -0.1, -0.55, { len: 1.5 }],
-      guests: ['crowd', -0.1, -0.82, { spots: [[-0.6, 0], [-0.3, 0.04], [0, -0.02], [0.3, 0.03], [0.6, -0.01]], face: 0, state: 'sit' }],
+      guests: ['crowd', -0.1, -1.0, { spots: [[-0.6, 0], [-0.3, 0.04], [0, -0.02], [0.3, 0.03], [0.6, -0.01]], face: 0, state: 'sit' }],
       jars: ['jars', 1.3, 0.05],
     },
     cast: {
@@ -673,20 +673,21 @@ export const SCRIPTS = {
       'p0.3': [['jesus', 'speak', { look: 0 }]],
       'p1.0': [['jesus', 'idle', { item: null }], ['attendant', 'idle', { item: 'scroll' }], ['jesus', 'seat', { z: -0.1, delay: 1200 }],
         ['elder', 'sit-ground', { look: 0.6 }], ['man', 'sit-ground', { look: -0.6 }], ['phar', 'sit-ground', { look: 0.8 }]],
-      'p1.2': [['jesus', 'speak'], ['man', 'shrug', { delay: 3500 }]],
+      'p1.2': [['jesus', 'sit-speak'], ['man', 'shrug', { delay: 3500 }]], // 앉으신 채 — 말하려고 일어났다 다시 앉으셨다(사용자 2026-11)
       'p1.4': [['phar', 'speak', { look: 1.0 }]],
-      'p2.1': [['jesus', 'speak'], ['phar', 'point', { delay: 3000 }], ['man', 'point', { delay: 3400 }], ['elder', 'shrug', { delay: 3800 }]],
+      'p2.1': [['jesus', 'sit-speak'], ['phar', 'point', { delay: 3000 }], ['man', 'point', { delay: 3400 }], ['elder', 'shrug', { delay: 3800 }]],
       // 낭떠러지 산(Mount Precipice): 꼭대기 동쪽 가장자리가 이스르엘 평야 쪽으로 200m 가까이 떨어진다 — 예수가 선 자리(1.85, -0.22)를 그 가장자리에
       'p2.4': [['@at', [32.682, 35.302], { x: 1.85, z: -0.22 }], ['cliff', null, { show: 1 }], ['rocks', null, { show: 1 }], ['folk', null, { show: 0 }],
         ['jesus', 'idle', { x: 1.85, z: -0.22, look: 1.2 }], ['phar', 'idle', { x: 1.45, z: -0.05, look: 1.0 }], ['man', 'idle', { x: 1.6, z: 0.18, look: 0.8 }], ['elder', 'idle', { x: 1.25, z: 0.22, look: 1.0 }]],
-      'p2.6': [['jesus', 'idle', { x: 1.5, z: 0.1, delay: 800 }], ['jesus', 'idle', { x: -1.7, z: 0.4, delay: 2200 }], ['jesus', 'idle', { show: 0, delay: 7500 }],
+      'p2.6': [['jesus', 'idle', { x: 1.5, z: 0.1, delay: 800 }], ['jesus', 'idle', { x: -1.7, z: 0.4, delay: 2200 }], // 홀로 걸어가시는 모습으로 맺는다 (사용자 2026-11)
         ['phar', 'shrug', { look: -1.0, delay: 2500 }], ['man', 'idle', { look: -1.0, delay: 2600 }], ['elder', 'idle', { look: -1.0, delay: 2800 }]],
       w0: [['@at', null], ['cliff', null, { show: 0 }], ['rocks', null, { show: 0 }], ['folk', 'sit', { show: 1 }], ['jesus', 'speak', { show: 1, x: -0.12, z: 0.02, look: 0, item: 'scroll' }], ['attendant', 'idle', { item: null }],
         ['elder', 'sit-ground', { x: -0.6, z: 0.38, look: 0.8 }], ['man', 'sit-ground', { x: 0.45, z: 0.4, look: -0.8 }], ['phar', 'sit-ground', { x: -0.5, z: 0.1, look: 0.9 }]],
       w1: [['jesus', 'speak', { item: null }]],
       w2: [['jesus', 'speak', { look: 0.6 }], ['phar', 'shrug']],
-      end: [['@at', null], ['cliff', null, { show: 0 }], ['rocks', null, { show: 0 }], ['folk', 'sit', { show: 1 }], ['jesus', 'idle', { show: 1, x: -0.12, z: 0.02, look: 0, item: 'scroll' }], ['attendant', 'idle', { item: null }],
-        ['elder', 'sit-ground', { x: -0.6, z: 0.38, look: 0.8 }], ['man', 'sit-ground', { x: 0.45, z: 0.4, look: -0.8 }], ['phar', 'sit-ground', { x: -0.5, z: 0.1, look: 0.9 }]],
+      // 끝: 낭떠러지에서 무리 가운데를 지나 홀로 걸어가시는 모습 그대로 — 회당의 사람들이 다시 차려지면 이야기가 되감기는 것 같았다(사용자 2026-11)
+      end: [['@at', [32.682, 35.302], { x: 1.85, z: -0.22 }], ['cliff', null, { show: 1 }], ['rocks', null, { show: 1 }], ['folk', null, { show: 0 }], ['attendant', 'idle', { show: 0 }],
+        ['phar', 'idle', { show: 0 }], ['man', 'idle', { show: 0 }], ['elder', 'idle', { show: 0 }], ['jesus', 'idle', { show: 1, x: 0.2, z: 0.3, look: -1.3, item: null }]],
     },
   },
 
@@ -716,12 +717,12 @@ export const SCRIPTS = {
         // 물가에 앉아 그물을 손질한다 — 서서 허리를 굽히니 빈손으로 무언가를 들여다보는 것 같았다(사용자 2026-11)
         ['james', 'sit-ground', { show: 1, x: 1.55, z: -0.2, look: 0.8 }], ['johnD', 'sit-ground', { show: 1, x: 1.8, z: -0.08, look: -1.0 }]],
       'p0.2': [['shore', null, { show: 1 }], ['jesus', 'idle', { x: -0.4, z: -0.1, look: 0.6 }],
-        ['jesus', 'sit', { board: 'boat', x: -0.42, z: 0, look: 0, delay: 3000 }], ['peter', 'idle', { board: 'boat', x: 0.35, z: 0.02, look: -1.0, delay: 3000 }],
+        ['jesus', 'sit', { board: 'boat', x: -0.42, z: 0, look: 0, delay: 3000 }], ['peter', 'idle', { board: 'boat', x: 0.48, z: 0.04, look: -1.0, delay: 3000 }],
         ['boat', null, { geo: [32.858, 35.572], delay: 3200 }], ['jesus', 'speak', { delay: 5000 }]],
       'p1.0': [['jesus', 'speak', { look: 1.0 }]],
-      'p1.3': [['peter', 'shrug'], ['andrew', 'idle', { board: 'boat', x: 0.62, z: -0.02, look: -1.0 }], ['boat', null, { geo: [32.845, 35.578] }], ['net', null, { geo: [32.84, 35.588], delay: 3000 }], ['peter', 'bow', { delay: 3000 }]],
+      'p1.3': [['peter', 'shrug'], ['andrew', 'idle', { board: 'boat', x: 0.66, z: -0.08, look: -1.0 }], ['boat', null, { geo: [32.845, 35.578] }], ['net', null, { geo: [32.84, 35.588], delay: 3000 }], ['peter', 'bow', { delay: 3000 }]],
       'p1.5': [['net', 'full'], ['peter', 'afraid', { delay: 1500 }], ['boat2', null, { geo: [32.845, 35.6] }], ['james', 'idle', { x: 1.3, z: -0.15, look: -1.0 }], ['johnD', 'idle', { x: 1.6, z: -0.05, look: -1.0 }]],
-      'p2.0': [['peter', 'kneel', { x: 0.3, z: 0.02, look: -1.0 }]], // 예수님 무릎 앞에 붙어 있었다 — 조금 떨어져
+      'p2.0': [['peter', 'kneel', { x: -0.05, z: 0.04, look: -1.0 }]], // 예수님(-0.42)과 돛대(0.2) 사이 — 예수님 무릎에 붙거나 돛대가 얼굴을 뚫었다(사용자 2026-11)
       'p2.1': [['peter', 'speak']],
       'p2.4': [['jesus', 'bless', { look: 1.0 }], ['peter', 'kneel']],
       'p2.6': [['boat', null, { geo: [32.859, 35.566] }], ['boat2', null, { geo: [32.862, 35.616] }], ['net', null, { x: 0.55, z: -0.02 }], ['shore', null, { show: 0, delay: 1500 }],
@@ -841,7 +842,7 @@ export const SCRIPTS = {
     props: {
       booth: ['booth', -0.8, -0.3],
       feast: ['feast', 0.85, -0.55, { len: 1.2 }],
-      guests: ['crowd', 0.85, -0.78, { spots: [[-0.45, 0], [-0.15, 0.03], [0.15, -0.02], [0.45, 0.02]], face: 0, state: 'sit' }],
+      guests: ['crowd', 0.85, -0.96, { spots: [[-0.45, 0], [-0.15, 0.03], [0.15, -0.02], [0.45, 0.02]], face: 0, state: 'sit' }],
     },
     cast: {
       jesus: ['jesus', -1.95, 0.3, 1.2],
@@ -1074,7 +1075,7 @@ export const SCRIPTS = {
     env: 'dusk', wide: 1.3,
     props: {
       feast: ['feast', 0, -0.42, { len: 1.3 }],
-      guests: ['crowd', 0, -0.66, { spots: [[-0.45, 0], [-0.15, 0.03], [0.15, -0.02], [0.45, 0.02]], face: 0, state: 'sit' }],
+      guests: ['crowd', 0, -0.84, { spots: [[-0.45, 0], [-0.15, 0.03], [0.15, -0.02], [0.45, 0.02]], face: 0, state: 'sit' }],
     },
     cast: {
       jesus: ['jesus', -0.45, -0.1, 0.8],
@@ -1932,7 +1933,7 @@ export const SCRIPTS = {
     props: {
       feast: ['feast', 0, -0.42, { len: 1.3 }],
       lamp: ['lamp', 0.75, -0.25],
-      guests: ['crowd', 0, -0.66, { spots: [[-0.4, 0], [0.4, 0.02]], face: 0, state: 'sit' }],
+      guests: ['crowd', 0, -0.84, { spots: [[-0.4, 0], [0.4, 0.02]], face: 0, state: 'sit' }],
     },
     cast: {
       jesus: ['jesus', -0.35, -0.12, 0.6],
@@ -2119,7 +2120,7 @@ export const SCRIPTS = {
     props: {
       feast: ['feast', 0, -0.4, { len: 1.4 }],
       lamp: ['lamp', 0.0, -0.58],
-      others: ['crowd', 0, -0.68, { spots: [[-0.55, 0], [-0.25, 0.03], [0.25, 0.02], [0.55, 0]], face: 0, state: 'sit' }],
+      others: ['crowd', 0, -0.86, { spots: [[-0.55, 0], [-0.25, 0.03], [0.25, 0.02], [0.55, 0]], face: 0, state: 'sit' }],
       basin: ['basin', -0.6, 0.2],
     },
     cast: {

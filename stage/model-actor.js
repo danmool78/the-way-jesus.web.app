@@ -122,6 +122,16 @@ function withBorrowed(gltf, body, borrow = {}) {
   }
   have[key] = { scene: gltf.scene, animations: anims }; merged.set(gltf, have); return have[key];
 }
+// 제자리에서 꿇기: Mixamo의 꿇기 동작은 엉덩이를 앞으로 0.3쯤 옮겨, 꿇는 사람이 앞사람 쪽으로 미끄러져 겹쳤다(e08 세례 요한, 사용자 2026-11).
+// 엉덩이의 앞뒤·좌우 움직임은 서 있을 때(처음 열쇠의 기본 자세가 아니라 모델의 뼈 자리) 그대로 두고 높이만 동작대로
+function inPlace(clip, rest) {
+  if (!rest) return clip;
+  return new THREE.AnimationClip(clip.name, clip.duration, clip.tracks.map(k => {
+    if (!/Hips\.position$/.test(k.name)) return k;
+    const V = Array.from(k.values); for (let i = 0; i < V.length; i += 3) { V[i] = rest.x; V[i + 2] = rest.z; }
+    return new THREE.VectorKeyframeTrack(k.name, Array.from(k.times), V);
+  }));
+}
 export class StageModel {
   constructor(gltf, type, x = 0, z = 0, face = 0, o = {}) {
     this.doll = o.doll || new Actor(type, x, z, face, o); // 보이지 않는 길잡이 (장면에 넣지 않는다) — o.doll: 낭독 중에 모델이 늦게 와서 서 있던 인형을 그대로 길잡이로
@@ -148,7 +158,7 @@ export class StageModel {
     if (o.still) this.acts = {};
     // 무릎 꿇는 동작('pray')은 앉았다(1.9초까지)·꿇은 채(4.6초까지)·일어남이 한 번에 들어 있어, 되풀이하면 꿇었다 일어났다를 거듭했다
     // (스데반·다메섹 길의 바울, 사용자 2026-11) — 꿇은 채 머무는 가운데 토막만 되풀이한다
-    if (this.acts.pray) { const c = this.acts.pray.getClip(); if (c.duration > 5) this.acts.pray = this.mixer.clipAction(THREE.AnimationUtils.subclip(c, 'pray-hold', 57, 138, 30)); }
+    if (this.acts.pray) { const c = this.acts.pray.getClip(); if (c.duration > 5) this.acts.pray = this.mixer.clipAction(inPlace(THREE.AnimationUtils.subclip(c, 'pray-hold', 57, 138, 30), bone(body, 'Hips')?.position.clone())); }
     this.march = MARCH.has(type); this.stride = Math.random(); this.pace = 0.9 + Math.random() * 0.2;
     // 인형의 왼팔·오른팔이 모델의 어느 팔인지는 자리(x)로 맞춘다 (서로 앞을 보는 쪽이 같다)
     const L = { up: bone(body, 'LeftArm'), lo: bone(body, 'LeftForeArm'), hand: bone(body, 'LeftHand') };
@@ -428,5 +438,5 @@ export function crowdPerson(gltf, height) {
     seatStone(stone, hp, body.parent, lp, top, height);
   };
   pose(false);
-  return { obj: body, pose };
+  return { obj: body, pose, stone };
 }
