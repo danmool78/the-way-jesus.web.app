@@ -161,8 +161,8 @@ export class StageModel {
     if (this.acts.pray) { const c = this.acts.pray.getClip(); if (c.duration > 5) this.acts.pray = this.mixer.clipAction(inPlace(THREE.AnimationUtils.subclip(c, 'pray-hold', 57, 138, 30), bone(body, 'Hips')?.position.clone())); }
     this.march = MARCH.has(type); this.stride = Math.random(); this.pace = 0.9 + Math.random() * 0.2;
     // 인형의 왼팔·오른팔이 모델의 어느 팔인지는 자리(x)로 맞춘다 (서로 앞을 보는 쪽이 같다)
-    const L = { up: bone(body, 'LeftArm'), lo: bone(body, 'LeftForeArm'), hand: bone(body, 'LeftHand') };
-    const R = { up: bone(body, 'RightArm'), lo: bone(body, 'RightForeArm'), hand: bone(body, 'RightHand') };
+    const L = { up: bone(body, 'LeftArm'), lo: bone(body, 'LeftForeArm'), hand: bone(body, 'LeftHand'), mid: bone(body, 'LeftHandMiddle1') };
+    const R = { up: bone(body, 'RightArm'), lo: bone(body, 'RightForeArm'), hand: bone(body, 'RightHand'), mid: bone(body, 'RightHandMiddle1') };
     const dl = this.doll.p.armL.position.x > 0;
     this.arms = [[this.doll.p.armL, dl === (L.up.getWorldPosition(v1).x > 0) ? L : R], [this.doll.p.armR, dl === (L.up.getWorldPosition(v1).x > 0) ? R : L]];
     for (const [, mb] of this.arms) if (mb.hand) mb.hand0 = mb.hand.quaternion.clone(); // 손목의 기본 자세 (곧게 편 손)
@@ -229,7 +229,8 @@ export class StageModel {
     if (!this.props?.length) return;
     const r = this.p.root, dr = this.doll.p.root; r.updateMatrixWorld(true); dr.updateMatrixWorld(true);
     const inv = r.matrixWorld.clone().invert(), qr = r.getWorldQuaternion(new THREE.Quaternion()), qd = dr.getWorldQuaternion(new THREE.Quaternion()).invert();
-    const handAt = i => { const m = this.arms[i][1]; return m.hand ? m.hand.getWorldPosition(new THREE.Vector3()).applyMatrix4(inv) : null; };
+    // 손바닥 가운데(손목 뼈와 가운뎃손가락 뿌리 사이) — 손목 뼈 자리에 붙이니 두루마리가 손목에 끼어 보였다(사용자 2026-11)
+    const handAt = i => { const m = this.arms[i][1]; if (!m.hand) return null; const h = m.hand.getWorldPosition(new THREE.Vector3()); if (m.mid) h.lerp(m.mid.getWorldPosition(new THREE.Vector3()), 0.75); return h.applyMatrix4(inv); };
     for (const it of this.props) {
       const { o, kind, side } = it;
       if (!o.visible) continue;
