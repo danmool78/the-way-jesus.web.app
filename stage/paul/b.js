@@ -229,7 +229,7 @@ export const B = {
       // 몇 해 전 돌에 맞았던 그 성 — 바울이 신전 쪽을 돌아본다
       'p0.1': [['paul', 'idle', { x: 0.7, z: 0.3, look: 2.4 }], ['silas', 'idle', { look: 2.0, delay: 600 }]],
       // 디모데가 나와 맞는다
-      'p0.2': [['paul', 'idle', { look: -1.2 }], ['silas', 'idle', { look: -1.3 }], ['tim', 'idle', { x: 0.24, z: 0.27, look: 1.3 }], ['tim', 'bow', { look: 1.3, delay: 3200 }], ['paul', 'bless', { to: 'tim', delay: 3400 }]],
+      'p0.2': [['paul', 'idle', { look: -1.2 }], ['silas', 'idle', { look: -1.3 }], ['tim', 'idle', { x: 0.26, z: 0.28, look: 1.3 }], ['tim', 'bow', { look: 1.3, delay: 3200 }], ['paul', 'bless', { to: 'tim', delay: 3400 }]],
       // 어머니는 믿는 유대 여인, 아버지는 헬라 사람
       'p0.3': [['tim', 'idle', { look: -1.2 }], ['paul', 'idle'], ['eunice', 'idle', { x: -0.5, z: 0.05, look: 1.2 }], ['lois', 'idle', { x: -0.72, z: 0.31, look: 1.2, delay: 400 }],
         ['father', 'idle', { show: 1, x: -1.25, z: -0.03, look: 0.9, delay: 600 }]],
@@ -244,7 +244,7 @@ export const B = {
         ['paul', 'idle', { show: 0, delay: 3600 }], ['tim', 'idle', { show: 0, delay: 3900 }], ['eunice', 'pray', { look: -1.6 }], ['lois', 'pray', { look: -1.6 }]],
       // 훗날 바울은 썼다 — 두 사람이 다시 나온다
       'p1.3': [['home', 'open'], ['paul', 'idle', { show: 1, x: -1.25, z: -0.1 }], ['tim', 'idle', { show: 1, x: -1.15, z: -0.08 }],
-        ['paul', 'idle', { x: -0.1, z: 0.2, look: 1.2, delay: 600 }], ['tim', 'idle', { x: -0.35, z: 0.4, look: 1.0, delay: 800 }], ['eunice', 'idle', { look: 0.9 }], ['lois', 'idle', { look: 1.0 }]],
+        ['paul', 'idle', { x: -0.1, z: 0.2, look: 1.2, delay: 600 }], ['tim', 'idle', { x: -0.36, z: 0.4, look: 1.0, delay: 800 }], ['eunice', 'idle', { look: 0.9 }], ['lois', 'idle', { look: 1.0 }]],
       'p1.4': [['home', 'idle'], ['paul', 'speak', { x: -0.1, z: 0.2, to: 'j1' }], ['j1', 'listen', { look: -1.8 }], ['j2', 'idle']],
       // 여러 성을 다니며 예루살렘의 결정을 전한다
       'p2.0': [['paul', 'speak', { item: 'scroll', look: 0.6, to: 'e1' }], ['silas', 'idle', { x: 0.75, z: 0.45, look: -1.1 }], ['e1', 'listen'], ['e2', 'listen'], ['j1', 'idle', { look: -1.0 }]],
@@ -304,7 +304,7 @@ export const B = {
       // 길이 닫힐 때마다 걸음을 돌린다
       'p0.3': [['stopA', null, { show: 0 }], ['stopB', null, { show: 0 }], ['paul', 'shrug', { x: 1.5, z: -0.2, look: 0.8 }], ['silas', 'idle', { x: 1.75, z: -0.12, look: -0.4 }], ['tim', 'idle', { x: 1.3, z: -0.05, look: 0.6 }]],
       // 무시아를 지나 바닷가 드로아로 내려간다
-      'p1.0': [['stopB', null, { show: 0 }], ['home', null, { show: 1 }], ['paul', 'idle', { x: 0.45, z: -0.09, look: -1.3 }], ['silas', 'idle', { x: 0.77, z: -0.03, look: -1.3, delay: 300 }], ['tim', 'idle', { x: 0.8, z: 0.4, look: -1.3, delay: 500 }]],
+      'p1.0': [['stopB', null, { show: 0 }], ['home', null, { show: 1 }], ['paul', 'idle', { x: 0.45, z: -0.09, look: -1.3 }], ['silas', 'idle', { x: 0.77, z: -0.03, look: -1.3, delay: 300 }], ['tim', 'idle', { x: 0.81, z: 0.4, look: -1.3, delay: 500 }]],
       // 성 너머로 에게 바다 — 바다를 바라본다
       'p1.1': [['paul', 'idle', { x: 0.45, z: 0.18, look: -1.45 }], ['silas', 'idle', { x: 0.7, z: 0.0, look: -1.3 }], ['tim', 'point', { x: 0.8, z: 0.4, look: -1.4 }]],
       // 그날 밤 — 깔개에 누워 잠든다
@@ -384,10 +384,10 @@ export const B = {
       'p1.4': [['paul', 'sit-speak', { to: 'lydia' }], ['lydia', 'listen', { look: 1.0 }], ['heart', null, { show: 1, delay: 500 }], ['lydia', 'pray', { delay: 3500 }]],
       // 강가에서 세례 — 루디아가 물가에 무릎 꿇고 바울이 물을 붓는다
       'p2.0': [['heart', null, { show: 0 }], ['lydia', 'kneel', { x: -1.05, z: 0.25, look: 1.4 }], ['maid', 'kneel', { x: -0.95, z: 0.55, look: 1.4, delay: 300 }],
-        ['paul', 'idle', { x: -0.7, z: 0.28, look: -1.4 }], ['paul', 'anoint', { look: -1.4, delay: 2600 }], ['water', 'pour', { delay: 3000 }], ['water', 'idle', { delay: 6500 }],
+        ['paul', 'idle', { x: -0.7, z: 0.27, look: -1.4 }], ['paul', 'anoint', { look: -1.4, delay: 2600 }], ['water', 'pour', { delay: 3000 }], ['water', 'idle', { delay: 6500 }],
         ['silas', 'pray', { x: -0.45, z: 0.0, look: -1.2 }], ['tim', 'pray', { x: -0.37, z: 0.46, look: -1.3 }], ['w1', 'pray'], ['w2', 'pray']],
       // 루디아가 간절히 청한다
-      'p2.1': [['water', 'idle'], ['paul', 'idle', { x: -0.7, z: 0.29, look: -1.4 }], ['lydia', 'idle', { x: -1.05, z: 0.25, look: 1.4 }], ['maid', 'idle', { x: -0.95, z: 0.55 }], ['silas', 'idle'], ['tim', 'idle']],
+      'p2.1': [['water', 'idle'], ['paul', 'idle', { x: -0.7, z: 0.28, look: -1.4 }], ['lydia', 'idle', { x: -1.05, z: 0.25, look: 1.4 }], ['maid', 'idle', { x: -0.95, z: 0.55 }], ['silas', 'idle'], ['tim', 'idle']],
       'p2.2': [['lydia', 'speak', { to: 'paul' }], ['lydia', 'bow', { delay: 4200 }]],
       // 그 청을 물리칠 수 없었다 — 모두 성문 쪽 루디아의 집으로
       'p2.3': [['lydia', 'idle'], ['paul', 'bless', { to: 'lydia' }], ['lydia', 'idle', { x: 1.45, z: -0.35, delay: 2200 }], ['paul', 'idle', { x: 1.55, z: -0.15, delay: 2500 }], ['maid', 'idle', { x: 1.3, z: -0.25, delay: 2400 }],
@@ -446,9 +446,9 @@ export const B = {
       // 점치는 여종이 일행을 따라온다
       intro: [['@env', 'day'], ['jail', 'shut'], ['stocks', 'shut'], ['lamp', null, { show: 0 }], ['water', 'idle'], ['basin', null, { show: 0 }], ...hide('wife', 'kid'),
         ['paul', 'idle', { look: -1.3 }], ['silas', 'idle', { look: -1.3 }], ['slave', 'idle', { look: -1.3 }]],
-      'p0.1': [['paul', 'idle', { x: -0.25, z: 0.38 }], ['silas', 'idle', { x: 0.0, z: 0.22, delay: 200 }], ['slave', 'idle', { x: 0.42, z: 0.44, delay: 600 }]],
+      'p0.1': [['paul', 'idle', { x: -0.25, z: 0.38 }], ['silas', 'idle', { x: 0.0, z: 0.22, delay: 200 }], ['slave', 'idle', { x: 0.43, z: 0.44, delay: 600 }]],
       // 여종이 외친다
-      'p0.2': [['paul', 'idle', { x: -0.25, z: 0.38 }], ['silas', 'idle', { x: 0.0, z: 0.22 }], ['slave', 'point', { x: 0.41, z: 0.45, look: -1.3 }]],
+      'p0.2': [['paul', 'idle', { x: -0.25, z: 0.38 }], ['silas', 'idle', { x: 0.0, z: 0.22 }], ['slave', 'point', { x: 0.42, z: 0.45, look: -1.3 }]],
       'p0.3': [['slave', 'raise', { look: -1.3 }]],
       // 몹시 괴로워진 바울이 돌아서서 명한다
       'p0.4': [['slave', 'idle'], ['paul', 'idle', { look: 1.3 }], ['silas', 'idle', { look: 1.2, delay: 400 }]],
