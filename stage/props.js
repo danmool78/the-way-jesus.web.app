@@ -298,7 +298,8 @@ const MAKERS = {
         g.add(f.obj); return f;
       });
       let was = null;
-      return new Prop(g, (P) => { const sit = P.state === 'sit'; if (sit !== was) { was = sit; people.forEach(f => f.pose(sit)); } }, { state: o.state || 'stand' });
+      // y: 걸상 높이 — 그 위에서는 걸터앉는다
+      return new Prop(g, (P) => { const sit = P.state === 'sit'; if (sit !== was) { was = sit; people.forEach(f => f.pose(sit, o.y || 0)); } }, { state: o.state || 'stand' });
     }
     const folk = (o.spots || []).map(([x, z], i) => {
       const p = new THREE.Group(), body = new THREE.Group();
