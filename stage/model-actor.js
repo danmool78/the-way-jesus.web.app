@@ -266,7 +266,7 @@ export class StageModel {
         const sd = r.worldToLocal(l.up.getWorldPosition(v1)).x > 0 ? 1 : -1; // 몸의 어느 쪽 다리인지
         // 양반다리: 넓적다리는 앞으로 벌려 눕히고 정강이는 안쪽으로 엇갈리게 / 꿇어앉기: 넓적다리는 앞으로, 정강이는 뒤로
         const thigh = (cross ? new THREE.Vector3(sd * 0.75, -0.12, 0.65) : new THREE.Vector3(0, -0.35, 1)).normalize().applyQuaternion(qr);
-        const shin = (cross ? new THREE.Vector3(-sd * 0.85, -0.08, 0.45) : new THREE.Vector3(0, -0.12, -1)).normalize().applyQuaternion(qr);
+        const shin = (cross ? new THREE.Vector3(-sd * 0.95, -0.08, -0.12) : new THREE.Vector3(0, -0.12, -1)).normalize().applyQuaternion(qr);
         this.aim(l.up, l.lo, thigh, this.seizaW); this.aim(l.lo, l.foot, shin, this.seizaW); for (const b of [l.lo, l.foot, l.toe]) if (b) knee = Math.min(knee, b.getWorldPosition(v1).y); } // 무릎·발·발끝 가운데 가장 낮은 곳을 땅에 (무릎만 맞추니 발끝이 묻혔다)
       if (knee < Infinity) this.body.position.y -= (knee - r.getWorldPosition(v2).y) / r.getWorldScale(v1).y - 0.03 * this.hipH;
     }
@@ -330,12 +330,24 @@ export function crowdPerson(gltf, height) {
   const idle = clip('idle'), act = idle && mixer.clipAction(idle);
   act?.play();
   // 앉기는 무릎 꿇고 발뒤꿈치에 앉은 모습 — 넓적다리는 앞으로, 정강이는 뒤로 눕히고 무릎이 땅에 닿게 몸을 내린다 (순례자 모델엔 앉는 동작이 없다)
-  const pose = sit => {
+  const pose = (sit, seat = 0) => {
     body.position.y = 0;
     mixer.setTime(idle ? idle.duration * t0 : 0); // 멈추지(stop) 않는다 — 멈추면 뼈가 처음 자세(A자)로 되돌아간다
     if (!sit) return;
     body.parent?.updateMatrixWorld(true); body.updateMatrixWorld(true);
-    const q = body.getWorldQuaternion(new THREE.Quaternion()), thigh = new THREE.Vector3(0, -0.35, 1).normalize().applyQuaternion(q), shin = new THREE.Vector3(0, -0.12, -1).normalize().applyQuaternion(q);
+    const q = body.getWorldQuaternion(new THREE.Quaternion());
+    if (seat > 0) { // 걸상(회당·서원의 돌 걸상)에 걸터앉기: 넓적다리는 앞으로 눕히고 정강이는 바닥까지 내린다 — 걸상 위에 꿇어앉아 발이 뒤로 삐져나왔다(사용자 2026-11)
+      const w = body.parent ? body.parent.getWorldScale(v2).y : 1, py = body.parent.getWorldPosition(v1).y;
+      for (const [u, l, f] of legs) if (u && l && f) aimBone(u, l, new THREE.Vector3(0, -0.08, 1).normalize().applyQuaternion(q));
+      let hip = Infinity; for (const [u] of legs) if (u) hip = Math.min(hip, u.getWorldPosition(v1).y);
+      body.position.y -= (hip - py) / w - 0.06 * height; body.updateMatrixWorld(true); // 엉덩이를 걸상 위에
+      for (const [, l, f] of legs) if (l && f) {
+        const k = l.getWorldPosition(v1), L = k.distanceTo(f.getWorldPosition(v3)), drop = Math.min(L * 0.98, k.y - (py - seat * w)); // 무릎에서 바닥까지
+        aimBone(l, f, new THREE.Vector3(0, -drop / L, Math.sqrt(Math.max(0, 1 - (drop / L) ** 2))).applyQuaternion(q));
+      }
+      return;
+    }
+    const thigh = new THREE.Vector3(0, -0.35, 1).normalize().applyQuaternion(q), shin = new THREE.Vector3(0, -0.12, -1).normalize().applyQuaternion(q);
     let knee = Infinity;
     for (const [u, l, f] of legs) if (u && l && f) { aimBone(u, l, thigh); aimBone(l, f, shin); knee = Math.min(knee, l.getWorldPosition(v1).y); }
     const w = body.parent ? body.parent.getWorldScale(v2).y : 1;
