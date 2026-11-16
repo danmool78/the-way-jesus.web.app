@@ -403,7 +403,7 @@ export function crowdPerson(gltf, height) {
       let hip = Infinity; for (const [u] of legs) if (u) hip = Math.min(hip, u.getWorldPosition(v1).y);
       body.position.y -= (hip - py) / w - 0.06 * height; body.updateMatrixWorld(true); // 엉덩이를 걸상 위에
       for (const [, l, f] of legs) if (l && f) {
-        const k = l.getWorldPosition(v1), L = k.distanceTo(f.getWorldPosition(v3)), drop = Math.min(L * 0.98, k.y - (py - seat * w)); // 무릎에서 바닥까지
+        const k = l.getWorldPosition(v1), L = k.distanceTo(f.getWorldPosition(v3)), drop = Math.min(L * 0.98, k.y - (py - seat * w) - 0.05 * height * w); // 무릎에서 바닥까지 — 발목 뼈를 바닥에 대니 발바닥이 발목 높이만큼 묻혔다(사용자)
         aimBone(l, f, new THREE.Vector3(0, -drop / L, Math.sqrt(Math.max(0, 1 - (drop / L) ** 2))).applyQuaternion(q));
       }
       return;
