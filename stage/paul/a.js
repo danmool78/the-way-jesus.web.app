@@ -198,7 +198,7 @@ export const A = {
     },
     beats: {
       enter: [['vision', null, { show: 0 }], ['blind', 'kneel', { show: 0 }], ['saul', 'idle', { show: 1, look: -0.9 }], ['ananias', 'bless', { x: 0.85, z: 0.62, look: 1.4 }], ['scales', 'idle'], ['water', 'idle'],
-        ['judas', 'idle', { x: 1.75, z: 0.25, look: -1.6 }], ['t1', 'listen', { x: 0.25, z: 0.2, look: 1 }], ['t2', 'idle', { x: 0.4, z: -0.15, look: 1.3 }]],
+        ['judas', 'idle', { x: 1.75, z: 0.45, look: -1.6 }], ['t1', 'listen', { x: 0.25, z: 0.2, look: 1 }], ['t2', 'idle', { x: 0.4, z: -0.15, look: 1.3 }]],
       // 다메섹의 제자 아나니아 — 길 건너 유다의 집 앞에는 눈먼 사울이 무릎 꿇어 기도한다
       intro: [['@env', 'day'], ['vision', null, { show: 0 }], ['scales', 'idle'], ['water', 'idle'], ['saul', 'kneel', { show: 0 }], ['blind', 'pray']],
       // 환상 가운데 주님이 부르신다 — 빛이 내린다
@@ -216,7 +216,7 @@ export const A = {
       'p1.4': [['ananias', 'look-up']],
       'p1.5': [['ananias', 'bow', { look: 0.3 }]],
       // 그 집에 들어가 손을 얹는다
-      'p2.0': [['vision', null, { show: 0 }], ['ananias', 'idle', { x: 0.85, z: 0.62, look: 1.4 }], ['ananias', 'bless', { look: 1.4, delay: 4000 }], ['judas', 'idle', { x: 1.75, z: 0.25, look: -1.6 }]],
+      'p2.0': [['vision', null, { show: 0 }], ['ananias', 'idle', { x: 0.85, z: 0.62, look: 1.4 }], ['ananias', 'bless', { look: 1.4, delay: 4000 }], ['judas', 'idle', { x: 1.75, z: 0.45, look: -1.6 }]],
       'p2.1': [['vision', null, { show: 0 }], ['ananias', 'speak', { x: 0.85, z: 0.62, look: 1.4, to: 'blind' }], ['blind', 'listen', { look: -1.3 }]],
       'p2.2': [['ananias', 'bless', { to: 'blind' }]],
       // 눈에서 비늘 같은 것이 떨어지고 — 다시 본다 (눈먼 사울을 같은 자리의 사울로 바꿔 낀다)
@@ -227,10 +227,10 @@ export const A = {
       w0: [['vision', null, { show: 1 }], ['ananias', 'listen', { x: -0.95, z: 0.5, look: 0.6 }], ['blind', 'pray', { show: 1 }], ['saul', 'kneel', { show: 0 }], ['water', 'idle'], ['scales', 'idle']],
       w1: [['vision', null, { show: 0 }], ['ananias', 'bless', { x: 0.85, z: 0.62, look: 1.4, to: 'blind' }], ['ananias', 'speak', { to: 'blind', delay: 400 }], ['blind', 'listen', { show: 1, look: -1.3 }], ['saul', 'kneel', { show: 0 }]],
       // 회당에서 '예수는 하나님의 아들'이라 전한다 — 길의 사람들에게
-      w2: [['vision', null, { show: 0 }], ['blind', 'kneel', { show: 0 }], ['saul', 'speak', { show: 1, x: 0.75, z: 0.25, look: -1, to: 't1' }], ['ananias', 'idle', { x: 1.05, z: 0.55, look: -1 }],
+      w2: [['vision', null, { show: 0 }], ['blind', 'kneel', { show: 0 }], ['saul', 'speak', { show: 1, x: 0.75, z: 0.25, look: -1, to: 't1' }], ['ananias', 'idle', { x: 1.05, z: 0.5, look: -1 }],
         ['t1', 'listen', { x: 0.2, z: 0.05, look: 1.2 }], ['t2', 'shrug', { x: 0.35, z: -0.3, look: 1.3 }]],
       end: [['vision', null, { show: 0 }], ['scales', 'idle'], ['water', 'idle'], ['blind', 'kneel', { show: 0 }], ['saul', 'idle', { show: 1, x: 1.25, z: 0.6, look: -0.9 }],
-        ['ananias', 'bless', { x: 0.85, z: 0.62, look: 1.4 }], ['judas', 'idle', { x: 1.75, z: 0.25, look: -1.6 }], ['t1', 'listen', { x: 0.25, z: 0.2, look: 1 }], ['t2', 'idle', { x: 0.4, z: -0.15, look: 1.3 }]],
+        ['ananias', 'bless', { x: 0.85, z: 0.62, look: 1.4 }], ['judas', 'idle', { x: 1.75, z: 0.45, look: -1.6 }], ['t1', 'listen', { x: 0.25, z: 0.2, look: 1 }], ['t2', 'idle', { x: 0.4, z: -0.15, look: 1.3 }]],
     },
   },
 
@@ -344,13 +344,13 @@ export const A = {
         ['b1', 'idle', { show: 1, x: 0.1, z: 0.55, look: 1.2 }], ['saul', 'idle', { x: 0.45, z: 0.35, look: -1.2 }],
         ['saul', 'idle', { x: -1.65, z: 0.5, delay: 2600 }], ['b1', 'idle', { x: -1.75, z: 0.7, delay: 2800 }], ['barnabas', 'bless', { look: -1.3, delay: 2600 }],
         ['saul', 'idle', { show: 0, delay: 7400 }], ['b1', 'idle', { show: 0, delay: 7600 }]],
-      w0: [['home', 'open'], ['mat', null, { show: 0 }], ['peter', 'listen', { show: 1, x: -0.35, z: -0.12, look: 0.8 }], ['james', 'listen', { show: 1, x: -0.05, z: -0.18, look: 0.6 }],
+      w0: [['home', 'open'], ['mat', null, { show: 0 }], ['peter', 'listen', { show: 1, x: -0.35, z: -0.03, look: 0.8 }], ['james', 'listen', { show: 1, x: 0, z: -0.11, look: 0.6 }],
         ['barnabas', 'speak', { show: 1, x: -0.05, z: 0.32, look: -0.8, to: 'peter' }], ['saul', 'idle', { show: 1, x: 0.35, z: 0.2, look: -1.0 }],
         ['h1', 'idle', { show: 0 }], ['h2', 'idle', { show: 0 }], ['b1', 'idle', { show: 0 }]],
       w1: [['mat', null, { show: 1 }], ['peter', 'sit-speak', { x: -0.55, z: 0.42, look: 1.4, to: 'saul' }], ['saul', 'sit-ground', { show: 1, x: -0.05, z: 0.45, look: -1.4 }], ['barnabas', 'idle', { x: 0.45, z: 0.0, look: -1.2 }]],
       w2: [['mat', null, { show: 0 }], ['peter', 'idle', { x: -0.65, z: 0.25, look: 1.2 }], ['saul', 'idle', { show: 1, x: 0.35, z: 0.2, look: -1.0 }], ['d1', 'listen', { show: 1, look: 1.2 }], ['d2', 'listen', { show: 1, look: 1.2 }]],
       end: [['home', 'open'], ['mat', null, { show: 0 }], ['saul', 'idle', { show: 1, x: 0.35, z: 0.2, look: -1.0 }], ['barnabas', 'speak', { show: 1, x: -0.05, z: 0.32, look: -0.8, to: 'peter' }],
-        ['peter', 'listen', { show: 1, x: -0.35, z: -0.12, look: 0.8 }], ['james', 'listen', { show: 1, x: -0.05, z: -0.18, look: 0.6 }], ['d1', 'listen', { show: 1, x: -1.2, z: 0.05, look: 1.2 }],
+        ['peter', 'listen', { show: 1, x: -0.35, z: -0.03, look: 0.8 }], ['james', 'listen', { show: 1, x: 0, z: -0.11, look: 0.6 }], ['d1', 'listen', { show: 1, x: -1.2, z: 0.05, look: 1.2 }],
         ['d2', 'listen', { show: 1, x: -1.4, z: 0.32, look: 1.2 }], ['h1', 'idle', { show: 0 }], ['h2', 'idle', { show: 0 }], ['b1', 'idle', { show: 0 }]],
     },
   },
@@ -407,8 +407,8 @@ export const A = {
         ['barnabas', 'hold-basket', { delay: 3500 }], ['saul', 'idle', { item: 'basket', delay: 3500 }], ['sacks', null, { show: 0.5, delay: 3500 }],
         ['barnabas', 'hold-basket', { x: -1.7, z: 0.55, delay: 4800 }], ['saul', 'idle', { x: -1.75, z: 0.3, delay: 5000 }], ['barnabas', 'idle', { show: 0, delay: 9800 }], ['saul', 'idle', { show: 0, delay: 10000 }]],
       w0: [['folk', 'sit', { show: 1 }], ['sacks', null, { show: 0 }], ['agabus', 'idle', { show: 0 }], ['barnabas', 'idle', { show: 1, x: -0.25, z: -0.35, look: 0.1 }], ['saul', 'idle', { show: 1, x: 0.35, z: -0.35, look: -0.1, item: null }],
-        ['g1', 'speak', { x: 1.2, z: -0.25, look: -1.6, to: 'g2' }], ['g2', 'point', { x: 1.45, z: 0.1, look: -1.4 }], ['lucius', 'listen', { x: -0.9, z: -0.15, look: 0.6 }]],
-      w1: [['folk', 'stand', { show: 1 }], ['barnabas', 'speak', { show: 1, x: -0.9, z: -0.3, look: 1.2 }], ['saul', 'idle', { show: 0 }], ['g1', 'pray'], ['g2', 'pray']],
+        ['g1', 'speak', { x: 1.2, z: -0.25, look: -1.6, to: 'g2' }], ['g2', 'point', { x: 1.45, z: 0.1, look: -1.4 }], ['lucius', 'listen', { x: -0.89, z: -0.14, look: 0.6 }]],
+      w1: [['folk', 'stand', { show: 1 }], ['barnabas', 'speak', { show: 1, x: -0.91, z: -0.31, look: 1.2 }], ['saul', 'idle', { show: 0 }], ['g1', 'pray'], ['g2', 'pray']],
       w2: [['folk', 'stand', { show: 1 }], ['sacks', null, { show: 1 }], ['barnabas', 'idle', { show: 1, x: 0.75, z: 0.55, look: 1.3 }], ['saul', 'idle', { show: 1, x: 0.7, z: 0.25, look: 1.3, item: null }]],
       end: [['folk', 'sit', { show: 1 }], ['sacks', null, { show: 0 }], ['barnabas', 'speak', { show: 1, x: -0.25, z: -0.35, look: 0.1 }], ['saul', 'idle', { show: 1, x: 0.35, z: -0.35, look: -0.1, item: null }],
         ['j1', 'idle', { show: 0 }], ['lucius', 'listen', { x: -0.9, z: -0.15, look: 0.6 }], ['g1', 'listen', { x: 1.2, z: -0.25, look: -1.2 }], ['g2', 'point', { x: 1.45, z: 0.1, look: -1.4 }], ['gw', 'idle', { show: 0 }],

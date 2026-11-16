@@ -369,7 +369,7 @@ export const D = {
       // 생각을 바꾸어 신이라 한다 — 엎드린다
       'p1.5': [['@env', 'overcast'], ['i1', 'bow', { look: -1.3 }], ['i2', 'kneel', { look: -1.6, delay: 500 }], ['iw', 'bow', { look: -0.8, delay: 900 }], ['paul', 'raise', { look: 1.3, delay: 2600 }]],
       // 보블리오의 땅 — 집 앞에 나와 일행을 맞는다
-      'p2.0': [['@env', 'day'], ['i1', 'idle'], ['i2', 'idle'], ['iw', 'idle'], ['paul', 'idle'], ['publius', 'idle', { show: 1, x: 1.6, z: -0.1, look: -1.2 }]],
+      'p2.0': [['@env', 'day'], ['i1', 'idle'], ['i2', 'idle'], ['iw', 'idle'], ['paul', 'idle'], ['publius', 'idle', { show: 1, x: 1.6, z: -0.05, look: -1.2 }]],
       'p2.1': [['publius', 'bless', { look: -1.3 }], ['paul', 'idle', { x: 0.75, z: 0.0, look: 1.3, delay: 600 }], ['luke', 'idle', { x: 0.45, z: -0.25, look: 1.2, delay: 900 }], ['julius', 'idle', { x: 0.4, z: 0.3, look: 1.3, delay: 1100 }],
         ['publius', 'speak', { to: 'paul', delay: 3500 }]],
       // 열병과 이질로 누운 아버지
@@ -564,7 +564,7 @@ export const D = {
       'p0.0': [['ones', 'idle', { show: 1, x: 1.1, z: 0.3, look: -1.4 }], ['paul', 'sit', { look: 1.2, delay: 1500 }]],
       'p0.1': [['ones', 'bow', { look: -1.4 }]],
       // 갇힌 바울을 통해 믿음을 얻는다 — 무릎 꿇은 오네시모에게 손을 얹는다
-      'p0.2': [['paul', 'idle', { x: 0.62, z: 0.3, look: 1.2 }], ['soldier', 'idle', { x: 0.94, z: 0.3, look: -0.6 }], ['ones', 'kneel', { x: 0.98, z: 0.38, look: -1.4, delay: 600 }], ['paul', 'bless', { look: 1.4, delay: 2000 }]],
+      'p0.2': [['paul', 'idle', { x: 0.62, z: 0.3, look: 1.2 }], ['soldier', 'idle', { x: 0.93, z: 0.25, look: -0.6 }], ['ones', 'kneel', { x: 0.99, z: 0.43, look: -1.4, delay: 600 }], ['paul', 'bless', { look: 1.4, delay: 2000 }]],
       // 곁에 두고 싶었지만 — 오네시모가 시중든다(물병)
       'p0.3': [['paul', 'idle', { x: 0.35, z: 0.06, look: 0.1 }], ['soldier', 'idle', { x: 0.67, z: 0.06, look: -0.3 }], ['ones', 'idle', { item: 'jar', x: 0.0, z: 0.3, look: 1.2, delay: 600 }], ['paul', 'sit-ground', { delay: 1800 }]],
       'p0.4': [['ones', 'idle', { item: null }], ['paul', 'sit-ground', { x: 0.35, z: 0.06, look: 0.1 }], ['desk', 'write', { delay: 800 }]],

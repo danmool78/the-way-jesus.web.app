@@ -165,8 +165,8 @@ Object.assign(LIKE, {
   onesimus: ['timothy', { plain: true, skin: 0.7 }], tychicus: ['luke', { hue: 140 }],
 });
 const dress = ([n, c]) => c === 'plain' ? plain(ready[n], n) : c && typeof c === 'object' ? restyle(ready[n], n, c) : c ? tinted(ready[n], n, c) : ready[n];
-// 3D 모델은 아직 점검 중 — 주소에 ?models가 있을 때만 쓴다. 운영은 예전 인형 (사용자 2026-11: 떠 있고 엉뚱한 곳을 보고 말해서, 다 잡을 때까지)
-const USE_MODELS = new URLSearchParams(location.search).has('models');
+// 예수 여정은 모델이 기본(사용자 2026-11) — 다른 여정은 아직 ?models가 있을 때만. ?dolls면 예전 인형으로
+const USE_MODELS = (q => !q.has('dolls') && (q.has('models') || (q.get('j') || 'jesus') === 'jesus'))(new URLSearchParams(location.search));
 function modelOf(type, i) {
   if (!USE_MODELS) return null;
   if (OWN[type]) return [OWN[type]];
@@ -444,6 +444,21 @@ if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__st
     return out; },
   actorsDbg() { return actors; },
   solidCount() { return [solidBoxes().length, Object.values(props).map(p => p.kind).join(',')]; },
+  // 자리 굽기(_src/tools/bake-positions.cjs): 순간마다 대본대로 세우고 직육면체로 밀어낸 자리를 계산해, 그 사람을 그 자리에 세운 대본 줄을 알려 준다
+  // [{ src: 'cast' | [beat, 줄 번호], name, x, z }] — 대본 좌표를 고쳐 두면 화면에서 밀어내며 미끄러지지 않는다(사용자 2026-11)
+  bake(keys) {
+    const src = {}, out = [], v = new THREE.Vector2();
+    Object.keys(script.cast).forEach(n => { src[n] = 'cast'; });
+    const settle = () => { Object.values(actors).forEach(a => { a.show = a.showT; for (let i = 0; i < 8; i++) a.update(i * 0.05, 0.05); }); Object.values(props).forEach(p => { for (let i = 0; i < 40; i++) p.update(i * 0.05, 0.05, {}); }); stageGroup.updateMatrixWorld(true); };
+    for (const k of keys) {
+      const cmds = script.beats[k] || [];
+      cmds.forEach((c, i) => { const [n, , o = {}] = c; if (actors[n] && (o.x !== undefined || o.z !== undefined || 'board' in o)) src[n] = [k, i]; });
+      atStart = false; apply(cmds, true); settle();
+      const before = Object.fromEntries(Object.entries(actors).map(([n, a]) => [n, a.pos.clone()]));
+      for (let i = 0; i < 40; i++) { frameNo++; spaceOut(1); }
+      for (const [n, a] of Object.entries(actors)) { if (a.pos.distanceTo(before[n]) > 0.008) out.push({ k, src: src[n], name: n, x: +a.pos.x.toFixed(2), z: +a.pos.y.toFixed(2) }); }
+    }
+    return out; },
   // 겹친 사람: 보이는 모든 사람(배역·군중)의 엉덩이 뼈 자리끼리 너무 가까운 쌍 (무대 좌표)
   crowding(lim = 0.1) { const v = new THREE.Vector3(), P = []; stageGroup.updateMatrixWorld(true); Object.entries(actors).forEach(([n, a]) => { a.p.root.userData.who = n; });
     stageGroup.traverse(o => { if (!o.isBone || !/Hips$/.test(o.name)) return; let vis = true; for (let q = o; q; q = q.parent) if (!q.visible || q.userData.deck || q.userData.saddle) { vis = false; break; } if (!vis) return; // 배·나귀에 탄 사람은 빼고

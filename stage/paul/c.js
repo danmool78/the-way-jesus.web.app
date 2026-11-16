@@ -151,8 +151,8 @@ export const C = {
       intro: [['@env', 'day'], ['fire', 'idle', { show: 0 }], ['coins', null, { show: 0 }], ['fog', 'off'], ['wild', 'idle', { show: 0 }], ['e1', 'idle', { show: 0 }], ['e2', 'idle', { show: 0 }], ['e3', 'idle', { show: 0 }],
         ['b1', 'idle', { show: 0 }], ['b2', 'idle', { show: 0 }], ['b3', 'idle', { show: 0 }], ['b4', 'idle', { show: 0 }], ['paul', 'bless', { to: 'bearer' }]],
       // 바울이 몸에 대던 수건을 병자에게 가져다 댄다 — 일어난다
-      'p0.1': [['paul', 'idle'], ['bearer', 'idle', { item: 'cloak' }], ['bearer', 'idle', { x: -1.25, z: 0.55, delay: 600 }], ['bearer', 'bow', { look: -1.2, delay: 2400 }],
-        ['sick', 'sit-ground', { look: 0.6, delay: 3600 }], ['sick', 'idle', { x: -1.25, z: 0.45, look: 1.2, delay: 5200 }], ['bearer', 'idle', { item: null, look: 1.2, delay: 5200 }]],
+      'p0.1': [['paul', 'idle'], ['bearer', 'idle', { item: 'cloak' }], ['bearer', 'idle', { x: -1.22, z: 0.57, delay: 600 }], ['bearer', 'bow', { look: -1.2, delay: 2400 }],
+        ['sick', 'sit-ground', { look: 0.6, delay: 3600 }], ['sick', 'idle', { x: -1.28, z: 0.43, look: 1.2, delay: 5200 }], ['bearer', 'idle', { item: null, look: 1.2, delay: 5200 }]],
       // 떠돌며 귀신을 쫓던 유대인들이 흉내 낸다 — 오른쪽 집으로
       'p0.2': [['sick', 'idle', { x: -1.25, z: 0.45, look: 1.2 }], ['bearer', 'idle', { item: null, x: -1.0, z: 0.62, look: 1.2 }],
         ['e1', 'idle', { show: 1, x: 0.75, z: 0.0 }], ['e2', 'idle', { show: 1, x: 0.6, z: 0.28, delay: 300 }], ['e3', 'idle', { show: 1, x: 0.55, z: -0.25, delay: 500 }]],
@@ -166,7 +166,7 @@ export const C = {
       // 달려들어 눌러 이긴다 — 그들은 놀라 뒷걸음질 친다
       'p1.3': [['wild', 'rebuke', { x: 0.95, z: 0.05 }], ['e1', 'afraid', { x: 0.45, z: 0.05 }], ['e2', 'afraid', { x: 0.3, z: 0.35 }], ['e3', 'cower', { x: 0.3, z: -0.2 }]],
       // 그 집에서 달아난다 — 왼쪽 앞으로 달려 나가 사라진다
-      'p1.4': [['wild', 'idle', { x: 1.2, z: -0.05, look: -1.0 }], ['e1', 'idle', { x: -0.6, z: 0.85 }], ['e2', 'idle', { x: -0.8, z: 0.95, delay: 200 }], ['e3', 'idle', { x: -0.9, z: 0.75, delay: 400 }],
+      'p1.4': [['wild', 'idle', { x: 1.2, z: 0, look: -1.0 }], ['e1', 'idle', { x: -0.6, z: 0.85 }], ['e2', 'idle', { x: -0.8, z: 0.95, delay: 200 }], ['e3', 'idle', { x: -0.9, z: 0.75, delay: 400 }],
         ['e1', 'idle', { show: 0, delay: 1800 }], ['e2', 'idle', { show: 0, delay: 2000 }], ['e3', 'idle', { show: 0, delay: 2200 }]],
       // 온 에베소가 두려워하고 주 예수의 이름이 높아진다
       'p1.5': [['e1', 'idle', { show: 0 }], ['e2', 'idle', { show: 0 }], ['e3', 'idle', { show: 0 }], ['wild', 'idle', { show: 0, delay: 1500 }], ['fog', 'off', { delay: 1500 }],
@@ -190,7 +190,7 @@ export const C = {
       'p2.3': [['fire', 'burn'], ['coins', null, { show: 1 }], ['paul', 'raise'], ['b1', 'raise', { delay: 400 }], ['b3', 'look-up', { delay: 600 }], ['b2', 'idle', { look: -1.4 }],
         ['sick', 'raise', { delay: 900 }], ['bearer', 'look-up', { delay: 1200 }]],
       w0: [['fire', 'idle', { show: 0 }], ['coins', null, { show: 0 }], ['b1', 'idle', { show: 0 }], ['b2', 'idle', { show: 0 }], ['b3', 'idle', { show: 0 }], ['b4', 'idle', { show: 0 }],
-        ['wild', 'idle', { show: 1, x: 1.35, z: -0.05, look: -1.0 }], ['fog', 'on'], ['e1', 'rebuke', { show: 1, x: 0.75, z: 0.0, look: 1.2 }], ['e2', 'rebuke', { show: 1, x: 0.6, z: 0.28, look: 1.2 }], ['e3', 'point', { show: 1, x: 0.55, z: -0.25, look: 1.3 }]],
+        ['wild', 'idle', { show: 1, x: 1.35, z: 0, look: -1.0 }], ['fog', 'on'], ['e1', 'rebuke', { show: 1, x: 0.75, z: 0.0, look: 1.2 }], ['e2', 'rebuke', { show: 1, x: 0.6, z: 0.28, look: 1.2 }], ['e3', 'point', { show: 1, x: 0.55, z: -0.25, look: 1.3 }]],
       w1: [['e1', 'afraid'], ['e2', 'afraid'], ['e3', 'idle'], ['wild', 'speak', { to: 'e1' }]],
       w2: [['wild', 'idle', { show: 0 }], ['fog', 'off'], ['e1', 'idle', { show: 0 }], ['e2', 'idle', { show: 0 }], ['e3', 'idle', { show: 0 }], ['fire', 'burn', { show: 1 }], ['coins', null, { show: 1 }],
         ['paul', 'raise', { x: -0.45, z: 0.1, look: 0.8 }], ['b1', 'raise', { show: 1, x: -0.3, z: 0.55, look: 1.0 }], ['b2', 'idle', { show: 1, x: 0.65, z: 0.2, look: -1.4 }],
@@ -554,7 +554,7 @@ export const C = {
       w1: [['paul', 'bless', { look: 1.2 }], ['e1', 'kneel'], ['e2', 'kneel']],
       w2: [['paul', 'speak', { to: 'e4' }], ['e1', 'listen'], ['e2', 'listen']],
       end: [['ship', 'furled'], ['runner', 'idle', { show: 0 }], ['paul', 'kneel', { board: null, x: 0.35, z: 0.25, look: 0.6 }], ['luke', 'kneel', { board: null, x: 0.0, z: 0.5, look: 0.8 }], ['timothy', 'kneel', { board: null, x: -0.05, z: 0.05, look: 1.0 }],
-        ['e1', 'mourn', { show: 1, x: 0.75, z: 0.05, look: -1.2 }], ['e2', 'kneel', { show: 1, x: 1.05, z: 0.3, look: -1.3 }], ['e3', 'kneel', { show: 1, x: 0.8, z: 0.55, look: -1.3 }], ['e4', 'pray', { show: 1, x: 1.25, z: 0.0, look: -1.2 }], ['e5', 'kneel', { show: 1, x: 0.55, z: 0.72, look: -0.8 }]],
+        ['e1', 'mourn', { show: 1, x: 0.75, z: 0.05, look: -1.2 }], ['e2', 'kneel', { show: 1, x: 1.05, z: 0.3, look: -1.3 }], ['e3', 'kneel', { show: 1, x: 0.8, z: 0.55, look: -1.3 }], ['e4', 'pray', { show: 1, x: 1.25, z: 0.0, look: -1.2 }], ['e5', 'kneel', { show: 1, x: 0.55, z: 0.65, look: -0.8 }]],
     },
   },
 
@@ -599,7 +599,7 @@ export const C = {
         ['philip', 'embrace', { look: -1.2, delay: 3200 }], ['paul', 'embrace', { look: 1.2, delay: 3400 }]],
       // 여러 날 뒤, 유대에서 아가보가 내려온다
       'p1.1': [['t1', 'idle', { show: 0 }], ['t2', 'idle', { show: 0 }], ['t3', 'idle', { show: 0 }], ['t4', 'idle', { show: 0 }], ['paul', 'idle', { x: 0.45, z: 0.25, look: 1.2 }], ['luke', 'idle', { x: 0.65, z: 0.55, look: 1.0 }],
-        ['timothy', 'idle', { x: 0.75, z: 0.0, look: 1.0 }], ['philip', 'idle', { x: 1.15, z: -0.05, look: -1.0 }], ['agabus', 'idle', { show: 1, x: 1.25, z: 0.42, look: -1.3 }]],
+        ['timothy', 'idle', { x: 0.75, z: 0.0, look: 1.0 }], ['philip', 'idle', { x: 1.15, z: 0, look: -1.0 }], ['agabus', 'idle', { show: 1, x: 1.25, z: 0.42, look: -1.3 }]],
       // 바울의 허리띠를 가져다 제 손발을 묶는다
       'p1.2': [['agabus', 'idle', { x: 1.0, z: 0.35, look: -1.3 }], ['belt', 'held', { delay: 1800 }], ['agabus', 'sit-ground', { look: -1.2, delay: 3000 }], ['belt', 'bound', { delay: 4200 }]],
       'p1.3': [['belt', 'bound'], ['agabus', 'sit-speak', { x: 1.0, z: 0.35, look: -1.2, to: 'paul' }]],
@@ -613,7 +613,7 @@ export const C = {
       'p2.4': [['paul', 'idle'], ['luke', 'idle', { look: -1.0 }], ['philip', 'idle'], ['timothy', 'idle']],
       'p2.5': [['luke', 'pray'], ['philip', 'pray', { delay: 300 }], ['timothy', 'pray', { delay: 500 }], ['agabus', 'sit-ground', { look: -0.6 }], ['paul', 'look-up', { delay: 1500 }]],
       w0: [['belt', 'bound'], ['agabus', 'sit-speak', { show: 1, x: 1.0, z: 0.35, look: -1.2, to: 'paul' }], ['paul', 'listen', { x: 0.45, z: 0.25, look: 1.2 }], ['luke', 'idle', { x: 0.65, z: 0.55, look: 1.0 }],
-        ['timothy', 'idle', { x: 0.75, z: 0.0, look: 1.0 }], ['philip', 'idle', { x: 1.15, z: -0.05, look: -1.0 }],
+        ['timothy', 'idle', { x: 0.75, z: 0.0, look: 1.0 }], ['philip', 'idle', { x: 1.15, z: 0, look: -1.0 }],
         ['t1', 'idle', { show: 0 }], ['t2', 'idle', { show: 0 }], ['t3', 'idle', { show: 0 }], ['t4', 'idle', { show: 0 }]],
       w1: [['agabus', 'sit-ground'], ['paul', 'speak', { to: 'luke' }], ['luke', 'mourn'], ['philip', 'mourn']],
       w2: [['paul', 'look-up'], ['luke', 'pray'], ['philip', 'pray'], ['timothy', 'pray']],
@@ -660,7 +660,7 @@ export const C = {
       intro: [['@env', 'day'], ['chain', null, { show: 0 }], ['folk', null, { show: 0 }], ['tribune', 'idle', { show: 0 }], ['s1', 'idle', { show: 0 }], ['s2', 'idle', { show: 0 }],
         ['a1', 'idle', { show: 0 }], ['a2', 'idle', { show: 0 }], ['m1', 'idle', { show: 0 }], ['james', 'idle', { show: 0 }], ['el1', 'idle', { show: 0 }], ['el2', 'idle', { show: 0 }],
         ['v1', 'idle', { show: 0 }], ['v2', 'idle', { show: 0 }], ['v3', 'idle', { show: 0 }], ['v4', 'idle', { show: 0 }]],
-      'p0.0': [['paul', 'idle', { x: -0.95, z: 0.3 }], ['luke', 'idle', { x: -1.15, z: 0.52, delay: 300 }], ['troph', 'idle', { x: -1.2, z: 0.12, delay: 400 }]],
+      'p0.0': [['paul', 'idle', { x: -0.95, z: 0.3 }], ['luke', 'idle', { x: -1.13, z: 0.53, delay: 300 }], ['troph', 'idle', { x: -1.2, z: 0.12, delay: 400 }]],
       // 이튿날 야고보를 찾아가니 장로들이 모인다
       'p0.1': [['paul', 'idle', { x: -0.95, z: 0.3, look: -1.2 }], ['james', 'idle', { show: 1 }], ['el1', 'idle', { show: 1, delay: 500 }], ['el2', 'idle', { show: 1, delay: 900 }]],
       'p0.2': [['paul', 'speak', { to: 'james' }], ['james', 'listen'], ['el1', 'listen'], ['el2', 'listen']],

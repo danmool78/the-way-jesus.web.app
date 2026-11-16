@@ -142,15 +142,15 @@ export const B = {
       barnabas: ['barnabas', -0.25, 0.1, 1.1],
       mark: ['mark', -0.55, 0.35, 1.0],
       silas: ['silas', 2.0, -0.25, -1.3],
-      b1: ['greek', -1.0, -0.05, 0.6],
+      b1: ['greek', -0.94, 0.04, 0.6],
       b2: ['simeon', -1.25, 0.25, 0.8],
-      b3: ['greekW', -0.8, 0.45, 0.8, { gaze: false }],
+      b3: ['greekW', -0.81, 0.46, 0.8, { gaze: false }],
       old: ['paulOS', 1.55, 0.32, 0.1, { pose: 'sit-ground', gaze: false }],
     },
     beats: {
       // 갈라서는 순간 — 두 사람이 등을 돌린다
       enter: [['grace', null, { show: 0 }], ['desk', 'idle', { show: 0 }], ['old', 'sit-ground', { show: 0 }], ['silas', 'idle', { show: 0 }],
-        ['paul', 'idle', { x: 0.75, z: 0.0, look: 1.3 }], ['barnabas', 'idle', { x: -0.4, z: 0.15, look: -1.1 }], ['mark', 'bow', { x: -0.65, z: 0.4, look: 0.6 }],
+        ['paul', 'idle', { x: 0.75, z: 0.0, look: 1.3 }], ['barnabas', 'idle', { x: -0.4, z: 0.15, look: -1.1 }], ['mark', 'bow', { x: -0.64, z: 0.39, look: 0.6 }],
         ['b1', 'shrug', { look: 1.0 }], ['b2', 'idle', { look: 0.9 }]],
       // 안디옥에서 얼마 동안 지낸 뒤 — 바울이 바나바에게 말한다
       intro: [['@env', 'day'], ['grace', null, { show: 0 }], ['desk', 'idle', { show: 0 }], ['old', 'sit-ground', { show: 0 }], ['silas', 'idle', { show: 0 }], ['paul', 'speak', { to: 'barnabas' }]],
@@ -180,14 +180,14 @@ export const B = {
       'p2.4': [['desk', 'done'], ['old', 'look-up', { look: -0.5 }]],
       w0: [['@env', 'day'], ['grace', null, { show: 0 }], ['desk', 'idle', { show: 0 }], ['old', 'sit-ground', { show: 0 }], ['silas', 'idle', { show: 0 }],
         ['paul', 'speak', { show: 1, x: 0.35, z: 0.1, to: 'barnabas' }], ['barnabas', 'listen', { show: 1, x: -0.25, z: 0.1, look: 1.1 }], ['mark', 'idle', { show: 1, x: -0.55, z: 0.35, look: 1.0 }],
-        ['b1', 'idle', { show: 1, x: -1.0, z: -0.05, look: 0.6 }], ['b2', 'idle', { show: 1, x: -1.25, z: 0.25, look: 0.8 }], ['b3', 'idle', { show: 1, x: -0.8, z: 0.45, look: 0.8 }]],
+        ['b1', 'idle', { show: 1, x: -0.94, z: 0.04, look: 0.6 }], ['b2', 'idle', { show: 1, x: -1.25, z: 0.25, look: 0.8 }], ['b3', 'idle', { show: 1, x: -0.8, z: 0.45, look: 0.8 }]],
       w1: [['grace', null, { show: 1 }], ['paul', 'kneel', { x: 0.45, z: 0.12, look: -0.6 }], ['silas', 'kneel', { show: 1, x: 0.75, z: 0.22, look: -0.8 }],
         ['barnabas', 'idle', { x: -1.85, z: 0.65 }], ['mark', 'idle', { x: -1.95, z: 0.4 }], ['barnabas', 'idle', { show: 0, delay: 3000 }], ['mark', 'idle', { show: 0, delay: 3200 }],
         ['b1', 'bless', { x: -0.05, z: 0.0, look: 1.1 }], ['b2', 'bless', { x: -0.1, z: 0.35, look: 1.2 }], ['b3', 'pray', { x: -0.45, z: 0.4 }]],
       w2: [['@env', 'dusk'], ['grace', null, { show: 0 }], ...hide('paul', 'silas', 'barnabas', 'mark', 'b1', 'b2', 'b3'), ['desk', 'write', { show: 1 }], ['old', 'sit-speak', { show: 1, look: 0.1 }]],
       end: [['@env', 'day'], ['grace', null, { show: 0 }], ['desk', 'idle', { show: 0 }], ['old', 'sit-ground', { show: 0 }], ['silas', 'idle', { show: 0 }],
-        ['paul', 'idle', { show: 1, x: 0.75, z: 0.0, look: 1.3 }], ['barnabas', 'idle', { show: 1, x: -0.4, z: 0.15, look: -1.1 }], ['mark', 'bow', { show: 1, x: -0.65, z: 0.4, look: 0.6 }],
-        ['b1', 'shrug', { show: 1, x: -1.0, z: -0.05, look: 1.0 }], ['b2', 'idle', { show: 1, x: -1.25, z: 0.25, look: 0.9 }], ['b3', 'idle', { show: 1, x: -0.8, z: 0.45, look: 0.8 }]],
+        ['paul', 'idle', { show: 1, x: 0.75, z: 0.0, look: 1.3 }], ['barnabas', 'idle', { show: 1, x: -0.4, z: 0.15, look: -1.1 }], ['mark', 'bow', { show: 1, x: -0.64, z: 0.39, look: 0.6 }],
+        ['b1', 'shrug', { show: 1, x: -0.91, z: 0, look: 1.0 }], ['b2', 'idle', { show: 1, x: -1.25, z: 0.25, look: 0.9 }], ['b3', 'idle', { show: 1, x: -0.81, z: 0.46, look: 0.8 }]],
     },
   },
 
@@ -214,14 +214,14 @@ export const B = {
       lois: ['lois', -1.4, 0.25, 0.8],
       father: ['greek2', -1.6, -0.08, 0.7, { gaze: false }],
       e1: ['elderC', 0.15, 0.25, 0.9],
-      e2: ['lycaonian', -0.1, 0.48, 1.0],
+      e2: ['lycaonian', -0.23, 0.49, 1.0],
       j1: ['jewD', 0.55, -0.42, -0.6, { gaze: false }],
       j2: ['pharisee', 0.82, -0.4, -0.9, { gaze: false }],
     },
     beats: {
       // 어머니와 할머니의 믿음 — 바울이 디모데를 축복한다
       enter: [['faith', null, { show: 1 }], ['folk', 'stand', { show: 0 }], ['father', 'idle', { show: 0 }], ['j1', 'idle', { show: 0 }], ['j2', 'idle', { show: 0 }],
-        ['paul', 'bless', { x: -0.4, z: 0.3, look: -1.2 }], ['silas', 'idle', { x: -0.1, z: 0.45, look: -1.3 }], ['tim', 'bow', { x: -0.8, z: 0.3, look: 1.2 }],
+        ['paul', 'bless', { x: -0.4, z: 0.3, look: -1.2 }], ['silas', 'idle', { x: -0.07, z: 0.44, look: -1.3 }], ['tim', 'bow', { x: -0.8, z: 0.3, look: 1.2 }],
         ['eunice', 'pray', { x: -1.1, z: 0.05, look: 1.0 }], ['lois', 'pray', { x: -1.35, z: 0.3, look: 1.0 }]],
       // 더베를 지나 루스드라에 — 바울과 실라가 오른쪽에서 들어온다
       intro: [['@env', 'day'], ['home', 'idle'], ['faith', null, { show: 0 }], ['folk', 'stand', { show: 0 }], ['father', 'idle', { show: 0 }], ['tim', 'idle', { x: -1.3, z: -0.05, look: 0.4 }]],
@@ -229,10 +229,10 @@ export const B = {
       // 몇 해 전 돌에 맞았던 그 성 — 바울이 신전 쪽을 돌아본다
       'p0.1': [['paul', 'idle', { x: 0.7, z: 0.3, look: 2.4 }], ['silas', 'idle', { look: 2.0, delay: 600 }]],
       // 디모데가 나와 맞는다
-      'p0.2': [['paul', 'idle', { look: -1.2 }], ['silas', 'idle', { look: -1.3 }], ['tim', 'idle', { x: 0.2, z: 0.25, look: 1.3 }], ['tim', 'bow', { look: 1.3, delay: 3200 }], ['paul', 'bless', { to: 'tim', delay: 3400 }]],
+      'p0.2': [['paul', 'idle', { look: -1.2 }], ['silas', 'idle', { look: -1.3 }], ['tim', 'idle', { x: 0.24, z: 0.27, look: 1.3 }], ['tim', 'bow', { look: 1.3, delay: 3200 }], ['paul', 'bless', { to: 'tim', delay: 3400 }]],
       // 어머니는 믿는 유대 여인, 아버지는 헬라 사람
-      'p0.3': [['tim', 'idle', { look: -1.2 }], ['paul', 'idle'], ['eunice', 'idle', { x: -0.5, z: 0.05, look: 1.2 }], ['lois', 'idle', { x: -0.75, z: 0.3, look: 1.2, delay: 400 }],
-        ['father', 'idle', { show: 1, x: -1.25, z: -0.08, look: 0.9, delay: 600 }]],
+      'p0.3': [['tim', 'idle', { look: -1.2 }], ['paul', 'idle'], ['eunice', 'idle', { x: -0.5, z: 0.05, look: 1.2 }], ['lois', 'idle', { x: -0.72, z: 0.31, look: 1.2, delay: 400 }],
+        ['father', 'idle', { show: 1, x: -1.25, z: -0.03, look: 0.9, delay: 600 }]],
       // 형제들이 모두 그를 좋게 말한다
       'p0.4': [['e1', 'speak', { to: 'paul' }], ['e2', 'point', { look: -1.0 }], ['e2', 'idle', { delay: 3000 }]],
       // 바울은 디모데를 데리고 가고 싶었다
@@ -251,15 +251,15 @@ export const B = {
       // 믿음이 굳어지고 날마다 수가 는다
       'p2.1': [['paul', 'idle', { item: null }], ['folk', 'stand', { show: 1 }], ['e1', 'raise'], ['e2', 'pray', { delay: 500 }]],
       // 아들처럼 아끼는 동역자
-      'p2.2': [['e1', 'idle'], ['e2', 'idle'], ['paul', 'bless', { x: -0.4, z: 0.3, look: -1.2, to: 'tim' }], ['tim', 'bow', { x: -0.8, z: 0.3, look: 1.2 }], ['silas', 'idle', { x: -0.1, z: 0.45, look: -1.3 }]],
+      'p2.2': [['e1', 'idle'], ['e2', 'idle'], ['paul', 'bless', { x: -0.4, z: 0.3, look: -1.2, to: 'tim' }], ['tim', 'bow', { x: -0.83, z: 0.29, look: 1.2 }], ['silas', 'idle', { x: -0.05, z: 0.42, look: -1.3 }]],
       // 할머니 로이스와 어머니 유니게의 믿음 — 빛 속에서 기도한다
       'p2.4': [['faith', null, { show: 1 }], ['eunice', 'pray', { x: -1.1, z: 0.05, look: 1.0 }], ['lois', 'pray', { x: -1.35, z: 0.3, look: 1.0 }], ['father', 'idle', { look: 1.0 }]],
       w0: [['faith', null, { show: 1 }], ['paul', 'speak', { show: 1, x: -0.4, z: 0.3, look: -1.2, item: null, to: 'tim' }], ['tim', 'listen', { show: 1, x: -0.8, z: 0.3, look: 1.2 }],
         ['eunice', 'pray', { x: -1.1, z: 0.05, look: 1.0 }], ['lois', 'pray', { x: -1.35, z: 0.3, look: 1.0 }]],
       w1: [['faith', null, { show: 0 }], ['paul', 'speak', { x: -0.1, z: 0.2, to: 'j1' }], ['j1', 'listen', { show: 1, look: -1.8 }], ['j2', 'idle', { show: 1 }], ['tim', 'idle', { x: -0.35, z: 0.4, look: 1.0 }]],
       w2: [['faith', null, { show: 0 }], ['paul', 'speak', { x: -0.4, z: 0.3, look: 1.2, to: 'e1' }], ['tim', 'idle', { x: -0.8, z: 0.3, look: 1.2 }], ['e1', 'listen'], ['e2', 'listen']],
-      end: [['@env', 'day'], ['home', 'idle'], ['faith', null, { show: 1 }], ['folk', 'stand', { show: 1 }], ['father', 'idle', { show: 1, x: -1.25, z: -0.08, look: 1.0 }],
-        ['paul', 'bless', { show: 1, x: -0.4, z: 0.3, look: -1.2, item: null }], ['silas', 'idle', { show: 1, x: -0.1, z: 0.45, look: -1.3 }], ['tim', 'bow', { show: 1, x: -0.8, z: 0.3, look: 1.2 }],
+      end: [['@env', 'day'], ['home', 'idle'], ['faith', null, { show: 1 }], ['folk', 'stand', { show: 1 }], ['father', 'idle', { show: 1, x: -1.25, z: -0.03, look: 1.0 }],
+        ['paul', 'bless', { show: 1, x: -0.4, z: 0.3, look: -1.2, item: null }], ['silas', 'idle', { show: 1, x: -0.07, z: 0.43, look: -1.3 }], ['tim', 'bow', { show: 1, x: -0.8, z: 0.3, look: 1.2 }],
         ['eunice', 'pray', { show: 1, x: -1.1, z: 0.05, look: 1.0 }], ['lois', 'pray', { show: 1, x: -1.35, z: 0.3, look: 1.0 }], ['j1', 'idle', { show: 1 }], ['j2', 'idle', { show: 1 }]],
     },
   },
@@ -304,7 +304,7 @@ export const B = {
       // 길이 닫힐 때마다 걸음을 돌린다
       'p0.3': [['stopA', null, { show: 0 }], ['stopB', null, { show: 0 }], ['paul', 'shrug', { x: 1.5, z: -0.2, look: 0.8 }], ['silas', 'idle', { x: 1.75, z: -0.12, look: -0.4 }], ['tim', 'idle', { x: 1.3, z: -0.05, look: 0.6 }]],
       // 무시아를 지나 바닷가 드로아로 내려간다
-      'p1.0': [['stopB', null, { show: 0 }], ['home', null, { show: 1 }], ['paul', 'idle', { x: 0.45, z: 0.18, look: -1.3 }], ['silas', 'idle', { x: 0.7, z: 0.0, look: -1.3, delay: 300 }], ['tim', 'idle', { x: 0.8, z: 0.4, look: -1.3, delay: 500 }]],
+      'p1.0': [['stopB', null, { show: 0 }], ['home', null, { show: 1 }], ['paul', 'idle', { x: 0.45, z: -0.09, look: -1.3 }], ['silas', 'idle', { x: 0.77, z: -0.03, look: -1.3, delay: 300 }], ['tim', 'idle', { x: 0.8, z: 0.4, look: -1.3, delay: 500 }]],
       // 성 너머로 에게 바다 — 바다를 바라본다
       'p1.1': [['paul', 'idle', { x: 0.45, z: 0.18, look: -1.45 }], ['silas', 'idle', { x: 0.7, z: 0.0, look: -1.3 }], ['tim', 'point', { x: 0.8, z: 0.4, look: -1.4 }]],
       // 그날 밤 — 깔개에 누워 잠든다
@@ -384,10 +384,10 @@ export const B = {
       'p1.4': [['paul', 'sit-speak', { to: 'lydia' }], ['lydia', 'listen', { look: 1.0 }], ['heart', null, { show: 1, delay: 500 }], ['lydia', 'pray', { delay: 3500 }]],
       // 강가에서 세례 — 루디아가 물가에 무릎 꿇고 바울이 물을 붓는다
       'p2.0': [['heart', null, { show: 0 }], ['lydia', 'kneel', { x: -1.05, z: 0.25, look: 1.4 }], ['maid', 'kneel', { x: -0.95, z: 0.55, look: 1.4, delay: 300 }],
-        ['paul', 'idle', { x: -0.7, z: 0.3, look: -1.4 }], ['paul', 'anoint', { look: -1.4, delay: 2600 }], ['water', 'pour', { delay: 3000 }], ['water', 'idle', { delay: 6500 }],
-        ['silas', 'pray', { x: -0.45, z: 0.0, look: -1.2 }], ['tim', 'pray', { x: -0.35, z: 0.55, look: -1.3 }], ['w1', 'pray'], ['w2', 'pray']],
+        ['paul', 'idle', { x: -0.7, z: 0.28, look: -1.4 }], ['paul', 'anoint', { look: -1.4, delay: 2600 }], ['water', 'pour', { delay: 3000 }], ['water', 'idle', { delay: 6500 }],
+        ['silas', 'pray', { x: -0.45, z: 0.0, look: -1.2 }], ['tim', 'pray', { x: -0.37, z: 0.46, look: -1.3 }], ['w1', 'pray'], ['w2', 'pray']],
       // 루디아가 간절히 청한다
-      'p2.1': [['water', 'idle'], ['paul', 'idle', { x: -0.7, z: 0.3, look: -1.4 }], ['lydia', 'idle', { x: -1.05, z: 0.25, look: 1.4 }], ['maid', 'idle', { x: -0.95, z: 0.55 }], ['silas', 'idle'], ['tim', 'idle']],
+      'p2.1': [['water', 'idle'], ['paul', 'idle', { x: -0.7, z: 0.29, look: -1.4 }], ['lydia', 'idle', { x: -1.05, z: 0.25, look: 1.4 }], ['maid', 'idle', { x: -0.95, z: 0.55 }], ['silas', 'idle'], ['tim', 'idle']],
       'p2.2': [['lydia', 'speak', { to: 'paul' }], ['lydia', 'bow', { delay: 4200 }]],
       // 그 청을 물리칠 수 없었다 — 모두 성문 쪽 루디아의 집으로
       'p2.3': [['lydia', 'idle'], ['paul', 'bless', { to: 'lydia' }], ['lydia', 'idle', { x: 1.45, z: -0.35, delay: 2200 }], ['paul', 'idle', { x: 1.55, z: -0.15, delay: 2500 }], ['maid', 'idle', { x: 1.3, z: -0.25, delay: 2400 }],
@@ -446,9 +446,9 @@ export const B = {
       // 점치는 여종이 일행을 따라온다
       intro: [['@env', 'day'], ['jail', 'shut'], ['stocks', 'shut'], ['lamp', null, { show: 0 }], ['water', 'idle'], ['basin', null, { show: 0 }], ...hide('wife', 'kid'),
         ['paul', 'idle', { look: -1.3 }], ['silas', 'idle', { look: -1.3 }], ['slave', 'idle', { look: -1.3 }]],
-      'p0.1': [['paul', 'idle', { x: -0.25, z: 0.38 }], ['silas', 'idle', { x: 0.0, z: 0.22, delay: 200 }], ['slave', 'idle', { x: 0.4, z: 0.45, delay: 600 }]],
+      'p0.1': [['paul', 'idle', { x: -0.25, z: 0.38 }], ['silas', 'idle', { x: 0.0, z: 0.22, delay: 200 }], ['slave', 'idle', { x: 0.42, z: 0.44, delay: 600 }]],
       // 여종이 외친다
-      'p0.2': [['paul', 'idle', { x: -0.25, z: 0.38 }], ['silas', 'idle', { x: 0.0, z: 0.22 }], ['slave', 'point', { x: 0.4, z: 0.45, look: -1.3 }]],
+      'p0.2': [['paul', 'idle', { x: -0.25, z: 0.38 }], ['silas', 'idle', { x: 0.0, z: 0.22 }], ['slave', 'point', { x: 0.41, z: 0.45, look: -1.3 }]],
       'p0.3': [['slave', 'raise', { look: -1.3 }]],
       // 몹시 괴로워진 바울이 돌아서서 명한다
       'p0.4': [['slave', 'idle'], ['paul', 'idle', { look: 1.3 }], ['silas', 'idle', { look: 1.2, delay: 400 }]],
@@ -554,10 +554,10 @@ export const B = {
       'p0.5': [['paul', 'idle'], ['g1', 'raise', { y: 0, x: 0.3, z: -0.55 }], ['nob', 'pray', { y: 0, x: 0.3, z: -0.15, delay: 500 }], ['g2', 'pray', { delay: 900 }], ['j2', 'rebuke', { delay: 1200 }]],
       // 시기한 사람들이 불량배들을 모아 야손의 집으로 — 바울과 실라는 보이지 않는다
       'p1.0': [['paul', 'idle', { show: 0 }], ['silas', 'idle', { show: 0 }], ['tim', 'idle', { show: 0 }], ['g1', 'idle'], ['nob', 'idle'],
-        ['j1', 'rebuke', { y: 0, x: 0.75, z: 0.3, look: 1.2 }], ['j2', 'point', { y: 0, x: 0.95, z: 0.5, look: 1.0, delay: 400 }], ['mob', 'stand', { show: 1, delay: 1200 }], ['r1', 'rebuke', { show: 1, x: 1.8, z: 0.38, delay: 1500 }],
+        ['j1', 'rebuke', { y: 0, x: 0.75, z: 0.3, look: 1.2 }], ['j2', 'point', { y: 0, x: 0.93, z: 0.51, look: 1.0, delay: 400 }], ['mob', 'stand', { show: 1, delay: 1200 }], ['r1', 'rebuke', { show: 1, x: 1.8, z: 0.38, delay: 1500 }],
         ['home', 'open', { delay: 2600 }], ['jason', 'afraid', { delay: 2800 }]],
       // 찾지 못하자 야손을 관리들 앞으로
-      'p1.1': [['jason', 'idle', { x: 0.55, z: 0.12, look: -1.0 }], ['j1', 'idle', { x: 0.85, z: 0.32, look: -1.2 }], ['r1', 'point', { x: 1.05, z: 0.42, look: -1.3, delay: 400 }], ['home', 'idle'],
+      'p1.1': [['jason', 'idle', { x: 0.55, z: 0.12, look: -1.0 }], ['j1', 'idle', { x: 0.85, z: 0.32, look: -1.2 }], ['r1', 'point', { x: 1.07, z: 0.41, look: -1.3, delay: 400 }], ['home', 'idle'],
         ['o1', 'idle', { show: 1, look: 0.9 }], ['o2', 'idle', { show: 1, look: 0.8, delay: 300 }], ['g1', 'sit', { y: 0.1, x: 0.47, z: -0.55 }], ['nob', 'sit', { y: 0.1, x: 0.47, z: -0.15 }]],
       'p1.2': [['j1', 'rebuke', { to: 'o1' }]],
       'p1.3': [['j1', 'speak', { to: 'o1' }], ['j2', 'point', { look: -1.6 }], ['o1', 'listen'], ['jason', 'shrug']],
