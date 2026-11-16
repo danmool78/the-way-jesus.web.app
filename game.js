@@ -449,6 +449,8 @@ const keys = new Set(), stick = { x: 0, y: 0 };
 addEventListener('keydown', e => { if (e.target.tagName === 'INPUT') return; keys.add(e.key.toLowerCase()); if (e.key.startsWith('Arrow')) e.preventDefault(); });
 addEventListener('keyup', e => keys.delete(e.key.toLowerCase()));
 addEventListener('blur', () => keys.clear());
+// 마우스 오른쪽 단추·길게 누르기의 메뉴(이미지 저장·검사)를 띄우지 않는다 — 게임 화면을 누르다 자꾸 떴다(사용자 2026-11). 이름 칸에서는 그대로
+addEventListener('contextmenu', e => { if (!e.target.closest('input,textarea')) e.preventDefault(); });
 // 조종기 (사용자 2026-11): 버튼이 없는 화면 아무 데나 누르면 그 자리에 조종기가 생긴다. 달리기 단추 없이 끄는 세기로 —
 // 조금 끌면 천천히, 원 끝까지 끌면 걷기, 원 밖으로 더 끌면 달린다. 두 번째 손가락이 닿으면 조종기를 놓고 확대·축소로
 (() => {
@@ -580,7 +582,7 @@ function meet() {
   const e = G.events[G.idx];
   G.grade = gradeNow(); G.meetLeft = Math.max(0, G.timeT); G.timeT = 0; G.leader.goal.copy(G.leader.pos);
   G.me.goal.copy(G.me.pos);
-  G.leader.target = G.me; G.leader.set('speak'); G.me.target = G.leader;
+  G.leader.target = G.me; G.leader.set('idle'); // 말씀하실 때도 그냥 서서 — 말하기 동작의 손짓이 왔다 갔다 하며 손이 어색했다(사용자 2026-11) G.me.target = G.leader;
   // 그분이 하신 말씀(j)이 있으면 그분 입으로, 없으면(수태고지처럼 아직 태어나시기 전 등) '이 자리의 말씀'으로 누가 한 말인지 밝혀서
   const own = (e.words || []).find(x => x.j), w = own || (e.words || [])[0];
   // 말씀은 곧 이어지는 '말씀 고르기'에서 맞히게, 말풍선에는 반기는 인사만 (먼저 보여 주면 너무 쉬웠다)
@@ -880,11 +882,26 @@ async function placeCast() {
     if (names[i].endsWith(':bearer') && prev) { const dx = G.me.pos.x - prev.pos.x, dz = G.me.pos.y - prev.pos.y, L = Math.hypot(dx, dz) || 1; ox = prev.pos.x + (dx * 0.85 - dz * 0.3) / L - gx; oz = prev.pos.y + (dz * 0.85 + dx * 0.3) / L - gz; } // 거인 몸에 겹치지 않게 조금 비켜
     const lie = names[i].endsWith(':lie'); // 누운 사람(베데스다의 병자 — 자리에 누워 있었다, 요 5:6)
     const a = new ModelActor(g, gx + ox, gz + oz, { noPillow: true }).hold(GEAR[names[i]]);
-    a.big = SCALE * (SIZE[names[i]] || 1); a.target = lie ? null : G.me; a.showT = 0; a.show = 0;
+    a.big = SCALE * (SIZE[names[i]] || 1); a.target = lie ? null : G.me; a.lie = lie; a.showT = 0; a.show = 0;
     if (lie) { a.set('sleep'); a.face = a.faceT = 1.2; }
     if (names[i] === 'goliath') a.set('taunt'); // 골리앗은 가슴을 치며 이스라엘을 모욕한다(삼상 17:10)
     G.scene.add(a.p.root); G.cast.push(a);
   });
+}
+// 곁의 사람이 살아 있게 (사용자 2026-11 — 아무 몸짓 없이 서 있었다): 내가 다가오면 나를 반겨 보고,
+// 그분이 이야기를 시작하면 그분 쪽으로 돌아선다. 몇 초마다 한 번씩 곁의 사람을 보거나 나를 돌아보거나 고개를 끄덕인다
+function castLook(c, t, dt) {
+  const talking = G.meetT > 0 && G.talk && G.talkI < G.talk.length;
+  const ai = c.ai ??= { next: t + 1 + Math.random() * 3, who: null, until: 0 };
+  if (t > ai.next) {
+    ai.next = t + 2.5 + Math.random() * 3.5;
+    const others = G.cast.filter(o => o !== c && !o.lie), r = Math.random();
+    if (r < 0.3 && others.length) { ai.who = others[Math.floor(Math.random() * others.length)]; ai.until = t + 1.4 + Math.random(); } // 곁의 사람을 본다
+    else if (talking && r < 0.45) { ai.who = G.me; ai.until = t + 1.2; } // 이야기 도중 나를 돌아본다
+    else if (talking && r < 0.75) c.nod?.(); // 고개를 끄덕인다
+  }
+  const base = talking ? G.leader : G.me;
+  c.target = ai.who && t < ai.until ? ai.who : base;
 }
 // 마을 사람: 우물가에 물 긷는 여인, 양 떼 곁에 목자 (예수 여정, 모델이 있을 때만)
 async function placeLocals() {
@@ -959,6 +976,10 @@ async function begin(fresh) {
   if (fresh) store.set('theway-game-' + JID, null);
   store.set('theway-game-last', JID);
   const J = JOURNEYS[JID];
+  // 불러오는 동안 도는 표시와 지금 하는 일 — 멈춘 화면이 죽은 것 같았다(사용자 2026-11)
+  if (G.starting) return; G.starting = true;
+  const busy = t => { $('#loading').classList.remove('hidden'); $('#loading b').textContent = t; };
+  busy('여정을 펼치는 중…');
   await loadJourney();
   if (J.sail) await loadMask(); // 지중해의 뭍과 바다
   const saved = store.get('theway-game-' + JID, null);
@@ -971,6 +992,7 @@ async function begin(fresh) {
   G.r = renderer($('#world'));
   buildWorld(J); placeTreasures();
   playerType();
+  busy('사람들을 부르는 중…');
   // 출발: 처음이면 첫 장면에서 조금 떨어진 곳, 이어 걷기면 앞 장면 자리
   const ref = G.events[Math.max(0, G.idx - 1)], [rx, rz] = toXZ(placeOf(ref).lat, placeOf(ref).lng);
   let sx = rx, sz = rz;
@@ -988,8 +1010,8 @@ async function begin(fresh) {
   G.leader.realWalk = true; G.leader.big = SCALE; G.leader.target = G.me;
   G.scene.add(G.me.p.root, G.leader.p.root);
   drawWater(); drawCardBtn(); resize();
-  toast('땅과 마을을 세우는 중…', true, 6000);
-  await G.world.ready; $('#toast').classList.remove('on');
+  busy('땅과 마을을 세우는 중…');
+  await G.world.ready; $('#loading').classList.add('hidden');
   spawnPatrols(); placeLocals();
   startLeg();
   if (G.idx === 0) toast(`${esc(me.name)}님, ${esc(josa(J.who, '을', '를'))} 따라 걸어요<small>지도에서 장소 이름을 찾아 걸어가세요 · 가까이 가면 그분의 발자국이 보여요</small>`, true, 4200);
@@ -1115,7 +1137,7 @@ function frame(now) {
   if (G.wounded) G.wounded.a.update(t, dt);
   me0.update(t, dt); G.leader.update(t, dt);
   // 곁에 선 사람은 그분처럼 가까이 가야 보인다. 마을 사람은 가까울 때만 움직인다(멀면 그리지도 셈하지도 않는다)
-  for (const c of G.cast || []) { c.showT = G.leader.showT; c.ground = standY(c.pos.x, c.pos.y); c.update(t, dt); }
+  for (const c of G.cast || []) { c.showT = G.leader.showT; c.ground = standY(c.pos.x, c.pos.y); if (!c.lie) castLook(c, t, dt); c.update(t, dt); }
   if (G.castBoat) G.castBoat.obj.visible = G.leader.show > 0.05;
   for (const o of G.castSet || []) o.visible = G.leader.show > 0.05;
   for (const a of G.locals || []) { const far = Math.hypot(a.pos.x - me0.pos.x, a.pos.y - me0.pos.y) > 14; a.showT = far ? 0 : 1; if (far && a.show < 0.02) { a.p.root.visible = false; continue; } a.ground = GH(a.pos.x, a.pos.y); a.update(t, dt); }
