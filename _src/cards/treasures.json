@@ -1,14 +1,98 @@
 [
-  { "id": "field", "prompt": "A small clay jar of gold coins and jewels half uncovered in the dark soil of a plowed Galilean field, a wooden plow and the edge of a farmer's hand brushing the earth away, golden evening light, wheat at the field's edge (Matthew 13:44, treasure hidden in a field)." },
-  { "id": "pearl", "prompt": "One single large flawless pearl resting in an opened shell on a merchant's dark cloth, glowing softly, a harbor of the Mediterranean (Tyre) with moored wooden boats blurred behind (Matthew 13:45-46, the pearl of great price)." },
-  { "id": "net", "prompt": "A heavy fishing net full of many large silver fish dragged onto the pebbly shore of the Sea of Galilee at dawn, the net unbroken, a small charcoal fire smoking on the beach in the distance (John 21:11, 153 fish)." },
-  { "id": "sheep", "prompt": "A single small lost lamb alone among rocks on a Galilean hillside at dusk, a shepherd's staff reaching in from the edge of the frame, the flock tiny and far away on the next hill (Luke 15:4-5)." },
-  { "id": "stater", "prompt": "A silver coin (a shekel / stater) gleaming in the open mouth of a freshly caught fish held in a fisherman's wet hands, a fishing line and the calm Sea of Galilee behind (Matthew 17:27)." },
-  { "id": "mites", "prompt": "Two tiny thin copper coins (lepta) in the open worn palm of an old widow's hand, about to drop into a bronze trumpet-shaped offering box in the stone court of the Jerusalem temple, warm light (Mark 12:42-44)." },
-  { "id": "jar", "prompt": "An elegant alabaster jar of precious nard perfume, its neck just broken open, fragrant oil glistening, on a low table in a lamplit house in Bethany (Mark 14:3-8)." },
-  { "id": "ring", "prompt": "A gold signet ring, a fine robe and new sandals laid out on a wooden bench in a family courtyard at evening, a welcome feast being prepared in the warm background (Luke 15:22, the prodigal son's return)." },
-  { "id": "coin", "prompt": "A single silver drachma coin glinting in the beam of a small oil lamp on a swept stone floor of a simple house, a broom made of palm fronds leaning nearby (Luke 15:8)." },
-  { "id": "mustard", "prompt": "A single tiny mustard seed on a fingertip in the foreground, and behind it a large mustard tree in a Galilean field with small birds nesting in its branches (Matthew 13:31-32)." },
-  { "id": "bread", "prompt": "A small woven basket holding five round barley loaves and two small dried fish, on the green grass of a hillside by the Sea of Galilee, a crowd sitting far away in the soft distance (John 6:9)." },
-  { "id": "lamp", "prompt": "A clay oil lamp burning brightly beside a small flask of oil, held ready in the dark by a doorway at night, a wedding procession's torches glowing far down the village street (Matthew 25:4)." }
+ {
+  "id": "field",
+  "prompt": "A small clay jar of gold coins and jewels half uncovered in the dark soil of a plowed Galilean field, a wooden plow and the edge of a farmer's hand brushing the earth away, golden evening light, wheat at the field's edge (Matthew 13:44, treasure hidden in a field)."
+ },
+ {
+  "id": "pearl",
+  "prompt": "One single large flawless pearl resting in an opened shell on a merchant's dark cloth, glowing softly, a harbor of the Mediterranean (Tyre) with moored wooden boats blurred behind (Matthew 13:45-46, the pearl of great price)."
+ },
+ {
+  "id": "net",
+  "prompt": "A heavy fishing net full of many large silver fish dragged onto the pebbly shore of the Sea of Galilee at dawn, the net unbroken, a small charcoal fire smoking on the beach in the distance (John 21:11, 153 fish)."
+ },
+ {
+  "id": "sheep",
+  "prompt": "A single small lost lamb alone among rocks on a Galilean hillside at dusk, a shepherd's staff reaching in from the edge of the frame, the flock tiny and far away on the next hill (Luke 15:4-5)."
+ },
+ {
+  "id": "stater",
+  "prompt": "A silver coin (a shekel / stater) gleaming in the open mouth of a freshly caught fish held in a fisherman's wet hands, a fishing line and the calm Sea of Galilee behind (Matthew 17:27)."
+ },
+ {
+  "id": "mites",
+  "prompt": "Two tiny thin copper coins (lepta) in the open worn palm of an old widow's hand, about to drop into a bronze trumpet-shaped offering box in the stone court of the Jerusalem temple, warm light (Mark 12:42-44)."
+ },
+ {
+  "id": "jar",
+  "prompt": "An elegant alabaster jar of precious nard perfume, its neck just broken open, fragrant oil glistening, on a low table in a lamplit house in Bethany (Mark 14:3-8)."
+ },
+ {
+  "id": "ring",
+  "prompt": "A gold signet ring, a fine robe and new sandals laid out on a wooden bench in a family courtyard at evening, a welcome feast being prepared in the warm background (Luke 15:22, the prodigal son's return)."
+ },
+ {
+  "id": "coin",
+  "prompt": "A single silver drachma coin glinting in the beam of a small oil lamp on a swept stone floor of a simple house, a broom made of palm fronds leaning nearby (Luke 15:8)."
+ },
+ {
+  "id": "mustard",
+  "prompt": "A single tiny mustard seed on a fingertip in the foreground, and behind it a large mustard tree in a Galilean field with small birds nesting in its branches (Matthew 13:31-32)."
+ },
+ {
+  "id": "bread",
+  "prompt": "A small woven basket holding five round barley loaves and two small dried fish, on the green grass of a hillside by the Sea of Galilee, a crowd sitting far away in the soft distance (John 6:9)."
+ },
+ {
+  "id": "lamp",
+  "prompt": "A clay oil lamp burning brightly beside a small flask of oil, held ready in the dark by a doorway at night, a wedding procession's torches glowing far down the village street (Matthew 25:4)."
+ },
+ {
+  "id": "p-crown",
+  "prompt": "A simple victor's wreath of green laurel resting on a rolled letter scroll on a small wooden table in a dim Roman prison cell, a shaft of morning light falling on it, an iron chain lying loose beside (2 Timothy 4:8). No person."
+ },
+ {
+  "id": "p-chain",
+  "prompt": "Heavy iron chains and an opened wooden foot-stock lying broken on the stone floor of a Roman prison at night, the iron door swung open, dust in the air from an earthquake, a small oil lamp glowing (Acts 16:26)."
+ },
+ {
+  "id": "p-anchor",
+  "prompt": "Four heavy ancient iron anchors with ropes hanging over the stern of a wooden Roman grain ship in a stormy dawn, rocky shore of an island faintly ahead (Acts 27:29)."
+ },
+ {
+  "id": "p-basket",
+  "prompt": "A large woven rope basket hanging on ropes outside a window high on a massive ancient stone city wall at night, moonlight, the ropes lowering it down (Acts 9:25). No face visible."
+ },
+ {
+  "id": "p-purple",
+  "prompt": "Rich royal-purple dyed wool cloth folded and draped over a merchant's bench beside a river outside the city gate of Philippi, sunlight making the purple glow (Acts 16:14)."
+ },
+ {
+  "id": "p-altar",
+  "prompt": "A small ancient Greek stone altar in an Athens street at dusk with carved Greek letters reading AGNOSTO THEO, other statues and columns of the city around it, the Acropolis faint behind (Acts 17:23)."
+ },
+ {
+  "id": "p-scrolls",
+  "prompt": "A pile of papyrus scrolls and magic books burning in a bonfire in a street of Ephesus at night, sparks rising, the marble columns of the city around (Acts 19:19)."
+ },
+ {
+  "id": "p-tent",
+  "prompt": "A tentmaker's bronze needle and heavy thread on a half-sewn panel of dark goat-hair tent cloth on a workbench in a busy Corinthian workshop, leather tools around (Acts 18:3)."
+ },
+ {
+  "id": "p-belt",
+  "prompt": "A long leather and cloth belt lying coiled on a wooden floor of a house in Caesarea by the sea, a prophet's hands nearby having just untied it, harbor light through the window (Acts 21:11)."
+ },
+ {
+  "id": "p-letter",
+  "prompt": "A short folded papyrus letter with a small wax seal on a table beside an iron chain and a reed pen, written in large hand at the end, lamplight in a Roman house (Philemon)."
+ },
+ {
+  "id": "p-cloak",
+  "prompt": "A worn heavy woollen traveller's cloak hanging on a peg in a simple house by the harbor of Troas, a few parchment scrolls on a shelf beside it, the Aegean sea through the window (2 Timothy 4:13)."
+ },
+ {
+  "id": "p-viper",
+  "prompt": "A viper coiling out of a bundle of brushwood beside a crackling fire on a rainy rocky beach of Malta, wet shipwreck timbers nearby (Acts 28:3). No gore."
+ }
 ]
