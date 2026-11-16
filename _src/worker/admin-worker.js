@@ -3,7 +3,7 @@
 //   GET/PUT/… /gh/<GitHub API 경로>  → 이 저장소에 한해 api.github.com으로 (열쇠: GH_TOKEN 비밀값)
 //   PUT /r2/psalms/<파일>            → R2 버킷 theway에 바로 (BUCKET 연결 — 열쇠 필요 없음)
 //   POST /hit (공개)                 → 여정·장면 방문 기록을 Analytics Engine(theway_hits)에 — 관리자 페이지의 여정별 방문
-//   GET /f/<models|cards>/<파일> (공개) → R2 버킷의 3D 모델·카드 그림 — r2.dev 공개 주소는 속도 제한이 있어 느린 곳에서 모델이 한참 안 왔다(사용자 2026-11).
+//   GET /f/<models|cards|assets|psalms>/<파일> (공개) → R2 버킷의 3D 모델·카드 그림·낭독·음악·영상·시편 노래 — r2.dev 공개 주소는 속도 제한이 있어 느린 곳에서 모델이 한참 안 왔다(사용자 2026-11).
 //                                      이름에 내용 해시가 있으니 브라우저가 한 해 동안 다시 받지 않게(immutable)
 // 로그인 확인: Firebase 인증(프로젝트 the-way-jesus)의 ID 토큰을 구글 공개 열쇠로 검증하고, 이메일의 SHA-256이 ALLOWED에 있는지 본다
 // (이메일을 저장소에 그대로 적지 않으려고 해시로). 올리기: .github/workflows/worker.yml
@@ -50,11 +50,17 @@ export default {
     }
     if (url.pathname.startsWith('/f/') && (req.method === 'GET' || req.method === 'HEAD')) {
       const key = decodeURIComponent(url.pathname.slice(3));
-      if (!/^(models|cards)\/[\w.-]+\.(glb|webp|png|jpg)$/.test(key)) return new Response('not found', { status: 404 });
-      const obj = await env.BUCKET.get(key);
+      // 모델·카드 그림·낭독·배경음악·영상·시편 노래 — 음성·영상은 중간부터 듣고 넘기게 부분 받기(Range)도
+      if (!/^((models|cards)\/[\w.-]+\.(glb|webp|png|jpg)|assets\/(voice|music|video)\/[\w.\/-]+\.(mp3|mp4|m4a|json)|psalms\/[\w.-]+\.(mp3|m4a))$/.test(key) || key.includes('..')) return new Response('not found', { status: 404 });
+      const range = req.headers.get('Range'), obj = await env.BUCKET.get(key, range ? { range: req.headers } : {});
       if (!obj) return new Response('not found', { status: 404, headers: { 'Access-Control-Allow-Origin': '*' } });
-      const type = key.endsWith('.glb') ? 'model/gltf-binary' : key.endsWith('.webp') ? 'image/webp' : obj.httpMetadata?.contentType || 'application/octet-stream';
-      return new Response(req.method === 'HEAD' ? null : obj.body, { headers: { 'Content-Type': type, 'Content-Length': String(obj.size), ETag: obj.httpEtag, 'Cache-Control': 'public, max-age=31536000, immutable', 'Access-Control-Allow-Origin': '*' } });
+      const ext = key.split('.').pop(), type = { glb: 'model/gltf-binary', webp: 'image/webp', png: 'image/png', jpg: 'image/jpeg', mp3: 'audio/mpeg', m4a: 'audio/mp4', mp4: 'video/mp4', json: 'application/json' }[ext];
+      // 이름에 내용 해시가 있는 모델·카드·노래는 한 해, 다시 녹음하면 이름이 같은 낭독·음악은 하루
+      const h = { 'Content-Type': type, ETag: obj.httpEtag, 'Accept-Ranges': 'bytes', 'Cache-Control': /^(models|cards|psalms)\//.test(key) ? 'public, max-age=31536000, immutable' : 'public, max-age=86400', 'Access-Control-Allow-Origin': '*', 'Access-Control-Expose-Headers': 'Content-Length, Content-Range, Accept-Ranges' };
+      let status = 200, len = obj.size;
+      if (range && obj.range) { const r = obj.range, off = 'suffix' in r ? obj.size - r.suffix : r.offset || 0; len = 'suffix' in r ? r.suffix : r.length ?? obj.size - off; status = 206; h['Content-Range'] = `bytes ${off}-${off + len - 1}/${obj.size}`; }
+      h['Content-Length'] = String(len);
+      return new Response(req.method === 'HEAD' ? null : obj.body, { status, headers: h });
     }
     try { await verify((req.headers.get('Authorization') || '').replace(/^Bearer\s+/i, ''), env); }
     catch (e) { return json({ message: e.status === 403 ? '허락된 계정이 아닙니다' : '로그인이 필요합니다' }, e.status || 401); }
