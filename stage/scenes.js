@@ -355,12 +355,12 @@ export const SCRIPTS = {
       dove: ['dove', 0.12, 0.05, { y: 2.2 }],
     },
     cast: {
-      john: ['baptist', 0.3, 0.0, -1.0],
+      john: ['baptist', 0.5, 0.0, -1.0], // 모델은 인형보다 커서 예수님과 겹쳤다 — 조금 떨어져 (사용자 2026-11)
       jesus: ['jesus', -2.0, 0.25, 1.2],
     },
     beats: {
-      enter: [['beam', null, { show: 1 }], ['dove', 'rest', { show: 1, y: 1.05 }], ['jesus', 'pray', { x: 0.1, z: 0.08, look: 0 }], ['john', 'kneel', { x: 0.42, z: 0.0, look: -1.1 }]],
-      intro: [['beam', null, { show: 0 }], ['dove', 'fly', { show: 0, y: 2.2 }], ['jesus', 'idle', { x: -2.0, z: 0.25, look: 1.2 }], ['john', 'speak', { x: 0.3, z: 0.0, look: -1.2 }]],
+      enter: [['beam', null, { show: 1 }], ['dove', 'rest', { show: 1, y: 1.05 }], ['jesus', 'pray', { x: 0.1, z: 0.08, look: 0 }], ['john', 'kneel', { x: 0.6, z: 0.0, look: -1.1 }]],
+      intro: [['beam', null, { show: 0 }], ['dove', 'fly', { show: 0, y: 2.2 }], ['jesus', 'idle', { x: -2.0, z: 0.25, look: 1.2 }], ['john', 'speak', { x: 0.5, z: 0.0, look: -1.2 }]],
       'p0.1': [['jesus', 'idle', { x: -0.55, z: 0.25, look: 1.1 }]],
       'p0.3': [['john', 'shrug', { look: -1.1 }]],
       'p1.1': [['jesus', 'speak']],
