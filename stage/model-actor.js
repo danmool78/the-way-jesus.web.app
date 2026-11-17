@@ -348,6 +348,10 @@ export class StageModel {
     // 걸터앉기·나귀 타기: 넓적다리를 앞으로, 정강이는 아래로 하고 몸을 인형처럼 내려 앉힌다 (모델에 앉는 동작이 없다)
     this.legW = damp(this.legW, ride ? 1 : 0, 6, dt);
     this.body.position.y = -this.hipH * 0.58 * (d.kneel || 0) * this.legW;
+    // 의자·걸상에 걸터앉기(높이를 정한 사람): 엉덩이 뼈가 앉는 높이(root) + 0.09·H에 오게(군중의 걸상과 같은 셈) — 인형처럼 몸을 일정하게만 내리니
+    // 엉덩이가 방석보다 한 뼘 위 허공에 떠 앉았다(a08 총독, 사용자 2026-11)
+    if (onSeat && this.hipsB) { const r0 = this.p.root; this.body.position.y = 0; r0.updateMatrixWorld(true);
+      const hy = r0.worldToLocal(this.hipsB.getWorldPosition(v1)).y; this.body.position.y = -(hy - 0.09 * this.H) * this.legW; }
     // 잠: 잠자는 동작이 없는 모델(베드로 등)은 인형이 눕는 대로 몸을 옆으로 눕힌다 — 서 있는 채 자고 있었다
     const lie = d.pose === 'sleep' && !this.acts.sleep;
     this.body.rotation.z = lie ? d.p.body.rotation.z : 0; this.body.position.x = lie ? d.p.body.position.x : 0;
