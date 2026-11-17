@@ -415,7 +415,9 @@ if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__st
       stageGroup.updateMatrixWorld(true);
       let low = Infinity; a.p.root.traverse(o => { if (o.isBone && /(Foot|ToeBase|Toe_End|Leg)$/.test(o.name)) low = Math.min(low, stageGroup.worldToLocal(o.getWorldPosition(v)).y); });
       if (a.pose === 'sleep') { low = Infinity; a.body.updateMatrixWorld(true); a.body.traverse(o => { if (!o.isSkinnedMesh) return; const c = o.geometry.attributes.position.count; for (let i = 0; i < c; i += 4) { o.getVertexPosition(i, v); o.localToWorld(v); low = Math.min(low, stageGroup.worldToLocal(v).y); } }); } // 누운 사람은 살로 잰다
-      const gap = (low - (a.ground + (['seat', 'sit-speak', 'sit'].includes(a.pose) ? 0 : a.y))) / (a.big || 1), r = { name, pose: a.pose, gap: +gap.toFixed(3), big: +(a.big || 1).toFixed(2) }; // 지형 안에서는 사람을 키우니(big) 그만큼 나눈다
+      // 앉은 사람은 발 밑의 단·바닥(재판석 단, 공의회 바닥) 위에 발을 둔다 — 맨땅과 견주니 단 위의 총독이 '떠 있다'로 나와 진짜 뜬 사람과 섞였다
+      const seated = ['seat', 'sit-speak', 'sit'].includes(a.pose), floor = seated ? Math.max(a.ground, ...Object.values(props).filter(p => p.heightAt && !(p.terrainHide && inTerrain)).map(p => { const h = p.heightAt(a.pos.x, a.pos.y); return h > 0 ? p.lift.position.y + h : -Infinity; })) : a.ground;
+      const gap = (low - (floor + (seated ? 0 : a.y))) / (a.big || 1), r = { name, pose: a.pose, gap: +gap.toFixed(3), big: +(a.big || 1).toFixed(2) }; // 지형 안에서는 사람을 키우니(big) 그만큼 나눈다
       if (inTerrain && !a.y && !a.yT) { const w = new THREE.Vector3(a.pos.x, low + 5, a.pos.y).applyMatrix4(stageGroup.matrixWorld), h = groundHit(w); // 그려진 땅(지형 그물·도성 단)에 직접 대어 본다
         if (h !== null) r.hit = +((low - stageGroup.worldToLocal(new THREE.Vector3(w.x, h, w.z)).y) / (a.big || 1)).toFixed(3); }
       const t = a.talkTo || ((a.pose === 'speak' || a.pose === 'sit-speak') && a.target);
@@ -509,6 +511,7 @@ if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__st
     let sk = null; a.body.traverse(o => { if (o.isSkinnedMesh && !sk) sk = o; }); sk.computeBoundingBox(); const bb = sk.boundingBox.clone().applyMatrix4(sk.matrixWorld);
     const pr = q => { const x = q.clone().project(camera), r = canvas.getBoundingClientRect(); return [Math.round(r.left + (x.x + 1) / 2 * r.width), Math.round(r.top + (1 - x.y) / 2 * r.height)]; };
     return { n, sh: pr(v), sp: pr(w), mesh: [bb.min.y, bb.max.y, bb.min.z, bb.max.z].map(x => +x.toFixed(3)), head: [v.x, v.y, v.z].map(x => +x.toFixed(3)), pillow: [w.x, w.y, w.z].map(x => +x.toFixed(3)), root: [u.x, u.y, u.z].map(x => +x.toFixed(3)), k: +k.toFixed(3) }; }); },
+  feetAt(n) { const a = actors[n]; if (!a?.body) return null; const out = { floor: a.floorUnder, ground: a.ground }; a.body.traverse(o => { if (o.isBone && /(Foot|ToeBase|Toe_End)$/.test(o.name)) out[o.name.replace('mixamorig', '')] = +stageGroup.worldToLocal(o.getWorldPosition(new THREE.Vector3())).y.toFixed(3); }); return out; },
   hipsAt(n) { const a = actors[n]; if (!a?.body) return null; let h = null; a.body.traverse(o => { if (!h && o.isBone && /Hips$/.test(o.name)) h = o; }); const v = stageGroup.worldToLocal(h.getWorldPosition(new THREE.Vector3())); return { hips: [v.x, v.y, v.z].map(x => +x.toFixed(3)), root: [a.pos.x, a.pos.y].map(x => +x.toFixed(3)) }; },
   hipsY(n) { const a = actors[n]; if (!a?.body) return null; let h = null; a.body.traverse(o => { if (!h && o.isBone && /Hips$/.test(o.name)) h = o; }); return +h.getWorldPosition(new THREE.Vector3()).y.toFixed(3); },
   goAll(dx) { Object.values(actors).forEach(a => a.moveTo(a.goal.x + dx, a.goal.y)); },
@@ -860,6 +863,8 @@ function frame() {
     const onDeck = ac.p.root.parent !== stageGroup, g0 = onDeck ? 0 : ac.fixedY ? Math.max(groundAt(ac.pos.x, ac.pos.y), floorAt(ac.pos.x, ac.pos.y)) : groundAt(ac.pos.x, ac.pos.y);
     ac.ground = ac.fixedY || onDeck ? g0 + (ac.fixedY && inTerrain ? ac.y * (bigNow - 1) : 0) : Math.max(g0, ...grounds.map(p => { const h = p.heightAt(ac.pos.x, ac.pos.y); return h > 0 ? p.lift.position.y + h : -Infinity; }));
     ac.big = inTerrain && !onDeck ? bigNow : 1; // 배·나귀에 탄 사람은 그 소품과 함께 커진다
+    // 앉은 사람의 발이 디딜 바닥: 발 밑의 단·마루(재판석 단, 공의회 바닥) — 맨땅에 대니 발이 단 속에 묻혔다(사용자 2026-11, 점검기)
+    ac.floorUnder = ac.fixedY && !onDeck ? Math.max(groundAt(ac.pos.x, ac.pos.y), ...grounds.map(p => { const h = p.heightAt(ac.pos.x, ac.pos.y); return h > 0 ? p.lift.position.y + h : -Infinity; })) : undefined;
     // 바닥이 평평한 건물(회당·공의회) 안의 걸상에 앉은 사람(높이를 정한 사람): 건물 받침 높이에, 키우지 않는다 — 건물은 지형 축척 그대로인데
     // 사람만 키우고 앉는 높이까지 키워 걸상 위 허공에 떠 앉았다(a01 공의회, 사용자 2026-11). 걸터앉은 무리(p.bench)와 같은 셈
     if (inTerrain && !onDeck && ac.fixedY && ac.y > 0) { const host = grounds.find(p => FLAT.has(p.kind) && p.heightAt(ac.pos.x, ac.pos.y) > 0); if (host) { ac.ground = host.lift.position.y; ac.big = 1; } }

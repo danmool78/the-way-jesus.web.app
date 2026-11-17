@@ -397,12 +397,13 @@ export class StageModel {
     if (this.legW > 0.01) {
       const qr = r.getWorldQuaternion(new THREE.Quaternion());
       const thigh = new THREE.Vector3(0, -0.25, 1).normalize().applyQuaternion(qr), shin = new THREE.Vector3(0, -1, 0.15).normalize().applyQuaternion(qr);
-      const ks = r.getWorldScale(v3).y, ground = r.getWorldPosition(v2).y - (d.y || 0) * ks + 0.045 * ks; // 발이 닿을 땅: root는 땅에서 앉는 높이(y)만큼 올라가 있다 — 발목 뼈는 발바닥보다 발 두께만큼 위(0.01이면 발이 묻혔다)
+      const ks = r.getWorldScale(v3).y, ground = (this.floorUnder !== undefined && r.parent ? r.parent.localToWorld(v2.set(0, this.floorUnder, 0)).y : r.getWorldPosition(v2).y - (d.y || 0) * ks) + 0.045 * ks; // 발이 닿을 땅: root는 땅에서 앉는 높이(y)만큼 올라가 있다 — 발목 뼈는 발바닥보다 발 두께만큼 위(0.01이면 발이 묻혔다)
       for (const l of this.legs) if (l.up && l.lo && l.foot) {
-        this.aim(l.up, l.lo, thigh, this.legW); this.aim(l.lo, l.foot, shin, this.legW);
-        // 의자가 모델의 정강이보다 낮으면 발이 바닥을 뚫었다(왕좌의 헤롯) — 정강이를 뒤로 접어 발끝이 바닥 위에 오게
-        const ky = l.lo.getWorldPosition(v1).y, low = Math.min(l.foot.getWorldPosition(v3).y, l.toe ? l.toe.getWorldPosition(v3).y : Infinity);
-        if (low < ground && ky > ground) { const t = Math.max(0.05, (ky - ground) / (ky - low)), back = new THREE.Vector3(0, -t, -Math.sqrt(1 - t * t)).applyQuaternion(qr); this.aim(l.lo, l.foot, back, this.legW); }
+        // 의자가 정강이보다 낮으면 무릎을 세워(넓적다리를 위로) 정강이가 곧게 바닥에 닿게 — 정강이를 뒤로 접으니
+        // 발이 의자 밑으로 들어가 의자 위에 꿇어앉은 듯했다(a08 총독, 사용자 2026-11). 높은 의자면 넓적다리는 조금 내려 발을 바닥 쪽으로
+        const hy = l.up.getWorldPosition(v1).y, L1 = l.up.getWorldPosition(v1).distanceTo(l.lo.getWorldPosition(v3)), L2 = l.lo.getWorldPosition(v1).distanceTo(l.foot.getWorldPosition(v3));
+        const s = THREE.MathUtils.clamp((ground + L2 * 0.98 - hy) / L1, -0.25, 0.8), th = new THREE.Vector3(0, s, Math.sqrt(1 - s * s)).applyQuaternion(qr);
+        this.aim(l.up, l.lo, s > -0.25 ? th : thigh, this.legW); this.aim(l.lo, l.foot, shin, this.legW);
       }
     }
     if (this.w < 0.01) return;
