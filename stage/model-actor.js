@@ -480,7 +480,8 @@ export function crowdPerson(gltf, height) {
       aimBone(u, l, new THREE.Vector3(sd * 0.22, 0.05, 1).normalize().applyQuaternion(q)); aimBone(l, f, new THREE.Vector3(sd * 0.04, -1, 0.08).normalize().applyQuaternion(q));
       low = Math.min(low, f.getWorldPosition(v1).y); });
     const w = body.parent ? body.parent.getWorldScale(v2).y : 1, py = body.parent.getWorldPosition(v1).y;
-    if (low < Infinity) body.position.y -= (low - py) / w - 0.02 * height;
+    // 발목 뼈는 발바닥보다 발 두께만큼 위 — 0.02로 대니 앉은 사람의 발이 땅에 묻혔다(a06, 사용자 2026-11)
+    if (low < Infinity) body.position.y -= (low - py) / w - 0.05 * height;
     // 엉덩이 밑에 돌 하나 (무대 사람과 같게)
     body.updateMatrixWorld(true); const hp = bone(body, 'Hips'); if (!hp) return;
     const bot = seatBottom(body, hp, 0.09 * height * body.parent.getWorldScale(v2).y);
