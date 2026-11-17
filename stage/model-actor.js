@@ -261,8 +261,8 @@ export class StageModel {
       } else if (kind === 'both') { const a = handAt(0), b = handAt(1); if (!a || !b) continue;
         // 두 손이 벌어지면(말하며 팔을 펼 때) 한가운데는 가슴 앞 허공 — 두루마리가 가슴에서 튀어나와 보였다(사용자 2026-11). 그땐 오른손에
         const apart = a.distanceTo(b) > 0.3 * this.H; if (apart) o.position.copy(b); else { o.position.copy(a).add(b).multiplyScalar(0.5); o.position.y += 0.02; o.position.z += 0.07 * this.H; } o.quaternion.copy(it.q0); } // 두 손 사이 조금 앞 — 손 사이 그대로면 두루마리가 팔뚝에 박혔다(e16, 사용자 2026-11)
-      else if (kind === 'staff') { // 손 옆에 세워 땅을 짚는다. 눕거나 나무 위·엎드려 울 때는 내려놓는다(허공에 서 있었다)
-        const h = handAt(1); if (!h || ['sleep', 'perch', 'mourn'].includes(this.doll.pose)) { o.visible = false; continue; } o.position.set(h.x, 0, h.z); }
+      else if (kind === 'staff') { // 손 옆에 세워 땅을 짚는다. 눕거나 나무 위·엎드려 울 때, 기도할 때(두 손을 모은다)는 내려놓는다(허공에 서 있었다)
+        const h = handAt(1); if (!h || ['sleep', 'perch', 'mourn', 'kneel', 'pray'].includes(this.doll.pose)) { o.visible = false; continue; } o.position.set(h.x, 0, h.z); }
       else if (kind === 'glow') o.position.set(0, it.p0.y + 0.1, it.p0.z);
     }
   }
@@ -416,7 +416,8 @@ export class StageModel {
     const lap = this.seizaW > 0.5 && d.pose !== 'mourn';
     const qr = lap && r.getWorldQuaternion(new THREE.Quaternion());
     // 서서 기도: 두 손을 가슴 앞 가운데에 모은다 — 인형의 팔 방향을 그대로 옮기니 사람 비율의 팔뚝이 가운데를 지나쳐 두 손이 엇갈렸다(e18 외딴곳의 기도, 사용자 2026-11)
-    const pray = d.pose === 'pray' && !lap && this.arms.every(([, mb]) => mb.up && mb.lo && mb.hand);
+    // 무릎 꿇기(kneel)도 두 손을 가슴 앞에 모은다 — 빌린 꿇는 동작의 팔이 손바닥을 위로 앞으로 내밀고 있었다(a07, 사용자 2026-11: 예수 여정처럼 두 손 모아)
+    const pray = (d.pose === 'pray' || d.pose === 'kneel') && !lap && this.arms.every(([, mb]) => mb.up && mb.lo && mb.hand);
     if (pray) { const [a, b] = this.arms.map(([, mb]) => mb.up.getWorldPosition(new THREE.Vector3())), k = this.H * r.getWorldScale(v2).y;
       this.prayAt = a.add(b).multiplyScalar(0.5).add(new THREE.Vector3(0, -0.13 * k, 0.19 * k).applyQuaternion(qb)); this.prayK = k; }
     this.arms.forEach(([da, mb], i) => {
