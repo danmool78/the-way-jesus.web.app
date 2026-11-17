@@ -253,7 +253,10 @@ Object.assign(MAKERS, {
     mesh(new THREE.BoxGeometry(0.36, 0.05, 0.28), wood(), g, [o.bx ?? 0.35, 0.025, -0.15]);
     mesh(new THREE.BoxGeometry(0.16, 0.34, 0.12), wood(), g, [o.bx ?? 0.35, 0.19, -0.2]);
     mesh(new THREE.BoxGeometry(0.2, 0.02, 0.16), wood(), g, [o.bx ?? 0.35, 0.37, -0.2]).rotation.x = 0.3;
-    return new Prop(g);
+    const P = new Prop(g);
+    // 바닥 판 위 — 3D 지형에서 바닥이 평평한 건물처럼(stage.js FLAT) 받침을 대고, 걸상에 앉은 사람이 건물 높이를 따른다
+    P.heightAt = (x, z) => { const u = (x - g.position.x) / g.scale.x, v = (z - g.position.z) / g.scale.z; return P.show > 0.5 && Math.abs(u) < W / 2 + 0.2 && v > -0.95 && v < 0.85 ? 0.02 * g.scale.y : 0; };
+    return P;
   },
 
   // 등잔 켠 집 안의 모임 (안디옥 교회의 예배와 금식 — 행 13:2, 뒤 묶음의 드로아 다락방·집의 교회): 깔개 깐 흙바닥, 낮은 뒷벽과 왼벽,
