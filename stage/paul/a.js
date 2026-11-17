@@ -637,10 +637,10 @@ export const A = {
       'p2.2': [['lame', 'idle', { show: 0 }], ['stones', 'throw'], ['l1', 'hurl', { look: 1.3 }], ['j1', 'hurl', { look: 1.4, delay: 500 }], ['paul', 'cower', { delay: 1000 }], ['paul', 'topple', { delay: 2600 }],
         ['stones', 'idle', { delay: 4500 }], ['l1', 'idle', { x: -1.9, z: -0.1, delay: 5000 }], ['j1', 'idle', { x: -1.85, z: 0.3, delay: 5200 }], ['j2', 'idle', { x: -1.9, z: 0.6, delay: 5400 }], ['lw', 'idle', { x: -2.0, z: 0.75, delay: 5600 }],
         ['l1', 'idle', { show: 0, delay: 8000 }], ['j1', 'idle', { show: 0, delay: 8200 }], ['j2', 'idle', { show: 0, delay: 8400 }], ['lw', 'idle', { show: 0, delay: 8600 }], ['folk', null, { show: 0, delay: 5500 }],
-        ['barnabas', 'mourn', { x: 0.8, z: -0.1, look: -1.0, delay: 6000 }]],
+        ['barnabas', 'mourn', { x: 0.7, z: -0.4, look: -1.0, delay: 6000 }]],
       // 제자들이 둘러서자 바울이 일어나 성으로 들어가고, 이튿날 더베로
       'p2.3': [['stones', 'idle'], ['folk', null, { show: 0 }], ['l1', 'idle', { show: 0 }], ['j1', 'idle', { show: 0 }], ['j2', 'idle', { show: 0 }], ['lw', 'idle', { show: 0 }], ['lame', 'idle', { show: 0 }],
-        ['paul', 'topple'], ['barnabas', 'kneel', { x: 0.8, z: -0.1, look: -1.0 }], ['d1', 'pray', { show: 1, x: 0.85, z: 0.3, look: -1.4 }], ['d2', 'pray', { show: 1, x: 0.3, z: 0.4, look: 2.4, delay: 300 }],
+        ['paul', 'topple'], ['barnabas', 'kneel', { x: 0.7, z: -0.4, look: -1.0 }], ['d1', 'pray', { show: 1, x: 0.85, z: 0.3, look: -1.4 }], ['d2', 'pray', { show: 1, x: 0.3, z: 0.4, look: 2.4, delay: 300 }],
         ['paul', 'sit-ground', { delay: 3000 }], ['paul', 'idle', { look: 1.2, delay: 4800 }], ['barnabas', 'idle', { look: -1.2, delay: 4800 }],
         ['paul', 'idle', { x: 1.25, z: -0.5, delay: 6500 }], ['barnabas', 'idle', { x: 1.45, z: -0.45, delay: 6700 }], ['paul', 'idle', { show: 0, delay: 9500 }], ['barnabas', 'idle', { show: 0, delay: 9700 }]],
       w0: [['folk', 'stand', { show: 1 }], ['ox1', null, { show: 0 }], ['priest', 'idle', { show: 0 }], ['temple', 'idle'], ['stones', 'idle'], ['j1', 'idle', { show: 0 }], ['j2', 'idle', { show: 0 }], ['d1', 'idle', { show: 0 }], ['d2', 'idle', { show: 0 }],
