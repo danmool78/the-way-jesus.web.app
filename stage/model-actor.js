@@ -10,7 +10,8 @@ import { clone } from '../assets/vendor/SkeletonUtils.js';
 import { calmClips } from '../game-model.js';
 
 // 팔까지 모델의 동작 그대로 쓰는 자세 (그 밖의 자세는 팔을 인형에 맞춘다)
-const CLIP = { idle: 'idle', listen: 'idle', speak: 'talk', sleep: 'sleep' };
+const CLIP = { idle: 'idle', listen: 'idle', speak: 'talk', sleep: 'sleep', topple: 'sleep' }; // 쓰러짐(topple, 돌에 맞은 바울)은 눕는 동작으로 — 서서 팔만 쓰러지는 척했다(a10, 사용자 2026-11)
+const LIE = new Set(['sleep', 'topple']);
 // 무릎 꿇은 다리만 모델의 'pray'(무릎 꿇고 두 팔을 높이 듦)에서 빌리고 팔은 인형대로 — 인형의 기도는 서서 두 손을 가슴에 모은다
 const KNEEL = new Set(['kneel', 'mourn', 'cower']); // 땅에 앉기(sit-ground)는 무릎 꿇기가 아니다 — 앉아 가르치시는 예수님이 무릎 꿇고 기도하는 다리를 빌려 시도 때도 없이 꿇으셨다(사용자 2026-11)
 // 걸터앉기: 넓적다리를 앞으로, 정강이는 아래로 (회당에서 앉아 말씀을 읽으심 — 무릎 꿇고 기도하는 자세가 되었다, 사용자 2026-11)
@@ -262,7 +263,7 @@ export class StageModel {
         // 두 손이 벌어지면(말하며 팔을 펼 때) 한가운데는 가슴 앞 허공 — 두루마리가 가슴에서 튀어나와 보였다(사용자 2026-11). 그땐 오른손에
         const apart = a.distanceTo(b) > 0.3 * this.H; if (apart) o.position.copy(b); else { o.position.copy(a).add(b).multiplyScalar(0.5); o.position.y += 0.02; o.position.z += 0.07 * this.H; } o.quaternion.copy(it.q0); } // 두 손 사이 조금 앞 — 손 사이 그대로면 두루마리가 팔뚝에 박혔다(e16, 사용자 2026-11)
       else if (kind === 'staff') { // 손 옆에 세워 땅을 짚는다. 눕거나 나무 위·엎드려 울 때, 기도할 때(두 손을 모은다)는 내려놓는다(허공에 서 있었다)
-        const h = handAt(1); if (!h || ['sleep', 'perch', 'mourn', 'kneel', 'pray'].includes(this.doll.pose)) { o.visible = false; continue; } o.position.set(h.x, 0, h.z); }
+        const h = handAt(1); if (!h || ['sleep', 'topple', 'perch', 'mourn', 'kneel', 'pray'].includes(this.doll.pose)) { o.visible = false; continue; } o.position.set(h.x, 0, h.z); }
       else if (kind === 'glow') o.position.set(0, it.p0.y + 0.1, it.p0.z);
     }
   }
@@ -293,8 +294,8 @@ export class StageModel {
   // 묻히거나(마리아의 무릎 꿇기) 떠 보였다. 높이를 정한 사람·나무 위·누운 사람·걸터앉은 사람·날아 있는 것은 그대로
   toGround() {
     const d = this.doll;
-    const lying = d.pose === 'sleep' && this.acts.sleep && d.goal.distanceTo(d.pos) <= 0.02; // 잠자기 동작(빌린 것 포함)으로 누우면 몸 전체의 가장 낮은 뼈를 땅에 — 엉덩이 높이가 모델마다 달라 떠 있었다(요셉)
-    if (d.floating || (d.yT || 0) > 0.05 || (!lying && ['sleep', 'perch', 'seat', 'ride', 'crucified', 'crucified-dead'].includes(d.pose)) || this.body.rotation.x) return;
+    const lying = LIE.has(d.pose) && this.acts.sleep && d.goal.distanceTo(d.pos) <= 0.02; // 잠자기 동작(빌린 것 포함)으로 누우면 몸 전체의 가장 낮은 뼈를 땅에 — 엉덩이 높이가 모델마다 달라 떠 있었다(요셉)
+    if (d.floating || (d.yT || 0) > 0.05 || (!lying && ['sleep', 'topple', 'perch', 'seat', 'ride', 'crucified', 'crucified-dead'].includes(d.pose)) || this.body.rotation.x) return;
     const r = this.p.root; r.updateMatrixWorld(true);
     let low = Infinity;
     // 누우면 몸(살)의 가장 낮은 점을 땅에 — 가장 낮은 뼈로 맞추니 살 밖으로 삐져나온 뼈가 있는 모델은 몸이 떠 있었다(e18 시몬의 장모, 사용자 2026-11).
@@ -316,7 +317,7 @@ export class StageModel {
     r.position.copy(dr.position); r.rotation.copy(dr.rotation);
     // 말하거나 듣는 사람은 상대 쪽으로 몸을 온전히 돌린다 — 미니어처 인형은 얼굴이 보이게 앞쪽(±1.15)까지만 돌았는데,
     // 사람 비율의 모델이 그대로 따르니 엉뚱한 곳을 보고 말했다(사용자 2026-11). 걷거나 눕거나 엎드린 때는 인형 그대로
-    { const t = d.talkTo || d.target, keep = moving || d.floating || ['sleep', 'perch', 'mourn', 'crucified', 'crucified-dead', 'ride', 'carry-pole'].includes(d.pose);
+    { const t = d.talkTo || d.target, keep = moving || d.floating || ['sleep', 'topple', 'perch', 'mourn', 'crucified', 'crucified-dead', 'ride', 'carry-pole'].includes(d.pose);
       let want = dr.rotation.y;
       if (t && t.showT > 0.5 && !keep) want = Math.atan2(t.pos.x - d.pos.x, t.pos.y - d.pos.y);
       this.yaw ??= want; this.yaw += Math.atan2(Math.sin(want - this.yaw), Math.cos(want - this.yaw)) * (1 - Math.exp(-6 * dt));
@@ -353,7 +354,7 @@ export class StageModel {
     if (onSeat && this.hipsB) { const r0 = this.p.root; this.body.position.y = 0; r0.updateMatrixWorld(true);
       const hy = r0.worldToLocal(this.hipsB.getWorldPosition(v1)).y; this.body.position.y = -(hy - 0.09 * this.H) * this.legW; }
     // 잠: 잠자는 동작이 없는 모델(베드로 등)은 인형이 눕는 대로 몸을 옆으로 눕힌다 — 서 있는 채 자고 있었다
-    const lie = d.pose === 'sleep' && !this.acts.sleep;
+    const lie = LIE.has(d.pose) && !this.acts.sleep;
     this.body.rotation.z = lie ? d.p.body.rotation.z : 0; this.body.position.x = lie ? d.p.body.position.x : 0;
     if (lie) this.body.position.y += d.p.body.position.y * 0.6 + 0.045 * this.hipH; // 옆으로 누운 몸의 두께만큼 띄운다 (다리가 땅에 묻혔다)
     // 가지에 엎드리기(삭개오, 눅 19:4): 발끝을 축으로 앞으로 눕혀 몸이 가지를 따라 놓이고, 두 팔은 가지를 끌어안고, 고개는 들어 아래를 본다
