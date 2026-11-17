@@ -1163,7 +1163,7 @@ class Actor {
     p.items.timbrel.position.y = this.pose === 'dance' ? 0.98 : 0.62; // 춤출 때 소고는 머리 위로 든 두 손에
     if (p.slingSpin) p.slingSpin.rotation.x = this.pose === 'sling' ? t * 15 : damp(p.slingSpin.rotation.x % (Math.PI * 2), 0, 4, dt);
     if (p.bowArc) p.bowArc.rotation.x = damp(p.bowArc.rotation.x, this.pose === 'shoot' ? Math.PI / 2 : 0, 6, dt);
-    if (p.staff) p.staff.visible = !['hurl', 'play', 'sling', 'shoot', 'dance', 'topple', 'anoint'].includes(this.pose) && !(this.item && HAND.has(this.item));
+    if (p.staff) p.staff.visible = !['hurl', 'play', 'sling', 'shoot', 'dance', 'topple', 'anoint', 'kneel', 'pray'].includes(this.pose) && !(this.item && HAND.has(this.item));
     // 엄숙한 장면: 숨쉬기 외의 작은 몸짓을 멈춘다
     if (this.solemn) { nod += 0.05; }
     p.armL.userData.loaf.visible = p.armR.userData.loaf.visible = this.pose === 'break';
