@@ -121,7 +121,7 @@ const BOYS = new Set(['child', 'boyJesus']);
 // 옷은 restyle로 색상을 돌리고 살갗 밝기도 달리 — 구약 여정의 그 사람과 같아 보이지 않게(사용자 2026-11)
 const LIKE = { official: ['nicodemus', { hue: 200, sat: 1.3 }], // 왕의 신하(요 4:46) — 엑스트라가 뽑히니 신하 같지 않았다
   king: ['rehoboam', { hue: 150, skin: 1.05 }], magus: ['jethro', { hue: 200, sat: 1.4, skin: 0.8 }], magus2: ['nathan', { hue: 90, sat: 1.5, skin: 1.1 }], magus3: ['absalom', { hue: 250, skin: 0.62 }], // 헤롯은 오만한 왕, 동방박사는 사막 족장·현자·젊은 귀공자(먼 나라 사람이라 살갗도 저마다)
-  official: ['jeroboam', { plain: true, skin: 0.9 }], youth: ['jonathan', { plain: true, hue: 40, skin: 1.08 }], guard: ['joab', { hue: 30, sat: 0.6, skin: 0.95 }], // 왕의 신하, 나인 성 과부의 아들, 성전 경비병
+  official: ['nicodemus', { plain: true, skin: 0.9 }], youth: ['jonathan', { plain: true, hue: 40, skin: 1.08 }], guard: ['joab', { hue: 30, sat: 0.6, skin: 0.95 }], // 왕의 신하, 나인 성 과부의 아들, 성전 경비병
   wild: ['pilgrim-man', { plain: true, skin: 0.72 }], sadducee: ['nicodemus', { hue: 160, skin: 1.08 }] }; // 거라사의 귀신 들린 사람(해진 옷, 햇볕에 그을림), 사두개인(바리새인 니고데모와 달리)
 const DISCIPLES = ['andrew', 'james']; // 이름 없는 제자는 안드레·야고보 모델을 번갈아
 // 엑스트라(이름 없는 남녀·군중): 여러 사람을 섞는다 (사용자 2026-11: 순례자로만 하지 말고, 다른 시대 사람도 — 왕은 빼고, 수수하게 입은 사람을
@@ -140,6 +140,7 @@ const EXTRA = {
 const BORROW = () => ({ sleep: ready['pilgrim-man'], pray: ready['jesus-moves'], idle: ready['jesus-moves'], talk: ready['jesus-moves'] }); // 천사 모델은 걷기만 있어 서기·말하기도
 // 바울 여정의 나머지 배역 (사용자 2026-11: 바울 여정도 모두 모델로) — 비슷한 사람의 모델에 옷 색(hue)·살갗(skin)을 달리 입힌다.
 // 로마 관리(토가)는 빌라도, 병사는 병정, 왕과 왕비는 구약의 왕·왕비, 수염 없는 젊은이는 디모데, 사울(회심 전)은 바울 모델 그대로
+// 왕관을 쓴 모델(솔로몬·여로보암·르호보암·아합)은 왕에게만 — 헤롯과 함께 자란 마나엔·은장색·선주가 왕관을 쓰고 있었다(사용자 2026-11)
 Object.assign(LIKE, {
   sauly: ['paul'], saulB: ['paul'],
   stephen: ['jonathan', { white: true, skin: 1.05 }], councilor: ['nicodemus', { hue: 230 }], witness: ['pilgrim-man', { plain: true, skin: 0.9 }],
@@ -147,7 +148,7 @@ Object.assign(LIKE, {
   judasD: ['jethro', { plain: true, skin: 0.9 }], townsman: ['pilgrim-man', '#9a7a5a'], jewD: ['elisha', { hue: 180, skin: 1.05 }],
   nabatean: ['joab', { hue: 330, skin: 0.72 }], jamesL: ['nathan', { hue: 60, skin: 1.05 }], lucius: ['ahijah', { hue: 160, skin: 0.7 }],
   greek: ['timothy', { hue: 190 }], greek2: ['silas', { hue: 300, skin: 1.08 }], greekW: ['rahab', { hue: 20 }],
-  agabus: ['elijah', { plain: true }], simeon: ['barnabas', { hue: 90, skin: 0.62 }], manaen: ['solomon', { plain: true, skin: 0.95 }],
+  agabus: ['elijah', { plain: true }], simeon: ['barnabas', { hue: 90, skin: 0.62 }], manaen: ['nicodemus', { hue: 40, skin: 0.95 }],
   proconsul: ['pilate'], lictor: ['soldier', { sat: 0.5 }], elymas: ['isaiah', { hue: 250, sat: 0.6, skin: 0.9 }],
   mark: ['timothy', { hue: 230, skin: 1.04 }], ruler: ['nicodemus', { hue: 200, skin: 1.06 }], noblewoman: ['michal', { hue: 300 }],
   lame: ['pilgrim-man', { plain: true, skin: 0.95 }], lycaonian: ['shepherd', { hue: 20, skin: 0.75 }], lycaonianW: ['zipporah', { hue: 25, skin: 0.8 }],
@@ -156,11 +157,11 @@ Object.assign(LIKE, {
   magistrate: ['pilate', { hue: 330 }], jailer: ['joab', { plain: true, skin: 0.9 }], philosopher: ['samuel', { hue: 200, skin: 1.08 }],
   philosopher2: ['isaiah', { hue: 230, skin: 1.08 }], aquila: ['fisherman', { hue: 20, skin: 0.95 }], priscilla: ['pilgrim-woman', '#3e5a6a'],
   sailor: ['fisherman', { hue: 200, skin: 0.75 }], governor: ['pilate', { hue: 300 }], ephesian: ['pilgrim-man', '#c97a3a'],
-  demetrius: ['jeroboam', { hue: 30, sat: 0.7 }], titus: ['timothy', { hue: 40, skin: 1.02 }], tertius: ['nathan', { hue: 210, skin: 1.03 }],
+  demetrius: ['joseph', { hue: 30, sat: 0.7 }], titus: ['timothy', { hue: 40, skin: 1.02 }], tertius: ['nathan', { hue: 210, skin: 1.03 }],
   phoebe: ['woman', { hue: 190 }], eutychus: ['david', { plain: true, skin: 1.03 }], tribune: ['centurion', { hue: 20 }],
   nephew: ['timothy', { hue: 200, skin: 1.06 }], drusilla: ['jezebel', { hue: 180, skin: 1.05 }], tertullus: ['pilate', { plain: true, skin: 1.05 }],
   festus: ['pilate', { hue: 340, skin: 1.03 }], agrippa: ['ahab', { hue: 280 }], bernice: ['jezebel', { hue: 300 }],
-  aristarchus: ['barnabas', { hue: 20, skin: 1.05 }], shipowner: ['jeroboam', { hue: 210 }], islander: ['shepherd', { plain: true, skin: 0.68 }],
+  aristarchus: ['barnabas', { hue: 20, skin: 1.05 }], shipowner: ['andrew', { hue: 210 }], islander: ['shepherd', { plain: true, skin: 0.68 }],
   islanderW: ['zipporah', { plain: true, skin: 0.72 }], publius: ['pilate', { hue: 250, skin: 0.95 }], epaphroditus: ['silas', { hue: 270 }],
   onesimus: ['timothy', { plain: true, skin: 0.7 }], tychicus: ['luke', { hue: 140 }],
 });
@@ -401,7 +402,7 @@ if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__st
   cmd(list) { atStart = false; apply(list, true); }, // 점검용: 명령을 바로
   play(k) { atStart = false; beat(k); }, // 점검용: 그 순간을 제 속도(delay 포함)로
   // 점검용 가까이 찍기: 배역 n을 옆(yaw 기준 side 라디안)에서 크게 찍어 그림 주소로
-  closeup(n, side = Math.PI / 2, dist = 1.1) { const a = actors[n]; if (!a) return null; const r = a.p.root; r.updateMatrixWorld(true); const c = r.getWorldPosition(new THREE.Vector3()), s = r.getWorldScale(new THREE.Vector3()).y, h = (a.H || 0.9) * s;
+  closeup(n, side = Math.PI / 2, dist = 1.1) { const a = Array.isArray(n) ? null : actors[n]; if (!a && !Array.isArray(n)) return null; const r = a ? a.p.root : stageGroup; r.updateMatrixWorld(true); const c = a ? r.getWorldPosition(new THREE.Vector3()) : stageGroup.localToWorld(new THREE.Vector3(...n)), s = r.getWorldScale(new THREE.Vector3()).y, h = (a?.H || 0.9) * s; // n: 배역 이름 또는 무대 좌표 [x, y, z]
     const yaw = r.getWorldQuaternion(new THREE.Quaternion()), dir = new THREE.Vector3(Math.sin(side), 0.25, Math.cos(side)).normalize().applyQuaternion(yaw);
     const cam = new THREE.PerspectiveCamera(30, 1, 0.01, 50); cam.position.copy(c).addScaledVector(dir, h * dist * 2.2).add(new THREE.Vector3(0, h * 0.25, 0)); cam.lookAt(c.x, c.y + h * 0.25, c.z);
     const sz = renderer.getSize(new THREE.Vector2()); renderer.setSize(500, 500, false); renderer.render(scene, cam); const url = renderer.domElement.toDataURL(); renderer.setSize(sz.x, sz.y, false); return url; }, beats: () => Object.keys(script?.beats || {}),
