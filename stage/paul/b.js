@@ -60,7 +60,7 @@ export const B = {
       g1: ['greek', -0.85, -0.2, 0.9, { pose: 'sit-ground' }],
       gw: ['greekW', -0.55, -0.5, 0.5, { pose: 'sit-ground' }],
       g2: ['greek2', -1.3, 0.1, 1.0],
-      scribe: ['townsman', 1.15, 0.47, 1.4, { pose: 'sit-ground', gaze: false }],
+      scribe: ['townsman', 1.02, 0.47, 1.4, { pose: 'sit-ground', gaze: false }],
       peter: ['peter', PE[0], PE[1], look(PE, MID), { y: 0.12, pose: 'sit' }],
       john: ['john', JO[0], JO[1], look(JO, MID), { y: 0.12, pose: 'sit' }],
       e1: ['elder', E1[0], E1[1], look(E1, MID), { y: 0.12, pose: 'sit' }],
@@ -82,11 +82,11 @@ export const B = {
       // 갈라디아의 교회들도 흔들린다
       'p0.4': [['paul', 'idle'], ['barnabas', 'idle'], ['t1', 'idle'], ['t2', 'idle'], ['g1', 'listen', { look: 1.3 }], ['gw', 'shrug'], ['g2', 'shrug', { delay: 600 }]],
       // 편지를 쓴다 — 오른쪽 앞 낮은 상에 앉아 받아 적게 한다
-      'p0.5': [['paul', 'idle', { x: 1.5, z: 0.22, look: 0.2 }], ['paul', 'sit-ground', { look: 0.2, delay: 2600 }], ['scribe', 'sit-ground', { show: 1, delay: 1500 }],
+      'p0.5': [['paul', 'idle', { x: 1.5, z: 0.12, look: 0.2 }], ['paul', 'sit-ground', { look: 0.2, delay: 2600 }], ['scribe', 'sit-ground', { show: 1, delay: 1500 }],
         ['desk', 'write', { delay: 2800 }], ['barnabas', 'idle', { x: 0.85, z: -0.1, look: 1.3, delay: 600 }], ['gw', 'sit-ground'], ['g2', 'idle']],
-      'p0.6': [['paul', 'sit-speak', { x: 1.5, z: 0.22, to: 'scribe' }], ['scribe', 'sit-ground', { show: 1 }], ['desk', 'write']],
+      'p0.6': [['paul', 'sit-speak', { x: 1.5, z: 0.12, to: 'scribe' }], ['scribe', 'sit-ground', { show: 1 }], ['desk', 'write']],
       // 끝에 손수 큰 글씨를
-      'p1.0': [['paul', 'sit', { x: 1.5, z: 0.22, look: 0.1 }], ['scribe', 'listen', { show: 1, look: 1.4 }], ['desk', 'big']],
+      'p1.0': [['paul', 'sit', { x: 1.5, z: 0.12, look: 0.1 }], ['scribe', 'listen', { show: 1, look: 1.4 }], ['desk', 'big']],
       // 예루살렘으로 — 안디옥의 집은 걷히고 공의회가 선다
       'p1.1': [['scribe', 'listen', { show: 0 }], ['desk', 'big', { show: 0, delay: 600 }], ['hc', null, { show: 0, delay: 300 }], ...hide('g1', 'gw', 'g2'),
         ['t1', 'idle', { x: 0.95, z: -0.25, look: -1.3 }], ['t2', 'idle', { x: 1.15, z: 0.08, look: -1.4 }],
@@ -117,7 +117,7 @@ export const B = {
         ['g1', 'raise', { delay: 4200 }], ['gw', 'pray', { delay: 4500 }], ['g2', 'raise', { delay: 4800 }]],
       // 말씀 — 갈라디아서를 쓰는 바울
       w0: [...antioch, ['t1', 'idle', { show: 0 }], ['t2', 'idle', { show: 0 }], ['desk', 'big'], ['scribe', 'listen', { show: 1 }],
-        ['paul', 'sit-speak', { x: 1.5, z: 0.22, look: 0.2, to: 'scribe' }], ['barnabas', 'idle', { x: 0.85, z: -0.1, look: 1.3 }], ['g1', 'listen', { look: 1.3 }], ['gw', 'listen', { look: 1.1 }]],
+        ['paul', 'sit-speak', { x: 1.5, z: 0.12, look: 0.2, to: 'scribe' }], ['barnabas', 'idle', { x: 0.85, z: -0.1, look: 1.3 }], ['g1', 'listen', { look: 1.3 }], ['gw', 'listen', { look: 1.1 }]],
       w1: [...jerusalem, ['peter', 'speak', { y: 0, x: PE[0] + 0.2, z: PE[1] + 0.3, to: 't1' }], ['t1', 'listen'], ['t2', 'listen']],
       w2: [...jerusalem, ['james', 'speak', { y: 0, x: JA[0], z: JA[1] + 0.12, look: 0.4, to: 't1' }], ['t1', 'bow']],
       end: [...jerusalem, ['james', 'speak', { y: 0, x: JA[0], z: JA[1] + 0.12, look: 0 }]],
