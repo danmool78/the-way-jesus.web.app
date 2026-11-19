@@ -72,6 +72,7 @@ const regions = Object.entries(TREG).map(([name, r]) => {
 const regionAt = (x, z) => regions.find(r => x >= r.X0 && x <= r.X1 && z >= r.Z0 && z <= r.Z1);
 // 카메라: 바라보는 점(tx, tz), 거리, 기울기(내려다보는 각), 방위
 const cam = { tx: 0, tz: 0, dist: 150, pitch: 0.62, yaw: 0, goal: null };
+let fly = null; // 멀리 옮겨 가는 비행(물러났다 내려앉기)
 const placeDist = k => (isCity(k) ? 42 : 150);
 // 장면의 무대가 선 곳: 장면 안에서 옮겨 가는 장면(app.js의 start·stops)은 지금 있는 곳. 무대의 at(핀에서 떨어진 지점)은 장면의 장소에 있을 때만
 const placeOf = ev => window.stagePlaceOf?.(ev) || ev.place;
@@ -732,7 +733,18 @@ function loop(now) {
   const dt = Math.min(0.25, (now - last) / 1000); last = now; // 느린 기기에서도 카메라가 제때 닿게 넉넉히
   // 걷는 동안은 카메라가 걷는 사람을 따라간다
   if (walking && walker.has) cam.goal = { tx: walker.x, tz: walker.z, dist: walkDist };
-  if (cam.goal) {
+  // 멀리 옮겨 갈 때(가까이 본 화면 크기보다 먼 곳): 먼저 살며시 물러나 둘 다 보이게 한 뒤 옮겨 가고 다시 내려앉는다 — 가까이 본 채로
+  // 미끄러지니 땅이 휙휙 지나가 어지러웠다(사용자 2026-11). 걸리는 시간은 거리에 따라 1~3.2초, 물러나는 높이는 옮겨 가는 거리만큼
+  if (cam.goal && !walking && cam.goal !== fly?.goal) {
+    const D = Math.hypot(cam.goal.tx - cam.tx, cam.goal.tz - cam.tz);
+    fly = D > cam.dist * 0.35 ? { goal: cam.goal, t: 0, x: cam.tx, z: cam.tz, d: cam.dist, D, T: THREE.MathUtils.clamp(1 + 0.7 * Math.log2(1 + D / cam.dist), 1, 3.2) } : { goal: cam.goal };
+  }
+  if (cam.goal && !walking && fly?.T) {
+    fly.t = Math.min(1, fly.t + dt / fly.T); const s = fly.t * fly.t * (3 - 2 * fly.t), g = cam.goal;
+    const hump = Math.max(0, Math.min(fly.D * 0.9, 900) - Math.max(fly.d, g.dist)) * Math.sin(Math.PI * s);
+    cam.tx = fly.x + (g.tx - fly.x) * s; cam.tz = fly.z + (g.tz - fly.z) * s; cam.dist = fly.d + (g.dist - fly.d) * s + hump;
+    if (fly.t >= 1) { cam.goal = null; fly = null; }
+  } else if (cam.goal) {
     const k = 1 - Math.exp(-(walking ? 3.5 : 2.2) * dt);
     cam.tx += (cam.goal.tx - cam.tx) * k; cam.tz += (cam.goal.tz - cam.tz) * k; cam.dist += (cam.goal.dist - cam.dist) * k;
     if (!walking && Math.hypot(cam.goal.tx - cam.tx, cam.goal.tz - cam.tz) < 0.01 && Math.abs(cam.goal.dist - cam.dist) < 0.01) cam.goal = null;
