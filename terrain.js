@@ -22,6 +22,20 @@ const TREG = {
   // 모세 여정만(south): 시내 반도와 그 북쪽 광야(가데스·호르산)는 29.8°에서 맞닿는다. 광야라 나무·마을을 두지 않고 오아시스에 종려나무만(wild) — 진영은 무대가 세운다
   sinai: { lat0: 28.2, lat1: 29.8, lng0: 32.65, lng1: 35.6, fade: 'swe', south: 1, wild: 1 },
   negev: { lat0: 29.8, lat1: 30.95, lng0: 32.65, lng1: 35.6, fade: 'nwe', south: 1, wild: 1 },
+  // 바울 여정만(med): 레반트 밖 장소 둘레 — 3D로 가장 멀리 물러나도 화면이 이 안에 든다(사용자 2026-11). 사방을 풀어 내린다
+  damascus: { lat0: 32.8, lat1: 34.06, lng0: 35.95, lng1: 36.91, fade: 'nswe', med: 1 },
+  antioch: { lat0: 35.65, lat1: 36.75, lng0: 35.56, lng1: 36.76, fade: 'nswe', med: 1 },
+  paphos: { lat0: 34.21, lat1: 35.31, lng0: 31.81, lng1: 33.01, fade: 'nswe', med: 1 },
+  pantioch: { lat0: 37.76, lat1: 38.86, lng0: 30.59, lng1: 31.79, fade: 'nswe', med: 1 },
+  lystra: { lat0: 36.8, lat1: 38.13, lng0: 31.85, lng1: 33.96, fade: 'nswe', med: 1 },
+  troas: { lat0: 39.21, lat1: 40.31, lng0: 25.56, lng1: 26.76, fade: 'nswe', med: 1 },
+  philippi: { lat0: 40.46, lat1: 41.56, lng0: 23.69, lng1: 24.89, fade: 'nswe', med: 1 },
+  thessalonica: { lat0: 40.09, lat1: 41.19, lng0: 22.34, lng1: 23.54, fade: 'nswe', med: 1 },
+  achaia: { lat0: 37.36, lat1: 38.52, lng0: 22.28, lng1: 24.32, fade: 'nswe', med: 1 },
+  ephesus: { lat0: 36.98, lat1: 38.49, lng0: 26.68, lng1: 27.94, fade: 'nswe', med: 1 },
+  crete: { lat0: 34.51, lat1: 35.61, lng0: 24.35, lng1: 25.55, fade: 'nswe', med: 1 },
+  malta: { lat0: 35.4, lat1: 36.5, lng0: 13.82, lng1: 15.02, fade: 'nswe', med: 1 },
+  rome: { lat0: 40.88, lat1: 42.44, lng0: 11.89, lng1: 13.68, fade: 'nswe', med: 1 },
 };
 const EXAG = 1.8, M = 1 / 111; // 높이 과장 배율, 1m = 1/111 지도 단위
 const lv = m => m * M * EXAG;  // 고도(m) → 높이
@@ -144,6 +158,7 @@ async function build() {
 /* ---------- 지역 불러오기 ---------- */
 function ensureRegion(r) {
   if (r.south && !window.journeyMap?.south) return Promise.resolve(); // 다른 여정에서는 불러오지 않는다
+  if (r.med && !window.journeyMap?.med) return Promise.resolve();
   if (!r.load) {
     // 무대 밑을 고른 뒤에 이웃 지역이 늦게 오면 그 지역만 고르지 않은 채라 경계에 틈이 벌어졌다 — 다시 고른다
     r.load = loadRegion(r).then(() => { if (leveled) level(leveled.cx, leveled.cz, leveled.r); decorate(); window.recenterStage?.(); });

@@ -32,6 +32,21 @@ REGIONS = {
     # 정밀 타일이 없는 사막이라 색은 2D 바탕(relief-south)과 같은 방식으로 고도에서 바로 칠한다(src 없음, dry). 바다는 홍해의 두 만
     'sinai': dict(lat0=28.2, lat1=29.8, lng0=32.65, lng1=35.6, grid=0.25, color=1.0, src=None, gulf=True),
     'negev': dict(lat0=29.8, lat1=30.95, lng0=32.65, lng1=35.6, grid=0.25, color=1.0, src=None),
+    # 바울 여정(med): 레반트 밖의 장소(가까운 곳은 묶어서) 둘레 위도 ±0.55°·경도 ±0.6° — 3D 지형으로 가장 멀리 물러나도 화면이 이 안에 든다(사용자 2026-11).
+    # 색은 2D 지도의 지중해 고운 타일(assets/relief-med-hi, 장소 둘레만)을 이어 붙이고, 없는 곳은 거친 바탕(relief-med). 바다는 해수면 아래 전부(sea0)
+    'damascus': dict(lat0=32.8, lat1=34.06, lng0=35.95, lng1=36.91, grid=0.5, color=1.2, src=('relief-hi', R.HI)),  # 레반트 정밀 타일 안 (지중해 바탕은 이 자리를 비워 둔다)
+    'antioch': dict(lat0=35.65, lat1=36.75, lng0=35.56, lng1=36.76, grid=0.5, color=1.2, src='med', sea0=True),
+    'paphos': dict(lat0=34.21, lat1=35.31, lng0=31.81, lng1=33.01, grid=0.5, color=1.2, src='med', sea0=True),
+    'pantioch': dict(lat0=37.76, lat1=38.86, lng0=30.59, lng1=31.79, grid=0.5, color=1.2, src='med', sea0=True),
+    'lystra': dict(lat0=36.8, lat1=38.13, lng0=31.85, lng1=33.96, grid=0.5, color=1.2, src='med', sea0=True),
+    'troas': dict(lat0=39.21, lat1=40.31, lng0=25.56, lng1=26.76, grid=0.5, color=1.2, src='med', sea0=True),
+    'philippi': dict(lat0=40.46, lat1=41.56, lng0=23.69, lng1=24.89, grid=0.5, color=1.2, src='med', sea0=True),
+    'thessalonica': dict(lat0=40.09, lat1=41.19, lng0=22.34, lng1=23.54, grid=0.5, color=1.2, src='med', sea0=True),
+    'achaia': dict(lat0=37.36, lat1=38.52, lng0=22.28, lng1=24.32, grid=0.5, color=1.2, src='med', sea0=True),
+    'ephesus': dict(lat0=36.98, lat1=38.49, lng0=26.68, lng1=27.94, grid=0.5, color=1.2, src='med', sea0=True),
+    'crete': dict(lat0=34.51, lat1=35.61, lng0=24.35, lng1=25.55, grid=0.5, color=1.2, src='med', sea0=True),
+    'malta': dict(lat0=35.4, lat1=36.5, lng0=13.82, lng1=15.02, grid=0.5, color=1.2, src='med', sea0=True),
+    'rome': dict(lat0=40.88, lat1=42.44, lng0=11.89, lng1=13.68, grid=0.5, color=1.2, src='med', sea0=True),
 }
 
 
@@ -77,6 +92,28 @@ def hi_mosaic(ext, src, size):
     return crop.resize(size, Image.LANCZOS)
 
 
+def med_mosaic(ext, size):
+    """지중해 바탕(바울 여정): 거친 바탕(relief-med)을 깔고 그 위에 고운 타일(relief-med-hi)을 얹어 ext 범위를 잘라 낸다. 바다(투명)는 3D 바다색"""
+    E, T, P = R.MED, R.MED_HI_UNITS, R.HI_TILE_PX
+    ux = lambda lng: (lng - E['lng0']) * R.COS * 1000
+    uy = lambda lat: (E['lat1'] - lat) * 1000
+    x0, x1, y0, y1 = ux(ext['lng0']), ux(ext['lng1']), uy(ext['lat1']), uy(ext['lat0'])
+    c0, c1, r0, r1 = int(x0 // T), int(x1 // T), int(y0 // T), int(y1 // T)
+    k = P / T
+    base = Image.open(ROOT / 'assets' / 'relief-med.webp').convert('RGBA'); bw, bh = base.size
+    bu = bw / ((E['lng1'] - E['lng0']) * R.COS * 1000)  # 거친 바탕의 지도 단위당 픽셀
+    big = base.crop((round(c0 * T * bu), round(r0 * T * bu), round((c1 + 1) * T * bu), round((r1 + 1) * T * bu))).resize(((c1 - c0 + 1) * P, (r1 - r0 + 1) * P), Image.BILINEAR)
+    for r in range(r0, r1 + 1):
+        for c in range(c0, c1 + 1):
+            f = ROOT / 'assets' / 'relief-med-hi' / f'{r}_{c}.webp'
+            if f.exists():
+                tile = Image.open(f).convert('RGBA'); a = tile.split()[3]
+                big.paste(tile, ((c - c0) * P, (r - r0) * P), a)
+    sea = Image.new('RGBA', big.size, (126, 166, 173, 255)); sea.alpha_composite(big)
+    crop = sea.crop((round((x0 - c0 * T) * k), round((y0 - r0 * T) * k), round((x1 - c0 * T) * k), round((y1 - r0 * T) * k)))
+    return crop.convert('RGB').resize(size, Image.LANCZOS)
+
+
 def main(cache, only=None):
     OUT.mkdir(parents=True, exist_ok=True)
     for name, e in REGIONS.items():
@@ -104,7 +141,7 @@ def main(cache, only=None):
         Image.fromarray(img, 'RGB').save(OUT / f'{name}-height.png', optimize=True)
 
         cw, ch = round(uw * e['color']), round(uh * e['color'])
-        col = hi_mosaic(e, e['src'], (cw, ch)) if e['src'] else dry_color(cache, e, (cw, ch))
+        col = med_mosaic(e, (cw, ch)) if e['src'] == 'med' else hi_mosaic(e, e['src'], (cw, ch)) if e['src'] else dry_color(cache, e, (cw, ch))
         a = np.asarray(col, np.float32)
         # 헤르몬의 눈: 1900m 위로 갈수록 희게 (시내산 둘레의 2000m대 봉우리는 눈이 없는 바위)
         d = np.asarray(Image.fromarray(dem.astype(np.float32)).resize(col.size, Image.BILINEAR))
