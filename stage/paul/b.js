@@ -229,7 +229,7 @@ export const B = {
       // 몇 해 전 돌에 맞았던 그 성 — 바울이 신전 쪽을 돌아본다
       'p0.1': [['paul', 'idle', { x: 0.7, z: 0.3, look: 2.4 }], ['silas', 'idle', { look: 2.0, delay: 600 }]],
       // 디모데가 나와 맞는다
-      'p0.2': [['paul', 'idle', { look: -1.2 }], ['silas', 'idle', { look: -1.3 }], ['tim', 'idle', { x: 0.27, z: 0.29, look: 1.3 }], ['tim', 'bow', { look: 1.3, delay: 3200 }], ['paul', 'bless', { to: 'tim', delay: 3400 }]],
+      'p0.2': [['paul', 'idle', { look: -1.2 }], ['silas', 'idle', { look: -1.3 }], ['tim', 'idle', { x: 0.28, z: 0.3, look: 1.3 }], ['tim', 'bow', { look: 1.3, delay: 3200 }], ['paul', 'bless', { to: 'tim', delay: 3400 }]],
       // 어머니는 믿는 유대 여인, 아버지는 헬라 사람
       'p0.3': [['tim', 'idle', { look: -1.2 }], ['paul', 'idle'], ['eunice', 'idle', { x: -0.5, z: 0.05, look: 1.2 }], ['lois', 'idle', { x: -0.72, z: 0.31, look: 1.2, delay: 400 }],
         ['father', 'idle', { show: 1, x: -1.25, z: -0.03, look: 0.9, delay: 600 }]],
@@ -375,7 +375,7 @@ export const B = {
       'p1.0': [['paul', 'idle', { x: 0.25, z: 0.12, look: -1.3 }], ['silas', 'idle', { x: 0.5, z: -0.08 }], ['tim', 'idle', { x: 0.5, z: 0.4 }], ['luke', 'idle', { x: 0.8, z: 0.2 }],
         ['lydia', 'listen', { look: 1.1 }], ['w1', 'listen', { look: 1.1, delay: 400 }], ['w2', 'idle', { look: 1.2, delay: 700 }]],
       // 일행은 앉아서 말씀을 전한다
-      'p1.1': [['paul', 'sit-speak', { x: 0.2, z: 0.2, look: -1.3, to: 'lydia' }], ['silas', 'sit-ground', { x: 0.42, z: -0.07, look: -1.3 }], ['tim', 'sit-ground', { x: 0.45, z: 0.42, look: -1.3 }],
+      'p1.1': [['paul', 'sit-speak', { x: 0.2, z: 0.12, look: -1.3, to: 'lydia' }], ['silas', 'sit-ground', { x: 0.44, z: -0.08, look: -1.3 }], ['tim', 'sit-ground', { x: 0.45, z: 0.42, look: -1.3 }],
         ['w2', 'listen'], ['maid', 'listen']],
       // 두아디라에서 온 자색 옷감 장수 루디아
       'p1.2': [['lydia', 'listen', { look: 1.0 }]],
@@ -397,13 +397,13 @@ export const B = {
         ['tim', 'idle', { show: 0, delay: 1100 }], ['luke', 'idle', { show: 0, delay: 1200 }], ['w1', 'raise'], ['w2', 'pray'], ['@env', 'dusk']],
       w0: [['@env', 'day'], ['heart', null, { show: 1 }], ['water', 'idle'], ['paul', 'sit-speak', { show: 1, x: 0.2, z: 0.2, look: -1.3, to: 'lydia' }], ['silas', 'sit-ground', { show: 1, x: 0.42, z: -0.07, look: -1.3 }],
         ['tim', 'sit-ground', { show: 1, x: 0.45, z: 0.42, look: -1.3 }], ['luke', 'idle', { show: 1, x: 0.75, z: 0.2, look: -1.3 }], ['lydia', 'listen', { show: 1, x: -0.4, z: 0.28, look: 1.0 }],
-        ['maid', 'sit-ground', { show: 1, x: -0.97, z: 0.29, look: 1.1 }], ['w1', 'listen'], ['w2', 'listen']],
+        ['maid', 'sit-ground', { show: 1, x: -0.98, z: 0.28, look: 1.1 }], ['w1', 'listen'], ['w2', 'listen']],
       w1: [['heart', null, { show: 0 }], ['lydia', 'speak', { x: -0.55, z: 0.25, look: 1.3, to: 'paul' }], ['paul', 'listen', { x: -0.15, z: 0.25, look: -1.3 }], ['maid', 'idle', { x: -0.85, z: 0.5, look: 1.2 }],
         ['silas', 'idle', { x: 0.1, z: 0.0, look: -1.3 }], ['tim', 'idle', { x: 0.15, z: 0.45, look: -1.3 }]],
       w2: [['@env', 'dusk'], ['lydia', 'listen', { look: 1.3 }], ['paul', 'speak', { to: 'lydia' }], ['w1', 'pray'], ['w2', 'pray']],
       end: [['@env', 'day'], ['heart', null, { show: 1 }], ['water', 'idle'], ['paul', 'sit-speak', { show: 1, x: 0.2, z: 0.2, look: -1.3, to: 'lydia' }], ['silas', 'sit-ground', { show: 1, x: 0.42, z: -0.07, look: -1.3 }],
         ['tim', 'sit-ground', { show: 1, x: 0.45, z: 0.42, look: -1.3 }], ['luke', 'idle', { show: 1, x: 0.75, z: 0.2, look: -1.3 }], ['lydia', 'listen', { show: 1, x: -0.4, z: 0.28, look: 1.0 }],
-        ['maid', 'sit-ground', { show: 1, x: -0.96, z: 0.29, look: 1.1 }], ['w1', 'listen', { show: 1 }], ['w2', 'listen', { show: 1 }]],
+        ['maid', 'sit-ground', { show: 1, x: -0.97, z: 0.28, look: 1.1 }], ['w1', 'listen', { show: 1 }], ['w2', 'listen', { show: 1 }]],
     },
   },
 
@@ -753,7 +753,7 @@ export const B = {
       // 데살로니가 교회가 믿음과 사랑을 지킨다는 기쁜 소식
       'p0.1': [['paul', 'idle'], ['silas', 'idle'], ['tim', 'speak', { to: 'paul' }], ['paul', 'raise', { look: 0.8, delay: 3800 }]],
       // 셋이 함께 편지를 보낸다 — 낮은 상에 앉는다
-      'p0.2': [['tim', 'idle'], ['paul', 'sit-ground', { x: -1.51, z: 0.27, look: 0.1 }], ['silas', 'sit-ground', { x: -1.96, z: 0.45, look: 1.3 }], ['tim', 'sit-ground', { x: -1.04, z: 0.54, look: -1.3 }],
+      'p0.2': [['tim', 'idle'], ['paul', 'sit-ground', { x: -1.51, z: 0.27, look: 0.1 }], ['silas', 'sit-ground', { x: -1.97, z: 0.46, look: 1.3 }], ['tim', 'sit-ground', { x: -1.04, z: 0.54, look: -1.3 }],
         ['desk', 'write', { delay: 2600 }]],
       'p0.3': [['paul', 'sit-speak', { to: 'silas' }], ['desk', 'write']],
       'p0.4': [['paul', 'sit', { look: 0.1 }], ['desk', 'write']],

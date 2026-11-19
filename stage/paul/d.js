@@ -515,7 +515,7 @@ export const D = {
       'p1.3': [['epa', 'sleep', { x: 1.2, z: 0.25, look: -1.3 }], ['paul', 'pray', { look: 1.3, delay: 600 }], ['epa', 'sit-ground', { delay: 4200 }], ['epa', 'idle', { delay: 5600 }], ['paul', 'raise', { look: 1.3, delay: 5600 }]],
       // 편지를 쓴다 — 바울이 상 뒤에 앉고 디모데가 받아 적는다
       'p1.4': [['epa', 'idle', { x: 1.2, z: 0.25, look: -1.3 }], ['paul', 'sit-ground', { x: 0.33, z: -0.05, look: 0.1 }], ['soldier', 'idle', { x: 0.67, z: 0.06, look: -0.3 }],
-        ['desk', 'idle', { show: 1 }], ['tim', 'sit-ground', { x: -0.02, z: 0.44, look: 1.2 }], ['desk', 'write', { delay: 2400 }]],
+        ['desk', 'idle', { show: 1 }], ['tim', 'sit-ground', { x: -0.03, z: 0.47, look: 1.2 }], ['desk', 'write', { delay: 2400 }]],
       'p2.0': [['desk', 'write'], ['paul', 'sit-speak', { to: 'tim' }]],
       'p2.1': [['paul', 'sit-speak', { to: 'tim' }]],
       // 황제의 근위대가 모두 알게 되었다 — 지키는 군인도 귀 기울인다
