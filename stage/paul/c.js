@@ -57,7 +57,7 @@ export const C = {
     },
     beats: {
       enter: [['spirit', null, { show: 0 }], ['twelve', null, { show: 0 }], ['j1', 'idle', { show: 0 }], ['j2', 'idle', { show: 0 }], ['desk', 'write'],
-        ['paul', 'sit-ground', { x: 0.25, z: 0.45, look: 0 }], ['news', 'idle', { x: -0.25, z: 0.58, look: 1.2, item: 'scroll' }],
+        ['paul', 'sit-ground', { x: 0.23, z: 0.45, look: 0 }], ['news', 'idle', { x: -0.25, z: 0.58, look: 1.2, item: 'scroll' }],
         ['d1', 'idle', { x: 0.62, z: -0.2, look: 2.8, y: 0.1, pose: 'sit' }], ['d2', 'idle', { x: 1.45, z: -0.2, look: -2.8 }], ['d3', 'listen', { x: 0.75, z: 0.5, look: -1.2 }], ['d4', 'listen', { x: -0.2, z: 0.3, look: 1.0 }],
         ['s1', 'sit'], ['s2', 'sit'], ['s3', 'sit'], ['s4', 'sit']],
       // 에베소에서 만난 제자 몇 사람 — 바울이 묻는다
@@ -97,20 +97,20 @@ export const C = {
       // 물음을 적어 보낸 편지를 건넨다
       'p2.2': [['news', 'idle', { item: null, delay: 1800 }], ['paul', 'idle', { item: 'scroll', delay: 1800 }]],
       // 바울이 낮은 상에 앉아 편지를 쓴다
-      'p2.3': [['news', 'idle', { item: null }], ['paul', 'sit-ground', { item: null, x: 0.25, z: 0.45, look: 0 }], ['desk', 'write', { delay: 2500 }], ['news', 'listen', { x: -0.25, z: 0.58, look: 1.2 }]],
-      'p2.4': [['desk', 'write'], ['paul', 'sit-ground', { x: 0.25, z: 0.45, look: 0 }]],
+      'p2.3': [['news', 'idle', { item: null }], ['paul', 'sit-ground', { item: null, x: 0.23, z: 0.45, look: 0 }], ['desk', 'write', { delay: 2500 }], ['news', 'listen', { x: -0.25, z: 0.58, look: 1.2 }]],
+      'p2.4': [['desk', 'write'], ['paul', 'sit-ground', { x: 0.2, z: 0.45, look: 0 }]],
       // 그리스도의 한 몸 — 서원의 제자들이 둘러 와 선다
       'p2.5': [['d1', 'listen', { y: 0, x: 0.75, z: 0.5, look: -1.2 }], ['d3', 'listen', { y: 0, x: -0.05, z: 0.32, look: 0.8, delay: 400 }]],
       'p2.6': [['paul', 'look-up', { delay: 800 }], ['desk', 'done', { delay: 3000 }]],
       w0: [['spirit', null, { show: 0 }], ['twelve', null, { show: 0 }], ['desk', 'blank'], ['news', 'idle', { show: 0 }], ['paul', 'speak', { item: null, x: -0.3, z: 0.3, look: -1.2, to: 'd1' }],
         ['d1', 'listen', { y: 0, x: -0.8, z: 0.32, look: 1.2 }], ['d2', 'listen', { show: 1, y: 0, x: -1.15, z: 0.05, look: 1.0 }], ['d3', 'idle', { y: 0, x: -1.25, z: 0.48, look: 1.1 }], ['d4', 'idle', { show: 1, y: 0, x: -0.75, z: 0.02, look: 0.9 }]],
       w1: [['paul', 'listen'], ['d1', 'speak', { to: 'paul' }], ['d4', 'shrug']],
-      w2: [['spirit', null, { show: 0 }], ['d1', 'idle'], ['d4', 'idle'], ['paul', 'sit-ground', { x: 0.25, z: 0.45, look: 0 }], ['desk', 'write'],
+      w2: [['spirit', null, { show: 0 }], ['d1', 'idle'], ['d4', 'idle'], ['paul', 'sit-ground', { x: 0.23, z: 0.45, look: 0 }], ['desk', 'write'],
         ['d1', 'listen', { x: 0.75, z: 0.5, look: -1.2 }], ['d3', 'listen', { x: -0.05, z: 0.32, look: 0.8 }], ['d2', 'idle', { show: 0 }], ['d4', 'idle', { show: 0 }]],
       w3: [['paul', 'look-up', { x: 0.25, z: 0.45, look: 0 }], ['desk', 'done']],
       end: [['spirit', null, { show: 0 }], ['twelve', null, { show: 0 }], ['water', 'idle'], ['j1', 'idle', { show: 0 }], ['j2', 'idle', { show: 0 }], ['desk', 'done'],
         ['s1', 'sit', { show: 0 }], ['s2', 'sit', { show: 0 }], ['s3', 'sit', { show: 0 }], ['s4', 'sit', { show: 0 }], ['news', 'listen', { show: 1, x: -0.25, z: 0.58, look: 1.2, item: null }],
-        ['paul', 'sit-ground', { item: null, x: 0.25, z: 0.45, look: 0 }], ['d1', 'listen', { show: 1, y: 0, x: 0.75, z: 0.5, look: -1.2 }], ['d3', 'listen', { show: 1, y: 0, x: -0.05, z: 0.32, look: 0.8 }],
+        ['paul', 'sit-ground', { item: null, x: 0.2, z: 0.45, look: 0 }], ['d1', 'listen', { show: 1, y: 0, x: 0.75, z: 0.5, look: -1.2 }], ['d3', 'listen', { show: 1, y: 0, x: -0.05, z: 0.32, look: 0.8 }],
         ['d2', 'idle', { show: 0 }], ['d4', 'idle', { show: 0 }]],
     },
   },
@@ -307,7 +307,7 @@ export const C = {
     },
     beats: {
       enter: [['desk', 'write'], ['jar', 'glow'], ['e1', 'idle', { show: 0 }], ['e2', 'idle', { show: 0 }], ['e3', 'idle', { show: 0 }], ['foe1', 'idle', { show: 0 }], ['foe2', 'idle', { show: 0 }],
-        ['paul', 'sit-ground', { x: -0.7, z: 0.3, look: 0 }], ['titus', 'listen', { x: -0.15, z: 0.25, look: -1.2 }], ['timothy', 'listen', { x: -1.15, z: 0.35, look: 1.0 }]],
+        ['paul', 'sit-ground', { x: -0.71, z: 0.23, look: 0 }], ['titus', 'listen', { x: -0.15, z: 0.25, look: -1.2 }], ['timothy', 'listen', { x: -1.15, z: 0.35, look: 1.0 }]],
       // 소동이 가라앉고 — 바울이 제자들을 격려하고 작별한다
       intro: [['@env', 'day'], ['desk', 'blank'], ['jar', 'idle'], ['titus', 'idle', { show: 0 }], ['bro', 'idle', { show: 0 }], ['timothy', 'idle', { show: 0 }], ['foe1', 'idle', { show: 0 }], ['foe2', 'idle', { show: 0 }],
         ['paul', 'bless', { to: 'e1' }]],
@@ -327,14 +327,14 @@ export const C = {
       'p1.2': [['@env', 'dawn'], ['foe1', 'idle', { show: 0 }], ['foe2', 'idle', { show: 0 }], ['paul', 'kneel', { x: -0.55, z: 0.15, look: 0.3 }],
         ['titus', 'idle', { show: 1, x: 0.45, z: 0.2 }], ['paul', 'idle', { look: 1.2, delay: 2200 }], ['paul', 'idle', { x: -0.05, z: 0.2, delay: 2800 }]],
       // 고린도 교회의 소식을 전한다
-      'p1.3': [['@env', 'day'], ['titus', 'speak', { x: 0.45, z: 0.2, look: -1.2, to: 'paul' }], ['paul', 'listen', { x: -0.05, z: 0.2, look: 1.2 }], ['timothy', 'listen', { x: -0.55, z: 0.42, look: 1.2 }]],
+      'p1.3': [['@env', 'day'], ['titus', 'speak', { x: 0.45, z: 0.2, look: -1.2, to: 'paul' }], ['paul', 'listen', { x: -0.05, z: 0.2, look: 1.2 }], ['timothy', 'listen', { x: -0.61, z: 0.42, look: 1.2 }]],
       // 위로하시는 하나님 — 둘이 끌어안는다
       'p1.4': [['titus', 'embrace', { x: 0.28, z: 0.2, look: -1.3 }], ['paul', 'embrace', { x: 0.05, z: 0.2, look: 1.3 }], ['timothy', 'look-up', { delay: 1500 }]],
       // 마게도냐에서 다시 편지를 쓴다
-      'p2.0': [['titus', 'idle', { x: -0.15, z: 0.25, look: -1.2 }], ['paul', 'idle', { x: -0.7, z: 0.3 }], ['paul', 'sit-ground', { look: 0, delay: 1600 }], ['desk', 'write', { delay: 2200 }],
+      'p2.0': [['titus', 'idle', { x: -0.15, z: 0.25, look: -1.2 }], ['paul', 'idle', { x: -0.71, z: 0.23 }], ['paul', 'sit-ground', { look: 0, delay: 1600 }], ['desk', 'write', { delay: 2200 }],
         ['timothy', 'listen', { x: -1.15, z: 0.35, look: 1.0 }]],
       // 이 보물을 질그릇에 — 항아리 안에서 빛이 샌다
-      'p2.2': [['desk', 'write'], ['paul', 'sit-ground', { x: -0.7, z: 0.3, look: 0 }], ['jar', 'glow', { delay: 1200 }], ['titus', 'listen', { x: -0.15, z: 0.25, look: -1.2 }]],
+      'p2.2': [['desk', 'write'], ['paul', 'sit-ground', { x: -0.75, z: 0.3, look: 0 }], ['jar', 'glow', { delay: 1200 }], ['titus', 'listen', { x: -0.15, z: 0.25, look: -1.2 }]],
       'p2.3': [['jar', 'glow'], ['paul', 'look-up']],
       // 디도와 칭찬받는 형제가 편지를 들고 다시 고린도로
       'p2.4': [['desk', 'done'], ['paul', 'idle', { x: -0.55, z: 0.2, look: 1.2 }], ['titus', 'idle', { item: 'scroll', x: 0.05, z: 0.25, look: -1.2, delay: 1200 }],
@@ -347,10 +347,10 @@ export const C = {
       w0: [['@env', 'day'], ['desk', 'done'], ['jar', 'idle'], ['titus', 'idle', { show: 0 }], ['bro', 'idle', { show: 0 }], ['e1', 'idle', { show: 0 }], ['e2', 'idle', { show: 0 }], ['e3', 'idle', { show: 0 }],
         ['paul', 'mourn', { show: 1, x: -0.7, z: 0.3, look: 0 }], ['timothy', 'idle', { show: 1, x: -1.15, z: 0.1, look: 0.8 }]],
       w1: [['desk', 'blank'], ['titus', 'embrace', { show: 1, x: 0.28, z: 0.2, look: -1.3 }], ['paul', 'embrace', { x: 0.05, z: 0.2, look: 1.3 }]],
-      w2: [['titus', 'listen', { x: -0.15, z: 0.25, look: -1.2 }], ['paul', 'sit-ground', { x: -0.7, z: 0.3, look: 0 }], ['desk', 'write'], ['jar', 'glow']],
+      w2: [['titus', 'listen', { x: -0.15, z: 0.25, look: -1.2 }], ['paul', 'sit-ground', { x: -0.71, z: 0.23, look: 0 }], ['desk', 'write'], ['jar', 'glow']],
       w3: [['paul', 'look-up', { x: -0.7, z: 0.3 }], ['jar', 'glow'], ['desk', 'done']],
       end: [['@env', 'day'], ['desk', 'write'], ['jar', 'glow'], ['e1', 'idle', { show: 0 }], ['e2', 'idle', { show: 0 }], ['e3', 'idle', { show: 0 }], ['foe1', 'idle', { show: 0 }], ['foe2', 'idle', { show: 0 }], ['bro', 'idle', { show: 0 }],
-        ['paul', 'sit-ground', { show: 1, item: null, x: -0.7, z: 0.3, look: 0 }], ['titus', 'listen', { show: 1, item: null, x: -0.15, z: 0.25, look: -1.2 }], ['timothy', 'listen', { show: 1, x: -1.15, z: 0.35, look: 1.0 }]],
+        ['paul', 'sit-ground', { show: 1, item: null, x: -0.75, z: 0.3, look: 0 }], ['titus', 'listen', { show: 1, item: null, x: -0.15, z: 0.25, look: -1.2 }], ['timothy', 'listen', { show: 1, x: -1.15, z: 0.35, look: 1.0 }]],
     },
   },
 
@@ -478,7 +478,7 @@ export const C = {
       'p2.2': [['@env', 'dawn'], ['paul', 'idle', { show: 0 }], ['timothy', 'idle', { show: 0 }], ['eut', 'idle', { show: 1, y: 0, x: SX + 0.4, z: SZ + 0.38 }], ['eut', 'idle', { x: 1.75, z: 0.5, delay: 800 }],
         ['luke', 'idle', { x: 1.65, z: 0.25, delay: 1000 }], ['g1', 'idle', { x: 1.9, z: 0.35, delay: 600 }], ['eut', 'idle', { show: 0, delay: 4500 }], ['luke', 'idle', { show: 0, delay: 4700 }], ['g1', 'idle', { show: 0, delay: 4300 }]],
       w0: [['@env', 'night'], ['room', 'lit'], ['eutL', 'sleep', { show: 0 }], ['eut', 'sit', { show: 1, y: SY, x: SX, z: SZ, look: -1.2 }],
-        ['paul', 'speak', { show: 1, item: null, x: -0.5, z: -0.28, look: 0.7, to: 'timothy' }], ['luke', 'sit-ground', { show: 1, x: -0.15, z: -0.5 }], ['g1', 'sit-ground', { show: 1, x: -0.2, z: -0.15 }],
+        ['paul', 'speak', { show: 1, item: null, x: -0.49, z: -0.29, look: 0.7, to: 'timothy' }], ['luke', 'sit-ground', { show: 1, x: -0.15, z: -0.5 }], ['g1', 'sit-ground', { show: 1, x: -0.2, z: -0.13 }],
         ['timothy', 'sit-ground', { show: 1 }], ['w1', 'sit-ground', { show: 1 }]],
       w1: [['eut', 'sit', { show: 0 }], ['eutL', 'sleep', { show: 1 }], ['paul', 'speak', { show: 1, x: SX + 0.08, z: SZ + 0.42, look: 1.0, to: 'luke' }],
         ['luke', 'listen', { show: 1, x: SX + 0.65, z: SZ + 0.55, look: -1.3 }], ['g1', 'listen', { show: 1, x: SX + 0.75, z: SZ + 0.2, look: -1.4 }]],
@@ -554,7 +554,7 @@ export const C = {
       w1: [['paul', 'bless', { look: 1.2 }], ['e1', 'kneel'], ['e2', 'kneel']],
       w2: [['paul', 'speak', { to: 'e4' }], ['e1', 'listen'], ['e2', 'listen']],
       end: [['ship', 'furled'], ['runner', 'idle', { show: 0 }], ['paul', 'kneel', { board: null, x: 0.35, z: 0.25, look: 0.6 }], ['luke', 'kneel', { board: null, x: 0.0, z: 0.5, look: 0.8 }], ['timothy', 'kneel', { board: null, x: -0.05, z: 0.05, look: 1.0 }],
-        ['e1', 'mourn', { show: 1, x: 0.75, z: 0.05, look: -1.2 }], ['e2', 'kneel', { show: 1, x: 1.05, z: 0.3, look: -1.3 }], ['e3', 'kneel', { show: 1, x: 0.8, z: 0.55, look: -1.3 }], ['e4', 'pray', { show: 1, x: 1.25, z: 0.0, look: -1.2 }], ['e5', 'kneel', { show: 1, x: 0.55, z: 0.65, look: -0.8 }]],
+        ['e1', 'mourn', { show: 1, x: 0.75, z: 0.05, look: -1.2 }], ['e2', 'kneel', { show: 1, x: 1.05, z: 0.3, look: -1.3 }], ['e3', 'kneel', { show: 1, x: 0.81, z: 0.55, look: -1.3 }], ['e4', 'pray', { show: 1, x: 1.25, z: 0.0, look: -1.2 }], ['e5', 'kneel', { show: 1, x: 0.54, z: 0.65, look: -0.8 }]],
     },
   },
 

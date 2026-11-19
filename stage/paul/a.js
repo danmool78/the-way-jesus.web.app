@@ -314,7 +314,7 @@ export const A = {
       b1: ['disciple', -1.2, 0.55, 1, { gaze: false }],
     },
     beats: {
-      enter: [['home', 'open'], ['saul', 'idle', { x: 0.35, z: 0.2, look: -1.0 }], ['barnabas', 'speak', { x: -0.05, z: 0.32, look: -0.8, to: 'peter' }], ['peter', 'listen', { look: 0.8 }],
+      enter: [['home', 'open'], ['saul', 'idle', { x: 0.35, z: -0.08, look: -1.0 }], ['barnabas', 'speak', { x: -0.05, z: 0.32, look: -0.8, to: 'peter' }], ['peter', 'listen', { look: 0.8 }],
         ['james', 'listen', { look: 0.6 }], ['h1', 'idle', { show: 0 }], ['h2', 'idle', { show: 0 }], ['b1', 'idle', { show: 0 }]],
       // 예루살렘으로 돌아온 사울 — 제자들은 문을 닫고 있다
       intro: [['@env', 'day'], ['home', 'idle'], ['mat', null, { show: 0 }], ['peter', 'idle', { show: 0 }], ['james', 'idle', { show: 0 }], ['h1', 'idle', { show: 0 }], ['h2', 'idle', { show: 0 }], ['b1', 'idle', { show: 0 }],
@@ -550,7 +550,7 @@ export const A = {
       // 산길을 올라 비시디아 안디옥 — 회당에 들어가 앉는다
       'p0.2': [['mark', 'idle', { show: 0 }], ['paul', 'idle', { x: 0.75, z: 0.42, look: -0.9 }], ['barnabas', 'idle', { x: 1.0, z: 0.5, look: -1.0, delay: 400 }]],
       // 율법과 선지서를 읽고 — 회당장이 권할 말을 청한다
-      'p0.3': [['paul', 'sit-ground', { x: 0.75, z: 0.42, look: -0.9 }], ['barnabas', 'sit-ground', { x: 1.0, z: 0.5, look: -1.0 }],
+      'p0.3': [['paul', 'sit-ground', { x: 0.74, z: 0.41, look: -0.9 }], ['barnabas', 'sit-ground', { x: 1.01, z: 0.51, look: -1.0 }],
         ['ruler', 'idle', { y: 0, x: 0.0, z: -0.42, look: 0.1, item: 'scroll' }]],
       'p0.4': [['ruler', 'speak', { item: null, look: 0.9, to: 'paul' }]],
       // 바울이 일어나 손짓하며 이스라엘의 역사를 들려준다

@@ -514,8 +514,8 @@ export const D = {
       // 병이 들어 — 누웠다가, 바울의 기도 끝에 일어난다
       'p1.3': [['epa', 'sleep', { x: 1.2, z: 0.25, look: -1.3 }], ['paul', 'pray', { look: 1.3, delay: 600 }], ['epa', 'sit-ground', { delay: 4200 }], ['epa', 'idle', { delay: 5600 }], ['paul', 'raise', { look: 1.3, delay: 5600 }]],
       // 편지를 쓴다 — 바울이 상 뒤에 앉고 디모데가 받아 적는다
-      'p1.4': [['epa', 'idle', { x: 1.2, z: 0.25, look: -1.3 }], ['paul', 'sit-ground', { x: 0.35, z: 0.06, look: 0.1 }], ['soldier', 'idle', { x: 0.67, z: 0.06, look: -0.3 }],
-        ['desk', 'idle', { show: 1 }], ['tim', 'sit-ground', { x: 0.05, z: 0.35, look: 1.2 }], ['desk', 'write', { delay: 2400 }]],
+      'p1.4': [['epa', 'idle', { x: 1.2, z: 0.25, look: -1.3 }], ['paul', 'sit-ground', { x: 0.33, z: -0.05, look: 0.1 }], ['soldier', 'idle', { x: 0.67, z: 0.06, look: -0.3 }],
+        ['desk', 'idle', { show: 1 }], ['tim', 'sit-ground', { x: -0.02, z: 0.44, look: 1.2 }], ['desk', 'write', { delay: 2400 }]],
       'p2.0': [['desk', 'write'], ['paul', 'sit-speak', { to: 'tim' }]],
       'p2.1': [['paul', 'sit-speak', { to: 'tim' }]],
       // 황제의 근위대가 모두 알게 되었다 — 지키는 군인도 귀 기울인다
@@ -564,9 +564,9 @@ export const D = {
       'p0.0': [['ones', 'idle', { show: 1, x: 1.1, z: 0.3, look: -1.4 }], ['paul', 'sit', { look: 1.2, delay: 1500 }]],
       'p0.1': [['ones', 'bow', { look: -1.4 }]],
       // 갇힌 바울을 통해 믿음을 얻는다 — 무릎 꿇은 오네시모에게 손을 얹는다
-      'p0.2': [['paul', 'idle', { x: 0.62, z: 0.3, look: 1.2 }], ['soldier', 'idle', { x: 0.93, z: 0.25, look: -0.6 }], ['ones', 'kneel', { x: 0.99, z: 0.43, look: -1.4, delay: 600 }], ['paul', 'bless', { look: 1.4, delay: 2000 }]],
+      'p0.2': [['paul', 'idle', { x: 0.64, z: 0.3, look: 1.2 }], ['soldier', 'idle', { x: 0.93, z: 0.25, look: -0.6 }], ['ones', 'kneel', { x: 0.99, z: 0.43, look: -1.4, delay: 600 }], ['paul', 'bless', { look: 1.4, delay: 2000 }]],
       // 곁에 두고 싶었지만 — 오네시모가 시중든다(물병)
-      'p0.3': [['paul', 'idle', { x: 0.35, z: 0.06, look: 0.1 }], ['soldier', 'idle', { x: 0.67, z: 0.06, look: -0.3 }], ['ones', 'idle', { item: 'jar', x: 0.0, z: 0.3, look: 1.2, delay: 600 }], ['paul', 'sit-ground', { delay: 1800 }]],
+      'p0.3': [['paul', 'idle', { x: 0.33, z: 0.06, look: 0.1 }], ['soldier', 'idle', { x: 0.67, z: 0.06, look: -0.3 }], ['ones', 'idle', { item: 'jar', x: 0.0, z: 0.3, look: 1.2, delay: 600 }], ['paul', 'sit-ground', { delay: 1800 }]],
       'p0.4': [['ones', 'idle', { item: null }], ['paul', 'sit-ground', { x: 0.35, z: 0.06, look: 0.1 }], ['desk', 'write', { delay: 800 }]],
       // 빌레몬에게 — 받아 적는 줄이 늘어난다
       'p1.0': [['desk', 'write'], ['paul', 'sit-speak', { to: 'ones' }]],
@@ -592,7 +592,7 @@ export const D = {
       w1: [['desk', 'big'], ['paul', 'sit-ground', { look: 0.0 }]],
       w2: [['desk', 'write'], ['tim', 'sit-ground', { show: 1 }], ['paul', 'sit-speak', { to: 'tim' }]],
       w3: [['desk', 'done'], ['paul', 'bless', { x: 0.35, z: 0.06, look: 1.2 }], ['tych', 'idle', { show: 1, x: 1.05, z: 0.15, look: -1.4, item: 'scroll' }], ['ones', 'idle', { show: 1, x: 1.25, z: 0.45, look: -1.4 }]],
-      end: [['@env', 'day'], ['desk', 'big'], ['tych', 'idle', { show: 0 }], ['tim', 'sit-ground', { show: 0 }], ['paul', 'sit-ground', { x: 0.35, z: 0.06, look: 0.1 }], ['soldier', 'idle', { x: 0.67, z: 0.06, look: -0.3 }],
+      end: [['@env', 'day'], ['desk', 'big'], ['tych', 'idle', { show: 0 }], ['tim', 'sit-ground', { show: 0 }], ['paul', 'sit-ground', { x: 0.34, z: 0.06, look: 0.1 }], ['soldier', 'idle', { x: 0.67, z: 0.06, look: -0.3 }],
         ['ones', 'idle', { show: 1, x: 0.0, z: 0.3, look: 1.2, item: null }]],
     },
   },
@@ -698,7 +698,7 @@ export const D = {
         ['demas', 'idle', { show: 0, delay: 3200 }], ['cres', 'idle', { x: -1.6, z: 1.0, delay: 3000 }], ['cres', 'idle', { show: 0, delay: 5600 }], ['titus', 'idle', { show: 0, delay: 6200 }]],
       // 누가만 함께 있었다
       'p1.2': [...hide('demas', 'cres', 'titus'), ['luke', 'idle', { x: -0.4, z: 0.1, look: 1.0 }], ['luke', 'sit-ground', { delay: 1800 }]],
-      'p1.3': [['luke', 'sit-ground', { x: -0.4, z: 0.1, look: 1.0 }], ['paul', 'sit-speak', { to: 'luke' }]],
+      'p1.3': [['luke', 'sit-ground', { x: -0.45, z: 0.07, look: 1.0 }], ['paul', 'sit-speak', { to: 'luke' }]],
       'p1.4': [['desk', 'write'], ['paul', 'sit-speak', { to: 'luke' }]],
       'p1.5': [['paul', 'sit-ground']],
       'p1.6': [['luke', 'listen', { look: 1.0 }]],
@@ -712,13 +712,13 @@ export const D = {
       'p2.3': [['@env', 'overcast'], ['cell', 'light'], ['lord', null, { show: 1, delay: 800 }], ['paul', 'look-up', { look: 0.6, delay: 1200 }]],
       'p2.4': [['paul', 'raise', { look: 0.5 }]],
       // 한 번 더 부탁 — 다시 앉아 쓴다
-      'p2.5': [['lord', null, { show: 0 }], ['paul', 'sit-ground', { x: 0.0, z: 0.12, look: 0 }], ['desk', 'write', { delay: 1200 }], ['luke', 'sit-ground', { show: 1, x: -0.4, z: 0.1, look: 1.0, delay: 1500 }]],
+      'p2.5': [['lord', null, { show: 0 }], ['paul', 'sit-ground', { x: -0.01, z: 0.12, look: 0 }], ['desk', 'write', { delay: 1200 }], ['luke', 'sit-ground', { show: 1, x: -0.45, z: 0.07, look: 1.0, delay: 1500 }]],
       // 겨울이 되기 전에 어서 오너라 — 다 쓴 편지와 빛
       'p2.6': [['desk', 'done'], ['paul', 'look-up', { look: 0.2 }], ['lord', null, { show: 1, delay: 1500 }]],
       w0: [['@env', 'overcast'], ['cell', 'dim'], ['lord', null, { show: 0 }], ['desk', 'write'], ...hide('demas', 'cres', 'titus'), ['luke', 'idle', { show: 1, x: -0.55, z: -0.15, look: 0.8 }], ['paul', 'look-up', { x: 0.0, z: 0.12, look: 0.2 }]],
       w1: [['paul', 'look-up'], ['cell', 'light']],
       w2: [['luke', 'idle', { show: 0 }], ['cell', 'light'], ['lord', null, { show: 1 }], ['paul', 'kneel', { look: 0.6 }]],
-      w3: [['lord', null, { show: 0 }], ['paul', 'sit-ground', { look: 0 }], ['desk', 'done'], ['things', null, { show: 1 }], ['luke', 'sit-ground', { show: 1, x: -0.4, z: 0.1, look: 1.0 }]],
+      w3: [['lord', null, { show: 0 }], ['paul', 'sit-ground', { look: 0 }], ['desk', 'done'], ['things', null, { show: 1 }], ['luke', 'sit-ground', { show: 1, x: -0.45, z: 0.07, look: 1.0 }]],
       end: [['@env', 'overcast'], ['cell', 'light'], ['lord', null, { show: 1 }], ['desk', 'done'], ['things', null, { show: 1 }], ...hide('demas', 'cres', 'titus'), ['luke', 'idle', { show: 0 }],
         ['paul', 'look-up', { x: 0.0, z: 0.12, look: 0.2 }]],
     },

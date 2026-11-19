@@ -201,18 +201,34 @@ function want(names) {
 // 겹침 막기(stage/collide.js): 사람·단단한 물건을 바닥의 직육면체로 보고, 멈춰 선 사람이 다른 사람이나 물건과 겹치면 밖으로 밀어낸다.
 // 대본의 자리는 작은 인형에 맞춰져 모델끼리 뚫고 섰고, 상·의자·짐승·집 벽을 뚫었다(사용자 2026-11 — 원 말고 직육면체로).
 // 누운 사람·탄 사람·십자가·안긴 사람·높이를 정한 사람(걸상·단 위)은 그대로
+// 가구도 단단한 것으로(바울 여정의 편지 쓰는 상·장인의 가판 등) — 앉은 사람이 다리를 뻗어 상을 뚫었다(a12, 사용자 2026-11). 족쇄(stocks)는 발을 넣는 것이라 뺀다
+const FURNITURE = new Set(['desk', 'scribedesk', 'cargo', 'clayjar', 'statues', 'shrines', 'silverheap', 'tentshop', 'altarG', 'garlandox', 'anchors', 'bookfire', 'purple']);
 const STAY = new Set(['sleep', 'ride', 'crucified', 'crucified-dead', 'perch', 'carry', 'carry-pole', 'mourn']);
-const actorBox = a => personBox(a.pos.x, a.pos.y, a.p.root.rotation.y, (a.H || 0.9) * (a.big || 1));
+// 꿇거나 땅에 앉은 사람은 다리가 앞으로 나와 서 있는 사람의 네모로는 모자란다 — 뼈(엉덩이·다리·발)가 차지한 바닥 네모를 몇 화면마다 잰다
+const LOW = new Set(['kneel', 'sit-ground', 'sit', 'cower', 'pray-ground']), LEGS = /(Hips|UpLeg|Leg|Foot|ToeBase)$/, lv3 = new THREE.Vector3();
+// 몸 기준 자리(엉덩이에서 다리 끝까지의 가운데와 너비)는 몇 화면마다 재고, 네모는 늘 지금 자리에서 만든다 — 네모를 통째로 두니 밀려난 뒤에도 옛 자리에서 계속 밀어 무대 밖까지 밀려났다
+const lowBox = a => { const r = a.p.root;
+  if (a.lowAt === undefined || frameNo - a.lowAt > 12 || a.lowPose !== a.pose) { r.updateMatrixWorld(true);
+    let x0 = Infinity, x1 = -Infinity, z0 = Infinity, z1 = -Infinity; a.body.traverse(o => { if (!o.isBone || !LEGS.test(o.name)) return; r.worldToLocal(o.getWorldPosition(lv3)); x0 = Math.min(x0, lv3.x); x1 = Math.max(x1, lv3.x); z0 = Math.min(z0, lv3.z); z1 = Math.max(z1, lv3.z); });
+    a.lowAt = frameNo; a.lowPose = a.pose; a.lowLocal = x0 === Infinity ? null : [(x0 + x1) / 2, (z0 + z1) / 2, (x1 - x0) / 2, (z1 - z0) / 2]; }
+  const L = a.lowLocal; if (!L) return null; const s = r.scale.x, yaw = r.rotation.y, H = (a.H || 0.9) * (a.big || 1), c = Math.cos(yaw), sn = Math.sin(yaw);
+  return box(a.pos.x + (L[0] * c + L[1] * sn) * s, a.pos.y + (-L[0] * sn + L[1] * c) * s, yaw, Math.max(0.085 * H / 0.9, L[2] * s), Math.max(0.055 * H / 0.9, L[3] * s)); };
+const standBox = a => personBox(a.pos.x, a.pos.y, a.p.root.rotation.y, (a.H || 0.9) * (a.big || 1));
+const actorBox = a => (a.doll && LOW.has(a.pose) && a.body && lowBox(a)) || standBox(a);
 // 한 화면에 한 번만 잰다 (배역·군중마다 다시 재니 화면이 버벅였다)
 let solidCache = null, solidAt = -1, frameNo = 0;
 const solidBoxes = () => { if (solidAt !== frameNo) { solidAt = frameNo; solidCache = Object.values(props).filter(p => SOLID.has(p.kind) && p.show > 0.5).flatMap(p => propBoxes(p.obj, stageGroup)); } return solidCache; };
+// 가구(편지 쓰는 상 등)는 따로 — 앉은 사람의 다리 네모로 잰다. 잔칫상·상(SOLID)은 기대 앉는 것이라 서 있는 사람 네모로만
+let furnCache = null, furnAt = -1;
+const furnBoxes = () => { if (furnAt !== frameNo) { furnAt = frameNo; furnCache = Object.values(props).filter(p => FURNITURE.has(p.kind) && p.show > 0.5).flatMap(p => propBoxes(p.obj, stageGroup)); } return furnCache; };
 function spaceOut(dt) {
   if (!USE_MODELS || !script) return;
   const L = Object.values(actors).filter(a => a.doll && a.showT > 0.5 && a.p.root.parent === stageGroup && !a.y && !a.yT && !STAY.has(a.pose) && a.goal.distanceTo(a.pos) < 0.02);
-  const k = Math.min(1, dt * 6), solids = L.length ? solidBoxes() : [];
+  const k = Math.min(1, dt * 6), solids = L.length ? solidBoxes() : [], furn = L.length ? furnBoxes() : [];
   for (let i = 0; i < L.length; i++) {
     const a = L[i];
-    for (const b of solids) { const d = push(actorBox(a), b); if (d) { a.pos.x += d[0] * k; a.pos.y += d[1] * k; } }
+    for (const b of solids) { const d = push(standBox(a), b); if (d) { a.pos.x += d[0] * k; a.pos.y += d[1] * k; } }
+    for (const b of furn) { const d = push(actorBox(a), b); if (d) { a.pos.x += d[0] * k; a.pos.y += d[1] * k; } }
     for (let j = i + 1; j < L.length; j++) { const b = L[j], d = push(actorBox(a), actorBox(b)); if (!d) continue;
       a.pos.x += d[0] * k / 2; a.pos.y += d[1] * k / 2; b.pos.x -= d[0] * k / 2; b.pos.y -= d[1] * k / 2; b.goal.copy(b.pos); }
     a.goal.copy(a.pos);
@@ -230,7 +246,7 @@ function spaceOut(dt) {
 }
 // 군중이 비켜설 네모들: 보이는 배역(탄 사람 빼고)과 단단한 물건 (props.js crowd)
 let avoidCache = null, avoidAt = -1;
-const avoidFor = () => { if (avoidAt !== frameNo) { avoidAt = frameNo; avoidCache = { stage: stageGroup, boxes: [...Object.values(actors).filter(a => a.showT > 0.5 && a.p.root.parent === stageGroup).map(actorBox), ...solidBoxes()] }; } return avoidCache; };
+const avoidFor = () => { if (avoidAt !== frameNo) { avoidAt = frameNo; avoidCache = { stage: stageGroup, boxes: [...Object.values(actors).filter(a => a.showT > 0.5 && a.p.root.parent === stageGroup).map(actorBox), ...solidBoxes(), ...furnBoxes()] }; } return avoidCache; };
 // 낭독 중에 모델이 늦게 도착하면 서 있던 인형을 그 자리에서 모델로 바꿔 끼운다 — 다시 차리면 낭독 중의 움직임이 처음으로 돌아가니,
 // 인형은 그대로 보이지 않는 길잡이로 두고 모델만 덧씌운다 (e04 헤롯·박사, e06 어린 예수님이 인형으로 남았다, 사용자 2026-11)
 // 군중 모델이 낭독 중에 도착하면 군중 소품만 새로 세운다 (보이던 모양·앉음 그대로)
@@ -468,6 +484,21 @@ if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__st
       stageGroup.worldToLocal(c.getWorldPosition(v)); const yaw = new THREE.Euler().setFromQuaternion(sq.clone().multiply(c.getWorldQuaternion(q)), 'YXZ').y; E.push([n + i, personBox(v.x, v.z, yaw), 'p']); });
       if (SOLID.has(p.kind) && p.show > 0.5) propBoxes(p.obj, stageGroup).forEach((b, i) => E.push([n + '(' + p.kind + ')', b, 's'])); });
     const out = []; for (let i = 0; i < E.length; i++) for (let j = i + 1; j < E.length; j++) { if (E[i][2] === 's' && E[j][2] === 's') continue; const d = push(E[i][1], E[j][1]); if (d && Math.hypot(...d) > 0.01) out.push([E[i][0], E[j][0], +Math.hypot(...d).toFixed(3)]); }
+    return out; },
+  // 한꺼번에 점검(사용자 2026-11: 이런 오류를 한 번에): 자세와 상관없이 몸(뼈)이 차지한 바닥 네모로 사람·소품 겹침을 재고, 높이를 정해 앉은 사람이 앉을 바닥(건물·걸상) 위에 있는지 본다.
+  // 서 있는 사람만 재던 overlaps()는 앉은·꿇은·누운 사람과 책상 같은 가구를 놓쳤다(a12 편지 쓰는 바울)
+  audit() { const E = [], out = [], v = new THREE.Vector3(), q = new THREE.Quaternion(), sq = stageGroup.getWorldQuaternion(new THREE.Quaternion()).invert(); stageGroup.updateMatrixWorld(true);
+    const BONE = /(Hips|Spine2|Head|UpLeg|Leg|Foot|ToeBase|Arm|ForeArm|Hand)$/;
+    Object.entries(actors).forEach(([n, a]) => { if (!a.doll || a.showT < 0.5 || a.p.root.parent !== stageGroup) return; const r = a.p.root; r.updateMatrixWorld(true);
+      let x0 = Infinity, x1 = -Infinity, z0 = Infinity, z1 = -Infinity; a.body.traverse(o => { if (!o.isBone || !BONE.test(o.name)) return; r.worldToLocal(o.getWorldPosition(v)); x0 = Math.min(x0, v.x); x1 = Math.max(x1, v.x); z0 = Math.min(z0, v.z); z1 = Math.max(z1, v.z); });
+      if (x0 === Infinity) return; const s = r.scale.x, c = new THREE.Vector3((x0 + x1) / 2, 0, (z0 + z1) / 2).applyMatrix4(r.matrix), hx = Math.max(0.03, (x1 - x0) / 2 * s * 0.8), hz = Math.max(0.03, (z1 - z0) / 2 * s * 0.8);
+      E.push([n, box(c.x, c.z, r.rotation.y, hx, hz), 'p', a.pose + (a.fixedY && a.y > 0.05 ? '@' + a.y.toFixed(2) : '')]);
+      if (a.fixedY && a.y > 0.05 && ['sit', 'sit-speak', 'seat'].includes(a.pose) && !Object.values(props).some(p => p.heightAt && p.heightAt(a.pos.x, a.pos.y) > 0) && !Object.values(props).some(p => p.kind !== 'crowd' && propBoxes(p.obj, stageGroup).some(b => push(personBox(a.pos.x, a.pos.y, 0, 0.3), b))))
+        out.push([n, 'no-seat', +a.y.toFixed(2)]); });
+    Object.entries(props).forEach(([n, p]) => { if (p.kind === 'crowd' && p.show > 0.5) p.obj.children.forEach((c, i) => { let b = false; c.traverse(o => { if (o.isBone) b = true; }); if (!b) return;
+      stageGroup.worldToLocal(c.getWorldPosition(v)); const yaw = new THREE.Euler().setFromQuaternion(sq.clone().multiply(c.getWorldQuaternion(q)), 'YXZ').y; E.push([n + i, personBox(v.x, v.z, yaw), 'p']); });
+      if ((SOLID.has(p.kind) || FURNITURE.has(p.kind)) && p.show > 0.5) propBoxes(p.obj, stageGroup).forEach(b => E.push([n + '(' + p.kind + ')', b, 's'])); });
+    for (let i = 0; i < E.length; i++) for (let j = i + 1; j < E.length; j++) { if (E[i][2] === 's' && E[j][2] === 's') continue; const d = push(E[i][1], E[j][1]); if (d && Math.hypot(...d) > 0.015) out.push([E[i][0], E[j][0], +Math.hypot(...d).toFixed(3), E[i][3] || '', E[j][3] || '']); }
     return out; },
   actorsDbg() { return actors; },
   solidCount() { return [solidBoxes().length, Object.values(props).map(p => p.kind).join(',')]; },
