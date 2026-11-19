@@ -285,7 +285,8 @@ function decorate() {
       const e = 0.05, x0 = Math.max(r.X0, bx0 + e), x1 = Math.min(r.X1, bx1 - e), z0 = Math.max(r.Z0, cz + e), z1 = Math.min(r.Z1, bz1 - e); // 구멍이 판 가장자리에 닿으면 삼각형 나누기가 깨져 살짝 안쪽으로
       if (x1 - x0 > 0.01 && z1 - z0 > 0.01) sh.holes.push(new THREE.Path([[x0, z0], [x0, z1], [x1, z1], [x1, z0]].map(([x, z]) => new THREE.Vector2(x, z))));
     });
-    const m = flat(sh, greyable(new THREE.MeshStandardMaterial({ map: b.tex, transparent: true, roughness: 1, side: THREE.DoubleSide, depthWrite: !b.top })), b.y);
+    // 지중해 판(top)은 바다 판(0.05)과 높이 차가 0.03~0.04뿐이라, 넓은 바다를 멀리서 보면 깊이 구분이 안 돼 움직일 때마다 바다 판과 번갈아 번쩍였다(사용자 2026-11) — 늘 앞으로 당겨 그린다
+    const m = flat(sh, greyable(new THREE.MeshStandardMaterial({ map: b.tex, transparent: true, roughness: 1, side: THREE.DoubleSide, depthWrite: !b.top, ...(b.top ? { polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -8 } : {}) })), b.y);
     if (b.top) {
       // 지중해 판은 아주 커서(2만 단위 넘게) 삼각형 두 개로는 밉맵 단계가 틀어져 가까이서도 온통 바다색으로 보였다 — 잘게 나눈 판으로
       m.renderOrder = b.top;
