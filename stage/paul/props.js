@@ -51,7 +51,7 @@ Object.assign(MAKERS, {
     mesh(new THREE.BoxGeometry(0.3, 0.3, 0.05), st2, g, [0, 0.37, CZ - R * 0.82 - 0.47]);
     const P = new Prop(g);
     // 바닥 판(2.6×1.7) 위 — 3D 지형에서 바닥이 평평한 건물처럼 받침을 대고, 그 안의 걸상에 앉은 사람이 건물 높이를 따른다(stage.js)
-    P.heightAt = (x, z) => { const u = (x - g.position.x) / g.scale.x, v = (z - g.position.z) / g.scale.z; return P.show > 0.5 && Math.abs(u) < 1.3 && v > -0.9 && v < 0.8 ? 0.02 * g.scale.y : 0; };
+    P.heightAt = (x, z) => { const u = (x - g.position.x) / g.scale.x, v = (z - g.position.z) / g.scale.z; return P.show > 0.5 && Math.abs(u) < 1.3 && v > -0.99 && v < 0.8 ? 0.02 * g.scale.y : 0; }; // 뒤쪽 벽 앞 높은 자리(v −0.91)까지 — 빠져 있어 3D에서 대제사장·야고보만 건물 밖 땅에 묻혔다(a12, 사용자 2026-11)
     return P;
   },
 
