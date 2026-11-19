@@ -201,6 +201,8 @@ function want(names) {
 // 겹침 막기(stage/collide.js): 사람·단단한 물건을 바닥의 직육면체로 보고, 멈춰 선 사람이 다른 사람이나 물건과 겹치면 밖으로 밀어낸다.
 // 대본의 자리는 작은 인형에 맞춰져 모델끼리 뚫고 섰고, 상·의자·짐승·집 벽을 뚫었다(사용자 2026-11 — 원 말고 직육면체로).
 // 누운 사람·탄 사람·십자가·안긴 사람·높이를 정한 사람(걸상·단 위)은 그대로
+// 점검에서만 단단한 것으로 보는 가구(바울 여정) — 앉은 사람이 다리를 뻗어 뚫는지 본다
+const FURNITURE = new Set(['desk', 'scribedesk', 'cargo', 'clayjar', 'statues', 'shrines', 'silverheap', 'tentshop', 'altarG', 'garlandox', 'anchors', 'bookfire', 'purple', 'stocks']);
 const STAY = new Set(['sleep', 'ride', 'crucified', 'crucified-dead', 'perch', 'carry', 'carry-pole', 'mourn']);
 const actorBox = a => personBox(a.pos.x, a.pos.y, a.p.root.rotation.y, (a.H || 0.9) * (a.big || 1));
 // 한 화면에 한 번만 잰다 (배역·군중마다 다시 재니 화면이 버벅였다)
@@ -468,6 +470,21 @@ if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__st
       stageGroup.worldToLocal(c.getWorldPosition(v)); const yaw = new THREE.Euler().setFromQuaternion(sq.clone().multiply(c.getWorldQuaternion(q)), 'YXZ').y; E.push([n + i, personBox(v.x, v.z, yaw), 'p']); });
       if (SOLID.has(p.kind) && p.show > 0.5) propBoxes(p.obj, stageGroup).forEach((b, i) => E.push([n + '(' + p.kind + ')', b, 's'])); });
     const out = []; for (let i = 0; i < E.length; i++) for (let j = i + 1; j < E.length; j++) { if (E[i][2] === 's' && E[j][2] === 's') continue; const d = push(E[i][1], E[j][1]); if (d && Math.hypot(...d) > 0.01) out.push([E[i][0], E[j][0], +Math.hypot(...d).toFixed(3)]); }
+    return out; },
+  // 한꺼번에 점검(사용자 2026-11: 이런 오류를 한 번에): 자세와 상관없이 몸(뼈)이 차지한 바닥 네모로 사람·소품 겹침을 재고, 높이를 정해 앉은 사람이 앉을 바닥(건물·걸상) 위에 있는지 본다.
+  // 서 있는 사람만 재던 overlaps()는 앉은·꿇은·누운 사람과 책상 같은 가구를 놓쳤다(a12 편지 쓰는 바울)
+  audit() { const E = [], out = [], v = new THREE.Vector3(), q = new THREE.Quaternion(), sq = stageGroup.getWorldQuaternion(new THREE.Quaternion()).invert(); stageGroup.updateMatrixWorld(true);
+    const BONE = /(Hips|Spine2|Head|UpLeg|Leg|Foot|ToeBase|Arm|ForeArm|Hand)$/;
+    Object.entries(actors).forEach(([n, a]) => { if (!a.doll || a.showT < 0.5 || a.p.root.parent !== stageGroup) return; const r = a.p.root; r.updateMatrixWorld(true);
+      let x0 = Infinity, x1 = -Infinity, z0 = Infinity, z1 = -Infinity; a.body.traverse(o => { if (!o.isBone || !BONE.test(o.name)) return; r.worldToLocal(o.getWorldPosition(v)); x0 = Math.min(x0, v.x); x1 = Math.max(x1, v.x); z0 = Math.min(z0, v.z); z1 = Math.max(z1, v.z); });
+      if (x0 === Infinity) return; const s = r.scale.x, c = new THREE.Vector3((x0 + x1) / 2, 0, (z0 + z1) / 2).applyMatrix4(r.matrix), hx = Math.max(0.03, (x1 - x0) / 2 * s * 0.8), hz = Math.max(0.03, (z1 - z0) / 2 * s * 0.8);
+      E.push([n, box(c.x, c.z, r.rotation.y, hx, hz), 'p', a.pose + (a.fixedY && a.y > 0.05 ? '@' + a.y.toFixed(2) : '')]);
+      if (a.fixedY && a.y > 0.05 && ['sit', 'sit-speak', 'seat'].includes(a.pose) && !Object.values(props).some(p => p.heightAt && p.heightAt(a.pos.x, a.pos.y) > 0) && !Object.values(props).some(p => p.kind !== 'crowd' && propBoxes(p.obj, stageGroup).some(b => push(personBox(a.pos.x, a.pos.y, 0, 0.3), b))))
+        out.push([n, 'no-seat', +a.y.toFixed(2)]); });
+    Object.entries(props).forEach(([n, p]) => { if (p.kind === 'crowd' && p.show > 0.5) p.obj.children.forEach((c, i) => { let b = false; c.traverse(o => { if (o.isBone) b = true; }); if (!b) return;
+      stageGroup.worldToLocal(c.getWorldPosition(v)); const yaw = new THREE.Euler().setFromQuaternion(sq.clone().multiply(c.getWorldQuaternion(q)), 'YXZ').y; E.push([n + i, personBox(v.x, v.z, yaw), 'p']); });
+      if ((SOLID.has(p.kind) || FURNITURE.has(p.kind)) && p.show > 0.5) propBoxes(p.obj, stageGroup).forEach(b => E.push([n + '(' + p.kind + ')', b, 's'])); });
+    for (let i = 0; i < E.length; i++) for (let j = i + 1; j < E.length; j++) { if (E[i][2] === 's' && E[j][2] === 's') continue; const d = push(E[i][1], E[j][1]); if (d && Math.hypot(...d) > 0.015) out.push([E[i][0], E[j][0], +Math.hypot(...d).toFixed(3), E[i][3] || '', E[j][3] || '']); }
     return out; },
   actorsDbg() { return actors; },
   solidCount() { return [solidBoxes().length, Object.values(props).map(p => p.kind).join(',')]; },
