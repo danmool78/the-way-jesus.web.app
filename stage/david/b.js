@@ -421,7 +421,7 @@ export const B = {
       'p0.4': [['nabal', 'sit-speak', { to: 'y1' }]],
       'p0.5': [['nabal', 'sit-speak', { to: 'y1' }], ['guest', 'sit', { look: -1 }]],
       // 돌아가 전하자 — 모두 칼을 차라
-      'p1.0': [['nabal', 'sit', { look: 0.3 }], ['y1', 'idle', { x: -1.1, z: 0.05, look: -1 }], ['y2', 'idle', { x: -1.18, z: 0.3, look: -1 }],
+      'p1.0': [['nabal', 'sit', { look: 0.3 }], ['y1', 'idle', { x: -1.1, z: 0.05, look: -1 }], ['y2', 'idle', { x: -1.17, z: 0.29, look: -1 }],
         ['david', 'idle', { show: 1, x: -1.45, z: -0.12, look: 1 }], ['m1', 'idle', { show: 1, x: -1.75, z: -0.3, look: 1 }], ['y1', 'speak', { to: 'david', delay: 3800 }]],
       'p1.1': [['y1', 'idle'], ['david', 'rebuke', { look: 1, item: 'sword' }]],
       'p1.2': [['david', 'idle', { item: 'sword' }], ['y1', 'idle', { look: 1 }], ['y2', 'idle', { look: 1 }], ['m1', 'idle', { look: 1 }]],
@@ -432,7 +432,7 @@ export const B = {
       'p1.5': [['servant', 'idle'], ['donkey', null, { show: 1, x: 1.4, z: 0.32 }], ['abigail', 'idle', { x: 1.42, z: 0.18, look: 0 }]],
       'p1.6': [['abigail', 'ride', { board: 'donkey', x: 0, z: 0, look: 3 }], ['donkey', null, { x: -0.3, z: 0.42, delay: 1500 }], ['servant', 'idle', { x: 1.1, z: 0.45, look: -1, delay: 1800 }]],
       // 산골짜기 길에서 마주친다 — 나귀에서 내려 엎드린다
-      'p2.0': [['donkey', null, { x: -0.3, z: 0.42 }], ['david', 'idle', { item: null, x: -1.0, z: 0.15, look: 1 }], ['m1', 'idle', { x: -1.35, z: 0.0, look: 1 }], ['y1', 'idle', { x: -1.3, z: 0.38 }],
+      'p2.0': [['donkey', null, { x: -0.3, z: 0.42 }], ['david', 'idle', { item: null, x: -1.0, z: 0.15, look: 1 }], ['m1', 'idle', { x: -1.35, z: 0.0, look: 1 }], ['y1', 'idle', { x: -1.31, z: 0.39 }],
         ['abigail', 'idle', { board: null, x: -0.62, z: 0.22, look: -1, delay: 1500 }], ['abigail', 'kneel', { delay: 3000 }]],
       'p2.1': [['abigail', 'bow', { look: -1 }]],
       'p2.3': [['abigail', 'kneel']],
@@ -575,7 +575,7 @@ export const B = {
       // 주 안에서 힘을 얻는다
       'p1.5': [['m1', 'idle'], ['m2', 'idle'], ['david', 'kneel', { look: 0 }], ['beam', null, { show: 1, x: -0.45, z: 0.12 }], ['david', 'pray', { delay: 1500 }]],
       // 에봇을 가져오게 하고 여쭙는다
-      'p1.6': [['abiathar', 'idle', { show: 1, x: -0.73, z: 0.29, look: 1, item: 'cloak' }], ['david', 'kneel', { look: -1, delay: 2500 }]],
+      'p1.6': [['abiathar', 'idle', { show: 1, x: -0.72, z: 0.3, look: 1, item: 'cloak' }], ['david', 'kneel', { look: -1, delay: 2500 }]],
       'p1.7': [['david', 'look-up']],
       // 브솔 시내 — 지친 이백 명이 남는다
       'p2.0': [['beam', null, { show: 0 }], ['ruin', 'smoke', { show: 0 }], ['brook', null, { show: 1 }], ['abiathar', 'idle', { item: null, x: -1.1, z: 0.42, look: 1 }],
