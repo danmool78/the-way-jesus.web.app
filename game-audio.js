@@ -111,6 +111,7 @@ export function createAudio() {
       f.type = 'lowpass'; f.frequency.setValueAtTime(700, t); f.frequency.linearRampToValueAtTime(1800, t + 0.1); f.Q.value = 3;
       g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.07, t + 0.03); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.42);
       o.connect(f); o2.connect(f); f.connect(g); g.connect(master); if (verb) g.connect(verb); o.start(t); o2.start(t); o.stop(t + 0.45); o2.stop(t + 0.45); drop(o, [o2, f, g]); },
+    swish: () => { burst({ type: 'bandpass', f: 900, f2: 2600, q: 1.4, vol: 0.12, a: 0.02, d: 0.16 }); burst({ type: 'highpass', f: 3000, vol: 0.04, a: 0.01, d: 0.1, at: 0.03 }); }, // 종려가지를 휙
     step: () => burst({ type: 'lowpass', f: 300, q: 0.8, vol: 0.16, a: 0.004, d: 0.12 }),                                          // 발 구름(박자)
     shout: () => { for (let i = 0; i < 6; i++) burst({ type: 'bandpass', f: 500 + Math.random() * 700, q: 0.8, vol: 0.07, a: 0.02, d: 0.25, at: Math.random() * 0.05 }); },
     collapse: () => { burst({ type: 'lowpass', f: 400, f2: 50, vol: 0.45, a: 0.02, d: 2.6, rate: 0.5 }); for (let i = 0; i < 20; i++) burst({ type: 'bandpass', f: 600 + Math.random() * 1500, q: 1, vol: 0.08, a: 0.01, d: 0.2, at: Math.random() * 1.8 }); },
