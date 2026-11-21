@@ -27,6 +27,7 @@ const cana = {
   quote: '항아리에 물을 채우라 하시니 아귀까지 채우니', ref: '요 2:7',
   help: '항아리를 누르고 있으면 물을 부어요. 오래 누를수록 빨라져요.<br>금줄(아귀)까지 — 넘치면 쏟아져 다시 채워야 해요.',
   ask: ['그날 하인들에게 맡긴 일을 이번엔 네게 맡기마.', '저 돌항아리 여섯에 물을 채워라 — 아귀까지. 시간이 많지 않구나!'], // 이야기 끝에 그분이 맡기시는 일 (말풍선)
+  art: ['e11/bg', 'e11/jar', 'e11/pitcher'],
   seconds: 21, // 아슬아슬하게(사용자): 적당히 빠르면 17초쯤(4초 남음), 한 번 넘치면 +2초, 조금씩만 부으면 24초 — 모자란다
   init() {
     // 두 줄로 셋씩 (폰 세로 화면에서도 항아리가 커 보이게) — 뒷줄은 조금 작고 위에
@@ -121,6 +122,7 @@ const cana = {
 
 // 잔칫집 안마당: 회벽, 아치 문, 매단 등잔의 따뜻한 빛, 돌바닥
 function courtyard(g) {
+  if (bgArt(g, 'e11/bg')) return;
   const sky = g.createLinearGradient(0, 0, 0, H);
   sky.addColorStop(0, '#5a3d28'); sky.addColorStop(0.55, '#8a6242'); sky.addColorStop(0.56, '#6e5440'); sky.addColorStop(1, '#3e2e22');
   g.fillStyle = sky; g.fillRect(0, 0, W, H);
@@ -159,6 +161,7 @@ function jarPath(g, j, inset = 0) {
   g.lineTo(...P(pts[0][0], 1)); g.closePath();
 }
 function drawJar(g, j, wine, active) {
+  if (art('e11/jar')) return drawJarArt(g, j, wine, active);
   const { x, y, w, h } = j;
   g.save();
   // 그림자
@@ -202,9 +205,34 @@ function drawJar(g, j, wine, active) {
   if (j.done) { g.fillStyle = '#ffe29a'; g.font = '800 15px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.fillText('✓', x, y + 20); }
   g.restore();
 }
+// 그림 항아리: 돌 그림의 모양 그대로 안의 물을 비춰 보이게(놀이를 위해) — 작은 캔버스에 돌을 그리고 그 모양 안에만 물을 칠한다
+let jarCv = null;
+function drawJarArt(g, j, wine, active) {
+  const im = art('e11/jar'), { x, y, h } = j, w = im.width * h / im.height, R = 2;
+  jarCv ??= typeof OffscreenCanvas !== 'undefined' ? new OffscreenCanvas(8, 8) : document.createElement('canvas');
+  jarCv.width = Math.ceil(w * R); jarCv.height = Math.ceil(h * R); const c = jarCv.getContext('2d');
+  c.drawImage(im, 0, 0, jarCv.width, jarCv.height); c.globalCompositeOperation = 'source-atop';
+  const lv = Math.min(1.02, j.lv), surf = (h - 8 - (h - 16) * lv) * R, water = mix([95, 170, 210], [128, 22, 48], wine), deep = mix([40, 100, 150], [70, 8, 26], wine);
+  const wg = c.createLinearGradient(0, surf, 0, h * R); wg.addColorStop(0, `rgba(${water},.72)`); wg.addColorStop(1, `rgba(${deep},.85)`); c.fillStyle = wg;
+  c.beginPath(); c.moveTo(0, surf); for (let xx = 0; xx <= jarCv.width; xx += 6) c.lineTo(xx, surf + Math.sin(xx * 0.09 + j.wob) * (active ? 3 : 1.4)); c.lineTo(jarCv.width, h * R); c.lineTo(0, h * R); c.fill();
+  c.fillStyle = `rgba(255,255,255,${0.55 - wine * 0.25})`; c.fillRect(w * R * 0.2, surf, w * R * 0.6, 2.5);
+  g.save(); g.fillStyle = 'rgba(0,0,0,.35)'; g.beginPath(); g.ellipse(x + 4, y + 2, w * 0.5, 7, 0, 0, 7); g.fill();
+  if (active) { g.shadowColor = '#ffe29a'; g.shadowBlur = 18; }
+  g.drawImage(jarCv, x - w / 2, y - h, w, h); g.shadowBlur = 0;
+  const fy = y - 8 - (h - 16) * FULL; // 아귀 금줄 — 여기까지
+  g.strokeStyle = j.done ? 'rgba(255,226,150,.95)' : 'rgba(255,215,120,.8)'; g.setLineDash(j.done ? [] : [4, 3]); g.lineWidth = 1.8;
+  g.beginPath(); g.moveTo(x - w * 0.4, fy); g.lineTo(x + w * 0.4, fy); g.stroke(); g.setLineDash([]);
+  if (j.flash > 0) { g.globalAlpha = j.flash; g.fillStyle = 'rgba(255,242,192,.6)'; g.beginPath(); g.ellipse(x, y - h / 2, w * 0.7, h * 0.6, 0, 0, 7); g.fill(); g.globalAlpha = 1; }
+  if (j.spill > 0) { g.globalAlpha = j.spill; g.fillStyle = 'rgba(150,205,235,.75)';
+    for (const sd of [-1, 1]) { g.beginPath(); g.moveTo(x + sd * w * 0.36, y - h); g.quadraticCurveTo(x + sd * w * 0.6, y - h * 0.5, x + sd * w * 0.46, y); g.lineTo(x + sd * w * 0.36, y); g.quadraticCurveTo(x + sd * w * 0.5, y - h * 0.5, x + sd * w * 0.3, y - h); g.fill(); }
+    g.beginPath(); g.ellipse(x, y + 3, w * 0.8 * (1.6 - j.spill * 0.6), 6, 0, 0, 7); g.fill(); g.globalAlpha = 1; }
+  if (j.done) { g.fillStyle = '#ffe29a'; g.font = '800 15px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.fillText('✓', x, y + 20); }
+  g.restore();
+}
 const mix = (a, b, t) => a.map((v, i) => Math.round(v + (b[i] - v) * t)).join(',');
 // 하인의 물동이: 누르면 기울어 붓는다
 function pitcher(g, x, y, tilt) {
+  if (spr(g, 'e11/pitcher', x + 22, y + 14, 62, { ay: 0.7, rot: -0.15 - tilt * 0.85 })) return;
   g.save(); g.translate(x + 22, y - 6); g.rotate(-0.15 - tilt * 0.85);
   const c = g.createLinearGradient(-20, 0, 20, 0); c.addColorStop(0, '#7a3f22'); c.addColorStop(0.45, '#c9774a'); c.addColorStop(1, '#6a341b');
   g.fillStyle = c; g.beginPath(); g.ellipse(0, 0, 19, 23, 0, 0, 7); g.fill();
@@ -226,7 +254,7 @@ const fishing = {
   ask: ['밤새 수고했는데 한 마리도 못 잡았다고?', '깊은 데로 가서 그물을 내려라. 그물이 찢어지지 않게 끌어올려야 한다!'],
   quote: '깊은 데로 가서 그물을 내려 고기를 잡으라', ref: '눅 5:4',
   help: '물고기 떼를 노려 누르면 그물을 던져요. 날아가는 동안 떼가 움직이니 앞을 노려요.<br>걸리면 누르고 있어 끌어올려요 — 빨개지면 잠깐 놓았다 당겨요. 찢어지면 반을 잃어요.',
-  seconds: 32,
+  seconds: 32, art: ['e17/bg', 'e17/boat'],
   init() {
     const S = { goal: this.goal || GOAL, schools: [], net: { st: 'ready' }, got: 0, sparks: [], rip: [], msg: null, spawnT: 0, boatY: 0, shine: [] };
     for (let i = 0; i < 4; i++) S.schools.push(school(true));
@@ -282,7 +310,7 @@ const fishing = {
   up(S) { if (S.net.st === 'haul') S.net.hold = false; },
   won: S => S.got >= S.goal,
   draw(g, S) {
-    lake(g, S); this.under?.(g, S);
+    lake(g, S, this.bg); this.under?.(g, S);
     for (const f of S.schools) drawSchool(g, f);
     const N = S.net;
     drawBoat(g, S);
@@ -345,7 +373,8 @@ function drawNet(g, x, y, r, n, ten, al = 1) {
   g.restore();
 }
 // 새벽의 갈릴리 바다: 밤새 허탕친 뒤(눅 5:5) — 먼 기슭의 언덕, 동트는 하늘빛이 물에 비침
-function lake(g, S) {
+function lake(g, S, bg = 'e17/bg') {
+  if (bgArt(g, bg)) { const t = performance.now() / 1000; for (const [x, y, p] of S.shine) { const a = (Math.sin(t * 1.3 + p) + 1) / 2; g.strokeStyle = `rgba(255,236,200,${a * 0.22})`; g.lineWidth = 1.2; g.beginPath(); g.moveTo(x - 9, y); g.quadraticCurveTo(x, y - 3, x + 9, y); g.stroke(); } return; }
   const w = g.createLinearGradient(0, 0, 0, H); w.addColorStop(0, '#1d4560'); w.addColorStop(0.5, '#2a6a86'); w.addColorStop(1, '#3d8aa2');
   g.fillStyle = w; g.fillRect(0, 0, W, H);
   const sky = g.createLinearGradient(0, 0, 0, 62); sky.addColorStop(0, '#f2c58c'); sky.addColorStop(1, '#e89a6a'); g.fillStyle = sky; g.fillRect(0, 0, W, 62);
@@ -360,6 +389,13 @@ function lake(g, S) {
 }
 function drawBoat(g, S) {
   const [x, y0] = BOAT, y = y0 + S.boatY;
+  if (art('e17/boat')) { // 그림 배 — 실은 고기는 배 안에 코드로 쌓는다
+    g.save(); g.fillStyle = 'rgba(10,30,45,.35)'; g.beginPath(); g.ellipse(x, y0 + 16, 110, 16, 0, 0, 7); g.fill();
+    spr(g, 'e17/boat', x, y + 40, 132);
+    const n = Math.min(60, Math.round(S.got / (S.goal || GOAL) * 60));
+    for (let i = 0; i < n; i++) { const fx = x - 70 + (i * 37 % 140), fy = y - 28 + ((i * 13) % 12) - Math.floor(i / 20) * 3; g.fillStyle = i % 4 ? '#c9d6dd' : '#e8f0f4'; fish(g, fx, fy, (i * 1.7) % 6.28, 0.8); }
+    g.strokeStyle = 'rgba(220,240,250,.45)'; g.lineWidth = 2; for (let k = 0; k < 3; k++) { g.beginPath(); g.ellipse(x, y0 + 30 + k * 6, 96 + k * 14, 9 + k * 3, 0, 0.1, Math.PI - 0.1); g.stroke(); } // 뱃전의 물결
+    g.restore(); return; }
   g.save();
   g.fillStyle = 'rgba(10,30,45,.35)'; g.beginPath(); g.ellipse(x, y0 + 14, 92, 14, 0, 0, 7); g.fill();
   const h = g.createLinearGradient(0, y - 22, 0, y + 20); h.addColorStop(0, '#8a5a34'); h.addColorStop(1, '#4a2c16');
@@ -626,9 +662,10 @@ const water = {
   ask: ['베드로처럼 물 위로 걸어와 보겠니?', '바람을 보지 말고 나만 바라보아라. 눈을 떼면 빠져 간다!'],
   quote: '오라 하시니 베드로가 배에서 내려 물 위로 걸어서 예수께로 가되', ref: '마 14:29',
   help: '화면을 끌면 빛 고리(시선)가 움직여요. 고리 안에 예수님을 두면 다가가요.<br>돌풍이 시선을 흔들어요 — 예수님을 놓치면 물에 빠져 가요.',
+  art: ['e32/bg', 'e32/calm', 'e32/jesus', 'e32/jesus-hand'],
   seconds: 26,
-  init() { return { gx: 200, gy: 156, wvx: 0, wvy: 0, gustT: 1.6, prog: 0, sink: 0, flash: 0, boltT: rnd(2.5, 4), focus: true, t: 0, last: null, rain: Array.from({ length: 70 }, () => [rnd(0, W), rnd(0, H), rnd(0.6, 1)]), calm: 0 }; },
-  jesus(S) { const hz = 150 + S.calm * 0, k = S.prog; return { x: 200 + Math.sin(S.t * 0.7) * 46 + Math.sin(S.t * 1.9) * 12 * (1 - S.calm), y: hz + 26 + k * 150, s: 0.75 + k * 1.6 }; },
+  init() { return { gx: 200, gy: art('e32/bg') ? 266 : 156, wvx: 0, wvy: 0, gustT: 1.6, prog: 0, sink: 0, flash: 0, boltT: rnd(2.5, 4), focus: true, t: 0, last: null, rain: Array.from({ length: 70 }, () => [rnd(0, W), rnd(0, H), rnd(0.6, 1)]), calm: 0 }; },
+  jesus(S) { const hz = art('e32/bg') ? 262 : 150, k = S.prog; return { x: 200 + Math.sin(S.t * 0.7) * 46 + Math.sin(S.t * 1.9) * 12 * (1 - S.calm), y: hz + 26 + k * 150, s: 0.75 + k * 1.6 }; },
   update(dt, S) {
     S.t += dt; S.fx.storm?.(clamp(0.45 + S.prog * 0.55 - S.calm, 0, 1));
     // 돌풍: 가까이 갈수록 세다
@@ -652,6 +689,7 @@ const water = {
   lost: S => S.sink >= 1,
   failText: S => S.sink >= 1 ? '"주여 나를 구원하소서"' : '시간이 다 되었어요', // 마 14:30
   draw(g, S) {
+    if (art('e32/bg')) return this.drawArt(g, S);
     const hz = 150, c = S.calm;
     // 밤하늘과 구름 (번개 때 밝게)
     const sky = g.createLinearGradient(0, 0, 0, hz); sky.addColorStop(0, mixc('#070d16', '#c9a77a', c)); sky.addColorStop(1, mixc('#1d3044', '#f3d2a2', c));
@@ -671,6 +709,9 @@ const water = {
     g.fillStyle = glow; g.beginPath(); g.arc(j.x, j.y - sz * 0.9, sz * 1.8, 0, 7); g.fill(); // 네모로 칠하니 빛 가장자리가 잘려 보였다
     figure(g, j.x, j.y, sz, S.prog > 0.85 || c ? 1 : 0);
     g.fillStyle = 'rgba(255,240,210,.25)'; g.beginPath(); g.ellipse(j.x, j.y + 2, sz * 0.5, sz * 0.08, 0, 0, 7); g.fill(); // 물에 비친 빛
+    this.overlay(g, S);
+  },
+  overlayBody(g, S) { const c = S.calm;
     // 비
     g.strokeStyle = `rgba(200,220,240,${0.35 * (1 - c)})`; g.lineWidth = 1;
     for (const [x, y, d] of S.rain) { g.beginPath(); g.moveTo(x, y); g.lineTo(x - 5 * d, y + 16 * d); g.stroke(); }
@@ -691,6 +732,22 @@ const water = {
     g.save(); g.fillStyle = 'rgba(0,0,0,.35)'; g.fillRect(16, 16, 120, 6); g.fillStyle = '#ffe29a'; g.fillRect(16, 16, 120 * S.prog, 6);
     g.font = '700 12px "Noto Sans KR",sans-serif'; g.fillStyle = 'rgba(255,255,255,.85)'; g.textAlign = 'left'; g.fillText('예수님께로', 142, 23); g.restore();
   },
+  drawArt(g, S) { // 폭풍 그림 위에 잔잔한 새벽 그림을 겹쳐(바람이 그침), 파도 줄은 코드로 움직인다
+    const c = S.calm, hz = 262; bgArt(g, 'e32/bg');
+    if (c > 0) { g.save(); g.globalAlpha = c; g.drawImage(art('e32/calm'), -20, 0, W + 40, H + 50); g.restore(); }
+    else { g.fillStyle = 'rgba(10,16,26,.25)'; g.fillRect(0, 0, W, H); }
+    const amp = 1 - c * 0.9;
+    for (let r = 0; r < 10; r++) { const d = r / 9, y = hz + 10 + d * d * (H - hz), a = (3 + d * 14) * amp;
+      g.strokeStyle = `rgba(220,235,245,${(0.06 + d * 0.16) * amp})`; g.lineWidth = 1 + d * 2; g.beginPath();
+      for (let x = -10; x <= W + 10; x += 8) g.lineTo(x, y + Math.sin(x * (0.04 - d * 0.025) + S.t * (2.2 + r * 0.15) + r) * a); g.stroke(); }
+    const j = this.jesus(S), sz = 34 * j.s;
+    const glow = g.createRadialGradient(j.x, j.y - sz, 2, j.x, j.y - sz, sz * 2.2); glow.addColorStop(0, 'rgba(255,240,200,.5)'); glow.addColorStop(1, 'rgba(255,240,200,0)');
+    g.fillStyle = glow; g.beginPath(); g.arc(j.x, j.y - sz, sz * 2.2, 0, 7); g.fill();
+    spr(g, S.prog > 0.85 || c ? 'e32/jesus-hand' : 'e32/jesus', j.x, j.y, sz * 2.1);
+    g.fillStyle = 'rgba(255,240,210,.25)'; g.beginPath(); g.ellipse(j.x, j.y + 2, sz * 0.6, sz * 0.09, 0, 0, 7); g.fill();
+    this.overlay(g, S);
+  },
+  overlay(g, S) { this.overlayBody(g, S); },
   // 성공: 손을 내밀어 붙잡으시고, 배에 오르니 바람이 그친다 (마 14:31–32)
   end(g, k, S) { S.calm = ease(k); S.prog = 1; this.update(0.016, S); this.draw(g, S);
     if (k > 0.3) { g.save(); g.globalAlpha = clamp((k - 0.3) * 2, 0, 1); g.font = '700 21px "Gowun Batang",serif'; g.textAlign = 'center';
@@ -1942,16 +1999,17 @@ function helper(g, x, y, sd, push, col, [tx, ty]) { // 아론·훌 — 두 손�
 }
 
 /* ---------- 디베랴 바닷가의 아침 (요 21:1–11): 그물 던지기를 다시 씀 — 배 오른편에, 153마리, 찢어지지 않는 그물 ---------- */
-const tiberias = { ...fishing, title: '디베랴 바닷가의 아침', task: '배 오른편에 그물을 — 153마리', goal: 153, right: true, noTear: true, seconds: 40,
+const tiberias = { ...fishing, title: '디베랴 바닷가의 아침', task: '배 오른편에 그물을 — 153마리', goal: 153, right: true, noTear: true, seconds: 40, bg: 'e59/bg', art: ['e59/bg', 'e17/boat'],
   ask: ['얘들아, 고기가 있느냐? 밤새 아무것도 잡지 못했구나.', '그물을 배 오른편에 던져라. 그러면 잡으리라!'],
   quote: '그물을 배 오른편에 던지라 그리하면 잡으리라', ref: '요 21:6',
   help: '배 <b>오른편</b>의 물고기 떼를 노려 눌러 그물을 던져요. 왼편은 허탕이에요.<br>걸리면 누르고 있어 끌어올려요. 그물이 너무 무거워지면 잠깐 놓았다가 다시 당겨요 — 찢어지지는 않아요.',
   endLine: ['백쉰세 마리라 그물이 찢어지지 아니하였더라', '요 21:11'],
   under(g, S) { // 왼편은 그늘, 오른편에 아침 빛 — 그리고 물가의 숯불 곁에 서신 분(21:4, 9)
-    g.fillStyle = 'rgba(5,15,30,.22)'; g.fillRect(0, 64, BOAT[0], H - 64);
-    const lg = g.createLinearGradient(BOAT[0], 0, W, 0); lg.addColorStop(0, 'rgba(255,220,160,0)'); lg.addColorStop(1, 'rgba(255,220,160,.12)'); g.fillStyle = lg; g.fillRect(BOAT[0], 64, W - BOAT[0], H - 64);
-    g.save(); g.setLineDash([5, 7]); g.strokeStyle = 'rgba(255,240,210,.25)'; g.lineWidth = 1.5; g.beginPath(); g.moveTo(BOAT[0], 70); g.lineTo(BOAT[0], BOAT[1] - 30); g.stroke(); g.restore();
+    const top = art('e59/bg') ? 150 : 64; g.fillStyle = 'rgba(5,15,30,.16)'; g.fillRect(0, top, BOAT[0], H - top);
+    const lg = g.createLinearGradient(BOAT[0], 0, W, 0); lg.addColorStop(0, 'rgba(255,220,160,0)'); lg.addColorStop(1, 'rgba(255,220,160,.12)'); g.fillStyle = lg; g.fillRect(BOAT[0], top, W - BOAT[0], H - top);
+    g.save(); g.setLineDash([5, 7]); g.strokeStyle = 'rgba(255,240,210,.25)'; g.lineWidth = 1.5; g.beginPath(); g.moveTo(BOAT[0], top + 6); g.lineTo(BOAT[0], BOAT[1] - 60); g.stroke(); g.restore();
     g.font = '800 12px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.fillStyle = 'rgba(255,236,200,.8)'; g.fillText('오른편 →', BOAT[0] + 44, BOAT[1] - 40); g.fillStyle = 'rgba(200,215,230,.45)'; g.fillText('← 왼편', BOAT[0] - 44, BOAT[1] - 40);
+    if (art('e59/bg')) return; // 그림에 물가의 숯불과 그분이 있다
     const fx = 300, fy = 52, fl = 0.8 + 0.2 * Math.sin(performance.now() / 90);
     g.fillStyle = `rgba(255,150,60,${0.5 * fl})`; g.beginPath(); g.arc(fx + 14, fy + 4, 7, 0, 7); g.fill(); g.fillStyle = '#ffcf6a'; g.beginPath(); g.ellipse(fx + 14, fy + 2, 2.5, 4 * fl, 0, 0, 7); g.fill(); // 숯불
     g.fillStyle = '#f2ece0'; g.beginPath(); g.ellipse(fx, fy - 4, 4, 9, 0, 0, 7); g.fill(); g.fillStyle = '#b5523e'; g.fillRect(fx - 4, fy - 10, 2, 9); g.fillStyle = '#c99a6a'; g.beginPath(); g.arc(fx, fy - 15, 3.2, 0, 7); g.fill();
