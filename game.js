@@ -593,7 +593,7 @@ function meet() {
   const nm = me.name || '순례자', call = /^[가-힣]+$/.test(nm) ? josa(nm, '아', '야') : nm;
   G.meetWord = `${call}, 잘 찾아왔구나. 여기는 ${placeOf(e).name}.`;
   // 인사 뒤에 이 자리에서 있었던 일을 두세 마디 더 (assets/game-talk — 사용자 2026-11: '여기는 ○○' 하고 바로 카드가 뜨니 주변을 볼 새도 없었다)
-  G.talk = [G.meetWord, ...(TALK[e.id] || [])]; G.talkI = 0;
+  G.talk = [G.meetWord, ...(TALK[e.id] || []), ...(MINI[JID]?.[e.id]?.ask || [])]; G.talkI = 0; // 놀이가 있는 장면은 이야기 끝에 그분이 직접 할 일을 맡기신다(사용자 2026-11)
   sayLine(); G.meetT += 0.9; snd.play('meet');
   setTimeout(() => $('#bubble').classList.add('on'), 900);
   document.body.classList.add('meeting');
