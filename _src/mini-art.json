@@ -1,0 +1,26 @@
+{
+  "d16": {
+    "bg": { "bg": true, "p": "Side view, interior of a limestone cave at En Gedi. The right side is the bright cave mouth with warm daylight spilling in across the floor; the left third falls into deep darkness. Jagged stalactites along the ceiling, a flat sandy-stone floor across the bottom fifth of the image. Empty scene: absolutely no people, no animals." },
+    "saul-a": { "h": 420, "ref": ["_src/cards/saul.png"], "p": "King Saul seated on the ground seen from the side, facing right, resting, wearing a deep crimson royal robe whose long hem spreads on the ground behind him to the left, a small gold crown. Same character as the second reference image." },
+    "saul-b": { "h": 420, "ref": ["_src/cards/saul.png"], "p": "King Saul seated on the ground seen from the side, body facing right, but his head turned back over his shoulder to look left with a suspicious frown, deep crimson royal robe whose long hem spreads on the ground behind him to the left, a small gold crown. Same character as the second reference image." },
+    "david-sneak": { "h": 420, "ref": ["_src/cards/david-warrior.png"], "p": "Young David seen from the side, facing right, creeping forward in a low crouch on tiptoe, holding a short knife low in his right hand, simple shepherd tunic. Same character as the second reference image." }
+  },
+  "e11": {
+    "bg": { "bg": true, "p": "Courtyard of a modest stone house in Cana of Galilee during an evening wedding feast: plastered stone walls with three arches, two hanging clay oil lamps glowing warmly, a grapevine trellis with grape clusters along the top edge, smooth flagstone floor covering the lower half. The floor area is clear and empty. No people, no jars, no furniture in the lower half." },
+    "jar": { "h": 420, "ratio": "3:4", "p": "One tall carved limestone water jar for Jewish purification, straight front view, nearly cylindrical body that bulges very slightly, a thick rounded rim at the top, a small foot, pale cream stone with fine chisel marks. The opening is at the top. Centered, upright." },
+    "pitcher": { "h": 300, "p": "A terracotta water pitcher with one handle and a pouring spout, side view, the spout pointing to the left, warm reddish clay." }
+  },
+  "e17": {
+    "bg": { "bg": true, "p": "High angle view over the Sea of Galilee in the early morning: the water fills the whole image with gentle ripples and sparkling glints, only the top tenth shows the far shore hills and a warm dawn sky. Darker deeper water toward the top half. No boats, no people, no fish visible." },
+    "boat": { "h": 420, "ratio": "16:9", "p": "An empty first-century wooden Galilean fishing boat seen from slightly above and behind with its stern toward the viewer, the open hull interior visible, oars resting along the sides." }
+  },
+  "e59": {
+    "bg": { "bg": true, "ref": ["_src/cards/jesus-ref.png"], "p": "High angle view over the Sea of Galilee at sunrise: the water fills the whole image with gentle ripples and golden glints, only the top tenth shows the near pebbly shore where a small charcoal fire burns at the top right and a lone tiny figure in a white robe with a red sash stands beside it (the second reference image). No boats, no fish visible." }
+  },
+  "e32": {
+    "bg": { "bg": true, "p": "Night storm over the Sea of Galilee seen from water level: dark churning waves with white crests filling the lower two thirds, heavy rolling storm clouds above, a dim horizon in the upper third. No people, no boats." },
+    "calm": { "bg": true, "p": "The Sea of Galilee just after a storm, seen from water level at dawn: glassy calm water with soft reflections filling the lower two thirds, clouds parting with golden light in the upper third, the same wide composition as a seascape. No people, no boats." },
+    "jesus": { "h": 420, "ratio": "3:4", "ref": ["_src/cards/jesus-ref.png"], "p": "Jesus walking toward the viewer, full body front view, white robe with a red sash, calm gentle face, arms relaxed, robe moving slightly in the wind. Same character as the second reference image." },
+    "jesus-hand": { "h": 420, "ratio": "3:4", "ref": ["_src/cards/jesus-ref.png"], "p": "Jesus standing, full body front view, white robe with a red sash, reaching his right hand forward toward the viewer to catch and lift someone, compassionate face. Same character as the second reference image." }
+  }
+}
