@@ -121,6 +121,8 @@ export function createAudio() {
     snip: () => { burst({ type: 'highpass', f: 4000, vol: 0.1, a: 0.002, d: 0.05 }); burst({ type: 'bandpass', f: 2400, q: 3, vol: 0.06, a: 0.002, d: 0.08, at: 0.05 }); }, // 칼로 옷자락을 벰
     creep: () => burst({ type: 'lowpass', f: 500, q: 0.7, vol: 0.035, a: 0.01, d: 0.08 }), // 살금 발소리
     hum: () => tone({ f: 110, f2: 98, type: 'triangle', vol: 0.05, a: 0.05, d: 0.5 }), // 사울이 뒤척이며 '음…'
+    hiss: () => burst({ type: 'highpass', f: 3500, vol: 0.09, a: 0.05, d: 0.5 }), // 독사가 쉬익
+    crackle: () => { for (let i = 0; i < 6; i++) burst({ type: 'bandpass', f: 1800 + Math.random() * 2000, q: 2, vol: 0.05, a: 0.002, d: 0.03, at: Math.random() * 0.3 }); burst({ type: 'lowpass', f: 600, vol: 0.08, a: 0.05, d: 0.4 }); }, // 불이 확 붙음
     step: () => burst({ type: 'lowpass', f: 300, q: 0.8, vol: 0.16, a: 0.004, d: 0.12 }),                                          // 발 구름(박자)
     shout: () => { for (let i = 0; i < 6; i++) burst({ type: 'bandpass', f: 500 + Math.random() * 700, q: 0.8, vol: 0.07, a: 0.02, d: 0.25, at: Math.random() * 0.05 }); },
     collapse: () => { burst({ type: 'lowpass', f: 400, f2: 50, vol: 0.45, a: 0.02, d: 2.6, rate: 0.5 }); for (let i = 0; i < 20; i++) burst({ type: 'bandpass', f: 600 + Math.random() * 1500, q: 1, vol: 0.08, a: 0.01, d: 0.2, at: Math.random() * 1.8 }); },

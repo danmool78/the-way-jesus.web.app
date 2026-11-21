@@ -452,5 +452,113 @@
    "h": 200,
    "p": "A small window opening in a stone wall with two wooden shutters swung open and warm orange lamplight glowing from inside, straight-on view."
   }
+ },
+ "m09": {
+  "sand": {
+   "bg": true,
+   "p": "Seamless texture seen from directly above: wet sand of a sea floor at night lit by warm firelight, gentle ripple marks, small shells and pebbles, evenly lit, no objects, no horizon."
+  },
+  "water": {
+   "bg": true,
+   "p": "Seamless texture seen from directly above: dark deep blue churning sea water at night with white foam streaks, evenly lit, no horizon, no objects."
+  },
+  "shore": {
+   "bg": true,
+   "p": "Seamless texture seen from directly above: dark rocky desert ground at night, sand and small stones, very dim, evenly lit, no objects."
+  },
+  "pillar": {
+   "h": 420,
+   "ratio": "9:16",
+   "p": "A towering vertical column of billowing white cloud with a warm fire glowing inside its core, tall and narrow, from top to bottom of the image."
+  },
+  "chariot": {
+   "h": 300,
+   "ratio": "16:9",
+   "p": "An Egyptian war chariot pulled by two galloping horses, side view facing right, a charioteer with a bow, dark night colors with golden highlights."
+  }
+ },
+ "m12": {
+  "bg": {
+   "bg": true,
+   "p": "The wilderness of Sin at dawn: a pale blue-gold morning sky with the sun just rising on the right, low distant hills, a wide flat sandy plain covering the lower two thirds sparkling with dew. Empty: no people, no tents."
+  },
+  "tent": {
+   "h": 260,
+   "p": "A dark goat-hair Israelite tent seen from the front, its entrance flap open, simple ropes and poles."
+  },
+  "basket": {
+   "h": 200,
+   "p": "An empty round woven reed basket seen from the front, open at the top."
+  }
+ },
+ "m14": {
+  "bg": {
+   "bg": true,
+   "p": "Side view of the battlefield at Rephidim in the afternoon: a rocky hilltop rises in the center of the image (its flat top at about the middle height), a wide dusty valley across the bottom quarter, distant mountains and sky above. No people."
+  },
+  "moses-up": {
+   "h": 420,
+   "ref": [
+    "_src/cards/moses.png"
+   ],
+   "p": "Moses, an old man with a long white beard and a brown robe, full body straight front view, symmetric pose, both arms raised high straight up toward heaven, a wooden staff in his right hand."
+  },
+  "moses-mid": {
+   "h": 420,
+   "ref": [
+    "_src/cards/moses.png"
+   ],
+   "p": "Moses, an old man with a long white beard and a brown robe, full body straight front view, symmetric pose, both arms stretched straight out sideways at shoulder height, a wooden staff in his right hand."
+  },
+  "moses-down": {
+   "h": 420,
+   "ref": [
+    "_src/cards/moses.png"
+   ],
+   "p": "Moses, an old man with a long white beard and a brown robe, full body straight front view, symmetric pose, both arms hanging tiredly down at his sides, a wooden staff in his right hand pointing down."
+  },
+  "aaron": {
+   "h": 420,
+   "ref": [
+    "_src/cards/aaron.png"
+   ],
+   "p": "Aaron the priest, full body side view facing right, both arms raised up and forward as if holding up someone's arm, robe and turban. Same character as the second reference image."
+  },
+  "hur": {
+   "h": 420,
+   "p": "Hur, an Israelite elder with a grey beard, full body side view facing left, both arms raised up and forward as if holding up someone's arm, simple robe and head cloth."
+  },
+  "israel": {
+   "h": 300,
+   "ratio": "16:9",
+   "p": "A small band of ancient Israelite foot soldiers with swords and round shields charging to the right, side view, dust.",
+   "key": "m"
+  },
+  "amalek": {
+   "h": 300,
+   "ratio": "16:9",
+   "p": "A small band of Amalekite desert warriors with spears and curved swords charging to the left, side view, dark robes, dust.",
+   "key": "m"
+  }
+ },
+ "a37": {
+  "bg": {
+   "bg": true,
+   "p": "A rainy cold beach on Malta seen from a high angle: grey sea with a wrecked ship's stern in the upper part, wet sand and pebbles covering the lower two thirds, drizzle, overcast. Empty: no people, no fire."
+  },
+  "people": {
+   "h": 300,
+   "ratio": "16:9",
+   "p": "A huddled group of six shipwrecked sailors and friendly islanders in wet cloaks standing in a semicircle, warming their hands, seen from the front."
+  },
+  "viper": {
+   "h": 200,
+   "p": "A small brown viper snake coiled and striking, side view, head to the left, mouth open."
+  },
+  "stick": {
+   "h": 160,
+   "ratio": "16:9",
+   "p": "One dry gnarled driftwood stick lying horizontally, side view."
+  }
  }
 }
