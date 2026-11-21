@@ -56,8 +56,9 @@ export function homeSet(o = {}) {
   if (!own) {
     mesh(new THREE.CylinderGeometry(m(0.2), m(0.13), m(0.1), 14), clay, g, [m(0.1), m(0.05), m(-0.5)]);
     mesh(new THREE.SphereGeometry(m(0.17), 10, 6, 0, Math.PI * 2, 0, Math.PI / 2), greens, g, [m(0.1), m(0.08), m(-0.5)]).scale.y = 0.5; // 나물 한 그릇 (15:17)
-    [[-0.45, -0.2], [-0.5, -0.75], [0.6, -0.85]].forEach(([x, z]) => mesh(new THREE.CylinderGeometry(m(0.16), m(0.16), m(0.04), 14), bread, g, [m(x), m(0.02), m(z)]));
-    mesh(new THREE.CylinderGeometry(m(0.07), m(0.05), m(0.16), 10), clay, g, [m(0.55), m(0.08), m(-0.25)]); // 물 단지
+    // 빵과 물 단지는 둘러앉은 사람들의 발이 닿지 않는 가운데로 — 모델은 다리가 길어 앉은 발이 빵을 밟았다(p04, 사용자 2026-11)
+    [[-0.2, -0.05], [0.24, 0.0], [0.02, 0.24]].forEach(([x, z]) => mesh(new THREE.CylinderGeometry(m(0.16), m(0.16), m(0.04), 14), bread, g, [m(x), m(0.02), m(z)]));
+    mesh(new THREE.CylinderGeometry(m(0.07), m(0.05), m(0.16), 10), clay, g, [m(0.3), m(0.08), m(0.3)]); // 물 단지
   } else {
     // 양털 바구니와 자은 실타래 (31:13 양털과 삼을 구하여 부지런히 손으로 일하며)
     mesh(new THREE.CylinderGeometry(m(0.24), m(0.2), m(0.22), 14, 1, true), mat('#a0804e', { roughness: 1, side: THREE.DoubleSide }), g, [m(-0.75), m(0.11), m(-0.75)]);
