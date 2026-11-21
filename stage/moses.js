@@ -33,7 +33,7 @@ export const MOSES = {
       pharaoh: ['pharaoh', 1.2, -0.2, -1],
       scribe: ['egyptian', 1.5, 0.05, -1.2],
       mid1: ['woman', 0.7, 0.35, 1.1],
-      mid2: ['woman2', 0.88, 0.5, 1.2],
+      mid2: ['woman2', 1.02, 0.58, 1.2],
     },
     beats: {
       enter: [['folk', null, { show: 1 }], ['h1', 'bow'], ['h2', 'bow'], ['h3', 'bow'], ['boss', 'point', { look: -1 }], ['pharaoh', 'idle', { show: 1 }], ['scribe', 'idle', { show: 1 }], ['mid1', 'idle', { show: 0 }], ['mid2', 'idle', { show: 0 }]],
@@ -121,7 +121,7 @@ export const MOSES = {
       moses: ['mosesS', -1.3, 0.15, 1],
       sh1: ['shepherd', 0.55, 0.3, -1],
       sh2: ['shepherd', 0.8, 0.12, -1.1],
-      d1: ['woman', -0.15, 0.15, 0.4],
+      d1: ['woman', -0.22, 0.22, 0.4],
       d2: ['woman2', 0.0, 0.32, 0.2],
       d3: ['samaritan', -0.32, 0.38, 0.6],
       zip: ['woman', 0.4, -0.25, -0.6],
@@ -140,7 +140,7 @@ export const MOSES = {
       'p0.1': [['boss', 'rebuke', { to: 'slave' }], ['slave', 'cower'], ['prince', 'idle', { look: -1.3, delay: 1200 }], ['prince', 'idle', { look: 1.3, delay: 2600 }], ['boss', 'idle', { show: 0, delay: 4200 }]],
       'p0.3': [['slave', 'idle', { show: 0 }], ['prince', 'idle', { look: 0.3 }]],
       // 이튿날 다투는 두 히브리 사람
-      'p1.0': [['slave', 'rebuke', { show: 1, x: -0.4, z: 0.2, look: 1 }], ['slave2', 'afraid', { show: 1, x: -0.05, z: 0.25, look: -1 }], ['prince', 'idle', { x: -0.25, z: 0.0, look: 0.4 }]],
+      'p1.0': [['slave', 'rebuke', { show: 1, x: -0.4, z: 0.2, look: 1 }], ['slave2', 'afraid', { show: 1, x: -0.05, z: 0.25, look: -1 }], ['prince', 'idle', { x: -0.17, z: -0.03, look: 0.4 }]],
       'p1.4': [['prince', 'afraid', { look: -0.8 }]],
       'p1.5': [['@env', 'overcast']],
       // 모든 것을 두고 동쪽 광야로 — 애굽의 자리는 사라진다
@@ -152,7 +152,7 @@ export const MOSES = {
         ['sh1', 'idle', { x: 1.6, z: 0.4, delay: 5200 }], ['sh2', 'idle', { x: 1.7, z: 0.2, delay: 5200 }], ['sh1', 'idle', { show: 0, delay: 7600 }], ['sh2', 'idle', { show: 0, delay: 7600 }],
         ['moses', 'bow', { x: -0.05, z: 0.21, look: 0.4, delay: 6000 }], ['d1', 'idle', { delay: 5000 }], ['d2', 'idle', { delay: 5000 }]],
       // 르우엘의 장막 — 십보라와 혼인한다
-      'p2.2': [['tent', null, { show: 1 }], ['reuel', 'idle', { show: 1, x: 0.85, z: -0.2, look: -1 }], ['zip', 'idle', { show: 1, x: 0.29, z: 0.21, look: -1 }], ['moses', 'idle', { x: -0.05, z: 0.21, look: 0.6 }],
+      'p2.2': [['tent', null, { show: 1 }], ['reuel', 'idle', { show: 1, x: 0.85, z: -0.2, look: -1 }], ['zip', 'idle', { show: 1, x: 0.34, z: 0.27, look: -1 }], ['moses', 'idle', { x: -0.05, z: 0.21, look: 0.6 }],
         ['d1', 'idle', { x: -0.57, z: 0.26 }], ['d2', 'idle', { x: -0.75, z: 0.45 }], ['d3', 'idle', { x: -0.95, z: 0.3 }]],
       // 그 사이 애굽에서는 탄식이 하늘에 닿았다
       'p2.5': [['@env', 'dusk'], ['moses', 'look-up', { look: -0.8 }]],
@@ -235,7 +235,7 @@ export const MOSES = {
       'p1.0': [['h1', 'bow', { show: 1 }], ['h2', 'bow', { show: 1 }], ['boss', 'rebuke', { show: 1, to: 'h1' }]],
       'p1.4': [['h1', 'idle', { x: -1.35, z: -0.2, look: -1 }], ['h2', 'bow', { x: -0.9, z: 0.45 }], ['h1', 'cower', { delay: 2600 }]],
       // 원망이 모세에게
-      'p2.0': [['boss', 'idle', { show: 0 }], ['h1', 'rebuke', { x: -0.7, z: 0.05, to: 'moses' }], ['h2', 'rebuke', { x: -0.6, z: 0.35, to: 'moses' }], ['moses', 'idle', { look: -1 }]],
+      'p2.0': [['boss', 'idle', { show: 0 }], ['h1', 'rebuke', { x: -0.7, z: 0.05, to: 'moses' }], ['h2', 'rebuke', { x: -0.55, z: 0.42, to: 'moses' }], ['moses', 'idle', { look: -1 }]],
       'p2.2': [['h1', 'idle', { show: 0 }], ['h2', 'idle', { show: 0 }], ['moses', 'kneel', { look: -0.3 }]],
       'p2.3': [['moses', 'look-up', { look: -0.3 }]],
       'p2.5': [['moses', 'pray', { look: -0.3 }]],
@@ -263,7 +263,7 @@ export const MOSES = {
     },
     cast: {
       moses: ['mosesE', -0.3, 0.25, 0.8],
-      aaron: ['aaron', -0.6, 0.15, 0.7],
+      aaron: ['aaron', -0.68, 0.08, 0.7],
       pharaoh: ['pharaoh', 0.95, -0.2, -0.8],
       mag1: ['magician', 1.35, -0.05, -1],
       mag2: ['magician', 1.25, 0.25, -1.1],
@@ -306,7 +306,7 @@ export const MOSES = {
     cast: {
       father: ['hebrew', -0.6, 0.1, 0.5],
       mom: ['woman', -0.15, -0.05, -0.6],
-      kid: ['child', -0.48, -0.09, 0.3],
+      kid: ['child', -0.34, 0.0, 0.3],
       h2: ['hebrew2', -0.05, 0.3, -0.8],
       moses: ['mosesE', 0.9, -0.05, -1],
       aaron: ['aaron', 1.15, 0.12, -1],
@@ -395,14 +395,14 @@ export const MOSES = {
     cast: {
       moses: ['mosesE', -0.55, 0.05, 1],
       aaron: ['aaron', -0.75, 0.25, 0.8],
-      man: ['hebrew', -1.15, 0.35, -1],
-      wom: ['woman', -1.35, 0.15, -1.2],
+      man: ['hebrew', -1.0, 0.42, -1],
+      wom: ['woman', -1.22, 0.24, -1.2],
     },
     beats: {
       enter: [['sea', 'part'], ['@env', 'night'], ['pillar', 'fire', { x: -1.55 }], ['folk', null, { x: 0.3 }], ['moses', 'raise', { x: -0.55, look: 1 }], ['aaron', 'idle', { x: 0.1, z: 0.05, look: 1 }], ['man', 'idle', { x: 0.45, z: -0.1, look: 1 }], ['wom', 'idle', { x: 0.65, z: 0.1, look: 1 }],
         ['car1', null, { show: 0 }], ['car2', null, { show: 0 }]],
       intro: [['sea', 'calm'], ['@env', 'dusk'], ['pillar', 'cloud', { show: 0, x: -0.2, z: -0.4 }], ['folk', null, { x: -0.95, z: -0.05 }], ['car1', null, { show: 0, x: -2.4 }], ['car2', null, { show: 0, x: -2.7 }],
-        ['moses', 'idle', { x: -0.55, z: 0.05, look: 1 }], ['aaron', 'idle', { x: -0.75, z: 0.25, look: 0.8 }], ['man', 'idle', { x: -1.15, z: 0.35, look: 1 }], ['wom', 'idle', { x: -1.35, z: 0.15, look: 1 }]],
+        ['moses', 'idle', { x: -0.55, z: 0.05, look: 1 }], ['aaron', 'idle', { x: -0.75, z: 0.25, look: 0.8 }], ['man', 'idle', { x: -1.0, z: 0.42, look: 1 }], ['wom', 'idle', { x: -1.22, z: 0.24, look: 1 }]],
       // 병거 육백 대가 뒤쫓는다
       'p0.3': [['car1', null, { show: 1, x: -1.85 }], ['car2', null, { show: 1, x: -2.05 }]],
       'p0.4': [['man', 'afraid', { look: -1.2 }], ['wom', 'afraid', { look: -1.2 }]],
@@ -414,7 +414,7 @@ export const MOSES = {
       // 손을 내밀자 밤새 동풍 — 물이 갈라진다
       'p2.0': [['moses', 'raise', { look: 1 }], ['sea', 'part', { delay: 1200 }]],
       // 좌우에 벽처럼 선 물 사이로
-      'p2.2': [['moses', 'idle', { x: 1.35, z: -0.05, look: -1 }], ['aaron', 'idle', { x: 1.25, z: 0.15, delay: 600 }], ['folk', null, { x: 1.55, delay: 400 }], ['man', 'idle', { x: 1.48, z: 0.26, delay: 1400 }], ['wom', 'idle', { x: 1.67, z: 0.04, delay: 2000 }]],
+      'p2.2': [['moses', 'idle', { x: 1.35, z: -0.05, look: -1 }], ['aaron', 'idle', { x: 1.2, z: 0.2, delay: 600 }], ['folk', null, { x: 1.55, delay: 400 }], ['man', 'idle', { x: 1.48, z: 0.26, delay: 1400 }], ['wom', 'idle', { x: 1.74, z: -0.01, delay: 2000 }]],
       // 새벽, 병거가 길로 들어서고 물이 돌아온다 — 병거는 물결 속에 사라진다
       'p2.3': [['@env', 'dawn'], ['pillar', 'cloud', { show: 0 }], ['car1', null, { x: -0.4, z: -0.05 }], ['car2', null, { x: -0.7, z: 0.1 }], ['moses', 'raise', { look: -1, delay: 1500 }],
         ['sea', 'return', { delay: 3500 }], ['car1', null, { show: 0, delay: 4200 }], ['car2', null, { show: 0, delay: 4400 }]],
@@ -558,7 +558,7 @@ export const MOSES = {
       elder1: ['elder', 0.0, -0.35, 0.6],
       elder2: ['jethro', -0.35, -0.3, 0.6, { gaze: true }],
       man: ['hebrew', -0.45, 0.3, 0.6],
-      wom: ['mother', -0.65, 0.05, 0.8],
+      wom: ['mother', -0.74, -0.01, 0.8],
       kid: ['child', -0.6, 0.4, 0.6],
     },
     beats: {
@@ -606,11 +606,11 @@ export const MOSES = {
       // 손을 들면 이기고, 내리면 진다
       'p1.0': [['moses', 'raise'], ['israel', null, { x: -0.75 }], ['amalek', null, { x: -1.6 }], ['moses', 'idle', { delay: 3500 }], ['israel', null, { x: -0.4, delay: 3500 }], ['amalek', null, { x: -1.2, delay: 3500 }]],
       // 두 사람이 돌을 가져다 앉히고 양쪽에서 손을 붙든다
-      'p1.2': [['moses', 'sit', { y: 0.06 }], ['aaron', 'raise', { x: 0.82, z: -0.3 }], ['hur', 'raise', { x: 1.09, z: -0.31 }], ['moses', 'raise', { delay: 2600 }], ['israel', null, { x: -0.75, delay: 2600 }], ['amalek', null, { x: -1.6, delay: 2600 }]],
+      'p1.2': [['moses', 'sit', { y: 0.06 }], ['aaron', 'raise', { x: 0.82, z: -0.3 }], ['hur', 'raise', { x: 1.14, z: -0.3 }], ['moses', 'raise', { delay: 2600 }], ['israel', null, { x: -0.75, delay: 2600 }], ['amalek', null, { x: -1.6, delay: 2600 }]],
       'p1.3': [['@env', 'dusk']],
       // 아말렉이 물러나고, 모세는 제단을 쌓는다
       'p2.0': [['amalek', null, { x: -2.2, show: 0 }], ['israel', null, { x: -0.95 }]],
-      'p2.4': [['moses', 'idle', { y: 0, x: 0.45, z: 0.12, look: 0 }], ['aaron', 'idle', { x: 0.16, z: 0.22 }], ['hur', 'idle', { x: 0.74, z: 0.27 }], ['joshua', 'idle', { x: 0.0, z: 0.45, look: 1 }], ['altar', 'fire', { show: 1, delay: 2000 }], ['moses', 'raise', { delay: 3000 }]],
+      'p2.4': [['moses', 'idle', { y: 0, x: 0.45, z: 0.03, look: 0 }], ['aaron', 'idle', { x: 0.1, z: 0.17 }], ['hur', 'idle', { x: 0.81, z: 0.22 }], ['joshua', 'idle', { x: 0.0, z: 0.45, look: 1 }], ['altar', 'fire', { show: 1, delay: 2000 }], ['moses', 'raise', { delay: 3000 }]],
       w0: [['moses', 'listen', { look: 0 }]],
       w1: [['moses', 'speak', { to: 'joshua' }]],
       end: [['@env', 'dusk']],
@@ -832,12 +832,12 @@ export const MOSES = {
       moses: ['mosesE', -0.9, 0.3, 0.8],
     },
     beats: {
-      enter: [['moses', 'kneel', { x: -0.1, z: 0.04, look: 1, item: 'tablets' }], ['glory', null, { x: 0.3, z: 0.15 }]],
+      enter: [['moses', 'kneel', { x: -0.1, z: 0.15, look: 1, item: 'tablets' }], ['glory', null, { x: 0.3, z: 0.15 }]],
       intro: [['@env', 'overcast'], ['glory', null, { show: 0, x: 1.4, z: 0.1 }], ['moses', 'idle', { x: -0.9, z: 0.3, item: null }]],
       'p0.1': [['moses', 'pray', { look: 0.6 }]],
       'p0.4': [['moses', 'look-up', { look: 0.6 }]],
       // 바위 틈에 두고 손으로 덮어 주신다
-      'p1.3': [['moses', 'idle', { x: -0.1, z: 0.04, look: 1 }]],
+      'p1.3': [['moses', 'idle', { x: -0.1, z: 0.15, look: 1 }]],
       // 새 돌판 둘을 들고 새벽 어스름에 홀로
       'p1.4': [['@env', 'dawn'], ['moses', 'idle', { item: 'tablets' }]],
       // 구름 가운데 내려와 그 앞을 지나가신다
@@ -905,7 +905,7 @@ export const MOSES = {
       man: ['hebrew', 0.85, 0.3, -0.8],
       wom: ['woman', -0.85, 0.3, 0.6],
       kid: ['child', -0.6, 0.45, 0.6],
-      joshua: ['joshua', 0.45, 0.0, -0.4],
+      joshua: ['joshua', 0.53, -0.05, -0.4],
     },
     beats: {
       enter: [['fire', null, { show: 0 }], ['spirit', null, { show: 0 }], ['quail', null, { show: 1 }], ['man', 'bow', { item: 'basket' }], ['wom', 'bow', { item: 'basket' }], ['kid', 'look-up'], ['moses', 'idle', { look: 0.4 }]],
@@ -953,7 +953,7 @@ export const MOSES = {
       sp2: ['hebrew2', 1.4, 0.2, -1, { speed: 0.4 }],
     },
     beats: {
-      enter: [['glory', 'cloud', { show: 0 }], ['grapes', null, { x: 0.68, z: 0.2 }], ['sp1', 'idle', { x: 0.45, z: 0.2 }], ['sp2', 'idle', { x: 0.9, z: 0.2 }], ['caleb', 'raise', { to: 'moses' }], ['joshua', 'idle']],
+      enter: [['glory', 'cloud', { show: 0 }], ['grapes', null, { x: 0.68, z: 0.2 }], ['sp1', 'idle', { x: 0.56, z: 0.14 }], ['sp2', 'idle', { x: 0.9, z: 0.2 }], ['caleb', 'raise', { to: 'moses' }], ['joshua', 'idle']],
       intro: [['glory', 'cloud', { show: 0 }], ['grapes', null, { show: 0, x: 1.9, z: 0.2 }], ['sp1', 'idle', { show: 0, x: 1.7, z: 0.2 }], ['sp2', 'idle', { show: 0, x: 2.15, z: 0.2 }], ['spies', null, { show: 1 }], ['folk', null, { show: 0 }],
         ['joshua', 'idle', { x: 0.0, z: 0.15 }], ['caleb', 'idle', { x: 0.25, z: 0.3 }]],
       'p0.0': [['moses', 'speak', { to: 'joshua' }]],
@@ -961,7 +961,7 @@ export const MOSES = {
       // 사십 일 동안 그 땅을 살핀다 (무대를 떠났다가)
       'p0.4': [['moses', 'idle'], ['joshua', 'idle', { x: 1.8, z: 0.1 }], ['caleb', 'idle', { x: 1.9, z: 0.3 }], ['spies', null, { x: 1.9, show: 0 }], ['joshua', 'idle', { show: 0, delay: 3200 }], ['caleb', 'idle', { show: 0, delay: 3200 }]],
       // 두 사람이 막대에 꿴 포도송이를 메고 돌아온다
-      'p1.0': [['grapes', null, { show: 1, x: 0.68, z: 0.2 }], ['sp1', 'idle', { show: 1, x: 0.45, z: 0.2 }], ['sp2', 'idle', { show: 1, x: 0.9, z: 0.2 }], ['folk', null, { show: 1 }],
+      'p1.0': [['grapes', null, { show: 1, x: 0.68, z: 0.2 }], ['sp1', 'idle', { show: 1, x: 0.56, z: 0.14 }], ['sp2', 'idle', { show: 1, x: 0.9, z: 0.2 }], ['folk', null, { show: 1 }],
         ['joshua', 'idle', { show: 1, x: 0.0, z: 0.15, look: -0.8 }], ['caleb', 'idle', { show: 1, x: 0.25, z: 0.35, look: -0.8 }]],
       'p1.3': [['moses', 'raise', { look: 1 }]],
       // 열 사람은 메뚜기 같았다고 — 갈렙만이 올라가자
@@ -1041,12 +1041,12 @@ export const MOSES = {
     cast: {
       moses: ['mosesE', -0.35, 0.05, -1],
       aaron: ['aaronP', -0.6, 0.2, -1],
-      wom: ['woman', -0.9, 0.0, -2.6],
+      wom: ['woman', -1.1, -0.06, -2.6],
       man: ['hebrew', 0.25, 0.25, -0.8],
     },
     beats: {
       enter: [['rock', 'flow'], ['glory', null, { show: 0 }], ['moses', 'raise', { x: 0.2, z: -0.15, look: 0.8 }], ['aaron', 'idle', { x: -0.05, z: 0.0 }], ['man', 'kneel', { x: 0.75, z: 0.05, look: -0.3 }]],
-      intro: [['rock', 'dry'], ['glory', null, { show: 0 }], ['folk', null, { show: 0 }], ['moses', 'mourn', { x: -0.6, z: -0.1, look: -1.2 }], ['aaron', 'mourn', { x: -0.75, z: 0.1, look: -1.2 }], ['wom', 'mourn'], ['man', 'idle', { show: 0 }]],
+      intro: [['rock', 'dry'], ['glory', null, { show: 0 }], ['folk', null, { show: 0 }], ['moses', 'mourn', { x: -0.6, z: -0.1, look: -1.2 }], ['aaron', 'mourn', { x: -0.8, z: 0.16, look: -1.2 }], ['wom', 'mourn'], ['man', 'idle', { show: 0 }]],
       // 미리암이 숨을 거두어 묻혔다
       'p0.2': [['wom', 'kneel', { look: -2.6 }]],
       // 물이 떨어지고, 백성이 몰려와 다툰다
@@ -1090,7 +1090,7 @@ export const MOSES = {
       'p0.1': [['@env', 'dusk']],
       'p0.3': [['aaron', 'bow', { look: -0.8 }], ['moses', 'mourn']],
       // 온 회중이 지켜보는 가운데 산을 오른다
-      'p1.0': [['moses', 'idle', { x: 0.35, z: -0.42, look: 0.4 }], ['aaron', 'idle', { x: 0.55, z: -0.5, look: 0 }], ['eleazar', 'idle', { x: 0.78, z: -0.42, look: -0.4 }]],
+      'p1.0': [['moses', 'idle', { x: 0.35, z: -0.42, look: 0.4 }], ['aaron', 'idle', { x: 0.6, z: -0.52, look: 0 }], ['eleazar', 'idle', { x: 0.86, z: -0.42, look: -0.4 }]],
       // 형의 옷을 벗겨 엘르아살에게
       'p1.2': [['aaron', 'idle', { show: 0 }], ['aaronP2', 'idle', { show: 1, x: 0.55, z: -0.5 }], ['eleazar', 'idle', { show: 0 }], ['eleazarP', 'idle', { show: 1, x: 0.78, z: -0.42, look: -0.6 }], ['moses', 'bless', { to: 'eleazarP' }]],
       // 아론은 산꼭대기에서 — 빛 속으로
@@ -1171,7 +1171,7 @@ export const MOSES = {
       // 헤스본에 들어가 산다
       'p1.2': [['israel', null, { x: 0.6, z: -0.05 }], ['joshua', 'idle', { x: 0.2, z: 0.15 }], ['moses', 'idle', { x: -0.4, z: -0.1 }]],
       // 바산 왕 옥
-      'p2.1': [['amorite', null, { show: 1, x: 1.0, z: 0.3 }], ['@env', 'overcast']],
+      'p2.1': [['amorite', null, { show: 1, x: 1.25, z: 0.3 }], ['@env', 'overcast']],
       'p2.2': [['moses', 'listen', { look: 0.4 }], ['amorite', null, { show: 0, x: 1.6, delay: 3000 }], ['@env', 'day', { delay: 3000 }]],
       'p2.4': [['moses', 'raise', { look: 0.6 }]],
       w0: [['moses', 'listen', { look: 0.4 }]],
@@ -1247,7 +1247,7 @@ export const MOSES = {
       'p1.0': [['moses', 'raise']],
       'p1.2': [['moses', 'speak', { to: 'wom' }]],
       // 집에 앉아 있을 때나 길을 걸을 때나 — 자녀에게
-      'p1.4': [['wom', 'idle', { x: 0.55, z: 0.3 }], ['wom', 'speak', { to: 'kid', delay: 2000 }], ['kid', 'listen']],
+      'p1.4': [['wom', 'idle', { x: 0.6, z: 0.12 }], ['wom', 'speak', { to: 'kid', delay: 2000 }], ['kid', 'listen']],
       'p2.0': [['moses', 'rebuke', { to: 'kid' }], ['wom', 'sit-ground', { x: 0.75, z: 0.25 }]],
       'p2.3': [['moses', 'point', { look: -1.6 }], ['kid', 'listen']],
       w0: [['moses', 'speak', { to: 'kid' }]],
@@ -1304,8 +1304,8 @@ export const MOSES = {
     cast: {
       joshua: ['joshua', -0.1, -0.05, 0],
       cap1: ['caleb', 0.45, 0.05, -1],
-      cap2: ['man', 0.55, 0.3, -1.1],
-      cap3: ['hebrew2', 0.3, 0.35, -0.9],
+      cap2: ['man', 0.62, 0.3, -1.1],
+      cap3: ['hebrew2', 0.24, 0.37, -0.9],
     },
     beats: {
       enter: [['light', null, { show: 0 }], ['joshua', 'speak', { look: 1, to: 'cap1' }], ['folk', null, { show: 1 }]],
@@ -1415,7 +1415,7 @@ export const MOSES = {
       folk: ['crowd', 1.5, 0.45, { spots: [[0.08, 0.03], [-0.13, -0.01], [0.2, -0.16], [-0.03, 0.22], [-0.38, -0.22], [0.35, 0], [-0.25, 0.19], [-0.02, -0.21], [0.24, 0.19], [-0.35, -0.01]], face: -Math.PI / 2, speed: 0.35 }],
     },
     cast: {
-      joshua: ['joshua', -1.1, 0.4, 0.6],
+      joshua: ['joshua', -1.12, 0.47, 0.6],
       h1: ['priest', -0.3, 0.2, -1.35, { speed: 0.35 }], h2: ['priest', -0.08, 0.25, -1.35, { speed: 0.35 }], h3: ['priest', 0.14, 0.2, -1.35, { speed: 0.35 }],
       p1: ['priest', 0.48, 0.2, -1.57, { speed: 0.35, pose: 'carry-pole' }], p2: ['priest', 1.32, 0.2, -1.57, { speed: 0.35, pose: 'carry-pole' }],
       rahab: ['rahab', 0.75, -0.35, 0.4],
@@ -1427,7 +1427,7 @@ export const MOSES = {
       'p0.1': [['@env', 'dawn']],
       'p0.2': [['@env', 'day'], ['joshua', 'listen', { look: 0.8 }]],
       // 엿새 동안 날마다 한 번 — 뿔나팔을 불며 성을 돈다 (오른쪽에서 왼쪽으로 지나간다)
-      'p1.0': [['h1', 'idle', { x: -1.3 }], ['h2', 'idle', { x: -1.08, z: 0.24 }], ['h3', 'idle', { x: -0.86 }], ['p1', 'carry-pole', { x: -0.52 }], ['p2', 'carry-pole', { x: 0.32 }], ['folk', null, { x: 0.5 }]],
+      'p1.0': [['h1', 'idle', { x: -1.3 }], ['h2', 'idle', { x: -1.08, z: 0.18 }], ['h3', 'idle', { x: -0.86 }], ['p1', 'carry-pole', { x: -0.52 }], ['p2', 'carry-pole', { x: 0.32 }], ['folk', null, { x: 0.5 }]],
       // 일곱째 날 새벽, 일곱 번 — 그리고 큰 소리
       'p1.3': [['@env', 'dawn'], ['h1', 'look-up', { look: -2.6 }], ['h2', 'look-up', { look: -2.6 }], ['h3', 'look-up', { look: -2.6 }], ['joshua', 'raise', { delay: 2500 }]],
       // 성벽이 무너져 내린다
@@ -1514,7 +1514,7 @@ export const MOSES = {
       intro: [['altar', 'idle'], ['ark', null, { show: 0 }], ['p1', 'idle', { show: 0 }], ['p2', 'idle', { show: 0 }], ['half1', null, { show: 0 }], ['half2', null, { show: 0 }], ['wom', 'idle', { show: 0 }], ['kid', 'idle', { show: 0 }], ['stranger', 'idle', { show: 0 }], ['joshua', 'idle', { x: 0.1, z: 0.25, item: null }]],
       'p0.1': [['joshua', 'point', { look: 3 }]],
       // 에발산에 자연석 제단
-      'p0.2': [['joshua', 'idle', { x: -0.2, z: -0.26, look: 3 }], ['altar', 'fire', { delay: 2500 }]],
+      'p0.2': [['joshua', 'idle', { x: -0.14, z: -0.17, look: 3 }], ['altar', 'fire', { delay: 2500 }]],
       'p1.0': [['joshua', 'kneel', { look: 3 }]],
       // 언약궤를 멘 제사장들이 가운데, 백성은 반씩
       'p1.1': [['ark', null, { show: 1 }], ['p1', 'idle', { show: 1 }], ['p2', 'idle', { show: 1 }], ['half1', null, { show: 1 }], ['half2', null, { show: 1 }], ['joshua', 'idle', { x: 0.1, z: 0.25, look: 0 }]],
@@ -1558,7 +1558,7 @@ export const MOSES = {
       'p0.4': [['runner', 'idle', { show: 1, x: -0.2, z: 0.35 }], ['runner', 'idle', { x: 1.3, z: 0.35, delay: 1200 }], ['joshua', 'idle', { show: 1 }]],
       'p0.5': [['runner', 'speak', { to: 'joshua' }]],
       // 밤새 산길을 올라 새벽에 덮친다
-      'p1.2': [['@env', 'night'], ['runner', 'idle', { show: 0 }], ['israel', null, { show: 1, x: 0.95 }], ['joshua', 'idle', { x: 0.75, z: 0.15, look: -1 }], ['@env', 'dawn', { delay: 4000 }]],
+      'p1.2': [['@env', 'night'], ['runner', 'idle', { show: 0 }], ['israel', null, { show: 1, x: 1.2 }], ['joshua', 'idle', { x: 0.75, z: 0.15, look: -1 }], ['@env', 'dawn', { delay: 4000 }]],
       // 혼란에 빠져 비탈로 달아나고 — 우박
       'p1.3': [['@env', 'storm'], ['kings', null, { x: -1.4 }], ['king', 'afraid', { x: -1.1, z: 0.0 }], ['israel', null, { x: 0.3 }]],
       'p1.4': [['kings', null, { show: 0 }], ['king', 'idle', { show: 0 }]],
@@ -1588,7 +1588,7 @@ export const MOSES = {
       joshua: ['joshua', -0.1, 0.15, 0.4],
       eleazar: ['eleazar', -0.4, 0.05, 0.4],
       m1: ['hebrew', 0.45, 0.2, -0.8, { speed: 0.4 }],
-      m2: ['hebrew2', 0.65, 0.35, -0.9, { speed: 0.4 }],
+      m2: ['hebrew2', 0.72, 0.4, -0.9, { speed: 0.4 }],
       m3: ['man', 0.35, 0.45, -0.7, { speed: 0.4 }],
     },
     beats: {
@@ -1626,7 +1626,7 @@ export const MOSES = {
     cast: {
       joshua: ['joshua', 0.0, 0.0, 0],
       elder: ['elder', -0.45, 0.25, 2.8],
-      wife: ['woman', 0.3, 0.1, 0.3],
+      wife: ['woman', 0.37, 0.15, 0.3],
       son: ['hebrew2', 0.45, 0.2, 0.2],
     },
     beats: {
