@@ -5,10 +5,14 @@
 import './props-d.js';
 
 // 무리(crowd)의 자리: 가운데를 둘러 n명을 흩어 놓는다 (moses.js와 같다)
-const flock = (n, rx, rz, seed = 1) => Array.from({ length: n }, (_, i) => {
+// 모델은 인형보다 몸이 커서 좁은 무리 안에서 서로 뚫고 섰다(사용자 2026-11) — 몸 네모(0.17×0.11)가 겹치지 않을 만큼(0.18) 서로 밀어 벌린다
+const flock = (n, rx, rz, seed = 1) => { const P = Array.from({ length: n }, (_, i) => {
   const a = i * 2.399 + seed, r = Math.sqrt((i + 0.5) / n);
   return [Math.cos(a) * r * rx, Math.sin(a) * r * rz];
 });
+  for (let it = 0; it < 60; it++) for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) { const dx = P[j][0] - P[i][0], dz = P[j][1] - P[i][1], d = Math.hypot(dx, dz) || 1e-3;
+    if (d < 0.18) { const k = (0.18 - d) / 2 / d; P[i][0] -= dx * k; P[i][1] -= dz * k; P[j][0] += dx * k; P[j][1] += dz * k; } }
+  return P.map(([x, z]) => [+x.toFixed(3), +z.toFixed(3)]); };
 const E = Math.PI / 2; // 무리(crowd)가 동쪽(오른쪽)을 보는 방향
 
 export const D = {
@@ -184,7 +188,7 @@ export const D = {
     },
     beats: {
       enter: [['absalom', 'idle', { show: 0 }], ['amasa', 'idle', { show: 0 }], ['camp', null, { show: 0 }], ['d1', null, { x: 1.5, z: 0.28 }], ['d2', null, { x: 1.75, z: 0.02 }],
-        ['david', 'sit', { x: -0.35, z: 0.04, look: 0.4 }], ['joab', 'sit-ground', { x: -0.85, z: 0.15, look: 0.6 }], ['folk', null, { x: -0.75, z: -0.25 }], ['folk', 'sit'],
+        ['david', 'sit', { x: -0.35, z: -0.1, look: 0.4 }], ['joab', 'sit-ground', { x: -0.98, z: 0.12, look: 0.6 }], ['folk', null, { x: -0.75, z: -0.25 }], ['folk', 'sit'],
         ['barzillai', 'speak', { x: 0.12, z: 0.12, to: 'david' }], ['shobi', 'idle', { x: 0.42, z: 0.0, look: -1 }], ['machir', 'idle', { x: 0.55, z: 0.25, look: -1 }]],
       intro: [['@env', 'day'], ['folk', 'stand'], ['absalom', 'idle', { show: 0 }], ['amasa', 'idle', { show: 0 }], ['camp', null, { show: 0 }], ['shobi', 'idle', { show: 0 }], ['machir', 'idle', { show: 0 }], ['barzillai', 'idle', { show: 0 }],
         ['d1', null, { show: 0 }], ['d2', null, { show: 0 }], ['wares', null, { show: 0 }], ['food', null, { show: 0 }], ['sh1', null, { show: 0 }], ['sh2', null, { show: 0 }], ['feast', null, { show: 0 }]],
@@ -212,7 +216,7 @@ export const D = {
       'p2.1': [['barzillai', 'speak', { to: 'david' }], ['david', 'listen', { look: 1 }]],
       'p2.2': [['barzillai', 'idle'], ['machir', 'idle', { look: -1 }], ['shobi', 'idle', { look: -1 }]],
       // 낯선 땅에 차려진 상 앞에 앉는다
-      'p2.3': [['feast', null, { show: 1 }], ['david', 'idle', { x: -0.35, z: 0.04, look: 0.4 }], ['david', 'sit', { delay: 2600 }], ['joab', 'idle', { x: -0.85, z: 0.15, look: 0.6 }],
+      'p2.3': [['feast', null, { show: 1 }], ['david', 'idle', { x: -0.35, z: -0.1, look: 0.4 }], ['david', 'sit', { delay: 2600 }], ['joab', 'idle', { x: -0.98, z: 0.12, look: 0.6 }],
         ['barzillai', 'idle', { x: 0.12, z: 0.12, look: -1 }], ['shobi', 'idle', { x: 0.42, z: 0.0 }], ['machir', 'idle', { x: 0.55, z: 0.25 }]],
       'p2.4': [['@env', 'dusk'], ['joab', 'sit-ground'], ['folk', 'sit', { x: -0.75, z: -0.25 }]],
       w0: [['barzillai', 'speak', { show: 1, to: 'david' }]],

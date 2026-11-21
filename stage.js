@@ -165,6 +165,27 @@ Object.assign(LIKE, {
   islanderW: ['zipporah', { plain: true, skin: 0.72 }], publius: ['pilate', { hue: 250, skin: 0.95 }], epaphroditus: ['silas', { hue: 270 }],
   onesimus: ['timothy', { plain: true, skin: 0.7 }], tychicus: ['luke', { hue: 140 }],
 });
+// 다윗 여정 (사용자 2026-11: 다윗 여정도 모델로) — 다윗은 나이마다 소년·젊은 용사·왕 모델, 이름 있는 사람은 그 사람의 모델(OWN),
+// 나머지는 비슷한 사람의 모델에 옷 색·살갗을 달리. 병사는 여호수아·요압(투구), 블레셋 사람은 골리앗(깃털 투구), 제사장은 아론·가야바, 레위 사람은 흰 세마포의 나사로.
+// 왕관 쓴 모델은 왕(다윗·사울·아기스)에게만 — 압살롬이 왕을 자처할 때도 왕관 없는 압살롬 모델 그대로
+Object.assign(OWN, { davidY: 'david', davidW: 'david-warrior', davidK: 'david-king', davidO: 'david-king', samuel: 'samuel', saul: 'saul', saulS: 'saul',
+  jonathan: 'jonathan', michal: 'michal', goliath: 'goliath', joab: 'joab', nathan: 'nathan', absalom: 'absalom', absalomK: 'absalom', solomon: 'solomon', miriam: 'miriam', rahab: 'rahab' });
+Object.assign(LIKE, {
+  davidA: ['david', { hue: 20, sat: 0.7 }], davidE: ['david-warrior', { white: true }], davidH: ['david-king', { plain: true }], // 사울의 군복을 입은 소년, 세마포 에봇, 머리를 가린 피난길의 왕
+  jesse: ['jethro', { hue: 20, skin: 1.04 }], eliab: ['joshua', { hue: 140, skin: 1.02 }], brother: ['andrew', { hue: 30 }], brother2: ['thomas', { hue: 200, skin: 0.9 }],
+  israelite: ['joshua', { plain: true }], israelite2: ['joab', { hue: 60, skin: 0.9 }], philistine: ['goliath', { hue: 20, skin: 0.95 }], shieldman: ['goliath', { hue: 200, sat: 0.6, skin: 0.9 }],
+  abner: ['joab', { hue: 120, skin: 1.05 }], abnerS: ['joab', { hue: 120, skin: 1.05 }], abishai: ['joshua', { hue: 200, skin: 0.95 }], amasa: ['joab', { hue: 200 }],
+  benaiah: ['joshua', { hue: 30, skin: 1.05 }], uriah: ['joshua', { hue: 220, skin: 0.82 }], ittai: ['goliath', { hue: 120, skin: 1.02 }],
+  lad: ['david', { plain: true, hue: 40, skin: 1.05 }], ahimelech: ['aaron'], zadok: ['aaron', { hue: 200, skin: 1.05 }], abiathar: ['caiaphas', { hue: 180, skin: 1.05 }],
+  levite: ['lazarus', { skin: 0.95 }], doeg: ['judas', { skin: 0.8 }], achish: ['rehoboam', { hue: 160, skin: 0.85 }], gad: ['moses', { hue: 20, skin: 1.05 }],
+  nabal: ['nicodemus', { hue: 330 }], abigail: ['lydia', { hue: 160 }], egyslave: ['pilgrim-man', { plain: true, skin: 0.65 }], amalekite: ['samaritan', { hue: 330, skin: 0.8 }],
+  hebrew: ['pilgrim-man', '#8b6f50'], hebrew2: ['fisherman', { hue: 30, skin: 0.92 }],
+  jebusite: ['shepherd', { hue: 200, skin: 0.85 }], jebusite2: ['fisherman', { hue: 300, skin: 0.8 }], tyrian: ['silas', { hue: 260, skin: 0.9 }], tyrianD: ['barnabas', { hue: 280, skin: 0.92 }],
+  uzzah: ['thomas', { hue: 30 }], ahio: ['andrew', { hue: 200 }], ziba: ['samaritan', { hue: 60 }], mephibosheth: ['luke', { hue: 100 }], mephiS: ['luke', { hue: 100 }],
+  joram: ['barnabas', { hue: 240, skin: 0.9 }], bathsheba: ['magdalene', { skin: 1.05 }], runner: ['timothy', { plain: true }], ahithophel: ['pharisee', { hue: 60 }],
+  ahimaaz: ['timothy', { hue: 30 }], cushite: ['timothy', { hue: 0, skin: 0.5 }], hushai: ['jethro', { hue: 220, skin: 1.05 }], shimei: ['thomas', { hue: 330, skin: 0.85 }],
+  shobi: ['barnabas', { hue: 40, skin: 0.9 }], araunah: ['fisherman', { hue: 40 }], abishag: ['mary-bethany', { hue: 30, skin: 1.05 }], adonijah: ['absalom', { hue: 200, skin: 1.03 }],
+});
 const dress = ([n, c]) => c === 'plain' ? plain(ready[n], n) : c && typeof c === 'object' ? restyle(ready[n], n, c) : c ? tinted(ready[n], n, c) : ready[n];
 // 한 장면에 같은 모델이 또 서면 옷 색상·살갗이 눈에 띄게 다른 차림을 골라 입힌다 — 같은 옷·같은 살갗의 같은 사람이 둘셋씩 섰다(사용자 2026-11).
 // 배역과 군중(여러 무리)을 한 장부(taken: 모델 이름 → 이미 입힌 차림들)로 함께 센다 — 무리마다 따로 세니 두 무리에 쌍둥이가 섰다
@@ -500,7 +521,7 @@ if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__st
       if ((SOLID.has(p.kind) || FURNITURE.has(p.kind)) && p.show > 0.5) propBoxes(p.obj, stageGroup).forEach(b => E.push([n + '(' + p.kind + ')', b, 's'])); });
     for (let i = 0; i < E.length; i++) for (let j = i + 1; j < E.length; j++) { if (E[i][2] === 's' && E[j][2] === 's') continue; const d = push(E[i][1], E[j][1]); if (d && Math.hypot(...d) > 0.015) out.push([E[i][0], E[j][0], +Math.hypot(...d).toFixed(3), E[i][3] || '', E[j][3] || '']); }
     return out; },
-  actorsDbg() { return actors; },
+  actorsDbg() { return actors; }, propsDbg() { return props; },
   solidCount() { return [solidBoxes().length, Object.values(props).map(p => p.kind).join(',')]; },
   // 자리 굽기(_src/tools/bake-positions.cjs): 순간마다 대본대로 세우고 직육면체로 밀어낸 자리를 계산해, 그 사람을 그 자리에 세운 대본 줄을 알려 준다
   // [{ src: 'cast' | [beat, 줄 번호], name, x, z }] — 대본 좌표를 고쳐 두면 화면에서 밀어내며 미끄러지지 않는다(사용자 2026-11)
@@ -785,10 +806,10 @@ let bigNow = 1;
 const floorAt = (x, z, self) => Math.max(-Infinity, ...Object.values(props).filter(f => f.floor && f !== self && f.heightAt(x, z) > 0).map(f => f.lift.position.y));
 // 땅에 붙은 소품: 지형과 같은 고정 축척에 둔다. 나머지(사람 곁의 십자가·배·짐승·상·바구니…)는 사람과 함께 커진다
 // 바닥이 평평한 건물: 가운데 땅 높이에 앉히면 비탈 위쪽이 땅에 묻힌다(골짜기 바닥의 실로암 못) — 바닥 네 귀퉁이 가운데 가장 높은 땅에 앉힌다
-const FLAT = new Set(['pool', 'house', 'well', 'synagogue', 'temple', 'gate', 'walls', 'cliffshrine', 'council', 'synahall', 'bema', 'schola', 'aula', 'theater', 'upperroom3']);
+const FLAT = new Set(['hall', 'roof', 'gatetower', 'couch', 'pool', 'house', 'well', 'synagogue', 'temple', 'gate', 'walls', 'cliffshrine', 'council', 'synahall', 'bema', 'schola', 'aula', 'theater', 'upperroom3']);
 // 땅에 까는 얇은 판(모래·풀밭): 가운데 땅 높이에 두면 비탈 아래쪽에 선 사람의 다리를 판이 덮어 발만 보였다(가드 성문, 2026-11) — 가장 낮은 귀퉁이에 깐다(높은 쪽은 지형 밑으로 숨는다)
 const COVER = new Set(['sand', 'grass', 'field', 'flowers', 'rocks']); // 바위도 낮은 쪽에 — 비탈 위쪽이 조금 묻히는 편이 떠 있는 것보다 낫다
-const FIXED = new Set(['water', 'grass', 'hill', 'tomb', 'temple', 'house', 'rocks', 'figtree', 'synagogue', 'well', 'pool', 'flowers', 'gate', 'field', 'cliffshrine', 'palm', 'walls', 'olive', 'star', 'host', 'rain', 'council', 'synahall', 'bema', 'schola', 'aula', 'theater', 'upperroom3']);
+const FIXED = new Set(['hall', 'roof', 'gatetower', 'couch', 'water', 'grass', 'hill', 'tomb', 'temple', 'house', 'rocks', 'figtree', 'synagogue', 'well', 'pool', 'flowers', 'gate', 'field', 'cliffshrine', 'palm', 'walls', 'olive', 'star', 'host', 'rain', 'council', 'synahall', 'bema', 'schola', 'aula', 'theater', 'upperroom3']);
 // '@at' 명령: 3D 지형에서만 무대 바닥을 다른 실제 지점으로 옮긴다 — 무대 (x, z) 자리가 그 위경도에 오도록.
 // 나사렛 회당에서 낭떠러지로 끌고 가는 대목처럼, 이야기가 근처의 실제 지형으로 옮겨 갈 때. 2D 무대는 그대로 둔다
 let moveAt = null, atSnap = true, lastHere = null;
@@ -877,7 +898,7 @@ function frame() {
       // 걸상에 앉은 무리(y): 그 걸상이 있는 건물과 같은 높이에, 건물처럼 키우지 않는다 — 땅 높이·배율이 건물과 달라 걸상 위 허공에 떠 앉았다(e16, 사용자 2026-11)
       if (p.bench) { const host = Object.values(props).find(q => q !== p && FLAT.has(q.kind) && Math.hypot(q.obj.position.x - p.obj.position.x, q.obj.position.z - p.obj.position.z) < 0.05);
         if (host) { p.lift.position.copy(host.lift.position); return; } }
-      p.lift.position.y = FLAT.has(p.kind) || p.floor ? Math.max(...corners())
+      p.lift.position.y = FLAT.has(p.kind) || p.floor ? Math.max(...corners(), floorAt(ox, oz, p)) // 궁 안의 침상(다윗 여정 d37)은 궁 바닥 위에
         : COVER.has(p.kind) ? Math.min(...corners())
         : Math.max(groundAt(ox, oz), floorAt(ox, oz, p));
       if (!FIXED.has(p.kind)) { // 사람과 함께 키운다: 크기는 제자리에서, 높이(십자가가 선 언덕 위, 나는 비둘기)는 바닥에서부터
@@ -898,7 +919,7 @@ function frame() {
     ac.floorUnder = ac.fixedY && !onDeck ? Math.max(groundAt(ac.pos.x, ac.pos.y), ...grounds.map(p => { const h = p.heightAt(ac.pos.x, ac.pos.y); return h > 0 ? p.lift.position.y + h : -Infinity; })) : undefined;
     // 바닥이 평평한 건물(회당·공의회) 안의 걸상에 앉은 사람(높이를 정한 사람): 건물 받침 높이에, 키우지 않는다 — 건물은 지형 축척 그대로인데
     // 사람만 키우고 앉는 높이까지 키워 걸상 위 허공에 떠 앉았다(a01 공의회, 사용자 2026-11). 걸터앉은 무리(p.bench)와 같은 셈
-    if (inTerrain && !onDeck && ac.fixedY && ac.y > 0) { const host = grounds.find(p => FLAT.has(p.kind) && p.heightAt(ac.pos.x, ac.pos.y) > 0); if (host) { ac.ground = host.lift.position.y; ac.big = 1; } }
+    if (inTerrain && !onDeck && ac.fixedY && ac.y > 0) { const host = grounds.filter(p => FLAT.has(p.kind) && p.heightAt(ac.pos.x, ac.pos.y) > 0).sort((a, b) => b.lift.position.y - a.lift.position.y)[0]; if (host) { ac.ground = host.lift.position.y; ac.big = 1; } }
     ac.update(time, dt);
   });
   if (inTerrain) scaleLights();

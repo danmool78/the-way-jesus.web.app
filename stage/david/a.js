@@ -24,7 +24,7 @@ export const A = {
       s2: ['sheep', 0.7, 0.05, { rot: -0.5 }],
       s3: ['sheep', 0.55, -0.4, { rot: 2.6 }],
       s4: ['sheep', 0.95, -0.2, { rot: 3.4 }],
-      s5: ['sheep', 0.15, 0.3, { rot: 0.2 }],
+      s5: ['sheep', 0.45, 0.42, { rot: 0.2 }],
       lamb: ['sheep', -0.55, 0.2, { scale: 0.7, rot: 0.3, speed: 0.75 }],
       lion: ['lion', -1.95, 0.05, { speed: 0.75 }],
       bear: ['bear', 2.05, 0.4, { speed: 0.5, rot: Math.PI }], // 집(1.25, -0.6) 앞쪽 들판으로 — 뒤쪽 길은 곰이 집을 뚫고 지나갔다
@@ -56,7 +56,7 @@ export const A = {
       'p2.4': [['david', 'pray', { look: 0 }]],
       w0: [['david', 'speak', { item: null }]],
       w1: [['david', 'speak']],
-      w2: [['jesse', 'speak', { show: 1, x: 0.9, z: -0.15, look: -1 }]],
+      w2: [['jesse', 'speak', { show: 1, x: 1.15, z: 0.08, look: -1 }]],
       end: [['@env', 'night'], ['david', 'play', { item: 'lyre', look: 0.3 }]],
     },
   },
