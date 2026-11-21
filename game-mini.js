@@ -1125,7 +1125,82 @@ function accuser(g, m, S) {
   g.restore();
 }
 
-export const MINI = { jesus: { e11: cana, e17: fishing, e22: twelve, e23: rock, e31: loaves, e32: water, e39: stones, e42: sheep, e43: coin } };
+/* ---------- 여리고의 두 만남 (눅 19:1–10): 키 작은 삭개오, 돌무화과나무 오르기 — 타이밍 ---------- */
+// 가지가 바람에 흔들려 몸 가까이 올 때(빛날 때) 그쪽(왼쪽·오른쪽 화면)을 누르면 한 칸 오른다. 엉뚱한 쪽이거나 멀 때 누르면 미끄러져 한 칸 내려간다.
+// 아래 길로 예수님 일행이 지나가신다 — 다 지나가시기 전에 꼭대기에 올라야 한다(19:4). 높이 오를수록 가지가 빨리 흔들린다
+const BRANCH = 9;
+const climb = {
+  title: '여리고의 두 만남', task: '돌무화과나무 꼭대기까지',
+  ask: ['여리고에 키가 작은 세리장 삭개오가 있었단다. 사람들에 가려 나를 볼 수가 없었지.', '그가 앞으로 달려가 나무에 올랐단다 — 너도 내가 지나가기 전에 꼭대기까지 올라 보렴!'],
+  quote: '앞으로 달려가서 보기 위하여 돌무화과나무에 올라가니', ref: '눅 19:4',
+  help: '가지가 몸 가까이 흔들려 올 때(빛날 때) 그쪽 — 화면 왼쪽이나 오른쪽 — 을 누르면 올라가요.<br>멀 때 누르거나 반대쪽을 누르면 미끄러져요. 예수님이 다 지나가시기 전에!',
+  seconds: 14, // 반응 지연을 둔 자동 오르기로 60fps 시뮬레이션: 빠른 반응 6초, 보통 9초, 느린 반응 12초
+  init() {
+    const br = Array.from({ length: BRANCH }, (_, i) => ({ side: i === 0 ? -1 : Math.random() < 0.5 ? -1 : 1, ph: rnd(0, 6), w: 2.6 + i * 0.28 }));
+    for (let i = 1; i < BRANCH; i++) if (br[i].side === br[i - 1].side && Math.random() < 0.5) br[i].side *= -1; // 좌우가 섞이게
+    return { br, lv: 0, view: 0, t: 0, slip: 0, msg: null, sparks: [], leaves: Array.from({ length: 40 }, () => [rnd(0, W), rnd(-400, H), rnd(0.6, 1.4)]) };
+  },
+  near(S, i) { const b = S.br[i]; return b && (Math.sin(S.t * b.w + b.ph) + 1) / 2; }, // 0 멀다 → 1 가깝다
+  update(dt, S) {
+    S.t += dt; S.view += (S.lv - S.view) * Math.min(1, dt * 6); S.slip = Math.max(0, S.slip - dt * 2.5);
+    for (const p of S.sparks) { p.y += p.vy * dt; p.life -= dt; } S.sparks = S.sparks.filter(p => p.life > 0);
+    if (S.msg) S.msg.at -= dt;
+  },
+  down(x, y, S) {
+    if (S.lv >= BRANCH) return;
+    const side = x < W / 2 ? -1 : 1, b = S.br[S.lv], n = this.near(S, S.lv);
+    if (side === b.side && n > 0.68) { S.lv++; S.fx.play('flip'); if (S.lv >= BRANCH) S.fx.play('plink');
+      for (let i = 0; i < 6; i++) S.sparks.push({ x: W / 2 + side * 60, y: 250 + rnd(-10, 10), vy: rnd(-40, -10), life: rnd(0.3, 0.7), r: rnd(1.2, 2.2) }); }
+    else { const was = S.lv; S.lv = Math.max(0, S.lv - 1); S.slip = 1; S.fx.play('miss'); S.msg = { t: was ? '미끄러졌어요!' : '아직 멀어요', c: '#ffb38a', at: 0.9, x: W / 2, y: 200 }; }
+  },
+  up() {},
+  won: S => S.lv >= BRANCH,
+  draw(g, S) {
+    const v = S.view, span = 64; // 가지 사이 높이 — 오를수록 화면이 아래로(위로 올라간 듯)
+    const sky = g.createLinearGradient(0, 0, 0, H); sky.addColorStop(0, '#9cc9e6'); sky.addColorStop(1, '#e8dcb4'); g.fillStyle = sky; g.fillRect(0, 0, W, H);
+    // 아래 길과 무리 (오를수록 아래로 멀어진다), 지나가시는 예수님 일행
+    const roadY = 452 + v * 3, prog = clamp(S.t / this.seconds, 0, 1); // 길은 늘 아래에 보이게 — 오를수록 무리가 작아 보이기만(끝에 그분이 올려다보시는 것이 보여야)
+    g.fillStyle = '#c9b48a'; g.fillRect(0, roadY - 10, W, 200);
+    const ks = 1 - v / BRANCH * 0.45; // 오를수록 아래 사람들이 작게
+    for (let i = 0; i < 16; i++) { const x = (i * 29 + 6) % W, y = roadY - 4 + (i % 3) * 7; g.fillStyle = `hsl(${(i * 47) % 360},25%,40%)`; g.beginPath(); g.arc(x, y, 9 * ks, Math.PI, 0); g.fill(); g.fillStyle = '#c99872'; g.beginPath(); g.arc(x, y - 11 * ks, 5 * ks, 0, 7); g.fill(); }
+    const jx = S.lv >= BRANCH ? W / 2 + 60 : -30 + prog * (W + 60); figure(g, jx, Math.min(H - 4, roadY + 20), 42, S.lv >= BRANCH ? 1 : 0); // 오르면 나무 아래 멈춰 올려다보신다
+    // 나무 줄기
+    const tr = g.createLinearGradient(W / 2 - 22, 0, W / 2 + 22, 0); tr.addColorStop(0, '#5a4630'); tr.addColorStop(0.5, '#8a6e4a'); tr.addColorStop(1, '#4a3826');
+    g.fillStyle = tr; g.beginPath(); g.moveTo(W / 2 - 30, H); g.lineTo(W / 2 - 18, 0); g.lineTo(W / 2 + 18, 0); g.lineTo(W / 2 + 30, H); g.fill();
+    // 가지 (지금 붙잡을 가지는 흔들림에 따라 빛난다)
+    for (let i = 0; i < BRANCH; i++) {
+      const y = 330 - (i - v) * span; if (y < -40 || y > H + 20) continue;
+      const b = S.br[i], n = this.near(S, i), reach = 70 + (1 - n) * 70, x0 = W / 2 + b.side * 16, x1 = W / 2 + b.side * (16 + reach);
+      const cur = i === S.lv, hot = cur && n > 0.68;
+      g.strokeStyle = hot ? '#ffe29a' : '#6a5236'; g.lineWidth = hot ? 9 : 7; g.lineCap = 'round';
+      g.beginPath(); g.moveTo(x0, y); g.quadraticCurveTo((x0 + x1) / 2, y - 14, x1, y - 6 + Math.sin(S.t * b.w + b.ph) * 4); g.stroke();
+      g.fillStyle = i < S.lv ? 'rgba(90,130,60,.7)' : 'rgba(110,150,70,.9)';
+      for (let k = 0; k < 4; k++) { g.beginPath(); g.ellipse(x1 - b.side * k * 14, y - 14 - (k % 2) * 6, 13, 8, b.side * 0.4, 0, 7); g.fill(); }
+      if (cur && !hot) { g.strokeStyle = 'rgba(255,255,255,.25)'; g.setLineDash([3, 5]); g.beginPath(); g.arc(W / 2 + b.side * 86, y - 6, 18, 0, 7); g.stroke(); g.setLineDash([]); }
+    }
+    // 삭개오 (줄기에 매달림)
+    const zy = 360 + S.slip * 18, zx = W / 2 + Math.sin(S.t * 3) * 2;
+    g.fillStyle = '#5a4a7a'; g.beginPath(); g.ellipse(zx, zy, 13, 18, 0, 0, 7); g.fill();
+    g.fillStyle = '#c99872'; g.beginPath(); g.arc(zx, zy - 22, 8, 0, 7); g.fill(); g.fillStyle = '#3a2a1a'; g.beginPath(); g.arc(zx, zy - 25, 8, Math.PI, 0); g.fill();
+    g.strokeStyle = '#c99872'; g.lineWidth = 4; g.lineCap = 'round'; g.beginPath(); g.moveTo(zx - 10, zy - 10); g.lineTo(zx - 18, zy - 30); g.moveTo(zx + 10, zy - 10); g.lineTo(zx + 18, zy - 30); g.stroke();
+    // 흩날리는 잎
+    for (const l of S.leaves) { l[1] += 0.6 * l[2]; l[0] += Math.sin(S.t + l[1] * 0.02) * 0.4; if (l[1] > H) l[1] = -10; g.fillStyle = 'rgba(110,150,70,.45)'; g.beginPath(); g.ellipse(l[0], l[1], 4 * l[2], 2 * l[2], l[1] * 0.05, 0, 7); g.fill(); }
+    for (const p of S.sparks) { g.fillStyle = `rgba(255,236,170,${clamp(p.life, 0, 1)})`; star(g, p.x, p.y, p.r * 2.4); }
+    floatMsg(g, S.msg);
+    // 높이, 지나가시는 정도
+    g.save(); g.font = '700 14px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.lineWidth = 3; g.strokeStyle = 'rgba(40,50,60,.5)'; g.fillStyle = '#fff';
+    g.strokeText(`높이 ${S.lv} / ${BRANCH}`, 14, 24); g.fillText(`높이 ${S.lv} / ${BRANCH}`, 14, 24); g.restore();
+    g.fillStyle = 'rgba(0,0,0,.35)'; g.fillRect(W - 140, 16, 124, 6); g.fillStyle = '#ffb38a'; g.fillRect(W - 140, 16, 124 * prog, 6);
+    g.font = '600 11px "Noto Sans KR",sans-serif'; g.textAlign = 'right'; g.fillStyle = 'rgba(255,255,255,.9)'; g.fillText('예수님이 지나가심', W - 16, 36);
+  },
+  end(g, k, S) { this.update(0.016, S); this.draw(g, S);
+    if (k > 0.25) { g.save(); g.globalAlpha = clamp((k - 0.25) * 2, 0, 1); g.fillStyle = 'rgba(30,24,14,.8)'; g.fillRect(0, 92, W, 84);
+      g.font = '700 17px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#fff0d6'; g.fillText('삭개오야 속히 내려오라', W / 2, 122); g.fillText('내가 오늘 네 집에 유하여야 하겠다', W / 2, 146);
+      g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#e6cfa6'; g.fillText('눅 19:5', W / 2, 165); g.restore(); }
+  },
+};
+
+export const MINI = { jesus: { e11: cana, e17: fishing, e22: twelve, e23: rock, e31: loaves, e32: water, e39: stones, e42: sheep, e43: coin, e46: climb } };
 
 /* ---------- 놀이 틀: 소개 → 놀이(제한 시간) → 성공 연출/실패 → 결과 ---------- */
 // host: 모달 안의 상자. fx: { play, pour } (game-audio.js). 끝나면 done({ ok, left, tries })
