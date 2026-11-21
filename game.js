@@ -13,6 +13,7 @@ import { model, tinted, ModelActor } from './game-model.js';
 import { buildNav } from './game-nav.js';
 import { CHARS, STRENGTHS, effects, unlockedBy } from './game-chars.js';
 import { CAST, FOLLOW, SIZE, LEADS, GEAR, BOAT, SETS } from './game-cast.js';
+import { MINI, playMini } from './game-mini.js';
 
 const $ = s => document.querySelector(s);
 const snd = createAudio(); // 배경음악·발소리·배 소리·효과음 (game-audio.js)
@@ -626,10 +627,17 @@ function arrive() {
   if (G.met) {
     G.met = false;
     const g = group(); if (g.n > 1 && g.k === 1) toast(`${esc(placeOf(e).name)}에서 일어난 일이 ${g.n}가지예요<small>걷지 않고 이 자리에서 카드를 이어 받아요</small>`, true, 3200);
+    // 장면 놀이가 있는 장면은 말씀 고르기 대신 놀이 — 제한 시간 안에 성공해야 카드(사용자 2026-11). 남은 초는 점수에 더한다
+    const mini = MINI[JID]?.[e.id];
+    if (mini) { playMiniGame(mini, r => { if (r.ok) { G.bonus = (G.bonus || 0) + r.left * 10; reveal(e, stars, straight); } else missCard(e); }); return; }
     pickWord(e, ok => ok ? reveal(e, stars, straight) : missCard(e));
     return;
   }
   cardPlain(e, stars, straight);
+}
+function playMiniGame(mini, done) {
+  const s = sheet('<div class="mhost"></div>'); s.querySelector('.card').classList.add('minicard');
+  playMini(mini, s.querySelector('.mhost'), snd, r => { s.querySelector('.card').classList.remove('minicard'); done(r); });
 }
 // 말씀 고르기: 만난 자리에서 들은 말씀을 보기 셋 가운데서 고른다 — 맞히면 카드 (사용자 2026-11)
 function pickWord(e, done) {
@@ -1211,6 +1219,6 @@ function frame(now) {
   drawTags();
 }
 
-if (new URLSearchParams(location.search).has('debug')) window.__game = { G, me, pv, toXZ, goalXZ, steer: (x, z) => { stick.x = x; stick.y = z; }, startLeg: (...a) => startLeg(...a), wetAt: (x, z) => wetAt(x, z), standXZ: () => standXZ() }; // 끝까지 자동으로 걸어 보는 확인용
+if (new URLSearchParams(location.search).has('debug')) window.__game = { G, me, pv, toXZ, goalXZ, steer: (x, z) => { stick.x = x; stick.y = z; }, startLeg: (...a) => startLeg(...a), wetAt: (x, z) => wetAt(x, z), standXZ: () => standXZ(), mini: (id, cb) => playMiniGame(MINI[JID][id], cb || (r => console.log('mini', JSON.stringify(r)))) }; // 끝까지 자동으로 걸어 보는 확인용
 setupUI(); resize();
 requestAnimationFrame(frame);
