@@ -123,6 +123,7 @@ export function createAudio() {
     hum: () => tone({ f: 110, f2: 98, type: 'triangle', vol: 0.05, a: 0.05, d: 0.5 }), // 사울이 뒤척이며 '음…'
     hiss: () => burst({ type: 'highpass', f: 3500, vol: 0.09, a: 0.05, d: 0.5 }), // 독사가 쉬익
     crackle: () => { for (let i = 0; i < 6; i++) burst({ type: 'bandpass', f: 1800 + Math.random() * 2000, q: 2, vol: 0.05, a: 0.002, d: 0.03, at: Math.random() * 0.3 }); burst({ type: 'lowpass', f: 600, vol: 0.08, a: 0.05, d: 0.4 }); }, // 불이 확 붙음
+    sour: () => { tone({ f: 233, type: 'sawtooth', vol: 0.05, a: 0.005, d: 0.5, lp: 1400 }); tone({ f: 247, type: 'sawtooth', vol: 0.05, a: 0.005, d: 0.5, lp: 1400 }); }, // 어긋난 줄(수금)
     step: () => burst({ type: 'lowpass', f: 300, q: 0.8, vol: 0.16, a: 0.004, d: 0.12 }),                                          // 발 구름(박자)
     shout: () => { for (let i = 0; i < 6; i++) burst({ type: 'bandpass', f: 500 + Math.random() * 700, q: 0.8, vol: 0.07, a: 0.02, d: 0.25, at: Math.random() * 0.05 }); },
     collapse: () => { burst({ type: 'lowpass', f: 400, f2: 50, vol: 0.45, a: 0.02, d: 2.6, rate: 0.5 }); for (let i = 0; i < 20; i++) burst({ type: 'bandpass', f: 600 + Math.random() * 1500, q: 1, vol: 0.08, a: 0.01, d: 0.2, at: Math.random() * 1.8 }); },
@@ -243,5 +244,7 @@ export function createAudio() {
   // 나갈 때 모두 끊는다
   function close() { boat(0, false, false); pour(null); storm(null); if (cur) { cur.pause(); cur.removeAttribute('src'); cur.load(); cur = null; } ctx?.close().catch(() => {}); ctx = null; }
 
-  return { unlock, play, walk, boat, pour, storm, music, hold, setOn, close, get on() { return on; } };
+  // 수금 한 줄: 세모파에 배음을 조금 — 퉁긴 뒤 길게 사그라진다
+  const pluck = f => { unlock(); tone({ f, type: 'triangle', vol: 0.16, a: 0.003, d: 1.6 }); tone({ f: f * 2, vol: 0.05, a: 0.003, d: 0.8 }); tone({ f: f * 3, vol: 0.02, a: 0.003, d: 0.4 }); };
+  return { unlock, play, pluck, walk, boat, pour, storm, music, hold, setOn, close, get on() { return on; } };
 }

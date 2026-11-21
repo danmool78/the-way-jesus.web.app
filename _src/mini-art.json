@@ -847,5 +847,32 @@
    "ratio": "16:9",
    "p": "A bundle of ship's tackle: a coiled heavy rope, a wooden spar and a pulley block tied together, side view."
   }
+ },
+ "d03": {
+  "bg": {
+   "bg": true,
+   "p": "The dim inner hall of King Saul's house at Gibeah at night: rough stone walls, a heavy wooden throne-like seat on the left side, a single oil lamp, deep shadows and a faint dark oppressive haze in the air. No people."
+  },
+  "saul": {
+   "h": 420,
+   "ref": [
+    "_src/cards/saul.png"
+   ],
+   "p": "King Saul seated, tormented and brooding, head in one hand, dark haunted eyes, crown askew, spear leaning beside him, side view facing right. Same character as the second reference image. Only the person and his seat."
+  },
+  "saul-calm": {
+   "h": 420,
+   "ref": [
+    "_src/cards/saul.png"
+   ],
+   "p": "King Saul seated and at peace, leaning back with eyes gently closed, relieved and calm, crown straight, spear leaning beside him, side view facing right. Same character as the second reference image. Only the person and his seat."
+  },
+  "david": {
+   "h": 420,
+   "ref": [
+    "_src/cards/david.png"
+   ],
+   "p": "Young shepherd boy David sitting cross-legged and playing a small wooden lyre (kinnor) held upright on his lap, side view facing left, simple tunic. Same character as the second reference image. Only the person."
+  }
  }
 }
