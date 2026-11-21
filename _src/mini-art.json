@@ -874,5 +874,37 @@
    ],
    "p": "Young shepherd boy David sitting cross-legged and playing a small wooden lyre (kinnor) held upright on his lap, side view facing left, simple tunic. Same character as the second reference image. Only the person."
   }
+ },
+ "m15": {
+  "bg": {
+   "bg": true,
+   "p": "The Israelite camp in the Sinai wilderness in bright morning light: rows of brown goat-hair tents, rocky red mountains behind, a wide sandy open ground in the front half of the image. No people."
+  },
+  "moses": {
+   "h": 420,
+   "ref": [
+    "_src/cards/moses.png"
+   ],
+   "p": "Moses, an old man with white beard and a staff, sitting on a simple stone seat and judging, one hand raised as if listening, tired, front three-quarter view. Same character as the second reference image. Only the person and the stone seat."
+  },
+  "elder": {
+   "h": 420,
+   "p": "An Israelite elder appointed as a judge, middle-aged man with grey-brown beard, striped robe and head covering, sitting on a low wooden stool, attentive, front three-quarter view. Only the person and the stool."
+  },
+  "man": {
+   "h": 420,
+   "p": "An Israelite man in a plain brown robe standing and waiting in line, holding his hands together, a little anxious, front three-quarter view. Only the person."
+  },
+  "woman": {
+   "h": 420,
+   "p": "An Israelite woman in a blue robe and head scarf standing and waiting in line, front three-quarter view. Only the person."
+  },
+  "jethro": {
+   "h": 420,
+   "ref": [
+    "_src/cards/jethro.png"
+   ],
+   "p": "Jethro, Moses' father-in-law, a wise old Midianite priest with a long grey beard, colourful striped robe and staff, standing and pointing with one hand as if giving advice, side view facing right. Same character as the second reference image. Only the person."
+  }
  }
 }
