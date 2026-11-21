@@ -112,6 +112,8 @@ export function createAudio() {
       g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.07, t + 0.03); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.42);
       o.connect(f); o2.connect(f); f.connect(g); g.connect(master); if (verb) g.connect(verb); o.start(t); o2.start(t); o.stop(t + 0.45); o2.stop(t + 0.45); drop(o, [o2, f, g]); },
     swish: () => { burst({ type: 'bandpass', f: 900, f2: 2600, q: 1.4, vol: 0.12, a: 0.02, d: 0.16 }); burst({ type: 'highpass', f: 3000, vol: 0.04, a: 0.01, d: 0.1, at: 0.03 }); }, // 종려가지를 휙
+    thud: () => { burst({ type: 'lowpass', f: 260, f2: 80, q: 0.9, vol: 0.4, a: 0.003, d: 0.22 }); burst({ type: 'bandpass', f: 1600, q: 1.5, vol: 0.05, a: 0.002, d: 0.05 }); }, // 돌이 돌 위에 놓임
+    fire: () => { burst({ type: 'lowpass', f: 300, f2: 1800, q: 0.7, vol: 0.4, a: 0.3, d: 2.2, rate: 0.6 }); for (let i = 0; i < 26; i++) burst({ type: 'bandpass', f: 1500 + Math.random() * 2500, q: 2, vol: 0.05, a: 0.002, d: 0.05, at: 0.2 + Math.random() * 2 }); }, // 하늘에서 내린 불(쏴아 + 타닥)
     step: () => burst({ type: 'lowpass', f: 300, q: 0.8, vol: 0.16, a: 0.004, d: 0.12 }),                                          // 발 구름(박자)
     shout: () => { for (let i = 0; i < 6; i++) burst({ type: 'bandpass', f: 500 + Math.random() * 700, q: 0.8, vol: 0.07, a: 0.02, d: 0.25, at: Math.random() * 0.05 }); },
     collapse: () => { burst({ type: 'lowpass', f: 400, f2: 50, vol: 0.45, a: 0.02, d: 2.6, rate: 0.5 }); for (let i = 0; i < 20; i++) burst({ type: 'bandpass', f: 600 + Math.random() * 1500, q: 1, vol: 0.08, a: 0.01, d: 0.2, at: Math.random() * 1.8 }); },
