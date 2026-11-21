@@ -335,5 +335,12 @@
  "landG2": "Chants et sagesse",
  "landG2s": "Les chants des Psaumes, une journée dans les Proverbes",
  "landG3": "Pour découvrir",
- "landG3s": "La bonne nouvelle et les questions, en bref"
+ "landG3s": "La bonne nouvelle et les questions, en bref",
+ "landGameTag": "Jeu du pèlerin",
+ "landGameH": "Marchez vous-même, à sa suite",
+ "landGameP": "Suivez les indices sur la carte pour rencontrer Jésus, Moïse, David et Élie, et collectionnez les cartes des scènes avec les paroles entendues là-bas.",
+ "landGame1": "Choisissez un personnage et habillez votre pèlerin",
+ "landGame2": "Empreintes, tempêtes de sable et trésors cachés",
+ "landGame3": "Collectionnez les cartes or, argent et bronze",
+ "landGameGo": "Commencer le jeu →"
 }
