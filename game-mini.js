@@ -428,6 +428,7 @@ const loaves = {
   ask: ['이 많은 사람을 먹이려면 먼저 질서 있게 앉혀야겠지.', '푸른 풀밭에 오십 명씩 무리 지어 앉혀 다오 — 넘치지도 모자라지도 않게!'],
   quote: '떼를 지어 한 오십 명씩 앉히라', ref: '눅 9:14',
   help: '가족을 끌어다 풀밭에 놓아요. 풀밭마다 꼭 50명이어야 해요.<br>앉힌 가족을 누르면 다시 빠져요. 어디에도 맞지 않는 가족이 둘 섞여 있어요.',
+  art: ['e31/bg', 'e31/fam-a', 'e31/fam-b', 'e31/fam-c', 'e31/bread', 'e31/fish'],
   seconds: 55,
   init() {
     // 풀밭마다 50을 3~4 묶음으로 나눠 가족을 만들고, 맞지 않는 가족 둘을 섞는다 — 늘 풀 수 있게
@@ -522,6 +523,11 @@ function layout(S) {
 }
 function drawFam(g, f, lifted) {
   const r = famR(f), t = performance.now() / 1000;
+  if (art('e31/fam-a')) { // 그림 가족 — 큰 가족일수록 크게, 숫자 표는 오른쪽 위
+    g.save(); g.translate(f.x, f.y + (lifted ? -4 : Math.sin(t * 2 + f.bob) * 1)); if (lifted) g.scale(1.12, 1.12);
+    spr(g, `e31/fam-${'abc'[Math.round(f.hue) % 3]}`, 0, r * 0.8, r * 1.75);
+    const bx = r * 0.85, by = -r * 0.75; g.fillStyle = 'rgba(30,24,12,.75)'; g.beginPath(); g.arc(bx, by, 13, 0, 7); g.fill(); g.strokeStyle = '#ffe29a'; g.lineWidth = 1.5; g.stroke();
+    g.font = '800 14px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = '#fff'; g.fillText(f.n, bx, by + 1); g.restore(); return; }
   g.save(); g.translate(f.x, f.y + (lifted ? -4 : Math.sin(t * 2 + f.bob) * 1));
   g.fillStyle = 'rgba(0,0,0,.3)'; g.beginPath(); g.ellipse(0, r * 0.8 + (lifted ? 10 : 2), r * 0.9, 4, 0, 0, 7); g.fill();
   if (lifted) g.scale(1.12, 1.12);
@@ -538,6 +544,7 @@ function drawFam(g, f, lifted) {
 }
 // 갈릴리 빈 들: 봄의 푸른 풀(막 6:39), 멀리 호수
 function meadow(g) {
+  if (bgArt(g, 'e31/bg')) return;
   const s = g.createLinearGradient(0, 0, 0, H); s.addColorStop(0, '#9cc7d8'); s.addColorStop(0.09, '#c9dfc0'); s.addColorStop(0.1, '#7fae5a'); s.addColorStop(0.7, '#5f9440'); s.addColorStop(1, '#3f6a2a');
   g.fillStyle = s; g.fillRect(0, 0, W, H);
   g.fillStyle = '#6a9fb8'; g.beginPath(); g.moveTo(0, 46); g.quadraticCurveTo(200, 36, W, 48); g.lineTo(W, 52); g.lineTo(0, 52); g.fill();
@@ -546,6 +553,7 @@ function meadow(g) {
   g.fillStyle = 'rgba(255,240,200,.5)'; for (let i = 0; i < 26; i++) { g.beginPath(); g.arc((i * 151) % W, 70 + (i * 71) % 400, 1.6, 0, 7); g.fill(); } // 들꽃
 }
 function bread(g, x, y, fishy) {
+  if (spr(g, fishy ? 'e31/fish' : 'e31/bread', x, y, fishy ? 12 : 16, { ay: 0.5 })) return;
   g.save(); g.translate(x, y);
   if (fishy) { g.fillStyle = '#c9d6dd'; fish(g, 0, 0, 0, 1.6); }
   else { g.fillStyle = '#d9a55a'; g.beginPath(); g.ellipse(0, 0, 9, 6, 0, 0, 7); g.fill(); g.strokeStyle = '#a8742e'; g.lineWidth = 1; g.beginPath(); g.moveTo(-5, -2); g.lineTo(5, -2); g.stroke(); }
@@ -781,6 +789,7 @@ const coin = {
   ask: ['어떤 여자가 은전 열 개 가운데 하나를 잃었단다.', '등불을 켜고 집을 쓸며 찾아보렴 — 은전 가까이를 쓸면 희미하게 반짝일 거야.'],
   quote: '등불을 켜고 집을 쓸며 찾도록 부지런히 찾지 아니하겠느냐', ref: '눅 15:8',
   help: '끌면 등불이 따라오고, 등불 아래 먼지 더미가 쓸려요.<br>은전 가까이를 쓸면 희미하게 반짝여요 — 반짝임을 따라 범위를 좁혀요. 찾으면 눌러서 주워요.',
+  art: ['e43/bg', 'e43/coin', 'e43/lamp', 'e43/pile'],
   seconds: 26,
   init() {
     const piles = [];
@@ -822,10 +831,10 @@ const coin = {
   won: S => S.got,
   draw(g, S) {
     // 돌바닥과 흙
-    g.fillStyle = '#5a4630'; g.fillRect(0, 0, W, H);
+    if (!bgArt(g, 'e43/bg')) { g.fillStyle = '#5a4630'; g.fillRect(0, 0, W, H);
     g.strokeStyle = 'rgba(30,20,10,.45)'; g.lineWidth = 1.2;
     for (let y = 40; y < H; y += 34) for (let x = ((y / 34) % 2) * 26 - 26; x < W; x += 52) { g.beginPath(); g.rect(x + 1, y + 1, 50, 32); g.stroke(); }
-    for (const f of FURN) furniture(g, f);
+    for (const f of FURN) furniture(g, f); }
     // 먼지 더미
     for (const p of S.piles) {
       if (p.coin && p.amt < 0.6) drawCoin(g, p.x, p.y, S.got ? 1 : 0.6 + Math.sin(performance.now() / 150) * 0.4);
@@ -867,6 +876,7 @@ function furniture(g, [x, y, w, h, k]) {
 }
 function dustPile(g, p) {
   const a = clamp(p.amt, 0, 1), r = p.r * (0.45 + a * 0.55);
+  if (spr(g, 'e43/pile', p.x, p.y, r * 1.7, { ay: 0.5, a: 0.35 + a * 0.5, rot: p.seed })) return;
   g.save(); g.globalAlpha = 0.35 + a * 0.65;
   g.fillStyle = '#8e7550'; g.beginPath(); g.ellipse(p.x, p.y, r * 1.2, r * 0.75, 0, 0, 7); g.fill();
   g.fillStyle = '#a88c60'; for (let i = 0; i < 7; i++) { const s = (p.seed + i * 37) % 1; g.beginPath(); g.ellipse(p.x + Math.cos(i * 2.4 + p.seed) * r * 0.6, p.y + Math.sin(i * 2.4 + p.seed) * r * 0.35, r * 0.4 * (0.6 + s * 0.4), r * 0.22, i, 0, 7); g.fill(); }
@@ -874,12 +884,14 @@ function dustPile(g, p) {
   g.restore();
 }
 function drawCoin(g, x, y, shine) {
+  if (spr(g, 'e43/coin', x, y, 20, { ay: 0.5 })) { g.save(); g.globalAlpha = shine; g.fillStyle = '#fffbe6'; star(g, x + 7, y - 7, 7); g.restore(); return; }
   g.save(); const c = g.createRadialGradient(x - 3, y - 3, 1, x, y, 10); c.addColorStop(0, '#ffffff'); c.addColorStop(0.5, '#d9dde0'); c.addColorStop(1, '#8a9096');
   g.fillStyle = c; g.beginPath(); g.ellipse(x, y, 10, 8, 0, 0, 7); g.fill(); g.strokeStyle = '#6e747a'; g.lineWidth = 1; g.stroke();
   g.fillStyle = 'rgba(90,96,100,.6)'; g.beginPath(); g.arc(x, y, 4, 0, 7); g.fill();
   g.globalAlpha = shine; g.fillStyle = '#fffbe6'; star(g, x + 6, y - 6, 7); g.restore();
 }
 function lampIcon(g, x, y) {
+  if (spr(g, 'e43/lamp', x + 4, y + 8, 34)) return;
   g.save(); g.translate(x, y);
   g.fillStyle = '#b5713c'; g.beginPath(); g.ellipse(0, 0, 13, 7, 0, 0, 7); g.fill(); g.beginPath(); g.moveTo(9, -2); g.lineTo(19, -4); g.lineTo(19, 1); g.lineTo(9, 3); g.fill();
   g.fillStyle = '#3a2410'; g.beginPath(); g.ellipse(-2, -2, 4, 2, 0, 0, 7); g.fill();
@@ -897,6 +909,7 @@ const sheep = {
   ask: ['양은 목자의 음성을 듣고 따라온단다.', `흩어진 양 ${SHEEP}마리를 우리 안으로 데려다 주렴 — 이리가 오면 네가 지켜야 한다!`],
   quote: '나는 선한 목자라 선한 목자는 양들을 위하여 목숨을 버리거니와', ref: '요 10:11',
   help: '끌면 목자가 따라와요. 양은 목자를 피해 움직여요 — 뒤에서 몰아 우리 문(왼쪽 아래 틈)으로 넣어요.<br>이리가 나타나면 가까이 가서 쫓아요.',
+  art: ['e42/bg', 'e42/sheep', 'e42/wolf', 'e42/shepherd', 'e42/stone'],
   seconds: 45, // 무리 뒤에서 문 쪽으로 미는 자동 목자로 60fps 시뮬레이션: 절반이 25초, 80%가 45초 안에
   init() {
     const flock = Array.from({ length: SHEEP }, () => ({ x: rnd(40, 220), y: rnd(260, 460), vx: 0, vy: 0, in: false, ph: rnd(0, 6), baaT: rnd(1, 6), scared: 0 }));
@@ -949,19 +962,20 @@ const sheep = {
   up() {},
   won: S => S.flock.every(q => q.in),
   draw(g, S) {
-    const bg = g.createLinearGradient(0, 0, 0, H); bg.addColorStop(0, '#8fb06a'); bg.addColorStop(1, '#5c8a3e'); g.fillStyle = bg; g.fillRect(0, 0, W, H);
-    g.fillStyle = 'rgba(40,70,20,.18)'; for (let i = 0; i < 40; i++) { g.beginPath(); g.ellipse((i * 113) % W, 50 + (i * 67) % 440, 18, 6, 0, 0, 7); g.fill(); }
-    for (const [x, y, r] of [[60, 120, 16], [190, 190, 12], [350, 330, 18], [90, 440, 11]]) { g.fillStyle = '#9a9384'; g.beginPath(); g.ellipse(x, y, r, r * 0.7, 0.3, 0, 7); g.fill(); g.fillStyle = 'rgba(255,255,255,.18)'; g.beginPath(); g.ellipse(x - r * 0.3, y - r * 0.25, r * 0.4, r * 0.25, 0.3, 0, 7); g.fill(); }
+    const A = bgArt(g, 'e42/bg');
+    if (!A) { const bg = g.createLinearGradient(0, 0, 0, H); bg.addColorStop(0, '#8fb06a'); bg.addColorStop(1, '#5c8a3e'); g.fillStyle = bg; g.fillRect(0, 0, W, H); }
+    if (!A) g.fillStyle = 'rgba(40,70,20,.18)'; if (!A) for (let i = 0; i < 40; i++) { g.beginPath(); g.ellipse((i * 113) % W, 50 + (i * 67) % 440, 18, 6, 0, 0, 7); g.fill(); }
+    if (!A) for (const [x, y, r] of [[60, 120, 16], [190, 190, 12], [350, 330, 18], [90, 440, 11]]) { g.fillStyle = '#9a9384'; g.beginPath(); g.ellipse(x, y, r, r * 0.7, 0.3, 0, 7); g.fill(); g.fillStyle = 'rgba(255,255,255,.18)'; g.beginPath(); g.ellipse(x - r * 0.3, y - r * 0.25, r * 0.4, r * 0.25, 0.3, 0, 7); g.fill(); }
     // 돌담 우리 (문 틈)
     g.save(); g.lineCap = 'round';
     for (let a = 0; a < Math.PI * 2; a += 0.16) { const off = Math.abs(Math.atan2(Math.sin(a - FOLD.gate), Math.cos(a - FOLD.gate))); if (off < FOLD.open) continue;
-      const x = FOLD.x + Math.cos(a) * FOLD.r, y = FOLD.y + Math.sin(a) * FOLD.r; g.fillStyle = (a * 7) % 2 > 1 ? '#a89f8c' : '#8f8774'; g.beginPath(); g.ellipse(x, y, 9, 7, a, 0, 7); g.fill(); }
+      const x = FOLD.x + Math.cos(a) * FOLD.r, y = FOLD.y + Math.sin(a) * FOLD.r; if (spr(g, 'e42/stone', x, y, 12 + (a * 13 % 3), { ay: 0.5, rot: a * 3 })) continue; g.fillStyle = (a * 7) % 2 > 1 ? '#a89f8c' : '#8f8774'; g.beginPath(); g.ellipse(x, y, 9, 7, a, 0, 7); g.fill(); }
     g.fillStyle = 'rgba(255,240,190,.25)'; const ga = FOLD.gate; g.beginPath(); g.arc(FOLD.x + Math.cos(ga) * FOLD.r, FOLD.y + Math.sin(ga) * FOLD.r, 26, 0, 7); g.fill(); // 문 자리
     g.font = '600 11px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.fillStyle = 'rgba(255,255,255,.85)'; g.fillText('문', FOLD.x + Math.cos(ga) * (FOLD.r + 26), FOLD.y + Math.sin(ga) * (FOLD.r + 26) + 4);
     g.restore();
     for (const q of S.flock) drawSheep(g, q, S.t);
     if (S.wolf) drawWolf(g, S.wolf, this.pred);
-    shepherd(g, S.sx, S.sy);
+    shepherd(g, S.sx, S.sy, this.pred ? 'd01/shepherd' : 'e42/shepherd');
     g.strokeStyle = 'rgba(255,255,255,.18)'; g.setLineDash([4, 5]); g.beginPath(); g.arc(S.sx, S.sy, FLEE, 0, 7); g.stroke(); g.setLineDash([]); // 양이 피하는 거리
     for (const p of S.sparks) { g.fillStyle = `rgba(255,236,170,${clamp(p.life, 0, 1)})`; star(g, p.x, p.y, p.r * 2.4); }
     floatMsg(g, S.msg);
@@ -976,6 +990,7 @@ const sheep = {
 };
 function drawSheep(g, q, t) {
   const a = Math.hypot(q.vx, q.vy) > 8 ? Math.atan2(q.vy, q.vx) : (q.a ?? 0); q.a = a; const bob = Math.sin(t * 8 + q.ph) * (Math.hypot(q.vx, q.vy) > 20 ? 1.2 : 0.2);
+  if (art('e42/sheep')) { const L = Math.cos(a) < 0; g.fillStyle = 'rgba(0,0,0,.2)'; g.beginPath(); g.ellipse(q.x + 2, q.y + 8, 13, 4, 0, 0, 7); g.fill(); spr(g, 'e42/sheep', q.x, q.y + bob, 24, { ay: 0.5, flip: L, rot: L ? a - Math.PI : a }); return; } // 왼쪽으로 갈 때는 뒤집어 거꾸로 서지 않게
   g.save(); g.translate(q.x, q.y + bob); g.fillStyle = 'rgba(0,0,0,.2)'; g.beginPath(); g.ellipse(2, 6, 11, 4, 0, 0, 7); g.fill(); g.rotate(a);
   g.fillStyle = '#f4f0e6'; for (const [x, y, r] of [[-5, -3, 6], [-5, 3, 6], [1, -4, 6], [1, 4, 6], [-1, 0, 7]]) { g.beginPath(); g.arc(x, y, r, 0, 7); g.fill(); }
   g.fillStyle = '#3e342a'; g.beginPath(); g.ellipse(9, 0, 4.5, 3.4, 0, 0, 7); g.fill();
@@ -983,13 +998,15 @@ function drawSheep(g, q, t) {
   g.restore();
 }
 function drawWolf(g, w, pred) { // 이리(기본) · 사자(다윗의 들판 — 갈기)
+  if (spr(g, pred?.mane ? 'd01/lion' : 'e42/wolf', w.x, w.y, pred?.mane ? 30 : 26, { ay: 0.5, flip: (w.vx ?? 1) < 0 })) return;
   g.save(); g.translate(w.x, w.y); g.fillStyle = 'rgba(0,0,0,.25)'; g.beginPath(); g.ellipse(2, 7, 14, 4, 0, 0, 7); g.fill();
   if (pred?.mane) { g.fillStyle = pred.mane; g.beginPath(); g.arc(12, -2, 10, 0, 7); g.fill(); }
   g.fillStyle = pred?.color || '#5e5a56'; g.beginPath(); g.ellipse(0, 0, 13, 7, 0, 0, 7); g.fill(); g.beginPath(); g.moveTo(-12, 0); g.lineTo(-22, -4); g.lineTo(-20, 3); g.fill();
   g.beginPath(); g.ellipse(13, -2, 6, 5, 0, 0, 7); g.fill(); g.beginPath(); g.moveTo(15, -6); g.lineTo(17, -12); g.lineTo(19, -5); g.fill();
   g.fillStyle = '#ffcf5a'; g.beginPath(); g.arc(16, -3, 1.3, 0, 7); g.fill(); g.restore();
 }
-function shepherd(g, x, y) {
+function shepherd(g, x, y, n = 'e42/shepherd') {
+  if (spr(g, n, x, y + 16, 50)) return;
   g.save(); g.translate(x, y); g.fillStyle = 'rgba(0,0,0,.25)'; g.beginPath(); g.ellipse(2, 10, 12, 4, 0, 0, 7); g.fill();
   g.fillStyle = '#7a5a3a'; g.beginPath(); g.arc(0, 0, 10, 0, 7); g.fill(); g.fillStyle = '#c4a26e'; g.beginPath(); g.arc(0, -1, 7, 0, 7); g.fill(); // 위에서 본 머리쓰개
   g.strokeStyle = '#5a3e22'; g.lineWidth = 2.5; g.lineCap = 'round'; g.beginPath(); g.moveTo(8, 4); g.lineTo(20, -14); g.arc(17, -16, 3.5, 0, Math.PI * 1.3, true); g.stroke(); // 목자 막대
@@ -1190,7 +1207,7 @@ function accuser(g, m, S) {
   if (m.gone >= 1) return;
   const x = m.x + (m.gone || 0) * (m.x < WOM[0] ? -160 : 160), y = m.y - (m.gone || 0) * 40;
   if (art('e39/elder-low')) { // 그림: 노인 바리새인·서기관을 번갈아, 여인 쪽을 보게. 돌을 치켜들면 '든' 그림으로 바꾼다
-    const who = m.hue % 20 === 0 ? 'elder' : 'scribe', up = !S.leave && m.wind ? clamp(1 - m.wind / WIND, 0, 1) : 0, flip = m.x > WOM[0], h = 96 + (y - 200) * 0.12, o = { flip, a: 1 - (m.gone || 0) };
+    const who = m.hue % 40 === 0 ? 'elder' : 'scribe', up = !S.leave && m.wind ? clamp(1 - m.wind / WIND, 0, 1) : 0, flip = m.x > WOM[0], h = 96 + (y - 200) * 0.12, o = { flip, a: 1 - (m.gone || 0) };
     g.fillStyle = `rgba(0,0,0,${0.22 * o.a})`; g.beginPath(); g.ellipse(x, y + 22, 18, 5, 0, 0, 7); g.fill();
     spr(g, `e39/${who}-low`, x, y + 24, h, { ...o, a: o.a * (1 - up) }); spr(g, `e39/${who}-up`, x + (flip ? 8 : -8) * up, y + 24, h, { ...o, a: o.a * up });
     if (m.wind && !S.leave) { g.strokeStyle = `rgba(255,70,50,${0.5 + up * 0.5})`; g.lineWidth = 3; g.beginPath(); g.ellipse(x, y + 22, 26 + (1 - up) * 8, 9 + (1 - up) * 3, 0, 0, 7); g.stroke(); }
@@ -1286,7 +1303,7 @@ const climb = {
 
 /* ---------- 다른 여정에서 다시 쓰는 놀이 (사용자 2026-11: 여정마다 비슷한 방식이어도 된다) — 글·끝 말씀·생김새만 바꿔 끼운다 ---------- */
 // 다윗: 베들레헴 들판의 목동(d01) — 양 몰기, 이리 대신 사자(삼상 17:34–35)
-const herdDavid = { ...sheep, title: '베들레헴 들판의 목동', pred: { name: '사자', color: '#b98a44', mane: '#7a4e22' },
+const herdDavid = { ...sheep, title: '베들레헴 들판의 목동', art: ['e42/bg', 'e42/sheep', 'e42/stone', 'd01/lion', 'd01/shepherd'], pred: { name: '사자', color: '#b98a44', mane: '#7a4e22' },
   ask: ['나도 이 들판에서 아버지의 양을 쳤단다. 사자나 곰이 새끼를 물어 가면 쫓아가 건져 냈지.', '흩어진 양을 우리로 데려다 주렴 — 사자가 오면 네가 지켜야 해!'],
   quote: '사자나 곰이 와서 양 떼에서 새끼를 물어 가면 내가 따라가서 그 입에서 새끼를 건져내었고', ref: '삼상 17:34–35',
   help: '끌면 목동이 따라와요. 양은 목동을 피해 움직여요 — 뒤에서 몰아 우리 문(왼쪽 아래 틈)으로 넣어요.<br>사자가 나타나면 가까이 가서 쫓아요.',
