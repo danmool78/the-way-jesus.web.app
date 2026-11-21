@@ -2812,8 +2812,65 @@ const prison = { ...jericho, title: '한밤의 찬송과 흔들린 감옥', task
 function hymnNote(g, x, y, fast) { g.save(); g.translate(x, y); g.fillStyle = fast ? '#ffe29a' : '#f4ecd8'; g.strokeStyle = '#3a2a14'; g.lineWidth = 1.2;
   g.beginPath(); g.ellipse(-4, 8, 8, 6, -0.4, 0, 7); g.fill(); g.stroke(); g.fillRect(3, -16, 3, 24); g.beginPath(); g.moveTo(6, -16); g.quadraticCurveTo(18, -10, 14, 0); g.lineTo(13, -2); g.quadraticCurveTo(15, -8, 6, -11); g.fill(); g.restore(); }
 
+/* ---------- 도단을 둘러싼 불말과 불병거 (왕하 6:15–17): 눈을 열어 보기 — 찾기 ---------- */
+// 아람 군대가 둘러싼 산에 불말과 불병거가 숨어 있다. 끌면 '열린 눈'(빛 고리)이 손가락 조금 위를 따라가고, 그 안에서만 불병거가 보인다.
+// 불병거가 고리 가운데에 0.5초 머물면 찾은 것. 여섯을 찾으면 산 가득 불병거가 드러난다(6:17). 한동안 못 찾으면 가장 가까운 것이 희미하게 일렁인다
+const LENS = 56, SEEN = 0.6, CHARIOTS = 6;
+const dothan = {
+  title: '도단을 둘러싼 불말과 불병거', task: '눈을 열어 숨은 불병거 여섯 찾기', art: ['k26/bg', 'k26/firechariot', 'k26/elisha'],
+  ask: ['사환이 새벽에 나가 보니 아람 군대가 성을 에워쌌단다. 그는 떨며 어찌하리이까 외쳤지.', '두려워 말라 — 우리와 함께한 자가 더 많다. 눈을 열어 산을 살펴보렴!'],
+  quote: '여호와여 원하건대 그의 눈을 열어서 보게 하옵소서 하니', ref: '왕하 6:17',
+  help: '끌면 빛 고리(열린 눈)가 따라와요. 고리 안에서만 불병거가 보여요.<br>불병거를 고리 가운데에 잠깐 두면 찾아요. 여섯을 찾아요.',
+  seconds: 18,
+  init() { const C = []; for (let k = 0; C.length < CHARIOTS && k < 500; k++) { const x = rnd(50, 350), y = rnd(110, 300); if (C.every(c => Math.hypot(c.x - x, c.y - y) > 80)) C.push({ x, y, s: 0.6 + (y - 110) / 190 * 0.5, flip: Math.random() < 0.5, got: 0, dwell: 0 }); }
+    return { C, lx: 200, ly: 230, on: false, t: 0, last: 0, msg: null, sparks: [], found: 0 }; },
+  update(dt, S) {
+    S.t += dt; if (S.msg) S.msg.at -= dt;
+    for (const c of S.C) { if (c.got) { c.got = Math.min(1, c.got + dt); continue; }
+      const d = Math.hypot(c.x - S.lx, c.y - S.ly); if (S.on && d < 30) { c.dwell += dt; if (c.dwell >= SEEN) { c.got = 0.01; S.found++; S.last = S.t; S.fx.play('glint'); S.fx.play('coin');
+          S.msg = { t: S.found >= CHARIOTS ? '산에 불말과 불병거가 가득!' : '불병거가 보여요!', c: '#ffe29a', at: 1, x: c.x, y: c.y - 34 };
+          for (let i = 0; i < 16; i++) { const a = rnd(0, 7), v = rnd(30, 100); S.sparks.push({ x: c.x, y: c.y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: rnd(0.4, 0.9) }); } } } else c.dwell = Math.max(0, c.dwell - dt * 2); }
+    for (const p of S.sparks) { p.x += p.vx * dt; p.y += p.vy * dt; p.life -= dt; } S.sparks = S.sparks.filter(p => p.life > 0);
+  },
+  down(x, y, S) { S.on = true; S.lx = x; S.ly = y - 50; },
+  move(x, y, S) { if (S.on) { S.lx = x; S.ly = y - 50; } },
+  up(S) { S.on = false; },
+  won: S => S.found >= CHARIOTS,
+  failText: () => '아직 다 보지 못했어요',
+  fire(g, c, a) { spr(g, 'k26/firechariot', c.x, c.y + 26 * c.s, 54 * c.s, { flip: c.flip, a }); },
+  draw(g, S) {
+    if (!bgArt(g, 'k26/bg')) { g.fillStyle = '#7a6a4a'; g.fillRect(0, 0, W, H); }
+    g.fillStyle = 'rgba(20,24,40,.22)'; g.fillRect(0, 0, W, H); // 새벽의 어스름
+    spr(g, 'k26/elisha', 74, 494, 120);
+    // 한동안 못 찾으면 가장 가까운 것이 일렁인다
+    const hint = S.t - S.last > 8; let nearest = null, nd = 1e9; for (const c of S.C) if (!c.got) { const d = Math.hypot(c.x - S.lx, c.y - S.ly); if (d < nd) { nd = d; nearest = c; } }
+    for (const c of S.C) { if (c.got) this.fire(g, c, c.got); else if (hint && c === nearest) { const a = 0.08 + 0.08 * Math.sin(S.t * 6); this.fire(g, c, a); } }
+    if (S.on) { // 열린 눈: 고리 안만 밝고 금빛, 그 안의 숨은 불병거가 보인다
+      g.save(); g.beginPath(); g.arc(S.lx, S.ly, LENS, 0, 7); g.clip();
+      g.fillStyle = 'rgba(255,220,140,.22)'; g.fillRect(0, 0, W, H);
+      for (const c of S.C) if (!c.got) this.fire(g, c, 0.95);
+      g.restore();
+      g.save(); g.shadowColor = '#ffd27a'; g.shadowBlur = 16; g.strokeStyle = 'rgba(255,230,160,.95)'; g.lineWidth = 3; g.beginPath(); g.arc(S.lx, S.ly, LENS, 0, 7); g.stroke(); g.restore();
+      for (const c of S.C) if (!c.got && c.dwell > 0) { g.strokeStyle = '#fff4c8'; g.lineWidth = 4; g.beginPath(); g.arc(S.lx, S.ly, 30, -Math.PI / 2, -Math.PI / 2 + c.dwell / SEEN * Math.PI * 2); g.stroke(); }
+    }
+    for (const p of S.sparks) { g.fillStyle = `rgba(255,220,140,${clamp(p.life, 0, 1)})`; star(g, p.x, p.y, 4); }
+    g.save(); g.font = '800 14px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.lineWidth = 3; g.strokeStyle = 'rgba(20,16,10,.7)'; g.fillStyle = '#fff';
+    const t = `찾은 불병거 ${S.found} / ${CHARIOTS}`; g.strokeText(t, 14, 26); g.fillText(t, 14, 26); g.restore();
+    floatMsg(g, S.msg);
+  },
+  end(g, k, S) { // 산에 불말과 불병거가 가득(6:17)
+    this.update(0.016, S); this.draw(g, S);
+    S.extra ??= Array.from({ length: 18 }, () => ({ x: rnd(20, 380), y: rnd(90, 320), flip: Math.random() < 0.5 })).map(c => ({ ...c, s: 0.5 + (c.y - 90) / 230 * 0.5 }));
+    g.save(); g.globalCompositeOperation = 'lighter'; g.globalAlpha = 0.25 * k; g.fillStyle = '#ffb060'; g.fillRect(0, 0, W, 340); g.restore();
+    S.extra.forEach((c, i) => this.fire(g, c, clamp(k * 2.5 - i * 0.08, 0, 1)));
+    if (k > 0.35) { g.save(); g.globalAlpha = clamp((k - 0.35) * 2, 0, 1); g.fillStyle = 'rgba(30,18,8,.8)'; g.fillRect(0, 340, W, 84);
+      g.font = '700 16px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#fff0d6'; g.fillText('그가 보니 불말과 불병거가 산에 가득하여', W / 2, 370); g.fillText('엘리사를 둘렀더라', W / 2, 394);
+      g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#e6cfa6'; g.fillText('왕하 6:17', W / 2, 413); g.restore(); }
+  },
+};
+
 export const MINI = { jesus: { e04: magi, e11: cana, e17: fishing, e22: twelve, e23: rock, e28: bail, e31: loaves, e32: water, e39: stones, e42: sheep, e43: coin, e46: climb, e48: palms, e59: tiberias },
-  david: { d01: herdDavid, d05: sling, d16: cave, d24: arkDance, d38: templeStones }, moses: { m09: redSea, m12: manna, m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket, a17: prison, a37: viper }, kings: { k15: carmel, k24: naaman } };
+  david: { d01: herdDavid, d05: sling, d16: cave, d24: arkDance, d38: templeStones }, moses: { m09: redSea, m12: manna, m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket, a17: prison, a37: viper }, kings: { k15: carmel, k24: naaman, k26: dothan } };
 
 /* ---------- 놀이 틀: 소개 → 놀이(제한 시간) → 성공 연출/실패 → 결과 ---------- */
 // host: 모달 안의 상자. fx: { play, pour } (game-audio.js). 끝나면 done({ ok, left, tries })
