@@ -285,7 +285,7 @@ export const PROVERBS = {
     street: 'palace', env: 'night',
     cams: {
       wide: { pos: [0.62, 0.99, 8.3], at: [0, 2.0, -7.3], fov: 66 },     // 광장에서 궁을
-      porch: { pos: [1.4, 0.8, 0.9], at: [0, 2.3, -6.8], fov: 60 },     // 문 너머로 올려다본 백향목 기둥
+      porch: { pos: [0.3, 0.8, 1.6], at: [0, 2.0, -6.8], fov: 60 },     // 문 너머로 올려다본 백향목 기둥 — 문 한가운데로 (예전 자리는 문기둥이 화면 가운데를 막았다)
       gate: { pos: [-0.1, 0.8, 2.6], at: [-1.25, 0.4, -0.4], fov: 52 },  // 파수꾼과 문 곁의 가난한 사람
       give: { pos: [-2.6, 0.72, 1.5], at: [-1.45, 0.3, -0.05], fov: 48 },  // 빵을 나누는 아들 — 서쪽에서 (아버지 등이 가리지 않게)
       pair: { pos: [-0.1, 0.8, 3.4], at: [-1.0, 0.62, 1.8], fov: 44 },   // 아버지와 아들
@@ -297,9 +297,9 @@ export const PROVERBS = {
       guard1: ['soldier', -0.78, -0.31, 0, { gaze: false }],
       guard2: ['soldier', 0.78, -0.31, 0, { gaze: false }],
       beggar: ['beggar', -1.77, -0.2, 0.5, { gaze: false, pose: 'sit-ground' }],
-      noble: ['rich', 1.6, 4.2, 3.14, { gaze: false }],
-      lady: ['princess', 2.0, 4.5, 3.14, { gaze: false }],
-      porter: ['servant', 1.3, 4.8, 3.14, { gaze: false }],
+      noble: ['rich', 0.5, 4.0, 3.14, { gaze: false }], // 셋은 광장에서 곧장 문 한가운데로 — 옆에서 비스듬히 오니 문기둥과 파수꾼을 뚫고 지났다
+      lady: ['princess', 0.75, 4.3, 3.14, { gaze: false }],
+      porter: ['servant', 0.25, 3.6, 3.14, { gaze: false }],
     },
     beats: {
       // 낭독 없이 볼 때: 문 곁의 가난한 사람에게 빵을 내미는 아들
@@ -310,7 +310,7 @@ export const PROVERBS = {
       // 왕궁 앞을 지나는구나 — 광장으로 걸어 들어온다
       'p0.0': [['father', 'idle', { x: -1.14, z: 1.77, look: 2.8 }], ['son', 'idle', { x: -0.83, z: 1.98, look: 3.0 }]],
       // 귀인들이 파수꾼 사이로 들어간다 — 등불 든 종을 앞세우고
-      'p0.1': [['@cam', 'porch'], ['porter', 'idle', { item: 'torch', x: 0.1, z: -5.0 }], ['noble', 'idle', { x: 0.25, z: -5.6, delay: 500 }], ['lady', 'idle', { x: 0.55, z: -5.4, delay: 900 }],
+      'p0.1': [['@cam', 'porch'], ['porter', 'idle', { item: 'torch', x: 0.1, z: -5.0 }], ['noble', 'idle', { x: 0.25, z: -5.6, delay: 500 }], ['lady', 'idle', { x: 0.4, z: -5.4, delay: 900 }],
         ['porter', 'idle', { show: 0, delay: 9000 }], ['noble', 'idle', { show: 0, delay: 9500 }], ['lady', 'idle', { show: 0, delay: 9800 }]],
       // 문 곁의 가난한 사람
       'p0.2': [['@cam', 'gate'], ['beggar', 'sit-ground', { look: 0.7 }]],
