@@ -247,7 +247,7 @@ export const C = {
       lev1: ['levite', -1.62, 0.0, 1.57, { speed: 0.3, pose: 'carry-pole' }],
       lev2: ['levite', -0.78, 0.0, 1.57, { speed: 0.3, pose: 'carry-pole' }],
       horn: ['hebrew', -1.75, 0.45, 1, { gaze: false, speed: 0.35 }],
-      w1: ['woman', 0.45, 0.6, -0.5, { gaze: false }],
+      w1: ['woman', 0.1, 0.6, 0.3, { gaze: false }],
       michal: ['michal', -1.35, -0.45, 1],
     },
     beats: {
