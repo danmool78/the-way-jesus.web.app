@@ -405,6 +405,9 @@ export class StageModel {
         const hy = l.up.getWorldPosition(v1).y, L1 = l.up.getWorldPosition(v1).distanceTo(l.lo.getWorldPosition(v3)), L2 = l.lo.getWorldPosition(v1).distanceTo(l.foot.getWorldPosition(v3));
         const s = THREE.MathUtils.clamp((ground + L2 * 0.98 - hy) / L1, -0.25, 0.8), th = new THREE.Vector3(0, s, Math.sqrt(1 - s * s)).applyQuaternion(qr);
         this.aim(l.up, l.lo, s > -0.25 ? th : thigh, this.legW); this.aim(l.lo, l.foot, shin, this.legW);
+        // 무릎을 다 세워도 모자랄 만큼 낮은 자리(아레오바고 바위 위 돌 의자 — 바닥과 한 뼘 차)는 정강이를 뒤로 접어 발이 바닥 위에 (a19)
+        const ky = l.lo.getWorldPosition(v1).y, low = Math.min(l.foot.getWorldPosition(v3).y, l.toe ? l.toe.getWorldPosition(v3).y : Infinity);
+        if (low < ground - 0.01 * ks && ky > ground) { const tt = Math.max(0.05, (ky - ground) / (ky - low)), back = new THREE.Vector3(0, -tt, -Math.sqrt(1 - tt * tt)).applyQuaternion(qr); this.aim(l.lo, l.foot, back, this.legW); }
       }
     }
     if (this.w < 0.01) return;
