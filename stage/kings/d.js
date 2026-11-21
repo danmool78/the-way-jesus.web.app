@@ -6,10 +6,14 @@
    이 묶음에만 쓰는 소품은 stage/kings/props-d.js (asherah·campfires·fetters·vault·prison·ziggurat·shadowstair) */
 
 // 무리(crowd)의 자리: 가운데를 둘러 n명을 흩어 놓는다 (a.js와 같다)
-const flock = (n, rx, rz, seed = 1) => Array.from({ length: n }, (_, i) => {
+// 모델은 인형보다 몸이 커서 좁은 무리 안에서 서로 뚫고 섰다(사용자 2026-11) — 몸 네모(0.17×0.11)가 조금 돌아서도 겹치지 않을 만큼(0.22) 서로 밀어 벌린다
+const flock = (n, rx, rz, seed = 1) => { const P = Array.from({ length: n }, (_, i) => {
   const a = i * 2.399 + seed, r = Math.sqrt((i + 0.5) / n);
   return [Math.cos(a) * r * rx, Math.sin(a) * r * rz];
 });
+  for (let it = 0; it < 60; it++) for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) { const dx = P[j][0] - P[i][0], dz = P[j][1] - P[i][1], d = Math.hypot(dx, dz) || 1e-3;
+    if (d < 0.22) { const k = (0.22 - d) / 2 / d; P[i][0] -= dx * k; P[i][1] -= dz * k; P[j][0] += dx * k; P[j][1] += dz * k; } }
+  return P.map(([x, z]) => [+x.toFixed(3), +z.toFixed(3)]); };
 // 성벽 위에 한 줄로 선 사람들 (성벽 위 높이는 crowd 소품의 y로)
 const row = (n, w, seed = 0) => Array.from({ length: n }, (_, i) => [(i / (n - 1) - 0.5) * w + Math.sin(i * 3.1 + seed) * 0.03, Math.sin(i * 1.7 + seed) * 0.02]);
 
@@ -52,7 +56,7 @@ export const D = {
       // 돌기둥을 깨뜨리고 아세라 목상을 찍어 넘긴다
       'p1.1': [['hezekiah', 'idle', { look: -1.9 }], ['g1', 'idle', { x: -1.12, z: -0.28, look: -2.2 }] /* 아세라 목상의 왼쪽 — 목상은 오른쪽(+x)으로 쓰러진다 */, ['g2', 'idle', { x: -1.75, z: -0.1, look: -2.4 }], ['pole', 'down', { delay: 1800 }], ['stone', 'down', { delay: 2400 }]],
       // 그리고 놋뱀 앞에 — 엎드렸던 사람들이 물러선다
-      'p1.2': [['hezekiah', 'idle', { x: 1.0, z: 0.1, look: -1.9 }], ['w1', 'afraid', { x: 0.05, z: 0.45, look: 0.8 }], ['w2', 'afraid', { x: 0.45, z: 0.55, look: 0.4 }], ['w3', 'idle', { x: 1.55, z: 0.55, look: -0.9 }]],
+      'p1.2': [['hezekiah', 'idle', { x: 1.0, z: 0.1, look: -1.9 }], ['w1', 'afraid', { x: 0.05, z: 0.45, look: 0.8 }], ['w2', 'afraid', { x: 0.45, z: 0.55, look: 0.4 }], ['w3', 'idle', { x: 1.56, z: 0.56, look: -0.9 }]],
       'p1.3': [['hezekiah', 'speak', { to: 'w1' }]],
       // 산산이 부수고 '느후스단' — 놋 조각일 뿐
       'p1.4': [['hezekiah', 'rebuke', { look: -1.9 }], ['snake', 'broken', { delay: 600 }], ['g1', 'idle', { x: -1.05, z: -0.22, look: -1.6 }], ['g2', 'idle', { x: -1.6, z: -0.05, look: -1.6 }]],
@@ -61,7 +65,7 @@ export const D = {
       'p2.0': [['hezekiah', 'pray', { look: -0.4 }], ['w1', 'idle'], ['w2', 'idle']],
       'p2.2': [['hezekiah', 'raise', { look: 0 }]],
       // 앗수르를 섬기지 않겠다고 — 북쪽(뒤)으로 돌아선다
-      'p2.3': [['hezekiah', 'idle', { x: 0.95, z: 0.3, look: 3.0 }], ['g1', 'idle', { x: 0.45, z: 0.35, look: 2.9 }], ['g2', 'idle', { x: 1.45, z: 0.45, look: 3.1 }]],
+      'p2.3': [['hezekiah', 'idle', { x: 0.95, z: 0.3, look: 3.0 }], ['g1', 'idle', { x: 0.45, z: 0.35, look: 2.9 }], ['g2', 'idle', { x: 1.44, z: 0.44, look: 3.1 }]],
       // 북쪽 하늘에 먹구름
       'p2.4': [['@env', 'overcast']],
       w0: [['hezekiah', 'pray', { look: -0.4 }]],
@@ -203,7 +207,7 @@ export const D = {
     props: {
       grass: ['grass', 0.6, 0.1, { r: 1.9, color: '#9a9a6a' }],
       wall: ['kwall', -1.55, -0.75, { scale: 0.85, w: 1.8 }],
-      folk: ['crowd', -1.55, -0.76, { y: 0.595, spots: row(5, 1.0, 2), face: 0.5 }],
+      folk: ['crowd', -1.55, -0.76, { y: 0.595, spots: row(5, 1.35, 2), face: 0.5 }],
       camp1: ['camp', 1.15, -0.8, { n: 6, span: 1.15, color: '#6a6c7e', flag: '#9d3328', scale: 1.8 }],
       camp2: ['camp', 1.5, -0.4, { n: 4, span: 0.7, color: '#5c5e70', flag: '#9d3328', scale: 1.6 }],
       fires: ['campfires', 0, 0, { spots: [[0.25, -0.35], [0.85, 0.15], [1.55, 0.05], [2.35, -0.1], [1.15, 0.5]], sweep: 2.6 }],
@@ -586,7 +590,7 @@ export const D = {
       c1: ['guardJ', 0.5, 0.1, -1.4],
       c2: ['hebrew2', 0.75, -0.2, -1.6, { gaze: false }],
       p1: ['exile', -0.95, 0.25, 0.9, { gaze: false, speed: 0.45 }],
-      p2: ['exileW', -0.75, 0.45, 0.6, { gaze: false, speed: 0.45 }],
+      p2: ['exileW', -0.68, 0.52, 0.6, { gaze: false, speed: 0.45 }],
       jehoiachin: ['jehoiachin', 1.45, -0.38, 0.0, { pose: 'sit-ground' }],
       jehoiachinR: ['jehoiachinR', 1.45, 0.05, -1.4],
       king: ['babking', 2.3, 0.3, -1.5, { speed: 0.5 }],

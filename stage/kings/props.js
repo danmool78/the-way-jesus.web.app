@@ -134,7 +134,7 @@ Object.assign(MAKERS, {
     const P = new Prop(g);
     P.heightAt = (x, z) => { const u = (x - g.position.x) / g.scale.x, v = (z - g.position.z) / g.scale.z;
       if (P.show < 0.5 || Math.abs(u) > 0.23) return 0;
-      if (v < 0.08 && v > -0.17) return 0; // 자리 위는 배역 y로 (앉은 왕)
+      if (v < 0.08 && v > -0.17) return 0.12 * g.scale.y; // 자리 위는 배역 y로 (앉은 왕). 앉은 왕의 발은 이 높이에 둔다 — 앞으로 뻗은 발이 닿는 층계(셋째·넷째 단 0.105–0.14). 0이면 발이 층계 위 허공에 떴다(모델, 2026-11). 0이 아니어야 3D 지형에서 왕이 보좌와 같은 높이·축척에 앉는다(stage.js FLAT)
       if (v >= 0.08 && v < 0.33) return 0.035 * Math.min(6, Math.max(1, Math.floor((0.33 - v) / 0.05) + 1)) * g.scale.y;
       return 0; };
     return P;
@@ -218,10 +218,13 @@ Object.assign(MAKERS, {
     for (let i = 0; i < 9; i++) mesh(new THREE.DodecahedronGeometry(0.05 + (i % 3) * 0.02, 0), rockM('#b8a888'), rubble, [(i % 3 - 1) * 0.12, 0.03 + Math.floor(i / 3) * 0.04, (i % 2) * 0.08]);
     const mound = mesh(sphere(0.5, 20, 8, 0, Math.PI * 2, 0, Math.PI / 2), mat('#a8936e', { roughness: 1 }), g, [-Wd * 0.3, 0, 0.45], [1.2, 0.35, 0.5]); mound.visible = false; // 흙 언덕 (토성)
     const smoke = smokePuffs(g, [[-Wd * 0.35, Hh, -0.3], [Wd * 0.3, Hh, -0.4]], 10, '#6a625a', 1.1);
-    return new Prop(g, (P, t, dt) => {
+    const P = new Prop(g, (P, t, dt) => {
       const br = P.state === 'breach'; mid.scale.y = damp(mid.scale.y, br ? 0.35 : 1, 1.5, dt); rubble.visible = mid.scale.y < 0.8;
       mound.visible = P.state === 'siege' || br; smoke((P.state === 'siege' ? 1 : 0) * P.show, t);
     }, { state: o.state || 'stand' });
+    // 성벽 위의 사람·무리(배역 y)가 3D 지형에서 성벽과 같은 받침 높이·축척에 서도록 성벽 자리에 아주 얇은 높이를 준다(stage.js FLAT) — 문을 지나는 사람이 올라타지 않게 거의 0
+    P.heightAt = (x, z) => { const u = (x - g.position.x) / g.scale.x, v = (z - g.position.z) / g.scale.z; return P.show > 0.5 && Math.abs(u) < Wd / 2 + 0.15 && v > -0.15 && v < 0.17 ? 0.001 * g.scale.y : 0; };
+    return P;
   },
 
   // 높이 솟는 연기 기둥 (불타는 성읍·제사): o.fire면 밑동에 불빛. state 'on' | 'off'(걷힌다)

@@ -4,10 +4,14 @@
    죽음은 그리지 않는다: 하나님의 사람(k09)은 길 위에서 사라지고 사자와 나귀만 가만히 서 있다, 아비야(k10)는 그리지 않고 어머니의 애도로만 */
 
 // 무리(crowd)의 자리: 가운데를 둘러 n명을 흩어 놓는다 (moses.js와 같다)
-const flock = (n, rx, rz, seed = 1) => Array.from({ length: n }, (_, i) => {
+// 모델은 인형보다 몸이 커서 좁은 무리 안에서 서로 뚫고 섰다(사용자 2026-11) — 몸 네모(0.17×0.11)가 조금 돌아서도 겹치지 않을 만큼(0.22) 서로 밀어 벌린다
+const flock = (n, rx, rz, seed = 1) => { const P = Array.from({ length: n }, (_, i) => {
   const a = i * 2.399 + seed, r = Math.sqrt((i + 0.5) / n);
   return [Math.cos(a) * r * rx, Math.sin(a) * r * rz];
 });
+  for (let it = 0; it < 60; it++) for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) { const dx = P[j][0] - P[i][0], dz = P[j][1] - P[i][1], d = Math.hypot(dx, dz) || 1e-3;
+    if (d < 0.22) { const k = (0.22 - d) / 2 / d; P[i][0] -= dx * k; P[i][1] -= dz * k; P[j][0] += dx * k; P[j][1] += dz * k; } }
+  return P.map(([x, z]) => [+x.toFixed(3), +z.toFixed(3)]); };
 
 export const A = {
   /* k01. 기브온의 꿈 — 큰 산당의 장막(성막)과 큰 제단, 연기. 해 질 녘 번제를 드리던 젊은 왕이 불이 잦아든 밤 제단 곁에 잠든다.
@@ -199,7 +203,7 @@ export const A = {
         ['sheba', 'speak', { x: 0.0, z: 0.35, look: 1, to: 'solomon' }], ['gifts', null, { show: 1 }]],
       // 향품을 실은 낙타 떼가 성문으로 길게 들어온다
       intro: [['gifts', null, { show: 0 }], ['cam1', null, { show: 0 }], ['cam2', null, { show: 0 }], ['driver', 'idle', { show: 0 }], ['sheba', 'idle', { show: 0 }], ['maid', 'idle', { show: 0 }], ['solomon', 'sit', { look: -0.6 }]],
-      'p0.0': [['cam1', null, { show: 1, x: -2.05 }], ['cam2', null, { show: 1, x: -2.45 }], ['driver', 'idle', { show: 1, x: -1.6, z: -0.08 }], ['sheba', 'idle', { show: 1, x: -1.1, z: 0.6 }], ['maid', 'idle', { show: 1, x: -1.45, z: 0.72 }]],
+      'p0.0': [['cam1', null, { show: 1, x: -2.05 }], ['cam2', null, { show: 1, x: -2.45 }], ['driver', 'idle', { show: 1, x: -1.6, z: -0.07 }], ['sheba', 'idle', { show: 1, x: -1.1, z: 0.6 }], ['maid', 'idle', { show: 1, x: -1.45, z: 0.72 }]],
       // 먼 남쪽 나라의 여왕 — 왕 앞에 나아가 묻는다
       'p0.2': [['sheba', 'idle', { x: 0.0, z: 0.35, look: 1 }], ['maid', 'idle', { x: -0.45, z: 0.6, look: 1 }]],
       'p0.4': [['sheba', 'speak', { to: 'solomon' }]],
@@ -221,7 +225,7 @@ export const A = {
       w0: [['sheba', 'speak', { show: 1, x: 0.0, z: 0.35, look: 1, to: 'solomon' }]],
       w1: [['sheba', 'speak'], ['off1', 'bow'], ['off2', 'bow']],
       w2: [['off1', 'idle'], ['off2', 'idle'], ['sheba', 'raise']],
-      end: [['gifts', null, { show: 1 }], ['cam1', null, { show: 1, x: -2.05 }], ['cam2', null, { show: 1, x: -2.45 }], ['driver', 'idle', { show: 1, x: -1.6, z: -0.08 }], ['maid', 'idle', { show: 1, x: -0.45, z: 0.6, look: 1 }],
+      end: [['gifts', null, { show: 1 }], ['cam1', null, { show: 1, x: -2.05 }], ['cam2', null, { show: 1, x: -2.45 }], ['driver', 'idle', { show: 1, x: -1.6, z: -0.07 }], ['maid', 'idle', { show: 1, x: -0.45, z: 0.6, look: 1 }],
         ['sheba', 'bow', { show: 1 }], ['sheba', 'bow', { x: 0.0, z: 0.35, look: 1 }], ['solomon', 'sit']],
     },
   },
@@ -391,7 +395,7 @@ export const A = {
       hp: ['highplace', 0.35, -0.4, { pole: false }],
       calf: ['calf', 0.62, -0.5, { scale: 1.4, y: 0.1 }],
       calf2: ['calf', 1.25, -0.2, { scale: 1.4, speed: 0.35 }],
-      folk: ['crowd', -1.2, 0.15, { spots: flock(9, 0.5, 0.3, 4), face: Math.PI / 2, speed: 0.3 }],
+      folk: ['crowd', -1.4, 0.15, { spots: flock(9, 0.5, 0.3, 4), face: Math.PI / 2, speed: 0.3 }],
     },
     cast: {
       jeroboam: ['jeroboamK', -0.35, 0.3, 0.4, { speed: 0.5 }],

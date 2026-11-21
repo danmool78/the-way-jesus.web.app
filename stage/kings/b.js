@@ -5,10 +5,14 @@
    나봇은 성 밖으로 끌려가 사라지는 것까지, 아합의 죽음은 어둠과 떨어진 왕관으로. 묶음 b의 소품·인물은 stage/kings/props-b.js */
 
 // 무리(crowd)의 자리: 가운데를 둘러 n명을 흩어 놓는다 (a.js와 같다)
-const flock = (n, rx, rz, seed = 1) => Array.from({ length: n }, (_, i) => {
+// 모델은 인형보다 몸이 커서 좁은 무리 안에서 서로 뚫고 섰다(사용자 2026-11) — 몸 네모(0.17×0.11)가 조금 돌아서도 겹치지 않을 만큼(0.22) 서로 밀어 벌린다
+const flock = (n, rx, rz, seed = 1) => { const P = Array.from({ length: n }, (_, i) => {
   const a = i * 2.399 + seed, r = Math.sqrt((i + 0.5) / n);
   return [Math.cos(a) * r * rx, Math.sin(a) * r * rz];
 });
+  for (let it = 0; it < 60; it++) for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) { const dx = P[j][0] - P[i][0], dz = P[j][1] - P[i][1], d = Math.hypot(dx, dz) || 1e-3;
+    if (d < 0.22) { const k = (0.22 - d) / 2 / d; P[i][0] -= dx * k; P[i][1] -= dz * k; P[j][0] += dx * k; P[j][1] += dz * k; } }
+  return P.map(([x, z]) => [+x.toFixed(3), +z.toFixed(3)]); };
 
 export const B = {
   /* k12. 비가 그치리라 — 사마리아 언덕의 왕궁(왼쪽 뒤). 시돈의 공주 이세벨이 들어오고, 아합이 오른쪽에 바알의 산당(제단·돌기둥·아세라 장대)을 세운다.
@@ -185,7 +189,7 @@ export const B = {
       altarB: ['altar12', -0.95, -0.45, { baal: true }],
       altarE: ['altar12', 0.95, -0.4],
       folkL: ['crowd', -1.95, 0.35, { spots: flock(7, 0.35, 0.22, 1), face: Math.PI / 2 - 0.3 }],
-      folkR: ['crowd', 2.0, 0.35, { spots: flock(7, 0.35, 0.22, 2), face: -Math.PI / 2 + 0.3 }],
+      folkR: ['crowd', 2.25, 0.4, { spots: flock(7, 0.35, 0.22, 2), face: -Math.PI / 2 + 0.3 }],
     },
     cast: {
       elijah: ['elijahK', 0.2, 0.35, -0.3],
@@ -193,8 +197,8 @@ export const B = {
       bp2: ['baalprophet2', -0.4, -0.42, -1.6],
       bp3: ['baalprophet', -1.2, -0.78, 0.4, { gaze: false }],
       bp4: ['baalprophet2', -0.7, -0.8, -0.4, { gaze: false }],
-      sv1: ['servantE', 1.6, 0.05, -1.2, { gaze: false }],
-      sv2: ['hebrew', 1.75, 0.3, -1.2, { gaze: false }],
+      sv1: ['servantE', 1.5, 0.02, -1.2, { gaze: false }],
+      sv2: ['hebrew', 1.62, 0.28, -1.2, { gaze: false }],
       man: ['hebrew2', 1.3, 0.55, -1.5],
     },
     beats: {
@@ -226,9 +230,9 @@ export const B = {
       // 돌 열두 개로 다시 쌓고, 물을 세 번 붓게 한다
       'p2.0': [['@env', 'dusk'], ['altarE', 'idle', { show: 1 }], ['elijah', 'idle', { x: 0.45, z: 0.0, look: 0.6 }],
         ['sv1', 'idle', { item: 'jar', x: 1.15, z: -0.2, delay: 2000 }], ['sv2', 'idle', { item: 'jar', x: 1.25, z: -0.05, delay: 2300 }], ['altarE', 'wet', { delay: 4000 }],
-        ['sv1', 'idle', { x: 1.6, z: 0.05, delay: 5200 }], ['sv2', 'idle', { x: 1.75, z: 0.3, delay: 5400 }], ['sv1', 'idle', { item: null, x: 1.6, z: 0.05, look: -1.2, delay: 8000 }], ['sv2', 'idle', { item: null, look: -1.2, delay: 8000 }]],
+        ['sv1', 'idle', { x: 1.5, z: 0.02, delay: 5200 }], ['sv2', 'idle', { x: 1.62, z: 0.28, delay: 5400 }], ['sv1', 'idle', { item: null, x: 1.5, z: 0.02, look: -1.2, delay: 8000 }], ['sv2', 'idle', { item: null, look: -1.2, delay: 8000 }]],
       // 엘리야가 기도한다
-      'p2.1': [['altarE', 'wet'], ['sv1', 'idle', { item: null, x: 1.6, z: 0.05, look: -1.2 }], ['sv2', 'idle', { item: null, x: 1.75, z: 0.3, look: -1.2 }], ['elijah', 'raise', { look: 0.6 }]],
+      'p2.1': [['altarE', 'wet'], ['sv1', 'idle', { item: null, x: 1.5, z: 0.02, look: -1.2 }], ['sv2', 'idle', { item: null, x: 1.62, z: 0.28, look: -1.2 }], ['elijah', 'raise', { look: 0.6 }]],
       'p2.2': [['elijah', 'raise']],
       // 불이 떨어진다 — 하늘에서 내린 빛과 불꽃
       'p2.3': [['altarE', 'fire'], ['elijah', 'look-up', { look: 0.6 }], ['bp1', 'afraid', { look: 1.2 }], ['bp2', 'cower', { look: 1.2 }], ['bp3', 'afraid', { look: 1.2 }], ['bp4', 'cower', { look: 1.2 }]],
@@ -275,8 +279,8 @@ export const B = {
       'p0.2': [['elijah', 'speak', { to: 'ahab' }], ['ahab', 'idle', { look: -1.0 }]],
       'p0.3': [['elijah', 'look-up', { look: -0.6 }]],
       // 아합은 먹고 마시러, 엘리야는 꼭대기에 올라 땅에 엎드린다
-      'p0.4': [['ahab', 'idle', { x: 1.4, z: -0.32, look: 0 }], ['ahab', 'sit', { delay: 2600 }], ['elijah', 'idle', { x: -0.7, z: -0.22, look: -0.9 }], ['servant', 'idle', { x: -0.15, z: 0.25, look: -1.1, delay: 600 }], ['elijah', 'mourn', { delay: 3500 }]],
-      'p0.5': [['ahab', 'sit', { x: 1.4, z: -0.32, look: 0 }], ['elijah', 'mourn', { x: -0.7, z: -0.22, look: -0.9 }]],
+      'p0.4': [['ahab', 'idle', { x: 1.4, z: -0.42, look: 0 }], ['ahab', 'sit', { delay: 2600 }], ['elijah', 'idle', { x: -0.7, z: -0.22, look: -0.9 }], ['servant', 'idle', { x: -0.15, z: 0.25, look: -1.1, delay: 600 }], ['elijah', 'mourn', { delay: 3500 }]],
+      'p0.5': [['ahab', 'sit', { x: 1.4, z: -0.42, look: 0 }], ['elijah', 'mourn', { x: -0.7, z: -0.22, look: -0.9 }]],
       // 바다 쪽을 바라보아라 — 사환이 오르내린다
       'p1.0': [['servant', 'idle', { look: -1.1 }]],
       'p1.1': [['servant', 'idle', { x: -1.7, z: 0.15 }], ['servant', 'idle', { look: -2.2, delay: 2600 }]],
