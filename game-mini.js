@@ -1769,7 +1769,7 @@ const wallBasket = {
     if (S.v > 6 && (S.cr -= dt) <= 0) { S.cr = 0.34 - S.v / 300; S.fx.play('creak'); }
     const L = this.light(S, S.y);
     if (L > 0.15) { S.seen = Math.min(1, S.seen + L * 0.95 * dt); if (!S.msg || S.msg.at < 0) S.msg = { t: '불빛 안이에요!', c: '#ffc28a', at: 0.5, x: B_X + 70, y: S.y }; }
-    else S.seen = Math.max(0, S.seen - 0.12 * dt); // 어둠 속에서는 의심이 조금씩 가라앉는다
+    else S.seen = Math.max(0, S.seen - 0.1 * dt); // 어둠 속에서는 의심이 조금씩 가라앉는다
     if (S.y >= B_BOT && !S.landed) { S.landed = 0.001; S.fx.play('drop'); }
   },
   down(x, y, S) { S.hold = true; },
@@ -3114,7 +3114,67 @@ const boyJesus = {
   },
 };
 
-export const MINI = { jesus: { e04: magi, e07: boyJesus, e11: cana, e17: fishing, e22: twelve, e23: rock, e28: bail, e31: loaves, e32: water, e39: stones, e42: sheep, e43: coin, e46: climb, e48: palms, e59: tiberias },
+/* ---------- 애굽으로 피하다 (마 2:13–15): 밤길에 헤롯 병정의 횃불을 피해 — 멈췄다 가기 ---------- */
+// 누르고 있으면 요셉이 나귀를 끌고 남쪽으로 걷고(길이 흐른다), 떼면 멈춘다. 언덕 위에 병정이 나타나 횃불을 들면(먼저 '!') 곧 불빛이 길을 훑는다.
+// 불빛 안에서 걸으면 '눈에 띔'이 빨리, 멈춰 있어도 천천히 찬다 — 바위·종려나무 뒤에 멈춰 있으면 숨는다. 다 차면 실패, 애굽 땅까지 가면 성공
+const ROAD = 960, FAM_X = 116, ROAD_Y = 432;
+const egypt = {
+  title: '애굽으로 피하다', task: '횃불을 피해 애굽 땅까지', art: ['e05/bg', 'e05/family', 'e05/palm', 'e05/rock', 'a04/guard'],
+  ask: ['헤롯이 아기를 찾아 죽이려 하니, 그 밤에 일어나 애굽으로 떠나라는 말씀을 꿈에 받았단다.', '요셉과 함께 길을 가 주렴 — 횃불이 오면 바위나 나무 뒤에 멈춰 숨고!'],
+  quote: '요셉이 일어나서 밤에 아기와 그의 어머니를 데리고 애굽으로 떠나가', ref: '마 2:14',
+  help: '누르고 있으면 걷고, 떼면 멈춰요. 언덕에 병정이 나타나면(!) 곧 횃불이 길을 훑어요.<br>불빛 안에서 걸으면 들켜요 — <b>바위·종려나무 뒤</b>에 멈추면 숨어요. 애굽 땅까지!',
+  seconds: 38,
+  init() { const C = []; for (let x = 140; x < ROAD - 60; x += rnd(110, 160)) C.push({ x, k: C.length % 2 ? 'e05/rock' : 'e05/palm' });
+    return { px: 0, hold: false, C, beam: null, nextBeam: 2.2, seen: 0, t: 0, msg: null, step: 0 }; },
+  hidden(S) { return !S.hold && S.C.some(c => Math.abs(c.x - S.px - 20) < 44); }, // 가족(화면 FAM_X) 둘레에 가림이 있고 멈춰 있으면 숨는다
+  update(dt, S) {
+    S.t += dt; if (S.msg) S.msg.at -= dt;
+    if (S.hold) { S.px = Math.min(ROAD, S.px + 48 * dt); if ((S.step -= dt) <= 0) { S.step = 0.45; S.fx.play('creep'); } }
+    if (!S.beam && (S.nextBeam -= dt) <= 0) { const dir = Math.random() < 0.5 ? 1 : -1; S.beam = { warn: 0.9, x: dir > 0 ? -60 : W + 60, dir, sp: rnd(95, 125), gx: dir > 0 ? rnd(40, 160) : rnd(240, 360) }; S.fx.play('hum'); }
+    const B = S.beam; let lit = 0;
+    if (B) { if (B.warn > 0) B.warn -= dt; else { B.x += B.dir * B.sp * dt; const d = Math.abs(B.x - FAM_X); lit = d < 46 ? 1 - d / 46 : 0;
+        if (B.x < -80 || B.x > W + 80) { S.beam = null; S.nextBeam = rnd(1.8, 3.4); } } }
+    const hid = this.hidden(S);
+    if (lit > 0 && !hid) { S.seen = Math.min(1, S.seen + (S.hold ? 2.8 : 1.9) * lit * dt); if (!S.msg || S.msg.at < 0) S.msg = { t: S.hold ? '불빛 안에서 걷고 있어요!' : '숨을 곳이 없어요…', c: '#ffc28a', at: 0.5, x: FAM_X + 60, y: 330 }; }
+    else S.seen = Math.max(0, S.seen - 0.1 * dt);
+    S.lit = lit; S.hid = hid;
+  },
+  down(x, y, S) { S.hold = true; },
+  up(S) { S.hold = false; },
+  key(k, S) { if (k === ' ' || k === 'ArrowRight') { S.hold = true; clearTimeout(S._kt); S._kt = setTimeout(() => S.hold = false, 160); return; } return false; },
+  won: S => S.px >= ROAD,
+  lost: S => S.seen >= 1,
+  failText: S => S.seen >= 1 ? '헤롯의 병정에게 들켰어요' : '날이 밝아 왔어요',
+  dark(g, n, x, y, h, o = {}) { g.save(); g.filter = 'brightness(0.5) saturate(0.7)'; spr(g, n, x, y, h, o); g.restore(); }, // 낮빛 그림을 밤빛으로
+  draw(g, S) {
+    // 바탕은 천천히(먼 산), 길과 가림은 걷는 만큼 흐른다
+    const A = art('e05/bg'); if (A) { const off = (S.px * 0.25) % W; g.drawImage(A, -off, 0, W, H); g.save(); g.translate(2 * W - off, 0); g.scale(-1, 1); g.drawImage(A, 0, 0, W, H); g.restore(); } else { g.fillStyle = '#101830'; g.fillRect(0, 0, W, H); }
+    const B = S.beam;
+    if (B) { const sx = B.gx; spr(g, 'a04/guard', sx, 312, 52, { flip: B.dir < 0 });
+      if (B.warn > 0) { g.font = '900 20px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.lineWidth = 4; g.strokeStyle = 'rgba(30,10,0,.7)'; g.strokeText('!', sx, 250); g.fillStyle = '#ffd08a'; g.fillText('!', sx, 250); }
+      else { const cone = g.createRadialGradient(B.x, ROAD_Y - 10, 4, B.x, ROAD_Y - 10, 90); cone.addColorStop(0, 'rgba(255,190,100,.5)'); cone.addColorStop(1, 'rgba(255,190,100,0)');
+        g.save(); g.globalCompositeOperation = 'lighter'; g.fillStyle = 'rgba(255,190,110,.22)'; g.beginPath(); g.moveTo(sx, 290); g.lineTo(B.x - 50, ROAD_Y + 20); g.lineTo(B.x + 50, ROAD_Y + 20); g.closePath(); g.fill(); g.fillStyle = cone; g.fillRect(B.x - 90, ROAD_Y - 100, 180, 160); g.restore(); } } // 밤빛 위에서 보이게 더해 칠한다
+    // 애굽 땅 표 (길 끝)
+    const ex = ROAD - S.px + FAM_X + 80; if (ex < W + 60) { g.fillStyle = 'rgba(255,230,170,.85)'; g.font = '800 13px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.fillText('애굽 땅', ex, ROAD_Y - 60); g.fillStyle = '#c8a060'; g.beginPath(); g.moveTo(ex - 22, ROAD_Y - 14); g.lineTo(ex, ROAD_Y - 50); g.lineTo(ex + 22, ROAD_Y - 14); g.fill(); }
+    // 가림 — 가족 뒤에 있는 것 먼저, 가족, 앞의 가림(가족을 가린다)
+    const bob = S.hold ? Math.abs(Math.sin(S.t * 6)) * 1.5 : 0, cov = c => this.dark(g, c.k, c.x - S.px + FAM_X, ROAD_Y + (c.k.includes('rock') ? 14 : 18), c.k.includes('rock') ? 60 : 112);
+    g.save(); g.globalAlpha = S.hid ? 0.75 : 1; this.dark(g, 'e05/family', FAM_X, ROAD_Y + 10 - bob, 78); g.restore();
+    for (const c of S.C) { const x = c.x - S.px + FAM_X; if (x > -80 && x < W + 80) cov(c); }
+    if (S.hid) { g.font = '700 11px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.fillStyle = 'rgba(200,230,255,.85)'; g.fillText('숨었어요', FAM_X, ROAD_Y + 34); }
+    // 막대들
+    g.save(); g.font = '800 13px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.fillStyle = '#e8ecf8'; g.fillText('눈에 띔', 14, 28);
+    g.fillStyle = 'rgba(255,255,255,.18)'; g.fillRect(66, 18, 90, 12); g.fillStyle = S.seen > 0.66 ? '#ff7a5a' : '#ffb36a'; g.fillRect(66, 18, 90 * S.seen, 12);
+    g.fillStyle = 'rgba(255,255,255,.18)'; g.fillRect(180, 22, 200, 5); g.fillStyle = '#ffe29a'; g.fillRect(180, 22, 200 * S.px / ROAD, 5); g.fillStyle = '#e8ecf8'; g.font = '700 10px "Noto Sans KR",sans-serif'; g.textAlign = 'right'; g.fillText('애굽까지', W - 20, 42); g.restore();
+    floatMsg(g, S.msg);
+  },
+  end(g, k, S) { S.beam = null; this.update(0.016, S); this.draw(g, S);
+    if (k > 0.3) { g.save(); g.globalAlpha = clamp((k - 0.3) * 2, 0, 1); g.fillStyle = 'rgba(10,14,30,.82)'; g.fillRect(0, 140, W, 84);
+      g.font = '700 16px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#eef2ff'; g.fillText('애굽으로부터 내 아들을 불렀다 함을', W / 2, 170); g.fillText('이루려 하심이라', W / 2, 194);
+      g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#b8c2e0'; g.fillText('마 2:15', W / 2, 213); g.restore(); }
+  },
+};
+
+export const MINI = { jesus: { e04: magi, e05: egypt, e07: boyJesus, e11: cana, e17: fishing, e22: twelve, e23: rock, e28: bail, e31: loaves, e32: water, e39: stones, e42: sheep, e43: coin, e46: climb, e48: palms, e59: tiberias },
   david: { d01: herdDavid, d05: sling, d10: arrows, d16: cave, d24: arkDance, d38: templeStones }, moses: { m09: redSea, m12: manna, m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket, a17: prison, a36: wreck, a37: viper }, kings: { k15: carmel, k24: naaman, k25: axe, k26: dothan } };
 
 /* ---------- 놀이 틀: 소개 → 놀이(제한 시간) → 성공 연출/실패 → 결과 ---------- */
