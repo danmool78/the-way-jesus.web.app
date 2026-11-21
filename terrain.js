@@ -652,8 +652,11 @@ function placeCam() {
   camera.position.set(cam.tx + Math.sin(cam.yaw) * d, ground0 + h, cam.tz + Math.cos(cam.yaw) * d);
   camera.lookAt(cam.tx, ground0, cam.tz); camera.updateMatrixWorld(); // 그리기 전에 투영(무대 붙이기)이 새 시점을 쓰게
   // 해와 그림자 상자도 시선을 따라간다
-  const S = Math.max(150, cam.dist * 1.6);
-  sun.position.set(cam.tx - S * 0.8, S * 1.0, cam.tz - S * 0.6); sun.target.position.set(cam.tx, 0, cam.tz);
+  // 무대가 서 있으면 그림자 상자를 무대 둘레로 좁힌다 — 수백 단위 상자에 그림자 지도 한 장이라 사람 그림자가 성겨 사라졌다(사용자 2026-11).
+  // 땅의 높낮이 음영은 색 그림에 이미 있어, 무대 밖에 그림자가 없어도 티가 나지 않는다
+  const sf = window.stageFoot?.xz && window.stageFoot.r ? window.stageFoot : null;
+  const S = sf ? THREE.MathUtils.clamp(sf.r * 1.4, 6, 150) : Math.max(150, cam.dist * 1.6), cx = sf ? sf.xz[0] : cam.tx, cz = sf ? sf.xz[1] : cam.tz;
+  sun.position.set(cx - S * 0.8, S * 1.0, cz - S * 0.6); sun.target.position.set(cx, 0, cz);
   Object.assign(sun.shadow.camera, { left: -S, right: S, top: S, bottom: -S, near: 1, far: S * 4 }); sun.shadow.camera.updateProjectionMatrix();
 }
 // 장소로 날아가기: 지금 장면의 장소를 화면 가운데(카드에 가리지 않는 쪽)로

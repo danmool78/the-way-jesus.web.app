@@ -146,7 +146,8 @@ export class StageModel {
     const top = bone(body, 'HeadTop_End'), h = top ? top.getWorldPosition(v1).y : 1.7;
     body.scale.setScalar(dollHeight(type) * MS * 0.97 / (h > 0.1 ? h : 1.7));
     this.mats = [];
-    body.traverse(m => { if (m.isMesh) { m.frustumCulled = false; m.material = brighten(m.material).clone(); this.mats.push(m.material); } });
+    // 무대의 사람은 그림자를 드리운다 — 모델을 받을 때 게임(성능) 때문에 그림자를 꺼 두어 무대 사람만 그림자 없이 떠 보였다(사용자 2026-11)
+    body.traverse(m => { if (m.isMesh) { m.frustumCulled = false; m.castShadow = true; m.material = brighten(m.material).clone(); this.mats.push(m.material); } });
     this.p = { root: new THREE.Group() }; this.p.root.add(body);
     this.mixer = new THREE.AnimationMixer(body);
     // 없는 동작(잠자기·무릎 꿇고 기도, 천사의 서기·말하기)은 같은 Mixamo 뼈대의 다른 모델에서 빌린다 — 요셉이 잘 때 인형처럼 몸을 통째로 눕혀 어색했다(사용자 2026-11).
@@ -456,7 +457,7 @@ export function crowdPerson(gltf, height) {
   body.updateMatrixWorld(true);
   const top = bone(body, 'HeadTop_End'), h = top ? top.getWorldPosition(v1).y : 1.7;
   body.scale.setScalar(height / (h > 0.1 ? h : 1.7));
-  const mats = []; body.traverse(m => { if (m.isMesh) { m.frustumCulled = false; m.material = brighten(m.material).clone(); mats.push(m.material); } }); // 저마다 재질 — 나타날 때 투명도를 따로
+  const mats = []; body.traverse(m => { if (m.isMesh) { m.frustumCulled = false; m.castShadow = true; m.material = brighten(m.material).clone(); mats.push(m.material); } }); // 저마다 재질 — 나타날 때 투명도를 따로
   const mixer = new THREE.AnimationMixer(body), clips = calmClips(gltf), clip = n => clips.find(c => c.name === n);
   const t0 = Math.random();
   const legs = ['Left', 'Right'].map(sd => [bone(body, sd + 'UpLeg'), bone(body, sd + 'Leg'), bone(body, sd + 'Foot')]);
