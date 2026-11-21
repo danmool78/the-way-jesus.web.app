@@ -59,7 +59,7 @@ function close(s, i) { let d = 0, q = null; for (let j = i; j < s.length; j++) {
         if (sIdx < 0 || sIdx > lineEnd) continue;
         let e0 = sIdx + 'spots:'.length; while (scene[e0] === ' ') e0++;
         const e1 = scene[e0] === '[' ? close(scene, e0) : close(scene, scene.indexOf('(', e0)); const expr = scene.slice(e0, e1 + 1);
-        const helpers = (src.match(/^const (flock|row|ring|line|arc|grid)\b[\s\S]*?;\n(?=\S)/gm) || []).join('\n');
+        const helpers = src.slice(0, src.search(/^export /m)).replace(/^import [^\n]*$/gm, ''); // 대본 파일 머리의 도우미(flock·row …)
         let spots; try { spots = new Function(helpers + `\nreturn ${expr};`)(); } catch (err) { console.log(id, n, 'spots 식을 못 읽음', expr); continue; }
         const P0 = spots.map(([x, z]) => [x, z]), Pn = spots.map(([x, z]) => [x, z]);
         const beats = snaps.filter(s => s?.crowds[n] && !s.crowds[n].sit);
