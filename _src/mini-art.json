@@ -818,5 +818,34 @@
    "ratio": "16:9",
    "p": "A distant army camp of the Arameans seen from far away: a small cluster of dark tents with a red banner on a pole and tiny chariots, on a patch of ground."
   }
+ },
+ "a35": {
+  "bg": {
+   "bg": true,
+   "p": "A violent storm on the open Mediterranean Sea in daytime gloom: huge grey-green waves with white foam, low black storm clouds, slanting rain, the sea surface filling the lower half of the image with the horizon a little above the middle. No ships, no people, no land."
+  },
+  "ship": {
+   "h": 360,
+   "ratio": "16:9",
+   "p": "An ancient Roman merchant grain ship in exact side view, bow pointing right: a long wooden hull with a flat open deck clearly visible along the top edge of the hull, one central mast with the square sail lowered and tied up, thick ropes wrapped around the hull to hold it together, a steering oar at the stern. No people, no cargo on deck, no water."
+  },
+  "crate": {
+   "h": 200,
+   "p": "A heavy wooden cargo crate bound with rope, side view."
+  },
+  "amphora": {
+   "h": 260,
+   "ratio": "9:16",
+   "p": "A tall clay amphora for wine or oil with two handles and a pointed base, standing upright, side view."
+  },
+  "sack": {
+   "h": 200,
+   "p": "A full burlap sack of wheat tied at the top, side view, sitting on the ground."
+  },
+  "tackle": {
+   "h": 200,
+   "ratio": "16:9",
+   "p": "A bundle of ship's tackle: a coiled heavy rope, a wooden spar and a pulley block tied together, side view."
+  }
  }
 }

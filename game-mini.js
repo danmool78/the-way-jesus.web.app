@@ -3396,8 +3396,97 @@ const lastArrow = {
   },
 };
 
+/* ---------- 유라굴로 광풍 (행 27:13–26): 짐을 던져 배를 가볍게 — 균형 잡기 ---------- */
+// 폭풍에 배가 기울면 갑판의 짐이 낮은 쪽으로 미끄러지고, 짐이 쏠린 쪽으로 더 기운다. 짐을 끌어 배 밖으로 던지거나(27:18–19)
+// 갑판의 다른 자리로 옮겨 균형을 잡는다. 큰 파도는 '!'로 1초 먼저 알린다. 너무 기운 채 0.9초가 지나면 뒤집힌다. 여덟 개를 던지면 성공.
+const SHIP = { x: 200, y: 300, h: 212, deck: 146 }, THROW = 8, CARGO = { crate: [2, 39], amphora: [1.2, 48], sack: [1, 35], tackle: [1.5, 28] };
+const storm = {
+  title: '유라굴로 광풍', task: '짐을 바다에 던져 배를 가볍게', art: ['a35/bg', 'a35/ship', 'a35/crate', 'a35/amphora', 'a35/sack', 'a35/tackle'],
+  ask: ['배가 몹시 흔들려, 이튿날 사공들은 짐을 바다에 풀어 버렸단다.', '이번엔 네가 짐을 던져 배를 가볍게 해 다오 — 한쪽만 던지면 배가 기우니, 균형을 보면서!'],
+  quote: '우리가 폭풍으로 심히 애쓰다가 이튿날 사공들이 짐을 바다에 풀어 버리고', ref: '행 27:18',
+  help: '짐을 끌어 <b>배 밖 바다로</b> 던져요 — 여덟 개!<br>배가 기울면 짐이 낮은 쪽으로 미끄러지고 더 기울어요. 짐을 갑판의 다른 자리로 옮겨 균형을 잡을 수도 있어요. 큰 파도(!)를 조심 — 너무 오래 기울면 뒤집혀요.',
+  seconds: 20,
+  init() {
+    const kinds = ['crate', 'sack', 'amphora', 'tackle', 'crate', 'amphora', 'sack', 'crate', 'amphora', 'sack'], C = kinds.map((k, i) => ({ k, m: CARGO[k][0], h: CARGO[k][1], x: -130 + i * 29 + rnd(-4, 4), v: 0 }));
+    return { C, th: 0, om: 0, held: null, px: 0, py: 0, thrown: 0, cap: 0, wave: null, nextWave: 2.6, t: 0, splash: [], msg: null, rain: Array.from({ length: 50 }, () => [rnd(0, W), rnd(0, H)]) };
+  },
+  local(S, x, y) { const c = Math.cos(-S.th), s = Math.sin(-S.th), dx = x - SHIP.x, dy = y - this.bob(S); return [dx * c - dy * s, dx * s + dy * c]; },
+  bob: S => SHIP.y + Math.sin(S.t * 1.7) * 6,
+  update(dt, S) {
+    S.t += dt; if (S.msg) S.msg.at -= dt;
+    for (const r of S.rain) { r[0] -= 160 * dt; r[1] += 620 * dt; if (r[1] > H) { r[1] = -10; r[0] = rnd(0, W + 120); } }
+    for (const p of S.splash) { p.x += p.vx * dt; p.y += p.vy * dt; p.vy += 420 * dt; p.a -= dt * 1.4; } S.splash = S.splash.filter(p => p.a > 0);
+    if (S.thrown >= THROW) { S.om += (-2.2 * S.th - 1.6 * S.om) * dt; S.th += S.om * dt; return; } // 끝 연출: 잦아듦
+    // 큰 파도: 1초 먼저 '!' — 한쪽에서 배를 세게 민다
+    if (!S.wave && (S.nextWave -= dt) <= 0) { S.wave = { dir: Math.random() < 0.5 ? -1 : 1, warn: 1 }; S.fx.play('gust'); }
+    if (S.wave && (S.wave.warn -= dt) <= 0) { S.om += S.wave.dir * rnd(0.34, 0.46); S.fx.play('splash'); S.wave = null; S.nextWave = rnd(2.4, 3.8); }
+    let tq = 0; for (const c of S.C) if (c !== S.held) tq += c.m * c.x;
+    S.om += (-2.2 * S.th - 0.8 * S.om + tq * 0.00082 + 0.22 * Math.sin(S.t * 1.3)) * dt; S.th += S.om * dt;
+    // 짐은 기울어진 쪽으로 미끄러진다(무거울수록 덜)
+    for (const c of S.C) { if (c === S.held) continue; const a = Math.abs(S.th) > 0.07 ? Math.sin(S.th) * 360 / Math.sqrt(c.m) : 0;
+      c.v = (c.v + a * dt) * Math.pow(0.04, dt); c.x += c.v * dt; if (Math.abs(c.x) > SHIP.deck) { c.x = Math.sign(c.x) * SHIP.deck; c.v = 0; } }
+    if (Math.abs(S.th) > 0.48) { S.cap += dt; if (S.cap > 0.2 && (!S.msg || S.msg.at < 0)) S.msg = { t: '배가 뒤집히려 해요!', c: '#ffb08a', at: 0.5, x: 200, y: 140 }; } else S.cap = Math.max(0, S.cap - dt * 2);
+  },
+  down(x, y, S) {
+    if (S.held || S.thrown >= THROW) return; const [lx, ly] = this.local(S, x, y);
+    let best = null, bd = 34; for (const c of S.C) { const d = Math.hypot(lx - c.x, ly + c.h / 2); if (d < bd) { bd = d; best = c; } }
+    if (best) { S.held = best; S.px = x; S.py = y; S.fx.play('pick'); }
+  },
+  move(x, y, S) { if (S.held) { S.px = x; S.py = y; } },
+  up(S, x = S.px, y = S.py) {
+    const c = S.held; if (!c) return; S.held = null; const [lx] = this.local(S, x, y);
+    if (Math.abs(lx) > SHIP.deck + 22 || y > this.bob(S) + 60) { // 배 밖 — 바다로
+      S.C.splice(S.C.indexOf(c), 1); S.thrown++; S.fx.play('plop'); for (let i = 0; i < 12; i++) S.splash.push({ x, y: Math.max(y, this.bob(S) + 30), vx: rnd(-80, 80), vy: rnd(-240, -90), a: 1 });
+      if (S.thrown >= THROW) { S.fx.play('calm'); } }
+    else { c.x = clamp(lx, -SHIP.deck, SHIP.deck); c.v = 0; S.fx.play('drop'); }
+  },
+  won: S => S.thrown >= THROW,
+  lost: S => S.cap > 0.9,
+  failText: S => S.cap > 0.9 ? '배가 뒤집혔어요' : '짐을 다 던지지 못했어요',
+  sea(g, S, calm = 0) {
+    const A = art('a35/bg'), sw = Math.sin(S.t * 1.1) * 8 * (1 - calm);
+    if (A) { g.drawImage(A, -12 + sw, -14 + Math.cos(S.t * 0.9) * 6 * (1 - calm), W + 24, H + 28); } else { g.fillStyle = '#2c3a40'; g.fillRect(0, 0, W, H); }
+    if (calm) { g.fillStyle = `rgba(255,236,200,${0.18 * calm})`; g.fillRect(0, 0, W, H); }
+  },
+  front(g, S) { // 배 앞을 지나가는 물결 — 선체 아랫부분이 물에 잠겨 보이게
+    const y0 = this.bob(S) + 34, gr = g.createLinearGradient(0, y0 - 10, 0, H); gr.addColorStop(0, 'rgba(60,92,96,.0)'); gr.addColorStop(0.12, 'rgba(60,92,96,.88)'); gr.addColorStop(1, 'rgba(28,44,50,.96)');
+    g.fillStyle = gr; g.beginPath(); g.moveTo(0, H); for (let x = 0; x <= W; x += 10) g.lineTo(x, y0 + Math.sin(x * 0.035 + S.t * 2.6) * 7 + Math.sin(x * 0.011 - S.t * 1.3) * 6); g.lineTo(W, H); g.fill();
+    g.strokeStyle = 'rgba(230,240,240,.45)'; g.lineWidth = 2; g.beginPath(); for (let x = 0; x <= W; x += 10) g.lineTo(x, y0 + Math.sin(x * 0.035 + S.t * 2.6) * 7 + Math.sin(x * 0.011 - S.t * 1.3) * 6); g.stroke();
+  },
+  cargo(g, c, x, y, rot = 0) { if (!spr(g, 'a35/' + c.k, x, y, c.h, { rot })) { g.fillStyle = '#7a5a34'; g.fillRect(x - c.h * 0.45, y - c.h, c.h * 0.9, c.h); } },
+  ship(g, S) {
+    g.save(); g.translate(SHIP.x, this.bob(S)); g.rotate(S.th);
+    if (!spr(g, 'a35/ship', 0, 0, SHIP.h, { ay: 0.74 })) { g.fillStyle = '#6a4a2a'; g.fillRect(-160, 0, 320, 44); g.fillRect(-3, -150, 6, 150); }
+    for (const c of S.C) if (c !== S.held) this.cargo(g, c, c.x, 2);
+    g.restore();
+  },
+  draw(g, S) {
+    this.sea(g, S); this.ship(g, S); this.front(g, S);
+    g.save(); g.strokeStyle = 'rgba(220,230,240,.35)'; g.lineWidth = 1; g.beginPath(); for (const [x, y] of S.rain) { g.moveTo(x, y); g.lineTo(x - 5, y + 16); } g.stroke(); g.restore();
+    for (const p of S.splash) { g.fillStyle = `rgba(235,245,250,${p.a})`; g.beginPath(); g.arc(p.x, p.y, 3, 0, 7); g.fill(); }
+    if (S.held) { const [lx] = this.local(S, S.px, S.py), out = Math.abs(lx) > SHIP.deck + 22 || S.py > this.bob(S) + 60;
+      this.cargo(g, S.held, S.px, S.py + S.held.h / 2, S.th);
+      g.save(); g.font = '800 13px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.lineWidth = 4; g.strokeStyle = 'rgba(10,20,25,.7)'; const t = out ? '놓으면 바다로' : '놓으면 이 자리에'; const tx = clamp(S.px, 60, W - 60); g.strokeText(t, tx, S.py - S.held.h - 6); g.fillStyle = out ? '#bfe6ff' : '#f2ead8'; g.fillText(t, tx, S.py - S.held.h - 6); g.restore(); }
+    if (S.wave) { const x = S.wave.dir < 0 ? 34 : W - 34; g.save(); g.font = '900 26px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.lineWidth = 5; g.strokeStyle = 'rgba(10,20,25,.75)'; g.strokeText('!', x, 250); g.fillStyle = '#ffe08a'; g.fillText('!', x, 250);
+      g.font = '800 12px "Noto Sans KR",sans-serif'; g.lineWidth = 4; g.strokeText('큰 파도', x, 270); g.fillText('큰 파도', x, 270); g.restore(); }
+    // 위: 던진 짐, 기울기
+    g.save(); g.font = '800 13px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.fillStyle = '#eef2f4'; g.fillText(`던진 짐 ${S.thrown} / ${THROW}`, 14, 28);
+    const cx = W - 60, cy = 34, r = 26, lim = 0.48; g.lineWidth = 6; g.strokeStyle = 'rgba(255,255,255,.18)'; g.beginPath(); g.arc(cx, cy, r, Math.PI + 0.25, -0.25); g.stroke();
+    g.strokeStyle = 'rgba(255,120,90,.7)'; g.beginPath(); g.arc(cx, cy, r, Math.PI + 0.25, Math.PI + 0.62); g.stroke(); g.beginPath(); g.arc(cx, cy, r, -0.62, -0.25); g.stroke();
+    const a = -Math.PI / 2 + clamp(S.th / lim, -1.15, 1.15) * (Math.PI / 2 - 0.62); g.strokeStyle = Math.abs(S.th) > lim ? '#ff7a5a' : '#f2ead8'; g.lineWidth = 3; g.beginPath(); g.moveTo(cx, cy); g.lineTo(cx + Math.cos(a) * (r + 2), cy + Math.sin(a) * (r + 2)); g.stroke();
+    g.font = '700 10px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.fillStyle = '#eef2f4'; g.fillText('기울기', cx, cy + 14); g.restore();
+    floatMsg(g, S.msg);
+  },
+  end(g, k, S) {
+    this.update(0.016, S); this.sea(g, S, k); this.ship(g, S); this.front(g, S);
+    if (k > 0.35) { g.save(); g.globalAlpha = clamp((k - 0.35) * 2, 0, 1); g.fillStyle = 'rgba(12,20,26,.84)'; g.fillRect(0, 120, W, 96);
+      g.font = '700 16px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#eef3f6'; g.fillText('이제는 안심하라 너희 중 아무도', W / 2, 152); g.fillText('생명에는 아무런 손상이 없겠고 오직 배뿐이리라', W / 2, 176);
+      g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#b8c6cc'; g.fillText('행 27:22', W / 2, 198); g.restore(); }
+  },
+};
+
 export const MINI = { jesus: { e04: magi, e05: egypt, e07: boyJesus, e11: cana, e17: fishing, e22: twelve, e23: rock, e28: bail, e31: loaves, e32: water, e39: stones, e42: sheep, e43: coin, e46: climb, e48: palms, e59: tiberias },
-  david: { d01: herdDavid, d05: sling, d10: arrows, d16: cave, d24: arkDance, d38: templeStones }, moses: { m02: nile, m09: redSea, m12: manna, m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket, a17: prison, a36: wreck, a37: viper }, kings: { k15: carmel, k24: naaman, k25: axe, k26: dothan, k30: lastArrow } };
+  david: { d01: herdDavid, d05: sling, d10: arrows, d16: cave, d24: arkDance, d38: templeStones }, moses: { m02: nile, m09: redSea, m12: manna, m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket, a17: prison, a35: storm, a36: wreck, a37: viper }, kings: { k15: carmel, k24: naaman, k25: axe, k26: dothan, k30: lastArrow } };
 
 /* ---------- 놀이 틀: 소개 → 놀이(제한 시간) → 성공 연출/실패 → 결과 ---------- */
 // host: 모달 안의 상자. fx: { play, pour } (game-audio.js). 끝나면 done({ ok, left, tries })
