@@ -677,7 +677,7 @@ function reveal(e, stars, straight) {
   }
 }
 function cardPlain(e, stars, straight) {
-  const w = (e.words || []).find(x => x.j) || (e.words || [])[0];
+  const w = cardWord(e);
   const s = sheet(`${e.img ? `<div class="img" style="background-image:url('${esc(e.img.src)}')"><span class="stars">${'★'.repeat(stars)}${'☆'.repeat(3 - stars)}</span></div>` : ''}
     <div class="body"><small>${G.idx + 1} / ${G.events.length} · ${esc(placeOf(e).name)}</small><h2>${esc(e.title)}</h2><p class="sub">${esc(e.subtitle || '')}</p>
     ${straight >= SAME * 1.5 ? `<div class="leg"><span>걸은 길 <b>${Math.round(G.legWalked)}km</b></span><span>곧은 길 ${Math.round(straight)}km</span><span>${'★'.repeat(stars)}</span></div>` : ''}
@@ -701,7 +701,10 @@ function finish() {
 }
 // 말씀 카드: 시간 안에 그분을 만난 장면의 말씀을 모은다 (사용자 2026-11). 처음부터 다시 걸어도 지우지 않는다 — 놓친 카드를 채우러 다시 걷게
 const cardKey = () => 'theway-game-cards-' + JID;
-const cardWord = e => (e.words || []).find(x => x.j) || (e.words || [])[0];
+// 카드·말씀 고르기의 말씀: 그분의 말씀(j) 가운데 첫 온전한 문장 — '마리아야.'·'울지 마라.' 같은 부르는 말 한마디는 카드로 너무 짧았다(사용자 2026-11).
+// 그분의 말씀이 모두 짧으면 이 자리의 다른 말씀, 그것도 없으면 가장 긴 것
+const SHORT = 12;
+const cardWord = e => { const W = e.words || []; return W.find(x => x.j && x.text.length >= SHORT) || W.find(x => x.text.length >= SHORT) || [...W].sort((a, b) => b.text.length - a.text.length)[0]; };
 // 카드 점수(사용자 2026-11): 별 하나에 100점 + 만났을 때 남은 시간 1초에 10점. 같은 카드는 더 높은 기록만 남긴다
 const deck = () => { const v = store.get(cardKey(), {}); const d = Array.isArray(v) ? Object.fromEntries(v.map(k => [k, 1])) : v;
   for (const k in d) if (typeof d[k] === 'number') d[k] = { s: d[k], p: d[k] * 100 }; return d; };
@@ -1221,6 +1224,6 @@ function frame(now) {
   drawTags();
 }
 
-if (new URLSearchParams(location.search).has('debug')) window.__game = { G, me, pv, toXZ, goalXZ, steer: (x, z) => { stick.x = x; stick.y = z; }, startLeg: (...a) => startLeg(...a), wetAt: (x, z) => wetAt(x, z), standXZ: () => standXZ(), mini: (id, cb) => playMiniGame(MINI[JID][id], cb || (r => console.log('mini', JSON.stringify(r)))), meet: () => meet() }; // 끝까지 자동으로 걸어 보는 확인용
+if (new URLSearchParams(location.search).has('debug')) window.__game = { G, me, pv, toXZ, goalXZ, steer: (x, z) => { stick.x = x; stick.y = z; }, startLeg: (...a) => startLeg(...a), wetAt: (x, z) => wetAt(x, z), standXZ: () => standXZ(), mini: (id, cb) => playMiniGame(MINI[JID][id], cb || (r => console.log('mini', JSON.stringify(r)))), meet: () => meet(), pick: id => { G.idx = G.events.findIndex(e => e.id === id); pickWord(G.events[G.idx], () => {}); } }; // 끝까지 자동으로 걸어 보는 확인용
 setupUI(); resize();
 requestAnimationFrame(frame);
