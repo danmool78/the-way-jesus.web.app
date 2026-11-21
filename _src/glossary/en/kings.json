@@ -1,0 +1,530 @@
+[
+ {
+  "id": "high-place",
+  "terms": [
+   "high place",
+   "high places"
+  ],
+  "text": "Altar sites set up on hills and mountaintops. After the temple was built they easily became mixed with idol worship, and the prophets rebuked them again and again."
+ },
+ {
+  "id": "burnt-offering",
+  "terms": [
+   "burnt offerings"
+  ],
+  "text": "A sacrifice in which an animal was burned whole on the altar to God, expressing complete devotion."
+ },
+ {
+  "id": "peace-offering",
+  "terms": [
+   "peace offerings"
+  ],
+  "text": "Offerings expressing peace with God and thanks. Part was burned on the altar, and the rest was eaten together by those who brought it."
+ },
+ {
+  "id": "sacrifice",
+  "terms": [
+   "sacrifice",
+   "sacrifices"
+  ],
+  "text": "Worship in which animals or grain were offered to God, presented by priests at the appointed place."
+ },
+ {
+  "id": "ark",
+  "terms": [
+   "ark"
+  ],
+  "text": "A gold-covered wooden chest holding the stone tablets engraved with God's covenant. It showed that God was among his people."
+ },
+ {
+  "id": "cherub",
+  "terms": [
+   "cherubim"
+  ],
+  "text": "The Bible's word for winged angels who guard God's presence. Their figures were carved above the ark and in the Most Holy Place."
+ },
+ {
+  "id": "holy-of-holies",
+  "terms": [
+   "Most Holy Place"
+  ],
+  "text": "The innermost and holiest room of the temple, where the ark was kept. Only the high priest could enter, once a year."
+ },
+ {
+  "id": "sanctuary",
+  "terms": [
+   "sanctuary"
+  ],
+  "text": "A holy place set apart for God; here, the temple."
+ },
+ {
+  "id": "covenant",
+  "terms": [
+   "covenant"
+  ],
+  "text": "The promise made between God and his people: God would protect them, and they would serve him alone."
+ },
+ {
+  "id": "covenant-book",
+  "terms": [
+   "Book of the Covenant",
+   "Book of the Law"
+  ],
+  "text": "The book recording the law God gave through Moses. It was found again in the temple in Josiah's day and read aloud."
+ },
+ {
+  "id": "law",
+  "terms": [
+   "law"
+  ],
+  "text": "The teaching and rules God gave Israel through Moses, the standard for worship and daily life."
+ },
+ {
+  "id": "commandment",
+  "terms": [
+   "commands"
+  ],
+  "text": "Teachings God ordered his people to keep, centered on the Ten Commandments."
+ },
+ {
+  "id": "prophet",
+  "terms": [
+   "prophet",
+   "prophets"
+  ],
+  "text": "A person who received God's word and delivered it to kings and people."
+ },
+ {
+  "id": "man-of-god",
+  "terms": [
+   "man of God"
+  ],
+  "text": "A respectful title for a prophet sent by God."
+ },
+ {
+  "id": "prophets-sons",
+  "terms": [
+   "company of the prophets",
+   "disciples of the prophets"
+  ],
+  "text": "Groups who gathered around a prophet to learn and live together. In the days of Elijah and Elisha there were several in different places."
+ },
+ {
+  "id": "prophecy",
+  "terms": [
+   "prophesies"
+  ],
+  "text": "To prophesy is to deliver the message a prophet received from God. It can foretell the future, but it is often a warning to turn back now."
+ },
+ {
+  "id": "priest",
+  "terms": [
+   "priest",
+   "priests"
+  ],
+  "text": "A person who served between God and the people by offering sacrifices in the temple. Originally only Aaron's descendants from the tribe of Levi could serve."
+ },
+ {
+  "id": "high-priest",
+  "terms": [
+   "high priest"
+  ],
+  "text": "The chief of the priests. Once a year he entered the Most Holy Place to make atonement for the people."
+ },
+ {
+  "id": "levite",
+  "terms": [
+   "tribe of Levi"
+  ],
+  "text": "The tribe of Levi was set apart for the work of the temple. Jeroboam broke this rule and made anyone a priest."
+ },
+ {
+  "id": "tribe",
+  "terms": [
+   "tribe",
+   "tribes"
+  ],
+  "text": "One of the great clans of Israel descended from the twelve sons of Jacob. The nation was made up of twelve tribes."
+ },
+ {
+  "id": "incense",
+  "terms": [
+   "incense"
+  ],
+  "text": "Burning fragrant incense as an offering to a god. The rising smoke stood for prayer going up."
+ },
+ {
+  "id": "spices",
+  "terms": [
+   "spices"
+  ],
+  "text": "Precious fragrant resins and spices, costly goods carried by camel from far away."
+ },
+ {
+  "id": "talent",
+  "terms": [
+   "talents"
+  ],
+  "text": "A heavy unit of weight, about 34 kg. A talent of gold was a fortune."
+ },
+ {
+  "id": "shekel",
+  "terms": [
+   "shekel",
+   "shekels"
+  ],
+  "text": "A unit of weight and of money, about 11 g, used mostly to weigh silver."
+ },
+ {
+  "id": "seah",
+  "terms": [
+   "seah"
+  ],
+  "text": "A dry measure for grain, about 7 liters."
+ },
+ {
+  "id": "baal",
+  "terms": [
+   "Baal"
+  ],
+  "text": "A god the Canaanites believed controlled rain and storms. His worship spread widely in Israel under Ahab and Jezebel."
+ },
+ {
+  "id": "asherah",
+  "terms": [
+   "Asherah"
+  ],
+  "text": "A Canaanite goddess, worshiped through wooden poles or carved images set up as her symbol."
+ },
+ {
+  "id": "pillar",
+  "terms": [
+   "sacred pillars"
+  ],
+  "text": "Standing stones set up as a mark of idol worship. The law said not to set them up but to break them down."
+ },
+ {
+  "id": "idol",
+  "terms": [
+   "idols"
+  ],
+  "text": "Images made of wood, stone, or metal and worshiped as gods. The Bible sees this as the sin of turning away from God."
+ },
+ {
+  "id": "golden-calf",
+  "terms": [
+   "golden calf",
+   "golden calves"
+  ],
+  "text": "A calf-shaped image made of gold. Worshiped in place of God, both in the wilderness and in Jeroboam's time, it became a great sin."
+ },
+ {
+  "id": "bronze-serpent",
+  "terms": [
+   "bronze snake"
+  ],
+  "text": "The bronze snake Moses put on a pole in the wilderness to save the people's lives. Later people worshiped it as an idol, so Hezekiah destroyed it."
+ },
+ {
+  "id": "bronze-sea",
+  "terms": [
+   "bronze Sea"
+  ],
+  "text": "A huge bronze water basin in the courtyard of Solomon's temple, holding water for the priests to wash."
+ },
+ {
+  "id": "wrath",
+  "terms": [
+   "anger",
+   "angered",
+   "Lord was angry"
+  ],
+  "text": "God's great anger when he sees sin."
+ },
+ {
+  "id": "sign",
+  "terms": [
+   "sign"
+  ],
+  "text": "A remarkable event showing that what God has said is true."
+ },
+ {
+  "id": "anoint",
+  "terms": [
+   "anoint",
+   "anointed"
+  ],
+  "text": "A ceremony of pouring olive oil on someone's head to install a king or priest, meaning God had chosen and appointed that person."
+ },
+ {
+  "id": "gentile",
+  "terms": [
+   "foreigner",
+   "foreign"
+  ],
+  "text": "Belonging to peoples other than Israel."
+ },
+ {
+  "id": "assembly",
+  "terms": [
+   "assembly"
+  ],
+  "text": "The whole people gathered in one place to worship God."
+ },
+ {
+  "id": "concubine",
+  "terms": [
+   "concubines"
+  ],
+  "text": "Wives of a king ranked below his official queens."
+ },
+ {
+  "id": "yoke",
+  "terms": [
+   "yoke"
+  ],
+  "text": "A wooden frame laid on the necks of two oxen so they could pull a plow or cart. It can also stand for a heavy burden or oppression."
+ },
+ {
+  "id": "scorpion-whip",
+  "terms": [
+   "scorpions"
+  ],
+  "text": "Thought to be a very painful whip fitted with metal or barbs. It means ruling even more harshly."
+ },
+ {
+  "id": "chariot",
+  "terms": [
+   "chariot",
+   "chariots"
+  ],
+  "text": "A horse-drawn war cart, the strongest weapon of ancient armies."
+ },
+ {
+  "id": "horsemen",
+  "terms": [
+   "horsemen"
+  ],
+  "text": "Soldiers on horseback. 'The chariots and horsemen of Israel' meant the strength that protected the nation."
+ },
+ {
+  "id": "servant",
+  "terms": [
+   "his servant"
+  ],
+  "text": "An attendant who stays close by to run errands and serve."
+ },
+ {
+  "id": "yoke-of-oxen",
+  "terms": [
+   "pairs of oxen",
+   "pair of oxen"
+  ],
+  "text": "Two oxen sharing one yoke and pulling together as a team."
+ },
+ {
+  "id": "sackcloth",
+  "terms": [
+   "sackcloth"
+  ],
+  "text": "Clothing woven from rough hair, worn to show grief or repentance."
+ },
+ {
+  "id": "fast",
+  "terms": [
+   "fast",
+   "fasted"
+  ],
+  "text": "Going without food for a set time to cling to God, a sign of grief or repentance."
+ },
+ {
+  "id": "threshing-floor",
+  "terms": [
+   "threshing floor"
+  ],
+  "text": "A wide, flat area where stalks of grain were beaten to loosen the kernels. Near a city gate it also served as a meeting place."
+ },
+ {
+  "id": "gird",
+  "terms": [
+   "tucked"
+  ],
+  "text": "Tying up a long robe with a belt, getting ready to run or work."
+ },
+ {
+  "id": "still-small",
+  "terms": [
+   "still, small voice"
+  ],
+  "text": "A very quiet, gentle sound. Elijah met God not in the mighty wind but in a soft voice."
+ },
+ {
+  "id": "leprosy",
+  "terms": [
+   "leprosy"
+  ],
+  "text": "In the Bible, leprosy covered not only today's Hansen's disease but many serious skin diseases. Those who had it had to live outside the town."
+ },
+ {
+  "id": "commander",
+  "terms": [
+   "commander of the army"
+  ],
+  "text": "A high-ranking general who led an army."
+ },
+ {
+  "id": "beam",
+  "terms": [
+   "beam"
+  ],
+  "text": "A thick timber laid across between posts to hold up a roof."
+ },
+ {
+  "id": "inner-room",
+  "terms": [
+   "inner room"
+  ],
+  "text": "A small room behind a larger one, out of sight of others."
+ },
+ {
+  "id": "watchman",
+  "terms": [
+   "watchman"
+  ],
+  "text": "A person who kept watch from a wall or tower to guard the city."
+ },
+ {
+  "id": "watchtower",
+  "terms": [
+   "tower"
+  ],
+  "text": "A tall structure built for watching and guarding from far off."
+ },
+ {
+  "id": "harlotry",
+  "terms": [
+   "idolatry"
+  ],
+  "text": "The original word means sexual unfaithfulness outside marriage. The Bible often uses it as a picture of worshiping idols, being unfaithful to God."
+ },
+ {
+  "id": "sorcery",
+  "terms": [
+   "witchcraft"
+  ],
+  "text": "Using magic such as spells and fortune-telling. The law forbade it."
+ },
+ {
+  "id": "eunuch",
+  "terms": [
+   "eunuchs"
+  ],
+  "text": "Palace officials who served the king and queen closely."
+ },
+ {
+  "id": "centurion",
+  "terms": [
+   "commanders of hundreds"
+  ],
+  "text": "Officers each leading about a hundred soldiers."
+ },
+ {
+  "id": "throne",
+  "terms": [
+   "throne"
+  ],
+  "text": "The seat where a king sits, standing for royal power."
+ },
+ {
+  "id": "tribute",
+  "terms": [
+   "tribute"
+  ],
+  "text": "Wealth paid every year to a stronger nation as a sign of submission."
+ },
+ {
+  "id": "scribe",
+  "terms": [
+   "secretary"
+  ],
+  "text": "An official in charge of writing and records. In this period it was a high office handling the palace's documents."
+ },
+ {
+  "id": "recorder",
+  "terms": [
+   "recorder"
+  ],
+  "text": "An official who recorded and announced the affairs of the palace."
+ },
+ {
+  "id": "aramaic",
+  "terms": [
+   "Aramaic"
+  ],
+  "text": "The language of the Arameans. It was used by diplomats of many nations at the time, so ordinary people of Judah did not understand it well."
+ },
+ {
+  "id": "blaspheme",
+  "terms": [
+   "insulted"
+  ],
+  "text": "Words or actions that dishonor God or treat him with contempt."
+ },
+ {
+  "id": "zion",
+  "terms": [
+   "Zion"
+  ],
+  "text": "A name for Jerusalem, especially the hill where the temple stood; the place where God dwells."
+ },
+ {
+  "id": "angel-of-lord",
+  "terms": [
+   "angel of the Lord"
+  ],
+  "text": "An angel sent by God to announce or carry out his will."
+ },
+ {
+  "id": "passover",
+  "terms": [
+   "Passover"
+  ],
+  "text": "Israel's greatest festival, remembering the night of rescue from Egypt. Families killed a lamb and ate it together."
+ },
+ {
+  "id": "judges",
+  "terms": [
+   "judges"
+  ],
+  "text": "The leaders God raised up in times of crisis to guide Israel before there were kings."
+ },
+ {
+  "id": "medium",
+  "terms": [
+   "mediums"
+  ],
+  "text": "People who claimed to call up the spirits of the dead to tell fortunes. The law strictly forbade it."
+ },
+ {
+  "id": "guard-captain",
+  "terms": [
+   "commander of the guard",
+   "captain of the guard"
+  ],
+  "text": "The commander of the troops who guarded the king."
+ },
+ {
+  "id": "siege-ramp",
+  "terms": [
+   "siege ramps"
+  ],
+  "text": "Mounds of earth piled up to a city wall during a siege, so that siege weapons could be moved up them."
+ },
+ {
+  "id": "tribulation",
+  "terms": [
+   "distress"
+  ],
+  "text": "Great suffering and hardship."
+ }
+]
