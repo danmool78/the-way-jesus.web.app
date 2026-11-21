@@ -355,7 +355,7 @@ export const B = {
       silas: ['silas', 1.6, -0.3, -1.0],
       tim: ['timothy', 1.25, -0.15, -1.0],
       luke: ['luke', 1.55, -0.05, -1.0, { gaze: false }],
-      lydia: ['lydia', -0.4, 0.28, 1.0, { pose: 'sit-ground' }],
+      lydia: ['lydia', -0.49, 0.29, 1.0, { pose: 'sit-ground' }],
       w1: ['greekW', -0.75, 0.02, 1.0, { pose: 'sit-ground' }],
       w2: ['woman', -0.7, 0.45, 1.1, { pose: 'sit-ground' }],
       maid: ['woman2', -0.95, 0.3, 1.1, { pose: 'sit-ground', gaze: false }],
@@ -375,7 +375,7 @@ export const B = {
       'p1.0': [['paul', 'idle', { x: 0.25, z: 0.12, look: -1.3 }], ['silas', 'idle', { x: 0.5, z: -0.08 }], ['tim', 'idle', { x: 0.5, z: 0.4 }], ['luke', 'idle', { x: 0.8, z: 0.2 }],
         ['lydia', 'listen', { look: 1.1 }], ['w1', 'listen', { look: 1.1, delay: 400 }], ['w2', 'idle', { look: 1.2, delay: 700 }]],
       // 일행은 앉아서 말씀을 전한다
-      'p1.1': [['paul', 'sit-speak', { x: 0.2, z: 0.12, look: -1.3, to: 'lydia' }], ['silas', 'sit-ground', { x: 0.44, z: -0.08, look: -1.3 }], ['tim', 'sit-ground', { x: 0.45, z: 0.42, look: -1.3 }],
+      'p1.1': [['paul', 'sit-speak', { x: 0.18, z: 0.13, look: -1.3, to: 'lydia' }], ['silas', 'sit-ground', { x: 0.46, z: -0.09, look: -1.3 }], ['tim', 'sit-ground', { x: 0.45, z: 0.42, look: -1.3 }],
         ['w2', 'listen'], ['maid', 'listen']],
       // 두아디라에서 온 자색 옷감 장수 루디아
       'p1.2': [['lydia', 'listen', { look: 1.0 }]],
@@ -397,13 +397,13 @@ export const B = {
         ['tim', 'idle', { show: 0, delay: 1100 }], ['luke', 'idle', { show: 0, delay: 1200 }], ['w1', 'pray'], ['w2', 'pray'], ['@env', 'dusk']],
       w0: [['@env', 'day'], ['heart', null, { show: 1 }], ['water', 'idle'], ['paul', 'sit-speak', { show: 1, x: 0.2, z: 0.2, look: -1.3, to: 'lydia' }], ['silas', 'sit-ground', { show: 1, x: 0.42, z: -0.07, look: -1.3 }],
         ['tim', 'sit-ground', { show: 1, x: 0.45, z: 0.42, look: -1.3 }], ['luke', 'idle', { show: 1, x: 0.75, z: 0.2, look: -1.3 }], ['lydia', 'listen', { show: 1, x: -0.4, z: 0.28, look: 1.0 }],
-        ['maid', 'sit-ground', { show: 1, x: -0.98, z: 0.28, look: 1.1 }], ['w1', 'listen'], ['w2', 'listen']],
+        ['maid', 'sit-ground', { show: 1, x: -0.99, z: 0.28, look: 1.1 }], ['w1', 'listen'], ['w2', 'listen']],
       w1: [['heart', null, { show: 0 }], ['lydia', 'speak', { x: -0.55, z: 0.25, look: 1.3, to: 'paul' }], ['paul', 'listen', { x: -0.15, z: 0.25, look: -1.3 }], ['maid', 'idle', { x: -0.85, z: 0.5, look: 1.2 }],
         ['silas', 'idle', { x: 0.1, z: 0.0, look: -1.3 }], ['tim', 'idle', { x: 0.15, z: 0.45, look: -1.3 }]],
       w2: [['@env', 'dusk'], ['lydia', 'listen', { look: 1.3 }], ['paul', 'speak', { to: 'lydia' }], ['w1', 'pray'], ['w2', 'pray']],
       end: [['@env', 'day'], ['heart', null, { show: 1 }], ['water', 'idle'], ['paul', 'sit-speak', { show: 1, x: 0.2, z: 0.2, look: -1.3, to: 'lydia' }], ['silas', 'sit-ground', { show: 1, x: 0.42, z: -0.07, look: -1.3 }],
         ['tim', 'sit-ground', { show: 1, x: 0.45, z: 0.42, look: -1.3 }], ['luke', 'idle', { show: 1, x: 0.75, z: 0.2, look: -1.3 }], ['lydia', 'listen', { show: 1, x: -0.4, z: 0.28, look: 1.0 }],
-        ['maid', 'sit-ground', { show: 1, x: -0.97, z: 0.28, look: 1.1 }], ['w1', 'listen', { show: 1 }], ['w2', 'listen', { show: 1 }]],
+        ['maid', 'sit-ground', { show: 1, x: -0.98, z: 0.28, look: 1.1 }], ['w1', 'listen', { show: 1 }], ['w2', 'listen', { show: 1 }]],
     },
   },
 
