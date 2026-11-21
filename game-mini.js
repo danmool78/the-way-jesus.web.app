@@ -2294,8 +2294,97 @@ const manna = {
   },
 };
 
+/* ---------- 엔게디 굴의 옷자락 (삼상 24:3–7): 사울이 돌아보지 않을 때만 — 살금살금 ---------- */
+// 누르고 있으면 다윗이 굴 안쪽 어둠에서 사울 쪽으로 살금살금 다가가고, 떼면 멈춘다. 사울은 가끔 뒤척이다(먼저 '음…' 하고 고개가 움찔) 굴 안쪽을 돌아본다.
+// 돌아보는 동안 움직이면 의심이 찬다. 겉옷 자락에 닿으면 그가 돌아보지 않을 때 눌러 자락을 베고(24:4), 다시 어둠 속으로 돌아오면 성공
+const CAVE_DARK = 70, ROBE_X = 226;
+const cave = {
+  title: '엔게디 굴의 옷자락', task: '사울 몰래 겉옷 자락을 베고 돌아오기',
+  ask: ['사울이 바로 우리가 숨은 굴로 들어왔단다. 사람들은 하나님이 원수를 내 손에 넘기셨다고 속삭였지.', '그러나 여호와께서 기름 부으신 이를 해칠 수는 없어 — 겉옷 자락만 가만히 베고 돌아오너라. 그가 돌아볼 땐 멈추고!'],
+  quote: '다윗이 일어나서 사울의 겉옷 자락을 가만히 베니라', ref: '삼상 24:4',
+  help: '누르고 있으면 살금살금 다가가고, 떼면 멈춰요. 사울이 "음…" 하고 움찔하면 곧 돌아봐요 — 그때는 멈춰요.<br>겉옷 자락에 닿으면 눌러서 베고, 다시 왼쪽 어둠까지 돌아와요.',
+  seconds: 22,
+  init() { return { x: 36, hold: false, phase: 'go', sus: 0, st: 'calm', stT: rnd(1.6, 2.6), t: 0, msg: null, cut: 0, stepT: 0, look: 0, chips: [] }; },
+  update(dt, S) {
+    S.t += dt; if (S.msg) S.msg.at -= dt; S.cut = Math.max(0, S.cut - dt);
+    // 사울: 편히 있음 → 뒤척임(0.65초, 미리 알림) → 돌아봄(1.0–1.8초) → 편히
+    if ((S.stT -= dt) <= 0) {
+      if (S.st === 'calm') { S.st = 'stir'; S.stT = 0.45; S.fx.play('hum'); }
+      else if (S.st === 'stir') { if (Math.random() < 0.25) { S.st = 'calm'; S.stT = rnd(0.8, 1.6); } else { S.st = 'look'; S.stT = rnd(1.0, 1.8); } } // 뒤척이기만 하고 마는 때도 있다
+      else { S.st = 'calm'; S.stT = rnd(1.1, 2.4) / (1 + S.t * 0.015); }
+    }
+    S.look += ((S.st === 'look' ? 1 : 0) - S.look) * Math.min(1, dt * 8);
+    const goal = S.phase === 'go' ? ROBE_X : CAVE_DARK - 40, dir = Math.sign(goal - S.x);
+    if (S.hold && S.phase !== 'cut') { S.x += dir * 40 * dt; if ((S.stepT -= dt) <= 0) { S.stepT = 0.32; S.fx.play('creep'); } }
+    if (S.phase === 'go' && S.x >= ROBE_X) { S.x = ROBE_X; S.phase = 'cut'; S.hold = false; S.msg = { t: '지금 — 눌러서 자락을 베요', c: '#ffe29a', at: 1.4, x: 220, y: 220 }; }
+    // 의심: 돌아보는 눈길 안에서 움직이면 빠르게, 가만히 있어도 밝은 곳(굴 어귀 가까이)이면 천천히
+    const near = clamp((S.x - CAVE_DARK) / (ROBE_X - CAVE_DARK), 0, 1);
+    if (S.look > 0.5) S.sus += ((S.hold ? 1.4 : 0) + near * 0.12) * S.look * dt; else S.sus = Math.max(0, S.sus - 0.08 * dt);
+    S.sus = Math.min(1, S.sus);
+    for (const c of S.chips) { c.vy += 300 * dt; c.x += c.vx * dt; c.y += c.vy * dt; c.r += c.vr * dt; if (c.y > 420) { c.y = 420; c.vy = 0; c.vx *= 0.8; c.vr = 0; } }
+  },
+  down(x, y, S) {
+    if (S.phase === 'cut') {
+      if (S.look > 0.4) { S.sus = Math.min(1, S.sus + 0.5); S.fx.play('miss'); S.msg = { t: '돌아보고 있어요!', c: '#ffb38a', at: 0.8, x: 240, y: 220 }; return; }
+      S.phase = 'back'; S.cut = 0.6; S.fx.play('snip'); S.chips.push({ x: ROBE_X - 4, y: 400, vx: -30, vy: -60, r: 0, vr: -2 });
+      S.msg = { t: '자락을 베었어요 — 이제 돌아가요', c: '#ffe29a', at: 1.3, x: 200, y: 220 }; return; }
+    S.hold = true; },
+  up(S) { S.hold = false; },
+  key(k, S) { if (k === ' ' || k === 'ArrowRight' || k === 'ArrowLeft') { if (S.phase === 'cut') this.down(0, 0, S); else { S.hold = true; clearTimeout(S._kt); S._kt = setTimeout(() => S.hold = false, 160); } return; } return false; },
+  won: S => S.phase === 'back' && S.x <= CAVE_DARK - 38,
+  lost: S => S.sus >= 1,
+  failText: S => S.sus >= 1 ? '사울이 알아챘어요' : '사울이 굴을 나갔어요',
+  draw(g, S) {
+    // 굴 안: 오른쪽 어귀로 빛이 들고, 왼쪽 안쪽은 캄캄
+    g.fillStyle = '#120d0a'; g.fillRect(0, 0, W, H);
+    const lg = g.createLinearGradient(0, 0, W, 0); lg.addColorStop(0, 'rgba(0,0,0,0)'); lg.addColorStop(0.45, 'rgba(120,90,60,.25)'); lg.addColorStop(1, 'rgba(255,220,160,.55)'); g.fillStyle = lg; g.fillRect(0, 0, W, H);
+    g.fillStyle = '#f2dca8'; g.beginPath(); g.moveTo(W, 120); g.quadraticCurveTo(356, 220, 380, 420); g.lineTo(W, 420); g.fill(); // 굴 어귀의 바깥 빛
+    g.fillStyle = '#2a1e16'; g.beginPath(); g.moveTo(0, 0); g.lineTo(W, 0); g.lineTo(W, 110); g.quadraticCurveTo(300, 70, 220, 96); g.quadraticCurveTo(120, 120, 0, 90); g.fill(); // 천장
+    g.beginPath(); g.moveTo(0, 420); g.lineTo(W, 420); g.lineTo(W, H); g.lineTo(0, H); g.fill(); // 바닥
+    g.fillStyle = 'rgba(255,230,190,.06)'; for (let i = 0; i < 18; i++) { g.beginPath(); g.ellipse((i * 61) % W, 426 + (i * 13) % 70, 14 + (i % 4) * 5, 4, 0, 0, 7); g.fill(); } // 바닥 돌
+    g.fillStyle = '#1e1610'; for (let i = 0; i < 7; i++) { g.beginPath(); g.moveTo(30 + i * 52, 96 - (i % 2) * 10); g.lineTo(44 + i * 52, 140 + (i % 3) * 16); g.lineTo(56 + i * 52, 96); g.fill(); } // 종유석
+    // 안쪽 어둠 속 다윗의 사람들 — 눈만 반짝
+    g.fillStyle = 'rgba(0,0,0,.55)'; g.fillRect(0, 90, CAVE_DARK, 330);
+    for (let i = 0; i < 5; i++) { const ex = 12 + (i % 3) * 18, ey = 300 + i * 22; if (Math.sin(S.t * 0.7 + i * 3) > -0.8) { g.fillStyle = 'rgba(255,240,200,.55)'; g.fillRect(ex, ey, 2, 1.5); g.fillRect(ex + 5, ey, 2, 1.5); } }
+    // 사울 — 어귀 가까이 등을 돌리고 앉아 있다. 겉옷 자락이 안쪽으로 펼쳐져 있다
+    const sx = 324, sy = 418, turn = S.look, stir = S.st === 'stir' ? Math.sin(S.t * 40) * 1.5 : 0;
+    g.save(); g.translate(sx, sy); g.scale(1.6, 1.6);
+    g.fillStyle = '#6a2a3a'; g.beginPath(); g.moveTo(-20, 0); g.quadraticCurveTo(-24, -40, 0, -52); g.quadraticCurveTo(22, -40, 18, 0); g.fill(); // 겉옷
+    g.fillStyle = S.cut ? '#8a3a4a' : '#6a2a3a'; g.beginPath(); g.moveTo(-18, -4); g.quadraticCurveTo(-46, 2, -60, 8); g.lineTo(-22, 8); g.fill(); // 펼쳐진 자락
+    if (S.phase === 'back' || S.phase === 'done') { g.fillStyle = '#120d0a'; g.beginPath(); g.moveTo(-60, 8); g.lineTo(-50, 2); g.lineTo(-44, 8); g.fill(); } // 베어 낸 귀퉁이
+    g.fillStyle = '#d8b24a'; g.fillRect(-14, -40, 28, 3);
+    g.fillStyle = '#c99a6a'; g.beginPath(); g.arc(-turn * 6 + stir, -60, 8, 0, 7); g.fill(); // 머리 — 돌아보면 안쪽(왼쪽)으로
+    g.fillStyle = '#3a2416'; g.beginPath(); g.arc(-turn * 6 + 3 * (1 - turn) + stir, -62, 8.4, Math.PI * (0.9 - turn * 0.6), Math.PI * (2.1 - turn * 0.6)); g.fill();
+    g.fillStyle = '#e0b850'; g.fillRect(-7 - turn * 6 + stir, -72, 14, 4); for (let k = 0; k < 3; k++) g.fillRect(-6 + k * 5 - turn * 6 + stir, -76, 2.5, 4); // 왕관
+    if (turn > 0.3) { g.fillStyle = '#fff'; g.fillRect(-12 - turn * 4, -61, 2.4, 2); } // 눈
+    g.restore();
+    if (S.look > 0.05) { const hx = sx - 10, hy = sy - 96, cone = g.createRadialGradient(hx, hy, 4, hx, hy, 280); cone.addColorStop(0, `rgba(255,120,90,${0.28 * S.look})`); cone.addColorStop(1, 'rgba(255,120,90,0)');
+      g.fillStyle = cone; g.beginPath(); g.moveTo(hx, hy); g.lineTo(30, 170); g.lineTo(30, 440); g.closePath(); g.fill(); } // 눈길
+    if (S.st === 'stir') { g.font = '800 14px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.fillStyle = '#ffd08a'; g.fillText('음…', sx - 8, sy - 132); }
+    for (const c of S.chips) { g.save(); g.translate(c.x, c.y); g.rotate(c.r); g.fillStyle = '#6a2a3a'; g.beginPath(); g.moveTo(-6, -3); g.lineTo(7, -2); g.lineTo(3, 4); g.fill(); g.restore(); }
+    // 다윗 — 살금살금(무릎을 굽힌 실루엣), 칼
+    const dx = S.x, dy = 420, bob = S.hold ? Math.abs(Math.sin(S.t * 8)) * 2 : 0, lit = clamp((dx - CAVE_DARK) / 220, 0, 1);
+    g.save(); g.translate(dx, dy - bob); g.scale(S.phase === 'back' ? -2.1 : 2.1, 2.1);
+    g.fillStyle = `rgb(${30 + lit * 60},${24 + lit * 46},${20 + lit * 34})`;
+    g.beginPath(); g.ellipse(0, -16, 7, 11, 0.5, 0, 7); g.fill(); g.beginPath(); g.arc(6, -28, 5, 0, 7); g.fill();
+    g.fillRect(-5, -8, 3, 8); g.fillRect(3, -6, 3, 6);
+    g.strokeStyle = `rgba(220,220,230,${0.3 + lit * 0.5})`; g.lineWidth = 1.4; g.beginPath(); g.moveTo(8, -16); g.lineTo(16, -20); g.stroke(); // 칼
+    g.restore();
+    if (S.phase === 'cut') { g.strokeStyle = `rgba(255,226,150,${0.6 + 0.4 * Math.sin(S.t * 10)})`; g.lineWidth = 2; g.beginPath(); g.arc(ROBE_X - 2, 420, 20, 0, 7); g.stroke(); }
+    // 의심 막대 + 할 일
+    g.save(); g.font = '800 13px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.fillStyle = '#efe2cc'; g.fillText(S.phase === 'go' ? '겉옷 자락까지 살금살금' : S.phase === 'cut' ? '자락을 베어요' : '어둠 속으로 돌아가요', 14, 26);
+    g.fillText('의심', 14, 50); g.fillStyle = 'rgba(255,255,255,.15)'; g.fillRect(50, 40, 100, 12); g.fillStyle = S.sus > 0.66 ? '#ff7a5a' : '#ffb36a'; g.fillRect(50, 40, 100 * S.sus, 12); g.restore();
+    floatMsg(g, S.msg);
+  },
+  end(g, k, S) { S.st = 'calm'; S.look = 0; S.hold = false; this.update(0.016, S); this.draw(g, S);
+    if (k > 0.3) { g.save(); g.globalAlpha = clamp((k - 0.3) * 2, 0, 1); g.fillStyle = 'rgba(20,12,8,.82)'; g.fillRect(0, 140, W, 84);
+      g.font = '700 16px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#fff0d6'; g.fillText('내 손을 들어 그를 치는 것은', W / 2, 170); g.fillText('여호와께서 금하시는 것이니', W / 2, 194);
+      g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#e6cfa6'; g.fillText('삼상 24:6', W / 2, 213); g.restore(); }
+  },
+};
+
 export const MINI = { jesus: { e04: magi, e11: cana, e17: fishing, e22: twelve, e23: rock, e28: bail, e31: loaves, e32: water, e39: stones, e42: sheep, e43: coin, e46: climb, e48: palms, e59: tiberias },
-  david: { d01: herdDavid, d05: sling, d24: arkDance, d38: templeStones }, moses: { m09: redSea, m12: manna, m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket }, kings: { k15: carmel } };
+  david: { d01: herdDavid, d05: sling, d16: cave, d24: arkDance, d38: templeStones }, moses: { m09: redSea, m12: manna, m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket }, kings: { k15: carmel } };
 
 /* ---------- 놀이 틀: 소개 → 놀이(제한 시간) → 성공 연출/실패 → 결과 ---------- */
 // host: 모달 안의 상자. fx: { play, pour } (game-audio.js). 끝나면 done({ ok, left, tries })
