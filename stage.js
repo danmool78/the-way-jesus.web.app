@@ -186,6 +186,34 @@ Object.assign(LIKE, {
   ahimaaz: ['timothy', { hue: 30 }], cushite: ['timothy', { hue: 0, skin: 0.5 }], hushai: ['jethro', { hue: 220, skin: 1.05 }], shimei: ['thomas', { hue: 330, skin: 0.85 }],
   shobi: ['barnabas', { hue: 40, skin: 0.9 }], araunah: ['fisherman', { hue: 40 }], abishag: ['mary-bethany', { hue: 30, skin: 1.05 }], adonijah: ['absalom', { hue: 200, skin: 1.03 }],
 });
+// 열왕기 여정 (사용자 2026-11) — 왕·선지자는 그 사람의 모델(OWN), 나머지는 비슷한 모델에 옷 색·살갗을 달리.
+// 왕관 모델(솔로몬·여로보암·르호보암·아합·히스기야·요시야·이세벨)은 왕·왕비에게만 — 왕이 되기 전 여로보암, 변장한 아합은 왕관 없는 모델로.
+// 앗수르·바벨론·아람 군사는 골리앗·요압(투구)에 그 나라 빛, 애굽 사람은 흰 세마포(빌라도 흰옷)
+Object.assign(OWN, { solomonK: 'solomon', solomonO: 'solomon', rehoboam: 'rehoboam', jeroboamK: 'jeroboam', ahab: 'ahab', jezebel: 'jezebel', elijahK: 'elijah',
+  elisha: 'elisha', elishaM: 'elisha', elishaO: 'elisha', ahijah: 'ahijah', ahijahT: 'ahijah', hezekiah: 'hezekiah', isaiah: 'isaiah', josiah: 'josiah', josiahA: 'josiah', pharaoh: 'pharaoh' });
+Object.assign(LIKE, {
+  jeroboam: ['andrew', { hue: 170, skin: 1.02 }], princess: ['jezebel', { hue: 40, skin: 1.08 }], wifeM: ['michal', { hue: 330 }], wifeS: ['lydia', { hue: 300, skin: 0.9 }],
+  egyptian: ['pilate', { white: true, skin: 0.75 }], egysoldier: ['goliath', { hue: 40, skin: 0.75 }], priest: ['lazarus', { skin: 1.08 }],
+  mother1: ['pilgrim-woman', '#8e6d4e'], mother2: ['woman', { hue: 260 }], guardJ: ['joab', { hue: 320 }], courtier: ['timothy', { hue: 300, skin: 1.02 }],
+  sheba: ['jezebel', { hue: 40, skin: 0.6 }], shebamaid: ['zipporah', { hue: 30, skin: 0.6 }], shebaman: ['jethro', { hue: 40, skin: 0.6 }],
+  godman: ['samuel', { hue: 40 }], oldprophet: ['jethro', { plain: true }], queenN: ['jezebel', { hue: 180 }], jerowife: ['pilgrim-woman', '#5e564a'],
+  baalprophet: ['caiaphas', { hue: 20, sat: 1.4, skin: 0.85 }], baalprophet2: ['pharisee', { hue: 0, skin: 0.9 }],
+  widow: ['mary', { plain: true }], widowson: ['david', { plain: true, skin: 1.05 }], servantE: ['timothy', { hue: 30 }],
+  ahabS: ['ahab', { plain: true }], naboth: ['shepherd', { hue: 90 }], scoundrel: ['judas', { hue: 30, skin: 0.9 }], israelK: ['joshua', { hue: 170 }],
+  jehoshaphat: ['rehoboam', { hue: 40, skin: 1.05 }], zedekiahF: ['caiaphas', { hue: 170 }], falseprophet: ['pharisee', { hue: 170, skin: 1.05 }], micaiah: ['nathan', { hue: 30, skin: 1.03 }],
+  ahabA: ['joab', { hue: 180 }], prophetson: ['andrew', { hue: 40 }], prophetson2: ['thomas', { hue: 60, skin: 0.9 }], gehazi: ['luke', { hue: 30 }],
+  shunammite: ['mary-bethany', { hue: 30 }], shunamhus: ['jethro', { plain: true, skin: 1.05 }], shunamboy: ['david', { hue: 60, skin: 1.05 }],
+  naaman: ['joab', { hue: 60, skin: 0.85 }], naamanH: ['lazarus', { skin: 0.85 }], arameanW: ['rahab', { hue: 60, skin: 0.85 }], maid: ['girl'],
+  aramean: ['joshua', { hue: 60, skin: 0.82 }], aramean2: ['joab', { hue: 80, skin: 0.8 }], aramK: ['ahab', { hue: 80, skin: 0.85 }], obadiah: ['nicodemus', { hue: 170 }],
+  leper: ['pilgrim-man', { plain: true, skin: 0.9 }], jehu: ['joab', { skin: 1.05 }], joramK: ['jeroboam', { hue: 40 }], eunuch: ['timothy', { plain: true, skin: 0.8 }],
+  athaliah: ['jezebel', { hue: 180, skin: 1.05 }], jehosheba: ['miriam', { hue: 40 }], jehoiada: ['aaron'], joashY: ['david', { hue: 300 }], joashboy: ['david', { hue: 300 }],
+  joashI: ['rehoboam', { hue: 60 }], hoshea: ['jeroboam', { plain: true }], assyrian: ['goliath', { hue: 220, sat: 0.7, skin: 0.85 }], assyrian2: ['joab', { hue: 220, skin: 0.85 }],
+  exile: ['pilgrim-man', { plain: true }], exileW: ['pilgrim-woman', '#5a5048'], rabshakeh: ['caiaphas', { hue: 340, skin: 0.85 }],
+  eliakim: ['nicodemus', { hue: 300 }], shebna: ['pharisee', { hue: 30 }], hezekiahS: ['hezekiah', { plain: true }], babenvoy: ['jethro', { hue: 50, skin: 0.8 }],
+  hilkiah: ['aaron', { hue: 30, skin: 1.03 }], shaphan: ['luke', { hue: 60 }], huldah: ['miriam', { hue: 200 }], neco: ['pharaoh', { hue: 30 }],
+  babking: ['hezekiah', { hue: 50, skin: 0.8 }], babylonian: ['goliath', { hue: 200, skin: 0.85 }], babylonian2: ['joab', { hue: 200, skin: 0.85 }],
+  zedekiah: ['josiah', { skin: 1.03 }], gedaliah: ['nicodemus', { hue: 100 }], jehoiachin: ['pilgrim-man', { plain: true, skin: 1.05 }], jehoiachinR: ['rehoboam', { hue: 300 }],
+});
 const dress = ([n, c]) => c === 'plain' ? plain(ready[n], n) : c && typeof c === 'object' ? restyle(ready[n], n, c) : c ? tinted(ready[n], n, c) : ready[n];
 // 한 장면에 같은 모델이 또 서면 옷 색상·살갗이 눈에 띄게 다른 차림을 골라 입힌다 — 같은 옷·같은 살갗의 같은 사람이 둘셋씩 섰다(사용자 2026-11).
 // 배역과 군중(여러 무리)을 한 장부(taken: 모델 이름 → 이미 입힌 차림들)로 함께 센다 — 무리마다 따로 세니 두 무리에 쌍둥이가 섰다
@@ -806,10 +834,10 @@ let bigNow = 1;
 const floorAt = (x, z, self) => Math.max(-Infinity, ...Object.values(props).filter(f => f.floor && f !== self && f.heightAt(x, z) > 0).map(f => f.lift.position.y));
 // 땅에 붙은 소품: 지형과 같은 고정 축척에 둔다. 나머지(사람 곁의 십자가·배·짐승·상·바구니…)는 사람과 함께 커진다
 // 바닥이 평평한 건물: 가운데 땅 높이에 앉히면 비탈 위쪽이 땅에 묻힌다(골짜기 바닥의 실로암 못) — 바닥 네 귀퉁이 가운데 가장 높은 땅에 앉힌다
-const FLAT = new Set(['hall', 'roof', 'gatetower', 'couch', 'pool', 'house', 'well', 'synagogue', 'temple', 'gate', 'walls', 'cliffshrine', 'council', 'synahall', 'bema', 'schola', 'aula', 'theater', 'upperroom3']);
+const FLAT = new Set(['hall', 'ivorythrone', 'twothrones', 'roomhouse', 'kwall', 'stemple', 'roof', 'gatetower', 'couch', 'pool', 'house', 'well', 'synagogue', 'temple', 'gate', 'walls', 'cliffshrine', 'council', 'synahall', 'bema', 'schola', 'aula', 'theater', 'upperroom3']);
 // 땅에 까는 얇은 판(모래·풀밭): 가운데 땅 높이에 두면 비탈 아래쪽에 선 사람의 다리를 판이 덮어 발만 보였다(가드 성문, 2026-11) — 가장 낮은 귀퉁이에 깐다(높은 쪽은 지형 밑으로 숨는다)
 const COVER = new Set(['sand', 'grass', 'field', 'flowers', 'rocks']); // 바위도 낮은 쪽에 — 비탈 위쪽이 조금 묻히는 편이 떠 있는 것보다 낫다
-const FIXED = new Set(['hall', 'roof', 'gatetower', 'couch', 'water', 'grass', 'hill', 'tomb', 'temple', 'house', 'rocks', 'figtree', 'synagogue', 'well', 'pool', 'flowers', 'gate', 'field', 'cliffshrine', 'palm', 'walls', 'olive', 'star', 'host', 'rain', 'council', 'synahall', 'bema', 'schola', 'aula', 'theater', 'upperroom3']);
+const FIXED = new Set(['hall', 'ivorythrone', 'twothrones', 'roomhouse', 'kwall', 'stemple', 'roof', 'gatetower', 'couch', 'water', 'grass', 'hill', 'tomb', 'temple', 'house', 'rocks', 'figtree', 'synagogue', 'well', 'pool', 'flowers', 'gate', 'field', 'cliffshrine', 'palm', 'walls', 'olive', 'star', 'host', 'rain', 'council', 'synahall', 'bema', 'schola', 'aula', 'theater', 'upperroom3']);
 // '@at' 명령: 3D 지형에서만 무대 바닥을 다른 실제 지점으로 옮긴다 — 무대 (x, z) 자리가 그 위경도에 오도록.
 // 나사렛 회당에서 낭떠러지로 끌고 가는 대목처럼, 이야기가 근처의 실제 지형으로 옮겨 갈 때. 2D 무대는 그대로 둔다
 let moveAt = null, atSnap = true, lastHere = null;
