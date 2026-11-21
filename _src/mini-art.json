@@ -650,5 +650,29 @@
    ],
    "p": "The apostle Paul standing on the beach, full body, side view facing left, soaked robe, one arm stretched out pointing to the sea, encouraging others. Same character as the second reference image."
   }
+ },
+ "d10": {
+  "bg": {
+   "bg": true,
+   "p": "A wide open grassy field near Gibeah in the early morning, seen from the side: flat green-gold meadow across the lower third, a large grey boulder (the stone Ezel) at the far left edge, gentle hills and a pale sky above. No people."
+  },
+  "jonathan": {
+   "h": 420,
+   "ref": [
+    "_src/cards/jonathan.png"
+   ],
+   "p": "Prince Jonathan, full body side view facing right, drawing a longbow with an arrow aimed up and to the right, royal tunic and cloak, determined face. Same character as the second reference image."
+  },
+  "boy": {
+   "h": 300,
+   "p": "A young servant boy running to the right across a field, full body side view, simple short tunic, carrying a quiver."
+  },
+  "david": {
+   "h": 300,
+   "ref": [
+    "_src/cards/david.png"
+   ],
+   "p": "Young David crouching and peeking out from behind a rock, upper body only, sad anxious face, looking to the right. Same character as the second reference image. Only the person, no rock."
+  }
  }
 }

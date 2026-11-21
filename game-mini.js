@@ -2933,8 +2933,71 @@ const wreck = {
   },
 };
 
+/* ---------- 화살 세 개 (삼상 20:20–22, 35–38): 아이 너머로 쏘는 신호 화살 — 겨누기 + 바람 ---------- */
+// 요나단이 되어 끌었다 놓아 활을 쏜다(당긴 만큼 세게, 반대쪽으로). 화살이 달려가는 아이 '너머'에 떨어져야 다윗에게 떠나라는 신호다(20:22).
+// 아이 앞에 떨어지면 잘못된 신호, 아이에게 맞으면 실패. 쏠 때마다 바람이 바뀐다(깃발). 화살 다섯 개로 신호 셋을 보내면 성공
+const ARCH = [126, 388], GY = 438, AV = 430, AG = 330, GOOD = 3, ARROWS = 5;
+const arrows = {
+  title: '화살 세 개', task: '아이 너머로 신호 화살 셋', art: ['d10/bg', 'd10/jonathan', 'd10/boy', 'd10/david'],
+  ask: ['요나단과 나는 약속했단다. 화살이 아이 너머에 떨어지면 내가 떠나야 한다는 뜻이라고.', '이번엔 네가 요나단이 되어 쏘아 보렴 — 꼭 아이 너머로! 바람도 살피고.'],
+  quote: '내가 아이에게 이르기를 화살이 네 앞쪽에 있다 하거든 너는 갈지니 여호와께서 너를 보내셨음이니라', ref: '삼상 20:22',
+  help: '화면을 뒤로 끌었다 놓으면 화살이 날아가요(당긴 만큼 세게).<br>달려가는 아이 <b>너머</b>(초록 띠)에 떨어뜨려요. 아이에게 맞으면 실패! 깃발로 바람을 보고, 다섯 발로 신호 셋.',
+  seconds: 34,
+  init() { const S = { bx: 250, tx: 250, run: 0, wind: 0, shot: null, aim: null, good: 0, left: ARROWS, stuck: [], msg: null, hurt: 0, t: 0, trail: [] }; this.roll(S); return S; },
+  roll(S) { S.wind = Math.round(rnd(-1, 1) * 10) / 10; },
+  zone: S => [S.bx + 26, S.bx + 126],
+  update(dt, S) {
+    S.t += dt; if (S.msg) S.msg.at -= dt;
+    if (S.run > 0) { S.run -= dt; S.bx += (S.tx - S.bx) * Math.min(1, dt * 3.2); }
+    const a = S.shot;
+    if (a) { a.vy += AG * dt; a.vx += S.wind * 70 * dt; a.x += a.vx * dt; a.y += a.vy * dt; S.trail.push([a.x, a.y]); if (S.trail.length > 10) S.trail.shift();
+      if (Math.abs(a.x - S.bx) < 10 && a.y > GY - 50 && a.y < GY) { S.hurt = 1; S.shot = null; S.fx.play('miss'); S.msg = { t: '아이가 다칠 뻔했어요!', c: '#ffb38a', at: 1.6, x: S.bx, y: GY - 90 }; return; }
+      if (a.y >= GY || a.x > W + 30) { const x = a.x, [z0, z1] = this.zone(S); S.shot = null; S.trail = [];
+        if (x <= W) S.stuck.push({ x, ang: Math.atan2(a.vy, a.vx) });
+        if (x >= z0 && x <= z1) { S.good++; S.fx.play('coin'); S.msg = { t: S.good >= GOOD ? '세 번째 신호 — 다윗이 알아들었어요' : `화살이 네 앞쪽에 있다! (${S.good}/${GOOD})`, c: '#ffe29a', at: 1.3, x: Math.min(330, x), y: GY - 80 }; }
+        else if (x < S.bx) { S.fx.play('miss'); S.msg = { t: '아이 앞에 떨어졌어요 — 반대 신호', c: '#e8e0c8', at: 1.2, x: Math.max(90, x), y: GY - 80 }; }
+        else { S.fx.play('miss'); S.msg = { t: '너무 멀리 갔어요', c: '#e8e0c8', at: 1.1, x: Math.min(330, x), y: GY - 80 }; }
+        // 아이가 화살을 주우러 달려갔다 다음 자리로
+        S.tx = rnd(170, 300); S.run = 1.4; this.roll(S); } }
+  },
+  down(x, y, S) { if (S.shot || S.run > 0.3 || S.left <= 0 || S.hurt) return; S.aim = { x0: x, y0: y, x, y }; },
+  move(x, y, S) { if (S.aim) { S.aim.x = x; S.aim.y = y; } },
+  up(S) { const A = S.aim; S.aim = null; if (!A || S.shot) return; const v = this.vel(A); if (Math.hypot(v[0], v[1]) < 70) return;
+    S.shot = { x: ARCH[0] + 20, y: ARCH[1] - 30, vx: v[0], vy: v[1] }; S.left--; S.fx.play('cast'); S.trail = []; },
+  vel(a) { const dx = a.x0 - a.x, dy = a.y0 - a.y, L = Math.hypot(dx, dy), k = Math.min(1, L / 130) * AV / (L || 1); return [dx * k, dy * k]; },
+  won: S => S.good >= GOOD && !S.shot,
+  lost: S => S.hurt > 0 || (S.left <= 0 && !S.shot && S.good < GOOD),
+  failText: S => S.hurt ? '아이가 다칠 뻔했어요' : '화살이 다 떨어졌어요',
+  draw(g, S) {
+    if (!bgArt(g, 'd10/bg')) { g.fillStyle = '#b8d0c0'; g.fillRect(0, 0, W, H); g.fillStyle = '#7a9a4a'; g.fillRect(0, GY, W, H); }
+    g.save(); g.beginPath(); g.rect(0, 0, W, 352); g.clip(); spr(g, 'd10/david', 52, 372, 50); g.restore(); // 에셀 바위 뒤에 숨은 다윗 — 바위 위로 머리만
+    // 바람 깃발
+    const fx0 = 330, fy0 = 120; g.strokeStyle = '#5a3e22'; g.lineWidth = 3; g.beginPath(); g.moveTo(fx0, fy0 + 60); g.lineTo(fx0, fy0); g.stroke();
+    const wl = 10 + Math.abs(S.wind) * 34, dir = Math.sign(S.wind) || 1; g.fillStyle = '#c9423a';
+    g.beginPath(); g.moveTo(fx0, fy0); for (let i = 0; i <= 8; i++) { const u = i / 8; g.lineTo(fx0 + dir * wl * u, fy0 + 4 + Math.sin(S.t * 8 + u * 6) * 3 * u); } for (let i = 8; i >= 0; i--) { const u = i / 8; g.lineTo(fx0 + dir * wl * u, fy0 + 18 + Math.sin(S.t * 8 + u * 6) * 3 * u); } g.fill();
+    g.font = '700 11px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.lineWidth = 3; g.strokeStyle = 'rgba(20,20,10,.6)'; g.fillStyle = '#fff';
+    const wt = S.wind === 0 ? '바람 없음' : `바람 ${S.wind > 0 ? '→' : '←'} ${Math.abs(S.wind * 10).toFixed(0)}`; g.strokeText(wt, fx0, fy0 + 78); g.fillText(wt, fx0, fy0 + 78);
+    // 신호 띠(아이 너머)
+    const [z0, z1] = this.zone(S); g.fillStyle = 'rgba(130,230,120,.28)'; g.fillRect(z0, GY - 4, z1 - z0, 10); g.strokeStyle = 'rgba(160,255,150,.8)'; g.lineWidth = 1.5; g.strokeRect(z0, GY - 4, z1 - z0, 10);
+    for (const st of S.stuck) { g.save(); g.translate(st.x, GY); g.rotate(st.ang); g.strokeStyle = '#4a3520'; g.lineWidth = 2; g.beginPath(); g.moveTo(-22, 0); g.lineTo(2, 0); g.stroke(); g.fillStyle = '#e8e0c8'; g.fillRect(-24, -3, 6, 6); g.restore(); }
+    spr(g, 'd10/boy', S.bx, GY + 4, 62, { flip: S.run > 0 && S.tx < S.bx });
+    spr(g, 'd10/jonathan', ARCH[0], ARCH[1] + 52, 108);
+    if (S.aim) { const v = this.vel(S.aim); let x = ARCH[0] + 20, y = ARCH[1] - 30, vx = v[0], vy = v[1]; // 처음 몇 점만 궤적
+      g.fillStyle = 'rgba(255,255,255,.85)'; for (let i = 0; i < 6; i++) { for (let k = 0; k < 4; k++) { vy += AG / 60; x += vx / 60; y += vy / 60; } g.beginPath(); g.arc(x, y, 2.5 - i * 0.25, 0, 7); g.fill(); } }
+    if (S.shot) { const a = S.shot; g.save(); g.translate(a.x, a.y); g.rotate(Math.atan2(a.vy, a.vx)); g.strokeStyle = '#4a3520'; g.lineWidth = 2.2; g.beginPath(); g.moveTo(-24, 0); g.lineTo(4, 0); g.stroke(); g.fillStyle = '#9aa0a6'; g.beginPath(); g.moveTo(8, 0); g.lineTo(2, -3); g.lineTo(2, 3); g.fill(); g.fillStyle = '#e8e0c8'; g.fillRect(-26, -3, 6, 6); g.restore(); }
+    g.save(); g.font = '800 14px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.lineWidth = 3; g.strokeStyle = 'rgba(20,24,10,.6)'; g.fillStyle = '#fff';
+    const t = `신호 ${S.good} / ${GOOD} · 남은 화살 ${S.left}`; g.strokeText(t, 14, 26); g.fillText(t, 14, 26); g.restore();
+    floatMsg(g, S.msg);
+  },
+  end(g, k, S) { this.update(0.016, S); this.draw(g, S);
+    if (k > 0.3) { g.save(); g.globalAlpha = clamp((k - 0.3) * 2, 0, 1); g.fillStyle = 'rgba(24,30,14,.8)'; g.fillRect(0, 170, W, 84);
+      g.font = '700 16px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#f6ffe8'; g.fillText('요나단이 그 아이 뒤에서 외치되', W / 2, 200); g.fillText('지체 말고 빨리 달음질하라 하매', W / 2, 224);
+      g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#c8d8b0'; g.fillText('삼상 20:38', W / 2, 243); g.restore(); }
+  },
+};
+
 export const MINI = { jesus: { e04: magi, e11: cana, e17: fishing, e22: twelve, e23: rock, e28: bail, e31: loaves, e32: water, e39: stones, e42: sheep, e43: coin, e46: climb, e48: palms, e59: tiberias },
-  david: { d01: herdDavid, d05: sling, d16: cave, d24: arkDance, d38: templeStones }, moses: { m09: redSea, m12: manna, m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket, a17: prison, a36: wreck, a37: viper }, kings: { k15: carmel, k24: naaman, k26: dothan } };
+  david: { d01: herdDavid, d05: sling, d10: arrows, d16: cave, d24: arkDance, d38: templeStones }, moses: { m09: redSea, m12: manna, m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket, a17: prison, a36: wreck, a37: viper }, kings: { k15: carmel, k24: naaman, k26: dothan } };
 
 /* ---------- 놀이 틀: 소개 → 놀이(제한 시간) → 성공 연출/실패 → 결과 ---------- */
 // host: 모달 안의 상자. fx: { play, pour } (game-audio.js). 끝나면 done({ ok, left, tries })
