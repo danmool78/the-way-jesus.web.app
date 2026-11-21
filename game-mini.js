@@ -3294,8 +3294,110 @@ const nile = {
   },
 };
 
+/* ---------- 엘리사의 마지막 화살 (왕하 13:14–19): 동쪽 창으로 구원의 화살 → 땅을 끝까지 치기 ---------- */
+// 1) 누르고 있으면 활을 당기고(힘), 끄는 만큼 겨냥이 움직인다. 엘리사의 손이 얹혀(13:16) 알맞게 당기면 겨냥이 덜 흔들리고,
+//    너무 오래 당기고 있으면 팔이 떨린다. 떼면 쏜다 — 힘이 모자라면 화살이 못 미친다. 창 너머 아람 진(아벡)에 맞으면 13:17.
+// 2) 화살 묶음으로 땅을 친다: 팔이 올라가 화살이 빛날 때 누르면 한 번. 일찍 누르면 헛침, 빛이 지나도록 머뭇거리면 '멈춤'.
+//    여섯 번(대여섯 번, 13:19) 치면 성공, 세 번 머뭇거리면 실패 — 왕처럼 멈춘 것(13:18).
+const KWIN = { x0: 132, x1: 270, y0: 88, y1: 242 }, STRIKES = 6;
+const lastArrow = {
+  title: '엘리사의 마지막 화살', task: '구원의 화살을 쏘고, 땅을 끝까지 쳐라', art: ['k30/bg', 'k30/king', 'k30/strike', 'k30/elisha', 'k30/camp'],
+  ask: ['이번엔 네가 왕의 활을 잡아 보렴 — 내 손을 네 손 위에 얹으마. 동쪽 창 너머 아람 진을 겨누어라.', '그다음엔 화살로 땅을 쳐라. 세 번 치고 멈추지 말고, 끝까지!'],
+  quote: '엘리사가 또 이르되 화살들을 집으소서 곧 집으매 엘리사가 또 이스라엘 왕에게 이르되 땅을 치소서', ref: '왕하 13:18',
+  help: '<b>누르고 있으면</b> 활을 당기고, 끄는 만큼 겨냥이 움직여요. 힘이 금빛일 때 떼면 쏴요 — 창 너머 <b>아람 진</b>을 맞히세요.<br>그다음엔 화살이 빛날 때 눌러 땅을 쳐요. 여섯 번! 머뭇거리면 멈춘 것이 돼요(세 번이면 실패).',
+  seconds: 13,
+  init() {
+    return { ph: 'aim', t: 0, aim: { x: 201, y: 196 }, hold: false, p: 0, over: 0, grab: null, cx: rnd(158, 244), cy: rnd(188, 214), shot: null, hitT: 0,
+      n: 0, stop: 0, ring: 0, rise: rnd(0.35, 0.8), win: 0, swing: 0, dust: [], msg: null, fl: rnd(0, 9) };
+  },
+  sway(S) { // 겨냥 흔들림: 알맞게 당기면(엘리사의 손) 잔잔, 덜 당기면 보통, 너무 오래 당기면 떨림
+    const A = !S.hold ? 9 : S.p >= 0.72 && S.over < 0.55 ? 5 : S.over >= 0.55 ? 9 + Math.min(14, (S.over - 0.55) * 20) : 8, t = S.t + S.fl;
+    return [A * (Math.sin(t * 2.3) * 0.6 + Math.sin(t * 3.9 + 1) * 0.4), A * 0.8 * (Math.sin(t * 2.9 + 2) * 0.6 + Math.sin(t * 4.4) * 0.4)];
+  },
+  update(dt, S) {
+    S.t += dt; if (S.msg) S.msg.at -= dt; S.hitT -= dt; S.swing = Math.max(0, S.swing - dt * 5);
+    for (const d of S.dust) { d.x += d.vx * dt; d.y += d.vy * dt; d.vy += 30 * dt; d.a -= dt * 1.6; } S.dust = S.dust.filter(d => d.a > 0);
+    if (S.ph === 'aim') {
+      if (S.hold) { S.p = Math.min(1.1, S.p + dt / 0.95); if (S.p >= 1) S.over += dt; if (S.p >= 1 && Math.random() < dt * 3) S.fx.play('creak'); }
+      const A = S.shot; if (A) { A.k += dt / 0.55;
+        if (A.k >= 1 && !A.done) { A.done = true;
+          if (Math.hypot((A.tx - S.cx) / 17, (A.ty - S.cy) / 9) < 1) { S.hitT = 1.6; S.fx.play('bonus'); S.msg = { t: '여호와의 구원의 화살!', c: '#ffe39a', at: 1.4, x: 200, y: 290 }; S.ph = 'hit'; S.next = 1.6; }
+          else { S.fx.play('miss'); S.msg = { t: A.short ? '힘이 모자라 못 미쳤어요' : '빗나갔어요 — 다시', c: '#ffc0a0', at: 0.9, x: 200, y: 290 }; S.reload = 0.7; } }
+        if (A.k >= 1.5) S.shot = null; }
+      if (S.reload > 0) S.reload -= dt;
+    } else if (S.ph === 'hit') { if ((S.next -= dt) <= 0) { S.ph = 'strike'; S.ring = 0; S.fx.play('pick'); } }
+    else if (S.ph === 'strike' && S.n < STRIKES) { // 팔이 올라가는 동안 고리가 차고, 다 차면 화살이 빛나는 동안(win)만 친다
+      if (S.ring < 1) { S.ring = Math.min(1, S.ring + dt / S.rise); if (S.ring >= 1) { S.win = S.n >= 3 ? 0.26 : 0.32; S.fx.play('glint'); } }
+      else if ((S.win -= dt) <= 0) { S.stop++; S.fx.play('late'); S.msg = { t: S.stop >= 3 ? '왕이 멈추었어요…' : '머뭇거렸어요 — 계속 치세요!', c: '#ffb08a', at: 0.9, x: 200, y: 300 }; this.reset(S); }
+    }
+  },
+  reset(S) { S.ring = 0; S.rise = rnd(0.35, 0.8); },
+  down(x, y, S) {
+    if (S.ph === 'aim') { if (S.shot || S.reload > 0) return; S.hold = true; S.p = 0; S.over = 0; S.grab = { x, y, ax: S.aim.x, ay: S.aim.y }; S.fx.play('creak'); }
+    else if (S.ph === 'strike' && S.n < STRIKES) {
+      if (S.ring >= 1) { S.n++; S.swing = 1; S.fx.play('thud'); for (let i = 0; i < 10; i++) S.dust.push({ x: 196 + rnd(-20, 20), y: 452, vx: rnd(-60, 60), vy: rnd(-70, -20), a: 1 });
+        if (S.n >= STRIKES) S.fx.play('bonus'); this.reset(S); }
+      else { S.fx.play('miss'); S.msg = { t: '아직 — 팔이 다 올라가면!', c: '#ffd9a0', at: 0.7, x: 200, y: 300 }; this.reset(S); }
+    }
+  },
+  move(x, y, S) { if (S.ph === 'aim' && S.hold && S.grab) { S.aim.x = clamp(S.grab.ax + (x - S.grab.x), KWIN.x0, KWIN.x1); S.aim.y = clamp(S.grab.ay + (y - S.grab.y), KWIN.y0, KWIN.y1); } },
+  up(S) { if (S.ph !== 'aim' || !S.hold) return; S.hold = false; const [sx, sy] = this.sway(S), short = S.p < 0.72;
+    S.shot = { k: 0, tx: S.aim.x + sx, ty: S.aim.y + sy + (short ? (0.72 - S.p) * 160 : 0), short }; S.fx.play('swish'); S.p = 0; S.over = 0; },
+  key(k, S) { if (k === ' ') { if (S.ph === 'strike') this.down(0, 0, S); else return false; } else if (k.startsWith('Arrow') && S.ph === 'aim') { const d = { ArrowLeft: [-6, 0], ArrowRight: [6, 0], ArrowUp: [0, -6], ArrowDown: [0, 6] }[k]; if (!d) return false; S.aim.x = clamp(S.aim.x + d[0], KWIN.x0, KWIN.x1); S.aim.y = clamp(S.aim.y + d[1], KWIN.y0, KWIN.y1); } else return false; },
+  won: S => S.n >= STRIKES,
+  lost: S => S.stop >= 3,
+  failText: S => S.stop >= 3 ? '세 번 머뭇거리고 멈추었어요 (13:18)' : S.ph === 'aim' ? '화살을 쏘지 못했어요' : '날이 저물었어요',
+  scene(g, S, k = 0) {
+    if (!bgArt(g, 'k30/bg')) { g.fillStyle = '#3a2a1c'; g.fillRect(0, 0, W, H); g.fillStyle = '#e8b878'; g.fillRect(KWIN.x0, KWIN.y0, KWIN.x1 - KWIN.x0, KWIN.y1 - KWIN.y0); }
+    spr(g, 'k30/camp', S.cx, S.cy + 14, 34 + 4 * k); // 멀리 아벡의 아람 진
+    if (S.hitT > 0 || k) { g.save(); g.globalCompositeOperation = 'lighter'; const a = k || clamp(S.hitT, 0, 1), r = g.createRadialGradient(S.cx, S.cy, 2, S.cx, S.cy, 60); r.addColorStop(0, `rgba(255,230,150,${0.7 * a})`); r.addColorStop(1, 'rgba(255,230,150,0)'); g.fillStyle = r; g.fillRect(S.cx - 60, S.cy - 60, 120, 120); g.restore(); }
+    spr(g, 'k30/elisha', 300, 478, 118, { flip: true });
+  },
+  draw(g, S) {
+    this.scene(g, S);
+    if (S.ph === 'aim' || S.ph === 'hit') {
+      // 화살 (멀어질수록 작게)
+      const A = S.shot, ox = 150, oy = 300;
+      if (A) { const k = Math.min(1, A.k), x = ox + (A.tx - ox) * k, y = oy + (A.ty - oy) * k - Math.sin(k * Math.PI) * 30, L = 34 * (1 - k * 0.8), ang = Math.atan2(A.ty - oy, A.tx - ox);
+        if (A.k < 1.02) { g.save(); g.translate(x, y); g.rotate(ang); g.strokeStyle = '#3a2a18'; g.lineWidth = 2.2 * (1 - k * 0.6); g.beginPath(); g.moveTo(-L, 0); g.lineTo(0, 0); g.stroke(); g.fillStyle = '#d8d0c0'; g.beginPath(); g.moveTo(2, 0); g.lineTo(-5, -3); g.lineTo(-5, 3); g.fill(); g.restore(); } }
+      if (!spr(g, 'k30/king', 104, 494, 236)) { g.fillStyle = '#2a3e78'; g.fillRect(70, 290, 60, 200); }
+      if (S.ph === 'aim') { // 겨냥 고리
+        const [sx, sy] = this.sway(S), x = S.aim.x + sx, y = S.aim.y + sy, good = S.hold && S.p >= 0.72 && S.over < 0.55;
+        g.save(); g.strokeStyle = good ? '#ffe08a' : 'rgba(255,255,255,.85)'; g.lineWidth = 2; g.beginPath(); g.arc(x, y, 10, 0, 7); g.stroke();
+        g.beginPath(); g.moveTo(x - 16, y); g.lineTo(x - 5, y); g.moveTo(x + 5, y); g.lineTo(x + 16, y); g.moveTo(x, y - 16); g.lineTo(x, y - 5); g.moveTo(x, y + 5); g.lineTo(x, y + 16); g.stroke(); g.restore();
+        // 당긴 힘
+        g.save(); g.fillStyle = 'rgba(0,0,0,.45)'; g.fillRect(118, 268, 164, 14); const pc = Math.min(1, S.p);
+        g.fillStyle = S.over >= 0.55 ? '#ff8a6a' : S.p >= 0.72 ? '#ffd76a' : '#c9c2b0'; g.fillRect(120, 270, 160 * pc, 10);
+        g.fillStyle = 'rgba(255,215,106,.35)'; g.fillRect(120 + 160 * 0.72, 270, 160 * 0.28, 10); g.strokeStyle = 'rgba(255,255,255,.5)'; g.strokeRect(118, 268, 164, 14);
+        g.font = '700 11px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.fillStyle = '#f4ecd8'; g.fillText(S.hold ? (S.over >= 0.55 ? '팔이 떨려요 — 쏘세요!' : '당기는 중') : '눌러서 당기기', 200, 300); g.restore();
+      }
+    } else { // 땅 치기
+      const up = S.ring, sw = S.swing, rot = -0.12 * up + 0.22 * sw, dy = -10 * up + 14 * sw;
+      if (!spr(g, 'k30/strike', 150, 488 + dy, 220, { rot })) { g.fillStyle = '#2a3e78'; g.fillRect(110, 300, 70, 180); }
+      const glow = S.ring >= 1; // 고리: 바닥의 칠 자리
+      g.save(); g.translate(206, 452); g.scale(1, 0.38); g.lineWidth = 6; g.strokeStyle = 'rgba(0,0,0,.35)'; g.beginPath(); g.arc(0, 0, 40, 0, 7); g.stroke();
+      g.strokeStyle = glow ? '#ffe08a' : 'rgba(255,240,210,.8)'; g.beginPath(); g.arc(0, 0, 40, -Math.PI / 2, -Math.PI / 2 + 6.283 * Math.min(1, S.ring)); g.stroke();
+      if (glow) { g.globalCompositeOperation = 'lighter'; g.fillStyle = 'rgba(255,220,120,.35)'; g.beginPath(); g.arc(0, 0, 36, 0, 7); g.fill(); } g.restore();
+      for (const d of S.dust) { g.fillStyle = `rgba(200,170,120,${d.a * 0.7})`; g.beginPath(); g.arc(d.x, d.y, 4 + (1 - d.a) * 6, 0, 7); g.fill(); }
+      g.save(); g.font = '800 14px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.fillStyle = '#f4ecd8'; g.fillText(glow ? '지금 치세요!' : '팔을 드는 중…', 206, 496); g.restore();
+    }
+    // 위: 단계·횟수
+    g.save(); g.font = '800 13px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.fillStyle = '#f4ecd8';
+    if (S.ph === 'strike') { g.fillText(`땅을 친 횟수 ${S.n} / ${STRIKES}`, 14, 28); for (let i = 0; i < 3; i++) { g.fillStyle = i < S.stop ? '#ff8a6a' : 'rgba(255,255,255,.22)'; g.beginPath(); g.arc(W - 70 + i * 22, 24, 7, 0, 7); g.fill(); } g.fillStyle = '#f4ecd8'; g.font = '700 10px "Noto Sans KR",sans-serif'; g.textAlign = 'right'; g.fillText('머뭇거림', W - 92, 28); }
+    else g.fillText('동쪽 창 너머 아람 진을 겨누어 쏘세요', 14, 28);
+    g.restore(); floatMsg(g, S.msg);
+  },
+  end(g, k, S) {
+    this.scene(g, S, Math.min(1, k * 1.5));
+    spr(g, 'k30/strike', 150, 478, 220);
+    if (k > 0.35) { g.save(); g.globalAlpha = clamp((k - 0.35) * 2, 0, 1); g.fillStyle = 'rgba(24,16,8,.84)'; g.fillRect(0, 150, W, 92);
+      g.font = '700 16px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#f6eedc'; g.fillText('여호와를 위한 구원의 화살', W / 2, 182); g.fillText('곧 아람에 대한 구원의 화살이니', W / 2, 206);
+      g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#cdbf9e'; g.fillText('왕하 13:17', W / 2, 226); g.restore(); }
+  },
+};
+
 export const MINI = { jesus: { e04: magi, e05: egypt, e07: boyJesus, e11: cana, e17: fishing, e22: twelve, e23: rock, e28: bail, e31: loaves, e32: water, e39: stones, e42: sheep, e43: coin, e46: climb, e48: palms, e59: tiberias },
-  david: { d01: herdDavid, d05: sling, d10: arrows, d16: cave, d24: arkDance, d38: templeStones }, moses: { m02: nile, m09: redSea, m12: manna, m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket, a17: prison, a36: wreck, a37: viper }, kings: { k15: carmel, k24: naaman, k25: axe, k26: dothan } };
+  david: { d01: herdDavid, d05: sling, d10: arrows, d16: cave, d24: arkDance, d38: templeStones }, moses: { m02: nile, m09: redSea, m12: manna, m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket, a17: prison, a36: wreck, a37: viper }, kings: { k15: carmel, k24: naaman, k25: axe, k26: dothan, k30: lastArrow } };
 
 /* ---------- 놀이 틀: 소개 → 놀이(제한 시간) → 성공 연출/실패 → 결과 ---------- */
 // host: 모달 안의 상자. fx: { play, pour } (game-audio.js). 끝나면 done({ ok, left, tries })
