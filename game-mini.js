@@ -3174,8 +3174,128 @@ const egypt = {
   },
 };
 
+/* ---------- 나일강의 갈대 상자 (출 2:1–10): 물살을 타고 바로의 딸에게 — 피하기 ---------- */
+// 위에서 내려다본 강. 끌거나 방향키로 갈대 상자를 좌우로 몬다. 강 가운데일수록 물살이 빨라 빨리 가지만 악어·소용돌이도 가운데에 많다.
+// 하마는 먼저 물거품(0.9초)이 일고 솟는다. 소용돌이는 가까이 가면 끌어당긴다. 세 번 부딪히면 실패. 끝은 목욕하러 나온 바로의 딸(2:5–6).
+const NILE = 3300, NB_Y = 392, BANK = 62, NR = 19;
+const nileSpeed = x => 72 + 78 * clamp(1 - Math.abs(x - W / 2) / (W / 2 - BANK), 0, 1); // 가장자리 72, 가운데 150 px/s
+const nile = {
+  title: '나일강의 갈대 상자', task: '물살을 타고 바로의 딸에게', art: ['m02/river', 'm02/basket', 'm02/croc', 'm02/hippo', 'm02/lotus', 'm02/princess', 'm02/miriam'],
+  ask: ['그 갈대 상자를 이번엔 네가 몰아 주렴 — 바로의 딸이 목욕하던 물가까지.', '악어와 하마, 소용돌이를 피해서! 강 가운데로 갈수록 물살이 빠르단다.'],
+  quote: '갈대 상자를 가져다가 역청과 나무 진을 칠하고 아기를 거기 담아 나일 강 가 갈대 사이에 두매', ref: '출 2:3',
+  help: '끌거나 ←→ 키로 상자를 좌우로 몰아요. <b>가운데 물살이 빨라요</b> — 가장자리는 느려요.<br>하마는 물거품이 인 뒤 솟아요. 소용돌이는 끌어당겨요. 세 번 부딪히면 실패!',
+  seconds: 30,
+  init() { return { d: 0, x: W / 2, tx: W / 2, O: [], next: 420, lot: 300, hits: 0, inv: 0, spin: 0, stall: 0, flash: 0, t: 0, msg: null, drops: [] }; },
+  spawn(S, wy) {
+    const r = Math.random(), late = S.d / NILE;
+    if (r < 0.4) { const up = Math.random() < 0.5; S.O.push({ k: 'croc', wy, x: rnd(95, 305), up, ph: rnd(0, 6), sw: up ? 26 : -34 }); }
+    else if (r < 0.7) S.O.push({ k: 'hippo', wy, x: rnd(95, 305), st: 'sub', tm: 0 });
+    else S.O.push({ k: 'whirl', wy, x: rnd(135, 265), r: 0 });
+    S.next = wy + rnd(125, 185) - 35 * late; // 갈수록 촘촘
+  },
+  sy: (S, o) => NB_Y - (o.wy - S.d),
+  update(dt, S) {
+    S.t += dt; if (S.msg) S.msg.at -= dt; S.inv -= dt; S.flash -= dt; S.spin = Math.max(0, S.spin - dt * 1.4); S.stall -= dt;
+    if (S.d >= NILE) return; // 끝 연출에서는 멈춤
+    // 좌우: 손가락을 따라가되 너무 빠르진 않게, 소용돌이가 끌어당긴다
+    let vx = clamp((S.tx - S.x) * 7, -280, 280);
+    for (const o of S.O) if (o.k === 'whirl') { const dx = o.x - S.x, dy = this.sy(S, o) - NB_Y, dd = Math.hypot(dx, dy); if (dd < 92) vx += dx / (dd || 1) * 150 * (1 - dd / 92); }
+    S.x = clamp(S.x + vx * dt, BANK + NR, W - BANK - NR);
+    const v = nileSpeed(S.x) * (S.stall > 0 ? 0.2 : 1); S.d = Math.min(NILE, S.d + v * dt);
+    while (S.next < S.d + 560 && S.next < NILE - 160) this.spawn(S, S.next);
+    if (S.lot < S.d + 560) { S.O.push({ k: 'lotus', wy: S.lot, x: Math.random() < 0.5 ? rnd(70, 110) : rnd(290, 330), rot: rnd(0, 6) }); S.lot += rnd(180, 320); }
+    for (const o of S.O) {
+      const y = this.sy(S, o);
+      if (o.k === 'croc') { o.wy += o.sw * dt; o.ph += dt * 1.6; o.x = clamp(o.x + Math.sin(o.ph) * 18 * dt, 80, 320); }
+      if (o.k === 'whirl') o.r += dt * 3.2;
+      if (o.k === 'hippo') { // 화면에 들어오면 거품 → 솟음 → 다시 잠김
+        if (o.st === 'sub' && y > 70) { o.st = 'warn'; o.tm = 0.9; S.fx.play('gurgle'); }
+        else if (o.st === 'warn' && (o.tm -= dt) <= 0) { o.st = 'up'; o.tm = 2.4; S.fx.play('splash'); }
+        else if (o.st === 'up' && (o.tm -= dt) <= 0) { o.st = 'down'; o.tm = 0.5; }
+        else if (o.st === 'down') o.tm -= dt; }
+      if (S.inv > 0 || Math.abs(y - NB_Y) > 70) continue;
+      let hit = false, what = '';
+      if (o.k === 'croc') { const cy = clamp(NB_Y, y - 50, y + 50); hit = Math.hypot(S.x - o.x, NB_Y - cy) < NR + 11; what = '악어!'; }
+      else if (o.k === 'hippo') { hit = o.st === 'up' && Math.hypot(S.x - o.x, NB_Y - y) < NR + 28; what = '하마!'; }
+      else if (o.k === 'whirl') { hit = Math.hypot(S.x - o.x, NB_Y - y) < NR + 6; what = '소용돌이!'; }
+      if (hit) { S.hits++; S.inv = 1.5; S.spin = 1; S.stall = 0.9; S.flash = 0.35; S.fx.play('thud'); S.fx.play('splash');
+        S.msg = { t: S.hits >= 3 ? '상자가 뒤집혔어요…' : what, c: '#ffb08a', at: 0.9, x: S.x, y: NB_Y - 50 };
+        if (o.k === 'whirl') { o.wy = -999; S.x += S.x < W / 2 ? 30 : -30; } // 한 번 휘돌고 빠져나온다
+        if (o.k === 'hippo') { o.st = 'down'; o.tm = 0.5; } }
+    }
+    S.O = S.O.filter(o => this.sy(S, o) < H + 120);
+    if (Math.random() < dt * 8) S.drops.push({ x: S.x + rnd(-14, 14), y: NB_Y + 26, a: 1 }); // 상자 뒤 물결
+    for (const p of S.drops) { p.y += (nileSpeed(S.x) * 0.9) * dt; p.a -= dt * 1.2; } S.drops = S.drops.filter(p => p.a > 0);
+  },
+  down(x, y, S) { S.tx = x; },
+  move(x, y, S) { S.tx = x; },
+  up() {},
+  key(k, S) { if (k === 'ArrowLeft') S.tx = Math.max(BANK, S.x - 46); else if (k === 'ArrowRight') S.tx = Math.min(W - BANK, S.x + 46); else return false; },
+  won: S => S.d >= NILE,
+  lost: S => S.hits >= 3,
+  failText: S => S.hits >= 3 ? '갈대 상자가 뒤집혔어요' : '바로의 딸이 돌아가 버렸어요',
+  river(g, S) {
+    const A = art('m02/river');
+    if (!A) { g.fillStyle = '#4e6a4a'; g.fillRect(0, 0, W, H); g.fillStyle = '#5d7e72'; g.fillRect(BANK, 0, W - 2 * BANK, H); return; }
+    const off = S.d % (2 * H); // 위아래로 뒤집어 이어 붙여 끝없이 흐르게
+    for (const b of [off - 2 * H, off]) { g.drawImage(A, 0, b, W, H); g.save(); g.translate(0, b + 2 * H); g.scale(1, -1); g.drawImage(A, 0, 0, W, H); g.restore(); }
+    // 가운데 빠른 물살 — 옅은 물줄기
+    g.save(); g.globalAlpha = 0.18; g.strokeStyle = '#e8f4ff'; g.lineWidth = 1.5;
+    for (let i = 0; i < 9; i++) { const x = 150 + (i * 37) % 100, y = ((i * 131 + S.d * 1.1) % (H + 80)) - 40; g.beginPath(); g.moveTo(x, y); g.lineTo(x, y + 26); g.stroke(); }
+    g.restore();
+  },
+  whirl(g, x, y, r) {
+    g.save(); g.translate(x, y); g.rotate(-r);
+    const sh = g.createRadialGradient(0, 0, 2, 0, 0, 46); sh.addColorStop(0, 'rgba(10,30,30,.7)'); sh.addColorStop(1, 'rgba(10,30,30,0)'); g.fillStyle = sh; g.beginPath(); g.arc(0, 0, 46, 0, 7); g.fill();
+    g.strokeStyle = 'rgba(220,240,235,.55)'; g.lineWidth = 2;
+    for (let a = 0; a < 3; a++) { g.beginPath(); for (let i = 0; i <= 30; i++) { const t = i / 30, ang = a * 2.09 + t * 4.2, rr = 6 + t * 38; g.lineTo(Math.cos(ang) * rr, Math.sin(ang) * rr); } g.stroke(); }
+    g.restore();
+  },
+  draw(g, S) {
+    this.river(g, S);
+    for (const o of S.O) { const y = this.sy(S, o); if (y < -120 || y > H + 120) continue;
+      if (o.k === 'lotus') spr(g, 'm02/lotus', o.x, y, 46, { ay: 0.5, rot: o.rot });
+      else if (o.k === 'whirl') this.whirl(g, o.x, y, o.r); }
+    for (const o of S.O) { const y = this.sy(S, o); if (y < -120 || y > H + 120) continue;
+      if (o.k === 'croc') { if (!spr(g, 'm02/croc', o.x, y, 116, { ay: 0.5, rot: (o.up ? 0 : Math.PI) + Math.cos(o.ph) * 0.12 })) { g.fillStyle = '#5c6e48'; g.fillRect(o.x - 9, y - 50, 18, 100); } }
+      else if (o.k === 'hippo') {
+        if (o.st === 'warn' || o.st === 'up' || o.st === 'down') { // 거품 고리 — 미리 알림
+          g.save(); g.strokeStyle = 'rgba(235,250,245,.7)'; g.lineWidth = 2; for (let i = 0; i < 3; i++) { const p = (S.t * 1.4 + i / 3) % 1; g.globalAlpha = 1 - p; g.beginPath(); g.ellipse(o.x, y, 14 + p * 34, 10 + p * 24, 0, 0, 7); g.stroke(); } g.restore();
+          if (o.st === 'warn') { g.font = '900 20px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.lineWidth = 4; g.strokeStyle = 'rgba(20,20,10,.7)'; g.strokeText('!', o.x, y - 30); g.fillStyle = '#ffe08a'; g.fillText('!', o.x, y - 30); } }
+        const k = o.st === 'up' ? clamp((2.4 - o.tm) * 4, 0, 1) : o.st === 'down' ? clamp(o.tm * 2, 0, 1) : 0;
+        if (k > 0) { if (!spr(g, 'm02/hippo', o.x, y, 64 * (0.6 + 0.4 * k), { ay: 0.5, a: k })) { g.fillStyle = '#7a6058'; g.beginPath(); g.ellipse(o.x, y, 26, 30, 0, 0, 7); g.fill(); } } } }
+    // 물결 자국과 상자
+    g.save(); g.strokeStyle = 'rgba(235,250,245,.6)'; g.lineWidth = 1.5; for (const p of S.drops) { g.globalAlpha = p.a * 0.6; g.beginPath(); g.arc(p.x, p.y, 4 + (1 - p.a) * 10, 0.2, Math.PI - 0.2); g.stroke(); } g.restore();
+    const blink = S.inv > 0 && Math.floor(S.inv * 10) % 2 === 0;
+    g.save(); g.globalAlpha = blink ? 0.45 : 1;
+    if (!spr(g, 'm02/basket', S.x, NB_Y, 62, { ay: 0.5, rot: S.spin * Math.PI * 2 + Math.sin(S.t * 2) * 0.06 })) { g.fillStyle = '#a07a44'; g.beginPath(); g.ellipse(S.x, NB_Y, 20, 26, 0, 0, 7); g.fill(); }
+    g.restore();
+    if (S.flash > 0) { g.fillStyle = `rgba(255,60,40,${S.flash * 0.6})`; g.fillRect(0, 0, W, H); }
+    // 누이 미리암이 갈대 사이로 따라오며 지켜본다(2:4)
+    spr(g, 'm02/miriam', -6, 300 + Math.sin(S.t * 3) * 3, 92, { ax: 0 });
+    // 위: 부딪힌 수, 바로의 딸까지
+    g.save(); g.font = '800 13px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.fillStyle = '#eef4ea'; g.fillText('상자', 14, 28);
+    for (let i = 0; i < 3; i++) { g.fillStyle = i < 3 - S.hits ? '#d8b070' : 'rgba(255,255,255,.2)'; g.beginPath(); g.ellipse(56 + i * 20, 23, 7, 5, 0, 0, 7); g.fill(); }
+    g.fillStyle = 'rgba(255,255,255,.18)'; g.fillRect(140, 22, 240, 5); g.fillStyle = '#ffe29a'; g.fillRect(140, 22, 240 * S.d / NILE, 5);
+    g.fillStyle = '#eef4ea'; g.font = '700 10px "Noto Sans KR",sans-serif'; g.textAlign = 'right'; g.fillText('바로의 딸까지', W - 20, 42); g.restore();
+    floatMsg(g, S.msg);
+  },
+  end(g, k, S) {
+    S.O = S.O.filter(o => o.k === 'lotus'); this.river(g, S);
+    for (const o of S.O) { const y = this.sy(S, o); spr(g, 'm02/lotus', o.x, y, 46, { ay: 0.5, rot: o.rot }); }
+    const e = ease(clamp(k * 1.4, 0, 1)), bx = S.x + (210 - S.x) * e, by = NB_Y + (300 - NB_Y) * e;
+    const py = 70 + 190 * ease(clamp(k * 1.6, 0, 1)); spr(g, 'm02/princess', 205, py, 170); // 물가로 내려오는 바로의 딸
+    g.save(); g.translate(205, py - 6); g.scale(1, 0.2); const wl = g.createRadialGradient(0, 0, 40, 0, 0, 175); wl.addColorStop(0, 'rgba(92,118,84,.95)'); wl.addColorStop(0.7, 'rgba(92,118,84,.85)'); wl.addColorStop(1, 'rgba(92,118,84,0)'); // 그림 밑동이 물에 잠긴 듯 — 가장자리는 흐리게
+    g.fillStyle = wl; g.beginPath(); g.arc(0, 0, 175, 0, 7); g.fill(); g.restore(); g.save(); g.strokeStyle = 'rgba(235,250,240,.5)'; g.lineWidth = 1.5; for (let i = 0; i < 5; i++) { g.beginPath(); g.ellipse(110 + i * 48, py - 14 + (i % 2) * 6, 22, 4, 0, 0, Math.PI); g.stroke(); } g.restore();
+    spr(g, 'm02/basket', bx, by, 62, { ay: 0.5, rot: Math.sin(S.t * 2) * 0.06 });
+    if (k > 0.35) { g.save(); g.globalAlpha = clamp((k - 0.35) * 2, 0, 1); g.fillStyle = 'rgba(18,24,16,.82)'; g.fillRect(0, 372, W, 96);
+      g.font = '700 16px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#f2f0e2'; g.fillText('그가 그의 이름을 모세라 하여 이르되', W / 2, 402); g.fillText('이는 내가 그를 물에서 건져내었음이라', W / 2, 426);
+      g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#c8c8b0'; g.fillText('출 2:10', W / 2, 448); g.restore(); }
+  },
+};
+
 export const MINI = { jesus: { e04: magi, e05: egypt, e07: boyJesus, e11: cana, e17: fishing, e22: twelve, e23: rock, e28: bail, e31: loaves, e32: water, e39: stones, e42: sheep, e43: coin, e46: climb, e48: palms, e59: tiberias },
-  david: { d01: herdDavid, d05: sling, d10: arrows, d16: cave, d24: arkDance, d38: templeStones }, moses: { m09: redSea, m12: manna, m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket, a17: prison, a36: wreck, a37: viper }, kings: { k15: carmel, k24: naaman, k25: axe, k26: dothan } };
+  david: { d01: herdDavid, d05: sling, d10: arrows, d16: cave, d24: arkDance, d38: templeStones }, moses: { m02: nile, m09: redSea, m12: manna, m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket, a17: prison, a36: wreck, a37: viper }, kings: { k15: carmel, k24: naaman, k25: axe, k26: dothan } };
 
 /* ---------- 놀이 틀: 소개 → 놀이(제한 시간) → 성공 연출/실패 → 결과 ---------- */
 // host: 모달 안의 상자. fx: { play, pour } (game-audio.js). 끝나면 done({ ok, left, tries })
