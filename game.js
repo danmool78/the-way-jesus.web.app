@@ -612,6 +612,8 @@ function bubble() {
   b.style.left = left + 'px'; b.style.top = Math.max(b.offsetHeight + 24, y) + 'px'; b.style.setProperty('--tx', `${Math.max(-half + 24, Math.min(half - 24, x - left))}px`);
 }
 addEventListener('pointerdown', e => { if (G.meetT > 0.4 && !e.target.closest('#stick')) G.meetT = 0.01; });
+// PC: 스페이스바·엔터로도 다음 말로 (사용자 2026-11) — 만나는 중일 때만, 걷기 키를 빼앗지 않게
+addEventListener('keydown', e => { if ((e.key === ' ' || e.key === 'Enter') && document.body.classList.contains('meeting') && !document.querySelector('.minicard') && e.target.tagName !== 'INPUT') { e.preventDefault(); if (G.meetT > 0.4) G.meetT = 0.01; } });
 // 모래시계 (사용자 2026-11): 늦어도 장면을 놓치지 않는다 — 그분은 그 자리에서 기다리시고, 얼마나 빨리 닿았는지가 카드 등급이 된다.
 // 제한 시간 안이면 금, 그 뒤 제한 시간의 60%까지는 은, 그보다 늦으면 동. 등급이 내려갈 때 알린다
 const gradeNow = () => G.timeT >= 0 ? 3 : G.timeT >= -G.timeMax * 0.6 ? 2 : 1;
@@ -1219,6 +1221,6 @@ function frame(now) {
   drawTags();
 }
 
-if (new URLSearchParams(location.search).has('debug')) window.__game = { G, me, pv, toXZ, goalXZ, steer: (x, z) => { stick.x = x; stick.y = z; }, startLeg: (...a) => startLeg(...a), wetAt: (x, z) => wetAt(x, z), standXZ: () => standXZ(), mini: (id, cb) => playMiniGame(MINI[JID][id], cb || (r => console.log('mini', JSON.stringify(r)))) }; // 끝까지 자동으로 걸어 보는 확인용
+if (new URLSearchParams(location.search).has('debug')) window.__game = { G, me, pv, toXZ, goalXZ, steer: (x, z) => { stick.x = x; stick.y = z; }, startLeg: (...a) => startLeg(...a), wetAt: (x, z) => wetAt(x, z), standXZ: () => standXZ(), mini: (id, cb) => playMiniGame(MINI[JID][id], cb || (r => console.log('mini', JSON.stringify(r)))), meet: () => meet() }; // 끝까지 자동으로 걸어 보는 확인용
 setupUI(); resize();
 requestAnimationFrame(frame);
