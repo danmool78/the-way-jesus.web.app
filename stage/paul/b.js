@@ -375,7 +375,7 @@ export const B = {
       'p1.0': [['paul', 'idle', { x: 0.25, z: 0.12, look: -1.3 }], ['silas', 'idle', { x: 0.5, z: -0.08 }], ['tim', 'idle', { x: 0.5, z: 0.4 }], ['luke', 'idle', { x: 0.8, z: 0.2 }],
         ['lydia', 'listen', { look: 1.1 }], ['w1', 'listen', { look: 1.1, delay: 400 }], ['w2', 'idle', { look: 1.2, delay: 700 }]],
       // 일행은 앉아서 말씀을 전한다
-      'p1.1': [['paul', 'sit-speak', { x: 0.18, z: 0.13, look: -1.3, to: 'lydia' }], ['silas', 'sit-ground', { x: 0.46, z: -0.09, look: -1.3 }], ['tim', 'sit-ground', { x: 0.45, z: 0.42, look: -1.3 }],
+      'p1.1': [['paul', 'sit-speak', { x: 0.18, z: 0.12, look: -1.3, to: 'lydia' }], ['silas', 'sit-ground', { x: 0.46, z: -0.09, look: -1.3 }], ['tim', 'sit-ground', { x: 0.45, z: 0.42, look: -1.3 }],
         ['w2', 'listen'], ['maid', 'listen']],
       // 두아디라에서 온 자색 옷감 장수 루디아
       'p1.2': [['lydia', 'listen', { look: 1.0 }]],
