@@ -2996,8 +2996,67 @@ const arrows = {
   },
 };
 
+/* ---------- 떠오른 도끼 (왕하 6:1–7): 거품을 보고 가라앉은 자리에 나뭇가지 던지기 → 떠오른 쇠도끼 건지기 ---------- */
+// 흐린 요단 물속에 빌린 도끼(6:5)가 가라앉아 바닥을 따라 천천히 떠밀린다. 가끔 거품이 올라오는데, 물살에 밀려 실제 자리보다 아래쪽(오른쪽)에 터진다.
+// 짐작한 자리를 누르면 엘리사가 나뭇가지를 던진다 — 가깝게 맞으면 쇠도끼가 떠오른다(6:6). 떠내려가기 전에 눌러 건지면 성공(6:7). 가지는 넷
+const AXE_R = 20, STICKS = 4, RIVER = [130, 340];
+const axe = {
+  title: '떠오른 도끼', task: '거품을 보고 도끼 자리에 가지 던지기', art: ['k25/bg', 'k25/elisha', 'k25/disciple', 'k25/axe', 'a37/stick'],
+  ask: ['들보를 베다가 빌려 온 쇠도끼가 자루에서 빠져 물에 떨어졌단다. 제자가 아이고 하며 소리쳤지.', '어디 떨어졌느냐? 거품을 잘 보아라 — 물살에 밀린다는 것도 잊지 말고!'],
+  quote: '하나님의 사람이 이르되 어디 빠졌느냐 하매 그 곳을 보이는지라 엘리사가 나뭇가지를 베어 물에 던져 쇠도끼를 떠오르게 하고', ref: '왕하 6:6',
+  help: '가끔 물속에서 거품이 올라와요 — 물살에 밀려 실제 자리보다 <b>오른쪽</b>에 터져요.<br>짐작한 자리를 누르면 나뭇가지를 던져요(넷). 도끼가 떠오르면 떠내려가기 전에 눌러 건져요.',
+  seconds: 18,
+  init() { return { ax: rnd(110, 260), ay: rnd(RIVER[0] + 40, RIVER[1] - 30), ph: 'find', bub: [], next: 0.8, sticks: STICKS, fly: null, rip: [], drift: [], t: 0, msg: null, fx2: 0, gone: 0, got: 0 }; },
+  update(dt, S) {
+    S.t += dt; if (S.msg) S.msg.at -= dt;
+    if (S.ph === 'find') { S.ax = Math.min(330, S.ax + 3 * dt);
+      if ((S.next -= dt) <= 0) { S.next = rnd(1.0, 1.7); S.bub.push({ x: S.ax + rnd(-7, 7), y: S.ay + rnd(-5, 5), t: 0, v: rnd(26, 38) }); } }
+    for (const b of S.bub) { b.t += dt; b.x += b.v * dt; } // 떠오르는 동안 물살에 밀린다(1초에 26–38px)
+    S.bub = S.bub.filter(b => b.t < 1.9);
+    if (S.fly) { const f = S.fly; f.t += dt; if (f.t >= f.dur) { S.fly = null; S.fx.play('plop'); S.rip.push({ x: f.x, y: f.y, t: 0 });
+        if (S.ph === 'find' && Math.hypot(f.x - S.ax, f.y - S.ay) < AXE_R) { S.ph = 'float'; S.fy = S.ay; S.fxx = S.ax; S.fx.play('glint'); S.msg = { t: '쇠도끼가 떠올랐어요! 얼른 건져요', c: '#ffe29a', at: 1.4, x: Math.min(300, S.ax), y: S.ay - 40 }; }
+        else { S.drift.push({ x: f.x, y: f.y, a: rnd(0, 3) }); S.msg = { t: S.sticks > 0 ? '여기는 아니에요' : '가지가 다 떨어졌어요', c: '#e8e0c8', at: 0.9, x: f.x, y: f.y - 30 }; } } }
+    if (S.ph === 'float') { S.fxx += 30 * dt; S.fy += Math.sin(S.t * 4) * 6 * dt; if (S.fxx > W + 10) { S.gone = 1; S.fx.play('miss'); } }
+    for (const d of S.drift) d.x += 28 * dt; S.drift = S.drift.filter(d => d.x < W + 40);
+    for (const r of S.rip) r.t += dt; S.rip = S.rip.filter(r => r.t < 1.2);
+  },
+  down(x, y, S) {
+    if (S.ph === 'float') { if (Math.hypot(x - S.fxx, y - S.fy) < 34) { S.ph = 'got'; S.got = 1; S.fx.play('coin'); S.msg = { t: '손을 내밀어 집었어요!', c: '#ffe29a', at: 1.4, x: S.fxx, y: S.fy - 34 }; } return; }
+    if (S.ph !== 'find' || S.fly || S.sticks <= 0 || y < RIVER[0] - 10 || y > RIVER[1] + 10) return;
+    S.sticks--; S.fly = { x, y, t: 0, dur: 0.35 + Math.hypot(x - 80, y - 400) / 900 }; S.fx.play('cast');
+  },
+  up() {},
+  won: S => S.got > 0,
+  lost: S => S.gone > 0 || (S.ph === 'find' && S.sticks <= 0 && !S.fly),
+  failText: S => S.gone ? '도끼가 떠내려갔어요' : '가지가 다 떨어졌어요',
+  draw(g, S) {
+    if (!bgArt(g, 'k25/bg')) { g.fillStyle = '#5a6a50'; g.fillRect(0, 0, W, H); }
+    // 물살 줄
+    g.strokeStyle = 'rgba(230,240,230,.14)'; g.lineWidth = 1.5; for (let r = 0; r < 7; r++) { const y = RIVER[0] + 14 + r * 30, off = (S.t * 30 + r * 40) % 80; g.beginPath(); for (let x = -80 + off; x < W; x += 80) { g.moveTo(x, y); g.lineTo(x + 34, y + 2); } g.stroke(); }
+    // 바닥의 도끼 — 흐린 물 때문에 거의 안 보인다(아주 희미한 그림자만)
+    if (S.ph === 'find') spr(g, 'k25/axe', S.ax, S.ay + 6, 16, { ay: 0.5, a: 0.05 });
+    for (const b of S.bub) { if (b.t < 0.9) continue; const k = (b.t - 0.9) / 1, yy = b.y - 10; for (let i = 0; i < 3; i++) { /* 물속을 오르는 동안은 흐려서 안 보이고, 물 위에서야 터진다 */ g.strokeStyle = `rgba(240,250,255,${0.85 * (1 - k)})`; g.lineWidth = 1.4; g.beginPath(); g.arc(b.x + i * 5 - 5, yy - (i % 2) * 4, 2.5 + k * 6 + i, 0, 7); g.stroke(); } }
+    for (const r of S.rip) { g.strokeStyle = `rgba(255,255,255,${0.6 * (1 - r.t / 1.2)})`; g.lineWidth = 2; g.beginPath(); g.ellipse(r.x, r.y, 10 + r.t * 30, 4 + r.t * 10, 0, 0, 7); g.stroke(); }
+    for (const d of S.drift) spr(g, 'a37/stick', d.x, d.y, 10, { ay: 0.5, rot: d.a + S.t * 0.4, a: 0.85 });
+    if (S.ph === 'float' || S.ph === 'got') { const x = S.ph === 'got' ? 150 : S.fxx, y = S.ph === 'got' ? 420 : S.fy;
+      const gl = g.createRadialGradient(x, y, 2, x, y, 36); gl.addColorStop(0, 'rgba(255,236,170,.6)'); gl.addColorStop(1, 'rgba(255,236,170,0)'); g.fillStyle = gl; g.fillRect(x - 36, y - 36, 72, 72);
+      spr(g, 'k25/axe', x, y, 34, { ay: 0.5, rot: Math.sin(S.t * 3) * 0.15 }); }
+    spr(g, 'k25/elisha', 64, 486, 118); spr(g, 'k25/disciple', 150, 488, 112);
+    if (S.fly) { const f = S.fly, k = f.t / f.dur, x = 86 + (f.x - 86) * k, y = 400 + (f.y - 400) * k - Math.sin(k * Math.PI) * 60; spr(g, 'a37/stick', x, y, 10, { ay: 0.5, rot: k * 9 }); }
+    g.save(); g.font = '800 14px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.lineWidth = 3; g.strokeStyle = 'rgba(14,20,14,.7)'; g.fillStyle = '#fff';
+    const tip = S.ph === 'find' ? `거품을 보고 자리를 짐작해요 · 가지 ${S.sticks}` : S.ph === 'float' ? '떠내려가기 전에 눌러 건져요!' : '';
+    g.strokeText(tip, 14, 26); g.fillText(tip, 14, 26); g.restore();
+    floatMsg(g, S.msg);
+  },
+  end(g, k, S) { this.update(0.016, S); this.draw(g, S);
+    if (k > 0.3) { g.save(); g.globalAlpha = clamp((k - 0.3) * 2, 0, 1); g.fillStyle = 'rgba(20,26,16,.8)'; g.fillRect(0, 170, W, 84);
+      g.font = '700 17px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#f4ffe8'; g.fillText('그것을 들라 하니', W / 2, 200); g.fillText('그 사람이 손을 내밀어 그것을 집으니라', W / 2, 224);
+      g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#c8d8b0'; g.fillText('왕하 6:7', W / 2, 243); g.restore(); }
+  },
+};
+
 export const MINI = { jesus: { e04: magi, e11: cana, e17: fishing, e22: twelve, e23: rock, e28: bail, e31: loaves, e32: water, e39: stones, e42: sheep, e43: coin, e46: climb, e48: palms, e59: tiberias },
-  david: { d01: herdDavid, d05: sling, d10: arrows, d16: cave, d24: arkDance, d38: templeStones }, moses: { m09: redSea, m12: manna, m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket, a17: prison, a36: wreck, a37: viper }, kings: { k15: carmel, k24: naaman, k26: dothan } };
+  david: { d01: herdDavid, d05: sling, d10: arrows, d16: cave, d24: arkDance, d38: templeStones }, moses: { m09: redSea, m12: manna, m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket, a17: prison, a36: wreck, a37: viper }, kings: { k15: carmel, k24: naaman, k25: axe, k26: dothan } };
 
 /* ---------- 놀이 틀: 소개 → 놀이(제한 시간) → 성공 연출/실패 → 결과 ---------- */
 // host: 모달 안의 상자. fx: { play, pour } (game-audio.js). 끝나면 done({ ok, left, tries })
