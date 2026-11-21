@@ -967,6 +967,9 @@ const CJK = /^(ko|ja|zh)$/;
 function glossParas(paras) {
   const g = DATA.glossary || [], used = new Set();
   const word = c => !!c && /[\p{L}\p{N}]/u.test(c);
+  // 더 긴 풀이 낱말 속의 짧은 낱말(제사장 속 제사)은 건너뛴다
+  const all = g.flatMap(x => x.terms.map(t => t.toLowerCase()));
+  const inside = (low, at, tl) => all.some(L => L.length > tl.length && L.includes(tl) && (() => { for (let k = L.indexOf(tl); k >= 0; k = L.indexOf(tl, k + 1)) if (low.startsWith(L, at - k)) return true; return false; })());
   return paras.map(text => {
     const low = text.toLowerCase(), hits = [];
     g.forEach((x, gi) => {
@@ -975,7 +978,7 @@ function glossParas(paras) {
       for (const term of x.terms) {
         const tl = term.toLowerCase();
         let at = low.indexOf(tl);
-        while (at >= 0 && !CJK.test(LANG) && (word(text[at - 1]) || word(text[at + tl.length]))) at = low.indexOf(tl, at + 1);
+        while (at >= 0 && ((!CJK.test(LANG) && (word(text[at - 1]) || word(text[at + tl.length]))) || inside(low, at, tl))) at = low.indexOf(tl, at + 1);
         if (at >= 0 && (!best || at < best[0] || (at === best[0] && tl.length > best[1]))) best = [at, tl.length];
       }
       if (best) hits.push([best[0], best[1], gi]);
