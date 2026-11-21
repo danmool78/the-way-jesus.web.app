@@ -395,7 +395,7 @@ export const A = {
       hp: ['highplace', 0.35, -0.4, { pole: false }],
       calf: ['calf', 0.62, -0.5, { scale: 1.4, y: 0.1 }],
       calf2: ['calf', 1.25, -0.2, { scale: 1.4, speed: 0.35 }],
-      folk: ['crowd', -1.2, 0.15, { spots: flock(9, 0.5, 0.3, 4), face: Math.PI / 2, speed: 0.3 }],
+      folk: ['crowd', -1.4, 0.15, { spots: flock(9, 0.5, 0.3, 4), face: Math.PI / 2, speed: 0.3 }],
     },
     cast: {
       jeroboam: ['jeroboamK', -0.35, 0.3, 0.4, { speed: 0.5 }],

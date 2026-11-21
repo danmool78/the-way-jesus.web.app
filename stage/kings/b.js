@@ -189,7 +189,7 @@ export const B = {
       altarB: ['altar12', -0.95, -0.45, { baal: true }],
       altarE: ['altar12', 0.95, -0.4],
       folkL: ['crowd', -1.95, 0.35, { spots: flock(7, 0.35, 0.22, 1), face: Math.PI / 2 - 0.3 }],
-      folkR: ['crowd', 2.0, 0.35, { spots: flock(7, 0.35, 0.22, 2), face: -Math.PI / 2 + 0.3 }],
+      folkR: ['crowd', 2.25, 0.4, { spots: flock(7, 0.35, 0.22, 2), face: -Math.PI / 2 + 0.3 }],
     },
     cast: {
       elijah: ['elijahK', 0.2, 0.35, -0.3],
@@ -197,8 +197,8 @@ export const B = {
       bp2: ['baalprophet2', -0.4, -0.42, -1.6],
       bp3: ['baalprophet', -1.2, -0.78, 0.4, { gaze: false }],
       bp4: ['baalprophet2', -0.7, -0.8, -0.4, { gaze: false }],
-      sv1: ['servantE', 1.6, 0.05, -1.2, { gaze: false }],
-      sv2: ['hebrew', 1.75, 0.3, -1.2, { gaze: false }],
+      sv1: ['servantE', 1.5, 0.02, -1.2, { gaze: false }],
+      sv2: ['hebrew', 1.62, 0.28, -1.2, { gaze: false }],
       man: ['hebrew2', 1.3, 0.55, -1.5],
     },
     beats: {
@@ -230,9 +230,9 @@ export const B = {
       // 돌 열두 개로 다시 쌓고, 물을 세 번 붓게 한다
       'p2.0': [['@env', 'dusk'], ['altarE', 'idle', { show: 1 }], ['elijah', 'idle', { x: 0.45, z: 0.0, look: 0.6 }],
         ['sv1', 'idle', { item: 'jar', x: 1.15, z: -0.2, delay: 2000 }], ['sv2', 'idle', { item: 'jar', x: 1.25, z: -0.05, delay: 2300 }], ['altarE', 'wet', { delay: 4000 }],
-        ['sv1', 'idle', { x: 1.6, z: 0.05, delay: 5200 }], ['sv2', 'idle', { x: 1.75, z: 0.3, delay: 5400 }], ['sv1', 'idle', { item: null, x: 1.6, z: 0.05, look: -1.2, delay: 8000 }], ['sv2', 'idle', { item: null, look: -1.2, delay: 8000 }]],
+        ['sv1', 'idle', { x: 1.5, z: 0.02, delay: 5200 }], ['sv2', 'idle', { x: 1.62, z: 0.28, delay: 5400 }], ['sv1', 'idle', { item: null, x: 1.5, z: 0.02, look: -1.2, delay: 8000 }], ['sv2', 'idle', { item: null, look: -1.2, delay: 8000 }]],
       // 엘리야가 기도한다
-      'p2.1': [['altarE', 'wet'], ['sv1', 'idle', { item: null, x: 1.6, z: 0.05, look: -1.2 }], ['sv2', 'idle', { item: null, x: 1.75, z: 0.3, look: -1.2 }], ['elijah', 'raise', { look: 0.6 }]],
+      'p2.1': [['altarE', 'wet'], ['sv1', 'idle', { item: null, x: 1.5, z: 0.02, look: -1.2 }], ['sv2', 'idle', { item: null, x: 1.62, z: 0.28, look: -1.2 }], ['elijah', 'raise', { look: 0.6 }]],
       'p2.2': [['elijah', 'raise']],
       // 불이 떨어진다 — 하늘에서 내린 빛과 불꽃
       'p2.3': [['altarE', 'fire'], ['elijah', 'look-up', { look: 0.6 }], ['bp1', 'afraid', { look: 1.2 }], ['bp2', 'cower', { look: 1.2 }], ['bp3', 'afraid', { look: 1.2 }], ['bp4', 'cower', { look: 1.2 }]],
@@ -280,7 +280,7 @@ export const B = {
       'p0.3': [['elijah', 'look-up', { look: -0.6 }]],
       // 아합은 먹고 마시러, 엘리야는 꼭대기에 올라 땅에 엎드린다
       'p0.4': [['ahab', 'idle', { x: 1.4, z: -0.42, look: 0 }], ['ahab', 'sit', { delay: 2600 }], ['elijah', 'idle', { x: -0.7, z: -0.22, look: -0.9 }], ['servant', 'idle', { x: -0.15, z: 0.25, look: -1.1, delay: 600 }], ['elijah', 'mourn', { delay: 3500 }]],
-      'p0.5': [['ahab', 'sit', { x: 1.4, z: -0.32, look: 0 }], ['elijah', 'mourn', { x: -0.7, z: -0.22, look: -0.9 }]],
+      'p0.5': [['ahab', 'sit', { x: 1.4, z: -0.42, look: 0 }], ['elijah', 'mourn', { x: -0.7, z: -0.22, look: -0.9 }]],
       // 바다 쪽을 바라보아라 — 사환이 오르내린다
       'p1.0': [['servant', 'idle', { look: -1.1 }]],
       'p1.1': [['servant', 'idle', { x: -1.7, z: 0.15 }], ['servant', 'idle', { look: -2.2, delay: 2600 }]],

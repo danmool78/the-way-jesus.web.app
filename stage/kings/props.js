@@ -134,7 +134,7 @@ Object.assign(MAKERS, {
     const P = new Prop(g);
     P.heightAt = (x, z) => { const u = (x - g.position.x) / g.scale.x, v = (z - g.position.z) / g.scale.z;
       if (P.show < 0.5 || Math.abs(u) > 0.23) return 0;
-      if (v < 0.08 && v > -0.17) return 0.001 * g.scale.y; // 자리 위는 배역 y로 (앉은 왕) — 거의 0이지만 0이 아니어야 3D 지형에서 왕이 보좌와 같은 높이·축척에 앉는다(stage.js FLAT)
+      if (v < 0.08 && v > -0.17) return 0.12 * g.scale.y; // 자리 위는 배역 y로 (앉은 왕). 앉은 왕의 발은 이 높이에 둔다 — 앞으로 뻗은 발이 닿는 층계(셋째·넷째 단 0.105–0.14). 0이면 발이 층계 위 허공에 떴다(모델, 2026-11). 0이 아니어야 3D 지형에서 왕이 보좌와 같은 높이·축척에 앉는다(stage.js FLAT)
       if (v >= 0.08 && v < 0.33) return 0.035 * Math.min(6, Math.max(1, Math.floor((0.33 - v) / 0.05) + 1)) * g.scale.y;
       return 0; };
     return P;

@@ -317,7 +317,7 @@ export const C = {
       'p1.5': [['@env', 'dusk'], ['ar1', 'idle', { show: 0 }], ['ar2', 'idle', { show: 0 }], ['l2', 'afraid', { x: 1.15, z: 0.25, look: 1 }], ['l1', 'idle', { x: 1.0, z: 0.05, look: 1 }], ['l3', 'idle', { x: 0.8, z: 0.4, look: 1 }], ['l4', 'idle', { x: 0.75, z: 0.15, look: 1 }]],
       'p1.6': [['l2', 'look-up', { look: 0.8 }]],
       // 먹고 마시며 은과 금을 감추다가
-      'p2.0': [['l1', 'sit-ground', { x: 1.29, z: 0, look: 0.6 }], ['l2', 'sit-ground', { x: 1.63, z: 0.22, look: -0.8 }], ['l3', 'bow', { x: 1.9, z: 0.22, look: 1 }], ['l4', 'idle', { x: 1.05, z: 0.3, look: 1, item: 'gift' }]],
+      'p2.0': [['l1', 'sit-ground', { x: 1.22, z: -0.04, look: 0.6 }], ['l2', 'sit-ground', { x: 1.72, z: 0.28, look: -0.8 }], ['l3', 'bow', { x: 1.9, z: 0.22, look: 1 }], ['l4', 'idle', { x: 1.05, z: 0.3, look: 1, item: 'gift' }]],
       'p2.1': [['l3', 'idle', { look: -1 }], ['l4', 'idle', { item: null }], ['l2', 'sit-speak', { to: 'l1' }]],
       'p2.2': [['l2', 'speak', { to: 'l1' }], ['l1', 'idle', { delay: 300 }]],
       'p2.3': [['l2', 'speak', { look: -1 }]],
@@ -350,7 +350,7 @@ export const C = {
       rider: ['jehu', 0, 0, 1, { board: 'car' }], // 병거를 모는 예후
       joram: ['joramK', 0, 0, 1, { board: 'car2' }],
       young: ['prophetson2', -2.6, 0.5, 1, { speed: 0.75 }],
-      c1: ['israelK', -1.9, 0.0, 0.6, { pose: 'sit-ground', gaze: false }],
+      c1: ['israelK', -2.05, -0.08, 0.6, { pose: 'sit-ground', gaze: false }],
       c2: ['israelK', -2.1, 0.35, 0.8, { pose: 'sit-ground', gaze: false }],
       c3: ['ahabA', -1.65, 0.5, 0.4, { pose: 'sit-ground', gaze: false }],
       watch: ['israelK', 1.79, -0.58, 1, { y: 1.0, gaze: false }],
@@ -410,7 +410,7 @@ export const C = {
       temple: ['stemple', 0.75, -0.6, { scale: 0.95, sea: false }],
       palace: ['tallhouse', -1.75, -0.6, { scale: 0.75, wall: '#e2d6bc' }],
       throne: ['ivorythrone', -1.0, -0.25],
-      folk: ['crowd', 2.05, 0.2, { spots: flock(9, 0.3, 0.35, 5), face: -Math.PI / 2 }],
+      folk: ['crowd', 2.3, 0.25, { spots: flock(9, 0.3, 0.35, 5), face: -Math.PI / 2 }],
       dust: ['smoke', -2.4, -1.0, { state: 'off', color: '#9a8a74', rise: 1.2 }],
     },
     cast: {

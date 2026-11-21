@@ -207,7 +207,7 @@ export const D = {
     props: {
       grass: ['grass', 0.6, 0.1, { r: 1.9, color: '#9a9a6a' }],
       wall: ['kwall', -1.55, -0.75, { scale: 0.85, w: 1.8 }],
-      folk: ['crowd', -1.55, -0.76, { y: 0.595, spots: row(5, 1.0, 2), face: 0.5 }],
+      folk: ['crowd', -1.55, -0.76, { y: 0.595, spots: row(5, 1.35, 2), face: 0.5 }],
       camp1: ['camp', 1.15, -0.8, { n: 6, span: 1.15, color: '#6a6c7e', flag: '#9d3328', scale: 1.8 }],
       camp2: ['camp', 1.5, -0.4, { n: 4, span: 0.7, color: '#5c5e70', flag: '#9d3328', scale: 1.6 }],
       fires: ['campfires', 0, 0, { spots: [[0.25, -0.35], [0.85, 0.15], [1.55, 0.05], [2.35, -0.1], [1.15, 0.5]], sweep: 2.6 }],
@@ -590,7 +590,7 @@ export const D = {
       c1: ['guardJ', 0.5, 0.1, -1.4],
       c2: ['hebrew2', 0.75, -0.2, -1.6, { gaze: false }],
       p1: ['exile', -0.95, 0.25, 0.9, { gaze: false, speed: 0.45 }],
-      p2: ['exileW', -0.75, 0.45, 0.6, { gaze: false, speed: 0.45 }],
+      p2: ['exileW', -0.68, 0.52, 0.6, { gaze: false, speed: 0.45 }],
       jehoiachin: ['jehoiachin', 1.45, -0.38, 0.0, { pose: 'sit-ground' }],
       jehoiachinR: ['jehoiachinR', 1.45, 0.05, -1.4],
       king: ['babking', 2.3, 0.3, -1.5, { speed: 0.5 }],
