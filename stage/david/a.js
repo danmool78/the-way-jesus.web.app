@@ -85,7 +85,7 @@ export const A = {
     beats: {
       enter: [['beam', null, { show: 1, x: -0.02, z: 0.22 }], ['altar', 'fire'], ['heifer', null, { show: 0 }], ['elder1', 'idle', { show: 0 }], ['elder2', 'idle', { show: 0 }],
         ['samuel', 'anoint', { x: 0.22, z: 0.18, look: -1, item: 'oilhorn' }], ['david', 'kneel', { x: -0.08, z: 0.22, look: 1 }],
-        ['jesse', 'idle', { x: -0.75, z: -0.2, look: 0.8 }], ['eliab', 'idle', { look: 0.8 }], ['abin', 'idle', { look: 0.8 }], ['shammah', 'idle', { look: 0.8 }]],
+        ['jesse', 'idle', { x: -0.6, z: -0.1, look: 0.8 }], ['eliab', 'idle', { look: 0.8 }], ['abin', 'idle', { look: 0.8 }], ['shammah', 'idle', { look: 0.8 }]],
       // 라마에서 사울 때문에 슬퍼하는 사무엘 — 아무도 없다
       intro: [['beam', null, { show: 0 }], ['altar', 'idle', { show: 0 }], ['heifer', null, { show: 0 }], ['elder1', 'idle', { show: 0 }], ['elder2', 'idle', { show: 0 }],
         ['jesse', 'idle', { show: 0 }], ['eliab', 'idle', { show: 0 }], ['abin', 'idle', { show: 0 }], ['shammah', 'idle', { show: 0 }], ['david', 'idle', { show: 0 }],
@@ -479,7 +479,7 @@ export const A = {
       // 늙은 선지자 앞에서 모두 털어놓는다
       'p0.1': [['david', 'speak', { to: 'samuel' }], ['samuel', 'listen', { look: -1 }]],
       // 함께 나욧으로 — 선지자 무리
-      'p0.2': [['david', 'idle', { x: 0.21, z: -0.49, look: 0.6 }], ['samuel', 'idle', { x: 0.78, z: -0.05, look: -1 }],
+      'p0.2': [['david', 'idle', { x: 0.12, z: -0.45, look: 0.6 }], ['samuel', 'idle', { x: 0.78, z: -0.05, look: -1 }],
         ['pr1', 'idle', { show: 1 }], ['pr2', 'idle', { show: 1 }], ['pr3', 'idle', { show: 1 }]],
       // 사울에게 소식이 들어간다
       'p0.3': [['saul', 'idle', { show: 1, x: -1.45, z: -0.3, look: 1 }], ['m1', 'idle', { show: 1, x: -1.1, z: -0.15, look: -1 }]],
