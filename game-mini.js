@@ -1,5 +1,5 @@
 // 장면 놀이 (사용자 2026-11): 그분을 만나 이야기를 다 들은 뒤, 몇몇 장면에서는 말씀 고르기 대신 그 장면의 짧은 놀이를 모달로 한다.
-// 제한 시간 안에 성공해야 그 장면의 말씀 카드를 얻는다(사용자: '성공해야 카드 줌'). 한 번 더 도전할 수 있다.
+// 제한 시간 안에 성공해야 그 장면의 말씀 카드를 얻는다(사용자: '성공해야 카드 줌'). 한 번 더 도전할 수 있다. 보너스는 남은 시간 비율×200점.
 // 그림은 모두 캔버스에 코드로 그린다(파일을 더 받지 않는다). 좌표는 400×500 논리 단위 — 화면 크기에 맞춰 늘린다.
 // 놀이 하나 = { title, ask(그분이 이야기 끝에 맡기시는 말), quote, ref, help, seconds, init(), update(dt, S), draw(g, S), down(x, y, S), up(S), won(S), end(g, k, S) }
 
@@ -369,12 +369,154 @@ function floatMsg(g, m) {
   g.lineWidth = 4; g.strokeStyle = 'rgba(15,20,25,.8)'; g.strokeText(m.t, clamp(m.x, 80, W - 80), m.y - rise); g.fillStyle = m.c; g.fillText(m.t, clamp(m.x, 80, W - 80), m.y - rise); g.restore();
 }
 
-export const MINI = { jesus: { e11: cana, e17: fishing } };
+/* ---------- 빈 들의 만찬 (막 6:30–44, 눅 9:10–17): 오십 명씩 앉히기 — 머리 쓰는 놀이 ---------- */
+// 크기가 다른 가족들을 끌어다 풀밭 넷에 앉힌다. 풀밭마다 꼭 50명(눅 9:14 '떼를 지어 한 오십 명씩') — 넘치면 들어가지 않는다.
+// 앉힌 가족을 누르면 다시 빠진다. 어디에도 맞지 않는 가족이 둘 섞여 있어, 아무렇게나 넣으면 막힌다(풀밭마다 꼭 맞는 묶음은 있다).
+// 넷이 다 차면 그분이 축사하시고 떡과 물고기가 무리마다 흘러가며, 남은 조각이 열두 바구니(눅 9:17)
+const PATCH = 50, PATCHES = [[106, 128], [294, 128], [106, 262], [294, 262]];
+const loaves = {
+  title: '빈 들의 만찬', task: '풀밭마다 꼭 오십 명씩',
+  ask: ['이 많은 사람을 먹이려면 먼저 질서 있게 앉혀야겠지.', '푸른 풀밭에 오십 명씩 무리 지어 앉혀 다오 — 넘치지도 모자라지도 않게!'],
+  quote: '떼를 지어 한 오십 명씩 앉히라', ref: '눅 9:14',
+  help: '가족을 끌어다 풀밭에 놓아요. 풀밭마다 꼭 50명이어야 해요.<br>앉힌 가족을 누르면 다시 빠져요. 어디에도 맞지 않는 가족이 둘 섞여 있어요.',
+  seconds: 55,
+  init() {
+    // 풀밭마다 50을 3~4 묶음으로 나눠 가족을 만들고, 맞지 않는 가족 둘을 섞는다 — 늘 풀 수 있게
+    const fams = [];
+    for (let k = 0; k < 4; k++) {
+      let ns; do { const parts = Math.random() < 0.5 ? 3 : 4; let left = PATCH; ns = [];
+        for (let i = 0; i < parts; i++) { const n = i === parts - 1 ? left : Math.round(rnd(5, Math.min(left - (parts - i - 1) * 5, 24))); ns.push(n); left -= n; }
+      } while (ns.some(n => n < 4 || n > 26)); // 너무 작거나 큰 가족은 다시
+      fams.push(...ns);
+    }
+    for (let i = 0; i < 2; i++) fams.push([7, 9, 11, 13, 17, 19, 23][Math.floor(Math.random() * 7)]); // 남는 가족 (홀수라 어디에 넣으면 50을 깨기 쉽다)
+    fams.sort(() => Math.random() - 0.5);
+    const S = { fams: fams.map((n, i) => ({ n, i, at: -1, x: 0, y: 0, hue: [28, 200, 340, 120, 48, 265][i % 6], bob: rnd(0, 6) })), drag: null, msg: null, sparks: [], shake: [0, 0, 0, 0], flow: 0 };
+    S.relayout = () => layout(S); layout(S); return S; // relayout: 확인용
+  },
+  update(dt, S) {
+    for (const f of S.fams) if (f !== S.drag?.f) { f.x += (f.tx - f.x) * Math.min(1, dt * 14); f.y += (f.ty - f.y) * Math.min(1, dt * 14); }
+    for (let k = 0; k < 4; k++) S.shake[k] = Math.max(0, S.shake[k] - dt * 3);
+    for (const p of S.sparks) { p.x += (p.vx || 0) * dt; p.y += p.vy * dt; p.life -= dt; } S.sparks = S.sparks.filter(p => p.life > 0);
+    if (S.msg) S.msg.at -= dt;
+  },
+  down(x, y, S) {
+    const f = [...S.fams].reverse().find(f => Math.hypot(f.x - x, f.y - y) < famR(f) + 6);
+    if (!f) return;
+    S.drag = { f, dx: f.x - x, dy: f.y - y, x0: x, y0: y, moved: false }; S.fx.play('pick');
+  },
+  move(x, y, S) { const D = S.drag; if (!D) return; if (Math.hypot(x - D.x0, y - D.y0) > 6) D.moved = true; D.f.x = x + D.dx; D.f.y = y + D.dy; },
+  up(S, x, y) {
+    const D = S.drag; if (!D) return; S.drag = null; const f = D.f;
+    if (!D.moved) { if (f.at >= 0) { f.at = -1; S.fx.play('drop'); layout(S); } return; } // 앉힌 가족을 누르면 빠진다
+    const k = PATCHES.findIndex(([px, py]) => Math.abs(x - px) < 92 && Math.abs(y - py) < 62);
+    if (k < 0) { f.at = -1; layout(S); return; }
+    const sum = S.fams.filter(o => o.at === k && o !== f).reduce((a, o) => a + o.n, 0);
+    if (sum + f.n > PATCH) { // 넘친다 — 들어가지 않는다
+      S.shake[k] = 1; S.fx.play('wrong'); S.msg = { t: `${sum + f.n}명 — 넘쳐요`, c: '#ffb38a', at: 1, x: PATCHES[k][0], y: PATCHES[k][1] - 50 };
+      layout(S); return;
+    }
+    f.at = k; layout(S); S.fx.play('drop');
+    if (sum + f.n === PATCH) { S.fx.play('plink'); S.msg = { t: '오십 명!', c: '#ffe29a', at: 1, x: PATCHES[k][0], y: PATCHES[k][1] - 50 };
+      for (let i = 0; i < 16; i++) S.sparks.push({ x: PATCHES[k][0] + rnd(-80, 80), y: PATCHES[k][1] + rnd(-45, 45), vy: rnd(-40, -10), life: rnd(0.5, 1.1), r: rnd(1.5, 3) }); }
+  },
+  won: S => PATCHES.every((_, k) => S.fams.filter(f => f.at === k).reduce((a, f) => a + f.n, 0) === PATCH),
+  draw(g, S) {
+    meadow(g);
+    for (const [k, [px, py]] of PATCHES.entries()) {
+      const sum = S.fams.filter(f => f.at === k).reduce((a, f) => a + f.n, 0), full = sum === PATCH, sx = Math.sin(S.shake[k] * 30) * S.shake[k] * 6;
+      g.save(); g.translate(px + sx, py);
+      g.fillStyle = full ? 'rgba(200,240,140,.32)' : 'rgba(150,200,100,.22)'; g.strokeStyle = full ? 'rgba(255,230,150,.95)' : S.shake[k] > 0 ? '#ff8a6a' : 'rgba(255,255,255,.45)';
+      g.lineWidth = full ? 3 : 2; g.setLineDash(full ? [] : [6, 5]); g.beginPath(); g.ellipse(0, 0, 88, 58, 0, 0, 7); g.fill(); g.stroke(); g.setLineDash([]);
+      // 몇 명 찼는지: 아래 막대 + 숫자
+      g.fillStyle = 'rgba(0,0,0,.3)'; g.fillRect(-50, 44, 100, 7); g.fillStyle = full ? '#ffe29a' : '#bfe7a0'; g.fillRect(-50, 44, 100 * sum / PATCH, 7);
+      g.font = '800 15px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.lineWidth = 3; g.strokeStyle = 'rgba(20,40,10,.6)';
+      const t = full ? '50 ✓' : `${sum} / 50`; g.strokeText(t, 0, -40); g.fillStyle = full ? '#ffe29a' : '#fff'; g.fillText(t, 0, -40);
+      g.restore();
+    }
+    // 떡과 물고기가 흘러가는 연출(성공 뒤)
+    if (S.flow > 0) for (const [k, [px, py]] of PATCHES.entries()) for (let i = 0; i < 4; i++) {
+      const t = (S.flow * 1.4 - i * 0.12 - k * 0.08); if (t <= 0 || t >= 1) continue;
+      const x = 200 + (px - 200) * t, y = 430 + (py - 430) * t - Math.sin(t * Math.PI) * 40; bread(g, x, y, i % 2);
+    }
+    // 풀밭 아래 기다리는 곳
+    g.fillStyle = 'rgba(40,60,20,.25)'; g.fillRect(0, 342, W, 2);
+    g.font = '600 11px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.fillStyle = 'rgba(255,255,255,.6)'; g.fillText('기다리는 가족', 14, 360);
+    for (const f of S.fams) if (f !== S.drag?.f) drawFam(g, f, false);
+    if (S.drag) drawFam(g, S.drag.f, true);
+    for (const p of S.sparks) { g.fillStyle = `rgba(255,226,150,${clamp(p.life, 0, 1)})`; star(g, p.x, p.y, p.r * 2.2); }
+    floatMsg(g, S.msg);
+    const done = PATCHES.filter((_, k) => S.fams.filter(f => f.at === k).reduce((a, f) => a + f.n, 0) === PATCH).length;
+    g.save(); g.font = '700 14px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.lineWidth = 3; g.strokeStyle = 'rgba(20,40,10,.55)'; g.fillStyle = '#fff';
+    g.strokeText(`앉힌 무리 ${done} / 4`, 16, 26); g.fillText(`앉힌 무리 ${done} / 4`, 16, 26); g.restore();
+  },
+  end(g, k, S) {
+    S.flow = k; this.draw(g, S);
+    if (k > 0.55) { // 남은 조각 열두 바구니
+      const a = clamp((k - 0.55) * 3, 0, 1);
+      g.save(); g.globalAlpha = a; g.fillStyle = 'rgba(30,20,10,.55)'; g.fillRect(0, 360, W, 140);
+      for (let i = 0; i < 12; i++) basket(g, 34 + (i % 6) * 66, 400 + Math.floor(i / 6) * 50, Math.min(1, (k - 0.55) * 4 - i * 0.05));
+      g.font = '700 16px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#ffe9c8'; g.lineWidth = 4; g.strokeStyle = 'rgba(30,20,10,.7)';
+      g.strokeText('남은 조각을 열두 바구니에 거두니라', W / 2, 382); g.fillText('남은 조각을 열두 바구니에 거두니라', W / 2, 382);
+      g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#e9d6b4'; g.fillText('눅 9:17', W / 2, 497); g.restore();
+    }
+  },
+};
+const famR = f => 15 + Math.sqrt(f.n) * 2.6;
+// 자리: 풀밭에 앉은 가족은 그 풀밭 안에 둥글게, 기다리는 가족은 아래 칸에 줄지어
+function layout(S) {
+  for (let k = 0; k < 4; k++) { const in_ = S.fams.filter(f => f.at === k), [px, py] = PATCHES[k];
+    in_.forEach((f, i) => { const a = -Math.PI / 2 + i * (Math.PI * 2 / Math.max(in_.length, 1)) + 0.4, r = in_.length > 1 ? 34 : 0; f.tx = px + Math.cos(a) * r * 1.35; f.ty = py + 4 + Math.sin(a) * r * 0.62; }); }
+  const wait = S.fams.filter(f => f.at < 0);
+  wait.forEach((f, i) => { const c = i % 6, r = Math.floor(i / 6); f.tx = 36 + c * 66; f.ty = 386 + r * 44 + (c % 2) * 6; });
+  for (const f of S.fams) if (!f.x) { f.x = f.tx; f.y = f.ty; }
+}
+function drawFam(g, f, lifted) {
+  const r = famR(f), t = performance.now() / 1000;
+  g.save(); g.translate(f.x, f.y + (lifted ? -4 : Math.sin(t * 2 + f.bob) * 1));
+  g.fillStyle = 'rgba(0,0,0,.3)'; g.beginPath(); g.ellipse(0, r * 0.8 + (lifted ? 10 : 2), r * 0.9, 4, 0, 0, 7); g.fill();
+  if (lifted) g.scale(1.12, 1.12);
+  const c = g.createRadialGradient(-r * 0.3, -r * 0.4, 2, 0, 0, r);
+  c.addColorStop(0, `hsl(${f.hue},45%,72%)`); c.addColorStop(1, `hsl(${f.hue},40%,42%)`);
+  g.fillStyle = c; g.beginPath(); g.arc(0, 0, r, 0, 7); g.fill();
+  g.strokeStyle = 'rgba(255,255,255,.55)'; g.lineWidth = 1.5; g.stroke();
+  // 사람 머리 몇 개(가족이 클수록 많이) — 숫자만 있으면 그냥 숫자 놀이 같았다
+  const heads = Math.min(5, 1 + Math.floor(f.n / 5));
+  for (let i = 0; i < heads; i++) { const a = Math.PI + (i + 0.5) / heads * Math.PI; g.fillStyle = `hsl(${f.hue},30%,28%)`; g.beginPath(); g.arc(Math.cos(a) * r * 0.62, Math.sin(a) * r * 0.62 + 2, r * 0.17, 0, 7); g.fill(); }
+  g.font = `800 ${Math.round(r * 0.78)}px "Noto Sans KR",sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle';
+  g.lineWidth = 3; g.strokeStyle = 'rgba(30,20,10,.55)'; g.strokeText(f.n, 0, r * 0.18); g.fillStyle = '#fff'; g.fillText(f.n, 0, r * 0.18);
+  g.restore();
+}
+// 갈릴리 빈 들: 봄의 푸른 풀(막 6:39), 멀리 호수
+function meadow(g) {
+  const s = g.createLinearGradient(0, 0, 0, H); s.addColorStop(0, '#9cc7d8'); s.addColorStop(0.09, '#c9dfc0'); s.addColorStop(0.1, '#7fae5a'); s.addColorStop(0.7, '#5f9440'); s.addColorStop(1, '#3f6a2a');
+  g.fillStyle = s; g.fillRect(0, 0, W, H);
+  g.fillStyle = '#6a9fb8'; g.beginPath(); g.moveTo(0, 46); g.quadraticCurveTo(200, 36, W, 48); g.lineTo(W, 52); g.lineTo(0, 52); g.fill();
+  g.strokeStyle = 'rgba(30,60,20,.25)'; g.lineWidth = 1;
+  for (let i = 0; i < 70; i++) { const x = (i * 97) % W, y = 60 + ((i * 53) % 420); g.beginPath(); g.moveTo(x, y); g.lineTo(x - 2, y - 6); g.moveTo(x + 3, y); g.lineTo(x + 4, y - 7); g.stroke(); }
+  g.fillStyle = 'rgba(255,240,200,.5)'; for (let i = 0; i < 26; i++) { g.beginPath(); g.arc((i * 151) % W, 70 + (i * 71) % 400, 1.6, 0, 7); g.fill(); } // 들꽃
+}
+function bread(g, x, y, fishy) {
+  g.save(); g.translate(x, y);
+  if (fishy) { g.fillStyle = '#c9d6dd'; fish(g, 0, 0, 0, 1.6); }
+  else { g.fillStyle = '#d9a55a'; g.beginPath(); g.ellipse(0, 0, 9, 6, 0, 0, 7); g.fill(); g.strokeStyle = '#a8742e'; g.lineWidth = 1; g.beginPath(); g.moveTo(-5, -2); g.lineTo(5, -2); g.stroke(); }
+  g.restore();
+}
+function basket(g, x, y, k) {
+  if (k <= 0) return;
+  g.save(); g.translate(x, y); g.scale(k, k);
+  g.fillStyle = '#9a6a32'; g.beginPath(); g.moveTo(-20, -8); g.lineTo(20, -8); g.lineTo(15, 14); g.lineTo(-15, 14); g.closePath(); g.fill();
+  g.strokeStyle = 'rgba(60,35,10,.6)'; g.lineWidth = 1; for (let i = -6; i <= 14; i += 5) { g.beginPath(); g.moveTo(-20, i); g.lineTo(20, i); g.stroke(); }
+  g.fillStyle = '#e0b46a'; for (let i = 0; i < 4; i++) { g.beginPath(); g.ellipse(-12 + i * 8, -10, 6, 4, 0, 0, 7); g.fill(); }
+  g.restore();
+}
+
+export const MINI = { jesus: { e11: cana, e17: fishing, e31: loaves } };
 
 /* ---------- 놀이 틀: 소개 → 놀이(제한 시간) → 성공 연출/실패 → 결과 ---------- */
 // host: 모달 안의 상자. fx: { play, pour } (game-audio.js). 끝나면 done({ ok, left, tries })
 export function playMini(game, host, fx, done) {
-  let tries = 0, raf = 0, S = null, phase = 'intro', t = 0, last = 0, endT = 0, left = 0;
+  let tries = 0, raf = 0, S = null, phase = 'intro', t = 0, last = 0, endT = 0, left = 0, bonus = 0;
   host.innerHTML = `<div class="mini">
     <div class="mhead"><small>${game.title}</small><b>${game.task}</b><span class="mtime"><i></i><em></em></span></div>
     <div class="mstage"><canvas></canvas>
@@ -386,7 +528,8 @@ export function playMini(game, host, fx, done) {
   fit(); addEventListener('resize', fit);
   const pt = ev => { const r = cv.getBoundingClientRect(); return [(ev.clientX - r.left) / r.width * W, (ev.clientY - r.top) / r.height * H]; };
   cv.addEventListener('pointerdown', ev => { if (phase !== 'play') return; cv.setPointerCapture(ev.pointerId); ev.preventDefault(); game.down(...pt(ev), S); });
-  const up = () => { if (phase === 'play') game.up(S); };
+  cv.addEventListener('pointermove', ev => { if (phase === 'play') game.move?.(...pt(ev), S); });
+  const up = ev => { if (phase === 'play') game.up(S, ...pt(ev)); };
   cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
   const panel = (cls, html) => { stage.querySelector('.mpanel')?.remove(); stage.insertAdjacentHTML('beforeend', `<div class="mpanel ${cls}">${html}</div>`); return stage.querySelector('.mpanel'); };
   const start = () => {
@@ -396,7 +539,7 @@ export function playMini(game, host, fx, done) {
   host.querySelector('.intro .go').onclick = start;
   const finish = ok => {
     fx.pour?.(null); phase = ok ? 'won' : 'lost'; host.querySelector('.mini').classList.remove('playing');
-    if (ok) { left = Math.ceil(t); endT = 0; fx.play('wine'); return; }
+    if (ok) { left = Math.ceil(t); bonus = Math.round(200 * t / game.seconds); endT = 0; fx.play('wine'); return; } // 보너스는 남은 시간의 비율로(최대 200) — 제한 시간이 긴 놀이만 점수가 커지지 않게
     fx.play('late');
     const p = panel('lost', `<h3>시간이 다 되었어요</h3><p>${tries < TRIES ? '한 번 더 해 볼까요?' : '이번에는 카드를 얻지 못했어요.<br>다시 걸을 때 또 도전할 수 있어요.'}</p>
       <div class="row">${tries < TRIES ? '<button class="go ghost" data-q>그만두기</button><button class="go" data-r>다시 도전</button>' : '<button class="go" data-q>계속</button>'}</div>`);
@@ -415,9 +558,9 @@ export function playMini(game, host, fx, done) {
       if (game.won(S)) finish(true); else if (t <= 0) { t = 0; finish(false); }
     } else if (phase === 'won') {
       endT += Math.min(0.2, raw); game.update(dt, S); // 성공 연출은 실제 시간으로 (느린 폰에서 판이 한참 늦게 떴다)
-      if (endT > 2.6 && !stage.querySelector('.won')) {
-        const p = panel('won', `<h3>성공!</h3><p>남은 시간 <b>${left}초</b> · 보너스 <b>+${left * 10}점</b></p><button class="go">카드 받기</button>`);
-        p.querySelector('.go').onclick = () => close({ ok: true, left, tries });
+      if (endT > 3.4 && !stage.querySelector('.won')) {
+        const p = panel('won', `<h3>성공!</h3><p>남은 시간 <b>${left}초</b> · 보너스 <b>+${bonus}점</b></p><button class="go">카드 받기</button>`);
+        p.querySelector('.go').onclick = () => close({ ok: true, left, bonus, tries });
       }
     }
     const k = Math.min(1, endT / 2.2);
