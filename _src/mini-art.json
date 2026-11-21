@@ -560,5 +560,50 @@
    "ratio": "16:9",
    "p": "One dry gnarled driftwood stick lying horizontally, side view."
   }
+ },
+ "k24": {
+  "bg": {
+   "bg": true,
+   "p": "The Jordan River seen from the side at water level on a bright day: muddy green-brown river water filling the lower half with a gentle current, reeds and tamarisk bushes on the far bank, hills and sky above, the near shore edge along the bottom-left corner. No people."
+  },
+  "naaman": {
+   "h": 420,
+   "ratio": "3:4",
+   "p": "Naaman, a proud Aramean army commander with a short black beard, bare-chested, standing waist-deep (draw him from the waist up only), arms folded, skin on his chest and arms covered with pale white scaly leprosy patches, determined face, front view."
+  },
+  "naaman-clean": {
+   "h": 420,
+   "ratio": "3:4",
+   "p": "Naaman, an Aramean army commander with a short black beard, bare-chested, from the waist up only, arms raised in astonishment and joy, his skin completely healthy and smooth like a young boy's, front view."
+  },
+  "servants": {
+   "h": 300,
+   "ratio": "16:9",
+   "p": "Two Aramean servants and a chariot horse standing on a riverbank watching, side view, simple robes, one holding a folded garment."
+  }
+ },
+ "a17": {
+  "bg": {
+   "bg": true,
+   "p": "The inner dungeon of the prison in Philippi at midnight: rough stone walls and floor, a heavy iron-bound wooden door at the right, a small barred window high up with moonlight, chains on the wall, a single oil lamp. Lower half is open floor. No people."
+  },
+  "paul-silas": {
+   "h": 420,
+   "ratio": "16:9",
+   "ref": [
+    "_src/cards/paul.png"
+   ],
+   "p": "Paul and Silas sitting on a prison floor side by side, their feet locked in a wooden stocks, bruised backs, singing hymns with faces lifted up joyfully, simple torn tunics. Paul as in the second reference image."
+  },
+  "prisoners": {
+   "h": 300,
+   "ratio": "16:9",
+   "p": "Three ragged prisoners in chains sitting on the ground, listening in wonder, side view facing left. Only the three figures; no wall, no floor, no background objects at all."
+  },
+  "door-open": {
+   "h": 420,
+   "ratio": "3:4",
+   "p": "A heavy iron-bound wooden prison door swung wide open with broken chains hanging, stone door frame, dust falling, straight front view."
+  }
  }
 }

@@ -2716,8 +2716,98 @@ function stick(g, x, y, a, big, al, held) {
   g.restore();
 }
 
+/* ---------- 나아만의 일곱 번 (왕하 5:10–14): 요단 강에 일곱 번 몸을 잠그기 — 누르고 있다 알맞게 떼기 ---------- */
+// 누르고 있으면 나아만이 물속에 잠기고 고리가 찬다. 초록 띠 안에서 떼야 한 번으로 센다 — 일찍 떼면 다시, 너무 오래면 숨이 차 물을 먹고 한 번을 잃는다.
+// 잠길 때마다 고리 빠르기와 띠가 조금씩 달라진다. 일곱 번을 채우면 살이 어린아이 살같이 깨끗해진다(5:14)
+const DIPS = 7;
+const naaman = {
+  title: '나아만의 일곱 번', task: '요단 강에 일곱 번 몸을 잠그기', art: ['k24/bg', 'k24/naaman', 'k24/naaman-clean', 'k24/servants'],
+  ask: ['나는 나가 보지도 않고 요단 강에 가서 일곱 번 몸을 씻으라고만 전했단다. 나아만은 화가 나서 돌아섰지.', '그래도 종들의 말을 듣고 이 물에 내려왔어 — 네가 함께 세어 주렴, 꼭 일곱 번!'],
+  quote: '나아만이 이에 내려가서 하나님의 사람의 말대로 요단 강에 일곱 번 몸을 잠그니', ref: '왕하 5:14',
+  help: '누르고 있으면 물속에 잠기고 고리가 차요. 초록 띠 안에서 떼면 한 번!<br>일찍 떼면 다시, 너무 오래면 숨이 차서 한 번을 잃어요. 일곱 번 채우기.',
+  seconds: 20,
+  init() { const S = { n: 0, hold: false, k: 0, sp: 1, lo: 0.7, hi: 0.95, dep: 0, t: 0, msg: null, bub: [], ripple: [], clean: 0, choke: 0 }; this.next(S); return S; },
+  next(S) { S.sp = rnd(1.05, 1.5) + S.n * 0.05; const w = 0.19 - S.n * 0.01; S.lo = rnd(0.55, 0.8); S.hi = S.lo + w; S.k = 0; }, // 잠길 때마다 빠르기·띠가 달라진다
+  update(dt, S) {
+    S.t += dt; if (S.msg) S.msg.at -= dt; S.choke = Math.max(0, S.choke - dt);
+    S.dep += ((S.hold && !S.choke ? 1 : 0) - S.dep) * Math.min(1, dt * 9);
+    if (S.hold && !S.choke) { S.k += dt * S.sp / 1.2; if (Math.random() < dt * 14) S.bub.push({ x: 200 + rnd(-30, 30), y: 330, vy: rnd(-60, -30), life: rnd(0.5, 1) });
+      if (S.k > S.hi + 0.22) { S.hold = false; S.choke = 0.9; S.n = Math.max(0, S.n - 1); S.fx.play('splash'); S.msg = { t: '숨이 차요! 한 번을 잃었어요', c: '#ffb38a', at: 1.2, x: 200, y: 200 }; this.next(S); } }
+    S.clean += (S.n / DIPS - S.clean) * Math.min(1, dt * 3);
+    for (const b of S.bub) { b.y += b.vy * dt; b.life -= dt; } S.bub = S.bub.filter(b => b.life > 0);
+    for (const r of S.ripple) r.t += dt; S.ripple = S.ripple.filter(r => r.t < 1.2);
+  },
+  down(x, y, S) { if (S.choke || S.n >= DIPS) return; S.hold = true; S.k = 0; S.fx.play('plop'); S.ripple.push({ t: 0 }); },
+  up(S) { if (!S.hold) return; S.hold = false; S.ripple.push({ t: 0 });
+    if (S.k >= S.lo && S.k <= S.hi) { S.n++; S.fx.play(S.n >= DIPS ? 'wine' : 'coin'); S.msg = { t: `${['하나', '둘', '셋', '넷', '다섯', '여섯', '일곱!'][S.n - 1]}`, c: '#ffe29a', at: 0.9, x: 200, y: 200 }; }
+    else if (S.k < S.lo) { S.fx.play('miss'); S.msg = { t: '너무 일찍 — 다시', c: '#e8e0c8', at: 0.8, x: 200, y: 200 }; }
+    else { S.fx.play('miss'); S.msg = { t: '조금 늦었어요 — 다시', c: '#e8e0c8', at: 0.8, x: 200, y: 200 }; }
+    this.next(S); },
+  key(k, S) { if (k === ' ') { if (!S.hold) this.down(0, 0, S); return; } return false; },
+  won: S => S.n >= DIPS && !S.hold,
+  failText: () => '해가 저물었어요',
+  draw(g, S) {
+    const WL = 300; // 물 높이
+    if (!bgArt(g, 'k24/bg')) { g.fillStyle = '#9cc0d0'; g.fillRect(0, 0, W, WL); g.fillStyle = '#5a6a48'; g.fillRect(0, WL, W, H); }
+    spr(g, 'k24/servants', 70, 470, 66, { flip: true });
+    // 나아만 — 잠기면 물 아래로 내려간다(물 위 부분만 보이게 자른다), 셀수록 살이 깨끗해진다
+    const ny = WL + 100 + S.dep * 120 + Math.sin(S.t * 2) * 2;
+    g.save(); g.beginPath(); g.rect(0, 0, W, WL + 4); g.clip();
+    const who = S.n >= DIPS ? 'k24/naaman-clean' : 'k24/naaman'; spr(g, who, 200, ny, 190); // 두 그림의 얼굴 자리가 달라 겹치면 머리가 둘로 보여, 일곱 번째에 한 번에 바꾼다
+    g.restore();
+    // 물속에 잠긴 몸이 흐리게 비친다
+    g.save(); g.beginPath(); g.rect(0, WL + 4, W, H); g.clip(); g.globalAlpha = 0.25; spr(g, who, 200, ny, 190); g.restore();
+    g.fillStyle = 'rgba(90,110,80,.35)'; g.fillRect(0, WL + 2, W, 3);
+    for (const r of S.ripple) { g.strokeStyle = `rgba(255,255,255,${0.5 * (1 - r.t / 1.2)})`; g.lineWidth = 2; g.beginPath(); g.ellipse(200, WL + 3, 40 + r.t * 90, 6 + r.t * 10, 0, 0, 7); g.stroke(); }
+    for (const b of S.bub) { g.strokeStyle = `rgba(230,245,255,${b.life})`; g.lineWidth = 1.2; g.beginPath(); g.arc(b.x, b.y, 3, 0, 7); g.stroke(); }
+    // 고리: 잠겨 있는 동안 찬다, 초록 띠 안에서 떼기
+    const cx = 200, cy = 112, R = 40;
+    g.save(); g.lineWidth = 10; g.strokeStyle = 'rgba(0,0,0,.35)'; g.beginPath(); g.arc(cx, cy, R, 0, 7); g.stroke();
+    const A = k => -Math.PI / 2 + k * Math.PI * 2; g.strokeStyle = 'rgba(120,220,120,.85)'; g.beginPath(); g.arc(cx, cy, R, A(S.lo), A(Math.min(1, S.hi))); g.stroke();
+    if (S.hold) { g.strokeStyle = S.k > S.hi ? '#ff7a5a' : '#fff4d8'; g.lineWidth = 5; g.beginPath(); g.arc(cx, cy, R, A(0), A(Math.min(1.2, S.k))); g.stroke(); }
+    g.font = '900 26px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.lineWidth = 5; g.strokeStyle = 'rgba(30,24,14,.7)'; g.strokeText(`${S.n}`, cx, cy); g.fillStyle = '#fff'; g.fillText(`${S.n}`, cx, cy);
+    g.font = '700 11px "Noto Sans KR",sans-serif'; g.lineWidth = 3; g.strokeText(`/ ${DIPS}번`, cx, cy + 22); g.fillStyle = '#ffe9c0'; g.fillText(`/ ${DIPS}번`, cx, cy + 22); g.restore();
+    g.save(); g.font = '800 14px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.lineWidth = 3; g.strokeStyle = 'rgba(20,30,20,.6)'; g.fillStyle = '#fff';
+    const tip = S.choke ? '콜록… 잠깐 숨을 골라요' : S.hold ? '초록 띠에서 떼요!' : '누르고 있으면 잠겨요'; g.strokeText(tip, 14, 26); g.fillText(tip, 14, 26); g.restore();
+    floatMsg(g, S.msg);
+  },
+  end(g, k, S) { S.hold = false; this.update(0.016, S); this.draw(g, S);
+    if (k > 0.1) { g.save(); g.globalAlpha = 0.3 * Math.sin(Math.min(1, k * 2) * Math.PI); g.fillStyle = '#fff6d8'; g.fillRect(0, 0, W, H); g.restore(); }
+    if (k > 0.3) { g.save(); g.globalAlpha = clamp((k - 0.3) * 2, 0, 1); g.fillStyle = 'rgba(20,30,24,.78)'; g.fillRect(0, 40, W, 84);
+      g.font = '700 16px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#f4fff0'; g.fillText('그의 살이 어린아이의 살 같이', W / 2, 70); g.fillText('회복되어 깨끗하게 되었더라', W / 2, 94);
+      g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#c8dcc0'; g.fillText('왕하 5:14', W / 2, 113); g.restore(); }
+  },
+};
+
+/* ---------- 한밤의 찬송과 흔들린 감옥 (행 16:25–26): 여리고 박자 놀이를 다시 씀 — 찬송의 박자, 끝은 지진 ---------- */
+const HYMN_SEG = ['한밤중 — 첫 찬송', '기도하며 둘째 노래', '죄수들이 귀를 기울이고', '마지막 찬송'];
+const prison = { ...jericho, title: '한밤의 찬송과 흔들린 감옥', task: '찬송의 박자에 맞춰 밤새 노래하기',
+  art: ['a17/bg', 'a17/paul-silas', 'a17/prisoners', 'a17/door-open'],
+  ask: ['매를 맞고 발이 차꼬에 묶였어도, 실라와 나는 한밤중에 하나님을 찬송했단다.', '너도 같이 부르자 — 음표에 맞춰. 마지막엔 마음껏 소리 높여!'],
+  quote: '한밤중에 바울과 실라가 기도하고 하나님을 찬송하매 죄수들이 듣더라', ref: '행 16:25',
+  help: '음표가 오른쪽에서 흘러와요. 왼쪽 원에 닿을 때 눌러요.<br>갈수록 빨라져요. 여섯 번 놓치면 흐트러져요. 마지막에 마구 눌러 찬송을 높이면 —',
+  seconds: 36, plan: [[6, 0.85], [8, 0.7], [8, 0.58], [10, 0.48]],
+  label: (S, d) => S.shoutOn ? '소리 높여 찬송!' : HYMN_SEG[d - 1],
+  shoutMsg: '소리 높여!', shoutText: ['마구 눌러 찬송을 높여요!', '땅이 흔들린다!'], hitFx: ['plink'], doneFx: 'collapse', note: hymnNote, ink: '#f4ecd8',
+  missText: '찬송의 박자가 흐트러졌어요',
+  endLines: ['홀연히 큰 지진이 나서 옥터가 움직이고', '문이 곧 다 열리며 모든 사람의 매인 것이 다 벗어진지라', '행 16:26'],
+  scene(g, S) {
+    const f = S.fall, sh = f > 0 && f < 1 ? Math.sin(S.t * 60) * 6 * (1 - f) : 0;
+    g.save(); g.translate(sh, sh * 0.4);
+    if (!bgArt(g, 'a17/bg')) { g.fillStyle = '#1a1612'; g.fillRect(-10, -10, W + 20, H + 20); }
+    if (f > 0) spr(g, 'a17/door-open', 336, 330, 200, { a: Math.min(1, f * 1.5) }); // 문이 열린다
+    const lift = S.flash * 3; spr(g, 'a17/prisoners', 330, 452, 92);
+    spr(g, 'a17/paul-silas', 140, 404 - lift, 110);
+    g.restore();
+    if (f > 0 && f < 1) { g.fillStyle = `rgba(200,180,150,${Math.sin(f * Math.PI) * 0.35})`; for (let i = 0; i < 16; i++) { g.beginPath(); g.arc((i * 61) % W, (i * 37) % 300, 3 + (i % 3), 0, 7); g.fill(); } } // 떨어지는 먼지
+    g.fillStyle = 'rgba(10,8,6,.25)'; g.fillRect(0, 0, W, H);
+  },
+};
+function hymnNote(g, x, y, fast) { g.save(); g.translate(x, y); g.fillStyle = fast ? '#ffe29a' : '#f4ecd8'; g.strokeStyle = '#3a2a14'; g.lineWidth = 1.2;
+  g.beginPath(); g.ellipse(-4, 8, 8, 6, -0.4, 0, 7); g.fill(); g.stroke(); g.fillRect(3, -16, 3, 24); g.beginPath(); g.moveTo(6, -16); g.quadraticCurveTo(18, -10, 14, 0); g.lineTo(13, -2); g.quadraticCurveTo(15, -8, 6, -11); g.fill(); g.restore(); }
+
 export const MINI = { jesus: { e04: magi, e11: cana, e17: fishing, e22: twelve, e23: rock, e28: bail, e31: loaves, e32: water, e39: stones, e42: sheep, e43: coin, e46: climb, e48: palms, e59: tiberias },
-  david: { d01: herdDavid, d05: sling, d16: cave, d24: arkDance, d38: templeStones }, moses: { m09: redSea, m12: manna, m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket, a37: viper }, kings: { k15: carmel } };
+  david: { d01: herdDavid, d05: sling, d16: cave, d24: arkDance, d38: templeStones }, moses: { m09: redSea, m12: manna, m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket, a17: prison, a37: viper }, kings: { k15: carmel, k24: naaman } };
 
 /* ---------- 놀이 틀: 소개 → 놀이(제한 시간) → 성공 연출/실패 → 결과 ---------- */
 // host: 모달 안의 상자. fx: { play, pour } (game-audio.js). 끝나면 done({ ok, left, tries })
