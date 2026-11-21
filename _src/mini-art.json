@@ -1,26 +1,192 @@
 {
-  "d16": {
-    "bg": { "bg": true, "p": "Side view, interior of a limestone cave at En Gedi. The right side is the bright cave mouth with warm daylight spilling in across the floor; the left third falls into deep darkness. Jagged stalactites along the ceiling, a flat sandy-stone floor across the bottom fifth of the image. Empty scene: absolutely no people, no animals." },
-    "saul-a": { "h": 420, "ref": ["_src/cards/saul.png"], "p": "King Saul seated on the ground seen from the side, facing right, resting, wearing a deep crimson royal robe whose long hem spreads on the ground behind him to the left, a small gold crown. Same character as the second reference image." },
-    "saul-b": { "h": 420, "ref": ["_src/cards/saul.png"], "p": "King Saul seated on the ground seen from the side, body facing right, but his head turned back over his shoulder to look left with a suspicious frown, deep crimson royal robe whose long hem spreads on the ground behind him to the left, a small gold crown. Same character as the second reference image." },
-    "david-sneak": { "h": 420, "ref": ["_src/cards/david-warrior.png"], "p": "Young David seen from the side, facing right, creeping forward in a low crouch on tiptoe, holding a short knife low in his right hand, simple shepherd tunic. Same character as the second reference image." }
+ "d16": {
+  "bg": {
+   "bg": true,
+   "p": "Side view, interior of a limestone cave at En Gedi. The right side is the bright cave mouth with warm daylight spilling in across the floor; the left third falls into deep darkness. Jagged stalactites along the ceiling, a flat sandy-stone floor across the bottom fifth of the image. Empty scene: absolutely no people, no animals."
   },
-  "e11": {
-    "bg": { "bg": true, "p": "Courtyard of a modest stone house in Cana of Galilee during an evening wedding feast: plastered stone walls with three arches, two hanging clay oil lamps glowing warmly, a grapevine trellis with grape clusters along the top edge, smooth flagstone floor covering the lower half. The floor area is clear and empty. No people, no jars, no furniture in the lower half." },
-    "jar": { "h": 420, "ratio": "3:4", "p": "One tall carved limestone water jar for Jewish purification, straight front view, nearly cylindrical body that bulges very slightly, a thick rounded rim at the top, a small foot, pale cream stone with fine chisel marks. The opening is at the top. Centered, upright." },
-    "pitcher": { "h": 300, "p": "A terracotta water pitcher with one handle and a pouring spout, side view, the spout pointing to the left, warm reddish clay." }
+  "saul-a": {
+   "h": 420,
+   "ref": [
+    "_src/cards/saul.png"
+   ],
+   "p": "King Saul seated on the ground seen from the side, facing right, resting, wearing a deep crimson royal robe whose long hem spreads on the ground behind him to the left, a small gold crown. Same character as the second reference image."
   },
-  "e17": {
-    "bg": { "bg": true, "p": "High angle view over the Sea of Galilee in the early morning: the water fills the whole image with gentle ripples and sparkling glints, only the top tenth shows the far shore hills and a warm dawn sky. Darker deeper water toward the top half. No boats, no people, no fish visible." },
-    "boat": { "h": 420, "ratio": "16:9", "p": "An empty first-century wooden Galilean fishing boat seen from slightly above and behind with its stern toward the viewer, the open hull interior visible, oars resting along the sides." }
+  "saul-b": {
+   "h": 420,
+   "ref": [
+    "_src/cards/saul.png"
+   ],
+   "p": "King Saul seated on the ground seen from the side, body facing right, but his head turned back over his shoulder to look left with a suspicious frown, deep crimson royal robe whose long hem spreads on the ground behind him to the left, a small gold crown. Same character as the second reference image."
   },
-  "e59": {
-    "bg": { "bg": true, "ref": ["_src/cards/jesus-ref.png"], "p": "High angle view over the Sea of Galilee at sunrise: the water fills the whole image with gentle ripples and golden glints, only the top tenth shows the near pebbly shore where a small charcoal fire burns at the top right and a lone tiny figure in a white robe with a red sash stands beside it (the second reference image). No boats, no fish visible." }
-  },
-  "e32": {
-    "bg": { "bg": true, "p": "Night storm over the Sea of Galilee seen from water level: dark churning waves with white crests filling the lower two thirds, heavy rolling storm clouds above, a dim horizon in the upper third. No people, no boats." },
-    "calm": { "bg": true, "p": "The Sea of Galilee just after a storm, seen from water level at dawn: glassy calm water with soft reflections filling the lower two thirds, clouds parting with golden light in the upper third, the same wide composition as a seascape. No people, no boats." },
-    "jesus": { "h": 420, "ratio": "3:4", "ref": ["_src/cards/jesus-ref.png"], "p": "Jesus walking toward the viewer, full body front view, white robe with a red sash, calm gentle face, arms relaxed, robe moving slightly in the wind. Same character as the second reference image." },
-    "jesus-hand": { "h": 420, "ratio": "3:4", "ref": ["_src/cards/jesus-ref.png"], "p": "Jesus standing, full body front view, white robe with a red sash, reaching his right hand forward toward the viewer to catch and lift someone, compassionate face. Same character as the second reference image." }
+  "david-sneak": {
+   "h": 420,
+   "ref": [
+    "_src/cards/david-warrior.png"
+   ],
+   "p": "Young David seen from the side, facing right, creeping forward in a low crouch on tiptoe, holding a short knife low in his right hand, simple shepherd tunic. Same character as the second reference image."
   }
+ },
+ "e11": {
+  "bg": {
+   "bg": true,
+   "p": "Courtyard of a modest stone house in Cana of Galilee during an evening wedding feast: plastered stone walls with three arches, two hanging clay oil lamps glowing warmly, a grapevine trellis with grape clusters along the top edge, smooth flagstone floor covering the lower half. The floor area is clear and empty. No people, no jars, no furniture in the lower half."
+  },
+  "jar": {
+   "h": 420,
+   "ratio": "3:4",
+   "p": "One tall carved limestone water jar for Jewish purification, straight front view, nearly cylindrical body that bulges very slightly, a thick rounded rim at the top, a small foot, pale cream stone with fine chisel marks. The opening is at the top. Centered, upright."
+  },
+  "pitcher": {
+   "h": 300,
+   "p": "A terracotta water pitcher with one handle and a pouring spout, side view, the spout pointing to the left, warm reddish clay."
+  }
+ },
+ "e17": {
+  "bg": {
+   "bg": true,
+   "p": "High angle view over the Sea of Galilee in the early morning: the water fills the whole image with gentle ripples and sparkling glints, only the top tenth shows the far shore hills and a warm dawn sky. Darker deeper water toward the top half. No boats, no people, no fish visible."
+  },
+  "boat": {
+   "h": 420,
+   "ratio": "16:9",
+   "p": "An empty first-century wooden Galilean fishing boat seen from slightly above and behind with its stern toward the viewer, the open hull interior visible, oars resting along the sides."
+  }
+ },
+ "e59": {
+  "bg": {
+   "bg": true,
+   "ref": [
+    "_src/cards/jesus-ref.png"
+   ],
+   "p": "High angle view over the Sea of Galilee at sunrise: the water fills the whole image with gentle ripples and golden glints, only the top tenth shows the near pebbly shore where a small charcoal fire burns at the top right and a lone tiny figure in a white robe with a red sash stands beside it (the second reference image). No boats, no fish visible."
+  }
+ },
+ "e32": {
+  "bg": {
+   "bg": true,
+   "p": "Night storm over the Sea of Galilee seen from water level: dark churning waves with white crests filling the lower two thirds, heavy rolling storm clouds above, a dim horizon in the upper third. No people, no boats."
+  },
+  "calm": {
+   "bg": true,
+   "p": "The Sea of Galilee just after a storm, seen from water level at dawn: glassy calm water with soft reflections filling the lower two thirds, clouds parting with golden light in the upper third, the same wide composition as a seascape. No people, no boats."
+  },
+  "jesus": {
+   "h": 420,
+   "ratio": "3:4",
+   "ref": [
+    "_src/cards/jesus-ref.png"
+   ],
+   "p": "Jesus walking toward the viewer, full body front view, white robe with a red sash, calm gentle face, arms relaxed, robe moving slightly in the wind. Same character as the second reference image."
+  },
+  "jesus-hand": {
+   "h": 420,
+   "ratio": "3:4",
+   "ref": [
+    "_src/cards/jesus-ref.png"
+   ],
+   "p": "Jesus standing, full body front view, white robe with a red sash, reaching his right hand forward toward the viewer to catch and lift someone, compassionate face. Same character as the second reference image."
+  }
+ },
+ "e39": {
+  "bg": {
+   "bg": true,
+   "p": "High-angle view (looking down at about 50 degrees) of a sunlit stone-paved court of the Jerusalem temple: a row of tall cream columns of a colonnade across the top fifth, large pale limestone paving slabs covering the rest of the image, soft morning shadows. Empty: no people."
+  },
+  "woman": {
+   "h": 420,
+   "p": "A frightened young woman kneeling on the ground, seen from the front and slightly above, head covered with a plain dark violet shawl, head bowed, hands clasped at her chest, simple worn dress."
+  },
+  "elder-low": {
+   "h": 420,
+   "p": "A stern elderly Pharisee with a white beard, long striped robe and prayer shawl, standing, seen in three-quarter view facing right, holding a fist-sized stone low at his side in his right hand."
+  },
+  "elder-up": {
+   "h": 420,
+   "p": "A stern elderly Pharisee with a white beard, long striped robe and prayer shawl, standing, seen in three-quarter view facing right, angrily raising a fist-sized stone high above his head in his right hand, about to throw."
+  },
+  "scribe-low": {
+   "h": 420,
+   "p": "An angry middle-aged scribe with a black beard, dark blue robe and head cloth, standing, seen in three-quarter view facing right, holding a fist-sized stone low at his side in his right hand."
+  },
+  "scribe-up": {
+   "h": 420,
+   "p": "An angry middle-aged scribe with a black beard, dark blue robe and head cloth, standing, seen in three-quarter view facing right, raising a fist-sized stone high above his head in his right hand, about to throw."
+  },
+  "jesus-write": {
+   "h": 420,
+   "ref": [
+    "_src/cards/jesus-ref.png"
+   ],
+   "p": "Jesus crouching down low, seen from the side facing left, writing in the dust of the ground with one finger, calm face looking down, white robe with a red sash. Same character as the second reference image."
+  }
+ },
+ "e46": {
+  "bg": {
+   "bg": true,
+   "p": "Looking up into the sky above Jericho: a clear bright blue sky with a few soft clouds, the tops of distant date palms and flat-roofed houses only along the very bottom edge. Nothing in the middle of the image."
+  },
+  "trunk": {
+   "h": 420,
+   "ratio": "9:16",
+   "p": "A tall straight section of a thick sycamore-fig tree trunk, vertical, filling the height, gnarled pale grey-brown bark, no branches, no leaves, centered."
+  },
+  "leaves": {
+   "h": 200,
+   "p": "A lush cluster of broad green sycamore-fig leaves with a few small figs, roughly oval, as seen from the side."
+  },
+  "zac": {
+   "h": 420,
+   "p": "Zacchaeus, a short wealthy tax collector in a rich purple and gold robe with a small turban, seen from behind and slightly to the side, hugging and climbing up a vertical tree trunk (the trunk is not drawn), arms reaching up, one knee raised."
+  },
+  "jesus-walk": {
+   "h": 420,
+   "ref": [
+    "_src/cards/jesus-ref.png"
+   ],
+   "p": "Jesus walking to the right, full body side view, white robe with a red sash, sandals. Same character as the second reference image."
+  },
+  "jesus-up": {
+   "h": 420,
+   "ref": [
+    "_src/cards/jesus-ref.png"
+   ],
+   "p": "Jesus standing, full body, looking up high and calling with a warm smile, one hand raised and pointing up, white robe with a red sash. Same character as the second reference image."
+  },
+  "crowd": {
+   "h": 260,
+   "ratio": "16:9",
+   "p": "A dense jostling crowd of first-century Judean people walking to the right, seen from the side, about ten people in colorful robes and head cloths, a single horizontal group."
+  }
+ },
+ "e48": {
+  "bg": {
+   "bg": true,
+   "p": "View from the Mount of Olives across the Kidron valley to Jerusalem on a bright spring morning: the walled city with the gleaming temple in the upper right third, a grassy olive-dotted slope in the foreground. A pale dirt road runs from the upper left down to the right edge through the middle of the image, strewn with colorful cloaks. No people."
+  },
+  "rider": {
+   "h": 420,
+   "ref": [
+    "_src/cards/jesus-ref.png"
+   ],
+   "p": "Jesus riding a young donkey colt, full body side view facing right, white robe with a red sash, a colorful cloak laid over the donkey's back, calm gentle face. Same character as the second reference image."
+  },
+  "crowd-a": {
+   "h": 420,
+   "ratio": "16:9",
+   "p": "A joyful group of four first-century Judean pilgrims seen from behind and slightly to the side, raising and waving long green palm branches high, colorful robes and head cloths, standing in a row.",
+   "key": "m"
+  },
+  "crowd-b": {
+   "h": 420,
+   "ratio": "16:9",
+   "p": "A joyful group of four first-century Judean men, women and a child seen from behind, waving green palm branches above their heads and shouting, colorful robes, standing in a row.",
+   "key": "m"
+  }
+ },
+ "e04": {
+  "bg": {
+   "bg": true,
+   "p": "Night desert seen from a low angle: the upper seventy percent is a deep dark-blue night sky that is completely empty, with no stars and no moon. Along the bottom thirty percent, gently rolling dark sand dunes, and on the dunes three wise men riding camels in silhouette walking to the right. On the far right horizon a tiny flat-roofed village house with a warm lit window."
+  }
+ }
 }
