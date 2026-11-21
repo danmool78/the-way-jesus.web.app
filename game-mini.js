@@ -1351,35 +1351,47 @@ const jericho = {
   quote: '일곱째 날에는 그 성을 일곱 번 돌며 제사장들은 나팔을 불 것이며', ref: '수 6:4',
   help: '나팔(음표)이 오른쪽에서 흘러와요. 왼쪽 원에 닿을 때 화면을 눌러요.<br>날이 갈수록 빨라져요. 여섯 번 놓치면 흐트러져요. 마지막에 "외치라!" — 마구 눌러요!',
   seconds: 55,
+  // 박자표 [박 수, 간격]: 날마다 여섯 박(1–6일은 0.85→0.6초 간격), 일곱째 날은 박자 열넷을 빠르게
+  plan: [1, 2, 3, 4, 5, 6, 7].map(d => d < 7 ? [6, 0.9 - d * 0.05] : [14, 0.42]),
+  label: (S, d) => S.shoutOn ? '일곱째 날 — 외치라!' : `${d}일째${d === 7 ? ' — 일곱 바퀴' : ''}`,
+  shoutText: ['마구 눌러 크게 외쳐요!', '성벽이 무너진다!'], hitFx: ['horn', 'step'], note: horn,
+  missText: '나팔 소리에서 흐트러졌어요',
+  endLines: ['백성이 큰 소리로 외쳐 부를 때에', '성벽이 무너져 내린지라', '수 6:20'],
   init() {
-    // 박자표: 날마다 여섯 박(1–6일은 0.9→0.6초 간격), 일곱째 날은 박자 열넷을 빠르게
     const notes = []; let t = 1.6;
-    for (let d = 1; d <= 7; d++) { const n = d < 7 ? 6 : 14, gap = d < 7 ? 0.9 - d * 0.05 : 0.42; for (let i = 0; i < n; i++) { notes.push({ t, day: d, st: 0 }); t += gap; } t += 1.1; }
+    this.plan.forEach(([n, gap], i) => { for (let k = 0; k < n; k++) { notes.push({ t, day: i + 1, st: 0, last: i === this.plan.length - 1 }); t += gap; } t += 1.1; });
     return { notes, t: 0, miss: 0, hit: 0, combo: 0, msg: null, sparks: [], shout: 0, shoutOn: false, fall: 0, flash: 0, endT: t };
   },
-  day(S) { const n = S.notes.find(n => !n.st); return n ? n.day : 7; },
+  day(S) { const n = S.notes.find(n => !n.st); return n ? n.day : this.plan.length; },
   update(dt, S) {
     S.t += dt; S.flash = Math.max(0, S.flash - dt * 4);
     for (const n of S.notes) if (!n.st && S.t - n.t > WIN) { n.st = -1; S.miss++; S.combo = 0; S.msg = { t: '놓쳤어요', c: '#ffb38a', at: 0.6, x: HITX + 40, y: LANE - 48 }; }
-    if (!S.shoutOn && S.notes.every(n => n.st)) { S.shoutOn = true; S.msg = { t: '외치라!', c: '#ffe29a', at: 2, x: W / 2, y: 120 }; S.fx.play('horn'); }
+    if (!S.shoutOn && S.notes.every(n => n.st)) { S.shoutOn = true; S.msg = { t: this.shoutMsg || '외치라!', c: '#ffe29a', at: 2, x: W / 2, y: 120 }; S.fx.play(this.hitFx[0]); }
     if (S.shoutOn && S.fall === 0) S.shout = Math.max(0, S.shout - dt * 0.22); // 쉬면 함성이 잦아든다
     if (S.fall) S.fall = Math.min(1, S.fall + dt * 0.7);
     for (const p of S.sparks) { p.y += p.vy * dt; p.life -= dt; } S.sparks = S.sparks.filter(p => p.life > 0);
     if (S.msg) S.msg.at -= dt;
   },
   down(x, y, S) {
-    if (S.shoutOn) { if (!S.fall) { S.shout = Math.min(1, S.shout + 0.075); S.fx.play('shout'); if (S.shout >= 1) { S.fall = 0.001; S.fx.play('collapse'); } } return; }
+    if (S.shoutOn) { if (!S.fall) { S.shout = Math.min(1, S.shout + 0.075); S.fx.play('shout'); if (S.shout >= 1) { S.fall = 0.001; S.fx.play(this.doneFx || 'collapse'); } } return; }
     const n = S.notes.filter(n => !n.st).sort((a, b) => Math.abs(a.t - S.t) - Math.abs(b.t - S.t))[0];
     if (!n || Math.abs(n.t - S.t) > WIN) return; // 음표 근처가 아니면 그냥 (헛누름은 벌하지 않는다)
-    const d = Math.abs(n.t - S.t); n.st = 1; S.hit++; S.combo++; S.fx.play('horn'); S.fx.play('step'); S.flash = 1;
+    const d = Math.abs(n.t - S.t); n.st = 1; S.hit++; S.combo++; for (const f of this.hitFx) S.fx.play(f); S.flash = 1;
     S.msg = { t: d < 0.08 ? '딱 맞게!' : '좋아요', c: d < 0.08 ? '#ffe29a' : '#e8f0d0', at: 0.5, x: HITX + 50, y: LANE - 44 };
     for (let i = 0; i < (d < 0.08 ? 8 : 4); i++) S.sparks.push({ x: HITX + rnd(-12, 12), y: LANE + rnd(-12, 12), vy: rnd(-50, -15), life: rnd(0.3, 0.6), r: rnd(1.2, 2.4) });
   },
   up() {},
   won: S => S.fall >= 1,
   lost: S => S.miss >= MISSMAX,
-  failText: S => S.miss >= MISSMAX ? '나팔 소리에서 흐트러졌어요' : '시간이 다 되었어요',
+  failText(S) { return S.miss >= MISSMAX ? this.missText : '시간이 다 되었어요'; },
   draw(g, S) {
+    this.scene(g, S);
+    const day = this.day(S); g.save(); g.font = '800 16px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.fillStyle = this.ink || '#3a2a14';
+    g.fillText(this.label(S, day), 14, 28);
+    g.font = '700 12px "Noto Sans KR",sans-serif'; g.globalAlpha = 0.8; g.fillText(`놓침 ${S.miss} / ${MISSMAX}`, 14, 48); g.restore();
+    this.lane(g, S);
+  },
+  scene(g, S) {
     const sky = g.createLinearGradient(0, 0, 0, H); sky.addColorStop(0, '#e8c48a'); sky.addColorStop(0.6, '#d9b27a'); sky.addColorStop(1, '#a8885a'); g.fillStyle = sky; g.fillRect(0, 0, W, H);
     // 여리고 성 (가운데) — 무너질 때 아래로 주저앉고 먼지
     const cx = 200, cy = 220, f = S.fall;
@@ -1397,24 +1409,21 @@ const jericho = {
       if (i === 3) { g.fillStyle = '#e0b850'; g.fillRect(x - 11 * sc, y - 14 * sc, 22 * sc, 9 * sc); g.fillStyle = '#5a3a1a'; g.fillRect(x - 14 * sc, y - 6 * sc, 28 * sc, 2 * sc); } // 법궤
       else { g.fillStyle = i < 3 ? '#f2ead8' : '#6e5a40'; g.beginPath(); g.ellipse(x, y - 8 * sc, 4.5 * sc, 9 * sc, 0, 0, 7); g.fill(); g.fillStyle = '#c99a6a'; g.beginPath(); g.arc(x, y - 19 * sc, 3.2 * sc, 0, 7); g.fill(); }
       }
-    // 날짜
-    const day = this.day(S); g.save(); g.font = '800 16px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.fillStyle = '#3a2a14';
-    g.fillText(S.shoutOn ? '일곱째 날 — 외치라!' : `${day}일째${day === 7 ? ' — 일곱 바퀴' : ''}`, 14, 28);
-    g.font = '700 12px "Noto Sans KR",sans-serif'; g.fillStyle = '#5a3a1a'; g.fillText(`놓침 ${S.miss} / ${MISSMAX}`, 14, 48); g.restore();
-    // 나팔 길 (음표가 흘러온다)
+  },
+  lane(g, S) { // 나팔 길 (음표가 흘러온다)
     g.fillStyle = 'rgba(40,28,14,.55)'; g.fillRect(0, LANE - 30, W, 60);
     g.strokeStyle = S.flash ? `rgba(255,226,150,${0.5 + S.flash * 0.5})` : 'rgba(255,240,210,.6)'; g.lineWidth = 3; g.beginPath(); g.arc(HITX, LANE, 22 + S.flash * 4, 0, 7); g.stroke();
-    if (!S.shoutOn) for (const n of S.notes) { if (n.st) continue; const x = HITX + (n.t - S.t) * NSPEED; if (x > W + 20 || x < HITX - 30) continue; horn(g, x, LANE, n.day === 7); }
+    if (!S.shoutOn) for (const n of S.notes) { if (n.st) continue; const x = HITX + (n.t - S.t) * NSPEED; if (x > W + 20 || x < HITX - 30) continue; this.note(g, x, LANE, n.last); }
     // 함성 막대
     if (S.shoutOn) { g.fillStyle = 'rgba(255,255,255,.2)'; g.fillRect(40, LANE - 10, W - 80, 20); g.fillStyle = '#ffd27a'; g.fillRect(40, LANE - 10, (W - 80) * S.shout, 20);
-      g.font = '800 15px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.fillStyle = '#fff'; g.fillText(S.fall ? '성벽이 무너진다!' : '마구 눌러 크게 외쳐요!', W / 2, LANE - 18); }
+      g.font = '800 15px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.fillStyle = '#fff'; g.fillText(this.shoutText[S.fall ? 1 : 0], W / 2, LANE - 18); }
     for (const p of S.sparks) { g.fillStyle = `rgba(255,236,170,${clamp(p.life, 0, 1)})`; star(g, p.x, p.y, p.r * 2.4); }
     floatMsg(g, S.msg);
   },
   end(g, k, S) { S.fall = Math.max(S.fall, 1); this.update(0.016, S); this.draw(g, S);
     if (k > 0.3) { g.save(); g.globalAlpha = clamp((k - 0.3) * 2, 0, 1); g.fillStyle = 'rgba(40,24,10,.8)'; g.fillRect(0, 300, W, 84);
-      g.font = '700 18px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#fff0d6'; g.fillText('백성이 큰 소리로 외쳐 부를 때에', W / 2, 330); g.fillText('성벽이 무너져 내린지라', W / 2, 354);
-      g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#e6cfa6'; g.fillText('수 6:20', W / 2, 373); g.restore(); }
+      const [a, b, r] = this.endLines; g.font = '700 18px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#fff0d6'; g.fillText(a, W / 2, 330); g.fillText(b, W / 2, 354);
+      g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#e6cfa6'; g.fillText(r, W / 2, 373); g.restore(); }
   },
 };
 function horn(g, x, y, fast) { // 양각 나팔 음표
@@ -1423,7 +1432,163 @@ function horn(g, x, y, fast) { // 양각 나팔 음표
   g.restore();
 }
 
-export const MINI = { jesus: { e11: cana, e17: fishing, e22: twelve, e23: rock, e31: loaves, e32: water, e39: stones, e42: sheep, e43: coin, e46: climb },
+/* ---------- 종려가지의 행렬 (요 12:12–13, 눅 19:37–40): 여리고 박자 놀이를 다시 씀 ---------- */
+// 감람산 비탈을 내려가시는 나귀 앞에서 종려가지(음표)에 맞춰 흔든다. 네 구간, 갈수록 빨라짐. 끝은 '호산나!' — 마구 눌러 찬송을 채운다
+const PALM_SEG = ['감람산 꼭대기', '벳바게 비탈', '길이 꺾이는 곳', '성문 앞 — 호산나!'];
+const palms = { ...jericho, title: '종려가지의 행렬', task: '종려가지를 흔들며 성까지',
+  ask: ['오늘은 너도 저 무리 속에 서 보렴.', '종려가지를 박자에 맞춰 흔들어라 — 성문 앞에서는 크게 호산나!'],
+  quote: '종려나무 가지를 가지고 맞으러 나가 외치되 호산나 찬송하리로다', ref: '요 12:13',
+  help: '종려가지(음표)가 오른쪽에서 흘러와요. 왼쪽 원에 닿을 때 눌러요.<br>길을 내려갈수록 빨라져요. 여섯 번 놓치면 흐트러져요. 마지막에 "호산나!" — 마구 눌러요!',
+  seconds: 36, plan: [[6, 0.78], [8, 0.62], [10, 0.5], [12, 0.4]],
+  label: (S, d) => S.shoutOn ? '호산나! 찬송하리로다' : PALM_SEG[d - 1],
+  shoutMsg: '호산나!', shoutText: ['마구 눌러 호산나!', '찬송하리로다!'], hitFx: ['swish', 'step'], doneFx: 'shout', note: palmNote, ink: '#2a2a18',
+  missText: '행렬의 박자가 흐트러졌어요',
+  endLines: ['찬송하리로다 주의 이름으로 오시는 왕이여', '하늘에는 평화요 가장 높은 곳에는 영광이로다', '눅 19:38'],
+  scene(g, S) {
+    const sky = g.createLinearGradient(0, 0, 0, H); sky.addColorStop(0, '#f3d9a4'); sky.addColorStop(0.55, '#e7c690'); sky.addColorStop(1, '#9c9a66'); g.fillStyle = sky; g.fillRect(0, 0, W, H);
+    const f = S.fall, joy = S.shoutOn ? 0.4 + S.shout * 0.6 : 0;
+    if (f) { g.save(); g.globalAlpha = Math.min(1, f) * 0.5; g.fillStyle = '#fff6d8'; for (let i = 0; i < 9; i++) { const a = -Math.PI / 2 + (i - 4) * 0.22; g.beginPath(); g.moveTo(300, 120); g.lineTo(300 + Math.cos(a - 0.05) * 500, 120 + Math.sin(a - 0.05) * 500); g.lineTo(300 + Math.cos(a + 0.05) * 500, 120 + Math.sin(a + 0.05) * 500); g.fill(); } g.restore(); }
+    // 건너편 예루살렘(오른쪽 위)과 성전
+    g.fillStyle = '#c8ad7a'; g.beginPath(); g.moveTo(170, 190); g.lineTo(400, 150); g.lineTo(400, 230); g.lineTo(170, 230); g.fill();
+    g.fillStyle = '#d9c08c'; g.fillRect(220, 150, 180, 44); g.fillStyle = '#c4a46e'; for (let x = 220; x < 400; x += 14) g.fillRect(x, 144, 8, 8);
+    g.fillStyle = '#efe2c2'; g.fillRect(290, 112, 56, 40); g.fillStyle = '#e0b850'; g.fillRect(286, 108, 64, 6);
+    // 감람산 비탈 길(왼쪽 위에서 오른쪽 아래로 꺾여 내려옴)
+    g.fillStyle = '#8f9a5e'; g.beginPath(); g.moveTo(0, 210); g.quadraticCurveTo(200, 230, 400, 300); g.lineTo(400, H); g.lineTo(0, H); g.fill();
+    g.strokeStyle = '#d8c39a'; g.lineWidth = 26; g.lineCap = 'round'; g.beginPath(); g.moveTo(-10, 250); g.quadraticCurveTo(150, 300, 420, 330); g.stroke();
+    // 길에 편 겉옷들
+    const cloth = ['#9a3d32', '#3d5a8a', '#c49a3a', '#6b4a7a', '#4f7a52'];
+    for (let i = 0; i < 12; i++) { const u = i / 11, x = -10 + u * 430, y = 250 + (1 - (1 - u) * (1 - u)) * 80 - 4; g.fillStyle = cloth[i % 5]; g.save(); g.translate(x, y + 2); g.rotate(0.2 + u * 0.1); g.fillRect(-14, -5, 28, 10); g.restore(); }
+    // 나귀 탄 분이 천천히 길을 내려가신다 (박자가 지날수록)
+    const done = S.notes.filter(n => n.st).length / S.notes.length, u = 0.1 + done * 0.6, rx = -10 + u * 430, ry = 250 + (1 - (1 - u) * (1 - u)) * 80;
+    g.save(); g.translate(rx, ry + 6); g.scale(1.8, 1.8); donkeyRider(g, S.t); g.restore();
+    // 길가의 무리 — 두 줄, 종려가지를 흔든다 (맞힐 때마다 세게, 호산나 때는 더)
+    for (let row = 0; row < 2; row++) for (let i = 0; i < 9; i++) {
+      const x = 22 + i * 46 + (row ? 23 : 0), y = row ? 380 : 354, sc = row ? 1.1 : 0.92, k = row * 9 + i, sw = Math.sin(S.t * 5 + k * 1.3) * (0.18 + S.flash * 0.45 + joy * 0.5);
+      g.save(); g.translate(x, y); g.scale(sc, sc);
+      g.fillStyle = ['#7a5a3e', '#5a4a6a', '#9a6a3a', '#4a5a4a', '#8a4a3a'][k % 5]; g.beginPath(); g.moveTo(-10, 18); g.quadraticCurveTo(-11, -8, 0, -12); g.quadraticCurveTo(11, -8, 10, 18); g.fill();
+      g.fillStyle = ['#e9dcc0', '#d8c8a8', '#c9b6d0'][k % 3]; g.beginPath(); g.arc(0, -19, 7.5, Math.PI * 0.9, Math.PI * 2.1); g.fill(); // 머릿수건
+      g.fillStyle = '#c99a6a'; g.beginPath(); g.arc(0, -17, 5.5, 0, 7); g.fill();
+      g.save(); g.translate(7, -8); g.rotate(-0.35 + sw); g.strokeStyle = '#c99a6a'; g.lineWidth = 3; g.beginPath(); g.moveTo(0, 6); g.lineTo(0, 0); g.stroke(); frond(g, 42); g.restore();
+      g.restore(); }
+  },
+};
+function donkeyRider(g, t) { // 나귀 새끼와 그 위의 분 (원점 = 발 아래)
+  const b = Math.sin(t * 7) * 0.8;
+  g.fillStyle = '#7d6a58'; for (const [lx, ph] of [[-9, 0], [-4, 2], [7, 1], [12, 3]]) { const sw = Math.sin(t * 7 + ph) * 2; g.fillRect(lx + sw * 0.4, -8, 2.6, 9); }
+  g.beginPath(); g.ellipse(1, -12 + b, 14, 6.5, 0, 0, 7); g.fill();
+  g.beginPath(); g.moveTo(11, -14 + b); g.quadraticCurveTo(16, -22 + b, 19, -22 + b); g.lineTo(21, -17 + b); g.quadraticCurveTo(16, -14 + b, 13, -9 + b); g.fill(); // 목과 머리
+  g.fillStyle = '#6a5848'; g.beginPath(); g.ellipse(17, -25 + b, 1.4, 4, -0.3, 0, 7); g.fill(); g.beginPath(); g.ellipse(20, -25 + b, 1.4, 4, 0.2, 0, 7); g.fill(); // 귀
+  g.fillStyle = '#5a7a9a'; g.fillRect(-5, -19 + b, 12, 4); // 안장 대신 편 겉옷
+  g.fillStyle = '#f4efe2'; g.beginPath(); g.moveTo(-5, -15 + b); g.quadraticCurveTo(-6, -32 + b, 1, -34 + b); g.quadraticCurveTo(7, -32 + b, 6, -15 + b); g.fill();
+  g.fillStyle = '#b5523e'; g.beginPath(); g.moveTo(-3, -32 + b); g.lineTo(1, -16 + b); g.lineTo(-1, -16 + b); g.lineTo(-5, -30 + b); g.fill(); // 붉은 겉옷 띠
+  g.fillStyle = '#f4efe2'; g.fillRect(2, -16 + b, 3, 8); // 다리
+  g.fillStyle = '#c99a6a'; g.beginPath(); g.arc(1, -38 + b, 3.6, 0, 7); g.fill(); g.fillStyle = '#5a3a24'; g.beginPath(); g.arc(0.4, -39 + b, 3.8, Math.PI * 0.95, Math.PI * 2.05); g.fill();
+}
+function frond(g, L) { // 종려가지 하나(위로)
+  g.strokeStyle = '#4f7a32'; g.lineWidth = 1.6; g.beginPath(); g.moveTo(0, 0); g.lineTo(0, -L); g.stroke();
+  g.strokeStyle = '#6fa046'; g.lineWidth = 1.2; for (let k = 4; k < L; k += 3.2) { const w = (1 - k / L) * 9 + 2; g.beginPath(); g.moveTo(0, -k); g.lineTo(-w, -k + 4); g.moveTo(0, -k); g.lineTo(w, -k + 4); g.stroke(); }
+}
+function palmNote(g, x, y, fast) { g.save(); g.translate(x, y + 18); g.rotate(0.25); g.scale(1.25, 1.25); frond(g, 30); if (fast) { g.fillStyle = 'rgba(255,226,150,.5)'; g.beginPath(); g.arc(0, -16, 15, 0, 7); g.fill(); } g.restore(); }
+
+/* ---------- 별을 따라온 박사들 (마 2:1–10): 어제 없던 별 찾기 — 눈썰미·기억 ---------- */
+// 밤하늘을 잠깐 보여 주고 구름이 지나간 뒤, 별 하나가 새로 떠 있다. 그 별을 누른다. 네 밤, 밤마다 별이 많아진다.
+// 엉뚱한 데를 누르면 구름이 잠깐 덮어 시간을 잃는다. 오래 못 찾으면 새 별이 조금씩 반짝여 돕는다
+const NIGHTS = 4, LOOK = [3.0, 2.8, 2.6, 2.4], CLOUD = 0.8;
+const magi = {
+  title: '별을 따라온 박사들', task: '어제 없던 별 하나 찾기 — 네 밤',
+  ask: ['박사들은 밤마다 하늘을 살피던 사람들이었단다. 그러다 처음 보는 별 하나를 알아보았지.', '너도 찾아보렴 — 하늘을 잘 봐 두었다가, 새로 뜬 별을!'],
+  quote: '우리가 동방에서 그의 별을 보고 그에게 경배하러 왔노라', ref: '마 2:2',
+  help: '밤하늘을 잠깐 보여 줘요 — 잘 봐 두세요.<br>구름이 지나간 뒤 새로 뜬 별 하나를 눌러요. 엉뚱한 곳을 누르면 구름이 덮어요. 네 밤.',
+  seconds: 44,
+  init() { const S = { dust: Array.from({ length: 160 }, () => ({ x: rnd(0, W), y: rnd(0, 340), a: rnd(0.08, 0.22) })), night: 0, ph: 'look', pt: 0, stars: [], nova: null, found: 0, msg: null, sparks: [], cover: 0, wrong: [], tw: 0 }; this.sky(S); return S; },
+  sky(S) { // 밤마다 별을 새로 흩는다 — 서로 너무 붙지 않게
+    const n = 14 + S.night * 6, st = [];
+    const ok = (x, y) => st.every(s => Math.hypot(s.x - x, s.y - y) > 30);
+    for (let k = 0; st.length < n + 1 && k < 4000; k++) { const x = rnd(24, 376), y = rnd(40, 300); if (ok(x, y)) st.push({ x, y, r: rnd(1.5, 3.0), ph: rnd(0, 7) }); }
+    S.nova = st.pop(); S.nova.r = rnd(1.6, 2.3); S.stars = st; S.ph = 'look'; S.pt = 0; S.wrong = [];
+  },
+  update(dt, S) {
+    S.pt += dt; S.tw += dt; S.cover = Math.max(0, S.cover - dt);
+    if (S.ph === 'look' && S.pt > LOOK[S.night]) { S.ph = 'cloud'; S.pt = 0; S.fx.play('gust'); }
+    else if (S.ph === 'cloud' && S.pt > CLOUD) { S.ph = 'find'; S.pt = 0; }
+    else if (S.ph === 'got' && S.pt > 1.1) { S.found++; S.night++; if (S.night < NIGHTS) { this.sky(S); S.fx.play('go'); } }
+    for (const p of S.sparks) { p.x += p.vx * dt; p.y += p.vy * dt; p.life -= dt; } S.sparks = S.sparks.filter(p => p.life > 0);
+    if (S.msg) S.msg.at -= dt;
+  },
+  down(x, y, S) {
+    if (S.ph !== 'find' || S.cover > 0) return;
+    if (Math.hypot(x - S.nova.x, y - S.nova.y) < 24) {
+      S.ph = 'got'; S.pt = 0; S.fx.play('glint'); S.fx.play('coin');
+      S.msg = { t: S.night === NIGHTS - 1 ? '그의 별이다!' : '찾았어요!', c: '#ffe29a', at: 0.9, x: S.nova.x, y: S.nova.y - 26 };
+      for (let i = 0; i < 16; i++) { const a = rnd(0, 7), v = rnd(30, 90); S.sparks.push({ x: S.nova.x, y: S.nova.y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: rnd(0.4, 0.9), r: rnd(1, 2.2) }); }
+    } else { S.cover = 1.0; S.wrong.push({ x, y }); S.fx.play('miss'); S.msg = { t: '그 별이 아니에요', c: '#ffc2a0', at: 0.8, x, y: y - 20 }; }
+  },
+  up() {},
+  won: S => S.found >= NIGHTS,
+  failText: () => '새 별을 다 찾지 못했어요',
+  draw(g, S) {
+    nightSky(g, S);
+    const show = S.ph !== 'cloud';
+    if (show) { for (const s of S.stars) skyStar(g, s, S.tw, 0); if (S.ph === 'find' || S.ph === 'got') skyStar(g, S.nova, S.tw, S.ph === 'got' ? 1 : clamp((S.pt - 7) / 6, 0, 0.5)); } // 7초가 지나면 새 별이 조금씩 반짝여 돕는다
+    if (S.ph === 'got') { g.save(); g.globalAlpha = 0.5; g.strokeStyle = '#ffe29a'; g.lineWidth = 2; g.beginPath(); g.arc(S.nova.x, S.nova.y, 10 + S.pt * 20, 0, 7); g.stroke(); g.restore(); }
+    for (const w of S.wrong) { g.strokeStyle = 'rgba(255,160,130,.5)'; g.lineWidth = 1.5; g.beginPath(); g.arc(w.x, w.y, 9, 0, 7); g.stroke(); }
+    // 구름 — 밤이 바뀔 때, 또 잘못 누르면 잠깐
+    const ck = S.ph === 'cloud' ? Math.sin(S.pt / CLOUD * Math.PI) : 0, cv = Math.max(ck, Math.min(1, S.cover * 1.6));
+    if (cv > 0) { g.save(); g.globalAlpha = cv; g.fillStyle = '#2a2f52'; for (let i = 0; i < 9; i++) { g.beginPath(); g.ellipse((i * 61 + S.tw * 40) % 520 - 60, 60 + (i * 37) % 260, 90, 40, 0, 0, 7); g.fill(); } g.fillStyle = 'rgba(30,34,64,.85)'; g.fillRect(0, 20, W, 300); g.restore(); }
+    // 땅과 박사들의 낙타 (아래)
+    dunes(g);
+    for (let i = 0; i < 3; i++) camel(g, 90 + i * 70 + S.found * 18, 384 + i * 6, 1 - i * 0.08);
+    // 밤 표시
+    g.save(); g.font = '800 15px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.fillStyle = '#e9e2ff';
+    g.fillText(`${S.night + 1 > NIGHTS ? NIGHTS : S.night + 1}째 밤`, 14, 26);
+    g.font = '700 12px "Noto Sans KR",sans-serif'; g.fillStyle = 'rgba(233,226,255,.75)';
+    g.fillText(S.ph === 'look' ? '하늘을 잘 봐 두세요' : S.ph === 'cloud' ? '구름이 지나가요…' : S.ph === 'find' ? '새로 뜬 별 하나를 눌러요' : '', 14, 45);
+    for (let i = 0; i < NIGHTS; i++) { g.fillStyle = i < S.found ? '#ffe29a' : 'rgba(255,255,255,.25)'; star(g, W - 20 - i * 22, 22, 7); }
+    if (S.ph === 'look') { g.fillStyle = 'rgba(255,255,255,.25)'; g.fillRect(14, 52, 120, 4); g.fillStyle = '#c9c2ff'; g.fillRect(14, 52, 120 * (1 - S.pt / LOOK[S.night]), 4); }
+    g.restore();
+    for (const p of S.sparks) { g.fillStyle = `rgba(255,236,170,${clamp(p.life, 0, 1)})`; star(g, p.x, p.y, p.r * 2.4); }
+    floatMsg(g, S.msg);
+  },
+  end(g, k, S) { // 그 별이 앞서가 아기 있는 곳 위에 머문다(2:9)
+    nightSky(g, S);
+    for (const s of S.stars) skyStar(g, s, S.tw += 0.016, 0);
+    const sx = S.nova.x + (300 - S.nova.x) * k, sy = S.nova.y + (150 - S.nova.y) * k;
+    g.save(); g.globalAlpha = 0.25 * k; g.fillStyle = '#ffe9a8'; g.beginPath(); g.moveTo(sx, sy); g.lineTo(270, 362); g.lineTo(330, 362); g.fill(); g.restore();
+    dunes(g);
+    g.fillStyle = '#2a2236'; g.fillRect(276, 330, 48, 32); g.fillStyle = '#ffcf7a'; g.fillRect(294, 342, 12, 20); // 작은 집, 불빛
+    for (let i = 0; i < 3; i++) camel(g, 120 + i * 50 + k * 60, 384 + i * 6, 1 - i * 0.08);
+    g.save(); g.shadowColor = '#ffe9a8'; g.shadowBlur = 24; g.fillStyle = '#fff4c8'; star(g, sx, sy, 10 + 3 * Math.sin(k * 12)); g.restore();
+    if (k > 0.35) { g.save(); g.globalAlpha = clamp((k - 0.35) * 2, 0, 1); g.textAlign = 'center'; g.font = '700 17px "Gowun Batang",serif'; g.fillStyle = '#fff0d6';
+      g.fillText('그 별이 앞서 인도하여 가다가', W / 2, 220); g.fillText('아기 있는 곳 위에 머물러 서 있는지라', W / 2, 246);
+      g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#d8cfa8'; g.fillText('마 2:9', W / 2, 266); g.restore(); }
+  },
+};
+function nightSky(g, S) { // 짙은 밤 + 은하수 띠 + 아주 옅은 잔별(누를 별과 헷갈리지 않게 작고 흐리게)
+  const sky = g.createLinearGradient(0, 0, 0, H); sky.addColorStop(0, '#070a24'); sky.addColorStop(0.55, '#16204a'); sky.addColorStop(0.75, '#2c2a52'); sky.addColorStop(1, '#4a3550'); g.fillStyle = sky; g.fillRect(0, 0, W, H);
+  g.save(); g.translate(200, 190); g.rotate(-0.5); const mw = g.createLinearGradient(0, -60, 0, 60); mw.addColorStop(0, 'rgba(150,160,220,0)'); mw.addColorStop(0.5, 'rgba(150,160,220,.12)'); mw.addColorStop(1, 'rgba(150,160,220,0)'); g.fillStyle = mw; g.fillRect(-320, -60, 640, 120); g.restore();
+  const hz = g.createRadialGradient(330, 360, 10, 330, 360, 220); hz.addColorStop(0, 'rgba(255,170,120,.18)'); hz.addColorStop(1, 'rgba(255,170,120,0)'); g.fillStyle = hz; g.fillRect(0, 160, W, 220);
+  for (const d of S.dust) { g.fillStyle = `rgba(220,225,255,${d.a})`; g.fillRect(d.x, d.y, 0.9, 0.9); }
+}
+function dunes(g) {
+  g.fillStyle = '#231c33'; g.beginPath(); g.moveTo(0, 348); g.quadraticCurveTo(90, 326, 190, 342); g.quadraticCurveTo(300, 356, 400, 330); g.lineTo(400, H); g.lineTo(0, H); g.fill();
+  g.fillStyle = '#16111f'; g.beginPath(); g.moveTo(0, 372); g.quadraticCurveTo(120, 344, 230, 366); g.quadraticCurveTo(320, 382, 400, 360); g.lineTo(400, H); g.lineTo(0, H); g.fill();
+}
+function skyStar(g, s, t, glow) {
+  const tw = 0.75 + 0.25 * Math.sin(t * 2.2 + s.ph);
+  if (glow) { g.save(); g.globalAlpha = glow; g.shadowColor = '#ffe9a8'; g.shadowBlur = 14; g.fillStyle = '#fff4c8'; star(g, s.x, s.y, s.r * 3.4); g.restore(); }
+  g.fillStyle = `rgba(255,250,235,${tw})`; g.beginPath(); g.arc(s.x, s.y, s.r, 0, 7); g.fill();
+  if (s.r > 2.4) { g.strokeStyle = `rgba(255,250,235,${tw * 0.35})`; g.lineWidth = 0.8; g.beginPath(); g.moveTo(s.x - s.r * 3, s.y); g.lineTo(s.x + s.r * 3, s.y); g.moveTo(s.x, s.y - s.r * 3); g.lineTo(s.x, s.y + s.r * 3); g.stroke(); } // 밝은 별은 십자 빛
+}
+function camel(g, x, y, s) { // 실루엣
+  g.save(); g.translate(x, y); g.scale(s, s); g.fillStyle = '#0e0b16';
+  g.beginPath(); g.ellipse(0, -16, 18, 9, 0, 0, 7); g.fill(); g.beginPath(); g.ellipse(-2, -26, 8, 7, 0, 0, 7); g.fill();
+  g.beginPath(); g.moveTo(14, -18); g.quadraticCurveTo(26, -26, 24, -36); g.lineTo(30, -36); g.lineTo(28, -30); g.quadraticCurveTo(28, -22, 18, -12); g.fill();
+  for (const lx of [-12, -6, 8, 14]) g.fillRect(lx, -10, 3, 18);
+  g.beginPath(); g.ellipse(-2, -36, 4, 6, 0, 0, 7); g.fill(); // 탄 사람
+  g.restore();
+}
+
+export const MINI = { jesus: { e04: magi, e11: cana, e17: fishing, e22: twelve, e23: rock, e31: loaves, e32: water, e39: stones, e42: sheep, e43: coin, e46: climb, e48: palms },
   david: { d01: herdDavid, d05: sling, d38: templeStones }, moses: { m35: jericho, m39: tribes } };
 
 /* ---------- 놀이 틀: 소개 → 놀이(제한 시간) → 성공 연출/실패 → 결과 ---------- */
