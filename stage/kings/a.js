@@ -203,7 +203,7 @@ export const A = {
         ['sheba', 'speak', { x: 0.0, z: 0.35, look: 1, to: 'solomon' }], ['gifts', null, { show: 1 }]],
       // 향품을 실은 낙타 떼가 성문으로 길게 들어온다
       intro: [['gifts', null, { show: 0 }], ['cam1', null, { show: 0 }], ['cam2', null, { show: 0 }], ['driver', 'idle', { show: 0 }], ['sheba', 'idle', { show: 0 }], ['maid', 'idle', { show: 0 }], ['solomon', 'sit', { look: -0.6 }]],
-      'p0.0': [['cam1', null, { show: 1, x: -2.05 }], ['cam2', null, { show: 1, x: -2.45 }], ['driver', 'idle', { show: 1, x: -1.6, z: -0.08 }], ['sheba', 'idle', { show: 1, x: -1.1, z: 0.6 }], ['maid', 'idle', { show: 1, x: -1.45, z: 0.72 }]],
+      'p0.0': [['cam1', null, { show: 1, x: -2.05 }], ['cam2', null, { show: 1, x: -2.45 }], ['driver', 'idle', { show: 1, x: -1.6, z: -0.07 }], ['sheba', 'idle', { show: 1, x: -1.1, z: 0.6 }], ['maid', 'idle', { show: 1, x: -1.45, z: 0.72 }]],
       // 먼 남쪽 나라의 여왕 — 왕 앞에 나아가 묻는다
       'p0.2': [['sheba', 'idle', { x: 0.0, z: 0.35, look: 1 }], ['maid', 'idle', { x: -0.45, z: 0.6, look: 1 }]],
       'p0.4': [['sheba', 'speak', { to: 'solomon' }]],
@@ -225,7 +225,7 @@ export const A = {
       w0: [['sheba', 'speak', { show: 1, x: 0.0, z: 0.35, look: 1, to: 'solomon' }]],
       w1: [['sheba', 'speak'], ['off1', 'bow'], ['off2', 'bow']],
       w2: [['off1', 'idle'], ['off2', 'idle'], ['sheba', 'raise']],
-      end: [['gifts', null, { show: 1 }], ['cam1', null, { show: 1, x: -2.05 }], ['cam2', null, { show: 1, x: -2.45 }], ['driver', 'idle', { show: 1, x: -1.6, z: -0.08 }], ['maid', 'idle', { show: 1, x: -0.45, z: 0.6, look: 1 }],
+      end: [['gifts', null, { show: 1 }], ['cam1', null, { show: 1, x: -2.05 }], ['cam2', null, { show: 1, x: -2.45 }], ['driver', 'idle', { show: 1, x: -1.6, z: -0.07 }], ['maid', 'idle', { show: 1, x: -0.45, z: 0.6, look: 1 }],
         ['sheba', 'bow', { show: 1 }], ['sheba', 'bow', { x: 0.0, z: 0.35, look: 1 }], ['solomon', 'sit']],
     },
   },
