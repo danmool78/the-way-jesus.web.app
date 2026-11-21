@@ -290,9 +290,9 @@ export const C = {
       elisha: ['elishaM', -0.55, -0.05, 0.6, { speed: 0.45 }],
       officer: ['obadiah', 0.0, 0.0, -0.8, { speed: 0.45 }], // 왕의 장관
       l1: ['leper', -1.55, 0.3, 0.6, { speed: 0.35, pose: 'sit-ground' }],
-      l2: ['leper', -1.25, 0.45, 0.3, { speed: 0.35, pose: 'sit-ground' }],
+      l2: ['leper', -1.12, 0.52, 0.3, { speed: 0.35, pose: 'sit-ground' }],
       l3: ['leper', -1.85, 0.5, 0.8, { speed: 0.35, pose: 'sit-ground' }],
-      l4: ['leper', -1.5, 0.65, 0.2, { speed: 0.35, pose: 'sit-ground' }],
+      l4: ['leper', -1.6, 0.72, 0.2, { speed: 0.35, pose: 'sit-ground' }],
       ar1: ['aramean', 1.3, 0.2, -1, { speed: 0.5, gaze: false }],
       ar2: ['aramean2', 2.05, 0.3, -1, { speed: 0.5, gaze: false }],
     },
