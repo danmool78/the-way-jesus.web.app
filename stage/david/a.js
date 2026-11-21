@@ -522,8 +522,8 @@ export const A = {
     cast: {
       jonathan: ['jonathan', 0.35, 0.1, 1],
       david: ['davidW', 0.8, 0.1, -1],
-      saul: ['saul', -1.15, -0.55, 0.6, { pose: 'sit' }],
-      abner: ['abner', -0.55, -0.6, -0.4, { pose: 'sit' }],
+      saul: ['saul', -1.15, -0.67, 0.6, { pose: 'sit' }],
+      abner: ['abner', -0.5, -0.72, -0.4, { pose: 'sit' }],
       lad: ['lad', 0.0, 0.3, 1],
     },
     beats: {

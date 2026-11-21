@@ -6,8 +6,8 @@ const path = require('path'), fs = require('fs'), ROOT = path.resolve(__dirname,
 let [j, ...ids] = process.argv.slice(2);
 if (!ids.length) { const files = j === 'jesus' ? ['stage/scenes.js'] : fs.readdirSync(path.join(ROOT, 'stage', j)).filter(f => /^[a-z]\.js$/.test(f)).map(f => `stage/${j}/${f}`);
   ids = files.flatMap(f => [...fs.readFileSync(path.join(ROOT, f), 'utf8').matchAll(/^  ([a-z]\d\d): \{/gm)].map(m => m[1])).sort(); }
-// 일부러 붙는 것: 타기·앉기(높이)·나무 위·누움·십자가, 그리고 그런 사람이 기대는 물건, 짐승을 끄는 손(조금)
-const HOLD = /^(ride|seat|perch|sleep|topple|crucified|crucified-dead|carry|carry-pole)/, ON = /(throne|bema|stocks|bier|cage|crosses|donkey|camel|figtree)\)$/;
+// 일부러 붙는 것: 타기·앉기(높이)·나무 위·누움·십자가·껴안기, 그리고 그런 사람이 기대는 물건, 짐승을 끄는 손(조금)
+const HOLD = /^(ride|seat|perch|sleep|topple|crucified|crucified-dead|carry|carry-pole|embrace)/, ON = /(throne|bema|stocks|bier|cage|crosses|donkey|camel|figtree)\)$/;
 const skip = a => { if (a[1] === 'no-seat') return false; const [n1, n2, d, p1, p2] = a; const lean = s => HOLD.test(s) || s.includes('@');
   if (lean(p1 || '') || lean(p2 || '')) return true; if (/\((donkey|camel|ox|sheep|garlandox)\)$/.test(n2) && d < 0.09) return true; if (ON.test(n2) && /kneel|mourn|pray/.test(p1 || '')) return true; return false; };
 (async () => {
