@@ -26,6 +26,18 @@ BOOKS = {
     'ja': ['マタ', 'マコ', 'ルカ', 'ヨハ', '使', '創', '出', 'レビ', '民', '申', 'ヨシュ', 'ロマ', '一コリ', 'エフェ', '黙', 'イザ', 'エレ', '箴', 'サム上', 'サム下', '王上', '王下', '代上', '代下', '詩', 'ガラ', '一テサ', '二テサ', '二コリ', 'フィリ', 'フィレ', 'コロ', '一テモ', 'テト', '二テモ', 'ハバ'],
 }
 
+# 어려운 낱말 풀이(사용자 2026-11): _src/glossary/<언어>.json([{id, terms, text}]) 가운데 이 여정 이야기에 나오는 낱말만 싣는다.
+# 앱이 장면마다 처음 나오는 자리에 밑줄을 긋고, 누르면 풀이 창을 띄운다
+def gloss_for(lang, o):
+    f = os.path.join(here, 'glossary', lang + '.json')
+    if not os.path.exists(f): return
+    ev = o['events'] + ([o['prologue']] if o.get('prologue') else [])
+    txt = '\n'.join(p for e in ev if not e.get('song') for p in e.get('story', []))
+    low = txt.lower()
+    g = [{'terms': [t for t in x['terms'] if t.lower() in low], 'text': x['text']} for x in loadf(f)]
+    g = [x for x in g if x['terms']]
+    if g: o['glossary'] = g
+
 # 시편: 노래 목록(songs.json — 관리자 페이지의 시편 노래 작업실이 고치는 원본)에서 장면을 만든다. 장면 하나 = 노래 하나:
 # 이야기는 노래 앞 낭독 한 문단, song은 가사(작업실에서 올린 노래와 가사 시간은 앱이 assets/psalms/<id>.json에서 받는다).
 # 말씀 탭 자리에는 후렴 첫머리를 둔다(시편 장·편 표시). 묶음이 시대(periods)
@@ -127,6 +139,7 @@ def build(jid, src, out_dir):
         return u
     os.makedirs(out_dir, exist_ok=True)
     out = {'periods': periods, 'places': places, 'events': events, 'ui': ui_for('ko'), 'journey': journey, **({'prologue': prologue} if prologue else {})}
+    gloss_for('ko', out)
     json.dump(out, open(os.path.join(out_dir, 'data.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
     print('[%s]' % jid, len(events), 'events,', sum(1 for e in events if 'img' in e), 'with images')
 
@@ -204,6 +217,7 @@ def build(jid, src, out_dir):
             for v, tv in zip(l['verses'], t['verses']):
                 v['text'] = tv
                 v['ref'] = re.sub(r'(^|[;,·]\s*)([가-힣]+)(?=\s*\d)', lambda m: m.group(1) + books.get(m.group(2), m.group(2)), v['ref'])
+        o.pop('glossary', None); gloss_for(lang, o)
         json.dump(o, open(os.path.join(out_dir, 'data.%s.json' % lang), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
         print('[%s] data.%s.json' % (jid, lang), 'missing:', (miss[:12] + ['…'] if len(miss) > 12 else miss) or 'none')
 

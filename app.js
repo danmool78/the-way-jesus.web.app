@@ -52,7 +52,7 @@ function applyStatic() {
     ['#rate', 'speedLabel', 'aria-label'], ['#music', 'music', 'aria-label'], ['#music', 'music', 'title'],
     ['#words h2', 'wordsHead'], ['#words .list-head p', 'wordsIntro'], ['#wordSearch', 'wordsSearch', 'placeholder'], ['#wordSearch', 'wordsSearchLabel', 'aria-label'],
     ['#harmony h2', 'harmonyHead'], ['#harmony .list-head p', 'harmonyIntro'], ['#quiz h2', 'quizHead'], ['#quiz .list-head p', 'quizIntro'],
-    ['#closeViewer', 'close', 'aria-label'], ['#closeStamps', 'close', 'aria-label'], ['#closeQuiz', 'close', 'aria-label'], ['#closeEnd', 'close', 'aria-label'], ['#closeMv', 'close', 'aria-label'], ['#closeInstall', 'close', 'aria-label'], ['#closeNext', 'close', 'aria-label'], ['#reopenEnd', 'endReopen'], ['#stamps h2', 'myFootsteps'], ['#stamps .fine', 'stampsNote'],
+    ['#closeViewer', 'close', 'aria-label'], ['#closeStamps', 'close', 'aria-label'], ['#closeQuiz', 'close', 'aria-label'], ['#closeEnd', 'close', 'aria-label'], ['#closeMv', 'close', 'aria-label'], ['#closeInstall', 'close', 'aria-label'], ['#closeNext', 'close', 'aria-label'], ['#closeGloss', 'close', 'aria-label'], ['#reopenEnd', 'endReopen'], ['#stamps h2', 'myFootsteps'], ['#stamps .fine', 'stampsNote'],
     ['#resetProgress', 'resetProgress']
   ].forEach(([sel, k, attr]) => { const el = $(sel); if (!el) return; if (attr) el.setAttribute(attr, t(k)); else el.textContent = t(k); });
   $$('[data-i]').forEach(el => { el.textContent = t(el.dataset.i); }); // 글씨 키를 단 요소들
@@ -920,7 +920,7 @@ function renderScene() {
   </div>
   <div class="ctabs" role="tablist">${tabs.map(([k, n]) => `<button role="tab" data-tab="${k}" class="${k === cardTab ? 'active' : ''}">${esc(n)}</button>`).join('')}</div>
   <section class="pane" data-pane="story" aria-label="${esc(t('storyLabel'))}">
-    <div class="story">${e.story.map((s, i) => i === e.prayer ? `<div class="prayer-para"><h4>${esc(t('prayerOpen'))}</h4><p data-para="${i}">${esc(s)}</p></div>` : `<p data-para="${i}">${esc(s)}</p>`).join('')}</div>
+    <div class="story">${glossParas(e.story).map((s, i) => i === e.prayer ? `<div class="prayer-para"><h4>${esc(t('prayerOpen'))}</h4><p data-para="${i}">${s}</p></div>` : `<p data-para="${i}">${s}</p>`).join('')}</div>
     ${e.core ? `<aside class="core"><h4>${esc(t('coreHead'))}</h4><p>${esc(e.core)}</p></aside>` : ''}
     ${letterBox(e)}
     ${e.note ? `<aside class="note"><h4>${esc(t('noteHead'))}</h4><p>${esc(e.note)}</p></aside>` : ''}
@@ -955,11 +955,47 @@ function renderScene() {
   $$('.ctabs button', $('#scene')).forEach(b => b.onclick = () => showTab(b.dataset.tab));
   $('#toHarmony')?.addEventListener('click', () => setView('harmony'));
   letterWire($('#scene'));
+  $$('.gl', $('#scene')).forEach(b => b.onclick = ev => { ev.stopPropagation(); openGloss(b); });
   showTab(cardTab);
   updateQuizBtn();
 }
 // 모바일 하단 시트: 손잡이(또는 접힌 제목줄)를 위로 끌면 한 단계 올리고(제목줄 → 반 → 끝까지) 아래로 끌면 내린다.
 // 누르기만 하면 반 ↔ 끝까지. 반만 열린 시트에서 글을 위로 밀어 올리면 끝까지 올라온다 (낭독이 문단을 따라 내리는 스크롤은 건드리지 않는다)
+// 어려운 낱말 풀이(사용자 2026-11): 장면 이야기에서 풀이(DATA.glossary)가 있는 낱말이 처음 나오는 자리에 밑줄을 긋는다.
+// 낭독은 그대로 — 글씨만 다른 색. 라틴 글자 언어는 낱말 경계를 보고(대소문자 무시), 한중일은 그대로 찾는다(조사가 붙어도 잡히게)
+const CJK = /^(ko|ja|zh)$/;
+function glossParas(paras) {
+  const g = DATA.glossary || [], used = new Set();
+  const word = c => !!c && /[\p{L}\p{N}]/u.test(c);
+  return paras.map(text => {
+    const low = text.toLowerCase(), hits = [];
+    g.forEach((x, gi) => {
+      if (used.has(gi)) return;
+      let best = null;
+      for (const term of x.terms) {
+        const tl = term.toLowerCase();
+        let at = low.indexOf(tl);
+        while (at >= 0 && !CJK.test(LANG) && (word(text[at - 1]) || word(text[at + tl.length]))) at = low.indexOf(tl, at + 1);
+        if (at >= 0 && (!best || at < best[0] || (at === best[0] && tl.length > best[1]))) best = [at, tl.length];
+      }
+      if (best) hits.push([best[0], best[1], gi]);
+    });
+    hits.sort((a, b) => a[0] - b[0] || b[1] - a[1]);
+    let out = '', pos = 0;
+    for (const [at, len, gi] of hits) {
+      if (at < pos) continue; // 겹치면 앞의 것만 — 뒤의 낱말은 다음 문단에서 다시 찾는다
+      out += esc(text.slice(pos, at)) + `<button type="button" class="gl" data-g="${gi}">${esc(text.slice(at, at + len))}</button>`;
+      pos = at + len; used.add(gi);
+    }
+    return out + esc(text.slice(pos));
+  });
+}
+function openGloss(b) {
+  const x = (DATA.glossary || [])[+b.dataset.g]; if (!x) return;
+  $('#glossTerm').textContent = b.textContent;
+  $('#glossText').textContent = x.text;
+  $('#glossDlg').showModal();
+}
 function sheetDrag() {
   const sc = $('#scene'), mobile = () => innerWidth <= 900;
   const level = () => sc.classList.contains('peek') ? 0 : sc.classList.contains('full') ? 2 : 1;
@@ -2384,6 +2420,8 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   const nx = $('#nextDlg');
   $$('.next-open').forEach(b => b.onclick = () => { closePanel(); $('#nextBody').innerHTML = nextHtml(); nx.showModal(); });
   $('#closeNext').onclick = () => nx.close();
+  $('#closeGloss').onclick = () => $('#glossDlg').close();
+  $('#glossDlg').onclick = ev => { if (ev.target.id === 'glossDlg') $('#glossDlg').close(); }; // 창 밖(어두운 곳)을 눌러도 닫힘
   nx.onclick = ev => { if (ev.target === nx) nx.close(); };
   mv.onclick = ev => { if (ev.target === mv) mv.close(); };
   mv.onclose = () => { $('#mvFrame').src = 'about:blank'; };
