@@ -214,6 +214,15 @@ Object.assign(LIKE, {
   babking: ['hezekiah', { hue: 50, skin: 0.8 }], babylonian: ['goliath', { hue: 200, skin: 0.85 }], babylonian2: ['joab', { hue: 200, skin: 0.85 }],
   zedekiah: ['josiah', { skin: 1.03 }], gedaliah: ['nicodemus', { hue: 100 }], jehoiachin: ['pilgrim-man', { plain: true, skin: 1.05 }], jehoiachinR: ['rehoboam', { hue: 300 }],
 });
+// 모세와 여호수아 여정 (사용자 2026-11) — 여든의 모세·아론(대제사장)·이드로·십보라·여호수아는 그 사람의 모델(OWN), 나머지는 비슷한 모델에 옷 색·살갗을 달리.
+// 궁에서 자란 젊은 모세는 수염 없는 디모데 모델에 흰 세마포, 미디안의 목자 모세는 목자 모델. 애굽 사람은 흰 세마포에 짙은 살갗. 왕관 모델은 왕(시혼·발락)에게만
+Object.assign(OWN, { mosesE: 'moses', aaronP: 'aaron', jethro: 'jethro', zipporah: 'zipporah', joshua: 'joshua' });
+Object.assign(LIKE, {
+  mosesP: ['timothy', { white: true, skin: 0.95 }], mosesS: ['shepherd', { hue: 15, skin: 0.95 }], aaron: ['aaron', { plain: true }],
+  taskmaster: ['pilate', { white: true, skin: 0.68 }], egywoman: ['michal', { hue: 160, skin: 0.75 }], magician: ['caiaphas', { white: true, skin: 0.72 }], sister: ['girl'],
+  hur: ['nicodemus', { hue: 260 }], caleb: ['barnabas', { hue: 40 }], eleazar: ['aaron', { skin: 1.08 }],
+  sihon: ['ahab', { hue: 20, skin: 0.85 }], balaam: ['caiaphas', { hue: 280 }], balak: ['rehoboam', { hue: 330, skin: 0.9 }],
+});
 const dress = ([n, c]) => c === 'plain' ? plain(ready[n], n) : c && typeof c === 'object' ? restyle(ready[n], n, c) : c ? tinted(ready[n], n, c) : ready[n];
 // 한 장면에 같은 모델이 또 서면 옷 색상·살갗이 눈에 띄게 다른 차림을 골라 입힌다 — 같은 옷·같은 살갗의 같은 사람이 둘셋씩 섰다(사용자 2026-11).
 // 배역과 군중(여러 무리)을 한 장부(taken: 모델 이름 → 이미 입힌 차림들)로 함께 센다 — 무리마다 따로 세니 두 무리에 쌍둥이가 섰다
