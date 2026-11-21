@@ -174,8 +174,8 @@ export function createWorld({ scene, renderer, toXZ, regions: want, places, jour
       // 물을 건너는 길이면 대상을 두지 않는다 (낙타가 갈릴리 바다 위를 걸었다)
       if ([...Array(24)].some((_, i) => wet(A[0] + (B[0] - A[0]) * i / 23, A[1] + (B[1] - A[1]) * i / 23))) continue;
       for (let i = 0; i < 3; i++) {
-        const P = makeProp('camel', A[0] - i * 1.6, A[1], { scale: SC * 0.5 }); P.speed = 1.6; P.directional = true;
-        life.push({ P, route: [A, B], leg: 1, lag: i * 1.6 }); deco.add(P.obj);
+        const P = makeProp('camel', A[0] - i * 2.4, A[1], { scale: SC * 0.8 }); P.speed = 1.6; P.directional = true;
+        life.push({ P, route: [A, B], leg: 1, lag: i * 2.4 }); deco.add(P.obj);
       }
     }
     // 갈릴리 바다의 고기잡이배
@@ -259,5 +259,5 @@ export function createWorld({ scene, renderer, toXZ, regions: want, places, jour
     if (journeyId !== 'david' && journeyId !== 'moses') { addModel(buildJerusalem(), JLM, 3); city = cityRect(JLM, 3); } // 인형을 줄이며 도성도 (6배는 베들레헴까지 덮었다)
     if (regs.some(r => r.name === 'egypt')) Object.values(EGYPT).forEach(m => addModel(m.build(), m.extent, 1.5));
   });
-  return { ready, heightAt, update: updateLife, setTime, wells, flocks, onRiver, get city() { return city; } };
+  return { ready, heightAt, update: updateLife, setTime, wells, flocks, life, onRiver, get city() { return city; } };
 }
