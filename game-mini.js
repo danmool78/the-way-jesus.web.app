@@ -1999,8 +1999,129 @@ function drumNote(g, x, y, fast) { // 소고
   g.fillStyle = '#c9a050'; for (let i = 0; i < 6; i++) { const a = i * Math.PI / 3; g.beginPath(); g.arc(Math.cos(a) * 10, Math.sin(a) * 10, 2, 0, 7); g.fill(); } g.restore();
 }
 
+/* ---------- 바다가 갈라지다 (출 14:19–29): 구름 기둥으로 병거 막기 — 버티기 ---------- */
+// 백성이 물벽 사이로 건너는 동안 애굽 병거가 네 길로 달려온다(먼저 왼쪽에 흙먼지가 인다). 구름 기둥을 위아래로 끌어 그 길을 막으면
+// 병거가 어둠 속에서 멈춰 돌아간다(14:20). 막지 못한 병거가 백성에게 닿으면 한 번 — 세 번이면 실패. 끝까지 버티면 물이 다시 덮는다(14:28)
+const LANES = [176, 248, 320, 392], PIL_X = 168, PIL_H = 96, PEOPLE_X = 270, CAUGHT = 3;
+const redSea = {
+  title: '바다가 갈라지다', task: '구름 기둥으로 병거를 막아 백성이 건너기까지', survive: true,
+  ask: ['앞은 바다, 뒤는 바로의 병거였지. 그 밤 구름 기둥이 우리 뒤로 옮겨 와 애굽 진과 우리 사이에 섰단다.', '백성이 다 건널 때까지 구름 기둥으로 병거를 막아 다오!'],
+  quote: '구름 기둥도 앞에서 그들의 뒤로 옮겨 애굽 진과 이스라엘 진 사이에 이르러 서니', ref: '출 14:19–20',
+  help: '구름 기둥을 위아래로 끌어 병거가 오는 길을 막아요. 흙먼지가 이는 길에 곧 병거가 와요.<br>막지 못한 병거가 백성에게 닿으면 한 번 — 세 번이면 실패. 백성이 다 건널 때까지 버텨요.',
+  seconds: 28,
+  init() { return { py: LANES[1] + 36, ty: null, cars: [], hits: 0, t: 0, next: 1.2, msg: null, dust: [], shake: 0, people: Array.from({ length: 40 }, (_, i) => ({ k: i / 40, s: rnd(0.8, 1.2) })) }; },
+  update(dt, S) {
+    S.t += dt; if (S.msg) S.msg.at -= dt; S.shake = Math.max(0, S.shake - dt * 3);
+    if (S.ty !== null) S.py += (S.ty - S.py) * Math.min(1, dt * 14); // 손가락을 바로 따라가되 조금 무겁게
+    const lvl = Math.min(1, S.t / 24);
+    if ((S.next -= dt) <= 0) { // 병거: 흙먼지 0.9초 뒤 달려온다. 뒤로 갈수록 빠르고, 두 길에서 함께 오기도
+      const n = Math.random() < 0.1 + lvl * 0.35 ? 2 : 1, used = new Set();
+      for (let i = 0; i < n; i++) { let L; do L = Math.floor(Math.random() * 4); while (used.has(L)); used.add(L);
+        S.cars.push({ L, x: -50 - i * rnd(70, 130), sp: rnd(85, 115) + lvl * 55, warn: 1.0, st: 'run', back: 0 }); }
+      S.next = rnd(1.5, 2.3) - lvl * 0.6; S.fx.play('chariot');
+    }
+    const top = S.py - PIL_H / 2, bot = S.py + PIL_H / 2;
+    for (const c of S.cars) {
+      if (c.warn > 0) { c.warn -= dt; continue; }
+      if (c.st === 'run') { c.x += c.sp * dt; const y = LANES[c.L];
+        if (c.x > PIL_X - 46 && c.x < PIL_X - 20 && y > top && y < bot) { c.st = 'stop'; S.fx.play('neigh'); S.msg = { t: '어둠 속에 멈췄어요', c: '#d8e0ff', at: 0.7, x: PIL_X - 60, y: y - 26 }; }
+        else if (c.x > PEOPLE_X - 10) { c.st = 'hit'; S.hits++; S.shake = 1; S.fx.play('splash'); S.msg = { t: S.hits < CAUGHT ? `병거가 백성에게 닿았어요 (${S.hits}/${CAUGHT})` : '병거에 따라잡혔어요', c: '#ffb38a', at: 1.2, x: 200, y: y - 30 }; } }
+      else if (c.st === 'stop') { c.back += dt; c.x -= 70 * dt * Math.min(1, c.back); }
+      else if (c.st === 'hit') c.back += dt;
+    }
+    S.cars = S.cars.filter(c => c.x > -160 && !(c.st === 'hit' && c.back > 0.8));
+    for (const p of S.people) p.k = Math.min(1, p.k + dt * 0.032 * p.s);
+    if (Math.random() < dt * 20) S.dust.push({ x: rnd(0, 120), y: LANES[Math.floor(Math.random() * 4)] + rnd(-10, 10), r: rnd(4, 10), life: 1 });
+    for (const d of S.dust) { d.life -= dt; d.r += dt * 10; } S.dust = S.dust.filter(d => d.life > 0);
+  },
+  down(x, y, S) { S.ty = clamp(y, LANES[0] - 20, LANES[3] + 20); },
+  move(x, y, S) { if (S.ty !== null) S.ty = clamp(y, LANES[0] - 20, LANES[3] + 20); },
+  up(S) {},
+  key(k, S) { const i = LANES.findIndex(l => Math.abs(l - S.py) < 36); if (k === 'ArrowUp') { S.ty = LANES[Math.max(0, i - 1)]; return; } if (k === 'ArrowDown') { S.ty = LANES[Math.min(3, i + 1)]; return; } return false; },
+  won: () => false,
+  lost: S => S.hits >= CAUGHT,
+  bonus: S => Math.round(200 * (1 - S.hits / CAUGHT)),
+  failText: () => '병거에 따라잡혔어요',
+  sea(g, S, close = 0, part = 3) { // part: 1 땅, 2 물벽, 3 둘 다
+    // 위에서 내려다본 모습: 왼쪽은 애굽 쪽 바닷가(캄캄), 오른쪽은 물벽 사이로 드러난 마른 바닥(출 14:22). 끝나면 물벽이 다시 덮인다
+    const SH = 196, top = LANES[0] - 40, bot = LANES[3] + 40, cl = close * (bot - top) / 2;
+    if (part & 1) {
+    g.fillStyle = '#211c14'; g.fillRect(0, 0, W, H);
+    const lit = g.createRadialGradient(PIL_X + 60, (top + bot) / 2, 20, PIL_X + 60, (top + bot) / 2, 300); lit.addColorStop(0, 'rgba(255,190,110,.22)'); lit.addColorStop(1, 'rgba(255,190,110,0)'); g.fillStyle = lit; g.fillRect(0, 0, W, H);
+    g.fillStyle = '#5e5038'; g.beginPath(); g.moveTo(SH, top); g.lineTo(W, top); g.lineTo(W, bot); g.lineTo(SH, bot); g.fill(); // 바다 밑 마른 땅
+    g.fillStyle = 'rgba(30,24,16,.25)'; for (let k = 0; k < 30; k++) { g.beginPath(); g.ellipse(SH + 10 + (k * 53) % (W - SH), top + 10 + (k * 37) % (bot - top - 20), 6, 2.5, 0, 0, 7); g.fill(); } // 물결 자국
+    }
+    if (part & 2) {
+    for (const [y0, y1, sd] of [[0, top + cl, 1], [bot - cl, H, -1]]) {
+      const wg = g.createLinearGradient(0, y0, 0, y1); wg.addColorStop(sd > 0 ? 0 : 1, '#0e2a48'); wg.addColorStop(sd > 0 ? 1 : 0, '#2f6f96'); g.fillStyle = wg;
+      g.beginPath(); g.moveTo(SH - 30, y0); g.lineTo(W, y0); g.lineTo(W, y1); g.lineTo(SH - 30, y1); g.fill();
+      const edge = sd > 0 ? y1 : y0; g.strokeStyle = 'rgba(210,235,255,.55)'; g.lineWidth = 2.5; g.beginPath();
+      for (let x = SH - 30; x <= W; x += 8) { const yy = edge + Math.sin(x * 0.15 + S.t * 4) * 2.5 * sd; x === SH - 30 ? g.moveTo(x, yy) : g.lineTo(x, yy); } g.stroke();
+      g.fillStyle = 'rgba(210,235,255,.18)'; for (let x = SH - 20; x < W; x += 26) g.fillRect(x + Math.sin(S.t * 2 + x) * 3, edge - sd * 10, 14, 2); }
+    g.fillStyle = '#16120c'; g.fillRect(0, 0, SH - 30, top); g.fillRect(0, bot, SH - 30, H - bot); // 애굽 쪽 뭍(위아래)
+    g.fillStyle = 'rgba(230,225,255,.5)'; for (let k = 0; k < 14; k++) g.fillRect((k * 29) % (SH - 40), (k * 17) % (top - 10), 1, 1);
+    }
+  },
+  draw(g, S) {
+    g.save(); if (S.shake) g.translate(Math.sin(S.t * 60) * 4 * S.shake, 0);
+    this.sea(g, S);
+    // 길(네 줄) 표시
+    for (const y of LANES) { g.strokeStyle = 'rgba(255,230,190,.06)'; g.lineWidth = 30; g.beginPath(); g.moveTo(0, y); g.lineTo(PEOPLE_X - 20, y); g.stroke(); } // 병거가 오는 네 길
+    for (const d of S.dust) { g.fillStyle = `rgba(150,130,100,${d.life * 0.25})`; g.beginPath(); g.arc(d.x, d.y, d.r, 0, 7); g.fill(); }
+    // 백성 — 물벽 사이로 건너간다
+    for (const p of S.people) { const x = 262 + p.k * 170, y = LANES[0] - 16 + ((p.s * 997) % 1) * (LANES[3] - LANES[0] + 32); if (x > W + 10) continue;
+      g.fillStyle = 'rgba(0,0,0,.25)'; g.beginPath(); g.ellipse(x + 2, y + 3, 5, 3, 0, 0, 7); g.fill();
+      g.fillStyle = ['#e8dcc0', '#d8c8a0', '#c8b8d0'][Math.floor(p.s * 30) % 3]; g.beginPath(); g.arc(x, y, 5, 0, 7); g.fill(); g.fillStyle = '#9a7a54'; g.beginPath(); g.arc(x + 1.5, y, 2.6, 0, 7); g.fill(); } // 위에서 본 머리와 어깨
+    // 병거
+    for (const c of S.cars) { const y = LANES[c.L];
+      if (c.warn > 0) { g.fillStyle = `rgba(210,180,130,${0.5 * Math.sin((0.9 - c.warn) / 0.9 * Math.PI)})`; for (let i = 0; i < 4; i++) { g.beginPath(); g.arc(8 + i * 10, y + rnd(-4, 4), 12 + i * 3, 0, 7); g.fill(); }
+        g.fillStyle = '#ffcf8a'; g.font = '900 18px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.fillText('!', 10, y + 6); continue; }
+      chariot(g, c.x, y, c.st === 'stop' ? c.back : 0, S.t); }
+    // 구름 기둥 — 끌 수 있다
+    pillar(g, PIL_X, S.py, S.t);
+    // 남은 목숨·건넌 백성
+    g.restore();
+    g.save(); g.font = '800 14px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.fillStyle = '#e8e4f4'; g.fillText('백성이 건너는 중', 14, 26);
+    const pk = S.people.reduce((a, p) => a + p.k, 0) / S.people.length; g.fillStyle = 'rgba(255,255,255,.18)'; g.fillRect(14, 34, 140, 8); g.fillStyle = '#ffd27a'; g.fillRect(14, 34, 140 * pk, 8);
+    for (let i = 0; i < CAUGHT; i++) { g.fillStyle = i < CAUGHT - S.hits ? '#e8dcc0' : 'rgba(255,255,255,.15)'; g.beginPath(); g.arc(W - 22 - i * 20, 28, 7, 0, 7); g.fill(); }
+    g.restore();
+    floatMsg(g, S.msg);
+  },
+  end(g, k, S) { // 물이 다시 흘러 병거를 덮고(14:28), 백성은 건너편에
+    S.cars.forEach(c => { if (c.st === 'run') c.st = 'stop'; }); this.update(0.016, S);
+    const close = clamp((k - 0.15) * 2.2, 0, 1); this.sea(g, S, close, 1);
+    for (const c of S.cars) chariot(g, c.x, LANES[c.L], 1, S.t);
+    this.sea(g, S, close, 2); // 물이 병거 위를 덮는다(14:28)
+    pillar(g, PIL_X, S.py, S.t, 1 - k);
+    if (close > 0 && close < 1) { g.fillStyle = `rgba(220,240,255,${0.5 * Math.sin(close * Math.PI)})`; const mid = (LANES[0] + LANES[3]) / 2, half = (1 - close) * (LANES[3] - LANES[0] + 80) / 2; for (let i = 0; i < 26; i++) { const x = 170 + (i * 37) % 230; g.beginPath(); g.arc(x, mid + (i % 2 ? -half : half) + Math.sin(i) * 6, 6 + (i % 4) * 3, 0, 7); g.fill(); } } // 덮이는 물거품
+    if (k > 0.35) { g.save(); g.globalAlpha = clamp((k - 0.35) * 2, 0, 1); g.fillStyle = 'rgba(10,14,30,.82)'; g.fillRect(0, 50, W, 84);
+      g.font = '700 16px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#eef2ff'; g.fillText('이스라엘 자손은 바다 가운데를 육지로 행하였고', W / 2, 80); g.fillText('물이 좌우에 벽이 되었더라', W / 2, 104);
+      g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#b8c2e0'; g.fillText('출 14:29', W / 2, 123); g.restore(); }
+  },
+};
+function pillar(g, x, y, t, al = 1) { // 구름과 불 기둥 — 끄는 자리(가운데)를 중심으로 위아래로 길게, 가운데가 막는 폭
+  g.save(); g.globalAlpha = al;
+  const glow = g.createRadialGradient(x, y, 6, x, y, 90); glow.addColorStop(0, 'rgba(255,190,110,.45)'); glow.addColorStop(1, 'rgba(255,190,110,0)'); g.fillStyle = glow; g.fillRect(x - 90, y - 90, 180, 180);
+  for (let i = 0; i < 16; i++) { const yy = y - PIL_H / 2 - 30 + i * ((PIL_H + 60) / 15), w = (i > 2 && i < 13 ? 26 : 18) + Math.sin(t * 2 + i) * 4;
+    g.fillStyle = `rgba(${200 + (i % 3) * 15},${200 + (i % 3) * 12},${215},${i > 2 && i < 13 ? 0.82 : 0.5})`; g.beginPath(); g.ellipse(x + Math.sin(t * 1.5 + i * 0.8) * 4, yy, w, 13, 0, 0, 7); g.fill(); }
+  g.fillStyle = `rgba(255,200,120,${0.35 + 0.15 * Math.sin(t * 6)})`; g.beginPath(); g.ellipse(x, y, 9, PIL_H / 2 - 6, 0, 0, 7); g.fill(); // 속의 불빛(14:24)
+  g.strokeStyle = 'rgba(255,240,210,.5)'; g.setLineDash([4, 5]); g.lineWidth = 1.5; g.beginPath(); g.moveTo(x - 36, y - PIL_H / 2); g.lineTo(x - 36, y + PIL_H / 2); g.stroke(); g.setLineDash([]);
+  g.restore();
+}
+function chariot(g, x, y, stop, t) { // 말 두 필 + 병거(옆모습), 멈추면 말이 앞발을 든다
+  g.save(); g.translate(x, y); g.scale(1.5, 1.5); const rear = Math.min(1, stop * 2) * Math.max(0, 1 - stop) * 0.5;
+  g.fillStyle = '#2a1c12'; g.save(); g.translate(18, 0); g.rotate(-rear);
+  for (const dy of [-4, 3]) { g.beginPath(); g.ellipse(0, dy - 4, 12, 5, 0, 0, 7); g.fill(); g.beginPath(); g.moveTo(9, dy - 6); g.lineTo(17, dy - 14); g.lineTo(20, dy - 11); g.lineTo(12, dy - 3); g.fill();
+    const l = Math.sin(t * 18 + dy) * 3 * (1 - stop); g.fillRect(-9 + l, dy - 1, 2, 7); g.fillRect(7 - l, dy - 1, 2, 7); }
+  g.restore();
+  g.strokeStyle = '#1a140e'; g.lineWidth = 1.5; g.beginPath(); g.moveTo(-4, -4); g.lineTo(8, -4); g.stroke();
+  g.fillStyle = '#3a2a1a'; g.fillRect(-16, -14, 12, 10); g.strokeStyle = '#5a4430'; g.lineWidth = 2; g.beginPath(); g.arc(-10, 0, 6, 0, 7); g.stroke(); // 바퀴
+  g.fillStyle = '#2a1c12'; g.beginPath(); g.arc(-10, -20, 3.5, 0, 7); g.fill(); g.fillRect(-12, -18, 4, 6); g.fillStyle = '#c8a050'; g.fillRect(-13, -24, 6, 2); g.fillRect(-16, -14, 12, 1.5); // 투구·병거 테의 금빛
+  g.restore();
+}
+
 export const MINI = { jesus: { e04: magi, e11: cana, e17: fishing, e22: twelve, e23: rock, e31: loaves, e32: water, e39: stones, e42: sheep, e43: coin, e46: climb, e48: palms, e59: tiberias },
-  david: { d01: herdDavid, d05: sling, d24: arkDance, d38: templeStones }, moses: { m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket }, kings: { k15: carmel } };
+  david: { d01: herdDavid, d05: sling, d24: arkDance, d38: templeStones }, moses: { m09: redSea, m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket }, kings: { k15: carmel } };
 
 /* ---------- 놀이 틀: 소개 → 놀이(제한 시간) → 성공 연출/실패 → 결과 ---------- */
 // host: 모달 안의 상자. fx: { play, pour } (game-audio.js). 끝나면 done({ ok, left, tries })
