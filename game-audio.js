@@ -95,6 +95,9 @@ export function createAudio() {
     gust: () => burst({ type: 'bandpass', f: 500, f2: 1400, q: 1.1, vol: 0.12, a: 0.25, d: 0.8 }),                                  // 돌풍
     gurgle: () => { for (let i = 0; i < 12; i++) bubble(160 + Math.random() * 260, 0.05, i * 0.05); },                                // 가라앉음
     calm: () => { [196, 293.7, 392].forEach(f => tone({ f, vol: 0.06, a: 0.8, d: 3 })); [784, 987.8, 1174.7].forEach((f, i) => bell(f, 0.6 + i * 0.25, 0.05, 2.4)); }, // 바람이 그침
+    sweep: () => burst({ type: 'bandpass', f: 3200 + Math.random() * 1200, f2: 1800, q: 0.9, vol: 0.06, a: 0.02, d: 0.16 }),   // 비질
+    glint: () => [2637, 3520].forEach((f, i) => tone({ f, vol: 0.03, d: 0.35, at: i * 0.07 })),                            // 희미한 반짝임
+    coin: () => { [2093, 2637, 3322].forEach((f, i) => tone({ f: f * (1 + Math.random() * 0.01), type: 'sine', vol: 0.07, d: 0.9, at: i * 0.01 })); tone({ f: 4186, vol: 0.03, d: 0.4 }); bell(1046.5, 0.12, 0.06, 1.4); }, // 은전
     pick: () => { tone({ f: 520, f2: 700, type: 'triangle', vol: 0.06, a: 0.005, d: 0.08 }); },                         // 집어 듦
     drop: () => { burst({ type: 'lowpass', f: 500, q: 0.8, vol: 0.12, a: 0.004, d: 0.1 }); tone({ f: 392, type: 'triangle', vol: 0.05, d: 0.15 }); }, // 내려놓음
     cast: () => { burst({ type: 'bandpass', f: 600, f2: 2600, q: 1.2, vol: 0.12, a: 0.05, d: 0.3 }); burst({ type: 'highpass', f: 2000, vol: 0.04, d: 0.2, at: 0.08 }); }, // 그물이 휙
