@@ -1,0 +1,522 @@
+[
+ {
+  "id": "high-place",
+  "terms": [
+   "altares nos montes"
+  ],
+  "text": "Lugares de altar montados no alto de montes ou colinas. Depois que o Templo foi construído, misturavam-se facilmente com a idolatria, e os profetas os condenaram muitas vezes."
+ },
+ {
+  "id": "burnt-offering",
+  "terms": [
+   "holocausto",
+   "holocaustos"
+  ],
+  "text": "Sacrifício em que o animal inteiro era queimado sobre o altar e entregue a Deus. Mostrava entrega completa."
+ },
+ {
+  "id": "peace-offering",
+  "terms": [
+   "ofertas de paz"
+  ],
+  "text": "Oferta que expressava paz com Deus e gratidão. Uma parte era queimada no altar, e o resto era comido juntos por quem a trouxe."
+ },
+ {
+  "id": "sacrifice",
+  "terms": [
+   "sacrifícios"
+  ],
+  "text": "Culto em que se ofereciam animais ou cereais a Deus. Era feito pelos sacerdotes no lugar determinado."
+ },
+ {
+  "id": "ark",
+  "terms": [
+   "arca da aliança",
+   "arca"
+  ],
+  "text": "Caixa de madeira revestida de ouro com as tábuas de pedra da aliança de Deus. Mostrava que Deus estava no meio do povo."
+ },
+ {
+  "id": "cherub",
+  "terms": [
+   "querubins"
+  ],
+  "text": "Palavra bíblica para os anjos com asas que ficam junto de Deus. A sua forma foi esculpida sobre a arca e no Lugar Santíssimo."
+ },
+ {
+  "id": "holy-of-holies",
+  "terms": [
+   "Lugar Santíssimo"
+  ],
+  "text": "A sala mais sagrada, no fundo do Templo, onde ficava a arca. Só o sumo sacerdote podia entrar, uma vez por ano."
+ },
+ {
+  "id": "sanctuary",
+  "terms": [
+   "santuário"
+  ],
+  "text": "Lugar santo separado para Deus, isto é, o Templo."
+ },
+ {
+  "id": "covenant",
+  "terms": [
+   "aliança"
+  ],
+  "text": "A promessa entre Deus e o povo: Deus protegeria o povo, e o povo serviria somente a Deus."
+ },
+ {
+  "id": "covenant-book",
+  "terms": [
+   "livro da aliança",
+   "livro da lei"
+  ],
+  "text": "O livro com a Lei que Deus deu por meio de Moisés. No tempo de Josias foi reencontrado no Templo e lido de novo."
+ },
+ {
+  "id": "law",
+  "terms": [
+   "lei"
+  ],
+  "text": "Os ensinos e as normas que Deus deu a Israel por meio de Moisés. Eram o padrão para o culto e para a vida."
+ },
+ {
+  "id": "commandment",
+  "terms": [
+   "mandamentos"
+  ],
+  "text": "Ensinos que Deus mandou guardar. Os Dez Mandamentos são o centro deles."
+ },
+ {
+  "id": "prophet",
+  "terms": [
+   "profeta",
+   "profetas"
+  ],
+  "text": "Pessoa que recebia a palavra de Deus e a levava ao rei e ao povo."
+ },
+ {
+  "id": "man-of-god",
+  "terms": [
+   "homem de Deus"
+  ],
+  "text": "Forma respeitosa de chamar o profeta enviado por Deus."
+ },
+ {
+  "id": "prophets-sons",
+  "terms": [
+   "discípulos dos profetas"
+  ],
+  "text": "Grupos que se reuniam em volta de um profeta para aprender e viver juntos. No tempo de Elias e Eliseu havia vários deles."
+ },
+ {
+  "id": "prophecy",
+  "terms": [
+   "profetiza"
+  ],
+  "text": "A palavra que o profeta recebia de Deus e anunciava. Às vezes falava do futuro, mas muitas vezes era um aviso para mudar de vida agora."
+ },
+ {
+  "id": "priest",
+  "terms": [
+   "sacerdotes",
+   "sacerdote"
+  ],
+  "text": "Quem servia no Templo cuidando dos sacrifícios, entre Deus e o povo. Pela Lei, só os descendentes de Arão, da tribo de Levi, podiam sê-lo."
+ },
+ {
+  "id": "high-priest",
+  "terms": [
+   "sumo sacerdote"
+  ],
+  "text": "O chefe dos sacerdotes. Uma vez por ano entrava no Lugar Santíssimo para fazer expiação pelo povo."
+ },
+ {
+  "id": "levite",
+  "terms": [
+   "Levi"
+  ],
+  "text": "Membros da tribo de Levi, separados para o serviço do Templo. Jeroboão quebrou essa regra e pôs qualquer um como sacerdote."
+ },
+ {
+  "id": "tribe",
+  "terms": [
+   "tribo",
+   "tribos"
+  ],
+  "text": "Grande família descendente de um dos doze filhos de Jacó. O país era formado por doze tribos."
+ },
+ {
+  "id": "incense",
+  "terms": [
+   "incenso"
+  ],
+  "text": "Queimar resinas perfumadas como oferta a um deus. A fumaça representava a oração subindo."
+ },
+ {
+  "id": "spices",
+  "terms": [
+   "especiarias"
+  ],
+  "text": "Resinas e aromas preciosos. Eram mercadorias caras, trazidas de longe em camelos."
+ },
+ {
+  "id": "talent",
+  "terms": [
+   "talentos"
+  ],
+  "text": "Unidade de peso grande; um talento tem cerca de 34 kg. Um talento de ouro era uma fortuna."
+ },
+ {
+  "id": "shekel",
+  "terms": [
+   "siclo",
+   "siclos"
+  ],
+  "text": "Unidade de peso e de dinheiro; um siclo tem cerca de 11 g. Servia sobretudo para pesar prata."
+ },
+ {
+  "id": "seah",
+  "terms": [
+   "medida de farinha"
+  ],
+  "text": "Unidade de volume para cereais; uma medida dessas tem cerca de 7 litros."
+ },
+ {
+  "id": "baal",
+  "terms": [
+   "Baal"
+  ],
+  "text": "Deus em que os cananeus acreditavam como senhor da chuva e das tempestades. No tempo de Acabe e Jezabel se espalhou por Israel."
+ },
+ {
+  "id": "asherah",
+  "terms": [
+   "Aserá"
+  ],
+  "text": "Deusa dos cananeus. Era adorada com postes ou imagens de madeira que a representavam."
+ },
+ {
+  "id": "pillar",
+  "terms": [
+   "colunas sagradas"
+  ],
+  "text": "Colunas de pedra erguidas como sinal de idolatria. A Lei mandava não erguê-las e derrubá-las."
+ },
+ {
+  "id": "idol",
+  "terms": [
+   "ídolos"
+  ],
+  "text": "Imagens feitas pelas pessoas com madeira, pedra ou metal e adoradas como deuses. A Bíblia vê isso como o pecado de se afastar de Deus."
+ },
+ {
+  "id": "golden-calf",
+  "terms": [
+   "bezerros de ouro",
+   "bezerro de ouro"
+  ],
+  "text": "Imagem de bezerro feita de ouro. Tanto no deserto como no tempo de Jeroboão, foi adorada no lugar de Deus e se tornou um grande pecado."
+ },
+ {
+  "id": "bronze-serpent",
+  "terms": [
+   "serpente de bronze"
+  ],
+  "text": "Serpente de bronze que Moisés pôs numa haste no deserto para salvar o povo. Mais tarde virou um ídolo adorado, e Ezequias a destruiu."
+ },
+ {
+  "id": "bronze-sea",
+  "terms": [
+   "mar de bronze"
+  ],
+  "text": "Grande tanque de bronze no pátio do Templo de Salomão. Guardava a água com que os sacerdotes se lavavam."
+ },
+ {
+  "id": "wrath",
+  "terms": [
+   "ira"
+  ],
+  "text": "A grande indignação de Deus diante do pecado."
+ },
+ {
+  "id": "sign",
+  "terms": [
+   "sinal"
+  ],
+  "text": "Acontecimento admirável que mostra que a palavra de Deus é verdadeira."
+ },
+ {
+  "id": "anoint",
+  "terms": [
+   "ungiu",
+   "unja"
+  ],
+  "text": "Rito de derramar azeite de oliva na cabeça ao estabelecer um rei ou um sacerdote. Quer dizer que Deus o escolheu e o colocou ali."
+ },
+ {
+  "id": "gentile",
+  "terms": [
+   "estrangeiro",
+   "estrangeiras"
+  ],
+  "text": "Pessoas de outros povos, de fora de Israel."
+ },
+ {
+  "id": "assembly",
+  "terms": [
+   "assembleia"
+  ],
+  "text": "Todo o povo reunido num só lugar para servir a Deus."
+ },
+ {
+  "id": "concubine",
+  "terms": [
+   "concubinas"
+  ],
+  "text": "Mulheres do rei abaixo das rainhas oficiais."
+ },
+ {
+  "id": "yoke",
+  "terms": [
+   "jugo"
+  ],
+  "text": "Peça de madeira posta no pescoço de dois bois para puxarem o arado ou a carroça. Também significa uma carga pesada ou opressão."
+ },
+ {
+  "id": "scorpion-whip",
+  "terms": [
+   "chicotes de escorpião"
+  ],
+  "text": "Pensa-se que era um chicote muito doloroso, com pontas de metal ou espinhos. Quer dizer governar com ainda mais dureza."
+ },
+ {
+  "id": "chariot",
+  "terms": [
+   "carro",
+   "carros"
+  ],
+  "text": "Carro de guerra puxado por cavalos. Era a arma mais forte dos exércitos antigos."
+ },
+ {
+  "id": "horsemen",
+  "terms": [
+   "cavaleiros"
+  ],
+  "text": "Soldados montados a cavalo. 'Carros e cavaleiros de Israel' quer dizer a força que protege o país."
+ },
+ {
+  "id": "servant",
+  "terms": [
+   "seu servo",
+   "o servo"
+  ],
+  "text": "Quem fica ao lado de alguém para fazer recados e servir."
+ },
+ {
+  "id": "yoke-of-oxen",
+  "terms": [
+   "juntas de bois",
+   "junta de bois"
+  ],
+  "text": "Par de bois que puxam juntos debaixo do mesmo jugo."
+ },
+ {
+  "id": "sackcloth",
+  "terms": [
+   "pano de saco"
+  ],
+  "text": "Roupa tecida de pelos grossos. Era usada para mostrar tristeza ou arrependimento."
+ },
+ {
+  "id": "fast",
+  "terms": [
+   "jejum",
+   "jejuou"
+  ],
+  "text": "Ficar sem comer por um tempo para se agarrar a Deus. Mostrava tristeza ou arrependimento."
+ },
+ {
+  "id": "threshing-floor",
+  "terms": [
+   "eira"
+  ],
+  "text": "Terreiro largo e plano onde se batiam as espigas para soltar os grãos. Junto à porta da cidade, também servia de lugar de reunião."
+ },
+ {
+  "id": "gird",
+  "terms": [
+   "prendeu a roupa na cintura"
+  ],
+  "text": "Amarrar a barra da roupa comprida com o cinto. Quer dizer preparar-se para correr ou trabalhar."
+ },
+ {
+  "id": "still-small",
+  "terms": [
+   "som baixo e suave"
+  ],
+  "text": "Um som muito fino e pequeno. Elias encontrou Deus não no vento forte, mas num som baixinho."
+ },
+ {
+  "id": "leprosy",
+  "terms": [
+   "lepra",
+   "leprosos"
+  ],
+  "text": "A lepra da Bíblia não era só a hanseníase de hoje, mas incluía várias doenças graves de pele. Quem a tinha precisava morar fora do povoado."
+ },
+ {
+  "id": "commander",
+  "terms": [
+   "comandante do exército"
+  ],
+  "text": "Chefe militar de alto posto que comandava o exército."
+ },
+ {
+  "id": "beam",
+  "terms": [
+   "viga"
+  ],
+  "text": "Tronco grosso posto de uma coluna a outra para sustentar o telhado."
+ },
+ {
+  "id": "inner-room",
+  "terms": [
+   "quarto reservado"
+  ],
+  "text": "Cômodo pequeno atrás de uma sala grande. Ali se podia ficar longe dos olhares."
+ },
+ {
+  "id": "watchman",
+  "terms": [
+   "sentinela"
+  ],
+  "text": "Quem vigiava do alto da muralha ou de uma torre para guardar a cidade."
+ },
+ {
+  "id": "watchtower",
+  "terms": [
+   "torre"
+  ],
+  "text": "Construção alta, feita para vigiar e ver longe."
+ },
+ {
+  "id": "harlotry",
+  "terms": [
+   "prostituições"
+  ],
+  "text": "Pecado sexual fora do casamento. A Bíblia às vezes usa essa palavra como imagem da idolatria."
+ },
+ {
+  "id": "sorcery",
+  "terms": [
+   "feitiçarias"
+  ],
+  "text": "Práticas de magia, como encantamentos e adivinhação. A Lei as proibia."
+ },
+ {
+  "id": "eunuch",
+  "terms": [
+   "eunucos"
+  ],
+  "text": "Funcionários do palácio que serviam de perto o rei e a rainha."
+ },
+ {
+  "id": "throne",
+  "terms": [
+   "trono"
+  ],
+  "text": "O assento do rei. Representa o poder do rei."
+ },
+ {
+  "id": "tribute",
+  "terms": [
+   "tributo"
+  ],
+  "text": "Riquezas pagas todo ano a um país mais forte em sinal de submissão."
+ },
+ {
+  "id": "scribe",
+  "terms": [
+   "secretário"
+  ],
+  "text": "Funcionário que escrevia e cuidava dos registros. Nesse tempo era um alto cargo que tratava dos documentos do palácio."
+ },
+ {
+  "id": "recorder",
+  "terms": [
+   "cronista"
+  ],
+  "text": "Funcionário que registrava e anunciava os assuntos do palácio."
+ },
+ {
+  "id": "aramaic",
+  "terms": [
+   "aramaico"
+  ],
+  "text": "A língua dos arameus. Era a língua dos diplomatas de vários países, e por isso o povo comum de Judá não a entendia bem."
+ },
+ {
+  "id": "blaspheme",
+  "terms": [
+   "insultaram"
+  ],
+  "text": "Palavras ou atos que ofendem ou desprezam a Deus."
+ },
+ {
+  "id": "zion",
+  "terms": [
+   "Sião"
+  ],
+  "text": "Nome de Jerusalém, sobretudo do monte onde ficava o Templo. Indica o lugar onde Deus habita."
+ },
+ {
+  "id": "angel-of-lord",
+  "terms": [
+   "anjo do Senhor"
+  ],
+  "text": "Anjo enviado por Deus, que transmitia ou cumpria a vontade de Deus."
+ },
+ {
+  "id": "passover",
+  "terms": [
+   "Páscoa"
+  ],
+  "text": "A maior festa de Israel, que lembra a noite em que foram salvos no Egito. Matava-se um cordeiro e a família o comia junta."
+ },
+ {
+  "id": "judges",
+  "terms": [
+   "juízes"
+  ],
+  "text": "Líderes que guiavam Israel antes de haver reis. Deus os levantava em tempos de crise."
+ },
+ {
+  "id": "medium",
+  "terms": [
+   "médiuns"
+  ],
+  "text": "Pessoas que diziam chamar o espírito dos mortos para adivinhar. A Lei proibia isso severamente."
+ },
+ {
+  "id": "guard-captain",
+  "terms": [
+   "chefe da guarda",
+   "comandante da guarda"
+  ],
+  "text": "O chefe das tropas que protegiam o rei."
+ },
+ {
+  "id": "siege-ramp",
+  "terms": [
+   "rampas de terra"
+  ],
+  "text": "Aterro de terra levantado até a muralha para atacar uma cidade. Sobre ele se colocavam as máquinas de cerco."
+ },
+ {
+  "id": "tribulation",
+  "terms": [
+   "angústia"
+  ],
+  "text": "Situação muito dolorosa e difícil."
+ }
+]
