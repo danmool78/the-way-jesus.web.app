@@ -109,6 +109,27 @@ a{color:inherit}
 .share svg,.big svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8}
 .card.soon{filter:grayscale(.6) brightness(.7)}
 
+/* ---------- 순례 게임 띠: 왼쪽에 겹쳐 놓은 카드 셋(트레이딩 카드처럼 금·은·동 테두리), 오른쪽에 글과 단추 ---------- */
+.game{position:relative;margin-top:84px;display:grid;grid-template-columns:1fr 1.1fr;align-items:center;gap:40px;padding:44px 48px;border-radius:28px;overflow:hidden;
+  background:radial-gradient(ellipse 70% 90% at 20% 50%,rgba(226,189,114,.18),transparent 70%),linear-gradient(135deg,#221a12,#14100c);border:1px solid rgba(226,189,114,.22)}
+.game-art{position:relative;height:340px}
+.game-art img{position:absolute;top:50%;left:50%;width:190px;aspect-ratio:720/964;object-fit:cover;border-radius:14px;box-shadow:0 18px 40px rgba(0,0,0,.6);border:3px solid var(--rim);transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.game-art img:nth-child(1){--rim:#c98b5a;transform:translate(-118%,-48%) rotate(-12deg)}
+.game-art img:nth-child(2){--rim:#cfd6dc;transform:translate(-50%,-56%) rotate(0deg);z-index:2}
+.game-art img:nth-child(3){--rim:#e8c768;transform:translate(18%,-48%) rotate(12deg)}
+.game:hover .game-art img:nth-child(1){transform:translate(-128%,-50%) rotate(-16deg)}.game:hover .game-art img:nth-child(3){transform:translate(28%,-50%) rotate(16deg)}
+.game-tag{display:flex;align-items:center;gap:10px;color:var(--gold2);font:700 14px var(--sans);letter-spacing:.12em}
+.game-tag img{width:34px;height:34px}
+.game h2{margin:14px 0 0;font:700 32px/1.3 var(--serif);color:#fbf3e3}
+.game p{margin:12px 0 0;color:var(--muted);line-height:1.75}
+.game-points{list-style:none;margin:16px 0 26px;padding:0;display:grid;gap:6px;color:var(--ink);font-size:14.5px}
+.game-points li::before{content:'✦';color:var(--gold);margin-right:8px;font-size:11px}
+@media (max-width:900px){
+  .game{grid-template-columns:1fr;margin:56px 22px 0;padding:28px 22px 30px;gap:6px}
+  .game-art{height:250px}.game-art img{width:124px}
+  .game h2{font-size:25px}
+}
+
 /* ---------- 뮤직비디오 ---------- */
 .mv{max-width:960px;margin:84px auto 0}
 .mv .ghead{justify-content:center;flex-direction:column;align-items:center;text-align:center;gap:6px}
@@ -179,6 +200,17 @@ button,a,img,svg,nav,header,.btn{-webkit-touch-callout:none;-webkit-user-select:
   <section class="group" id="walk"><div class="ghead"><h2 data-i="landG1">걷는 여정</h2><p data-i="landG1s">지도를 따라 장면에서 장면으로</p></div><ul class="cards" data-g="walk"></ul></section>
   <section class="group two"><div class="ghead"><h2 data-i="landG2">노래와 지혜</h2><p data-i="landG2s">시편의 노래, 잠언의 하루</p></div><ul class="cards" data-g="song"></ul></section>
   <section class="group two"><div class="ghead"><h2 data-i="landG3">처음 만나는 분께</h2><p data-i="landG3s">복음과 질문, 짧게</p></div><ul class="cards" data-g="first"></ul></section>
+  <!-- 순례 게임(game.html): 아직 한국어뿐이라 한국어 화면에서만 보인다 -->
+  <section class="game" id="game" hidden>
+    <div class="game-art" id="gameArt" aria-hidden="true"></div>
+    <div class="game-txt">
+      <div class="game-tag"><img src="assets/game-icon.svg" alt=""><span data-i="landGameTag">순례 게임</span></div>
+      <h2 data-i="landGameH">그분을 따라 직접 걸어 보세요</h2>
+      <p data-i="landGameP">단서를 따라 지도를 걸어 예수님·모세·다윗·엘리야를 만나고, 그 자리에서 들은 말씀으로 장면 카드를 모읍니다.</p>
+      <ul class="game-points"><li data-i="landGame1">인물을 골라 순례자 꾸미기</li><li data-i="landGame2">발자국과 모래바람, 숨겨진 보물</li><li data-i="landGame3">금·은·동 말씀 카드 모으기</li></ul>
+      <a class="btn main" href="/game.html" data-i="landGameGo">순례 게임 시작 →</a>
+    </div>
+  </section>
   <section class="mv">
     <div class="ghead"><h2 data-i="mvGo">주제가 「그 길」 뮤직비디오</h2><p data-i="mvLead"></p></div>
     <div class="player" id="player"><button type="button" id="play" aria-label="재생"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5Z"/></svg></span></button></div>
@@ -231,6 +263,8 @@ function render(lang) {
       <div class="info">${c.n ? `<em>${esc(t(c.id === 'psalms' ? 'seriesPsalms' : 'seriesScenes', { n: c.n }))}</em>` : ''}<b>${esc(t(c.title))}</b><small>${esc(t(c.desc))}</small>
         ${p ? `<span class="bar"><b><i style="width:${p.pct}%"></i></b><span>${p.label}</span></span>` : c.progress ? `<span class="bar"><b><i style="width:${c.progress}%"></i></b><span>${esc(t('inProgress', { p: c.progress }))}</span></span>` : ''}</div></li>`; }).join(''); });
   resume();
+  document.getElementById('game').hidden = lang !== 'ko';
+  document.getElementById('gameArt').innerHTML = ['d05', 'e28', 'm10'].map(id => `<img src="${cardUrl(id)}" alt="" loading="lazy">`).join('');
   // 여정마다의 공유 주소(/jesus, /moses — 그 여정의 미리보기 카드). 4영리처럼 따로 만든 페이지는 그 주소(href)
   document.querySelectorAll('.share[data-id]').forEach(b => b.onclick = () => { const c = L.cards.find(x => x.id === b.dataset.id); share(SITE + (hrefOf(c) || `/${c.id}`), `${t('appName')} — ${t(c.title)}`); });
 }
