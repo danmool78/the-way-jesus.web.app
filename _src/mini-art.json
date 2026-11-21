@@ -696,5 +696,43 @@
    "ratio": "16:9",
    "p": "A heavy iron axe head without handle, side view, dark wet iron with a sharp edge."
   }
+ },
+ "e07": {
+  "street": {
+   "bg": true,
+   "p": "A crowded festival street of Jerusalem at Passover seen from a high angle: stone paving filling most of the image, stalls and stone house fronts along the top edge only, warm afternoon light. The open paved area must be empty of people."
+  },
+  "temple": {
+   "bg": true,
+   "p": "The temple courts in Jerusalem seen from a high angle: wide pale stone pavement filling most of the image, a colonnade with tall columns along the top edge only, warm morning light. The open area must be empty of people."
+  },
+  "jesus": {
+   "h": 300,
+   "p": "A twelve-year-old Jewish boy with short dark curly hair walking to the right, full body side view, wearing a plain white tunic with a red sash at the waist, bright attentive face."
+  },
+  "jesus-sit": {
+   "h": 300,
+   "p": "A twelve-year-old Jewish boy with short dark curly hair sitting cross-legged on the ground, listening and asking a question with one hand raised, wearing a plain white tunic with a red sash at the waist, seen from the front."
+  },
+  "boy-a": {
+   "h": 300,
+   "p": "A twelve-year-old Jewish boy with short dark hair walking to the right, full body side view, wearing a plain white tunic with a blue sash at the waist."
+  },
+  "boy-b": {
+   "h": 300,
+   "p": "A twelve-year-old Jewish boy with short dark curly hair walking to the right, full body side view, wearing a light beige tunic with a red sash at the waist."
+  },
+  "man": {
+   "h": 300,
+   "p": "A Passover pilgrim man with a beard and a striped robe and head cloth, walking to the right with a walking stick, full body side view."
+  },
+  "woman": {
+   "h": 300,
+   "p": "A Passover pilgrim woman in a blue robe and head covering carrying a basket, walking to the right, full body side view."
+  },
+  "elder": {
+   "h": 300,
+   "p": "An old Jewish teacher of the law with a long white beard and a prayer shawl sitting on the ground holding a scroll, seen from the front."
+  }
  }
 }
