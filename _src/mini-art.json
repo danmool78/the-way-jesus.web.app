@@ -605,5 +605,23 @@
    "ratio": "3:4",
    "p": "A heavy iron-bound wooden prison door swung wide open with broken chains hanging, stone door frame, dust falling, straight front view."
   }
+ },
+ "k26": {
+  "bg": {
+   "bg": true,
+   "p": "Dawn over the small walled town of Dothan on a hill: the surrounding hills in the upper two thirds are covered with the encircling Aramean army — tents, horses, chariots and soldiers small in the distance, spears glinting. The town gate and a stone rooftop are along the bottom fifth. No large foreground figures."
+  },
+  "firechariot": {
+   "h": 300,
+   "ratio": "16:9",
+   "p": "A heavenly chariot of fire pulled by two horses made of bright flame, side view galloping to the right, glowing golden-orange fire, translucent and radiant."
+  },
+  "elisha": {
+   "h": 420,
+   "ref": [
+    "_src/cards/elisha.png"
+   ],
+   "p": "The prophet Elisha standing calmly, full body, side view facing right, praying with one hand raised, plain robe and bald head, and beside him his young servant cowering in fear, pointing at the hills. Two figures together. Elisha as in the second reference image."
+  }
  }
 }
