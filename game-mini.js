@@ -1588,8 +1588,114 @@ function camel(g, x, y, s) { // 실루엣
   g.restore();
 }
 
+/* ---------- 광주리에 담겨 성벽을 내려가다 (행 9:23–25, 고후 11:32–33): 숨죽여 내리기 — 때 맞추기 ---------- */
+// 누르고 있으면 광주리가 내려가고(점점 빨라짐) 떼면 멈춘다. 성벽에 붙은 집의 창은 덧문이 열리며 불이 켜진다 — 켜지기 전에 깜박여 미리 알려 준다.
+// 불빛이나 성 위 경비병의 횃불 빛 안에 머물면 '들킴'이 찬다. 다 차면 실패. 땅까지 내려가면 성공
+const B_X = 200, B_TOP = 96, B_BOT = 438, WINS = [[176, 196], [222, 292], [180, 386]];
+const wallBasket = {
+  title: '광주리에 담겨 성벽을 내려가다', task: '불빛을 피해 광주리를 땅까지',
+  ask: ['다메섹 성문마다 나를 잡으려는 자들이 밤낮으로 지켜 섰을 때, 제자들이 나를 광주리에 담아 성벽으로 달아 내렸단다.', '이번엔 네가 줄을 잡아 보렴 — 창에 불이 켜질 때는 멈추고!'],
+  quote: '나는 광주리를 타고 들창문으로 성벽을 내려가 그 손에서 벗어났노라', ref: '고후 11:33',
+  help: '누르고 있으면 광주리가 내려가고, 떼면 멈춰요.<br>창이 깜박이면 곧 불이 켜져요 — 불빛과 위쪽 횃불 빛 안에 머물면 들켜요. 땅까지 내려가요.',
+  seconds: 10,
+  init() {
+    return { y: B_TOP, v: 0, hold: false, seen: 0, t: 0, msg: null, cr: 0, landed: 0,
+      wins: WINS.map(([x, y], i) => ({ x, y, st: 'dark', at: rnd(0.8, 2.2) + i * 0.4, lit: 0 })),
+      guards: [{ x: 60, dir: 1, sp: 34 }, { x: 330, dir: -1, sp: 28 }] };
+  },
+  // 이 자리가 지금 얼마나 밝은가(0–1): 창 불빛 + 횃불 빛
+  light(S, y) {
+    let L = 0;
+    for (const w of S.wins) if (w.lit > 0) { const dx = Math.abs(B_X - w.x), dy = Math.abs(y - w.y); if (dx < 62 && dy < 30) L = Math.max(L, w.lit * (1 - Math.max(dx / 62, dy / 30) ** 2)); }
+    for (const g of S.guards) { const d = y - 70, spread = 18 + d * 0.32, dx = Math.abs(B_X - g.x); if (d > 0 && d < 150 && dx < spread) L = Math.max(L, (1 - dx / spread) * (1 - d / 150)); }
+    return L;
+  },
+  update(dt, S) {
+    S.t += dt; if (S.msg) S.msg.at -= dt;
+    if (S.landed) { S.landed += dt; return; }
+    // 창: 어둠 → 깜박임(0.7초, 미리 알림) → 불(1.1–1.9초) → 어둠
+    for (const w of S.wins) { w.at -= dt;
+      if (w.at <= 0) { if (w.st === 'dark') { w.st = 'warn'; w.at = 0.7; } else if (w.st === 'warn') { w.st = 'lit'; w.at = rnd(1.1, 1.9); S.fx.play('creak'); } else { w.st = 'dark'; w.at = rnd(1.4, 3.0); } }
+      w.lit += ((w.st === 'lit' ? 1 : 0) - w.lit) * Math.min(1, dt * 9); }
+    for (const g of S.guards) { g.x += g.dir * g.sp * dt; if (g.x < 30 || g.x > 370) { g.dir *= -1; g.x = clamp(g.x, 30, 370); } }
+    // 내리기: 누르는 동안 빨라지고, 떼면 곧 멈춘다(줄을 잡는다)
+    S.v = S.hold ? Math.min(64, S.v + 130 * dt) : Math.max(0, S.v - 160 * dt);
+    S.y = Math.min(B_BOT, S.y + S.v * dt);
+    if (S.v > 6 && (S.cr -= dt) <= 0) { S.cr = 0.34 - S.v / 300; S.fx.play('creak'); }
+    const L = this.light(S, S.y);
+    if (L > 0.15) { S.seen = Math.min(1, S.seen + L * 0.95 * dt); if (!S.msg || S.msg.at < 0) S.msg = { t: '불빛 안이에요!', c: '#ffc28a', at: 0.5, x: B_X + 70, y: S.y }; }
+    else S.seen = Math.max(0, S.seen - 0.12 * dt); // 어둠 속에서는 의심이 조금씩 가라앉는다
+    if (S.y >= B_BOT && !S.landed) { S.landed = 0.001; S.fx.play('drop'); }
+  },
+  down(x, y, S) { S.hold = true; },
+  up(S) { S.hold = false; },
+  key(k, S) { if (k === ' ' || k === 'ArrowDown') { S.hold = true; clearTimeout(S._kt); S._kt = setTimeout(() => S.hold = false, 140); return; } return false; },
+  won: S => S.landed > 0,
+  lost: S => S.seen >= 1,
+  failText: S => S.seen >= 1 ? '경비병에게 들켰어요' : '날이 밝아 오고 있어요',
+  draw(g, S) {
+    const sky = g.createLinearGradient(0, 0, 0, H); sky.addColorStop(0, '#0a0f26'); sky.addColorStop(1, '#1c2238'); g.fillStyle = sky; g.fillRect(0, 0, W, H);
+    g.fillStyle = 'rgba(230,235,255,.6)'; for (let i = 0; i < 26; i++) g.fillRect((i * 97) % 400, (i * 53) % 60, 1, 1);
+    g.fillStyle = '#e8e4c8'; g.beginPath(); g.arc(350, 30, 11, 0, 7); g.fill(); g.fillStyle = '#0a0f26'; g.beginPath(); g.arc(355, 27, 10, 0, 7); g.fill(); // 그믐달
+    // 성벽 — 다듬은 돌을 엇갈려 쌓음
+    g.fillStyle = '#3a3a48'; g.fillRect(0, 70, W, B_BOT - 50);
+    for (let r = 0, y = 78; y < B_BOT + 20; r++, y += 22) for (let x = (r % 2) * 24 - 48; x < W; x += 48) { const h = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453 % 1; g.fillStyle = `rgba(${h > 0 ? '120,115,140' : '10,10,20'},${Math.abs(h) * 0.16})`; g.fillRect(x + 1, y + 1, 46, 20); } // 돌마다 조금씩 다른 빛
+    g.strokeStyle = 'rgba(15,15,25,.6)'; g.lineWidth = 1.2;
+    for (let r = 0, y = 78; y < B_BOT + 20; r++, y += 22) { g.beginPath(); g.moveTo(0, y); g.lineTo(W, y); g.stroke(); for (let x = (r % 2) * 24; x < W; x += 48) { g.beginPath(); g.moveTo(x, y); g.lineTo(x, y + 22); g.stroke(); } }
+    g.fillStyle = '#2e2e3a'; for (let x = 0; x < W; x += 28) g.fillRect(x, 56, 18, 16); g.fillRect(0, 68, W, 8); // 성가퀴
+    // 경비병과 횃불 빛(성 위에서 아래로)
+    for (const gd of S.guards) {
+      const fl = 0.85 + 0.15 * Math.sin(S.t * 17 + gd.x);
+      const cone = g.createLinearGradient(0, 70, 0, 220); cone.addColorStop(0, `rgba(255,170,80,${0.34 * fl})`); cone.addColorStop(1, 'rgba(255,170,80,0)');
+      g.fillStyle = cone; g.beginPath(); g.moveTo(gd.x - 14, 70); g.lineTo(gd.x - 18 - 48, 220); g.lineTo(gd.x + 18 + 48, 220); g.lineTo(gd.x + 14, 70); g.fill();
+      g.save(); g.translate(gd.x, 60); g.scale(1.45, 1.45); const st = Math.sin(S.t * 6 + gd.x) * 1.2;
+      g.fillStyle = '#12121a'; g.fillRect(-4 + st, -8, 3, 8); g.fillRect(1 - st, -8, 3, 8); // 다리
+      g.beginPath(); g.ellipse(0, -16, 6, 10, 0, 0, 7); g.fill(); g.beginPath(); g.arc(0, -29, 4.5, 0, 7); g.fill();
+      g.beginPath(); g.moveTo(-6, -30); g.lineTo(0, -38); g.lineTo(6, -30); g.fill(); // 투구
+      g.strokeStyle = '#12121a'; g.lineWidth = 1.6; g.beginPath(); g.moveTo(-gd.dir * 8, 0); g.lineTo(-gd.dir * 8, -46); g.stroke(); g.beginPath(); g.moveTo(-gd.dir * 8 - 2, -44); g.lineTo(-gd.dir * 8, -50); g.lineTo(-gd.dir * 8 + 2, -44); g.fill(); // 창
+      g.strokeStyle = '#3a2a1a'; g.lineWidth = 1.4; g.beginPath(); g.moveTo(gd.dir * 5, -18); g.lineTo(gd.dir * 10, -24); g.stroke();
+      g.shadowColor = '#ffb050'; g.shadowBlur = 10; g.fillStyle = `rgba(255,190,90,${fl})`; g.beginPath(); g.ellipse(gd.dir * 10, -29, 2.6, 5 * fl, 0, 0, 7); g.fill(); g.restore(); // 횃불
+    }
+    // 성벽에 붙은 집의 창
+    for (const w of S.wins) {
+      if (w.lit > 0.02) { const rg = g.createRadialGradient(w.x, w.y, 4, w.x, w.y, 70); rg.addColorStop(0, `rgba(255,190,110,${0.55 * w.lit})`); rg.addColorStop(1, 'rgba(255,190,110,0)'); g.fillStyle = rg; g.fillRect(w.x - 70, w.y - 70, 140, 140); }
+      const blink = w.st === 'warn' && Math.sin(S.t * 30) > 0;
+      g.fillStyle = w.lit > 0.3 ? '#ffd28a' : blink ? '#8a6a3a' : '#15151d'; g.fillRect(w.x - 11, w.y - 14, 22, 26);
+      g.fillStyle = '#4a3a2a'; const o = w.lit * 10; g.fillRect(w.x - 15 - o, w.y - 15, 6, 28); g.fillRect(w.x + 9 + o, w.y - 15, 6, 28); // 덧문
+      g.fillStyle = '#2a2a34'; g.fillRect(w.x - 16, w.y + 12, 32, 4);
+    }
+    // 들창문과 줄
+    g.fillStyle = '#0c0c14'; g.fillRect(B_X - 13, 78, 26, 20); g.fillStyle = '#2a2a34'; g.fillRect(B_X - 16, 96, 32, 4);
+    g.strokeStyle = '#a08a60'; g.lineWidth = 1.5; const sway = Math.sin(S.t * 2.2) * S.v * 0.05; g.beginPath(); g.moveTo(B_X, 92); g.quadraticCurveTo(B_X + sway, (92 + S.y) / 2, B_X + sway, S.y - 14); g.stroke();
+    // 땅
+    g.fillStyle = '#141a14'; g.fillRect(0, B_BOT + 14, W, H); g.fillStyle = '#1e2a1c'; for (let i = 0; i < 8; i++) { g.beginPath(); g.arc(20 + i * 54, B_BOT + 18, 14 + (i % 3) * 5, Math.PI, 0); g.fill(); }
+    // 광주리(바울이 웅크려 탔다)
+    const bx = B_X + sway;
+    g.save(); g.translate(bx, S.y); g.scale(1.3, 1.3); const L = this.light(S, S.y);
+    if (L > 0.15) { g.strokeStyle = `rgba(255,120,80,${0.4 + 0.4 * Math.sin(S.t * 14)})`; g.lineWidth = 2; g.beginPath(); g.arc(0, 0, 26, 0, 7); g.stroke(); }
+    g.fillStyle = '#3a2c1e'; g.beginPath(); g.arc(0, -8, 7, 0, 7); g.fill(); // 웅크린 머리(겉옷을 뒤집어씀)
+    g.fillStyle = '#8a6a3e'; g.beginPath(); g.moveTo(-17, -6); g.lineTo(17, -6); g.lineTo(13, 13); g.lineTo(-13, 13); g.closePath(); g.fill();
+    g.strokeStyle = '#5e4628'; g.lineWidth = 1; for (let k = -4; k < 13; k += 4) { g.beginPath(); g.moveTo(-16 + (k + 6) * 0.2, k); g.lineTo(16 - (k + 6) * 0.2, k); g.stroke(); }
+    for (let k = -12; k <= 12; k += 6) { g.beginPath(); g.moveTo(k, -6); g.lineTo(k * 0.8, 13); g.stroke(); }
+    g.strokeStyle = '#a08a60'; g.lineWidth = 1.2; g.beginPath(); g.moveTo(-15, -6); g.lineTo(0, -14); g.lineTo(15, -6); g.stroke();
+    g.restore();
+    // 들킴 표시와 남은 높이
+    g.save(); g.font = '800 13px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.fillStyle = '#e8e4f4'; g.fillText('들킴', 14, 100);
+    g.fillStyle = 'rgba(255,255,255,.18)'; g.fillRect(50, 90, 90, 12); g.fillStyle = S.seen > 0.66 ? '#ff7a5a' : '#ffb36a'; g.fillRect(50, 90, 90 * S.seen, 12);
+    g.textAlign = 'right'; g.fillStyle = '#c9c4dc'; g.fillText(`${Math.max(0, Math.round((B_BOT - S.y) / 34))}m`, W - 14, 100); g.restore();
+    floatMsg(g, S.msg);
+  },
+  end(g, k, S) { // 땅에 내려 어둠 속으로 — 행 9:25
+    S.v = 0; this.update(0.016, S); this.draw(g, S);
+    g.fillStyle = '#1a1410'; const px = B_X + 24 + k * 150; g.beginPath(); g.ellipse(px, B_BOT + 4, 6, 13, 0, 0, 7); g.fill(); g.beginPath(); g.arc(px, B_BOT - 13, 5, 0, 7); g.fill();
+    if (k > 0.3) { g.save(); g.globalAlpha = clamp((k - 0.3) * 2, 0, 1); g.fillStyle = 'rgba(10,10,20,.82)'; g.fillRect(0, 230, W, 84);
+      g.font = '700 17px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#f0ecff'; g.fillText('그의 제자들이 밤에 광주리에 바울을 담아', W / 2, 260); g.fillText('성벽에서 달아 내리니라', W / 2, 284);
+      g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#bdb6d8'; g.fillText('행 9:25', W / 2, 303); g.restore(); }
+  },
+};
+
 export const MINI = { jesus: { e04: magi, e11: cana, e17: fishing, e22: twelve, e23: rock, e31: loaves, e32: water, e39: stones, e42: sheep, e43: coin, e46: climb, e48: palms },
-  david: { d01: herdDavid, d05: sling, d38: templeStones }, moses: { m35: jericho, m39: tribes } };
+  david: { d01: herdDavid, d05: sling, d38: templeStones }, moses: { m35: jericho, m39: tribes }, paul: { a04: wallBasket } };
 
 /* ---------- 놀이 틀: 소개 → 놀이(제한 시간) → 성공 연출/실패 → 결과 ---------- */
 // host: 모달 안의 상자. fx: { play, pour } (game-audio.js). 끝나면 done({ ok, left, tries })
