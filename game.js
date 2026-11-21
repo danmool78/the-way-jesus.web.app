@@ -703,8 +703,8 @@ function finish() {
 const cardKey = () => 'theway-game-cards-' + JID;
 // 카드·말씀 고르기의 말씀: 그분의 말씀(j) 가운데 첫 온전한 문장 — '마리아야.'·'울지 마라.' 같은 부르는 말 한마디는 카드로 너무 짧았다(사용자 2026-11).
 // 그분의 말씀이 모두 짧으면 이 자리의 다른 말씀, 그것도 없으면 가장 긴 것
-const SHORT = 12;
-const cardWord = e => { const W = e.words || []; return W.find(x => x.j && x.text.length >= SHORT) || W.find(x => x.text.length >= SHORT) || [...W].sort((a, b) => b.text.length - a.text.length)[0]; };
+const SHORT = 12, KEEP = new Set(['e35']); // 짧아도 그 장면 자체인 말씀은 그대로('에바다. 열려라!' — 사용자 2026-11)
+const cardWord = e => { const W = e.words || []; if (KEEP.has(e.id)) return W.find(x => x.j) || W[0]; return W.find(x => x.j && x.text.length >= SHORT) || W.find(x => x.text.length >= SHORT) || [...W].sort((a, b) => b.text.length - a.text.length)[0]; };
 // 카드 점수(사용자 2026-11): 별 하나에 100점 + 만났을 때 남은 시간 1초에 10점. 같은 카드는 더 높은 기록만 남긴다
 const deck = () => { const v = store.get(cardKey(), {}); const d = Array.isArray(v) ? Object.fromEntries(v.map(k => [k, 1])) : v;
   for (const k in d) if (typeof d[k] === 'number') d[k] = { s: d[k], p: d[k] * 100 }; return d; };
