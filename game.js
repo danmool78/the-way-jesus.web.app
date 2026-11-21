@@ -1222,7 +1222,7 @@ function frame(now) {
   const warm = Math.max(0, Math.min(1, 1 - navD(cx, cz) / Math.max(G.legPath || 1, 40)));
   const lamp = $('#mDist'); lamp.textContent = warm > .85 ? tr('아주 가까워요') : warm > .6 ? tr('가까워요') : warm > .3 ? tr('조금 더') : tr('멀어요'); lamp.style.setProperty('--w', warm.toFixed(2));
   const tb = $('#mTime'), gr = gradeNow(), left = gr === 3 ? G.timeT : gr === 2 ? G.timeT + G.timeMax * 0.6 : 0;
-  tb.hidden = G.busy; tb.textContent = gr === 1 ? tr('⏳ 동 카드') : tr('⏳ {0}초 · {1}', Math.ceil(left), gr === 3 ? tr('금') : '은');
+  tb.hidden = G.busy; tb.textContent = gr === 1 ? tr('⏳ 동 카드') : tr('⏳ {0}초 · {1}', Math.ceil(left), gr === 3 ? tr('금') : tr('은'));
   tb.className = ['', 'bronze', 'silver', 'gold'][gr]; tb.classList.toggle('hurry', gr > 1 && left < 6);
   $('#mWalk').textContent = tr('걸은 길 {0}km', Math.round(G.total));
   $('#days').textContent = Math.floor(G.total / WALK) + 1;

@@ -3565,8 +3565,94 @@ const lyre = {
   },
 };
 
+/* ---------- 장인 이드로의 조언 (출 18:13–27): 송사를 나눠 맡기기 — 분류 ---------- */
+// 송사를 들고 온 사람들이 줄을 선다(카드에 그 일에 얽힌 사람 수). 끌어서 알맞은 재판장에게: 열 명까지 십부장, 쉰 명까지 오십부장,
+// 백 명까지 백부장, 그 위는 천부장 — '어려운 일'(⚖)만 모세에게(18:22). 재판장은 한 건을 듣는 동안 바쁘고, 모세는 훨씬 오래 걸린다
+// (모두 모세에게 가져가면 줄이 넘친다 — 18:18). 줄이 여섯을 넘으면 실패, 스물네 건을 마치면 성공.
+const JUDGES = [{ cap: 10, name: tr('십부장') }, { cap: 50, name: tr('오십부장') }, { cap: 100, name: tr('백부장') }, { cap: 1000, name: tr('천부장') }, { cap: 0, name: tr('모세'), hard: true }];
+const SEAT_X = [42, 121, 200, 279, 354], SEAT_Y = 236, SLOTS = [[70, 340], [200, 340], [330, 340], [70, 440], [200, 440], [330, 440]], CASES = 24, QMAX = 6;
+const counsel = {
+  title: tr('장인 이드로의 조언'), task: tr('송사를 알맞은 재판장에게 나눠 맡기기'), art: ['m15/bg', 'm15/moses', 'm15/elder', 'm15/man', 'm15/woman', 'm15/jethro'],
+  ask: [tr('장인 말씀대로 천부장·백부장·오십부장·십부장을 세웠단다. 이번엔 네가 송사를 나눠 맡겨 보렴.'), tr('작은 일은 알맞은 재판장에게, 어려운 일만 내게 가져오너라 — 줄이 넘치지 않게!')],
+  quote: tr('큰 일은 모두 네게 가져갈 것이요 작은 일은 모두 그들이 스스로 재판할 것이니'), ref: tr('출 18:22'),
+  help: tr('송사 카드를 끌어 재판장에게 맡겨요. 카드의 사람 수를 보세요 — <b>열 명까지 십부장, 쉰까지 오십부장, 백까지 백부장, 그 위는 천부장.</b><br>⚖ 어려운 일만 모세에게! 모세는 오래 걸려요. 줄이 여섯을 넘으면 실패.'),
+  seconds: 33,
+  init() { return { Q: [], next: 0.4, gap: 1.35, done: 0, busy: JUDGES.map(() => 0), drag: null, t: 0, msg: null, fly: [], over: false, made: 0 }; },
+  card(S) {
+    const hard = S.made > 2 && Math.random() < 0.16, tier = Math.floor(Math.random() * 4), lo = [2, 11, 51, 101][tier], hi = [10, 50, 100, 900][tier];
+    const n = Math.round(rnd(lo, hi) / (tier === 3 ? 10 : 1)) * (tier === 3 ? 10 : 1);
+    S.made++; return { n, hard, who: Math.random() < 0.5 ? 'm15/man' : 'm15/woman', k: hard ? 4 : JUDGES.findIndex(j => j.cap >= n), x: W + 80, y: 0, slot: -1, wob: rnd(0, 6) };
+  },
+  update(dt, S) {
+    S.t += dt; if (S.msg) S.msg.at -= dt; S.busy = S.busy.map(b => Math.max(0, b - dt));
+    if ((S.next -= dt) <= 0 && S.made < CASES + 8) { // 줄에 한 사람씩 — 갈수록 빨리
+      if (S.Q.length >= QMAX) { S.over = true; S.fx.play('late'); }
+      else { S.Q.push(this.card(S)); S.fx.play('step'); }
+      S.gap = Math.max(1.0, S.gap - 0.025); S.next = S.gap * rnd(0.85, 1.15);
+    }
+    S.Q.forEach((c, i) => { if (c === S.drag) return; const [x, y] = SLOTS[i]; c.x += (x - c.x) * Math.min(1, dt * 8); c.y += (y - c.y) * Math.min(1, dt * 8); });
+    for (const f of S.fly) { f.k += dt * 2.6; } S.fly = S.fly.filter(f => f.k < 1);
+  },
+  down(x, y, S) { for (const c of S.Q) if (Math.abs(x - c.x) < 62 && Math.abs(y - c.y) < 40) { S.drag = c; S.ox = x - c.x; S.oy = y - c.y; S.fx.play('pick'); return; } },
+  move(x, y, S) { if (S.drag) { S.drag.x = x - S.ox; S.drag.y = y - S.oy; } },
+  up(S, x, y) {
+    const c = S.drag; if (!c) return; S.drag = null;
+    if (y > SEAT_Y + 40) return; // 줄로 되돌아간다
+    const j = SEAT_X.reduce((b, sx, i) => Math.abs(sx - x) < Math.abs(SEAT_X[b] - x) ? i : b, 0);
+    this.give(S, c, j);
+  },
+  give(S, c, j) {
+    if (S.busy[j] > 0) { S.msg = { t: tr('{0:은/는} 아직 듣는 중이에요', JUDGES[j].name), c: '#ffd9a0', at: 0.8, x: SEAT_X[j], y: SEAT_Y - 120 }; S.fx.play('miss'); return; }
+    if (j !== c.k) { S.fx.play('wrong');
+      S.msg = { t: c.hard ? tr('어려운 일은 모세에게') : j === 4 ? tr('작은 일은 재판장들에게') : JUDGES[j].cap < c.n ? tr('{0}에게는 너무 큰 일이에요', JUDGES[j].name) : tr('더 작은 재판장에게 맡겨요'), c: '#ffb08a', at: 1, x: SEAT_X[j], y: SEAT_Y - 120 }; return; }
+    S.Q.splice(S.Q.indexOf(c), 1); S.busy[j] = j === 4 ? 2.4 : 0.85; S.done++; S.fx.play('drop');
+    S.fly.push({ x: c.x, y: c.y, tx: SEAT_X[j], ty: SEAT_Y - 30, k: 0 });
+    if (S.done >= CASES) S.fx.play('bonus');
+  },
+  key() { return false; },
+  won: S => S.done >= CASES,
+  lost: S => S.over,
+  failText: S => S.over ? tr('줄이 너무 길어져 백성이 지쳤어요 (18:18)') : tr('해가 저물었어요'),
+  seats(g, S) {
+    for (let i = 0; i < 5; i++) { const x = SEAT_X[i], mo = i === 4;
+      if (!spr(g, mo ? 'm15/moses' : 'm15/elder', x, SEAT_Y, mo ? 112 : 90)) { g.fillStyle = mo ? '#8a7a60' : '#7a6248'; g.fillRect(x - 22, SEAT_Y - 80, 44, 80); }
+      g.save(); g.fillStyle = 'rgba(20,14,8,.78)'; g.beginPath(); g.roundRect(x - 37, SEAT_Y + 4, 74, 34, 8); g.fill();
+      g.font = '800 12px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.fillStyle = mo ? '#ffe39a' : '#f2e8d4'; g.fillText(JUDGES[i].name, x, SEAT_Y + 19, 70);
+      g.font = '700 10px "Noto Sans KR",sans-serif'; g.fillStyle = '#cdbf9e'; g.fillText(mo ? tr('⚖ 어려운 일') : tr('{0}명까지', JUDGES[i].cap), x, SEAT_Y + 32, 70);
+      if (S.busy[i] > 0) { const T = mo ? 2.4 : 0.85; g.strokeStyle = 'rgba(255,226,150,.9)'; g.lineWidth = 4; g.beginPath(); g.arc(x, SEAT_Y - (mo ? 126 : 104), 10, -Math.PI / 2, -Math.PI / 2 + 6.283 * (S.busy[i] / T)); g.stroke(); }
+      g.restore(); }
+  },
+  drawCard(g, c) {
+    g.save(); g.translate(c.x, c.y); g.rotate(Math.sin(c.wob) * 0.02);
+    g.fillStyle = c.hard ? '#f6e2b0' : '#efe4cc'; g.strokeStyle = c.hard ? '#b8862e' : '#8a7458'; g.lineWidth = 2; g.beginPath(); g.roundRect(-58, -36, 116, 72, 10); g.fill(); g.stroke();
+    g.save(); g.beginPath(); g.roundRect(-58, -36, 116, 72, 10); g.clip(); spr(g, c.who, -36, 52, 92); g.restore();
+    g.textAlign = 'center'; g.fillStyle = '#3a2a18'; g.font = '900 22px "Noto Sans KR",sans-serif'; g.fillText(c.hard ? '⚖' : String(c.n), 22, 2, 66);
+    g.font = '700 11px "Noto Sans KR",sans-serif'; g.fillText(c.hard ? tr('어려운 일') : tr('{0}명의 일', c.n), 22, 22, 66);
+    g.restore();
+  },
+  draw(g, S) {
+    if (!bgArt(g, 'm15/bg')) { g.fillStyle = '#d8b884'; g.fillRect(0, 0, W, H); }
+    this.seats(g, S);
+    g.save(); g.fillStyle = 'rgba(30,20,10,.55)'; g.fillRect(0, 290, W, H - 290); g.restore();
+    for (const c of S.Q) if (c !== S.drag) this.drawCard(g, c);
+    for (const f of S.fly) { g.save(); g.globalAlpha = 1 - f.k; g.fillStyle = '#efe4cc'; g.beginPath(); g.arc(f.x + (f.tx - f.x) * f.k, f.y + (f.ty - f.y) * f.k, 14 * (1 - f.k * 0.6), 0, 7); g.fill(); g.restore(); }
+    if (S.drag) this.drawCard(g, S.drag);
+    g.save(); g.font = '800 13px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.fillStyle = '#fff6e4'; g.lineWidth = 3; g.strokeStyle = 'rgba(30,20,10,.6)';
+    const a = tr('마친 송사 {0} / {1}', S.done, CASES), b = tr('줄 {0} / {1}', S.Q.length, QMAX); g.strokeText(a, 14, 28); g.fillText(a, 14, 28);
+    g.textAlign = 'right'; g.fillStyle = S.Q.length >= QMAX - 1 ? '#ff9a7a' : '#fff6e4'; g.strokeText(b, W - 14, 28); g.fillText(b, W - 14, 28); g.restore();
+    floatMsg(g, S.msg);
+  },
+  end(g, k, S) {
+    if (!bgArt(g, 'm15/bg')) { g.fillStyle = '#d8b884'; g.fillRect(0, 0, W, H); }
+    S.Q = []; this.seats(g, S); spr(g, 'm15/jethro', 70 + 30 * ease(Math.min(1, k * 1.5)), 470, 200);
+    if (k > 0.35) { g.save(); g.globalAlpha = clamp((k - 0.35) * 2, 0, 1); g.fillStyle = 'rgba(30,20,10,.82)'; g.fillRect(0, 300, W, 86);
+      g.font = '700 16px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#f6eedc'; g.fillText(tr('이 모든 백성도 자기 곳으로'), W / 2, 332); g.fillText(tr('평안히 가리라'), W / 2, 356);
+      g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#cdbf9e'; g.fillText(tr('출 18:23'), W / 2, 374); g.restore(); }
+  },
+};
+
 export const MINI = { jesus: { e04: magi, e05: egypt, e07: boyJesus, e11: cana, e17: fishing, e22: twelve, e23: rock, e28: bail, e31: loaves, e32: water, e39: stones, e42: sheep, e43: coin, e46: climb, e48: palms, e59: tiberias },
-  david: { d01: herdDavid, d03: lyre, d05: sling, d10: arrows, d16: cave, d24: arkDance, d38: templeStones }, moses: { m02: nile, m09: redSea, m12: manna, m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket, a17: prison, a35: storm, a36: wreck, a37: viper }, kings: { k15: carmel, k24: naaman, k25: axe, k26: dothan, k30: lastArrow } };
+  david: { d01: herdDavid, d03: lyre, d05: sling, d10: arrows, d16: cave, d24: arkDance, d38: templeStones }, moses: { m02: nile, m09: redSea, m15: counsel, m12: manna, m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket, a17: prison, a35: storm, a36: wreck, a37: viper }, kings: { k15: carmel, k24: naaman, k25: axe, k26: dothan, k30: lastArrow } };
 
 /* ---------- 놀이 틀: 소개 → 놀이(제한 시간) → 성공 연출/실패 → 결과 ---------- */
 // host: 모달 안의 상자. fx: { play, pour } (game-audio.js). 끝나면 done({ ok, left, tries })

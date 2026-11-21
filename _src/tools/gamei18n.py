@@ -17,7 +17,7 @@ def keys():
             k = m.group(2).replace("\\'", "'").replace('\\"', '"').replace('\\n', '\n').replace('\\\\', '\\')
             out.setdefault(k, os.path.basename(f))
     html = open(os.path.join(ROOT, 'game.html'), encoding='utf-8').read()
-    for m in re.finditer(r'<(\w+)[^>]*\sdata-i18n[\s>][^>]*>(.*?)</\1>', html, re.S):
+    for m in re.finditer(r'<(\w+)\s[^>]*?\bdata-i18n(?:\s[^>]*)?>([^<]*)</\1>', html):
         out.setdefault(m.group(2).strip(), 'game.html')
     for m in re.finditer(r'placeholder="([^"]+)"[^>]*data-i18n-ph|data-i18n-ph[^>]*placeholder="([^"]+)"', html):
         out.setdefault(m.group(1) or m.group(2), 'game.html')
