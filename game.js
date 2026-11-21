@@ -507,7 +507,7 @@ $('#quit').onclick = () => {
   const was = G.busy, s = sheet(`<div class="body"><small>${esc(JOURNEYS[JID].name)}</small><h2>잠깐 쉬어 갈까요?</h2>
     <p class="sub">${G.idx + 1}번째 장면을 찾아가는 중이에요. 나가도 지금까지 만난 장면과 카드는 그대로 남고, 다음에 이어 걸을 수 있어요.</p>
     <div class="row"><button class="go ghost" id="qCards">말씀 카드</button><button class="go ghost" id="qHome">처음 화면</button></div>
-    <div class="row"><a class="go ghost" href="${JID === 'jesus' ? 'app.html' : 'app.html?j=' + JID}">그 길 앱으로</a><button class="go" id="qBack">계속 걷기</button></div></div>`);
+    <div class="row"><a class="go ghost" href="./">그 길 앱으로</a><button class="go" id="qBack">계속 걷기</button></div></div>`);
   s.querySelector('#qBack').onclick = () => { closeSheet(); G.busy = was; };
   s.querySelector('#qCards').onclick = () => openCards();
   s.querySelector('#qHome').onclick = () => { snd.close(); location.href = `game.html?j=${JID}`; };
