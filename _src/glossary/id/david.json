@@ -1,0 +1,503 @@
+[
+ {
+  "id": "prophet",
+  "terms": [
+   "nabi"
+  ],
+  "text": "Orang yang menerima kehendak Allah dan menyampaikannya kepada orang lain. Samuel, Gad, dan Natan melakukan tugas ini di samping Daud."
+ },
+ {
+  "id": "anoint",
+  "terms": [
+   "mengurapi",
+   "mengurapinya",
+   "urapilah",
+   "diurapi",
+   "yang diurapi"
+  ],
+  "text": "Menuangkan minyak zaitun ke atas kepala, tanda bahwa Allah telah menetapkan orang itu sebagai raja atau imam."
+ },
+ {
+  "id": "priest",
+  "terms": [
+   "imam"
+  ],
+  "text": "Orang yang mempersembahkan korban di tempat kudus dan mewakili umat di hadapan Allah. Tugas ini dipegang keturunan Harun."
+ },
+ {
+  "id": "sacrifice",
+  "terms": [
+   "mempersembahkan korban"
+  ],
+  "text": "Beribadah dengan mempersembahkan hewan atau hasil panen kepada Allah, untuk memohon pengampunan dosa atau untuk bersyukur."
+ },
+ {
+  "id": "burnt-offering",
+  "terms": [
+   "korban bakaran"
+  ],
+  "text": "Korban yang dibakar seluruhnya di atas mezbah bagi Allah, tanda penyerahan yang utuh."
+ },
+ {
+  "id": "peace-offering",
+  "terms": [
+   "korban keselamatan"
+  ],
+  "text": "Korban yang dipersembahkan dengan sukacita karena ada damai antara Allah dan manusia. Sebagian dagingnya dimakan bersama."
+ },
+ {
+  "id": "altar",
+  "terms": [
+   "mezbah"
+  ],
+  "text": "Tempat yang ditinggikan dari tanah atau batu untuk membakar korban bagi Allah."
+ },
+ {
+  "id": "offering",
+  "terms": [
+   "persembahan"
+  ],
+  "text": "Pemberian kepada Allah, seperti hewan atau hasil panen."
+ },
+ {
+  "id": "lyre",
+  "terms": [
+   "kecapi"
+  ],
+  "text": "Alat musik petik kuno dengan dawai yang direntangkan pada bingkai kayu. Daud pandai memainkannya."
+ },
+ {
+  "id": "harp",
+  "terms": [
+   "gambus"
+  ],
+  "text": "Alat musik petik kuno yang dipakai bersama kecapi dalam ibadah dan pesta."
+ },
+ {
+  "id": "timbrel",
+  "terms": [
+   "rebana"
+  ],
+  "text": "Gendang kecil yang dipegang di tangan. Para perempuan sering memukulnya sambil menari dan bernyanyi."
+ },
+ {
+  "id": "cymbal",
+  "terms": [
+   "ceracap"
+  ],
+  "text": "Alat musik dari dua lempeng tembaga yang dibenturkan, mirip simbal."
+ },
+ {
+  "id": "cubit",
+  "terms": [
+   "hasta"
+  ],
+  "text": "Panjang dari siku sampai ujung jari tengah, sekitar 45 cm. Enam hasta sejengkal hampir 3 meter."
+ },
+ {
+  "id": "shekel",
+  "terms": [
+   "syikal"
+  ],
+  "text": "Satuan berat dan uang; satu syikal sekitar 11 gram. Baju zirah lima ribu syikal beratnya lebih dari 50 kg."
+ },
+ {
+  "id": "talent",
+  "terms": [
+   "talenta emas",
+   "talenta"
+  ],
+  "text": "Satuan berat yang paling besar; satu talenta sekitar 34 kg, sama dengan 3.000 syikal."
+ },
+ {
+  "id": "circumcision",
+  "terms": [
+   "tidak bersunat",
+   "bersunat"
+  ],
+  "text": "Upacara memotong kulit khatan bayi laki-laki, tanda bahwa ia termasuk umat yang terikat perjanjian dengan Allah."
+ },
+ {
+  "id": "foreskin",
+  "terms": [
+   "kulit khatan"
+  ],
+  "text": "Kulit yang menutupi ujung kelamin laki-laki. Karena orang Filistin tidak bersunat, kulit itu menjadi bukti bahwa mereka telah dibunuh."
+ },
+ {
+  "id": "teraphim",
+  "terms": [
+   "terafim"
+  ],
+  "text": "Patung dewa kecil berbentuk manusia yang disimpan di rumah. Di Israel, ini termasuk berhala yang dilarang."
+ },
+ {
+  "id": "idol",
+  "terms": [
+   "patung berhala",
+   "berhala"
+  ],
+  "text": "Menyembah patung buatan manusia seolah-olah dewa. Alkitab melarang menyembah allah lain selain Allah."
+ },
+ {
+  "id": "ephod",
+  "terms": [
+   "efod"
+  ],
+  "text": "Pakaian imam yang mirip rompi. Dipakai untuk menanyakan kehendak Allah, dan Daud memakainya untuk bertanya jalan mana yang harus ditempuh."
+ },
+ {
+  "id": "sanctuary",
+  "terms": [
+   "tempat kudus"
+  ],
+  "text": "Tempat kudus untuk beribadah dan mempersembahkan korban kepada Allah. Pada zaman Daud tempat ini ada di Nob."
+ },
+ {
+  "id": "showbread",
+  "terms": [
+   "roti kudus"
+  ],
+  "text": "Roti yang disajikan di atas meja di tempat kudus di hadapan Allah. Setiap Sabat diganti dengan yang baru, dan hanya imam yang boleh memakannya."
+ },
+ {
+  "id": "tabernacle",
+  "terms": [
+   "Kemah Suci"
+  ],
+  "text": "Tempat ibadah berupa kemah yang dapat dipindahkan, dipakai sejak masa padang gurun sampai Bait Allah dibangun."
+ },
+ {
+  "id": "tent",
+  "terms": [
+   "kemah"
+  ],
+  "text": "Rumah dari kain, yaitu kemah. Daud mendirikan kemah khusus untuk tabut Allah."
+ },
+ {
+  "id": "curtain",
+  "terms": [
+   "tenda"
+  ],
+  "text": "Kain besar yang membentuk kemah atau menyekat ruang. Di sini berarti tabut berada di dalam kemah."
+ },
+ {
+  "id": "ark",
+  "terms": [
+   "tabut Allah",
+   "tabut TUHAN",
+   "Tabut Perjanjian",
+   "tabut"
+  ],
+  "text": "Peti berlapis emas berisi loh batu Sepuluh Perintah, tanda bahwa Allah hadir di tengah umat-Nya. Tidak boleh disentuh sembarangan."
+ },
+ {
+  "id": "temple",
+  "terms": [
+   "rumah TUHAN",
+   "bait suci"
+  ],
+  "text": "Rumah untuk beribadah kepada Allah. Bait Allah di Yerusalem dipersiapkan oleh Daud dan dibangun oleh anaknya, Salomo."
+ },
+ {
+  "id": "covenant",
+  "terms": [
+   "perjanjian"
+  ],
+  "text": "Janji khidmat yang dibuat dua pihak untuk saling ditepati. Allah membuat perjanjian kekal dengan keluarga Daud."
+ },
+ {
+  "id": "lord-of-hosts",
+  "terms": [
+   "TUHAN semesta alam"
+  ],
+  "text": "Nama Allah yang berarti TUHAN yang memimpin segala bala tentara di langit dan di bumi."
+ },
+ {
+  "id": "yahweh",
+  "terms": [
+   "TUHAN"
+  ],
+  "text": "Nama pribadi Allah yang dinyatakan kepada Musa (Yahweh), biasanya diartikan 'Dia yang ada'."
+ },
+ {
+  "id": "spirit-of-lord",
+  "terms": [
+   "Roh TUHAN",
+   "Roh Allah"
+  ],
+  "text": "Roh Allah. Ketika turun atas seseorang, Ia memberi kekuatan dan hikmat untuk melakukan pekerjaan Allah."
+ },
+ {
+  "id": "prophesy",
+  "terms": [
+   "bernubuat"
+  ],
+  "text": "Dikuasai Roh Allah lalu menyampaikan firman-Nya atau memuji-Nya. Bukan hanya meramalkan masa depan."
+ },
+ {
+  "id": "new-moon",
+  "terms": [
+   "bulan baru"
+  ],
+  "text": "Hari pertama bulan baru menurut peredaran bulan. Pada hari itu Israel mempersembahkan korban dan mengadakan perjamuan."
+ },
+ {
+  "id": "sling",
+  "terms": [
+   "umban"
+  ],
+  "text": "Senjata berupa kantong kulit berisi batu yang diputar lalu dilepaskan. Para gembala juga memakainya untuk mengusir binatang."
+ },
+ {
+  "id": "javelin",
+  "terms": [
+   "lembing"
+  ],
+  "text": "Tombak pendek yang dibuat untuk dilempar."
+ },
+ {
+  "id": "commander-thousand",
+  "terms": [
+   "kepala pasukan seribu"
+  ],
+  "text": "Komandan yang memimpin seribu prajurit."
+ },
+ {
+  "id": "commander",
+  "terms": [
+   "panglima tentara",
+   "panglima"
+  ],
+  "text": "Komandan tertinggi yang memimpin seluruh tentara kerajaan."
+ },
+ {
+  "id": "chariot",
+  "terms": [
+   "kereta"
+  ],
+  "text": "Kereta perang yang ditarik kuda. Juga menunjukkan kemegahan seorang raja atau pangeran."
+ },
+ {
+  "id": "threshing-floor",
+  "terms": [
+   "tempat pengirikan",
+   "pengirikan"
+  ],
+  "text": "Lapangan datar yang luas tempat hasil panen dipukul untuk memisahkan bulir. Biasanya di bukit yang berangin."
+ },
+ {
+  "id": "fine-linen",
+  "terms": [
+   "linen"
+  ],
+  "text": "Kain putih halus yang ditenun dari benang yang tipis. Dipakai untuk pakaian imam."
+ },
+ {
+  "id": "cedar",
+  "terms": [
+   "kayu aras",
+   "aras"
+  ],
+  "text": "Pohon besar dari Libanon yang harum dan kuat. Kayunya berharga untuk membangun istana dan Bait Allah."
+ },
+ {
+  "id": "tribute",
+  "terms": [
+   "upeti"
+  ],
+  "text": "Harta yang setiap tahun diserahkan bangsa yang kalah perang kepada bangsa yang menang."
+ },
+ {
+  "id": "counselor",
+  "terms": [
+   "penasihat"
+  ],
+  "text": "Orang yang memberi siasat dan pendapat kepada raja. Ahitofel terkenal karena hikmatnya."
+ },
+ {
+  "id": "vow",
+  "terms": [
+   "bernazar",
+   "nazar"
+  ],
+  "text": "Janji yang diucapkan kepada Allah untuk melakukan sesuatu. Janji ini wajib ditepati."
+ },
+ {
+  "id": "lawsuit",
+  "terms": [
+   "perkara"
+  ],
+  "text": "Membawa perselisihan ke pengadilan untuk mendapat keputusan."
+ },
+ {
+  "id": "tamarisk",
+  "terms": [
+   "pohon tamariska",
+   "tamariska"
+  ],
+  "text": "Pohon pendek yang tumbuh baik bahkan di tanah yang kering."
+ },
+ {
+  "id": "fasting",
+  "terms": [
+   "berpuasa"
+  ],
+  "text": "Tidak makan untuk beberapa waktu karena berduka atau karena berdoa dengan sungguh-sungguh."
+ },
+ {
+  "id": "worship",
+  "terms": [
+   "menyembah",
+   "sujud"
+  ],
+  "text": "Bersujud di hadapan Allah untuk memuliakan dan menyembah-Nya."
+ },
+ {
+  "id": "law",
+  "terms": [
+   "hukum Musa"
+  ],
+  "text": "Perintah dan ketetapan yang diberikan Allah melalui Musa, berisi jalan hidup bagi Israel."
+ },
+ {
+  "id": "rock",
+  "terms": [
+   "Gunung Batu Israel",
+   "Gunung Batu"
+  ],
+  "text": "Batu yang besar dan luas. Dipakai sebagai sebutan bagi Allah yang tidak tergoyahkan dan melindungi."
+ },
+ {
+  "id": "tribe",
+  "terms": [
+   "suku"
+  ],
+  "text": "Salah satu dari dua belas cabang keluarga Israel yang berasal dari dua belas anak Yakub."
+ },
+ {
+  "id": "elder",
+  "terms": [
+   "tua-tua",
+   "para tua-tua"
+  ],
+  "text": "Pemimpin kota dan suku yang sudah berumur."
+ },
+ {
+  "id": "assembly",
+  "terms": [
+   "seluruh jemaah",
+   "jemaah"
+  ],
+  "text": "Seluruh umat yang berkumpul untuk beribadah atau untuk urusan penting."
+ },
+ {
+  "id": "levite",
+  "terms": [
+   "orang-orang Lewi",
+   "orang Lewi"
+  ],
+  "text": "Orang dari suku Lewi, yang bertugas mengusung dan merawat Kemah Suci dan tabut."
+ },
+ {
+  "id": "wrath",
+  "terms": [
+   "murka TUHAN",
+   "murka"
+  ],
+  "text": "Kemarahan Allah yang kudus, yang tidak membiarkan dosa begitu saja."
+ },
+ {
+  "id": "wineskin",
+  "terms": [
+   "kirbat"
+  ],
+  "text": "Kantong dari kulit binatang yang dijahit, untuk membawa anggur atau air."
+ },
+ {
+  "id": "parched-grain",
+  "terms": [
+   "bertih gandum",
+   "bertih"
+  ],
+  "text": "Butir gandum atau jelai yang disangrai, bekal yang mudah dibawa dan dimakan."
+ },
+ {
+  "id": "curds",
+  "terms": [
+   "dadih"
+  ],
+  "text": "Makanan dari susu hewan yang dikentalkan, mirip yogurt atau mentega."
+ },
+ {
+  "id": "bride-price",
+  "terms": [
+   "mas kawin"
+  ],
+  "text": "Pemberian dari pengantin laki-laki kepada keluarga pengantin perempuan. Saul memakainya sebagai dalih untuk menjerumuskan Daud ke dalam bahaya."
+ },
+ {
+  "id": "watchman",
+  "terms": [
+   "Penjaga"
+  ],
+  "text": "Orang yang berjaga di atas tembok atau tempat tinggi dan memberi tahu bila ada orang datang."
+ },
+ {
+  "id": "messenger",
+  "terms": [
+   "utusan"
+  ],
+  "text": "Orang yang bergegas pergi menyampaikan kabar atau perintah."
+ },
+ {
+  "id": "justice",
+  "terms": [
+   "keadilan"
+  ],
+  "text": "Menegakkan apa yang benar dan lurus di mata Allah. Raja yang baik harus memerintah dengan adil."
+ },
+ {
+  "id": "set-apart",
+  "terms": [
+   "dikhususkan"
+  ],
+  "text": "Dipisahkan dari pemakaian biasa supaya hanya dipersembahkan kepada Allah."
+ },
+ {
+  "id": "decorum",
+  "terms": [
+   "kehormatannya"
+  ],
+  "text": "Sikap dan martabat yang pantas sesuai dengan kedudukan seseorang."
+ },
+ {
+  "id": "oak",
+  "terms": [
+   "pohon tarbantin",
+   "tarbantin"
+  ],
+  "text": "Pohon besar yang cabangnya lebar dan saling berjalin."
+ },
+ {
+  "id": "mule",
+  "terms": [
+   "bagal"
+  ],
+  "text": "Hewan hasil kawin kuda dan keledai. Pada zaman Daud, raja dan para pangeran menungganginya."
+ },
+ {
+  "id": "psalm",
+  "terms": [
+   "Mazmur"
+  ],
+  "text": "Kitab dalam Alkitab yang berisi kumpulan nyanyian dan doa kepada Allah. Banyak di antaranya ditulis oleh Daud."
+ },
+ {
+  "id": "grace",
+  "terms": [
+   "kasih karunia"
+  ],
+  "text": "Kasih dan kebaikan yang diberikan dengan cuma-cuma kepada orang yang tidak layak menerimanya."
+ }
+]

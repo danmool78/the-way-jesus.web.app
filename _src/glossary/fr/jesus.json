@@ -1,0 +1,756 @@
+[
+ {
+  "id": "cherub",
+  "terms": [
+   "chérubins"
+  ],
+  "text": "Les chérubins sont des êtres célestes ailés qui montent la garde auprès de Dieu."
+ },
+ {
+  "id": "tree-of-life",
+  "terms": [
+   "arbre de vie"
+  ],
+  "text": "L’arbre planté au milieu du jardin d’Éden, symbole d’une vie sans fin. Après la faute, le chemin vers cet arbre fut fermé à l’homme."
+ },
+ {
+  "id": "holy-spirit",
+  "terms": [
+   "Esprit Saint",
+   "Saint-Esprit"
+  ],
+  "text": "L’Esprit de Dieu. Les chrétiens le confessent, avec le Père et le Fils, comme le Dieu unique."
+ },
+ {
+  "id": "grace",
+  "terms": [
+   "grâce"
+  ],
+  "text": "L’amour et les dons que Dieu accorde gratuitement à des gens qui n’ont rien fait pour les mériter."
+ },
+ {
+  "id": "census",
+  "terms": [
+   "recenser"
+  ],
+  "text": "Un dénombrement de la population ordonné par l’empereur romain pour lever l’impôt. Chacun devait aller se faire inscrire dans la ville de ses ancêtres."
+ },
+ {
+  "id": "manger",
+  "terms": [
+   "mangeoire"
+  ],
+  "text": "Une auge où l’on met le fourrage des chevaux ou du bétail. Ce fut le premier lit de l’enfant Jésus."
+ },
+ {
+  "id": "savior",
+  "terms": [
+   "Sauveur"
+  ],
+  "text": "Celui qui sauve ; ici, celui qui délivre les hommes du péché et de la mort."
+ },
+ {
+  "id": "circumcision",
+  "terms": [
+   "circoncis"
+  ],
+  "text": "Un rite où l’on coupait le prépuce du petit garçon le huitième jour après sa naissance. C’était le signe de l’alliance entre Dieu et son peuple."
+ },
+ {
+  "id": "purification",
+  "terms": [
+   "purification",
+   "purifications"
+  ],
+  "text": "Un rite prescrit par la Loi pour rendre pur une personne ou un objet. Après l’accouchement, la mère apportait une offrande au bout d’un nombre de jours fixé."
+ },
+ {
+  "id": "law",
+  "terms": [
+   "Loi"
+  ],
+  "text": "L’enseignement et les commandements que Dieu donna à Israël par Moïse, consignés dans les cinq premiers livres de l’Ancien Testament."
+ },
+ {
+  "id": "temple",
+  "terms": [
+   "Temple"
+  ],
+  "text": "Le grand édifice de Jérusalem où l’on adorait Dieu et offrait des sacrifices. Au temps de Jésus, Hérode l’avait somptueusement rebâti."
+ },
+ {
+  "id": "christ",
+  "terms": [
+   "Christ"
+  ],
+  "text": "Mot grec qui signifie « oint », comme l’hébreu « Messie ». Il désigne le Sauveur que Dieu avait promis d’envoyer."
+ },
+ {
+  "id": "messiah",
+  "terms": [
+   "Messie"
+  ],
+  "text": "Mot hébreu qui signifie « oint » : le Sauveur promis qu’Israël attendait. En grec, on dit « Christ »."
+ },
+ {
+  "id": "tribe",
+  "terms": [
+   "tribu"
+  ],
+  "text": "L’un des douze clans d’Israël, issus des douze fils de Jacob."
+ },
+ {
+  "id": "prophet",
+  "terms": [
+   "prophétesse",
+   "prophète",
+   "prophètes"
+  ],
+  "text": "Une personne qui reçoit la parole de Dieu et la transmet aux autres. Sa tâche principale était de faire connaître la volonté de Dieu, plus que de prédire l’avenir."
+ },
+ {
+  "id": "fasting",
+  "terms": [
+   "jeûne"
+  ],
+  "text": "Se priver de nourriture pendant un temps pour se consacrer à la prière."
+ },
+ {
+  "id": "magi",
+  "terms": [
+   "mages"
+  ],
+  "text": "Non pas des magiciens, mais des savants d’Orient qui étudiaient les étoiles. Ils venaient sans doute de Perse ou de Babylonie."
+ },
+ {
+  "id": "high-priest",
+  "terms": [
+   "grands prêtres",
+   "grand prêtre"
+  ],
+  "text": "Le chef des prêtres et la plus haute autorité religieuse, responsable du Temple et du conseil juif."
+ },
+ {
+  "id": "priest",
+  "terms": [
+   "prêtres",
+   "prêtre"
+  ],
+  "text": "Un homme qui offrait les sacrifices au Temple et se tenait devant Dieu au nom du peuple. Cette charge revenait aux descendants d’Aaron."
+ },
+ {
+  "id": "levite",
+  "terms": [
+   "lévite"
+  ],
+  "text": "Un membre de la tribu de Lévi, qui aidait les prêtres dans le service du Temple."
+ },
+ {
+  "id": "scribe",
+  "terms": [
+   "scribes",
+   "docteurs de la Loi",
+   "docteur de la Loi",
+   "scribe"
+  ],
+  "text": "Un spécialiste qui étudiait et enseignait la Loi."
+ },
+ {
+  "id": "worship",
+  "terms": [
+   "adorer",
+   "adoreras"
+  ],
+  "text": "Se prosterner pour honorer quelqu’un comme le plus haut ; la plus profonde marque de respect, rendue à Dieu ou à un roi."
+ },
+ {
+  "id": "frankincense",
+  "terms": [
+   "encens"
+  ],
+  "text": "Une résine précieuse tirée d’un arbre, qui dégage une odeur agréable en brûlant. On l’utilisait dans les offrandes à Dieu."
+ },
+ {
+  "id": "myrrh",
+  "terms": [
+   "myrrhe"
+  ],
+  "text": "Un aromate coûteux tiré de la résine d’un arbre, employé comme remède et parfum, et aussi pour préparer les corps à l’ensevelissement."
+ },
+ {
+  "id": "aloes",
+  "terms": [
+   "aloès"
+  ],
+  "text": "Un aromate tiré d’un bois très parfumé, mêlé à la myrrhe et utilisé pour les corps lors de l’ensevelissement."
+ },
+ {
+  "id": "repentance",
+  "terms": [
+   "conversion",
+   "repentant"
+  ],
+  "text": "Non pas seulement regretter ses fautes, mais faire demi-tour de toute sa vie pour revenir à Dieu."
+ },
+ {
+  "id": "baptism",
+  "terms": [
+   "baptême"
+  ],
+  "text": "Un rite où l’on est plongé dans l’eau ou lavé avec de l’eau, pour montrer que les péchés sont lavés et qu’une vie nouvelle commence."
+ },
+ {
+  "id": "devil",
+  "terms": [
+   "diable",
+   "Satan"
+  ],
+  "text": "Le chef des esprits mauvais, qui s’oppose à Dieu et cherche à faire tomber les hommes. « Satan » signifie « adversaire »."
+ },
+ {
+  "id": "lamb-of-god",
+  "terms": [
+   "Agneau de Dieu"
+  ],
+  "text": "Ce titre rappelle les agneaux offerts en sacrifice pour le péché ; il désigne Jésus, qui allait mourir en portant le péché du monde."
+ },
+ {
+  "id": "rabbi",
+  "terms": [
+   "Rabbi",
+   "Rabbouni"
+  ],
+  "text": "Mot hébreu qui signifie « mon maître », titre de respect donné à un maître de la Loi. « Rabbouni » en est une forme plus affectueuse."
+ },
+ {
+  "id": "sign",
+  "terms": [
+   "signes",
+   "signe"
+  ],
+  "text": "Un miracle qui montre la puissance de Dieu et fait comprendre qui est Jésus.",
+  "skip": [
+   "signe à"
+  ]
+ },
+ {
+  "id": "money-changer",
+  "terms": [
+   "changeurs"
+  ],
+  "text": "Des marchands qui échangeaient les monnaies de tous pays contre les pièces en usage au Temple, en prenant une commission au passage."
+ },
+ {
+  "id": "son-of-man",
+  "terms": [
+   "Fils de l’homme"
+  ],
+  "text": "« Fils d’homme », le nom que Jésus se donnait le plus souvent. Il rappelle le souverain céleste du livre de Daniel."
+ },
+ {
+  "id": "pharisee",
+  "terms": [
+   "pharisien",
+   "pharisiens"
+  ],
+  "text": "Un groupe juif attaché à observer dans le moindre détail la Loi et la tradition des anciens. Il s’opposait souvent à Jésus."
+ },
+ {
+  "id": "samaritan",
+  "terms": [
+   "samaritaine",
+   "Samaritains",
+   "Samaritain"
+  ],
+  "text": "Les habitants de la Samarie, région située entre la Judée et la Galilée. Juifs et Samaritains étaient ennemis depuis longtemps et s’évitaient."
+ },
+ {
+  "id": "seventh-hour",
+  "terms": [
+   "septième heure"
+  ],
+  "text": "On comptait les heures à partir du lever du soleil environ ; la septième heure correspond donc à une heure de l’après-midi."
+ },
+ {
+  "id": "sabbath",
+  "terms": [
+   "sabbat"
+  ],
+  "text": "Le septième jour de la semaine, jour saint où l’on cessait le travail pour se souvenir de Dieu. Il allait du coucher du soleil le vendredi au coucher du soleil le samedi."
+ },
+ {
+  "id": "synagogue",
+  "terms": [
+   "synagogue"
+  ],
+  "text": "Le lieu où, dans chaque ville, les Juifs se réunissaient pour lire l’Écriture, prier et s’instruire."
+ },
+ {
+  "id": "synagogue-ruler",
+  "terms": [
+   "chef de la synagogue",
+   "chef de synagogue"
+  ],
+  "text": "La personne qui dirigeait les réunions et le culte d’une synagogue."
+ },
+ {
+  "id": "scroll",
+  "terms": [
+   "rouleau"
+  ],
+  "text": "Un livre fait de longues bandes de cuir ou de papyrus cousues bout à bout et roulées. Les Écritures étaient écrites ainsi."
+ },
+ {
+  "id": "unclean-spirit",
+  "terms": [
+   "esprit impur",
+   "démons",
+   "esprits impurs"
+  ],
+  "text": "Des esprits mauvais qui s’emparent des gens et les tourmentent. Jésus les chassait d’une seule parole."
+ },
+ {
+  "id": "paralytic",
+  "terms": [
+   "paralysé"
+  ],
+  "text": "Incapable de bouger son corps à cause d’une paralysie."
+ },
+ {
+  "id": "tax-collector",
+  "terms": [
+   "bureau des taxes",
+   "collecteur d’impôts",
+   "collecteurs d’impôts"
+  ],
+  "text": "Des Juifs qui percevaient pour Rome les impôts de leur propre peuple. Beaucoup prélevaient davantage pour eux-mêmes ; on les traitait donc en pécheurs."
+ },
+ {
+  "id": "colonnade",
+  "terms": [
+   "portiques",
+   "portique"
+  ],
+  "text": "Une longue galerie couverte, dont le toit repose sur des colonnes, ouverte sur un côté ou sur les deux."
+ },
+ {
+  "id": "apostle",
+  "terms": [
+   "apôtres"
+  ],
+  "text": "« Envoyé » : le titre des douze disciples que Jésus choisit et établit."
+ },
+ {
+  "id": "zealot",
+  "terms": [
+   "zélote"
+  ],
+  "text": "Membre d’un mouvement juif qui voulait chasser la domination romaine, même par la force."
+ },
+ {
+  "id": "rock",
+  "terms": [
+   "roc"
+  ],
+  "text": "Une pierre large et solide, image d’un fondement inébranlable. Le nom de Pierre signifie lui aussi « pierre » ou « roc »."
+ },
+ {
+  "id": "inner-room",
+  "terms": [
+   "ta chambre"
+  ],
+  "text": "Une petite pièce au fond de la maison ; un lieu pour prier seul, à l’abri des regards."
+ },
+ {
+  "id": "centurion",
+  "terms": [
+   "centurion"
+  ],
+  "text": "Un officier romain qui commandait une centaine de soldats."
+ },
+ {
+  "id": "elder",
+  "terms": [
+   "anciens"
+  ],
+  "text": "Des responsables âgés qui guidaient une ville ou le peuple."
+ },
+ {
+  "id": "perfume",
+  "terms": [
+   "parfum",
+   "nard"
+  ],
+  "text": "Une huile parfumée précieuse. Le nard était un parfum très coûteux tiré d’une plante de l’Himalaya."
+ },
+ {
+  "id": "alabaster",
+  "terms": [
+   "albâtre"
+  ],
+  "text": "Un vase de pierre lisse où l’on gardait le parfum. On en brisait le col pour le verser tout entier d’un coup."
+ },
+ {
+  "id": "denarius",
+  "terms": [
+   "deniers",
+   "denier"
+  ],
+  "text": "Une pièce d’argent romaine, à peu près le salaire d’une journée d’ouvrier."
+ },
+ {
+  "id": "forgive-debt",
+  "terms": [
+   "dette"
+  ],
+  "text": "Ici, une dette réduite ou effacée, qu’on n’a plus à rembourser."
+ },
+ {
+  "id": "stern",
+  "terms": [
+   "l’arrière"
+  ],
+  "text": "L’arrière d’un bateau. L’avant s’appelle la proue.",
+  "skip": [
+   "l’arrière, autour",
+   "l’arrière. En"
+  ]
+ },
+ {
+  "id": "bleeding",
+  "terms": [
+   "pertes de sang"
+  ],
+  "text": "Une maladie où le sang ne cesse de couler. Selon la Loi, elle rendait impur et coupait la personne des autres."
+ },
+ {
+  "id": "manna",
+  "terms": [
+   "manne"
+  ],
+  "text": "La nourriture que Dieu fit descendre du ciel chaque jour pendant les quarante ans d’Israël au désert."
+ },
+ {
+  "id": "greek-gentile",
+  "terms": [
+   "païenne",
+   "Grecque"
+  ],
+  "text": "« Grec » désigne ici un non-Juif formé par la culture grecque. Les païens sont les peuples autres que les Juifs, et leurs pays."
+ },
+ {
+  "id": "booths",
+  "terms": [
+   "fête des Tentes"
+  ],
+  "text": "Une fête d’automne de sept jours, après la récolte, où l’on vivait sous des abris de branchages en souvenir des années au désert."
+ },
+ {
+  "id": "booth",
+  "terms": [
+   "tentes",
+   "cabanes"
+  ],
+  "text": "De petites huttes provisoires faites de branchages ou d’herbes tressées."
+ },
+ {
+  "id": "adultery",
+  "terms": [
+   "adultère"
+  ],
+  "text": "Des relations sexuelles entre une personne mariée et quelqu’un d’autre que son conjoint. La Loi le punissait sévèrement."
+ },
+ {
+  "id": "condemn",
+  "terms": [
+   "condamnaient",
+   "condamne",
+   "condamnation"
+  ],
+  "text": "Déclarer quelqu’un coupable et prononcer sa peine."
+ },
+ {
+  "id": "hanukkah",
+  "terms": [
+   "fête de la Dédicace"
+  ],
+  "text": "Une fête d’hiver rappelant comment le Temple, profané par un roi grec, fut repris et de nouveau consacré à Dieu. On l’appelle aujourd’hui Hanoukka."
+ },
+ {
+  "id": "carob",
+  "terms": [
+   "caroubes"
+  ],
+  "text": "Les gousses du caroubier, qui servaient surtout de nourriture aux porcs et au bétail. Seuls les plus pauvres en mangeaient."
+ },
+ {
+  "id": "silver-coin",
+  "terms": [
+   "pièces d’argent"
+  ],
+  "text": "Des pièces faites d’argent ; ici des drachmes, chacune valant à peu près le salaire d’une journée."
+ },
+ {
+  "id": "sanhedrin",
+  "terms": [
+   "Conseil"
+  ],
+  "text": "La plus haute assemblée et le tribunal suprême des Juifs, présidés par le grand prêtre. On l’appelle aussi le Sanhédrin."
+ },
+ {
+  "id": "resurrection",
+  "terms": [
+   "résurrection"
+  ],
+  "text": "Le retour à la vie d’un mort. La résurrection de Jésus est au cœur de la foi chrétienne."
+ },
+ {
+  "id": "commandment",
+  "terms": [
+   "commandements"
+  ],
+  "text": "Un enseignement que Dieu ordonne à son peuple d’observer. Les Dix Commandements en sont les plus connus."
+ },
+ {
+  "id": "sycamore",
+  "terms": [
+   "sycomore"
+  ],
+  "text": "Un arbre proche du figuier, aux branches basses et largement étalées, facile à escalader."
+ },
+ {
+  "id": "leprosy",
+  "terms": [
+   "lépreux"
+  ],
+  "text": "Une grave maladie de peau. À l’époque biblique, elle rendait impur, et les malades devaient vivre à l’écart, hors du village."
+ },
+ {
+  "id": "pound",
+  "terms": [
+   "une livre",
+   "cent livres"
+  ],
+  "text": "Une unité de poids ; ici la livre romaine, environ 330 grammes."
+ },
+ {
+  "id": "palm",
+  "terms": [
+   "palmes"
+  ],
+  "text": "Le palmier dattier. On agitait ses branches en signe de victoire et d’accueil."
+ },
+ {
+  "id": "hosanna",
+  "terms": [
+   "Hosanna"
+  ],
+  "text": "Mot hébreu qui signifie « sauve-nous maintenant », devenu un cri d’accueil et de louange."
+ },
+ {
+  "id": "herodian",
+  "terms": [
+   "partisans d’Hérode"
+  ],
+  "text": "Des Juifs qui soutenaient le pouvoir de la famille d’Hérode et acceptaient de payer l’impôt à Rome."
+ },
+ {
+  "id": "sadducee",
+  "terms": [
+   "sadducéens"
+  ],
+  "text": "Un groupe juif proche des familles des grands prêtres. Ils ne croyaient ni à la résurrection ni aux anges."
+ },
+ {
+  "id": "treasury",
+  "terms": [
+   "tronc"
+  ],
+  "text": "Des coffres en forme de trompette, dans les cours du Temple, où l’on déposait les offrandes."
+ },
+ {
+  "id": "talent",
+  "terms": [
+   "talents"
+  ],
+  "text": "Une unité pour une grosse somme d’argent, à peu près ce qu’un ouvrier gagnait en près de vingt ans. Le mot « talent » vient de là."
+ },
+ {
+  "id": "unleavened",
+  "terms": [
+   "pains sans levain"
+  ],
+  "text": "Une fête de sept jours qui suivait la Pâque : on mangeait du pain sans levain en souvenir de la sortie d’Égypte."
+ },
+ {
+  "id": "passover",
+  "terms": [
+   "Pâque"
+  ],
+  "text": "La grande fête du printemps, en souvenir de la nuit où la mort passa par-dessus les maisons d’Israël en Égypte, et de la sortie d’Égypte."
+ },
+ {
+  "id": "upper-room",
+  "terms": [
+   "chambre haute"
+  ],
+  "text": "Une grande pièce à l’étage d’une maison, où Jésus prit son dernier repas avec ses disciples."
+ },
+ {
+  "id": "covenant",
+  "terms": [
+   "alliance"
+  ],
+  "text": "Une promesse solennelle que Dieu conclut avec les hommes. Jésus a établi une alliance nouvelle par son propre sang."
+ },
+ {
+  "id": "hymn",
+  "terms": [
+   "chanté les psaumes"
+  ],
+  "text": "Un chant à la louange de Dieu. À la fin du repas de la Pâque, on chantait des psaumes."
+ },
+ {
+  "id": "governor",
+  "terms": [
+   "gouverneur"
+  ],
+  "text": "Un haut fonctionnaire envoyé par l’empereur romain pour gouverner une province. Pilate était gouverneur de la Judée."
+ },
+ {
+  "id": "cross",
+  "terms": [
+   "croix"
+  ],
+  "text": "Le poteau de bois où Rome suspendait les condamnés pour les faire mourir ; le supplice le plus cruel et le plus infamant."
+ },
+ {
+  "id": "purple",
+  "terms": [
+   "pourpre"
+  ],
+  "text": "Le tissu de pourpre était coûteux et réservé aux rois. Les soldats en revêtirent Jésus pour se moquer de lui comme roi."
+ },
+ {
+  "id": "paradise",
+  "terms": [
+   "paradis"
+  ],
+  "text": "Le lieu de bonheur où les justes, après leur mort, sont avec Dieu."
+ },
+ {
+  "id": "veil",
+  "terms": [
+   "rideau"
+  ],
+  "text": "Le lourd rideau du Temple qui fermait l’accès au lieu très saint. Il représentait la séparation entre Dieu et les hommes."
+ },
+ {
+  "id": "linen",
+  "terms": [
+   "lin"
+  ],
+  "text": "Une toile fine tissée à partir du lin, dont on enveloppait le corps des morts."
+ },
+ {
+  "id": "first-day",
+  "terms": [
+   "premier jour de la semaine"
+  ],
+  "text": "Le lendemain du sabbat, notre dimanche. Jésus ressuscita ce jour-là."
+ },
+ {
+  "id": "stadion",
+  "terms": [
+   "stades"
+  ],
+  "text": "Une unité de distance : un stade fait environ 185 mètres, donc soixante stades font environ 11 kilomètres."
+ },
+ {
+  "id": "fourth-watch",
+  "terms": [
+   "quatrième veille"
+  ],
+  "text": "La nuit était divisée en quatre veilles ; la quatrième allait d’environ trois heures à six heures du matin."
+ },
+ {
+  "id": "authority",
+  "terms": [
+   "autorité"
+  ],
+  "text": "Le pouvoir et le droit de gouverner et de donner des ordres."
+ },
+ {
+  "id": "righteous",
+  "terms": [
+   "justes"
+  ],
+  "text": "Ceux que Dieu reconnaît comme justes devant lui. Ici, le mot vise aussi ceux qui se croient justes."
+ },
+ {
+  "id": "holy-city",
+  "terms": [
+   "ville sainte"
+  ],
+  "text": "Un nom de Jérusalem, où se trouvait le Temple de Dieu."
+ },
+ {
+  "id": "kingdom-of-god",
+  "terms": [
+   "royaume de Dieu",
+   "royaume des cieux"
+  ],
+  "text": "Le domaine où Dieu règne comme roi. C’est moins un lieu que le règne de Dieu qui s’accomplit."
+ },
+ {
+  "id": "eternal-life",
+  "terms": [
+   "vie éternelle"
+  ],
+  "text": "Non pas seulement vivre sans fin, mais la vraie vie partagée avec Dieu."
+ },
+ {
+  "id": "leaven",
+  "terms": [
+   "levain"
+  ],
+  "text": "Ce qui fait lever la pâte. Jésus en a fait une image : un peu de levain gagne toute la pâte."
+ },
+ {
+  "id": "mustard-seed",
+  "terms": [
+   "graine de moutarde"
+  ],
+  "text": "Une graine minuscule qui devient une plante plus haute qu’un homme."
+ },
+ {
+  "id": "feast",
+  "terms": [
+   "fête"
+  ],
+  "text": "Ici, les fêtes fixées où les Juifs montaient à Jérusalem, comme la Pâque et la fête des Tentes."
+ },
+ {
+  "id": "talitha",
+  "terms": [
+   "Talitha",
+   "Effata"
+  ],
+  "text": "De l’araméen, la langue que parlaient les Juifs au temps de Jésus. « Talitha koum » veut dire « fillette, lève-toi », et « Effata », « ouvre-toi »."
+ },
+ {
+  "id": "ransom",
+  "terms": [
+   "rançon"
+  ],
+  "text": "Le prix payé pour libérer un captif ou un esclave. Jésus a donné sa propre vie comme ce prix."
+ },
+ {
+  "id": "pilgrim",
+  "terms": [
+   "pèlerinage",
+   "pèlerins"
+  ],
+  "text": "Un voyage vers un lieu saint. À chaque fête, les Juifs montaient au Temple de Jérusalem."
+ }
+]

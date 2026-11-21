@@ -1,0 +1,500 @@
+[
+ {
+  "id": "store-city",
+  "terms": [
+   "ciudades de almacenes"
+  ],
+  "text": "Eran ciudades donde se guardaban el grano y las provisiones del reino. Los israelitas las construyeron sometidos como esclavos."
+ },
+ {
+  "id": "midwife",
+  "terms": [
+   "parteras"
+  ],
+  "text": "Eran las mujeres que ayudaban a dar a luz y recibían al bebé. Hoy diríamos comadronas."
+ },
+ {
+  "id": "bitumen",
+  "terms": [
+   "betún",
+   "brea"
+  ],
+  "text": "Es una masa negra y pegajosa que sale de la tierra, como el asfalto. Se untaba en cestas y barcas para que no entrara el agua."
+ },
+ {
+  "id": "priest",
+  "terms": [
+   "sacerdotes",
+   "sacerdote"
+  ],
+  "text": "Era quien ofrecía sacrificios a Dios, oraba por el pueblo y enseñaba la Ley."
+ },
+ {
+  "id": "high-priest",
+  "terms": [
+   "sumo sacerdote"
+  ],
+  "text": "Es el primero entre los sacerdotes. Aarón fue el primero, y sus hijos le sucedieron."
+ },
+ {
+  "id": "bush",
+  "terms": [
+   "zarza"
+  ],
+  "text": "Es un arbusto bajo y espinoso que crece en el desierto. Dios llamó a Moisés desde el fuego de una zarza."
+ },
+ {
+  "id": "sign",
+  "terms": [
+   "señales",
+   "señal"
+  ],
+  "text": "Es un hecho asombroso que muestra que Dios está presente. No es solo un milagro, sino una marca que apunta a algo."
+ },
+ {
+  "id": "feast",
+  "terms": [
+   "fiesta"
+  ],
+  "text": "Es una celebración en un tiempo fijado para reunirse y recordar a Dios, como la Pascua o la fiesta de las Tiendas."
+ },
+ {
+  "id": "magician",
+  "terms": [
+   "magos"
+  ],
+  "text": "Eran hombres de la corte del faraón que practicaban artes ocultas. Imitaron las primeras plagas, pero pronto se rindieron."
+ },
+ {
+  "id": "passover",
+  "terms": [
+   "Pascua"
+  ],
+  "text": "Es la primera fiesta de Israel; su nombre significa 'pasar de largo'. Recuerda la noche en que la plaga pasó de largo ante las casas marcadas con la sangre del cordero."
+ },
+ {
+  "id": "hyssop",
+  "terms": [
+   "hisopo"
+  ],
+  "text": "Es una planta pequeña que crece entre las piedras. Se ataba en manojo para mojarlo en sangre o agua y rociar."
+ },
+ {
+  "id": "lintel",
+  "terms": [
+   "dintel"
+  ],
+  "text": "Es el madero que va atravesado sobre la puerta. La noche de Pascua se untó con la sangre del cordero, igual que los dos postes."
+ },
+ {
+  "id": "leaven",
+  "terms": [
+   "levadura"
+  ],
+  "text": "Es lo que hace fermentar la masa del pan. Al salir con prisa comieron pan sin levadura, y de ahí nació la fiesta de los Panes sin Levadura."
+ },
+ {
+  "id": "able-men",
+  "terms": [
+   "hombres que partieron a pie"
+  ],
+  "text": "Se refiere a los varones adultos en edad de ir a la guerra. Las mujeres y los niños no entraban en esta cuenta."
+ },
+ {
+  "id": "chariot",
+  "terms": [
+   "carros"
+  ],
+  "text": "Eran carros de guerra tirados por caballos, el arma más temida de aquel tiempo."
+ },
+ {
+  "id": "timbrel",
+  "terms": [
+   "pandero",
+   "panderos"
+  ],
+  "text": "Es un tambor pequeño que se toca con la mano. En los días de alegría las mujeres lo tocaban mientras danzaban."
+ },
+ {
+  "id": "prophet",
+  "terms": [
+   "profetisa",
+   "profeta"
+  ],
+  "text": "Es quien recibe la palabra de Dios y la transmite a la gente. No es solo alguien que adivina el futuro."
+ },
+ {
+  "id": "statutes",
+  "terms": [
+   "leyes y normas"
+  ],
+  "text": "Son las leyes y reglas que Dios estableció para que su pueblo las cumpliera."
+ },
+ {
+  "id": "omer",
+  "terms": [
+   "omer"
+  ],
+  "text": "Es una medida de grano de unos dos litros: la cantidad de maná que comía una persona en un día."
+ },
+ {
+  "id": "manna",
+  "terms": [
+   "maná"
+  ],
+  "text": "Es el alimento que Dios hacía caer cada día en el desierto. Su nombre viene de la pregunta '¿qué es esto?'."
+ },
+ {
+  "id": "sabbath",
+  "terms": [
+   "día de reposo"
+  ],
+  "text": "Es el séptimo día, en que se deja el trabajo para descansar y recordar a Dios. Va desde la puesta del sol del viernes hasta la del sábado."
+ },
+ {
+  "id": "elder",
+  "terms": [
+   "ancianos",
+   "anciano"
+  ],
+  "text": "Eran líderes de edad que representaban a las familias y tribus. Deliberaban y juzgaban juntos los asuntos del pueblo."
+ },
+ {
+  "id": "altar",
+  "terms": [
+   "altar",
+   "altares"
+  ],
+  "text": "Es una plataforma de piedra o de tierra para ofrecer sacrificios. Era el lugar donde se adoraba a Dios."
+ },
+ {
+  "id": "burnt-offering",
+  "terms": [
+   "holocaustos",
+   "holocausto"
+  ],
+  "text": "Es el sacrificio en que la ofrenda se quema entera. Expresa la entrega total a Dios."
+ },
+ {
+  "id": "sacrifice",
+  "terms": [
+   "sacrificios"
+  ],
+  "text": "Son los animales que se mataban para ofrecerlos a Dios."
+ },
+ {
+  "id": "peace-offering",
+  "terms": [
+   "ofrendas de paz"
+  ],
+  "text": "Es un sacrificio para celebrar la paz entre Dios y las personas. Parte de la carne se comía juntos."
+ },
+ {
+  "id": "lawsuit",
+  "terms": [
+   "pleitos"
+  ],
+  "text": "Son las disputas que la gente presentaba para que se decidiera quién tenía razón, algo parecido a un juicio de hoy."
+ },
+ {
+  "id": "covenant",
+  "terms": [
+   "pacto"
+  ],
+  "text": "Es la promesa firme que Dios hizo con su pueblo: él sería su Dios, y ellos serían su pueblo."
+ },
+ {
+  "id": "purify",
+  "terms": [
+   "purificaron"
+  ],
+  "text": "Es lavar el cuerpo y la ropa para presentarse ante Dios. La limpieza exterior mostraba que el corazón se preparaba."
+ },
+ {
+  "id": "graven-image",
+  "terms": [
+   "imágenes talladas"
+  ],
+  "text": "Son figuras de dioses hechas tallando madera, piedra o metal. Si se hacen para adorarlas, son ídolos."
+ },
+ {
+  "id": "adultery",
+  "terms": [
+   "adulterio"
+  ],
+  "text": "Es que una persona casada tenga relaciones con alguien que no es su cónyuge."
+ },
+ {
+  "id": "sapphire",
+  "terms": [
+   "zafiro"
+  ],
+  "text": "Es una piedra preciosa de color azul; se piensa que era el zafiro o el lapislázuli."
+ },
+ {
+  "id": "tablets",
+  "terms": [
+   "tablas"
+  ],
+  "text": "Son las dos tablas de piedra en las que Dios grabó los Diez Mandamientos. Después se guardaron dentro del arca de la alianza."
+ },
+ {
+  "id": "tabernacle",
+  "terms": [
+   "tabernáculo"
+  ],
+  "text": "Era un templo en forma de tienda que se montaba y se trasladaba por el desierto. Era la señal de que Dios vivía en medio de su pueblo."
+ },
+ {
+  "id": "tent-of-meeting",
+  "terms": [
+   "tienda del encuentro"
+  ],
+  "text": "Era la tienda donde Dios se encontraba con Moisés y con el pueblo. Es otro nombre del tabernáculo."
+ },
+ {
+  "id": "testimony",
+  "terms": [
+   "tablas del testimonio"
+  ],
+  "text": "Son las tablas de piedra con los Diez Mandamientos. Se llamaban así porque dan testimonio de la alianza entre Dios y su pueblo."
+ },
+ {
+  "id": "ark",
+  "terms": [
+   "arca del testimonio",
+   "arca del pacto",
+   "arca"
+  ],
+  "text": "Era un cofre de madera cubierto de oro donde se guardaban las tablas. Mostraba que Dios estaba en medio del pueblo, y lo llevaban los sacerdotes."
+ },
+ {
+  "id": "mercy-seat",
+  "terms": [
+   "propiciatorio"
+  ],
+  "text": "Era la tapa de oro que cubría el arca. Cada año el sumo sacerdote rociaba allí sangre para purificar el pecado del pueblo."
+ },
+ {
+  "id": "veil",
+  "terms": [
+   "velo"
+  ],
+  "text": "Es una cortina gruesa que separa un espacio. En el tabernáculo ocultaba el lugar más santo."
+ },
+ {
+  "id": "showbread-table",
+  "terms": [
+   "mesa de los panes"
+  ],
+  "text": "Era la mesa del tabernáculo en la que siempre había doce panes delante de Dios."
+ },
+ {
+  "id": "lampstand",
+  "terms": [
+   "candelabro"
+  ],
+  "text": "Era un candelabro de oro con siete brazos encendidos, que iluminaba siempre el interior del tabernáculo."
+ },
+ {
+  "id": "incense-altar",
+  "terms": [
+   "altar de oro"
+  ],
+  "text": "Era un pequeño altar de oro dentro del tabernáculo donde se quemaba incienso por la mañana y por la tarde."
+ },
+ {
+  "id": "bronze-altar",
+  "terms": [
+   "altar de los holocaustos"
+  ],
+  "text": "Era el gran altar de bronce del atrio del tabernáculo. Allí se quemaban los animales ofrecidos en sacrificio."
+ },
+ {
+  "id": "laver",
+  "terms": [
+   "pila"
+  ],
+  "text": "Era un gran recipiente de bronce con agua donde los sacerdotes se lavaban las manos y los pies."
+ },
+ {
+  "id": "cubit",
+  "terms": [
+   "codos"
+  ],
+  "text": "Es la medida que va del codo a la punta de los dedos, unos 45 centímetros."
+ },
+ {
+  "id": "days-journey",
+  "terms": [
+   "día de camino"
+  ],
+  "text": "Es la distancia que se puede recorrer a pie en un día, unos 30 kilómetros."
+ },
+ {
+  "id": "spy",
+  "terms": [
+   "espías"
+  ],
+  "text": "Son personas que entran a escondidas en tierra enemiga para ver cómo está y volver a informar."
+ },
+ {
+  "id": "tribe",
+  "terms": [
+   "tribu",
+   "tribus"
+  ],
+  "text": "Son las grandes familias que descienden de los doce hijos de Jacob. Israel estaba formado por doce tribus."
+ },
+ {
+  "id": "censer",
+  "terms": [
+   "incensarios",
+   "incensario"
+  ],
+  "text": "Es un recipiente para llevar brasas y quemar incienso. Solo los sacerdotes podían usarlo delante de Dios."
+ },
+ {
+  "id": "plague",
+  "terms": [
+   "plaga"
+  ],
+  "text": "Es una calamidad terrible que cae sobre un pueblo, como una epidemia que se extiende entre la gente."
+ },
+ {
+  "id": "bronze-serpent",
+  "terms": [
+   "serpiente de bronce"
+  ],
+  "text": "Era una serpiente hecha de bronce. Quien la miraba, vivía; Jesús comparó con ella su propia cruz."
+ },
+ {
+  "id": "divination-fee",
+  "terms": [
+   "pago de la adivinación"
+  ],
+  "text": "Es el dinero o los bienes que se daban a cambio de echar una adivinación o pronunciar bendiciones y maldiciones."
+ },
+ {
+  "id": "official",
+  "terms": [
+   "jefes de más alto rango"
+  ],
+  "text": "Son personas que ocupan los cargos más altos de un reino."
+ },
+ {
+  "id": "law",
+  "terms": [
+   "libro de la ley",
+   "ley"
+  ],
+  "text": "Son las enseñanzas y mandamientos que Dios dio por medio de Moisés. El libro de la ley es el libro donde están escritos."
+ },
+ {
+  "id": "doorpost",
+  "terms": [
+   "postes"
+  ],
+  "text": "Son los dos maderos que se levantan a cada lado de la puerta."
+ },
+ {
+  "id": "flax",
+  "terms": [
+   "tallos de lino"
+  ],
+  "text": "Son los tallos de la planta del lino, con la que se teje tela. Se ponían a secar sobre el tejado."
+ },
+ {
+  "id": "ford",
+  "terms": [
+   "vados"
+  ],
+  "text": "Son los lugares poco profundos por donde se puede cruzar un río."
+ },
+ {
+  "id": "circumcision",
+  "terms": [
+   "circuncidado"
+  ],
+  "text": "Es el rito de cortar el extremo de la piel del órgano masculino. Era la señal de la alianza de pertenecer al pueblo de Dios."
+ },
+ {
+  "id": "shofar",
+  "terms": [
+   "cuerno de carnero"
+  ],
+  "text": "Es una trompeta hecha con el cuerno de un carnero (shofar). Se tocaba en las fiestas, en la guerra y para anunciar grandes acontecimientos."
+ },
+ {
+  "id": "devoted",
+  "terms": [
+   "consagrados",
+   "consagrar"
+  ],
+  "text": "Aquí significa entregarlo todo a Dios por completo: nadie podía quedarse con nada, y lo demás se destruía sin dejar resto."
+ },
+ {
+  "id": "lots",
+  "terms": [
+   "suertes",
+   "la suerte"
+  ],
+  "text": "Es un modo de decidir sacando piedras o palitos marcados. Se veía como una forma de preguntar la voluntad de Dios, no la humana."
+ },
+ {
+  "id": "peace-treaty",
+  "terms": [
+   "hecho la paz"
+  ],
+  "text": "Es comprometerse mutuamente a no luchar y vivir en buena relación."
+ },
+ {
+  "id": "inheritance",
+  "terms": [
+   "herencia"
+  ],
+  "text": "Es la parte que Dios da para que se disfrute y se transmita de generación en generación."
+ },
+ {
+  "id": "office",
+  "terms": [
+   "sacerdocio"
+  ],
+  "text": "Es el oficio de sacerdote: la tarea encomendada y el puesto que conlleva."
+ },
+ {
+  "id": "oak",
+  "terms": [
+   "encina"
+  ],
+  "text": "Es un árbol grande de la familia de los robles, que da bellotas. A menudo marcaba un lugar para recordar algo importante."
+ },
+ {
+  "id": "sanctuary",
+  "terms": [
+   "santuario"
+  ],
+  "text": "Es un lugar santo donde se adora a Dios."
+ },
+ {
+  "id": "wrath",
+  "terms": [
+   "ira"
+  ],
+  "text": "Es el santo enojo de Dios contra el pecado."
+ },
+ {
+  "id": "lovingkindness",
+  "terms": [
+   "amor fiel"
+  ],
+  "text": "Es el amor y la misericordia de Dios, que sostiene a los suyos sin cambiar nunca."
+ },
+ {
+  "id": "worship",
+  "terms": [
+   "adoró"
+  ],
+  "text": "Es postrarse para honrar a Dios."
+ }
+]

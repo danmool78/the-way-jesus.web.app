@@ -1,0 +1,506 @@
+[
+ {
+  "id": "store-city",
+  "terms": [
+   "store cities"
+  ],
+  "text": "Cities where a nation's grain and supplies were stored. The Israelites were forced to build them like slaves."
+ },
+ {
+  "id": "midwife",
+  "terms": [
+   "midwives"
+  ],
+  "text": "Women who helped mothers give birth, much like midwives today."
+ },
+ {
+  "id": "bitumen",
+  "terms": [
+   "tar",
+   "pitch"
+  ],
+  "text": "A sticky black substance found in the ground (asphalt). It was smeared on baskets and boats to keep water out."
+ },
+ {
+  "id": "priest",
+  "terms": [
+   "priest",
+   "priests"
+  ],
+  "text": "A person who offered sacrifices to God, prayed for the people, and taught the law."
+ },
+ {
+  "id": "high-priest",
+  "terms": [
+   "high priest"
+  ],
+  "text": "The chief of the priests. Aaron was the first, and his sons succeeded him."
+ },
+ {
+  "id": "bush",
+  "terms": [
+   "bush"
+  ],
+  "text": "A low, thorny shrub that grows in the wilderness. God called Moses from the flames of such a bush."
+ },
+ {
+  "id": "sign",
+  "terms": [
+   "sign",
+   "signs"
+  ],
+  "text": "An astonishing act showing that God is present. More than a simple miracle, it is a marker that points to something."
+ },
+ {
+  "id": "feast",
+  "terms": [
+   "festival"
+  ],
+  "text": "A sacred holiday kept at an appointed time to remember God, such as Passover or the Feast of Tabernacles."
+ },
+ {
+  "id": "magician",
+  "terms": [
+   "magicians"
+  ],
+  "text": "Men at Pharaoh's court who practiced secret arts. They imitated the first few plagues but soon gave up."
+ },
+ {
+  "id": "passover",
+  "terms": [
+   "Passover"
+  ],
+  "text": "Meaning 'passing over', Israel's first festival. It remembers the night the plague passed over the houses marked with a lamb's blood."
+ },
+ {
+  "id": "hyssop",
+  "terms": [
+   "hyssop"
+  ],
+  "text": "A small plant that grows between rocks. Tied in a bunch, it was used to dip and sprinkle blood or water."
+ },
+ {
+  "id": "lintel",
+  "terms": [
+   "lintel"
+  ],
+  "text": "The beam across the top of a doorway. On Passover night, lamb's blood was put on it and on the two doorposts."
+ },
+ {
+  "id": "leaven",
+  "terms": [
+   "unleavened bread"
+  ],
+  "text": "Bread made without yeast, which makes dough rise. Leaving in haste, Israel ate bread without yeast, and this led to the Feast of Unleavened Bread."
+ },
+ {
+  "id": "able-men",
+  "terms": [
+   "men on foot",
+   "fighting men"
+  ],
+  "text": "Grown men old enough to go to war. Women and children were not included in this count."
+ },
+ {
+  "id": "chariot",
+  "terms": [
+   "chariots"
+  ],
+  "text": "Horse-drawn war carts, the most fearsome weapons of the time."
+ },
+ {
+  "id": "timbrel",
+  "terms": [
+   "tambourine",
+   "tambourines"
+  ],
+  "text": "A small hand drum. Women played it and danced on joyful days."
+ },
+ {
+  "id": "prophet",
+  "terms": [
+   "prophet"
+  ],
+  "text": "A person who receives God's word and passes it on to others; not merely someone who predicts the future."
+ },
+ {
+  "id": "statutes",
+  "terms": [
+   "statute"
+  ],
+  "text": "Laws and rules God set for his people to keep."
+ },
+ {
+  "id": "omer",
+  "terms": [
+   "omer"
+  ],
+  "text": "A dry measure of about two liters, the amount of manna one person ate in a day."
+ },
+ {
+  "id": "manna",
+  "terms": [
+   "manna"
+  ],
+  "text": "The food God gave every day in the wilderness. Its name comes from the question 'What is it?'"
+ },
+ {
+  "id": "sabbath",
+  "terms": [
+   "Sabbath"
+  ],
+  "text": "The seventh day, when people stop work, rest, and remember God. It runs from sunset Friday to sunset Saturday."
+ },
+ {
+  "id": "elder",
+  "terms": [
+   "elders"
+  ],
+  "text": "Older leaders who represented their families and tribes, discussing and deciding the people's affairs together."
+ },
+ {
+  "id": "altar",
+  "terms": [
+   "altar",
+   "altars"
+  ],
+  "text": "A raised platform of stones or earth for offering sacrifices; a place for worshiping God."
+ },
+ {
+  "id": "burnt-offering",
+  "terms": [
+   "burnt offering",
+   "burnt offerings"
+  ],
+  "text": "A sacrifice burned whole on the altar, expressing complete devotion to God."
+ },
+ {
+  "id": "sacrifice",
+  "terms": [
+   "sacrifices"
+  ],
+  "text": "Animals killed as offerings to God."
+ },
+ {
+  "id": "peace-offering",
+  "terms": [
+   "peace offerings"
+  ],
+  "text": "An offering celebrating peace between God and people. Part of the meat was shared and eaten together."
+ },
+ {
+  "id": "lawsuit",
+  "terms": [
+   "disputes"
+  ],
+  "text": "Quarrels brought before someone to decide who is right, much like court cases today."
+ },
+ {
+  "id": "covenant",
+  "terms": [
+   "covenant"
+  ],
+  "text": "A binding promise God made with his people: he would be their God, and they would be his people."
+ },
+ {
+  "id": "purify",
+  "terms": [
+   "clean",
+   "Consecrate"
+  ],
+  "text": "Washing the body and clothes to come before God. Outward cleanness showed that the heart was being prepared."
+ },
+ {
+  "id": "graven-image",
+  "terms": [
+   "carved image"
+  ],
+  "text": "The figure of a god carved from wood, stone, or metal. Such things made to be worshiped are called idols."
+ },
+ {
+  "id": "adultery",
+  "terms": [
+   "adultery"
+  ],
+  "text": "Sexual relations between a married person and someone other than their spouse."
+ },
+ {
+  "id": "sapphire",
+  "terms": [
+   "sapphire"
+  ],
+  "text": "A blue gemstone, thought to be sapphire or lapis lazuli."
+ },
+ {
+  "id": "tablets",
+  "terms": [
+   "tablets"
+  ],
+  "text": "The two stone tablets on which God engraved the Ten Commandments. They were later kept inside the ark of the covenant."
+ },
+ {
+  "id": "tabernacle",
+  "terms": [
+   "tabernacle"
+  ],
+  "text": "A tent sanctuary set up and moved through the wilderness, a sign that God lived among his people."
+ },
+ {
+  "id": "tent-of-meeting",
+  "terms": [
+   "tent of meeting"
+  ],
+  "text": "The tent where God met with Moses and the people; another name for the tabernacle."
+ },
+ {
+  "id": "testimony",
+  "terms": [
+   "testimony"
+  ],
+  "text": "The stone tablets engraved with the Ten Commandments, so called because they bore witness to the covenant between God and his people."
+ },
+ {
+  "id": "ark",
+  "terms": [
+   "ark"
+  ],
+  "text": "A wooden chest covered with gold that held the stone tablets. It showed that God was among his people, and the priests carried it."
+ },
+ {
+  "id": "mercy-seat",
+  "terms": [
+   "atonement cover"
+  ],
+  "text": "The gold lid on the ark of the covenant. Each year the high priest sprinkled blood on it to cleanse the people's sins."
+ },
+ {
+  "id": "veil",
+  "terms": [
+   "curtain"
+  ],
+  "text": "A heavy cloth dividing a space. In the tabernacle it screened off the most holy place."
+ },
+ {
+  "id": "showbread-table",
+  "terms": [
+   "table"
+  ],
+  "text": "The table in the tabernacle where twelve loaves of bread were always set out before God."
+ },
+ {
+  "id": "lampstand",
+  "terms": [
+   "lampstand"
+  ],
+  "text": "A gold lampstand with seven branches of lights that always lit the inside of the tabernacle."
+ },
+ {
+  "id": "incense-altar",
+  "terms": [
+   "altar of incense"
+  ],
+  "text": "A small gold altar in the tabernacle where incense was burned every morning and evening."
+ },
+ {
+  "id": "bronze-altar",
+  "terms": [
+   "altar of burnt offering"
+  ],
+  "text": "The large bronze altar in the tabernacle courtyard, where animals were burned as sacrifices."
+ },
+ {
+  "id": "laver",
+  "terms": [
+   "basin"
+  ],
+  "text": "A large bronze basin where the priests washed their hands and feet.",
+  "skip": [
+   "basin and daubed"
+  ]
+ },
+ {
+  "id": "cubit",
+  "terms": [
+   "cubits"
+  ],
+  "text": "The length from the elbow to the fingertips, about 45 centimeters."
+ },
+ {
+  "id": "days-journey",
+  "terms": [
+   "a day's walk"
+  ],
+  "text": "The distance a person can walk in a day, about 30 kilometers."
+ },
+ {
+  "id": "spy",
+  "terms": [
+   "spy",
+   "spies"
+  ],
+  "text": "People who slip secretly into enemy land to see how things are and report back."
+ },
+ {
+  "id": "tribe",
+  "terms": [
+   "tribe",
+   "tribes"
+  ],
+  "text": "One of the large clans descended from the twelve sons of Jacob. Israel was made up of twelve tribes."
+ },
+ {
+  "id": "censer",
+  "terms": [
+   "censer",
+   "censers"
+  ],
+  "text": "A pan holding burning coals for offering incense. Only priests could use one before God."
+ },
+ {
+  "id": "plague",
+  "terms": [
+   "plague"
+  ],
+  "text": "A terrible disease that spreads among people.",
+  "skip": [
+   "plague grew",
+   "plague. At"
+  ]
+ },
+ {
+  "id": "bronze-serpent",
+  "terms": [
+   "bronze snake"
+  ],
+  "text": "A snake made of bronze. Whoever looked at it lived, and Jesus compared his own cross to it."
+ },
+ {
+  "id": "divination-fee",
+  "terms": [
+   "fee"
+  ],
+  "text": "Money or goods paid for fortune-telling or for pronouncing blessings and curses."
+ },
+ {
+  "id": "official",
+  "terms": [
+   "officials"
+  ],
+  "text": "People who held high positions in the government."
+ },
+ {
+  "id": "law",
+  "terms": [
+   "book of the law",
+   "law"
+  ],
+  "text": "The teaching and commandments God gave through Moses. The Book of the Law is the book where they were written."
+ },
+ {
+  "id": "doorpost",
+  "terms": [
+   "doorposts"
+  ],
+  "text": "The posts standing on either side of a door."
+ },
+ {
+  "id": "flax",
+  "terms": [
+   "flax"
+  ],
+  "text": "The stalks of the flax plant, used to weave linen. They were laid out on roofs to dry."
+ },
+ {
+  "id": "ford",
+  "terms": [
+   "fords"
+  ],
+  "text": "A shallow place where a river can be crossed, or a landing place for boats."
+ },
+ {
+  "id": "circumcision",
+  "terms": [
+   "circumcised"
+  ],
+  "text": "A rite in which the foreskin of a boy was cut, a sign of the covenant marking God's people."
+ },
+ {
+  "id": "shofar",
+  "terms": [
+   "trumpet",
+   "trumpets"
+  ],
+  "text": "Here, the shofar, a trumpet made from a ram's horn. It was blown at festivals, in battle, and to announce great events."
+ },
+ {
+  "id": "devoted",
+  "terms": [
+   "devoted"
+  ],
+  "text": "Destroyed completely: not kept by anyone, but handed over wholly to God."
+ },
+ {
+  "id": "lots",
+  "terms": [
+   "lot",
+   "lots"
+  ],
+  "text": "A way of deciding by drawing marked stones or sticks. It was seen as asking for God's will rather than human choice."
+ },
+ {
+  "id": "peace-treaty",
+  "terms": [
+   "made peace"
+  ],
+  "text": "Agreeing not to fight each other and to live on good terms."
+ },
+ {
+  "id": "inheritance",
+  "terms": [
+   "inheritance"
+  ],
+  "text": "The share God gave his people to hold and enjoy from generation to generation."
+ },
+ {
+  "id": "office",
+  "terms": [
+   "priesthood"
+  ],
+  "text": "The work someone is given and the position that comes with it."
+ },
+ {
+  "id": "oak",
+  "terms": [
+   "oak"
+  ],
+  "text": "A large tree of the oak family that bears acorns. Such trees often marked places where important things happened."
+ },
+ {
+  "id": "sanctuary",
+  "terms": [
+   "sanctuary"
+  ],
+  "text": "A holy place for worshiping God."
+ },
+ {
+  "id": "wrath",
+  "terms": [
+   "anger"
+  ],
+  "text": "God's holy anger against sin."
+ },
+ {
+  "id": "lovingkindness",
+  "terms": [
+   "steadfast love"
+  ],
+  "text": "God's love and mercy that hold on to his people and never change."
+ },
+ {
+  "id": "worship",
+  "terms": [
+   "worshipped"
+  ],
+  "text": "Bowing down to honor God."
+ }
+]

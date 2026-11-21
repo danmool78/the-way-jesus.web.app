@@ -1,0 +1,656 @@
+[
+ {
+  "id": "sanhedrin",
+  "terms": [
+   "Sinédrio"
+  ],
+  "text": "O conselho supremo dos judeus: uns setenta membros, com o sumo sacerdote à frente e anciãos e mestres da Lei, que julgavam questões de religião e da Lei."
+ },
+ {
+  "id": "high-priest",
+  "terms": [
+   "sumo sacerdote"
+  ],
+  "text": "O chefe dos sacerdotes do Templo de Jerusalém. No tempo romano, era o principal líder da sociedade judaica e dirigia o conselho."
+ },
+ {
+  "id": "persecution",
+  "terms": [
+   "perseguição",
+   "perseguido",
+   "persegue"
+  ],
+  "text": "Maltratar, prender ou matar pessoas por causa da sua fé. Depois da morte de Estêvão, a igreja de Jerusalém sofreu a primeira grande perseguição."
+ },
+ {
+  "id": "synagogue",
+  "terms": [
+   "sinagoga",
+   "sinagogas"
+  ],
+  "text": "Lugar onde os judeus se reuniam todo sábado para ler as Escrituras e orar. Ao chegar a uma cidade nova, Paulo pregava primeiro na sinagoga."
+ },
+ {
+  "id": "son-of-man",
+  "terms": [
+   "Filho do Homem"
+  ],
+  "text": "Quer dizer 'filho de um ser humano'; era o nome que Jesus mais usava para si mesmo. No livro de Daniel indica aquele que vem nas nuvens do céu."
+ },
+ {
+  "id": "holy-spirit",
+  "terms": [
+   "Espírito Santo"
+  ],
+  "text": "É o Espírito de Deus. Habita em quem crê, dando força e guiando; em Atos, é ele quem abre o caminho da igreja."
+ },
+ {
+  "id": "vision",
+  "terms": [
+   "visão"
+  ],
+  "text": "Cena que Deus mostra diante dos olhos, em sonho ou acordado. Por meio dela, ele dava a conhecer a sua vontade."
+ },
+ {
+  "id": "saints",
+  "terms": [
+   "santos"
+  ],
+  "text": "Quer dizer pessoas santas que pertencem a Deus; é um modo de chamar os que creem em Jesus."
+ },
+ {
+  "id": "gentile",
+  "terms": [
+   "gentios"
+  ],
+  "text": "Nome dado às pessoas de povos que não são judeus. Paulo foi chamado para ser apóstolo e levar o evangelho aos gentios."
+ },
+ {
+  "id": "baptism",
+  "terms": [
+   "batizado",
+   "batizados",
+   "batizadas",
+   "batismo"
+  ],
+  "text": "Rito de lavar com água ou mergulhar na água, mostrando que os pecados foram lavados e que a pessoa passou a seguir Jesus."
+ },
+ {
+  "id": "christ",
+  "terms": [
+   "Cristo"
+  ],
+  "text": "Palavra grega que quer dizer 'o ungido', a mesma coisa que Messias em hebraico. Indica o salvador que Deus prometeu."
+ },
+ {
+  "id": "christian",
+  "terms": [
+   "cristãos",
+   "cristão"
+  ],
+  "text": "Quer dizer 'quem pertence a Cristo'. Foram os moradores de Antioquia que chamaram assim os discípulos de Jesus pela primeira vez."
+ },
+ {
+  "id": "prophet",
+  "terms": [
+   "profeta",
+   "profetas"
+  ],
+  "text": "Pessoa que recebe a palavra de Deus e a transmite aos outros. Houve os profetas do Antigo Testamento e também profetas na igreja primitiva."
+ },
+ {
+  "id": "elder",
+  "terms": [
+   "presbíteros"
+  ],
+  "text": "Líderes mais velhos que cuidam da comunidade e a guiam. Paulo estabeleceu presbíteros em cada cidade e lhes confiou a igreja."
+ },
+ {
+  "id": "apostle",
+  "terms": [
+   "apóstolos"
+  ],
+  "text": "Quer dizer 'enviado'. Indica os doze discípulos que Jesus escolheu e Paulo, chamado pelo Senhor ressuscitado."
+ },
+ {
+  "id": "fasting",
+  "terms": [
+   "jejuar",
+   "jejuavam",
+   "jejuam"
+  ],
+  "text": "Ficar sem comer por um tempo para concentrar o coração em Deus. Era feito junto com a oração antes de decisões importantes."
+ },
+ {
+  "id": "laying-on-hands",
+  "terms": [
+   "impôs as mãos",
+   "impuseram as mãos",
+   "pôs as mãos"
+  ],
+  "text": "Orar pondo as mãos sobre a cabeça ou o corpo de alguém. Era feito ao enviar alguém para uma missão, ao curar ou ao abençoar."
+ },
+ {
+  "id": "proconsul",
+  "terms": [
+   "procônsul",
+   "governador romano",
+   "governador Félix",
+   "novo governador"
+  ],
+  "text": "Autoridade enviada por Roma para governar uma província. Chipre e Acaia eram governadas por procônsules do Senado; a Judeia, por governadores enviados pelo imperador."
+ },
+ {
+  "id": "sorcerer",
+  "terms": [
+   "mágico"
+  ],
+  "text": "Pessoa que dizia ter poderes misteriosos por meio de encantamentos e adivinhação e assim prendia as pessoas. A Bíblia proíbe essas práticas."
+ },
+ {
+  "id": "false-prophet",
+  "terms": [
+   "falso profeta"
+  ],
+  "text": "Quem engana dizendo que é palavra de Deus algo que não recebeu de Deus."
+ },
+ {
+  "id": "sabbath",
+  "terms": [
+   "sábado",
+   "sábados"
+  ],
+  "text": "O sétimo dia da semana (do pôr do sol de sexta ao pôr do sol de sábado), dia de descansar do trabalho e adorar a Deus."
+ },
+ {
+  "id": "law",
+  "terms": [
+   "lei"
+  ],
+  "text": "Os mandamentos e as normas que Deus deu por meio de Moisés. Em sentido amplo, os cinco primeiros livros do Antigo Testamento."
+ },
+ {
+  "id": "prophets-books",
+  "terms": [
+   "Lei e dos Profetas"
+  ],
+  "text": "Os livros dos profetas, como Isaías e Jeremias. Na sinagoga, eram lidos depois da Lei."
+ },
+ {
+  "id": "synagogue-ruler",
+  "terms": [
+   "chefes da sinagoga",
+   "chefe da sinagoga"
+  ],
+  "text": "Pessoa que organizava as reuniões e o culto da sinagoga. Decidia quem ia ler as Escrituras e falar."
+ },
+ {
+  "id": "justified",
+  "terms": [
+   "justificado",
+   "justificados"
+  ],
+  "text": "Quer dizer que Deus aceita o pecador como alguém sem culpa. Paulo ensinou que isso se recebe pela fé, e não pelas obras."
+ },
+ {
+  "id": "shake-dust",
+  "terms": [
+   "sacudiram o pó"
+  ],
+  "text": "Gesto judaico que mostrava que, se a cidade rejeitou a mensagem, a responsabilidade era dela."
+ },
+ {
+  "id": "noble-women",
+  "terms": [
+   "mulheres nobres",
+   "mulheres importantes"
+  ],
+  "text": "Mulheres de famílias ricas e de posição elevada. Nas cidades gregas tinham muita influência."
+ },
+ {
+  "id": "sacrifice",
+  "terms": [
+   "sacrifícios",
+   "sacrifício"
+  ],
+  "text": "Servir a um deus oferecendo animais ou cereais. Os moradores de Listra acharam que Paulo e Barnabé eram deuses e quiseram lhes oferecer sacrifícios."
+ },
+ {
+  "id": "priest",
+  "terms": [
+   "sacerdote",
+   "sacerdotes"
+  ],
+  "text": "Quem cuidava dos sacrifícios num templo ou no Templo. O sacerdote de Listra servia no templo de Zeus."
+ },
+ {
+  "id": "tear-clothes",
+  "terms": [
+   "rasgaram as roupas"
+  ],
+  "text": "Costume de rasgar a roupa para mostrar o que se sentia ao passar por uma grande tristeza ou ao ouvir uma ofensa contra Deus."
+ },
+ {
+  "id": "kingdom-of-god",
+  "terms": [
+   "reino de Deus"
+  ],
+  "text": "O reino em que Deus governa como rei. Mais do que um lugar, quer dizer o governo de Deus acontecendo."
+ },
+ {
+  "id": "circumcision",
+  "terms": [
+   "circuncisão",
+   "circuncidado",
+   "circuncidados",
+   "circuncidou",
+   "circuncidar"
+  ],
+  "text": "Rito de cortar a pele da ponta do órgão sexual dos meninos, sinal da aliança de pertencer ao povo de Deus. Houve grande debate sobre se os gentios que criam também deviam recebê-la."
+ },
+ {
+  "id": "gospel",
+  "terms": [
+   "evangelho"
+  ],
+  "text": "Quer dizer 'boa notícia': a notícia de que Jesus Cristo morreu e ressuscitou para salvar as pessoas."
+ },
+ {
+  "id": "grace",
+  "terms": [
+   "graça"
+  ],
+  "text": "O amor e os presentes que Deus dá de graça a quem não merece."
+ },
+ {
+  "id": "signs",
+  "terms": [
+   "sinais"
+  ],
+  "text": "Acontecimentos admiráveis que mostram que Deus está presente. A palavra põe o peso naquilo para o qual o milagre aponta."
+ },
+ {
+  "id": "roman-colony",
+  "terms": [
+   "colônia romana"
+  ],
+  "text": "Cidade onde Roma instalava, por exemplo, soldados aposentados e à qual dava as leis e os privilégios romanos. Os moradores de Filipos tinham muito orgulho de ser cidadãos romanos."
+ },
+ {
+  "id": "purple-cloth",
+  "terms": [
+   "tecidos de púrpura"
+  ],
+  "text": "Tecido tingido de púrpura com uma tinta cara extraída de moluscos. Só os ricos e poderosos o usavam, por isso quem o vendia vivia bem."
+ },
+ {
+  "id": "god-fearer",
+  "terms": [
+   "temente a Deus"
+  ],
+  "text": "Pessoa que não era judia, mas cria no Deus de Israel e participava do culto na sinagoga."
+ },
+ {
+  "id": "divination-spirit",
+  "terms": [
+   "espírito de adivinhação"
+  ],
+  "text": "Espírito mau que dizia adivinhar o futuro. Graças à escrava possuída por ele, os donos ganhavam dinheiro com adivinhações."
+ },
+ {
+  "id": "stocks",
+  "terms": [
+   "tronco"
+  ],
+  "text": "Armação de madeira em que se prendiam os tornozelos do preso para que não fugisse."
+ },
+ {
+  "id": "jailer",
+  "terms": [
+   "carcereiro"
+  ],
+  "text": "Quem guardava a prisão e cuidava dos presos. Se um preso fugisse, ele mesmo era castigado."
+ },
+ {
+  "id": "idol",
+  "terms": [
+   "ídolos"
+  ],
+  "text": "Adorar imagens de deuses feitas por mãos humanas. Atenas estava cheia de estátuas de deuses e de altares."
+ },
+ {
+  "id": "epicurean",
+  "terms": [
+   "epicureus"
+  ],
+  "text": "Filósofos gregos que tinham como meta da vida a paz do coração e o prazer sem dor. Achavam que os deuses não se interessavam pelos assuntos humanos."
+ },
+ {
+  "id": "stoic",
+  "terms": [
+   "estoicos"
+  ],
+  "text": "Filósofos gregos que ensinavam a dominar as emoções pela razão e a aceitar o destino."
+ },
+ {
+  "id": "areopagus",
+  "terms": [
+   "Areópago"
+  ],
+  "text": "Quer dizer 'colina de Ares'; o antigo conselho de Atenas se reunia ali e acabou recebendo esse nome. Às vezes também examinava ensinos novos."
+ },
+ {
+  "id": "repent",
+  "terms": [
+   "arrependam"
+  ],
+  "text": "Não é só lamentar o erro, mas voltar o coração e o rumo da vida para Deus."
+ },
+ {
+  "id": "judgment",
+  "terms": [
+   "juízo que virá"
+  ],
+  "text": "Quando Deus, no último dia, julgará com justiça a vida de todas as pessoas."
+ },
+ {
+  "id": "resurrection",
+  "terms": [
+   "ressurreição",
+   "ressuscitou",
+   "ressuscitar",
+   "ressuscitando",
+   "ressuscitam"
+  ],
+  "text": "Quando um morto volta a viver. A ressurreição de Jesus é o centro da fé cristã."
+ },
+ {
+  "id": "emperor",
+  "terms": [
+   "imperador"
+  ],
+  "text": "O governante supremo do Império Romano. No tempo de Paulo, os imperadores foram Cláudio e Nero."
+ },
+ {
+  "id": "tentmaker",
+  "terms": [
+   "faziam tendas"
+  ],
+  "text": "As tendas eram feitas de couro ou de tecido de pelo de cabra. Paulo ganhava o próprio sustento fazendo tendas enquanto anunciava o evangelho."
+ },
+ {
+  "id": "tyrannus-hall",
+  "terms": [
+   "escola de Tirano"
+  ],
+  "text": "Sala de ensino em Éfeso. Tirano parece ser o nome do dono ou de um professor dali; Paulo ensinou ali todos os dias por dois anos."
+ },
+ {
+  "id": "evil-spirit",
+  "terms": [
+   "espíritos maus",
+   "espírito mau",
+   "demônios"
+  ],
+  "text": "Seres espirituais que se opõem a Deus e atormentam as pessoas. Iam embora diante do nome de Jesus."
+ },
+ {
+  "id": "silver-coins",
+  "terms": [
+   "moedas de prata"
+  ],
+  "text": "Dinheiro feito de prata; uma moeda costumava valer o salário de um dia de trabalho. Cinquenta mil moedas eram um valor enorme."
+ },
+ {
+  "id": "artemis",
+  "terms": [
+   "Ártemis"
+  ],
+  "text": "A deusa Ártemis, adorada pelos gregos. O templo dela em Éfeso era contado entre as sete maravilhas do mundo antigo."
+ },
+ {
+  "id": "temple",
+  "terms": [
+   "templo",
+   "templos"
+  ],
+  "text": "Edifício onde se honra e se adora um deus."
+ },
+ {
+  "id": "town-clerk",
+  "terms": [
+   "escrivão"
+  ],
+  "text": "O funcionário mais alto da cidade de Éfeso, responsável pelos documentos e pela assembleia do povo. Respondia a Roma pela ordem da cidade."
+ },
+ {
+  "id": "blaspheme",
+  "terms": [
+   "blasfemaram"
+  ],
+  "text": "Desprezar e ofender um deus ou aquilo que é santo."
+ },
+ {
+  "id": "offering",
+  "terms": [
+   "oferta"
+  ],
+  "text": "Dinheiro dado a Deus ou recolhido para ajudar quem passa necessidade. Paulo levou as ofertas das igrejas dos gentios aos cristãos pobres de Jerusalém."
+ },
+ {
+  "id": "unleavened-bread",
+  "terms": [
+   "pães sem fermento"
+  ],
+  "text": "Festa judaica de sete dias, logo depois da Páscoa, em que se comia pão sem fermento para lembrar a saída do Egito."
+ },
+ {
+  "id": "breaking-bread",
+  "terms": [
+   "partir o pão",
+   "partiu o pão"
+  ],
+  "text": "Comer juntos repartindo o pão; na igreja primitiva, queria dizer participar juntos da ceia do Senhor."
+ },
+ {
+  "id": "lords-supper",
+  "terms": [
+   "ceia do Senhor"
+  ],
+  "text": "Rito em que se reparte o pão e o cálice lembrando a última refeição de Jesus com os discípulos, na noite antes de morrer. Também se chama santa ceia."
+ },
+ {
+  "id": "upper-room",
+  "terms": [
+   "cenáculo"
+  ],
+  "text": "Sala grande no andar de cima de uma casa. A igreja primitiva se reunia em salas assim para o culto."
+ },
+ {
+  "id": "pentecost",
+  "terms": [
+   "Pentecostes"
+  ],
+  "text": "Festa judaica da colheita, cinquenta dias depois da Páscoa. Nesse dia muitos peregrinos se reuniam em Jerusalém."
+ },
+ {
+  "id": "tribulation",
+  "terms": [
+   "tribulações",
+   "sofrimento",
+   "sofrimentos"
+  ],
+  "text": "Aflições e dificuldades difíceis de suportar."
+ },
+ {
+  "id": "bonds",
+  "terms": [
+   "correntes"
+  ],
+  "text": "Amarrar alguém com cordas ou correntes. Indica que Paulo seria preso e encarcerado."
+ },
+ {
+  "id": "evangelist",
+  "terms": [
+   "evangelista"
+  ],
+  "text": "Pessoa encarregada de anunciar o evangelho. Filipe era um dos sete auxiliares da igreja de Jerusalém."
+ },
+ {
+  "id": "vow-purification",
+  "terms": [
+   "purificação"
+  ],
+  "text": "Rito para purificar o corpo segundo a Lei. Paulo o fez junto com quatro homens que estavam terminando um voto de nazireu."
+ },
+ {
+  "id": "tribune",
+  "terms": [
+   "comandante"
+  ],
+  "text": "Oficial do exército romano que comandava cerca de mil soldados. Chefiava a guarnição da fortaleza Antônia, em Jerusalém."
+ },
+ {
+  "id": "barracks",
+  "terms": [
+   "fortaleza"
+  ],
+  "text": "Alojamento onde ficam os soldados. Em Jerusalém, era a fortaleza Antônia, bem ao lado do Templo."
+ },
+ {
+  "id": "centurion",
+  "terms": [
+   "centurião"
+  ],
+  "text": "Oficial do exército romano que comandava cerca de cem soldados. Eram soldados de carreira, a espinha dorsal do exército."
+ },
+ {
+  "id": "roman-citizen",
+  "terms": [
+   "cidadão romano",
+   "cidadania"
+  ],
+  "text": "Quem tinha a cidadania romana não podia ser açoitado sem julgamento e podia apelar ao imperador. Paulo era cidadão de nascimento."
+ },
+ {
+  "id": "sadducees",
+  "terms": [
+   "saduceus"
+  ],
+  "text": "Grupo judeu formado sobretudo por famílias de sacerdotes e pelos ricos. Só aceitavam os cinco livros de Moisés e não acreditavam na ressurreição nem em anjos."
+ },
+ {
+  "id": "pharisees",
+  "terms": [
+   "fariseus",
+   "fariseu"
+  ],
+  "text": "Grupo judeu que procurava cumprir com rigor a Lei e as tradições dos antepassados. Acreditavam na ressurreição, e Paulo também era fariseu."
+ },
+ {
+  "id": "heresy",
+  "terms": [
+   "seita"
+  ],
+  "text": "Originalmente quer dizer 'grupo, partido'. Os acusadores chamavam assim os seguidores de Jesus, como se fossem um grupo desviado."
+ },
+ {
+  "id": "self-control",
+  "terms": [
+   "domínio próprio"
+  ],
+  "text": "Controlar os próprios desejos e emoções para não passar da medida."
+ },
+ {
+  "id": "caesar",
+  "terms": [
+   "César"
+  ],
+  "text": "Título do imperador romano, vindo do nome de Júlio César. No tempo de Paulo, o César era Nero."
+ },
+ {
+  "id": "appeal",
+  "terms": [
+   "apelo",
+   "apelou"
+  ],
+  "text": "Não aceitar a sentença de um tribunal inferior e pedir um novo julgamento numa instância mais alta. O cidadão romano podia apelar ao imperador."
+ },
+ {
+  "id": "augustan-cohort",
+  "terms": [
+   "batalhão Imperial"
+  ],
+  "text": "Tropa auxiliar romana que levava o nome do imperador (Augusto)."
+ },
+ {
+  "id": "day-of-atonement",
+  "terms": [
+   "Dia da Expiação"
+  ],
+  "text": "Dia de jejum no outono (dia 10 do sétimo mês judaico), em que se pedia o perdão dos pecados do povo. Depois dele, navegar no Mediterrâneo ficava perigoso."
+ },
+ {
+  "id": "euroclydon",
+  "terms": [
+   "Euroaquilão"
+  ],
+  "text": "Vento nordeste violento que soprava no Mediterrâneo no inverno. Descia das montanhas de Creta sobre o mar."
+ },
+ {
+  "id": "lifeboat",
+  "terms": [
+   "bote"
+  ],
+  "text": "Barco pequeno levado a bordo de um navio grande. Servia para salvar pessoas em perigo ou para ir e voltar da terra."
+ },
+ {
+  "id": "dioscuri",
+  "terms": [
+   "Dióscuros"
+  ],
+  "text": "Castor e Pólux, os filhos gêmeos de Zeus. Os marinheiros os adoravam como protetores da navegação e punham o emblema deles na proa."
+ },
+ {
+  "id": "praetorian-guard",
+  "terms": [
+   "guarda do imperador"
+  ],
+  "text": "Tropa de elite que protegia o imperador romano. Os soldados que se revezavam vigiando Paulo preso ouviram o evangelho."
+ },
+ {
+  "id": "genealogy",
+  "terms": [
+   "genealogias"
+  ],
+  "text": "Registros da linhagem dos antepassados aos descendentes. Os falsos mestres de Éfeso criavam discussões inúteis com histórias de genealogias."
+ },
+ {
+  "id": "crown",
+  "terms": [
+   "coroa"
+  ],
+  "text": "A coroa que o vencedor de uma competição ou o rei punha na cabeça. Paulo a comparou ao prêmio de quem guarda a fé até o fim."
+ },
+ {
+  "id": "parchment",
+  "terms": [
+   "pergaminhos"
+  ],
+  "text": "Material para escrever feito de pele de ovelha ou cabra, esticada e seca. Deviam ser preciosos rolos das Escrituras."
+ },
+ {
+  "id": "drink-offering",
+  "terms": [
+   "derramado como vinho"
+  ],
+  "text": "Oferta em que se derramava vinho sobre o sacrifício. Paulo comparou a própria vida a algo sendo derramado como oferta."
+ },
+ {
+  "id": "altar",
+  "terms": [
+   "altar"
+  ],
+  "text": "Plataforma construída para oferecer sacrifícios a um deus ou para adorá-lo."
+ }
+]

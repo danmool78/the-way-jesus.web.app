@@ -1,0 +1,758 @@
+[
+ {
+  "id": "cherub",
+  "terms": [
+   "querubines"
+  ],
+  "text": "Los querubines son seres celestiales con alas que guardan el lugar donde está Dios."
+ },
+ {
+  "id": "tree-of-life",
+  "terms": [
+   "árbol de la vida"
+  ],
+  "text": "Era el árbol que estaba en medio del jardín del Edén y simboliza la vida sin fin. Tras el pecado, el camino hacia él quedó cerrado para el ser humano."
+ },
+ {
+  "id": "holy-spirit",
+  "terms": [
+   "Espíritu Santo"
+  ],
+  "text": "Es el Espíritu de Dios. La fe cristiana lo confiesa como un solo Dios junto con el Padre y el Hijo."
+ },
+ {
+  "id": "grace",
+  "terms": [
+   "gracia"
+  ],
+  "text": "Es el amor y el regalo que Dios da gratuitamente a quien no lo merece."
+ },
+ {
+  "id": "conceive",
+  "terms": [
+   "concebido"
+  ],
+  "text": "Significa quedar embarazada. María tuvo un hijo sin intervención de varón, por obra del Espíritu Santo."
+ },
+ {
+  "id": "census",
+  "terms": [
+   "censo"
+  ],
+  "text": "Fue un recuento de la población ordenado por el emperador romano para cobrar impuestos. Cada uno debía ir a inscribirse en el pueblo de sus antepasados."
+ },
+ {
+  "id": "manger",
+  "terms": [
+   "pesebre"
+  ],
+  "text": "Es el recipiente donde se pone la comida para los caballos o los bueyes. Fue el primer lugar donde se acostó al niño Jesús."
+ },
+ {
+  "id": "savior",
+  "terms": [
+   "Salvador"
+  ],
+  "text": "Significa 'el que salva'. Se refiere a quien libra a las personas del pecado y de la muerte."
+ },
+ {
+  "id": "circumcision",
+  "terms": [
+   "circuncidado"
+  ],
+  "text": "Es el rito de cortar el extremo de la piel del órgano masculino al octavo día de nacer un niño. Era la señal de la alianza de pertenecer al pueblo de Dios."
+ },
+ {
+  "id": "purification",
+  "terms": [
+   "purificación"
+  ],
+  "text": "Es el rito para limpiar el cuerpo y los objetos según la Ley. La madre que daba a luz también ofrecía un sacrificio pasados ciertos días."
+ },
+ {
+  "id": "law",
+  "terms": [
+   "Ley"
+  ],
+  "text": "Son las enseñanzas y los mandamientos que Dios dio a Israel por medio de Moisés. Están en los cinco primeros libros del Antiguo Testamento."
+ },
+ {
+  "id": "temple",
+  "terms": [
+   "Templo"
+  ],
+  "text": "Era el gran edificio de Jerusalén donde se adoraba a Dios y se ofrecían sacrificios. El de la época de Jesús lo había ampliado mucho Herodes."
+ },
+ {
+  "id": "christ",
+  "terms": [
+   "Cristo"
+  ],
+  "text": "Palabra griega que significa 'el ungido', lo mismo que el hebreo Mesías. Designa al salvador que Dios prometió enviar."
+ },
+ {
+  "id": "messiah",
+  "terms": [
+   "Mesías"
+  ],
+  "text": "Palabra hebrea que significa 'el ungido': el salvador prometido que Israel esperaba. En griego se dice Cristo."
+ },
+ {
+  "id": "tribe",
+  "terms": [
+   "tribu"
+  ],
+  "text": "Son las doce ramas familiares de Israel, que descienden de los doce hijos de Jacob."
+ },
+ {
+  "id": "prophet",
+  "terms": [
+   "profeta",
+   "profetas",
+   "profetisa"
+  ],
+  "text": "Es quien recibe la palabra de Dios y la transmite a la gente. Lo central no es predecir el futuro, sino comunicar la voluntad de Dios."
+ },
+ {
+  "id": "fasting",
+  "terms": [
+   "ayunando"
+  ],
+  "text": "Es dejar de comer durante un tiempo para concentrarse en la oración."
+ },
+ {
+  "id": "magi",
+  "terms": [
+   "magos"
+  ],
+  "text": "No eran magos de trucos, sino sabios de Oriente que estudiaban las estrellas. Se cree que venían de Persia o de Babilonia."
+ },
+ {
+  "id": "high-priest",
+  "terms": [
+   "sumo sacerdote",
+   "sumos sacerdotes"
+  ],
+  "text": "Era el jefe de los sacerdotes, la máxima autoridad religiosa que dirigía el Templo y el consejo judío."
+ },
+ {
+  "id": "priest",
+  "terms": [
+   "sacerdote",
+   "sacerdotes"
+  ],
+  "text": "Era quien ofrecía los sacrificios en el Templo y se acercaba a Dios en nombre del pueblo. Lo hacían los descendientes de Aarón."
+ },
+ {
+  "id": "levite",
+  "terms": [
+   "levita"
+  ],
+  "text": "Era un miembro de la tribu de Leví, que ayudaba a los sacerdotes en los trabajos del Templo."
+ },
+ {
+  "id": "scribe",
+  "terms": [
+   "maestros de la Ley",
+   "maestro de la Ley"
+  ],
+  "text": "Eran expertos que estudiaban y enseñaban la Ley. En la Biblia también se les llama escribas."
+ },
+ {
+  "id": "worship",
+  "terms": [
+   "adorarlo",
+   "adoraron",
+   "adoras",
+   "adorarás",
+   "adorar"
+  ],
+  "text": "Es postrarse y honrar profundamente. Es la mayor muestra de respeto ante Dios o ante un rey."
+ },
+ {
+  "id": "frankincense",
+  "terms": [
+   "incienso"
+  ],
+  "text": "Es una resina de árbol, seca y valiosa, que perfuma al quemarse. Se usaba en las ofrendas a Dios."
+ },
+ {
+  "id": "myrrh",
+  "terms": [
+   "mirra"
+  ],
+  "text": "Es una resina aromática muy cara. Se usaba como medicina y perfume, y también para ungir a los muertos al sepultarlos."
+ },
+ {
+  "id": "aloes",
+  "terms": [
+   "áloe"
+  ],
+  "text": "Es un perfume que se obtiene de una madera muy aromática. En los entierros se mezclaba con mirra para el cuerpo."
+ },
+ {
+  "id": "repentance",
+  "terms": [
+   "arrepentido"
+  ],
+  "text": "No es solo lamentar lo malo, sino cambiar el rumbo de la vida y volver a Dios."
+ },
+ {
+  "id": "baptism",
+  "terms": [
+   "bautismo",
+   "bautizado"
+  ],
+  "text": "Es el rito de sumergirse en agua o recibirla, que expresa el lavado del pecado y el comienzo de una vida nueva."
+ },
+ {
+  "id": "devil",
+  "terms": [
+   "diablo",
+   "Satanás"
+  ],
+  "text": "Es el jefe de los espíritus malos, que se opone a Dios y busca hacer caer a las personas. Satanás significa 'el adversario'."
+ },
+ {
+  "id": "lamb-of-god",
+  "terms": [
+   "Cordero"
+  ],
+  "text": "Alude a los corderos que se ofrecían en sacrificio por el pecado: así se llama a Jesús, que muere cargando el pecado del mundo."
+ },
+ {
+  "id": "rabbi",
+  "terms": [
+   "Rabí",
+   "Rabbuní"
+  ],
+  "text": "Palabra hebrea que significa 'mi maestro', título de respeto para quien enseñaba la Ley. Rabbuní es una forma más cariñosa."
+ },
+ {
+  "id": "sign",
+  "terms": [
+   "señales",
+   "señal"
+  ],
+  "text": "Es un milagro que muestra el poder de Dios y señala quién es Jesús."
+ },
+ {
+  "id": "money-changer",
+  "terms": [
+   "cambistas"
+  ],
+  "text": "Eran comerciantes que cambiaban monedas de otros países por la moneda que se usaba en el Templo. Cobraban un recargo para ganar dinero."
+ },
+ {
+  "id": "son-of-man",
+  "terms": [
+   "Hijo del hombre"
+  ],
+  "text": "Significa 'hijo de un ser humano'. Era el nombre que Jesús prefería para hablar de sí mismo, y recuerda al soberano celestial del libro de Daniel."
+ },
+ {
+  "id": "pharisee",
+  "terms": [
+   "fariseos",
+   "fariseo"
+  ],
+  "text": "Era un grupo judío que procuraba cumplir con todo detalle la Ley y las tradiciones de los antepasados. A menudo chocaron con Jesús."
+ },
+ {
+  "id": "samaritan",
+  "terms": [
+   "samaritana",
+   "samaritanos",
+   "samaritano"
+  ],
+  "text": "Eran los habitantes de Samaria, entre Judea y Galilea. Desde hacía mucho estaban enemistados con los judíos y no se trataban."
+ },
+ {
+  "id": "seventh-hour",
+  "terms": [
+   "una de la tarde"
+  ],
+  "text": "Las horas se contaban desde la salida del sol: la hora séptima equivale más o menos a la una de la tarde."
+ },
+ {
+  "id": "sabbath",
+  "terms": [
+   "sábado"
+  ],
+  "text": "Es el séptimo día de la semana, un día santo para descansar del trabajo y recordar a Dios. Va desde la puesta del sol del viernes hasta la del sábado."
+ },
+ {
+  "id": "synagogue",
+  "terms": [
+   "sinagoga"
+  ],
+  "text": "Era el lugar de cada pueblo donde los judíos se reunían para leer las Escrituras, orar y aprender."
+ },
+ {
+  "id": "synagogue-ruler",
+  "terms": [
+   "jefe de la sinagoga"
+  ],
+  "text": "Era el encargado de organizar y dirigir las reuniones y el culto de la sinagoga."
+ },
+ {
+  "id": "scroll",
+  "terms": [
+   "rollo"
+  ],
+  "text": "Es un libro hecho con tiras largas de cuero o papiro unidas y enrolladas. Así estaban escritas también las Escrituras."
+ },
+ {
+  "id": "unclean-spirit",
+  "terms": [
+   "espíritu impuro",
+   "espíritus impuros",
+   "demonios"
+  ],
+  "text": "Son espíritus malos que se apoderan de las personas y las atormentan. Jesús los expulsaba con su palabra."
+ },
+ {
+  "id": "paralytic",
+  "terms": [
+   "paralítico",
+   "paralíticos"
+  ],
+  "text": "Es una persona que padece parálisis y no puede mover el cuerpo."
+ },
+ {
+  "id": "tax-collector",
+  "terms": [
+   "recaudadores de impuestos",
+   "recaudador de impuestos",
+   "jefe de recaudadores",
+   "recaudadores",
+   "recaudador"
+  ],
+  "text": "Eran judíos que cobraban impuestos a su propio pueblo para Roma. Como a menudo se quedaban con más de lo debido, se les trataba como pecadores."
+ },
+ {
+  "id": "colonnade",
+  "terms": [
+   "pórticos",
+   "pórtico"
+  ],
+  "text": "Es un pasillo largo con techo sostenido por columnas, abierto por uno o por los dos lados."
+ },
+ {
+  "id": "apostle",
+  "terms": [
+   "apóstoles"
+  ],
+  "text": "Significa 'enviado'. Así se llama a los doce discípulos que Jesús escogió."
+ },
+ {
+  "id": "zealot",
+  "terms": [
+   "Zelote"
+  ],
+  "text": "Era miembro de un grupo judío que quería expulsar el dominio romano incluso por la fuerza."
+ },
+ {
+  "id": "rock",
+  "terms": [
+   "roca"
+  ],
+  "text": "Es una peña ancha y firme, imagen de un cimiento que no se mueve. El nombre de Pedro también significa 'piedra, roca'."
+ },
+ {
+  "id": "inner-room",
+  "terms": [
+   "su cuarto"
+  ],
+  "text": "Es una habitación pequeña y retirada de la casa: el lugar para orar a solas, lejos de las miradas."
+ },
+ {
+  "id": "centurion",
+  "terms": [
+   "centurión"
+  ],
+  "text": "Era un oficial del ejército romano que mandaba a unos cien soldados."
+ },
+ {
+  "id": "elder",
+  "terms": [
+   "ancianos"
+  ],
+  "text": "Eran los líderes de edad que guiaban a un pueblo o a la nación."
+ },
+ {
+  "id": "perfume",
+  "terms": [
+   "perfume",
+   "perfumes",
+   "nardo"
+  ],
+  "text": "Es un aceite aromático y valioso. El nardo, hecho de una planta del Himalaya, era un perfume carísimo."
+ },
+ {
+  "id": "alabaster",
+  "terms": [
+   "alabastro"
+  ],
+  "text": "Era un frasco de piedra pulida para guardar perfume. Se le rompía el cuello y se vaciaba de una vez."
+ },
+ {
+  "id": "denarius",
+  "terms": [
+   "denarios",
+   "denario"
+  ],
+  "text": "Moneda romana de plata, más o menos el jornal de un día de trabajo."
+ },
+ {
+  "id": "forgive-debt",
+  "terms": [
+   "perdonó la deuda",
+   "perdonaron una deuda"
+  ],
+  "text": "Es rebajar o cancelar una deuda que había que pagar."
+ },
+ {
+  "id": "stern",
+  "terms": [
+   "popa"
+  ],
+  "text": "Es la parte de atrás de una barca. La parte delantera se llama proa."
+ },
+ {
+  "id": "bleeding",
+  "terms": [
+   "hemorragias",
+   "hemorragia"
+  ],
+  "text": "Es una enfermedad en la que la sangre no deja de fluir. Según la Ley se consideraba impura, por lo que era difícil convivir con los demás."
+ },
+ {
+  "id": "manna",
+  "terms": [
+   "maná"
+  ],
+  "text": "Es el alimento que Dios hizo caer del cielo cada día durante los cuarenta años en que Israel atravesó el desierto."
+ },
+ {
+  "id": "greek-gentile",
+  "terms": [
+   "griega",
+   "paganos"
+  ],
+  "text": "Los griegos eran los habitantes de Grecia y, en general, de cultura griega. Los paganos o gentiles son los pueblos que no son judíos."
+ },
+ {
+  "id": "booths",
+  "terms": [
+   "fiesta de las Tiendas"
+  ],
+  "text": "Fiesta de siete días tras la cosecha de otoño, en la que se vivía en chozas de ramas para recordar el tiempo en el desierto."
+ },
+ {
+  "id": "booth",
+  "terms": [
+   "chozas"
+  ],
+  "text": "Es una casita provisional hecha con ramas o hierba."
+ },
+ {
+  "id": "adultery",
+  "terms": [
+   "adulterio"
+  ],
+  "text": "Es tener relaciones sexuales una persona casada con alguien que no es su cónyuge. La Ley lo castigaba con dureza."
+ },
+ {
+  "id": "condemn",
+  "terms": [
+   "condenaban",
+   "condeno"
+  ],
+  "text": "Es declarar a alguien culpable e imponerle un castigo."
+ },
+ {
+  "id": "hanukkah",
+  "terms": [
+   "fiesta de la Dedicación"
+  ],
+  "text": "Fiesta de invierno que recuerda cuando se recuperó el Templo profanado por un rey griego y se consagró de nuevo a Dios. Hoy se llama Janucá."
+ },
+ {
+  "id": "carob",
+  "terms": [
+   "algarrobas"
+  ],
+  "text": "Son frutos en forma de vaina que se daban sobre todo a los cerdos y al ganado. Solo los comía quien pasaba mucha hambre."
+ },
+ {
+  "id": "silver-coin",
+  "terms": [
+   "monedas de plata"
+  ],
+  "text": "Monedas hechas de plata. Aquí se trata de dracmas, que valían más o menos el jornal de un día."
+ },
+ {
+  "id": "sanhedrin",
+  "terms": [
+   "miembro del Consejo",
+   "Consejo"
+  ],
+  "text": "Era el consejo supremo y tribunal de los judíos, presidido por el sumo sacerdote. También se le llama Sanedrín."
+ },
+ {
+  "id": "resurrection",
+  "terms": [
+   "resurrección",
+   "resucitar",
+   "resucitó",
+   "resucitaría",
+   "resucitara"
+  ],
+  "text": "Es volver a la vida después de morir. La resurrección de Jesús es el centro de la fe cristiana."
+ },
+ {
+  "id": "commandment",
+  "terms": [
+   "mandamientos"
+  ],
+  "text": "Son las enseñanzas que Dios manda cumplir. Los Diez Mandamientos son el ejemplo más conocido."
+ },
+ {
+  "id": "sycamore",
+  "terms": [
+   "sicómoro"
+  ],
+  "text": "Es un árbol parecido a la higuera, de ramas bajas y extendidas, fácil de trepar."
+ },
+ {
+  "id": "leprosy",
+  "terms": [
+   "leproso"
+  ],
+  "text": "Era una grave enfermedad de la piel. En tiempos bíblicos se consideraba impura y los enfermos debían vivir aparte, fuera del pueblo."
+ },
+ {
+  "id": "pound",
+  "terms": [
+   "libra",
+   "libras"
+  ],
+  "text": "Es una medida de peso: aquí, la libra romana, de unos 330 gramos."
+ },
+ {
+  "id": "palm",
+  "terms": [
+   "palmera"
+  ],
+  "text": "Es la palmera datilera. Sus ramas se agitaban en señal de victoria y de bienvenida."
+ },
+ {
+  "id": "hosanna",
+  "terms": [
+   "Hosanna"
+  ],
+  "text": "Palabra hebrea que significa 'sálvanos ahora'. Se convirtió en un grito de bienvenida y alabanza."
+ },
+ {
+  "id": "sadducee",
+  "terms": [
+   "saduceos"
+  ],
+  "text": "Era un grupo judío cercano a las familias de los sumos sacerdotes. No creían en la resurrección ni en los ángeles."
+ },
+ {
+  "id": "treasury",
+  "terms": [
+   "arca de las ofrendas"
+  ],
+  "text": "Eran unas cajas en forma de trompeta, colocadas en el atrio del Templo, donde la gente echaba sus ofrendas."
+ },
+ {
+  "id": "talent",
+  "terms": [
+   "talentos"
+  ],
+  "text": "Era una enorme cantidad de dinero: lo que un trabajador ganaba en casi veinte años. De ahí viene la palabra 'talento' como capacidad."
+ },
+ {
+  "id": "unleavened",
+  "terms": [
+   "Panes sin Levadura"
+  ],
+  "text": "Fiesta de siete días, unida a la Pascua, en la que se comía pan sin levadura para recordar la salida de Egipto."
+ },
+ {
+  "id": "passover",
+  "terms": [
+   "Pascua"
+  ],
+  "text": "La gran fiesta de primavera que recuerda la noche en que la muerte pasó de largo ante las casas de Israel en Egipto, y la salida de allí."
+ },
+ {
+  "id": "upper-room",
+  "terms": [
+   "aposento alto"
+  ],
+  "text": "Es una sala grande en el piso de arriba de una casa. Allí Jesús tuvo la última cena con sus discípulos."
+ },
+ {
+  "id": "covenant",
+  "terms": [
+   "alianza"
+  ],
+  "text": "Es un pacto firme que Dios hace con las personas. Jesús estableció una nueva alianza con su sangre."
+ },
+ {
+  "id": "hymn",
+  "terms": [
+   "cantar los salmos"
+  ],
+  "text": "Son cantos para alabar a Dios. Al final de la cena de Pascua se cantaban salmos."
+ },
+ {
+  "id": "governor",
+  "terms": [
+   "gobernador"
+  ],
+  "text": "Era el funcionario que el emperador romano enviaba para gobernar una provincia. Pilato era el gobernador de Judea."
+ },
+ {
+  "id": "cross",
+  "terms": [
+   "cruz"
+  ],
+  "text": "Era el instrumento con que Roma ejecutaba a los condenados, colgándolos. Era la ejecución más cruel y vergonzosa."
+ },
+ {
+  "id": "purple",
+  "terms": [
+   "manto de púrpura",
+   "púrpura"
+  ],
+  "text": "Era una tela de color púrpura, muy cara, que vestían los reyes. Los soldados se la pusieron a Jesús para burlarse de él como rey."
+ },
+ {
+  "id": "paradise",
+  "terms": [
+   "paraíso"
+  ],
+  "text": "Es el lugar dichoso donde los justos que mueren están con Dios."
+ },
+ {
+  "id": "veil",
+  "terms": [
+   "velo"
+  ],
+  "text": "Era la gruesa cortina que separaba el Lugar Santísimo dentro del Templo. Simboliza la barrera entre Dios y las personas."
+ },
+ {
+  "id": "linen",
+  "terms": [
+   "lienzos finos",
+   "lienzos"
+  ],
+  "text": "Es una tela fina de lino. Se usaba para envolver a los muertos."
+ },
+ {
+  "id": "first-day",
+  "terms": [
+   "primer día de la semana"
+  ],
+  "text": "Es el día siguiente al sábado, es decir, nuestro domingo. Ese día resucitó Jesús."
+ },
+ {
+  "id": "stadion",
+  "terms": [
+   "estadios"
+  ],
+  "text": "Es una medida de distancia: un estadio mide unos 185 metros. Sesenta estadios son unos 11 kilómetros."
+ },
+ {
+  "id": "fourth-watch",
+  "terms": [
+   "cuarta vigilia"
+  ],
+  "text": "La noche se dividía en cuatro partes: la cuarta va más o menos de las tres a las seis de la madrugada."
+ },
+ {
+  "id": "authority",
+  "terms": [
+   "autoridad"
+  ],
+  "text": "Es el poder y el derecho de gobernar y dar órdenes."
+ },
+ {
+  "id": "righteous",
+  "terms": [
+   "justos",
+   "hombre justo"
+  ],
+  "text": "Es quien Dios reconoce como recto. Aquí a veces también es una crítica a quien se cree justo a sí mismo."
+ },
+ {
+  "id": "holy-city",
+  "terms": [
+   "ciudad santa"
+  ],
+  "text": "Así se llama a Jerusalén, donde estaba el Templo de Dios."
+ },
+ {
+  "id": "kingdom-of-god",
+  "terms": [
+   "reino de Dios",
+   "reino de los cielos"
+  ],
+  "text": "Es el reino donde Dios gobierna como rey. Más que un lugar, significa que se cumple el gobierno de Dios."
+ },
+ {
+  "id": "eternal-life",
+  "terms": [
+   "vida eterna"
+  ],
+  "text": "No es solo vivir para siempre, sino la vida verdadera que se disfruta junto a Dios."
+ },
+ {
+  "id": "leaven",
+  "terms": [
+   "levadura"
+  ],
+  "text": "Es lo que hace fermentar la masa. Es imagen de algo pequeño que se extiende por toda la masa."
+ },
+ {
+  "id": "mustard-seed",
+  "terms": [
+   "mostaza"
+  ],
+  "text": "Es una semilla muy pequeña que, al crecer, llega a ser más alta que una persona."
+ },
+ {
+  "id": "feast",
+  "terms": [
+   "fiesta"
+  ],
+  "text": "Aquí se refiere a las fiestas religiosas que los judíos celebraban subiendo a Jerusalén, como la Pascua o la fiesta de las Tiendas."
+ },
+ {
+  "id": "talitha",
+  "terms": [
+   "Talitá kum",
+   "Effetá"
+  ],
+  "text": "Es arameo, la lengua que hablaban los judíos en tiempos de Jesús. Talitá kum significa 'niña, levántate'; Effetá, 'ábrete'."
+ },
+ {
+  "id": "ransom",
+  "terms": [
+   "rescate"
+  ],
+  "text": "Es el precio que se paga para liberar a un cautivo o a un esclavo. Jesús entregó su propia vida como ese precio."
+ },
+ {
+  "id": "pilgrim",
+  "terms": [
+   "peregrinos"
+  ],
+  "text": "Es un viaje a un lugar santo. Los judíos subían al Templo de Jerusalén en cada fiesta."
+ }
+]

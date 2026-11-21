@@ -1,0 +1,218 @@
+[
+ {
+  "id": "elders-gate",
+  "terms": [
+   "elders"
+  ],
+  "text": "The older leaders of a town. They sat by the city gate to hear disputes, give judgments, and discuss the town's affairs."
+ },
+ {
+  "id": "lawsuit",
+  "terms": [
+   "cases"
+  ],
+  "text": "Bringing a dispute before officials or a court to receive a judgment."
+ },
+ {
+  "id": "yhwh",
+  "terms": [
+   "the Lord"
+  ],
+  "text": "'The Lord' stands for the name of Israel's God, written with four Hebrew letters. The Jews held it so holy that they did not say it aloud."
+ },
+ {
+  "id": "fear-of-lord",
+  "terms": [
+   "fear of the Lord",
+   "fears the Lord"
+  ],
+  "text": "Reverent awe toward God: fearing him while honoring and serving him. Proverbs names it as the starting point of wisdom."
+ },
+ {
+  "id": "instruction",
+  "terms": [
+   "instruction"
+  ],
+  "text": "Words that correct what is wrong and teach the right way."
+ },
+ {
+  "id": "fool",
+  "terms": [
+   "fools"
+  ],
+  "text": "In Proverbs, not someone lacking intelligence, but someone who ignores teaching and lives by his own stubborn will."
+ },
+ {
+  "id": "rebuke",
+  "terms": [
+   "rebuke"
+  ],
+  "text": "Words that point out a wrong so it can be set right."
+ },
+ {
+  "id": "understanding",
+  "terms": [
+   "understanding"
+  ],
+  "text": "The insight that sees into how things work and tells right from wrong. In Proverbs it goes hand in hand with wisdom."
+ },
+ {
+  "id": "vineyard",
+  "terms": [
+   "vineyard"
+  ],
+  "text": "A field where grapevines are planted and tended, at the heart of farming in Israel."
+ },
+ {
+  "id": "poverty",
+  "terms": [
+   "poverty"
+  ],
+  "text": "Being so poor that life is a hard struggle."
+ },
+ {
+  "id": "want",
+  "terms": [
+   "want"
+  ],
+  "text": "Having run out of everything, left in great need and worn out.",
+  "skip": [
+   "want you"
+  ]
+ },
+ {
+  "id": "weights",
+  "terms": [
+   "weight",
+   "weights"
+  ],
+  "text": "Pieces of stone or metal used on scales to weigh goods. Some merchants cheated with two sets of weights that differed."
+ },
+ {
+  "id": "favor",
+  "terms": [
+   "favor"
+  ],
+  "text": "Goodwill and kindness received from others: being thought well of by God and by people."
+ },
+ {
+  "id": "loyalty",
+  "terms": [
+   "Faithful"
+  ],
+  "text": "True-hearted and constant, and so worthy of trust."
+ },
+ {
+  "id": "lattice",
+  "terms": [
+   "lattice"
+  ],
+  "text": "A window made of thin strips of wood woven together. You can see out through it, but it is hard to see in."
+ },
+ {
+  "id": "slaughterhouse",
+  "terms": [
+   "slaughter"
+  ],
+  "text": "The place where animals such as cattle and pigs are killed."
+ },
+ {
+  "id": "lead-astray",
+  "terms": [
+   "astray"
+  ],
+  "text": "Luring someone onto the wrong path and clouding their judgment."
+ },
+ {
+  "id": "source-of-life",
+  "terms": [
+   "springs of life"
+  ],
+  "text": "The very first place from which something comes forth."
+ },
+ {
+  "id": "cedar",
+  "terms": [
+   "Cedar"
+  ],
+  "text": "A large, fragrant tree that grows in Lebanon. Its wood is hard and does not rot, so Solomon built the temple and palace with it."
+ },
+ {
+  "id": "watchman",
+  "terms": [
+   "guards"
+  ],
+  "text": "People who keep watch over a city gate, wall, or palace."
+ },
+ {
+  "id": "water-channel",
+  "terms": [
+   "streams of water"
+  ],
+  "text": "Channels of water dammed and led off to water fields. Just as people guide water, God guides the king's heart."
+ },
+ {
+  "id": "vanguard",
+  "terms": [
+   "goes before"
+  ],
+  "text": "Like the troops at the very front of an army: when pride comes, ruin soon follows."
+ },
+ {
+  "id": "needy",
+  "terms": [
+   "needy"
+  ],
+  "text": "So poor that one lacks enough to eat and live on."
+ },
+ {
+  "id": "agur",
+  "terms": [
+   "Agur"
+  ],
+  "text": "The wise man whose words make up Proverbs 30. Nothing is known about him except that he was the son of Jakeh."
+ },
+ {
+  "id": "scarlet",
+  "terms": [
+   "scarlet"
+  ],
+  "text": "A deep red. Scarlet clothes were thick garments dyed with costly dye, and they kept out the cold."
+ },
+ {
+  "id": "virtuous-woman",
+  "terms": [
+   "woman of noble character"
+  ],
+  "text": "A woman who is kind, wise, and upright in her conduct. Proverbs 31 sings of such a woman."
+ },
+ {
+  "id": "lovingkindness",
+  "terms": [
+   "kindness"
+  ],
+  "text": "Steadfast love and faithfulness, translating the Hebrew word 'hesed'."
+ },
+ {
+  "id": "mixed-wine",
+  "terms": [
+   "mixed her wine",
+   "wine I have mixed"
+  ],
+  "text": "Mixing wine with water or spices to serve at a feast, a sign that the table was prepared with care."
+ },
+ {
+  "id": "holy-one",
+  "terms": [
+   "Holy One"
+  ],
+  "text": "A name for God, meaning the one who is set apart and untouched by sin."
+ },
+ {
+  "id": "righteous",
+  "terms": [
+   "righteous"
+  ],
+  "text": "A person who lives rightly before God."
+ }
+]

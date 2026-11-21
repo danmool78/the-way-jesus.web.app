@@ -1,0 +1,505 @@
+[
+ {
+  "id": "store-city",
+  "terms": [
+   "cidades-armazém"
+  ],
+  "text": "Cidades onde se guardavam os cereais e as provisões do país. Os israelitas as construíram trabalhando como escravos."
+ },
+ {
+  "id": "midwife",
+  "terms": [
+   "parteiras"
+  ],
+  "text": "Mulheres que ajudavam no parto e recebiam o bebê. Como as parteiras de hoje."
+ },
+ {
+  "id": "bitumen",
+  "terms": [
+   "betume",
+   "piche"
+  ],
+  "text": "Massa preta e grudenta de óleo que sai da terra (asfalto). Era passada em cestos e barcos para não entrar água."
+ },
+ {
+  "id": "priest",
+  "terms": [
+   "sacerdote",
+   "sacerdotes"
+  ],
+  "text": "Quem oferecia sacrifícios a Deus, orava pelo povo e ensinava a Lei."
+ },
+ {
+  "id": "high-priest",
+  "terms": [
+   "sumo sacerdote"
+  ],
+  "text": "O principal entre os sacerdotes. Arão foi o primeiro, e seus filhos o sucederam."
+ },
+ {
+  "id": "bush",
+  "terms": [
+   "arbusto"
+  ],
+  "text": "Pequena árvore espinhosa que cresce no deserto. Deus chamou Moisés do meio das chamas de um arbusto assim."
+ },
+ {
+  "id": "sign",
+  "terms": [
+   "sinais",
+   "sinal"
+  ],
+  "text": "Acontecimento admirável que mostra que Deus está presente. Mais que um simples milagre, é uma marca que aponta para algo."
+ },
+ {
+  "id": "feast",
+  "terms": [
+   "festa"
+  ],
+  "text": "Celebração em que o povo se reúne em datas marcadas para lembrar de Deus, como a Páscoa e a festa das Tendas."
+ },
+ {
+  "id": "magician",
+  "terms": [
+   "magos"
+  ],
+  "text": "Homens do palácio do faraó que praticavam artes ocultas. Imitaram as primeiras pragas, mas logo desistiram."
+ },
+ {
+  "id": "seven-days",
+  "terms": [
+   "sete dias"
+  ],
+  "text": "Sete dias, isto é, uma semana."
+ },
+ {
+  "id": "passover",
+  "terms": [
+   "Páscoa"
+  ],
+  "text": "A primeira festa de Israel, cujo nome quer dizer 'passar por cima'. Lembra a noite em que a praga passou por cima das casas marcadas com o sangue do cordeiro."
+ },
+ {
+  "id": "hyssop",
+  "terms": [
+   "hissopo"
+  ],
+  "text": "Plantinha que cresce entre as pedras. Amarrada em feixe, servia para molhar no sangue ou na água e aspergir."
+ },
+ {
+  "id": "lintel",
+  "terms": [
+   "verga"
+  ],
+  "text": "A madeira atravessada em cima da porta. Na noite da Páscoa, o sangue do cordeiro foi passado nela e nos dois batentes."
+ },
+ {
+  "id": "leaven",
+  "terms": [
+   "fermento"
+  ],
+  "text": "O que faz a massa do pão crescer. Na pressa de partir, comeram pão sem fermento, e daí veio a festa dos Pães sem Fermento."
+ },
+ {
+  "id": "able-men",
+  "terms": [
+   "a pé"
+  ],
+  "text": "Homens adultos em idade de ir à guerra. Mulheres e crianças não entravam nessa conta."
+ },
+ {
+  "id": "chariot",
+  "terms": [
+   "carros"
+  ],
+  "text": "Carros de guerra puxados por cavalos. Eram a arma mais temida daquele tempo."
+ },
+ {
+  "id": "timbrel",
+  "terms": [
+   "tamborim",
+   "tamborins"
+  ],
+  "text": "Tambor pequeno que se segura na mão. Nos dias de alegria, as mulheres o tocavam dançando."
+ },
+ {
+  "id": "prophet",
+  "terms": [
+   "profetisa",
+   "profeta"
+  ],
+  "text": "Pessoa que recebe a palavra de Deus e a transmite ao povo. Não é só quem adivinha o futuro."
+ },
+ {
+  "id": "statutes",
+  "terms": [
+   "leis",
+   "decretos"
+  ],
+  "text": "As leis e regras que Deus estabeleceu para o seu povo cumprir."
+ },
+ {
+  "id": "omer",
+  "terms": [
+   "ômer"
+  ],
+  "text": "Medida de cereais, cerca de dois litros. Era a porção de maná que uma pessoa comia por dia."
+ },
+ {
+  "id": "manna",
+  "terms": [
+   "maná"
+  ],
+  "text": "O alimento que Deus fazia cair todos os dias no deserto. O nome vem da pergunta 'o que é isto?'."
+ },
+ {
+  "id": "sabbath",
+  "terms": [
+   "sábado"
+  ],
+  "text": "O sétimo dia, em que se para de trabalhar e se descansa para lembrar de Deus. Vai do pôr do sol de sexta ao pôr do sol de sábado."
+ },
+ {
+  "id": "elder",
+  "terms": [
+   "anciãos"
+  ],
+  "text": "Líderes mais velhos que representavam as famílias e as tribos. Discutiam e decidiam juntos as questões do povo."
+ },
+ {
+  "id": "altar",
+  "terms": [
+   "altar",
+   "altares"
+  ],
+  "text": "Plataforma de pedras ou de terra para oferecer sacrifícios. Era o lugar de adorar a Deus."
+ },
+ {
+  "id": "burnt-offering",
+  "terms": [
+   "holocaustos"
+  ],
+  "text": "Sacrifício em que o animal era queimado por inteiro. Mostrava entrega total a Deus."
+ },
+ {
+  "id": "sacrifice",
+  "terms": [
+   "sacrifícios"
+  ],
+  "text": "Animais abatidos para serem oferecidos a Deus."
+ },
+ {
+  "id": "peace-offering",
+  "terms": [
+   "ofertas de paz"
+  ],
+  "text": "Sacrifício oferecido com alegria pela paz entre Deus e as pessoas. Parte da carne era comida em comunhão."
+ },
+ {
+  "id": "lawsuit",
+  "terms": [
+   "causas",
+   "questões"
+  ],
+  "text": "Quando surge uma briga e se pede que alguém decida quem tem razão. Parecido com um julgamento de hoje."
+ },
+ {
+  "id": "covenant",
+  "terms": [
+   "aliança"
+  ],
+  "text": "Promessa firme que Deus fez com o seu povo: ele seria o Deus deles, e eles seriam o seu povo."
+ },
+ {
+  "id": "purify",
+  "terms": [
+   "purificaram"
+  ],
+  "text": "Lavar o corpo e as roupas para se apresentar diante de Deus. A limpeza de fora mostrava que o coração estava preparado."
+ },
+ {
+  "id": "graven-image",
+  "terms": [
+   "imagens esculpidas"
+  ],
+  "text": "Figura de um deus talhada em madeira, pedra ou metal. Quando feita para ser adorada, é chamada de ídolo."
+ },
+ {
+  "id": "adultery",
+  "terms": [
+   "adultério"
+  ],
+  "text": "Quando uma pessoa casada se une sexualmente a alguém que não é seu cônjuge."
+ },
+ {
+  "id": "sapphire",
+  "terms": [
+   "safira"
+  ],
+  "text": "Pedra preciosa azulada; pode ser a safira ou o lápis-lazúli."
+ },
+ {
+  "id": "tablets",
+  "terms": [
+   "tábuas"
+  ],
+  "text": "As duas placas de pedra em que Deus gravou os Dez Mandamentos. Depois foram guardadas dentro da arca da aliança."
+ },
+ {
+  "id": "tabernacle",
+  "terms": [
+   "tabernáculo"
+  ],
+  "text": "Templo em forma de tenda, montado e desmontado nas andanças pelo deserto. Era o sinal de que Deus estava no meio do povo."
+ },
+ {
+  "id": "tent-of-meeting",
+  "terms": [
+   "tenda do encontro"
+  ],
+  "text": "A tenda onde Deus se encontrava com Moisés e com o povo; outro nome do tabernáculo."
+ },
+ {
+  "id": "testimony",
+  "terms": [
+   "tábuas do testemunho"
+  ],
+  "text": "As placas de pedra com os Dez Mandamentos. Têm esse nome porque testemunham a aliança entre Deus e o povo."
+ },
+ {
+  "id": "ark",
+  "terms": [
+   "arca"
+  ],
+  "text": "Caixa de madeira revestida de ouro onde ficavam as tábuas de pedra. Mostrava que Deus estava no meio do povo, e os sacerdotes a carregavam."
+ },
+ {
+  "id": "mercy-seat",
+  "terms": [
+   "tampa da expiação"
+  ],
+  "text": "A tampa de ouro que cobria a arca da aliança. Todo ano o sumo sacerdote aspergia sangue sobre ela para purificar o povo dos pecados."
+ },
+ {
+  "id": "veil",
+  "terms": [
+   "véu"
+  ],
+  "text": "Tecido grosso que divide um espaço. No tabernáculo, escondia o lugar mais santo."
+ },
+ {
+  "id": "showbread-table",
+  "terms": [
+   "mesa dos pães"
+  ],
+  "text": "Mesa dentro do tabernáculo onde ficavam sempre doze pães diante de Deus."
+ },
+ {
+  "id": "lampstand",
+  "terms": [
+   "candelabro"
+  ],
+  "text": "Candelabro de ouro com sete braços acesos. Iluminava sempre o interior do tabernáculo."
+ },
+ {
+  "id": "incense-altar",
+  "terms": [
+   "altar de ouro"
+  ],
+  "text": "Pequeno altar de ouro dentro do tabernáculo, onde se queimava incenso de manhã e à tarde."
+ },
+ {
+  "id": "bronze-altar",
+  "terms": [
+   "altar dos holocaustos"
+  ],
+  "text": "O grande altar de bronze no pátio do tabernáculo. Nele se queimavam os animais oferecidos em sacrifício."
+ },
+ {
+  "id": "laver",
+  "terms": [
+   "bacia"
+  ],
+  "text": "Grande recipiente de bronze com água, onde os sacerdotes lavavam as mãos e os pés."
+ },
+ {
+  "id": "cubit",
+  "terms": [
+   "côvados"
+  ],
+  "text": "Medida que vai do cotovelo até a ponta dos dedos, cerca de 45 centímetros."
+ },
+ {
+  "id": "days-journey",
+  "terms": [
+   "dia de caminho"
+  ],
+  "text": "A distância que se percorre a pé num dia, cerca de 30 quilômetros."
+ },
+ {
+  "id": "spy",
+  "terms": [
+   "espias"
+  ],
+  "text": "Quem entra às escondidas na terra inimiga para observar a situação e voltar."
+ },
+ {
+  "id": "tribe",
+  "terms": [
+   "tribo",
+   "tribos"
+  ],
+  "text": "Grande família descendente de um dos doze filhos de Jacó. Israel era formado por doze tribos."
+ },
+ {
+  "id": "censer",
+  "terms": [
+   "incensários",
+   "incensário"
+  ],
+  "text": "Recipiente em que se punham brasas para queimar incenso. Só os sacerdotes podiam usá-lo diante de Deus."
+ },
+ {
+  "id": "plague",
+  "terms": [
+   "praga"
+  ],
+  "text": "Doença terrível que se espalha entre as pessoas."
+ },
+ {
+  "id": "bronze-serpent",
+  "terms": [
+   "serpente de bronze"
+  ],
+  "text": "Serpente feita de bronze (uma liga de cobre). Quem olhava para ela vivia, e Jesus comparou a sua cruz a ela."
+ },
+ {
+  "id": "divination-fee",
+  "terms": [
+   "pagamento da adivinhação"
+  ],
+  "text": "Dinheiro ou bens pagos a alguém para adivinhar ou para pronunciar bênçãos e maldições."
+ },
+ {
+  "id": "official",
+  "terms": [
+   "oficiais"
+  ],
+  "text": "Pessoas que ocupavam cargos altos no governo do país."
+ },
+ {
+  "id": "law",
+  "terms": [
+   "livro da lei",
+   "lei"
+  ],
+  "text": "Os ensinos e mandamentos que Deus deu por meio de Moisés. O livro da lei é o livro em que foram escritos."
+ },
+ {
+  "id": "doorpost",
+  "terms": [
+   "batentes"
+  ],
+  "text": "As colunas de madeira dos dois lados da porta."
+ },
+ {
+  "id": "flax",
+  "terms": [
+   "talos de linho"
+  ],
+  "text": "Os talos do linho, planta usada para tecer pano. Eram estendidos no terraço para secar."
+ },
+ {
+  "id": "ford",
+  "terms": [
+   "vaus"
+  ],
+  "text": "Lugar raso por onde se atravessa um rio, ou onde se encostam os barcos."
+ },
+ {
+  "id": "circumcision",
+  "terms": [
+   "circuncidado"
+  ],
+  "text": "Rito em que se corta a ponta da pele do órgão sexual de um menino. Era o sinal da aliança de pertencer ao povo de Deus."
+ },
+ {
+  "id": "shofar",
+  "terms": [
+   "chifre de carneiro"
+  ],
+  "text": "Trombeta feita de chifre de carneiro (o shofar). Era tocada nas festas, nas batalhas e para anunciar grandes acontecimentos."
+ },
+ {
+  "id": "devoted",
+  "terms": [
+   "consagrados",
+   "consagrado"
+  ],
+  "text": "Quer dizer destruir por completo: nada fica para as pessoas, tudo é entregue inteiramente a Deus."
+ },
+ {
+  "id": "lots",
+  "terms": [
+   "sorteio",
+   "tirou a sorte"
+  ],
+  "text": "Modo de decidir marcando pedras ou varetas e tirando uma delas. Era visto como perguntar a vontade de Deus, e não a das pessoas."
+ },
+ {
+  "id": "peace-treaty",
+  "terms": [
+   "feito paz"
+  ],
+  "text": "Prometer um ao outro não guerrear e viver em boa paz."
+ },
+ {
+  "id": "inheritance",
+  "terms": [
+   "herança"
+  ],
+  "text": "A parte que Deus deu para ser desfrutada de geração em geração, isto é, um patrimônio de família."
+ },
+ {
+  "id": "office",
+  "terms": [
+   "sacerdócio"
+  ],
+  "text": "A função recebida e o lugar que vem com ela."
+ },
+ {
+  "id": "oak",
+  "terms": [
+   "carvalho"
+  ],
+  "text": "Árvore grande da família que dá bolotas. Muitas vezes marcava o lugar de um acontecimento importante."
+ },
+ {
+  "id": "sanctuary",
+  "terms": [
+   "santuário"
+  ],
+  "text": "Lugar santo onde se adora a Deus."
+ },
+ {
+  "id": "wrath",
+  "terms": [
+   "ira"
+  ],
+  "text": "A santa indignação de Deus contra o pecado."
+ },
+ {
+  "id": "lovingkindness",
+  "terms": [
+   "amor fiel"
+  ],
+  "text": "O amor e a misericórdia de Deus que não mudam e não soltam o seu povo."
+ },
+ {
+  "id": "worship",
+  "terms": [
+   "adorou"
+  ],
+  "text": "Prostrar-se e honrar a Deus."
+ }
+]

@@ -1,0 +1,502 @@
+[
+ {
+  "id": "prophet",
+  "terms": [
+   "prophet",
+   "prophets"
+  ],
+  "text": "A person who receives God's will and passes it on to others. Samuel, Gad, and Nathan did this work at David's side."
+ },
+ {
+  "id": "anoint",
+  "terms": [
+   "anoint",
+   "anointed",
+   "horn of oil"
+  ],
+  "text": "Pouring olive oil on someone's head, a sign that God had appointed that person as king or priest."
+ },
+ {
+  "id": "priest",
+  "terms": [
+   "priest",
+   "priests"
+  ],
+  "text": "A person who offered sacrifices in the sanctuary and stood before God on behalf of the people. The office belonged to Aaron's descendants."
+ },
+ {
+  "id": "sacrifice",
+  "terms": [
+   "sacrifice",
+   "sacrifices",
+   "sacrificed"
+  ],
+  "text": "Worshiping God by offering animals or grain, to seek forgiveness for sin or to give thanks."
+ },
+ {
+  "id": "burnt-offering",
+  "terms": [
+   "burnt offerings"
+  ],
+  "text": "A sacrifice burned whole on the altar to God, expressing complete devotion."
+ },
+ {
+  "id": "peace-offering",
+  "terms": [
+   "peace offerings"
+  ],
+  "text": "An offering celebrating peace between God and people. Part of the meat was shared and eaten together."
+ },
+ {
+  "id": "altar",
+  "terms": [
+   "altar"
+  ],
+  "text": "A raised platform where offerings were burned for God, built of earth or stone."
+ },
+ {
+  "id": "offering",
+  "terms": [
+   "offering",
+   "offerings"
+  ],
+  "text": "An animal, grain, or other gift presented to God in a sacrifice.",
+  "skip": [
+   "offering sacrifices"
+  ]
+ },
+ {
+  "id": "lyre",
+  "terms": [
+   "lyre",
+   "lyres"
+  ],
+  "text": "An ancient stringed instrument with strings stretched on a wooden frame and plucked by hand. David played it well."
+ },
+ {
+  "id": "harp",
+  "terms": [
+   "harps"
+  ],
+  "text": "An ancient plucked stringed instrument, used with the lyre in worship and at celebrations."
+ },
+ {
+  "id": "timbrel",
+  "terms": [
+   "tambourines"
+  ],
+  "text": "A small hand drum. Women often played it as they danced and sang."
+ },
+ {
+  "id": "cymbal",
+  "terms": [
+   "cymbals"
+  ],
+  "text": "An instrument made of two bronze plates struck together, like modern cymbals."
+ },
+ {
+  "id": "cubit",
+  "terms": [
+   "cubits"
+  ],
+  "text": "The length from the elbow to the tip of the middle finger, about 45 cm. Six cubits and a span is close to 3 meters."
+ },
+ {
+  "id": "shekel",
+  "terms": [
+   "shekels"
+  ],
+  "text": "A unit of weight and of money; one shekel is about 11 g. Armor of five thousand shekels weighs over 50 kg."
+ },
+ {
+  "id": "talent",
+  "terms": [
+   "talents"
+  ],
+  "text": "The largest unit of weight: one talent is about 34 kg, equal to 3,000 shekels."
+ },
+ {
+  "id": "circumcision",
+  "terms": [
+   "uncircumcised"
+  ],
+  "text": "Circumcision was a rite of cutting off a baby boy's foreskin, a sign of belonging to the people in covenant with God."
+ },
+ {
+  "id": "foreskin",
+  "terms": [
+   "foreskins"
+  ],
+  "text": "The skin covering the tip of the penis. The Philistines were not circumcised, so foreskins proved that they had been killed."
+ },
+ {
+  "id": "teraphim",
+  "terms": [
+   "household idol"
+  ],
+  "text": "A small, human-shaped figure of a god kept in the home. In Israel it was a forbidden idol."
+ },
+ {
+  "id": "idol",
+  "terms": [
+   "idol"
+  ],
+  "text": "An image made by human hands and worshiped as a god. The Bible says to worship no god but God."
+ },
+ {
+  "id": "ephod",
+  "terms": [
+   "ephod"
+  ],
+  "text": "A vest-like garment worn by priests. It was used to ask God's will, and David sought guidance through it."
+ },
+ {
+  "id": "sanctuary",
+  "terms": [
+   "sanctuary"
+  ],
+  "text": "The holy place where God was worshiped and sacrifices were offered. In David's day it was at Nob."
+ },
+ {
+  "id": "showbread",
+  "terms": [
+   "holy bread"
+  ],
+  "text": "Bread set out before God on the table in the sanctuary. It was replaced every Sabbath, and only priests ate it."
+ },
+ {
+  "id": "tabernacle",
+  "terms": [
+   "tabernacle"
+  ],
+  "text": "The portable tent sanctuary used for worship since the wilderness years, until the temple was built."
+ },
+ {
+  "id": "tent",
+  "terms": [
+   "tent",
+   "tents"
+  ],
+  "text": "A dwelling made of cloth. David pitched a separate tent to house the ark."
+ },
+ {
+  "id": "curtain",
+  "terms": [
+   "curtains"
+  ],
+  "text": "Large cloths that formed a tent or screened off a space. Here it means the ark was kept inside a tent."
+ },
+ {
+  "id": "ark",
+  "terms": [
+   "ark"
+  ],
+  "text": "A gold-covered chest holding the stone tablets of the Ten Commandments. It showed that God was among his people, and it was not to be touched carelessly."
+ },
+ {
+  "id": "temple",
+  "terms": [
+   "temple",
+   "house of the Lord"
+  ],
+  "text": "The house for worshiping God. David prepared for the temple in Jerusalem, and his son Solomon built it."
+ },
+ {
+  "id": "covenant",
+  "terms": [
+   "covenant"
+  ],
+  "text": "A solemn promise both sides bind themselves to keep. God made an everlasting covenant with David's family."
+ },
+ {
+  "id": "lord-of-hosts",
+  "terms": [
+   "Lord of hosts"
+  ],
+  "text": "A name of God meaning the Lord who commands all the armies of heaven and earth."
+ },
+ {
+  "id": "yahweh",
+  "terms": [
+   "the Lord"
+  ],
+  "text": "'The Lord' stands for Yahweh, the personal name God revealed to Moses, usually understood as 'the one who is'.",
+  "skip": [
+   "the Lord of hosts"
+  ]
+ },
+ {
+  "id": "spirit-of-lord",
+  "terms": [
+   "Spirit of the Lord",
+   "Spirit of God"
+  ],
+  "text": "The Spirit of God. When he came upon a person, he gave strength and wisdom to do God's work."
+ },
+ {
+  "id": "prophesy",
+  "terms": [
+   "prophesy",
+   "prophesied",
+   "prophesying"
+  ],
+  "text": "Being seized by God's Spirit to speak his word or to sing his praise; not only predicting the future."
+ },
+ {
+  "id": "new-moon",
+  "terms": [
+   "New Moon"
+  ],
+  "text": "The first day of a new lunar month. Israel offered sacrifices and held a feast on that day."
+ },
+ {
+  "id": "sling",
+  "terms": [
+   "sling"
+  ],
+  "text": "A weapon with a leather pouch: a stone is put in it, swung around, and let fly. Shepherds also used it to drive off wild animals."
+ },
+ {
+  "id": "javelin",
+  "terms": [
+   "javelin"
+  ],
+  "text": "A short spear made for throwing."
+ },
+ {
+  "id": "commander-thousand",
+  "terms": [
+   "commander of a thousand"
+  ],
+  "text": "An officer in command of a thousand soldiers."
+ },
+ {
+  "id": "commander",
+  "terms": [
+   "commander"
+  ],
+  "text": "The highest officer, leading the nation's whole army."
+ },
+ {
+  "id": "chariot",
+  "terms": [
+   "chariots"
+  ],
+  "text": "Horse-drawn war carts. They also displayed the power and status of a king or prince."
+ },
+ {
+  "id": "threshing-floor",
+  "terms": [
+   "threshing floor",
+   "threshing floors"
+  ],
+  "text": "A wide, flat area where harvested grain was beaten to loosen the kernels, usually on a windy hilltop."
+ },
+ {
+  "id": "fine-linen",
+  "terms": [
+   "linen"
+  ],
+  "text": "Fine white cloth woven from thin thread, used for priests' garments."
+ },
+ {
+  "id": "cedar",
+  "terms": [
+   "cedar"
+  ],
+  "text": "A large, fragrant, hard-wooded tree from Lebanon, prized timber for building palaces and the temple."
+ },
+ {
+  "id": "tribute",
+  "terms": [
+   "tribute"
+  ],
+  "text": "Wealth that a defeated nation paid every year to the nation that conquered it."
+ },
+ {
+  "id": "counselor",
+  "terms": [
+   "counselor"
+  ],
+  "text": "An adviser who gave the king plans and opinions. Ahithophel was famous for his wisdom."
+ },
+ {
+  "id": "vow",
+  "terms": [
+   "vow"
+  ],
+  "text": "A promise a person freely makes to God to do something. It had to be kept."
+ },
+ {
+  "id": "lawsuit",
+  "terms": [
+   "lawsuit"
+  ],
+  "text": "Taking a dispute to court to get a judgment."
+ },
+ {
+  "id": "tamarisk",
+  "terms": [
+   "tamarisk"
+  ],
+  "text": "A small tree that grows well even in dry land."
+ },
+ {
+  "id": "fasting",
+  "terms": [
+   "fasted"
+  ],
+  "text": "Going without food for a time, out of grief or in earnest prayer."
+ },
+ {
+  "id": "worship",
+  "terms": [
+   "worship",
+   "worshiped"
+  ],
+  "text": "Bowing down before God to honor and adore him."
+ },
+ {
+  "id": "law",
+  "terms": [
+   "law"
+  ],
+  "text": "The commandments and rules God gave through Moses, showing Israel the way to live."
+ },
+ {
+  "id": "rock",
+  "terms": [
+   "Rock of Israel"
+  ],
+  "text": "A large, broad rock; a picture of God, who protects and never moves."
+ },
+ {
+  "id": "tribe",
+  "terms": [
+   "tribe",
+   "tribes"
+  ],
+  "text": "One of the twelve clans of Israel descended from the twelve sons of Jacob."
+ },
+ {
+  "id": "elder",
+  "terms": [
+   "elders"
+  ],
+  "text": "Older leaders who guided towns and tribes."
+ },
+ {
+  "id": "assembly",
+  "terms": [
+   "assembly"
+  ],
+  "text": "The whole people gathered together for worship or for an important event."
+ },
+ {
+  "id": "levite",
+  "terms": [
+   "Levites"
+  ],
+  "text": "Members of the tribe of Levi, who carried and cared for the tabernacle and the ark."
+ },
+ {
+  "id": "wrath",
+  "terms": [
+   "anger"
+  ],
+  "text": "God's holy anger, which does not let sin go unpunished."
+ },
+ {
+  "id": "wineskin",
+  "terms": [
+   "skin",
+   "skins"
+  ],
+  "text": "A bag made of sewn animal hide, used to carry wine or water."
+ },
+ {
+  "id": "parched-grain",
+  "terms": [
+   "roasted grain"
+  ],
+  "text": "Wheat or barley kernels roasted to make food that was easy to carry and eat."
+ },
+ {
+  "id": "curds",
+  "terms": [
+   "curds"
+  ],
+  "text": "Food made by thickening animal milk, similar to yogurt or butter."
+ },
+ {
+  "id": "bride-price",
+  "terms": [
+   "bride price"
+  ],
+  "text": "A gift the groom gave to the bride's family. Saul used it as an excuse to put David in danger."
+ },
+ {
+  "id": "watchman",
+  "terms": [
+   "watchman"
+  ],
+  "text": "A person who kept watch from a wall or a high place and announced anyone approaching."
+ },
+ {
+  "id": "messenger",
+  "terms": [
+   "messenger",
+   "messengers"
+  ],
+  "text": "A person who ran to deliver news or orders in haste."
+ },
+ {
+  "id": "justice",
+  "terms": [
+   "just and right"
+  ],
+  "text": "Upholding what is right and fair in God's eyes. A good king had to rule with justice."
+ },
+ {
+  "id": "set-apart",
+  "terms": [
+   "dedicated"
+  ],
+  "text": "Setting something aside from ordinary use to give it to God alone."
+ },
+ {
+  "id": "decorum",
+  "terms": [
+   "dignity"
+  ],
+  "text": "Behavior and bearing fitting one's position and rank."
+ },
+ {
+  "id": "oak",
+  "terms": [
+   "oak"
+  ],
+  "text": "A large tree of the oak family that bears acorns, with wide, tangled branches."
+ },
+ {
+  "id": "mule",
+  "terms": [
+   "mule"
+  ],
+  "text": "An animal born of a horse and a donkey. In David's time kings and princes rode them."
+ },
+ {
+  "id": "psalm",
+  "terms": [
+   "Psalm"
+  ],
+  "text": "The book of the Bible that gathers songs and prayers offered to God. Many of them were written by David."
+ },
+ {
+  "id": "grace",
+  "terms": [
+   "kindness"
+  ],
+  "text": "Love and favor freely given to someone who has not earned it."
+ }
+]

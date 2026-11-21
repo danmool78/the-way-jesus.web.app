@@ -1,0 +1,656 @@
+[
+ {
+  "id": "sanhedrin",
+  "terms": [
+   "Sanhédrin",
+   "conseil"
+  ],
+  "text": "Le plus haut conseil juif : environ soixante-dix membres, présidés par le grand prêtre et comprenant des anciens et des scribes, qui tranchaient les questions de religion et de loi.",
+  "skip": [
+   "conseil d’Athènes"
+  ]
+ },
+ {
+  "id": "high-priest",
+  "terms": [
+   "grand-prêtre",
+   "grands-prêtres"
+  ],
+  "text": "Le chef des prêtres du Temple de Jérusalem. À l’époque romaine, il présidait le Conseil et était le plus haut dirigeant de la société juive."
+ },
+ {
+  "id": "persecution",
+  "terms": [
+   "persécution",
+   "persécutes",
+   "persécuté"
+  ],
+  "text": "Harceler, emprisonner ou tuer des gens à cause de leur foi. Après la mort d’Étienne, une première grande persécution frappa l’Église de Jérusalem."
+ },
+ {
+  "id": "synagogue",
+  "terms": [
+   "synagogues",
+   "synagogue"
+  ],
+  "text": "Le lieu où les Juifs se réunissaient chaque sabbat pour lire l’Écriture et prier. Dans chaque nouvelle ville, Paul prêchait d’abord à la synagogue."
+ },
+ {
+  "id": "son-of-man",
+  "terms": [
+   "Fils de l’homme"
+  ],
+  "text": "« Fils d’homme », le nom que Jésus se donnait souvent. Dans Daniel, il désigne celui qui vient avec les nuées du ciel."
+ },
+ {
+  "id": "holy-spirit",
+  "terms": [
+   "Esprit Saint"
+  ],
+  "text": "L’Esprit de Dieu, qui habite en ceux qui croient, leur donne la force et les conduit. Dans les Actes, c’est lui qui ouvre le chemin de l’Église."
+ },
+ {
+  "id": "vision",
+  "terms": [
+   "vision"
+  ],
+  "text": "Une scène que Dieu montre à quelqu’un en rêve ou éveillé, pour faire connaître sa volonté."
+ },
+ {
+  "id": "saints",
+  "terms": [
+   "fidèles",
+   "croyants",
+   "croyant"
+  ],
+  "text": "Littéralement « les saints » : ceux qui appartiennent à Dieu. C’est un nom donné à ceux qui croient en Jésus."
+ },
+ {
+  "id": "gentile",
+  "terms": [
+   "non-Juifs"
+  ],
+  "text": "Un nom pour ceux qui ne sont pas juifs. Paul fut appelé à être l’apôtre qui porte l’Évangile aux païens."
+ },
+ {
+  "id": "baptism",
+  "terms": [
+   "baptisé",
+   "baptisées",
+   "baptisés",
+   "baptême"
+  ],
+  "text": "Un rite où l’on est lavé avec de l’eau ou plongé dedans, pour montrer que les péchés sont lavés et qu’on est devenu disciple de Jésus."
+ },
+ {
+  "id": "christ",
+  "terms": [
+   "Christ"
+  ],
+  "text": "Mot grec qui signifie « oint », comme l’hébreu « Messie ». Il désigne le Sauveur que Dieu avait promis."
+ },
+ {
+  "id": "christian",
+  "terms": [
+   "chrétiens",
+   "chrétien"
+  ],
+  "text": "« Celui qui appartient au Christ ». Les habitants d’Antioche furent les premiers à appeler ainsi les disciples de Jésus."
+ },
+ {
+  "id": "prophet",
+  "terms": [
+   "prophète",
+   "prophètes"
+  ],
+  "text": "Une personne qui reçoit la parole de Dieu et la transmet aux autres. Il y eut des prophètes dans l’Ancien Testament et dans l’Église des débuts."
+ },
+ {
+  "id": "elder",
+  "terms": [
+   "anciens"
+  ],
+  "text": "Des responsables âgés qui prennent soin d’une communauté et la guident. Paul établit des anciens dans chaque ville et leur confia l’Église."
+ },
+ {
+  "id": "apostle",
+  "terms": [
+   "apôtres"
+  ],
+  "text": "« Envoyé » : les douze disciples que Jésus lui-même établit, et Paul, appelé par le Seigneur ressuscité."
+ },
+ {
+  "id": "fasting",
+  "terms": [
+   "jeûnaient",
+   "jeûné",
+   "jeûnent"
+  ],
+  "text": "Se priver de nourriture pendant un temps pour se tourner vers Dieu, avec la prière, avant les décisions importantes."
+ },
+ {
+  "id": "laying-on-hands",
+  "terms": [
+   "posa les mains",
+   "posèrent les mains"
+  ],
+  "text": "Poser les mains sur la tête ou le corps de quelqu’un en priant, pour l’envoyer en mission, le guérir ou le bénir."
+ },
+ {
+  "id": "proconsul",
+  "terms": [
+   "gouverneur",
+   "proconsul"
+  ],
+  "text": "Un haut fonctionnaire envoyé par Rome pour gouverner une province. Chypre et l’Achaïe avaient des proconsuls envoyés par le Sénat, la Judée des gouverneurs envoyés par l’empereur."
+ },
+ {
+  "id": "sorcerer",
+  "terms": [
+   "magicien"
+  ],
+  "text": "Quelqu’un qui prétendait avoir un pouvoir mystérieux par les incantations ou la divination et tenait les gens sous son emprise. La Bible interdisait ces pratiques."
+ },
+ {
+  "id": "false-prophet",
+  "terms": [
+   "faux prophète"
+  ],
+  "text": "Quelqu’un qui fait passer pour parole de Dieu des paroles que Dieu n’a pas données."
+ },
+ {
+  "id": "sabbath",
+  "terms": [
+   "sabbat",
+   "sabbats"
+  ],
+  "text": "Le septième jour de la semaine (du coucher du soleil le vendredi au coucher du soleil le samedi), où l’on cesse le travail pour adorer Dieu."
+ },
+ {
+  "id": "law",
+  "terms": [
+   "Loi"
+  ],
+  "text": "Les commandements et les règles que Dieu donna par Moïse. Au sens large, les cinq premiers livres de l’Ancien Testament."
+ },
+ {
+  "id": "prophets-books",
+  "terms": [
+   "la Loi et des Prophètes",
+   "loi de Moïse et des Prophètes"
+  ],
+  "text": "« Les Prophètes » sont les livres de prophètes comme Ésaïe et Jérémie. À la synagogue, on les lisait après la Loi."
+ },
+ {
+  "id": "synagogue-ruler",
+  "terms": [
+   "chefs de la synagogue",
+   "chef de la synagogue"
+  ],
+  "text": "La personne qui organisait les réunions et le culte d’une synagogue et décidait qui lirait et prendrait la parole."
+ },
+ {
+  "id": "justified",
+  "terms": [
+   "déclarés justes"
+  ],
+  "text": "Dieu accepte le pécheur comme s’il n’avait pas de péché. Paul enseignait que cela ne vient pas des œuvres mais de la foi."
+ },
+ {
+  "id": "shake-dust",
+  "terms": [
+   "secouèrent contre eux la poussière"
+  ],
+  "text": "Un geste juif qui montrait qu’une ville avait rejeté le message : la responsabilité retombait désormais sur elle."
+ },
+ {
+  "id": "noble-women",
+  "terms": [
+   "femmes de la haute société",
+   "notables"
+  ],
+  "text": "Des femmes de haut rang, issues de familles riches. Elles avaient une grande influence dans les villes grecques."
+ },
+ {
+  "id": "sacrifice",
+  "terms": [
+   "sacrifice"
+  ],
+  "text": "Adorer un dieu en lui offrant des animaux ou des céréales. Les gens de Lystre prirent Paul et Barnabas pour des dieux et voulurent leur offrir des sacrifices."
+ },
+ {
+  "id": "priest",
+  "terms": [
+   "prêtre",
+   "prêtres"
+  ],
+  "text": "Celui qui était chargé des sacrifices dans un temple. Le prêtre de Lystre servait le temple de Zeus."
+ },
+ {
+  "id": "tear-clothes",
+  "terms": [
+   "déchirèrent leurs vêtements"
+  ],
+  "text": "Une coutume : déchirer ses vêtements pour montrer une grande douleur, ou pour réagir à des paroles qui outragent Dieu."
+ },
+ {
+  "id": "kingdom-of-god",
+  "terms": [
+   "royaume de Dieu"
+  ],
+  "text": "Le domaine où Dieu règne comme roi. C’est moins un lieu que le règne de Dieu qui s’accomplit."
+ },
+ {
+  "id": "circumcision",
+  "terms": [
+   "circoncis",
+   "circoncision",
+   "circoncit",
+   "circoncire"
+  ],
+  "text": "Un rite où l’on coupait le prépuce du petit garçon, signe de l’alliance du peuple de Dieu. Fallait-il aussi circoncire les croyants païens ? Ce fut un grand débat."
+ },
+ {
+  "id": "gospel",
+  "terms": [
+   "bonne nouvelle",
+   "évangile"
+  ],
+  "text": "« Bonne nouvelle » : la nouvelle que Jésus-Christ est mort et ressuscité pour sauver les hommes."
+ },
+ {
+  "id": "grace",
+  "terms": [
+   "grâce"
+  ],
+  "text": "L’amour et les dons que Dieu accorde gratuitement à des gens qui n’ont rien fait pour les mériter."
+ },
+ {
+  "id": "signs",
+  "terms": [
+   "signes",
+   "prodiges"
+  ],
+  "text": "Des actes étonnants qui montrent que Dieu est présent. Le mot met l’accent sur ce vers quoi le miracle fait signe."
+ },
+ {
+  "id": "roman-colony",
+  "terms": [
+   "colonie romaine"
+  ],
+  "text": "Une ville où Rome installait des gens, comme d’anciens soldats, et accordait le droit et les privilèges romains. Les habitants de Philippes étaient très fiers d’être citoyens romains."
+ },
+ {
+  "id": "purple-cloth",
+  "terms": [
+   "pourpre"
+  ],
+  "text": "Une étoffe teinte d’une teinture coûteuse tirée de coquillages marins. Seuls les riches et les puissants la portaient ; ceux qui la vendaient prospéraient."
+ },
+ {
+  "id": "god-fearer",
+  "terms": [
+   "qui adorait Dieu"
+  ],
+  "text": "Un païen qui n’était pas juif mais croyait au Dieu d’Israël et participait au culte de la synagogue."
+ },
+ {
+  "id": "divination-spirit",
+  "terms": [
+   "esprit de divination"
+  ],
+  "text": "Un esprit qu’on disait capable de prédire l’avenir. Par la jeune esclave qu’il possédait, ses maîtres gagnaient de l’argent en disant la bonne aventure."
+ },
+ {
+  "id": "stocks",
+  "terms": [
+   "entraves"
+  ],
+  "text": "Un cadre de bois qui bloquait les chevilles d’un prisonnier pour l’empêcher de s’enfuir."
+ },
+ {
+  "id": "jailer",
+  "terms": [
+   "gardien"
+  ],
+  "text": "L’homme qui gardait une prison et avait la charge des prisonniers. Si un prisonnier s’évadait, c’est lui qui était puni."
+ },
+ {
+  "id": "idol",
+  "terms": [
+   "idoles"
+  ],
+  "text": "Des images de dieux faites de main d’homme et adorées. Athènes était pleine de statues de dieux et d’autels de toutes sortes."
+ },
+ {
+  "id": "epicurean",
+  "terms": [
+   "épicuriens"
+  ],
+  "text": "Des philosophes grecs qui faisaient de la paix de l’esprit et d’un plaisir libre de douleur le but de la vie. Pour eux, les dieux ne s’occupent pas des affaires humaines."
+ },
+ {
+  "id": "stoic",
+  "terms": [
+   "stoïciens"
+  ],
+  "text": "Des philosophes grecs qui enseignaient à gouverner ses émotions par la raison et à accepter son destin."
+ },
+ {
+  "id": "areopagus",
+  "terms": [
+   "Aréopage"
+  ],
+  "text": "« Colline d’Arès ». L’ancien conseil d’Athènes y siégeait et en tirait son nom ; il examinait parfois les enseignements nouveaux."
+ },
+ {
+  "id": "repent",
+  "terms": [
+   "changer de vie"
+  ],
+  "text": "Non pas seulement regretter ses fautes, mais tourner son cœur et la direction de sa vie vers Dieu."
+ },
+ {
+  "id": "judgment",
+  "terms": [
+   "jugera le monde",
+   "jugement"
+  ],
+  "text": "Le jour où Dieu pèsera avec justice la vie de chaque personne."
+ },
+ {
+  "id": "resurrection",
+  "terms": [
+   "résurrection"
+  ],
+  "text": "Le retour à la vie d’un mort. La résurrection de Jésus est au cœur de la foi chrétienne."
+ },
+ {
+  "id": "emperor",
+  "terms": [
+   "empereur"
+  ],
+  "text": "Le souverain suprême de l’Empire romain. Au temps de Paul, les empereurs furent Claude et Néron."
+ },
+ {
+  "id": "tentmaker",
+  "terms": [
+   "tentes"
+  ],
+  "text": "Les tentes étaient faites de cuir ou d’étoffe en poil de chèvre. Paul gagnait sa vie en fabriquant des tentes tout en annonçant l’Évangile."
+ },
+ {
+  "id": "tyrannus-hall",
+  "terms": [
+   "école de Tyrannus"
+  ],
+  "text": "Une salle de cours à Éphèse. Tyrannus en était sans doute le propriétaire ou un maître qui y enseignait ; Paul y enseigna chaque jour pendant deux ans."
+ },
+ {
+  "id": "evil-spirit",
+  "terms": [
+   "esprits mauvais",
+   "esprit mauvais"
+  ],
+  "text": "Des êtres spirituels opposés à Dieu qui tourmentent les gens. Ils sortaient au nom de Jésus."
+ },
+ {
+  "id": "silver-coins",
+  "terms": [
+   "pièces d’argent"
+  ],
+  "text": "Des pièces faites d’argent, chacune valant d’ordinaire à peu près le salaire d’une journée d’ouvrier. Cinquante mille, c’était une somme énorme."
+ },
+ {
+  "id": "artemis",
+  "terms": [
+   "Artémis"
+  ],
+  "text": "La déesse Artémis, adorée par les Grecs. Son temple d’Éphèse comptait parmi les sept merveilles du monde antique."
+ },
+ {
+  "id": "temple",
+  "terms": [
+   "temple de Zeus",
+   "temples",
+   "temple d’Artémis"
+  ],
+  "text": "Un édifice où l’on loge un dieu et où on l’adore."
+ },
+ {
+  "id": "town-clerk",
+  "terms": [
+   "secrétaire de la ville"
+  ],
+  "text": "Le plus haut magistrat d’Éphèse, chargé des archives de la ville et de son assemblée. Il répondait devant Rome de l’ordre public."
+ },
+ {
+  "id": "blaspheme",
+  "terms": [
+   "insulté"
+  ],
+  "text": "Mépriser un dieu ou une chose sainte et la traiter avec dédain."
+ },
+ {
+  "id": "offering",
+  "terms": [
+   "don"
+  ],
+  "text": "De l’argent donné à Dieu ou rassemblé pour aider le prochain dans le besoin. Paul porta les dons des Églises païennes aux croyants pauvres de Jérusalem."
+ },
+ {
+  "id": "unleavened-bread",
+  "terms": [
+   "fête des Pains sans levain"
+  ],
+  "text": "Une fête juive de sept jours qui suivait la Pâque : on mangeait du pain sans levain en souvenir de la sortie d’Égypte."
+ },
+ {
+  "id": "breaking-bread",
+  "terms": [
+   "rompre le pain",
+   "rompit le pain"
+  ],
+  "text": "Partager le pain ensemble ; dans l’Église des débuts, c’était partager le repas du Seigneur."
+ },
+ {
+  "id": "lords-supper",
+  "terms": [
+   "repas du Seigneur"
+  ],
+  "text": "Un rite où l’on partage le pain et la coupe en souvenir du dernier repas que Jésus prit avec ses disciples la veille de sa mort. On l’appelle aussi la communion."
+ },
+ {
+  "id": "upper-room",
+  "terms": [
+   "chambre du haut"
+  ],
+  "text": "Une grande pièce à l’étage d’une maison. L’Église des débuts se réunissait dans de telles pièces pour le culte."
+ },
+ {
+  "id": "pentecost",
+  "terms": [
+   "Pentecôte"
+  ],
+  "text": "Une fête juive des moissons, le cinquantième jour après la Pâque. Ce jour-là, beaucoup de pèlerins se rassemblaient à Jérusalem."
+ },
+ {
+  "id": "tribulation",
+  "terms": [
+   "souffrances"
+  ],
+  "text": "Des souffrances et des épreuves difficiles à supporter."
+ },
+ {
+  "id": "bonds",
+  "terms": [
+   "chaînes",
+   "chaîne"
+  ],
+  "text": "Être attaché avec des cordes ou des chaînes ; ici, le signe que Paul serait arrêté et emprisonné."
+ },
+ {
+  "id": "evangelist",
+  "terms": [
+   "évangéliste"
+  ],
+  "text": "Une personne dont l’œuvre est de répandre l’Évangile. Philippe était l’un des sept serviteurs de l’Église de Jérusalem."
+ },
+ {
+  "id": "vow-purification",
+  "terms": [
+   "purifié",
+   "purification"
+  ],
+  "text": "Un rite prescrit par la Loi pour rendre le corps pur. Paul s’y associa avec quatre hommes qui achevaient un vœu de naziréat."
+ },
+ {
+  "id": "tribune",
+  "terms": [
+   "tribun"
+  ],
+  "text": "Un officier romain qui commandait environ mille soldats. Il dirigeait la garnison de la forteresse Antonia, à Jérusalem."
+ },
+ {
+  "id": "barracks",
+  "terms": [
+   "caserne"
+  ],
+  "text": "Le lieu où logent les soldats. À Jérusalem, il s’agit de la forteresse Antonia, juste à côté du Temple."
+ },
+ {
+  "id": "centurion",
+  "terms": [
+   "centurion"
+  ],
+  "text": "Un officier romain qui commandait une centaine de soldats, ces soldats de métier qui formaient l’ossature de l’armée."
+ },
+ {
+  "id": "roman-citizen",
+  "terms": [
+   "citoyen",
+   "citoyenneté"
+  ],
+  "text": "Les citoyens romains avaient le privilège de ne pas être fouettés sans jugement et de faire appel à l’empereur. Paul était citoyen de naissance."
+ },
+ {
+  "id": "sadducees",
+  "terms": [
+   "sadducéens"
+  ],
+  "text": "Un groupe juif formé surtout de familles de prêtres et de riches. Ils n’acceptaient que les cinq livres de Moïse et ne croyaient ni à la résurrection ni aux anges."
+ },
+ {
+  "id": "pharisees",
+  "terms": [
+   "pharisiens",
+   "pharisien"
+  ],
+  "text": "Un groupe juif attaché à observer dans le moindre détail la Loi et la tradition des anciens. Ils croyaient à la résurrection, et Paul était pharisien."
+ },
+ {
+  "id": "heresy",
+  "terms": [
+   "secte"
+  ],
+  "text": "Au sens premier, « parti » ou « faction ». Les accusateurs s’en servaient pour faire passer les disciples de Jésus pour une faction déviante."
+ },
+ {
+  "id": "self-control",
+  "terms": [
+   "maîtrise de soi"
+  ],
+  "text": "Gouverner ses propres désirs et sentiments pour ne pas aller trop loin."
+ },
+ {
+  "id": "caesar",
+  "terms": [
+   "César"
+  ],
+  "text": "Un titre de l’empereur romain, tiré du nom de Jules César. Au temps de Paul, César était Néron."
+ },
+ {
+  "id": "appeal",
+  "terms": [
+   "en appelle"
+  ],
+  "text": "Refuser le verdict d’un tribunal inférieur et demander à une autorité plus haute de juger à nouveau l’affaire. Les citoyens romains pouvaient faire appel à l’empereur."
+ },
+ {
+  "id": "augustan-cohort",
+  "terms": [
+   "cohorte Auguste"
+  ],
+  "text": "Une unité auxiliaire romaine qui portait le nom de l’empereur (Auguste)."
+ },
+ {
+  "id": "day-of-atonement",
+  "terms": [
+   "jour du Grand Pardon"
+  ],
+  "text": "Un jour d’automne (le dixième jour du septième mois juif) où l’on jeûnait et priait pour que les péchés du peuple soient purifiés. Après ce jour, la navigation en Méditerranée devenait dangereuse."
+ },
+ {
+  "id": "euroclydon",
+  "terms": [
+   "Euraquilon"
+  ],
+  "text": "Un violent vent du nord-est qui soufflait en hiver sur la Méditerranée, descendant des montagnes de Crète vers la mer."
+ },
+ {
+  "id": "lifeboat",
+  "terms": [
+   "chaloupe"
+  ],
+  "text": "Une petite embarcation portée par un grand navire, servant à recueillir les gens en danger ou à faire la navette avec le rivage."
+ },
+ {
+  "id": "dioscuri",
+  "terms": [
+   "Dioscures"
+  ],
+  "text": "Castor et Pollux, les fils jumeaux de Zeus. Les marins les honoraient comme des dieux protecteurs des voyages et plaçaient leur emblème à la proue."
+ },
+ {
+  "id": "praetorian-guard",
+  "terms": [
+   "garde impériale"
+  ],
+  "text": "Les troupes d’élite qui gardaient l’empereur romain. Les soldats qui gardaient Paul prisonnier se relayaient, et entendirent ainsi l’Évangile."
+ },
+ {
+  "id": "genealogy",
+  "terms": [
+   "généalogies"
+  ],
+  "text": "Les listes d’une lignée familiale, des ancêtres aux descendants. À Éphèse, de faux docteurs suscitaient à leur sujet des discussions vaines."
+ },
+ {
+  "id": "crown",
+  "terms": [
+   "couronne"
+  ],
+  "text": "La couronne portée par le vainqueur d’une compétition ou par un roi. Paul la compara à la récompense de ceux qui gardent la foi jusqu’au bout."
+ },
+ {
+  "id": "parchment",
+  "terms": [
+   "parchemins"
+  ],
+  "text": "Un support d’écriture fait de minces peaux de mouton ou de chèvre tendues et séchées. Il s’agissait sans doute de précieux rouleaux des Écritures."
+ },
+ {
+  "id": "drink-offering",
+  "terms": [
+   "versée comme le vin"
+  ],
+  "text": "Une offrande de vin versée sur un sacrifice (la libation). Paul y compara sa vie, répandue comme une offrande."
+ },
+ {
+  "id": "altar",
+  "terms": [
+   "autel"
+  ],
+  "text": "Une plate-forme surélevée construite pour offrir des sacrifices ou adorer un dieu."
+ }
+]

@@ -1,0 +1,493 @@
+[
+ {
+  "id": "prophet",
+  "terms": [
+   "profeta",
+   "profetas"
+  ],
+  "text": "Pessoa que recebe a vontade de Deus e a transmite ao povo. Samuel, Gade e Natã fizeram isso ao lado de Davi."
+ },
+ {
+  "id": "anoint",
+  "terms": [
+   "ungido",
+   "ungiram",
+   "chifre de azeite"
+  ],
+  "text": "Derramar azeite de oliva sobre a cabeça. Era o sinal de que Deus tinha escolhido aquela pessoa como rei ou sacerdote."
+ },
+ {
+  "id": "priest",
+  "terms": [
+   "sacerdote",
+   "sacerdotes"
+  ],
+  "text": "Quem oferecia sacrifícios no santuário e representava o povo diante de Deus. Eram descendentes de Arão."
+ },
+ {
+  "id": "sacrifice",
+  "terms": [
+   "sacrifício",
+   "sacrifícios"
+  ],
+  "text": "Adorar a Deus oferecendo animais ou cereais. Era feito para pedir perdão dos pecados ou para agradecer."
+ },
+ {
+  "id": "burnt-offering",
+  "terms": [
+   "holocaustos",
+   "holocausto"
+  ],
+  "text": "Sacrifício em que a oferta era queimada inteira sobre o altar e entregue a Deus. Mostrava entrega completa."
+ },
+ {
+  "id": "peace-offering",
+  "terms": [
+   "ofertas de paz"
+  ],
+  "text": "Sacrifício oferecido com alegria pela paz entre Deus e as pessoas. Parte da carne era comida em comunhão."
+ },
+ {
+  "id": "altar",
+  "terms": [
+   "altar"
+  ],
+  "text": "Plataforma onde a oferta era colocada e queimada para Deus. Era feita de terra ou de pedras."
+ },
+ {
+  "id": "lyre",
+  "terms": [
+   "harpa",
+   "harpas"
+  ],
+  "text": "Antigo instrumento de cordas presas a uma moldura de madeira, tocado com os dedos. Davi o tocava muito bem."
+ },
+ {
+  "id": "harp",
+  "terms": [
+   "liras"
+  ],
+  "text": "Antigo instrumento de cordas dedilhadas, usado junto com a harpa no culto e nas festas."
+ },
+ {
+  "id": "timbrel",
+  "terms": [
+   "tamborins"
+  ],
+  "text": "Tambor pequeno que se segura na mão. As mulheres costumavam tocá-lo dançando e cantando."
+ },
+ {
+  "id": "cymbal",
+  "terms": [
+   "címbalos"
+  ],
+  "text": "Instrumento de duas placas de bronze que se batem uma na outra. Parecido com os pratos de hoje."
+ },
+ {
+  "id": "cubit",
+  "terms": [
+   "côvados"
+  ],
+  "text": "Medida do cotovelo até a ponta do dedo médio, cerca de 45 cm. Seis côvados e um palmo dão quase 3 metros."
+ },
+ {
+  "id": "shekel",
+  "terms": [
+   "siclos"
+  ],
+  "text": "Unidade de peso e de dinheiro; um siclo pesa cerca de 11 g. Uma couraça de cinco mil siclos passa de 50 kg."
+ },
+ {
+  "id": "talent",
+  "terms": [
+   "talentos"
+  ],
+  "text": "A maior unidade de peso: um talento tem cerca de 34 kg e equivale a 3.000 siclos."
+ },
+ {
+  "id": "circumcision",
+  "terms": [
+   "incircunciso"
+  ],
+  "text": "Rito de cortar o prepúcio dos meninos; era o sinal de pertencer ao povo que fez aliança com Deus."
+ },
+ {
+  "id": "foreskin",
+  "terms": [
+   "prepúcios"
+  ],
+  "text": "A pele que cobre a ponta do órgão sexual masculino. Os filisteus não eram circuncidados, por isso servia de prova de que tinham sido mortos."
+ },
+ {
+  "id": "teraphim",
+  "terms": [
+   "terafins"
+  ],
+  "text": "Pequenas imagens de deuses em forma de gente, guardadas em casa. Em Israel eram ídolos proibidos."
+ },
+ {
+  "id": "idol",
+  "terms": [
+   "ídolo"
+  ],
+  "text": "Adorar como deus uma imagem feita por mãos humanas. A Bíblia manda não servir a outros deuses além de Deus."
+ },
+ {
+  "id": "ephod",
+  "terms": [
+   "éfode"
+  ],
+  "text": "Veste parecida com um colete, usada pelo sacerdote. Servia para consultar a vontade de Deus, e Davi a usou para perguntar o caminho."
+ },
+ {
+  "id": "sanctuary",
+  "terms": [
+   "santuário"
+  ],
+  "text": "Lugar santo onde se adorava a Deus e se ofereciam sacrifícios. No tempo de Davi ficava em Nobe."
+ },
+ {
+  "id": "showbread",
+  "terms": [
+   "pão sagrado"
+  ],
+  "text": "Pães colocados diante de Deus sobre a mesa do santuário. Eram trocados a cada sábado, e só os sacerdotes podiam comê-los."
+ },
+ {
+  "id": "tabernacle",
+  "terms": [
+   "tabernáculo"
+  ],
+  "text": "Santuário em forma de tenda, usado desde o tempo do deserto para adorar a Deus, até que o Templo fosse construído."
+ },
+ {
+  "id": "tent",
+  "terms": [
+   "tenda",
+   "tendas"
+  ],
+  "text": "Casa feita de pano. Davi armou uma tenda à parte para colocar a arca."
+ },
+ {
+  "id": "curtain",
+  "terms": [
+   "cortinas"
+  ],
+  "text": "Grandes panos que formam uma tenda ou fecham um espaço. Aqui indica que a arca estava dentro de uma tenda."
+ },
+ {
+  "id": "ark",
+  "terms": [
+   "arca"
+  ],
+  "text": "Caixa revestida de ouro com as tábuas dos Dez Mandamentos; mostrava que Deus estava no meio do povo. Ninguém podia tocá-la à toa."
+ },
+ {
+  "id": "temple",
+  "terms": [
+   "casa do Senhor",
+   "templo"
+  ],
+  "text": "A casa onde se adora a Deus. O Templo de Jerusalém foi preparado por Davi e construído por seu filho Salomão."
+ },
+ {
+  "id": "covenant",
+  "terms": [
+   "aliança"
+  ],
+  "text": "Promessa solene que duas partes fazem para cumprir. Deus fez uma aliança eterna com a família de Davi."
+ },
+ {
+  "id": "lord-of-hosts",
+  "terms": [
+   "Senhor dos Exércitos"
+  ],
+  "text": "Nome de Deus que quer dizer o Senhor que comanda todos os exércitos do céu e da terra."
+ },
+ {
+  "id": "spirit-of-lord",
+  "terms": [
+   "Espírito do Senhor",
+   "Espírito de Deus"
+  ],
+  "text": "O Espírito de Deus. Quando vinha sobre alguém, dava força e sabedoria para fazer a obra de Deus."
+ },
+ {
+  "id": "prophesy",
+  "terms": [
+   "profetizando",
+   "profetizar",
+   "profetizaram"
+  ],
+  "text": "Tomado pelo Espírito de Deus, anunciar a sua palavra ou louvá-lo. Não é só prever o futuro."
+ },
+ {
+  "id": "new-moon",
+  "terms": [
+   "lua nova"
+  ],
+  "text": "O primeiro dia do mês lunar. Nesse dia Israel oferecia sacrifícios e fazia festa."
+ },
+ {
+  "id": "sling",
+  "terms": [
+   "funda"
+  ],
+  "text": "Arma de couro onde se põe uma pedra; gira-se e solta-se para lançá-la. Os pastores também a usavam para espantar animais."
+ },
+ {
+  "id": "javelin",
+  "terms": [
+   "dardo",
+   "dardos"
+  ],
+  "text": "Lança curta, feita para ser arremessada."
+ },
+ {
+  "id": "commander-thousand",
+  "terms": [
+   "comandante de mil"
+  ],
+  "text": "Oficial que comandava mil soldados."
+ },
+ {
+  "id": "commander",
+  "terms": [
+   "comandante do exército"
+  ],
+  "text": "O comandante supremo de todo o exército do país."
+ },
+ {
+  "id": "chariot",
+  "terms": [
+   "carros"
+  ],
+  "text": "Carros de guerra puxados por cavalos. Também mostravam o poder e a pompa de um rei ou de um príncipe."
+ },
+ {
+  "id": "threshing-floor",
+  "terms": [
+   "eira",
+   "eiras"
+  ],
+  "text": "Terreno largo e plano onde se batia o cereal colhido para soltar os grãos. Em geral ficava num morro onde o vento soprava bem."
+ },
+ {
+  "id": "fine-linen",
+  "terms": [
+   "linho"
+  ],
+  "text": "Tecido branco e fino, feito de fio delicado. Era usado nas roupas dos sacerdotes."
+ },
+ {
+  "id": "cedar",
+  "terms": [
+   "cedro",
+   "cedros"
+  ],
+  "text": "Árvore grande, perfumada e resistente, que cresce no Líbano. Era madeira preciosa para construir palácios e o Templo."
+ },
+ {
+  "id": "tribute",
+  "terms": [
+   "tributo"
+  ],
+  "text": "Riquezas que o país derrotado na guerra pagava todo ano ao vencedor."
+ },
+ {
+  "id": "counselor",
+  "terms": [
+   "conselheiro"
+  ],
+  "text": "Assessor que dava ideias e conselhos ao rei. Aitofel era famoso por sua sabedoria."
+ },
+ {
+  "id": "vow",
+  "terms": [
+   "voto"
+  ],
+  "text": "Promessa que a própria pessoa faz a Deus de fazer alguma coisa. Tinha de ser cumprida."
+ },
+ {
+  "id": "lawsuit",
+  "terms": [
+   "causa para julgar"
+  ],
+  "text": "Levar uma briga a julgamento para receber uma sentença."
+ },
+ {
+  "id": "tamarisk",
+  "terms": [
+   "tamargueira"
+  ],
+  "text": "Árvore baixa que cresce bem até em terra seca."
+ },
+ {
+  "id": "seven-days",
+  "terms": [
+   "sete dias"
+  ],
+  "text": "Sete dias, ou seja, uma semana."
+ },
+ {
+  "id": "fasting",
+  "terms": [
+   "jejuaram",
+   "jejuou",
+   "jejuando"
+  ],
+  "text": "Ficar sem comer por um tempo, por causa da tristeza ou de uma oração insistente."
+ },
+ {
+  "id": "worship",
+  "terms": [
+   "adorou",
+   "adorava",
+   "adoração"
+  ],
+  "text": "Prostrar-se diante de Deus, honrá-lo e prestar-lhe culto."
+ },
+ {
+  "id": "law",
+  "terms": [
+   "Lei"
+  ],
+  "text": "Os mandamentos e as normas que Deus deu por meio de Moisés. Mostram o caminho de vida para Israel."
+ },
+ {
+  "id": "rock",
+  "terms": [
+   "Rocha de Israel"
+  ],
+  "text": "Uma pedra grande e larga. É uma imagem de Deus, que protege e não se abala."
+ },
+ {
+  "id": "tribe",
+  "terms": [
+   "tribo",
+   "tribos"
+  ],
+  "text": "Cada um dos doze ramos de famílias de Israel, vindos dos doze filhos de Jacó."
+ },
+ {
+  "id": "elder",
+  "terms": [
+   "anciãos"
+  ],
+  "text": "Líderes mais velhos que guiavam as cidades e as tribos."
+ },
+ {
+  "id": "assembly",
+  "terms": [
+   "assembleia"
+  ],
+  "text": "Todo o povo reunido para o culto ou para um assunto importante."
+ },
+ {
+  "id": "levite",
+  "terms": [
+   "levitas"
+  ],
+  "text": "Membros da tribo de Levi, encarregados de carregar e cuidar do tabernáculo e da arca."
+ },
+ {
+  "id": "wrath",
+  "terms": [
+   "ira do Senhor"
+  ],
+  "text": "A santa indignação de Deus, que não deixa o pecado passar."
+ },
+ {
+  "id": "wineskin",
+  "terms": [
+   "odre",
+   "odres"
+  ],
+  "text": "Bolsa feita de pele de animal costurada, usada para levar vinho ou água."
+ },
+ {
+  "id": "parched-grain",
+  "terms": [
+   "grãos tostados"
+  ],
+  "text": "Grãos de trigo ou cevada torrados, um alimento fácil de levar e comer na viagem."
+ },
+ {
+  "id": "curds",
+  "terms": [
+   "coalhada"
+  ],
+  "text": "Alimento feito do leite de animais coalhado, parecido com o iogurte ou a manteiga."
+ },
+ {
+  "id": "bride-price",
+  "terms": [
+   "dote"
+  ],
+  "text": "Presente que o noivo dava à família da noiva. Saul usou isso como pretexto para pôr Davi em perigo."
+ },
+ {
+  "id": "watchman",
+  "terms": [
+   "sentinela"
+  ],
+  "text": "Quem vigiava do alto da muralha ou de um lugar elevado e avisava quando alguém se aproximava."
+ },
+ {
+  "id": "messenger",
+  "terms": [
+   "mensageiro",
+   "mensageiros"
+  ],
+  "text": "Quem corria para levar com pressa uma notícia ou uma ordem."
+ },
+ {
+  "id": "justice",
+  "terms": [
+   "justiça"
+  ],
+  "text": "Guardar o que é certo e reto aos olhos de Deus. Um bom rei devia governar com justiça."
+ },
+ {
+  "id": "set-apart",
+  "terms": [
+   "dedicou"
+  ],
+  "text": "Separar algo do uso comum para entregá-lo somente a Deus."
+ },
+ {
+  "id": "decorum",
+  "terms": [
+   "compostura"
+  ],
+  "text": "O comportamento e a dignidade que combinam com a posição de alguém."
+ },
+ {
+  "id": "oak",
+  "terms": [
+   "carvalho"
+  ],
+  "text": "Árvore grande da família que dá bolotas. Seus galhos crescem largos e entrelaçados."
+ },
+ {
+  "id": "mule",
+  "terms": [
+   "mula"
+  ],
+  "text": "Animal nascido do cruzamento de cavalo com jumenta. No tempo de Davi, reis e príncipes montavam nele."
+ },
+ {
+  "id": "psalm",
+  "terms": [
+   "Salmo"
+  ],
+  "text": "Livro da Bíblia que reúne cânticos e orações a Deus. Muitos deles foram compostos por Davi."
+ },
+ {
+  "id": "grace",
+  "terms": [
+   "graça"
+  ],
+  "text": "Amor e favor dados de graça a quem não merece."
+ }
+]

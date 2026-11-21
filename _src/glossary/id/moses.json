@@ -1,0 +1,523 @@
+[
+ {
+  "id": "store-city",
+  "terms": [
+   "kota-kota perbekalan",
+   "kota perbekalan"
+  ],
+  "text": "Kota tempat menyimpan gandum dan perbekalan kerajaan. Orang Israel dipaksa bekerja seperti budak untuk membangun kota-kota ini."
+ },
+ {
+  "id": "midwife",
+  "terms": [
+   "bidan",
+   "bidan-bidan",
+   "para bidan"
+  ],
+  "text": "Perempuan yang mendampingi dan menolong ibu yang melahirkan."
+ },
+ {
+  "id": "bitumen",
+  "terms": [
+   "gala-gala",
+   "ter"
+  ],
+  "text": "Bahan hitam lengket dari dalam tanah, seperti aspal. Dioleskan pada peti atau perahu supaya air tidak masuk."
+ },
+ {
+  "id": "priest",
+  "terms": [
+   "imam",
+   "para imam"
+  ],
+  "text": "Orang yang mempersembahkan korban kepada Allah, berdoa bagi umat, dan mengajarkan hukum Taurat."
+ },
+ {
+  "id": "high-priest",
+  "terms": [
+   "imam besar"
+  ],
+  "text": "Yang utama di antara para imam. Harun yang pertama memegang jabatan ini, lalu anak-anaknya meneruskannya."
+ },
+ {
+  "id": "bush",
+  "terms": [
+   "semak duri",
+   "semak"
+  ],
+  "text": "Pohon berduri yang pendek di padang gurun. Dari nyala api di semak itu Allah memanggil Musa."
+ },
+ {
+  "id": "sign",
+  "terms": [
+   "tanda-tanda"
+  ],
+  "text": "Perbuatan ajaib yang menunjukkan bahwa Allah menyertai. Bukan sekadar keajaiban, tetapi petunjuk yang menunjuk kepada sesuatu."
+ },
+ {
+  "id": "feast",
+  "terms": [
+   "perayaan"
+  ],
+  "text": "Hari raya yang dirayakan pada waktu yang ditetapkan untuk mengingat Allah, seperti Paskah dan Hari Raya Pondok Daun."
+ },
+ {
+  "id": "magician",
+  "terms": [
+   "para ahli sihir",
+   "ahli sihir"
+  ],
+  "text": "Orang-orang di istana Firaun yang mempraktikkan ilmu gaib. Mereka meniru beberapa tulah pertama, tetapi segera menyerah."
+ },
+ {
+  "id": "passover",
+  "terms": [
+   "Paskah"
+  ],
+  "text": "Hari raya pertama Israel, artinya 'melewati'. Mengingat malam ketika tulah melewati rumah-rumah yang diolesi darah anak domba."
+ },
+ {
+  "id": "hyssop",
+  "terms": [
+   "hisop"
+  ],
+  "text": "Tumbuhan kecil yang tumbuh di celah batu. Diikat menjadi seikat untuk mencelup dan memercikkan darah atau air."
+ },
+ {
+  "id": "lintel",
+  "terms": [
+   "ambang atasnya"
+  ],
+  "text": "Balok kayu yang melintang di atas pintu. Pada malam Paskah, darah anak domba dioleskan di sini dan pada kedua tiang pintu."
+ },
+ {
+  "id": "leaven",
+  "terms": [
+   "roti tidak beragi",
+   "tidak beragi"
+  ],
+  "text": "Ragi membuat adonan roti mengembang. Karena berangkat tergesa-gesa, mereka makan roti tanpa ragi, dan dari sinilah Hari Raya Roti Tidak Beragi."
+ },
+ {
+  "id": "able-men",
+  "terms": [
+   "laki-laki yang berjalan kaki"
+  ],
+  "text": "Laki-laki dewasa yang dapat maju berperang. Perempuan dan anak-anak tidak termasuk dalam hitungan ini."
+ },
+ {
+  "id": "chariot",
+  "terms": [
+   "kereta perang",
+   "kereta",
+   "kereta-kereta"
+  ],
+  "text": "Kereta perang yang ditarik kuda, senjata paling menakutkan pada zaman itu."
+ },
+ {
+  "id": "timbrel",
+  "terms": [
+   "rebana"
+  ],
+  "text": "Gendang kecil yang dipegang di tangan. Pada hari sukacita, para perempuan memukulnya sambil menari."
+ },
+ {
+  "id": "prophet",
+  "terms": [
+   "nabi",
+   "nabiah"
+  ],
+  "text": "Orang yang menerima firman Allah dan menyampaikannya kepada orang lain, bukan hanya orang yang meramal masa depan. Nabiah adalah nabi perempuan."
+ },
+ {
+  "id": "statutes",
+  "terms": [
+   "ketetapan",
+   "peraturan"
+  ],
+  "text": "Hukum dan aturan yang ditetapkan Allah untuk ditaati umat-Nya."
+ },
+ {
+  "id": "omer",
+  "terms": [
+   "omer"
+  ],
+  "text": "Takaran untuk biji-bijian, sekitar dua liter. Itulah jatah manna seorang untuk sehari."
+ },
+ {
+  "id": "manna",
+  "terms": [
+   "manna"
+  ],
+  "text": "Makanan yang diturunkan Allah setiap hari di padang gurun. Namanya berasal dari pertanyaan 'Apakah ini?'"
+ },
+ {
+  "id": "sabbath",
+  "terms": [
+   "hari Sabat",
+   "Sabat"
+  ],
+  "text": "Hari ketujuh, hari untuk berhenti bekerja, beristirahat, dan mengingat Allah. Berlangsung dari matahari terbenam hari Jumat sampai matahari terbenam hari Sabtu."
+ },
+ {
+  "id": "elder",
+  "terms": [
+   "tua-tua",
+   "para tua-tua"
+  ],
+  "text": "Pemimpin yang sudah berumur dan mewakili keluarga serta suku. Mereka ikut berunding dan memutuskan urusan umat."
+ },
+ {
+  "id": "altar",
+  "terms": [
+   "mezbah"
+  ],
+  "text": "Tempat dari batu atau tanah yang ditinggikan untuk mempersembahkan korban. Di sanalah orang menyembah Allah."
+ },
+ {
+  "id": "burnt-offering",
+  "terms": [
+   "korban bakaran"
+  ],
+  "text": "Korban yang dibakar seluruhnya, tanda menyerahkan diri sepenuhnya kepada Allah."
+ },
+ {
+  "id": "sacrifice",
+  "terms": [
+   "korban sembelihan"
+  ],
+  "text": "Hewan yang disembelih untuk dipersembahkan kepada Allah."
+ },
+ {
+  "id": "peace-offering",
+  "terms": [
+   "korban keselamatan"
+  ],
+  "text": "Korban yang dipersembahkan dengan sukacita karena ada damai antara Allah dan manusia. Sebagian dagingnya dimakan bersama."
+ },
+ {
+  "id": "lawsuit",
+  "terms": [
+   "perkara-perkara",
+   "perkara"
+  ],
+  "text": "Perselisihan yang dibawa supaya diputuskan siapa yang benar, mirip pengadilan sekarang."
+ },
+ {
+  "id": "covenant",
+  "terms": [
+   "perjanjian"
+  ],
+  "text": "Janji teguh yang dibuat Allah dengan umat-Nya: Ia menjadi Allah mereka, dan mereka menjadi umat-Nya."
+ },
+ {
+  "id": "purify",
+  "terms": [
+   "menguduskan diri",
+   "Kuduskanlah dirimu"
+  ],
+  "text": "Membersihkan tubuh dan pakaian sebelum menghadap Allah. Kebersihan lahiriah menunjukkan kesiapan hati."
+ },
+ {
+  "id": "graven-image",
+  "terms": [
+   "patung pahatan"
+  ],
+  "text": "Bentuk dewa yang dipahat dari kayu, batu, atau logam. Benda seperti ini yang dibuat untuk disembah disebut berhala."
+ },
+ {
+  "id": "adultery",
+  "terms": [
+   "berzina"
+  ],
+  "text": "Hubungan seksual orang yang sudah menikah dengan orang yang bukan pasangannya."
+ },
+ {
+  "id": "sapphire",
+  "terms": [
+   "batu nilam",
+   "nilam"
+  ],
+  "text": "Batu permata berwarna biru, mungkin safir atau lapis lazuli."
+ },
+ {
+  "id": "tablets",
+  "terms": [
+   "dua loh batu",
+   "loh batu",
+   "loh"
+  ],
+  "text": "Dua lempeng batu tempat Allah menuliskan Sepuluh Perintah. Kemudian disimpan di dalam tabut perjanjian."
+ },
+ {
+  "id": "tabernacle",
+  "terms": [
+   "Kemah Suci"
+  ],
+  "text": "Kemah ibadah yang dipindah-pindahkan di padang gurun, tanda bahwa Allah tinggal di tengah umat-Nya."
+ },
+ {
+  "id": "tent-of-meeting",
+  "terms": [
+   "Kemah Pertemuan"
+  ],
+  "text": "Kemah tempat Allah bertemu dengan Musa dan umat-Nya; nama lain untuk Kemah Suci."
+ },
+ {
+  "id": "testimony",
+  "terms": [
+   "loh kesaksian"
+  ],
+  "text": "Lempeng batu bertuliskan Sepuluh Perintah, disebut demikian karena menjadi saksi perjanjian antara Allah dan umat-Nya."
+ },
+ {
+  "id": "ark",
+  "terms": [
+   "Tabut Perjanjian",
+   "tabut"
+  ],
+  "text": "Peti kayu berlapis emas tempat menyimpan loh batu. Tanda bahwa Allah hadir di tengah umat-Nya, dan diusung oleh para imam."
+ },
+ {
+  "id": "mercy-seat",
+  "terms": [
+   "tutup pendamaian"
+  ],
+  "text": "Tutup emas di atas tabut perjanjian. Setiap tahun imam besar memercikkan darah di sini untuk menghapus dosa umat."
+ },
+ {
+  "id": "veil",
+  "terms": [
+   "tirai",
+   "tabir"
+  ],
+  "text": "Kain tebal yang menyekat ruangan. Di Kemah Suci, kain ini menutupi tempat yang paling kudus."
+ },
+ {
+  "id": "showbread-table",
+  "terms": [
+   "meja roti"
+  ],
+  "text": "Meja di dalam Kemah Suci tempat dua belas roti selalu disajikan di hadapan Allah."
+ },
+ {
+  "id": "lampstand",
+  "terms": [
+   "kandil"
+  ],
+  "text": "Kaki pelita emas dengan tujuh cabang yang dinyalakan. Selalu menerangi bagian dalam Kemah Suci."
+ },
+ {
+  "id": "incense-altar",
+  "terms": [
+   "mezbah ukupan"
+  ],
+  "text": "Mezbah emas yang kecil di dalam Kemah Suci, tempat membakar ukupan setiap pagi dan petang."
+ },
+ {
+  "id": "bronze-altar",
+  "terms": [
+   "mezbah korban bakaran"
+  ],
+  "text": "Mezbah tembaga yang besar di pelataran Kemah Suci, tempat hewan dibakar sebagai korban."
+ },
+ {
+  "id": "laver",
+  "terms": [
+   "bejana pembasuhan"
+  ],
+  "text": "Bejana tembaga yang besar tempat para imam membasuh tangan dan kaki."
+ },
+ {
+  "id": "cubit",
+  "terms": [
+   "hasta"
+  ],
+  "text": "Panjang dari siku sampai ujung jari, sekitar 45 sentimeter."
+ },
+ {
+  "id": "days-journey",
+  "terms": [
+   "perjalanan sehari"
+  ],
+  "text": "Jarak yang dapat ditempuh berjalan kaki dalam sehari, sekitar 30 kilometer."
+ },
+ {
+  "id": "spy",
+  "terms": [
+   "para pengintai",
+   "pengintai"
+  ],
+  "text": "Orang yang diam-diam masuk ke negeri musuh untuk melihat keadaannya lalu kembali."
+ },
+ {
+  "id": "tribe",
+  "terms": [
+   "suku-suku",
+   "suku Israel",
+   "suku"
+  ],
+  "text": "Keluarga besar yang berasal dari dua belas anak Yakub. Israel terdiri atas dua belas suku."
+ },
+ {
+  "id": "censer",
+  "terms": [
+   "perbaraan"
+  ],
+  "text": "Wadah berisi bara untuk membakar ukupan. Hanya imam yang boleh memakainya di hadapan Allah."
+ },
+ {
+  "id": "plague",
+  "terms": [
+   "tulah"
+  ],
+  "text": "Penyakit atau bencana dahsyat yang menimpa banyak orang."
+ },
+ {
+  "id": "bronze-serpent",
+  "terms": [
+   "ular tembaga"
+  ],
+  "text": "Ular yang dibuat dari tembaga. Siapa yang memandangnya tetap hidup, dan Yesus membandingkan salib-Nya dengan ular ini."
+ },
+ {
+  "id": "divination-fee",
+  "terms": [
+   "upah tenung"
+  ],
+  "text": "Uang atau barang yang dibayarkan untuk meramal atau untuk memohonkan berkat dan kutuk."
+ },
+ {
+  "id": "official",
+  "terms": [
+   "para pembesar",
+   "pembesar"
+  ],
+  "text": "Orang yang memegang jabatan tinggi dalam kerajaan."
+ },
+ {
+  "id": "law",
+  "terms": [
+   "kitab Taurat",
+   "Taurat"
+  ],
+  "text": "Ajaran dan perintah yang diberikan Allah melalui Musa. Kitab Taurat adalah kitab tempat semuanya dituliskan."
+ },
+ {
+  "id": "doorpost",
+  "terms": [
+   "kedua tiang pintu",
+   "tiang pintu"
+  ],
+  "text": "Tiang yang berdiri di kedua sisi pintu."
+ },
+ {
+  "id": "flax",
+  "terms": [
+   "batang rami",
+   "rami"
+  ],
+  "text": "Batang tanaman rami (linen) yang dipakai untuk menenun kain. Dijemur di atas atap."
+ },
+ {
+  "id": "ford",
+  "terms": [
+   "tempat penyeberangan",
+   "penyeberangan"
+  ],
+  "text": "Bagian sungai yang dangkal tempat orang menyeberang."
+ },
+ {
+  "id": "circumcision",
+  "terms": [
+   "disunat"
+  ],
+  "text": "Upacara memotong ujung kulit kelamin anak laki-laki, tanda perjanjian sebagai umat Allah."
+ },
+ {
+  "id": "shofar",
+  "terms": [
+   "sangkakala tanduk domba",
+   "tanduk domba jantan",
+   "sangkakala"
+  ],
+  "text": "Terompet dari tanduk domba jantan (syofar). Ditiup pada hari raya, dalam perang, dan untuk memberitakan peristiwa penting."
+ },
+ {
+  "id": "devoted",
+  "terms": [
+   "ditumpas",
+   "dikhususkan"
+  ],
+  "text": "Dimusnahkan seluruhnya. Artinya, tidak diambil manusia, tetapi diserahkan sepenuhnya kepada Allah."
+ },
+ {
+  "id": "lots",
+  "terms": [
+   "membuang undi",
+   "undian",
+   "undi"
+  ],
+  "text": "Cara memutuskan dengan menarik batu atau tongkat yang bertanda. Dianggap sebagai cara menanyakan kehendak Allah, bukan kehendak manusia."
+ },
+ {
+  "id": "peace-treaty",
+  "terms": [
+   "berdamai"
+  ],
+  "text": "Saling berjanji untuk tidak berperang dan hidup rukun."
+ },
+ {
+  "id": "inheritance",
+  "terms": [
+   "milik pusaka",
+   "pusaka"
+  ],
+  "text": "Bagian yang diberikan Allah untuk dimiliki turun-temurun, yaitu warisan."
+ },
+ {
+  "id": "office",
+  "terms": [
+   "jabatan imam",
+   "jabatan"
+  ],
+  "text": "Tugas yang dipercayakan beserta kedudukannya."
+ },
+ {
+  "id": "oak",
+  "terms": [
+   "pohon tarbantin",
+   "tarbantin"
+  ],
+  "text": "Pohon besar yang rindang. Sering menjadi tempat untuk mengenang peristiwa penting."
+ },
+ {
+  "id": "sanctuary",
+  "terms": [
+   "tempat kudus"
+  ],
+  "text": "Tempat kudus untuk menyembah Allah."
+ },
+ {
+  "id": "wrath",
+  "terms": [
+   "murka"
+  ],
+  "text": "Kemarahan Allah yang kudus terhadap dosa."
+ },
+ {
+  "id": "lovingkindness",
+  "terms": [
+   "kasih setia"
+  ],
+  "text": "Kasih dan belas kasihan Allah yang tetap teguh dan tidak berubah."
+ },
+ {
+  "id": "worship",
+  "terms": [
+   "menyembah",
+   "sujud"
+  ],
+  "text": "Bersujud dan memuliakan Allah."
+ }
+]

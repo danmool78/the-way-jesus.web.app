@@ -1,0 +1,481 @@
+[
+ {
+  "id": "prophet",
+  "terms": [
+   "profeta",
+   "profetas"
+  ],
+  "text": "Es quien recibe la voluntad de Dios y la transmite a la gente. Samuel, Gad y Natán cumplieron esta tarea junto a David."
+ },
+ {
+  "id": "anoint",
+  "terms": [
+   "ungido",
+   "ungieron",
+   "cuerno de aceite"
+  ],
+  "text": "Es derramar aceite de oliva sobre la cabeza de alguien, como señal de que Dios lo ha puesto como rey o sacerdote."
+ },
+ {
+  "id": "priest",
+  "terms": [
+   "sacerdote",
+   "sacerdotes"
+  ],
+  "text": "Es quien ofrece sacrificios en el santuario y representa al pueblo delante de Dios. Lo hacían los descendientes de Aarón."
+ },
+ {
+  "id": "sacrifice",
+  "terms": [
+   "sacrificio",
+   "sacrificios"
+  ],
+  "text": "Es el acto de adorar a Dios ofreciéndole animales o grano, para pedir perdón por el pecado o para darle gracias."
+ },
+ {
+  "id": "burnt-offering",
+  "terms": [
+   "holocaustos"
+  ],
+  "text": "Es el sacrificio en que la ofrenda se quema entera sobre el altar. Expresa la entrega completa a Dios."
+ },
+ {
+  "id": "peace-offering",
+  "terms": [
+   "sacrificios de paz"
+  ],
+  "text": "Es un sacrificio para celebrar la paz entre Dios y las personas. Parte de la carne se comía juntos."
+ },
+ {
+  "id": "altar",
+  "terms": [
+   "altar"
+  ],
+  "text": "Es una plataforma de tierra o de piedra donde se quemaban las ofrendas para Dios."
+ },
+ {
+  "id": "lyre",
+  "terms": [
+   "arpa",
+   "arpas"
+  ],
+  "text": "Es un antiguo instrumento de cuerdas tensadas en un marco de madera, que se pulsan con la mano. David lo tocaba muy bien."
+ },
+ {
+  "id": "harp",
+  "terms": [
+   "liras"
+  ],
+  "text": "Es otro antiguo instrumento de cuerdas pulsadas que, junto con el arpa, se usaba en el culto y en las fiestas."
+ },
+ {
+  "id": "timbrel",
+  "terms": [
+   "panderos"
+  ],
+  "text": "Es un tambor pequeño que se sostiene en la mano. Las mujeres solían tocarlo mientras bailaban y cantaban."
+ },
+ {
+  "id": "cymbal",
+  "terms": [
+   "címbalos"
+  ],
+  "text": "Es un instrumento de dos platos de bronce que se golpean entre sí, parecido a los platillos."
+ },
+ {
+  "id": "cubit",
+  "terms": [
+   "codos"
+  ],
+  "text": "Es la medida que va del codo a la punta del dedo medio, unos 45 cm. Seis codos y un palmo son casi 3 metros."
+ },
+ {
+  "id": "shekel",
+  "terms": [
+   "siclos"
+  ],
+  "text": "Es una unidad de peso y de dinero: un siclo pesa unos 11 gramos. Una coraza de cinco mil siclos pesa más de 50 kilos."
+ },
+ {
+  "id": "talent",
+  "terms": [
+   "talentos"
+  ],
+  "text": "Es la mayor unidad de peso: un talento son unos 34 kilos, lo mismo que 3.000 siclos."
+ },
+ {
+  "id": "circumcision",
+  "terms": [
+   "incircunciso"
+  ],
+  "text": "Incircunciso es quien no ha recibido la circuncisión, el rito que marcaba al pueblo que tenía una alianza con Dios. Era un modo de llamar a los filisteos."
+ },
+ {
+  "id": "foreskin",
+  "terms": [
+   "prepucios"
+  ],
+  "text": "Es la piel que cubre el extremo del órgano masculino. Como los filisteos no estaban circuncidados, servía de prueba de que se les había dado muerte."
+ },
+ {
+  "id": "teraphim",
+  "terms": [
+   "terafín"
+  ],
+  "text": "Era una pequeña imagen de un dios con forma humana que se tenía en casa. En Israel era un ídolo prohibido."
+ },
+ {
+  "id": "idol",
+  "terms": [
+   "ídolo"
+  ],
+  "text": "Es una figura hecha por manos humanas a la que se adora como a un dios. La Biblia manda no adorar a otros dioses fuera del Señor."
+ },
+ {
+  "id": "ephod",
+  "terms": [
+   "efod"
+  ],
+  "text": "Es una prenda parecida a un chaleco que llevaba el sacerdote. Se usaba para consultar la voluntad de Dios, y David pidió por medio de él que le mostrara el camino."
+ },
+ {
+  "id": "sanctuary",
+  "terms": [
+   "santuario"
+  ],
+  "text": "Era el lugar santo donde se adoraba a Dios y se ofrecían sacrificios. En tiempos de David estaba en Nob."
+ },
+ {
+  "id": "showbread",
+  "terms": [
+   "pan consagrado"
+  ],
+  "text": "Era el pan que se ponía sobre la mesa del santuario delante de Dios. Se cambiaba cada sábado y solo los sacerdotes podían comerlo."
+ },
+ {
+  "id": "tabernacle",
+  "terms": [
+   "tabernáculo"
+  ],
+  "text": "Era el santuario en forma de tienda, que se podía trasladar, donde se adoraba a Dios desde los tiempos del desierto. Se usó hasta que se construyó el Templo."
+ },
+ {
+  "id": "tent",
+  "terms": [
+   "tienda",
+   "tiendas"
+  ],
+  "text": "Es una casa hecha de tela, una carpa. David levantó una tienda aparte para colocar el arca."
+ },
+ {
+  "id": "curtain",
+  "terms": [
+   "cortina"
+  ],
+  "text": "Es una tela grande que forma una tienda o separa un espacio. Aquí indica que el arca estaba dentro de una tienda."
+ },
+ {
+  "id": "ark",
+  "terms": [
+   "arca"
+  ],
+  "text": "Era un cofre cubierto de oro que guardaba las tablas de los Diez Mandamientos y mostraba que Dios estaba en medio de su pueblo. No se podía tocar a la ligera."
+ },
+ {
+  "id": "temple",
+  "terms": [
+   "casa del Señor",
+   "templo"
+  ],
+  "text": "Es la casa donde se adora a Dios. David preparó el Templo de Jerusalén, y su hijo Salomón lo construyó."
+ },
+ {
+  "id": "covenant",
+  "terms": [
+   "pacto"
+  ],
+  "text": "Es una promesa solemne que dos partes se comprometen a cumplir. Dios hizo un pacto eterno con la familia de David."
+ },
+ {
+  "id": "lord-of-hosts",
+  "terms": [
+   "Señor de los ejércitos"
+  ],
+  "text": "Es un nombre de Dios que significa que él manda sobre todos los ejércitos del cielo y de la tierra."
+ },
+ {
+  "id": "spirit-of-lord",
+  "terms": [
+   "Espíritu del Señor",
+   "Espíritu de Dios"
+  ],
+  "text": "Es el Espíritu de Dios. Cuando venía sobre alguien, le daba fuerza y sabiduría para hacer la obra de Dios."
+ },
+ {
+  "id": "prophesy",
+  "terms": [
+   "profetizando",
+   "profetizar",
+   "profetizaron"
+  ],
+  "text": "Es comunicar la palabra de Dios o alabarlo bajo el impulso de su Espíritu. No es solo adivinar el futuro."
+ },
+ {
+  "id": "new-moon",
+  "terms": [
+   "luna nueva"
+  ],
+  "text": "Es el primer día del mes lunar. Israel ofrecía sacrificios y celebraba un banquete ese día."
+ },
+ {
+  "id": "sling",
+  "terms": [
+   "honda"
+  ],
+  "text": "Es un arma con una bolsita de cuero donde se pone una piedra, que se hace girar y se lanza. Los pastores también la usaban para ahuyentar a las fieras."
+ },
+ {
+  "id": "javelin",
+  "terms": [
+   "jabalina"
+  ],
+  "text": "Es una lanza corta, hecha para arrojarla."
+ },
+ {
+  "id": "commander-thousand",
+  "terms": [
+   "jefe de mil"
+  ],
+  "text": "Era un jefe militar que tenía a su mando a mil soldados."
+ },
+ {
+  "id": "commander",
+  "terms": [
+   "jefe del ejército"
+  ],
+  "text": "Era el jefe supremo de todo el ejército del reino."
+ },
+ {
+  "id": "chariot",
+  "terms": [
+   "carros"
+  ],
+  "text": "Son carros de combate tirados por caballos. También mostraban el poder de un rey o de un príncipe."
+ },
+ {
+  "id": "threshing-floor",
+  "terms": [
+   "era de Nacón",
+   "era de Arauna",
+   "las eras"
+  ],
+  "text": "La era es un terreno amplio y llano donde se golpeaba el grano cosechado para separarlo. Solía estar en una colina donde soplaba bien el viento."
+ },
+ {
+  "id": "fine-linen",
+  "terms": [
+   "lino"
+  ],
+  "text": "Es una tela blanca y fina, tejida con hilo delgado. Se usaba para las vestiduras de los sacerdotes."
+ },
+ {
+  "id": "cedar",
+  "terms": [
+   "cedro"
+  ],
+  "text": "Es un árbol grande, aromático y de madera dura, que crece en el Líbano. Era una madera valiosa para construir palacios y templos."
+ },
+ {
+  "id": "tribute",
+  "terms": [
+   "tributario"
+  ],
+  "text": "Es pagar tributo: la riqueza que el pueblo vencido entregaba cada año al vencedor."
+ },
+ {
+  "id": "counselor",
+  "terms": [
+   "consejero"
+  ],
+  "text": "Es quien da al rey consejos y planes. Ahitofel era famoso por su sabiduría."
+ },
+ {
+  "id": "vow",
+  "terms": [
+   "voto"
+  ],
+  "text": "Es una promesa que uno hace a Dios por su propia voluntad de hacer algo. Había que cumplirla sin falta."
+ },
+ {
+  "id": "lawsuit",
+  "terms": [
+   "pleito"
+  ],
+  "text": "Es llevar una disputa ante un juez para que dicte sentencia."
+ },
+ {
+  "id": "tamarisk",
+  "terms": [
+   "tamarisco"
+  ],
+  "text": "Es un árbol pequeño que crece bien incluso en tierra seca."
+ },
+ {
+  "id": "fasting",
+  "terms": [
+   "ayunó",
+   "ayunaron"
+  ],
+  "text": "Es dejar de comer durante un tiempo por tristeza o para orar con insistencia."
+ },
+ {
+  "id": "worship",
+  "terms": [
+   "adoraba"
+  ],
+  "text": "Es postrarse ante Dios para honrarlo y rendirle culto."
+ },
+ {
+  "id": "law",
+  "terms": [
+   "ley"
+  ],
+  "text": "Son los mandamientos y normas que Dios dio por medio de Moisés. Contienen el camino por el que Israel debía vivir."
+ },
+ {
+  "id": "rock",
+  "terms": [
+   "Roca de Israel"
+  ],
+  "text": "Una roca es una peña grande y ancha. Se llama así a Dios porque protege sin moverse nunca."
+ },
+ {
+  "id": "tribe",
+  "terms": [
+   "tribus",
+   "tribu"
+  ],
+  "text": "Son las doce ramas familiares de Israel, que descienden de los doce hijos de Jacob."
+ },
+ {
+  "id": "elder",
+  "terms": [
+   "ancianos"
+  ],
+  "text": "Eran los líderes de edad que guiaban las ciudades y las tribus."
+ },
+ {
+  "id": "assembly",
+  "terms": [
+   "asamblea"
+  ],
+  "text": "Es todo el pueblo reunido para el culto o para un asunto importante."
+ },
+ {
+  "id": "levite",
+  "terms": [
+   "levitas"
+  ],
+  "text": "Eran los miembros de la tribu de Leví, encargados de cuidar el tabernáculo y de llevar el arca."
+ },
+ {
+  "id": "wrath",
+  "terms": [
+   "ira del Señor"
+  ],
+  "text": "Es el santo enojo de Dios, que no deja pasar el pecado."
+ },
+ {
+  "id": "wineskin",
+  "terms": [
+   "odre",
+   "odres"
+  ],
+  "text": "Es una bolsa hecha de piel de animal cosida, que servía para llevar vino o agua."
+ },
+ {
+  "id": "parched-grain",
+  "terms": [
+   "grano tostado"
+  ],
+  "text": "Son granos de trigo o cebada tostados, un alimento fácil de llevar y comer por el camino."
+ },
+ {
+  "id": "curds",
+  "terms": [
+   "cuajada"
+  ],
+  "text": "Es leche de animal cuajada, algo parecido al yogur o a la mantequilla."
+ },
+ {
+  "id": "bride-price",
+  "terms": [
+   "dote"
+  ],
+  "text": "Es el regalo que el novio daba a la familia de la novia. Saúl lo usó como excusa para poner a David en peligro."
+ },
+ {
+  "id": "watchman",
+  "terms": [
+   "centinela"
+  ],
+  "text": "Es quien vigila desde la muralla o desde un lugar alto y avisa de quién se acerca."
+ },
+ {
+  "id": "messenger",
+  "terms": [
+   "mensajero",
+   "mensajeros"
+  ],
+  "text": "Es quien corre para llevar con urgencia una noticia o una orden."
+ },
+ {
+  "id": "justice",
+  "terms": [
+   "justicia"
+  ],
+  "text": "Es mantener lo que es recto y justo a los ojos de Dios. Un buen rey debía gobernar con justicia."
+ },
+ {
+  "id": "set-apart",
+  "terms": [
+   "consagró"
+  ],
+  "text": "Es apartar algo del uso común para dedicarlo solo a Dios."
+ },
+ {
+  "id": "decorum",
+  "terms": [
+   "dignidad"
+  ],
+  "text": "Es la manera de comportarse y el prestigio que corresponden a un cargo."
+ },
+ {
+  "id": "oak",
+  "terms": [
+   "encina"
+  ],
+  "text": "Es un árbol grande de la familia de los robles, que da bellotas. Sus ramas crecen anchas y entrelazadas."
+ },
+ {
+  "id": "mule",
+  "terms": [
+   "mula"
+  ],
+  "text": "Es un animal nacido del cruce de un caballo y una burra. En tiempos de David la montaban el rey y los príncipes."
+ },
+ {
+  "id": "psalm",
+  "terms": [
+   "Salmo"
+  ],
+  "text": "El libro de los Salmos reúne cantos y oraciones dirigidos a Dios. Muchos de ellos los compuso David."
+ },
+ {
+  "id": "grace",
+  "terms": [
+   "gracia"
+  ],
+  "text": "Es el amor y el favor que se dan gratuitamente a quien no los merece."
+ }
+]

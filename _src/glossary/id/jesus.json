@@ -1,0 +1,782 @@
+[
+ {
+  "id": "cherub",
+  "terms": [
+   "kerub",
+   "kerub-kerub"
+  ],
+  "text": "Kerub adalah makhluk surgawi bersayap yang berjaga di dekat Allah."
+ },
+ {
+  "id": "tree-of-life",
+  "terms": [
+   "pohon kehidupan"
+  ],
+  "text": "Pohon di tengah Taman Eden yang melambangkan hidup tanpa akhir. Setelah manusia berdosa, jalan ke pohon ini tertutup."
+ },
+ {
+  "id": "holy-spirit",
+  "terms": [
+   "Roh Kudus"
+  ],
+  "text": "Roh Allah. Iman Kristen mengakui-Nya, bersama Bapa dan Anak, sebagai satu Allah."
+ },
+ {
+  "id": "grace",
+  "terms": [
+   "kasih karunia"
+  ],
+  "text": "Kasih dan pemberian Allah yang diberikan dengan cuma-cuma kepada orang yang tidak layak menerimanya."
+ },
+ {
+  "id": "conceive",
+  "terms": [
+   "mengandung"
+  ],
+  "text": "Membawa anak dalam rahim. Maria mengandung oleh Roh Kudus, tanpa hubungan dengan laki-laki."
+ },
+ {
+  "id": "census",
+  "terms": [
+   "mendaftarkan diri"
+  ],
+  "text": "Kaisar Romawi menghitung jumlah penduduk untuk memungut pajak. Setiap orang harus pergi ke kota leluhurnya untuk didaftar."
+ },
+ {
+  "id": "manger",
+  "terms": [
+   "palungan"
+  ],
+  "text": "Tempat makanan untuk kuda atau sapi. Di sinilah bayi Yesus pertama kali dibaringkan."
+ },
+ {
+  "id": "savior",
+  "terms": [
+   "Juru Selamat"
+  ],
+  "text": "Dia yang menyelamatkan manusia dari dosa dan maut."
+ },
+ {
+  "id": "circumcision",
+  "terms": [
+   "disunat"
+  ],
+  "text": "Upacara memotong ujung kulit kelamin anak laki-laki pada hari kedelapan. Ini tanda perjanjian sebagai umat Allah."
+ },
+ {
+  "id": "purification",
+  "terms": [
+   "upacara penyucian",
+   "pentahiran",
+   "penyucian"
+  ],
+  "text": "Upacara menurut hukum Taurat untuk menyucikan tubuh dan barang. Seorang ibu yang baru melahirkan juga mempersembahkan korban setelah waktu tertentu."
+ },
+ {
+  "id": "law",
+  "terms": [
+   "hukum Taurat",
+   "Taurat"
+  ],
+  "text": "Ajaran dan perintah yang diberikan Allah kepada Israel melalui Musa, tertulis dalam lima kitab pertama Perjanjian Lama."
+ },
+ {
+  "id": "temple",
+  "terms": [
+   "Bait Allah"
+  ],
+  "text": "Bangunan besar di Yerusalem tempat orang beribadah dan mempersembahkan korban kepada Allah. Pada zaman Yesus, bangunan ini telah dibangun ulang secara besar-besaran oleh Herodes."
+ },
+ {
+  "id": "christ",
+  "terms": [
+   "Kristus"
+  ],
+  "text": "Kata Yunani yang berarti 'yang diurapi', sama dengan kata Ibrani Mesias. Menunjuk kepada Penyelamat yang dijanjikan Allah."
+ },
+ {
+  "id": "messiah",
+  "terms": [
+   "Mesias"
+  ],
+  "text": "Kata Ibrani yang berarti 'yang diurapi', yaitu Penyelamat yang dijanjikan dan dinantikan Israel. Dalam bahasa Yunani: Kristus."
+ },
+ {
+  "id": "tribe",
+  "terms": [
+   "suku"
+  ],
+  "text": "Salah satu dari dua belas cabang keluarga Israel yang berasal dari dua belas anak Yakub."
+ },
+ {
+  "id": "prophet",
+  "terms": [
+   "nabi",
+   "para nabi"
+  ],
+  "text": "Orang yang menerima firman Allah dan menyampaikannya kepada orang lain. Intinya bukan meramal masa depan, melainkan menyampaikan kehendak Allah."
+ },
+ {
+  "id": "fasting",
+  "terms": [
+   "berpuasa"
+  ],
+  "text": "Tidak makan untuk beberapa waktu supaya dapat memusatkan hati dalam doa."
+ },
+ {
+  "id": "magi",
+  "terms": [
+   "orang-orang majus",
+   "orang majus",
+   "majus"
+  ],
+  "text": "Bukan orang bergelar, melainkan para ahli dari Timur yang mempelajari bintang. Mungkin mereka datang dari Persia atau Babel."
+ },
+ {
+  "id": "high-priest",
+  "terms": [
+   "imam besar"
+  ],
+  "text": "Pemimpin para imam dan pemuka agama tertinggi, yang memimpin Bait Allah dan Mahkamah Agama Yahudi."
+ },
+ {
+  "id": "priest",
+  "terms": [
+   "imam",
+   "imam-imam",
+   "para imam"
+  ],
+  "text": "Orang yang mempersembahkan korban di Bait Allah dan menghadap Allah atas nama umat. Tugas ini dipegang keturunan Harun."
+ },
+ {
+  "id": "levite",
+  "terms": [
+   "seorang Lewi"
+  ],
+  "text": "Orang dari suku Lewi, yang membantu para imam dalam pekerjaan di Bait Allah."
+ },
+ {
+  "id": "scribe",
+  "terms": [
+   "ahli Taurat",
+   "ahli-ahli Taurat",
+   "para ahli Taurat",
+   "guru Taurat"
+  ],
+  "text": "Ahli yang mempelajari dan mengajarkan hukum Taurat."
+ },
+ {
+  "id": "worship",
+  "terms": [
+   "menyembah",
+   "menyembah-Nya",
+   "bersujud"
+  ],
+  "text": "Sujud dan memuliakan dengan hormat. Inilah bentuk hormat yang terdalam di hadapan Allah atau raja."
+ },
+ {
+  "id": "frankincense",
+  "terms": [
+   "kemenyan"
+  ],
+  "text": "Getah pohon yang dikeringkan, wewangian berharga yang harum bila dibakar. Dipakai dalam persembahan kepada Allah."
+ },
+ {
+  "id": "myrrh",
+  "terms": [
+   "mur"
+  ],
+  "text": "Wewangian mahal dari getah pohon. Dipakai sebagai obat dan minyak wangi, juga untuk meminyaki jenazah."
+ },
+ {
+  "id": "aloes",
+  "terms": [
+   "gaharu"
+  ],
+  "text": "Wewangian dari kayu yang sangat harum. Dicampur dengan mur untuk merawat jenazah."
+ },
+ {
+  "id": "repentance",
+  "terms": [
+   "pertobatan",
+   "bertobat"
+  ],
+  "text": "Bukan hanya menyesali kesalahan, tetapi berbalik arah hidup dan kembali kepada Allah."
+ },
+ {
+  "id": "baptism",
+  "terms": [
+   "baptisan",
+   "dibaptis",
+   "membaptis"
+  ],
+  "text": "Upacara dengan air yang menandakan penyucian dari dosa dan awal hidup yang baru."
+ },
+ {
+  "id": "devil",
+  "terms": [
+   "Iblis",
+   "Setan"
+  ],
+  "text": "Pemimpin roh-roh jahat yang melawan Allah dan berusaha menjatuhkan manusia. Setan berarti 'penentang'."
+ },
+ {
+  "id": "lamb-of-god",
+  "terms": [
+   "Anak Domba Allah",
+   "Anak Domba"
+  ],
+  "text": "Seperti anak domba yang dikorbankan untuk menggantikan orang berdosa, sebutan ini menunjuk kepada Yesus yang akan mati menanggung dosa dunia."
+ },
+ {
+  "id": "rabbi",
+  "terms": [
+   "Rabi",
+   "Rabuni"
+  ],
+  "text": "Kata Ibrani yang berarti 'guruku', sebutan hormat bagi guru hukum Taurat. Rabuni adalah sapaan yang lebih akrab."
+ },
+ {
+  "id": "sign",
+  "terms": [
+   "tanda",
+   "tanda-tanda"
+  ],
+  "text": "Mukjizat yang menunjukkan kuasa Allah dan menyatakan siapa Yesus."
+ },
+ {
+  "id": "money-changer",
+  "terms": [
+   "penukar uang",
+   "para penukar uang"
+  ],
+  "text": "Pedagang yang menukar uang dari berbagai negeri dengan uang yang dipakai di Bait Allah, sambil mengambil untung."
+ },
+ {
+  "id": "son-of-man",
+  "terms": [
+   "Anak Manusia"
+  ],
+  "text": "Sebutan yang sering dipakai Yesus untuk diri-Nya sendiri. Sebutan ini mengingatkan pada sosok surgawi yang berkuasa dalam Kitab Daniel."
+ },
+ {
+  "id": "pharisee",
+  "terms": [
+   "orang-orang Farisi",
+   "orang Farisi",
+   "Farisi"
+  ],
+  "text": "Kelompok dalam agama Yahudi yang berusaha menaati hukum Taurat dan adat nenek moyang dengan sangat teliti. Mereka sering berselisih dengan Yesus."
+ },
+ {
+  "id": "samaritan",
+  "terms": [
+   "orang-orang Samaria",
+   "orang Samaria",
+   "seorang Samaria",
+   "perempuan Samaria"
+  ],
+  "text": "Penduduk Samaria, di antara Yudea dan Galilea. Sejak lama mereka bermusuhan dengan orang Yahudi dan tidak bergaul satu sama lain."
+ },
+ {
+  "id": "seventh-hour",
+  "terms": [
+   "jam ketujuh"
+  ],
+  "text": "Jam dihitung sejak matahari terbit, jadi kira-kira pukul satu siang sekarang."
+ },
+ {
+  "id": "sabbath",
+  "terms": [
+   "hari Sabat",
+   "Sabat"
+  ],
+  "text": "Hari ketujuh dalam seminggu, hari kudus untuk berhenti bekerja dan mengingat Allah. Berlangsung dari matahari terbenam hari Jumat sampai matahari terbenam hari Sabtu."
+ },
+ {
+  "id": "synagogue",
+  "terms": [
+   "rumah ibadat"
+  ],
+  "text": "Tempat orang Yahudi di setiap kota berkumpul untuk membaca Kitab Suci, berdoa, dan belajar."
+ },
+ {
+  "id": "synagogue-ruler",
+  "terms": [
+   "kepala rumah ibadat"
+  ],
+  "text": "Orang yang memimpin pertemuan dan ibadah di rumah ibadat."
+ },
+ {
+  "id": "scroll",
+  "terms": [
+   "gulungan kitab",
+   "gulungan"
+  ],
+  "text": "Kitab dari kulit atau papirus yang disambung panjang lalu digulung. Kitab Suci juga ditulis dengan cara ini."
+ },
+ {
+  "id": "unclean-spirit",
+  "terms": [
+   "roh jahat",
+   "roh-roh jahat"
+  ],
+  "text": "Roh jahat yang menguasai dan menyiksa manusia. Yesus mengusir mereka dengan perkataan-Nya."
+ },
+ {
+  "id": "paralytic",
+  "terms": [
+   "lumpuh"
+  ],
+  "text": "Orang yang tubuhnya lumpuh sehingga tidak dapat bergerak."
+ },
+ {
+  "id": "tax-collector",
+  "terms": [
+   "kepala pemungut cukai",
+   "pemungut cukai",
+   "rumah cukai"
+  ],
+  "text": "Orang yang memungut pajak dari bangsanya sendiri untuk Roma. Karena banyak yang memeras, mereka dianggap orang berdosa."
+ },
+ {
+  "id": "colonnade",
+  "terms": [
+   "Serambi Salomo",
+   "serambi"
+  ],
+  "text": "Lorong panjang beratap yang ditopang tiang-tiang, terbuka di satu atau dua sisi."
+ },
+ {
+  "id": "apostle",
+  "terms": [
+   "rasul"
+  ],
+  "text": "Artinya 'orang yang diutus'. Sebutan bagi dua belas murid yang dipilih dan ditetapkan Yesus."
+ },
+ {
+  "id": "zealot",
+  "terms": [
+   "orang Zelot",
+   "Zelot"
+  ],
+  "text": "Anggota kelompok Yahudi yang ingin mengusir kekuasaan Roma, bahkan dengan kekerasan."
+ },
+ {
+  "id": "rock",
+  "terms": [
+   "batu karang"
+  ],
+  "text": "Batu yang luas dan kokoh, lambang dasar yang tidak tergoyahkan. Nama Petrus pun berarti 'batu'."
+ },
+ {
+  "id": "inner-room",
+  "terms": [
+   "kamarmu"
+  ],
+  "text": "Ruangan kecil di bagian dalam rumah, tempat berdoa sendirian jauh dari pandangan orang."
+ },
+ {
+  "id": "centurion",
+  "terms": [
+   "perwira"
+  ],
+  "text": "Komandan dalam tentara Romawi yang memimpin sekitar seratus prajurit."
+ },
+ {
+  "id": "elder",
+  "terms": [
+   "tua-tua",
+   "para tua-tua"
+  ],
+  "text": "Pemimpin kota atau bangsa yang sudah berumur dan dihormati."
+ },
+ {
+  "id": "perfume",
+  "terms": [
+   "minyak narwastu",
+   "minyak wangi",
+   "narwastu"
+  ],
+  "text": "Minyak harum yang berharga. Narwastu dibuat dari tanaman pegunungan Himalaya dan sangat mahal."
+ },
+ {
+  "id": "alabaster",
+  "terms": [
+   "buli-buli pualam",
+   "pualam"
+  ],
+  "text": "Botol batu yang halus untuk menyimpan minyak wangi. Lehernya dipecahkan supaya isinya dituang sekaligus."
+ },
+ {
+  "id": "denarius",
+  "terms": [
+   "dinar"
+  ],
+  "text": "Uang perak Romawi, kira-kira upah seorang pekerja untuk satu hari."
+ },
+ {
+  "id": "forgive-debt",
+  "terms": [
+   "dihapuskan"
+  ],
+  "text": "Utang yang seharusnya dibayar dikurangi atau ditiadakan."
+ },
+ {
+  "id": "stern",
+  "terms": [
+   "buritan"
+  ],
+  "text": "Bagian belakang perahu. Bagian depannya disebut haluan."
+ },
+ {
+  "id": "bleeding",
+  "terms": [
+   "pendarahan"
+  ],
+  "text": "Penyakit darah yang terus mengalir tanpa berhenti. Menurut hukum Taurat, orang ini dianggap najis sehingga sulit bergaul dengan orang lain."
+ },
+ {
+  "id": "manna",
+  "terms": [
+   "manna"
+  ],
+  "text": "Makanan yang diturunkan Allah dari langit setiap hari selama empat puluh tahun Israel berjalan di padang gurun."
+ },
+ {
+  "id": "greek-gentile",
+  "terms": [
+   "Yunani"
+  ],
+  "text": "Yunani di sini menunjuk kepada orang yang bukan Yahudi, yaitu bangsa lain."
+ },
+ {
+  "id": "booths",
+  "terms": [
+   "Hari Raya Pondok Daun",
+   "Pondok Daun"
+  ],
+  "text": "Hari raya tujuh hari sesudah panen musim gugur. Orang tinggal di pondok dari ranting untuk mengingat masa di padang gurun."
+ },
+ {
+  "id": "booth",
+  "terms": [
+   "pondok-pondok",
+   "pondok",
+   "kemah"
+  ],
+  "text": "Rumah kecil sementara yang dibuat dari ranting atau rumput."
+ },
+ {
+  "id": "adultery",
+  "terms": [
+   "zina"
+  ],
+  "text": "Hubungan seksual orang yang sudah menikah dengan orang yang bukan pasangannya. Hukum Taurat menghukumnya dengan berat."
+ },
+ {
+  "id": "condemn",
+  "terms": [
+   "menghukum",
+   "menghukummu",
+   "dihukum"
+  ],
+  "text": "Menyatakan seseorang bersalah dan menjatuhkan hukuman."
+ },
+ {
+  "id": "hanukkah",
+  "terms": [
+   "Hari Raya Pentahbisan",
+   "Pentahbisan Bait Allah"
+  ],
+  "text": "Hari raya musim dingin untuk mengenang Bait Allah yang direbut kembali dari raja Yunani yang menajiskannya, lalu dipersembahkan lagi kepada Allah. Sekarang disebut Hanukkah."
+ },
+ {
+  "id": "carob",
+  "terms": [
+   "ampas"
+  ],
+  "text": "Buah polong yang biasa dipakai untuk makanan babi atau ternak. Hanya dimakan orang yang sangat miskin."
+ },
+ {
+  "id": "silver-coin",
+  "terms": [
+   "keping perak"
+  ],
+  "text": "Mata uang dari perak. Di sini adalah dirham, kira-kira upah sehari."
+ },
+ {
+  "id": "sanhedrin",
+  "terms": [
+   "anggota Mahkamah Agama",
+   "Mahkamah Agama"
+  ],
+  "text": "Dewan tertinggi dan pengadilan orang Yahudi yang dipimpin imam besar, disebut juga Sanhedrin."
+ },
+ {
+  "id": "resurrection",
+  "terms": [
+   "kebangkitan"
+  ],
+  "text": "Orang yang sudah mati hidup kembali. Kebangkitan Yesus adalah inti iman Kristen."
+ },
+ {
+  "id": "commandment",
+  "terms": [
+   "perintah-perintah"
+  ],
+  "text": "Ajaran yang diperintahkan Allah untuk ditaati. Sepuluh Perintah Allah adalah contoh utamanya."
+ },
+ {
+  "id": "sycamore",
+  "terms": [
+   "pohon ara hutan"
+  ],
+  "text": "Pohon mirip pohon ara yang dahannya rendah dan melebar, sehingga mudah dipanjat."
+ },
+ {
+  "id": "leprosy",
+  "terms": [
+   "sakit kusta",
+   "kusta"
+  ],
+  "text": "Penyakit kulit yang berat. Pada zaman Alkitab, penderitanya dianggap najis dan harus tinggal terpisah di luar kampung."
+ },
+ {
+  "id": "pound",
+  "terms": [
+   "kati"
+  ],
+  "text": "Satuan berat. Satu kati di sini adalah litra Romawi, sekitar 330 gram."
+ },
+ {
+  "id": "palm",
+  "terms": [
+   "daun palem",
+   "palem"
+  ],
+  "text": "Pohon kurma. Daunnya dilambaikan sebagai tanda kemenangan dan sambutan."
+ },
+ {
+  "id": "hosanna",
+  "terms": [
+   "Hosana"
+  ],
+  "text": "Kata Ibrani yang berarti 'selamatkanlah sekarang', yang menjadi seruan sambutan dan pujian."
+ },
+ {
+  "id": "herodian",
+  "terms": [
+   "orang Herodian",
+   "Herodian"
+  ],
+  "text": "Kelompok Yahudi yang mendukung pemerintahan keluarga Herodes dan setuju membayar pajak kepada Roma."
+ },
+ {
+  "id": "sadducee",
+  "terms": [
+   "orang Saduki",
+   "Saduki"
+  ],
+  "text": "Kelompok dalam agama Yahudi yang dekat dengan keluarga imam besar. Mereka tidak percaya pada kebangkitan dan malaikat."
+ },
+ {
+  "id": "treasury",
+  "terms": [
+   "peti persembahan"
+  ],
+  "text": "Peti berbentuk corong di halaman Bait Allah, tempat orang memasukkan persembahan uang."
+ },
+ {
+  "id": "talent",
+  "terms": [
+   "talenta"
+  ],
+  "text": "Satuan uang yang sangat besar, hampir sama dengan upah kerja dua puluh tahun. Kata 'talenta' dalam arti bakat berasal dari sini."
+ },
+ {
+  "id": "unleavened",
+  "terms": [
+   "Hari Raya Roti Tidak Beragi",
+   "Roti Tidak Beragi"
+  ],
+  "text": "Hari raya tujuh hari sesudah Paskah. Orang makan roti tanpa ragi untuk mengingat keluarnya Israel dari Mesir."
+ },
+ {
+  "id": "passover",
+  "terms": [
+   "Paskah"
+  ],
+  "text": "Hari raya musim semi yang terbesar, mengenang malam ketika maut melewati rumah-rumah Israel di Mesir dan keluarnya mereka dari Mesir."
+ },
+ {
+  "id": "upper-room",
+  "terms": [
+   "ruang atas"
+  ],
+  "text": "Ruangan besar di lantai atas sebuah rumah. Di sinilah Yesus makan malam terakhir bersama murid-murid-Nya."
+ },
+ {
+  "id": "covenant",
+  "terms": [
+   "perjanjian"
+  ],
+  "text": "Janji teguh yang dibuat Allah dengan manusia. Yesus menetapkan perjanjian baru dengan darah-Nya sendiri."
+ },
+ {
+  "id": "hymn",
+  "terms": [
+   "nyanyian pujian"
+  ],
+  "text": "Lagu untuk memuji Allah. Di akhir perjamuan Paskah orang menyanyikan mazmur."
+ },
+ {
+  "id": "governor",
+  "terms": [
+   "gubernur"
+  ],
+  "text": "Pejabat yang diutus kaisar Romawi untuk memerintah suatu wilayah. Pilatus adalah gubernur Yudea."
+ },
+ {
+  "id": "cross",
+  "terms": [
+   "salib",
+   "disalibkan"
+  ],
+  "text": "Alat hukuman Romawi untuk menggantung dan membunuh penjahat. Inilah cara hukuman mati yang paling kejam dan memalukan."
+ },
+ {
+  "id": "purple",
+  "terms": [
+   "jubah ungu",
+   "ungu"
+  ],
+  "text": "Pakaian ungu yang mahal, biasa dipakai raja. Para prajurit mengenakannya pada Yesus untuk mengejek-Nya sebagai raja."
+ },
+ {
+  "id": "paradise",
+  "terms": [
+   "Firdaus"
+  ],
+  "text": "Tempat bahagia tempat orang benar yang sudah mati berada bersama Allah."
+ },
+ {
+  "id": "veil",
+  "terms": [
+   "tirai"
+  ],
+  "text": "Kain tebal yang menutupi Ruang Mahakudus, bagian paling kudus di Bait Allah. Lambang sekat antara Allah dan manusia."
+ },
+ {
+  "id": "linen",
+  "terms": [
+   "kain lenan",
+   "lenan"
+  ],
+  "text": "Kain halus dari serat rami atau linen. Dipakai untuk membungkus jenazah."
+ },
+ {
+  "id": "first-day",
+  "terms": [
+   "hari pertama minggu itu"
+  ],
+  "text": "Hari sesudah Sabat, yaitu hari Minggu sekarang. Pada hari itulah Yesus bangkit."
+ },
+ {
+  "id": "stadion",
+  "terms": [
+   "stadia"
+  ],
+  "text": "Satuan jarak; satu stadion kira-kira 185 meter. Enam puluh stadia sekitar 11 kilometer."
+ },
+ {
+  "id": "fourth-watch",
+  "terms": [
+   "jaga malam keempat"
+  ],
+  "text": "Bagian keempat dari malam yang dibagi empat, kira-kira pukul tiga sampai enam pagi."
+ },
+ {
+  "id": "authority",
+  "terms": [
+   "kuasa"
+  ],
+  "text": "Kekuatan dan hak untuk memerintah dan menyuruh."
+ },
+ {
+  "id": "righteous",
+  "terms": [
+   "orang benar"
+  ],
+  "text": "Orang yang dinyatakan benar di hadapan Allah. Di sini juga menyindir orang yang menganggap dirinya benar."
+ },
+ {
+  "id": "holy-city",
+  "terms": [
+   "kota suci"
+  ],
+  "text": "Sebutan untuk Yerusalem, tempat Bait Allah berada."
+ },
+ {
+  "id": "kingdom-of-god",
+  "terms": [
+   "Kerajaan Allah",
+   "Kerajaan Surga"
+  ],
+  "text": "Kerajaan tempat Allah memerintah sebagai Raja. Yang dimaksud bukan terutama sebuah tempat, tetapi terlaksananya pemerintahan Allah."
+ },
+ {
+  "id": "eternal-life",
+  "terms": [
+   "hidup yang kekal"
+  ],
+  "text": "Bukan sekadar hidup sangat lama, melainkan hidup sejati yang dinikmati bersama Allah."
+ },
+ {
+  "id": "leaven",
+  "terms": [
+   "ragi"
+  ],
+  "text": "Bahan yang membuat adonan mengembang. Dipakai sebagai gambaran sesuatu yang kecil tetapi menyebar ke seluruh adonan."
+ },
+ {
+  "id": "mustard-seed",
+  "terms": [
+   "biji sesawi",
+   "sesawi"
+  ],
+  "text": "Biji yang sangat kecil, tetapi setelah tumbuh menjadi lebih tinggi dari manusia."
+ },
+ {
+  "id": "feast",
+  "terms": [
+   "hari raya"
+  ],
+  "text": "Di sini, perayaan yang dirayakan orang Yahudi dengan pergi ke Yerusalem, misalnya Paskah dan Hari Raya Pondok Daun."
+ },
+ {
+  "id": "talitha",
+  "terms": [
+   "Talita kum",
+   "Talita",
+   "Efata"
+  ],
+  "text": "Bahasa Aram yang dipakai orang Yahudi pada zaman Yesus. Talita kum berarti 'anak perempuan, bangunlah', dan Efata berarti 'terbukalah'."
+ },
+ {
+  "id": "ransom",
+  "terms": [
+   "tebusan"
+  ],
+  "text": "Harga yang dibayar untuk membebaskan tawanan atau budak. Yesus memberikan nyawa-Nya sebagai harga itu."
+ },
+ {
+  "id": "pilgrim",
+  "terms": [
+   "para peziarah",
+   "peziarah",
+   "berziarah"
+  ],
+  "text": "Perjalanan ke tempat yang kudus. Pada setiap hari raya orang Yahudi naik ke Bait Allah di Yerusalem."
+ }
+]

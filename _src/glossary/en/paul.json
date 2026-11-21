@@ -1,0 +1,653 @@
+[
+ {
+  "id": "sanhedrin",
+  "terms": [
+   "Council"
+  ],
+  "text": "The highest Jewish council: about seventy members, led by the high priest and including elders and teachers of the law, who ruled on matters of religion and law.",
+  "skip": [
+   "council of Athens"
+  ]
+ },
+ {
+  "id": "high-priest",
+  "terms": [
+   "high priest"
+  ],
+  "text": "The head of the priests of the temple in Jerusalem. In Roman times he led the Council and was the highest leader of Jewish society."
+ },
+ {
+  "id": "persecution",
+  "terms": [
+   "persecution",
+   "persecuting",
+   "persecuted"
+  ],
+  "text": "Harassing, imprisoning, or killing people because of their faith. After Stephen's death the first great persecution struck the church in Jerusalem."
+ },
+ {
+  "id": "synagogue",
+  "terms": [
+   "synagogue",
+   "synagogues"
+  ],
+  "text": "The place where Jews gathered every Sabbath to read Scripture and pray. In each new city, Paul first preached in the synagogue."
+ },
+ {
+  "id": "son-of-man",
+  "terms": [
+   "Son of Man"
+  ],
+  "text": "Meaning 'son of a human being', the name Jesus often used for himself. In Daniel it refers to the one who comes with the clouds of heaven."
+ },
+ {
+  "id": "holy-spirit",
+  "terms": [
+   "Holy Spirit"
+  ],
+  "text": "The Spirit of God, who lives in believers, gives them strength, and guides them. In Acts he opens the way for the church."
+ },
+ {
+  "id": "vision",
+  "terms": [
+   "vision"
+  ],
+  "text": "A scene God shows someone in a dream or while awake, to make his will known."
+ },
+ {
+  "id": "saints",
+  "terms": [
+   "God's people",
+   "believers",
+   "believer"
+  ],
+  "text": "In Korean, literally 'holy ones': people who belong to God. It is a name for those who believe in Jesus."
+ },
+ {
+  "id": "gentile",
+  "terms": [
+   "Gentile",
+   "Gentiles"
+  ],
+  "text": "A name for people who are not Jewish. Paul was called to be the apostle who brought the gospel to the Gentiles."
+ },
+ {
+  "id": "baptism",
+  "terms": [
+   "baptism",
+   "baptized"
+  ],
+  "text": "A rite of washing with water or being immersed in it, showing that sins are washed away and the person has become a follower of Jesus."
+ },
+ {
+  "id": "christ",
+  "terms": [
+   "Christ"
+  ],
+  "text": "A Greek word meaning 'anointed one', the same as the Hebrew 'Messiah'. It refers to the Savior God promised."
+ },
+ {
+  "id": "christian",
+  "terms": [
+   "Christian",
+   "Christians"
+  ],
+  "text": "Meaning 'one who belongs to Christ'. The people of Antioch were the first to call Jesus' disciples by this name."
+ },
+ {
+  "id": "prophet",
+  "terms": [
+   "prophet",
+   "prophets"
+  ],
+  "text": "A person who receives God's word and passes it on to others. There were prophets in the Old Testament and in the early church."
+ },
+ {
+  "id": "elder",
+  "terms": [
+   "elders"
+  ],
+  "text": "Older leaders who care for and guide a community. Paul appointed elders in each city and entrusted the church to them."
+ },
+ {
+  "id": "apostle",
+  "terms": [
+   "apostles"
+  ],
+  "text": "Meaning 'one who is sent': the twelve disciples Jesus himself appointed, and Paul, called by the risen Lord."
+ },
+ {
+  "id": "fasting",
+  "terms": [
+   "fasting",
+   "fast"
+  ],
+  "text": "Going without food for a time to focus on God, practiced with prayer before important decisions."
+ },
+ {
+  "id": "laying-on-hands",
+  "terms": [
+   "laid his hands",
+   "laid their hands"
+  ],
+  "text": "Placing hands on a person's head or body and praying, done when sending someone out for a task, healing, or blessing."
+ },
+ {
+  "id": "proconsul",
+  "terms": [
+   "governor"
+  ],
+  "text": "An official Rome sent to rule a province. Cyprus and Achaia were ruled by governors sent by the Senate, Judea by governors sent by the emperor."
+ },
+ {
+  "id": "sorcerer",
+  "terms": [
+   "sorcerer"
+  ],
+  "text": "A person who claimed mysterious power through spells or fortune-telling and held people under his sway. The Bible forbade such things."
+ },
+ {
+  "id": "false-prophet",
+  "terms": [
+   "false prophet"
+  ],
+  "text": "A person who passes off words God did not give as the word of God."
+ },
+ {
+  "id": "sabbath",
+  "terms": [
+   "Sabbath",
+   "Sabbaths"
+  ],
+  "text": "The seventh day of the week (sunset Friday to sunset Saturday), a day for resting from work and worshiping God."
+ },
+ {
+  "id": "law",
+  "terms": [
+   "law"
+  ],
+  "text": "The commandments and rules God gave through Moses. In a broader sense, the first five books of the Old Testament."
+ },
+ {
+  "id": "prophets-books",
+  "terms": [
+   "Law and the Prophets",
+   "law of Moses and the Prophets"
+  ],
+  "text": "'The Prophets' are the books of prophets such as Isaiah and Jeremiah. In the synagogue they were read after the Law."
+ },
+ {
+  "id": "synagogue-ruler",
+  "terms": [
+   "leaders of the synagogue",
+   "leader of the synagogue"
+  ],
+  "text": "The person who organized the gatherings and worship of a synagogue and decided who would read and speak."
+ },
+ {
+  "id": "justified",
+  "terms": [
+   "set right"
+  ],
+  "text": "God accepting sinners as if they had no sin. Paul taught that this comes not by works but by faith."
+ },
+ {
+  "id": "shake-dust",
+  "terms": [
+   "shook the dust"
+  ],
+  "text": "A Jewish gesture showing that a town had rejected the message, so the responsibility now lay with them."
+ },
+ {
+  "id": "noble-women",
+  "terms": [
+   "leading women"
+  ],
+  "text": "Women of high rank from wealthy families. They had great influence in Greek cities."
+ },
+ {
+  "id": "sacrifice",
+  "terms": [
+   "sacrifice",
+   "sacrifices"
+  ],
+  "text": "Worshiping a god by offering animals or grain. The people of Lystra thought Paul and Barnabas were gods and tried to offer sacrifices to them."
+ },
+ {
+  "id": "priest",
+  "terms": [
+   "priest",
+   "priests"
+  ],
+  "text": "A person in charge of sacrifices at a temple. The priest at Lystra served the temple of Zeus."
+ },
+ {
+  "id": "tear-clothes",
+  "terms": [
+   "tore their clothes"
+  ],
+  "text": "A custom of tearing one's clothes to show great grief or to react to words that insult God."
+ },
+ {
+  "id": "kingdom-of-god",
+  "terms": [
+   "kingdom of God"
+  ],
+  "text": "The realm where God rules as king. It is less a place than God's rule being carried out."
+ },
+ {
+  "id": "circumcision",
+  "terms": [
+   "circumcision",
+   "circumcised",
+   "circumcise"
+  ],
+  "text": "A rite of cutting off the foreskin of a baby boy, the covenant sign of God's people. Whether Gentile believers also had to be circumcised was a great debate."
+ },
+ {
+  "id": "gospel",
+  "terms": [
+   "gospel",
+   "good news"
+  ],
+  "text": "Meaning 'good news': the news that Jesus Christ died and rose again to save people."
+ },
+ {
+  "id": "grace",
+  "terms": [
+   "grace"
+  ],
+  "text": "The love and gifts God freely gives to people who have done nothing to deserve them."
+ },
+ {
+  "id": "signs",
+  "terms": [
+   "signs"
+  ],
+  "text": "Astonishing acts showing that God is present. The word puts weight on what a miracle points to."
+ },
+ {
+  "id": "roman-colony",
+  "terms": [
+   "Roman colony"
+  ],
+  "text": "A city where Rome settled people such as retired soldiers and granted Roman law and privileges. The people of Philippi were very proud of being Roman citizens."
+ },
+ {
+  "id": "purple-cloth",
+  "terms": [
+   "purple"
+  ],
+  "text": "Purple cloth dyed with a costly dye taken from sea snails. Only the rich and powerful wore it, so those who sold it did well."
+ },
+ {
+  "id": "god-fearer",
+  "terms": [
+   "woman who worshiped God"
+  ],
+  "text": "A Gentile who was not Jewish but believed in the God of Israel and joined in synagogue worship."
+ },
+ {
+  "id": "divination-spirit",
+  "terms": [
+   "spirit that told fortunes"
+  ],
+  "text": "A spirit said to foretell the future. Through the slave girl it possessed, her owners made money telling fortunes."
+ },
+ {
+  "id": "stocks",
+  "terms": [
+   "stocks"
+  ],
+  "text": "A wooden frame that locked a prisoner's ankles so he could not escape."
+ },
+ {
+  "id": "jailer",
+  "terms": [
+   "jailer"
+  ],
+  "text": "The person who guarded a prison and was in charge of the prisoners. If a prisoner escaped, he himself was punished."
+ },
+ {
+  "id": "idol",
+  "terms": [
+   "idols"
+  ],
+  "text": "Images of gods made by human hands and worshiped. Athens was full of statues of gods and altars of every kind."
+ },
+ {
+  "id": "epicurean",
+  "terms": [
+   "Epicurean"
+  ],
+  "text": "Greek philosophers who made peace of mind and pleasure free from pain the goal of life. They held that the gods take no interest in human affairs."
+ },
+ {
+  "id": "stoic",
+  "terms": [
+   "Stoic"
+  ],
+  "text": "Greek philosophers who taught people to govern their emotions by reason and to accept their fate."
+ },
+ {
+  "id": "areopagus",
+  "terms": [
+   "Areopagus"
+  ],
+  "text": "Meaning 'hill of Ares'. Athens' ancient council met there and took its name from it; it sometimes examined new teachings."
+ },
+ {
+  "id": "repent",
+  "terms": [
+   "repent"
+  ],
+  "text": "Not just feeling sorry for wrongs, but turning the heart and the direction of life toward God."
+ },
+ {
+  "id": "judgment",
+  "terms": [
+   "judgment",
+   "judge the world"
+  ],
+  "text": "God justly weighing the life of every person on the last day."
+ },
+ {
+  "id": "resurrection",
+  "terms": [
+   "resurrection"
+  ],
+  "text": "A dead person coming back to life. The resurrection of Jesus is at the center of the Christian faith."
+ },
+ {
+  "id": "emperor",
+  "terms": [
+   "emperor"
+  ],
+  "text": "The supreme ruler of the Roman Empire. In Paul's day the emperors were Claudius and Nero."
+ },
+ {
+  "id": "tentmaker",
+  "terms": [
+   "tents"
+  ],
+  "text": "Tents were made of leather or goat-hair cloth. Paul earned his own living making tents while he preached the gospel."
+ },
+ {
+  "id": "tyrannus-hall",
+  "terms": [
+   "lecture hall",
+   "hall of Tyrannus"
+  ],
+  "text": "A lecture hall in Ephesus. Tyrannus was probably its owner or a teacher there; Paul taught in it every day for two years."
+ },
+ {
+  "id": "evil-spirit",
+  "terms": [
+   "evil spirit",
+   "evil spirits"
+  ],
+  "text": "Spiritual beings who oppose God and torment people. They left at the name of Jesus."
+ },
+ {
+  "id": "silver-coins",
+  "terms": [
+   "silver coins"
+  ],
+  "text": "Coins made of silver, each usually worth about a day's wage for a laborer. Fifty thousand of them was an enormous sum."
+ },
+ {
+  "id": "artemis",
+  "terms": [
+   "Artemis"
+  ],
+  "text": "The goddess Artemis worshiped by the Greeks. Her temple in Ephesus was counted among the Seven Wonders of the ancient world."
+ },
+ {
+  "id": "temple",
+  "terms": [
+   "temple of Zeus",
+   "temple of Artemis",
+   "temples"
+  ],
+  "text": "A building where a god is housed and worshiped."
+ },
+ {
+  "id": "town-clerk",
+  "terms": [
+   "city clerk"
+  ],
+  "text": "The highest official of Ephesus, in charge of the city's records and its assembly. He answered to Rome for order in the city."
+ },
+ {
+  "id": "blaspheme",
+  "terms": [
+   "insulted"
+  ],
+  "text": "Looking down on a god or something holy and treating it with contempt."
+ },
+ {
+  "id": "offering",
+  "terms": [
+   "gift"
+  ],
+  "text": "Money given to God or collected to help neighbors in need. Paul carried the gifts of the Gentile churches to the poor believers in Jerusalem."
+ },
+ {
+  "id": "unleavened-bread",
+  "terms": [
+   "Unleavened Bread"
+  ],
+  "text": "A seven-day Jewish festival following Passover, when people ate bread without yeast to remember the exodus from Egypt."
+ },
+ {
+  "id": "breaking-bread",
+  "terms": [
+   "break bread",
+   "broke bread"
+  ],
+  "text": "Sharing bread together; in the early church it meant sharing the Lord's Supper."
+ },
+ {
+  "id": "lords-supper",
+  "terms": [
+   "Lord's Supper"
+  ],
+  "text": "A rite of sharing bread and cup in memory of the last meal Jesus ate with his disciples the night before he died. It is also called Communion."
+ },
+ {
+  "id": "upper-room",
+  "terms": [
+   "upstairs room"
+  ],
+  "text": "A large room on the upper floor of a house. The early church gathered in rooms like this to worship."
+ },
+ {
+  "id": "pentecost",
+  "terms": [
+   "Pentecost"
+  ],
+  "text": "A Jewish harvest festival on the fiftieth day after Passover. Many pilgrims gathered in Jerusalem on that day."
+ },
+ {
+  "id": "tribulation",
+  "terms": [
+   "hardships",
+   "distress",
+   "troubles"
+  ],
+  "text": "Suffering and hardship that are hard to bear."
+ },
+ {
+  "id": "bonds",
+  "terms": [
+   "chains",
+   "chain"
+  ],
+  "text": "Being tied up with ropes or chains; here, a sign that Paul would be arrested and imprisoned."
+ },
+ {
+  "id": "evangelist",
+  "terms": [
+   "evangelist"
+  ],
+  "text": "A person whose work is spreading the gospel. Philip was one of the seven helpers of the Jerusalem church."
+ },
+ {
+  "id": "vow-purification",
+  "terms": [
+   "purification"
+  ],
+  "text": "A rite under the law for making the body clean. Paul took part in it with four men who were completing a Nazirite vow."
+ },
+ {
+  "id": "tribune",
+  "terms": [
+   "commander of a thousand",
+   "commander"
+  ],
+  "text": "A Roman officer in command of about a thousand soldiers. He led the garrison of the Antonia Fortress in Jerusalem."
+ },
+ {
+  "id": "barracks",
+  "terms": [
+   "barracks"
+  ],
+  "text": "Quarters where soldiers stay. In Jerusalem this means the Antonia Fortress right beside the temple."
+ },
+ {
+  "id": "centurion",
+  "terms": [
+   "centurion"
+  ],
+  "text": "A Roman officer in command of about a hundred soldiers, the professional soldiers who formed the backbone of the army."
+ },
+ {
+  "id": "roman-citizen",
+  "terms": [
+   "citizen",
+   "citizenship"
+  ],
+  "text": "Roman citizens had the privilege of not being flogged without trial and of appealing to the emperor. Paul was a citizen from birth."
+ },
+ {
+  "id": "sadducees",
+  "terms": [
+   "Sadducees"
+  ],
+  "text": "A Jewish group centered on priestly families and the wealthy. They accepted only the five books of Moses and did not believe in resurrection or angels."
+ },
+ {
+  "id": "pharisees",
+  "terms": [
+   "Pharisee",
+   "Pharisees"
+  ],
+  "text": "A Jewish group devoted to keeping the law and the traditions of the elders in every detail. They believed in the resurrection, and Paul was a Pharisee."
+ },
+ {
+  "id": "heresy",
+  "terms": [
+   "sect"
+  ],
+  "text": "Originally meaning 'party' or 'faction'. The accusers used it to brand the followers of Jesus as a false faction."
+ },
+ {
+  "id": "self-control",
+  "terms": [
+   "self-control"
+  ],
+  "text": "Governing one's own desires and feelings so as not to go too far."
+ },
+ {
+  "id": "caesar",
+  "terms": [
+   "Caesar"
+  ],
+  "text": "A title for the Roman emperor, from the name Julius Caesar. The Caesar of Paul's day was Nero."
+ },
+ {
+  "id": "appeal",
+  "terms": [
+   "appeal",
+   "appealed"
+  ],
+  "text": "Refusing to accept a lower court's verdict and asking a higher authority to judge the case again. Roman citizens could appeal to the emperor."
+ },
+ {
+  "id": "augustan-cohort",
+  "terms": [
+   "Imperial Regiment"
+  ],
+  "text": "A Roman auxiliary unit named after the emperor (Augustus)."
+ },
+ {
+  "id": "day-of-atonement",
+  "terms": [
+   "Day of Atonement"
+  ],
+  "text": "A day each autumn (the tenth day of the seventh Jewish month) of fasting and praying for the people's sins to be cleansed. After it, sailing the Mediterranean became dangerous."
+ },
+ {
+  "id": "euroclydon",
+  "terms": [
+   "Northeaster"
+  ],
+  "text": "A violent northeast wind that blew over the Mediterranean in winter, sweeping down from the mountains of Crete onto the sea."
+ },
+ {
+  "id": "lifeboat",
+  "terms": [
+   "lifeboat"
+  ],
+  "text": "A small boat carried by a large ship, used to carry people in danger or to go back and forth to shore."
+ },
+ {
+  "id": "dioscuri",
+  "terms": [
+   "Dioscuri"
+  ],
+  "text": "Castor and Pollux, the twin sons of Zeus. Sailors honored them as gods who protected voyages and put their emblem on the bow."
+ },
+ {
+  "id": "praetorian-guard",
+  "terms": [
+   "imperial guard"
+  ],
+  "text": "The elite troops who guarded the Roman emperor. The soldiers guarding the imprisoned Paul took turns, and so heard the gospel."
+ },
+ {
+  "id": "genealogy",
+  "terms": [
+   "family records"
+  ],
+  "text": "Records of a family line from ancestors to descendants. False teachers in Ephesus stirred up empty arguments over them."
+ },
+ {
+  "id": "crown",
+  "terms": [
+   "crown"
+  ],
+  "text": "A wreath worn by the winner of a contest or by a king. Paul compared it to the reward for those who keep the faith to the end."
+ },
+ {
+  "id": "parchment",
+  "terms": [
+   "parchments"
+  ],
+  "text": "Writing material made by stretching and drying thin sheets of sheep or goat skin. These were probably precious scrolls of Scripture."
+ },
+ {
+  "id": "drink-offering",
+  "terms": [
+   "poured out like wine"
+  ],
+  "text": "An offering of wine poured over a sacrifice (a drink offering). Paul compared his life to it, being poured out as an offering."
+ },
+ {
+  "id": "altar",
+  "terms": [
+   "altar"
+  ],
+  "text": "A raised platform built to offer sacrifices or worship a god."
+ }
+]

@@ -1,0 +1,491 @@
+[
+ {
+  "id": "prophet",
+  "terms": [
+   "prophète",
+   "prophètes"
+  ],
+  "text": "Une personne qui reçoit la volonté de Dieu et la transmet aux autres. Samuel, Gad et Nathan remplirent ce rôle auprès de David."
+ },
+ {
+  "id": "anoint",
+  "terms": [
+   "corne d’huile",
+   "onction",
+   "oint"
+  ],
+  "text": "Verser de l’huile d’olive sur la tête de quelqu’un, signe que Dieu l’avait choisi comme roi ou comme prêtre."
+ },
+ {
+  "id": "priest",
+  "terms": [
+   "prêtre",
+   "prêtres"
+  ],
+  "text": "Une personne qui offrait les sacrifices au sanctuaire et se tenait devant Dieu au nom du peuple. Cette charge revenait aux descendants d’Aaron."
+ },
+ {
+  "id": "sacrifice",
+  "terms": [
+   "sacrifice",
+   "sacrifices"
+  ],
+  "text": "Adorer Dieu en lui offrant des animaux ou des céréales, pour demander le pardon des péchés ou pour rendre grâce."
+ },
+ {
+  "id": "burnt-offering",
+  "terms": [
+   "holocaustes",
+   "holocauste"
+  ],
+  "text": "Un sacrifice entièrement brûlé sur l’autel pour Dieu, signe d’un don total de soi."
+ },
+ {
+  "id": "peace-offering",
+  "terms": [
+   "sacrifices de paix"
+  ],
+  "text": "Une offrande qui célèbre la paix entre Dieu et les hommes. Une partie de la viande était partagée et mangée ensemble."
+ },
+ {
+  "id": "altar",
+  "terms": [
+   "autel"
+  ],
+  "text": "Une plate-forme surélevée de terre ou de pierre où l’on brûlait les offrandes pour Dieu."
+ },
+ {
+  "id": "lyre",
+  "terms": [
+   "lyre",
+   "lyres"
+  ],
+  "text": "Un ancien instrument à cordes tendues sur un cadre de bois, qu’on pince avec les doigts. David en jouait bien."
+ },
+ {
+  "id": "harp",
+  "terms": [
+   "harpes"
+  ],
+  "text": "Un ancien instrument à cordes pincées, utilisé avec la lyre dans le culte et les fêtes."
+ },
+ {
+  "id": "timbrel",
+  "terms": [
+   "tambourins"
+  ],
+  "text": "Un petit tambour qu’on tient à la main. Les femmes en jouaient souvent en dansant et en chantant."
+ },
+ {
+  "id": "cymbal",
+  "terms": [
+   "cymbales"
+  ],
+  "text": "Un instrument fait de deux plaques de bronze qu’on frappe l’une contre l’autre, comme les cymbales d’aujourd’hui."
+ },
+ {
+  "id": "cubit",
+  "terms": [
+   "coudées"
+  ],
+  "text": "La longueur du coude au bout du majeur, environ 45 cm. Six coudées et un empan font près de 3 mètres."
+ },
+ {
+  "id": "shekel",
+  "terms": [
+   "sicles"
+  ],
+  "text": "Une unité de poids et de monnaie ; un sicle pèse environ 11 g. Une cuirasse de cinq mille sicles pèse plus de 50 kg."
+ },
+ {
+  "id": "talent",
+  "terms": [
+   "talents"
+  ],
+  "text": "La plus grande unité de poids : un talent fait environ 34 kg, soit 3 000 sicles."
+ },
+ {
+  "id": "circumcision",
+  "terms": [
+   "incirconcis"
+  ],
+  "text": "La circoncision était un rite où l’on coupait le prépuce du petit garçon, signe d’appartenance au peuple de l’alliance avec Dieu."
+ },
+ {
+  "id": "foreskin",
+  "terms": [
+   "prépuces"
+  ],
+  "text": "La peau qui recouvre l’extrémité du pénis. Les Philistins n’étaient pas circoncis ; les prépuces prouvaient donc qu’ils avaient été tués."
+ },
+ {
+  "id": "teraphim",
+  "terms": [
+   "téraphim"
+  ],
+  "text": "Une petite figure de dieu à forme humaine gardée à la maison. En Israël, c’était une idole interdite."
+ },
+ {
+  "id": "ephod",
+  "terms": [
+   "éphod"
+  ],
+  "text": "Un vêtement semblable à un gilet, porté par les prêtres. Il servait à demander la volonté de Dieu, et David s’en servit pour chercher sa direction."
+ },
+ {
+  "id": "sanctuary",
+  "terms": [
+   "sanctuaire"
+  ],
+  "text": "Le lieu saint où l’on adorait Dieu et offrait des sacrifices. Au temps de David, il se trouvait à Nob."
+ },
+ {
+  "id": "showbread",
+  "terms": [
+   "pain consacré"
+  ],
+  "text": "Le pain déposé devant Dieu sur la table du sanctuaire. On le renouvelait chaque sabbat, et seuls les prêtres en mangeaient."
+ },
+ {
+  "id": "tabernacle",
+  "terms": [
+   "demeure"
+  ],
+  "text": "La tente-sanctuaire transportable où l’on adorait Dieu depuis les années au désert, jusqu’à la construction du Temple."
+ },
+ {
+  "id": "tent",
+  "terms": [
+   "tente",
+   "tentes"
+  ],
+  "text": "Une habitation faite de toile. David dressa une tente à part pour abriter l’arche."
+ },
+ {
+  "id": "curtain",
+  "terms": [
+   "tenture"
+  ],
+  "text": "De grandes pièces d’étoffe qui formaient une tente ou fermaient un espace. Ici, cela veut dire que l’arche était gardée sous une tente."
+ },
+ {
+  "id": "ark",
+  "terms": [
+   "arche"
+  ],
+  "text": "Un coffre recouvert d’or contenant les tables de pierre des Dix Commandements. Il montrait que Dieu était au milieu de son peuple, et on ne devait pas le toucher à la légère."
+ },
+ {
+  "id": "temple",
+  "terms": [
+   "maison du Seigneur",
+   "Temple"
+  ],
+  "text": "La maison où l’on adore Dieu. David prépara le Temple de Jérusalem, et son fils Salomon le bâtit."
+ },
+ {
+  "id": "covenant",
+  "terms": [
+   "alliance"
+  ],
+  "text": "Une promesse solennelle que les deux parties s’engagent à tenir. Dieu fit une alliance éternelle avec la famille de David."
+ },
+ {
+  "id": "lord-of-hosts",
+  "terms": [
+   "Seigneur des armées"
+  ],
+  "text": "Un nom de Dieu qui signifie le Seigneur qui commande à toutes les armées du ciel et de la terre."
+ },
+ {
+  "id": "yahweh",
+  "terms": [
+   "Seigneur"
+  ],
+  "text": "« Le Seigneur » rend YHWH, le nom propre que Dieu révéla à Moïse, compris d’ordinaire comme « celui qui est »."
+ },
+ {
+  "id": "spirit-of-lord",
+  "terms": [
+   "Esprit du Seigneur",
+   "Esprit de Dieu"
+  ],
+  "text": "L’Esprit de Dieu. Quand il venait sur quelqu’un, il lui donnait la force et la sagesse pour faire l’œuvre de Dieu."
+ },
+ {
+  "id": "prophesy",
+  "terms": [
+   "prophétiser",
+   "prophétisèrent",
+   "prophétisant"
+  ],
+  "text": "Être saisi par l’Esprit de Dieu pour dire sa parole ou chanter sa louange ; pas seulement prédire l’avenir."
+ },
+ {
+  "id": "new-moon",
+  "terms": [
+   "nouvelle lune"
+  ],
+  "text": "Le premier jour d’un nouveau mois lunaire. Israël offrait ce jour-là des sacrifices et faisait un repas de fête."
+ },
+ {
+  "id": "sling",
+  "terms": [
+   "fronde"
+  ],
+  "text": "Une arme munie d’une poche de cuir : on y place une pierre, on la fait tournoyer et on la lâche. Les bergers s’en servaient aussi pour chasser les bêtes sauvages."
+ },
+ {
+  "id": "javelin",
+  "terms": [
+   "javelot",
+   "javelots"
+  ],
+  "text": "Une lance courte faite pour être lancée."
+ },
+ {
+  "id": "commander-thousand",
+  "terms": [
+   "chef de mille"
+  ],
+  "text": "Un officier qui commandait mille soldats."
+ },
+ {
+  "id": "commander",
+  "terms": [
+   "chef de l’armée"
+  ],
+  "text": "Le plus haut officier, à la tête de toute l’armée du pays."
+ },
+ {
+  "id": "chariot",
+  "terms": [
+   "char",
+   "chars"
+  ],
+  "text": "Des voitures de guerre tirées par des chevaux. Elles montraient aussi la puissance et le rang d’un roi ou d’un prince."
+ },
+ {
+  "id": "threshing-floor",
+  "terms": [
+   "aires",
+   "aire"
+  ],
+  "text": "Une surface large et plate où l’on battait les céréales récoltées pour en détacher les grains, d’ordinaire sur une hauteur exposée au vent."
+ },
+ {
+  "id": "fine-linen",
+  "terms": [
+   "lin"
+  ],
+  "text": "Une toile blanche et fine tissée de fils minces, dont on faisait les vêtements des prêtres."
+ },
+ {
+  "id": "cedar",
+  "terms": [
+   "cèdre"
+  ],
+  "text": "Un grand arbre du Liban au bois dur et parfumé, très recherché pour bâtir les palais et le Temple."
+ },
+ {
+  "id": "tribute",
+  "terms": [
+   "tributaire"
+  ],
+  "text": "Les richesses qu’un pays vaincu payait chaque année au pays qui l’avait soumis."
+ },
+ {
+  "id": "counselor",
+  "terms": [
+   "conseiller"
+  ],
+  "text": "Un conseiller qui proposait au roi des plans et des avis. Ahitophel était célèbre pour sa sagesse."
+ },
+ {
+  "id": "vow",
+  "terms": [
+   "vœu"
+  ],
+  "text": "Une promesse qu’on fait librement à Dieu de faire quelque chose. Il fallait la tenir."
+ },
+ {
+  "id": "lawsuit",
+  "terms": [
+   "procès"
+  ],
+  "text": "Porter un différend devant un juge pour obtenir un jugement."
+ },
+ {
+  "id": "tamarisk",
+  "terms": [
+   "tamaris"
+  ],
+  "text": "Un petit arbre qui pousse bien même en terre sèche."
+ },
+ {
+  "id": "fasting",
+  "terms": [
+   "jeûnèrent",
+   "jeûna"
+  ],
+  "text": "Se priver de nourriture pendant un temps, par chagrin ou dans une prière ardente."
+ },
+ {
+  "id": "worship",
+  "terms": [
+   "prosterna",
+   "Prosterné",
+   "prosterner",
+   "prosternait",
+   "adorer"
+  ],
+  "text": "S’incliner devant Dieu pour l’honorer et l’adorer."
+ },
+ {
+  "id": "law",
+  "terms": [
+   "loi"
+  ],
+  "text": "Les commandements et les règles que Dieu donna par Moïse, pour montrer à Israël comment vivre."
+ },
+ {
+  "id": "rock",
+  "terms": [
+   "Rocher d’Israël"
+  ],
+  "text": "Un grand rocher large ; une image de Dieu, qui protège et ne bouge jamais."
+ },
+ {
+  "id": "tribe",
+  "terms": [
+   "tribus",
+   "tribu"
+  ],
+  "text": "L’un des douze clans d’Israël issus des douze fils de Jacob."
+ },
+ {
+  "id": "elder",
+  "terms": [
+   "anciens"
+  ],
+  "text": "Des responsables âgés qui guidaient les villes et les tribus."
+ },
+ {
+  "id": "assembly",
+  "terms": [
+   "assemblée"
+  ],
+  "text": "Le peuple entier réuni pour le culte ou pour un événement important."
+ },
+ {
+  "id": "levite",
+  "terms": [
+   "lévites"
+  ],
+  "text": "Les membres de la tribu de Lévi, qui portaient et entretenaient le tabernacle et l’arche."
+ },
+ {
+  "id": "wrath",
+  "terms": [
+   "colère"
+  ],
+  "text": "La sainte colère de Dieu, qui ne laisse pas le péché impuni."
+ },
+ {
+  "id": "wineskin",
+  "terms": [
+   "outre",
+   "outres"
+  ],
+  "text": "Un sac de peau de bête cousue, pour transporter du vin ou de l’eau."
+ },
+ {
+  "id": "parched-grain",
+  "terms": [
+   "grain grillé"
+  ],
+  "text": "Des grains de blé ou d’orge grillés, une nourriture facile à transporter et à manger."
+ },
+ {
+  "id": "curds",
+  "terms": [
+   "lait caillé"
+  ],
+  "text": "Un aliment fait de lait épaissi, proche du yaourt ou du beurre."
+ },
+ {
+  "id": "bride-price",
+  "terms": [
+   "dot"
+  ],
+  "text": "Un présent que le fiancé faisait à la famille de la fiancée. Saül s’en servit comme prétexte pour mettre David en danger."
+ },
+ {
+  "id": "watchman",
+  "terms": [
+   "guetteur"
+  ],
+  "text": "Une personne qui montait la garde sur un rempart ou un lieu élevé et annonçait qui approchait."
+ },
+ {
+  "id": "messenger",
+  "terms": [
+   "messager",
+   "messagers"
+  ],
+  "text": "Une personne qui courait porter en hâte des nouvelles ou des ordres."
+ },
+ {
+  "id": "justice",
+  "terms": [
+   "droit et la justice",
+   "justice"
+  ],
+  "text": "Faire respecter ce qui est droit et équitable aux yeux de Dieu. Un bon roi devait gouverner avec justice."
+ },
+ {
+  "id": "set-apart",
+  "terms": [
+   "consacré",
+   "consacra"
+  ],
+  "text": "Mettre une chose à part de l’usage ordinaire pour la donner à Dieu seul."
+ },
+ {
+  "id": "decorum",
+  "terms": [
+   "retenue"
+  ],
+  "text": "La conduite et l’allure qui conviennent à sa place et à son rang."
+ },
+ {
+  "id": "oak",
+  "terms": [
+   "chêne"
+  ],
+  "text": "Un grand arbre de la famille du chêne, qui porte des glands, aux branches larges et enchevêtrées."
+ },
+ {
+  "id": "mule",
+  "terms": [
+   "mulet",
+   "mule"
+  ],
+  "text": "Un animal né d’un cheval et d’une ânesse. Au temps de David, les rois et les princes les montaient."
+ },
+ {
+  "id": "psalm",
+  "terms": [
+   "Psaume"
+  ],
+  "text": "Le livre de la Bible qui rassemble des chants et des prières adressés à Dieu. Beaucoup ont été écrits par David."
+ },
+ {
+  "id": "grace",
+  "terms": [
+   "bonté",
+   "grâce"
+  ],
+  "text": "Un amour et une faveur donnés gratuitement à quelqu’un qui ne les a pas mérités."
+ }
+]

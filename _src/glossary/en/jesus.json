@@ -1,0 +1,754 @@
+[
+ {
+  "id": "cherub",
+  "terms": [
+   "cherubim"
+  ],
+  "text": "Cherubim are winged heavenly beings who stand guard near God."
+ },
+ {
+  "id": "tree-of-life",
+  "terms": [
+   "tree of life"
+  ],
+  "text": "The tree in the middle of the Garden of Eden, a symbol of unending life. After sin, the way to this tree was closed to humankind."
+ },
+ {
+  "id": "holy-spirit",
+  "terms": [
+   "Holy Spirit"
+  ],
+  "text": "The Spirit of God. Christians confess him, together with the Father and the Son, as the one God."
+ },
+ {
+  "id": "grace",
+  "terms": [
+   "grace"
+  ],
+  "text": "The love and gifts God freely gives to people who have done nothing to deserve them."
+ },
+ {
+  "id": "conceive",
+  "terms": [
+   "conceived"
+  ],
+  "text": "To become pregnant with a child. Mary carried her child not through a man but by the Holy Spirit."
+ },
+ {
+  "id": "census",
+  "terms": [
+   "registered"
+  ],
+  "text": "A count of the population ordered by the Roman emperor for taxation. Everyone had to go to their ancestral town to be listed."
+ },
+ {
+  "id": "manger",
+  "terms": [
+   "manger"
+  ],
+  "text": "A trough that holds feed for horses or cattle. It was the first bed of the infant Jesus."
+ },
+ {
+  "id": "savior",
+  "terms": [
+   "Savior"
+  ],
+  "text": "One who saves; here, the one who rescues people from sin and death."
+ },
+ {
+  "id": "circumcision",
+  "terms": [
+   "circumcised"
+  ],
+  "text": "A rite in which the foreskin of a baby boy was cut on the eighth day after birth. It was the sign of God's covenant with his people."
+ },
+ {
+  "id": "purification",
+  "terms": [
+   "purification"
+  ],
+  "text": "A rite under the law for making a person or thing clean. After giving birth, a mother brought an offering once a set number of days had passed."
+ },
+ {
+  "id": "law",
+  "terms": [
+   "law"
+  ],
+  "text": "The teaching and commandments God gave Israel through Moses, recorded in the first five books of the Old Testament."
+ },
+ {
+  "id": "temple",
+  "terms": [
+   "temple"
+  ],
+  "text": "The great building in Jerusalem where people worshiped God and offered sacrifices. The temple of Jesus' day had been lavishly rebuilt by Herod."
+ },
+ {
+  "id": "christ",
+  "terms": [
+   "Christ"
+  ],
+  "text": "A Greek word meaning 'anointed one', the same as the Hebrew 'Messiah'. It refers to the Savior God promised to send."
+ },
+ {
+  "id": "messiah",
+  "terms": [
+   "Messiah"
+  ],
+  "text": "A Hebrew word meaning 'anointed one': the promised Savior Israel was waiting for. In Greek the word is 'Christ'."
+ },
+ {
+  "id": "tribe",
+  "terms": [
+   "tribe"
+  ],
+  "text": "One of the twelve clans of Israel, descended from the twelve sons of Jacob."
+ },
+ {
+  "id": "prophet",
+  "terms": [
+   "prophet",
+   "prophets"
+  ],
+  "text": "A person who receives God's word and passes it on to others. Their main task was making God's will known, more than foretelling the future."
+ },
+ {
+  "id": "fasting",
+  "terms": [
+   "fasting"
+  ],
+  "text": "Going without food for a time in order to focus on prayer."
+ },
+ {
+  "id": "magi",
+  "terms": [
+   "wise men"
+  ],
+  "text": "Not men with academic degrees, but scholars from the East who studied the stars. They likely came from Persia or Babylon."
+ },
+ {
+  "id": "high-priest",
+  "terms": [
+   "high priest"
+  ],
+  "text": "The head of the priests and the highest religious leader, in charge of the temple and the Jewish council."
+ },
+ {
+  "id": "priest",
+  "terms": [
+   "priest",
+   "priests"
+  ],
+  "text": "A man who offered sacrifices in the temple and came before God on behalf of the people. The office belonged to the descendants of Aaron."
+ },
+ {
+  "id": "levite",
+  "terms": [
+   "Levite"
+  ],
+  "text": "A member of the tribe of Levi, who assisted the priests with the work of the temple."
+ },
+ {
+  "id": "scribe",
+  "terms": [
+   "teacher of the law",
+   "teachers of the law"
+  ],
+  "text": "An expert who studied and taught the law. Older translations call them 'scribes'."
+ },
+ {
+  "id": "worship",
+  "terms": [
+   "worship",
+   "worshiped"
+  ],
+  "text": "To bow down and honor someone as highest; the deepest expression of reverence, given to God or to a king."
+ },
+ {
+  "id": "frankincense",
+  "terms": [
+   "frankincense"
+  ],
+  "text": "A precious resin from a tree that gives off a sweet smell when burned. It was used in offerings to God."
+ },
+ {
+  "id": "myrrh",
+  "terms": [
+   "myrrh"
+  ],
+  "text": "A costly spice taken from tree resin, used as medicine and perfume and also to prepare bodies for burial."
+ },
+ {
+  "id": "aloes",
+  "terms": [
+   "aloes"
+  ],
+  "text": "A spice from a strongly fragrant wood, mixed with myrrh and used on bodies at burial."
+ },
+ {
+  "id": "repentance",
+  "terms": [
+   "repentance",
+   "repented"
+  ],
+  "text": "Not just feeling sorry for wrongs, but turning one's whole life around and coming back to God."
+ },
+ {
+  "id": "baptism",
+  "terms": [
+   "baptism"
+  ],
+  "text": "A rite of being immersed in or washed with water, showing that sins are washed away and a new life begins."
+ },
+ {
+  "id": "devil",
+  "terms": [
+   "devil",
+   "Satan"
+  ],
+  "text": "The chief of the evil spirits, who opposes God and tries to make people fall. 'Satan' means 'adversary'."
+ },
+ {
+  "id": "lamb-of-god",
+  "terms": [
+   "Lamb of God"
+  ],
+  "text": "Recalling the young lambs offered as sacrifices for sin, this title points to Jesus, who would die bearing the sin of the world."
+ },
+ {
+  "id": "rabbi",
+  "terms": [
+   "Rabbi",
+   "Rabboni"
+  ],
+  "text": "A Hebrew word meaning 'my teacher', a respectful title for a teacher of the law. 'Rabboni' is a warmer form."
+ },
+ {
+  "id": "sign",
+  "terms": [
+   "sign",
+   "signs"
+  ],
+  "text": "A miracle that shows God's power and points to who Jesus is."
+ },
+ {
+  "id": "money-changer",
+  "terms": [
+   "money changers"
+  ],
+  "text": "Merchants who exchanged money from many lands for the coins used in the temple, charging a fee for their profit."
+ },
+ {
+  "id": "son-of-man",
+  "terms": [
+   "Son of Man"
+  ],
+  "text": "Meaning 'son of a human being', the name Jesus most often used for himself. It recalls the heavenly ruler in the book of Daniel."
+ },
+ {
+  "id": "pharisee",
+  "terms": [
+   "Pharisee",
+   "Pharisees"
+  ],
+  "text": "A Jewish group devoted to keeping the law and the traditions of the elders in every detail. They often clashed with Jesus."
+ },
+ {
+  "id": "samaritan",
+  "terms": [
+   "Samaritan",
+   "Samaritans"
+  ],
+  "text": "People of Samaria, the region between Judea and Galilee. They and the Jews had long been hostile and avoided each other."
+ },
+ {
+  "id": "seventh-hour",
+  "terms": [
+   "seventh hour"
+  ],
+  "text": "Hours were counted from about sunrise, so the seventh hour is around one in the afternoon."
+ },
+ {
+  "id": "sabbath",
+  "terms": [
+   "Sabbath"
+  ],
+  "text": "The seventh day of the week, a holy day for resting from work and remembering God. It ran from sunset Friday to sunset Saturday."
+ },
+ {
+  "id": "synagogue",
+  "terms": [
+   "synagogue"
+  ],
+  "text": "The place in each town where Jews gathered to read Scripture, pray, and learn."
+ },
+ {
+  "id": "synagogue-ruler",
+  "terms": [
+   "synagogue leader",
+   "leader of the synagogue"
+  ],
+  "text": "The person who led the gatherings and worship of a synagogue."
+ },
+ {
+  "id": "scroll",
+  "terms": [
+   "scroll"
+  ],
+  "text": "A book made of long strips of leather or papyrus joined and rolled up. The Scriptures were written this way."
+ },
+ {
+  "id": "unclean-spirit",
+  "terms": [
+   "unclean spirit",
+   "unclean spirits",
+   "demons"
+  ],
+  "text": "Evil spirits that seize and torment people. Jesus drove them out with a word."
+ },
+ {
+  "id": "paralytic",
+  "terms": [
+   "paralyzed"
+  ],
+  "text": "Unable to move the body because of paralysis."
+ },
+ {
+  "id": "tax-collector",
+  "terms": [
+   "tax collector",
+   "tax collectors",
+   "chief tax collector",
+   "tax booth"
+  ],
+  "text": "People who collected taxes from their own people for Rome. Many took extra for themselves, so they were treated as sinners."
+ },
+ {
+  "id": "colonnade",
+  "terms": [
+   "Colonnade",
+   "colonnades"
+  ],
+  "text": "A long walkway with a roof held up by columns, open on one or both sides."
+ },
+ {
+  "id": "apostle",
+  "terms": [
+   "apostles"
+  ],
+  "text": "Meaning 'one who is sent', the title of the twelve disciples Jesus chose and appointed."
+ },
+ {
+  "id": "zealot",
+  "terms": [
+   "Zealot"
+  ],
+  "text": "A member of a Jewish movement that sought to drive out Roman rule, even by force."
+ },
+ {
+  "id": "rock",
+  "terms": [
+   "rock"
+  ],
+  "text": "Broad, solid stone, a picture of a foundation that cannot be shaken. The name Peter also means 'stone' or 'rock'."
+ },
+ {
+  "id": "inner-room",
+  "terms": [
+   "inner room"
+  ],
+  "text": "A small room deep inside a house; a place to pray alone, away from others' eyes."
+ },
+ {
+  "id": "centurion",
+  "terms": [
+   "centurion"
+  ],
+  "text": "A Roman officer in command of about a hundred soldiers."
+ },
+ {
+  "id": "elder",
+  "terms": [
+   "elders"
+  ],
+  "text": "Older leaders who guided a town or the people."
+ },
+ {
+  "id": "perfume",
+  "terms": [
+   "perfume",
+   "nard"
+  ],
+  "text": "A precious fragrant oil. Nard was a very costly perfume made from a plant grown in the Himalayas."
+ },
+ {
+  "id": "alabaster",
+  "terms": [
+   "alabaster"
+  ],
+  "text": "A smooth stone jar for holding perfume. Its neck was broken so it could be poured out all at once."
+ },
+ {
+  "id": "denarius",
+  "terms": [
+   "denarius",
+   "denarii"
+  ],
+  "text": "A Roman silver coin, about a day's wage for a laborer."
+ },
+ {
+  "id": "forgive-debt",
+  "terms": [
+   "debt",
+   "debts"
+  ],
+  "text": "Here, a debt that is reduced or wiped out so it no longer has to be repaid."
+ },
+ {
+  "id": "stern",
+  "terms": [
+   "stern"
+  ],
+  "text": "The back part of a boat. The front is called the bow."
+ },
+ {
+  "id": "bleeding",
+  "terms": [
+   "bleeding"
+  ],
+  "text": "An illness in which bleeding does not stop. Under the law it made a person unclean, cutting them off from others."
+ },
+ {
+  "id": "manna",
+  "terms": [
+   "manna"
+  ],
+  "text": "The food God sent down from heaven every day during Israel's forty years in the wilderness."
+ },
+ {
+  "id": "greek-gentile",
+  "terms": [
+   "Greek",
+   "foreign"
+  ],
+  "text": "'Greek' here means a non-Jewish person shaped by Greek culture. Gentiles are peoples other than the Jews, and their lands."
+ },
+ {
+  "id": "booths",
+  "terms": [
+   "Feast of Tabernacles"
+  ],
+  "text": "A seven-day autumn festival after the harvest, when people lived in shelters made of branches to remember the wilderness years."
+ },
+ {
+  "id": "booth",
+  "terms": [
+   "shelters"
+  ],
+  "text": "Small temporary huts woven from branches or grass."
+ },
+ {
+  "id": "adultery",
+  "terms": [
+   "adultery"
+  ],
+  "text": "Sexual relations between a married person and someone other than their spouse. The law punished it severely."
+ },
+ {
+  "id": "condemn",
+  "terms": [
+   "condemn",
+   "condemned"
+  ],
+  "text": "To declare someone guilty and pass sentence on them."
+ },
+ {
+  "id": "hanukkah",
+  "terms": [
+   "Feast of Dedication"
+  ],
+  "text": "A winter festival remembering how the temple, defiled by a Greek king, was won back and rededicated to God. Today it is called Hanukkah."
+ },
+ {
+  "id": "carob",
+  "terms": [
+   "pods"
+  ],
+  "text": "Carob pods, mostly used as food for pigs and livestock. Only the very poor would eat them."
+ },
+ {
+  "id": "silver-coin",
+  "terms": [
+   "silver coins"
+  ],
+  "text": "Coins made of silver; here drachmas, each worth about a day's wage."
+ },
+ {
+  "id": "sanhedrin",
+  "terms": [
+   "council"
+  ],
+  "text": "The highest Jewish assembly and court, led by the high priest. It is also called the Sanhedrin."
+ },
+ {
+  "id": "resurrection",
+  "terms": [
+   "resurrection"
+  ],
+  "text": "A dead person coming back to life. The resurrection of Jesus is at the center of the Christian faith."
+ },
+ {
+  "id": "commandment",
+  "terms": [
+   "commandment",
+   "commandments"
+  ],
+  "text": "A teaching God orders his people to keep. The Ten Commandments are the best known."
+ },
+ {
+  "id": "sycamore",
+  "terms": [
+   "sycamore"
+  ],
+  "text": "A fig-like tree with low, wide-spreading branches that is easy to climb."
+ },
+ {
+  "id": "leprosy",
+  "terms": [
+   "leprosy"
+  ],
+  "text": "A serious skin disease. In Bible times it was considered unclean, and those who had it had to live apart outside the village."
+ },
+ {
+  "id": "pound",
+  "terms": [
+   "pound",
+   "pounds"
+  ],
+  "text": "A unit of weight; here the Roman litra, about 330 grams."
+ },
+ {
+  "id": "palm",
+  "terms": [
+   "palm"
+  ],
+  "text": "The date palm. Its branches were waved as a sign of victory and welcome."
+ },
+ {
+  "id": "hosanna",
+  "terms": [
+   "Hosanna"
+  ],
+  "text": "A Hebrew word meaning 'save us now', which became a shout of welcome and praise."
+ },
+ {
+  "id": "herodian",
+  "terms": [
+   "Herodians"
+  ],
+  "text": "Jews who supported the rule of Herod's family and went along with paying taxes to Rome."
+ },
+ {
+  "id": "sadducee",
+  "terms": [
+   "Sadducees"
+  ],
+  "text": "A Jewish group close to the high priestly families. They did not believe in the resurrection or in angels."
+ },
+ {
+  "id": "treasury",
+  "terms": [
+   "offering box"
+  ],
+  "text": "Trumpet-shaped chests in the temple courts where people put their offerings."
+ },
+ {
+  "id": "talent",
+  "terms": [
+   "talents"
+  ],
+  "text": "A unit for a large sum of money, about what a laborer earned in nearly twenty years. The English word 'talent' comes from it."
+ },
+ {
+  "id": "unleavened",
+  "terms": [
+   "Unleavened Bread"
+  ],
+  "text": "A seven-day festival following Passover, when people ate bread without yeast to remember the exodus from Egypt."
+ },
+ {
+  "id": "passover",
+  "terms": [
+   "Passover"
+  ],
+  "text": "The great spring festival remembering the night death passed over Israel's houses in Egypt, and the exodus."
+ },
+ {
+  "id": "upper-room",
+  "terms": [
+   "upper room"
+  ],
+  "text": "A large room on the upper floor of a house, where Jesus ate his last meal with his disciples."
+ },
+ {
+  "id": "covenant",
+  "terms": [
+   "covenant"
+  ],
+  "text": "A binding promise God makes with people. Jesus established a new covenant with his own blood."
+ },
+ {
+  "id": "hymn",
+  "terms": [
+   "hymn"
+  ],
+  "text": "A song in praise of God. At the end of the Passover meal, psalms were sung."
+ },
+ {
+  "id": "governor",
+  "terms": [
+   "governor"
+  ],
+  "text": "An official sent by the Roman emperor to rule a province. Pilate was governor of Judea."
+ },
+ {
+  "id": "cross",
+  "terms": [
+   "cross"
+  ],
+  "text": "The wooden frame on which Rome hung condemned prisoners to die; the cruelest and most shameful form of execution.",
+  "skip": [
+   "cross over"
+  ]
+ },
+ {
+  "id": "purple",
+  "terms": [
+   "purple"
+  ],
+  "text": "Purple cloth was costly and worn by kings. The soldiers put it on Jesus to mock him as a king."
+ },
+ {
+  "id": "paradise",
+  "terms": [
+   "paradise"
+  ],
+  "text": "The blessed place where the righteous dead are with God."
+ },
+ {
+  "id": "veil",
+  "terms": [
+   "curtain"
+  ],
+  "text": "The heavy curtain in the temple that screened off the Most Holy Place. It stood for the barrier between God and people."
+ },
+ {
+  "id": "linen",
+  "terms": [
+   "linen"
+  ],
+  "text": "Fine cloth woven from flax, used to wrap the bodies of the dead."
+ },
+ {
+  "id": "first-day",
+  "terms": [
+   "first day of the week"
+  ],
+  "text": "The day after the Sabbath, our Sunday. Jesus rose on this day."
+ },
+ {
+  "id": "stadion",
+  "terms": [
+   "stadia"
+  ],
+  "text": "A unit of distance; one stadion is about 185 meters, so sixty stadia is about 11 kilometers."
+ },
+ {
+  "id": "fourth-watch",
+  "terms": [
+   "fourth watch"
+  ],
+  "text": "The night was divided into four watches; the fourth ran from about three to six in the morning."
+ },
+ {
+  "id": "authority",
+  "terms": [
+   "authority"
+  ],
+  "text": "The power and the right to rule and give commands."
+ },
+ {
+  "id": "righteous",
+  "terms": [
+   "righteous"
+  ],
+  "text": "People God accepts as right before him. Here it also pokes at those who consider themselves righteous."
+ },
+ {
+  "id": "holy-city",
+  "terms": [
+   "holy city"
+  ],
+  "text": "A name for Jerusalem, where God's temple stood."
+ },
+ {
+  "id": "kingdom-of-god",
+  "terms": [
+   "kingdom of God",
+   "kingdom of heaven"
+  ],
+  "text": "The realm where God rules as king. It is less a place than God's rule being carried out."
+ },
+ {
+  "id": "eternal-life",
+  "terms": [
+   "eternal life"
+  ],
+  "text": "Not just living forever, but the true life shared with God."
+ },
+ {
+  "id": "leaven",
+  "terms": [
+   "yeast"
+  ],
+  "text": "What makes dough rise. Jesus used its power, a little spreading through the whole batch, as a picture."
+ },
+ {
+  "id": "mustard-seed",
+  "terms": [
+   "mustard seed"
+  ],
+  "text": "A very tiny seed that grows into a plant taller than a person."
+ },
+ {
+  "id": "feast",
+  "terms": [
+   "festival",
+   "festivals"
+  ],
+  "text": "Here, the appointed feasts when Jews went up to Jerusalem, such as Passover and the Feast of Tabernacles."
+ },
+ {
+  "id": "talitha",
+  "terms": [
+   "Talitha",
+   "Ephphatha"
+  ],
+  "text": "Aramaic, the language Jews spoke in Jesus' day. 'Talitha koum' means 'little girl, get up', and 'Ephphatha' means 'be opened'."
+ },
+ {
+  "id": "ransom",
+  "terms": [
+   "ransom"
+  ],
+  "text": "A price paid to set a captive or slave free. Jesus gave his own life as that price."
+ },
+ {
+  "id": "pilgrim",
+  "terms": [
+   "pilgrimage",
+   "pilgrims"
+  ],
+  "text": "A journey to a holy place. At each festival, Jews went up to the temple in Jerusalem."
+ }
+]

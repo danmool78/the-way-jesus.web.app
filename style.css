@@ -524,6 +524,12 @@ dialog{position:fixed}
 .prayer p{font-family:var(--serif);font-size:14.5px;line-height:1.8;margin:0;color:#f1e3c3}
 .endbtns{display:flex;flex-direction:column;align-items:center;gap:8px}
 /* 다음 여정 후원 — 홈페이지와 같은 점선 상자. 여정을 마치며 창에서는 축복 뒤, 맨 아래 단추 위에 차분하게 */
+/* 어려운 낱말: 다른 색 + 점선 밑줄, 누르면 풀이 창 */
+.story .gl{all:unset;cursor:pointer;color:var(--gold2);text-decoration:underline dotted;text-decoration-thickness:1.5px;text-underline-offset:4px}
+.story .gl:hover,.story .gl:focus-visible{color:var(--gold);text-decoration-style:solid}
+.gloss-dlg{width:min(420px,90vw);word-break:keep-all}
+.gloss-dlg h3{margin:0 30px 10px 0;font-family:var(--serif);color:var(--gold2);font-size:20px}
+.gloss-dlg p{margin:0;line-height:1.75}
 .next-dlg{width:min(560px,94vw);max-height:92vh;overflow-y:auto;word-break:keep-all}
 .nextbox{text-align:left;padding:20px 20px 18px;border:1.5px dashed rgba(var(--gold-rgb),.45);border-radius:16px;background:rgba(var(--gold-rgb),.04);margin:0 0 26px}
 .next-dlg .nextbox{margin:0;padding:0;border:0;background:none} /* 창 안에서는 창이 테두리 — 점선 상자를 겹쳐 그리지 않고 × 자리를 비운다 */
