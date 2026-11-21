@@ -211,7 +211,7 @@ export const PROVERBS = {
       'p0.1': [['@set', 'lamps:on'], ['friend', 'speak', { to: 'father' }]],
       // 나물 한 그릇과 빵 — 자리에 둘러앉는다
       'p0.2': [['@cam', 'meal'], ['father', 'sit-ground', { x: -0.52, z: -0.26, look: 1.57 }], ['friend', 'sit-ground', { x: 0.52, z: -0.26, look: -1.57 }],
-        ['son', 'sit-ground', { x: 0, z: -0.74, look: 0 }], ['wife', 'hold-basket', { item: 'basket', x: 0.2, z: -0.62, look: -1.2 }]],
+        ['son', 'sit-ground', { x: 0, z: -0.74, look: 0 }], ['wife', 'hold-basket', { item: 'basket', x: 0.33, z: -0.52, look: -1.2 }]],
       'p0.3': [['wife', 'sit-ground', { item: null, x: 0.47, z: -0.7, look: -0.6 }], ['father', 'sit-speak', { to: 'son' }]],
       // 친구는 언제나 사랑하고 — 마주 앉은 두 사람
       'p1.0': [['@cam', 'pair'], ['@env', 'night'], ['father', 'sit-ground', { look: 1.57 }], ['friend', 'sit-speak', { to: 'father' }]],
