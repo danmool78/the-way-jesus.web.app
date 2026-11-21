@@ -6,10 +6,14 @@
 import './props-c.js';
 
 // 무리(crowd)의 자리: 가운데를 둘러 n명을 흩어 놓는다 (moses.js와 같다)
-const flock = (n, rx, rz, seed = 1) => Array.from({ length: n }, (_, i) => {
+// 모델은 인형보다 몸이 커서 좁은 무리 안에서 서로 뚫고 섰다(사용자 2026-11) — 몸 네모(0.17×0.11)가 조금 돌아서도 겹치지 않을 만큼(0.22) 서로 밀어 벌린다
+const flock = (n, rx, rz, seed = 1) => { const P = Array.from({ length: n }, (_, i) => {
   const a = i * 2.399 + seed, r = Math.sqrt((i + 0.5) / n);
   return [Math.cos(a) * r * rx, Math.sin(a) * r * rz];
 });
+  for (let it = 0; it < 60; it++) for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) { const dx = P[j][0] - P[i][0], dz = P[j][1] - P[i][1], d = Math.hypot(dx, dz) || 1e-3;
+    if (d < 0.22) { const k = (0.22 - d) / 2 / d; P[i][0] -= dx * k; P[i][1] -= dz * k; P[j][0] += dx * k; P[j][1] += dz * k; } }
+  return P.map(([x, z]) => [+x.toFixed(3), +z.toFixed(3)]); };
 
 export const C = {
   /* d21. 헤브론의 왕 — 헤브론의 집들 앞. 다윗이 주께 여쭙고 빛 아래에서 듣는다. 두 아내와 사람들을 데리고 올라와 자리 잡고,
@@ -164,15 +168,15 @@ export const C = {
       ark: ['arkc', 0.0, 0.5, { lift: 0.33, on: ['lev1', 'lev2'] }],
       beam: ['beam', 0.0, 0.4, { r: 0.28, h: 2.2 }],
       bless: ['beam', 1.6, -0.2, { r: 0.6, h: 2.3, peak: 0.3 }],
-      folk: ['crowd', -1.15, -0.4, { spots: flock(6, 0.45, 0.1, 3), face: Math.PI / 2, speed: 0.32 }],
+      folk: ['crowd', -0.95, -0.4, { spots: flock(6, 0.45, 0.1, 3), face: Math.PI / 2, speed: 0.32 }],
     },
     cast: {
       uzzah: ['uzzah', -1.5, 0.38, 1, { speed: 0.32 }],
       ahio: ['ahio', 0.25, 0.28, 1, { speed: 0.32 }],
-      david: ['davidK', -2.0, 0.45, 1, { speed: 0.32 }],
+      david: ['davidK', -1.95, 0.4, 1, { speed: 0.32 }],
       lev: ['levite', -2.05, 0.2, 1, { gaze: false, speed: 0.32 }],
-      w1: ['woman', -2.05, 0.62, 1, { gaze: false, speed: 0.32 }],
-      w2: ['miriam', -1.6, 0.72, 1, { gaze: false, speed: 0.32 }],
+      w1: ['woman', -2.2, 0.7, 1, { gaze: false, speed: 0.32 }],
+      w2: ['miriam', -1.6, 0.8, 1, { gaze: false, speed: 0.32 }],
       lev1: ['levite', -0.42, 0.5, -1.57, { speed: 0.3, pose: 'carry-pole' }],
       lev2: ['levite', 0.42, 0.5, -1.57, { speed: 0.3, pose: 'carry-pole' }],
       obedEdom: ['hebrew2', 1.95, -0.3, -1],
@@ -183,7 +187,7 @@ export const C = {
       enter: [['cart', 'go', { x: 0.0 }], ['cartE', null, { show: 0 }], ['ark', null, { show: 0 }], ['lev1', 'carry-pole', { show: 0 }], ['lev2', 'carry-pole', { show: 0 }], ['beam', null, { show: 0 }], ['bless', null, { show: 0 }],
         ['obedEdom', 'idle', { show: 0 }], ['wife', 'idle', { show: 0 }], ['kid', 'idle', { show: 0 }], ['folk', null, { x: -0.85 }],
         ['uzzah', 'idle', { x: -0.4, z: 0.38 }], ['ahio', 'idle', { x: 1.3, z: 0.32, look: -1 }], ['david', 'play', { x: -0.90, z: 0.45, item: 'lyre' }],
-        ['lev', 'play', { x: -1.20, z: 0.2, item: 'lyre' }], ['w1', 'dance', { x: -1.20, z: 0.62, item: 'timbrel' }], ['w2', 'dance', { x: -0.75, z: 0.72, item: 'timbrel' }]],
+        ['lev', 'play', { x: -1.20, z: 0.2, item: 'lyre' }], ['w1', 'dance', { x: -1.20, z: 0.62, item: 'timbrel' }], ['w2', 'dance', { x: -0.68, z: 0.8, item: 'timbrel' }]],
       intro: [['@env', 'day'], ['cart', 'go'], ['cartE', null, { show: 0 }], ['ark', null, { show: 0 }], ['lev1', 'carry-pole', { show: 0 }], ['lev2', 'carry-pole', { show: 0 }], ['beam', null, { show: 0 }], ['bless', null, { show: 0 }],
         ['obedEdom', 'idle', { show: 0 }], ['wife', 'idle', { show: 0 }], ['kid', 'idle', { show: 0 }],
         ['david', 'play', { item: 'lyre' }], ['lev', 'play', { item: 'lyre' }], ['w1', 'dance', { item: 'timbrel' }], ['w2', 'dance', { item: 'timbrel' }]],
@@ -194,7 +198,7 @@ export const C = {
         ['lev', 'play', { x: -1.80, z: 0.2 }], ['w1', 'dance', { x: -1.80, z: 0.62 }], ['w2', 'dance', { x: -1.35, z: 0.72 }]],
       // 나곤의 타작마당에 이르러
       'p1.0': [['cart', 'go', { x: 0.0 }], ['uzzah', 'idle', { x: -0.4, z: 0.38 }], ['ahio', 'idle', { x: 1.3, z: 0.32 }], ['david', 'play', { x: -0.90, z: 0.45 }],
-        ['lev', 'play', { x: -1.20, z: 0.2 }], ['w1', 'dance', { x: -1.20, z: 0.62 }], ['w2', 'dance', { x: -0.75, z: 0.72 }], ['folk', null, { x: -0.85 }]],
+        ['lev', 'play', { x: -1.20, z: 0.2 }], ['w1', 'dance', { x: -1.20, z: 0.62 }], ['w2', 'dance', { x: -0.68, z: 0.8 }], ['folk', null, { x: -0.85 }]],
       // 소들이 비틀거리고, 웃사가 손을 뻗어 궤를 붙든다
       'p1.1': [['cart', 'stumble', { x: 0.0 }], ['uzzah', 'afraid', { x: -0.3, z: 0.36, look: 2.6 }], ['ahio', 'afraid', { look: -1 }]],
       'p1.2': [['uzzah', 'point', { x: -0.15, z: 0.3, look: 2.5 }]],
@@ -243,7 +247,7 @@ export const C = {
       lev1: ['levite', -1.62, 0.0, 1.57, { speed: 0.3, pose: 'carry-pole' }],
       lev2: ['levite', -0.78, 0.0, 1.57, { speed: 0.3, pose: 'carry-pole' }],
       horn: ['hebrew', -1.75, 0.45, 1, { gaze: false, speed: 0.35 }],
-      w1: ['woman', 0.45, 0.6, -0.5, { gaze: false }],
+      w1: ['woman', 0.1, 0.6, 0.3, { gaze: false }],
       michal: ['michal', -1.35, -0.45, 1],
     },
     beats: {
@@ -254,7 +258,7 @@ export const C = {
       'p0.1': [['david', 'raise', { look: 1 }]],
       // 이번에는 사람들이 궤를 메었다 — 여섯 걸음에 제물을 드린다
       'p0.2': [['david', 'idle', { x: -0.15, z: 0.28, look: -1 }], ['lev1', 'carry-pole', { x: -1.22 }], ['lev2', 'carry-pole', { x: -0.38 }]],
-      'p0.3': [['altar', 'fire'], ['david', 'kneel', { x: 0.1, z: -0.12, look: 0 }]],
+      'p0.3': [['altar', 'fire'], ['david', 'kneel', { x: 0.1, z: -0.04, look: 0 }]],
       // 세마포 에봇을 입고 온 힘을 다해 춤춘다
       'p0.4': [['david', 'dance', { x: 0.95, z: 0.35 }], ['lev1', 'carry-pole', { x: -0.22, delay: 600 }], ['lev2', 'carry-pole', { x: 0.62, delay: 600 }]],
       // 함성과 나팔 소리
@@ -353,10 +357,10 @@ export const C = {
       walker: ['mephiS', -2.0, 0.2, 1, { speed: 0.35 }],
       meph: ['mephibosheth', -0.2, 0.08, 0, { pose: 'sit' }],
       prince: ['absalom', -0.62, 0.08, 0.3, { pose: 'sit' }],
-      mica: ['child', 0.15, 0.1, -0.4],
+      mica: ['child', -0.08, 0.16, -0.4],
     },
     beats: {
-      enter: [['official', 'idle', { show: 0 }], ['ziba', 'idle', { show: 0 }], ['walker', 'idle', { show: 0 }], ['king', 'sit', { y: 0, x: 0.3, z: 0.1, look: -0.8 }], ['meph', 'sit', { look: 0.2 }], ['mica', 'idle', { x: 0.12, z: 0.12, look: -1 }]],
+      enter: [['official', 'idle', { show: 0 }], ['ziba', 'idle', { show: 0 }], ['walker', 'idle', { show: 0 }], ['king', 'sit', { y: 0, x: 0.3, z: 0.1, look: -0.8 }], ['meph', 'sit', { look: 0.2 }], ['mica', 'idle', { x: -0.08, z: 0.16, look: -1 }]],
       intro: [['@env', 'day'], ['table', null, { show: 0 }], ['meph', 'sit', { show: 0 }], ['prince', 'sit', { show: 0 }], ['mica', 'idle', { show: 0 }], ['ziba', 'idle', { show: 0 }], ['walker', 'idle', { show: 0 }], ['king', 'sit', { look: -0.4 }]],
       // 사울의 집안에 아직 남은 사람이 있느냐
       'p0.1': [['king', 'sit-speak', { to: 'official' }], ['official', 'listen', { look: 0.6 }]],
@@ -381,8 +385,8 @@ export const C = {
       'p2.1': [['king', 'idle'], ['ziba', 'idle', { x: -1.9, z: 0.3, look: -1 }], ['ziba', 'idle', { show: 0, delay: 4200 }]],
       // 늘 왕의 식탁에서 — 왕자들과 함께
       'p2.2': [['ziba', 'idle', { show: 0 }], ['table', null, { show: 1 }], ['walker', 'idle', { show: 0, x: -0.2, z: 0.08 }], ['meph', 'sit', { show: 1, look: 0.2 }], ['prince', 'sit', { show: 1 }],
-        ['king', 'idle', { x: 0.3, z: 0.1, look: -1 }], ['king', 'sit', { look: -0.8, delay: 1800 }], ['official', 'idle', { x: 0.75, z: -0.1, look: -0.6 }]],
-      'p2.3': [['mica', 'idle', { show: 1, x: 0.12, z: 0.12, look: -1 }], ['meph', 'sit', { look: 0.6 }]],
+        ['king', 'idle', { x: 0.32, z: 0.12, look: -1 }], ['king', 'sit', { look: -0.8, delay: 1800 }], ['official', 'idle', { x: 0.75, z: -0.1, look: -0.6 }]],
+      'p2.3': [['mica', 'idle', { show: 1, x: -0.08, z: 0.16, look: -1 }], ['meph', 'sit', { look: 0.6 }]],
       'p2.4': [['meph', 'sit', { look: 0.2 }]],
       w0: [['king', 'speak', { show: 1 }]],
       w1: [['king', 'speak', { show: 1 }]],
@@ -431,7 +435,7 @@ export const C = {
       // 하맛 왕 도이가 보낸 아들 요람
       'p1.2': [['joram', 'idle', { show: 1, x: 0.25, z: 0.05, look: -1, item: 'gift' }], ['joram', 'bow', { delay: 5200 }], ['joab', 'idle', { x: -0.9, z: 0.4 }]],
       // 모두 주께 구별하여 드린다
-      'p1.3': [['joram', 'idle', { item: null, x: 0.7, z: 0.1, look: -1 }], ['beam', null, { show: 1 }], ['king', 'idle', { x: -0.3, z: 0.0, look: 0.6 }], ['king', 'kneel', { delay: 1800 }]],
+      'p1.3': [['joram', 'idle', { item: null, x: 0.58, z: 0.05, look: -1 }], ['beam', null, { show: 1 }], ['king', 'idle', { x: -0.3, z: 0.0, look: 0.6 }], ['king', 'kneel', { delay: 1800 }]],
       // 소금 골짜기의 에돔 — 다시 나갔다 돌아온다
       'p2.0': [['beam', null, { show: 0 }], ['joram', 'idle', { show: 0 }], ['king', 'idle', { look: 1 }], ['@env', 'overcast'],
         ['joab', 'idle', { x: 2.0, z: 0.4 }], ['s1', 'idle', { x: 2.1, z: 0.55 }], ['s2', 'idle', { x: 2.1, z: 0.2 }], ['s3', 'idle', { show: 0 }],
@@ -644,9 +648,9 @@ export const C = {
       // 아무것도 모른 채 따라간 이백 명
       'p2.5': [['absalom', 'idle'], ['folk', null, { show: 1, x: 0.15 }]],
       // 제사를 드리며 아히도벨까지
-      'p2.6': [['altar', 'fire'], ['absalom', 'idle', { x: 0.85, z: -0.15, look: 0.4 }], ['ahith', 'idle', { show: 1, x: 1.35, z: 0.05, look: -1 }], ['ahith', 'bow', { delay: 4000 }]],
+      'p2.6': [['altar', 'fire'], ['absalom', 'idle', { x: 0.87, z: -0.1, look: 0.4 }], ['ahith', 'idle', { show: 1, x: 1.35, z: 0.05, look: -1 }], ['ahith', 'bow', { delay: 4000 }]],
       // 반역의 세력은 점점 커졌다 — 금관
-      'p2.7': [['ahith', 'idle'], ['absalom', 'idle', { show: 0 }], ['absK', 'raise', { show: 1, x: 0.85, z: -0.15, look: 0.4 }], ['@env', 'dusk', { delay: 2000 }]],
+      'p2.7': [['ahith', 'idle'], ['absalom', 'idle', { show: 0 }], ['absK', 'raise', { show: 1, x: 0.83, z: -0.2, look: 0.4 }], ['@env', 'dusk', { delay: 2000 }]],
       w0: [['king', 'speak', { show: 1, to: 'absalom' }], ['absalom', 'idle', { show: 1 }]],
       w1: [['absalom', 'speak', { show: 1 }], ['absK', 'idle', { show: 0 }]],
       w2: [['absalom', 'speak', { show: 1 }]],

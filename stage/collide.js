@@ -45,8 +45,9 @@ function parts(obj) {
 const p3 = new THREE.Vector3(), ax = new THREE.Vector3(), az = new THREE.Vector3();
 export function propBoxes(obj, stage) {
   if (!obj.visible) return []; // 행렬은 지난 화면에 그린 것을 그대로 쓴다 — 물건마다 무대 전체를 다시 계산하니 화면이 버벅였다(사용자 2026-11)
+  const P = parts(obj); // 먼저 잰다 — parts()가 같은 행렬 m을 쓰므로, 뒤에 부르면 처음 한 번은 엉뚱한 자리(집이 무대 가운데)의 상자가 나왔다
   m.copy(stage.matrixWorld).invert().multiply(obj.matrixWorld);
   ax.setFromMatrixColumn(m, 0); az.setFromMatrixColumn(m, 2);
   const sx = Math.hypot(ax.x, ax.z), sz = Math.hypot(az.x, az.z), yaw = Math.atan2(-ax.z, ax.x);
-  return parts(obj).map(([x, z, hx, hz]) => { p3.set(x, 0, z).applyMatrix4(m); return box(p3.x, p3.z, yaw, hx * sx, hz * sz); });
+  return P.map(([x, z, hx, hz]) => { p3.set(x, 0, z).applyMatrix4(m); return box(p3.x, p3.z, yaw, hx * sx, hz * sz); });
 }

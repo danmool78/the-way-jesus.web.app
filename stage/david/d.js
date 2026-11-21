@@ -5,10 +5,14 @@
 import './props-d.js';
 
 // 무리(crowd)의 자리: 가운데를 둘러 n명을 흩어 놓는다 (moses.js와 같다)
-const flock = (n, rx, rz, seed = 1) => Array.from({ length: n }, (_, i) => {
+// 모델은 인형보다 몸이 커서 좁은 무리 안에서 서로 뚫고 섰다(사용자 2026-11) — 몸 네모(0.17×0.11)가 조금 돌아서도 겹치지 않을 만큼(0.22) 서로 밀어 벌린다
+const flock = (n, rx, rz, seed = 1) => { const P = Array.from({ length: n }, (_, i) => {
   const a = i * 2.399 + seed, r = Math.sqrt((i + 0.5) / n);
   return [Math.cos(a) * r * rx, Math.sin(a) * r * rz];
 });
+  for (let it = 0; it < 60; it++) for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) { const dx = P[j][0] - P[i][0], dz = P[j][1] - P[i][1], d = Math.hypot(dx, dz) || 1e-3;
+    if (d < 0.22) { const k = (0.22 - d) / 2 / d; P[i][0] -= dx * k; P[i][1] -= dz * k; P[j][0] += dx * k; P[j][1] += dz * k; } }
+  return P.map(([x, z]) => [+x.toFixed(3), +z.toFixed(3)]); };
 const E = Math.PI / 2; // 무리(crowd)가 동쪽(오른쪽)을 보는 방향
 
 export const D = {
@@ -54,7 +58,7 @@ export const D = {
       'p0.4': [['david', 'speak', { to: 'official' }]],
       'p0.5': [['david', 'rebuke', { to: 'official' }], ['official', 'bow']],
       // 온 집안과 함께 성을 나선다
-      'p0.6': [['david', 'idle', { x: -0.75, z: 0.22, look: 1 }], ['official', 'idle', { x: -1.0, z: 0.32, look: 1 }], ['msg', 'idle', { x: -0.55, z: 0.5, look: 1 }], ['msg', 'idle', { show: 0, delay: 2500 }],
+      'p0.6': [['david', 'idle', { x: -0.75, z: 0.22, look: 1 }], ['official', 'idle', { x: -1.02, z: 0.44, look: 1 }], ['msg', 'idle', { x: -0.55, z: 0.5, look: 1 }], ['msg', 'idle', { show: 0, delay: 2500 }],
         ['folk', null, { show: 1 }]],
       // 가드에서 온 잇대 — 돌아가라 해도
       'p0.7': [['ittai', 'idle', { show: 1, x: -1.1, z: 0.05, look: 1 }], ['david', 'idle', { look: -1, delay: 1200 }], ['david', 'speak', { to: 'ittai', delay: 2400 }]],
@@ -107,7 +111,7 @@ export const D = {
     cast: {
       david: ['davidH', -1.15, 0.28, 1, { speed: 0.9 }],
       abishai: ['abishai', -0.85, 0.12, 1],
-      joab: ['joab', -1.4, 0.08, 1],
+      joab: ['joab', -1.05, 0.32, 1],
       g1: ['israelite', -0.95, 0.5, 1, { gaze: false }],
       g2: ['israelite2', -1.4, 0.5, 1, { gaze: false }],
       shimei: ['shimei', 0.9, -0.72, -1, { speed: 0.9 }],
@@ -138,7 +142,7 @@ export const D = {
       'p1.4': [['david', 'speak', { to: 'abishai' }], ['joab', 'idle', { look: 1 }]],
       'p1.5': [['david', 'speak', { to: 'abishai' }]],
       'p1.6': [['david', 'mourn']],
-      'p1.7': [['david', 'speak', { to: 'abishai' }], ['abishai', 'idle', { item: null, x: 0.05, z: 0.12, look: -1, delay: 1500 }]],
+      'p1.7': [['david', 'speak', { to: 'abishai' }], ['abishai', 'idle', { item: null, x: 0.26, z: 0.08, look: -1, delay: 1500 }]],
       'p2.1': [['david', 'look-up', { look: 0.3 }]],
       // 다시 길을 걷는다 — 시므이는 맞은편 비탈을 나란히 따라오며 돌을 던진다
       'p2.2': [['david', 'idle', { x: 0.75, z: 0.32, look: 1 }], ['abishai', 'idle', { x: 1.05, z: 0.14, look: 1 }], ['joab', 'idle', { x: 0.45, z: 0.1, look: 1 }],
@@ -175,7 +179,7 @@ export const D = {
     },
     cast: {
       david: ['davidK', -1.55, 0.3, 1],
-      joab: ['joab', -1.85, 0.12, 1],
+      joab: ['joab', -2.1, 0.35, 1],
       absalom: ['absalomK', -1.95, -0.2, 1],
       amasa: ['amasa', -2.0, -0.4, 1],
       shobi: ['shobi', 1.95, 0.15, -1],
@@ -184,12 +188,12 @@ export const D = {
     },
     beats: {
       enter: [['absalom', 'idle', { show: 0 }], ['amasa', 'idle', { show: 0 }], ['camp', null, { show: 0 }], ['d1', null, { x: 1.5, z: 0.28 }], ['d2', null, { x: 1.75, z: 0.02 }],
-        ['david', 'sit', { x: -0.35, z: 0.04, look: 0.4 }], ['joab', 'sit-ground', { x: -0.85, z: 0.15, look: 0.6 }], ['folk', null, { x: -0.75, z: -0.25 }], ['folk', 'sit'],
+        ['david', 'sit', { x: -0.35, z: -0.16, look: 0.4 }], ['joab', 'sit-ground', { x: -0.98, z: 0.12, look: 0.6 }], ['folk', null, { x: -0.98, z: -0.32 }], ['folk', 'sit'],
         ['barzillai', 'speak', { x: 0.12, z: 0.12, to: 'david' }], ['shobi', 'idle', { x: 0.42, z: 0.0, look: -1 }], ['machir', 'idle', { x: 0.55, z: 0.25, look: -1 }]],
       intro: [['@env', 'day'], ['folk', 'stand'], ['absalom', 'idle', { show: 0 }], ['amasa', 'idle', { show: 0 }], ['camp', null, { show: 0 }], ['shobi', 'idle', { show: 0 }], ['machir', 'idle', { show: 0 }], ['barzillai', 'idle', { show: 0 }],
         ['d1', null, { show: 0 }], ['d2', null, { show: 0 }], ['wares', null, { show: 0 }], ['food', null, { show: 0 }], ['sh1', null, { show: 0 }], ['sh2', null, { show: 0 }], ['feast', null, { show: 0 }]],
       // 요단을 건너 마하나임 성문 앞에
-      'p0.0': [['david', 'idle', { x: -0.15, z: -0.02, look: 1 }], ['joab', 'idle', { x: -0.45, z: -0.12, look: 1, delay: 500 }], ['folk', null, { x: -0.75, z: -0.25 }]],
+      'p0.0': [['david', 'idle', { x: -0.15, z: -0.02, look: 1 }], ['joab', 'idle', { x: -0.45, z: -0.12, look: 1, delay: 500 }], ['folk', null, { x: -0.98, z: -0.32 }]],
       // 압살롬도 온 이스라엘을 이끌고 건너온다
       'p0.1': [['absalom', 'idle', { show: 1, x: -1.3, z: 0.02, look: 1 }], ['amasa', 'idle', { show: 1, x: -1.58, z: -0.12, look: 1, delay: 600 }]],
       // 아마사를 군대 장관으로 세우고 길르앗 땅에 진을 친다
@@ -212,9 +216,9 @@ export const D = {
       'p2.1': [['barzillai', 'speak', { to: 'david' }], ['david', 'listen', { look: 1 }]],
       'p2.2': [['barzillai', 'idle'], ['machir', 'idle', { look: -1 }], ['shobi', 'idle', { look: -1 }]],
       // 낯선 땅에 차려진 상 앞에 앉는다
-      'p2.3': [['feast', null, { show: 1 }], ['david', 'idle', { x: -0.35, z: 0.04, look: 0.4 }], ['david', 'sit', { delay: 2600 }], ['joab', 'idle', { x: -0.85, z: 0.15, look: 0.6 }],
+      'p2.3': [['feast', null, { show: 1 }], ['david', 'idle', { x: -0.35, z: -0.16, look: 0.4 }], ['david', 'sit', { delay: 2600 }], ['joab', 'idle', { x: -0.98, z: 0.12, look: 0.6 }],
         ['barzillai', 'idle', { x: 0.12, z: 0.12, look: -1 }], ['shobi', 'idle', { x: 0.42, z: 0.0 }], ['machir', 'idle', { x: 0.55, z: 0.25 }]],
-      'p2.4': [['@env', 'dusk'], ['joab', 'sit-ground'], ['folk', 'sit', { x: -0.75, z: -0.25 }]],
+      'p2.4': [['@env', 'dusk'], ['joab', 'sit-ground'], ['folk', 'sit', { x: -0.98, z: -0.32 }]],
       w0: [['barzillai', 'speak', { show: 1, to: 'david' }]],
       w1: [],
       end: [['@env', 'dusk'], ['david', 'sit']],
@@ -454,9 +458,9 @@ export const D = {
     cast: {
       david: ['davidO', -1.0, -0.28, 0.5, { y: 0.13, pose: 'sit' }],
       abishag: ['abishag', -1.45, -0.12, 0.8],
-      adonijah: ['adonijah', 1.8, 0.35, -0.3],
-      joab: ['joab', 2.05, 0.5, -1],
-      abiathar: ['abiathar', 1.5, 0.6, 0.6],
+      adonijah: ['adonijah', 1.8, 0.15, 0],
+      joab: ['joab', 2.32, 0.52, -1],
+      abiathar: ['abiathar', 1.26, 0.6, 1],
       bathsheba: ['bathsheba', -0.35, 0.3, -1],
       nathan: ['nathan', 0.05, 0.25, -1],
       solomon: ['solomon', 0, 0, Math.PI, { board: 'mule', pose: 'ride' }],
@@ -469,7 +473,7 @@ export const D = {
         ['mule', null, { show: 0 }], ['solomon', 'ride', { show: 0 }], ['solomon', 'kneel', { show: 1, board: null, x: 0.62, z: -0.1, look: 1 }],
         ['zadok', 'anoint', { item: 'oilhorn', look: -1 }], ['nathan', 'idle', { x: 0.25, z: 0.22, look: 1 }], ['benaiah', 'raise'], ['horn', 'idle', { item: 'horn' }],
         ['bathsheba', 'idle', { x: -0.65, z: 0.2, look: -1 }]],
-      intro: [['@env', 'day'], ['spring', 'flow'], ['adonijah', 'idle', { show: 0 }], ['joab', 'idle', { show: 0 }], ['abiathar', 'idle', { show: 0 }], ['feast', null, { show: 0 }],
+      intro: [['@env', 'day'], ['spring', 'flow'], ['adonijah', 'idle', { show: 0 }], ['joab', 'idle', { x: 2.32, z: 0.52, show: 0 }], ['abiathar', 'idle', { show: 0 }], ['feast', null, { show: 0 }],
         ['bathsheba', 'idle', { show: 0 }], ['nathan', 'idle', { show: 0 }], ['mule', null, { show: 0 }], ['solomon', 'ride', { show: 0, board: 'mule', x: 0, z: 0, look: Math.PI }], ['zadok', 'idle', { show: 0, item: null }],
         ['benaiah', 'idle', { show: 0 }], ['horn', 'idle', { show: 0, item: 'horn' }]],
       // 늙은 왕 — 수넴 여자 아비삭이 곁에서
@@ -499,7 +503,7 @@ export const D = {
       'p2.2': [['zadok', 'idle', { item: null }], ['horn', 'idle', { show: 1, item: 'horn' }]],
       'p2.3': [['solomon', 'idle', { look: 0.2 }], ['benaiah', 'raise'], ['nathan', 'raise'], ['zadok', 'raise']],
       // 함성에 아도니야의 손님들이 흩어진다
-      'p2.4': [['adonijah', 'afraid', { look: -1 }], ['joab', 'idle', { x: 2.3, z: 0.6 }], ['abiathar', 'idle', { x: 2.2, z: 0.8 }], ['adonijah', 'idle', { x: 2.3, z: 0.3, delay: 1200 }],
+      'p2.4': [['adonijah', 'afraid', { look: -1 }], ['joab', 'idle', { x: 2.45, z: 0.45 }], ['abiathar', 'idle', { x: 2.2, z: 0.8 }], ['adonijah', 'idle', { x: 2.3, z: 0.3, delay: 1200 }],
         ['joab', 'idle', { show: 0, delay: 2600 }], ['abiathar', 'idle', { show: 0, delay: 2600 }], ['adonijah', 'idle', { show: 0, delay: 3800 }]],
       // 왕은 침상에서 몸을 굽힌다
       'p2.5': [['benaiah', 'idle'], ['nathan', 'idle'], ['zadok', 'idle'], ['david', 'sit', { look: 0.3 }], ['abishag', 'kneel']],

@@ -194,7 +194,7 @@ Object.assign(MAKERS, {
       const h = glow(0.4, 0.45); h.position.set(tx, y + 0.1, 0.02); g.add(h);
     }
     const P = new Prop(g);
-    P.heightAt = (x, z) => P.show > 0.5 ? top(x - g.position.x, z - g.position.z) : 0;
+    P.heightAt = (x, z) => P.show > 0.5 ? top((x - g.position.x) / g.scale.x, (z - g.position.z) / g.scale.z) * g.scale.y : 0; // 3D 지형에서 사람과 함께 커지면 높이도 같은 배율로
     return P;
   },
 
@@ -213,7 +213,7 @@ Object.assign(MAKERS, {
     [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([a, b]) => mesh(new THREE.CylinderGeometry(0.008, 0.008, 0.42, 5), cedar, g, [ax + a * 0.2, H + 0.21, az + b * 0.14]));
     mesh(new THREE.BoxGeometry(0.46, 0.012, 0.34), mat(o.awning || '#c9b48c', { roughness: 1 }), g, [ax, H + 0.42, az]);
     const P = new Prop(g);
-    P.heightAt = (x, z) => { const u = x - g.position.x, v = z - g.position.z; return P.show > 0.5 && Math.abs(u) < W / 2 - 0.02 && Math.abs(v) < D / 2 - 0.02 ? H + 0.02 : 0; };
+    P.heightAt = (x, z) => { const u = (x - g.position.x) / g.scale.x, v = (z - g.position.z) / g.scale.z; return P.show > 0.5 && Math.abs(u) < W / 2 - 0.02 && Math.abs(v) < D / 2 - 0.02 ? (H + 0.02) * g.scale.y : 0; };
     return P;
   },
 
@@ -228,7 +228,7 @@ Object.assign(MAKERS, {
     const grain = mesh(sphere(0.16, 16, 8, 0, Math.PI * 2, 0, Math.PI / 2), mat('#d8bc72', { roughness: 1 }), g, [o.altar ? 0.3 : 0, 0.035, 0.12], [1.2, 0.4, 1]); grain.castShadow = false;
     const sledge = mesh(new THREE.BoxGeometry(0.32, 0.025, 0.16), wood(), g, [-0.18, 0.055, 0.2]); sledge.rotation.y = 0.4;
     const P = new Prop(g);
-    P.heightAt = (x, z) => { const u = x - g.position.x, v = z - g.position.z; return P.show > 0.5 && u * u + v * v < R * R ? 0.04 : 0; };
+    P.heightAt = (x, z) => { const u = (x - g.position.x) / g.scale.x, v = (z - g.position.z) / g.scale.z; return P.show > 0.5 && u * u + v * v < R * R ? 0.04 * g.scale.y : 0; };
     return P;
   },
 

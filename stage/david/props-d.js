@@ -73,7 +73,11 @@ Object.assign(MAKERS, {
     mesh(new THREE.BoxGeometry(GW, 0.05, 0.02), st, g, [0, GH + 0.025, GD / 2 - 0.01]); // 다락 앞 낮은 난간
     // 문 곁 돌 의자 (왕이 앉는 자리 — 문길 왼쪽 앞)
     mesh(new THREE.BoxGeometry(0.26, 0.11, 0.12), st2, g, [-0.25, 0.055, GD / 2 + 0.12]).receiveShadow = true;
-    return new Prop(g);
+    // 3D 지형에서 문 곁 돌 의자·다락방·성벽 위의 사람(배역 y)이 성문과 같은 받침 높이·축척에 서도록, 성문 앞뒤 바닥에 아주 얇은 높이를 준다
+    // (stage.js FLAT — 높이가 0이면 그 사람만 따로 키워 의자 위 허공에 앉았다). 문을 지나는 사람이 올라타지 않게 높이는 거의 0
+    const P = new Prop(g);
+    P.heightAt = (x, z) => { const u = (x - g.position.x) / g.scale.x, v = (z - g.position.z) / g.scale.z; return P.show > 0.5 && Math.abs(u) < W / 2 && v > -0.25 && v < GD / 2 + 0.25 ? 0.001 * g.scale.y : 0; };
+    return P;
   },
 
   // 던진 돌과 흙먼지 (시므이, 삼하 16:6·13): 던지는 사람 손 높이(o.h)에서 (o.dx, o.dz)쪽으로 돌이 포물선을 그리며 날아가 땅에 떨어지고 흙먼지가 인다.
@@ -170,7 +174,10 @@ Object.assign(MAKERS, {
     mesh(new THREE.BoxGeometry(0.34, 0.035, 0.3), mat('#6a4a7a', { roughness: 1 }), g, [0.13, 0.17, 0.005]); // 겹친 담요
     mesh(new THREE.BoxGeometry(0.3, 0.03, 0.31), mat('#a8312a', { roughness: 1 }), g, [0.15, 0.195, 0.005]);
     g.traverse(m => { if (m.isMesh) m.receiveShadow = true; });
-    return new Prop(g);
+    // 앉은 사람(배역 y)이 3D 지형에서 침상과 같은 높이·축척에 앉도록 (stage.js FLAT)
+    const P = new Prop(g);
+    P.heightAt = (x, z) => { const u = (x - g.position.x) / g.scale.x, v = (z - g.position.z) / g.scale.z; return P.show > 0.5 && Math.abs(u) < 0.34 && Math.abs(v) < 0.2 ? 0.001 * g.scale.y : 0; };
+    return P;
   },
 
   // 성전을 위해 쌓아 둔 것 (대상 22:2–4·29:2–7): o.kind 'stone'(다듬은 돌) | 'cedar'(백향목) | 'bronze'(놋과 쇠) | 'gold'(금과 은).
