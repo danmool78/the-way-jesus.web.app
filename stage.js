@@ -35,7 +35,8 @@ sun.shadow.mapSize.set(1024, 1024);
 Object.assign(sun.shadow.camera, { left: -3, right: 3, top: 3, bottom: -3, near: 0.5, far: 14 });
 sun.shadow.radius = 4;
 scene.add(sun);
-const ground = new THREE.Mesh(new THREE.CircleGeometry(3, 40), new THREE.ShadowMaterial({ opacity: 0.28 }));
+// 그림자 받는 판은 깊이를 쓰지 않는다 — 물에 잠기는 배 밑동(흘수선 아래)이 이 판 밑으로 가려져 돛대만 남았다(사용자 2026-11)
+const ground = new THREE.Mesh(new THREE.CircleGeometry(3, 40), new THREE.ShadowMaterial({ opacity: 0.42, depthWrite: false }));
 ground.rotation.x = -Math.PI / 2;
 ground.receiveShadow = true;
 scene.add(ground);
@@ -49,18 +50,18 @@ scene.add(occluder);
 /* ---------- 장면 분위기: 조명과 지도 색조를 함께 바꾼다 ----------
    wave/rain은 물결·비의 세기(0~1), map은 지도에 거는 CSS 필터 */
 const ENV = {
-  day:      { hemi: [1.6, '#fff4dc'], sun: [2.2, '#fff0d0'], shadow: 0.28, map: '' },
-  dusk:     { hemi: [1.15, '#ffdcb8'], sun: [1.6, '#ffb878'], shadow: 0.32, map: 'sepia(.3) saturate(1.1) brightness(.88)' },
+  day:      { hemi: [1.6, '#fff4dc'], sun: [2.2, '#fff0d0'], shadow: 0.42, map: '' },
+  dusk:     { hemi: [1.15, '#ffdcb8'], sun: [1.6, '#ffb878'], shadow: 0.45, map: 'sepia(.3) saturate(1.1) brightness(.88)' },
   // 밤의 남빛은 .atmos가 덮으므로 지도는 조금 덜 어둡게
-  night:    { hemi: [0.7, '#a9bcff'], sun: [0.55, '#b8c8ff'], shadow: 0.18, map: 'brightness(.62) saturate(.6) hue-rotate(-12deg)' },
-  storm:    { hemi: [0.95, '#b9c6cf'], sun: [0.7, '#c9d4dc'], shadow: 0.12, map: 'brightness(.62) saturate(.45) contrast(1.05)', wave: 1, rain: 1 },
-  calm:     { hemi: [1.25, '#ffe2c2'], sun: [1.7, '#ffc58e'], shadow: 0.3, map: 'sepia(.22) brightness(.92)', wave: 0 },
-  overcast: { hemi: [1.15, '#e8e2d6'], sun: [1.0, '#e9e4da'], shadow: 0.16, map: 'saturate(.6) brightness(.85)' },
-  dark:     { hemi: [0.55, '#9a96a8'], sun: [0.3, '#a8a4b4'], shadow: 0.08, map: 'brightness(.36) saturate(.25)' },
+  night:    { hemi: [0.7, '#a9bcff'], sun: [0.55, '#b8c8ff'], shadow: 0.27, map: 'brightness(.62) saturate(.6) hue-rotate(-12deg)' },
+  storm:    { hemi: [0.95, '#b9c6cf'], sun: [0.7, '#c9d4dc'], shadow: 0.18, map: 'brightness(.62) saturate(.45) contrast(1.05)', wave: 1, rain: 1 },
+  calm:     { hemi: [1.25, '#ffe2c2'], sun: [1.7, '#ffc58e'], shadow: 0.45, map: 'sepia(.22) brightness(.92)', wave: 0 },
+  overcast: { hemi: [1.15, '#e8e2d6'], sun: [1.0, '#e9e4da'], shadow: 0.24, map: 'saturate(.6) brightness(.85)' },
+  dark:     { hemi: [0.55, '#9a96a8'], sun: [0.3, '#a8a4b4'], shadow: 0.12, map: 'brightness(.36) saturate(.25)' },
   // 부활의 새벽: 골고다의 어둠과 대비되게, 장밋빛 금빛이 번지며 색이 돌아온다
-  dawn:     { hemi: [1.35, '#ffe0d0'], sun: [1.9, '#ffc9a0'], shadow: 0.26, map: 'sepia(.12) saturate(1.15) brightness(.97) hue-rotate(-6deg)' },
+  dawn:     { hemi: [1.35, '#ffe0d0'], sun: [1.9, '#ffc9a0'], shadow: 0.39, map: 'sepia(.12) saturate(1.15) brightness(.97) hue-rotate(-6deg)' },
   // 영광: 맑고 밝은 빛 (승천)
-  glory:    { hemi: [1.9, '#fff8e8'], sun: [2.5, '#fff4dc'], shadow: 0.24, map: 'saturate(1.15) brightness(1.06)' },
+  glory:    { hemi: [1.9, '#fff8e8'], sun: [2.5, '#fff4dc'], shadow: 0.36, map: 'saturate(1.15) brightness(1.06)' },
 };
 let env = { ...ENV.day, name: 'day' };
 const envNow = { hemi: 1.6, sun: 2.2, waveNow: 0, rainNow: 0, wave: 0 };
@@ -709,8 +710,8 @@ function resize() {
   // 3D 지형에서 당겨 보면 인물도 커지므로 그만큼 화면(캔버스)도 넓힌다
   const wide = (script?.wide || 1) * (tv ? Math.max(1, tv.zoom) : 1);
   // 2D 지도를 휠·두 손가락으로 당기면 무대와 사람도 살짝 따라 커진다(멀리 물러나면 조금 작아진다) — 지도만 커지고 무대는 그대로라 어색했다(사용자 2026-11).
-  // 장면에 맞춘 확대(app.js frameStage의 stageU0) 대비 지도 확대의 0.35제곱만큼, 0.8–1.7배. 캔버스만 키우고 시야각은 그대로 두어 사람이 커 보인다. 0.05 단위로 끊어 매 화면 다시 만들지 않는다
-  const zoomK = tv || !window.stageU0 || !window.mapU ? 1 : Math.round(Math.min(1.7, Math.max(0.8, Math.pow(window.stageU0 / window.mapU, 0.35))) * 20) / 20;
+  // 장면에 맞춘 확대(app.js frameStage의 stageU0) 대비 지도 확대의 0.5제곱만큼, 0.8–2배. 캔버스만 키우고 시야각은 그대로 두어 사람이 커 보인다. 0.05 단위로 끊어 매 화면 다시 만들지 않는다
+  const zoomK = tv || !window.stageU0 || !window.mapU ? 1 : Math.round(Math.min(2.0, Math.max(0.8, Math.pow(window.stageU0 / window.mapU, 0.5))) * 20) / 20; // 0.5제곱·2배까지 — 당겨도 무대가 덜 커졌다(사용자 2026-11)
   const { w, h } = stageBox(wide * zoomK);
   if (w === size.w && h === size.h) return;
   size = { w, h };
