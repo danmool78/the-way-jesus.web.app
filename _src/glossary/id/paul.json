@@ -1,0 +1,664 @@
+[
+ {
+  "id": "sanhedrin",
+  "terms": [
+   "Mahkamah Agama"
+  ],
+  "text": "Dewan tertinggi orang Yahudi. Sekitar tujuh puluh anggota, dipimpin imam besar bersama tua-tua dan ahli Taurat, memutuskan perkara agama dan hukum Taurat."
+ },
+ {
+  "id": "high-priest",
+  "terms": [
+   "Imam Besar"
+  ],
+  "text": "Pemimpin para imam di Bait Allah Yerusalem. Pada zaman Romawi, ia pemimpin tertinggi masyarakat Yahudi yang mengetuai Mahkamah Agama."
+ },
+ {
+  "id": "persecution",
+  "terms": [
+   "penganiayaan",
+   "menganiaya"
+  ],
+  "text": "Menyiksa, memenjarakan, atau membunuh orang karena imannya. Setelah kematian Stefanus, penganiayaan besar pertama menimpa jemaat di Yerusalem."
+ },
+ {
+  "id": "synagogue",
+  "terms": [
+   "rumah-rumah ibadat",
+   "rumah ibadat"
+  ],
+  "text": "Tempat orang Yahudi berkumpul setiap Sabat untuk membaca Kitab Suci dan berdoa. Di setiap kota baru, Paulus lebih dahulu memberitakan firman di rumah ibadat."
+ },
+ {
+  "id": "son-of-man",
+  "terms": [
+   "Anak Manusia"
+  ],
+  "text": "Sebutan yang sering dipakai Yesus untuk diri-Nya. Dalam Kitab Daniel menunjuk kepada sosok yang datang dengan awan-awan di langit."
+ },
+ {
+  "id": "holy-spirit",
+  "terms": [
+   "Roh Kudus"
+  ],
+  "text": "Roh Allah. Ia tinggal di dalam orang percaya, memberi kekuatan dan memimpin; dalam Kisah Para Rasul Ia membuka jalan bagi jemaat."
+ },
+ {
+  "id": "vision",
+  "terms": [
+   "penglihatan"
+  ],
+  "text": "Pemandangan yang ditunjukkan Allah dalam mimpi atau saat terjaga. Dengan cara ini Ia menyatakan kehendak-Nya."
+ },
+ {
+  "id": "saints",
+  "terms": [
+   "orang-orang kudus",
+   "orang kudus",
+   "orang-orang percaya",
+   "orang percaya"
+  ],
+  "text": "Sebutan untuk orang yang percaya kepada Yesus, yaitu orang yang menjadi milik Allah."
+ },
+ {
+  "id": "gentile",
+  "terms": [
+   "bangsa-bangsa lain",
+   "bangsa lain",
+   "bukan Yahudi"
+  ],
+  "text": "Sebutan untuk orang dari bangsa mana pun yang bukan Yahudi. Paulus dipanggil menjadi rasul untuk memberitakan Injil kepada mereka."
+ },
+ {
+  "id": "baptism",
+  "terms": [
+   "baptisan",
+   "dibaptis"
+  ],
+  "text": "Upacara dengan air yang menyatakan bahwa dosa telah dibasuh dan orang itu telah menjadi pengikut Yesus."
+ },
+ {
+  "id": "christ",
+  "terms": [
+   "Kristus"
+  ],
+  "text": "Kata Yunani yang berarti 'yang diurapi', sama dengan kata Ibrani Mesias. Menunjuk kepada Penyelamat yang dijanjikan Allah."
+ },
+ {
+  "id": "christian",
+  "terms": [
+   "orang Kristen",
+   "Kristen"
+  ],
+  "text": "Artinya 'milik Kristus'. Penduduk Antiokhia yang pertama kali menyebut murid-murid Yesus demikian."
+ },
+ {
+  "id": "prophet",
+  "terms": [
+   "nabi",
+   "nabi-nabi",
+   "para nabi"
+  ],
+  "text": "Orang yang menerima firman Allah dan menyampaikannya kepada orang lain. Ada para nabi Perjanjian Lama dan ada juga nabi dalam jemaat mula-mula."
+ },
+ {
+  "id": "elder",
+  "terms": [
+   "para penatua",
+   "penatua-penatua",
+   "penatua"
+  ],
+  "text": "Pemimpin yang sudah berumur, yang menggembalakan dan memimpin persekutuan. Paulus menetapkan penatua di setiap kota untuk memimpin jemaat."
+ },
+ {
+  "id": "apostle",
+  "terms": [
+   "para rasul",
+   "rasul"
+  ],
+  "skip": [
+   "rasul, penulis",
+   "rasul berakhir"
+  ],
+  "text": "Artinya 'orang yang diutus'. Sebutan bagi dua belas murid yang ditetapkan Yesus sendiri, dan bagi Paulus yang dipanggil oleh Tuhan yang bangkit."
+ },
+ {
+  "id": "fasting",
+  "terms": [
+   "berpuasa",
+   "puasa"
+  ],
+  "text": "Tidak makan untuk beberapa waktu supaya hati terpusat kepada Allah. Dilakukan bersama doa sebelum keputusan penting."
+ },
+ {
+  "id": "laying-on-hands",
+  "terms": [
+   "menumpangkan tangan",
+   "meletakkan tangan"
+  ],
+  "text": "Meletakkan tangan di atas kepala atau tubuh seseorang sambil berdoa. Dilakukan saat mengutus orang untuk suatu tugas, menyembuhkan, atau memberkati."
+ },
+ {
+  "id": "proconsul",
+  "terms": [
+   "gubernur"
+  ],
+  "text": "Pejabat yang dikirim Roma untuk memerintah sebuah provinsi. Siprus dan Akhaya diperintah gubernur dari Senat, Yudea oleh gubernur yang diutus kaisar."
+ },
+ {
+  "id": "sorcerer",
+  "terms": [
+   "tukang sihir"
+  ],
+  "text": "Orang yang memikat banyak orang dengan mengaku memiliki kuasa gaib lewat mantra atau tenung. Alkitab melarang hal ini."
+ },
+ {
+  "id": "false-prophet",
+  "terms": [
+   "nabi palsu"
+  ],
+  "text": "Orang yang menipu dengan menyampaikan perkataan yang tidak berasal dari Allah seolah-olah firman Allah."
+ },
+ {
+  "id": "sabbath",
+  "terms": [
+   "hari Sabat",
+   "Sabat"
+  ],
+  "text": "Hari ketujuh dalam seminggu (dari matahari terbenam hari Jumat sampai matahari terbenam hari Sabtu), hari untuk berhenti bekerja dan beribadah kepada Allah."
+ },
+ {
+  "id": "law",
+  "terms": [
+   "hukum Taurat",
+   "Taurat"
+  ],
+  "text": "Perintah dan ketetapan yang diberikan Allah melalui Musa. Dalam arti luas, lima kitab pertama Perjanjian Lama."
+ },
+ {
+  "id": "prophets-books",
+  "terms": [
+   "kitab para nabi"
+  ],
+  "text": "Kitab-kitab para nabi seperti Yesaya dan Yeremia. Di rumah ibadat, kitab para nabi dibacakan sesudah hukum Taurat."
+ },
+ {
+  "id": "synagogue-ruler",
+  "terms": [
+   "kepala rumah ibadat"
+  ],
+  "text": "Orang yang mengatur pertemuan dan ibadah di rumah ibadat, termasuk menentukan siapa yang membaca Kitab Suci dan berbicara."
+ },
+ {
+  "id": "justified",
+  "terms": [
+   "dibenarkan"
+  ],
+  "text": "Allah menerima orang berdosa sebagai orang yang tidak bersalah. Paulus mengajarkan bahwa hal ini diperoleh karena iman, bukan karena perbuatan."
+ },
+ {
+  "id": "shake-dust",
+  "terms": [
+   "mengebaskan debu"
+  ],
+  "text": "Isyarat orang Yahudi yang menyatakan bahwa kota itu telah menolak firman, sehingga tanggung jawabnya ada pada mereka sendiri."
+ },
+ {
+  "id": "noble-women",
+  "terms": [
+   "perempuan-perempuan terkemuka",
+   "perempuan terkemuka"
+  ],
+  "text": "Perempuan dari keluarga yang berkedudukan tinggi dan kaya. Di kota-kota Yunani pengaruh mereka besar."
+ },
+ {
+  "id": "sacrifice",
+  "terms": [
+   "mempersembahkan korban"
+  ],
+  "text": "Menyembah dewa dengan mempersembahkan hewan atau hasil panen. Penduduk Listra mengira Paulus dan Barnabas dewa lalu hendak mempersembahkan korban kepada mereka."
+ },
+ {
+  "id": "priest",
+  "terms": [
+   "imam"
+  ],
+  "text": "Orang yang bertugas mempersembahkan korban di kuil atau Bait Allah. Imam di Listra melayani kuil Zeus."
+ },
+ {
+  "id": "tear-clothes",
+  "terms": [
+   "mengoyakkan pakaian"
+  ],
+  "text": "Kebiasaan merobek pakaian untuk menyatakan perasaan ketika sangat berduka atau mendengar perkataan yang menghina Allah."
+ },
+ {
+  "id": "kingdom-of-god",
+  "terms": [
+   "Kerajaan Allah"
+  ],
+  "text": "Kerajaan tempat Allah memerintah sebagai Raja. Yang dimaksud bukan terutama sebuah tempat, tetapi terlaksananya pemerintahan Allah."
+ },
+ {
+  "id": "circumcision",
+  "terms": [
+   "sunat",
+   "disunat",
+   "menyunat"
+  ],
+  "text": "Upacara memotong ujung kulit kelamin bayi laki-laki, tanda perjanjian sebagai umat Allah. Apakah orang percaya dari bangsa lain juga harus disunat menjadi perdebatan besar."
+ },
+ {
+  "id": "gospel",
+  "terms": [
+   "Injil"
+  ],
+  "text": "Artinya 'kabar baik': berita bahwa Yesus Kristus mati dan bangkit kembali untuk menyelamatkan manusia."
+ },
+ {
+  "id": "grace",
+  "terms": [
+   "kasih karunia"
+  ],
+  "text": "Kasih dan pemberian Allah yang diberikan dengan cuma-cuma kepada orang yang tidak layak menerimanya."
+ },
+ {
+  "id": "signs",
+  "terms": [
+   "tanda-tanda",
+   "mukjizat-mukjizat",
+   "mukjizat"
+  ],
+  "text": "Perbuatan ajaib yang menunjukkan bahwa Allah menyertai. Yang ditekankan adalah apa yang ditunjuk oleh keajaiban itu."
+ },
+ {
+  "id": "roman-colony",
+  "terms": [
+   "koloni Romawi"
+  ],
+  "text": "Kota tempat Roma menempatkan antara lain para bekas prajurit dan memberinya hukum serta hak istimewa Romawi. Penduduk Filipi bangga sebagai warga Romawi."
+ },
+ {
+  "id": "purple-cloth",
+  "terms": [
+   "kain ungu"
+  ],
+  "text": "Kain ungu yang dicelup dengan pewarna mahal dari kerang. Hanya orang kaya dan berkedudukan tinggi yang memakainya, sehingga pedagangnya berkecukupan."
+ },
+ {
+  "id": "god-fearer",
+  "terms": [
+   "beribadah kepada Allah"
+  ],
+  "text": "Orang bukan Yahudi yang percaya kepada Allah Israel dan ikut beribadah di rumah ibadat."
+ },
+ {
+  "id": "divination-spirit",
+  "terms": [
+   "roh tenung"
+  ],
+  "text": "Roh jahat yang dipercaya dapat meramal masa depan. Berkat budak perempuan yang kerasukan roh ini, tuannya mendapat uang dari tenungan."
+ },
+ {
+  "id": "stocks",
+  "terms": [
+   "dipasung"
+  ],
+  "text": "Bingkai kayu untuk menjepit pergelangan kaki tahanan supaya tidak dapat melarikan diri."
+ },
+ {
+  "id": "jailer",
+  "terms": [
+   "kepala penjara"
+  ],
+  "text": "Orang yang menjaga penjara dan mengurus para tahanan. Jika tahanan melarikan diri, dialah yang dihukum."
+ },
+ {
+  "id": "idol",
+  "terms": [
+   "berhala"
+  ],
+  "text": "Menyembah patung dewa buatan tangan manusia. Atena penuh dengan berbagai patung dewa dan mezbah."
+ },
+ {
+  "id": "epicurean",
+  "terms": [
+   "Epikuros"
+  ],
+  "text": "Para filsuf Yunani yang menjadikan ketenangan hati dan kesenangan tanpa penderitaan sebagai tujuan hidup. Mereka berpendapat bahwa para dewa tidak peduli pada urusan manusia."
+ },
+ {
+  "id": "stoic",
+  "terms": [
+   "Stoa"
+  ],
+  "text": "Para filsuf Yunani yang mengajarkan untuk mengendalikan perasaan dengan akal budi dan menerima nasib."
+ },
+ {
+  "id": "areopagus",
+  "terms": [
+   "Areopagus"
+  ],
+  "text": "Artinya 'Bukit Ares'. Dewan kuno Atena bersidang di sana sehingga namanya menjadi nama dewan itu. Dewan ini juga menilai ajaran-ajaran baru."
+ },
+ {
+  "id": "repent",
+  "terms": [
+   "bertobat"
+  ],
+  "text": "Bukan hanya menyesali kesalahan, tetapi mengarahkan hati dan hidup kembali kepada Allah."
+ },
+ {
+  "id": "judgment",
+  "terms": [
+   "menghakimi dunia",
+   "menghakimi",
+   "penghakiman"
+  ],
+  "text": "Allah akan menilai hidup setiap orang dengan adil pada hari terakhir."
+ },
+ {
+  "id": "resurrection",
+  "terms": [
+   "kebangkitan orang mati",
+   "kebangkitan"
+  ],
+  "text": "Orang yang sudah mati hidup kembali. Kebangkitan Yesus adalah inti iman Kristen."
+ },
+ {
+  "id": "emperor",
+  "terms": [
+   "Kaisar"
+  ],
+  "text": "Penguasa tertinggi Kekaisaran Romawi. Pada zaman Paulus, kaisarnya adalah Klaudius dan Nero."
+ },
+ {
+  "id": "tentmaker",
+  "terms": [
+   "pembuat tenda",
+   "tenda"
+  ],
+  "text": "Tenda dibuat dari kulit atau kain bulu kambing. Paulus mencari nafkah sendiri dengan membuat tenda sambil memberitakan Injil."
+ },
+ {
+  "id": "tyrannus-hall",
+  "terms": [
+   "ruang kuliah Tiranus",
+   "ruang kuliah",
+   "Tiranus"
+  ],
+  "text": "Ruang pertemuan di Efesus. Tiranus mungkin nama pemiliknya atau guru di sana; Paulus mengajar di situ setiap hari selama dua tahun."
+ },
+ {
+  "id": "evil-spirit",
+  "terms": [
+   "roh-roh jahat",
+   "roh jahat"
+  ],
+  "text": "Makhluk roh yang melawan Allah dan menyiksa manusia. Mereka pergi di hadapan nama Yesus."
+ },
+ {
+  "id": "silver-coins",
+  "terms": [
+   "uang perak"
+  ],
+  "text": "Uang dari perak; satu keping biasanya senilai upah sehari seorang pekerja. Lima puluh ribu keping adalah jumlah yang sangat besar."
+ },
+ {
+  "id": "artemis",
+  "terms": [
+   "Artemis"
+  ],
+  "text": "Dewi yang disembah orang Yunani. Kuil Artemis di Efesus terhitung salah satu dari tujuh keajaiban dunia kuno."
+ },
+ {
+  "id": "temple",
+  "terms": [
+   "kuil"
+  ],
+  "text": "Bangunan tempat dewa dipuja dan disembah."
+ },
+ {
+  "id": "town-clerk",
+  "terms": [
+   "panitera kota",
+   "panitera"
+  ],
+  "text": "Pejabat tertinggi kota Efesus yang mengurus dokumen kota dan sidang rakyat. Ia bertanggung jawab kepada Roma atas ketertiban kota."
+ },
+ {
+  "id": "blaspheme",
+  "terms": [
+   "menghujat"
+  ],
+  "text": "Meremehkan dan menghina dewa atau hal yang kudus."
+ },
+ {
+  "id": "offering",
+  "terms": [
+   "persembahan yang dikumpulkan",
+   "pemberian"
+  ],
+  "text": "Uang yang dikumpulkan untuk Allah atau untuk menolong sesama yang kesusahan. Paulus membawa persembahan jemaat-jemaat bukan Yahudi kepada orang-orang kudus yang miskin di Yerusalem."
+ },
+ {
+  "id": "unleavened-bread",
+  "terms": [
+   "Hari Raya Roti Tidak Beragi",
+   "Roti Tidak Beragi"
+  ],
+  "text": "Hari raya Yahudi tujuh hari sesudah Paskah. Orang makan roti tanpa ragi untuk mengingat keluarnya Israel dari Mesir."
+ },
+ {
+  "id": "breaking-bread",
+  "terms": [
+   "memecahkan roti"
+  ],
+  "text": "Makan roti bersama. Dalam jemaat mula-mula artinya merayakan Perjamuan Tuhan bersama."
+ },
+ {
+  "id": "lords-supper",
+  "terms": [
+   "Perjamuan Tuhan"
+  ],
+  "text": "Upacara membagi roti dan cawan untuk mengingat makan malam terakhir Yesus dengan murid-murid-Nya pada malam sebelum Ia wafat. Disebut juga Perjamuan Kudus."
+ },
+ {
+  "id": "upper-room",
+  "terms": [
+   "ruang atas"
+  ],
+  "text": "Ruangan luas di lantai atas sebuah rumah. Jemaat mula-mula berkumpul di ruangan seperti ini untuk beribadah."
+ },
+ {
+  "id": "pentecost",
+  "terms": [
+   "Pentakosta"
+  ],
+  "text": "Hari raya panen orang Yahudi pada hari kelima puluh sesudah Paskah. Pada hari itu banyak peziarah berkumpul di Yerusalem."
+ },
+ {
+  "id": "tribulation",
+  "terms": [
+   "penderitaan"
+  ],
+  "text": "Kesusahan dan kesukaran yang berat untuk ditanggung."
+ },
+ {
+  "id": "bonds",
+  "terms": [
+   "belenggu",
+   "rantai"
+  ],
+  "text": "Mengikat orang dengan tali atau rantai. Di sini berarti Paulus akan ditangkap dan dipenjarakan."
+ },
+ {
+  "id": "evangelist",
+  "terms": [
+   "pemberita Injil"
+  ],
+  "text": "Orang yang bertugas memberitakan Injil. Filipus adalah salah seorang dari tujuh pelayan jemaat Yerusalem."
+ },
+ {
+  "id": "vow-purification",
+  "terms": [
+   "upacara penyucian",
+   "penyucian"
+  ],
+  "text": "Upacara menurut hukum Taurat untuk menyucikan diri. Paulus menjalaninya bersama empat orang yang sedang menyelesaikan nazar orang Nazir."
+ },
+ {
+  "id": "tribune",
+  "terms": [
+   "kepala pasukan"
+  ],
+  "text": "Komandan dalam tentara Romawi yang memimpin sekitar seribu prajurit. Ia memimpin pasukan penjaga di benteng Antonia di Yerusalem."
+ },
+ {
+  "id": "barracks",
+  "terms": [
+   "markas"
+  ],
+  "text": "Tempat tinggal para prajurit. Di Yerusalem, ini adalah benteng Antonia tepat di samping Bait Allah."
+ },
+ {
+  "id": "centurion",
+  "terms": [
+   "perwira"
+  ],
+  "text": "Perwira dalam tentara Romawi yang memimpin sekitar seratus prajurit. Mereka tentara profesional yang menjadi tulang punggung pasukan."
+ },
+ {
+  "id": "roman-citizen",
+  "terms": [
+   "warga negara Romawi",
+   "warga negara",
+   "kewarganegaraan"
+  ],
+  "text": "Warga negara Romawi berhak untuk tidak dicambuk tanpa diadili dan dapat naik banding kepada kaisar. Paulus sudah menjadi warga negara sejak lahir."
+ },
+ {
+  "id": "sadducees",
+  "terms": [
+   "orang Saduki",
+   "Saduki"
+  ],
+  "text": "Kelompok Yahudi yang terutama terdiri atas keluarga imam dan orang kaya. Mereka hanya menerima lima kitab Musa dan tidak percaya pada kebangkitan dan malaikat."
+ },
+ {
+  "id": "pharisees",
+  "terms": [
+   "orang Farisi",
+   "Farisi"
+  ],
+  "text": "Kelompok Yahudi yang berusaha menaati hukum Taurat dan adat nenek moyang dengan teliti. Mereka percaya pada kebangkitan; Paulus pun seorang Farisi."
+ },
+ {
+  "id": "heresy",
+  "terms": [
+   "sekte"
+  ],
+  "text": "Semula berarti 'kelompok' atau 'aliran'. Para penuduh menyebut pengikut Yesus demikian, seakan-akan aliran yang sesat."
+ },
+ {
+  "id": "self-control",
+  "terms": [
+   "penguasaan diri"
+  ],
+  "text": "Mengendalikan keinginan dan perasaan sendiri supaya tidak berlebihan."
+ },
+ {
+  "id": "caesar",
+  "terms": [
+   "kaisar Romawi"
+  ],
+  "text": "Gelar bagi kaisar Romawi, berasal dari nama Caesar. Kaisar pada saat Paulus naik banding adalah Nero."
+ },
+ {
+  "id": "appeal",
+  "terms": [
+   "naik banding",
+   "banding"
+  ],
+  "text": "Tidak menerima keputusan pengadilan yang lebih rendah dan meminta diadili lagi oleh yang lebih tinggi. Warga negara Romawi dapat naik banding kepada kaisar."
+ },
+ {
+  "id": "augustan-cohort",
+  "terms": [
+   "pasukan Kaisar"
+  ],
+  "text": "Pasukan bantuan Romawi yang memakai nama kaisar (Agustus)."
+ },
+ {
+  "id": "day-of-atonement",
+  "terms": [
+   "Hari Pendamaian"
+  ],
+  "text": "Hari setiap musim gugur (tanggal 10 bulan ketujuh kalender Yahudi) untuk berpuasa dan memohon pengampunan dosa umat. Sesudah itu pelayaran di Laut Tengah menjadi berbahaya."
+ },
+ {
+  "id": "euroclydon",
+  "terms": [
+   "Eurakilo"
+  ],
+  "text": "Angin timur laut yang ganas di Laut Tengah pada musim dingin. Angin ini turun dari pegunungan Kreta ke laut."
+ },
+ {
+  "id": "lifeboat",
+  "terms": [
+   "sekoci"
+  ],
+  "text": "Perahu kecil yang dibawa kapal besar. Dipakai untuk menyelamatkan orang saat bahaya atau untuk pergi ke darat."
+ },
+ {
+  "id": "dioscuri",
+  "terms": [
+   "Dioskuri"
+  ],
+  "text": "Kastor dan Poluks, anak kembar Zeus. Para pelaut menyembah mereka sebagai pelindung pelayaran dan memasang lambangnya di haluan kapal."
+ },
+ {
+  "id": "praetorian-guard",
+  "terms": [
+   "pasukan pengawal istana",
+   "pasukan pengawal",
+   "pengawal istana"
+  ],
+  "text": "Pasukan pilihan yang menjaga kaisar Romawi. Para prajurit yang bergiliran menjaga Paulus dalam tahanan ikut mendengar Injil."
+ },
+ {
+  "id": "genealogy",
+  "terms": [
+   "silsilah"
+  ],
+  "text": "Catatan keturunan dari nenek moyang sampai anak cucu. Guru-guru palsu di Efesus memperdebatkan silsilah dengan sia-sia."
+ },
+ {
+  "id": "crown",
+  "terms": [
+   "mahkota"
+  ],
+  "text": "Mahkota yang dipakai pemenang pertandingan atau raja. Paulus memakainya sebagai gambaran upah bagi orang yang setia beriman sampai akhir."
+ },
+ {
+  "id": "parchment",
+  "terms": [
+   "perkamen"
+  ],
+  "text": "Bahan tulis dari kulit domba atau kambing yang ditipiskan dan dikeringkan. Mungkin berisi gulungan Kitab Suci yang berharga."
+ },
+ {
+  "id": "drink-offering",
+  "terms": [
+   "anggur yang dicurahkan"
+  ],
+  "text": "Korban berupa anggur yang dicurahkan di atas persembahan. Paulus membandingkan hidupnya yang sedang dicurahkan dengan persembahan ini."
+ },
+ {
+  "id": "altar",
+  "terms": [
+   "mezbah"
+  ],
+  "text": "Tempat yang ditinggikan untuk mempersembahkan korban atau beribadah kepada dewa."
+ }
+]
