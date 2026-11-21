@@ -967,7 +967,9 @@ function frame() {
     ac.floorUnder = ac.fixedY && !onDeck ? Math.max(groundAt(ac.pos.x, ac.pos.y), ...grounds.map(p => { const h = p.heightAt(ac.pos.x, ac.pos.y); return h > 0 ? p.lift.position.y + h : -Infinity; })) : undefined;
     // 바닥이 평평한 건물(회당·공의회) 안의 걸상에 앉은 사람(높이를 정한 사람): 건물 받침 높이에, 키우지 않는다 — 건물은 지형 축척 그대로인데
     // 사람만 키우고 앉는 높이까지 키워 걸상 위 허공에 떠 앉았다(a01 공의회, 사용자 2026-11). 걸터앉은 무리(p.bench)와 같은 셈
-    if (inTerrain && !onDeck && ac.fixedY && ac.y > 0) { const host = grounds.filter(p => FLAT.has(p.kind) && p.heightAt(ac.pos.x, ac.pos.y) > 0).sort((a, b) => b.lift.position.y - a.lift.position.y)[0]; if (host) { ac.ground = host.lift.position.y; ac.big = 1; } }
+    // 건물 바닥 위에 선 사람도 키우지 않는다 — 앉은 사람만 그대로 두니 왕궁 안에서 서 있는 사람만 두 배로 커져 보좌의 왕이 작아 보였다(k02, 사용자 2026-11)
+    if (inTerrain && !onDeck) { const host = grounds.filter(p => FLAT.has(p.kind) && FIXED.has(p.kind) && p.heightAt(ac.pos.x, ac.pos.y) > 0).sort((a, b) => b.lift.position.y - a.lift.position.y)[0];
+      if (host) { if (ac.fixedY && ac.y > 0) ac.ground = host.lift.position.y; ac.big = 1; } }
     ac.update(time, dt);
   });
   if (inTerrain) scaleLights();
