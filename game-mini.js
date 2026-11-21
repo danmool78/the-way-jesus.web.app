@@ -924,7 +924,109 @@ function shepherd(g, x, y) {
   g.restore();
 }
 
-export const MINI = { jesus: { e11: cana, e17: fishing, e22: twelve, e31: loaves, e32: water, e42: sheep, e43: coin } };
+/* ---------- 산 위의 가르침 (마 7:24–27): 반석 위에 집 짓기 — 떨어지는 돌 맞춰 쌓기 ---------- */
+// 네 칸짜리 돌이 하나씩 내려온다. 좌우로 끌어 옮기고, 톡 누르면 돌리고, 아래로 휙 쓸면 바로 내린다(PC는 방향키·스페이스).
+// 한 줄이 빈틈없이 차면 단단한 벽 한 켜가 된다(그 줄은 걷히고 위가 내려온다). 여섯 켜를 쌓으면 성공 — 비가 와도 무너지지 않는다(7:25).
+// 돌이 맨 위까지 차면 모래 위에 지은 집처럼 무너진다(7:27). 켜가 쌓일수록 조금씩 빨라진다
+const COLS = 10, ROWS = 17, CELL = 25, BX = 22, BY = 46, GOALROWS = 6;
+const SHAPES = [[[0, 1], [1, 1], [2, 1], [3, 1]], [[0, 0], [1, 0], [0, 1], [1, 1]], [[1, 0], [0, 1], [1, 1], [2, 1]], [[0, 0], [0, 1], [1, 1], [2, 1]], [[2, 0], [0, 1], [1, 1], [2, 1]], [[1, 0], [2, 0], [0, 1], [1, 1]], [[0, 0], [1, 0], [1, 1], [2, 1]]];
+const STONE = ['#cfc3a6', '#b9a988', '#d8cdb2', '#a8987a', '#c4b494', '#bfae8e', '#d2c4a2'];
+const rock = {
+  title: '산 위의 가르침', task: `반석 위에 벽 ${GOALROWS}켜 쌓기`,
+  ask: ['내 말을 듣고 행하는 사람은 반석 위에 집을 지은 지혜로운 사람 같단다.', `돌을 빈틈없이 맞춰 벽을 쌓아 보렴 — ${GOALROWS}켜!`],
+  quote: '내 말을 듣고 행하는 자는 그 집을 반석 위에 지은 지혜로운 사람 같으리니', ref: '마 7:24',
+  help: '좌우로 끌면 돌이 옮겨지고, 톡 누르면 돌아가요. 아래로 휙 쓸면 바로 내려가요(PC: 방향키·스페이스).<br>한 줄이 빈틈없이 차면 벽 한 켜! 맨 위까지 차면 무너져요.',
+  seconds: 110,
+  init() { const S = { grid: Array.from({ length: ROWS }, () => Array(COLS).fill(-1)), rows: 0, fallT: 0, clearing: null, msg: null, sparks: [], rain: 0, flood: 0, dead: false, bag: [] };
+    // 주춧돌: 맨 아래 세 줄은 놓여 있고 줄마다 빈자리가 한두 칸 — 그 틈을 메우는 것부터 (빈 판에서 시작하니 처음이 지루하고 길었다)
+    for (let r = ROWS - 3; r < ROWS; r++) { const gap = Math.floor(Math.random() * COLS), gap2 = Math.random() < 0.5 ? (gap + 1 + Math.floor(Math.random() * (COLS - 1))) % COLS : -1;
+      S.grid[r] = S.grid[r].map((_, c) => c === gap || c === gap2 ? -1 : Math.floor(Math.random() * 7)); }
+    S.next = draw7(S); spawn(S); return S; },
+  update(dt, S) {
+    for (const p of S.sparks) { p.y += p.vy * dt; p.life -= dt; } S.sparks = S.sparks.filter(p => p.life > 0);
+    if (S.msg) S.msg.at -= dt;
+    if (S.clearing) { S.clearing.t -= dt; if (S.clearing.t <= 0) { for (const r of S.clearing.rows) { S.grid.splice(r, 1); S.grid.unshift(Array(COLS).fill(-1)); } S.clearing = null; spawn(S); } return; }
+    if (S.dead || !S.cur) return;
+    const speed = 0.62 * Math.pow(0.86, S.rows);
+    S.fallT += dt; if (S.fallT >= speed) { S.fallT = 0; if (!step(S, 0, 1)) land(S); }
+  },
+  down(x, y, S) { S.drag = { x0: x, y0: y, x, y, t: performance.now(), moved: false, col: S.cur?.x }; },
+  move(x, y, S) { const D = S.drag; if (!D || !S.cur || S.clearing) return; D.x = x; D.y = y;
+    const want = D.col + Math.round((x - D.x0) / (CELL * 0.9)); // 끈 만큼 칸을 옮긴다
+    while (S.cur.x < want && step(S, 1, 0)) { D.moved = true; S.fx.play('tick'); } while (S.cur.x > want && step(S, -1, 0)) { D.moved = true; S.fx.play('tick'); }
+    if (Math.abs(x - D.x0) > 8) D.moved = true; },
+  up(S, x, y) { const D = S.drag; S.drag = null; if (!D || !S.cur || S.clearing) return;
+    const dt = performance.now() - D.t, dy = (y ?? D.y) - D.y0;
+    if (dy > 60 && dt < 500) { while (step(S, 0, 1)); land(S); S.fx.play('drop'); return; } // 아래로 휙 — 바로 내린다
+    if (!D.moved && dt < 300) rot(S); },
+  key(k, S) { if (!S.cur || S.clearing) return false;
+    if (k === 'ArrowLeft') step(S, -1, 0); else if (k === 'ArrowRight') step(S, 1, 0); else if (k === 'ArrowUp') rot(S);
+    else if (k === 'ArrowDown') { if (!step(S, 0, 1)) land(S); } else if (k === ' ') { while (step(S, 0, 1)); land(S); S.fx.play('drop'); } else return false; },
+  won: S => S.rows >= GOALROWS && !S.clearing,
+  lost: S => S.dead,
+  failText: S => S.dead ? '모래 위에 지은 집처럼 무너졌어요' : '시간이 다 되었어요',
+  draw(g, S) {
+    const sky = g.createLinearGradient(0, 0, 0, H); sky.addColorStop(0, mixc('#7aa6c8', '#3a4652', S.rain)); sky.addColorStop(1, mixc('#d8c8a2', '#5a5a52', S.rain));
+    g.fillStyle = sky; g.fillRect(0, 0, W, H);
+    // 판(집 지을 터)과 그 밑의 반석
+    g.fillStyle = 'rgba(28,22,16,.82)'; g.fillRect(BX - 2, BY - 2, COLS * CELL + 4, ROWS * CELL + 4); // 어두운 터 — 밝으면 돌이 묻혔다
+    g.strokeStyle = 'rgba(255,255,255,.06)'; g.lineWidth = 1; for (let c = 1; c < COLS; c++) { g.beginPath(); g.moveTo(BX + c * CELL, BY); g.lineTo(BX + c * CELL, BY + ROWS * CELL); g.stroke(); }
+    const rk = g.createLinearGradient(0, BY + ROWS * CELL, 0, H); rk.addColorStop(0, '#7d7468'); rk.addColorStop(1, '#4e463c'); g.fillStyle = rk;
+    g.beginPath(); g.moveTo(0, BY + ROWS * CELL + 2); for (let x = 0; x <= W; x += 20) g.lineTo(x, BY + ROWS * CELL + 2 + Math.sin(x * 0.07) * 3); g.lineTo(W, H); g.lineTo(0, H); g.fill();
+    g.font = '700 11px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.fillStyle = 'rgba(255,255,255,.7)'; g.fillText('반석', BX + COLS * CELL / 2, H - 8);
+    for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) if (S.grid[r][c] >= 0) {
+      const glow = S.clearing?.rows.includes(r); stoneCell(g, BX + c * CELL, BY + r * CELL, S.grid[r][c], glow ? 1 - S.clearing.t / 0.35 : 0); }
+    if (S.cur && !S.clearing && !S.dead) { // 떨어질 자리 그림자 + 지금 돌
+      let gy = 0; while (fits(S, S.cur.cells, S.cur.x, S.cur.y + gy + 1)) gy++;
+      g.fillStyle = 'rgba(255,255,255,.12)'; for (const [cx, cy] of S.cur.cells) g.fillRect(BX + (S.cur.x + cx) * CELL + 2, BY + (S.cur.y + cy + gy) * CELL + 2, CELL - 4, CELL - 4);
+      for (const [cx, cy] of S.cur.cells) if (S.cur.y + cy >= 0) stoneCell(g, BX + (S.cur.x + cx) * CELL, BY + (S.cur.y + cy) * CELL, S.cur.k, 0); }
+    // 옆 칸: 다음 돌, 쌓은 켜
+    const sx = BX + COLS * CELL + 16;
+    g.fillStyle = 'rgba(28,22,16,.75)'; rrect(g, sx - 8, BY - 4, W - sx, 256, 8); g.fill();
+    g.textAlign = 'left'; g.font = '700 12px "Noto Sans KR",sans-serif'; g.fillStyle = 'rgba(255,240,210,.85)'; g.fillText('다음 돌', sx, BY + 10);
+    for (const [cx, cy] of SHAPES[S.next]) stoneCell(g, sx + cx * 17, BY + 22 + cy * 17, S.next, 0, 17);
+    g.fillStyle = 'rgba(255,240,210,.85)'; g.fillText('쌓은 켜', sx, BY + 110);
+    for (let i = 0; i < GOALROWS; i++) { g.fillStyle = i < S.rows ? '#ffe29a' : 'rgba(255,240,210,.14)'; g.fillRect(sx, BY + 122 + (GOALROWS - 1 - i) * 16, 92, 12); }
+    g.font = '800 20px "Noto Sans KR",sans-serif'; g.fillStyle = '#ffe9c0'; g.fillText(`${Math.min(S.rows, GOALROWS)} / ${GOALROWS}`, sx, BY + 236);
+    // 비와 물 (성공 연출)
+    if (S.rain > 0) { g.strokeStyle = `rgba(200,220,240,${0.5 * S.rain})`; g.lineWidth = 1; const t = performance.now() / 1000;
+      for (let i = 0; i < 90; i++) { const x = (i * 53 + t * 240) % (W + 60) - 30, y = (i * 97 + t * 700) % H; g.beginPath(); g.moveTo(x, y); g.lineTo(x - 5, y + 16); g.stroke(); }
+      const fy = H - S.flood * 150; g.fillStyle = 'rgba(70,96,110,.6)'; g.beginPath(); g.moveTo(0, H); for (let x = 0; x <= W; x += 10) g.lineTo(x, fy + Math.sin(x * 0.06 + t * 3) * 5); g.lineTo(W, H); g.fill(); }
+    for (const p of S.sparks) { g.fillStyle = `rgba(255,236,170,${clamp(p.life, 0, 1)})`; star(g, p.x, p.y, p.r * 2.4); }
+    floatMsg(g, S.msg);
+  },
+  end(g, k, S) { S.rain = clamp(k * 2, 0, 1); S.flood = ease(clamp(k * 1.4, 0, 1)); this.draw(g, S);
+    if (k > 0.45) { g.save(); g.globalAlpha = clamp((k - 0.45) * 2.5, 0, 1); g.fillStyle = 'rgba(20,24,28,.8)'; g.fillRect(0, 150, W, 84);
+      g.font = '700 17px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#eef2f4'; g.fillText('비가 내리고 창수가 나고 바람이 불어', W / 2, 180); g.fillText('그 집에 부딪치되 무너지지 아니하나니', W / 2, 204);
+      g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#c8d2d8'; g.fillText('마 7:25', W / 2, 223); g.restore(); }
+  },
+};
+function draw7(S) { if (!S.bag.length) S.bag = [0, 1, 2, 3, 4, 5, 6].sort(() => Math.random() - 0.5); return S.bag.pop(); } // 일곱 모양을 고르게
+function fits(S, cells, x, y) { return cells.every(([cx, cy]) => { const c = x + cx, r = y + cy; return c >= 0 && c < COLS && r < ROWS && (r < 0 || S.grid[r][c] < 0); }); }
+function spawn(S) { const k = S.next; S.next = draw7(S); S.cur = { k, cells: SHAPES[k].map(c => [...c]), x: 3, y: -1 }; S.fallT = 0; if (!fits(S, S.cur.cells, S.cur.x, S.cur.y + 1)) { S.dead = true; S.fx.play('splash'); } }
+function step(S, dx, dy) { if (!fits(S, S.cur.cells, S.cur.x + dx, S.cur.y + dy)) return false; S.cur.x += dx; S.cur.y += dy; return true; }
+function rot(S) { // 시계 방향으로, 벽에 닿으면 한두 칸 비켜서(벽 차기)
+  const n = Math.max(...S.cur.cells.flat()), cells = S.cur.cells.map(([x, y]) => [n - y, x]);
+  for (const kx of [0, -1, 1, -2, 2]) if (fits(S, cells, S.cur.x + kx, S.cur.y)) { S.cur.cells = cells; S.cur.x += kx; S.fx.play('flip'); return; } }
+function land(S) {
+  for (const [cx, cy] of S.cur.cells) { const r = S.cur.y + cy; if (r < 0) { S.dead = true; S.fx.play('splash'); return; } S.grid[r][S.cur.x + cx] = S.cur.k; }
+  S.fx.play('drop'); S.cur = null;
+  const full = S.grid.map((row, r) => row.every(v => v >= 0) ? r : -1).filter(r => r >= 0);
+  if (full.length) { S.rows += full.length; S.clearing = { rows: full, t: 0.35 }; S.fx.play('plink');
+    S.msg = { t: full.length > 1 ? `벽 ${full.length}켜!` : '벽 한 켜!', c: '#ffe29a', at: 1, x: BX + COLS * CELL / 2, y: BY + full[0] * CELL };
+    for (const r of full) for (let i = 0; i < 10; i++) S.sparks.push({ x: BX + rnd(0, COLS * CELL), y: BY + r * CELL + rnd(0, CELL), vy: rnd(-40, -10), life: rnd(0.4, 0.9), r: rnd(1.4, 2.6) }); }
+  else spawn(S);
+}
+// 깎은 돌 한 칸: 돌마다 빛깔이 조금 다르고 위·왼쪽은 밝게, 아래·오른쪽은 어둡게
+function stoneCell(g, x, y, k, glow, sz = CELL) {
+  g.fillStyle = '#3a2c1c'; g.fillRect(x, y, sz, sz); g.fillStyle = STONE[k]; g.fillRect(x + 1, y + 1, sz - 2, sz - 2); // 진한 줄눈
+  g.fillStyle = 'rgba(255,255,255,.28)'; g.fillRect(x + 1, y + 1, sz - 2, 3); g.fillRect(x + 1, y + 1, 3, sz - 2);
+  g.fillStyle = 'rgba(60,40,20,.28)'; g.fillRect(x + 1, y + sz - 4, sz - 2, 3); g.fillRect(x + sz - 4, y + 1, 3, sz - 2);
+  g.fillStyle = 'rgba(80,60,40,.18)'; g.fillRect(x + sz * 0.3, y + sz * 0.45, 2, 2); g.fillRect(x + sz * 0.62, y + sz * 0.3, 2, 2);
+  if (glow > 0) { g.fillStyle = `rgba(255,236,160,${glow * 0.8})`; g.fillRect(x, y, sz, sz); }
+}
+
+export const MINI = { jesus: { e11: cana, e17: fishing, e22: twelve, e23: rock, e31: loaves, e32: water, e42: sheep, e43: coin } };
 
 /* ---------- 놀이 틀: 소개 → 놀이(제한 시간) → 성공 연출/실패 → 결과 ---------- */
 // host: 모달 안의 상자. fx: { play, pour } (game-audio.js). 끝나면 done({ ok, left, tries })
@@ -942,6 +1044,7 @@ export function playMini(game, host, fx, done) {
   const pt = ev => { const r = cv.getBoundingClientRect(); return [(ev.clientX - r.left) / r.width * W, (ev.clientY - r.top) / r.height * H]; };
   cv.addEventListener('pointerdown', ev => { if (phase !== 'play') return; cv.setPointerCapture(ev.pointerId); ev.preventDefault(); game.down(...pt(ev), S); });
   cv.addEventListener('pointermove', ev => { if (phase === 'play') game.move?.(...pt(ev), S); });
+  const onKey = ev => { if (phase === 'play' && game.key && game.key(ev.key, S) !== false) ev.preventDefault(); }; addEventListener('keydown', onKey); // PC의 방향키
   const up = ev => { if (phase === 'play') game.up(S, ...pt(ev)); };
   cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
   const panel = (cls, html) => { stage.querySelector('.mpanel')?.remove(); stage.insertAdjacentHTML('beforeend', `<div class="mpanel ${cls}">${html}</div>`); return stage.querySelector('.mpanel'); };
@@ -959,7 +1062,7 @@ export function playMini(game, host, fx, done) {
     p.querySelector('[data-r]')?.addEventListener('click', start);
     p.querySelector('[data-q]').onclick = () => close({ ok: false, left: 0, tries });
   };
-  const close = r => { cancelAnimationFrame(raf); removeEventListener('resize', fit); fx.pour?.(null); fx.storm?.(null); done(r); };
+  const close = r => { cancelAnimationFrame(raf); removeEventListener('resize', fit); removeEventListener('keydown', onKey); fx.pour?.(null); fx.storm?.(null); done(r); };
   const loop = now => {
     raf = requestAnimationFrame(loop);
     const raw = (now - last) / 1000 || 0, dt = Math.min(0.05, raw); last = now;
