@@ -279,7 +279,7 @@ export const B = {
       'p0.2': [['elijah', 'speak', { to: 'ahab' }], ['ahab', 'idle', { look: -1.0 }]],
       'p0.3': [['elijah', 'look-up', { look: -0.6 }]],
       // 아합은 먹고 마시러, 엘리야는 꼭대기에 올라 땅에 엎드린다
-      'p0.4': [['ahab', 'idle', { x: 1.4, z: -0.32, look: 0 }], ['ahab', 'sit', { delay: 2600 }], ['elijah', 'idle', { x: -0.7, z: -0.22, look: -0.9 }], ['servant', 'idle', { x: -0.15, z: 0.25, look: -1.1, delay: 600 }], ['elijah', 'mourn', { delay: 3500 }]],
+      'p0.4': [['ahab', 'idle', { x: 1.4, z: -0.42, look: 0 }], ['ahab', 'sit', { delay: 2600 }], ['elijah', 'idle', { x: -0.7, z: -0.22, look: -0.9 }], ['servant', 'idle', { x: -0.15, z: 0.25, look: -1.1, delay: 600 }], ['elijah', 'mourn', { delay: 3500 }]],
       'p0.5': [['ahab', 'sit', { x: 1.4, z: -0.32, look: 0 }], ['elijah', 'mourn', { x: -0.7, z: -0.22, look: -0.9 }]],
       // 바다 쪽을 바라보아라 — 사환이 오르내린다
       'p1.0': [['servant', 'idle', { look: -1.1 }]],

@@ -158,7 +158,7 @@ export const C = {
     props: {
       grass: ['grass', -0.4, 0.05, { r: 1.8, color: '#8f9a5e' }],
       river: ['river', -0.2, -0.1, { w: 0.62, len: 2.6 }], // 지도의 요단 줄기 위에,
-      t1: ['olive', -0.66, -0.42, { scale: 0.55 }],
+      t1: ['olive', -0.72, -0.62, { scale: 0.55 }],
       t2: ['oak', -1.75, -0.8, { scale: 0.55 }],
       t3: ['olive', -1.05, -1.0, { scale: 0.55 }],
       logs: ['cedarlogs', -2.05, -0.3, { scale: 0.7 }],
