@@ -224,6 +224,8 @@ Object.assign(LIKE, {
   hur: ['nicodemus', { hue: 260 }], caleb: ['barnabas', { hue: 40 }], eleazar: ['aaron', { skin: 1.08 }],
   sihon: ['ahab', { hue: 20, skin: 0.85 }], balaam: ['caiaphas', { hue: 280 }], balak: ['rehoboam', { hue: 330, skin: 0.9 }],
 });
+// 잠언 여정 (거리 무대): 아버지는 요셉 모델에 푸른 겉옷, 아들은 수염 없는 디모데 모델에 붉은 겉옷, 지혜(성문에서 외치는 여인)는 흰 옷, 장사꾼은 바리새인 모델에 갈색
+Object.assign(LIKE, { father: ['joseph', { hue: 190 }], son: ['timothy', { hue: 0, skin: 1.02 }], wisdom: ['mary-bethany', { white: true }], merchant: ['pharisee', { hue: 20, skin: 0.95 }] });
 const dress = ([n, c]) => c === 'plain' ? plain(ready[n], n) : c && typeof c === 'object' ? restyle(ready[n], n, c) : c ? tinted(ready[n], n, c) : ready[n];
 // 한 장면에 같은 모델이 또 서면 옷 색상·살갗이 눈에 띄게 다른 차림을 골라 입힌다 — 같은 옷·같은 살갗의 같은 사람이 둘셋씩 섰다(사용자 2026-11).
 // 배역과 군중(여러 무리)을 한 장부(taken: 모델 이름 → 이미 입힌 차림들)로 함께 센다 — 무리마다 따로 세니 두 무리에 쌍둥이가 섰다
@@ -237,10 +239,15 @@ function unique(m, taken) {
   if (L.some(x => nearLook(x, look))) { look = LOOKS.find(v => !L.some(x => nearLook(x, v))); if (!look) return m; m = [m[0], { hue: look.hue, sat: 0.95, skin: look.skin }]; }
   L.push(look); return m;
 }
-// 예수·바울·다윗·열왕기·모세 여정은 모델이 기본(사용자 2026-11) — 다른 여정은 아직 ?models가 있을 때만. ?dolls면 예전 인형으로
-const USE_MODELS = (q => !q.has('dolls') && (q.has('models') || ['jesus', 'paul', 'david', 'kings', 'moses'].includes(q.get('j') || 'jesus')))(new URLSearchParams(location.search));
+// 다른 여정은 아직 ?models가 있을 때만. ?dolls면 예전 인형으로
+// 예수·바울·다윗·열왕기·모세·잠언 여정은 모델이 기본 (잠언은 거리 무대 — 사용자 2026-11)
+const USE_MODELS = (q => !q.has('dolls') && (q.has('models') || ['jesus', 'paul', 'david', 'kings', 'moses', 'proverbs'].includes(q.get('j') || 'jesus')))(new URLSearchParams(location.search));
+// 구약 여정의 병사는 로마 병정 모델이 아니라 투구 쓴 이스라엘 병사(요압 모델) — 모세 여정 문지기·잠언 성문 파수꾼이 로마 병정으로 섰다(2026-11)
+const NT = ['jesus', 'paul'].includes(new URLSearchParams(location.search).get('j') || 'jesus');
+const OT_LIKE = { soldier: ['joab', { hue: 30, skin: 0.95 }] };
 function modelOf(type, i) {
   if (!USE_MODELS) return null;
+  if (!NT && OT_LIKE[type]) return OT_LIKE[type];
   if (OWN[type]) return [OWN[type]];
   if (LIKE[type]) return LIKE[type];
   if (type === 'disciple') return [DISCIPLES[i % DISCIPLES.length]];
@@ -405,7 +412,7 @@ function setScene(ev) {
   // 배역마다 쓸 모델 (거리 무대·실루엣은 인형 그대로)
   // dolls: 그 장면의 사람은 인형 그대로 (에덴 프롤로그의 아담·하와는 하나님이 지어 주신 가죽옷 — 순례자 모델이 지금 옷처럼 보였다, 사용자 2026-11). 천사만 모델로
   const taken = new Map(); // 이 장면에 입힌 차림 (배역 먼저, 군중은 그 뒤)
-  const plan = Object.values(script.cast).map(([type, , , , o = {}], i) => !script.street && !o.silhouette && !(script.dolls && type !== 'angel') && unique(modelOf(type, i), taken));
+  const plan = Object.values(script.cast).map(([type, , , , o = {}], i) => !o.silhouette && !(script.dolls && type !== 'angel') && unique(modelOf(type, i), taken));
   {
     const crowd = !script.street && Object.values(script.props || {}).some(([k]) => k === 'crowd');
     // 군중: 엑스트라를 섞되 이 장면에 이름으로 나오는 사람은 빼고 (사무엘이 이름으로 선 장면의 군중에 또 사무엘이 서지 않게)
@@ -423,8 +430,8 @@ function setScene(ev) {
     const thenCrowd = () => { const w = crowdNames.length ? want(crowdNames) : null; w?.then(() => { if (curEv !== ev0) return; if (atStart) return setScene(ev0); setCrowd(crowdSet()); rebuildCrowds(); }); };
     wait ? wait.then(() => { if (curEv !== ev0) return; if (atStart || new URLSearchParams(location.search).has('beat')) setScene(ev0); else { swapIn(plan); thenCrowd(); } }) : thenCrowd();
     // 다음 두 장면의 배역 모델도 미리 받아 둔다 — 장면에 들어선 뒤에야 받기 시작하면 낭독이 이미 시작돼 그 장면엔 인형이 남았다(e04 헤롯·박사, 사용자 2026-11)
-    if (USE_MODELS && !script.street) { const ks = Object.keys(SCRIPTS), at = ks.indexOf(ev.id);
-      const next = ks.slice(at + 1, at + 3).flatMap(k => { const sc = SCRIPTS[k]; if (!sc?.cast || sc.street) return [];
+    if (USE_MODELS) { const ks = Object.keys(SCRIPTS), at = ks.indexOf(ev.id);
+      const next = ks.slice(at + 1, at + 3).flatMap(k => { const sc = SCRIPTS[k]; if (!sc?.cast) return [];
         return Object.values(sc.cast).map(([type, , , , o = {}], i) => !o.silhouette && !(sc.dolls && type !== 'angel') && modelOf(type, i)).filter(Boolean).map(m => m[0]).concat(Object.values(sc.cast).some(([t]) => t === 'angel') ? ['wings'] : []); });
       const rest = [...new Set(next)].filter(n => !ready[n] && !loading[n]); if (rest.length) wait ? wait.then(() => want(rest)) : want(rest); }
   }
@@ -529,7 +536,7 @@ if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__st
   probe2(n) { const a = actors[n], act = a.acts.talk, c = act.getClip(); const i = c.tracks.findIndex(k => /Neck\.quaternion/.test(k.name)); const ip = act._interpolants[i], k = c.tracks[i];
     return { name: k.name, times: Array.from(k.times).slice(-6).map(t => +t.toFixed(3)), vals: Array.from(k.values).slice(-12).map(v => +v.toFixed(3)), ip: [3.9, 4.0, 5.0, 5.4].map(t => Array.from(ip.evaluate(t)).map(v => +v.toFixed(3))), ending: ip.settings }; },
   // 모델이 정해지지 않아 인형으로 남는 배역 (장면별)
-  unmapped() { const out = {}; for (const [id, sc] of Object.entries(SCRIPTS)) { if (!sc?.cast || sc.street || sc.dolls) continue; Object.values(sc.cast).forEach(([t, , , , o = {}], i) => { if (!o.silhouette && !modelOf(t, i)) (out[t] ||= []).push(id); }); } return out; },
+  unmapped() { const out = {}; for (const [id, sc] of Object.entries(SCRIPTS)) { if (!sc?.cast || sc.dolls) continue; Object.values(sc.cast).forEach(([t, , , , o = {}], i) => { if (!o.silhouette && !modelOf(t, i)) (out[t] ||= []).push(id); }); } return out; },
   crowdDbg() { const v = new THREE.Vector3(); return Object.entries(props).filter(([, p]) => p.kind === 'crowd').map(([n, p]) => [n, p.obj.children.map(c => [c.type, +c.position.x.toFixed(2), +c.position.z.toFixed(2)]).slice(0, 12), p.avoid().map(q => [+q.x.toFixed(2), +q.z.toFixed(2)]), p.obj.getWorldPosition(v).toArray().map(x => +x.toFixed(2)), p.obj.getWorldScale(v).x]); },
   ghosts() { const roots = new Set(Object.values(actors).map(a => a.p.root)), out = []; stageGroup.children.forEach(c => { let h = false; c.traverse(o => { if (o.isBone && /Hips$/.test(o.name)) h = true; }); if (h && !roots.has(c) && !Object.values(props).some(p => p.lift === c)) out.push([c.type, c.position.x.toFixed(2), c.position.z.toFixed(2), c.visible]); }); return out; },
   cupd() { const p = Object.values(props).find(p => p.kind === 'crowd'); let err = null; try { for (let i = 0; i < 40; i++) p.update(i * 0.05, 0.05, {}); } catch (e) { err = e.message; } return [err, p.obj.children.slice(0, 6).map(c => [+c.position.x.toFixed(2), +c.position.z.toFixed(2)])]; },
