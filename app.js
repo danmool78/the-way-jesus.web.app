@@ -978,7 +978,7 @@ function glossParas(paras) {
       for (const term of x.terms) {
         const tl = term.toLowerCase();
         let at = low.indexOf(tl);
-        while (at >= 0 && ((!CJK.test(LANG) && (word(text[at - 1]) || word(text[at + tl.length]))) || inside(low, at, tl))) at = low.indexOf(tl, at + 1);
+        while (at >= 0 && ((!CJK.test(LANG) && (word(text[at - 1]) || word(text[at + tl.length]))) || inside(low, at, tl) || (x.skip || []).some(k => low.startsWith(k.toLowerCase(), at)))) at = low.indexOf(tl, at + 1);
         if (at >= 0 && (!best || at < best[0] || (at === best[0] && tl.length > best[1]))) best = [at, tl.length];
       }
       if (best) hits.push([best[0], best[1], gi]);

@@ -26,15 +26,15 @@ BOOKS = {
     'ja': ['マタ', 'マコ', 'ルカ', 'ヨハ', '使', '創', '出', 'レビ', '民', '申', 'ヨシュ', 'ロマ', '一コリ', 'エフェ', '黙', 'イザ', 'エレ', '箴', 'サム上', 'サム下', '王上', '王下', '代上', '代下', '詩', 'ガラ', '一テサ', '二テサ', '二コリ', 'フィリ', 'フィレ', 'コロ', '一テモ', 'テト', '二テモ', 'ハバ'],
 }
 
-# 어려운 낱말 풀이(사용자 2026-11): _src/glossary/<언어>.json([{id, terms, text}]) 가운데 이 여정 이야기에 나오는 낱말만 싣는다.
+# 어려운 낱말 풀이(사용자 2026-11): _src/glossary/<언어>/<여정>.json([{id, terms, text}]) — 여정마다 따로(풀이가 그 여정 이야기에 맞게). 이야기에 나오는 낱말만 싣는다.
 # 앱이 장면마다 처음 나오는 자리에 밑줄을 긋고, 누르면 풀이 창을 띄운다
-def gloss_for(lang, o):
-    f = os.path.join(here, 'glossary', lang + '.json')
+def gloss_for(jid, lang, o):
+    f = os.path.join(here, 'glossary', lang, jid + '.json')
     if not os.path.exists(f): return
     ev = o['events'] + ([o['prologue']] if o.get('prologue') else [])
     txt = '\n'.join(p for e in ev if not e.get('song') for p in e.get('story', []))
     low = txt.lower()
-    g = [{'terms': [t for t in x['terms'] if t.lower() in low], 'text': x['text']} for x in loadf(f)]
+    g = [{'terms': [t for t in x['terms'] if t.lower() in low], 'text': x['text'], **({'skip': x['skip']} if x.get('skip') else {})} for x in loadf(f)]  # skip: 이 낱말로 시작하는 자리는 건너뜀(가이사랴 속 가이사)
     g = [x for x in g if x['terms']]
     if g: o['glossary'] = g
 
@@ -139,7 +139,7 @@ def build(jid, src, out_dir):
         return u
     os.makedirs(out_dir, exist_ok=True)
     out = {'periods': periods, 'places': places, 'events': events, 'ui': ui_for('ko'), 'journey': journey, **({'prologue': prologue} if prologue else {})}
-    gloss_for('ko', out)
+    gloss_for(jid, 'ko', out)
     json.dump(out, open(os.path.join(out_dir, 'data.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
     print('[%s]' % jid, len(events), 'events,', sum(1 for e in events if 'img' in e), 'with images')
 
@@ -217,7 +217,7 @@ def build(jid, src, out_dir):
             for v, tv in zip(l['verses'], t['verses']):
                 v['text'] = tv
                 v['ref'] = re.sub(r'(^|[;,·]\s*)([가-힣]+)(?=\s*\d)', lambda m: m.group(1) + books.get(m.group(2), m.group(2)), v['ref'])
-        o.pop('glossary', None); gloss_for(lang, o)
+        o.pop('glossary', None); gloss_for(jid, lang, o)
         json.dump(o, open(os.path.join(out_dir, 'data.%s.json' % lang), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
         print('[%s] data.%s.json' % (jid, lang), 'missing:', (miss[:12] + ['…'] if len(miss) > 12 else miss) or 'none')
 
