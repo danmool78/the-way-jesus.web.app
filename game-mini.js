@@ -817,7 +817,114 @@ function lampIcon(g, x, y) {
   g.restore();
 }
 
-export const MINI = { jesus: { e11: cana, e17: fishing, e22: twelve, e31: loaves, e32: water, e43: coin } };
+/* ---------- 나는 선한 목자 (요 10:1–18): 양 열둘을 우리로 몰기 ---------- */
+// 손가락으로 목자를 움직이면 양들이 목자를 피해 몰려 다닌다(서로 모이고, 떨어지고, 제멋대로 풀을 뜯으며). 이것을 써서 우리 문 안으로 몰아넣는다.
+// 중간에 이리가 나타나 우리 밖의 양을 쫓는다 — 목자가 가까이 가면 물러난다(요 10:11–12, 삯꾼은 달아나지만 목자는 지킨다). 이리에 쫓긴 양은 흩어진다
+const FOLD = { x: 296, y: 124, r: 70, gate: Math.PI * 0.75, open: 0.62 }, FLEE = 96, SHEEP = 10;
+const sheep = {
+  title: '나는 선한 목자', task: `흩어진 양 ${SHEEP}마리를 우리로`,
+  ask: ['양은 목자의 음성을 듣고 따라온단다.', `흩어진 양 ${SHEEP}마리를 우리 안으로 데려다 주렴 — 이리가 오면 네가 지켜야 한다!`],
+  quote: '나는 선한 목자라 선한 목자는 양들을 위하여 목숨을 버리거니와', ref: '요 10:11',
+  help: '끌면 목자가 따라와요. 양은 목자를 피해 움직여요 — 뒤에서 몰아 우리 문(왼쪽 아래 틈)으로 넣어요.<br>이리가 나타나면 가까이 가서 쫓아요.',
+  seconds: 45, // 무리 뒤에서 문 쪽으로 미는 자동 목자로 60fps 시뮬레이션: 절반이 25초, 80%가 45초 안에
+  init() {
+    const flock = Array.from({ length: SHEEP }, () => ({ x: rnd(40, 220), y: rnd(260, 460), vx: 0, vy: 0, in: false, ph: rnd(0, 6), baaT: rnd(1, 6), scared: 0 }));
+    return { flock, sx: 120, sy: 300, tx: 120, ty: 300, wolf: null, wolfT: rnd(14, 18), msg: null, sparks: [], t: 0 };
+  },
+  update(dt, S) {
+    S.t += dt;
+    // 목자는 손가락 쪽으로 걸어간다(순간이동하지 않게)
+    const dx = S.tx - S.sx, dy = S.ty - S.sy, d = Math.hypot(dx, dy), sp = Math.min(d, 260 * dt); if (d > 1) { S.sx += dx / d * sp; S.sy += dy / d * sp; }
+    // 이리
+    S.wolfT -= dt;
+    if (!S.wolf && S.wolfT <= 0 && S.flock.some(q => !q.in)) { const L = Math.random() < 0.5; S.wolf = { x: L ? -20 : W + 20, y: rnd(300, 470), flee: 0 }; S.fx.play('howl'); S.msg = { t: '이리가 온다!', c: '#ffb38a', at: 1.6, x: W / 2, y: 60 }; }
+    if (S.wolf) {
+      const w = S.wolf, out = S.flock.filter(q => !q.in);
+      if (w.flee > 0) { w.flee -= dt; const a = Math.atan2(w.y - S.sy, w.x - S.sx); w.x += Math.cos(a) * 200 * dt; w.y += Math.sin(a) * 200 * dt; if (w.x < -40 || w.x > W + 40 || w.y < -40 || w.y > H + 40) { S.wolf = null; S.wolfT = rnd(9, 13); } }
+      else if (out.length) { const q = out.reduce((a, b) => Math.hypot(a.x - w.x, a.y - w.y) < Math.hypot(b.x - w.x, b.y - w.y) ? a : b), a = Math.atan2(q.y - w.y, q.x - w.x);
+        w.x += Math.cos(a) * 95 * dt; w.y += Math.sin(a) * 95 * dt;
+        if (Math.hypot(q.x - w.x, q.y - w.y) < 16) { q.scared = 1.6; const b = Math.atan2(q.y - w.y, q.x - w.x); q.vx = Math.cos(b) * 220; q.vy = Math.sin(b) * 220; S.fx.play('baa'); } }
+      if (w.flee <= 0 && Math.hypot(w.x - S.sx, w.y - S.sy) < 62) { w.flee = 3; S.fx.play('shoo'); S.msg = { t: '이리를 쫓았어요', c: '#ffe29a', at: 1.2, x: w.x, y: w.y - 24 }; }
+    }
+    // 양 무리: 목자·이리를 피하고, 가까운 양끼리 모이고, 부딪히지 않게 떨어지고, 가끔 풀을 뜯으며 어슬렁
+    for (const q of S.flock) {
+      let ax = 0, ay = 0;
+      if (q.in) { // 우리 안에서는 조용히 거닐기만
+        ax += (FOLD.x - q.x) * 0.8 + Math.sin(S.t + q.ph) * 6; ay += (FOLD.y - q.y) * 0.8 + Math.cos(S.t * 0.8 + q.ph) * 6;
+      } else {
+        const ds = Math.hypot(q.x - S.sx, q.y - S.sy); if (ds < FLEE) { const k = (FLEE - ds) / FLEE * 700; ax += (q.x - S.sx) / ds * k; ay += (q.y - S.sy) / ds * k; }
+        if (S.wolf && S.wolf.flee <= 0) { const dw = Math.hypot(q.x - S.wolf.x, q.y - S.wolf.y); if (dw < 80) { ax += (q.x - S.wolf.x) / dw * 500; ay += (q.y - S.wolf.y) / dw * 500; } }
+        let cx = 0, cy = 0, n = 0;
+        for (const o of S.flock) { if (o === q || o.in) continue; const dd = Math.hypot(o.x - q.x, o.y - q.y); if (dd < 90) { cx += o.x; cy += o.y; n++; } if (dd < 18 && dd > 0) { ax += (q.x - o.x) / dd * 260; ay += (q.y - o.y) / dd * 260; } }
+        if (n) { ax += (cx / n - q.x) * 0.9; ay += (cy / n - q.y) * 0.9; }
+        ax += Math.sin(S.t * 0.7 + q.ph * 3) * 22; ay += Math.cos(S.t * 0.6 + q.ph * 2) * 22;
+        // 우리 담: 문(gate 방향) 말고는 막힌다
+        const fd = Math.hypot(q.x - FOLD.x, q.y - FOLD.y), fa = Math.atan2(q.y - FOLD.y, q.x - FOLD.x), atGate = Math.abs(Math.atan2(Math.sin(fa - FOLD.gate), Math.cos(fa - FOLD.gate))) < FOLD.open;
+        if (fd < FOLD.r + 10 && !atGate) { ax += (q.x - FOLD.x) / fd * 900; ay += (q.y - FOLD.y) / fd * 900; }
+        if (fd < FOLD.r - 12) { q.in = true; S.fx.play('baa'); S.msg = { t: `${S.flock.filter(o => o.in).length} / ${SHEEP}`, c: '#ffe29a', at: 1, x: FOLD.x, y: FOLD.y - FOLD.r - 10 };
+          for (let i = 0; i < 8; i++) S.sparks.push({ x: q.x + rnd(-10, 10), y: q.y + rnd(-8, 8), vy: rnd(-30, -10), life: rnd(0.4, 0.9), r: rnd(1.2, 2.4) }); }
+      }
+      q.scared = Math.max(0, q.scared - dt);
+      q.vx = (q.vx + ax * dt) * Math.exp(-dt * (q.scared ? 1 : 3)); q.vy = (q.vy + ay * dt) * Math.exp(-dt * (q.scared ? 1 : 3));
+      const v = Math.hypot(q.vx, q.vy), mx = q.scared ? 230 : q.in ? 25 : 120; if (v > mx) { q.vx *= mx / v; q.vy *= mx / v; }
+      q.x = clamp(q.x + q.vx * dt, 12, W - 12); q.y = clamp(q.y + q.vy * dt, 46, H - 10);
+      q.baaT -= dt; if (q.baaT <= 0) { q.baaT = rnd(4, 9); if (Math.random() < 0.5) S.fx.play('baa'); }
+    }
+    for (const p of S.sparks) { p.y += p.vy * dt; p.life -= dt; } S.sparks = S.sparks.filter(p => p.life > 0);
+    if (S.msg) S.msg.at -= dt;
+  },
+  down(x, y, S) { S.tx = x; S.ty = y; },
+  move(x, y, S) { S.tx = x; S.ty = y; },
+  up() {},
+  won: S => S.flock.every(q => q.in),
+  draw(g, S) {
+    const bg = g.createLinearGradient(0, 0, 0, H); bg.addColorStop(0, '#8fb06a'); bg.addColorStop(1, '#5c8a3e'); g.fillStyle = bg; g.fillRect(0, 0, W, H);
+    g.fillStyle = 'rgba(40,70,20,.18)'; for (let i = 0; i < 40; i++) { g.beginPath(); g.ellipse((i * 113) % W, 50 + (i * 67) % 440, 18, 6, 0, 0, 7); g.fill(); }
+    for (const [x, y, r] of [[60, 120, 16], [190, 190, 12], [350, 330, 18], [90, 440, 11]]) { g.fillStyle = '#9a9384'; g.beginPath(); g.ellipse(x, y, r, r * 0.7, 0.3, 0, 7); g.fill(); g.fillStyle = 'rgba(255,255,255,.18)'; g.beginPath(); g.ellipse(x - r * 0.3, y - r * 0.25, r * 0.4, r * 0.25, 0.3, 0, 7); g.fill(); }
+    // 돌담 우리 (문 틈)
+    g.save(); g.lineCap = 'round';
+    for (let a = 0; a < Math.PI * 2; a += 0.16) { const off = Math.abs(Math.atan2(Math.sin(a - FOLD.gate), Math.cos(a - FOLD.gate))); if (off < FOLD.open) continue;
+      const x = FOLD.x + Math.cos(a) * FOLD.r, y = FOLD.y + Math.sin(a) * FOLD.r; g.fillStyle = (a * 7) % 2 > 1 ? '#a89f8c' : '#8f8774'; g.beginPath(); g.ellipse(x, y, 9, 7, a, 0, 7); g.fill(); }
+    g.fillStyle = 'rgba(255,240,190,.25)'; const ga = FOLD.gate; g.beginPath(); g.arc(FOLD.x + Math.cos(ga) * FOLD.r, FOLD.y + Math.sin(ga) * FOLD.r, 26, 0, 7); g.fill(); // 문 자리
+    g.font = '600 11px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.fillStyle = 'rgba(255,255,255,.85)'; g.fillText('문', FOLD.x + Math.cos(ga) * (FOLD.r + 26), FOLD.y + Math.sin(ga) * (FOLD.r + 26) + 4);
+    g.restore();
+    for (const q of S.flock) drawSheep(g, q, S.t);
+    if (S.wolf) drawWolf(g, S.wolf);
+    shepherd(g, S.sx, S.sy);
+    g.strokeStyle = 'rgba(255,255,255,.18)'; g.setLineDash([4, 5]); g.beginPath(); g.arc(S.sx, S.sy, FLEE, 0, 7); g.stroke(); g.setLineDash([]); // 양이 피하는 거리
+    for (const p of S.sparks) { g.fillStyle = `rgba(255,236,170,${clamp(p.life, 0, 1)})`; star(g, p.x, p.y, p.r * 2.4); }
+    floatMsg(g, S.msg);
+    g.save(); g.font = '700 14px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.lineWidth = 3; g.strokeStyle = 'rgba(30,50,20,.55)'; g.fillStyle = '#fff';
+    const n = S.flock.filter(q => q.in).length; g.strokeText(`우리 안의 양 ${n} / ${SHEEP}`, 14, 24); g.fillText(`우리 안의 양 ${n} / ${SHEEP}`, 14, 24); g.restore();
+  },
+  end(g, k, S) { S.wolf = null; this.update(0.016, S); this.draw(g, S);
+    if (k > 0.3) { g.save(); g.globalAlpha = clamp((k - 0.3) * 2, 0, 1); g.fillStyle = 'rgba(20,34,12,.78)'; g.fillRect(0, 226, W, 78);
+      g.font = '700 18px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#f4ecd2'; g.fillText('내 양은 내 음성을 들으며', W / 2, 256); g.fillText('나는 그들을 알며 그들은 나를 따르느니라', W / 2, 280);
+      g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#d8d0b0'; g.fillText('요 10:27', W / 2, 297); g.restore(); }
+  },
+};
+function drawSheep(g, q, t) {
+  const a = Math.hypot(q.vx, q.vy) > 8 ? Math.atan2(q.vy, q.vx) : (q.a ?? 0); q.a = a; const bob = Math.sin(t * 8 + q.ph) * (Math.hypot(q.vx, q.vy) > 20 ? 1.2 : 0.2);
+  g.save(); g.translate(q.x, q.y + bob); g.fillStyle = 'rgba(0,0,0,.2)'; g.beginPath(); g.ellipse(2, 6, 11, 4, 0, 0, 7); g.fill(); g.rotate(a);
+  g.fillStyle = '#f4f0e6'; for (const [x, y, r] of [[-5, -3, 6], [-5, 3, 6], [1, -4, 6], [1, 4, 6], [-1, 0, 7]]) { g.beginPath(); g.arc(x, y, r, 0, 7); g.fill(); }
+  g.fillStyle = '#3e342a'; g.beginPath(); g.ellipse(9, 0, 4.5, 3.4, 0, 0, 7); g.fill();
+  g.fillStyle = '#5a4c3e'; g.beginPath(); g.ellipse(8, -4, 1.6, 2.6, 0.6, 0, 7); g.fill(); g.beginPath(); g.ellipse(8, 4, 1.6, 2.6, -0.6, 0, 7); g.fill();
+  g.restore();
+}
+function drawWolf(g, w) {
+  g.save(); g.translate(w.x, w.y); g.fillStyle = 'rgba(0,0,0,.25)'; g.beginPath(); g.ellipse(2, 7, 14, 4, 0, 0, 7); g.fill();
+  g.fillStyle = '#5e5a56'; g.beginPath(); g.ellipse(0, 0, 13, 7, 0, 0, 7); g.fill(); g.beginPath(); g.moveTo(-12, 0); g.lineTo(-22, -4); g.lineTo(-20, 3); g.fill();
+  g.beginPath(); g.ellipse(13, -2, 6, 5, 0, 0, 7); g.fill(); g.beginPath(); g.moveTo(15, -6); g.lineTo(17, -12); g.lineTo(19, -5); g.fill();
+  g.fillStyle = '#ffcf5a'; g.beginPath(); g.arc(16, -3, 1.3, 0, 7); g.fill(); g.restore();
+}
+function shepherd(g, x, y) {
+  g.save(); g.translate(x, y); g.fillStyle = 'rgba(0,0,0,.25)'; g.beginPath(); g.ellipse(2, 10, 12, 4, 0, 0, 7); g.fill();
+  g.fillStyle = '#7a5a3a'; g.beginPath(); g.arc(0, 0, 10, 0, 7); g.fill(); g.fillStyle = '#c4a26e'; g.beginPath(); g.arc(0, -1, 7, 0, 7); g.fill(); // 위에서 본 머리쓰개
+  g.strokeStyle = '#5a3e22'; g.lineWidth = 2.5; g.lineCap = 'round'; g.beginPath(); g.moveTo(8, 4); g.lineTo(20, -14); g.arc(17, -16, 3.5, 0, Math.PI * 1.3, true); g.stroke(); // 목자 막대
+  g.restore();
+}
+
+export const MINI = { jesus: { e11: cana, e17: fishing, e22: twelve, e31: loaves, e32: water, e42: sheep, e43: coin } };
 
 /* ---------- 놀이 틀: 소개 → 놀이(제한 시간) → 성공 연출/실패 → 결과 ---------- */
 // host: 모달 안의 상자. fx: { play, pour } (game-audio.js). 끝나면 done({ ok, left, tries })

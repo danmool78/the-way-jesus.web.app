@@ -98,6 +98,13 @@ export function createAudio() {
     sweep: () => burst({ type: 'bandpass', f: 3200 + Math.random() * 1200, f2: 1800, q: 0.9, vol: 0.06, a: 0.02, d: 0.16 }),   // 비질
     glint: () => [2637, 3520].forEach((f, i) => tone({ f, vol: 0.03, d: 0.35, at: i * 0.07 })),                            // 희미한 반짝임
     coin: () => { [2093, 2637, 3322].forEach((f, i) => tone({ f: f * (1 + Math.random() * 0.01), type: 'sine', vol: 0.07, d: 0.9, at: i * 0.01 })); tone({ f: 4186, vol: 0.03, d: 0.4 }); bell(1046.5, 0.12, 0.06, 1.4); }, // 은전
+    baa: () => { // 양 울음: 떨리는 톱니파를 콧소리처럼 걸러서
+      if (!ctx || !on) return; const t = ctx.currentTime, o = ctx.createOscillator(), l = ctx.createOscillator(), lg = ctx.createGain(), f = ctx.createBiquadFilter(), g = ctx.createGain(), base = 280 + Math.random() * 120;
+      o.type = 'sawtooth'; o.frequency.setValueAtTime(base, t); o.frequency.linearRampToValueAtTime(base * 0.86, t + 0.55); l.frequency.value = 7 + Math.random() * 3; lg.gain.value = base * 0.06; l.connect(lg); lg.connect(o.frequency);
+      f.type = 'bandpass'; f.frequency.value = 1100; f.Q.value = 2.5; g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.07, t + 0.06); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.6);
+      o.connect(f); f.connect(g); g.connect(master); if (verb) g.connect(verb); o.start(t); l.start(t); o.stop(t + 0.65); l.stop(t + 0.65); drop(o, [l, lg, f, g]); },
+    howl: () => { tone({ f: 330, f2: 520, type: 'sine', vol: 0.05, a: 0.4, d: 1.2, lp: 1200 }); tone({ f: 520, f2: 380, type: 'sine', vol: 0.04, a: 0.1, d: 0.8, at: 1.4, lp: 1200 }); }, // 먼 이리 울음
+    shoo: () => { burst({ type: 'bandpass', f: 900, q: 1, vol: 0.12, a: 0.01, d: 0.15 }); tone({ f: 180, f2: 120, type: 'square', vol: 0.05, d: 0.2, lp: 700 }); }, // 막대로 쫓음
     pick: () => { tone({ f: 520, f2: 700, type: 'triangle', vol: 0.06, a: 0.005, d: 0.08 }); },                         // 집어 듦
     drop: () => { burst({ type: 'lowpass', f: 500, q: 0.8, vol: 0.12, a: 0.004, d: 0.1 }); tone({ f: 392, type: 'triangle', vol: 0.05, d: 0.15 }); }, // 내려놓음
     cast: () => { burst({ type: 'bandpass', f: 600, f2: 2600, q: 1.2, vol: 0.12, a: 0.05, d: 0.3 }); burst({ type: 'highpass', f: 2000, vol: 0.04, d: 0.2, at: 0.08 }); }, // 그물이 휙
