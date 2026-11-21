@@ -734,5 +734,30 @@
    "h": 300,
    "p": "An old Jewish teacher of the law with a long white beard and a prayer shawl sitting on the ground holding a scroll, seen from the front."
   }
+ },
+ "e05": {
+  "bg": {
+   "bg": true,
+   "p": "A moonlit desert road at night on the way south to Egypt, side view panorama: a dark blue starry sky with a crescent moon in the upper half, low rolling sand hills and a rocky ridge in the middle, a pale sandy road running horizontally across the lower third. No people, no trees in the foreground."
+  },
+  "family": {
+   "h": 420,
+   "ratio": "16:9",
+   "ref": [
+    "_src/cards/joseph.png",
+    "_src/cards/mary.png"
+   ],
+   "p": "Joseph walking to the right leading a small donkey by a rope, Mary riding the donkey holding the baby Jesus wrapped in cloth, night travel cloaks, full side view. Joseph and Mary as in the reference images."
+  },
+  "palm": {
+   "h": 420,
+   "ratio": "3:4",
+   "p": "A single date palm tree with a thick trunk and a few bushes at its base, side view, night colors with soft moonlight."
+  },
+  "rock": {
+   "h": 300,
+   "ratio": "16:9",
+   "p": "A large desert boulder, side view, night colors with soft moonlight, wide enough to hide behind."
+  }
  }
 }
