@@ -3055,7 +3055,66 @@ const axe = {
   },
 };
 
-export const MINI = { jesus: { e04: magi, e11: cana, e17: fishing, e22: twelve, e23: rock, e28: bail, e31: loaves, e32: water, e39: stones, e42: sheep, e43: coin, e46: climb, e48: palms, e59: tiberias },
+/* ---------- 열두 살, 아버지의 집에서 (눅 2:41–51): 사흘 동안 무리 속에서 소년 예수 찾기 — 눈썰미 ---------- */
+// 흰 옷에 붉은 띠를 맨 열두 살 소년을 찾는다. 비슷한 아이(흰 옷에 푸른 띠, 베이지 옷에 붉은 띠)가 섞여 걷는다.
+// 첫날·둘째 날은 명절 거리의 무리 속을 걷고, 사흘째에는 성전 뜰에서 선생들 가운데 앉아 있다(2:46). 엉뚱한 사람을 누르면 잠깐 두리번거린다
+const BOY_DAYS = [{ bg: 'e07/street', n: 14, decoy: 3 }, { bg: 'e07/street', n: 22, decoy: 5 }, { bg: 'e07/temple', n: 16, decoy: 5, sit: true }];
+const boyJesus = {
+  title: '열두 살, 아버지의 집에서', task: '사흘 동안 무리 속에서 소년 예수 찾기', art: ['e07/street', 'e07/temple', 'e07/jesus', 'e07/jesus-sit', 'e07/boy-a', 'e07/boy-b', 'e07/man', 'e07/woman', 'e07/elder'],
+  ask: ['명절을 마치고 다들 돌아갈 때, 나는 예루살렘에 남았단다. 부모님은 동행 중에 있는 줄 알고 하룻길을 가셨지.', '너도 함께 찾아보렴 — 흰 옷에 붉은 띠를 맨 아이야. 비슷한 아이들이 많단다!'],
+  quote: '사흘 후에 성전에서 만난즉 그가 선생들 중에 앉으사 그들에게 듣기도 하시며 묻기도 하시니', ref: '눅 2:46',
+  help: '흰 옷에 <b>붉은 띠</b>를 맨 소년을 찾아 눌러요. 푸른 띠·베이지 옷의 비슷한 아이가 섞여 있어요.<br>엉뚱한 사람을 누르면 잠깐 두리번거려요. 사흘(세 번) 찾기.',
+  seconds: 45,
+  init() { const S = { day: 0, t: 0, msg: null, lock: 0, found: 0, flash: 0, sparks: [] }; this.crowd(S); return S; },
+  crowd(S) { const D = BOY_DAYS[S.day], P = [], kinds = ['e07/man', 'e07/woman'];
+    const put = (kind, opt = {}) => { const y = rnd(170, 470), dir = Math.random() < 0.5 ? 1 : -1; P.push({ kind, x: rnd(20, 380), y, dir, sp: opt.sit ? 0 : rnd(14, 34), ph: rnd(0, 7), ...opt }); };
+    for (let i = 0; i < D.n; i++) put(kinds[i % 2]);
+    for (let i = 0; i < D.decoy; i++) put(i % 2 ? 'e07/boy-a' : 'e07/boy-b');
+    if (D.sit) { const gx = rnd(90, 310), gy = rnd(260, 420); for (let i = 0; i < 3; i++) P.push({ kind: 'e07/elder', x: gx + (i - 1) * 46, y: gy - (i === 1 ? 26 : 0), dir: i === 2 ? -1 : 1, sp: 0, ph: 0 });
+      P.push({ kind: 'e07/jesus-sit', x: gx, y: gy + 22, dir: 1, sp: 0, ph: 0, me: 1 });
+      const ox = gx < 200 ? 300 : 100; for (let i = 0; i < 3; i++) P.push({ kind: 'e07/elder', x: ox + (i - 1) * 46, y: 300 + (i % 2) * 20, dir: 1, sp: 0, ph: 0 }); } // 다른 선생 무리(가짜 자리)
+    else put('e07/jesus', { me: 1, sp: rnd(18, 28) });
+    S.P = P; },
+  h: y => 54 + (y - 170) * 0.12, // 멀리(위) 작게
+  update(dt, S) {
+    S.t += dt; if (S.msg) S.msg.at -= dt; S.lock = Math.max(0, S.lock - dt); S.flash = Math.max(0, S.flash - dt);
+    for (const p of S.P) if (p.sp) { p.x += p.dir * p.sp * dt; if (p.x < -30) p.x = W + 30; if (p.x > W + 30) p.x = -30; }
+    for (const q of S.sparks) { q.x += q.vx * dt; q.y += q.vy * dt; q.life -= dt; } S.sparks = S.sparks.filter(q => q.life > 0);
+    if (S.next && (S.next -= dt) <= 0) { S.next = 0; S.day++; if (S.day < BOY_DAYS.length) { this.crowd(S); S.fx.play('go'); } }
+  },
+  down(x, y, S) { if (S.lock || S.next || S.day >= BOY_DAYS.length) return;
+    let hit = null; for (const p of [...S.P].sort((a, b) => b.y - a.y)) { const h = this.h(p.y), w = h * 0.34; if (Math.abs(x - p.x) < w && y < p.y && y > p.y - h) { hit = p; break; } } // 앞사람부터
+    if (!hit) return;
+    if (hit.me) { S.found++; S.flash = 1; S.fx.play('glint'); S.fx.play('coin'); S.next = 1.3; S.msg = { t: S.day < 2 ? `찾았어요! (${S.day + 1}일째)` : '성전에서 찾았어요!', c: '#ffe29a', at: 1.2, x: hit.x, y: hit.y - this.h(hit.y) - 14 };
+      for (let i = 0; i < 14; i++) { const a = rnd(0, 7), v = rnd(30, 90); S.sparks.push({ x: hit.x, y: hit.y - this.h(hit.y) / 2, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: rnd(0.4, 0.9) }); } }
+    else { S.lock = 1.1; S.fx.play('miss'); S.msg = { t: hit.kind.includes('boy') ? '다른 아이예요' : '아니에요', c: '#ffc2a0', at: 0.9, x: hit.x, y: hit.y - this.h(hit.y) - 10 }; } },
+  up() {},
+  won: S => S.found >= BOY_DAYS.length,
+  failText: () => '아직 찾지 못했어요',
+  draw(g, S) {
+    const D = BOY_DAYS[Math.min(S.day, 2)];
+    if (!bgArt(g, D.bg)) { g.fillStyle = '#c9b48e'; g.fillRect(0, 0, W, H); }
+    for (const p of [...S.P].sort((a, b) => a.y - b.y)) { const h = this.h(p.y) * (p.kind.includes('sit') || p.kind.includes('elder') ? 0.8 : 1), bob = p.sp ? Math.abs(Math.sin(S.t * 6 + p.ph)) * 1.5 : 0;
+      g.fillStyle = 'rgba(0,0,0,.2)'; g.beginPath(); g.ellipse(p.x, p.y, h * 0.2, h * 0.05, 0, 0, 7); g.fill();
+      spr(g, p.kind, p.x, p.y - bob, h, { flip: p.dir < 0 && !p.kind.includes('jesus-sit') && !p.kind.includes('elder') });
+      if (p.me && S.next) { g.strokeStyle = `rgba(255,226,150,${0.9})`; g.lineWidth = 3; g.beginPath(); g.ellipse(p.x, p.y - h / 2, h * 0.32, h * 0.6, 0, 0, 7); g.stroke(); } }
+    if (S.lock) { g.fillStyle = `rgba(30,20,10,${0.25 * S.lock})`; g.fillRect(0, 0, W, H); }
+    for (const q of S.sparks) { g.fillStyle = `rgba(255,236,170,${clamp(q.life, 0, 1)})`; star(g, q.x, q.y, 4); }
+    // 찾는 아이 그림표(왼쪽 위)
+    g.save(); g.fillStyle = 'rgba(30,22,12,.72)'; rrect(g, 10, 36, 82, 96, 10); g.fill(); spr(g, 'e07/jesus', 51, 122, 76);
+    g.font = '700 10px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.fillStyle = '#ffe9c0'; g.fillText('흰 옷 · 붉은 띠', 51, 48); g.restore();
+    g.save(); g.font = '800 14px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.lineWidth = 3; g.strokeStyle = 'rgba(30,20,10,.7)'; g.fillStyle = '#fff';
+    const t = `${Math.min(S.day + 1, 3)}일째 · ${D.sit ? '성전 뜰' : '명절 거리'} (${S.found}/3)`; g.strokeText(t, 14, 26); g.fillText(t, 14, 26); g.restore();
+    floatMsg(g, S.msg);
+  },
+  end(g, k, S) { S.day = 2; this.update(0.016, S); this.draw(g, S);
+    if (k > 0.3) { g.save(); g.globalAlpha = clamp((k - 0.3) * 2, 0, 1); g.fillStyle = 'rgba(30,22,10,.8)'; g.fillRect(0, 150, W, 84);
+      g.font = '700 16px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#fff0d6'; g.fillText('내가 내 아버지 집에 있어야 될 줄을', W / 2, 180); g.fillText('알지 못하셨나이까', W / 2, 204);
+      g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#e6cfa6'; g.fillText('눅 2:49', W / 2, 223); g.restore(); }
+  },
+};
+
+export const MINI = { jesus: { e04: magi, e07: boyJesus, e11: cana, e17: fishing, e22: twelve, e23: rock, e28: bail, e31: loaves, e32: water, e39: stones, e42: sheep, e43: coin, e46: climb, e48: palms, e59: tiberias },
   david: { d01: herdDavid, d05: sling, d10: arrows, d16: cave, d24: arkDance, d38: templeStones }, moses: { m09: redSea, m12: manna, m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket, a17: prison, a36: wreck, a37: viper }, kings: { k15: carmel, k24: naaman, k25: axe, k26: dothan } };
 
 /* ---------- 놀이 틀: 소개 → 놀이(제한 시간) → 성공 연출/실패 → 결과 ---------- */
