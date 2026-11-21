@@ -7,3 +7,4 @@ firebase-debug*.log
 # Firebase service account keys ? never commit
 *-firebase-adminsdk-*.json
 __pycache__/
+_src/game-i18n/missing.*.json
