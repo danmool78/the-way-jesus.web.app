@@ -229,7 +229,8 @@ for j in series:
 
 # 첫 주소의 랜딩(index.html)이 읽는 land.json: 여정 카드(시리즈 + 마지막에 4영리)와 랜딩 글씨만 언어마다 — 앱의 data.json은 크다
 LAND_KEYS = ['appName', 'hubTag', 'hubLead', 'seriesHead', 'seriesGo', 'seriesScenes', 'shareShort', 'shareApp', 'linkCopied', 'soon',
-             'mvGo', 'mvLead', 'mvNote', 'qnaHelp', 'language', 'close', 'goodnewsGo', 'whyGo', 'inProgress', 'seriesPsalms']
+             'mvGo', 'mvLead', 'mvNote', 'qnaHelp', 'language', 'close', 'goodnewsGo', 'whyGo', 'inProgress', 'seriesPsalms',
+             'landTitle', 'landLead', 'landResume', 'landStart', 'landBrowse', 'landFact1', 'landFact2', 'landFact3', 'landFact4', 'landG1', 'landG1s', 'landG2', 'landG2s', 'landG3', 'landG3s', 'landGameTag', 'landGameH', 'landGameP', 'landGame1', 'landGame2', 'landGame3', 'landGameGo']  # 새 랜딩: 첫 화면 글씨와 묶음 이름
 land = {'langs': LANGS, 'cards': [{'id': j['id'], 'title': j['title'], 'desc': j['desc'], 'ready': j['ready'], **({'n': j['n']} if j.get('n') else {}), **({'progress': j['progress']} if j.get('progress') else {})} for j in series if j['id'] != 'goodnews']
         + [{'id': 'goodnews', 'title': 'goodnewsH', 'desc': 'goodnews', 'ready': True, 'href': '/goodnews/', 'go': 'goodnewsGo'},  # 4영리는 따로 만든 페이지(/goodnews/)로
            {'id': 'why', 'title': 'whyH', 'desc': 'why', 'ready': True, 'href': '/why.html', 'langHref': True, 'go': 'whyGo', 'icon': 'assets/why-icon.webp?v=' + hashlib.md5(open(os.path.join(root, 'assets', 'why-icon.webp'), 'rb').read()).hexdigest()[:8]}], 'ui': {}}  # '왜 기독교인가'는 언어마다 why.<언어>.html
