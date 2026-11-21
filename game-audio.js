@@ -5,7 +5,7 @@ const MEDIA = 'https://theway-admin.danmool78.workers.dev/f/';
 const MUSIC_VOL = 0.3;
 
 export function createAudio() {
-  let ctx = null, master = null, noise = null, on = true;
+  let ctx = null, master = null, noise = null, verb = null, on = true;
   try { on = localStorage.getItem('theway-game-sound') !== '0'; } catch { /* 사생활 보호 모드 */ }
 
   // 소리는 사용자가 한 번 누른 뒤에야 낼 수 있다(아이폰) — 시작 단추·화면을 누를 때 깨운다
@@ -16,6 +16,10 @@ export function createAudio() {
       // 흰 소음 2초 — 발소리·물소리·바람이 모두 이것을 걸러 쓴다
       noise = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
       const d = noise.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+      // 잔향: 지수로 줄어드는 소음을 충격 응답으로 — 마른 합성음이 방 안에서 울리듯 (종소리·물소리가 덜 싸구려처럼, 사용자 2026-11)
+      const n = ctx.sampleRate * 2.4, ir = ctx.createBuffer(2, n, ctx.sampleRate);
+      for (let c = 0; c < 2; c++) { const x = ir.getChannelData(c); for (let i = 0; i < n; i++) x[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 3.2); }
+      verb = ctx.createConvolver(); verb.buffer = ir; const vg = ctx.createGain(); vg.gain.value = 0.32; verb.connect(vg); vg.connect(master);
     }
     if (ctx.state === 'suspended') ctx.resume().catch(() => {});
   }
@@ -44,8 +48,17 @@ export function createAudio() {
     g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + a); g.gain.exponentialRampToValueAtTime(0.0001, t + a + d);
     let last = o;
     if (lp) { const fl = ctx.createBiquadFilter(); fl.type = 'lowpass'; fl.frequency.value = lp; o.connect(fl); last = fl; nodes.push(fl); }
-    last.connect(g); g.connect(master);
+    last.connect(g); g.connect(master); if (verb) g.connect(verb);
     o.start(t); o.stop(t + a + d + 0.05); drop(o, nodes);
+  }
+  // 물방울 하나: 터지는 거품은 짧게 울리며 음이 위로 미끄러진다 — 이것을 여럿 겹치면 물소리가 된다(소음을 거르는 것보다 훨씬 물 같다)
+  function bubble(f, vol = 0.06, at = 0) {
+    if (!ctx || !on) return;
+    const t = ctx.currentTime + at, o = ctx.createOscillator(), g = ctx.createGain(), d = 0.03 + Math.random() * 0.05;
+    o.type = 'sine'; o.frequency.setValueAtTime(f, t); o.frequency.exponentialRampToValueAtTime(f * (1.6 + Math.random() * 0.8), t + d);
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.004); g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+    o.connect(g); g.connect(master); if (verb && Math.random() < 0.5) g.connect(verb);
+    o.start(t); o.stop(t + d + 0.02); drop(o, [g]);
   }
   const bell = (f, at = 0, vol = 0.12, d = 1.4) => { tone({ f, vol, d, at }); tone({ f: f * 2.01, vol: vol * 0.35, d: d * 0.6, at }); tone({ f: f * 3.02, vol: vol * 0.12, d: d * 0.35, at }); };
 
@@ -64,6 +77,17 @@ export function createAudio() {
     twinkle: () => [2093, 2637, 3136].forEach((f, i) => tone({ f, vol: 0.035, d: 0.5, at: i * 0.09 })), // 보물이 가까이서 반짝임
     treasure: () => { [523.3, 659.3, 784, 1046.5, 1318.5].forEach((f, i) => tone({ f, type: 'triangle', vol: 0.08, d: 0.45, at: i * 0.07 })); bell(1568, 0.4, 0.09, 2); bell(2093, 0.55, 0.06, 2); },
     end: () => { [392, 523.3, 659.3, 784].forEach((f, i) => bell(f, i * 0.18, 0.1, 2)); },
+    // 장면 놀이 (game-mini.js)
+    go: () => { bell(659.3, 0, 0.09, 0.9); bell(987.8, 0.1, 0.08, 1.1); },                                              // 시작
+    plink: () => { bell(1318.5, 0, 0.08, 1.2); tone({ f: 1975.5, vol: 0.05, d: 0.6, at: 0.06 }); for (let i = 0; i < 5; i++) bubble(900 + i * 160, 0.035, 0.02 + i * 0.03); }, // 딱 맞음
+    splash: () => { burst({ type: 'lowpass', f: 2400, f2: 400, q: 0.7, vol: 0.26, a: 0.008, d: 0.55 }); burst({ type: 'highpass', f: 3500, vol: 0.05, d: 0.3, at: 0.04 });
+      for (let i = 0; i < 26; i++) bubble(250 + Math.random() * 900, 0.05 + Math.random() * 0.05, Math.random() * 0.6); // 쏟아져 바닥에 튀는 물방울
+      tone({ f: 220, f2: 150, type: 'triangle', vol: 0.07, d: 0.35, lp: 900 }); }, // 넘침
+    wine: () => { // 물이 포도주로: 낮은 울림 위로 종이 오르고, 오래 남는 화음
+      [130.8, 196, 261.6].forEach(f => tone({ f, type: 'sine', vol: 0.06, a: 0.6, d: 2.6 }));
+      [523.3, 659.3, 784, 987.8, 1174.7, 1568].forEach((f, i) => bell(f, 0.15 + i * 0.13, 0.065, 2.6));
+      [1046.5, 1318.5, 1568, 2093].forEach((f, i) => tone({ f, type: 'triangle', vol: 0.025, a: 0.4, d: 2.2, at: 0.9 + i * 0.05 })); },
+    tick: () => tone({ f: 1760, type: 'triangle', vol: 0.04, d: 0.06 }),                                                   // 남은 초
   };
   const play = k => { unlock(); SFX[k]?.(); };
 
@@ -97,6 +121,24 @@ export function createAudio() {
       oarT -= dt;
       if (oarT <= 0) { oarT = 1.25; burst({ type: 'bandpass', f: 900, f2: 400, q: 1, vol: 0.12, a: 0.02, d: 0.35 }); burst({ type: 'bandpass', f: 1800, q: 2, vol: 0.05, a: 0.01, d: 0.2, at: 0.08 }); }
     } else oarT = 0.3;
+  }
+
+  // 물 붓기 (가나의 돌항아리): 물줄기 소리(낮게 거른 소음)에 거품 소리를 계속 흩뿌린다. 항아리가 찰수록 공명(대역)과 거품의 음이 높아진다
+  // — 빈 병에 물을 부을 때처럼 귀로도 아귀가 가까워지는 것을 안다
+  let pourN = null, pourK = 0;
+  function pour(k) {
+    if (!ctx || !on) k = null;
+    if (k != null && !pourN) {
+      const s = ctx.createBufferSource(), lp = ctx.createBiquadFilter(), bp = ctx.createBiquadFilter(), g = ctx.createGain(), gb = ctx.createGain();
+      s.buffer = noise; s.loop = true; lp.type = 'lowpass'; lp.frequency.value = 2200; bp.type = 'bandpass'; bp.Q.value = 6; g.gain.value = 0; gb.gain.value = 0;
+      s.connect(lp); lp.connect(g); g.connect(master); lp.connect(bp); bp.connect(gb); gb.connect(master); if (verb) gb.connect(verb);
+      s.start(); g.gain.setTargetAtTime(0.06, ctx.currentTime, 0.05); gb.gain.setTargetAtTime(0.22, ctx.currentTime, 0.05);
+      const iv = setInterval(() => { const n = 1 + (Math.random() < 0.6); for (let i = 0; i < n; i++) bubble((260 + pourK * 900) * (0.7 + Math.random() * 0.7), 0.03 + Math.random() * 0.04, Math.random() * 0.03); }, 28);
+      pourN = { s, lp, bp, g, gb, iv };
+    }
+    if (k != null) { pourK = Math.min(1.1, k); pourN.bp.frequency.setTargetAtTime(320 + pourK * 1300, ctx.currentTime, 0.06); }
+    else if (pourN) { const n = pourN; pourN = null; clearInterval(n.iv); n.g.gain.setTargetAtTime(0, ctx.currentTime, 0.05); n.gb.gain.setTargetAtTime(0, ctx.currentTime, 0.08);
+      setTimeout(() => { try { n.s.stop(); } catch { /* */ } [n.s, n.lp, n.bp, n.g, n.gb].forEach(x => { try { x.disconnect(); } catch { /* */ } }); }, 500); }
   }
 
   // 배경음악: 장면마다 앱과 같은 곡(e.music)으로, 바뀔 때는 서서히 겹쳐 넘긴다
@@ -136,7 +178,7 @@ export function createAudio() {
     if (cur) { if (v && !paused) cur.play().then(() => fade(cur, MUSIC_VOL, 800)).catch(() => {}); else fade(cur, 0, 300, () => cur?.pause()); }
   }
   // 나갈 때 모두 끊는다
-  function close() { boat(0, false, false); if (cur) { cur.pause(); cur.removeAttribute('src'); cur.load(); cur = null; } ctx?.close().catch(() => {}); ctx = null; }
+  function close() { boat(0, false, false); pour(null); if (cur) { cur.pause(); cur.removeAttribute('src'); cur.load(); cur = null; } ctx?.close().catch(() => {}); ctx = null; }
 
-  return { unlock, play, walk, boat, music, hold, setOn, close, get on() { return on; } };
+  return { unlock, play, walk, boat, pour, music, hold, setOn, close, get on() { return on; } };
 }
