@@ -2120,7 +2120,105 @@ function chariot(g, x, y, stop, t) { // 말 두 필 + 병거(옆모습), 멈추�
   g.restore();
 }
 
-export const MINI = { jesus: { e04: magi, e11: cana, e17: fishing, e22: twelve, e23: rock, e31: loaves, e32: water, e39: stones, e42: sheep, e43: coin, e46: climb, e48: palms, e59: tiberias },
+/* ---------- 바람과 바다를 꾸짖으시다 (막 4:35–41): 배에 들이친 물 퍼내기 — 버티기 ---------- */
+// 배는 네 칸. 파도가 한쪽 칸 위로 솟아오르면(0.7초 먼저 보임) 곧 그 칸에 물이 들이치고 이웃 칸으로도 조금 넘친다. 비도 계속 샌다.
+// 칸을 누르면 바가지로 물을 퍼서 던진다(한 번에 조금, 바가지는 잠깐 쉰다). 어느 칸이든 물이 가득 차면 실패. 끝까지 버티면 그분이 일어나 바다를 꾸짖으신다
+const HULL = { x0: 34, x1: 366, top: 300, bot: 432 }, CELLS = 4, BAIL = 0.15, BAIL_CD = 0.26;
+const bail = {
+  title: '바람과 바다를 꾸짖으시다', task: '배에 들이치는 물을 퍼내며 버티기', survive: true,
+  ask: ['그날 밤, 파도가 배 안으로 들이쳐 배에 물이 가득하게 되었단다.', '나는 고물에서 자고 있을 테니 — 그때까지 물을 퍼내며 버텨 보렴!'],
+  quote: '큰 광풍이 일어나며 물결이 배에 부딪쳐 들어와 배에 가득하게 되었더라', ref: '막 4:37',
+  help: '파도가 솟는 칸에 곧 물이 들이쳐요. 칸을 눌러 물을 퍼내요(한 번에 조금).<br>어느 칸이든 물이 가득 차면 실패. 끝까지 버텨요.',
+  seconds: 26,
+  init() { return { lv: [0.12, 0.08, 0.1, 0.06], waves: [], next: 1.0, cd: 0, t: 0, drops: [], bucket: null, msg: null, flash: 0, bolt: 0, rock: 0 }; },
+  cellX(i) { const w = (HULL.x1 - HULL.x0) / CELLS; return [HULL.x0 + i * w, HULL.x0 + (i + 1) * w]; },
+  update(dt, S) {
+    S.t += dt; S.cd = Math.max(0, S.cd - dt); S.flash = Math.max(0, S.flash - dt * 2); if (S.msg) S.msg.at -= dt;
+    const lvl = Math.min(1, S.t / 22); S.fx.storm?.(0.55 + lvl * 0.45); S.rock = Math.sin(S.t * 1.6) * 0.05 + Math.sin(S.t * 2.7) * 0.025;
+    if ((S.next -= dt) <= 0) { const i = Math.floor(Math.random() * CELLS); S.waves.push({ i, t: 0, amt: rnd(0.24, 0.36) + lvl * 0.08 }); S.next = rnd(1.15, 1.55) - lvl * 0.45;
+      if (Math.random() < 0.08 + lvl * 0.2) { S.bolt = 0.25; S.fx.play('thunder'); } }
+    for (const w of S.waves) { w.t += dt; if (w.t >= 0.7 && !w.hit) { w.hit = 1; S.lv[w.i] += w.amt; if (w.i > 0) S.lv[w.i - 1] += w.amt * 0.25; if (w.i < CELLS - 1) S.lv[w.i + 1] += w.amt * 0.25; S.fx.play('splash');
+        const [a, b] = this.cellX(w.i); for (let k = 0; k < 16; k++) S.drops.push({ x: rnd(a, b), y: HULL.top - rnd(0, 30), vx: rnd(-40, 40), vy: rnd(40, 160), life: rnd(0.4, 0.8), c: 1 }); } }
+    S.waves = S.waves.filter(w => w.t < 1.4);
+    for (let i = 0; i < CELLS; i++) S.lv[i] = Math.min(1, S.lv[i] + (0.006 + lvl * 0.01) * dt); // 빗물
+    if (S.bucket) { S.bucket.t += dt; if (S.bucket.t > 0.35) S.bucket = null; }
+    for (const d of S.drops) { d.vy += 500 * dt; d.x += d.vx * dt; d.y += d.vy * dt; d.life -= dt; } S.drops = S.drops.filter(d => d.life > 0);
+    S.bolt = Math.max(0, S.bolt - dt);
+  },
+  down(x, y, S) {
+    if (y < HULL.top - 80) return; const i = clamp(Math.floor((x - HULL.x0) / ((HULL.x1 - HULL.x0) / CELLS)), 0, CELLS - 1);
+    if (S.cd > 0) return; S.cd = BAIL_CD; S.lv[i] = Math.max(0, S.lv[i] - BAIL); S.fx.play('bail');
+    const [a, b] = this.cellX(i), cx = (a + b) / 2, side = i < 2 ? -1 : 1; S.bucket = { i, t: 0, x: cx };
+    for (let k = 0; k < 12; k++) S.drops.push({ x: cx, y: HULL.top - 10, vx: side * rnd(90, 200), vy: rnd(-260, -120), life: rnd(0.5, 0.9), c: 0 }); // 배 밖으로 던진다
+  },
+  up() {},
+  key(k, S) { const n = '1234'.indexOf(k); if (n >= 0) { const [a, b] = this.cellX(n); this.down((a + b) / 2, HULL.top + 40, S); return; } return false; },
+  won: () => false,
+  lost: S => S.lv.some(v => v >= 1),
+  bonus: S => Math.round(200 * (1 - S.lv.reduce((a, b) => a + b, 0) / CELLS)),
+  failText: () => '배에 물이 가득 찼어요',
+  draw(g, S, calm = 0) {
+    const st = 1 - calm;
+    const sky = g.createLinearGradient(0, 0, 0, H); sky.addColorStop(0, `rgb(${20 + calm * 120},${26 + calm * 130},${40 + calm * 150})`); sky.addColorStop(1, `rgb(${40 + calm * 90},${56 + calm * 100},${70 + calm * 110})`); g.fillStyle = sky; g.fillRect(0, 0, W, H);
+    if (S.bolt > 0 && st > 0.5) { g.fillStyle = `rgba(230,240,255,${S.bolt * 2})`; g.fillRect(0, 0, W, H); g.strokeStyle = '#f4f8ff'; g.lineWidth = 2; g.beginPath(); g.moveTo(260, 0); g.lineTo(240, 60); g.lineTo(262, 70); g.lineTo(230, 150); g.stroke(); }
+    // 먹구름 — 빠르게 흘러간다
+    for (let i = 0; i < 9; i++) { const x = ((i * 83 + S.t * (30 + i * 4)) % 560) - 80, y = 20 + (i % 3) * 34; g.fillStyle = `rgba(${14 + calm * 150},${18 + calm * 150},${28 + calm * 160},${0.75 * st})`; g.beginPath(); g.ellipse(x, y, 90, 34, 0, 0, 7); g.fill(); }
+    // 비
+    if (st > 0.05) { g.strokeStyle = `rgba(200,215,235,${0.35 * st})`; g.lineWidth = 1; for (let i = 0; i < 60; i++) { const x = (i * 71 + S.t * 300) % 460 - 30, y = (i * 113 + S.t * 700) % H; g.beginPath(); g.moveTo(x, y); g.lineTo(x - 6, y + 16); g.stroke(); } }
+    // 바다 — 큰 너울
+    const sea = y0 => { g.beginPath(); g.moveTo(0, H); for (let x = 0; x <= W; x += 10) g.lineTo(x, y0 + Math.sin(x * 0.03 + S.t * 1.8) * 18 * st + Math.sin(x * 0.07 - S.t * 2.6) * 8 * st); g.lineTo(W, H); g.fill(); };
+    g.fillStyle = '#1e3a50'; sea(250); g.fillStyle = '#244a62'; sea(330);
+    // 솟는 파도 — 곧 들이칠 칸 위
+    g.save(); g.translate(200, 420); g.rotate(S.rock * st); g.translate(-200, -420);
+    for (const w of S.waves) { const [a, b] = this.cellX(w.i), k = w.t < 0.7 ? w.t / 0.7 : Math.max(0, 1 - (w.t - 0.7) / 0.5), m = (a + b) / 2, hgt = 130 * k;
+      const wg = g.createLinearGradient(0, HULL.top - hgt, 0, HULL.top + 20); wg.addColorStop(0, `rgba(150,200,225,${0.95 * k})`); wg.addColorStop(1, `rgba(40,90,120,${0.95 * k})`); g.fillStyle = wg;
+      g.beginPath(); g.moveTo(a - 30, HULL.top + 20); g.bezierCurveTo(a - 10, HULL.top - hgt * 0.5, m - 30, HULL.top - hgt, m + 10, HULL.top - hgt * 0.95); g.bezierCurveTo(m + 34, HULL.top - hgt * 0.9, b + 4, HULL.top - hgt * 0.6, m + 18, HULL.top - hgt * 0.55); // 말려드는 물마루
+      g.quadraticCurveTo(b + 20, HULL.top - hgt * 0.4, b + 30, HULL.top + 20); g.closePath(); g.fill();
+      g.fillStyle = `rgba(240,250,255,${0.85 * k})`; for (let j = 0; j < 9; j++) { g.beginPath(); g.arc(m - 26 + j * 7 + Math.sin(S.t * 9 + j) * 2, HULL.top - hgt * (0.92 - Math.abs(j - 4) * 0.03), 3 + (j % 3), 0, 7); g.fill(); } // 흰 물거품
+      if (w.t < 0.7) { g.fillStyle = '#ffd08a'; g.font = '900 22px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.lineWidth = 4; g.strokeStyle = 'rgba(20,30,40,.7)'; g.strokeText('!', m, HULL.top - hgt - 12); g.fillText('!', m, HULL.top - hgt - 12); } }
+    // 배 (옆 단면) — 네 칸과 물
+    const hull = () => { g.beginPath(); g.moveTo(HULL.x0 - 14, HULL.top - 12); g.lineTo(HULL.x1 + 14, HULL.top - 18); g.quadraticCurveTo(HULL.x1 + 4, HULL.bot - 10, HULL.x1 - 40, HULL.bot); g.lineTo(HULL.x0 + 40, HULL.bot); g.quadraticCurveTo(HULL.x0 - 4, HULL.bot - 10, HULL.x0 - 14, HULL.top - 12); g.closePath(); };
+    g.fillStyle = '#5a3a22'; hull(); g.fill();
+    g.save(); hull(); g.clip(); g.fillStyle = '#3a2414'; g.fillRect(HULL.x0, HULL.top, HULL.x1 - HULL.x0, HULL.bot - HULL.top); // 배 안
+    for (let i = 0; i < CELLS; i++) { const [a, b] = this.cellX(i), v = S.lv[i], wy = HULL.bot - v * (HULL.bot - HULL.top + 8);
+      const wg = g.createLinearGradient(0, wy, 0, HULL.bot); wg.addColorStop(0, v > 0.8 ? '#5a8ab0' : '#4a7a9c'); wg.addColorStop(1, '#244a62'); g.fillStyle = wg;
+      g.beginPath(); g.moveTo(a, HULL.bot); for (let x = a; x <= b; x += 6) g.lineTo(x, wy + Math.sin(x * 0.2 + S.t * 6) * 2); g.lineTo(b, HULL.bot); g.fill();
+      if (v > 0.8) { g.fillStyle = `rgba(255,120,90,${0.25 + 0.2 * Math.sin(S.t * 12)})`; g.fillRect(a, HULL.top, b - a, 6); } }
+    g.restore();
+    g.strokeStyle = '#7a5434'; g.lineWidth = 5; for (let i = 1; i < CELLS; i++) { const [a] = this.cellX(i); g.beginPath(); g.moveTo(a, HULL.top - 8); g.lineTo(a, HULL.bot - 4); g.stroke(); } // 가름대
+    g.strokeStyle = '#8a6040'; g.lineWidth = 4; g.beginPath(); g.moveTo(HULL.x0 - 14, HULL.top - 12); g.lineTo(HULL.x1 + 14, HULL.top - 18); g.stroke();
+    // 돛대
+    g.strokeStyle = '#4a3020'; g.lineWidth = 5; g.beginPath(); g.moveTo(170, HULL.top); g.lineTo(170 + S.rock * 60, 110); g.stroke();
+    // 제자들(칸마다 둘) — 물 위로 몸
+    for (let i = 0; i < CELLS; i++) { if (i === 3) continue; const [a, b] = this.cellX(i);
+      for (let k = 0; k < 2; k++) { const x = a + 22 + k * 36, y = HULL.top - 6; g.fillStyle = ['#7a5a3e', '#5a4a6a', '#4a5a4a'][(i + k) % 3]; g.beginPath(); g.ellipse(x, y, 8, 14, 0, 0, 7); g.fill(); g.fillStyle = '#c99a6a'; g.beginPath(); g.arc(x, y - 17, 5.5, 0, 7); g.fill(); } }
+    // 고물에서 베개를 베고 주무시는 분(4:38) — 끝에는 일어나신다
+    const [sa] = this.cellX(3);
+    if (calm <= 0) { g.fillStyle = '#c8b890'; g.beginPath(); g.ellipse(sa + 70, HULL.top - 4, 10, 6, 0, 0, 7); g.fill(); g.fillStyle = '#f2ece0'; g.beginPath(); g.ellipse(sa + 40, HULL.top + 2, 28, 8, -0.08, 0, 7); g.fill(); g.fillStyle = '#c99a6a'; g.beginPath(); g.arc(sa + 68, HULL.top - 10, 6, 0, 7); g.fill(); g.fillStyle = '#5a3a24'; g.beginPath(); g.arc(sa + 70, HULL.top - 12, 6, Math.PI * 0.5, Math.PI * 1.6); g.fill(); }
+    else { const x = sa + 46, y = HULL.top - 6; g.fillStyle = '#f2ece0'; g.beginPath(); g.ellipse(x, y - 6, 9, 20, 0, 0, 7); g.fill(); g.fillStyle = '#b5523e'; g.fillRect(x - 8, y - 22, 3, 22);
+      g.strokeStyle = '#f2ece0'; g.lineWidth = 4; g.lineCap = 'round'; g.beginPath(); g.moveTo(x + 4, y - 18); g.lineTo(x + 18, y - 40 * calm); g.stroke(); g.fillStyle = '#c99a6a'; g.beginPath(); g.arc(x, y - 30, 6, 0, 7); g.fill(); g.fillStyle = '#5a3a24'; g.beginPath(); g.arc(x, y - 32, 6.2, Math.PI, 0); g.fill(); }
+    // 바가지
+    if (S.bucket) { const [a, b] = this.cellX(S.bucket.i), k = S.bucket.t / 0.35, cx = (a + b) / 2, side = S.bucket.i < 2 ? -1 : 1;
+      g.save(); g.translate(cx + side * k * 30, HULL.top - 20 - Math.sin(k * Math.PI) * 40); g.rotate(side * k * 2); g.scale(1.6, 1.6); g.fillStyle = '#9a7040'; g.beginPath(); g.arc(0, 0, 10, 0, Math.PI); g.fill(); g.strokeStyle = '#6a4a28'; g.lineWidth = 1.5; g.stroke(); g.restore(); }
+    g.restore();
+    for (const d of S.drops) { g.fillStyle = d.c ? `rgba(200,225,245,${clamp(d.life * 2, 0, 1)})` : `rgba(170,210,240,${clamp(d.life * 2, 0, 1)})`; g.beginPath(); g.arc(d.x, d.y, 2.2, 0, 7); g.fill(); }
+    // 칸 번호 + 바가지 준비
+    if (!calm) { g.save(); g.font = '700 11px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; for (let i = 0; i < CELLS; i++) { const [a, b] = this.cellX(i); g.fillStyle = 'rgba(255,255,255,.55)'; g.fillText(`${Math.round(S.lv[i] * 100)}%`, (a + b) / 2, HULL.bot + 20); }
+      g.font = '800 14px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.fillStyle = '#e8eef4'; g.fillText('칸을 눌러 물을 퍼내요', 14, 26); g.restore(); }
+    floatMsg(g, S.msg);
+  },
+  end(g, k, S) { // 그분이 깨어 일어나 바람을 꾸짖으시니 아주 잔잔해진다(4:39)
+    S.waves = []; S.fx.storm?.(Math.max(0, 0.6 - k * 1.2)); if (!S.calmSnd && k > 0.15) { S.calmSnd = 1; S.fx.play('calm'); }
+    S.t += 0.016; S.lv = S.lv.map(v => Math.max(0.05, v - 0.004));
+    for (const d of S.drops) { d.vy += 500 * 0.016; d.x += d.vx * 0.016; d.y += d.vy * 0.016; d.life -= 0.016; } S.drops = S.drops.filter(d => d.life > 0);
+    this.draw(g, S, clamp(k * 1.6, 0, 1));
+    if (k > 0.35) { g.save(); g.globalAlpha = clamp((k - 0.35) * 2, 0, 1); g.fillStyle = 'rgba(20,30,45,.78)'; g.fillRect(0, 40, W, 84);
+      g.font = '700 17px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#f2f6ff'; g.fillText('잠잠하라 고요하라 하시니', W / 2, 70); g.fillText('바람이 그치고 아주 잔잔하여지더라', W / 2, 94);
+      g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#c0cce0'; g.fillText('막 4:39', W / 2, 113); g.restore(); }
+  },
+};
+
+export const MINI = { jesus: { e04: magi, e11: cana, e17: fishing, e22: twelve, e23: rock, e28: bail, e31: loaves, e32: water, e39: stones, e42: sheep, e43: coin, e46: climb, e48: palms, e59: tiberias },
   david: { d01: herdDavid, d05: sling, d24: arkDance, d38: templeStones }, moses: { m09: redSea, m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket }, kings: { k15: carmel } };
 
 /* ---------- 놀이 틀: 소개 → 놀이(제한 시간) → 성공 연출/실패 → 결과 ---------- */
