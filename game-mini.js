@@ -1161,11 +1161,13 @@ const stones = {
       const d = Math.hypot(f.x - WOM[0], f.y - (WOM[1] - 14));
       if (!f.done && d < SHIELD_R + 6 && d > SHIELD_R - 14) { const a = Math.atan2(f.y - (WOM[1] - 14), f.x - WOM[0]), off = Math.abs(Math.atan2(Math.sin(a - S.ang), Math.cos(a - S.ang)));
         if (off < SHIELD_W / 2 + 0.08) { f.done = true; f.vx *= -0.25; f.vy = -80; f.fall = 1; S.fx.play('drop'); for (let i = 0; i < 5; i++) S.sparks.push({ x: f.x, y: f.y, vy: rnd(-40, -10), life: rnd(0.3, 0.6), r: rnd(1, 2) }); } }
-      if (!f.done && d < 16) { f.done = true; f.hit = true; S.hits++; S.shake = 1; S.fx.play('rip'); S.msg = { t: S.hits < HITS ? `맞았어요 ${S.hits} / ${HITS}` : '지키지 못했어요', c: '#ffb38a', at: 1.2, x: WOM[0], y: WOM[1] - 70 }; }
+      if (!f.done && d < 16) { f.done = true; f.hit = true; S.hits++; S.shake = 1; S.ouch = 1; S.hitAt = [f.x, f.y]; S.fx.play('thud'); S.fx.play('rip'); // 맞으면 여인이 움찔하고 붉게 번쩍, 돌이 부서진다 — 그냥 사라지니 안 맞은 줄 알았다(사용자 2026-11)
+        for (let i = 0; i < 10; i++) S.sparks.push({ x: f.x, y: f.y, vy: rnd(-90, 10), vx: rnd(-80, 80), life: rnd(0.4, 0.8), r: rnd(1.4, 2.8), rock: 1 }); S.msg = { t: S.hits < HITS ? `맞았어요 ${S.hits} / ${HITS}` : '지키지 못했어요', c: '#ffb38a', at: 1.2, x: WOM[0], y: WOM[1] - 70 }; }
       if (f.fall) { f.vy += 500 * dt; f.fall -= dt * 0.6; }
     }
     S.flying = S.flying.filter(f => !f.hit && f.y < H + 20 && (!f.fall || f.fall > 0));
-    for (const p of S.sparks) { p.y += p.vy * dt; p.life -= dt; } S.sparks = S.sparks.filter(p => p.life > 0);
+    for (const p of S.sparks) { p.y += p.vy * dt; p.x += (p.vx || 0) * dt; if (p.rock) p.vy += 300 * dt; p.life -= dt; } S.sparks = S.sparks.filter(p => p.life > 0);
+    S.ouch = Math.max(0, (S.ouch || 0) - dt * 1.8);
     if (S.msg) S.msg.at -= dt;
   },
   down(x, y, S) { this.move(x, y, S); },
@@ -1190,7 +1192,11 @@ const stones = {
     for (const m of S.men) accuser(g, m, S);
     // 여인 (무릎 꿇고 고개 숙임)
     g.fillStyle = 'rgba(0,0,0,.25)'; g.beginPath(); g.ellipse(WOM[0], WOM[1] + 4, 26, 7, 0, 0, 7); g.fill();
-    if (!spr(g, 'e39/woman', WOM[0], WOM[1] + 8, 92)) { g.fillStyle = '#6a5a8a'; g.beginPath(); g.moveTo(WOM[0] - 20, WOM[1]); g.quadraticCurveTo(WOM[0] - 14, WOM[1] - 34, WOM[0], WOM[1] - 36); g.quadraticCurveTo(WOM[0] + 14, WOM[1] - 34, WOM[0] + 20, WOM[1]); g.fill();
+    const ou = S.ouch || 0, kick = ou * Math.sin(ou * 20) * 6;
+    if (spr(g, 'e39/woman', WOM[0] + kick, WOM[1] + 8, 92, { rot: ou * 0.12 * Math.sign((S.hitAt?.[0] ?? 0) - WOM[0] || 1) * -1 })) {
+      if (ou > 0) { const rg = g.createRadialGradient(WOM[0], WOM[1] - 40, 4, WOM[0], WOM[1] - 40, 70); rg.addColorStop(0, `rgba(255,60,40,${0.55 * ou})`); rg.addColorStop(1, 'rgba(255,60,40,0)'); g.fillStyle = rg; g.fillRect(WOM[0] - 70, WOM[1] - 110, 140, 140);
+        g.font = '900 18px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.lineWidth = 4; g.strokeStyle = 'rgba(40,10,10,.7)'; g.globalAlpha = ou; g.strokeText('아!', WOM[0] + 34, WOM[1] - 92); g.fillStyle = '#ffb0a0'; g.fillText('아!', WOM[0] + 34, WOM[1] - 92); g.globalAlpha = 1; } }
+    else { g.fillStyle = '#6a5a8a'; g.beginPath(); g.moveTo(WOM[0] - 20, WOM[1]); g.quadraticCurveTo(WOM[0] - 14, WOM[1] - 34, WOM[0], WOM[1] - 36); g.quadraticCurveTo(WOM[0] + 14, WOM[1] - 34, WOM[0] + 20, WOM[1]); g.fill();
     g.fillStyle = '#3a2e4a'; g.beginPath(); g.arc(WOM[0], WOM[1] - 38, 9, 0, 7); g.fill(); }
     // 겉옷 방패
     if (!S.leave) { g.save(); g.lineCap = 'round'; g.strokeStyle = '#7a2e2a'; g.lineWidth = 12; g.beginPath(); g.arc(WOM[0], WOM[1] - 14, SHIELD_R, S.ang - SHIELD_W / 2, S.ang + SHIELD_W / 2); g.stroke();
@@ -1198,7 +1204,7 @@ const stones = {
       g.strokeStyle = 'rgba(255,255,255,.16)'; g.setLineDash([3, 6]); g.beginPath(); g.arc(WOM[0], WOM[1] - 14, SHIELD_R, 0, 7); g.stroke(); g.setLineDash([]); }
     for (const f of S.flying) { g.save(); g.translate(f.x, f.y); g.rotate(f.rot); g.fillStyle = '#8a8274'; g.beginPath(); g.moveTo(-6, -3); g.lineTo(0, -6); g.lineTo(6, -2); g.lineTo(5, 4); g.lineTo(-4, 5); g.closePath(); g.fill(); g.fillStyle = 'rgba(255,255,255,.25)'; g.fillRect(-3, -4, 4, 2); g.restore(); }
     for (const [x, y] of S.fallen) { g.fillStyle = '#8a8274'; g.beginPath(); g.ellipse(x, y, 6, 4, 0, 0, 7); g.fill(); }
-    for (const p of S.sparks) { g.fillStyle = `rgba(255,236,170,${clamp(p.life, 0, 1)})`; star(g, p.x, p.y, p.r * 2.4); }
+    for (const p of S.sparks) { if (p.rock) { g.fillStyle = `rgba(150,140,124,${clamp(p.life * 2, 0, 1)})`; g.beginPath(); g.arc(p.x, p.y, p.r, 0, 7); g.fill(); continue; } g.fillStyle = `rgba(255,236,170,${clamp(p.life, 0, 1)})`; star(g, p.x, p.y, p.r * 2.4); }
     g.restore();
     floatMsg(g, S.msg);
     g.save(); g.font = '700 14px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.lineWidth = 3; g.strokeStyle = 'rgba(60,40,20,.5)'; g.fillStyle = '#fff';
