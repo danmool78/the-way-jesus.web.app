@@ -336,32 +336,32 @@ img,canvas{-webkit-user-drag:none;user-select:none}
 <section id="setup">
   <div class="backdrop" id="backdrop"></div>
   <header class="ltop">
-    <div class="logo"><img src="assets/game-icon.svg" alt="" width="46" height="46"><div><small>그 길 시리즈</small><b>그 길 순례</b></div></div>
+    <div class="logo"><img src="assets/game-icon.svg" alt="" width="46" height="46"><div><small data-i18n>그 길 시리즈</small><b data-i18n>그 길 순례</b></div></div>
     <div class="purse" id="purse"></div>
   </header>
-  <div class="stagebox"><canvas id="preview"></canvas><div class="plate"><b id="plate"></b><small id="rank"></small></div><div class="spin">↻ 끌어서 돌려 보기</div></div>
+  <div class="stagebox"><canvas id="preview"></canvas><div class="plate"><b id="plate"></b><small id="rank"></small></div><div class="spin" data-i18n>↻ 끌어서 돌려 보기</div></div>
   <div class="panel">
-    <nav class="tabs"><button data-tab="j" class="on">여정</button><button data-tab="me">꾸미기</button></nav>
+    <nav class="tabs"><button data-tab="j" class="on" data-i18n>여정</button><button data-tab="me" data-i18n>꾸미기</button></nav>
     <div class="tab" id="tabJ">
       <div class="jcards" id="jpick"></div>
       <div class="jinfo" id="jinfo"></div>
     </div>
     <div class="tab hidden" id="tabMe">
-      <div class="field"><b>인물</b><div class="cgrid" id="cpick"></div><div class="cinfo" id="cinfo"></div></div>
-      <div class="field"><label for="name">순례자 이름</label><input id="name" maxlength="10" autocomplete="off" placeholder="이름을 넣어 주세요"></div>
-      <div class="field" hidden><b>모습</b><div class="chips" data-k="sex"></div></div>
-      <div class="field"><b>얼굴빛</b><div class="sw" data-k="skin"></div></div>
-      <div class="field"><b>머리카락</b><div class="sw" data-k="hair"></div></div>
-      <div class="field"><b>수염</b><div class="chips" data-k="beard"></div></div>
-      <div class="field"><b>속옷</b><div class="sw" data-k="robe"></div></div>
-      <div class="field"><b>겉옷</b><div class="sw" data-k="mantle"></div></div>
-      <div class="field"><b>머리에</b><div class="chips" data-k="head"></div></div>
-      <div class="field"><b>지팡이</b><div class="chips" data-k="staff"></div></div>
+      <div class="field"><b data-i18n>인물</b><div class="cgrid" id="cpick"></div><div class="cinfo" id="cinfo"></div></div>
+      <div class="field"><label for="name" data-i18n>순례자 이름</label><input id="name" maxlength="10" autocomplete="off" placeholder="이름을 넣어 주세요" data-i18n-ph></div>
+      <div class="field" hidden><b data-i18n>모습</b><div class="chips" data-k="sex"></div></div>
+      <div class="field"><b data-i18n>얼굴빛</b><div class="sw" data-k="skin"></div></div>
+      <div class="field"><b data-i18n>머리카락</b><div class="sw" data-k="hair"></div></div>
+      <div class="field"><b data-i18n>수염</b><div class="chips" data-k="beard"></div></div>
+      <div class="field"><b data-i18n>속옷</b><div class="sw" data-k="robe"></div></div>
+      <div class="field"><b data-i18n>겉옷</b><div class="sw" data-k="mantle"></div></div>
+      <div class="field"><b data-i18n>머리에</b><div class="chips" data-k="head"></div></div>
+      <div class="field"><b data-i18n>지팡이</b><div class="chips" data-k="staff"></div></div>
     </div>
     <div class="acts">
-      <button class="go" id="start">길 떠나기</button>
-      <div class="row2"><button class="go ghost hidden" id="restart">처음부터</button><button class="go ghost" id="seeCards">카드 모음</button></div>
-      <a class="back" href="./">← 그 길 앱으로</a>
+      <button class="go" id="start" data-i18n>길 떠나기</button>
+      <div class="row2"><button class="go ghost hidden" id="restart" data-i18n>처음부터</button><button class="go ghost" id="seeCards" data-i18n>카드 모음</button></div>
+      <a class="back" href="./" data-i18n>← 그 길 앱으로</a>
     </div>
   </div>
 </section>
@@ -369,15 +369,15 @@ img,canvas{-webkit-user-drag:none;user-select:none}
 <header id="hud" class="hidden">
   <div class="mission"><small id="mNo"></small><b id="mTitle"></b><span id="mClue"></span><div class="meta"><span id="mTime" hidden></span><span id="mDist"></span><span id="mWalk"></span></div></div>
 </header>
-<div class="stat hidden" id="waterBox"><span id="water"></span>물병</div>
-<div class="stat hidden" id="dayBox"><b id="days">0</b>일째</div>
+<div class="stat hidden" id="waterBox"><span id="water"></span><i data-i18n>물병</i></div>
+<div class="stat hidden" id="dayBox"><b id="days">0</b><i data-i18n>일째</i></div>
 <div id="arrow" class="hidden"><svg viewBox="0 0 46 46"><circle cx="23" cy="23" r="21" fill="rgba(29,24,19,.8)" stroke="#d9b46a" stroke-width="1.5"/><path d="M23 9 L33 29 L23 24 L13 29 Z" fill="#f0d79a"/></svg></div>
 <div id="tags"></div>
 <div id="stick" class="hidden"><i></i></div>
 <button id="cardsBtn" class="hidden"></button>
-<button id="ask" class="hidden">길 묻기</button>
-<button id="quit" class="hidden" aria-label="나가기">나가기</button>
-<button id="sound" class="hidden">소리 켬</button>
+<button id="ask" class="hidden" data-i18n>길 묻기</button>
+<button id="quit" class="hidden" aria-label="나가기" data-i18n>나가기</button>
+<button id="sound" class="hidden" data-i18n>소리 켬</button>
 
 <div id="toast"></div>
 <div id="loading" class="hidden"><i></i><b></b></div>
