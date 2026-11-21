@@ -355,7 +355,7 @@ export const B = {
       silas: ['silas', 1.6, -0.3, -1.0],
       tim: ['timothy', 1.25, -0.15, -1.0],
       luke: ['luke', 1.55, -0.05, -1.0, { gaze: false }],
-      lydia: ['lydia', -0.4, 0.28, 1.0, { pose: 'sit-ground' }],
+      lydia: ['lydia', -0.49, 0.29, 1.0, { pose: 'sit-ground' }],
       w1: ['greekW', -0.75, 0.02, 1.0, { pose: 'sit-ground' }],
       w2: ['woman', -0.7, 0.45, 1.1, { pose: 'sit-ground' }],
       maid: ['woman2', -0.95, 0.3, 1.1, { pose: 'sit-ground', gaze: false }],
@@ -375,7 +375,7 @@ export const B = {
       'p1.0': [['paul', 'idle', { x: 0.25, z: 0.12, look: -1.3 }], ['silas', 'idle', { x: 0.5, z: -0.08 }], ['tim', 'idle', { x: 0.5, z: 0.4 }], ['luke', 'idle', { x: 0.8, z: 0.2 }],
         ['lydia', 'listen', { look: 1.1 }], ['w1', 'listen', { look: 1.1, delay: 400 }], ['w2', 'idle', { look: 1.2, delay: 700 }]],
       // 일행은 앉아서 말씀을 전한다
-      'p1.1': [['paul', 'sit-speak', { x: 0.2, z: 0.12, look: -1.3, to: 'lydia' }], ['silas', 'sit-ground', { x: 0.44, z: -0.08, look: -1.3 }], ['tim', 'sit-ground', { x: 0.45, z: 0.42, look: -1.3 }],
+      'p1.1': [['paul', 'sit-speak', { x: 0.18, z: 0.12, look: -1.3, to: 'lydia' }], ['silas', 'sit-ground', { x: 0.46, z: -0.09, look: -1.3 }], ['tim', 'sit-ground', { x: 0.45, z: 0.42, look: -1.3 }],
         ['w2', 'listen'], ['maid', 'listen']],
       // 두아디라에서 온 자색 옷감 장수 루디아
       'p1.2': [['lydia', 'listen', { look: 1.0 }]],
@@ -394,16 +394,16 @@ export const B = {
         ['silas', 'idle', { x: 1.7, z: -0.3, delay: 2800 }], ['tim', 'idle', { x: 1.35, z: 0.0, delay: 3000 }], ['luke', 'idle', { x: 1.65, z: 0.05, delay: 3100 }]],
       // 빌립보 교회를 늘 기쁨으로 — 강가의 여인들이 기도하고, 일행은 성문 안으로 사라진다
       'p2.4': [['lydia', 'idle', { show: 0, delay: 600 }], ['paul', 'idle', { show: 0, delay: 900 }], ['maid', 'idle', { show: 0, delay: 700 }], ['silas', 'idle', { show: 0, delay: 1000 }],
-        ['tim', 'idle', { show: 0, delay: 1100 }], ['luke', 'idle', { show: 0, delay: 1200 }], ['w1', 'raise'], ['w2', 'pray'], ['@env', 'dusk']],
+        ['tim', 'idle', { show: 0, delay: 1100 }], ['luke', 'idle', { show: 0, delay: 1200 }], ['w1', 'pray'], ['w2', 'pray'], ['@env', 'dusk']],
       w0: [['@env', 'day'], ['heart', null, { show: 1 }], ['water', 'idle'], ['paul', 'sit-speak', { show: 1, x: 0.2, z: 0.2, look: -1.3, to: 'lydia' }], ['silas', 'sit-ground', { show: 1, x: 0.42, z: -0.07, look: -1.3 }],
         ['tim', 'sit-ground', { show: 1, x: 0.45, z: 0.42, look: -1.3 }], ['luke', 'idle', { show: 1, x: 0.75, z: 0.2, look: -1.3 }], ['lydia', 'listen', { show: 1, x: -0.4, z: 0.28, look: 1.0 }],
-        ['maid', 'sit-ground', { show: 1, x: -0.98, z: 0.28, look: 1.1 }], ['w1', 'listen'], ['w2', 'listen']],
+        ['maid', 'sit-ground', { show: 1, x: -0.99, z: 0.28, look: 1.1 }], ['w1', 'listen'], ['w2', 'listen']],
       w1: [['heart', null, { show: 0 }], ['lydia', 'speak', { x: -0.55, z: 0.25, look: 1.3, to: 'paul' }], ['paul', 'listen', { x: -0.15, z: 0.25, look: -1.3 }], ['maid', 'idle', { x: -0.85, z: 0.5, look: 1.2 }],
         ['silas', 'idle', { x: 0.1, z: 0.0, look: -1.3 }], ['tim', 'idle', { x: 0.15, z: 0.45, look: -1.3 }]],
       w2: [['@env', 'dusk'], ['lydia', 'listen', { look: 1.3 }], ['paul', 'speak', { to: 'lydia' }], ['w1', 'pray'], ['w2', 'pray']],
       end: [['@env', 'day'], ['heart', null, { show: 1 }], ['water', 'idle'], ['paul', 'sit-speak', { show: 1, x: 0.2, z: 0.2, look: -1.3, to: 'lydia' }], ['silas', 'sit-ground', { show: 1, x: 0.42, z: -0.07, look: -1.3 }],
         ['tim', 'sit-ground', { show: 1, x: 0.45, z: 0.42, look: -1.3 }], ['luke', 'idle', { show: 1, x: 0.75, z: 0.2, look: -1.3 }], ['lydia', 'listen', { show: 1, x: -0.4, z: 0.28, look: 1.0 }],
-        ['maid', 'sit-ground', { show: 1, x: -0.97, z: 0.28, look: 1.1 }], ['w1', 'listen', { show: 1 }], ['w2', 'listen', { show: 1 }]],
+        ['maid', 'sit-ground', { show: 1, x: -0.98, z: 0.28, look: 1.1 }], ['w1', 'listen', { show: 1 }], ['w2', 'listen', { show: 1 }]],
     },
   },
 
@@ -535,8 +535,8 @@ export const B = {
       b1: ['greek2', -0.2, 0.3, 1.0, { gaze: false }],
       be1: ['elderC', -0.85, 0.1, 0.9, { pose: 'sit-ground' }],
       be2: ['greekW', -0.25, 0.12, -0.9, { pose: 'sit-ground' }],
-      be3: ['jewD', -0.55, -0.32, 0, { pose: 'sit-ground' }],
-      be4: ['greek', -0.85, -0.25, 0.6, { pose: 'sit-ground', gaze: false }],
+      be3: ['jewD', -0.55, -0.42, 0, { pose: 'sit-ground' }],
+      be4: ['greek', -0.97, -0.22, 0.6, { pose: 'sit-ground', gaze: false }],
     },
     beats: {
       // 베뢰아 — 두루마리를 둘러앉아 날마다 성경을 찾아본다

@@ -750,8 +750,8 @@ export const C = {
       'p1.1': [['paul', 'speak', { look: -0.7, to: 'm1' }]],
       'p1.2': [['paul', 'speak', { to: 'm2' }]],
       // 성전에서 기도할 때 주님께서 — 바울 위로 빛
-      'p1.3': [['paul', 'look-up', { look: -0.3 }], ['memory', null, { show: 1, delay: 800 }]],
-      'p1.4': [['memory', null, { show: 1 }], ['paul', 'raise', { look: -0.4 }]],
+      'p1.3': [['paul', 'pray', { look: -0.3 }], ['memory', null, { show: 1, delay: 800 }]], // 기도는 두 손 모음(사용자 2026-11)
+      'p1.4': [['memory', null, { show: 1 }], ['paul', 'look-up', { look: -0.4 }]],
       'p1.5': [['paul', 'point', { look: -1.4 }]],
       // 무리가 외친다 — 이런 자는 없애 버려라
       'p2.0': [['memory', null, { show: 0 }], ['paul', 'idle', { look: -0.7 }], ['m1', 'rebuke'], ['m2', 'raise', { delay: 300 }], ['m3', 'rebuke', { delay: 500 }], ['m4', 'raise', { delay: 700 }]],

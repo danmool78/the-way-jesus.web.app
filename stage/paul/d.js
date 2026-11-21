@@ -489,7 +489,7 @@ export const D = {
       epa: ['epaphroditus', 2.2, 0.35, -1.3],
     },
     beats: {
-      enter: [['desk', 'write'], ...hide('j1', 'j2', 'j3', 'j4', 'j5', 'epa'), ['gift', null, { show: 1 }], ['paul', 'sit-speak', { x: 0.35, z: 0.06, look: 0.1, to: 'tim' }],
+      enter: [['desk', 'write'], ...hide('j1', 'j2', 'j3', 'j4', 'j5', 'epa'), ['gift', null, { show: 1 }], ['paul', 'sit-speak', { x: 0.35, z: -0.04, look: 0.1, to: 'tim' }],
         ['soldier', 'idle', { x: 0.67, z: 0.06, look: -0.3 }], ['tim', 'sit-ground', { x: 0.05, z: 0.35, look: 1.2 }]],
       // 사흘 뒤 — 사슬에 매인 바울과 지키는 군인. 지도자들은 아직 오지 않았다
       intro: [['@env', 'day'], ['desk', 'idle', { show: 0 }], ['gift', null, { show: 0 }], ...hide('j1', 'j2', 'j3', 'j4', 'j5', 'epa'), ['tim', 'idle', { show: 0 }]],
@@ -522,17 +522,17 @@ export const D = {
       'p2.2': [['soldier', 'listen', { look: -0.9 }], ['paul', 'sit-speak', { to: 'soldier' }]],
       'p2.3': [['soldier', 'idle', { look: -0.3 }], ['paul', 'sit-speak', { to: 'tim' }]],
       // 주님 안에서 늘 기뻐하십시오 — 사슬 찬 손을 들고
-      'p2.4': [['paul', 'raise', { x: 0.35, z: 0.06, look: 0.1 }]],
+      'p2.4': [['paul', 'raise', { x: 0.35, z: -0.04, look: 0.1 }]],
       'p2.5': [['paul', 'raise'], ['desk', 'done'], ['tim', 'look-up', { look: 1.0 }]],
       // 사슬에 매인 사람이 보낸 기쁨 — 에바브로디도가 편지를 들고 떠난다
       'p2.6': [['paul', 'bless', { look: 1.2 }], ['epa', 'idle', { item: 'scroll' }], ['epa', 'bow', { delay: 800 }], ['epa', 'idle', { x: 2.3, z: 0.4, delay: 2600 }], ['epa', 'idle', { show: 0, delay: 5600 }]],
-      w0: [['@env', 'day'], ['desk', 'write', { show: 1 }], ['gift', null, { show: 1 }], ...hide('j1', 'j2', 'j3', 'j4', 'j5', 'epa'), ['paul', 'sit-speak', { x: 0.35, z: 0.06, look: 0.1, to: 'tim' }],
+      w0: [['@env', 'day'], ['desk', 'write', { show: 1 }], ['gift', null, { show: 1 }], ...hide('j1', 'j2', 'j3', 'j4', 'j5', 'epa'), ['paul', 'sit-speak', { x: 0.35, z: -0.04, look: 0.1, to: 'tim' }],
         ['soldier', 'idle', { x: 0.67, z: 0.06, look: -0.3 }], ['tim', 'sit-ground', { show: 1, x: 0.05, z: 0.35, look: 1.2 }]],
       w1: [['paul', 'sit-speak', { to: 'tim' }]],
       w2: [['desk', 'done'], ['paul', 'raise', { look: 0.1 }]],
       w3: [['desk', 'idle', { show: 0 }], ['tim', 'idle', { show: 0 }], ['j1', 'sit-ground', { show: 1, x: -0.55, z: 0.1, look: 1.2 }], ['j3', 'sit-ground', { show: 1, x: -0.75, z: 0.45, look: 1.2 }], ['j4', 'sit-ground', { show: 1, x: -1.15, z: 0.15, look: 1.3 }],
         ['paul', 'speak', { x: 0.35, z: -0.05, item: 'scroll', to: 'j1' }], ['soldier', 'idle', { x: 0.67, z: -0.05, look: -0.4 }]],
-      end: [['@env', 'day'], ['desk', 'done', { show: 1 }], ['gift', null, { show: 1 }], ...hide('j1', 'j2', 'j3', 'j4', 'j5', 'epa'), ['paul', 'raise', { x: 0.35, z: 0.06, look: 0.1 }],
+      end: [['@env', 'day'], ['desk', 'done', { show: 1 }], ['gift', null, { show: 1 }], ...hide('j1', 'j2', 'j3', 'j4', 'j5', 'epa'), ['paul', 'raise', { x: 0.35, z: -0.04, look: 0.1 }],
         ['soldier', 'idle', { x: 0.67, z: 0.06, look: -0.3 }], ['tim', 'sit-ground', { show: 1, x: 0.05, z: 0.35, look: 1.2 }]],
     },
   },
