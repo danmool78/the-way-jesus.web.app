@@ -49,7 +49,7 @@ Object.assign(MAKERS, {
       [-1, 1].forEach(k => mesh(new THREE.BoxGeometry(0.025, 0.08, 0.08), wood(), g, [s * (bw / 2 + 0.12) + k * (bw / 2 - 0.04), 0.04, z]));
     }));
     const P = new Prop(g);
-    P.heightAt = (x, z) => { const u = (x - g.position.x) / g.scale.x, v = (z - g.position.z) / g.scale.z; return P.show > 0.5 && Math.abs(u) < 0.29 && v > -0.6 && v < -0.31 ? DH * g.scale.y : 0; };
+    P.heightAt = (x, z) => { const u = (x - g.position.x) / g.scale.x, v = (z - g.position.z) / g.scale.z; if (P.show <= 0.5) return 0; if (Math.abs(u) < 0.29 && v > -0.6 && v < -0.31) return DH * g.scale.y; return Math.abs(u) < W / 2 + 0.1 && v > -0.67 && v < 0.57 ? 0.02 * g.scale.y : 0; }; // 강단 밖도 바닥 판 — 긴 의자에 앉은 학생들이 3D에서 건물 밖 땅으로 잡혔다(a22)
     return P;
   },
 

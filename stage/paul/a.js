@@ -622,7 +622,7 @@ export const A = {
       'p1.1': [['l1', 'speak', { look: 1.2 }]],
       'p1.2': [['l1', 'bow', { x: -0.2, z: -0.25, look: 1.2 }], ['lw', 'bow', { look: 1.2, delay: 500 }], ['lame', 'bow', { look: 1.2, delay: 900 }]],
       // 제우스 신전의 제사장이 소와 꽃다발을 끌고 온다 — 제단에 불
-      'p1.3': [['temple', 'fire'], ['priest', 'idle', { show: 1, x: -0.7, z: -0.15, look: 1.2 }], ['ox1', null, { show: 1, x: -0.95, z: 0.05 }]],
+      'p1.3': [['temple', 'fire'], ['priest', 'idle', { show: 1, x: -0.7, z: -0.15, look: 1.2 }], ['ox1', null, { show: 1, x: -1.1, z: 0.05 }]],
       // 옷을 찢고 무리 속으로 뛰어들어 외친다 — 우리도 여러분과 같은 사람
       'p1.4': [['priest', 'raise'], ['paul', 'rebuke', { x: 0.5, z: 0.0, look: -1.3 }], ['barnabas', 'rebuke', { x: 0.85, z: -0.3, look: -1.2, delay: 300 }]],
       'p1.5': [['paul', 'raise', { look: -1.3 }], ['barnabas', 'speak', { to: 'priest', delay: 2500 }]],
@@ -646,11 +646,11 @@ export const A = {
       w0: [['folk', 'stand', { show: 1 }], ['ox1', null, { show: 0 }], ['priest', 'idle', { show: 0 }], ['temple', 'idle'], ['stones', 'idle'], ['j1', 'idle', { show: 0 }], ['j2', 'idle', { show: 0 }], ['d1', 'idle', { show: 0 }], ['d2', 'idle', { show: 0 }],
         ['paul', 'speak', { show: 1, x: 0.75, z: 0.1, look: -1.5, to: 'lame' }], ['barnabas', 'idle', { show: 1, x: 1.15, z: -0.2, look: -1.2 }], ['lame', 'sit-ground', { show: 1, x: 0.05, z: 0.35, look: 1.1 }],
         ['l1', 'idle', { show: 1, x: -0.55, z: -0.3, look: 1.2 }], ['lw', 'idle', { show: 1, x: -0.25, z: 0.6, look: 1.1 }]],
-      w1: [['lame', 'raise', { x: 0.3, z: 0.55 }], ['l1', 'speak', { look: 1.2 }], ['lw', 'raise', { look: 1.1 }], ['temple', 'fire'], ['priest', 'idle', { show: 1, x: -0.7, z: -0.15, look: 1.2 }], ['ox1', null, { show: 1, x: -0.95, z: 0.05 }]],
+      w1: [['lame', 'raise', { x: 0.3, z: 0.55 }], ['l1', 'speak', { look: 1.2 }], ['lw', 'raise', { look: 1.1 }], ['temple', 'fire'], ['priest', 'idle', { show: 1, x: -0.7, z: -0.15, look: 1.2 }], ['ox1', null, { show: 1, x: -1.1, z: 0.05 }]],
       w2: [['folk', 'stand', { show: 1 }], ['paul', 'raise', { show: 1, x: 0.5, z: 0.0, look: -1.3 }], ['barnabas', 'speak', { show: 1, x: 0.85, z: -0.3, look: -1.2, to: 'priest' }], ['priest', 'shrug', { show: 1, x: -0.7, z: -0.15, look: 1.2 }],
-        ['l1', 'bow', { show: 1, x: -0.2, z: -0.25, look: 1.2 }], ['lw', 'bow', { show: 1, look: 1.2 }], ['lame', 'bow', { show: 1, x: 0.3, z: 0.55, look: 1.2 }], ['ox1', null, { show: 1, x: -0.95, z: 0.05 }], ['temple', 'fire'],
+        ['l1', 'bow', { show: 1, x: -0.2, z: -0.25, look: 1.2 }], ['lw', 'bow', { show: 1, look: 1.2 }], ['lame', 'bow', { show: 1, x: 0.3, z: 0.55, look: 1.2 }], ['ox1', null, { show: 1, x: -1.1, z: 0.05 }], ['temple', 'fire'],
         ['j1', 'idle', { show: 0 }], ['j2', 'idle', { show: 0 }], ['d1', 'idle', { show: 0 }], ['d2', 'idle', { show: 0 }], ['stones', 'idle']],
-      end: [['folk', 'stand', { show: 1 }], ['temple', 'fire'], ['stones', 'idle'], ['ox1', null, { show: 1, x: -0.95, z: 0.05 }], ['priest', 'raise', { show: 1, x: -0.7, z: -0.15, look: 1.2 }],
+      end: [['folk', 'stand', { show: 1 }], ['temple', 'fire'], ['stones', 'idle'], ['ox1', null, { show: 1, x: -1.1, z: 0.05 }], ['priest', 'raise', { show: 1, x: -0.7, z: -0.15, look: 1.2 }],
         ['lame', 'idle', { show: 1, x: 0.1, z: 0.35, look: 1.0 }], ['l1', 'bow', { show: 1, x: -0.2, z: -0.25, look: 1.2 }], ['lw', 'bow', { show: 1, x: -0.25, z: 0.6, look: 1.2 }],
         ['paul', 'raise', { show: 1, x: 0.5, z: 0.0, look: -1.3 }], ['barnabas', 'rebuke', { show: 1, x: 0.85, z: -0.3, look: -1.2 }],
         ['j1', 'idle', { show: 0 }], ['j2', 'idle', { show: 0 }], ['d1', 'idle', { show: 0 }], ['d2', 'idle', { show: 0 }]],
