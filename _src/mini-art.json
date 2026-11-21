@@ -360,5 +360,97 @@
    ],
    "p": "The prophet Elijah standing, full body, side view facing left, both arms lifted high to heaven in prayer, rough hairy cloak with a leather belt, white beard. Same character as the second reference image."
   }
+ },
+ "m35": {
+  "bg": {
+   "bg": true,
+   "p": "The walled city of Jericho on its mound seen from the plain at golden afternoon: massive mud-brick and stone double walls with towers across the middle of the image, palm trees around, a flat dusty plain in the lower third where a procession can walk, warm sky above. No people."
+  },
+  "priests": {
+   "h": 420,
+   "ratio": "16:9",
+   "p": "Three Israelite priests in white linen robes walking to the right in a line, each blowing a long curved ram's horn trumpet (shofar), side view."
+  },
+  "ark": {
+   "h": 420,
+   "ratio": "16:9",
+   "p": "The golden Ark of the Covenant with two cherubim on its lid, carried on two long poles on the shoulders of four Levite priests in white robes walking to the right, side view."
+  },
+  "people": {
+   "h": 420,
+   "ratio": "16:9",
+   "p": "A marching column of five ancient Israelite men with simple robes, some with spears and round shields, walking silently to the right, side view."
+  },
+  "fallen": {
+   "bg": true,
+   "ref": [
+    "_src/mini-art/m35/bg.png"
+   ],
+   "p": "Exactly the same view and composition as the second reference image of Jericho, but the walls have fallen down flat into heaps of rubble and dust clouds rising, the plain in front unchanged. No people."
+  }
+ },
+ "d05": {
+  "bg": {
+   "bg": true,
+   "p": "The Valley of Elah seen from the side: low golden hills on both sides, a dry stream bed of smooth stones in the foreground left, open sunlit ground across the lower third, the Philistine tents faintly on the far right hill and Israel's camp on the far left hill. No people in the foreground."
+  },
+  "goliath": {
+   "h": 420,
+   "ref": [
+    "_src/cards/goliath.png"
+   ],
+   "p": "Goliath the Philistine giant striding to the left, full body side view, a bronze helmet that leaves his forehead bare, bronze scale armor coat, bronze greaves, a huge spear held upright in his right hand, fierce bearded face. Same character as the second reference image."
+  },
+  "bearer": {
+   "h": 420,
+   "p": "A Philistine shield-bearer walking to the left, full body side view, holding a huge tall rectangular bronze-rimmed shield in front of him, plumed headdress."
+  },
+  "david": {
+   "h": 420,
+   "ref": [
+    "_src/cards/david.png"
+   ],
+   "p": "Young shepherd David facing right, full body side view, whirling a leather sling above his head with his right arm, a shepherd's bag at his side, determined face. Same character as the second reference image."
+  }
+ },
+ "d24": {
+  "bg": {
+   "bg": true,
+   "p": "The road up to the City of David (Zion) on a bright festive day: a stone path climbing diagonally from the lower left to the walled hilltop city at the upper right, a palace window in the wall, terraced slopes and olive trees, open festive sky. No people."
+  },
+  "david": {
+   "h": 420,
+   "ref": [
+    "_src/cards/david-king.png"
+   ],
+   "p": "King David dancing with all his might, full body, wearing only a simple white linen ephod, both arms raised in joy, one leg lifted in a leap, red-brown hair, joyful face. Same character as the second reference image."
+  },
+  "crowd": {
+   "h": 420,
+   "ratio": "16:9",
+   "p": "A joyful group of five ancient Israelites seen from the front, playing tambourines, lyres and cymbals and singing, colorful robes, standing in a row."
+  }
+ },
+ "a04": {
+  "bg": {
+   "bg": true,
+   "p": "Straight-on night view of the massive ancient stone city wall of Damascus filling the image: large dark stone blocks, a crenellated top edge near the top fifth with a deep starry night sky and a thin crescent moon above, dark bushes and ground at the very bottom. Plain wall face without any windows or doors."
+  },
+  "basket": {
+   "h": 300,
+   "p": "A large round woven wicker basket hanging from ropes, with a man in a dark cloak crouched inside it with only his head and shoulders showing, side view."
+  },
+  "guard": {
+   "h": 420,
+   "p": "A city watchman of Damascus walking to the right, full body side view, holding a burning torch forward in his left hand and a spear in his right, helmet and cloak."
+  },
+  "win-shut": {
+   "h": 200,
+   "p": "A small window opening in a stone wall with two closed wooden shutters, straight-on view."
+  },
+  "win-open": {
+   "h": 200,
+   "p": "A small window opening in a stone wall with two wooden shutters swung open and warm orange lamplight glowing from inside, straight-on view."
+  }
  }
 }
