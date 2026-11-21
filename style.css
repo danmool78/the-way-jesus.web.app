@@ -627,7 +627,9 @@ body.intro-open *{animation-play-state:paused}
 body.intro-open .intro,body.intro-open .intro *{animation-play-state:running}
 :lang(ko) .intro{word-break:keep-all} /* 한국어는 낱말 중간에서 줄을 바꾸지 않게 (중·일은 띄어쓰기가 없어 그대로) */
 .intro section{max-width:640px;margin:0 auto;padding:0 20px;text-align:center}
-.land-hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-top:32px!important;padding-bottom:24px!important;animation:introIn .9s ease-out both}
+.land-home{position:absolute;top:14px;left:16px;font-size:14px;color:var(--muted);text-decoration:none;padding:6px 4px}
+.land-home:hover{color:var(--gold2)}
+.land-hero{position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-top:32px!important;padding-bottom:24px!important;animation:introIn .9s ease-out both}
 @keyframes introIn{from{opacity:0;transform:translateY(12px)}}
 .intro-logo{width:104px;height:104px;filter:drop-shadow(0 0 28px rgba(232,196,120,.35))}
 .intro h1{margin:14px 0 4px;font-family:var(--serif);font-size:44px;font-weight:700;letter-spacing:.24em;color:var(--gold2);text-indent:.24em}
