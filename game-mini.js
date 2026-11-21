@@ -3486,8 +3486,87 @@ const storm = {
   },
 };
 
+/* ---------- 수금 타는 소년 (삼상 16:14–23): 가락을 듣고 따라 타기 — 기억 ---------- */
+// 수금 줄 일곱(오음 음계). 먼저 한 가락이 울리며 줄이 빛나고(듣기), 그대로 따라 퉁긴다(타기). 맞으면 사울을 덮은 어둠이 걷히고,
+// 틀리면 어긋난 소리와 함께 어둠이 짙어지고 같은 가락을 다시 들려준다. 가락은 3·4·5·6음, 뒤로 갈수록 빠르게. 세 번 틀리면 실패.
+const HARP = [293.7, 329.6, 370, 440, 493.9, 587.3, 659.3], PHRASES = [3, 4, 5, 6], HARP_Y = [318, 486], harpX = i => 72 + i * 42.7;
+const lyre = {
+  title: tr('수금 타는 소년'), task: tr('가락을 듣고 똑같이 따라 타기'), art: ['d03/bg', 'd03/saul', 'd03/saul-calm', 'd03/david'],
+  ask: [tr('이번엔 네가 내 수금을 타 보렴 — 내가 먼저 한 가락을 타면, 똑같이 따라 타는 거야.'), tr('줄을 틀리면 왕의 마음이 더 어두워지니, 귀 기울여 잘 들어!')],
+  quote: tr('하나님께서 부리시는 악령이 사울에게 이를 때에 다윗이 수금을 들고 와서 손으로 탄즉'), ref: tr('삼상 16:23'),
+  help: tr('먼저 줄이 빛나며 한 가락이 울려요 — 잘 듣고 보세요.<br>그다음 <b>같은 차례로 줄을 눌러</b> 따라 타요. 맞히면 왕을 덮은 어둠이 걷혀요. 세 번 틀리면 실패!'),
+  seconds: 34,
+  init() { const S = { r: 0, seq: [], i: 0, ph: 'wait', wait: 1.2, play: [], glow: HARP.map(() => 0), dark: 0.85, miss: 0, t: 0, msg: null, notes: [] }; this.make(S); return S; },
+  make(S) { // 오음 음계 위를 걷듯이 — 한두 칸씩 오르내리는 노래 같은 가락
+    const n = PHRASES[S.r]; let x = Math.floor(rnd(1, 6)); S.seq = [x];
+    while (S.seq.length < n) { let y; do { y = x + [-2, -1, -1, 1, 1, 2][Math.floor(Math.random() * 6)]; } while (y < 0 || y > 6 || y === x); S.seq.push(x = y); }
+  },
+  listen(S) { S.ph = 'listen'; S.i = 0; S.gap = S.r >= 2 ? 0.42 : 0.55; S.next = 0.3; },
+  pluck(S, k) { S.glow[k] = 1; S.fx.pluck?.(HARP[k]); S.notes.push({ x: harpX(k), y: 300, a: 1 }); },
+  update(dt, S) {
+    S.t += dt; if (S.msg) S.msg.at -= dt; S.glow = S.glow.map(g => Math.max(0, g - dt * 2.6));
+    for (const n of S.notes) { n.y -= 40 * dt; n.a -= dt * 0.8; } S.notes = S.notes.filter(n => n.a > 0);
+    S.dark += ((S.goal ?? S.dark) - S.dark) * Math.min(1, dt * 3);
+    if (S.ph === 'wait' && (S.wait -= dt) <= 0) this.listen(S);
+    else if (S.ph === 'listen' && (S.next -= dt) <= 0) {
+      if (S.i < S.seq.length) { this.pluck(S, S.seq[S.i++]); S.next = S.gap; }
+      else { S.ph = 'play'; S.i = 0; S.msg = { t: tr('이제 따라 타세요'), c: '#ffe8b0', at: 0.9, x: 200, y: 300 }; }
+    }
+  },
+  down(x, y, S) {
+    if (S.ph !== 'play' || y < HARP_Y[0] - 30) return;
+    const k = clamp(Math.round((x - 72) / 42.7), 0, 6); this.pluck(S, k);
+    if (k === S.seq[S.i]) { if (++S.i >= S.seq.length) { S.r++; S.goal = Math.max(0, 0.85 - S.r * 0.2125); S.fx.play('right');
+        S.msg = { t: S.r >= PHRASES.length ? tr('왕의 얼굴이 밝아졌어요') : tr('좋아요 — 어둠이 걷혀요'), c: '#ffe8b0', at: 1, x: 200, y: 240 };
+        if (S.r < PHRASES.length) { this.make(S); S.ph = 'wait'; S.wait = 1.1; } else S.ph = 'done'; } }
+    else { S.miss++; S.goal = Math.min(1, (S.goal ?? S.dark) + 0.12); S.fx.play('sour'); S.ph = S.miss >= 3 ? 'fail' : 'wait'; S.wait = 1.1;
+      S.msg = { t: S.miss >= 3 ? tr('왕의 마음이 더 어두워졌어요') : tr('줄이 어긋났어요 — 다시 들어 보세요'), c: '#ffb08a', at: 1, x: 200, y: 240 }; }
+  },
+  up() {},
+  key(k, S) { const i = '1234567'.indexOf(k); if (i < 0) return false; this.down(harpX(i), 400, S); },
+  won: S => S.ph === 'done' && S.dark < 0.05,
+  lost: S => S.miss >= 3,
+  failText: S => S.miss >= 3 ? tr('세 번 틀렸어요 — 왕의 마음이 더 어두워졌어요') : tr('시간이 다 되었어요'),
+  scene(g, S, calm = 0) {
+    if (!bgArt(g, 'd03/bg')) { g.fillStyle = '#1c1612'; g.fillRect(0, 0, W, H); }
+    const d = S.dark * (1 - calm);
+    g.save(); g.globalAlpha = 1 - calm; spr(g, 'd03/saul', 106, 300, 208); g.restore();
+    if (calm > 0) { g.save(); g.globalAlpha = calm; spr(g, 'd03/saul-calm', 106, 300, 208); g.restore(); }
+    // 사울을 덮은 어둠: 짙은 보랏빛 안개가 일렁인다
+    g.save(); const r = g.createRadialGradient(100, 200, 10, 100, 200, 150); r.addColorStop(0, `rgba(30,10,40,${0.75 * d})`); r.addColorStop(1, 'rgba(30,10,40,0)'); g.fillStyle = r; g.fillRect(-60, 40, 320, 320);
+    for (let i = 0; i < 7; i++) { const a = S.t * 0.6 + i; g.fillStyle = `rgba(20,6,30,${0.22 * d})`; g.beginPath(); g.ellipse(100 + Math.cos(a) * 60, 190 + Math.sin(a * 1.3) * 60, 50, 30, a, 0, 7); g.fill(); } g.restore();
+    if (calm > 0) { g.save(); g.globalCompositeOperation = 'lighter'; const w = g.createRadialGradient(150, 200, 10, 150, 200, 220); w.addColorStop(0, `rgba(255,220,150,${0.3 * calm})`); w.addColorStop(1, 'rgba(255,220,150,0)'); g.fillStyle = w; g.fillRect(0, 0, W, 420); g.restore(); }
+    spr(g, 'd03/david', 304, 300, 168, { flip: true });
+  },
+  harp(g, S) { // 수금: 나무 틀과 일곱 줄
+    g.save(); g.fillStyle = 'rgba(18,12,8,.72)'; g.fillRect(0, 296, W, H - 296);
+    g.strokeStyle = '#8a5a2e'; g.lineWidth = 10; g.lineCap = 'round'; g.beginPath(); g.moveTo(44, HARP_Y[1] + 4); g.quadraticCurveTo(30, 330, 52, HARP_Y[0] - 12); g.moveTo(356, HARP_Y[1] + 4); g.quadraticCurveTo(370, 330, 348, HARP_Y[0] - 12); g.stroke();
+    g.lineWidth = 9; g.beginPath(); g.moveTo(46, HARP_Y[0] - 10); g.lineTo(354, HARP_Y[0] - 10); g.stroke(); g.lineWidth = 12; g.beginPath(); g.moveTo(44, HARP_Y[1] + 6); g.lineTo(356, HARP_Y[1] + 6); g.stroke();
+    for (let i = 0; i < 7; i++) { const x = harpX(i), gl = S.glow[i], wob = gl ? Math.sin(S.t * 60 + i) * 2.5 * gl : 0;
+      if (gl) { g.save(); g.globalCompositeOperation = 'lighter'; g.strokeStyle = `rgba(255,210,120,${0.5 * gl})`; g.lineWidth = 12; g.beginPath(); g.moveTo(x, HARP_Y[0]); g.lineTo(x, HARP_Y[1]); g.stroke(); g.restore(); }
+      g.strokeStyle = gl ? '#fff1c8' : '#d8c8a0'; g.lineWidth = 2.4 - i * 0.18; g.beginPath(); g.moveTo(x, HARP_Y[0]); g.quadraticCurveTo(x + wob, (HARP_Y[0] + HARP_Y[1]) / 2, x, HARP_Y[1]); g.stroke(); }
+    for (const n of S.notes) { g.fillStyle = `rgba(255,226,160,${n.a})`; g.font = '700 18px serif'; g.textAlign = 'center'; g.fillText('♪', n.x, n.y); }
+    g.restore();
+  },
+  draw(g, S) {
+    this.scene(g, S); this.harp(g, S);
+    g.save(); g.font = '800 13px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.fillStyle = '#f2e8d4';
+    g.fillText(tr('가락 {0} / {1}', Math.min(S.r + 1, PHRASES.length), PHRASES.length), 14, 28);
+    for (let i = 0; i < 3; i++) { g.fillStyle = i < S.miss ? '#ff8a6a' : 'rgba(255,255,255,.22)'; g.beginPath(); g.arc(W - 70 + i * 22, 24, 7, 0, 7); g.fill(); }
+    g.font = '800 14px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.fillStyle = S.ph === 'play' ? '#ffe39a' : '#c8bca4';
+    g.fillText(S.ph === 'listen' || S.ph === 'wait' ? tr('잘 들어 보세요…') : S.ph === 'play' ? tr('따라 타기 {0} / {1}', S.i, S.seq.length) : '', 200, 312 - 24);
+    g.restore(); floatMsg(g, S.msg);
+  },
+  end(g, k, S) {
+    this.update(0.016, S); this.scene(g, S, Math.min(1, k * 1.6)); this.harp(g, S);
+    if (k > 0.35) { g.save(); g.globalAlpha = clamp((k - 0.35) * 2, 0, 1); g.fillStyle = 'rgba(20,14,10,.84)'; g.fillRect(0, 60, W, 86);
+      g.font = '700 16px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#f6eedc'; g.fillText(tr('사울이 상쾌하여 낫고'), W / 2, 92); g.fillText(tr('악령이 그에게서 떠나더라'), W / 2, 116);
+      g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#cdbf9e'; g.fillText(tr('삼상 16:23'), W / 2, 136); g.restore(); }
+  },
+};
+
 export const MINI = { jesus: { e04: magi, e05: egypt, e07: boyJesus, e11: cana, e17: fishing, e22: twelve, e23: rock, e28: bail, e31: loaves, e32: water, e39: stones, e42: sheep, e43: coin, e46: climb, e48: palms, e59: tiberias },
-  david: { d01: herdDavid, d05: sling, d10: arrows, d16: cave, d24: arkDance, d38: templeStones }, moses: { m02: nile, m09: redSea, m12: manna, m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket, a17: prison, a35: storm, a36: wreck, a37: viper }, kings: { k15: carmel, k24: naaman, k25: axe, k26: dothan, k30: lastArrow } };
+  david: { d01: herdDavid, d03: lyre, d05: sling, d10: arrows, d16: cave, d24: arkDance, d38: templeStones }, moses: { m02: nile, m09: redSea, m12: manna, m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket, a17: prison, a35: storm, a36: wreck, a37: viper }, kings: { k15: carmel, k24: naaman, k25: axe, k26: dothan, k30: lastArrow } };
 
 /* ---------- 놀이 틀: 소개 → 놀이(제한 시간) → 성공 연출/실패 → 결과 ---------- */
 // host: 모달 안의 상자. fx: { play, pour } (game-audio.js). 끝나면 done({ ok, left, tries })
