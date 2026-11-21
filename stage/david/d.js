@@ -142,7 +142,7 @@ export const D = {
       'p1.4': [['david', 'speak', { to: 'abishai' }], ['joab', 'idle', { look: 1 }]],
       'p1.5': [['david', 'speak', { to: 'abishai' }]],
       'p1.6': [['david', 'mourn']],
-      'p1.7': [['david', 'speak', { to: 'abishai' }], ['abishai', 'idle', { item: null, x: 0.14, z: 0.1, look: -1, delay: 1500 }]],
+      'p1.7': [['david', 'speak', { to: 'abishai' }], ['abishai', 'idle', { item: null, x: 0.26, z: 0.08, look: -1, delay: 1500 }]],
       'p2.1': [['david', 'look-up', { look: 0.3 }]],
       // 다시 길을 걷는다 — 시므이는 맞은편 비탈을 나란히 따라오며 돌을 던진다
       'p2.2': [['david', 'idle', { x: 0.75, z: 0.32, look: 1 }], ['abishai', 'idle', { x: 1.05, z: 0.14, look: 1 }], ['joab', 'idle', { x: 0.45, z: 0.1, look: 1 }],
