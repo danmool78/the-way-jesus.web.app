@@ -700,7 +700,124 @@ function figure(g, x, y, h, reach) {
   g.restore();
 }
 
-export const MINI = { jesus: { e11: cana, e17: fishing, e22: twelve, e31: loaves, e32: water } };
+/* ---------- 잃은 것을 찾는 기쁨 (눅 15:8–10): 등불을 켜고 집을 쓸며 잃은 드라크마 찾기 — 찾기·추리 ---------- */
+// 어두운 집. 손가락을 끄는 곳의 조금 위에 등불이 따라오고, 등불 아래 먼지 더미를 쓸면 걷힌다(눅 15:8 '등불을 켜고 집을 쓸며').
+// 은전은 더미 하나 밑에 있다. 은전 가까이의 더미를 다 쓸면 희미하게 반짝인다 — 그 반짝임으로 범위를 좁힌다.
+// 찾은 은전을 눌러 주우면 집이 환해진다(15:9). 손가락이 등불을 가리지 않게 등불은 손가락보다 위에 있다
+const LAMP = 66, LIFT = 58, NEAR = 105;
+const coin = {
+  title: '잃은 것을 찾는 기쁨', task: '등불을 켜고 잃은 드라크마 찾기',
+  ask: ['어떤 여자가 은전 열 개 가운데 하나를 잃었단다.', '등불을 켜고 집을 쓸며 찾아보렴 — 은전 가까이를 쓸면 희미하게 반짝일 거야.'],
+  quote: '등불을 켜고 집을 쓸며 찾도록 부지런히 찾지 아니하겠느냐', ref: '눅 15:8',
+  help: '끌면 등불이 따라오고, 등불 아래 먼지 더미가 쓸려요.<br>은전 가까이를 쓸면 희미하게 반짝여요 — 반짝임을 따라 범위를 좁혀요. 찾으면 눌러서 주워요.',
+  seconds: 26,
+  init() {
+    const piles = [];
+    for (let tries = 0; piles.length < 24 && tries < 900; tries++) { // 방 안 빈자리에 고르게 흩어 놓는다(가구 자리는 피함)
+      const x = rnd(40, W - 40), y = rnd(80, H - 40);
+      if (FURN.some(f => x > f[0] - 22 && x < f[0] + f[2] + 22 && y > f[1] - 22 && y < f[1] + f[3] + 22)) continue;
+      if (piles.some(p => Math.hypot(p.x - x, p.y - y) < 54)) continue;
+      piles.push({ x, y, amt: 1, r: rnd(18, 26), seed: Math.random() * 1000, hint: false });
+    }
+    const k = Math.floor(Math.random() * piles.length); piles[k].coin = true;
+    return { piles, lx: 200, ly: 300, down: false, mx: 0, my: 0, dust: [], sparks: [], found: false, sweepT: 0, msg: null, light: 0, got: false };
+  },
+  update(dt, S) {
+    S.sweepT -= dt;
+    if (S.down && !S.got) {
+      for (const p of S.piles) {
+        if (p.amt <= 0 || Math.hypot(p.x - S.lx, p.y - S.ly) > LAMP * 0.62 + p.r) continue;
+        p.amt -= dt * 2.3;
+        if (S.sweepT <= 0) { S.fx.play('sweep'); S.sweepT = 0.12; }
+        if (Math.random() < 0.6) S.dust.push({ x: p.x + rnd(-p.r, p.r), y: p.y + rnd(-p.r * 0.6, p.r * 0.6), vx: (S.lx - S.mx) * 4 + rnd(-30, 30), vy: rnd(-40, -5), life: rnd(0.4, 0.8) });
+        if (p.amt <= 0) { // 다 쓸었다
+          if (p.coin) { S.found = true; S.fx.play('glint'); S.msg = { t: '반짝! 은전이다 — 눌러서 주워요', c: '#fff2c0', at: 2, x: p.x, y: p.y - 34 }; }
+          else { const c = S.piles.find(q => q.coin), d = Math.hypot(c.x - p.x, c.y - p.y);
+            if (d < NEAR) { p.hint = true; S.fx.play('glint'); S.msg = { t: '희미하게 반짝였어요…', c: '#e8dcb0', at: 1.3, x: p.x, y: p.y - 30 }; for (let i = 0; i < 6; i++) S.sparks.push({ x: p.x + rnd(-10, 10), y: p.y + rnd(-8, 8), vy: rnd(-25, -8), life: rnd(0.5, 1), r: rnd(1, 2) }); } }
+        }
+      }
+    }
+    for (const d of S.dust) { d.x += d.vx * dt; d.y += d.vy * dt; d.vy += 30 * dt; d.life -= dt; } S.dust = S.dust.filter(d => d.life > 0);
+    for (const p of S.sparks) { p.y += p.vy * dt; p.life -= dt; } S.sparks = S.sparks.filter(p => p.life > 0);
+    if (S.msg) S.msg.at -= dt;
+  },
+  down(x, y, S) {
+    const c = S.piles.find(p => p.coin);
+    if (S.found && Math.hypot(x - c.x, y - c.y) < 34 || S.found && Math.hypot(x - c.x, y - LIFT - c.y) < 34) { S.got = true; S.fx.play('coin'); return; } // 손가락이나 등불 자리로 은전을 누르면
+    S.down = true; this.move(x, y, S);
+  },
+  move(x, y, S) { S.mx = S.lx; S.lx = clamp(x, 10, W - 10); S.ly = clamp(y - LIFT, 60, H - 10); },
+  up(S) { S.down = false; },
+  won: S => S.got,
+  draw(g, S) {
+    // 돌바닥과 흙
+    g.fillStyle = '#5a4630'; g.fillRect(0, 0, W, H);
+    g.strokeStyle = 'rgba(30,20,10,.45)'; g.lineWidth = 1.2;
+    for (let y = 40; y < H; y += 34) for (let x = ((y / 34) % 2) * 26 - 26; x < W; x += 52) { g.beginPath(); g.rect(x + 1, y + 1, 50, 32); g.stroke(); }
+    for (const f of FURN) furniture(g, f);
+    // 먼지 더미
+    for (const p of S.piles) {
+      if (p.coin && p.amt < 0.6) drawCoin(g, p.x, p.y, S.got ? 1 : 0.6 + Math.sin(performance.now() / 150) * 0.4);
+      if (p.amt > 0) dustPile(g, p);
+      else if (p.hint) { g.fillStyle = 'rgba(255,235,170,.18)'; g.beginPath(); g.arc(p.x, p.y, 12, 0, 7); g.fill(); }
+    }
+    for (const d of S.dust) { g.fillStyle = `rgba(170,140,100,${clamp(d.life, 0, 1) * 0.6})`; g.beginPath(); g.arc(d.x, d.y, 2, 0, 7); g.fill(); }
+    // 어둠: 등불 둘레만 밝게 (성공하면 방 전체가 밝아진다)
+    const L = S.light;
+    g.save(); const dark = g.createRadialGradient(S.lx, S.ly, LAMP * 0.35, S.lx, S.ly, LAMP * 1.5 + L * 600);
+    dark.addColorStop(0, 'rgba(8,5,2,0)'); dark.addColorStop(1, `rgba(8,5,2,${0.93 * (1 - L)})`); g.fillStyle = dark; g.fillRect(0, 0, W, H);
+    const warm = g.createRadialGradient(S.lx, S.ly, 2, S.lx, S.ly, LAMP); warm.addColorStop(0, 'rgba(255,190,100,.22)'); warm.addColorStop(1, 'rgba(255,190,100,0)'); g.fillStyle = warm; g.fillRect(S.lx - LAMP, S.ly - LAMP, LAMP * 2, LAMP * 2);
+    g.restore();
+    // 등불 (기름 등잔)과 비
+    lampIcon(g, S.lx, S.ly - 8);
+    for (const p of S.sparks) { g.fillStyle = `rgba(255,236,170,${clamp(p.life, 0, 1)})`; star(g, p.x, p.y, p.r * 2.4); }
+    floatMsg(g, S.msg);
+    g.save(); g.font = '700 13px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.fillStyle = 'rgba(255,230,190,.85)';
+    g.fillText(`쓸어 낸 더미 ${S.piles.filter(p => p.amt <= 0).length} / ${S.piles.length}`, 14, 24); g.restore();
+  },
+  // 성공: 집이 환해지고 이웃을 불러 함께 기뻐한다 (눅 15:9–10)
+  end(g, k, S) { S.light = ease(k); const c = S.piles.find(p => p.coin); S.lx = c.x; S.ly = c.y; this.draw(g, S);
+    if (Math.random() < 0.4) S.sparks.push({ x: c.x + rnd(-30, 30), y: c.y + rnd(-20, 20), vy: rnd(-40, -10), life: rnd(0.5, 1), r: rnd(1.4, 2.6) });
+    if (k > 0.3) { g.save(); g.globalAlpha = clamp((k - 0.3) * 2, 0, 1); g.fillStyle = 'rgba(30,18,8,.78)'; g.fillRect(0, 96, W, 82);
+      g.font = '700 18px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#ffeccb';
+      g.fillText('나와 함께 즐기자', W / 2, 128); g.fillText('잃은 드라크마를 찾았노라', W / 2, 152);
+      g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#e6cfa6'; g.fillText('눅 15:9', W / 2, 170); g.restore(); }
+  },
+};
+// 집 안의 세간: [x, y, w, h, 종류] — 먼지 더미는 이 자리를 피한다
+const FURN = [[18, 52, 70, 46, 'jars'], [300, 50, 84, 40, 'loom'], [150, 222, 100, 58, 'mat'], [24, 400, 60, 66, 'bin'], [318, 412, 64, 52, 'jars']];
+function furniture(g, [x, y, w, h, k]) {
+  g.save();
+  if (k === 'jars') for (let i = 0; i < 3; i++) { const cx = x + 12 + i * (w - 24) / 2, cy = y + h * 0.55; g.fillStyle = '#8a5a34'; g.beginPath(); g.ellipse(cx, cy, 11, 15, 0, 0, 7); g.fill(); g.fillStyle = '#6a4224'; g.beginPath(); g.ellipse(cx, cy - 14, 6, 3, 0, 0, 7); g.fill(); }
+  else if (k === 'loom') { g.fillStyle = '#6e5232'; g.fillRect(x, y, w, 6); g.fillRect(x, y + h - 6, w, 6); g.strokeStyle = 'rgba(220,200,160,.55)'; g.lineWidth = 1; for (let i = 4; i < w; i += 5) { g.beginPath(); g.moveTo(x + i, y + 6); g.lineTo(x + i, y + h - 6); g.stroke(); } }
+  else if (k === 'mat') { g.fillStyle = '#8a7444'; g.fillRect(x, y, w, h); g.strokeStyle = 'rgba(60,40,20,.4)'; for (let i = 6; i < h; i += 6) { g.beginPath(); g.moveTo(x, y + i); g.lineTo(x + w, y + i); g.stroke(); } }
+  else if (k === 'bin') { g.fillStyle = '#7a6040'; g.beginPath(); g.ellipse(x + w / 2, y + h / 2, w / 2, h / 2, 0, 0, 7); g.fill(); g.fillStyle = '#d9b86a'; g.beginPath(); g.ellipse(x + w / 2, y + h / 2, w / 2 - 6, h / 2 - 6, 0, 0, 7); g.fill(); } // 곡식 통
+  g.restore();
+}
+function dustPile(g, p) {
+  const a = clamp(p.amt, 0, 1), r = p.r * (0.45 + a * 0.55);
+  g.save(); g.globalAlpha = 0.35 + a * 0.65;
+  g.fillStyle = '#8e7550'; g.beginPath(); g.ellipse(p.x, p.y, r * 1.2, r * 0.75, 0, 0, 7); g.fill();
+  g.fillStyle = '#a88c60'; for (let i = 0; i < 7; i++) { const s = (p.seed + i * 37) % 1; g.beginPath(); g.ellipse(p.x + Math.cos(i * 2.4 + p.seed) * r * 0.6, p.y + Math.sin(i * 2.4 + p.seed) * r * 0.35, r * 0.4 * (0.6 + s * 0.4), r * 0.22, i, 0, 7); g.fill(); }
+  g.strokeStyle = 'rgba(200,170,110,.5)'; g.lineWidth = 1; for (let i = 0; i < 5; i++) { g.beginPath(); g.moveTo(p.x - r + i * r * 0.5, p.y - r * 0.2); g.lineTo(p.x - r + i * r * 0.5 + 8, p.y - r * 0.35); g.stroke(); } // 지푸라기
+  g.restore();
+}
+function drawCoin(g, x, y, shine) {
+  g.save(); const c = g.createRadialGradient(x - 3, y - 3, 1, x, y, 10); c.addColorStop(0, '#ffffff'); c.addColorStop(0.5, '#d9dde0'); c.addColorStop(1, '#8a9096');
+  g.fillStyle = c; g.beginPath(); g.ellipse(x, y, 10, 8, 0, 0, 7); g.fill(); g.strokeStyle = '#6e747a'; g.lineWidth = 1; g.stroke();
+  g.fillStyle = 'rgba(90,96,100,.6)'; g.beginPath(); g.arc(x, y, 4, 0, 7); g.fill();
+  g.globalAlpha = shine; g.fillStyle = '#fffbe6'; star(g, x + 6, y - 6, 7); g.restore();
+}
+function lampIcon(g, x, y) {
+  g.save(); g.translate(x, y);
+  g.fillStyle = '#b5713c'; g.beginPath(); g.ellipse(0, 0, 13, 7, 0, 0, 7); g.fill(); g.beginPath(); g.moveTo(9, -2); g.lineTo(19, -4); g.lineTo(19, 1); g.lineTo(9, 3); g.fill();
+  g.fillStyle = '#3a2410'; g.beginPath(); g.ellipse(-2, -2, 4, 2, 0, 0, 7); g.fill();
+  const t = performance.now() / 90; g.fillStyle = '#ffd27a'; g.beginPath(); g.ellipse(19, -9 + Math.sin(t) * 0.6, 3, 6 + Math.sin(t * 1.3), 0, 0, 7); g.fill();
+  g.fillStyle = '#fff4cc'; g.beginPath(); g.ellipse(19, -7, 1.4, 3, 0, 0, 7); g.fill();
+  g.restore();
+}
+
+export const MINI = { jesus: { e11: cana, e17: fishing, e22: twelve, e31: loaves, e32: water, e43: coin } };
 
 /* ---------- 놀이 틀: 소개 → 놀이(제한 시간) → 성공 연출/실패 → 결과 ---------- */
 // host: 모달 안의 상자. fx: { play, pour } (game-audio.js). 끝나면 done({ ok, left, tries })
