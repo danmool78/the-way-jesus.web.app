@@ -102,7 +102,7 @@ export const A = {
       'p1.2': [['samuel', 'speak', { to: 'elder1' }], ['elder1', 'listen'], ['altar', 'fire', { delay: 1500 }]],
       // 이새와 아들들 — 맏아들 엘리압이 앞에 선다
       'p1.4': [['elder1', 'idle', { x: 0.15, z: -0.42, look: 0.5 }], ['elder2', 'idle', { x: 0.45, z: -0.5, look: 0.2 }], ['elder2', 'idle', { show: 0, delay: 2400 }],
-        ['jesse', 'idle', { show: 1, x: -0.75, z: -0.18, look: 0.8 }], ['eliab', 'idle', { show: 1, x: -0.12, z: 0.12, look: 1, delay: 600 }],
+        ['jesse', 'idle', { show: 1, x: -0.6, z: -0.1, look: 0.8 }], ['eliab', 'idle', { show: 1, x: -0.12, z: 0.12, look: 1, delay: 600 }],
         ['abin', 'idle', { show: 1, look: 0.7 }], ['shammah', 'idle', { show: 1, look: 0.7 }], ['samuel', 'idle', { look: -1 }]],
       'p1.6': [['beam', null, { show: 1, x: 0.4, z: 0.08 }], ['samuel', 'look-up', { look: -0.3 }]],
       'p1.7': [['samuel', 'listen']],

@@ -58,7 +58,7 @@ export const D = {
       'p0.4': [['david', 'speak', { to: 'official' }]],
       'p0.5': [['david', 'rebuke', { to: 'official' }], ['official', 'bow']],
       // 온 집안과 함께 성을 나선다
-      'p0.6': [['david', 'idle', { x: -0.75, z: 0.22, look: 1 }], ['official', 'idle', { x: -1.12, z: 0.38, look: 1 }], ['msg', 'idle', { x: -0.55, z: 0.5, look: 1 }], ['msg', 'idle', { show: 0, delay: 2500 }],
+      'p0.6': [['david', 'idle', { x: -0.75, z: 0.22, look: 1 }], ['official', 'idle', { x: -1.02, z: 0.44, look: 1 }], ['msg', 'idle', { x: -0.55, z: 0.5, look: 1 }], ['msg', 'idle', { show: 0, delay: 2500 }],
         ['folk', null, { show: 1 }]],
       // 가드에서 온 잇대 — 돌아가라 해도
       'p0.7': [['ittai', 'idle', { show: 1, x: -1.1, z: 0.05, look: 1 }], ['david', 'idle', { look: -1, delay: 1200 }], ['david', 'speak', { to: 'ittai', delay: 2400 }]],
@@ -142,7 +142,7 @@ export const D = {
       'p1.4': [['david', 'speak', { to: 'abishai' }], ['joab', 'idle', { look: 1 }]],
       'p1.5': [['david', 'speak', { to: 'abishai' }]],
       'p1.6': [['david', 'mourn']],
-      'p1.7': [['david', 'speak', { to: 'abishai' }], ['abishai', 'idle', { item: null, x: 0.05, z: 0.12, look: -1, delay: 1500 }]],
+      'p1.7': [['david', 'speak', { to: 'abishai' }], ['abishai', 'idle', { item: null, x: 0.14, z: 0.1, look: -1, delay: 1500 }]],
       'p2.1': [['david', 'look-up', { look: 0.3 }]],
       // 다시 길을 걷는다 — 시므이는 맞은편 비탈을 나란히 따라오며 돌을 던진다
       'p2.2': [['david', 'idle', { x: 0.75, z: 0.32, look: 1 }], ['abishai', 'idle', { x: 1.05, z: 0.14, look: 1 }], ['joab', 'idle', { x: 0.45, z: 0.1, look: 1 }],

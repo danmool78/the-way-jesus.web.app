@@ -357,10 +357,10 @@ export const C = {
       walker: ['mephiS', -2.0, 0.2, 1, { speed: 0.35 }],
       meph: ['mephibosheth', -0.2, 0.08, 0, { pose: 'sit' }],
       prince: ['absalom', -0.62, 0.08, 0.3, { pose: 'sit' }],
-      mica: ['child', 0.02, 0.14, -0.4],
+      mica: ['child', -0.08, 0.16, -0.4],
     },
     beats: {
-      enter: [['official', 'idle', { show: 0 }], ['ziba', 'idle', { show: 0 }], ['walker', 'idle', { show: 0 }], ['king', 'sit', { y: 0, x: 0.3, z: 0.1, look: -0.8 }], ['meph', 'sit', { look: 0.2 }], ['mica', 'idle', { x: 0.02, z: 0.14, look: -1 }]],
+      enter: [['official', 'idle', { show: 0 }], ['ziba', 'idle', { show: 0 }], ['walker', 'idle', { show: 0 }], ['king', 'sit', { y: 0, x: 0.3, z: 0.1, look: -0.8 }], ['meph', 'sit', { look: 0.2 }], ['mica', 'idle', { x: -0.08, z: 0.16, look: -1 }]],
       intro: [['@env', 'day'], ['table', null, { show: 0 }], ['meph', 'sit', { show: 0 }], ['prince', 'sit', { show: 0 }], ['mica', 'idle', { show: 0 }], ['ziba', 'idle', { show: 0 }], ['walker', 'idle', { show: 0 }], ['king', 'sit', { look: -0.4 }]],
       // 사울의 집안에 아직 남은 사람이 있느냐
       'p0.1': [['king', 'sit-speak', { to: 'official' }], ['official', 'listen', { look: 0.6 }]],
@@ -386,7 +386,7 @@ export const C = {
       // 늘 왕의 식탁에서 — 왕자들과 함께
       'p2.2': [['ziba', 'idle', { show: 0 }], ['table', null, { show: 1 }], ['walker', 'idle', { show: 0, x: -0.2, z: 0.08 }], ['meph', 'sit', { show: 1, look: 0.2 }], ['prince', 'sit', { show: 1 }],
         ['king', 'idle', { x: 0.32, z: 0.12, look: -1 }], ['king', 'sit', { look: -0.8, delay: 1800 }], ['official', 'idle', { x: 0.75, z: -0.1, look: -0.6 }]],
-      'p2.3': [['mica', 'idle', { show: 1, x: 0.02, z: 0.14, look: -1 }], ['meph', 'sit', { look: 0.6 }]],
+      'p2.3': [['mica', 'idle', { show: 1, x: -0.08, z: 0.16, look: -1 }], ['meph', 'sit', { look: 0.6 }]],
       'p2.4': [['meph', 'sit', { look: 0.2 }]],
       w0: [['king', 'speak', { show: 1 }]],
       w1: [['king', 'speak', { show: 1 }]],

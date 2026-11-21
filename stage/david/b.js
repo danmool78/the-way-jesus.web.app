@@ -333,17 +333,17 @@ export const B = {
     cast: {
       david: ['davidW', 0.72, -0.5, -0.6, { pose: 'sit-ground' }],
       m1: ['abishai', 0.26, -0.62, 0.4, { pose: 'sit-ground' }],
-      m2: ['hebrew2', 1.12, -0.3, -0.8, { pose: 'sit-ground', gaze: false }],
+      m2: ['hebrew2', 1.02, -0.2, -0.8, { pose: 'sit-ground', gaze: false }],
       saul: ['saulS', -1.9, 0.25, 1],
       sol1: ['israelite', -2.0, 0.05, 1, { gaze: false }],
       sol2: ['israelite2', -2.05, 0.45, 1, { gaze: false }],
     },
     beats: {
-      enter: [['saul', 'mourn', { x: -0.85, z: 0.25, look: 1 }], ['sol1', 'idle', { x: -1.4, z: 0.0 }], ['sol2', 'idle', { x: -1.6, z: 0.5 }],
+      enter: [['saul', 'mourn', { x: -0.85, z: 0.25, look: 1 }], ['sol1', 'idle', { x: -1.4, z: 0.1 }], ['sol2', 'idle', { x: -1.6, z: 0.5 }],
         ['david', 'kneel', { x: -0.2, z: 0.25, look: -1, item: 'hem' }], ['m1', 'idle', { x: 0.25, z: 0.0, look: -1 }], ['m2', 'idle', { show: 0 }]],
       intro: [['@env', 'day'], ['saul', 'idle', { show: 0 }], ['sol1', 'idle', { show: 0 }], ['sol2', 'idle', { show: 0 }], ['david', 'sit-ground', { show: 0 }], ['m1', 'sit-ground', { show: 0 }], ['m2', 'sit-ground', { show: 0 }]],
       // 삼천 명의 정예를 이끌고 사울이 온다
-      'p0.0': [['saul', 'idle', { show: 1, x: -1.15, z: 0.25, look: 1 }], ['sol1', 'idle', { show: 1, x: -1.4, z: 0 }], ['sol2', 'idle', { show: 1, x: -1.6, z: 0.5 }]],
+      'p0.0': [['saul', 'idle', { show: 1, x: -1.15, z: 0.25, look: 1 }], ['sol1', 'idle', { show: 1, x: -1.4, z: 0.1 }], ['sol2', 'idle', { show: 1, x: -1.6, z: 0.5 }]],
       // 홀로 그 굴로 들어간다
       'p0.2': [['saul', 'idle', { x: 0.0, z: 0.05, look: 0 }], ['sol1', 'idle', { look: 0 }], ['sol2', 'idle', { look: 0 }]],
       // 굴 깊숙한 곳, 숨죽인 다윗과 부하들
@@ -389,7 +389,7 @@ export const B = {
     wide: 1.45,
     props: {
       grass: ['grass', 0, 0.05, { r: 1.9 }],
-      house: ['house', 1.62, -0.6, { scale: 0.8 }],
+      house: ['house', 1.78, -0.62, { scale: 0.8 }],
       feast: ['feast', 0.62, -0.38, { len: 0.8 }],
       s1: ['sheep', 0.38, 0.28, { rot: 0.3 }],
       s2: ['sheep', 0.7, 0.5, { rot: -0.4 }],
@@ -398,7 +398,7 @@ export const B = {
       donkey: ['packdonkey', 1.55, 0.3, { speed: 0.45, rot: Math.PI }],
     },
     cast: {
-      nabal: ['nabal', 0.45, -0.72, 0.2, { pose: 'sit' }],
+      nabal: ['nabal', 0.45, -0.8, 0.2, { pose: 'sit' }],
       guest: ['man', 1.02, -0.72, -0.3, { pose: 'sit', gaze: false }],
       shearer: ['shepherd', 0.55, 0.1, 0.3, { gaze: false }],
       y1: ['israelite2', -1.9, 0.0, 1],
