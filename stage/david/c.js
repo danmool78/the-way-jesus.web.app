@@ -386,7 +386,7 @@ export const C = {
       // 늘 왕의 식탁에서 — 왕자들과 함께
       'p2.2': [['ziba', 'idle', { show: 0 }], ['table', null, { show: 1 }], ['walker', 'idle', { show: 0, x: -0.2, z: 0.08 }], ['meph', 'sit', { show: 1, look: 0.2 }], ['prince', 'sit', { show: 1 }],
         ['king', 'idle', { x: 0.32, z: 0.12, look: -1 }], ['king', 'sit', { look: -0.8, delay: 1800 }], ['official', 'idle', { x: 0.75, z: -0.1, look: -0.6 }]],
-      'p2.3': [['mica', 'idle', { show: 1, x: -0.08, z: 0.16, look: -1 }], ['meph', 'sit', { look: 0.6 }]],
+      'p2.3': [['mica', 'idle', { show: 1, x: -0.01, z: 0.11, look: -1 }], ['meph', 'sit', { look: 0.6 }]],
       'p2.4': [['meph', 'sit', { look: 0.2 }]],
       w0: [['king', 'speak', { show: 1 }]],
       w1: [['king', 'speak', { show: 1 }]],
