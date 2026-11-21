@@ -1,6 +1,7 @@
 // 장면마다 그분 곁에 함께 서는 사람 (예수 여정 — 사용자 2026-11: 사람 위주로).
 // 이름으로 고르면 틀린다('마리아'는 베다니의 마리아이기도, '시몬'은 바리새인 시몬이기도 하다) — 그래서 장면마다 손으로 정했다.
 // 모델 이름은 assets/models.json의 것. 아직 없는 모델(베드로 등)은 받을 수 없으면 건너뛴다
+import { t as tr } from './game-i18n.js';
 export const CAST = {
   jesus: {
     e01: ['mary'], e02: ['mary', 'joseph'], e03: ['mary', 'joseph'], e04: ['mary', 'joseph'], e05: ['mary', 'joseph'], e06: ['mary', 'joseph'], e07: ['mary', 'joseph'],
@@ -112,9 +113,9 @@ for (const [j, m] of Object.entries(OT_EXTRA)) for (const [id, l] of Object.entr
 // 앞서 걷는 그분이 장면에 따라 바뀐다: [이 장면부터, 모델, 화면 이름] (사용자 2026-11 — 소년·청년·왕 다윗을 나눈다)
 // 모세가 죽은 뒤로는 여호수아, 열왕기는 시대마다 선지자(솔로몬 때는 나단 모델로 선지자 자리, 나라가 갈라질 때는 아히야)
 export const LEADS = {
-  moses: [['m01', 'moses', '모세'], ['m32', 'joshua', '여호수아']],
-  david: [['d01', 'david', '다윗'], ['d06', 'david-warrior', '다윗'], ['d21', 'david-king', '다윗 왕']],
-  kings: [['k01', 'nathan', '선지자'], ['k06', 'ahijah', '아히야'], ['k12', 'elijah', '엘리야'], ['k22', 'elisha', '엘리사'], ['k32', 'isaiah', '이사야']],
+  moses: [['m01', 'moses', tr('모세')], ['m32', 'joshua', tr('여호수아')]],
+  david: [['d01', 'david', tr('다윗')], ['d06', 'david-warrior', tr('다윗')], ['d21', 'david-king', tr('다윗 왕')]],
+  kings: [['k01', 'nathan', tr('선지자')], ['k06', 'ahijah', tr('아히야')], ['k12', 'elijah', tr('엘리야')], ['k22', 'elisha', tr('엘리사')], ['k32', 'isaiah', tr('이사야')]],
 };
 // 제자를 부르신 뒤(e17부터)에는 정해 둔 사람이 없는 장면에도 제자 둘이 따른다
 export const FOLLOW = { jesus: { from: 'e17', pool: ['john', 'andrew', 'james', 'peter'] } };
