@@ -380,7 +380,7 @@ function applyView() {
   view = { x, y, w, h };
   map.setAttribute('viewBox', `${x} ${y} ${w} ${h}`);
   const u = w / r.width; // 화면 1px 당 지도 단위
-  map.style.setProperty('--u', u);
+  map.style.setProperty('--u', u); window.mapU = u; // 무대(stage.js)가 장면에 맞춘 확대(stageU0)와 견주어 조금 따라 커진다
   // 축척 막대: 지도 1단위 = 위도 1/K도(약 111m). 110px 안에 드는 가장 긴 '보기 좋은' 거리를 고른다
   const sb = $('#scalebar');
   if (sb) {
@@ -507,6 +507,7 @@ function frameStage(i, ms = 1300, mode = 'open') {
   const [cx, cy] = st.at ? px(st.at) : P(PLACES[here(e)]);
   const min = i < 0 ? 1500 : PLACES[here(e)].jlm || here(e) === 'jerusalem' ? 14 : 300; // 프롤로그는 에덴 둘레(두 강과 만)가 다 보이게 멀리서
   const u = reserveCard({ x: 0, y: 0, w: min * (ONE ? .6 : 1), h: min * (ONE ? .6 : 1) }).w / r.width; // 한 장면만 보기는 카드가 없으니 무대에 더 다가간다 // 이 확대에서 화면 1px 당 지도 단위
+  window.stageU0 = u; // 무대의 기준 확대 — 여기서 더 당기면 무대와 사람이 살짝 따라 커진다(stage.js, 사용자 2026-11)
   const f = freeArea(mode), fx = (f.l + f.r) / 2, fy = (f.t + f.b) / 2;
   // 핀 + 무대 어긋남(dx,dy)이 빈 영역의 가운데에 오도록 보기 상자를 놓는다
   animateTo({ x: cx - (fx - st.dx) * u, y: cy - (fy - st.dy) * u, w: r.width * u, h: r.height * u }, ms);

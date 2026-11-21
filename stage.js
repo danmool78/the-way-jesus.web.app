@@ -692,12 +692,15 @@ function resize() {
   const tv = window.terrainOn && window.terrainView;
   // 3D 지형에서 당겨 보면 인물도 커지므로 그만큼 화면(캔버스)도 넓힌다
   const wide = (script?.wide || 1) * (tv ? Math.max(1, tv.zoom) : 1);
-  const { w, h } = stageBox(wide);
+  // 2D 지도를 휠·두 손가락으로 당기면 무대와 사람도 살짝 따라 커진다(멀리 물러나면 조금 작아진다) — 지도만 커지고 무대는 그대로라 어색했다(사용자 2026-11).
+  // 장면에 맞춘 확대(app.js frameStage의 stageU0) 대비 지도 확대의 0.35제곱만큼, 0.8–1.7배. 캔버스만 키우고 시야각은 그대로 두어 사람이 커 보인다. 0.05 단위로 끊어 매 화면 다시 만들지 않는다
+  const zoomK = tv || !window.stageU0 || !window.mapU ? 1 : Math.round(Math.min(1.7, Math.max(0.8, Math.pow(window.stageU0 / window.mapU, 0.35))) * 20) / 20;
+  const { w, h } = stageBox(wide * zoomK);
   if (w === size.w && h === size.h) return;
   size = { w, h };
   // 작은 인물의 윤곽이 매끈하도록 화면 해상도의 2배로 그려 줄여 보인다(슈퍼샘플링). 3D 지형에서 당겨 무대가 커지면
   // 인물도 커서 덜 필요하므로 그만큼 낮춘다 — 큰 캔버스를 3배로 그리면 휴대폰이 버거웠다
-  renderer.setPixelRatio(Math.max(devicePixelRatio, Math.min(devicePixelRatio * 2, 3) / Math.max(1, wide / 1.5)));
+  renderer.setPixelRatio(Math.max(devicePixelRatio, Math.min(devicePixelRatio * 2, 3) / Math.max(1, wide * zoomK / 1.5)));
   renderer.setSize(w, h, false);
   canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
   // 3D 지형 모드가 무대 밑의 집·나무를 치울 넓이 (무대 바닥이 차지하는 화면 반지름)
