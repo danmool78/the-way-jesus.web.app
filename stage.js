@@ -868,15 +868,18 @@ function placeTerrain(T, dt) {
   const s = stageGroup.scale.x, k = oldUnit(T, d0, T.zoomAt(d0, placeOf(curEv)));
   [home.x, home.z] = px(ll);
   let [x, z] = [home.x, home.z];
-  if (moveAt) { const [mx, mz] = px(moveAt.ll); x = mx - moveAt.x * k * s; z = mz - moveAt.z * k * s; }
+  // 줌아웃할 때 멀리서도 보이게 키우는 배율(1~2) — 사람만 키우면 건물·보좌는 그대로라 거인과 소인국이 섞였다(k02 솔로몬, 사용자 2026-11).
+  // 이제 무대 전체(사람·건물·소품·바닥)를 한 덩어리로 키운다 — 서로의 비율은 늘 같다
+  const grow = THREE.MathUtils.clamp(oldUnit(T, T.cam.dist, window.terrainView?.zoom ?? 1) / k, 1, 2), kg = k * grow;
+  if (moveAt) { const [mx, mz] = px(moveAt.ll); x = mx - moveAt.x * kg * s; z = mz - moveAt.z * kg * s; }
   if (atSnap) { center.x = x; center.z = z; atSnap = false; } // 장면을 열 때나 즉시 적용할 때는 바로, 낭독 중에는 무리가 걸어가는 동안 천천히
   else { center.x = damp(center.x, x, 0.7, dt); center.z = damp(center.z, z, 0.7, dt); }
   ({ x, z } = center);
-  holder.position.set(x, T.heightAt(x, z) + 0.08, z); holder.scale.setScalar(k);
-  Object.assign(base, { x, z, y: holder.position.y, k: k * s });
-  bigNow = THREE.MathUtils.clamp(oldUnit(T, T.cam.dist, window.terrainView?.zoom ?? 1) / k, 1, 2);
+  holder.position.set(x, T.heightAt(x, z) + 0.08, z); holder.scale.setScalar(kg);
+  Object.assign(base, { x, z, y: holder.position.y, k: kg * s });
+  bigNow = 1; // 사람·소품만 따로 키우던 배율 — 무대 전체를 키우므로 쓰지 않는다(옛 셈은 그대로 두되 1)
   // 무대 밑 집·나무를 치울 넓이 (지도 단위)
-  window.stageFoot = { r: k * 1.9 * (script.wide || 1), at: script.at || null, xz: [x, z] };
+  window.stageFoot = { r: kg * 1.9 * (script.wide || 1), at: script.at || null, xz: [x, z] };
   // 장면 분위기(밤·폭풍·새벽)는 지형 화면에 색조(CSS 필터)를 거는 대신 지형의 해·하늘빛으로 넘긴다 —
   // 필터는 사람까지 함께 어둡게 해 밤 장면의 무대가 묻혔다. 따로 그릴 때처럼 사람과 땅이 같은 달빛을 받고, 등잔이 빛난다
   // 넓은 땅 전체가 받으므로 따로 그릴 때보다 누그러뜨린다: 빛깔은 반만, 어두운 정도는 6~7할만 (해 질 녘 땅이 온통 주황, 밤 무대가 묻힘)
