@@ -7,6 +7,16 @@ const W = 400, H = 500, TRIES = 2;
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const ease = t => 1 - Math.pow(1 - t, 3);
 const rnd = (a, b) => a + Math.random() * (b - a);
+// 그림 조각(assets/mini/…, 카드와 같은 화풍 — _src/tools/sprite.py): 놀이가 열릴 때 미리 불러 두고, 아직 못 받았으면 코드 그림으로 그린다
+const ART = {};
+function art(n) { if (typeof Image === 'undefined') return null; let a = ART[n]; if (!a) { a = ART[n] = new Image(); a.src = `assets/mini/${n}.webp`; } return a.complete && a.naturalWidth ? a : null; }
+function spr(g, n, x, y, h, o = {}) { // (x, y) = 발밑 가운데(ax·ay로 바꿈), h = 그릴 높이
+  const im = art(n); if (!im) return false; const w = im.width * h / im.height;
+  g.save(); g.globalAlpha *= o.a ?? 1; g.translate(x, y); if (o.rot) g.rotate(o.rot); if (o.flip) g.scale(-1, 1);
+  g.drawImage(im, -w * (o.ax ?? 0.5), -h * (o.ay ?? 1), w, h); g.restore(); return true;
+}
+const bgArt = (g, n) => { const im = art(n); if (!im) return false; g.drawImage(im, 0, 0, W, H);
+  const sh = g.createLinearGradient(0, 0, 0, 70); sh.addColorStop(0, 'rgba(0,0,0,.45)'); sh.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = sh; g.fillRect(0, 0, W, 70); return true; }; // 위쪽 글씨가 읽히게
 
 /* ---------- 가나의 혼인 잔치 (요 2:1–11): 돌항아리 여섯을 아귀까지 ---------- */
 // 누르고 있으면 하인의 물동이가 기울어 물을 붓는다 — 오래 누를수록 콸콸(빨라진다), 손을 떼도 떨어지던 물줄기는 잠깐 더 들어간다.
@@ -2297,13 +2307,13 @@ const manna = {
 /* ---------- 엔게디 굴의 옷자락 (삼상 24:3–7): 사울이 돌아보지 않을 때만 — 살금살금 ---------- */
 // 누르고 있으면 다윗이 굴 안쪽 어둠에서 사울 쪽으로 살금살금 다가가고, 떼면 멈춘다. 사울은 가끔 뒤척이다(먼저 '음…' 하고 고개가 움찔) 굴 안쪽을 돌아본다.
 // 돌아보는 동안 움직이면 의심이 찬다. 겉옷 자락에 닿으면 그가 돌아보지 않을 때 눌러 자락을 베고(24:4), 다시 어둠 속으로 돌아오면 성공
-const CAVE_DARK = 70, ROBE_X = 226;
+const CAVE_DARK = 70, ROBE_X = 180;
 const cave = {
   title: '엔게디 굴의 옷자락', task: '사울 몰래 겉옷 자락을 베고 돌아오기',
   ask: ['사울이 바로 우리가 숨은 굴로 들어왔단다. 사람들은 하나님이 원수를 내 손에 넘기셨다고 속삭였지.', '그러나 여호와께서 기름 부으신 이를 해칠 수는 없어 — 겉옷 자락만 가만히 베고 돌아오너라. 그가 돌아볼 땐 멈추고!'],
   quote: '다윗이 일어나서 사울의 겉옷 자락을 가만히 베니라', ref: '삼상 24:4',
   help: '누르고 있으면 살금살금 다가가고, 떼면 멈춰요. 사울이 "음…" 하고 움찔하면 곧 돌아봐요 — 그때는 멈춰요.<br>겉옷 자락에 닿으면 눌러서 베고, 다시 왼쪽 어둠까지 돌아와요.',
-  seconds: 22,
+  seconds: 22, art: ['d16/bg', 'd16/saul-a', 'd16/saul-b', 'd16/david-sneak'],
   init() { return { x: 36, hold: false, phase: 'go', sus: 0, st: 'calm', stT: rnd(1.6, 2.6), t: 0, msg: null, cut: 0, stepT: 0, look: 0, chips: [] }; },
   update(dt, S) {
     S.t += dt; if (S.msg) S.msg.at -= dt; S.cut = Math.max(0, S.cut - dt);
@@ -2335,6 +2345,13 @@ const cave = {
   lost: S => S.sus >= 1,
   failText: S => S.sus >= 1 ? '사울이 알아챘어요' : '사울이 굴을 나갔어요',
   draw(g, S) {
+    if (bgArt(g, 'd16/bg')) this.drawArt(g, S); else this.drawVec(g, S);
+    // 의심 막대 + 할 일
+    g.save(); g.font = '800 13px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.fillStyle = '#efe2cc'; g.fillText(S.phase === 'go' ? '겉옷 자락까지 살금살금' : S.phase === 'cut' ? '자락을 베어요' : '어둠 속으로 돌아가요', 14, 26);
+    g.fillText('의심', 14, 50); g.fillStyle = 'rgba(255,255,255,.15)'; g.fillRect(50, 40, 100, 12); g.fillStyle = S.sus > 0.66 ? '#ff7a5a' : '#ffb36a'; g.fillRect(50, 40, 100 * S.sus, 12); g.restore();
+    floatMsg(g, S.msg);
+  },
+  drawVec(g, S) {
     // 굴 안: 오른쪽 어귀로 빛이 들고, 왼쪽 안쪽은 캄캄
     g.fillStyle = '#120d0a'; g.fillRect(0, 0, W, H);
     const lg = g.createLinearGradient(0, 0, W, 0); lg.addColorStop(0, 'rgba(0,0,0,0)'); lg.addColorStop(0.45, 'rgba(120,90,60,.25)'); lg.addColorStop(1, 'rgba(255,220,160,.55)'); g.fillStyle = lg; g.fillRect(0, 0, W, H);
@@ -2371,10 +2388,19 @@ const cave = {
     g.strokeStyle = `rgba(220,220,230,${0.3 + lit * 0.5})`; g.lineWidth = 1.4; g.beginPath(); g.moveTo(8, -16); g.lineTo(16, -20); g.stroke(); // 칼
     g.restore();
     if (S.phase === 'cut') { g.strokeStyle = `rgba(255,226,150,${0.6 + 0.4 * Math.sin(S.t * 10)})`; g.lineWidth = 2; g.beginPath(); g.arc(ROBE_X - 2, 420, 20, 0, 7); g.stroke(); }
-    // 의심 막대 + 할 일
-    g.save(); g.font = '800 13px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.fillStyle = '#efe2cc'; g.fillText(S.phase === 'go' ? '겉옷 자락까지 살금살금' : S.phase === 'cut' ? '자락을 베어요' : '어둠 속으로 돌아가요', 14, 26);
-    g.fillText('의심', 14, 50); g.fillStyle = 'rgba(255,255,255,.15)'; g.fillRect(50, 40, 100, 12); g.fillStyle = S.sus > 0.66 ? '#ff7a5a' : '#ffb36a'; g.fillRect(50, 40, 100 * S.sus, 12); g.restore();
-    floatMsg(g, S.msg);
+  },
+  drawArt(g, S) { // 그림 조각으로: 굴(바탕) · 사울(등 돌림 ↔ 돌아봄을 겹쳐 바꿈) · 다윗
+    g.fillStyle = 'rgba(0,0,0,.35)'; g.fillRect(0, 0, CAVE_DARK, H); // 안쪽 어둠
+    for (let i = 0; i < 5; i++) { const ex = 12 + (i % 3) * 18, ey = 330 + i * 18; if (Math.sin(S.t * 0.7 + i * 3) > -0.8) { g.fillStyle = 'rgba(255,240,200,.6)'; g.fillRect(ex, ey, 2, 1.5); g.fillRect(ex + 5, ey, 2, 1.5); } }
+    const stir = S.st === 'stir' ? Math.sin(S.t * 40) * 1.2 : 0;
+    spr(g, 'd16/saul-a', 396 + stir, 446, 168, { ax: 1, a: 1 - S.look }); spr(g, 'd16/saul-b', 396 + stir, 446, 168, { ax: 1, a: S.look });
+    if (S.look > 0.05) { const hx = 330, hy = 300, cone = g.createRadialGradient(hx, hy, 4, hx, hy, 300); cone.addColorStop(0, `rgba(255,110,80,${0.25 * S.look})`); cone.addColorStop(1, 'rgba(255,110,80,0)');
+      g.fillStyle = cone; g.beginPath(); g.moveTo(hx, hy); g.lineTo(20, 200); g.lineTo(20, 470); g.closePath(); g.fill(); }
+    if (S.st === 'stir') { g.font = '800 15px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.lineWidth = 4; g.strokeStyle = 'rgba(30,18,10,.7)'; g.strokeText('음…', 300, 330); g.fillStyle = '#ffd08a'; g.fillText('음…', 300, 330); }
+    for (const c of S.chips) { g.save(); g.translate(c.x, c.y); g.rotate(c.r); g.fillStyle = '#8a2a2a'; g.beginPath(); g.moveTo(-8, -3); g.lineTo(9, -2); g.lineTo(4, 5); g.fill(); g.restore(); }
+    const lit = clamp((S.x - CAVE_DARK) / 220, 0, 1), bob = S.hold ? Math.abs(Math.sin(S.t * 8)) * 2 : 0;
+    g.save(); g.filter = `brightness(${0.45 + lit * 0.55})`; spr(g, 'd16/david-sneak', S.x, 448 - bob, 128, { flip: S.phase === 'back' }); g.restore(); // 어둠 속에서는 어둡게
+    if (S.phase === 'cut') { g.strokeStyle = `rgba(255,226,150,${0.6 + 0.4 * Math.sin(S.t * 10)})`; g.lineWidth = 2.5; g.beginPath(); g.arc(ROBE_X + 8, 440, 18, 0, 7); g.stroke(); }
   },
   end(g, k, S) { S.st = 'calm'; S.look = 0; S.hold = false; this.update(0.016, S); this.draw(g, S);
     if (k > 0.3) { g.save(); g.globalAlpha = clamp((k - 0.3) * 2, 0, 1); g.fillStyle = 'rgba(20,12,8,.82)'; g.fillRect(0, 140, W, 84);
@@ -2396,6 +2422,7 @@ export function playMini(game, host, fx, done) {
       <div class="mpanel intro"><q>${game.quote}</q><cite>${game.ref}</cite><p>${game.help}</p><button class="go">시작</button></div>
     </div></div>`;
   host._mini = () => S; // 확인용(캡처 스크립트)
+  (game.art || []).forEach(art); // 그림 조각을 소개 화면 동안 미리 받는다
   const cv = host.querySelector('canvas'), g = cv.getContext('2d'), stage = host.querySelector('.mstage'), bar = host.querySelector('.mtime i'), sec = host.querySelector('.mtime em');
   const fit = () => { const r = stage.getBoundingClientRect(), d = Math.min(3, devicePixelRatio || 1); cv.width = Math.round(r.width * d); cv.height = Math.round(r.width * H / W * d); g.setTransform(cv.width / W, 0, 0, cv.height / H, 0, 0); };
   fit(); addEventListener('resize', fit);
