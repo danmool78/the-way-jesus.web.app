@@ -674,5 +674,27 @@
    ],
    "p": "Young David crouching and peeking out from behind a rock, upper body only, sad anxious face, looking to the right. Same character as the second reference image. Only the person, no rock."
   }
+ },
+ "k25": {
+  "bg": {
+   "bg": true,
+   "p": "The Jordan River seen from a high angle on its bank: murky green-brown water flowing from left to right across the middle of the image with visible current lines, a wooded bank with freshly cut tree trunks and logs at the top, a muddy near bank with reeds along the bottom fifth. No people."
+  },
+  "elisha": {
+   "h": 420,
+   "ref": [
+    "_src/cards/elisha.png"
+   ],
+   "p": "The prophet Elisha standing, full body side view facing right, throwing a small cut stick forward with his right arm, plain robe and bald head. Same character as the second reference image. Only the person, no ground, no rock under his feet."
+  },
+  "disciple": {
+   "h": 420,
+   "p": "A young disciple of the prophets standing, full body side view facing right, holding up a bare wooden stick handle (its iron head has flown off, nothing on the end), crying out in dismay with his other hand on his head. Only the person."
+  },
+  "axe": {
+   "h": 160,
+   "ratio": "16:9",
+   "p": "A heavy iron axe head without handle, side view, dark wet iron with a sharp edge."
+  }
  }
 }
