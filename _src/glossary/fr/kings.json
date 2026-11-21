@@ -1,0 +1,526 @@
+[
+ {
+  "id": "high-place",
+  "terms": [
+   "hauts lieux"
+  ],
+  "text": "Des lieux de culte établis sur les collines et les sommets. Après la construction du Temple, ils se mêlèrent facilement au culte des idoles, et les prophètes les condamnèrent sans cesse."
+ },
+ {
+  "id": "burnt-offering",
+  "terms": [
+   "holocaustes"
+  ],
+  "text": "Un sacrifice où l’animal était entièrement brûlé sur l’autel pour Dieu, signe d’un don total de soi."
+ },
+ {
+  "id": "peace-offering",
+  "terms": [
+   "sacrifices de paix"
+  ],
+  "text": "Des offrandes qui expriment la paix avec Dieu et la reconnaissance. Une part était brûlée sur l’autel, et le reste mangé ensemble par ceux qui l’avaient apportée."
+ },
+ {
+  "id": "sacrifice",
+  "terms": [
+   "sacrifices"
+  ],
+  "text": "Un culte où l’on offrait à Dieu des animaux ou des céréales, présentés par les prêtres au lieu fixé."
+ },
+ {
+  "id": "ark",
+  "terms": [
+   "arche"
+  ],
+  "text": "Un coffre de bois recouvert d’or qui contenait les tables de pierre où était gravée l’alliance de Dieu. Il montrait que Dieu était au milieu de son peuple."
+ },
+ {
+  "id": "cherub",
+  "terms": [
+   "chérubins"
+  ],
+  "text": "Le mot biblique pour des anges ailés qui gardent la présence de Dieu. Leurs figures étaient sculptées au-dessus de l’arche et dans le lieu très saint."
+ },
+ {
+  "id": "holy-of-holies",
+  "terms": [
+   "lieu très saint"
+  ],
+  "text": "La pièce la plus intérieure et la plus sainte du Temple, où se trouvait l’arche. Seul le grand prêtre pouvait y entrer, une fois par an."
+ },
+ {
+  "id": "sanctuary",
+  "terms": [
+   "sanctuaires",
+   "sanctuaire"
+  ],
+  "text": "Un lieu saint mis à part pour Dieu ; ici, le Temple."
+ },
+ {
+  "id": "covenant",
+  "terms": [
+   "alliance"
+  ],
+  "text": "La promesse conclue entre Dieu et son peuple : Dieu le protégerait, et le peuple ne servirait que lui."
+ },
+ {
+  "id": "covenant-book",
+  "terms": [
+   "livre de la Loi",
+   "livre de l’alliance"
+  ],
+  "text": "Le livre où était consignée la Loi que Dieu donna par Moïse. Il fut retrouvé dans le Temple au temps de Josias et lu à haute voix."
+ },
+ {
+  "id": "law",
+  "terms": [
+   "Loi"
+  ],
+  "text": "L’enseignement et les règles que Dieu donna à Israël par Moïse, la référence pour le culte et la vie de tous les jours."
+ },
+ {
+  "id": "commandment",
+  "terms": [
+   "commandements"
+  ],
+  "text": "Les enseignements que Dieu ordonnait à son peuple d’observer, centrés sur les Dix Commandements."
+ },
+ {
+  "id": "prophet",
+  "terms": [
+   "prophète",
+   "prophètes"
+  ],
+  "text": "Une personne qui recevait la parole de Dieu et la transmettait aux rois et au peuple."
+ },
+ {
+  "id": "man-of-god",
+  "terms": [
+   "homme de Dieu"
+  ],
+  "text": "Un titre de respect pour un prophète envoyé par Dieu."
+ },
+ {
+  "id": "prophets-sons",
+  "terms": [
+   "disciples des prophètes"
+  ],
+  "text": "Des groupes qui se rassemblaient autour d’un prophète pour apprendre et vivre ensemble. Au temps d’Élie et d’Élisée, il y en avait en plusieurs endroits."
+ },
+ {
+  "id": "priest",
+  "terms": [
+   "prêtres",
+   "prêtre"
+  ],
+  "text": "Une personne qui servait d’intermédiaire entre Dieu et le peuple en offrant les sacrifices au Temple. À l’origine, seuls les descendants d’Aaron, de la tribu de Lévi, pouvaient remplir cette charge."
+ },
+ {
+  "id": "high-priest",
+  "terms": [
+   "grand prêtre"
+  ],
+  "text": "Le chef des prêtres. Une fois par an, il entrait dans le lieu très saint pour faire l’expiation pour le peuple."
+ },
+ {
+  "id": "levite",
+  "terms": [
+   "descendants de Lévi"
+  ],
+  "text": "La tribu de Lévi était mise à part pour le service du Temple. Jéroboam enfreignit cette règle et fit prêtre n’importe qui."
+ },
+ {
+  "id": "tribe",
+  "terms": [
+   "tribu",
+   "tribus"
+  ],
+  "text": "L’un des grands clans d’Israël issus des douze fils de Jacob. La nation était formée de douze tribus."
+ },
+ {
+  "id": "incense",
+  "terms": [
+   "encens"
+  ],
+  "text": "Brûler un encens odorant en offrande à un dieu. La fumée qui monte représentait la prière."
+ },
+ {
+  "id": "spices",
+  "terms": [
+   "aromates"
+  ],
+  "text": "Des résines et des épices précieuses et parfumées, marchandises coûteuses apportées de loin à dos de chameau."
+ },
+ {
+  "id": "talent",
+  "terms": [
+   "talents"
+  ],
+  "text": "Une lourde unité de poids, environ 34 kg. Un talent d’or représentait une fortune."
+ },
+ {
+  "id": "shekel",
+  "terms": [
+   "sicle"
+  ],
+  "text": "Une unité de poids et de monnaie, environ 11 g, servant surtout à peser l’argent."
+ },
+ {
+  "id": "seah",
+  "terms": [
+   "mesure"
+  ],
+  "text": "Une mesure pour les grains, environ 7 litres."
+ },
+ {
+  "id": "baal",
+  "terms": [
+   "Baal"
+  ],
+  "text": "Un dieu dont les Cananéens croyaient qu’il commandait la pluie et l’orage. Son culte se répandit largement en Israël sous Achab et Jézabel."
+ },
+ {
+  "id": "asherah",
+  "terms": [
+   "Astarté",
+   "Ashéra"
+  ],
+  "text": "Une déesse cananéenne, adorée à travers des poteaux de bois ou des images sculptées dressés comme son symbole."
+ },
+ {
+  "id": "pillar",
+  "terms": [
+   "stèles"
+  ],
+  "text": "Des pierres dressées comme marque du culte des idoles. La Loi disait de ne pas en dresser, mais de les abattre."
+ },
+ {
+  "id": "idol",
+  "terms": [
+   "idoles"
+  ],
+  "text": "Des images de bois, de pierre ou de métal adorées comme des dieux. La Bible y voit le péché de se détourner de Dieu."
+ },
+ {
+  "id": "golden-calf",
+  "terms": [
+   "veaux d’or",
+   "veau d’or"
+  ],
+  "text": "Une image d’or en forme de veau. Adorée à la place de Dieu, au désert comme au temps de Jéroboam, elle devint un grand péché."
+ },
+ {
+  "id": "bronze-serpent",
+  "terms": [
+   "serpent de bronze"
+  ],
+  "text": "Le serpent de bronze que Moïse plaça sur une perche au désert pour sauver la vie du peuple. Plus tard, on l’adora comme une idole, et Ézéchias le détruisit."
+ },
+ {
+  "id": "bronze-sea",
+  "terms": [
+   "Mer de bronze"
+  ],
+  "text": "Une immense cuve de bronze dans la cour du Temple de Salomon, qui contenait l’eau pour les ablutions des prêtres."
+ },
+ {
+  "id": "wrath",
+  "terms": [
+   "irrita",
+   "colère"
+  ],
+  "text": "La grande colère de Dieu devant le péché."
+ },
+ {
+  "id": "sign",
+  "terms": [
+   "signe"
+  ],
+  "text": "Un événement remarquable qui montre que ce que Dieu a dit est vrai."
+ },
+ {
+  "id": "anoint",
+  "terms": [
+   "onction"
+  ],
+  "text": "Une cérémonie où l’on versait de l’huile d’olive sur la tête de quelqu’un pour l’établir roi ou prêtre ; cela voulait dire que Dieu l’avait choisi et établi."
+ },
+ {
+  "id": "gentile",
+  "terms": [
+   "étranger",
+   "étrangères"
+  ],
+  "text": "Qui appartient à des peuples autres qu’Israël."
+ },
+ {
+  "id": "assembly",
+  "terms": [
+   "assemblée"
+  ],
+  "text": "Le peuple entier réuni en un lieu pour adorer Dieu."
+ },
+ {
+  "id": "concubine",
+  "terms": [
+   "concubines"
+  ],
+  "text": "Des épouses du roi d’un rang inférieur à celui des reines officielles."
+ },
+ {
+  "id": "yoke",
+  "terms": [
+   "joug"
+  ],
+  "text": "Une pièce de bois posée sur le cou de deux bœufs pour qu’ils tirent une charrue ou un chariot. Il peut aussi représenter un lourd fardeau ou l’oppression."
+ },
+ {
+  "id": "scorpion-whip",
+  "terms": [
+   "scorpions"
+  ],
+  "text": "Probablement un fouet garni de métal ou de pointes, très douloureux. Cela veut dire gouverner encore plus durement."
+ },
+ {
+  "id": "chariot",
+  "terms": [
+   "char",
+   "chars"
+  ],
+  "text": "Une voiture de guerre tirée par des chevaux, l’arme la plus puissante des armées anciennes."
+ },
+ {
+  "id": "horsemen",
+  "terms": [
+   "cavaliers"
+  ],
+  "text": "Des soldats à cheval. « Les chars et les cavaliers d’Israël » désignait la force qui protégeait la nation."
+ },
+ {
+  "id": "servant",
+  "terms": [
+   "le serviteur",
+   "son serviteur"
+  ],
+  "text": "Un homme qui se tient tout près pour faire les commissions et servir.",
+  "skip": [
+   "le serviteur de ce"
+  ]
+ },
+ {
+  "id": "yoke-of-oxen",
+  "terms": [
+   "paires de bœufs",
+   "paire de bœufs"
+  ],
+  "text": "Deux bœufs partageant un même joug et tirant ensemble."
+ },
+ {
+  "id": "sackcloth",
+  "terms": [
+   "sac"
+  ],
+  "text": "Un vêtement tissé de poils rudes, porté en signe de deuil ou de repentance."
+ },
+ {
+  "id": "fast",
+  "terms": [
+   "jeûne",
+   "jeûna"
+  ],
+  "text": "Se priver de nourriture pendant un temps fixé pour s’attacher à Dieu, signe de deuil ou de repentance."
+ },
+ {
+  "id": "threshing-floor",
+  "terms": [
+   "aire"
+  ],
+  "text": "Une surface large et plate où l’on battait les tiges de céréales pour en détacher les grains. Près de la porte d’une ville, elle servait aussi de lieu de réunion."
+ },
+ {
+  "id": "gird",
+  "terms": [
+   "serra sa ceinture"
+  ],
+  "text": "Remonter un long vêtement et le serrer avec une ceinture, pour se préparer à courir ou à travailler."
+ },
+ {
+  "id": "still-small",
+  "terms": [
+   "murmure"
+  ],
+  "text": "Un son très faible et doux. Élie rencontra Dieu non dans le vent violent, mais dans une voix douce."
+ },
+ {
+  "id": "leprosy",
+  "terms": [
+   "lèpre",
+   "lépreux"
+  ],
+  "text": "Dans la Bible, la lèpre désignait non seulement la maladie de Hansen actuelle, mais aussi bien des maladies graves de la peau. Ceux qui en étaient atteints devaient vivre hors de la ville."
+ },
+ {
+  "id": "commander",
+  "terms": [
+   "chef de l’armée"
+  ],
+  "text": "Un général de haut rang qui commandait une armée."
+ },
+ {
+  "id": "beam",
+  "terms": [
+   "poutre"
+  ],
+  "text": "Une grosse pièce de bois posée entre des poteaux pour porter un toit."
+ },
+ {
+  "id": "inner-room",
+  "terms": [
+   "pièce à l’écart"
+  ],
+  "text": "Une petite pièce derrière une plus grande, à l’abri des regards."
+ },
+ {
+  "id": "watchman",
+  "terms": [
+   "guetteur"
+  ],
+  "text": "Une personne qui montait la garde sur un rempart ou une tour pour protéger la ville."
+ },
+ {
+  "id": "watchtower",
+  "terms": [
+   "tour"
+  ],
+  "text": "Une construction élevée bâtie pour surveiller et garder de loin.",
+  "skip": [
+   "tour en disant"
+  ]
+ },
+ {
+  "id": "harlotry",
+  "terms": [
+   "prostitutions"
+  ],
+  "text": "Le mot d’origine désigne l’infidélité sexuelle hors du mariage. La Bible l’emploie souvent comme image du culte des idoles, une infidélité envers Dieu."
+ },
+ {
+  "id": "sorcery",
+  "terms": [
+   "sorcelleries"
+  ],
+  "text": "Le recours à la magie, comme les incantations et la divination. La Loi l’interdisait."
+ },
+ {
+  "id": "eunuch",
+  "terms": [
+   "eunuques"
+  ],
+  "text": "Des fonctionnaires du palais qui servaient de près le roi et la reine."
+ },
+ {
+  "id": "centurion",
+  "terms": [
+   "chefs de centaine"
+  ],
+  "text": "Des officiers qui commandaient chacun une centaine de soldats."
+ },
+ {
+  "id": "throne",
+  "terms": [
+   "trône"
+  ],
+  "text": "Le siège où s’assied le roi, symbole du pouvoir royal."
+ },
+ {
+  "id": "tribute",
+  "terms": [
+   "tribut"
+  ],
+  "text": "Les richesses payées chaque année à un pays plus fort en signe de soumission."
+ },
+ {
+  "id": "scribe",
+  "terms": [
+   "secrétaire"
+  ],
+  "text": "Un fonctionnaire chargé des écrits et des archives. À cette époque, c’était une haute charge qui gérait les documents du palais."
+ },
+ {
+  "id": "recorder",
+  "terms": [
+   "archiviste"
+  ],
+  "text": "Un fonctionnaire qui consignait et annonçait les affaires du palais."
+ },
+ {
+  "id": "aramaic",
+  "terms": [
+   "araméen"
+  ],
+  "text": "La langue des Araméens. Les diplomates de bien des nations s’en servaient à l’époque ; le peuple de Juda ne la comprenait donc pas bien."
+ },
+ {
+  "id": "blaspheme",
+  "terms": [
+   "insulté"
+  ],
+  "text": "Des paroles ou des actes qui déshonorent Dieu ou le traitent avec mépris."
+ },
+ {
+  "id": "zion",
+  "terms": [
+   "Sion"
+  ],
+  "text": "Un nom de Jérusalem, surtout de la colline où se trouvait le Temple ; le lieu où Dieu habite."
+ },
+ {
+  "id": "angel-of-lord",
+  "terms": [
+   "ange du Seigneur"
+  ],
+  "text": "Un ange envoyé par Dieu pour annoncer ou accomplir sa volonté."
+ },
+ {
+  "id": "passover",
+  "terms": [
+   "Pâque"
+  ],
+  "text": "La plus grande fête d’Israël, en souvenir de la nuit de la délivrance d’Égypte. Chaque famille immolait un agneau et le mangeait ensemble."
+ },
+ {
+  "id": "judges",
+  "terms": [
+   "Juges"
+  ],
+  "text": "Les chefs que Dieu suscitait aux temps de crise pour guider Israël avant qu’il y ait des rois."
+ },
+ {
+  "id": "medium",
+  "terms": [
+   "interrogeaient les morts"
+  ],
+  "text": "Des gens qui prétendaient faire venir les esprits des morts pour prédire l’avenir. La Loi l’interdisait sévèrement."
+ },
+ {
+  "id": "guard-captain",
+  "terms": [
+   "chef de la garde"
+  ],
+  "text": "Le chef des troupes qui gardaient le roi."
+ },
+ {
+  "id": "siege-ramp",
+  "terms": [
+   "remblais"
+  ],
+  "text": "Des monticules de terre élevés jusqu’au rempart d’une ville assiégée, pour y faire monter les machines de siège."
+ },
+ {
+  "id": "tribulation",
+  "terms": [
+   "détresse"
+  ],
+  "text": "Une grande souffrance et une grande épreuve."
+ }
+]

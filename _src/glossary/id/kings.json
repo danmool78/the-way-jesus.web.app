@@ -1,0 +1,544 @@
+[
+ {
+  "id": "high-place",
+  "terms": [
+   "bukit-bukit pengorbanan",
+   "bukit pengorbanan"
+  ],
+  "text": "Tempat mezbah di atas gunung atau bukit. Setelah Bait Allah berdiri, tempat ini mudah bercampur dengan penyembahan berhala, sehingga para nabi berulang kali menegurnya."
+ },
+ {
+  "id": "burnt-offering",
+  "terms": [
+   "korban bakaran"
+  ],
+  "text": "Korban hewan yang dibakar seluruhnya di atas mezbah bagi Allah, tanda penyerahan yang utuh."
+ },
+ {
+  "id": "peace-offering",
+  "terms": [
+   "korban keselamatan"
+  ],
+  "text": "Korban untuk menyatakan damai dan syukur kepada Allah. Sebagian dibakar di mezbah, sisanya dimakan bersama oleh yang mempersembahkan."
+ },
+ {
+  "id": "sacrifice",
+  "terms": [
+   "mempersembahkan korban"
+  ],
+  "text": "Ibadah dengan mempersembahkan hewan atau hasil panen kepada Allah, di tempat yang ditentukan dan dilayani oleh imam."
+ },
+ {
+  "id": "ark",
+  "terms": [
+   "Tabut Perjanjian",
+   "tabut"
+  ],
+  "text": "Peti kayu berlapis emas berisi loh batu perjanjian Allah, tanda bahwa Allah hadir di tengah umat-Nya."
+ },
+ {
+  "id": "cherub",
+  "terms": [
+   "kerub",
+   "kerub-kerub"
+  ],
+  "text": "Sebutan Alkitab untuk makhluk surgawi bersayap yang menjaga di dekat Allah. Bentuknya dipahat di atas tabut perjanjian dan di Ruang Mahakudus."
+ },
+ {
+  "id": "holy-of-holies",
+  "terms": [
+   "Ruang Mahakudus"
+  ],
+  "text": "Ruangan paling dalam dan paling kudus di Bait Allah, tempat tabut perjanjian. Hanya imam besar yang boleh masuk, setahun sekali."
+ },
+ {
+  "id": "sanctuary",
+  "terms": [
+   "tempat kudus"
+  ],
+  "text": "Tempat kudus yang dikhususkan bagi Allah, yaitu Bait Allah."
+ },
+ {
+  "id": "covenant",
+  "terms": [
+   "perjanjian"
+  ],
+  "text": "Janji antara Allah dan umat-Nya: Allah melindungi umat-Nya, dan umat hanya beribadah kepada Allah."
+ },
+ {
+  "id": "covenant-book",
+  "terms": [
+   "kitab perjanjian",
+   "kitab Taurat"
+  ],
+  "text": "Kitab yang berisi hukum Taurat yang diberikan Allah melalui Musa. Pada zaman Yosia kitab ini ditemukan kembali di Bait Allah dan dibacakan."
+ },
+ {
+  "id": "law",
+  "terms": [
+   "hukum Taurat",
+   "Taurat"
+  ],
+  "text": "Ajaran dan ketetapan yang diberikan Allah kepada Israel melalui Musa, menjadi ukuran bagi ibadah dan kehidupan."
+ },
+ {
+  "id": "commandment",
+  "terms": [
+   "perintah-perintah"
+  ],
+  "text": "Ajaran yang diperintahkan Allah untuk ditaati. Sepuluh Perintah adalah intinya."
+ },
+ {
+  "id": "prophet",
+  "terms": [
+   "nabi",
+   "nabi-nabi",
+   "para nabi"
+  ],
+  "text": "Orang yang menerima firman Allah lalu menyampaikannya kepada raja dan rakyat."
+ },
+ {
+  "id": "man-of-god",
+  "terms": [
+   "abdi Allah"
+  ],
+  "text": "Sebutan hormat untuk nabi yang diutus Allah."
+ },
+ {
+  "id": "prophets-sons",
+  "terms": [
+   "rombongan nabi"
+  ],
+  "text": "Kelompok yang berkumpul di sekitar seorang nabi untuk belajar dan hidup bersama. Pada zaman Elia dan Elisa mereka ada di beberapa tempat."
+ },
+ {
+  "id": "prophecy",
+  "terms": [
+   "bernubuat"
+  ],
+  "text": "Menyampaikan firman yang diterima nabi dari Allah. Kadang memberitahukan hal yang akan datang, tetapi lebih sering berupa peringatan untuk berbalik sekarang."
+ },
+ {
+  "id": "priest",
+  "terms": [
+   "imam",
+   "imam-imam",
+   "para imam"
+  ],
+  "text": "Orang yang melayani korban di Bait Allah, menjadi perantara antara Allah dan umat. Semula hanya keturunan Harun dari suku Lewi."
+ },
+ {
+  "id": "high-priest",
+  "terms": [
+   "imam besar"
+  ],
+  "text": "Pemimpin para imam. Setahun sekali ia masuk ke Ruang Mahakudus untuk mengadakan pendamaian bagi umat."
+ },
+ {
+  "id": "levite",
+  "terms": [
+   "keturunan Lewi"
+  ],
+  "text": "Orang dari suku Lewi yang dikhususkan untuk pekerjaan Bait Allah. Yerobeam melanggar aturan ini dan mengangkat siapa saja menjadi imam."
+ },
+ {
+  "id": "tribe",
+  "terms": [
+   "suku"
+  ],
+  "text": "Keluarga besar Israel yang berasal dari dua belas anak Yakub. Bangsa itu terdiri atas dua belas suku."
+ },
+ {
+  "id": "incense",
+  "terms": [
+   "membakar dupa",
+   "dupa"
+  ],
+  "text": "Membakar wewangian sebagai persembahan kepada dewa atau Allah. Asapnya melambangkan doa yang naik."
+ },
+ {
+  "id": "spices",
+  "terms": [
+   "rempah-rempah",
+   "rempah"
+  ],
+  "text": "Getah kayu dan wewangian yang berharga, dibawa dengan unta dari negeri jauh dan sangat mahal."
+ },
+ {
+  "id": "talent",
+  "terms": [
+   "talenta"
+  ],
+  "text": "Satuan berat yang besar; satu talenta sekitar 34 kg. Satu talenta emas adalah harta yang sangat besar."
+ },
+ {
+  "id": "shekel",
+  "terms": [
+   "syikal"
+  ],
+  "text": "Satuan berat dan uang; satu syikal sekitar 11 gram, terutama untuk menimbang perak."
+ },
+ {
+  "id": "seah",
+  "terms": [
+   "sukat"
+  ],
+  "text": "Takaran isi untuk biji-bijian; satu sukat (sea) sekitar 7 liter."
+ },
+ {
+  "id": "baal",
+  "terms": [
+   "Baal"
+  ],
+  "text": "Dewa yang dipercaya orang Kanaan menguasai hujan dan badai. Penyembahannya tersebar luas di Israel pada zaman Ahab dan Izebel."
+ },
+ {
+  "id": "asherah",
+  "terms": [
+   "Asyera"
+  ],
+  "text": "Dewi orang Kanaan. Ia disembah dengan mendirikan tiang atau patung kayu sebagai lambangnya."
+ },
+ {
+  "id": "pillar",
+  "terms": [
+   "tugu-tugu berhala",
+   "tugu berhala"
+  ],
+  "text": "Tiang batu yang didirikan sebagai tanda penyembahan berhala. Hukum Taurat melarang mendirikannya dan menyuruh menghancurkannya."
+ },
+ {
+  "id": "idol",
+  "terms": [
+   "berhala"
+  ],
+  "text": "Patung dari kayu, batu, atau logam buatan manusia yang disembah seperti dewa. Alkitab memandangnya sebagai dosa meninggalkan Allah."
+ },
+ {
+  "id": "golden-calf",
+  "terms": [
+   "anak lembu emas",
+   "lembu emas"
+  ],
+  "text": "Patung anak lembu dari emas. Baik di padang gurun maupun pada zaman Yerobeam, patung ini disembah sebagai ganti Allah dan menjadi dosa besar."
+ },
+ {
+  "id": "bronze-serpent",
+  "terms": [
+   "ular tembaga"
+  ],
+  "text": "Ular tembaga yang dipasang Musa pada sebuah tiang di padang gurun untuk menyelamatkan umat. Kemudian orang menyembahnya sebagai berhala, maka Hizkia menghancurkannya."
+ },
+ {
+  "id": "bronze-sea",
+  "terms": [
+   "laut tembaga"
+  ],
+  "text": "Bejana tembaga yang sangat besar di pelataran Bait Allah Salomo, berisi air untuk para imam membasuh diri."
+ },
+ {
+  "id": "wrath",
+  "terms": [
+   "murka TUHAN",
+   "murka",
+   "sakit hati"
+  ],
+  "text": "Allah sangat marah melihat dosa."
+ },
+ {
+  "id": "sign",
+  "terms": [
+   "tanda"
+  ],
+  "text": "Perbuatan ajaib yang menunjukkan bahwa firman Allah benar."
+ },
+ {
+  "id": "anoint",
+  "terms": [
+   "urapilah",
+   "mengurapi",
+   "mengurapinya"
+  ],
+  "text": "Upacara menuangkan minyak zaitun ke atas kepala saat menetapkan raja atau imam, tanda bahwa Allah memilih dan mengangkatnya."
+ },
+ {
+  "id": "gentile",
+  "terms": [
+   "bangsa asing",
+   "orang asing",
+   "bangsa lain"
+  ],
+  "text": "Sebutan untuk bangsa-bangsa lain di luar Israel."
+ },
+ {
+  "id": "assembly",
+  "terms": [
+   "seluruh jemaah",
+   "jemaah"
+  ],
+  "text": "Seluruh umat yang berkumpul di satu tempat untuk beribadah kepada Allah."
+ },
+ {
+  "id": "concubine",
+  "terms": [
+   "gundiknya"
+  ],
+  "text": "Istri raja yang kedudukannya di bawah permaisuri dan para istri resmi."
+ },
+ {
+  "id": "yoke",
+  "terms": [
+   "kuk"
+  ],
+  "text": "Kayu yang dipasang di leher dua ekor lembu untuk menarik bajak atau gerobak. Juga berarti beban berat atau penindasan."
+ },
+ {
+  "id": "scorpion-whip",
+  "terms": [
+   "cambuk kalajengking",
+   "kalajengking"
+  ],
+  "text": "Mungkin cambuk berduri atau berujung logam yang sangat menyakitkan. Artinya ia akan memerintah dengan lebih kejam."
+ },
+ {
+  "id": "chariot",
+  "terms": [
+   "kereta"
+  ],
+  "text": "Kereta perang yang ditarik kuda, senjata terkuat pasukan zaman dahulu."
+ },
+ {
+  "id": "horsemen",
+  "terms": [
+   "berkuda"
+  ],
+  "text": "Prajurit yang menunggang kuda. 'Kereta Israel dan orang-orangnya yang berkuda' berarti kekuatan yang menjaga bangsa itu."
+ },
+ {
+  "id": "servant",
+  "terms": [
+   "bujangnya",
+   "bujang"
+  ],
+  "text": "Orang yang selalu menyertai dan melayani tuannya."
+ },
+ {
+  "id": "yoke-of-oxen",
+  "terms": [
+   "pasang lembu"
+  ],
+  "text": "Dua ekor lembu yang memikul satu kuk dan menarik bersama."
+ },
+ {
+  "id": "sackcloth",
+  "terms": [
+   "kain kabung"
+  ],
+  "text": "Pakaian dari kain kasar berbulu, dipakai untuk menunjukkan dukacita atau penyesalan."
+ },
+ {
+  "id": "fast",
+  "terms": [
+   "berpuasa",
+   "puasa"
+  ],
+  "text": "Tidak makan untuk sementara waktu sambil berseru kepada Allah, tanda dukacita atau penyesalan."
+ },
+ {
+  "id": "threshing-floor",
+  "terms": [
+   "tempat pengirikan",
+   "pengirikan"
+  ],
+  "text": "Lapangan datar yang luas tempat bulir dipukul untuk memisahkan biji. Di dekat pintu gerbang kota, tempat ini juga dipakai untuk berkumpul."
+ },
+ {
+  "id": "gird",
+  "terms": [
+   "mengikat pinggangnya"
+  ],
+  "text": "Mengikat ujung jubah yang panjang dengan ikat pinggang, tanda bersiap untuk berlari atau bekerja."
+ },
+ {
+  "id": "still-small",
+  "terms": [
+   "bunyi angin sepoi-sepoi basa",
+   "sepoi-sepoi",
+   "suara yang lembut"
+  ],
+  "text": "Sesuatu yang sangat halus dan pelan. Elia bertemu Allah bukan dalam angin kencang, tetapi dalam suara yang lembut."
+ },
+ {
+  "id": "leprosy",
+  "terms": [
+   "sakit kusta",
+   "kusta"
+  ],
+  "text": "Kusta dalam Alkitab tidak hanya penyakit Hansen sekarang, tetapi berbagai penyakit kulit yang berat. Penderitanya harus tinggal di luar kampung."
+ },
+ {
+  "id": "commander",
+  "terms": [
+   "panglima tentara",
+   "panglima"
+  ],
+  "text": "Pemimpin tinggi yang mengepalai tentara."
+ },
+ {
+  "id": "beam",
+  "terms": [
+   "balok"
+  ],
+  "text": "Kayu besar yang dipasang melintang di antara tiang-tiang untuk menopang atap."
+ },
+ {
+  "id": "inner-room",
+  "terms": [
+   "kamar dalam"
+  ],
+  "text": "Ruangan kecil di balik ruangan besar, tempat yang tersembunyi dari pandangan orang."
+ },
+ {
+  "id": "watchman",
+  "terms": [
+   "Penjaga"
+  ],
+  "text": "Orang yang berjaga di atas tembok atau menara untuk melindungi kota."
+ },
+ {
+  "id": "watchtower",
+  "terms": [
+   "menara"
+  ],
+  "text": "Bangunan tinggi untuk berjaga dan melihat jauh."
+ },
+ {
+  "id": "harlotry",
+  "terms": [
+   "sundal"
+  ],
+  "text": "Dosa seksual di luar pernikahan. Alkitab juga memakai kata ini sebagai gambaran penyembahan berhala."
+ },
+ {
+  "id": "sorcery",
+  "terms": [
+   "sihir"
+  ],
+  "text": "Ilmu gaib seperti mantra dan tenung. Hukum Taurat melarangnya."
+ },
+ {
+  "id": "eunuch",
+  "terms": [
+   "sida-sida"
+  ],
+  "text": "Pegawai istana yang melayani raja dan ratu dari dekat."
+ },
+ {
+  "id": "centurion",
+  "terms": [
+   "kepala pasukan seratus"
+  ],
+  "text": "Perwira yang memimpin sekitar seratus prajurit."
+ },
+ {
+  "id": "throne",
+  "terms": [
+   "takhta"
+  ],
+  "text": "Kursi tempat raja duduk, lambang kuasa raja."
+ },
+ {
+  "id": "tribute",
+  "terms": [
+   "upeti"
+  ],
+  "text": "Harta yang setiap tahun diserahkan kepada bangsa yang kuat sebagai tanda takluk."
+ },
+ {
+  "id": "scribe",
+  "terms": [
+   "panitera negara",
+   "panitera"
+  ],
+  "text": "Pejabat yang menulis dan mengurus catatan. Pada masa itu jabatan ini tinggi, mengurus dokumen-dokumen istana."
+ },
+ {
+  "id": "recorder",
+  "terms": [
+   "bendahari"
+  ],
+  "text": "Pejabat istana yang mencatat dan mengumumkan urusan kerajaan."
+ },
+ {
+  "id": "aramaic",
+  "terms": [
+   "bahasa Aram"
+  ],
+  "text": "Bahasa orang Aram. Pada masa itu dipakai para diplomat dari banyak bangsa, sehingga rakyat Yehuda pada umumnya tidak memahaminya."
+ },
+ {
+  "id": "blaspheme",
+  "terms": [
+   "menghujat"
+  ],
+  "text": "Perkataan atau perbuatan yang menghina dan merendahkan Allah."
+ },
+ {
+  "id": "zion",
+  "terms": [
+   "Sion"
+  ],
+  "text": "Nama untuk Yerusalem, terutama gunung tempat Bait Allah berdiri. Artinya tempat Allah berdiam."
+ },
+ {
+  "id": "angel-of-lord",
+  "terms": [
+   "Malaikat TUHAN"
+  ],
+  "text": "Malaikat yang diutus Allah untuk menyampaikan atau melaksanakan kehendak-Nya."
+ },
+ {
+  "id": "passover",
+  "terms": [
+   "Paskah"
+  ],
+  "text": "Hari raya terbesar Israel untuk mengenang malam keselamatan di Mesir. Keluarga menyembelih anak domba dan memakannya bersama."
+ },
+ {
+  "id": "judges",
+  "terms": [
+   "para hakim",
+   "hakim"
+  ],
+  "text": "Para pemimpin yang memimpin Israel sebelum ada raja. Allah mengangkat mereka pada masa genting."
+ },
+ {
+  "id": "medium",
+  "terms": [
+   "pemanggil arwah"
+  ],
+  "text": "Orang yang meramal dengan mengaku dapat memanggil roh orang mati. Hukum Taurat melarangnya dengan keras."
+ },
+ {
+  "id": "guard-captain",
+  "terms": [
+   "kepala pasukan pengawal",
+   "kepala pengawal"
+  ],
+  "text": "Pemimpin pasukan yang menjaga raja."
+ },
+ {
+  "id": "siege-ramp",
+  "terms": [
+   "Tembok-tembok pengepungan"
+  ],
+  "text": "Tanggul tanah yang ditimbun sampai ke tembok kota saat mengepung. Alat-alat penggempur dinaikkan ke atasnya."
+ },
+ {
+  "id": "tribulation",
+  "terms": [
+   "kesesakan"
+  ],
+  "text": "Keadaan yang sangat menyusahkan dan sulit."
+ }
+]

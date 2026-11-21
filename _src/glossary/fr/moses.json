@@ -1,0 +1,506 @@
+[
+ {
+  "id": "store-city",
+  "terms": [
+   "villes d’entrepôts"
+  ],
+  "text": "Des villes où un pays stockait son grain et ses provisions. Les Israélites furent forcés de les bâtir comme des esclaves."
+ },
+ {
+  "id": "midwife",
+  "terms": [
+   "sages-femmes"
+  ],
+  "text": "Des femmes qui aidaient les mères à accoucher, comme les sages-femmes d’aujourd’hui."
+ },
+ {
+  "id": "bitumen",
+  "terms": [
+   "bitume",
+   "poix"
+  ],
+  "text": "Une substance noire et collante tirée du sol (l’asphalte). On en enduisait les paniers et les bateaux pour les rendre étanches."
+ },
+ {
+  "id": "priest",
+  "terms": [
+   "prêtre",
+   "prêtres"
+  ],
+  "text": "Une personne qui offrait des sacrifices à Dieu, priait pour le peuple et enseignait la Loi."
+ },
+ {
+  "id": "high-priest",
+  "terms": [
+   "grand prêtre"
+  ],
+  "text": "Le chef des prêtres. Aaron fut le premier, et ses fils lui succédèrent."
+ },
+ {
+  "id": "bush",
+  "terms": [
+   "buisson"
+  ],
+  "text": "Un arbuste bas et épineux qui pousse au désert. Dieu appela Moïse du milieu des flammes d’un tel buisson."
+ },
+ {
+  "id": "sign",
+  "terms": [
+   "signes",
+   "signe"
+  ],
+  "text": "Un acte étonnant qui montre que Dieu est présent. Plus qu’un simple miracle, c’est une marque qui renvoie à autre chose."
+ },
+ {
+  "id": "feast",
+  "terms": [
+   "fête"
+  ],
+  "text": "Un jour saint célébré à une date fixée pour se souvenir de Dieu, comme la Pâque ou la fête des Tentes."
+ },
+ {
+  "id": "magician",
+  "terms": [
+   "magiciens"
+  ],
+  "text": "Des hommes de la cour du pharaon qui pratiquaient des arts secrets. Ils imitèrent les premiers fléaux, mais renoncèrent vite."
+ },
+ {
+  "id": "passover",
+  "terms": [
+   "Pâque"
+  ],
+  "text": "« Passage » : la première fête d’Israël. Elle rappelle la nuit où le fléau passa par-dessus les maisons marquées du sang d’un agneau."
+ },
+ {
+  "id": "hyssop",
+  "terms": [
+   "hysope"
+  ],
+  "text": "Une petite plante qui pousse entre les pierres. Liée en bouquet, elle servait à tremper et asperger le sang ou l’eau."
+ },
+ {
+  "id": "lintel",
+  "terms": [
+   "linteau"
+  ],
+  "text": "La poutre posée en travers au-dessus d’une porte. La nuit de la Pâque, on mit le sang de l’agneau dessus et sur les deux montants."
+ },
+ {
+  "id": "leaven",
+  "terms": [
+   "pain sans levain"
+  ],
+  "text": "Du pain fait sans levain, ce qui fait lever la pâte. Partis en hâte, les Israélites mangèrent du pain sans levain ; de là vient la fête des Pains sans levain."
+ },
+ {
+  "id": "able-men",
+  "terms": [
+   "hommes à pied"
+  ],
+  "text": "Les hommes adultes en âge d’aller à la guerre. Les femmes et les enfants n’étaient pas comptés."
+ },
+ {
+  "id": "chariot",
+  "terms": [
+   "chars"
+  ],
+  "text": "Des voitures de guerre tirées par des chevaux, les armes les plus redoutées de l’époque."
+ },
+ {
+  "id": "timbrel",
+  "terms": [
+   "tambourin",
+   "tambourins"
+  ],
+  "text": "Un petit tambour qu’on tient à la main. Les femmes en jouaient et dansaient aux jours de joie."
+ },
+ {
+  "id": "prophet",
+  "terms": [
+   "prophétesse",
+   "prophète"
+  ],
+  "text": "Une personne qui reçoit la parole de Dieu et la transmet aux autres ; pas seulement quelqu’un qui prédit l’avenir."
+ },
+ {
+  "id": "statutes",
+  "terms": [
+   "lois"
+  ],
+  "text": "Les lois et les règles que Dieu a fixées pour que son peuple les observe."
+ },
+ {
+  "id": "omer",
+  "terms": [
+   "omer"
+  ],
+  "text": "Une mesure pour les grains d’environ deux litres, la quantité de manne qu’une personne mangeait par jour."
+ },
+ {
+  "id": "manna",
+  "terms": [
+   "manne"
+  ],
+  "text": "La nourriture que Dieu donna chaque jour au désert. Son nom vient de la question « Qu’est-ce que c’est ? »."
+ },
+ {
+  "id": "sabbath",
+  "terms": [
+   "sabbat"
+  ],
+  "text": "Le septième jour, où l’on cesse le travail pour se reposer et se souvenir de Dieu. Il va du coucher du soleil le vendredi au coucher du soleil le samedi."
+ },
+ {
+  "id": "elder",
+  "terms": [
+   "anciens"
+  ],
+  "text": "Des responsables âgés qui représentaient leurs familles et leurs tribus, et discutaient ensemble des affaires du peuple pour les trancher."
+ },
+ {
+  "id": "altar",
+  "terms": [
+   "autel",
+   "autels"
+  ],
+  "text": "Une plate-forme surélevée de pierres ou de terre pour offrir des sacrifices ; un lieu où l’on adore Dieu."
+ },
+ {
+  "id": "burnt-offering",
+  "terms": [
+   "holocauste",
+   "holocaustes"
+  ],
+  "text": "Un sacrifice entièrement brûlé sur l’autel, signe d’un don total de soi à Dieu."
+ },
+ {
+  "id": "sacrifice",
+  "terms": [
+   "sacrifices",
+   "sacrifice"
+  ],
+  "text": "Des animaux mis à mort et offerts à Dieu."
+ },
+ {
+  "id": "peace-offering",
+  "terms": [
+   "sacrifice de paix",
+   "sacrifices de paix"
+  ],
+  "text": "Une offrande qui célèbre la paix entre Dieu et les hommes. Une partie de la viande était partagée et mangée ensemble."
+ },
+ {
+  "id": "lawsuit",
+  "terms": [
+   "différends"
+  ],
+  "text": "Des querelles portées devant quelqu’un pour qu’il décide qui a raison, un peu comme les procès d’aujourd’hui."
+ },
+ {
+  "id": "covenant",
+  "terms": [
+   "alliance"
+  ],
+  "text": "Une promesse solennelle que Dieu fit avec son peuple : il serait leur Dieu, et ils seraient son peuple."
+ },
+ {
+  "id": "purify",
+  "terms": [
+   "purifièrent",
+   "sanctifier",
+   "Sanctifiez"
+  ],
+  "text": "Se laver le corps et les vêtements pour se présenter devant Dieu. La propreté du dehors montrait que le cœur se préparait."
+ },
+ {
+  "id": "graven-image",
+  "terms": [
+   "image taillée"
+  ],
+  "text": "La figure d’un dieu taillée dans le bois, la pierre ou le métal. Ces objets faits pour être adorés s’appellent des idoles."
+ },
+ {
+  "id": "adultery",
+  "terms": [
+   "adultère"
+  ],
+  "text": "Des relations sexuelles entre une personne mariée et quelqu’un d’autre que son conjoint."
+ },
+ {
+  "id": "sapphire",
+  "terms": [
+   "saphir"
+  ],
+  "text": "Une pierre précieuse bleue ; on pense au saphir ou au lapis-lazuli."
+ },
+ {
+  "id": "tablets",
+  "terms": [
+   "tables"
+  ],
+  "text": "Les deux tables de pierre sur lesquelles Dieu grava les Dix Commandements. Elles furent ensuite gardées dans l’arche de l’alliance."
+ },
+ {
+  "id": "tabernacle",
+  "terms": [
+   "Demeure"
+  ],
+  "text": "Un sanctuaire en forme de tente, dressé et déplacé à travers le désert, signe que Dieu habitait au milieu de son peuple."
+ },
+ {
+  "id": "tent-of-meeting",
+  "terms": [
+   "tente de la rencontre"
+  ],
+  "text": "La tente où Dieu rencontrait Moïse et le peuple ; un autre nom de la Demeure, le tabernacle."
+ },
+ {
+  "id": "testimony",
+  "terms": [
+   "témoignage"
+  ],
+  "text": "Les tables de pierre gravées des Dix Commandements, appelées ainsi parce qu’elles témoignaient de l’alliance entre Dieu et son peuple."
+ },
+ {
+  "id": "ark",
+  "terms": [
+   "arche"
+  ],
+  "text": "Un coffre de bois recouvert d’or qui contenait les tables de pierre. Il montrait que Dieu était au milieu de son peuple, et les prêtres le portaient."
+ },
+ {
+  "id": "mercy-seat",
+  "terms": [
+   "propitiatoire"
+  ],
+  "text": "Le couvercle d’or de l’arche de l’alliance. Chaque année, le grand prêtre y aspergeait du sang pour purifier les péchés du peuple."
+ },
+ {
+  "id": "veil",
+  "terms": [
+   "voile",
+   "rideau"
+  ],
+  "text": "Une lourde étoffe qui sépare un espace. Dans le tabernacle, elle fermait le lieu très saint."
+ },
+ {
+  "id": "showbread-table",
+  "terms": [
+   "table des pains"
+  ],
+  "text": "La table du tabernacle où douze pains étaient toujours disposés devant Dieu."
+ },
+ {
+  "id": "lampstand",
+  "terms": [
+   "chandelier"
+  ],
+  "text": "Un chandelier d’or à sept branches qui éclairait sans cesse l’intérieur du tabernacle."
+ },
+ {
+  "id": "incense-altar",
+  "terms": [
+   "autel d’or des parfums"
+  ],
+  "text": "Un petit autel d’or dans le tabernacle, où l’on brûlait de l’encens chaque matin et chaque soir."
+ },
+ {
+  "id": "bronze-altar",
+  "terms": [
+   "autel des holocaustes"
+  ],
+  "text": "Le grand autel de bronze dans la cour du tabernacle, où l’on brûlait les animaux offerts en sacrifice."
+ },
+ {
+  "id": "laver",
+  "terms": [
+   "cuve"
+  ],
+  "text": "Une grande cuve de bronze où les prêtres se lavaient les mains et les pieds."
+ },
+ {
+  "id": "cubit",
+  "terms": [
+   "coudées"
+  ],
+  "text": "La longueur du coude au bout des doigts, environ 45 centimètres."
+ },
+ {
+  "id": "days-journey",
+  "terms": [
+   "journée de marche"
+  ],
+  "text": "La distance qu’on peut parcourir à pied en un jour, environ 30 kilomètres."
+ },
+ {
+  "id": "spy",
+  "terms": [
+   "espions"
+  ],
+  "text": "Des hommes qui se glissent en secret dans le pays ennemi pour voir ce qui s’y passe et en faire le rapport."
+ },
+ {
+  "id": "tribe",
+  "terms": [
+   "tribus",
+   "tribu"
+  ],
+  "text": "L’un des grands clans issus des douze fils de Jacob. Israël était formé de douze tribus."
+ },
+ {
+  "id": "censer",
+  "terms": [
+   "encensoirs",
+   "encensoir"
+  ],
+  "text": "Un récipient contenant des braises pour offrir l’encens. Seuls les prêtres pouvaient s’en servir devant Dieu."
+ },
+ {
+  "id": "plague",
+  "terms": [
+   "fléau"
+  ],
+  "text": "Une terrible maladie qui se répand parmi les gens."
+ },
+ {
+  "id": "bronze-serpent",
+  "terms": [
+   "serpent de bronze"
+  ],
+  "text": "Un serpent fait de bronze. Quiconque le regardait vivait, et Jésus compara sa propre croix à ce serpent."
+ },
+ {
+  "id": "divination-fee",
+  "terms": [
+   "prix de la divination"
+  ],
+  "text": "L’argent ou les biens donnés pour une divination, ou pour prononcer des bénédictions et des malédictions."
+ },
+ {
+  "id": "official",
+  "terms": [
+   "dignitaires"
+  ],
+  "text": "Des gens qui occupaient de hautes fonctions dans le gouvernement."
+ },
+ {
+  "id": "law",
+  "terms": [
+   "livre de la loi",
+   "loi"
+  ],
+  "text": "L’enseignement et les commandements que Dieu donna par Moïse. Le livre de la Loi est le livre où ils furent écrits."
+ },
+ {
+  "id": "doorpost",
+  "terms": [
+   "montants"
+  ],
+  "text": "Les poteaux dressés de chaque côté d’une porte."
+ },
+ {
+  "id": "flax",
+  "terms": [
+   "lin"
+  ],
+  "text": "Les tiges de la plante de lin, dont on tissait la toile. On les étendait sur les toits pour les faire sécher."
+ },
+ {
+  "id": "ford",
+  "terms": [
+   "gués"
+  ],
+  "text": "Un endroit peu profond où l’on peut traverser une rivière, ou un lieu d’accostage pour les bateaux."
+ },
+ {
+  "id": "circumcision",
+  "terms": [
+   "circoncis"
+  ],
+  "text": "Un rite où l’on coupait le prépuce du garçon, signe de l’alliance qui marquait le peuple de Dieu."
+ },
+ {
+  "id": "shofar",
+  "terms": [
+   "cor",
+   "cors"
+  ],
+  "text": "Ici, le chofar, une trompette faite d’une corne de bélier. On en sonnait aux fêtes, à la guerre, et pour annoncer de grands événements."
+ },
+ {
+  "id": "devoted",
+  "terms": [
+   "voué à la destruction",
+   "voué"
+  ],
+  "text": "Détruit entièrement : rien n’en était gardé par personne, tout était remis à Dieu."
+ },
+ {
+  "id": "lots",
+  "terms": [
+   "sort"
+  ],
+  "text": "Une façon de décider en tirant des pierres ou des bâtons marqués. On y voyait une demande de la volonté de Dieu plutôt qu’un choix humain."
+ },
+ {
+  "id": "peace-treaty",
+  "terms": [
+   "fait la paix"
+  ],
+  "text": "Convenir de ne plus se battre et de vivre en bons termes."
+ },
+ {
+  "id": "inheritance",
+  "terms": [
+   "héritage"
+  ],
+  "text": "La part que Dieu donna à son peuple pour la posséder et en jouir de génération en génération."
+ },
+ {
+  "id": "office",
+  "terms": [
+   "sacerdoce"
+  ],
+  "text": "Le travail confié à quelqu’un et la place qui va avec."
+ },
+ {
+  "id": "oak",
+  "terms": [
+   "chêne"
+  ],
+  "text": "Un grand arbre de la famille du chêne, qui porte des glands. De tels arbres marquaient souvent les lieux où s’étaient passées des choses importantes."
+ },
+ {
+  "id": "sanctuary",
+  "terms": [
+   "sanctuaire"
+  ],
+  "text": "Un lieu saint pour adorer Dieu."
+ },
+ {
+  "id": "wrath",
+  "terms": [
+   "colère"
+  ],
+  "text": "La sainte colère de Dieu contre le péché."
+ },
+ {
+  "id": "lovingkindness",
+  "terms": [
+   "bonté",
+   "amour fidèle"
+  ],
+  "text": "L’amour et la miséricorde de Dieu, qui tiennent ferme à son peuple et ne changent jamais."
+ },
+ {
+  "id": "worship",
+  "terms": [
+   "prosterna",
+   "prosterner",
+   "prosternèrent",
+   "prosterné"
+  ],
+  "text": "S’incliner jusqu’à terre pour honorer Dieu."
+ }
+]
