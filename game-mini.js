@@ -1355,7 +1355,7 @@ const sling = {
   title: '다섯 개의 매끄러운 돌', task: '물매 돌로 골리앗의 이마를',
   ask: ['저 거인은 칼과 창과 단창을 의지하지만, 나는 만군의 여호와의 이름을 의지한다.', '시냇가에서 고른 매끄러운 돌 다섯 개가 있다 — 이마를 노려라!'],
   quote: '시내에서 매끄러운 돌 다섯을 골라서 자기 목자의 제구 곧 주머니에 넣고 손에 물매를 가지고', ref: '삼상 17:40',
-  help: '화면을 뒤로 끌었다 놓으면 돌이 날아가요 — 당긴 만큼 세게, 반대쪽으로.<br>투구·갑옷·방패는 튕겨 내요. 이마를 맞혀요! 돌은 다섯 개, 거인이 다가와요.',
+  help: '화면을 뒤로 끌었다 놓으면 돌이 날아가요 — 당긴 만큼 세게, 반대쪽으로.<br>과녁은 투구 바로 아래 <b>이마</b>(깜박이는 고리). 투구·갑옷·방패는 튕겨 내요. 돌은 다섯 개, 거인이 다가와요.',
   art: ['d05/bg', 'd05/goliath', 'd05/bearer', 'd05/david'],
   seconds: 30,
   init() { return { stones: 5, shot: null, gx: 360, t: 0, aim: null, msg: null, sparks: [], down: 0, fallen: 0, trail: [] }; },
@@ -1367,11 +1367,11 @@ const sling = {
     if (sh) {
       sh.vy += GRAV * dt; sh.x += sh.vx * dt; sh.y += sh.vy * dt; S.trail.push([sh.x, sh.y]); if (S.trail.length > 14) S.trail.shift();
       const h = this.head(S);
-      if (!S.down && Math.hypot(sh.x - h.x, sh.y - h.y) < 8.5) { // 이마!
+      if (!S.down && !sh.dead && Math.hypot(sh.x - h.x, sh.y - h.y) < 8.5) { // 이마!
         S.down = 1; S.shot = null; S.fx.play('thunder'); S.fx.play('plink'); S.msg = { t: '이마에 맞았다!', c: '#ffe29a', at: 1.6, x: h.x - 40, y: h.y - 40 };
         for (let i = 0; i < 16; i++) S.sparks.push({ x: h.x, y: h.y, vy: rnd(-60, -10), life: rnd(0.4, 0.9), r: rnd(1.4, 2.6) });
-      } else if (!S.down && armorHit(S, sh)) { // 투구·갑옷·방패 — 튕긴다
-        S.fx.play('halt'); S.msg = { t: armorHit(S, sh), c: '#cfd8e0', at: 0.9, x: sh.x, y: sh.y - 20 }; sh.vx = -sh.vx * 0.35; sh.vy = -120; sh.dead = true;
+      } else if (!S.down && !sh.dead && armorHit(S, sh)) { // 투구·갑옷·방패 — 한 번만 튕겨 다윗 쪽으로 떨어져 나간다(튕긴 돌이 갑옷 안에서 거듭 튀었다 — 사용자 2026-11)
+        S.fx.play('halt'); S.msg = { t: armorHit(S, sh), c: '#cfd8e0', at: 0.9, x: sh.x, y: sh.y - 20 }; sh.vx = -Math.max(60, Math.abs(sh.vx) * 0.4); sh.vy = -110; sh.dead = true;
       }
       if (sh.y > 470 || sh.x > W + 20 || sh.x < -20) { S.shot = null; S.trail = []; }
     }
@@ -1442,7 +1442,7 @@ function giant(g, S) {
     g.fillStyle = 'rgba(0,0,0,.25)'; g.beginPath(); g.ellipse(bx, 430, 26, 6, 0, 0, 7); g.fill(); g.beginPath(); g.ellipse(gx, 432, 40, 8, 0, 0, 7); g.fill();
     spr(g, 'd05/bearer', bx, 432, 132, { a: 1 - f * 0.5 });
     const k = (430 - h.y) / (420 - 62), gh = 420 * k; spr(g, 'd05/goliath', h.x, 430, gh, { flip: true, ax: 195 / 351, rot: -f * 1.45 });
-    if (!f) { g.fillStyle = '#ffeec0'; g.globalAlpha = 0.3 + Math.sin(S.t * 6) * 0.15; g.beginPath(); g.arc(h.x, h.y, 5, 0, 7); g.fill(); g.globalAlpha = 1; } // 이마 — 희미하게 빛나는 과녁
+    if (!f) { const p = 0.5 + 0.5 * Math.sin(S.t * 6); g.strokeStyle = `rgba(255,236,170,${0.55 + p * 0.4})`; g.lineWidth = 2; g.beginPath(); g.arc(h.x, h.y, 8.5 + p * 2, 0, 7); g.stroke(); g.fillStyle = 'rgba(255,240,200,.35)'; g.beginPath(); g.arc(h.x, h.y, 3, 0, 7); g.fill(); } // 이마 — 맞힐 자리(고리 크기 = 맞는 범위)
     return; }
   // 방패 든 자 (앞서 걷는다)
   g.save(); g.translate(bx, 428); g.globalAlpha = 1 - f * 0.5;
