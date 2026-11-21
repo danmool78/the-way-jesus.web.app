@@ -58,8 +58,8 @@ function applyStatic() {
   $$('[data-i]').forEach(el => { el.textContent = t(el.dataset.i); }); // 글씨 키를 단 요소들
   $$('.qna-link').forEach(a => { a.href = LANG === 'ko' ? 'qna.html' : `qna.${LANG}.html`; }); // 묻고 답하기: 한국어는 qna.html, 다른 언어는 qna.<언어>.html
   // 글로 읽기: 이 여정의 장면 글 모음(s/, pages.py — 예수는 s/index). 노래가 중심인 시편은 글 모음이 없어 감춘다
-  // 순례 게임(game.html): 지도를 걷는 여정에서만, 아직 한국어뿐이라 한국어 화면에서만 잇는다
-  $$('.game-link').forEach(a => { a.hidden = LANG !== 'ko' || !GAME_J.includes(JOURNEY); a.href = `game.html?j=${JOURNEY}`; });
+  // 순례 게임(game.html): 지도를 걷는 여정에서만 (8개 언어 — 사용자 2026-11)
+  $$('.game-link').forEach(a => { a.hidden = !GAME_J.includes(JOURNEY); a.href = `game.html?j=${JOURNEY}`; });
   $$('.text-link').forEach(a => { a.hidden = JOURNEY === 'psalms'; a.href = `s/${JOURNEY === 'jesus' ? 'index' : JOURNEY}${LANG === 'ko' ? '' : '.' + LANG}.html`; });
   $$('.scene-list').forEach(a => { a.hidden = JOURNEY !== 'jesus'; }); // 검색용 장면 목록(s/)은 아직 예수 여정만
   if (JOURNEY === 'jesus') $$('.scene-list').forEach(a => { a.href = LANG === 'ko' ? 's/index.html' : `s/index.${LANG}.html`; a.textContent = t('sceneList', { n: DATA.events.length }); }); // 장면 목록(정적 페이지 s/)도 같은 방식
@@ -2302,8 +2302,8 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   }).join('') + `<li data-journey="why" class="jcard ready"><img class="jicon" src="${DATA.journey?.whyIcon || 'assets/why-icon.webp'}" alt="" width="56" height="56">
       <div class="jtext"><b>${esc(t('whyH'))}</b><small>${esc(t('why'))}</small></div>
       <div class="jbtns"><a class="jgo" href="${LANG === 'ko' ? 'why.html' : `why.${LANG}.html`}">${esc(t('whyGo'))} →</a><button type="button" class="jshare" data-share="why" aria-label="${esc(t('shareApp'))} — ${esc(t('whyH'))}">${share}<span>${esc(t('shareShort'))}</span></button></div></li>`  // '왜 기독교인가'는 어느 여정에서 보든 맨 끝에 — 언어마다 why.<언어>.html
-    // 순례 게임: 맨 끝 빈칸을 채운다(사용자 2026-11). 아직 한국어뿐이라 한국어 화면에서만, 지도를 걷는 여정이면 그 여정으로 연다
-    + (LANG === 'ko' ? `<li data-journey="game" class="jcard ready"><img class="jicon" src="assets/game-icon.svg" alt="" width="56" height="56">
+    // 순례 게임: 맨 끝 빈칸을 채운다(사용자 2026-11, 8개 언어). 지도를 걷는 여정이면 그 여정으로 연다
+    + (true ? `<li data-journey="game" class="jcard ready"><img class="jicon" src="assets/game-icon.svg" alt="" width="56" height="56">
       <div class="jtext"><b>${esc(t('landGameTag'))}</b><small>${esc(t('landGameH'))}</small></div>
       <div class="jbtns"><a class="jgo" href="${GAME_J.includes(JOURNEY) ? `game.html?j=${JOURNEY}` : 'game.html'}">${esc(t('landGameGo'))}</a><button type="button" class="jshare" data-share="game" aria-label="${esc(t('shareApp'))} — ${esc(t('landGameTag'))}">${share}<span>${esc(t('shareShort'))}</span></button></div></li>` : '');
   // '왜 기독교인가'도 공유한다 — 여정이 아니라 페이지라 그 언어의 why 주소로 (전엔 공유 단추가 없었다, 사용자)

@@ -200,7 +200,7 @@ button,a,img,svg,nav,header,.btn{-webkit-touch-callout:none;-webkit-user-select:
   <section class="group" id="walk"><div class="ghead"><h2 data-i="landG1">걷는 여정</h2><p data-i="landG1s">지도를 따라 장면에서 장면으로</p></div><ul class="cards" data-g="walk"></ul></section>
   <section class="group two"><div class="ghead"><h2 data-i="landG2">노래와 지혜</h2><p data-i="landG2s">시편의 노래, 잠언의 하루</p></div><ul class="cards" data-g="song"></ul></section>
   <section class="group two"><div class="ghead"><h2 data-i="landG3">처음 만나는 분께</h2><p data-i="landG3s">복음과 질문, 짧게</p></div><ul class="cards" data-g="first"></ul></section>
-  <!-- 순례 게임(game.html): 아직 한국어뿐이라 한국어 화면에서만 보인다 -->
+  <!-- 순례 게임(game.html): 8개 언어 -->
   <section class="game" id="game" hidden>
     <div class="game-art" id="gameArt" aria-hidden="true"></div>
     <div class="game-txt">
@@ -263,7 +263,7 @@ function render(lang) {
       <div class="info">${c.n ? `<em>${esc(t(c.id === 'psalms' ? 'seriesPsalms' : 'seriesScenes', { n: c.n }))}</em>` : ''}<b>${esc(t(c.title))}</b><small>${esc(t(c.desc))}</small>
         ${p ? `<span class="bar"><b><i style="width:${p.pct}%"></i></b><span>${p.label}</span></span>` : c.progress ? `<span class="bar"><b><i style="width:${c.progress}%"></i></b><span>${esc(t('inProgress', { p: c.progress }))}</span></span>` : ''}</div></li>`; }).join(''); });
   resume();
-  document.getElementById('game').hidden = lang !== 'ko';
+  document.getElementById('game').hidden = false; // 순례 게임: 8개 언어 (사용자 2026-11)
   document.getElementById('gameArt').innerHTML = ['d05', 'e28', 'm10'].map(id => `<img src="${cardUrl(id)}" alt="" loading="lazy">`).join('');
   // 여정마다의 공유 주소(/jesus, /moses — 그 여정의 미리보기 카드). 4영리처럼 따로 만든 페이지는 그 주소(href)
   document.querySelectorAll('.share[data-id]').forEach(b => b.onclick = () => { const c = L.cards.find(x => x.id === b.dataset.id); share(SITE + (hrefOf(c) || `/${c.id}`), `${t('appName')} — ${t(c.title)}`); });

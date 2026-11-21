@@ -326,6 +326,8 @@ img,canvas{-webkit-user-drag:none;user-select:none}
 .quiz .opts button.cut s{opacity:.8}
 .quiz .opts button.cut em{display:block;margin-top:4px;font-size:11.5px;font-style:normal;color:var(--gold2)}
 .quiz .explain{margin:10px 0 0;color:var(--muted);font-size:13.5px;line-height:1.6;word-break:keep-all}
+/* 일본어·중국어는 띄어쓰기가 없어 keep-all이면 줄을 못 끊고 넘친다(말풍선·놀이 소개 — 2026-11) */
+:lang(ja) *, :lang(zh) * { word-break: normal !important; line-break: strict }
 </style>
 </head>
 <body>
