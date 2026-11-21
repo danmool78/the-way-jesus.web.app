@@ -1341,8 +1341,90 @@ function giant(g, S) {
   g.restore();
 }
 
+/* ---------- 무너진 성벽 (수 6:1–20): 양각 나팔에 맞춰 여리고 돌기 — 박자 ---------- */
+// 나팔 소리(음표)가 오른쪽에서 흘러와 왼쪽 표시선에 닿는 순간 누른다. 날마다 한 바퀴(박자 여섯), 일곱째 날은 일곱 바퀴를 몰아서 빠르게(6:3–4).
+// 여섯 번 놓치면 행렬이 흐트러져 실패. 다 돌면 '외치라!' — 마구 눌러 함성을 채우면 성벽이 무너진다(6:20)
+const LANE = 430, HITX = 70, NSPEED = 230, MISSMAX = 6, WIN = 0.15;
+const jericho = {
+  title: '무너진 성벽', task: '나팔에 맞춰 일곱째 날까지 성 돌기',
+  ask: ['엿새 동안 날마다 이 성을 한 바퀴 돌고, 일곱째 날에는 일곱 바퀴를 돌라 하셨다.', '제사장들의 양각 나팔 소리에 맞춰 걸어라 — 마지막엔 크게 외쳐라!'],
+  quote: '일곱째 날에는 그 성을 일곱 번 돌며 제사장들은 나팔을 불 것이며', ref: '수 6:4',
+  help: '나팔(음표)이 오른쪽에서 흘러와요. 왼쪽 원에 닿을 때 화면을 눌러요.<br>날이 갈수록 빨라져요. 여섯 번 놓치면 흐트러져요. 마지막에 "외치라!" — 마구 눌러요!',
+  seconds: 55,
+  init() {
+    // 박자표: 날마다 여섯 박(1–6일은 0.9→0.6초 간격), 일곱째 날은 박자 열넷을 빠르게
+    const notes = []; let t = 1.6;
+    for (let d = 1; d <= 7; d++) { const n = d < 7 ? 6 : 14, gap = d < 7 ? 0.9 - d * 0.05 : 0.42; for (let i = 0; i < n; i++) { notes.push({ t, day: d, st: 0 }); t += gap; } t += 1.1; }
+    return { notes, t: 0, miss: 0, hit: 0, combo: 0, msg: null, sparks: [], shout: 0, shoutOn: false, fall: 0, flash: 0, endT: t };
+  },
+  day(S) { const n = S.notes.find(n => !n.st); return n ? n.day : 7; },
+  update(dt, S) {
+    S.t += dt; S.flash = Math.max(0, S.flash - dt * 4);
+    for (const n of S.notes) if (!n.st && S.t - n.t > WIN) { n.st = -1; S.miss++; S.combo = 0; S.msg = { t: '놓쳤어요', c: '#ffb38a', at: 0.6, x: HITX + 40, y: LANE - 48 }; }
+    if (!S.shoutOn && S.notes.every(n => n.st)) { S.shoutOn = true; S.msg = { t: '외치라!', c: '#ffe29a', at: 2, x: W / 2, y: 120 }; S.fx.play('horn'); }
+    if (S.shoutOn && S.fall === 0) S.shout = Math.max(0, S.shout - dt * 0.22); // 쉬면 함성이 잦아든다
+    if (S.fall) S.fall = Math.min(1, S.fall + dt * 0.7);
+    for (const p of S.sparks) { p.y += p.vy * dt; p.life -= dt; } S.sparks = S.sparks.filter(p => p.life > 0);
+    if (S.msg) S.msg.at -= dt;
+  },
+  down(x, y, S) {
+    if (S.shoutOn) { if (!S.fall) { S.shout = Math.min(1, S.shout + 0.075); S.fx.play('shout'); if (S.shout >= 1) { S.fall = 0.001; S.fx.play('collapse'); } } return; }
+    const n = S.notes.filter(n => !n.st).sort((a, b) => Math.abs(a.t - S.t) - Math.abs(b.t - S.t))[0];
+    if (!n || Math.abs(n.t - S.t) > WIN) return; // 음표 근처가 아니면 그냥 (헛누름은 벌하지 않는다)
+    const d = Math.abs(n.t - S.t); n.st = 1; S.hit++; S.combo++; S.fx.play('horn'); S.fx.play('step'); S.flash = 1;
+    S.msg = { t: d < 0.08 ? '딱 맞게!' : '좋아요', c: d < 0.08 ? '#ffe29a' : '#e8f0d0', at: 0.5, x: HITX + 50, y: LANE - 44 };
+    for (let i = 0; i < (d < 0.08 ? 8 : 4); i++) S.sparks.push({ x: HITX + rnd(-12, 12), y: LANE + rnd(-12, 12), vy: rnd(-50, -15), life: rnd(0.3, 0.6), r: rnd(1.2, 2.4) });
+  },
+  up() {},
+  won: S => S.fall >= 1,
+  lost: S => S.miss >= MISSMAX,
+  failText: S => S.miss >= MISSMAX ? '나팔 소리에서 흐트러졌어요' : '시간이 다 되었어요',
+  draw(g, S) {
+    const sky = g.createLinearGradient(0, 0, 0, H); sky.addColorStop(0, '#e8c48a'); sky.addColorStop(0.6, '#d9b27a'); sky.addColorStop(1, '#a8885a'); g.fillStyle = sky; g.fillRect(0, 0, W, H);
+    // 여리고 성 (가운데) — 무너질 때 아래로 주저앉고 먼지
+    const cx = 200, cy = 220, f = S.fall;
+    g.fillStyle = '#b08a5a'; g.beginPath(); g.ellipse(cx, cy + 60, 150, 44, 0, 0, 7); g.fill(); // 언덕
+    g.save(); g.beginPath(); g.rect(0, 0, W, cy + 70); g.clip(); g.translate(0, f * 90);
+    g.fillStyle = '#c9a86e'; g.fillRect(cx - 110, cy - 30, 220, 80); g.fillStyle = '#b8945a';
+    for (let x = cx - 110; x < cx + 110; x += 16) g.fillRect(x, cy - 40, 10, 12); // 성가퀴
+    for (const tx of [cx - 110, cx + 90]) { g.fillStyle = '#b8945a'; g.fillRect(tx, cy - 60, 20, 110); for (let k = 0; k < 2; k++) g.fillRect(tx - 2 + k * 14, cy - 70, 8, 12); }
+    g.fillStyle = '#6a4a2a'; g.beginPath(); g.moveTo(cx - 14, cy + 50); g.lineTo(cx - 14, cy + 20); g.arc(cx, cy + 20, 14, Math.PI, 0); g.lineTo(cx + 14, cy + 50); g.fill(); // 성문
+    g.strokeStyle = 'rgba(90,60,30,.35)'; for (let y = cy - 24; y < cy + 50; y += 12) { g.beginPath(); g.moveTo(cx - 110, y); g.lineTo(cx + 110, y); g.stroke(); }
+    g.restore();
+    if (f > 0) { g.fillStyle = `rgba(200,170,120,${Math.sin(f * Math.PI) * 0.8})`; for (let i = 0; i < 14; i++) { g.beginPath(); g.arc(cx - 120 + i * 18, cy + 40 - f * 30 - (i % 3) * 10, 20 + f * 20, 0, 7); g.fill(); } }
+    // 성을 도는 행렬(나팔 부는 제사장 셋·법궤·백성, 6:6–9) — 성 앞 길을 줄지어 지나간다
+    for (let i = 0; i < 9; i++) { const u = (((S.t * 34 + i * 26) % 420) + 420) % 420, x = W + 10 - u, y = cy + 92 + Math.sin(x / 70) * 6, sc = 1.3;
+      if (i === 3) { g.fillStyle = '#e0b850'; g.fillRect(x - 11 * sc, y - 14 * sc, 22 * sc, 9 * sc); g.fillStyle = '#5a3a1a'; g.fillRect(x - 14 * sc, y - 6 * sc, 28 * sc, 2 * sc); } // 법궤
+      else { g.fillStyle = i < 3 ? '#f2ead8' : '#6e5a40'; g.beginPath(); g.ellipse(x, y - 8 * sc, 4.5 * sc, 9 * sc, 0, 0, 7); g.fill(); g.fillStyle = '#c99a6a'; g.beginPath(); g.arc(x, y - 19 * sc, 3.2 * sc, 0, 7); g.fill(); }
+      }
+    // 날짜
+    const day = this.day(S); g.save(); g.font = '800 16px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.fillStyle = '#3a2a14';
+    g.fillText(S.shoutOn ? '일곱째 날 — 외치라!' : `${day}일째${day === 7 ? ' — 일곱 바퀴' : ''}`, 14, 28);
+    g.font = '700 12px "Noto Sans KR",sans-serif'; g.fillStyle = '#5a3a1a'; g.fillText(`놓침 ${S.miss} / ${MISSMAX}`, 14, 48); g.restore();
+    // 나팔 길 (음표가 흘러온다)
+    g.fillStyle = 'rgba(40,28,14,.55)'; g.fillRect(0, LANE - 30, W, 60);
+    g.strokeStyle = S.flash ? `rgba(255,226,150,${0.5 + S.flash * 0.5})` : 'rgba(255,240,210,.6)'; g.lineWidth = 3; g.beginPath(); g.arc(HITX, LANE, 22 + S.flash * 4, 0, 7); g.stroke();
+    if (!S.shoutOn) for (const n of S.notes) { if (n.st) continue; const x = HITX + (n.t - S.t) * NSPEED; if (x > W + 20 || x < HITX - 30) continue; horn(g, x, LANE, n.day === 7); }
+    // 함성 막대
+    if (S.shoutOn) { g.fillStyle = 'rgba(255,255,255,.2)'; g.fillRect(40, LANE - 10, W - 80, 20); g.fillStyle = '#ffd27a'; g.fillRect(40, LANE - 10, (W - 80) * S.shout, 20);
+      g.font = '800 15px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.fillStyle = '#fff'; g.fillText(S.fall ? '성벽이 무너진다!' : '마구 눌러 크게 외쳐요!', W / 2, LANE - 18); }
+    for (const p of S.sparks) { g.fillStyle = `rgba(255,236,170,${clamp(p.life, 0, 1)})`; star(g, p.x, p.y, p.r * 2.4); }
+    floatMsg(g, S.msg);
+  },
+  end(g, k, S) { S.fall = Math.max(S.fall, 1); this.update(0.016, S); this.draw(g, S);
+    if (k > 0.3) { g.save(); g.globalAlpha = clamp((k - 0.3) * 2, 0, 1); g.fillStyle = 'rgba(40,24,10,.8)'; g.fillRect(0, 300, W, 84);
+      g.font = '700 18px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#fff0d6'; g.fillText('백성이 큰 소리로 외쳐 부를 때에', W / 2, 330); g.fillText('성벽이 무너져 내린지라', W / 2, 354);
+      g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#e6cfa6'; g.fillText('수 6:20', W / 2, 373); g.restore(); }
+  },
+};
+function horn(g, x, y, fast) { // 양각 나팔 음표
+  g.save(); g.translate(x, y); g.scale(1.6, 1.6); g.fillStyle = fast ? '#ffd27a' : '#e8d2a0'; g.strokeStyle = '#6a4a2a'; g.lineWidth = 1.5;
+  g.beginPath(); g.moveTo(-14, 6); g.quadraticCurveTo(-4, -14, 14, -8); g.lineTo(14, -2); g.quadraticCurveTo(-2, -6, -10, 10); g.closePath(); g.fill(); g.stroke();
+  g.restore();
+}
+
 export const MINI = { jesus: { e11: cana, e17: fishing, e22: twelve, e23: rock, e31: loaves, e32: water, e39: stones, e42: sheep, e43: coin, e46: climb },
-  david: { d01: herdDavid, d05: sling, d38: templeStones }, moses: { m39: tribes } };
+  david: { d01: herdDavid, d05: sling, d38: templeStones }, moses: { m35: jericho, m39: tribes } };
 
 /* ---------- 놀이 틀: 소개 → 놀이(제한 시간) → 성공 연출/실패 → 결과 ---------- */
 // host: 모달 안의 상자. fx: { play, pour } (game-audio.js). 끝나면 done({ ok, left, tries })
