@@ -76,7 +76,7 @@ export const A = {
       throne: ['ivorythrone', 0.7, -0.38],
     },
     cast: {
-      solomon: ['solomon', 0.7, -0.42, -0.4, { y: 0.22, pose: 'sit' }],
+      solomon: ['solomon', 0.7, -0.42, -0.4, { y: 0.17, pose: 'sit' }],
       mom: ['mother1', -0.55, 0.2, 0.9],
       other: ['mother2', -0.12, 0.3, 0.9],
       guard: ['guardJ', 1.2, 0.05, -1],
@@ -190,7 +190,7 @@ export const A = {
       cam2: ['camel', -3.3, -0.62, { speed: 0.45, scale: 0.55 }],
     },
     cast: {
-      solomon: ['solomonK', 0.85, -0.33, -0.6, { y: 0.22, pose: 'sit' }],
+      solomon: ['solomonK', 0.85, -0.33, -0.6, { y: 0.17, pose: 'sit' }],
       sheba: ['sheba', -2.2, 0.62, 1, { speed: 0.55 }],
       maid: ['shebamaid', -2.55, 0.75, 1, { speed: 0.55, gaze: false }],
       driver: ['shebaman', -2.3, 0.0, 1, { speed: 0.45, gaze: false }],

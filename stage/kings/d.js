@@ -378,7 +378,7 @@ export const D = {
       folk: ['crowd', 0.05, 0.5, { spots: flock(9, 0.6, 0.18, 3), face: -2.3 }], // 언약책을 읽는 왕(왼쪽 뒤)을 가리지 않게 오른쪽 앞으로
     },
     cast: {
-      josiah: ['josiah', 0.55, -0.48, 0.2, { y: 0.2, pose: 'sit' }],
+      josiah: ['josiah', 0.55, -0.48, 0.2, { y: 0.15, pose: 'sit' }],
       hilkiah: ['hilkiah', -0.8, -0.05, -2.0, { speed: 0.45 }],
       shaphan: ['shaphan', -0.35, 0.25, -1.2, { speed: 0.45 }],
       worker: ['hebrew', -1.95, 0.25, 1.2, { gaze: false }],

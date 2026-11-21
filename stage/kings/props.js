@@ -113,30 +113,24 @@ Object.assign(MAKERS, {
     return P;
   },
 
-  // 솔로몬의 상아 보좌 (왕상 10:18–20): 금 입힌 상아 의자, 여섯 층계의 양쪽에 사자 열둘, 팔걸이 곁에 사자 둘, 둥근 등받이.
-  // 앉은 왕은 배역 y 0.27, pose 'sit'. 앞(+z)으로 층계가 내려온다
+  // 솔로몬의 상아 보좌 (왕상 10:18–20): 금 입힌 상아 의자, 팔걸이 곁에 사자 둘, 둥근 등받이.
+  // 층계 없이 보통 의자 높이로(사용자 2026-11) — 층계 위에 올리니 앉은 왕의 정강이가 층계 속에 묻히거나 무릎이 가슴까지 올라왔다.
+  // 자리 밑은 다리 넷만 두고 비워 앉은 왕의 다리가 보이게. 앉은 왕은 배역 y 0.17, pose 'sit', 발은 바닥에
   ivorythrone(o = {}) {
     const g = new THREE.Group(), ivory = mat('#f2ead6', { roughness: 0.5 }), gold = goldM();
-    for (let i = 0; i < 6; i++) { // 여섯 층계 (앞이 낮다)
-      const z = 0.3 - i * 0.05, h = 0.012 * (i + 1); // 한 단 0.012 — 0.035로 쌓으니 자리 바로 앞 층계가 거의 자리 높이라 앉은 왕의 정강이가 층계 속에 묻혔다(k02, 사용자 2026-11)
-      mesh(new THREE.BoxGeometry(0.46 - i * 0.012, h, 0.06), ivory, g, [0, h / 2, z]).receiveShadow = true;
-      [-1, 1].forEach(k => { const lion = new THREE.Group(); lion.position.set(k * (0.25 - i * 0.006), h, z); g.add(lion); // 층계 양 끝의 사자
-        mesh(new THREE.BoxGeometry(0.026, 0.024, 0.04), gold, lion, [0, 0.016, 0]); mesh(sphere(0.016, 8, 6), gold, lion, [0, 0.036, 0.016]); });
-    }
-    const seatY = 0.21;
-    mesh(new THREE.BoxGeometry(0.34, seatY, 0.26), ivory, g, [0, seatY / 2, -0.04]);
-    mesh(new THREE.BoxGeometry(0.3, 0.03, 0.24), mat('#6b2a5e'), g, [0, seatY + 0.015, -0.03]);
-    mesh(new THREE.BoxGeometry(0.34, 0.42, 0.05), ivory, g, [0, seatY + 0.2, -0.16]);
+    const seatY = 0.16;
+    mesh(new THREE.BoxGeometry(0.34, 0.035, 0.26), ivory, g, [0, seatY - 0.0175, -0.04]); // 자리 널
+    [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([kx, kz]) => mesh(new THREE.BoxGeometry(0.035, seatY - 0.035, 0.035), gold, g, [kx * 0.15, (seatY - 0.035) / 2, -0.04 + kz * 0.11])); // 금 입힌 다리
+    mesh(new THREE.BoxGeometry(0.3, 0.03, 0.24), mat('#6b2a5e'), g, [0, seatY + 0.015, -0.03]); // 방석
+    mesh(new THREE.BoxGeometry(0.34, 0.42, 0.05), ivory, g, [0, seatY + 0.2, -0.16]); // 등받이
     const top = mesh(new THREE.CylinderGeometry(0.17, 0.17, 0.05, 20, 1, false, 0, Math.PI), gold, g, [0, seatY + 0.41, -0.16]); top.rotation.set(Math.PI / 2, Math.PI / 2, 0); // 둥근 등받이 머리 (10:19)
-    [-1, 1].forEach(k => { mesh(new THREE.BoxGeometry(0.04, 0.1, 0.22), gold, g, [k * 0.17, seatY + 0.07, -0.04]);
-      const lion = new THREE.Group(); lion.position.set(k * 0.2, seatY + 0.12, 0.06); g.add(lion);
+    [-1, 1].forEach(k => { mesh(new THREE.BoxGeometry(0.04, 0.1, 0.22), gold, g, [k * 0.17, seatY + 0.07, -0.04]); // 팔걸이
+      const lion = new THREE.Group(); lion.position.set(k * 0.2, seatY + 0.12, 0.06); g.add(lion); // 팔걸이 곁의 사자
       mesh(new THREE.BoxGeometry(0.03, 0.03, 0.05), gold, lion, [0, 0, 0]); mesh(sphere(0.02, 8, 6), gold, lion, [0, 0.025, 0.02]); });
     const P = new Prop(g);
+    // 자리 둘레는 바닥 높이(0보다 조금 위 — 0이 아니어야 3D 지형에서 왕이 보좌와 같은 높이·축척에 앉는다, stage.js FLAT). 앉은 왕의 높이는 배역 y로
     P.heightAt = (x, z) => { const u = (x - g.position.x) / g.scale.x, v = (z - g.position.z) / g.scale.z;
-      if (P.show < 0.5 || Math.abs(u) > 0.23) return 0;
-      if (v < 0.08 && v > -0.17) return 0.048 * g.scale.y; // 자리 위는 배역 y로 (앉은 왕). 앉은 왕의 발은 이 높이에 둔다 — 앞으로 뻗은 발이 닿는 층계(넷째 단 0.048). 0이면 발이 층계 위 허공에 떴다(모델, 2026-11). 0이 아니어야 3D 지형에서 왕이 보좌와 같은 높이·축척에 앉는다(stage.js FLAT)
-      if (v >= 0.08 && v < 0.33) return 0.012 * Math.min(6, Math.max(1, Math.floor((0.33 - v) / 0.05) + 1)) * g.scale.y;
-      return 0; };
+      return P.show < 0.5 || Math.abs(u) > 0.2 || v < -0.17 || v > 0.2 ? 0 : 0.002 * g.scale.y; };
     return P;
   },
 
