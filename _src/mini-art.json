@@ -188,5 +188,87 @@
    "bg": true,
    "p": "Night desert seen from a low angle: the upper seventy percent is a deep dark-blue night sky that is completely empty, with no stars and no moon. Along the bottom thirty percent, gently rolling dark sand dunes, and on the dunes three wise men riding camels in silhouette walking to the right. On the far right horizon a tiny flat-roofed village house with a warm lit window."
   }
+ },
+ "e43": {
+  "bg": {
+   "bg": true,
+   "p": "Top-down view of the floor of a humble one-room stone house in first-century Galilee, lit only dimly: rough flagstone and packed-earth floor, a few clay storage jars along the top-left and bottom-right walls, a rolled sleeping mat at the top right, a woven reed mat in the center, a small grinding stone at the bottom left. Leave plenty of open floor. No people."
+  },
+  "coin": {
+   "h": 160,
+   "p": "A single ancient silver drachma coin lying on the ground, seen from directly above (top-down view), worn stamped head, slightly tilted, shining."
+  },
+  "lamp": {
+   "h": 200,
+   "p": "A small first-century clay oil lamp, side view, with a bright warm flame burning at its spout on the right."
+  },
+  "pile": {
+   "h": 220,
+   "p": "A small heap of dust, dry straw bits and crumbs on a floor, seen from directly above (top-down view), roughly round, earthy brown."
+  }
+ },
+ "e42": {
+  "bg": {
+   "bg": true,
+   "p": "A grassy Judean hillside pasture seen from directly above (top-down view): soft green grass with darker tufts, scattered small grey rocks and a few wildflowers, gentle light. Completely empty: no animals, no people, no walls, no paths."
+  },
+  "sheep": {
+   "h": 200,
+   "p": "One fluffy white sheep seen from directly above (top-down view), walking with its head pointing to the right, dark face and ears visible."
+  },
+  "wolf": {
+   "h": 200,
+   "p": "One grey wolf seen from directly above (top-down view), prowling with its head pointing to the right, tail behind."
+  },
+  "shepherd": {
+   "h": 300,
+   "p": "A young Judean shepherd seen from a high angle above, wearing a brown cloak and head cloth, holding a long crooked shepherd's staff, standing."
+  },
+  "stone": {
+   "h": 120,
+   "p": "A single grey fieldstone for a dry-stone wall seen from directly above (top-down view), rounded, natural."
+  }
+ },
+ "d01": {
+  "lion": {
+   "h": 220,
+   "p": "One maned lion seen from directly above (top-down view), prowling with its head pointing to the right, tail behind."
+  },
+  "shepherd": {
+   "h": 300,
+   "ref": [
+    "_src/cards/david.png"
+   ],
+   "p": "Young David the shepherd boy seen from a high angle above, red hair, simple tunic, holding a long shepherd's staff, standing. Same character as the second reference image."
+  }
+ },
+ "e31": {
+  "bg": {
+   "bg": true,
+   "p": "A wide green grassy hillside beside the Sea of Galilee in spring, seen from a high angle: the lake and far hills along the top tenth, lush green grass covering everything else with gentle undulations and small flowers. Empty: no people."
+  },
+  "fam-a": {
+   "h": 260,
+   "key": "m",
+   "p": "A small family of four (father, mother, two children) sitting together on the grass, seen from a high angle, colorful simple robes, waiting."
+  },
+  "fam-b": {
+   "h": 260,
+   "key": "m",
+   "p": "A small group of three Galilean men and a grandmother sitting on the grass close together, seen from a high angle, earthy robes and head cloths."
+  },
+  "fam-c": {
+   "h": 260,
+   "key": "m",
+   "p": "A young mother with a baby and an older boy and girl sitting on the grass together, seen from a high angle, bright simple clothes."
+  },
+  "bread": {
+   "h": 140,
+   "p": "A round flat barley loaf of bread, side view."
+  },
+  "fish": {
+   "h": 140,
+   "p": "A small dried grilled fish, side view, head to the right."
+  }
  }
 }
