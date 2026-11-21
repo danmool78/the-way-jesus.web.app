@@ -481,7 +481,7 @@ if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__st
     const cam = new THREE.PerspectiveCamera(30, 1, 0.01, 50); cam.position.copy(c).addScaledVector(dir, h * dist * 2.2).add(new THREE.Vector3(0, h * 0.25, 0)); cam.lookAt(c.x, c.y + h * 0.25, c.z);
     const sz = renderer.getSize(new THREE.Vector2()); renderer.setSize(500, 500, false); renderer.render(scene, cam); const url = renderer.domElement.toDataURL(); renderer.setSize(sz.x, sz.y, false); return url; }, beats: () => Object.keys(script?.beats || {}),
   ready: () => !Object.keys(loading).some(n => !(n in ready)),
-  step(k) { atStart = false; apply(script.beats[k], true); gaze(); Object.values(actors).forEach(a => { a.show = a.showT; for (let i = 0; i < 60; i++) a.update(i * 0.05, 0.05); }); stageGroup.updateMatrixWorld(true); for (let i = 0; i < 60; i++) { frameNo++; spaceOut(0.05); Object.values(actors).forEach(a => a.update(3 + i * 0.05, 0.05)); } Object.values(props).forEach(p => { for (let i = 0; i < 40; i++) p.update(i * 0.05, 0.05, {}); }); },
+  step(k) { atStart = false; apply(script.beats[k], true); gaze(); Object.values(actors).forEach(a => { a.show = a.showT; for (let i = 0; i < 60; i++) a.update(i * 0.05, 0.05); }); stageGroup.updateMatrixWorld(true); for (let i = 0; i < 60; i++) { frameNo++; spaceOut(0.05); Object.values(actors).forEach(a => a.update(3 + i * 0.05, 0.05)); } Object.values(props).forEach(p => { for (let i = 0; i < 40; i++) { p.update(i * 0.05, 0.05, {}); p.obj.updateMatrixWorld(true); } }); }, // 움직이는 무리의 행렬을 화면처럼 매번 — 지난 자리 행렬로 비켜서기를 재니 옮겨 간 무리가 배역을 뚫었다(점검에서만)
   measure() {
     const out = [], v = new THREE.Vector3();
     for (const [name, a] of Object.entries(actors)) {

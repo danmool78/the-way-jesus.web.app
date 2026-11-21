@@ -4,7 +4,7 @@
 const { chromium } = require('playwright');
 const path = require('path'), fs = require('fs'), ROOT = path.resolve(__dirname, '../..');
 let [j, ...ids] = process.argv.slice(2);
-if (!ids.length) { const files = j === 'jesus' ? ['stage/scenes.js'] : fs.readdirSync(path.join(ROOT, 'stage', j)).filter(f => /^[a-z]\.js$/.test(f)).map(f => `stage/${j}/${f}`);
+if (!ids.length) { const files = j === 'jesus' ? ['stage/scenes.js'] : (fs.existsSync(path.join(ROOT, 'stage', j)) ? fs.readdirSync(path.join(ROOT, 'stage', j)).filter(f => /^[a-z]\.js$/.test(f)).map(f => `stage/${j}/${f}`) : [`stage/${j}.js`]);
   ids = files.flatMap(f => [...fs.readFileSync(path.join(ROOT, f), 'utf8').matchAll(/^  ([a-z]\d\d): \{/gm)].map(m => m[1])).sort(); }
 // 일부러 붙는 것: 타기·앉기(높이)·나무 위·누움·십자가·껴안기, 그리고 그런 사람이 기대는 물건, 짐승을 끄는 손(조금)
 const HOLD = /^(ride|seat|perch|sleep|topple|crucified|crucified-dead|carry|carry-pole|embrace)/, ON = /(throne|bema|stocks|bier|cage|crosses|donkey|camel|figtree)\)$/;
