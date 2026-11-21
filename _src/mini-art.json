@@ -759,5 +759,37 @@
    "ratio": "16:9",
    "p": "A large desert boulder, side view, night colors with soft moonlight, wide enough to hide behind."
   }
+ },
+ "m02": {
+  "river": {
+   "bg": true,
+   "p": "Seamless vertical river texture seen from directly above (top-down view): the calm green-brown Nile water filling the middle 70% of the width with gentle ripples, thick papyrus reeds and mud banks along both the left and right edges. No animals, no boats, no people."
+  },
+  "basket": {
+   "h": 200,
+   "p": "A small woven papyrus basket boat sealed with dark pitch, seen from directly above (top-down view), a baby boy sleeping inside wrapped in white linen, oval, the head of the basket pointing up."
+  },
+  "croc": {
+   "h": 300,
+   "ratio": "9:16",
+   "p": "A Nile crocodile swimming seen from directly above (top-down view), long body pointing up, mouth slightly open, green-grey scales."
+  },
+  "hippo": {
+   "h": 200,
+   "p": "The head and back of a hippopotamus surfacing in the water seen from directly above (top-down view), ears and eyes showing, ripples around it."
+  },
+  "lotus": {
+   "h": 160,
+   "p": "A cluster of floating lotus pads with one pink lotus flower, seen from directly above (top-down view)."
+  },
+  "princess": {
+   "h": 420,
+   "ratio": "16:9",
+   "p": "Pharaoh's daughter in white linen and a gold collar bathing at the edge of the Nile with two attendants, reaching toward the water, side view, warm afternoon light. Only the people."
+  },
+  "miriam": {
+   "h": 300,
+   "p": "A young Hebrew girl (Miriam, about 10 years old) in a plain brown tunic and head scarf, crouching low and peeking out anxiously, hands parting papyrus reeds, side view facing right. Only the girl and a few reed stalks in front of her."
+  }
  }
 }
