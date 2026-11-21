@@ -118,7 +118,7 @@ Object.assign(MAKERS, {
   ivorythrone(o = {}) {
     const g = new THREE.Group(), ivory = mat('#f2ead6', { roughness: 0.5 }), gold = goldM();
     for (let i = 0; i < 6; i++) { // 여섯 층계 (앞이 낮다)
-      const z = 0.3 - i * 0.05, h = 0.035 * (i + 1);
+      const z = 0.3 - i * 0.05, h = 0.012 * (i + 1); // 한 단 0.012 — 0.035로 쌓으니 자리 바로 앞 층계가 거의 자리 높이라 앉은 왕의 정강이가 층계 속에 묻혔다(k02, 사용자 2026-11)
       mesh(new THREE.BoxGeometry(0.46 - i * 0.012, h, 0.06), ivory, g, [0, h / 2, z]).receiveShadow = true;
       [-1, 1].forEach(k => { const lion = new THREE.Group(); lion.position.set(k * (0.25 - i * 0.006), h, z); g.add(lion); // 층계 양 끝의 사자
         mesh(new THREE.BoxGeometry(0.026, 0.024, 0.04), gold, lion, [0, 0.016, 0]); mesh(sphere(0.016, 8, 6), gold, lion, [0, 0.036, 0.016]); });
@@ -134,8 +134,8 @@ Object.assign(MAKERS, {
     const P = new Prop(g);
     P.heightAt = (x, z) => { const u = (x - g.position.x) / g.scale.x, v = (z - g.position.z) / g.scale.z;
       if (P.show < 0.5 || Math.abs(u) > 0.23) return 0;
-      if (v < 0.08 && v > -0.17) return 0.12 * g.scale.y; // 자리 위는 배역 y로 (앉은 왕). 앉은 왕의 발은 이 높이에 둔다 — 앞으로 뻗은 발이 닿는 층계(셋째·넷째 단 0.105–0.14). 0이면 발이 층계 위 허공에 떴다(모델, 2026-11). 0이 아니어야 3D 지형에서 왕이 보좌와 같은 높이·축척에 앉는다(stage.js FLAT)
-      if (v >= 0.08 && v < 0.33) return 0.035 * Math.min(6, Math.max(1, Math.floor((0.33 - v) / 0.05) + 1)) * g.scale.y;
+      if (v < 0.08 && v > -0.17) return 0.048 * g.scale.y; // 자리 위는 배역 y로 (앉은 왕). 앉은 왕의 발은 이 높이에 둔다 — 앞으로 뻗은 발이 닿는 층계(넷째 단 0.048). 0이면 발이 층계 위 허공에 떴다(모델, 2026-11). 0이 아니어야 3D 지형에서 왕이 보좌와 같은 높이·축척에 앉는다(stage.js FLAT)
+      if (v >= 0.08 && v < 0.33) return 0.012 * Math.min(6, Math.max(1, Math.floor((0.33 - v) / 0.05) + 1)) * g.scale.y;
       return 0; };
     return P;
   },
