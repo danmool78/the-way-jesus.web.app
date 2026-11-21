@@ -511,7 +511,98 @@ function basket(g, x, y, k) {
   g.restore();
 }
 
-export const MINI = { jesus: { e11: cana, e17: fishing, e31: loaves } };
+/* ---------- 열두 사람을 세우시다 (막 3:13–19): 이름과 그 사람의 이야기 짝 맞추기 — 기억력 ---------- */
+// 이름 카드 열둘과 이야기 카드 열둘. 처음 3초 모두 보여 준 뒤 뒤집는다. 두 장씩 뒤집어 같은 사람이면 남고, 아니면 다시 덮인다.
+// 제자 얼굴 그림이 넷뿐이라 얼굴 대신 성경에 나오는 그 사람의 이야기로 짝짓는다(외우게 되는 것이 덤)
+const TWELVE = [
+  ['시몬 베드로', '🪨', '반석', '마 16:18'], ['안드레', '🐟', '형을 예수께 데려옴', '요 1:41'],
+  ['세베대의 아들 야고보', '⚔️', '열둘 중 처음 순교', '행 12:2'], ['요한', '❤️', '예수께서 사랑하신 제자', '요 13:23'],
+  ['빌립', '🍞', '"떡을 어디서 사서?"', '요 6:5'], ['바돌로매 (나다나엘)', '🌳', '무화과나무 아래', '요 1:48'],
+  ['마태', '💰', '세관에 앉은 세리', '마 9:9'], ['도마', '✋', '"손을 넣어 보리라"', '요 20:25'],
+  ['알패오의 아들 야고보', '🔹', '작은 야고보', '막 15:40'], ['다대오', '🕯️', '가룟인 아닌 유다', '요 14:22'],
+  ['열심당원 시몬', '🔥', '열심당원', '눅 6:15'], ['가룟 유다', '👛', '돈궤를 맡은 자', '요 12:6'],
+];
+const CW = 86, CH = 70, PEEK = 3.2;
+const twelve = {
+  title: '열두 사람을 세우시다', task: '이름과 그 사람의 이야기 짝 맞추기',
+  ask: ['여기 모인 열두 사람, 서로 너무 다르지 않니?', '누가 누구인지 기억해 다오 — 이름과 그 사람의 이야기를 짝지어 보렴.'],
+  quote: '이에 열둘을 세우셨으니 이는 자기와 함께 있게 하시고', ref: '막 3:14',
+  help: '처음 3초 동안 카드를 모두 보여 줘요 — 잘 봐 두세요.<br>두 장씩 뒤집어 이름과 그 사람의 이야기를 짝지어요. 틀리면 다시 덮여요.',
+  seconds: 95,
+  init() {
+    // 카드는 덮인 채(up 0)로 만들어 소개 화면에서는 뒷면만 — 시작하면 뒤집혀 보인다
+    const cards = TWELVE.flatMap((d, i) => [{ p: i, name: true }, { p: i, name: false }]).sort(() => Math.random() - 0.5);
+    cards.forEach((c, k) => { c.x = 12 + (k % 4) * (CW + 9) + CW / 2 + 4; c.y = 48 + Math.floor(k / 4) * (CH + 6) + CH / 2; c.up = 0; c.want = 1; c.done = false; c.glow = 0; c.shake = 0; });
+    return { cards, peek: PEEK, open: [], wait: 0, msg: null, sparks: [], pairs: 0, fin: 0 };
+  },
+  update(dt, S) {
+    if (S.peek > 0) { S.peek -= dt; if (S.peek <= 0) { S.cards.forEach(c => c.want = 0); S.fx.play('flipall'); } }
+    for (const c of S.cards) { c.up += (c.want - c.up) * Math.min(1, dt * 12); c.glow = Math.max(0, c.glow - dt); c.shake = Math.max(0, c.shake - dt * 2.5); }
+    if (S.wait > 0) { S.wait -= dt; if (S.wait <= 0) { S.open.forEach(c => c.want = 0); S.open = []; } }
+    for (const p of S.sparks) { p.y += p.vy * dt; p.life -= dt; } S.sparks = S.sparks.filter(p => p.life > 0);
+    if (S.msg) S.msg.at -= dt;
+  },
+  down(x, y, S) {
+    if (S.peek > 0 || S.wait > 0) return;
+    const c = S.cards.find(c => !c.done && c.want === 0 && Math.abs(x - c.x) < CW / 2 && Math.abs(y - c.y) < CH / 2);
+    if (!c) return;
+    c.want = 1; S.open.push(c); S.fx.play('flip');
+    if (S.open.length < 2) return;
+    const [a, b] = S.open;
+    if (a.p === b.p && a.name !== b.name) { // 짝
+      a.done = b.done = true; a.glow = b.glow = 1; S.open = []; S.pairs++; S.fx.play('plink');
+      const d = TWELVE[a.p]; S.msg = { t: `${d[0]} — ${d[3]}`, c: '#ffe29a', at: 1.6, x: W / 2, y: 30 };
+      for (const o of [a, b]) for (let i = 0; i < 8; i++) S.sparks.push({ x: o.x + rnd(-30, 30), y: o.y + rnd(-20, 20), vy: rnd(-40, -10), life: rnd(0.4, 0.9), r: rnd(1.5, 2.6) });
+    } else { a.shake = b.shake = 1; S.wait = 0.85; S.fx.play('miss'); }
+  },
+  up() {},
+  won: S => S.pairs === 12,
+  draw(g, S) {
+    // 산 위(막 3:13): 저녁빛 언덕, 멀리 갈릴리 바다
+    const bg = g.createLinearGradient(0, 0, 0, H); bg.addColorStop(0, '#2c3a4a'); bg.addColorStop(0.5, '#3c4a3a'); bg.addColorStop(1, '#2a2a1e');
+    g.fillStyle = bg; g.fillRect(0, 0, W, H);
+    for (const c of S.cards) drawCard12(g, c, S);
+    for (const p of S.sparks) { g.fillStyle = `rgba(255,226,150,${clamp(p.life, 0, 1)})`; star(g, p.x, p.y, p.r * 2.2); }
+    if (S.peek > 0) { g.save(); g.font = '800 15px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.fillStyle = '#ffe29a'; g.fillText(`잘 봐 두세요 · ${Math.ceil(S.peek)}`, W / 2, 30); g.restore(); }
+    else if (!(S.msg && S.msg.at > 0)) { g.save(); g.font = '700 14px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.fillStyle = 'rgba(255,255,255,.9)'; g.fillText(`맞춘 짝 ${S.pairs} / 12`, 16, 30); g.restore(); }
+    if (S.msg && S.msg.at > 0) { g.save(); g.globalAlpha = clamp(S.msg.at * 2, 0, 1); g.font = '800 15px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.fillStyle = S.msg.c; g.fillText(S.msg.t, W / 2, 30); g.restore(); }
+  },
+  end(g, k, S) {
+    S.cards.forEach(c => { c.want = 1; c.up = 1; c.glow = 0.5 + Math.sin(performance.now() / 300 + c.p) * 0.3; }); this.draw(g, S);
+    if (k > 0.2) { g.save(); g.globalAlpha = clamp((k - 0.2) * 2, 0, 1); g.fillStyle = 'rgba(15,18,12,.93)'; g.fillRect(0, 214, W, 92); g.fillStyle = 'rgba(230,194,117,.5)'; g.fillRect(0, 214, W, 1.5); g.fillRect(0, 304, W, 1.5); g.globalAlpha = clamp((k - 0.2) * 2, 0, 1);
+      g.font = '700 19px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#ffe9c8'; g.fillText('자기와 함께 있게 하시고', W / 2, 246);
+      g.fillText('보내사 전도도 하게 하시려 함이러라', W / 2, 272); g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#d9c9a4'; g.fillText('막 3:14', W / 2, 290); g.restore(); }
+  },
+};
+function drawCard12(g, c, S) {
+  const d = TWELVE[c.p], open = c.up > 0.5, sx = Math.abs(Math.cos(c.up * Math.PI)) || 0.02, sh = Math.sin(c.shake * 25) * c.shake * 4;
+  g.save(); g.translate(c.x + sh, c.y); g.scale(sx, 1);
+  g.fillStyle = 'rgba(0,0,0,.35)'; rrect(g, -CW / 2 + 2, -CH / 2 + 3, CW, CH, 8); g.fill();
+  if (!open) { // 뒷면: 여정 금빛 무늬
+    const b = g.createLinearGradient(0, -CH / 2, 0, CH / 2); b.addColorStop(0, '#5a4424'); b.addColorStop(1, '#3a2a14');
+    g.fillStyle = b; rrect(g, -CW / 2, -CH / 2, CW, CH, 8); g.fill(); g.strokeStyle = 'rgba(230,194,117,.6)'; g.lineWidth = 1.5; g.stroke();
+    g.strokeStyle = 'rgba(230,194,117,.35)'; rrect(g, -CW / 2 + 5, -CH / 2 + 5, CW - 10, CH - 10, 5); g.stroke();
+    g.fillStyle = 'rgba(230,194,117,.75)'; g.font = '700 20px "Gowun Batang",serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('✝', 0, 1);
+  } else {
+    g.fillStyle = c.done ? '#f6ecd2' : '#efe5cf'; rrect(g, -CW / 2, -CH / 2, CW, CH, 8); g.fill();
+    g.strokeStyle = c.done ? '#d9a84a' : 'rgba(90,70,40,.5)'; g.lineWidth = c.done ? 2.5 : 1; g.stroke();
+    g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = '#2a1f14';
+    if (c.name) { // 이름 카드
+      const words = d[0].split(' '), two = d[0].length > 6 && words.length > 1;
+      g.font = `800 ${d[0].length > 9 ? 13 : 15}px "Noto Sans KR",sans-serif`;
+      if (two) { const h = Math.ceil(words.length / 2); g.fillText(words.slice(0, h).join(' '), 0, -9); g.fillText(words.slice(h).join(' '), 0, 10); } else g.fillText(d[0], 0, 0);
+    } else { // 이야기 카드: 그림 글자 + 한 줄
+      g.font = '24px "Apple Color Emoji","Noto Color Emoji",sans-serif'; g.fillText(d[1], 0, -12);
+      let fs = 11; g.font = `600 ${fs}px "Noto Sans KR",sans-serif`; while (g.measureText(d[2]).width > CW - 8 && fs > 8) g.font = `600 ${--fs}px "Noto Sans KR",sans-serif`; // 카드 폭에 맞게
+      g.fillStyle = '#5a4022'; g.fillText(d[2], 0, 19);
+    }
+    if (c.glow > 0) { g.strokeStyle = `rgba(255,220,120,${c.glow})`; g.lineWidth = 5; rrect(g, -CW / 2, -CH / 2, CW, CH, 8); g.stroke(); }
+  }
+  g.restore();
+}
+function rrect(g, x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
+
+export const MINI = { jesus: { e11: cana, e17: fishing, e22: twelve, e31: loaves } };
 
 /* ---------- 놀이 틀: 소개 → 놀이(제한 시간) → 성공 연출/실패 → 결과 ---------- */
 // host: 모달 안의 상자. fx: { play, pour } (game-audio.js). 끝나면 done({ ok, left, tries })
