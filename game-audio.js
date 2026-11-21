@@ -88,6 +88,9 @@ export function createAudio() {
       [523.3, 659.3, 784, 987.8, 1174.7, 1568].forEach((f, i) => bell(f, 0.15 + i * 0.13, 0.065, 2.6));
       [1046.5, 1318.5, 1568, 2093].forEach((f, i) => tone({ f, type: 'triangle', vol: 0.025, a: 0.4, d: 2.2, at: 0.9 + i * 0.05 })); },
     tick: () => tone({ f: 1760, type: 'triangle', vol: 0.04, d: 0.06 }),
+    flip: () => { burst({ type: 'bandpass', f: 2400, f2: 1200, q: 1.4, vol: 0.09, a: 0.004, d: 0.07 }); tone({ f: 880, type: 'triangle', vol: 0.03, d: 0.06 }); }, // 카드 뒤집기
+    flipall: () => { for (let i = 0; i < 12; i++) burst({ type: 'bandpass', f: 2200 + Math.random() * 800, q: 1.4, vol: 0.05, a: 0.004, d: 0.06, at: i * 0.025 }); },
+    miss: () => { tone({ f: 311, type: 'triangle', vol: 0.06, d: 0.18 }); tone({ f: 277, type: 'triangle', vol: 0.06, d: 0.25, at: 0.1 }); },
     pick: () => { tone({ f: 520, f2: 700, type: 'triangle', vol: 0.06, a: 0.005, d: 0.08 }); },                         // 집어 듦
     drop: () => { burst({ type: 'lowpass', f: 500, q: 0.8, vol: 0.12, a: 0.004, d: 0.1 }); tone({ f: 392, type: 'triangle', vol: 0.05, d: 0.15 }); }, // 내려놓음
     cast: () => { burst({ type: 'bandpass', f: 600, f2: 2600, q: 1.2, vol: 0.12, a: 0.05, d: 0.3 }); burst({ type: 'highpass', f: 2000, vol: 0.04, d: 0.2, at: 0.08 }); }, // 그물이 휙
