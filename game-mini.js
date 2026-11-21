@@ -2218,8 +2218,84 @@ const bail = {
   },
 };
 
+/* ---------- 하늘에서 내린 만나 (출 16:13–21): 장막마다 먹을 만큼 거두기 — 받기 + 어림 ---------- */
+// 이슬이 걷힌 아침, 하늘에서 깟씨 같은 만나가 내린다. 바구니를 좌우로 끌어 받는다. 알이 크면 많이, 작으면 조금 담긴다.
+// 장막마다 식구 수만큼(한 사람에 한 오멜, 16:16) — 초록 띠 안에서 장막을 누르면 담아 준다. 넘치면 남은 것에 벌레가 생겨 쏟고 다시(16:20).
+// 해가 뜨거워지면 만나가 녹아(16:21) 점점 덜 내린다
+const MANNA_TENTS = [2, 3, 2, 4], BASKET_Y = 392, BASKET_W = 70, BAND = 0.25;
+const manna = {
+  title: '하늘에서 내린 만나', task: '장막마다 식구 수만큼 거두기',
+  ask: ['아침마다 이슬이 마르면 들판에 작고 둥근 것이 서리처럼 깔려 있었단다.', '각 사람이 먹을 만큼만 거두어라 — 한 사람에 한 오멜씩. 남기면 벌레가 생긴다!'],
+  quote: '각 사람은 먹을 만큼만 거둘지니 곧 너희 사람 수효대로 한 사람에 한 오멜씩', ref: '출 16:16',
+  help: '바구니를 좌우로 끌어 내리는 만나를 받아요. 큰 알은 많이, 작은 알은 조금 담겨요.<br>막대가 초록 띠 안일 때 아래 장막을 눌러 담아요. 넘치면 벌레가 생겨 쏟아요. 해가 뜨거워지면 만나가 녹아요.',
+  seconds: 40,
+  init() { return { bx: 200, tx: 200, fl: [], amt: 0, tent: 0, done: [], t: 0, msg: null, spawn: 0, worms: 0, sparks: [], hop: 0 }; },
+  target: S => MANNA_TENTS[S.tent] || 0,
+  update(dt, S) {
+    S.t += dt; if (S.msg) S.msg.at -= dt; S.worms = Math.max(0, S.worms - dt); S.hop = Math.max(0, S.hop - dt * 4);
+    S.bx += (S.tx - S.bx) * Math.min(1, dt * 16);
+    const heat = clamp((S.t - 26) / 14, 0, 0.6); // 해가 뜨거워지면 덜 내린다
+    if ((S.spawn -= dt) <= 0) { S.spawn = rnd(0.09, 0.15) / (1 - heat); const big = Math.random() < 0.4;
+      S.fl.push({ x: rnd(20, W - 20), y: -8, v: rnd(70, 110), ph: rnd(0, 7), a: big ? rnd(0.45, 0.7) : rnd(0.12, 0.25), r: big ? 6 : 3.4 }); }
+    for (const f of S.fl) { f.y += f.v * dt; f.x += Math.sin(S.t * 2 + f.ph) * 14 * dt;
+      if (!f.got && f.y > BASKET_Y - 6 && f.y < BASKET_Y + 8 && Math.abs(f.x - S.bx) < BASKET_W / 2) { f.got = 1; if (!S.worms) { S.amt += f.a; S.fx.play(f.a > 0.4 ? 'drop' : 'tick'); S.hop = 1; } } }
+    S.fl = S.fl.filter(f => !f.got && f.y < 470);
+    if (S.amt > this.target(S) + BAND && !S.worms) { S.worms = 1.0; S.amt = Math.max(0, this.target(S) - 1.2); S.fx.play('miss'); S.msg = { t: '넘쳐서 벌레가 생겼어요 — 덜어 냈어요', c: '#ffc2a0', at: 1.4, x: W / 2, y: 260 }; } // 16:20
+    for (const p of S.sparks) { p.x += p.vx * dt; p.y += p.vy * dt; p.life -= dt; } S.sparks = S.sparks.filter(p => p.life > 0);
+  },
+  tentX: i => 44 + i * 78,
+  down(x, y, S) { if (y > 430) this.give(S); else S.tx = clamp(x, 30, W - 30); },
+  move(x, y, S) { if (y <= 430) S.tx = clamp(x, 30, W - 30); },
+  give(S) { const T = this.target(S); if (!T) return;
+    if (Math.abs(S.amt - T) <= BAND) { S.done.push(S.amt); S.fx.play('coin'); S.msg = { t: Math.abs(S.amt - T) < 0.07 ? '꼭 맞게!' : '알맞게 담았어요', c: '#ffe29a', at: 0.9, x: this.tentX(S.tent), y: 420 };
+      for (let i = 0; i < 12; i++) S.sparks.push({ x: this.tentX(S.tent), y: 450, vx: rnd(-50, 50), vy: rnd(-90, -30), life: rnd(0.4, 0.8) }); S.amt = 0; S.tent++; }
+    else if (S.amt < T) { S.msg = { t: '아직 모자라요', c: '#e8e0c8', at: 0.7, x: this.tentX(S.tent), y: 420 }; S.fx.play('miss'); } },
+  up() {},
+  key(k, S) { if (k === 'ArrowLeft') { S.tx = clamp(S.tx - 40, 30, W - 30); return; } if (k === 'ArrowRight') { S.tx = clamp(S.tx + 40, 30, W - 30); return; } if (k === ' ' || k === 'Enter') { this.give(S); return; } return false; },
+  won: S => S.tent >= MANNA_TENTS.length,
+  failText: () => '해가 뜨거워 만나가 다 녹았어요',
+  draw(g, S) {
+    const heat = clamp(S.t / this.seconds, 0, 1);
+    const sky = g.createLinearGradient(0, 0, 0, H); sky.addColorStop(0, `rgb(${150 + heat * 80},${180 + heat * 40},${210 - heat * 40})`); sky.addColorStop(0.6, `rgb(${240},${215 - heat * 20},${170 - heat * 30})`); sky.addColorStop(1, '#d8b47a'); g.fillStyle = sky; g.fillRect(0, 0, W, H);
+    g.fillStyle = `rgba(255,${240 - heat * 60},${190 - heat * 90},.9)`; g.beginPath(); g.arc(330, 150 - heat * 110, 18 + heat * 6, 0, 7); g.fill(); // 해가 높이 뜬다
+    g.fillStyle = '#c9a46a'; g.beginPath(); g.moveTo(0, 300); g.quadraticCurveTo(200, 270, 400, 300); g.lineTo(400, H); g.lineTo(0, H); g.fill();
+    g.fillStyle = `rgba(255,255,255,${0.3 * (1 - heat)})`; for (let i = 0; i < 40; i++) g.fillRect((i * 47) % W, 300 + (i * 23) % 120, 2, 1); // 이슬과 들판의 서리 같은 것(16:14)
+    // 장막들 — 지금 채울 장막은 빛난다
+    for (let i = 0; i < MANNA_TENTS.length; i++) { const x = this.tentX(i), y = 470, cur = i === S.tent, ok = i < S.tent;
+      if (cur) { g.fillStyle = 'rgba(255,236,170,.35)'; g.beginPath(); g.ellipse(x, y - 10, 40, 34, 0, 0, 7); g.fill(); }
+      g.fillStyle = ok ? '#8a7a58' : '#6a5238'; g.beginPath(); g.moveTo(x - 32, y + 14); g.lineTo(x, y - 30); g.lineTo(x + 32, y + 14); g.fill();
+      g.fillStyle = '#2a1e12'; g.beginPath(); g.moveTo(x - 7, y + 14); g.lineTo(x, y - 6); g.lineTo(x + 7, y + 14); g.fill();
+      for (let k = 0; k < MANNA_TENTS[i]; k++) { g.fillStyle = ok ? '#e8dcc0' : '#d8c8a0'; g.beginPath(); g.arc(x - (MANNA_TENTS[i] - 1) * 5 + k * 10, y - 38, 3.4, 0, 7); g.fill(); } // 식구 수
+      g.font = '800 12px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.fillStyle = ok ? '#4a6a2a' : '#3a2a14'; g.fillText(ok ? '✓' : `${MANNA_TENTS[i]}명`, x, y + 28); }
+    // 내리는 만나
+    for (const f of S.fl) { const fg = g.createRadialGradient(f.x - f.r * 0.3, f.y - f.r * 0.3, 0.5, f.x, f.y, f.r); fg.addColorStop(0, '#ffffff'); fg.addColorStop(1, '#e8dcc0'); g.fillStyle = fg; g.beginPath(); g.arc(f.x, f.y, f.r, 0, 7); g.fill(); g.strokeStyle = 'rgba(140,110,60,.4)'; g.lineWidth = 0.8; g.stroke(); if (f.a > 0.4) { g.strokeStyle = 'rgba(255,240,200,.6)'; g.lineWidth = 1; g.beginPath(); g.arc(f.x, f.y, f.r + 2.5, 0, 7); g.stroke(); } }
+    // 바구니와 오멜 막대
+    const T = this.target(S), bx = S.bx, by = BASKET_Y - S.hop * 3;
+    g.fillStyle = S.worms ? '#7a6a48' : '#a8804a'; g.beginPath(); g.moveTo(bx - BASKET_W / 2, by); g.lineTo(bx + BASKET_W / 2, by); g.lineTo(bx + BASKET_W / 2 - 8, by + 26); g.lineTo(bx - BASKET_W / 2 + 8, by + 26); g.fill();
+    g.strokeStyle = '#6a4a28'; g.lineWidth = 1; for (let k = 4; k < 26; k += 5) { g.beginPath(); g.moveTo(bx - BASKET_W / 2 + k * 0.3, by + k); g.lineTo(bx + BASKET_W / 2 - k * 0.3, by + k); g.stroke(); }
+    if (S.amt > 0) { g.fillStyle = '#fffaf0'; g.beginPath(); g.ellipse(bx, by + 2, (BASKET_W / 2 - 4) * Math.min(1, S.amt / (T || 1) + 0.2), 4 + Math.min(6, S.amt * 2), 0, Math.PI, 0); g.fill(); }
+    if (S.worms) { g.strokeStyle = '#6a5a3a'; g.lineWidth = 2; for (let k = 0; k < 5; k++) { g.beginPath(); g.moveTo(bx - 20 + k * 10, by + 8); g.quadraticCurveTo(bx - 16 + k * 10, by + 2 + Math.sin(S.t * 12 + k) * 4, bx - 12 + k * 10, by + 8); g.stroke(); } }
+    if (T) { const gx = 16, gy = 90, gh = 190, mx = T + 1, yOf = v => gy + gh * (1 - v / mx);
+      g.fillStyle = 'rgba(0,0,0,.25)'; rrect(g, gx, gy, 16, gh, 6); g.fill();
+      g.fillStyle = 'rgba(120,200,110,.55)'; g.fillRect(gx - 3, yOf(T + BAND), 22, yOf(T - BAND) - yOf(T + BAND));
+      const v = Math.min(S.amt, mx); g.fillStyle = S.amt > T + BAND ? '#ff8a6a' : Math.abs(S.amt - T) <= BAND ? '#9ee08a' : '#fff4d8'; g.fillRect(gx + 3, yOf(v), 10, gy + gh - yOf(v));
+      g.font = '700 11px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.fillStyle = '#3a2a14'; for (let k = 1; k <= T; k++) g.fillRect(gx + 16, yOf(k), 5, 1.5); g.fillText(`${T}오멜`, gx + 22, yOf(T) + 4);
+      g.font = '800 14px "Noto Sans KR",sans-serif'; g.fillText(`장막 ${S.tent + 1} / ${MANNA_TENTS.length} — ${T}명`, 14, 26);
+      const inb = Math.abs(S.amt - T) <= BAND && !S.worms, lab = `${S.amt.toFixed(1)} / ${T} 오멜`; // 바구니 위에 담긴 양 — 눈을 바구니에 둔 채로
+      g.font = '800 13px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.lineWidth = 4; g.strokeStyle = 'rgba(40,26,10,.75)'; g.strokeText(lab, bx, by - 12); g.fillStyle = inb ? '#b6f0a0' : S.amt > T ? '#ffb090' : '#fff4d8'; g.fillText(lab, bx, by - 12);
+      if (inb) { g.font = '900 15px "Noto Sans KR",sans-serif'; g.strokeText('지금! 아래 장막을 눌러요', W / 2, 352); g.fillStyle = `rgba(255,236,170,${0.7 + 0.3 * Math.sin(S.t * 10)})`; g.fillText('지금! 아래 장막을 눌러요', W / 2, 352); } }
+    for (const p of S.sparks) { g.fillStyle = `rgba(255,236,170,${clamp(p.life * 2, 0, 1)})`; star(g, p.x, p.y, 4); }
+    floatMsg(g, S.msg);
+  },
+  end(g, k, S) { S.fl = []; this.update(0.016, S); this.draw(g, S);
+    if (k > 0.3) { g.save(); g.globalAlpha = clamp((k - 0.3) * 2, 0, 1); g.fillStyle = 'rgba(50,34,14,.8)'; g.fillRect(0, 140, W, 106);
+      g.font = '700 16px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#fff0d6'; g.fillText('많이 거둔 자도 남음이 없고', W / 2, 170); g.fillText('적게 거둔 자도 부족함이 없이', W / 2, 194); g.fillText('각 사람은 먹을 만큼 거두었더라', W / 2, 218);
+      g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#e6cfa6'; g.fillText('출 16:18', W / 2, 237); g.restore(); }
+  },
+};
+
 export const MINI = { jesus: { e04: magi, e11: cana, e17: fishing, e22: twelve, e23: rock, e28: bail, e31: loaves, e32: water, e39: stones, e42: sheep, e43: coin, e46: climb, e48: palms, e59: tiberias },
-  david: { d01: herdDavid, d05: sling, d24: arkDance, d38: templeStones }, moses: { m09: redSea, m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket }, kings: { k15: carmel } };
+  david: { d01: herdDavid, d05: sling, d24: arkDance, d38: templeStones }, moses: { m09: redSea, m12: manna, m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket }, kings: { k15: carmel } };
 
 /* ---------- 놀이 틀: 소개 → 놀이(제한 시간) → 성공 연출/실패 → 결과 ---------- */
 // host: 모달 안의 상자. fx: { play, pour } (game-audio.js). 끝나면 done({ ok, left, tries })
