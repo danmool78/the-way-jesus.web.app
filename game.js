@@ -629,7 +629,7 @@ function arrive() {
     const g = group(); if (g.n > 1 && g.k === 1) toast(`${esc(placeOf(e).name)}에서 일어난 일이 ${g.n}가지예요<small>걷지 않고 이 자리에서 카드를 이어 받아요</small>`, true, 3200);
     // 장면 놀이가 있는 장면은 말씀 고르기 대신 놀이 — 제한 시간 안에 성공해야 카드(사용자 2026-11). 남은 초는 점수에 더한다
     const mini = MINI[JID]?.[e.id];
-    if (mini) { playMiniGame(mini, r => { if (r.ok) { G.bonus = (G.bonus || 0) + r.left * 10; reveal(e, stars, straight); } else missCard(e); }); return; }
+    if (mini) { playMiniGame(mini, r => { if (r.ok) { G.bonus = (G.bonus || 0) + r.bonus; reveal(e, stars, straight); } else missCard(e); }); return; }
     pickWord(e, ok => ok ? reveal(e, stars, straight) : missCard(e));
     return;
   }
