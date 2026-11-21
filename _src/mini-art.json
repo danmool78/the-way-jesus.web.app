@@ -791,5 +791,61 @@
    "h": 300,
    "p": "A young Hebrew girl (Miriam, about 10 years old) in a plain brown tunic and head scarf, crouching low and peeking out anxiously, hands parting papyrus reeds, side view facing right. Only the girl and a few reed stalks in front of her."
   }
+ },
+ "k30": {
+  "bg": {
+   "bg": true,
+   "p": "Interior of a simple stone upper room in ancient Samaria at dusk, seen from the doorway: a large open wooden window in the center of the back wall, upper half of the image, showing a wide plain stretching east to low distant hills under a fading amber sky; plastered walls, a packed earth floor in the lower third, a small clay oil lamp glowing on a ledge. No people, no bed, no furniture in the middle."
+  },
+  "king": {
+   "h": 420,
+   "p": "King Joash of Israel seen from behind in a three-quarter back view, standing and drawing a bow at full stretch, aiming forward and slightly up, small gold crown, deep blue robe with gold trim, quiver on his back. Only the person."
+  },
+  "strike": {
+   "h": 420,
+   "p": "King Joash of Israel seen from behind in a three-quarter back view, kneeling on one knee and raising a bundle of five arrows in both hands above his head, about to strike the ground with them, small gold crown, deep blue robe with gold trim. Only the person, no ground."
+  },
+  "elisha": {
+   "h": 300,
+   "ratio": "16:9",
+   "ref": [
+    "_src/cards/elisha.png"
+   ],
+   "p": "The very old prophet Elisha lying ill on a low wooden bed with a blanket, propped up on cushions, stretching out one hand forward, side view facing right, bald head and white beard. Same character as the second reference image. Only the person and the bed."
+  },
+  "camp": {
+   "h": 120,
+   "ratio": "16:9",
+   "p": "A distant army camp of the Arameans seen from far away: a small cluster of dark tents with a red banner on a pole and tiny chariots, on a patch of ground."
+  }
+ },
+ "a35": {
+  "bg": {
+   "bg": true,
+   "p": "A violent storm on the open Mediterranean Sea in daytime gloom: huge grey-green waves with white foam, low black storm clouds, slanting rain, the sea surface filling the lower half of the image with the horizon a little above the middle. No ships, no people, no land."
+  },
+  "ship": {
+   "h": 360,
+   "ratio": "16:9",
+   "p": "An ancient Roman merchant grain ship in exact side view, bow pointing right: a long wooden hull with a flat open deck clearly visible along the top edge of the hull, one central mast with the square sail lowered and tied up, thick ropes wrapped around the hull to hold it together, a steering oar at the stern. No people, no cargo on deck, no water."
+  },
+  "crate": {
+   "h": 200,
+   "p": "A heavy wooden cargo crate bound with rope, side view."
+  },
+  "amphora": {
+   "h": 260,
+   "ratio": "9:16",
+   "p": "A tall clay amphora for wine or oil with two handles and a pointed base, standing upright, side view."
+  },
+  "sack": {
+   "h": 200,
+   "p": "A full burlap sack of wheat tied at the top, side view, sitting on the ground."
+  },
+  "tackle": {
+   "h": 200,
+   "ratio": "16:9",
+   "p": "A bundle of ship's tackle: a coiled heavy rope, a wooden spar and a pulley block tied together, side view."
+  }
  }
 }

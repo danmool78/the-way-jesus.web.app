@@ -59,7 +59,7 @@ function applyStatic() {
   $$('.qna-link').forEach(a => { a.href = LANG === 'ko' ? 'qna.html' : `qna.${LANG}.html`; }); // 묻고 답하기: 한국어는 qna.html, 다른 언어는 qna.<언어>.html
   // 글로 읽기: 이 여정의 장면 글 모음(s/, pages.py — 예수는 s/index). 노래가 중심인 시편은 글 모음이 없어 감춘다
   // 순례 게임(game.html): 지도를 걷는 여정에서만, 아직 한국어뿐이라 한국어 화면에서만 잇는다
-  $$('.game-link').forEach(a => { a.hidden = LANG !== 'ko' || !['jesus', 'moses', 'david', 'kings', 'paul'].includes(JOURNEY); a.href = `game.html?j=${JOURNEY}`; });
+  $$('.game-link').forEach(a => { a.hidden = LANG !== 'ko' || !GAME_J.includes(JOURNEY); a.href = `game.html?j=${JOURNEY}`; });
   $$('.text-link').forEach(a => { a.hidden = JOURNEY === 'psalms'; a.href = `s/${JOURNEY === 'jesus' ? 'index' : JOURNEY}${LANG === 'ko' ? '' : '.' + LANG}.html`; });
   $$('.scene-list').forEach(a => { a.hidden = JOURNEY !== 'jesus'; }); // 검색용 장면 목록(s/)은 아직 예수 여정만
   if (JOURNEY === 'jesus') $$('.scene-list').forEach(a => { a.href = LANG === 'ko' ? 's/index.html' : `s/index.${LANG}.html`; a.textContent = t('sceneList', { n: DATA.events.length }); }); // 장면 목록(정적 페이지 s/)도 같은 방식
@@ -76,6 +76,7 @@ function applyStatic() {
 // 시리즈의 여정: 주소의 ?j=<여정> (없으면 예수). 예수 여정은 맨 위의 data.json, 다른 여정은 j/<여정>/data.json
 // (목록과 준비 여부는 data의 journey.series — _src/series.json). 이름은 영문 소문자만 받는다
 const JOURNEY = (q => /^[a-z]+$/.test(q || '') ? q : 'jesus')(new URLSearchParams(location.search).get('j'));
+const GAME_J = ['jesus', 'moses', 'david', 'kings', 'paul']; // 순례 게임이 있는 여정(지도를 걷는 여정)
 const JDIR = JOURNEY === 'jesus' ? '' : `j/${JOURNEY}/`;
 // 한 장면만 보기(?one): 순례 게임이 '이 장면 듣기'로 게임 위에 띄운다. 버튼 없이 그 장면 연출만 하고 끝나면 게임에 알린다 —
 // 다음 장면으로 걷거나 앱의 진행 기록을 바꾸지 않는다 (사용자 2026-11)
@@ -2300,9 +2301,13 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
       <div class="jbtns">${go}${j.ready ? `<button type="button" class="jshare" data-share="${j.id}" aria-label="${esc(t('shareApp'))} — ${esc(t(j.title))}">${share}<span>${esc(t('shareShort'))}</span></button>` : ''}</div></li>`;
   }).join('') + `<li data-journey="why" class="jcard ready"><img class="jicon" src="${DATA.journey?.whyIcon || 'assets/why-icon.webp'}" alt="" width="56" height="56">
       <div class="jtext"><b>${esc(t('whyH'))}</b><small>${esc(t('why'))}</small></div>
-      <div class="jbtns"><a class="jgo" href="${LANG === 'ko' ? 'why.html' : `why.${LANG}.html`}">${esc(t('whyGo'))} →</a><button type="button" class="jshare" data-share="why" aria-label="${esc(t('shareApp'))} — ${esc(t('whyH'))}">${share}<span>${esc(t('shareShort'))}</span></button></div></li>`; // '왜 기독교인가'는 어느 여정에서 보든 맨 끝에 — 언어마다 why.<언어>.html
+      <div class="jbtns"><a class="jgo" href="${LANG === 'ko' ? 'why.html' : `why.${LANG}.html`}">${esc(t('whyGo'))} →</a><button type="button" class="jshare" data-share="why" aria-label="${esc(t('shareApp'))} — ${esc(t('whyH'))}">${share}<span>${esc(t('shareShort'))}</span></button></div></li>`  // '왜 기독교인가'는 어느 여정에서 보든 맨 끝에 — 언어마다 why.<언어>.html
+    // 순례 게임: 맨 끝 빈칸을 채운다(사용자 2026-11). 아직 한국어뿐이라 한국어 화면에서만, 지도를 걷는 여정이면 그 여정으로 연다
+    + (LANG === 'ko' ? `<li data-journey="game" class="jcard ready"><img class="jicon" src="assets/game-icon.svg" alt="" width="56" height="56">
+      <div class="jtext"><b>${esc(t('landGameTag'))}</b><small>${esc(t('landGameH'))}</small></div>
+      <div class="jbtns"><a class="jgo" href="${GAME_J.includes(JOURNEY) ? `game.html?j=${JOURNEY}` : 'game.html'}">${esc(t('landGameGo'))}</a><button type="button" class="jshare" data-share="game" aria-label="${esc(t('shareApp'))} — ${esc(t('landGameTag'))}">${share}<span>${esc(t('shareShort'))}</span></button></div></li>` : '');
   // '왜 기독교인가'도 공유한다 — 여정이 아니라 페이지라 그 언어의 why 주소로 (전엔 공유 단추가 없었다, 사용자)
-  $$('#seriesList .jshare').forEach(b => b.onclick = () => shareLink(b.dataset.share === 'why' ? { url: `${SITE}/${LANG === 'ko' ? 'why.html' : `why.${LANG}.html`}`, title: `${t('appName')} — ${t('whyH')}` } : shareOf(b.dataset.share)));
+  $$('#seriesList .jshare').forEach(b => b.onclick = () => shareLink(b.dataset.share === 'why' ? { url: `${SITE}/${LANG === 'ko' ? 'why.html' : `why.${LANG}.html`}`, title: `${t('appName')} — ${t('whyH')}` } : b.dataset.share === 'game' ? { url: `${SITE}/game.html`, title: `${t('appName')} — ${t('landGameTag')}` } : shareOf(b.dataset.share)));
   // 첫 시작 화면: 장면 주소로 바로 들어온 때(#e05)와 연출 확인(?beat=)은 건너뛴다
   if (!hashOk && !quick && !new URLSearchParams(location.search).has('beat') && !ONE) showIntro(fromLast > 0 ? fromLast : -1);
   if (ONE) oneStart();

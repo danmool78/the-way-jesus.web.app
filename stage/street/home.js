@@ -61,10 +61,11 @@ export function homeSet(o = {}) {
     mesh(new THREE.CylinderGeometry(m(0.07), m(0.05), m(0.16), 10), clay, g, [m(0.3), m(0.08), m(0.3)]); // 물 단지
   } else {
     // 양털 바구니와 자은 실타래 (31:13 양털과 삼을 구하여 부지런히 손으로 일하며)
-    mesh(new THREE.CylinderGeometry(m(0.24), m(0.2), m(0.22), 14, 1, true), mat('#a0804e', { roughness: 1, side: THREE.DoubleSide }), g, [m(-0.75), m(0.11), m(-0.75)]);
-    mesh(new THREE.SphereGeometry(m(0.21), 12, 8), mat('#efe8da', { roughness: 1 }), g, [m(-0.75), m(0.2), m(-0.75)]).scale.y = 0.55;
-    [[0.5, -0.9], [0.68, -0.75]].forEach(([x, z]) => mesh(new THREE.SphereGeometry(m(0.08), 10, 6), mat('#9a3a2e', { roughness: 1 }), g, [m(x), m(0.07), m(z)]));
-    mesh(new THREE.CylinderGeometry(m(0.07), m(0.05), m(0.16), 10), clay, g, [m(0.55), m(0.08), m(-0.25)]);
+    // 바구니는 실 잣는 어머니의 왼편 곁에, 석류와 물 단지는 깔개 안쪽 끝에 — 어머니가 바구니에 앉고, 무릎 꿇은 아들의 발이 물 단지를 밟았다(p07, 사용자 2026-11)
+    mesh(new THREE.CylinderGeometry(m(0.24), m(0.2), m(0.22), 14, 1, true), mat('#a0804e', { roughness: 1, side: THREE.DoubleSide }), g, [m(-1.2), m(0.11), m(-1.0)]);
+    mesh(new THREE.SphereGeometry(m(0.21), 12, 8), mat('#efe8da', { roughness: 1 }), g, [m(-1.2), m(0.2), m(-1.0)]).scale.y = 0.55;
+    [[0.0, -1.1], [0.17, -1.2]].forEach(([x, z]) => mesh(new THREE.SphereGeometry(m(0.08), 10, 6), mat('#9a3a2e', { roughness: 1 }), g, [m(x), m(0.07), m(z)]));
+    mesh(new THREE.CylinderGeometry(m(0.07), m(0.05), m(0.16), 10), clay, g, [m(0.35), m(0.08), m(-1.15)]);
   }
   // 진흙 화덕(탄누르)과 불씨, 곁의 땔감
   const oven = mesh(new THREE.CylinderGeometry(m(0.38), m(0.48), m(0.75), 16, 1, true), mat('#9a6a46', { roughness: 1, side: THREE.DoubleSide }), g, [m(-2.9), m(0.375), m(-2.9)]);
