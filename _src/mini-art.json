@@ -623,5 +623,32 @@
    ],
    "p": "The prophet Elisha standing calmly, full body, side view facing right, praying with one hand raised, plain robe and bald head, and beside him his young servant cowering in fear, pointing at the hills. Two figures together. Elisha as in the second reference image."
   }
+ },
+ "a36": {
+  "bg": {
+   "bg": true,
+   "p": "A stormy bay of Malta at dawn seen from a high angle on the shore: a wrecked wooden ship broken apart on a rocky reef in the upper fifth, rough grey-green sea with white foam filling the middle, and a sandy beach with rocks along the bottom fifth. No people."
+  },
+  "swimmer": {
+   "h": 240,
+   "p": "A shipwrecked man treading water, drawn as a cut-out: only his head, shoulders and one raised arm with a small ring of white splash around his chest. Everything else in the image is pure flat green background — no sea, no water surface, no backdrop."
+  },
+  "floater": {
+   "h": 240,
+   "ratio": "16:9",
+   "p": "A shipwrecked man clinging to a floating broken wooden plank from the ship, seen from slightly above, kicking his legs, relieved face. Only the person, the plank and a little splashing water."
+  },
+  "plank": {
+   "h": 120,
+   "ratio": "16:9",
+   "p": "One broken wooden ship plank, seen from above, wet wood with a few nails."
+  },
+  "paul": {
+   "h": 420,
+   "ref": [
+    "_src/cards/paul.png"
+   ],
+   "p": "The apostle Paul standing on the beach, full body, side view facing left, soaked robe, one arm stretched out pointing to the sea, encouraging others. Same character as the second reference image."
+  }
  }
 }

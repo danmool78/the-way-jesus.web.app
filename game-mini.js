@@ -2869,8 +2869,72 @@ const dothan = {
   },
 };
 
+/* ---------- 한 사람도 잃지 않으리라 (행 27:39–44): 파선한 배에서 모두 뭍으로 — 널빤지 던지기 ---------- */
+// 깨진 배에서 사람들이 물로 뛰어든다. 저마다 힘(고리)이 줄어들고, 헤엄칠 줄 아는 이는 스스로 천천히 뭍으로 온다(27:43).
+// 사람을 누르면 바닷가의 바울 곁에서 널빤지를 던져 준다(쌓인 널빤지는 둘까지, 2초마다 하나씩 다시 모인다). 널빤지를 붙들면 빨리 뭍으로 온다(27:44).
+// 한 사람이라도 힘이 다해 가라앉으면 실패 — 모두 뭍에 오르면 성공
+const PEOPLE = 10, SHORE_Y = 398, PAUL = [352, 452];
+const wreck = {
+  title: '한 사람도 잃지 않으리라', task: '널빤지를 던져 모두 뭍으로', art: ['a36/bg', 'a36/swimmer', 'a36/floater', 'a36/plank', 'a36/paul', 'a37/people'],
+  ask: ['배가 두 물이 합하여 흐르는 곳에 걸려 깨어지고 있단다. 그러나 너희 중 생명은 하나도 잃지 않으리라 하셨지.', '헤엄 못 치는 이들에게 널빤지를 던져 주렴 — 한 사람도 잃지 않게!'],
+  quote: '너희 중 아무도 생명에는 아무런 손상이 없겠고 오직 배뿐이리라', ref: '행 27:22',
+  help: '물에 빠진 사람을 누르면 널빤지를 던져 줘요(둘까지, 다시 모여요). 널빤지를 붙들면 빨리 뭍으로 와요.<br>고리는 남은 힘 — 빨개진 사람부터! 한 사람이라도 가라앉으면 실패.',
+  seconds: 34,
+  init() { return { P: [], spawn: 0.4, made: 0, saved: 0, planks: 2, regen: 0, fly: [], t: 0, msg: null, sank: 0, splash: [] }; },
+  update(dt, S) {
+    S.t += dt; if (S.msg) S.msg.at -= dt;
+    if (S.made < PEOPLE && (S.spawn -= dt) <= 0) { const sw = Math.random() < 0.3; // 헤엄칠 줄 아는 사람(27:43)
+      S.P.push({ x: rnd(70, 320), y: rnd(118, 150), vy: sw ? rnd(13, 17) : rnd(4, 7), drain: sw ? rnd(0.06, 0.08) : rnd(0.12, 0.16), st: 1, ph: rnd(0, 7), plank: 0, swim: sw, saved: 0 });
+      S.made++; S.spawn = rnd(0.7, 1.2); S.fx.play('splash'); }
+    if (S.planks < 2 && (S.regen += dt) >= 2.0) { S.regen = 0; S.planks++; }
+    for (const p of S.P) { if (p.saved) continue;
+      const sway = Math.sin(S.t * 1.7 + p.ph) * 10 * dt;
+      if (p.plank) { p.y += 30 * dt; p.x += sway; } else { p.y += p.vy * dt; p.x += sway; p.st -= p.drain * dt; }
+      if (p.y >= SHORE_Y) { p.saved = 1; S.saved++; S.fx.play('coin'); S.msg = { t: `뭍에 올랐어요 ${S.saved} / ${PEOPLE}`, c: '#ffe29a', at: 0.9, x: p.x, y: SHORE_Y - 30 }; }
+      if (p.st <= 0 && !p.saved) { S.sank = 1; } }
+    for (const f of S.fly) { f.t += dt; if (f.t >= f.dur && !f.done) { f.done = 1; f.p.plank = 1; S.fx.play('plop'); S.splash.push({ x: f.p.x, y: f.p.y, t: 0 }); } }
+    S.fly = S.fly.filter(f => !f.done);
+    for (const s2 of S.splash) s2.t += dt; S.splash = S.splash.filter(s2 => s2.t < 0.8);
+  },
+  down(x, y, S) {
+    let best = null, bd = 34; for (const p of S.P) { if (p.saved || p.plank || S.fly.some(f => f.p === p)) continue; const d = Math.hypot(p.x - x, p.y - 10 - y); if (d < bd) { bd = d; best = p; } }
+    if (!best) return; if (S.planks <= 0) { S.msg = { t: '널빤지를 모으는 중…', c: '#e8e0c8', at: 0.6, x, y: y - 24 }; S.fx.play('miss'); return; }
+    S.planks--; const d = Math.hypot(best.x - PAUL[0], best.y - PAUL[1]); S.fly.push({ p: best, t: 0, dur: 0.25 + d / 900 }); S.fx.play('cast'); },
+  up() {},
+  won: S => S.saved >= PEOPLE,
+  lost: S => S.sank > 0,
+  failText: S => S.sank ? '한 사람이 물에 잠겼어요' : '시간이 다 되었어요',
+  draw(g, S) {
+    if (!bgArt(g, 'a36/bg')) { g.fillStyle = '#3a5a68'; g.fillRect(0, 0, W, H); g.fillStyle = '#b89a6a'; g.fillRect(0, SHORE_Y, W, H); }
+    // 물결 줄 (움직임)
+    g.strokeStyle = 'rgba(235,245,250,.18)'; g.lineWidth = 1.5; for (let r = 0; r < 8; r++) { const y = 140 + r * 32; g.beginPath(); for (let x = 0; x <= W; x += 10) g.lineTo(x, y + Math.sin(x * 0.04 + S.t * 2 + r) * 4); g.stroke(); }
+    spr(g, 'a36/paul', PAUL[0], PAUL[1] + 36, 96);
+    for (let i = 0; i < S.planks; i++) spr(g, 'a36/plank', PAUL[0] - 44 - i * 6, PAUL[1] + 30 - i * 5, 16); // 쌓인 널빤지
+    // 뭍에 오른 사람 수 — 바닷가에 앉아 있다
+    if (S.saved && !spr(g, 'a37/people', 96, 494, 34 + Math.min(S.saved, PEOPLE) * 3.2)) for (let i = 0; i < S.saved; i++) { const x = 30 + i * 28, y = 470; g.fillStyle = ['#7a5a3e', '#5a4a6a', '#4a5a4a', '#8a6a4a'][i % 4]; g.beginPath(); g.ellipse(x, y, 8, 12, 0, 0, 7); g.fill(); g.fillStyle = '#c99a6a'; g.beginPath(); g.arc(x, y - 15, 5, 0, 7); g.fill(); } // 뭍에 오른 무리 — 오를수록 커진다
+    for (const p of S.P) { if (p.saved) continue; const bob = Math.sin(S.t * 3 + p.ph) * 2;
+      if (p.plank) spr(g, 'a36/floater', p.x, p.y + 14 + bob, 34);
+      else { spr(g, 'a36/swimmer', p.x, p.y + 14 + bob, 40, { flip: p.ph > 3.5 });
+        const low = p.st < 0.35, c = low ? (Math.sin(S.t * 14) > 0 ? '#ff5a3c' : '#ffb08a') : p.st < 0.6 ? '#ffd27a' : '#9ee08a';
+        g.lineWidth = 3.5; g.strokeStyle = 'rgba(0,0,0,.35)'; g.beginPath(); g.arc(p.x, p.y - 8, 21, 0, 7); g.stroke();
+        g.strokeStyle = c; g.beginPath(); g.arc(p.x, p.y - 8, 21, -Math.PI / 2, -Math.PI / 2 + p.st * Math.PI * 2); g.stroke();
+        if (p.swim) { g.font = '700 10px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.fillStyle = 'rgba(255,255,255,.85)'; g.fillText('헤엄침', p.x, p.y + 26); } } }
+    for (const f of S.fly) { const k = f.t / f.dur, x = PAUL[0] + (f.p.x - PAUL[0]) * k, y = PAUL[1] - 30 + (f.p.y - PAUL[1] + 30) * k - Math.sin(k * Math.PI) * 50; spr(g, 'a36/plank', x, y, 16, { ay: 0.5, rot: k * 6 }); }
+    for (const s2 of S.splash) { g.strokeStyle = `rgba(255,255,255,${0.7 * (1 - s2.t / 0.8)})`; g.lineWidth = 2; g.beginPath(); g.ellipse(s2.x, s2.y + 10, 14 + s2.t * 30, 5 + s2.t * 8, 0, 0, 7); g.stroke(); }
+    g.save(); g.font = '800 14px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.lineWidth = 3; g.strokeStyle = 'rgba(10,20,30,.7)'; g.fillStyle = '#fff';
+    const t = `뭍에 오른 사람 ${S.saved} / ${PEOPLE}`; g.strokeText(t, 14, 26); g.fillText(t, 14, 26);
+    g.textAlign = 'right'; const pk = `널빤지 ${S.planks}`; g.strokeText(pk, W - 14, 26); g.fillText(pk, W - 14, 26); g.restore();
+    floatMsg(g, S.msg);
+  },
+  end(g, k, S) { this.update(0.016, S); this.draw(g, S);
+    if (k > 0.3) { g.save(); g.globalAlpha = clamp((k - 0.3) * 2, 0, 1); g.fillStyle = 'rgba(14,24,34,.8)'; g.fillRect(0, 150, W, 84);
+      g.font = '700 17px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#eef6ff'; g.fillText('그 남은 사람들은 널조각 혹은 배 물건에 의지하여', W / 2, 180); g.fillText('마침내 모두 상륙하여 구조되니라', W / 2, 204);
+      g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#b8c8d8'; g.fillText('행 27:44', W / 2, 223); g.restore(); }
+  },
+};
+
 export const MINI = { jesus: { e04: magi, e11: cana, e17: fishing, e22: twelve, e23: rock, e28: bail, e31: loaves, e32: water, e39: stones, e42: sheep, e43: coin, e46: climb, e48: palms, e59: tiberias },
-  david: { d01: herdDavid, d05: sling, d16: cave, d24: arkDance, d38: templeStones }, moses: { m09: redSea, m12: manna, m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket, a17: prison, a37: viper }, kings: { k15: carmel, k24: naaman, k26: dothan } };
+  david: { d01: herdDavid, d05: sling, d16: cave, d24: arkDance, d38: templeStones }, moses: { m09: redSea, m12: manna, m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket, a17: prison, a36: wreck, a37: viper }, kings: { k15: carmel, k24: naaman, k26: dothan } };
 
 /* ---------- 놀이 틀: 소개 → 놀이(제한 시간) → 성공 연출/실패 → 결과 ---------- */
 // host: 모달 안의 상자. fx: { play, pour } (game-audio.js). 끝나면 done({ ok, left, tries })
