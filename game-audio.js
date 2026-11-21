@@ -87,7 +87,13 @@ export function createAudio() {
       [130.8, 196, 261.6].forEach(f => tone({ f, type: 'sine', vol: 0.06, a: 0.6, d: 2.6 }));
       [523.3, 659.3, 784, 987.8, 1174.7, 1568].forEach((f, i) => bell(f, 0.15 + i * 0.13, 0.065, 2.6));
       [1046.5, 1318.5, 1568, 2093].forEach((f, i) => tone({ f, type: 'triangle', vol: 0.025, a: 0.4, d: 2.2, at: 0.9 + i * 0.05 })); },
-    tick: () => tone({ f: 1760, type: 'triangle', vol: 0.04, d: 0.06 }),                                                   // 남은 초
+    tick: () => tone({ f: 1760, type: 'triangle', vol: 0.04, d: 0.06 }),
+    cast: () => { burst({ type: 'bandpass', f: 600, f2: 2600, q: 1.2, vol: 0.12, a: 0.05, d: 0.3 }); burst({ type: 'highpass', f: 2000, vol: 0.04, d: 0.2, at: 0.08 }); }, // 그물이 휙
+    plop: () => { burst({ type: 'lowpass', f: 1400, f2: 300, q: 1, vol: 0.18, a: 0.006, d: 0.3 }); for (let i = 0; i < 9; i++) bubble(300 + Math.random() * 600, 0.04, 0.02 + Math.random() * 0.25); }, // 그물이 물에
+    flap: () => { for (let i = 0; i < 10; i++) burst({ type: 'bandpass', f: 1800 + Math.random() * 1500, q: 2, vol: 0.06, a: 0.003, d: 0.04, at: i * 0.06 + Math.random() * 0.03 }); }, // 고기가 퍼덕
+    creak: () => tone({ f: 140 + Math.random() * 40, f2: 120, type: 'sawtooth', vol: 0.025, a: 0.02, d: 0.18, lp: 700 }), // 그물 줄이 삐걱
+    rip: () => { burst({ type: 'highpass', f: 1200, f2: 4000, q: 0.6, vol: 0.18, a: 0.005, d: 0.22 }); burst({ type: 'bandpass', f: 900, q: 3, vol: 0.1, d: 0.15, at: 0.06 }); tone({ f: 300, f2: 120, type: 'square', vol: 0.05, d: 0.25, lp: 800 }); },
+    haul: () => { burst({ type: 'lowpass', f: 900, f2: 200, vol: 0.2, a: 0.01, d: 0.4 }); for (let i = 0; i < 14; i++) burst({ type: 'bandpass', f: 2000 + Math.random() * 1200, q: 2, vol: 0.05, a: 0.003, d: 0.04, at: 0.1 + i * 0.05 }); bell(784, 0.05, 0.07, 0.9); bell(1174.7, 0.15, 0.06, 1); }, // 배에 쏟음                                                   // 남은 초
   };
   const play = k => { unlock(); SFX[k]?.(); };
 
