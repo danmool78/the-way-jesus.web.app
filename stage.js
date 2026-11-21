@@ -214,6 +214,15 @@ Object.assign(LIKE, {
   babking: ['hezekiah', { hue: 50, skin: 0.8 }], babylonian: ['goliath', { hue: 200, skin: 0.85 }], babylonian2: ['joab', { hue: 200, skin: 0.85 }],
   zedekiah: ['josiah', { skin: 1.03 }], gedaliah: ['nicodemus', { hue: 100 }], jehoiachin: ['pilgrim-man', { plain: true, skin: 1.05 }], jehoiachinR: ['rehoboam', { hue: 300 }],
 });
+// 모세와 여호수아 여정 (사용자 2026-11) — 여든의 모세·아론(대제사장)·이드로·십보라·여호수아는 그 사람의 모델(OWN), 나머지는 비슷한 모델에 옷 색·살갗을 달리.
+// 궁에서 자란 젊은 모세는 수염 없는 디모데 모델에 흰 세마포, 미디안의 목자 모세는 목자 모델. 애굽 사람은 흰 세마포에 짙은 살갗. 왕관 모델은 왕(시혼·발락)에게만
+Object.assign(OWN, { mosesE: 'moses', aaronP: 'aaron', jethro: 'jethro', zipporah: 'zipporah', joshua: 'joshua' });
+Object.assign(LIKE, {
+  mosesP: ['timothy', { white: true, skin: 0.95 }], mosesS: ['shepherd', { hue: 15, skin: 0.95 }], aaron: ['aaron', { plain: true }],
+  taskmaster: ['pilate', { white: true, skin: 0.68 }], egywoman: ['michal', { hue: 160, skin: 0.75 }], magician: ['caiaphas', { white: true, skin: 0.72 }], sister: ['girl'],
+  hur: ['nicodemus', { hue: 260 }], caleb: ['barnabas', { hue: 40 }], eleazar: ['aaron', { skin: 1.08 }],
+  sihon: ['ahab', { hue: 20, skin: 0.85 }], balaam: ['caiaphas', { hue: 280 }], balak: ['rehoboam', { hue: 330, skin: 0.9 }],
+});
 const dress = ([n, c]) => c === 'plain' ? plain(ready[n], n) : c && typeof c === 'object' ? restyle(ready[n], n, c) : c ? tinted(ready[n], n, c) : ready[n];
 // 한 장면에 같은 모델이 또 서면 옷 색상·살갗이 눈에 띄게 다른 차림을 골라 입힌다 — 같은 옷·같은 살갗의 같은 사람이 둘셋씩 섰다(사용자 2026-11).
 // 배역과 군중(여러 무리)을 한 장부(taken: 모델 이름 → 이미 입힌 차림들)로 함께 센다 — 무리마다 따로 세니 두 무리에 쌍둥이가 섰다
@@ -227,8 +236,8 @@ function unique(m, taken) {
   if (L.some(x => nearLook(x, look))) { look = LOOKS.find(v => !L.some(x => nearLook(x, v))); if (!look) return m; m = [m[0], { hue: look.hue, sat: 0.95, skin: look.skin }]; }
   L.push(look); return m;
 }
-// 예수·바울·다윗·열왕기 여정은 모델이 기본(사용자 2026-11) — 다른 여정은 아직 ?models가 있을 때만. ?dolls면 예전 인형으로
-const USE_MODELS = (q => !q.has('dolls') && (q.has('models') || ['jesus', 'paul', 'david', 'kings'].includes(q.get('j') || 'jesus')))(new URLSearchParams(location.search));
+// 예수·바울·다윗·열왕기·모세 여정은 모델이 기본(사용자 2026-11) — 다른 여정은 아직 ?models가 있을 때만. ?dolls면 예전 인형으로
+const USE_MODELS = (q => !q.has('dolls') && (q.has('models') || ['jesus', 'paul', 'david', 'kings', 'moses'].includes(q.get('j') || 'jesus')))(new URLSearchParams(location.search));
 function modelOf(type, i) {
   if (!USE_MODELS) return null;
   if (OWN[type]) return [OWN[type]];
@@ -472,7 +481,7 @@ if (USE_MODELS && new URLSearchParams(location.search).has('check')) window.__st
     const cam = new THREE.PerspectiveCamera(30, 1, 0.01, 50); cam.position.copy(c).addScaledVector(dir, h * dist * 2.2).add(new THREE.Vector3(0, h * 0.25, 0)); cam.lookAt(c.x, c.y + h * 0.25, c.z);
     const sz = renderer.getSize(new THREE.Vector2()); renderer.setSize(500, 500, false); renderer.render(scene, cam); const url = renderer.domElement.toDataURL(); renderer.setSize(sz.x, sz.y, false); return url; }, beats: () => Object.keys(script?.beats || {}),
   ready: () => !Object.keys(loading).some(n => !(n in ready)),
-  step(k) { atStart = false; apply(script.beats[k], true); gaze(); Object.values(actors).forEach(a => { a.show = a.showT; for (let i = 0; i < 60; i++) a.update(i * 0.05, 0.05); }); stageGroup.updateMatrixWorld(true); for (let i = 0; i < 60; i++) { frameNo++; spaceOut(0.05); Object.values(actors).forEach(a => a.update(3 + i * 0.05, 0.05)); } Object.values(props).forEach(p => { for (let i = 0; i < 40; i++) p.update(i * 0.05, 0.05, {}); }); },
+  step(k) { atStart = false; apply(script.beats[k], true); gaze(); Object.values(actors).forEach(a => { a.show = a.showT; for (let i = 0; i < 60; i++) a.update(i * 0.05, 0.05); }); stageGroup.updateMatrixWorld(true); for (let i = 0; i < 60; i++) { frameNo++; spaceOut(0.05); Object.values(actors).forEach(a => a.update(3 + i * 0.05, 0.05)); } Object.values(props).forEach(p => { for (let i = 0; i < 40; i++) { p.update(i * 0.05, 0.05, {}); p.obj.updateMatrixWorld(true); } }); }, // 움직이는 무리의 행렬을 화면처럼 매번 — 지난 자리 행렬로 비켜서기를 재니 옮겨 간 무리가 배역을 뚫었다(점검에서만)
   measure() {
     const out = [], v = new THREE.Vector3();
     for (const [name, a] of Object.entries(actors)) {

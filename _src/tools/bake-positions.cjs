@@ -1,12 +1,12 @@
 // 무대 자리 굽기: 장면마다 모든 순간을 대본대로 세워 직육면체로 겹침을 밀어낸 자리를 계산하고(stage.js __stage.bake),
 // 그 사람을 그 자리에 세운 대본 줄(stage/scenes.js)의 x·z를 고쳐 쓴다 — 화면에서 매번 밀어내며 미끄러지지 않게(사용자 2026-11)
 // 쓰는 법: python3 -m http.server 8765 를 띄워 두고  node _src/tools/bake-positions.cjs [--j paul] [e01 a03 …]   (장면이 없으면 그 여정 전부)
-// 대본 파일: 예수 여정은 stage/scenes.js, 다른 여정은 stage/<여정>/*.js 가운데 그 장면이 든 파일
+// 대본 파일: 예수 여정은 stage/scenes.js, 다른 여정은 stage/<여정>/*.js 가운데 그 장면이 든 파일(폴더가 없는 여정은 stage/<여정>.js — 모세)
 const { chromium } = require('playwright');
 const fs = require('fs'), path = require('path');
 const argv = process.argv.slice(2), ji = argv.indexOf('--j'), J = ji >= 0 ? argv.splice(ji, 2)[1] : 'jesus';
 const ROOT = path.join(__dirname, '../..');
-const FILES = J === 'jesus' ? [path.join(ROOT, 'stage/scenes.js')] : fs.readdirSync(path.join(ROOT, 'stage', J)).filter(f => /^[a-z]\.js$|^[a-z]+\.js$/.test(f) && !f.startsWith('props')).map(f => path.join(ROOT, 'stage', J, f));
+const FILES = J === 'jesus' ? [path.join(ROOT, 'stage/scenes.js')] : !fs.existsSync(path.join(ROOT, 'stage', J)) ? [path.join(ROOT, 'stage', J + '.js')] : fs.readdirSync(path.join(ROOT, 'stage', J)).filter(f => /^[a-z]\.js$|^[a-z]+\.js$/.test(f) && !f.startsWith('props')).map(f => path.join(ROOT, 'stage', J, f));
 const fileOf = id => FILES.find(f => fs.readFileSync(f, 'utf8').includes(`  ${id}: {`));
 const ids = argv.length ? argv : FILES.flatMap(f => [...fs.readFileSync(f, 'utf8').matchAll(/^  ([a-z]\d\d): \{/gm)].map(m => m[1])).sort();
 const order = ks => { const rank = k => { const m = k.match(/^([pw])(\d+)(?:\.(\d+))?$/); return m ? [m[1] === 'p' ? 0 : 1, +m[2], m[3] === undefined ? -1 : +m[3]] : [9, 0, 0]; };

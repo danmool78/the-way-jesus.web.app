@@ -214,7 +214,7 @@ manger, sheep, star, beam(내려오는 빛), fruittree(fruit/taken), lifetree(op
 
 ## 3D 모델로 바꿀 때 점검 (예수·바울 여정에서 겪은 것, 사용자 2026-11)
 여러 번 지적받지 않게, 여정을 모델로 바꾸면 아래를 **장면마다 다 돌려 숫자로 0이 될 때까지** 고친 뒤 올린다. 화면 확인은 사용자가 한다(캡처는 의심 장면만, 작게).
-- 켜기: `stage.js` USE_MODELS의 여정 목록에 넣는다(예수·바울·다윗·열왕기). 대응 안 된 배역은 `?models&check`의 `__stage.unmapped()`로 — 0이어야 한다(stage.js LIKE에 비슷한 모델+옷색·살갗).
+- 켜기: `stage.js` USE_MODELS의 여정 목록에 넣는다(예수·바울·다윗·열왕기·모세). 대응 안 된 배역은 `?models&check`의 `__stage.unmapped()`로 — 0이어야 한다(stage.js LIKE에 비슷한 모델+옷색·살갗).
 - 한꺼번에 점검: `python3 -m http.server 8765` 띄우고 `node _src/tools/stage-audit.cjs <여정> [장면…]` — 순간마다 겹침(자세 상관없이 몸 네모, 사람·SOLID·가구), 앉을 바닥 없음, 뜸·묻힘. 일부러 붙는 것(탐·높이 앉기·누움·십자가·짐승 끄는 손)은 거른다.
 - 자리 굽기: `node _src/tools/bake-positions.cjs --j <여정>` — 밀어낸 자리를 대본 좌표에 적는다(상수로 만든 자리는 못 고치니 그 상수를 손으로).
 - 3D 지형 모드는 2D 점검으로 안 잡힌다: 건물·걸상 소품은 stage.js FIXED·FLAT에 넣고 `heightAt`(바닥 판 전체, 뒤 벽 앞 높은 자리까지)을 준다 — 안 그러면 3D에서 소품만 커져 앉은 사람이 허공·벽 속에 앉는다(a01·a09·a12).
