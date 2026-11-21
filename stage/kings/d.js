@@ -56,7 +56,7 @@ export const D = {
       // 돌기둥을 깨뜨리고 아세라 목상을 찍어 넘긴다
       'p1.1': [['hezekiah', 'idle', { look: -1.9 }], ['g1', 'idle', { x: -1.12, z: -0.28, look: -2.2 }] /* 아세라 목상의 왼쪽 — 목상은 오른쪽(+x)으로 쓰러진다 */, ['g2', 'idle', { x: -1.75, z: -0.1, look: -2.4 }], ['pole', 'down', { delay: 1800 }], ['stone', 'down', { delay: 2400 }]],
       // 그리고 놋뱀 앞에 — 엎드렸던 사람들이 물러선다
-      'p1.2': [['hezekiah', 'idle', { x: 1.0, z: 0.1, look: -1.9 }], ['w1', 'afraid', { x: 0.05, z: 0.45, look: 0.8 }], ['w2', 'afraid', { x: 0.45, z: 0.55, look: 0.4 }], ['w3', 'idle', { x: 1.55, z: 0.55, look: -0.9 }]],
+      'p1.2': [['hezekiah', 'idle', { x: 1.0, z: 0.1, look: -1.9 }], ['w1', 'afraid', { x: 0.05, z: 0.45, look: 0.8 }], ['w2', 'afraid', { x: 0.45, z: 0.55, look: 0.4 }], ['w3', 'idle', { x: 1.56, z: 0.56, look: -0.9 }]],
       'p1.3': [['hezekiah', 'speak', { to: 'w1' }]],
       // 산산이 부수고 '느후스단' — 놋 조각일 뿐
       'p1.4': [['hezekiah', 'rebuke', { look: -1.9 }], ['snake', 'broken', { delay: 600 }], ['g1', 'idle', { x: -1.05, z: -0.22, look: -1.6 }], ['g2', 'idle', { x: -1.6, z: -0.05, look: -1.6 }]],
@@ -65,7 +65,7 @@ export const D = {
       'p2.0': [['hezekiah', 'pray', { look: -0.4 }], ['w1', 'idle'], ['w2', 'idle']],
       'p2.2': [['hezekiah', 'raise', { look: 0 }]],
       // 앗수르를 섬기지 않겠다고 — 북쪽(뒤)으로 돌아선다
-      'p2.3': [['hezekiah', 'idle', { x: 0.95, z: 0.3, look: 3.0 }], ['g1', 'idle', { x: 0.45, z: 0.35, look: 2.9 }], ['g2', 'idle', { x: 1.45, z: 0.45, look: 3.1 }]],
+      'p2.3': [['hezekiah', 'idle', { x: 0.95, z: 0.3, look: 3.0 }], ['g1', 'idle', { x: 0.45, z: 0.35, look: 2.9 }], ['g2', 'idle', { x: 1.44, z: 0.44, look: 3.1 }]],
       // 북쪽 하늘에 먹구름
       'p2.4': [['@env', 'overcast']],
       w0: [['hezekiah', 'pray', { look: -0.4 }]],
