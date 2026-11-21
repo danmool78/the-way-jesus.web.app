@@ -206,7 +206,170 @@ function pitcher(g, x, y, tilt) {
 }
 function star(g, x, y, r) { g.beginPath(); for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4, rr = i % 2 ? r * 0.35 : r; g.lineTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr); } g.closePath(); g.fill(); }
 
-export const MINI = { jesus: { e11: cana } };
+/* ---------- 사람을 낚는 어부 (눅 5:1–11): 깊은 데로 가서 그물을 내리라 ---------- */
+// 누르면 그 자리로 그물을 던진다(날아가는 동안 떼가 움직이니 앞을 노린다). 걸린 고기는 누르고 있어야 끌어올려진다 —
+// 많이 걸릴수록 그물이 빨리 팽팽해져(눅 5:6 '그물이 찢어지는지라') 빨개지면 잠깐 놓았다 당긴다. 찢어지면 반을 잃는다.
+// 깊은 데(위쪽)일수록 떼가 크다. 제한 시간 안에 GOAL 마리를 잡으면 배가 잠기도록 가득 찬다(눅 5:7)
+const BOAT = [200, 452], NET_R = 44, GOAL = 110; // 잘 노리면 한 번에 20~38마리 — 몇 번 빗나가거나 한 번 찢어지면 빠듯하게
+const fishing = {
+  title: '사람을 낚는 어부', task: `그물을 던져 고기 ${GOAL}마리`,
+  ask: ['밤새 수고했는데 한 마리도 못 잡았다고?', '깊은 데로 가서 그물을 내려라. 그물이 찢어지지 않게 끌어올려야 한다!'],
+  quote: '깊은 데로 가서 그물을 내려 고기를 잡으라', ref: '눅 5:4',
+  help: '물고기 떼를 노려 누르면 그물을 던져요. 날아가는 동안 떼가 움직이니 앞을 노려요.<br>걸리면 누르고 있어 끌어올려요 — 빨개지면 잠깐 놓았다 당겨요. 찢어지면 반을 잃어요.',
+  seconds: 32,
+  init() {
+    const S = { schools: [], net: { st: 'ready' }, got: 0, sparks: [], rip: [], msg: null, spawnT: 0, boatY: 0, shine: [] };
+    for (let i = 0; i < 4; i++) S.schools.push(school(true));
+    for (let i = 0; i < 18; i++) S.shine.push([rnd(0, W), rnd(70, 420), rnd(0, 6)]);
+    return S;
+  },
+  update(dt, S) {
+    for (const f of S.schools) { f.t += dt; f.x += f.vx * dt; f.y += f.vy * dt + Math.sin(f.t * 0.9 + f.ph) * 6 * dt; }
+    S.schools = S.schools.filter(f => f.x > -90 && f.x < W + 90 && f.n > 0);
+    S.spawnT -= dt; if (S.schools.length < 5 && S.spawnT <= 0) { S.schools.push(school(false)); S.spawnT = rnd(0.6, 1.4); }
+    const N = S.net;
+    if (N.st === 'fly') {
+      N.t += dt;
+      if (N.t >= N.dur) { // 물에 닿아 펼쳐진다 — 그 둘레의 고기가 걸린다
+        let n = 0;
+        for (const f of S.schools) for (const o of f.fish) if (!o.gone && Math.hypot(f.x + o.x - N.x, f.y + o.y - N.y) < NET_R) { o.gone = true; n++; f.n--; }
+        S.fx.play(n ? 'plop' : 'plop'); if (n) S.fx.play('flap');
+        Object.assign(N, { st: n ? 'haul' : 'empty', n, prog: 0, ten: 0, t: 0, hold: false });
+        if (!n) S.msg = { t: '허탕!', c: '#cfd8e0', at: 0.9, x: N.x, y: N.y - 30 };
+        else S.msg = { t: `${n}마리!`, c: '#ffe29a', at: 1, x: N.x, y: N.y - 34 };
+      }
+    } else if (N.st === 'empty') { N.t += dt; if (N.t > 0.55) N.st = 'ready'; }
+    else if (N.st === 'haul') {
+      // 끌어올리기: 누르는 동안 나아가고 팽팽해진다. 놓으면 풀린다. 고기가 많을수록 빨리 팽팽
+      const load = 0.32 + N.n / 52;
+      if (N.hold) { N.prog += dt * 0.95; N.ten += dt * load; if (Math.random() < dt * 6) S.fx.play('creak'); }
+      else N.ten = Math.max(0, N.ten - dt * 1.1);
+      if (N.ten >= 1) { // 찢어졌다
+        const lost = Math.ceil(N.n / 2); N.n -= lost; N.ten = 0.35; N.hold = false; S.fx.play('rip');
+        S.msg = { t: `그물이 찢어졌어요 -${lost}`, c: '#ffb38a', at: 1.3, x: N.x, y: N.y - 34 };
+        for (let i = 0; i < lost; i++) S.rip.push({ x: N.x + rnd(-20, 20), y: N.y + rnd(-10, 10), vx: rnd(-60, 60), vy: rnd(-40, 40), life: rnd(0.5, 0.9) });
+      }
+      if (N.prog >= 1) { // 배에 올렸다
+        S.got += N.n; S.fx.play('haul'); S.boatY = Math.min(9, S.got / GOAL * 9);
+        S.msg = { t: `+${N.n}`, c: '#ffe29a', at: 1, x: BOAT[0], y: BOAT[1] - 40 };
+        for (let i = 0; i < 12; i++) S.sparks.push({ x: BOAT[0] + rnd(-50, 50), y: BOAT[1] - rnd(0, 20), vy: rnd(-60, -20), life: rnd(0.5, 1), r: rnd(1.5, 3) });
+        N.st = 'ready';
+      }
+    }
+    for (const p of S.sparks) { p.y += p.vy * dt; p.life -= dt; } S.sparks = S.sparks.filter(p => p.life > 0);
+    for (const p of S.rip) { p.x += p.vx * dt; p.y += p.vy * dt; p.life -= dt; } S.rip = S.rip.filter(p => p.life > 0);
+    if (S.msg) S.msg.at -= dt;
+  },
+  down(x, y, S) {
+    const N = S.net;
+    if (N.st === 'ready' && y < BOAT[1] - 30) { // 던진다: 멀수록 오래 난다
+      const d = Math.hypot(x - BOAT[0], y - BOAT[1]);
+      Object.assign(N, { st: 'fly', x, y, t: 0, dur: 0.3 + d / 620 }); S.fx.play('cast');
+    } else if (N.st === 'haul') N.hold = true;
+  },
+  up(S) { if (S.net.st === 'haul') S.net.hold = false; },
+  won: S => S.got >= GOAL,
+  draw(g, S) {
+    lake(g, S);
+    for (const f of S.schools) drawSchool(g, f);
+    const N = S.net;
+    drawBoat(g, S);
+    if (N.st === 'fly') { // 날아가는 그물: 배에서 포물선으로, 점점 펼쳐진다
+      const k = N.t / N.dur, x = BOAT[0] + (N.x - BOAT[0]) * k, y = BOAT[1] - 20 + (N.y - BOAT[1] + 20) * k - Math.sin(k * Math.PI) * 60;
+      g.strokeStyle = 'rgba(80,60,40,.6)'; g.lineWidth = 1; g.beginPath(); g.moveTo(BOAT[0], BOAT[1] - 20); g.quadraticCurveTo((BOAT[0] + x) / 2, y - 30, x, y); g.stroke();
+      drawNet(g, x, y, NET_R * (0.35 + 0.65 * k), 0, null);
+      g.strokeStyle = 'rgba(255,255,255,.35)'; g.setLineDash([3, 4]); g.beginPath(); g.arc(N.x, N.y, NET_R, 0, 7); g.stroke(); g.setLineDash([]);
+    } else if (N.st === 'empty') drawNet(g, N.x, N.y, NET_R, 0, null, 1 - N.t / 0.55);
+    else if (N.st === 'haul') {
+      const x = N.x + (BOAT[0] - N.x) * ease(N.prog), y = N.y + (BOAT[1] - 20 - N.y) * ease(N.prog);
+      g.strokeStyle = N.ten > 0.75 ? '#ff7a5c' : 'rgba(80,60,40,.85)'; g.lineWidth = 1.5 + N.ten * 1.5; g.beginPath(); g.moveTo(BOAT[0], BOAT[1] - 20); g.lineTo(x, y); g.stroke();
+      drawNet(g, x, y, NET_R * (1 - N.prog * 0.45), N.n, N.ten);
+      // 팽팽함 고리
+      g.lineWidth = 5; g.strokeStyle = 'rgba(0,0,0,.35)'; g.beginPath(); g.arc(x, y, NET_R * (1 - N.prog * 0.45) + 9, 0, 7); g.stroke();
+      g.strokeStyle = N.ten > 0.75 ? '#ff5a3c' : N.ten > 0.5 ? '#ffc35c' : '#9fe0a0'; g.beginPath(); g.arc(x, y, NET_R * (1 - N.prog * 0.45) + 9, -Math.PI / 2, -Math.PI / 2 + N.ten * Math.PI * 2); g.stroke();
+      if (!N.hold) { g.font = '800 14px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.lineWidth = 4; g.strokeStyle = 'rgba(10,20,30,.7)'; g.strokeText('누르고 있어 끌어올리기', x, y + NET_R + 26); g.fillStyle = '#fff'; g.fillText('누르고 있어 끌어올리기', x, y + NET_R + 26); }
+    }
+    for (const p of S.rip) { g.fillStyle = `rgba(200,215,225,${clamp(p.life, 0, 1)})`; fish(g, p.x, p.y, Math.atan2(p.vy, p.vx), 1, 1); }
+    for (const p of S.sparks) { g.fillStyle = `rgba(255,226,150,${clamp(p.life, 0, 1)})`; star(g, p.x, p.y, p.r * 2.2); }
+    floatMsg(g, S.msg);
+    g.save(); g.font = '700 14px "Noto Sans KR",sans-serif'; g.textAlign = 'left'; g.fillStyle = 'rgba(255,255,255,.92)'; g.lineWidth = 3; g.strokeStyle = 'rgba(10,25,40,.6)';
+    g.strokeText(`잡은 고기 ${S.got} / ${GOAL}`, 16, 26); g.fillText(`잡은 고기 ${S.got} / ${GOAL}`, 16, 26); g.restore();
+  },
+  end(g, k, S) { S.boatY = 9 + ease(k) * 7; S.net.st = 'done'; this.draw(g, S);
+    if (k > 0.3) { g.save(); g.globalAlpha = clamp((k - 0.3) * 2, 0, 1); g.font = '700 19px "Gowun Batang",serif'; g.textAlign = 'center';
+      g.lineWidth = 5; g.strokeStyle = 'rgba(8,20,32,.75)'; g.strokeText('이제 후로는 사람을 취하리라', W / 2, 120); g.fillStyle = '#eaf4ff'; g.fillText('이제 후로는 사람을 취하리라', W / 2, 120);
+      g.font = '600 12px "Noto Sans KR",sans-serif'; g.fillStyle = '#bcd6ea'; g.fillText('눅 5:10', W / 2, 139); g.restore(); }
+  },
+};
+// 고기 떼 하나: 위(깊은 데)일수록 크고 느리다. 처음 넷은 화면 안에, 그 뒤로는 양옆에서 들어온다
+function school(inside) {
+  const deep = Math.random() < 0.6, y = deep ? rnd(90, 230) : rnd(240, 380), n = deep ? Math.round(rnd(14, 34)) : Math.round(rnd(5, 13));
+  const dir = Math.random() < 0.5 ? 1 : -1, sp = deep ? rnd(22, 42) : rnd(35, 60), r = 14 + Math.sqrt(n) * 4.2;
+  const fishList = Array.from({ length: n }, () => { const a = rnd(0, 7), d = Math.sqrt(Math.random()) * r; return { x: Math.cos(a) * d, y: Math.sin(a) * d * 0.6, ph: rnd(0, 6), gone: false }; });
+  return { x: inside ? rnd(60, W - 60) : dir > 0 ? -70 : W + 70, y, vx: dir * sp, vy: rnd(-4, 4), n, fish: fishList, t: 0, ph: rnd(0, 6) };
+}
+function fish(g, x, y, a, s = 1, al = 1) { g.save(); g.translate(x, y); g.rotate(a); g.globalAlpha *= al; g.beginPath(); g.ellipse(0, 0, 6 * s, 2.3 * s, 0, 0, 7); g.moveTo(-5 * s, 0); g.lineTo(-10 * s, -3 * s); g.lineTo(-10 * s, 3 * s); g.closePath(); g.fill(); g.restore(); }
+function drawSchool(g, f) {
+  const a = f.vx > 0 ? 0 : Math.PI;
+  // 수면 아래 어두운 그림자 + 은빛 반짝임 (떼가 클수록 진하게)
+  const r = 14 + Math.sqrt(f.n) * 4.2, sh = g.createRadialGradient(f.x, f.y, 2, f.x, f.y, r * 1.3);
+  sh.addColorStop(0, 'rgba(10,30,45,.35)'); sh.addColorStop(1, 'rgba(10,30,45,0)'); g.fillStyle = sh; g.beginPath(); g.ellipse(f.x, f.y, r * 1.3, r * 0.9, 0, 0, 7); g.fill();
+  for (const o of f.fish) { if (o.gone) continue; const w = Math.sin(f.t * 7 + o.ph);
+    g.fillStyle = w > 0.85 ? 'rgba(220,235,245,.85)' : 'rgba(20,45,60,.7)'; fish(g, f.x + o.x + Math.sin(f.t * 2 + o.ph) * 2, f.y + o.y, a + w * 0.15, 1); }
+}
+function drawNet(g, x, y, r, n, ten, al = 1) {
+  g.save(); g.globalAlpha = al; g.translate(x, y);
+  g.fillStyle = 'rgba(230,220,190,.12)'; g.beginPath(); g.arc(0, 0, r, 0, 7); g.fill();
+  g.strokeStyle = ten > 0.75 ? 'rgba(255,170,140,.9)' : 'rgba(235,225,195,.75)'; g.lineWidth = 1;
+  g.beginPath(); g.arc(0, 0, r, 0, 7); g.clip();
+  for (let k = -r; k <= r; k += 8) { g.beginPath(); g.moveTo(k, -r); g.lineTo(k + r * 0.3, r); g.stroke(); g.beginPath(); g.moveTo(-r, k); g.lineTo(r, k - r * 0.3); g.stroke(); }
+  // 걸린 고기: 그물 안에서 퍼덕인다
+  const t = performance.now() / 120;
+  for (let i = 0; i < Math.min(n, 40); i++) { const a = i * 2.39, d = Math.sqrt((i + 0.5) / Math.max(n, 1)) * r * 0.8;
+    g.fillStyle = (i + Math.floor(t)) % 5 ? 'rgba(200,215,225,.95)' : 'rgba(255,255,255,1)'; fish(g, Math.cos(a) * d, Math.sin(a) * d, a + Math.sin(t + i) * 0.5, 0.85); }
+  g.restore();
+  g.save(); g.globalAlpha = al; g.strokeStyle = 'rgba(150,120,80,.9)'; g.lineWidth = 2; g.beginPath(); g.arc(x, y, r, 0, 7); g.stroke();
+  g.fillStyle = '#7a6a55'; for (let i = 0; i < 10; i++) { const a = i * Math.PI / 5; g.beginPath(); g.arc(x + Math.cos(a) * r, y + Math.sin(a) * r, 2, 0, 7); g.fill(); } // 그물 추
+  g.restore();
+}
+// 새벽의 갈릴리 바다: 밤새 허탕친 뒤(눅 5:5) — 먼 기슭의 언덕, 동트는 하늘빛이 물에 비침
+function lake(g, S) {
+  const w = g.createLinearGradient(0, 0, 0, H); w.addColorStop(0, '#1d4560'); w.addColorStop(0.5, '#2a6a86'); w.addColorStop(1, '#3d8aa2');
+  g.fillStyle = w; g.fillRect(0, 0, W, H);
+  const sky = g.createLinearGradient(0, 0, 0, 62); sky.addColorStop(0, '#f2c58c'); sky.addColorStop(1, '#e89a6a'); g.fillStyle = sky; g.fillRect(0, 0, W, 62);
+  g.fillStyle = '#5c5a4a'; g.beginPath(); g.moveTo(0, 62); for (let x = 0; x <= W; x += 20) g.lineTo(x, 44 + Math.sin(x * 0.02) * 8 + Math.sin(x * 0.07) * 3); g.lineTo(W, 62); g.closePath(); g.fill();
+  g.fillStyle = 'rgba(255,210,150,.25)'; g.fillRect(0, 60, W, 4);
+  // 깊은 데 표시: 위쪽 물빛이 짙다
+  const d = g.createLinearGradient(0, 64, 0, 260); d.addColorStop(0, 'rgba(5,20,40,.35)'); d.addColorStop(1, 'rgba(5,20,40,0)'); g.fillStyle = d; g.fillRect(0, 64, W, 200);
+  g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = 'rgba(220,235,245,.45)'; g.textAlign = 'right'; g.fillText('깊은 데', W - 12, 84);
+  // 물결 반짝임
+  const t = performance.now() / 1000;
+  for (const [x, y, p] of S.shine) { const a = (Math.sin(t * 1.3 + p) + 1) / 2; g.strokeStyle = `rgba(255,230,190,${0.08 + a * 0.18})`; g.lineWidth = 1.2; g.beginPath(); g.moveTo(x - 9, y); g.quadraticCurveTo(x, y - 3, x + 9, y); g.stroke(); }
+}
+function drawBoat(g, S) {
+  const [x, y0] = BOAT, y = y0 + S.boatY;
+  g.save();
+  g.fillStyle = 'rgba(10,30,45,.35)'; g.beginPath(); g.ellipse(x, y0 + 14, 92, 14, 0, 0, 7); g.fill();
+  const h = g.createLinearGradient(0, y - 22, 0, y + 20); h.addColorStop(0, '#8a5a34'); h.addColorStop(1, '#4a2c16');
+  g.fillStyle = h; g.beginPath(); g.moveTo(x - 92, y - 16); g.quadraticCurveTo(x, y + 30, x + 92, y - 16); g.lineTo(x + 80, y - 22); g.lineTo(x - 80, y - 22); g.closePath(); g.fill();
+  g.fillStyle = '#3a2210'; g.beginPath(); g.moveTo(x - 80, y - 22); g.lineTo(x + 80, y - 22); g.quadraticCurveTo(x, y + 8, x - 80, y - 22); g.fill();
+  // 실은 고기 (잡을수록 배 안이 찬다)
+  const n = Math.min(60, Math.round(S.got / GOAL * 60));
+  for (let i = 0; i < n; i++) { const fx = x - 60 + (i * 37 % 120), fy = y - 14 + ((i * 13) % 9) - Math.floor(i / 20) * 3; g.fillStyle = i % 4 ? '#c9d6dd' : '#e8f0f4'; fish(g, fx, fy, (i * 1.7) % 6.28, 0.8); }
+  g.strokeStyle = 'rgba(255,220,170,.25)'; g.lineWidth = 2; g.beginPath(); g.moveTo(x - 86, y - 18); g.quadraticCurveTo(x, y + 22, x + 86, y - 18); g.stroke();
+  // 물에 잠긴 가장자리 (가득 차면 배가 잠길 지경 — 눅 5:7)
+  const wl = g.createLinearGradient(0, y0 + 2, 0, y0 + 26); wl.addColorStop(0, 'rgba(61,138,162,.0)'); wl.addColorStop(0.3, 'rgba(61,138,162,.85)'); wl.addColorStop(1, 'rgba(61,138,162,.95)');
+  g.fillStyle = wl; g.fillRect(x - 100, y0 + 4, 200, 30);
+  g.restore();
+}
+function floatMsg(g, m) {
+  if (!m || m.at <= 0) return;
+  const a = clamp(m.at * 2, 0, 1), rise = (1 - clamp(m.at, 0, 1)) * 14;
+  g.save(); g.globalAlpha = a; g.font = '800 17px "Noto Sans KR",sans-serif'; g.textAlign = 'center';
+  g.lineWidth = 4; g.strokeStyle = 'rgba(15,20,25,.8)'; g.strokeText(m.t, clamp(m.x, 80, W - 80), m.y - rise); g.fillStyle = m.c; g.fillText(m.t, clamp(m.x, 80, W - 80), m.y - rise); g.restore();
+}
+
+export const MINI = { jesus: { e11: cana, e17: fishing } };
 
 /* ---------- 놀이 틀: 소개 → 놀이(제한 시간) → 성공 연출/실패 → 결과 ---------- */
 // host: 모달 안의 상자. fx: { play, pour } (game-audio.js). 끝나면 done({ ok, left, tries })
