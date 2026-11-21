@@ -215,7 +215,7 @@ export const B = {
       'p1.1': [['david', 'look-up']],
       'p1.3': [['david', 'listen']],
       // 내려가 블레셋을 친다 — 그들은 달아나 사라지고, 가축을 끌고 온다
-      'p1.4': [['beam', null, { show: 0 }], ['david', 'raise', { x: -0.05, z: 0.2, look: 1 }], ['i1', 'idle', { x: -0.3, z: 0.0, look: 1 }], ['i2', 'idle', { x: -0.25, z: 0.42, look: 1 }],
+      'p1.4': [['beam', null, { show: 0 }], ['david', 'raise', { x: -0.05, z: 0.2, look: 1 }], ['i1', 'idle', { x: -0.3, z: 0.0, look: 1 }], ['i2', 'idle', { x: -0.29, z: 0.39, look: 1 }],
         ['ph1', 'afraid', { delay: 600 }], ['ph2', 'afraid', { delay: 600 }], ['ph1', 'idle', { x: 2.0, z: -0.15, delay: 1500 }], ['ph2', 'idle', { x: 2.0, z: 0.25, delay: 1500 }],
         ['ph1', 'idle', { show: 0, delay: 4500 }], ['ph2', 'idle', { show: 0, delay: 4500 }], ['s1', null, { x: -0.1, z: 0.5, delay: 3500 }], ['s2', null, { x: 0.15, z: 0.55, delay: 3800 }]],
       // 그일라 주민이 살아났다
@@ -343,7 +343,7 @@ export const B = {
         ['david', 'kneel', { x: -0.2, z: 0.25, look: -1, item: 'hem' }], ['m1', 'idle', { x: 0.25, z: 0.0, look: -1 }], ['m2', 'idle', { show: 0 }]],
       intro: [['@env', 'day'], ['saul', 'idle', { show: 0 }], ['sol1', 'idle', { show: 0 }], ['sol2', 'idle', { show: 0 }], ['david', 'sit-ground', { show: 0 }], ['m1', 'sit-ground', { show: 0 }], ['m2', 'sit-ground', { show: 0 }]],
       // 삼천 명의 정예를 이끌고 사울이 온다
-      'p0.0': [['saul', 'idle', { show: 1, x: -1.15, z: 0.25, look: 1 }], ['sol1', 'idle', { show: 1, x: -1.4, z: -0.12 }], ['sol2', 'idle', { show: 1, x: -1.6, z: 0.5 }]],
+      'p0.0': [['saul', 'idle', { show: 1, x: -1.15, z: 0.25, look: 1 }], ['sol1', 'idle', { show: 1, x: -1.4, z: 0 }], ['sol2', 'idle', { show: 1, x: -1.6, z: 0.5 }]],
       // 홀로 그 굴로 들어간다
       'p0.2': [['saul', 'idle', { x: 0.0, z: 0.05, look: 0 }], ['sol1', 'idle', { look: 0 }], ['sol2', 'idle', { look: 0 }]],
       // 굴 깊숙한 곳, 숨죽인 다윗과 부하들
@@ -370,7 +370,7 @@ export const B = {
       // 사울은 집으로, 다윗은 요새로
       'p2.8': [['saul', 'idle', { x: -2.0, z: 0.3, look: -1 }], ['sol1', 'idle', { x: -2.1, z: 0.1, delay: 800 }], ['sol2', 'idle', { x: -2.1, z: 0.5, delay: 800 }],
         ['saul', 'idle', { show: 0, delay: 4000 }], ['sol1', 'idle', { show: 0, delay: 4500 }], ['sol2', 'idle', { show: 0, delay: 4500 }],
-        ['david', 'idle', { x: 1.45, z: -0.15, look: 1, delay: 1500 }], ['m1', 'idle', { x: 1.6, z: 0.0, look: 1, delay: 1800 }], ['m2', 'idle', { x: 1.7, z: -0.3, delay: 2000 }]],
+        ['david', 'idle', { x: 1.45, z: -0.15, look: 1, delay: 1500 }], ['m1', 'idle', { x: 1.68, z: -0.08, look: 1, delay: 1800 }], ['m2', 'idle', { x: 1.7, z: -0.3, delay: 2000 }]],
       // 굴에서 사울을 피하던 날의 노래
       'p2.9': [['saul', 'idle', { show: 0 }], ['sol1', 'idle', { show: 0 }], ['sol2', 'idle', { show: 0 }], ['m1', 'idle', { show: 0 }], ['m2', 'idle', { show: 0 }],
         ['david', 'kneel', { x: 0.4, z: -0.3, look: 0, item: null }], ['david', 'pray', { delay: 3500 }]],
@@ -400,7 +400,7 @@ export const B = {
     cast: {
       nabal: ['nabal', 0.55, -0.62, 0.2, { pose: 'sit' }],
       guest: ['man', 0.92, -0.6, -0.3, { pose: 'sit', gaze: false }],
-      shearer: ['shepherd', 0.6, 0.32, 0.3, { gaze: false }],
+      shearer: ['shepherd', 0.61, 0.31, 0.3, { gaze: false }],
       y1: ['israelite2', -1.9, 0.0, 1],
       y2: ['hebrew', -1.95, 0.2, 1, { gaze: false }],
       david: ['davidW', -1.55, -0.2, 1],
@@ -575,7 +575,7 @@ export const B = {
       // 주 안에서 힘을 얻는다
       'p1.5': [['m1', 'idle'], ['m2', 'idle'], ['david', 'kneel', { look: 0 }], ['beam', null, { show: 1, x: -0.45, z: 0.12 }], ['david', 'pray', { delay: 1500 }]],
       // 에봇을 가져오게 하고 여쭙는다
-      'p1.6': [['abiathar', 'idle', { show: 1, x: -0.75, z: 0.28, look: 1, item: 'cloak' }], ['david', 'kneel', { look: -1, delay: 2500 }]],
+      'p1.6': [['abiathar', 'idle', { show: 1, x: -0.73, z: 0.29, look: 1, item: 'cloak' }], ['david', 'kneel', { look: -1, delay: 2500 }]],
       'p1.7': [['david', 'look-up']],
       // 브솔 시내 — 지친 이백 명이 남는다
       'p2.0': [['beam', null, { show: 0 }], ['ruin', 'smoke', { show: 0 }], ['brook', null, { show: 1 }], ['abiathar', 'idle', { item: null, x: -1.1, z: 0.42, look: 1 }],

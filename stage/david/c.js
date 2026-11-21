@@ -385,8 +385,8 @@ export const C = {
       'p2.1': [['king', 'idle'], ['ziba', 'idle', { x: -1.9, z: 0.3, look: -1 }], ['ziba', 'idle', { show: 0, delay: 4200 }]],
       // 늘 왕의 식탁에서 — 왕자들과 함께
       'p2.2': [['ziba', 'idle', { show: 0 }], ['table', null, { show: 1 }], ['walker', 'idle', { show: 0, x: -0.2, z: 0.08 }], ['meph', 'sit', { show: 1, look: 0.2 }], ['prince', 'sit', { show: 1 }],
-        ['king', 'idle', { x: 0.3, z: 0.1, look: -1 }], ['king', 'sit', { look: -0.8, delay: 1800 }], ['official', 'idle', { x: 0.75, z: -0.1, look: -0.6 }]],
-      'p2.3': [['mica', 'idle', { show: 1, x: 0.12, z: 0.12, look: -1 }], ['meph', 'sit', { look: 0.6 }]],
+        ['king', 'idle', { x: 0.32, z: 0.12, look: -1 }], ['king', 'sit', { look: -0.8, delay: 1800 }], ['official', 'idle', { x: 0.75, z: -0.1, look: -0.6 }]],
+      'p2.3': [['mica', 'idle', { show: 1, x: 0.1, z: 0.1, look: -1 }], ['meph', 'sit', { look: 0.6 }]],
       'p2.4': [['meph', 'sit', { look: 0.2 }]],
       w0: [['king', 'speak', { show: 1 }]],
       w1: [['king', 'speak', { show: 1 }]],
@@ -648,9 +648,9 @@ export const C = {
       // 아무것도 모른 채 따라간 이백 명
       'p2.5': [['absalom', 'idle'], ['folk', null, { show: 1, x: 0.15 }]],
       // 제사를 드리며 아히도벨까지
-      'p2.6': [['altar', 'fire'], ['absalom', 'idle', { x: 0.85, z: -0.15, look: 0.4 }], ['ahith', 'idle', { show: 1, x: 1.35, z: 0.05, look: -1 }], ['ahith', 'bow', { delay: 4000 }]],
+      'p2.6': [['altar', 'fire'], ['absalom', 'idle', { x: 0.87, z: -0.1, look: 0.4 }], ['ahith', 'idle', { show: 1, x: 1.35, z: 0.05, look: -1 }], ['ahith', 'bow', { delay: 4000 }]],
       // 반역의 세력은 점점 커졌다 — 금관
-      'p2.7': [['ahith', 'idle'], ['absalom', 'idle', { show: 0 }], ['absK', 'raise', { show: 1, x: 0.85, z: -0.15, look: 0.4 }], ['@env', 'dusk', { delay: 2000 }]],
+      'p2.7': [['ahith', 'idle'], ['absalom', 'idle', { show: 0 }], ['absK', 'raise', { show: 1, x: 0.83, z: -0.2, look: 0.4 }], ['@env', 'dusk', { delay: 2000 }]],
       w0: [['king', 'speak', { show: 1, to: 'absalom' }], ['absalom', 'idle', { show: 1 }]],
       w1: [['absalom', 'speak', { show: 1 }], ['absK', 'idle', { show: 0 }]],
       w2: [['absalom', 'speak', { show: 1 }]],

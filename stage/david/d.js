@@ -473,7 +473,7 @@ export const D = {
         ['mule', null, { show: 0 }], ['solomon', 'ride', { show: 0 }], ['solomon', 'kneel', { show: 1, board: null, x: 0.62, z: -0.1, look: 1 }],
         ['zadok', 'anoint', { item: 'oilhorn', look: -1 }], ['nathan', 'idle', { x: 0.25, z: 0.22, look: 1 }], ['benaiah', 'raise'], ['horn', 'idle', { item: 'horn' }],
         ['bathsheba', 'idle', { x: -0.65, z: 0.2, look: -1 }]],
-      intro: [['@env', 'day'], ['spring', 'flow'], ['adonijah', 'idle', { show: 0 }], ['joab', 'idle', { show: 0 }], ['abiathar', 'idle', { show: 0 }], ['feast', null, { show: 0 }],
+      intro: [['@env', 'day'], ['spring', 'flow'], ['adonijah', 'idle', { show: 0 }], ['joab', 'idle', { x: 2.09, z: 0.6, show: 0 }], ['abiathar', 'idle', { show: 0 }], ['feast', null, { show: 0 }],
         ['bathsheba', 'idle', { show: 0 }], ['nathan', 'idle', { show: 0 }], ['mule', null, { show: 0 }], ['solomon', 'ride', { show: 0, board: 'mule', x: 0, z: 0, look: Math.PI }], ['zadok', 'idle', { show: 0, item: null }],
         ['benaiah', 'idle', { show: 0 }], ['horn', 'idle', { show: 0, item: 'horn' }]],
       // 늙은 왕 — 수넴 여자 아비삭이 곁에서
