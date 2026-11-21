@@ -270,5 +270,95 @@
    "h": 140,
    "p": "A small dried grilled fish, side view, head to the right."
   }
+ },
+ "e22": {
+  "bg": {
+   "bg": true,
+   "p": "A quiet hilltop in Galilee at dusk seen from above: soft grass and rocks, the Sea of Galilee shimmering far below, warm violet evening light, gentle and calm, with lots of open space. No people."
+  },
+  "back": {
+   "h": 420,
+   "ratio": "3:4",
+   "p": "The back of an ornate game card, straight front view filling the image: deep brown leather texture with an embossed gold double border and a simple gold cross emblem in the center. No text."
+  },
+  "face": {
+   "h": 420,
+   "ratio": "3:4",
+   "p": "A blank aged parchment game card face, straight front view filling the image, warm cream paper with subtle fibers and a thin faded gold border. Completely blank inside, no text, no images."
+  }
+ },
+ "m39": {
+  "bg": {
+   "bg": true,
+   "p": "The hill country around Shiloh in ancient Israel seen from above at golden hour: terraced fields, olive groves and a distant tent sanctuary, with lots of open calm space. No people."
+  },
+  "back": {
+   "h": 420,
+   "ratio": "3:4",
+   "p": "A plain ornamental game card back design, flat, straight front view filling the whole image edge to edge: deep teal leather texture, embossed gold double border, and in the very center one small golden seven-branched lampstand (menorah) symbol. Purely decorative pattern. Absolutely no people, no angels, no scene, no text."
+  }
+ },
+ "e23": {
+  "bg": {
+   "bg": true,
+   "p": "A Galilean hillside under a wide sky: a solid grey bedrock outcrop forms the ground along the bottom eighth of the image, distant hills and a few olive trees on the horizon, soft clouds. The middle of the image is open sky. No people, no buildings."
+  },
+  "block": {
+   "h": 200,
+   "p": "One rough-hewn grey-cream limestone ashlar building block, straight front view of its square face filling the image, visible chisel marks, chipped worn edges and natural stone speckles, solid and heavy."
+  }
+ },
+ "d38": {
+  "bg": {
+   "bg": true,
+   "p": "An ancient limestone quarry near Jerusalem seen at morning: pale stepped rock faces, a few large rough-cut blocks resting at the bottom edge, sunlight and soft dust, open sky in the middle of the image. No people."
+  }
+ },
+ "e28": {
+  "boat": {
+   "h": 420,
+   "ratio": "16:9",
+   "p": "An empty first-century wooden Galilean fishing boat, straight side view (profile), bow pointing right, curved hull of dark wet planks, a short mast stub, no sail, no people."
+  },
+  "men": {
+   "h": 300,
+   "p": "Two frightened first-century Galilean fishermen disciples seen from the front from the waist up, clinging to each other, wet hair and robes, looking up anxiously."
+  },
+  "sleep": {
+   "h": 220,
+   "ratio": "16:9",
+   "ref": [
+    "_src/cards/jesus-ref.png"
+   ],
+   "p": "Jesus sound asleep lying on his side on a cushion, side view, head to the right, white robe with a red sash, peaceful face. Same character as the second reference image."
+  },
+  "rebuke": {
+   "h": 420,
+   "ratio": "3:4",
+   "ref": [
+    "_src/cards/jesus-ref.png"
+   ],
+   "p": "Jesus standing in full body, front view, raising his right hand with authority to command the storm, robes and hair blown by wind, white robe with a red sash. Same character as the second reference image."
+  }
+ },
+ "k15": {
+  "bg": {
+   "bg": true,
+   "p": "Atop Mount Carmel at dusk: a ridge of rock and scrub, the Mediterranean sea and an orange sunset sky in the background, a crude abandoned stone altar of Baal to the left and a crowd of small distant Israelites on the right. The center of the image is open ground and sky. No close-up figures."
+  },
+  "elijah": {
+   "h": 420,
+   "ref": [
+    "_src/cards/elijah.png"
+   ],
+   "p": "Exactly one person only: the prophet Elijah standing alone, full body from head to sandals, side view facing left, rough hairy brown cloak with a leather belt, long white beard, hands folded in prayer. Same character as the second reference image. A single figure, not a sheet of variations."
+  },
+  "elijah-up": {
+   "h": 420,
+   "ref": [
+    "_src/cards/elijah.png"
+   ],
+   "p": "The prophet Elijah standing, full body, side view facing left, both arms lifted high to heaven in prayer, rough hairy cloak with a leather belt, white beard. Same character as the second reference image."
+  }
  }
 }
