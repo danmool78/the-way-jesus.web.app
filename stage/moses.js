@@ -1514,7 +1514,7 @@ export const MOSES = {
       intro: [['altar', 'idle'], ['ark', null, { show: 0 }], ['p1', 'idle', { show: 0 }], ['p2', 'idle', { show: 0 }], ['half1', null, { show: 0 }], ['half2', null, { show: 0 }], ['wom', 'idle', { show: 0 }], ['kid', 'idle', { show: 0 }], ['stranger', 'idle', { show: 0 }], ['joshua', 'idle', { x: 0.1, z: 0.25, item: null }]],
       'p0.1': [['joshua', 'point', { look: 3 }]],
       // 에발산에 자연석 제단
-      'p0.2': [['joshua', 'idle', { x: -0.2, z: -0.3, look: 3 }], ['altar', 'fire', { delay: 2500 }]],
+      'p0.2': [['joshua', 'idle', { x: -0.2, z: -0.26, look: 3 }], ['altar', 'fire', { delay: 2500 }]],
       'p1.0': [['joshua', 'kneel', { look: 3 }]],
       // 언약궤를 멘 제사장들이 가운데, 백성은 반씩
       'p1.1': [['ark', null, { show: 1 }], ['p1', 'idle', { show: 1 }], ['p2', 'idle', { show: 1 }], ['half1', null, { show: 1 }], ['half2', null, { show: 1 }], ['joshua', 'idle', { x: 0.1, z: 0.25, look: 0 }]],
