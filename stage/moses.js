@@ -301,12 +301,12 @@ export const MOSES = {
       house2: ['house', 0.55, -0.75, { scale: 0.8, stair: false, blood: true }],
       lamb: ['sheep', -0.2, 0.3, { rot: 0.4 }],
       fire: ['fire', -0.35, 0.05],
-      folk: ['crowd', 1.0, 0.25, { spots: [[-0.07, 0], [0.18, 0.15], [0.01, 0.27], [-0.22, -0.21], [0.33, 0], [-0.18, 0.18], [0.14, -0.28], [0.28, 0.33], [-0.3, -0.02], [0.45, -0.18]], face: Math.PI / 2 }],
+      folk: ['crowd', 1.0, 0.25, { spots: [[-0.08, 0], [0.18, 0.15], [0.01, 0.27], [-0.23, -0.22], [0.33, 0], [-0.18, 0.18], [0.15, -0.29], [0.28, 0.33], [-0.3, -0.02], [0.45, -0.18]], face: Math.PI / 2 }],
     },
     cast: {
       father: ['hebrew', -0.6, 0.1, 0.5],
       mom: ['woman', -0.15, -0.05, -0.6],
-      kid: ['child', -0.34, 0.0, 0.3],
+      kid: ['child', -0.18, -0.1, 0.3],
       h2: ['hebrew2', -0.05, 0.3, -0.8],
       moses: ['mosesE', 0.9, -0.05, -1],
       aaron: ['aaron', 1.15, 0.12, -1],
@@ -316,7 +316,7 @@ export const MOSES = {
       enter: [['@env', 'night'], ['house', 'blood'], ['house2', 'blood'], ['lamb', null, { show: 0 }], ['folk', null, { show: 0 }], ['moses', 'idle', { show: 0 }], ['aaron', 'idle', { show: 0 }], ['pharaoh', 'idle', { show: 0 }],
         ['father', 'break', { item: null }], ['mom', 'listen'], ['kid', 'listen'], ['h2', 'listen']],
       intro: [['@env', 'dusk'], ['house', 'idle'], ['house2', 'idle'], ['lamb', null, { show: 1 }], ['fire', null, { show: 0 }], ['folk', null, { show: 0 }], ['moses', 'idle', { show: 0 }], ['aaron', 'idle', { show: 0 }], ['pharaoh', 'idle', { show: 0 }],
-        ['father', 'idle', { x: -0.6, z: 0.1, look: 0.5 }], ['mom', 'idle', { x: -0.15, z: -0.05, look: -0.6 }], ['kid', 'idle', { x: -0.32, z: -0.02 }], ['h2', 'idle', { show: 0 }]],
+        ['father', 'idle', { x: -0.6, z: 0.1, look: 0.5 }], ['mom', 'idle', { x: -0.15, z: -0.05, look: -0.6 }], ['kid', 'idle', { x: -0.18, z: -0.1 }], ['h2', 'idle', { show: 0 }]],
       'p0.3': [['father', 'kneel', { x: -0.34, z: 0.19, look: 0.6 }]],
       // 우슬초에 피를 적셔 문설주와 인방에
       'p0.4': [['lamb', null, { show: 0 }], ['father', 'idle', { x: -0.58, z: -0.01, look: 2.8 }], ['father', 'raise', { delay: 2200 }], ['house', 'blood', { delay: 2600 }], ['house2', 'blood', { delay: 3400 }]],
@@ -610,7 +610,7 @@ export const MOSES = {
       'p1.3': [['@env', 'dusk']],
       // 아말렉이 물러나고, 모세는 제단을 쌓는다
       'p2.0': [['amalek', null, { x: -2.2, show: 0 }], ['israel', null, { x: -0.95 }]],
-      'p2.4': [['moses', 'idle', { y: 0, x: 0.45, z: 0.03, look: 0 }], ['aaron', 'idle', { x: 0.1, z: 0.17 }], ['hur', 'idle', { x: 0.81, z: 0.22 }], ['joshua', 'idle', { x: 0.0, z: 0.45, look: 1 }], ['altar', 'fire', { show: 1, delay: 2000 }], ['moses', 'raise', { delay: 3000 }]],
+      'p2.4': [['moses', 'idle', { y: 0, x: 0.45, z: -0.04, look: 0 }], ['aaron', 'idle', { x: 0.1, z: 0.17 }], ['hur', 'idle', { x: 0.81, z: 0.22 }], ['joshua', 'idle', { x: 0.0, z: 0.45, look: 1 }], ['altar', 'fire', { show: 1, delay: 2000 }], ['moses', 'raise', { delay: 3000 }]],
       w0: [['moses', 'listen', { look: 0 }]],
       w1: [['moses', 'speak', { to: 'joshua' }]],
       end: [['@env', 'dusk']],
@@ -832,12 +832,12 @@ export const MOSES = {
       moses: ['mosesE', -0.9, 0.3, 0.8],
     },
     beats: {
-      enter: [['moses', 'kneel', { x: -0.1, z: 0.22, look: 1, item: 'tablets' }], ['glory', null, { x: 0.3, z: 0.15 }]],
+      enter: [['moses', 'kneel', { x: -0.1, z: 0.27, look: 1, item: 'tablets' }], ['glory', null, { x: 0.3, z: 0.15 }]],
       intro: [['@env', 'overcast'], ['glory', null, { show: 0, x: 1.4, z: 0.1 }], ['moses', 'idle', { x: -0.9, z: 0.3, item: null }]],
       'p0.1': [['moses', 'pray', { look: 0.6 }]],
       'p0.4': [['moses', 'look-up', { look: 0.6 }]],
       // 바위 틈에 두고 손으로 덮어 주신다
-      'p1.3': [['moses', 'idle', { x: -0.1, z: 0.22, look: 1 }]],
+      'p1.3': [['moses', 'idle', { x: -0.1, z: 0.27, look: 1 }]],
       // 새 돌판 둘을 들고 새벽 어스름에 홀로
       'p1.4': [['@env', 'dawn'], ['moses', 'idle', { item: 'tablets' }]],
       // 구름 가운데 내려와 그 앞을 지나가신다
@@ -1587,7 +1587,7 @@ export const MOSES = {
     cast: {
       joshua: ['joshua', -0.1, 0.15, 0.4],
       eleazar: ['eleazar', -0.4, 0.05, 0.4],
-      m1: ['hebrew', 0.45, 0.2, -0.8, { speed: 0.4 }],
+      m1: ['hebrew', 0.38, 0.14, -0.8, { speed: 0.4 }],
       m2: ['hebrew2', 0.72, 0.4, -0.9, { speed: 0.4 }],
       m3: ['man', 0.35, 0.45, -0.7, { speed: 0.4 }],
     },
@@ -1602,7 +1602,7 @@ export const MOSES = {
         ['m1', 'idle', { show: 0, delay: 5500 }], ['m2', 'idle', { show: 0, delay: 5500 }], ['m3', 'idle', { show: 0, delay: 5500 }]],
       'p1.4': [['joshua', 'idle', { look: -0.6 }], ['eleazar', 'bow']],
       // 두루마리를 들고 돌아온다
-      'p2.1': [['m1', 'idle', { show: 1, x: 0.45, z: 0.2, item: 'scroll' }], ['m2', 'idle', { show: 1, x: 0.65, z: 0.35, item: 'scroll' }], ['m3', 'idle', { show: 1, x: 0.35, z: 0.45 }], ['eleazar', 'idle'], ['joshua', 'kneel', { look: -2.6, delay: 3500 }]],
+      'p2.1': [['m1', 'idle', { show: 1, x: 0.38, z: 0.14, item: 'scroll' }], ['m2', 'idle', { show: 1, x: 0.72, z: 0.4, item: 'scroll' }], ['m3', 'idle', { show: 1, x: 0.35, z: 0.45 }], ['eleazar', 'idle'], ['joshua', 'kneel', { look: -2.6, delay: 3500 }]],
       'p2.3': [['joshua', 'raise', { look: 0.6 }], ['m1', 'raise'], ['m2', 'raise']],
       w0: [['joshua', 'speak', { to: 'm1' }]],
       w1: [['joshua', 'speak', { to: 'm2' }]],
@@ -1621,7 +1621,7 @@ export const MOSES = {
       oak: ['olive', 0.75, -0.45, { scale: 1.3 }],
       stone: ['standing', 0.55, -0.25],
       light: ['beam', 0.0, 0.0, { r: 0.45, h: 2.5, peak: 0.45 }],
-      folk: ['crowd', 0, 0.5, { spots: [[-0.94, 0.08], [-1.12, -0.08], [-0.76, -0.03], [-1.15, 0.16], [-0.92, -0.18], [-0.69, 0.18], [-1.32, 0.01], [-0.71, -0.24], [0.87, 0.04], [0.97, -0.15], [1.09, 0.09], [0.66, 0.01], [1.19, -0.12], [0.92, 0.26], [0.75, -0.19], [1.31, 0.06]], face: Math.PI }],
+      folk: ['crowd', 0, 0.5, { spots: [[-0.94, 0.08], [-1.12, -0.08], [-0.76, -0.03], [-1.15, 0.16], [-0.92, -0.18], [-0.69, 0.18], [-1.32, 0.01], [-0.71, -0.24], [0.86, 0.06], [0.98, -0.11], [1.09, 0.09], [0.66, 0.02], [1.19, -0.12], [0.92, 0.27], [0.82, -0.25], [1.31, 0.06]], face: Math.PI }],
     },
     cast: {
       joshua: ['joshua', 0.0, 0.0, 0],
