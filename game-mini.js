@@ -652,12 +652,12 @@ function drawCard12(g, c, S) {
     g.strokeStyle = c.done ? '#d9a84a' : 'rgba(90,70,40,.5)'; g.lineWidth = c.done ? 2.5 : 1; g.stroke();
     g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = '#2a1f14';
     if (c.name) { // 이름 카드 (icons: 축복 카드와 같은 그림 글자를 위에)
-      const words = d[0].split(' '), two = d[0].length > 6 && words.length > 1, oy = S.icons ? 9 : 0;
-      if (S.icons) { g.font = '17px "Apple Color Emoji","Noto Color Emoji",sans-serif'; g.fillText(d[1], 0, -14); }
-      g.font = `800 ${d[0].length > 9 ? 13 : 15}px "Noto Sans KR",sans-serif`;
+      const words = d[0].split(' '), two = d[0].length > 6 && words.length > 1, oy = S.icons ? 18 : 0;
+      if (S.icons) { g.font = '28px "Apple Color Emoji","Noto Color Emoji",sans-serif'; g.fillText(d[1], 0, -9); } // 크게 — 작으면 짝을 그림으로 찾기 어려웠다(사용자 2026-11)
+      g.font = `800 ${S.icons ? 13 : d[0].length > 9 ? 13 : 15}px "Noto Sans KR",sans-serif`;
       if (two) { const h = Math.ceil(words.length / 2); g.fillText(words.slice(0, h).join(' '), 0, -9 + oy); g.fillText(words.slice(h).join(' '), 0, 10 + oy); } else g.fillText(d[0], 0, oy);
     } else { // 이야기 카드: 그림 글자 + 한 줄
-      g.font = '24px "Apple Color Emoji","Noto Color Emoji",sans-serif'; g.fillText(d[1], 0, -12);
+      g.font = `${S.icons ? 28 : 24}px "Apple Color Emoji","Noto Color Emoji",sans-serif`; g.fillText(d[1], 0, S.icons ? -9 : -12);
       let fs = 11; g.font = `600 ${fs}px "Noto Sans KR",sans-serif`; while (g.measureText(d[2]).width > CW - 8 && fs > 8) g.font = `600 ${--fs}px "Noto Sans KR",sans-serif`; // 카드 폭에 맞게
       g.fillStyle = '#5a4022'; g.fillText(d[2], 0, 19);
     }
