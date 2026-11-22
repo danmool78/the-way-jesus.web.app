@@ -595,7 +595,6 @@
  "헤엄 못 치는 이들에게 널빤지를 던져 주렴 — 한 사람도 잃지 않게!": "Throw planks to those who can't swim — don't lose a single one!",
  "너희 중 아무도 생명에는 아무런 손상이 없겠고 오직 배뿐이리라": "Not one of you will lose your life — only the ship will be lost",
  "행 27:22": "Acts 27:22",
- "물에 빠진 사람을 누르면 널빤지를 던져 줘요(둘까지, 다시 모여요). 널빤지를 붙들면 빨리 뭍으로 와요.<br>고리는 남은 힘 — 빨개진 사람부터! 한 사람이라도 가라앉으면 실패.": "Tap someone in the water to throw them a plank (up to two; they come back). With a plank they reach shore fast.<br>The ring is their strength left — help the red ones first! If even one sinks, you fail.",
  "뭍에 올랐어요 {0} / {1}": "Safe on shore {0} / {1}",
  "널빤지를 모으는 중…": "Gathering planks…",
  "한 사람이 물에 잠겼어요": "Someone went under",
@@ -1065,5 +1064,6 @@
  "이 모든 백성도 자기 곳으로": "and all these people will go home",
  "평안히 가리라": "in peace",
  "출 18:23": "Ex 18:23",
- "은": "Silver"
+ "은": "Silver",
+ "물에 빠진 사람을 누르면 널빤지를 던져 줘요(둘까지, 다시 모여요). 널빤지를 붙들면 빨리 뭍으로 와요.<br>고리는 남은 힘 — 빨개진 사람부터! <b>헤엄치는 사람은 스스로 와요.</b> 한 사람이라도 가라앉으면 실패.": "Tap someone in the water to throw them a plank (up to two; they come back). With a plank they reach shore fast.<br>The ring is their strength left — help the red ones first! <b>Swimmers make it on their own.</b> If even one sinks, you fail."
 }
