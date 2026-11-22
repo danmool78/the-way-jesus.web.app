@@ -1043,7 +1043,8 @@ const rock = {
   update(dt, S) {
     for (const p of S.sparks) { p.y += p.vy * dt; p.life -= dt; } S.sparks = S.sparks.filter(p => p.life > 0);
     if (S.msg) S.msg.at -= dt;
-    if (S.clearing) { S.clearing.t -= dt; if (S.clearing.t <= 0) { for (const r of S.clearing.rows) { S.grid.splice(r, 1); S.grid.unshift(Array(COLS).fill(-1)); } S.clearing = null; spawn(S); } return; }
+    if (S.clearing) { S.clearing.t -= dt; if (S.clearing.t <= 0) { for (const r of S.clearing.rows) { S.grid.splice(r, 1); S.grid.unshift(Array(COLS).fill(-1)); } S.clearing = null; if (S.rows < GOALROWS) spawn(S); else S.cur = null; } return; }
+    if (S.rows >= GOALROWS) { S.cur = null; return; } // 성공 뒤(끝 연출 중에도 update가 돈다) 돌이 계속 내려오던 것(사용자 2026-11)
     if (S.dead || !S.cur) return;
     const speed = 0.62 * Math.pow(0.86, S.rows);
     S.fallT += dt; if (S.fallT >= speed) { S.fallT = 0; if (!step(S, 0, 1)) land(S); }
