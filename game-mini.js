@@ -3666,8 +3666,14 @@ export function playMini(game, host, fx, done) {
   host._mini = () => S; // 확인용(캡처 스크립트)
   (game.art || []).forEach(art); // 그림 조각을 소개 화면 동안 미리 받는다
   const cv = host.querySelector('canvas'), g = cv.getContext('2d'), stage = host.querySelector('.mstage'), bar = host.querySelector('.mtime i'), sec = host.querySelector('.mtime em');
-  // 다른 언어는 글이 길어 캔버스 밖으로 넘칠 수 있어, 너비를 주지 않은 글은 화면 폭 안으로 눌러 담는다
-  if (LANG !== 'ko') for (const f of ['fillText', 'strokeText']) { const o = g[f].bind(g); g[f] = (s, x, y, mw) => o(s, x, y, mw ?? W - 16); }
+  // 글이 화면 밖으로 넘치지 않게(사용자 2026-11: 긴 끝 말씀이 잘렸다): 너비를 주지 않은 글이 화면 폭보다 길면 글씨를 줄여 한 줄에 맞춘다.
+  // 가운데 맞춤은 화면 폭, 왼쪽·오른쪽 맞춤은 그 자리에서 화면 끝까지. 그래도 넘치면 마지막으로 좌우를 눌러 담는다
+  for (const f of ['fillText', 'strokeText']) { const o = g[f].bind(g);
+    g[f] = (s, x, y, mw) => { if (mw != null) return o(s, x, y, mw); s = String(s);
+      const room = g.textAlign === 'center' ? W - 16 : g.textAlign === 'right' || g.textAlign === 'end' ? x - 8 : W - 8 - x, w = g.measureText(s).width;
+      if (w <= room || room <= 0) return o(s, x, y);
+      const font = g.font, m = font.match(/(\d+(?:\.\d+)?)px/); if (!m) return o(s, x, y, room);
+      g.font = font.replace(m[0], `${(+m[1] * room / w).toFixed(1)}px`); o(s, x, y, room); g.font = font; }; }
   const fit = () => { const r = stage.getBoundingClientRect(), d = Math.min(3, devicePixelRatio || 1); cv.width = Math.round(r.width * d); cv.height = Math.round(r.width * H / W * d); g.setTransform(cv.width / W, 0, 0, cv.height / H, 0, 0); };
   fit(); addEventListener('resize', fit);
   const pt = ev => { const r = cv.getBoundingClientRect(); return [(ev.clientX - r.left) / r.width * W, (ev.clientY - r.top) / r.height * H]; };
