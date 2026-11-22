@@ -906,5 +906,128 @@
    ],
    "p": "Jethro, Moses' father-in-law, a wise old Midianite priest with a long grey beard, colourful striped robe and staff, standing and pointing with one hand as if giving advice, side view facing right. Same character as the second reference image. Only the person."
   }
+ },
+ "m33": {
+  "bg": {
+   "bg": true,
+   "p": "Straight-on night view of the massive ancient mudbrick-and-stone city wall of Jericho filling the image: large weathered blocks, a crenellated top edge near the top fifth with a deep starry night sky and a thin crescent moon above, dark palm shrubs and ground at the very bottom. Plain wall face without any windows or doors."
+  },
+  "spies": {
+   "h": 300,
+   "p": "Two young Israelite spies in dark brown hooded cloaks clinging one above the other to a single thick rope, climbing down, side view, the rope continuing up out of the frame."
+  },
+  "guard": {
+   "h": 420,
+   "p": "A Canaanite city watchman of Jericho walking to the right, full body side view, holding a burning torch forward in his left hand and a spear in his right, bronze helmet, short tunic and cloak."
+  }
+ },
+ "d08": {
+  "bg": {
+   "bg": true,
+   "p": "Straight-on night view of the tall plain outer stone wall of a house in the hill town of Gibeah filling the image: rough cut stones and timber beams, a flat parapet top near the top fifth with a deep starry night sky and a thin crescent moon above, dark olive shrubs and ground at the very bottom. Plain wall face without any windows or doors."
+  },
+  "david": {
+   "h": 300,
+   "ref": [
+    "_src/cards/david.png"
+   ],
+   "p": "The young man David from the second reference image, in a dark cloak, gripping a single thick rope with both hands and sliding down it, side view, the rope continuing up out of the frame."
+  },
+  "guard": {
+   "h": 420,
+   "p": "One of King Saul's Israelite soldiers keeping watch at night, walking to the right, full body side view, holding a burning torch forward in his left hand and a spear in his right, leather cap, simple tunic and cloak."
+  }
+ },
+ "d18": {
+  "bg": {
+   "bg": true,
+   "p": "Side view at night, King Saul's camp in the wilderness of Ziph: the left third falls into deep darkness of a rocky hillside, the right side is lit by the dim orange glow of a dying campfire, a starry sky above, a flat dusty ground across the bottom fifth of the image. Empty scene: absolutely no people, no animals."
+  },
+  "saul-a": {
+   "h": 420,
+   "ratio": "16:9",
+   "ref": [
+    "_src/cards/saul.png"
+   ],
+   "p": "Wide side view, exactly two people and nothing else: at the far left a long spear stuck upright in the ground with a round clay water jug at its foot; right next to it King Saul (same character as the second reference image) lying asleep on his back on a mat, head toward the left near the spear; at the far right the commander Abner, a bearded soldier in armor, sitting on the ground dozing with his chin sunk on his chest. Night colors."
+  },
+  "saul-b": {
+   "h": 420,
+   "ratio": "16:9",
+   "ref": [
+    "_src/mini-art/d18/saul-a.png"
+   ],
+   "p": "Redraw the second reference image exactly the same — same people, poses, spear, jug, mat, framing and colors — with one change only: the soldier Abner at the right now has his head raised and turned to the left, eyes open, peering suspiciously into the dark. Keep the background perfectly flat pure green (#00FF00) like the reference, with no dark shading."
+  }
+ },
+ "a32": {
+  "bg": {
+   "bg": true,
+   "p": "Side view at night, a narrow street corner in ancient Jerusalem: the left third falls into the deep shadow of an archway, the right side is lit by the warm glow of an oil lamp in an open doorway, stone house walls, a flat paved street across the bottom fifth of the image. Empty scene: absolutely no people, no animals."
+  },
+  "plot-a": {
+   "h": 420,
+   "ratio": "16:9",
+   "p": "Wide side view: a group of four Jewish men in robes and head coverings huddled together whispering a secret plot by lamplight, all facing right toward each other, seen from the side. Night colors."
+  },
+  "plot-b": {
+   "h": 420,
+   "ratio": "16:9",
+   "ref": [
+    "_src/mini-art/a32/plot-a.png"
+   ],
+   "p": "Redraw the second reference image exactly the same — same four men, poses, clothes, lamp, framing and colors — with one change only: the leftmost man has turned his head to look suspiciously to the left over his shoulder."
+  },
+  "boy": {
+   "h": 420,
+   "p": "A Jewish boy of about twelve seen from the side, facing right, creeping forward in a low crouch on tiptoe, one hand cupped behind his ear listening, simple tunic."
+  }
+ },
+ "k38": {
+  "bg": {
+   "bg": true,
+   "p": "Top-down view of a dim storeroom floor inside Solomon's temple under repair: large cut limestone flagstones, scattered building timbers and stone blocks along the edges, a few broken clay jars, cedar planks stacked at the top left, mason tools at the bottom right. Leave plenty of open floor. No people."
+  },
+  "scroll": {
+   "h": 160,
+   "p": "A single old rolled parchment scroll tied with a cord, seen from directly above (top-down view), lying on the ground, slightly dusty."
+  }
+ },
+ "k29": {
+  "bg": {
+   "bg": true,
+   "p": "Side view panorama at night inside the long colonnaded corridor of the royal palace of Jerusalem: dark blue shadows, tall cedar-paneled walls with a few faint lamp glows high up in the upper half, a polished stone floor running horizontally across the lower third. No people, no pillars in the foreground."
+  },
+  "family": {
+   "h": 420,
+   "ratio": "16:9",
+   "p": "Princess Jehosheba, a young Judean woman in a dark hooded cloak, walking quickly to the right clutching a swaddled baby to her chest, followed by an older nurse carrying a rolled bed mat, full side view, night colors."
+  },
+  "pillar": {
+   "h": 420,
+   "ratio": "3:4",
+   "p": "A single thick carved cedar-and-stone palace pillar with a heavy hanging curtain draped beside it, side view, night colors with soft lamplight."
+  },
+  "jars": {
+   "h": 300,
+   "ratio": "16:9",
+   "p": "A cluster of three large clay storage jars and a wooden chest, side view, night colors with soft lamplight, wide enough to hide behind."
+  },
+  "guard": {
+   "h": 420,
+   "p": "One of Queen Athaliah's palace guards walking to the right, full body side view, holding a burning torch forward in his left hand and a spear in his right, bronze helmet and red cloak."
+  }
+ },
+ "m06": {
+  "bg": {
+   "bg": true,
+   "p": "Wide view of the Nile river in ancient Egypt under a dark ominous sky: the river water red, a stepped stone palace terrace with tall columns of Pharaoh's court on the right, palm trees and reed banks, swarms of locusts as dark specks in the sky. No people in the foreground."
+  }
+ },
+ "a39": {
+  "bg": {
+   "bg": true,
+   "p": "Interior of a modest rented room in ancient Rome: a wooden writing table with papyrus sheets, ink pot and reed pens, an oil lamp, scrolls stacked on a shelf, a small window with Roman rooftops, a chain lying on the floor beside a stool. No people."
+  }
  }
 }
