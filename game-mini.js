@@ -2000,6 +2000,7 @@ function altarStone(g, x, yb, w, name, glow, wet, burnt) { // yb = 돌 아랫면
 // 화면 왼쪽을 누르면 아론이 왼팔을, 오른쪽을 누르면 훌이 오른팔을 받쳐 올린다. 팔은 점점 무거워져 처진다(때로 한쪽이 덜컥).
 // 이미 높이 든 팔을 또 밀면 흔들려 내려간다 — 때를 맞춰야 한다. 두 팔이 다 올라가 있으면 이스라엘이, 하나라도 처지면 아말렉이 밀고 온다.
 // 반쯤 이기면 돌을 가져다 모세를 앉힌다(17:12 — 덜 처진다). 싸움 막대가 끝까지 차면 이긴다
+// 처지는 빠르기는 마우스에 맞췄다 — 커서 하나로 좌우를 오가니 터치보다 0.3초쯤 늦다(사용자 2026-11)
 const ARM_UP = 0.55, ARM_LOW = 0.38;
 const hands = {
   title: tr('들어 올린 두 손'), task: tr('모세의 두 팔을 해 지기까지'),
@@ -2014,13 +2015,13 @@ const hands = {
     const tired = (1 + S.t * 0.045) * (S.seat ? 0.8 : 1);
     if ((S.nextSlip -= dt) <= 0) { const k = Math.random() < 0.5 ? 0 : 1; S.arms[k].warn = 0.6; S.nextSlip = rnd(2.4, 4.2) / (1 + S.t * 0.02); } // 한쪽 팔이 덜컥 — 0.6초 전에 떨림
     for (const A of S.arms) {
-      if (A.warn > 0) { A.warn -= dt; if (A.warn <= 0) { A.v -= 0.75; S.fx.play('creak'); } }
-      A.v -= 0.40 * tired * dt; A.v *= Math.pow(0.12, dt); A.a = clamp(A.a + A.v * dt, 0, 1); if (A.a <= 0 || A.a >= 1) A.v = 0;
+      if (A.warn > 0) { A.warn -= dt; if (A.warn <= 0) { A.v -= 0.5; S.fx.play('creak'); } }
+      A.v -= 0.25 * tired * dt; A.v *= Math.pow(0.12, dt); A.a = clamp(A.a + A.v * dt, 0, 1); if (A.a <= 0 || A.a >= 1) A.v = 0;
       A.wob = Math.max(0, A.wob - dt * 2);
     }
     for (let i = 0; i < 2; i++) S.push[i] = Math.max(0, S.push[i] - dt * 3);
     const up = S.arms.every(A => A.a >= ARM_UP), down = S.arms.some(A => A.a < ARM_LOW);
-    S.war = clamp(S.war + (up ? 0.03 : down ? -0.07 : 0) * dt, 0, 1);
+    S.war = clamp(S.war + (up ? 0.035 : down ? -0.07 : 0) * dt, 0, 1);
     if (S.war > 0.55 && !S.seat) { S.seat = 1; S.msg = { t: tr('돌을 가져다 앉혔어요'), c: '#e8f0d0', at: 1.6, x: W / 2, y: 120 }; S.fx.play('thud'); }
     if (Math.random() < dt * 8) S.dust.push({ x: 120 + S.war * 160 + rnd(-30, 30), y: 430 + rnd(-10, 10), r: rnd(3, 8), life: 1 });
     for (const d of S.dust) { d.life -= dt * 0.8; d.y -= dt * 8; d.r += dt * 6; } S.dust = S.dust.filter(d => d.life > 0);
