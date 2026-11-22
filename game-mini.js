@@ -2301,7 +2301,7 @@ const redSea = {
     floatMsg(g, S.msg);
   },
   end(g, k, S) { // 물이 다시 흘러 병거를 덮고(14:28), 백성은 건너편에
-    S.cars.forEach(c => { if (c.st === 'run') c.st = 'stop'; }); this.update(0.016, S);
+    S.next = 99; S.cars.forEach(c => { if (c.st === 'run') c.st = 'stop'; }); this.update(0.016, S); // 성공 뒤엔 새 병거가 오지 않게
     const close = clamp((k - 0.15) * 2.2, 0, 1); this.sea(g, S, close, 1);
     for (const c of S.cars) chariot(g, c.x, LANES[c.L], 1, S.t);
     this.sea(g, S, close, 2); // 물이 병거 위를 덮는다(14:28)
@@ -2628,7 +2628,7 @@ const cave = {
     g.save(); g.filter = `brightness(${0.45 + lit * 0.55})`; spr(g, this.sneaker, S.x, 448 - bob, 128, { flip: S.phase === 'back' }); g.restore(); // 어둠 속에서는 어둡게
     if (S.phase === 'cut') { g.strokeStyle = `rgba(255,226,150,${0.6 + 0.4 * Math.sin(S.t * 10)})`; g.lineWidth = 2.5; g.beginPath(); g.arc((this.stopX ?? ROBE_X) + 8, 440, 18, 0, 7); g.stroke(); }
   },
-  end(g, k, S) { S.st = 'calm'; S.look = 0; S.hold = false; this.update(0.016, S); this.draw(g, S);
+  end(g, k, S) { S.st = 'calm'; S.stT = 99; S.look = 0; S.hold = false; this.update(0.016, S); this.draw(g, S); // stT: 성공 뒤에도 '음…' 소리가 되풀이됐다
     if (k > 0.3) { g.save(); g.globalAlpha = clamp((k - 0.3) * 2, 0, 1); g.fillStyle = 'rgba(20,12,8,.82)'; g.fillRect(0, 140, W, 84);
       g.font = '700 16px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#fff0d6'; const [l1, l2, rf] = this.endLines; g.fillText(l1, W / 2, 170); g.fillText(l2, W / 2, 194);
       g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#e6cfa6'; g.fillText(rf, W / 2, 213); g.restore(); }
