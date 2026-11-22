@@ -134,11 +134,18 @@ a{color:inherit}
 .game-points li{display:flex;gap:10px;align-items:baseline}.game-points li i{font-style:normal;width:22px;text-align:center}
 .game .btn.main{font-size:17px;padding:15px 30px;box-shadow:0 0 0 0 rgba(226,189,114,.6);animation:playPulse 2.4s infinite}
 @keyframes playPulse{0%{box-shadow:0 0 0 0 rgba(226,189,114,.55)}70%{box-shadow:0 0 0 16px rgba(226,189,114,0)}100%{box-shadow:0 0 0 0 rgba(226,189,114,0)}}
+.game-minis{grid-column:1/-1;margin:6px -48px -44px;padding:18px 0 22px;border-top:1px solid rgba(226,189,114,.18);background:rgba(0,0,0,.22);overflow:hidden}
+.game-minis h3{margin:0 48px 12px;font:800 15px var(--sans);color:#f1cf7f}.game-minis h3 small{margin-left:8px;color:var(--muted);font-weight:600;font-size:12.5px}
+.mreel{display:flex;gap:12px;width:max-content;animation:mreel 60s linear infinite}
+.mreel img{width:112px;aspect-ratio:4/5;object-fit:cover;border-radius:12px;border:2px solid rgba(226,189,114,.35);box-shadow:0 8px 18px rgba(0,0,0,.5)}
+@keyframes mreel{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.mreel{animation:none}}
 @media (prefers-reduced-motion:reduce){.game .btn.main{animation:none}.phone .scr img{transition:opacity .3s}}
 @media (max-width:900px){
   .game{grid-template-columns:1fr;margin:56px 22px 0;padding:30px 20px 30px;gap:14px}
   .game-show{height:420px}.phone{width:186px}.game-show .cardbk{width:118px}
   .game h2{font-size:26px}.game-stats b{font-size:22px}
+  .game-minis{margin:10px -20px -30px}.game-minis h3{margin:0 20px 10px}.mreel img{width:92px}
 }
 }
 
@@ -224,6 +231,7 @@ button,a,img,svg,nav,header,.btn{-webkit-touch-callout:none;-webkit-user-select:
       <ul class="game-points"><li><i>🧭</i><span data-i="landGame1">단서와 발자국만 보고 길 찾기</span></li><li><i>🎮</i><span data-i="landGame2">장면마다 미니게임 — 퍼즐·박자·피하기</span></li><li><i>🃏</i><span data-i="landGame3">금·은·동 말씀 카드와 숨겨진 보물</span></li></ul>
       <a class="btn main" href="/game.html" data-i="landGameGo">▶ 지금 플레이</a>
     </div>
+    <div class="game-minis" aria-hidden="true"><h3><span data-i="landGameMini">장면마다 새 놀이가 이어져요</span><small data-i="landGameMiniS">퍼즐 · 박자 · 피하기 · 기억 · 겨누기 · 숨기 …</small></h3><div class="mreel" id="gameMinis"></div></div>
   </section>
   <section class="mv">
     <div class="ghead"><h2 data-i="mvGo">주제가 「그 길」 뮤직비디오</h2><p data-i="mvLead"></p></div>
@@ -289,6 +297,8 @@ function gameShow(lang) {
   document.getElementById('gameBk1').src = cardUrl('d05'); document.getElementById('gameBk2').src = cardUrl('m10');
   const caps = [1, 2, 3, 4].map(n => t('landGameC' + n));
   scr.innerHTML = [1, 2, 3, 4].map(n => `<img src="assets/land/game/${L}-${n}.webp?v=1" alt="" loading="lazy">`).join(''); dots.innerHTML = '<i></i>'.repeat(4);
+  const M = ['e11', 'd05', 'm35', 'e23', 'a35', 'k15', 'e42', 'm02', 'd03', 'e17', 'k26', 'm12', 'a37', 'e46', 'm09', 'd16', 'k30', 'e04', 'a04']; // 장면 놀이 화면(assets/land/minis — gameshots.mjs minis)
+  document.getElementById('gameMinis').innerHTML = [...M, ...M].map(id => `<img src="assets/land/minis/${id}.webp?v=1" alt="" loading="lazy">`).join('');
   let k = 0; const show = () => { scr.querySelectorAll('img').forEach((im, i) => im.classList.toggle('on', i === k)); dots.querySelectorAll('i').forEach((d, i) => d.classList.toggle('on', i === k)); cap.textContent = caps[k]; };
   show(); clearInterval(gameShow.t); if (!matchMedia('(prefers-reduced-motion: reduce)').matches) gameShow.t = setInterval(() => { k = (k + 1) % 4; show(); }, 3000);
 }

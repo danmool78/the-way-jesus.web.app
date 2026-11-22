@@ -350,5 +350,7 @@
  "landGameC1": "手がかりをたよりに地図を歩く",
  "landGameC2": "その方に出会い、話を聞く",
  "landGameC3": "場面ごとにミニゲーム",
- "landGameC4": "みことばカードを集める"
+ "landGameC4": "みことばカードを集める",
+ "landGameMini": "場面ごとに新しいゲームが続く",
+ "landGameMiniS": "パズル・リズム・よける・記憶・ねらう・しのび足 …"
 }

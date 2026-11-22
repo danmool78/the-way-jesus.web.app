@@ -350,5 +350,7 @@
  "landGameC1": "Camina el mapa siguiendo pistas",
  "landGameC2": "Encuéntralo y escucha la historia",
  "landGameC3": "Un minijuego en cada escena",
- "landGameC4": "Colecciona cartas de la Palabra"
+ "landGameC4": "Colecciona cartas de la Palabra",
+ "landGameMini": "Un juego nuevo en cada escena",
+ "landGameMiniS": "puzle · ritmo · esquivar · memoria · puntería · sigilo …"
 }
