@@ -22,7 +22,6 @@
  "베드로": "Pedro",
  "어부 — 갈릴리 바다에서 배를 빨리 저어요 (요 21:7, 바다로 뛰어든 사람)": "Pescador — rema rápido no mar da Galileia (Jo 21:7, quem se jogou no mar)",
  "안드레": "André",
- "형제를 데려온 사람 — 길 묻기 점수가 반만 깎여요": "Trouxe o irmão — pedir o caminho custa só metade dos pontos",
  "요한": "João",
  "먼저 무덤에 닿은 제자 (요 20:4)": "O discípulo que chegou primeiro ao túmulo (Jo 20:4)",
  "도마": "Tomé",
@@ -949,8 +948,6 @@
  "여정 마치기": "Terminar a jornada",
  "이 자리의 다음 일 ({0}/{1}) →": "O que acontece a seguir aqui ({0}/{1}) →",
  "다음 장면으로 →": "Próxima cena →",
- "{0:으로/로} 가세요<small>지도에서 이름을 찾아보세요 · 이 장면 카드 점수가 {1}점 줄어요</small>": "Vá para {0}<small>Procure o nome no mapa · esta carta perde {1} pontos</small>",
- "이쪽으로 가세요<small>이 장면 카드 점수가 {0}점 줄어요</small>": "Vá por aqui<small>Esta carta perde {0} pontos</small>",
  "잠깐 쉬어 갈까요?": "Vamos descansar um pouco?",
  "{0}번째 장면을 찾아가는 중이에요. 나가도 지금까지 만난 장면과 카드는 그대로 남고, 다음에 이어 걸을 수 있어요.": "Você está indo para a {0}ª cena. Se sair, as cenas e cartas que já encontrou continuam guardadas, e você pode continuar depois.",
  "말씀 카드": "Cartas da Palavra",
@@ -1065,5 +1062,11 @@
  "이름을 넣어 주세요": "Digite seu nome",
  "물에 빠진 사람을 누르면 널빤지를 던져 줘요(둘까지, 다시 모여요). 널빤지를 붙들면 빨리 뭍으로 와요.<br>고리는 남은 힘 — 빨개진 사람부터! <b>헤엄치는 사람은 스스로 와요.</b> 한 사람이라도 가라앉으면 실패.": "Toque em quem está na água para jogar uma tábua (até duas; elas voltam a se juntar). Com a tábua, a pessoa chega rápido à praia.<br>O anel é a força que resta — primeiro os que estão no vermelho! <b>Quem sabe nadar chega sozinho.</b> Se alguém afundar, você perde.",
  "가끔 물속에서 거품이 올라와요 — 물살에 밀려 실제 자리보다 오른쪽에서 터지니, <b>거품보다 조금 왼쪽</b>을 눌러요.<br>누르면 그 자리에 나뭇가지를 던져요(넷). 도끼가 떠오르면 떠내려가기 전에 눌러 건져요.": "De vez em quando sobem bolhas — a correnteza as empurra e elas estouram à direita do lugar real: <b>toque um pouco à esquerda das bolhas</b>.<br>Onde você tocar, um galho é lançado (quatro). Quando o machado boiar, toque nele antes que a água o leve.",
- "처음 3초 동안 카드를 모두 보여 줘요 — 잘 봐 두세요.<br>두 장씩 뒤집어 <b>같은 그림</b>의 지파 이름과 그 축복을 짝지어요. 틀리면 다시 덮여요.": "Nos primeiros 3 segundos todas as cartas aparecem — observe bem.<br>Vire duas de cada vez e combine a tribo com a sua bênção — <b>procure o mesmo desenho</b>. Se errar, elas se fecham de novo."
+ "처음 3초 동안 카드를 모두 보여 줘요 — 잘 봐 두세요.<br>두 장씩 뒤집어 <b>같은 그림</b>의 지파 이름과 그 축복을 짝지어요. 틀리면 다시 덮여요.": "Nos primeiros 3 segundos todas as cartas aparecem — observe bem.<br>Vire duas de cada vez e combine a tribo com a sua bênção — <b>procure o mesmo desenho</b>. Se errar, elas se fecham de novo.",
+ "형제를 데려온 사람 — 길 묻기 화살표에 기름이 들지 않아요": "Aquele que trouxe o irmão — perguntar a seta não gasta azeite",
+ "등불 기름이 다 떨어졌어요<small>말씀 카드를 얻으면 다시 채워져요</small>": "O azeite da lâmpada acabou<small>Ganhe uma carta para encher de novo</small>",
+ "{0:으로/로} 가세요<small>지도에서 이름을 찾아보세요 · 등불 기름 한 방울을 썼어요</small>": "Vá para {0}<small>Procure o nome no mapa · usou uma gota de azeite</small>",
+ "이쪽으로 가세요<small>안드레는 기름 없이 길을 물어요</small>": "Por aqui<small>André pergunta o caminho sem azeite</small>",
+ "이쪽으로 가세요<small>등불 기름 한 방울을 썼어요</small>": "Por aqui<small>Usou uma gota de azeite</small>",
+ " · 등불 기름 +{0}": " · Azeite +{0}"
 }

@@ -14,7 +14,7 @@ export const CHARS = [
   { id: 'pilgrim-man', name: tr('순례자 형제'), sp: tr('고르게 걷는 사람 — 옷 색을 고를 수 있어요'), free: true },
   { id: 'pilgrim-woman', name: tr('순례자 자매'), sp: tr('고르게 걷는 사람 — 옷 색을 고를 수 있어요'), free: true },
   { id: 'peter', name: tr('베드로'), st: 'speed', sp: tr('어부 — 갈릴리 바다에서 배를 빨리 저어요 (요 21:7, 바다로 뛰어든 사람)'), fx: 'boat' },
-  { id: 'andrew', name: tr('안드레'), st: 'way', sp: tr('형제를 데려온 사람 — 길 묻기 점수가 반만 깎여요'), fx: 'ask' },
+  { id: 'andrew', name: tr('안드레'), st: 'way', sp: tr('형제를 데려온 사람 — 길 묻기 화살표에 기름이 들지 않아요'), fx: 'ask' },
   { id: 'john', name: tr('요한'), st: 'way', sp: tr('먼저 무덤에 닿은 제자 (요 20:4)') },
   { id: 'thomas', name: tr('도마'), st: 'wis', sp: tr('보고 만져 보고야 믿은 사람 (요 20:28)') },
   { id: 'magdalene', name: tr('막달라 마리아'), st: 'speed', sp: tr('무덤으로 달려간 아침 (요 20:2)') },

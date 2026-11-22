@@ -22,7 +22,6 @@
  "베드로": "Peter",
  "어부 — 갈릴리 바다에서 배를 빨리 저어요 (요 21:7, 바다로 뛰어든 사람)": "Fisherman — rows a boat fast on the Sea of Galilee (Jn 21:7, the one who jumped into the sea)",
  "안드레": "Andrew",
- "형제를 데려온 사람 — 길 묻기 점수가 반만 깎여요": "The one who brought his brother — asking the way costs only half the points",
  "요한": "John",
  "먼저 무덤에 닿은 제자 (요 20:4)": "The disciple who reached the tomb first (Jn 20:4)",
  "도마": "Thomas",
@@ -905,8 +904,6 @@
  "여정 마치기": "Finish the journey",
  "이 자리의 다음 일 ({0}/{1}) →": "What happened next here ({0}/{1}) →",
  "다음 장면으로 →": "To the next scene →",
- "{0:으로/로} 가세요<small>지도에서 이름을 찾아보세요 · 이 장면 카드 점수가 {1}점 줄어요</small>": "Head for {0}<small>Find the name on the map · This scene's card loses {1} pts</small>",
- "이쪽으로 가세요<small>이 장면 카드 점수가 {0}점 줄어요</small>": "Go this way<small>This scene's card loses {0} pts</small>",
  "잠깐 쉬어 갈까요?": "Take a break?",
  "{0}번째 장면을 찾아가는 중이에요. 나가도 지금까지 만난 장면과 카드는 그대로 남고, 다음에 이어 걸을 수 있어요.": "You're on your way to scene {0}. If you leave, the scenes and cards you have so far will stay, and you can continue next time.",
  "말씀 카드": "Word cards",
@@ -1065,5 +1062,11 @@
  "은": "Silver",
  "물에 빠진 사람을 누르면 널빤지를 던져 줘요(둘까지, 다시 모여요). 널빤지를 붙들면 빨리 뭍으로 와요.<br>고리는 남은 힘 — 빨개진 사람부터! <b>헤엄치는 사람은 스스로 와요.</b> 한 사람이라도 가라앉으면 실패.": "Tap someone in the water to throw them a plank (up to two; they come back). With a plank they reach shore fast.<br>The ring is their strength left — help the red ones first! <b>Swimmers make it on their own.</b> If even one sinks, you fail.",
  "가끔 물속에서 거품이 올라와요 — 물살에 밀려 실제 자리보다 오른쪽에서 터지니, <b>거품보다 조금 왼쪽</b>을 눌러요.<br>누르면 그 자리에 나뭇가지를 던져요(넷). 도끼가 떠오르면 떠내려가기 전에 눌러 건져요.": "Bubbles rise from the water now and then — the current pushes them, so they pop to the right of the real spot: <b>tap a little left of the bubbles</b>.<br>Where you tap, a stick is thrown (four). When the axe head floats up, tap it before it drifts away.",
- "처음 3초 동안 카드를 모두 보여 줘요 — 잘 봐 두세요.<br>두 장씩 뒤집어 <b>같은 그림</b>의 지파 이름과 그 축복을 짝지어요. 틀리면 다시 덮여요.": "For the first 3 seconds all the cards are shown — look carefully.<br>Turn over two at a time to match a tribe with its blessing — <b>look for the same picture</b>. Wrong pairs flip back."
+ "처음 3초 동안 카드를 모두 보여 줘요 — 잘 봐 두세요.<br>두 장씩 뒤집어 <b>같은 그림</b>의 지파 이름과 그 축복을 짝지어요. 틀리면 다시 덮여요.": "For the first 3 seconds all the cards are shown — look carefully.<br>Turn over two at a time to match a tribe with its blessing — <b>look for the same picture</b>. Wrong pairs flip back.",
+ "형제를 데려온 사람 — 길 묻기 화살표에 기름이 들지 않아요": "The one who brought his brother — asking for the arrow costs no oil",
+ "등불 기름이 다 떨어졌어요<small>말씀 카드를 얻으면 다시 채워져요</small>": "Your lamp oil has run out<small>Earn a word card to refill it</small>",
+ "{0:으로/로} 가세요<small>지도에서 이름을 찾아보세요 · 등불 기름 한 방울을 썼어요</small>": "Head for {0}<small>Find the name on the map · used a drop of lamp oil</small>",
+ "이쪽으로 가세요<small>안드레는 기름 없이 길을 물어요</small>": "This way<small>Andrew asks the way without oil</small>",
+ "이쪽으로 가세요<small>등불 기름 한 방울을 썼어요</small>": "This way<small>Used a drop of lamp oil</small>",
+ " · 등불 기름 +{0}": " · Lamp oil +{0}"
 }
