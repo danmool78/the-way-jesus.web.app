@@ -3190,7 +3190,8 @@ const egypt = {
     g.fillStyle = 'rgba(255,255,255,.18)'; g.fillRect(180, 22, 200, 5); g.fillStyle = '#ffe29a'; g.fillRect(180, 22, 200 * S.px / ROAD, 5); g.fillStyle = '#e8ecf8'; g.font = '700 10px "Noto Sans KR",sans-serif'; g.textAlign = 'right'; g.fillText(this.T.to, W - 20, 42); g.restore();
     floatMsg(g, S.msg);
   },
-  end(g, k, S) { S.beam = null; this.update(0.016, S); this.draw(g, S);
+  end(g, k, S) { // 성공 뒤에는 멈춘 그림 — update를 부르면 매 화면 횃불이 새로 생겨 '!'와 소리가 깜박였다(사용자 2026-11)
+    S.beam = null; S.nextBeam = 99; S.hold = false; S.lit = 0; S.msg = null; this.draw(g, S);
     if (k > 0.3) { g.save(); g.globalAlpha = clamp((k - 0.3) * 2, 0, 1); g.fillStyle = 'rgba(10,14,30,.82)'; g.fillRect(0, 140, W, 84);
       g.font = '700 16px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#eef2ff'; const [l1, l2, rf] = this.endLines; g.fillText(l1, W / 2, 170); g.fillText(l2, W / 2, 194);
       g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#b8c2e0'; g.fillText(rf, W / 2, 213); g.restore(); }
