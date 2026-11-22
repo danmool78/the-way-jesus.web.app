@@ -271,7 +271,7 @@ function render(lang) {
 // 카드 그림: 순례 게임 카드(장면 id) — 시편·잠언은 카드가 없어 다윗의 수금 장면과 잠언 거리 무대를 쓴다. GoodNews·'왜 기독교인가'는 그 페이지의 펜 그림
 let CARDS = null;
 const GROUP = { jesus: 'walk', moses: 'walk', david: 'walk', kings: 'walk', paul: 'walk', psalms: 'song', proverbs: 'song', goodnews: 'first', why: 'first' };
-const ART = { jesus: 'e23', moses: 'm10', david: 'd05', kings: 'k06', paul: 'a02', psalms: 'd03', proverbs: 'assets/img/land/proverbs.webp', goodnews: 'assets/img/g04.webp', why: 'assets/img/why/church.webp' };
+const ART = { jesus: 'e23', moses: 'm10', david: 'd05', kings: 'k06', paul: 'a02', psalms: 'd03', proverbs: 'assets/img/land/proverbs.webp?v=0c73aa9a', goodnews: 'assets/img/g04.webp', why: 'assets/img/why/church.webp' }; // 그림을 바꾸면 ?v=도 바꾼다 — 이미지는 7일 캐시라 폰에 옛 그림이 남았다(사용자 2026-11)
 const PAPER = new Set(['goodnews', 'why']);
 const cardUrl = id => CARDS?.files[id] ? `${CARDS.base}/${CARDS.files[id]}` : '';
 const artOf = id => ART[id].includes('/') ? ART[id] : cardUrl(ART[id]);
