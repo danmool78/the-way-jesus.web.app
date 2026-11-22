@@ -268,8 +268,8 @@ const SAME = 5; // 이만큼 붙은 장면은 같은 자리로 친다 (걷지 �
 // 내 둘레 PRINT_R km 안의 것만 보인다. 그 언저리까지는 단서로 찾아가고, 발자국을 만나면 따라간다
 const TRACK = 10, PRINT_R = 2.8, PRINT_GAP = 0.3, MAXP = 220; // 발은 키(약 1.3)의 6분의 1쯤 — 작게 하는 대신 촘촘히 (컸을 때는 사람보다 커 보였다, 사용자 2026-11)
 // 등불 기름(사용자 2026-11): 길을 물을 때마다 한 방울씩 쓴다 — 방향 화살표 3초. 그분을 만나 말씀을 받으면 등불이 다시 채워진다(시 119:105 — 금 카드 2, 은·동 1).
-// 점수를 깎던 것보다 손에 쥔 것이 줄어드는 게 잘 보였다. 여정마다 따로(진행 기록 oil), 처음이자 가득 3 — 9는 너무 넉넉했다 (마 25:4 슬기로운 처녀들의 기름)
-const OIL0 = 3, OILMAX = 3;
+// 점수를 깎던 것보다 손에 쥔 것이 줄어드는 게 잘 보였다. 여정마다 따로(진행 기록 oil), 처음 3·많아야 5 — 9는 너무 넉넉했다 (마 25:4 슬기로운 처녀들의 기름)
+const OIL0 = 3, OILMAX = 5;
 const WALK = 30;   // 하루에 걷는 거리(km) — '몇 일째'
 
 function waterMesh(poly, color) {
@@ -528,7 +528,7 @@ function toast(html, good = false, ms = 2600) {
   const t = $('#toast'); t.innerHTML = html; t.classList.toggle('good', good); t.classList.add('on');
   clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), ms);
 }
-function drawOil() { $('#oil').innerHTML = [...Array(Math.max(OIL0, G.oil)).keys()].map(i => `<i class="${i < G.oil ? '' : 'empty'}"></i>`).join(''); }
+function drawOil() { $('#oil').innerHTML = [...Array(OILMAX).keys()].map(i => `<i class="${i < G.oil ? '' : 'empty'}"></i>`).join(''); }
 const addOil = n => { const k = Math.min(OILMAX - G.oil, n); G.oil += k; drawOil(); return k; };
 function drawWater() { $('#water').innerHTML = [...Array(G.waterMax || 3).keys()].map(i => `<i class="${i < G.water ? '' : 'empty'}"></i>`).join(''); }
 const LOST = [tr('모래바람이 불어와 길을 잃었어요!'), tr('광야에서 방향을 잃었어요!'), tr('엉뚱한 길로 너무 멀리 왔어요!')];
