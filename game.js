@@ -1049,7 +1049,7 @@ async function begin(fresh) {
   await G.world.ready; $('#loading').classList.add('hidden');
   spawnPatrols(); placeLocals();
   startLeg();
-  G.askT = 6; // 게임을 열면(처음이든 이어 걷기든) 방향 화살표를 한 번 거저 보여 준다(사용자 2026-11)
+  G.askT = G.idx === 0 ? 10.5 : 6; // 게임을 열면(처음이든 이어 걷기든) 방향 화살표를 한 번 거저 보여 준다(사용자 2026-11) — 처음엔 환영 안내(4.2초)가 화살표를 가려 그만큼 더
   if (G.idx === 0) toast(tr('{0}님, {1:을/를} 따라 걸어요<small>지도에서 장소 이름을 찾아 걸어가세요 · 가까이 가면 그분의 발자국이 보여요</small>', esc(me.name), esc(J.who)), true, 4200);
 }
 
