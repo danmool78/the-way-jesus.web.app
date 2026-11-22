@@ -2635,7 +2635,7 @@ const viper = {
     S.sticks.push({ x, y, a: rnd(0, 3.14), big: Math.random() < 0.35, born: S.t }); },
   update(dt, S) {
     S.t += dt; if (S.msg) S.msg.at -= dt;
-    const rain = 0.05 + S.t * 0.0012; S.fire = Math.max(0, S.fire - rain * dt);
+    const rain = 0.042 + S.t * 0.001; S.fire = Math.max(0, S.fire - rain * dt);
     if ((S.spawn -= dt) <= 0 && S.sticks.length < 7) { this.addStick(S); S.spawn = rnd(0.4, 0.9); }
     if (S.vip === 1) { S.bit += dt; }
     S.trail.push([S.px, S.py, S.t]); S.trail = S.trail.filter(p => S.t - p[2] < 0.15);
@@ -2648,8 +2648,12 @@ const viper = {
     let best = null, bd = 30; for (const st of S.sticks) { const d = Math.hypot(st.x - x, st.y - y); if (d < bd) { bd = d; best = st; } }
     if (best) { S.hold = best; S.sticks.splice(S.sticks.indexOf(best), 1); S.fx.play('pick'); } },
   move(x, y, S) { const dx = x - S.px; S.px = x; S.py = y;
-    if (S.vip === 1 && Math.abs(dx) > 6) { // 손을 좌우로 세게 흔든다 — 방향이 바뀔 때마다 한 번, 1.2초 안에 세 번이면 떨어진다
-      const d = Math.sign(dx); if (S.shDir && d !== S.shDir) { S.shakes = (S.shakes || []).filter(tt => S.t - tt < 1.2); S.shakes.push(S.t); S.fx.play('swish');
+    // 손을 좌우로 세게 흔든다 — 한쪽으로 22px 넘게 움직였다가 방향이 바뀔 때마다 한 번, 1.2초 안에 세 번이면 떨어진다.
+    // 이벤트 한 번의 움직임으로 재면 마우스(이벤트가 아주 촘촘하다)에서는 흔들어도 세지지 않았다(사용자 2026-11)
+    if (S.vip === 1 && dx) {
+      const d = Math.sign(dx); if (d === S.shDir || !S.shDir) { S.run = (S.run || 0) + Math.abs(dx); S.shDir = d; return; }
+      const far = (S.run || 0) >= 22; S.run = Math.abs(dx);
+      if (far) { S.shakes = (S.shakes || []).filter(tt => S.t - tt < 1.2); S.shakes.push(S.t); S.fx.play('swish');
         if (S.shakes.length >= 3) { S.vip = 2; S.flung = 1; S.flX = x; S.flY = y; S.fx.play('crackle'); S.fire = Math.min(1, S.fire + 0.05);
           S.msg = { t: tr('불에 떨어 버렸어요 — 아무 해도 없어요'), c: '#ffe29a', at: 1.6, x: 200, y: 200 }; } }
       S.shDir = d; } },
@@ -2658,7 +2662,7 @@ const viper = {
     if (Math.hypot(S.px - FIRE[0], S.py - FIRE[1]) < FIRE_R + 10) {
       S.fire = Math.min(1, S.fire + (st.big ? 0.13 : 0.08)); S.fed++; S.fx.play('crackle');
       for (let i = 0; i < 10; i++) S.sparks.push({ x: FIRE[0] + rnd(-16, 16), y: FIRE[1] - 20, vx: rnd(-40, 40), vy: rnd(-120, -50), life: rnd(0.4, 0.9) });
-      if (S.vip === 0 && S.fire > 0.5) { S.vip = 1; S.bit = 0; S.fx.play('hiss'); S.shakes = []; S.shDir = 0; S.msg = { t: tr('독사가 나와 손을 물었어요! 손을 세게 흔들어요!'), c: '#ffb38a', at: 1.8, x: 200, y: 200 }; } // 28:3
+      if (S.vip === 0 && S.fire > 0.5) { S.vip = 1; S.bit = 0; S.fx.play('hiss'); S.shakes = []; S.shDir = 0; S.run = 0; S.msg = { t: tr('독사가 나와 손을 물었어요! 손을 세게 흔들어요!'), c: '#ffb38a', at: 1.8, x: 200, y: 200 }; } // 28:3
     } else { st.x = S.px; st.y = S.py; S.sticks.push(st); }
   },
   won: S => S.fire >= 0.97 && S.vip === 2,
