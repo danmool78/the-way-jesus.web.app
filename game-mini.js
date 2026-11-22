@@ -2873,19 +2873,20 @@ const dothan = {
 /* ---------- 한 사람도 잃지 않으리라 (행 27:39–44): 파선한 배에서 모두 뭍으로 — 널빤지 던지기 ---------- */
 // 깨진 배에서 사람들이 물로 뛰어든다. 저마다 힘(고리)이 줄어들고, 헤엄칠 줄 아는 이는 스스로 천천히 뭍으로 온다(27:43).
 // 사람을 누르면 바닷가의 바울 곁에서 널빤지를 던져 준다(쌓인 널빤지는 둘까지, 2초마다 하나씩 다시 모인다). 널빤지를 붙들면 빨리 뭍으로 온다(27:44).
+// 헤엄치는 이는 힘이 넉넉해 스스로 닿는다 — 처음엔 그들도 도중에 가라앉아 '헤엄침'을 믿고 두면 늘 실패했다(사용자 2026-11)
 // 한 사람이라도 힘이 다해 가라앉으면 실패 — 모두 뭍에 오르면 성공
 const PEOPLE = 10, SHORE_Y = 398, PAUL = [352, 452];
 const wreck = {
   title: tr('한 사람도 잃지 않으리라'), task: tr('널빤지를 던져 모두 뭍으로'), art: ['a36/bg', 'a36/swimmer', 'a36/floater', 'a36/plank', 'a36/paul', 'a37/people'],
   ask: [tr('배가 두 물이 합하여 흐르는 곳에 걸려 깨어지고 있단다. 그러나 너희 중 생명은 하나도 잃지 않으리라 하셨지.'), tr('헤엄 못 치는 이들에게 널빤지를 던져 주렴 — 한 사람도 잃지 않게!')],
   quote: tr('너희 중 아무도 생명에는 아무런 손상이 없겠고 오직 배뿐이리라'), ref: tr('행 27:22'),
-  help: tr('물에 빠진 사람을 누르면 널빤지를 던져 줘요(둘까지, 다시 모여요). 널빤지를 붙들면 빨리 뭍으로 와요.<br>고리는 남은 힘 — 빨개진 사람부터! 한 사람이라도 가라앉으면 실패.'),
+  help: tr('물에 빠진 사람을 누르면 널빤지를 던져 줘요(둘까지, 다시 모여요). 널빤지를 붙들면 빨리 뭍으로 와요.<br>고리는 남은 힘 — 빨개진 사람부터! <b>헤엄치는 사람은 스스로 와요.</b> 한 사람이라도 가라앉으면 실패.'),
   seconds: 34,
   init() { return { P: [], spawn: 0.4, made: 0, saved: 0, planks: 2, regen: 0, fly: [], t: 0, msg: null, sank: 0, splash: [] }; },
   update(dt, S) {
     S.t += dt; if (S.msg) S.msg.at -= dt;
     if (S.made < PEOPLE && (S.spawn -= dt) <= 0) { const sw = Math.random() < 0.3; // 헤엄칠 줄 아는 사람(27:43)
-      S.P.push({ x: rnd(70, 320), y: rnd(118, 150), vy: sw ? rnd(13, 17) : rnd(4, 7), drain: sw ? rnd(0.06, 0.08) : rnd(0.12, 0.16), st: 1, ph: rnd(0, 7), plank: 0, swim: sw, saved: 0 });
+      S.P.push({ x: rnd(70, 320), y: rnd(118, 150), vy: sw ? rnd(13, 17) : rnd(4, 7), drain: sw ? rnd(0.03, 0.038) : rnd(0.12, 0.16), st: 1, ph: rnd(0, 7), plank: 0, swim: sw, saved: 0 });
       S.made++; S.spawn = rnd(0.7, 1.2); S.fx.play('splash'); }
     if (S.planks < 2 && (S.regen += dt) >= 2.0) { S.regen = 0; S.planks++; }
     for (const p of S.P) { if (p.saved) continue;

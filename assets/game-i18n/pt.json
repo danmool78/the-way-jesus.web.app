@@ -595,7 +595,6 @@
  "헤엄 못 치는 이들에게 널빤지를 던져 주렴 — 한 사람도 잃지 않게!": "Jogue tábuas para quem não sabe nadar — que ninguém se perca!",
  "너희 중 아무도 생명에는 아무런 손상이 없겠고 오직 배뿐이리라": "Nenhum de vocês vai perder a vida; só o navio se perderá",
  "행 27:22": "At 27:22",
- "물에 빠진 사람을 누르면 널빤지를 던져 줘요(둘까지, 다시 모여요). 널빤지를 붙들면 빨리 뭍으로 와요.<br>고리는 남은 힘 — 빨개진 사람부터! 한 사람이라도 가라앉으면 실패.": "Toque em quem está na água para jogar uma tábua (até duas; elas voltam a se juntar). Com a tábua, a pessoa chega rápido à praia.<br>O anel é a força que resta — primeiro os que estão no vermelho! Se alguém afundar, você perde.",
  "뭍에 올랐어요 {0} / {1}": "Chegaram à praia {0} / {1}",
  "널빤지를 모으는 중…": "Juntando tábuas…",
  "한 사람이 물에 잠겼어요": "Uma pessoa afundou",
@@ -1065,5 +1064,6 @@
  "일째": "º dia",
  "길 묻기": "Pedir o caminho",
  "나가기": "Sair",
- "이름을 넣어 주세요": "Digite seu nome"
+ "이름을 넣어 주세요": "Digite seu nome",
+ "물에 빠진 사람을 누르면 널빤지를 던져 줘요(둘까지, 다시 모여요). 널빤지를 붙들면 빨리 뭍으로 와요.<br>고리는 남은 힘 — 빨개진 사람부터! <b>헤엄치는 사람은 스스로 와요.</b> 한 사람이라도 가라앉으면 실패.": "Toque em quem está na água para jogar uma tábua (até duas; elas voltam a se juntar). Com a tábua, a pessoa chega rápido à praia.<br>O anel é a força que resta — primeiro os que estão no vermelho! <b>Quem sabe nadar chega sozinho.</b> Se alguém afundar, você perde."
 }

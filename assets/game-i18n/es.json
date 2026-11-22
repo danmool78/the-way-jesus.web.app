@@ -595,7 +595,6 @@
  "헤엄 못 치는 이들에게 널빤지를 던져 주렴 — 한 사람도 잃지 않게!": "Lánzales tablas a los que no saben nadar — ¡que no se pierda ninguno!",
  "너희 중 아무도 생명에는 아무런 손상이 없겠고 오직 배뿐이리라": "Ninguno de ustedes perderá la vida; solo se perderá la nave",
  "행 27:22": "Hch 27:22",
- "물에 빠진 사람을 누르면 널빤지를 던져 줘요(둘까지, 다시 모여요). 널빤지를 붙들면 빨리 뭍으로 와요.<br>고리는 남은 힘 — 빨개진 사람부터! 한 사람이라도 가라앉으면 실패.": "Pulsa a alguien en el agua para lanzarle una tabla (dos a la vez; se vuelven a juntar). Agarrado a una tabla llega rápido a tierra.<br>El anillo es la fuerza que le queda — ¡primero los que están en rojo! Si uno solo se hunde, pierdes.",
  "뭍에 올랐어요 {0} / {1}": "En tierra {0} / {1}",
  "널빤지를 모으는 중…": "Juntando tablas…",
  "한 사람이 물에 잠겼어요": "Alguien se hundió en el agua",
@@ -1065,5 +1064,6 @@
  "물병": "Odres",
  "일째": ".º día",
  "길 묻기": "Preguntar el camino",
- "나가기": "Salir"
+ "나가기": "Salir",
+ "물에 빠진 사람을 누르면 널빤지를 던져 줘요(둘까지, 다시 모여요). 널빤지를 붙들면 빨리 뭍으로 와요.<br>고리는 남은 힘 — 빨개진 사람부터! <b>헤엄치는 사람은 스스로 와요.</b> 한 사람이라도 가라앉으면 실패.": "Pulsa a alguien en el agua para lanzarle una tabla (dos a la vez; se vuelven a juntar). Agarrado a una tabla llega rápido a tierra.<br>El anillo es la fuerza que le queda — ¡primero los que están en rojo! <b>Los que nadan llegan solos.</b> Si uno solo se hunde, pierdes."
 }

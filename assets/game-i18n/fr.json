@@ -595,7 +595,6 @@
  "헤엄 못 치는 이들에게 널빤지를 던져 주렴 — 한 사람도 잃지 않게!": "Lance des planches à ceux qui ne savent pas nager — que personne ne soit perdu !",
  "너희 중 아무도 생명에는 아무런 손상이 없겠고 오직 배뿐이리라": "Aucun de vous ne perdra la vie ; seul le navire sera perdu",
  "행 27:22": "Ac 27:22",
- "물에 빠진 사람을 누르면 널빤지를 던져 줘요(둘까지, 다시 모여요). 널빤지를 붙들면 빨리 뭍으로 와요.<br>고리는 남은 힘 — 빨개진 사람부터! 한 사람이라도 가라앉으면 실패.": "Touche une personne dans l’eau pour lui lancer une planche (deux au plus, elles reviennent). Avec une planche, on gagne vite la terre.<br>L’anneau, c’est la force qui reste — d’abord ceux qui sont en rouge ! Si une seule personne coule, c’est perdu.",
  "뭍에 올랐어요 {0} / {1}": "À terre {0} / {1}",
  "널빤지를 모으는 중…": "On rassemble les planches…",
  "한 사람이 물에 잠겼어요": "Quelqu’un a coulé",
@@ -1065,5 +1064,6 @@
  "물병": "Gourdes",
  "일째": "e jour",
  "길 묻기": "Demander le chemin",
- "나가기": "Quitter"
+ "나가기": "Quitter",
+ "물에 빠진 사람을 누르면 널빤지를 던져 줘요(둘까지, 다시 모여요). 널빤지를 붙들면 빨리 뭍으로 와요.<br>고리는 남은 힘 — 빨개진 사람부터! <b>헤엄치는 사람은 스스로 와요.</b> 한 사람이라도 가라앉으면 실패.": "Touche une personne dans l’eau pour lui lancer une planche (deux au plus, elles reviennent). Avec une planche, on gagne vite la terre.<br>L’anneau, c’est la force qui reste — d’abord ceux qui sont en rouge ! <b>Les nageurs arrivent seuls.</b> Si une seule personne coule, c’est perdu."
 }
