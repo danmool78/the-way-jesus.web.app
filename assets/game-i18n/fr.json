@@ -1063,10 +1063,9 @@
  "물에 빠진 사람을 누르면 널빤지를 던져 줘요(둘까지, 다시 모여요). 널빤지를 붙들면 빨리 뭍으로 와요.<br>고리는 남은 힘 — 빨개진 사람부터! <b>헤엄치는 사람은 스스로 와요.</b> 한 사람이라도 가라앉으면 실패.": "Touche une personne dans l’eau pour lui lancer une planche (deux au plus, elles reviennent). Avec une planche, on gagne vite la terre.<br>L’anneau, c’est la force qui reste — d’abord ceux qui sont en rouge ! <b>Les nageurs arrivent seuls.</b> Si une seule personne coule, c’est perdu.",
  "가끔 물속에서 거품이 올라와요 — 물살에 밀려 실제 자리보다 오른쪽에서 터지니, <b>거품보다 조금 왼쪽</b>을 눌러요.<br>누르면 그 자리에 나뭇가지를 던져요(넷). 도끼가 떠오르면 떠내려가기 전에 눌러 건져요.": "De temps en temps des bulles remontent — le courant les pousse, elles éclatent à droite du vrai endroit : <b>touche un peu à gauche des bulles</b>.<br>Là où tu touches, une branche est lancée (quatre). Quand le fer flotte, touche-le avant qu’il ne soit emporté.",
  "처음 3초 동안 카드를 모두 보여 줘요 — 잘 봐 두세요.<br>두 장씩 뒤집어 <b>같은 그림</b>의 지파 이름과 그 축복을 짝지어요. 틀리면 다시 덮여요.": "Pendant les 3 premières secondes, toutes les cartes sont visibles — regarde bien.<br>Retourne-les deux par deux pour associer une tribu et sa bénédiction — <b>cherche le même dessin</b>. Si c’est faux, elles se retournent.",
- "형제를 데려온 사람 — 길 묻기 화살표에 기름이 들지 않아요": "Celui qui amena son frère — la flèche ne coûte pas d’huile",
  "등불 기름이 다 떨어졌어요<small>말씀 카드를 얻으면 다시 채워져요</small>": "Ta lampe n’a plus d’huile<small>Gagne une carte pour la remplir</small>",
- "{0:으로/로} 가세요<small>지도에서 이름을 찾아보세요 · 등불 기름 한 방울을 썼어요</small>": "Va vers {0}<small>Cherche le nom sur la carte · une goutte d’huile utilisée</small>",
- "이쪽으로 가세요<small>안드레는 기름 없이 길을 물어요</small>": "Par ici<small>André demande le chemin sans huile</small>",
  "이쪽으로 가세요<small>등불 기름 한 방울을 썼어요</small>": "Par ici<small>Une goutte d’huile utilisée</small>",
- "말씀이 등불을 채웠어요 +{0}<br><small>주의 말씀은 내 발에 등이요 · 시 119:105</small>": "La parole a rempli ta lampe +{0}<br><small>Ta parole éclaire mes pas · Ps 119:105</small>"
+ "말씀이 등불을 채웠어요 +{0}<br><small>주의 말씀은 내 발에 등이요 · 시 119:105</small>": "La parole a rempli ta lampe +{0}<br><small>Ta parole éclaire mes pas · Ps 119:105</small>",
+ "이쪽으로 가세요<small>안드레는 두 번에 한 번 기름 없이 길을 물어요</small>": "Par ici<small>André demande le chemin sans huile une fois sur deux</small>",
+ "형제를 데려온 사람 — 길 묻기 두 번에 한 번은 기름이 들지 않아요": "Celui qui amena son frère — une demande sur deux ne coûte pas d’huile"
 }
