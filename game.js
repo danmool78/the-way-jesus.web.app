@@ -16,7 +16,7 @@ import { CAST, FOLLOW, SIZE, LEADS, GEAR, BOAT, SETS } from './game-cast.js';
 import { MINI, playMini } from './game-mini.js';
 import { t as tr, LANG, LANGS, applyT } from './game-i18n.js';
 // 다른 언어: 고정 글씨·제목·문서 언어를 바꾼다 (game-i18n.js)
-applyT(); document.documentElement.lang = LANG; if (LANG !== 'ko') document.title = tr('그 길 — 순례 게임 | 걸어서 만나는 예수');
+applyT(); document.documentElement.lang = LANG; if (LANG !== 'ko') document.title = tr('그 길 — 말씀 탐험 | 걸어서 만나는 예수');
 
 const $ = s => document.querySelector(s);
 const snd = createAudio(); // 배경음악·발소리·배 소리·효과음 (game-audio.js)
@@ -701,7 +701,7 @@ function cardPlain(e, stars, straight) {
 function finish() {
   snd.play('end');
   const n = G.events.length, st = G.stars.reduce((a, b) => a + (b || 0), 0), km = Math.round(G.total), J = JOURNEYS[JID];
-  const text = tr('그 길 순례 — {0}, {1:을/를} 따라 {2}장면 {3}km를 걸었습니다 · 말씀 카드 {4}/{5}장 {6}점\nhttps://thewaymap.org/game.html?j={7}', me.name || tr('순례자'), J.who, n, km, Object.keys(deck()).length, n, num(total(deck())), JID);
+  const text = tr('말씀 탐험 — {0}, {1:을/를} 따라 {2}장면 {3}km를 걸었습니다 · 말씀 카드 {4}/{5}장 {6}점\nhttps://thewaymap.org/game.html?j={7}', me.name || tr('순례자'), J.who, n, km, Object.keys(deck()).length, n, num(total(deck())), JID);
   const s = sheet(`<div class="body"><small>${esc(J.name)}</small><h2>${tr('여정을 마쳤습니다')}</h2><p class="sub">${tr('{0}님, {1}장면을 모두 찾아 걸었어요.', esc(me.name || tr('순례자')), n)}</p>
     <div class="leg"><span>${tr('걸은 길 <b>{0}km</b>', km)}</span><span>${tr('<b>{0}</b>일', Math.floor(G.total / WALK) + 1)}</span><span>★ <b>${st}</b>/${n * 3}</span></div>
     <p class="sub">${tr('말씀 카드 <b>{0}</b> / {1}장 · 합계 <b>{2}점</b>', Object.keys(deck()).length, n, num(total(deck())))}</p>
@@ -1247,7 +1247,7 @@ async function openMinis(j = store.get('theway-game-minicheck-j', 'jesus')) {
   const [M, D] = await Promise.all([fetch('assets/cards.json').then(r => r.json()).catch(() => null), fetch(url.replace('.json', suf + '.json')).then(r => r.ok ? r.json() : fetch(url).then(r => r.json()))]);
   const rec = store.get('theway-game-minicheck', {}), ev = id => D.events.find(e => e.id === id) || {}, img = id => M?.files?.[id] ? `${M.base}/${M.files[id]}` : '';
   const ids = Object.keys(MINI[j] || {}).sort();
-  const s = sheet(`<div class="body minis"><small>그 길 순례 · 관리자</small><h2>놀이 점검</h2>
+  const s = sheet(`<div class="body minis"><small>말씀 탐험 · 관리자</small><h2>놀이 점검</h2>
     <div class="mjs">${Object.keys(JOURNEYS).map(k => `<button data-j="${k}" class="${k === j ? 'on' : ''}">${esc(JOURNEYS[k].short)} <b>${Object.keys(MINI[k] || {}).length}</b></button>`).join('')}</div>
     <label class="mlang">언어 <select>${LANGS.map(l => `<option ${l === LANG ? 'selected' : ''}>${l}</option>`).join('')}</select></label>
     <div class="mgrid">${ids.map(id => { const g = MINI[j][id], r = rec[j + id];
@@ -1265,7 +1265,7 @@ async function openMinis(j = store.get('theway-game-minicheck-j', 'jesus')) {
 // 관리자만(사용자 2026-11): 관리자 페이지와 같은 Google 로그인(Firebase, 같은 주소라 로그인이 이어진다)을 하고,
 // 관리자 Worker가 허락된 계정으로 받아 주는지 물어 통과해야 목록을 연다 — 아니면 로그인 안내만
 async function minisGate() {
-  const box = msg => sheet(`<div class="body minis"><small>그 길 순례 · 관리자</small><h2>놀이 점검</h2><p class="sub">${msg}</p>
+  const box = msg => sheet(`<div class="body minis"><small>말씀 탐험 · 관리자</small><h2>놀이 점검</h2><p class="sub">${msg}</p>
     <div class="row"><button class="go" id="mLogin">Google로 로그인</button><a class="go ghost" href="admin.html">관리자 페이지</a></div></div>`);
   try {
     const [{ initializeApp }, A] = await Promise.all([import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js'), import('https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js')]);
