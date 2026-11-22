@@ -149,7 +149,7 @@ const TYPES = {
   // 앗수르는 짙은 남빛 옷에 붉은 단·뾰족 투구(peak)·네모 수염(beardLong), 바벨론은 밝은 청금석빛 옷에 노란 단·둥근 놋 투구, 애굽은 허리치마와 가발(모세 여정 그대로).
   // 선지자는 거친 갈색·회색 옷 — 엘리야는 털옷과 가죽 띠, 엘리사는 평범한 옷에서 엘리야의 겉옷(같은 빛 mantle)을 받아 입는다
   solomonK: { robe: '#f1e7cf', trim: '#d6a93a', mantle: '#6b2a5e', hair: '#3a2616', beard: true, crown: true, sash: '#d6a93a', skin: 2, height: 1 }, // 성전을 봉헌하는 왕 솔로몬 (짧은 수염 — 젊은 왕 solomon의 옷 그대로)
-  solomonO: { robe: '#f1e7cf', trim: '#d6a93a', mantle: '#6b2a5e', hair: '#cfc8bb', beard: true, long: true, crown: true, sash: '#d6a93a', skin: 2, height: 0.94 }, // 늙은 솔로몬 (왕상 11:4 — 희어진 머리)
+  solomonO: { robe: '#f1e7cf', trim: '#d6a93a', mantle: '#6b2a5e', hair: '#cfc8bb', beard: true, long: true, crown: true, sash: '#d6a93a', skin: 2, height: 1 }, // 늙은 솔로몬 (왕상 11:4 — 희어진 머리)
   rehoboam: { robe: '#5a2a5e', trim: '#d6a93a', mantle: '#a8312a', hair: '#2b1b10', beard: true, crown: true, sash: '#d6a93a', skin: 2 }, // 유다 왕 르호보암: 다윗 왕가의 자주·붉은 옷
   jeroboam: { robe: '#8a7350', trim: '#2a5a5e', mantle: '#2a5a5e', hair: '#2b1b10', beard: true, sash: '#2a5a5e', skin: 1, height: 0.96 }, // 에브라임 사람 여로보암 (요셉 집안 일꾼의 감독 — 청록 겉옷)
   jeroboamK: { robe: '#2a5a5e', trim: '#d6a93a', mantle: '#b8892f', hair: '#2b1b10', beard: true, crown: true, sash: '#d6a93a', skin: 1, height: 0.96 }, // 북이스라엘 왕 여로보암: 청록 옷에 황토 겉옷, 금관
