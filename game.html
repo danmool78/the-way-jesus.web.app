@@ -326,6 +326,14 @@ img,canvas{-webkit-user-drag:none;user-select:none}
 .quiz .opts button.cut s{opacity:.8}
 .quiz .opts button.cut em{display:block;margin-top:4px;font-size:11.5px;font-style:normal;color:var(--gold2)}
 .quiz .explain{margin:10px 0 0;color:var(--muted);font-size:13.5px;line-height:1.6;word-break:keep-all}
+/* 놀이 점검 (game.html?minis, 관리자) */
+.minis .mjs{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}.minis .mjs button{padding:7px 11px;border-radius:999px;border:1px solid rgba(217,180,106,.35);background:transparent;color:var(--muted);font:700 13px var(--sans)}
+.minis .mjs button.on{background:rgba(217,180,106,.18);color:var(--gold2)}.minis .mjs b{color:var(--gold2)}
+.minis .mlang{display:block;margin:0 0 10px;color:var(--muted);font-size:13px}.minis .mlang select{margin-left:6px;padding:4px 8px;border-radius:8px}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:14px}
+.mgrid button{display:flex;flex-direction:column;gap:3px;padding:0 0 9px;border-radius:12px;overflow:hidden;border:1px solid rgba(217,180,106,.25);background:rgba(255,255,255,.04);color:var(--ink,#f2e8d4);text-align:left}
+.mgrid .mimg{display:block;aspect-ratio:4/3;background:#2a2218 center/cover}.mgrid small,.mgrid b,.mgrid i{padding:0 9px}.mgrid small{color:var(--muted);font-size:11px}.mgrid b{font:700 14px/1.3 var(--sans)}.mgrid i{font-style:normal;color:var(--gold2);font-size:12px}
+.mtools{display:flex;gap:6px;padding:8px 8px 0}.mtools button{flex:1;padding:8px;border-radius:9px;border:1px solid rgba(217,180,106,.4);background:rgba(217,180,106,.12);color:var(--gold2);font:700 13px var(--sans)}
 /* 일본어·중국어는 띄어쓰기가 없어 keep-all이면 줄을 못 끊고 넘친다(말풍선·놀이 소개 — 2026-11) */
 :lang(ja) *, :lang(zh) * { word-break: normal !important; line-break: strict }
 </style>

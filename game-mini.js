@@ -3692,6 +3692,9 @@ export function playMini(game, host, fx, done) {
     p.querySelector('[data-q]').onclick = () => close({ ok: false, left: 0, tries });
   };
   const close = r => { cancelAnimationFrame(raf); removeEventListener('resize', fit); removeEventListener('keydown', onKey); fx.pour?.(null); fx.storm?.(null); done(r); };
+  // 점검(game.html?minis): 끝 장면을 곧장 보거나(성공·실패) 놀이를 닫는다
+  host._end = ok => { if (phase === 'intro') start(); if (phase === 'play') finish(ok); };
+  host._close = () => close({ ok: false, left: 0, tries });
   const loop = now => {
     raf = requestAnimationFrame(loop);
     const raw = (now - last) / 1000 || 0, dt = Math.min(0.05, raw); last = now;
