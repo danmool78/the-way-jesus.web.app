@@ -115,7 +115,7 @@ const OWN = { jesus: 'jesus', risen: 'jesus', peter: 'peter', john: 'john', mary
   pilate: 'pilate', shepherd: 'shepherd', soldier: 'soldier', highpriest: 'caiaphas', elder: 'nicodemus', woman: 'woman',
   moses: 'moses', elijah: 'elijah', angel: 'angel', whiteman: 'angel',
   paul: 'paul', paulS: 'paul', paulO: 'paul', paulOS: 'paul', barnabas: 'barnabas', silas: 'silas', timothy: 'timothy', lydia: 'lydia', luke: 'luke' }; // 바울 여정 (바울은 시기별 배역 모두 같은 모델) // 천사(가브리엘·목자들에게 나타난 천사·무덤의 흰 옷 입은 이)
-const MEN = new Set(['man', 'servant', 'traveler', 'healed', 'beggar', 'prodigal', 'levi', 'steward', 'groom', 'rich']);
+const MEN = new Set(['man', 'servant', 'traveler', 'healed', 'beggar', 'prodigal', 'levi', 'steward', 'groom']);
 const WOMEN = new Set(['woman2', 'mother', 'anna', 'phoenician']);
 const BOYS = new Set(['child', 'boyJesus']);
 // 모델이 따로 없는 배역은 비슷한 사람의 모델에 옷을 맞춰 입힌다 (사용자 2026-11: 다 만들 수는 없으니 있는 것에서) — 'plain'은 화려한 색을 바래게
@@ -123,7 +123,8 @@ const BOYS = new Set(['child', 'boyJesus']);
 const LIKE = { official: ['nicodemus', { hue: 200, sat: 1.3 }], // 왕의 신하(요 4:46) — 엑스트라가 뽑히니 신하 같지 않았다
   king: ['rehoboam', { hue: 150, skin: 1.05 }], magus: ['jethro', { hue: 200, sat: 1.4, skin: 0.8 }], magus2: ['nathan', { hue: 90, sat: 1.5, skin: 1.1 }], magus3: ['absalom', { hue: 250, skin: 0.62 }], // 헤롯은 오만한 왕, 동방박사는 사막 족장·현자·젊은 귀공자(먼 나라 사람이라 살갗도 저마다)
   official: ['nicodemus', { plain: true, skin: 0.9 }], youth: ['jonathan', { plain: true, hue: 40, skin: 1.08 }], guard: ['joab', { hue: 30, sat: 0.6, skin: 0.95 }], // 왕의 신하, 나인 성 과부의 아들, 성전 경비병
-  wild: ['pilgrim-man', { plain: true, skin: 0.72 }], sadducee: ['nicodemus', { hue: 160, skin: 1.08 }] }; // 거라사의 귀신 들린 사람(해진 옷, 햇볕에 그을림), 사두개인(바리새인 니고데모와 달리)
+  wild: ['pilgrim-man', { plain: true, skin: 0.72 }], sadducee: ['nicodemus', { hue: 160, skin: 1.08 }],
+  rich: ['absalom', { hue: 40, skin: 1.02 }] }; // 부자·귀인(부자 청년, 왕궁으로 드는 귀인 p06) — 엑스트라(순례자·어부·목자)가 뽑혀 귀족 같지 않았다(사용자 2026-11). 값진 옷의 왕자 모델을 색만 바꿔 // 거라사의 귀신 들린 사람(해진 옷, 햇볕에 그을림), 사두개인(바리새인 니고데모와 달리)
 const DISCIPLES = ['andrew', 'james']; // 이름 없는 제자는 안드레·야고보 모델을 번갈아
 // 엑스트라(이름 없는 남녀·군중): 여러 사람을 섞는다 (사용자 2026-11: 순례자로만 하지 말고, 다른 시대 사람도 — 왕은 빼고, 수수하게 입은 사람을
 // 평범한 색 옷으로). [모델, 옷] — 옷이 'plain'이면 화려한 색을 바래게, 색이면 그 색으로 (순례자만), 없으면 그대로
