@@ -8,3 +8,4 @@ firebase-debug*.log
 *-firebase-adminsdk-*.json
 __pycache__/
 _src/game-i18n/missing.*.json
+_src/game-i18n/new.*.json
