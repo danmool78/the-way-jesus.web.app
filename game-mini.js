@@ -592,7 +592,7 @@ const twelve = {
     // 카드는 덮인 채(up 0)로 만들어 소개 화면에서는 뒷면만 — 시작하면 뒤집혀 보인다
     const data = this.data || TWELVE, cards = data.flatMap((d, i) => [{ p: i, name: true }, { p: i, name: false }]).sort(() => Math.random() - 0.5);
     cards.forEach((c, k) => { c.x = 12 + (k % 4) * (CW + 9) + CW / 2 + 4; c.y = 48 + Math.floor(k / 4) * (CH + 6) + CH / 2; c.up = 0; c.want = 1; c.done = false; c.glow = 0; c.shake = 0; });
-    return { cards, data, peek: PEEK, open: [], wait: 0, msg: null, sparks: [], pairs: 0, fin: 0, sc: this.scene || 'e22' };
+    return { cards, data, peek: PEEK, open: [], wait: 0, msg: null, sparks: [], pairs: 0, fin: 0, sc: this.scene || 'e22', icons: !!this.icons };
   },
   update(dt, S) {
     if (S.peek > 0) { S.peek -= dt; if (S.peek <= 0) { S.cards.forEach(c => c.want = 0); S.fx.play('flipall'); } }
@@ -651,10 +651,11 @@ function drawCard12(g, c, S) {
     else { g.fillStyle = c.done ? '#f6ecd2' : '#efe5cf'; rrect(g, -CW / 2, -CH / 2, CW, CH, 8); g.fill(); }
     g.strokeStyle = c.done ? '#d9a84a' : 'rgba(90,70,40,.5)'; g.lineWidth = c.done ? 2.5 : 1; g.stroke();
     g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = '#2a1f14';
-    if (c.name) { // 이름 카드
-      const words = d[0].split(' '), two = d[0].length > 6 && words.length > 1;
+    if (c.name) { // 이름 카드 (icons: 축복 카드와 같은 그림 글자를 위에)
+      const words = d[0].split(' '), two = d[0].length > 6 && words.length > 1, oy = S.icons ? 9 : 0;
+      if (S.icons) { g.font = '17px "Apple Color Emoji","Noto Color Emoji",sans-serif'; g.fillText(d[1], 0, -14); }
       g.font = `800 ${d[0].length > 9 ? 13 : 15}px "Noto Sans KR",sans-serif`;
-      if (two) { const h = Math.ceil(words.length / 2); g.fillText(words.slice(0, h).join(' '), 0, -9); g.fillText(words.slice(h).join(' '), 0, 10); } else g.fillText(d[0], 0, 0);
+      if (two) { const h = Math.ceil(words.length / 2); g.fillText(words.slice(0, h).join(' '), 0, -9 + oy); g.fillText(words.slice(h).join(' '), 0, 10 + oy); } else g.fillText(d[0], 0, oy);
     } else { // 이야기 카드: 그림 글자 + 한 줄
       g.font = '24px "Apple Color Emoji","Noto Color Emoji",sans-serif'; g.fillText(d[1], 0, -12);
       let fs = 11; g.font = `600 ${fs}px "Noto Sans KR",sans-serif`; while (g.measureText(d[2]).width > CW - 8 && fs > 8) g.font = `600 ${--fs}px "Noto Sans KR",sans-serif`; // 카드 폭에 맞게
@@ -1341,10 +1342,11 @@ const TRIBES = [
   [tr('납달리'), '🦌', tr('놓인 암사슴'), tr('창 49:21')], [tr('베냐민'), '🐺', tr('물어뜯는 이리'), tr('창 49:27')],
   [tr('에브라임'), '🐂', tr('첫 수송아지 같은 위엄'), tr('신 33:17')], [tr('므낫세'), '🌿', tr('담을 넘은 무성한 가지'), tr('창 49:22 · 신 33:17')],
 ];
-const tribes = { ...twelve, title: tr('실로에서 나눈 땅'), task: tr('열두 지파와 그 축복 짝 맞추기'), data: TRIBES, scene: 'm39', art: ['m39/bg', 'm39/back', 'e22/face'],
+// 이름 카드에도 축복의 그림 글자를 — 창세기 49장을 외우지 않아도 그림으로 짝을 찾고, 맞추며 축복을 읽게(사용자 2026-11: '유다가 사자인 것밖에 모르겠다')
+const tribes = { ...twelve, icons: true, title: tr('실로에서 나눈 땅'), task: tr('열두 지파와 그 축복 짝 맞추기'), data: TRIBES, scene: 'm39', art: ['m39/bg', 'm39/back', 'e22/face'],
   ask: [tr('이제 이 땅을 열두 지파에게 제비 뽑아 나누었다.'), tr('야곱이 아들들에게 남긴 축복을 기억하니? 지파와 그 축복을 짝지어 보렴.')],
   quote: tr('이들은 이스라엘의 열두 지파라 … 각 사람의 분량대로 축복하였더라'), ref: tr('창 49:28'),
-  help: tr('처음 3초 동안 카드를 모두 보여 줘요 — 잘 봐 두세요.<br>두 장씩 뒤집어 지파 이름과 그 축복을 짝지어요. 틀리면 다시 덮여요.'),
+  help: tr('처음 3초 동안 카드를 모두 보여 줘요 — 잘 봐 두세요.<br>두 장씩 뒤집어 <b>같은 그림</b>의 지파 이름과 그 축복을 짝지어요. 틀리면 다시 덮여요.'),
   endLines: [tr('여호와께서 조상들에게 맹세하신 온 땅을'), tr('이스라엘에게 다 주셨으므로'), tr('수 21:43')] };
 
 /* ---------- 다섯 개의 매끄러운 돌 (삼상 17:40–50): 물매로 골리앗의 이마를 — 겨누기 ---------- */
