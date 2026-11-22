@@ -267,7 +267,7 @@ const SAME = 5; // 이만큼 붙은 장면은 같은 자리로 친다 (걷지 �
 // 발자국 (빛기둥 대신 — 빛기둥은 너무 빤한 힌트였다, 사용자 2026-11): 목적지 TRACK km 안쪽에만 그분이 걸어가신 굽은 발자국이 있고,
 // 내 둘레 PRINT_R km 안의 것만 보인다. 그 언저리까지는 단서로 찾아가고, 발자국을 만나면 따라간다
 const TRACK = 10, PRINT_R = 2.8, PRINT_GAP = 0.3, MAXP = 220; // 발은 키(약 1.3)의 6분의 1쯤 — 작게 하는 대신 촘촘히 (컸을 때는 사람보다 커 보였다, 사용자 2026-11)
-// 등불 기름(사용자 2026-11): 길을 물을 때마다 한 방울씩 쓴다 — 이름 알려 주기 1, 방향 화살표 1. 말씀 카드를 얻으면 채워진다(금 카드 2, 은·동 1), 보물도 1.
+// 등불 기름(사용자 2026-11): 길을 물을 때마다 한 방울씩 쓴다 — 이름 알려 주기 1, 방향 화살표 1. 그분을 만나 말씀을 받으면 등불이 다시 채워진다(시 119:105 — 금 카드 2, 은·동 1).
 // 점수를 깎던 것보다 손에 쥔 것이 줄어드는 게 잘 보였다. 여정마다 따로(진행 기록 oil), 처음 5·많아야 9 (마 25:4 슬기로운 처녀들의 기름)
 const OIL0 = 5, OILMAX = 9;     // 이만큼 다가가야 그분이 보인다  // 이만큼(km) 다가가면 도착
 const WALK = 30;   // 하루에 걷는 거리(km) — '몇 일째'
@@ -682,7 +682,7 @@ function reveal(e, stars, straight) {
     const pts = Math.max(10, stars * 100 + Math.round(G.meetLeft || 0) * 10 + (G.bonus || 0)), got = collect(e, stars, pts), fresh = got.fresh, oil = addOil(stars === 3 ? 2 : 1);
     const v = showCard(tcard(e, G.idx, { s: stars, p: pts }, 'big reveal'),
       `<div class="row"><a class="go ghost" href="${appLink(e)}" data-listen>${tr('이 장면 듣기')}</a><button class="go" id="next">${nextLabel()}</button></div>`,
-      `<p class="gotcard">${fresh ? tr('새 말씀 카드!') : got.best ? tr('최고 기록 갱신!') : tr('이미 모은 카드')} ${tr(' +{0}점', num(pts))}${straight >= SAME * 1.5 ? tr(' · 걸은 길 {0}km / 곧은 길 {1}km', Math.round(G.legWalked), Math.round(straight)) : ''}${oil ? tr(' · 등불 기름 +{0}', oil) : ''}</p>`);
+      `<p class="gotcard">${fresh ? tr('새 말씀 카드!') : got.best ? tr('최고 기록 갱신!') : tr('이미 모은 카드')} ${tr(' +{0}점', num(pts))}${straight >= SAME * 1.5 ? tr(' · 걸은 길 {0}km / 곧은 길 {1}km', Math.round(G.legWalked), Math.round(straight)) : ''}</p>${oil ? `<p class="gotcard oilnote">${tr('말씀이 등불을 채웠어요 +{0}<br><small>주의 말씀은 내 발에 등이요 · 시 119:105</small>', oil)}</p>` : ''}`);
     v.querySelector('#next').onclick = () => { closeSheet(); G.idx++; save(); G.idx < G.events.length ? startLeg() : finish(); };
   }
 }
@@ -786,11 +786,11 @@ function foundTreasure(h) {
   brand();
   const t = TLIST.find(x => x.id === h.id), sp = G.tfx[h.id];
   if (sp) { G.scene.remove(sp); sp.material.dispose(); delete G.tfx[h.id]; } // 반짝임 재질만 버린다 (빛 그림은 함께 쓴다)
-  G.hide = G.hide.filter(x => x !== h); G.foundRun = (G.foundRun || 0) + 1; const oil = addOil(1);
+  G.hide = G.hide.filter(x => x !== h); G.foundRun = (G.foundRun || 0) + 1;
   const d = tdeck(), fresh = !d[t.id]; d[t.id] = (d[t.id] || 0) + 1; store.set(tkey(), d); save(); drawCardBtn();
   snd.play('treasure');
   const v = showCard(treasureCard(t, tsrc(t), 'big reveal', esc), `<div class="row"><button class="go" id="tBack">${tr('계속 걷기')}</button></div>`,
-    `<p class="gotcard">${tr('숨겨진 보물을 찾았어요! · {0}', RARITY[t.rarity].name)}${fresh ? tr(' · +{0}점', RARITY[t.rarity].pts) : tr(' · 이미 찾은 보물')}${oil ? tr(' · 등불 기름 +{0}', oil) : ''}</p>`);
+    `<p class="gotcard">${tr('숨겨진 보물을 찾았어요! · {0}', RARITY[t.rarity].name)}${fresh ? tr(' · +{0}점', RARITY[t.rarity].pts) : tr(' · 이미 찾은 보물')}</p>`);
   v.querySelector('#tBack').onclick = closeSheet;
 }
 function openCards() {
@@ -1048,6 +1048,7 @@ async function begin(fresh) {
   await G.world.ready; $('#loading').classList.add('hidden');
   spawnPatrols(); placeLocals();
   startLeg();
+  if (G.idx === 0) G.askT = 9; // 첫 출발에는 방향 화살표를 한 번 거저 보여 준다(사용자 2026-11)
   if (G.idx === 0) toast(tr('{0}님, {1:을/를} 따라 걸어요<small>지도에서 장소 이름을 찾아 걸어가세요 · 가까이 가면 그분의 발자국이 보여요</small>', esc(me.name), esc(J.who)), true, 4200);
 }
 
@@ -1278,6 +1279,6 @@ async function minisGate() {
   } catch { box('로그인 도구를 불러오지 못했어요.'); }
 }
 if (new URLSearchParams(location.search).has('minis')) minisGate();
-if (new URLSearchParams(location.search).has('debug')) window.__game = { G, me, pv, toXZ, goalXZ, steer: (x, z) => { stick.x = x; stick.y = z; }, startLeg: (...a) => startLeg(...a), wetAt: (x, z) => wetAt(x, z), standXZ: () => standXZ(), mini: (id, cb) => playMiniGame(MINI[JID][id], cb || (r => console.log('mini', JSON.stringify(r)))), meet: () => meet(), pick: id => { G.idx = G.events.findIndex(e => e.id === id); pickWord(G.events[G.idx], () => {}); } }; // 끝까지 자동으로 걸어 보는 확인용
+if (new URLSearchParams(location.search).has('debug')) window.__game = { G, me, pv, toXZ, goalXZ, steer: (x, z) => { stick.x = x; stick.y = z; }, startLeg: (...a) => startLeg(...a), wetAt: (x, z) => wetAt(x, z), standXZ: () => standXZ(), mini: (id, cb) => playMiniGame(MINI[JID][id], cb || (r => console.log('mini', JSON.stringify(r)))), meet: () => meet(), pick: id => { G.idx = G.events.findIndex(e => e.id === id); pickWord(G.events[G.idx], () => {}); }, reveal: (id, s = 3) => { G.idx = G.events.findIndex(e => e.id === id); reveal(G.events[G.idx], s, 0); } }; // 끝까지 자동으로 걸어 보는 확인용
 setupUI(); resize();
 requestAnimationFrame(frame);

@@ -1068,5 +1068,5 @@
  "{0:으로/로} 가세요<small>지도에서 이름을 찾아보세요 · 등불 기름 한 방울을 썼어요</small>": "Head for {0}<small>Find the name on the map · used a drop of lamp oil</small>",
  "이쪽으로 가세요<small>안드레는 기름 없이 길을 물어요</small>": "This way<small>Andrew asks the way without oil</small>",
  "이쪽으로 가세요<small>등불 기름 한 방울을 썼어요</small>": "This way<small>Used a drop of lamp oil</small>",
- " · 등불 기름 +{0}": " · Lamp oil +{0}"
+ "말씀이 등불을 채웠어요 +{0}<br><small>주의 말씀은 내 발에 등이요 · 시 119:105</small>": "The word refilled your lamp +{0}<br><small>Your word lights the path at my feet · Ps 119:105</small>"
 }
