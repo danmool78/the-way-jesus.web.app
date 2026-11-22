@@ -214,7 +214,9 @@ export class StageModel {
   fadeTo(op) {
     if (Math.abs(op - this.op) < 0.004) return;
     const solid = op > 0.995;
-    this.mats.forEach(m => { if (m.alphaHash !== !solid) { m.alphaHash = !solid; m.needsUpdate = true; } m.opacity = solid ? 1 : op; });
+    // 나타나고 사라지는 동안(점 뿌리기 반투명)은 앞면만 — 양면 재질이라 뒤통수에 뚫린 틈으로 얼굴 안쪽(눈·코·입)이 먼저 비쳤다(p06, 사용자 2026-11)
+    this.mats.forEach(m => { if (m.userData.side0 === undefined) m.userData.side0 = m.side;
+      if (m.alphaHash !== !solid) { m.alphaHash = !solid; m.side = solid ? m.userData.side0 : THREE.FrontSide; m.needsUpdate = true; } m.opacity = solid ? 1 : op; });
     this.op = op;
   }
   aim(b, child, dir, w) { aimBone(b, child, dir, w); }
@@ -503,6 +505,6 @@ export function crowdPerson(gltf, height) {
   // 나타나고 사라질 때: 무리 전체를 키우니 사람들이 가운데서 사방으로 날아왔다(사용자 2026-11) — 제자리에서 스르륵(점묘 투명도)
   let op = -1;
   let stoneOn = false; // 돌은 거의 다 나타났을 때 함께 (돌 재질은 여럿이 같이 써서 투명하게 하지 않는다)
-  const fade = v => { stone.visible = stoneOn && v > 0.5; if (Math.abs(v - op) < 0.004) return; const solid = v > 0.995; mats.forEach(m => { if (m.alphaHash !== !solid) { m.alphaHash = !solid; m.needsUpdate = true; } m.opacity = solid ? 1 : v; }); op = v; };
+  const fade = v => { stone.visible = stoneOn && v > 0.5; if (Math.abs(v - op) < 0.004) return; const solid = v > 0.995; mats.forEach(m => { if (m.userData.side0 === undefined) m.userData.side0 = m.side; if (m.alphaHash !== !solid) { m.alphaHash = !solid; m.side = solid ? m.userData.side0 : THREE.FrontSide; m.needsUpdate = true; } m.opacity = solid ? 1 : v; }); op = v; }; // 군중도 나타나는 동안은 앞면만(얼굴 안쪽이 비치지 않게)
   return { obj: body, pose: (...a) => { pose(...a); stoneOn = stone.visible; }, stone, fade };
 }
