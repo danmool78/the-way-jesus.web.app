@@ -3659,8 +3659,96 @@ const counsel = {
   },
 };
 
-export const MINI = { jesus: { e04: magi, e05: egypt, e07: boyJesus, e11: cana, e17: fishing, e22: twelve, e23: rock, e28: bail, e31: loaves, e32: water, e39: stones, e42: sheep, e43: coin, e46: climb, e48: palms, e59: tiberias },
-  david: { d01: herdDavid, d03: lyre, d05: sling, d10: arrows, d16: cave, d24: arkDance, d38: templeStones }, moses: { m02: nile, m09: redSea, m15: counsel, m12: manna, m14: hands, m35: jericho, m39: tribes }, paul: { a04: wallBasket, a17: prison, a35: storm, a36: wreck, a37: viper }, kings: { k15: carmel, k24: naaman, k25: axe, k26: dothan, k30: lastArrow } };
+/* ---------- 그림 퍼즐(사용자 2026-11): 놀이로 만들기 애매한 장면에 — 그 장면의 말씀 카드 그림을 3×3으로 잘라 한 칸을 비우고 밀어 맞춘다 ---------- */
+// 그림은 말씀 카드(assets/cards.json → R2). 못 받으면 번호 칸으로. 섞는 것은 '가장 짧게 풀어도 PZ_D번'인 자리로 고르게(BFS) — 운에 따라 너무 쉽거나 어렵지 않게
+const PZ_N = 3, PZ_BW = 312, PZ_BH = Math.round(312 * 964 / 720), PZ_X = (W - PZ_BW) / 2, PZ_Y = 66, PZ_TW = PZ_BW / PZ_N, PZ_TH = PZ_BH / PZ_N, PZ_D = 18, PZ_SHOW = 1.8;
+const PZ_IMG = {}; let PZ_CARDS = null, PZ_DIST = null;
+function pzImg(id) {
+  if (typeof Image === 'undefined') return null;
+  if (!PZ_IMG[id]) { PZ_IMG[id] = new Image();
+    (PZ_CARDS ||= fetch('assets/cards.json').then(r => r.json()).catch(() => null)).then(c => { PZ_IMG[id].src = c?.files?.[id] ? `${c.base}/${c.files[id]}` : `_src/cards/out/${id}.webp`; }); }
+  const a = PZ_IMG[id]; return a.complete && a.naturalWidth ? a : null;
+}
+// 상태: 길이 9의 배열(칸 → 조각 번호, 8은 빈칸). 다 맞춘 자리에서 넓이 우선으로 걸어 모든 자리의 최단 수를 잰다(18만 자리, 한 번만)
+const pzKey = s => s.reduce((a, v) => a * 9 + v, 0);
+const pzNext = s => { const e = s.indexOf(8), r = Math.floor(e / 3), c = e % 3, out = [];
+  for (const [dr, dc] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) { const rr = r + dr, cc = c + dc; if (rr < 0 || rr > 2 || cc < 0 || cc > 2) continue;
+    const t = s.slice(), j = rr * 3 + cc; t[e] = t[j]; t[j] = 8; out.push(t); } return out; };
+function pzDist() { if (PZ_DIST) return PZ_DIST; const goal = [0, 1, 2, 3, 4, 5, 6, 7, 8], D = new Map([[pzKey(goal), 0]]), byD = [[goal]]; let q = [goal];
+  while (q.length) { const nq = []; for (const s of q) { const d = D.get(pzKey(s)); for (const t of pzNext(s)) { const k = pzKey(t); if (!D.has(k)) { D.set(k, d + 1); (byD[d + 1] ||= []).push(t); nq.push(t); } } } q = nq; }
+  return PZ_DIST = { D, byD };
+}
+const puzzleBase = {
+  task: tr('조각을 밀어 그림을 맞추기'), seconds: 82,
+  ask: [tr('그날의 그림이 조각조각 흩어졌구나.'), tr('조각을 밀어 다시 맞춰 보겠니?')],
+  help: tr('먼저 다 맞춘 그림을 잠깐 보여 주고 섞어요.<br>빈칸 옆 조각을 <b>누르면 빈칸으로 밀려 가요</b>(같은 줄이면 여러 조각이 함께). PC는 방향키. 왼쪽 위의 작은 그림을 보며 맞춰요.'),
+  preload() { pzImg(this.card); pzDist(); },
+  init() { const { byD } = pzDist(), pick = byD[PZ_D][Math.floor(Math.random() * byD[PZ_D].length)].slice();
+    const S = { s: [0, 1, 2, 3, 4, 5, 6, 7, 8], to: pick, pos: [], moves: 0, t: 0, done: false };
+    for (let i = 0; i < 9; i++) S.pos[i] = this.cell(i); return S; },
+  cell(i) { return [PZ_X + (i % 3) * PZ_TW, PZ_Y + Math.floor(i / 3) * PZ_TH]; },
+  slide(S, j) { // 빈칸과 같은 줄·칸의 조각을 누르면 그 사이 조각들이 함께 빈칸 쪽으로
+    if (S.t < PZ_SHOW || S.done) return; const e = S.s.indexOf(8), er = Math.floor(e / 3), ec = e % 3, r = Math.floor(j / 3), c = j % 3;
+    if (j === e || (r !== er && c !== ec)) { S.fx.play('miss'); return; }
+    const step = r === er ? (c > ec ? 1 : -1) : (r > er ? 3 : -3); let k = e;
+    while (k !== j) { S.s[k] = S.s[k + step]; S.s[k + step] = 8; k += step; S.moves++; }
+    S.fx.play('flip'); if (this.won(S)) S.done = true;
+  },
+  down(x, y, S) { const c = Math.floor((x - PZ_X) / PZ_TW), r = Math.floor((y - PZ_Y) / PZ_TH); if (c >= 0 && c < 3 && r >= 0 && r < 3) this.slide(S, r * 3 + c); },
+  up() {},
+  key(k, S) { const e = S.s.indexOf(8), r = Math.floor(e / 3), c = e % 3, m = { ArrowLeft: [0, 1], ArrowRight: [0, -1], ArrowUp: [1, 0], ArrowDown: [-1, 0] }[k]; if (!m) return false;
+    const rr = r + m[0], cc = c + m[1]; if (rr >= 0 && rr < 3 && cc >= 0 && cc < 3) this.slide(S, rr * 3 + cc); },
+  update(dt, S) { const was = S.t < PZ_SHOW; S.t += dt; if (was && S.t >= PZ_SHOW) { S.s = S.to; S.fx.play('go'); }
+    S.s.forEach((p, i) => { if (p === 8) return; const [x, y] = this.cell(i), q = S.pos[p], f = 1 - Math.exp(-dt * (S.t < PZ_SHOW + 0.6 ? 7 : 22)); q[0] += (x - q[0]) * f; q[1] += (y - q[1]) * f; }); },
+  won(S) { return S.t >= PZ_SHOW && S.s.every((p, i) => p === i); },
+  tile(g, S, p, x, y, gap, img) {
+    g.save(); g.beginPath(); g.roundRect(x + gap, y + gap, PZ_TW - gap * 2, PZ_TH - gap * 2, gap ? 6 : 0); g.clip();
+    if (img) { const sw = img.naturalWidth / 3, sh = img.naturalHeight / 3; g.drawImage(img, (p % 3) * sw, Math.floor(p / 3) * sh, sw, sh, x, y, PZ_TW, PZ_TH); }
+    else { g.fillStyle = `hsl(${30 + p * 25},35%,${30 + (p % 3) * 8}%)`; g.fillRect(x, y, PZ_TW, PZ_TH); g.fillStyle = '#f4ecd2'; g.font = '700 40px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillText(p + 1, x + PZ_TW / 2, y + PZ_TH / 2 + 14); }
+    g.restore();
+    if (gap) { g.strokeStyle = 'rgba(255,240,200,.35)'; g.lineWidth = 1.5; g.beginPath(); g.roundRect(x + gap, y + gap, PZ_TW - gap * 2, PZ_TH - gap * 2, 6); g.stroke(); }
+  },
+  draw(g, S) {
+    const img = pzImg(this.card), bg = g.createLinearGradient(0, 0, 0, H); bg.addColorStop(0, '#2a2118'); bg.addColorStop(1, '#15100b'); g.fillStyle = bg; g.fillRect(0, 0, W, H);
+    // 판(빈칸 자리가 보이게 어둡게 파인 바닥)
+    g.fillStyle = '#0d0906'; g.beginPath(); g.roundRect(PZ_X - 6, PZ_Y - 6, PZ_BW + 12, PZ_BH + 12, 10); g.fill(); g.strokeStyle = '#7a6040'; g.lineWidth = 2; g.stroke();
+    const show = S.t < PZ_SHOW;
+    if (show) { for (let p = 0; p < 9; p++) { const [x, y] = this.cell(p); this.tile(g, S, p, x, y, 0, img); } }
+    else for (let p = 0; p < 8; p++) this.tile(g, S, p, S.pos[p][0], S.pos[p][1], 2.5, img);
+    // 왼쪽 위의 작은 본보기 그림
+    g.save(); g.fillStyle = '#0d0906'; g.fillRect(14, 6, 40, 54); if (img) g.drawImage(img, 16, 8, 36, 50); g.strokeStyle = '#c9a35e'; g.lineWidth = 1.5; g.strokeRect(15, 7, 38, 52); g.restore();
+    g.textAlign = 'left'; g.fillStyle = '#e9dcbc'; g.font = '700 15px "Noto Sans KR",sans-serif';
+    g.fillText(show ? tr('잘 보아 두세요…') : tr('{0}번 밀었어요', S.moves), 66, 30);
+    g.font = '500 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#a8977a'; g.fillText(show ? tr('곧 조각이 섞여요') : tr('빈칸 옆 조각을 누르세요'), 66, 49);
+  },
+  end(g, k, S) { // 마지막 칸이 채워지고 금빛 테가 돈 뒤 말씀
+    S.s = [0, 1, 2, 3, 4, 5, 6, 7, 8]; const img = pzImg(this.card); this.draw(g, S);
+    g.save(); g.globalAlpha = Math.min(1, k * 2); this.tile(g, S, 8, ...this.cell(8), 0, img);
+    for (let p = 0; p < 8; p++) this.tile(g, S, p, ...this.cell(p), 0, img); g.restore();
+    g.save(); g.strokeStyle = `rgba(240,200,110,${0.9 * Math.min(1, k * 2)})`; g.lineWidth = 4; g.shadowColor = '#f0c060'; g.shadowBlur = 18 * k; g.strokeRect(PZ_X - 2, PZ_Y - 2, PZ_BW + 4, PZ_BH + 4); g.restore();
+    if (k > 0.35) { const [a, b, r] = this.endLines; g.save(); g.globalAlpha = clamp((k - 0.35) * 2, 0, 1); g.fillStyle = 'rgba(20,14,8,.84)'; g.fillRect(0, 372, W, 90);
+      g.font = '700 17px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#f6eedc'; g.fillText(a, W / 2, 402); g.fillText(b, W / 2, 427);
+      g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#cdbf9e'; g.fillText(r, W / 2, 448); g.restore(); }
+  },
+};
+const pzBethlehem = { ...puzzleBase, card: 'e02', title: tr('베들레헴의 밤'),
+  quote: tr('오늘 다윗의 동네에 너희를 위하여 구주가 나셨으니 곧 그리스도 주시니라'), ref: tr('눅 2:11'),
+  endLines: [tr('강보에 싸여 구유에 누인 아기를 보리니'), tr('이것이 너희에게 표적이니라'), tr('눅 2:12')] };
+const pzBush = { ...puzzleBase, card: 'm04', title: tr('불붙은 떨기나무'),
+  quote: tr('네가 선 곳은 거룩한 땅이니 네 발에서 신을 벗으라'), ref: tr('출 3:5'),
+  endLines: [tr('나는 스스로 있는 자이니라'), tr('스스로 있는 자가 나를 너희에게 보내셨다 하라'), tr('출 3:14')] };
+const pzAnoint = { ...puzzleBase, card: 'd02', title: tr('이새의 막내에게 부은 기름'),
+  quote: tr('사람은 외모를 보거니와 나 여호와는 중심을 보느니라'), ref: tr('삼상 16:7'),
+  endLines: [tr('이 날 이후로 다윗이'), tr('여호와의 영에게 크게 감동되니라'), tr('삼상 16:13')] };
+const pzTemple = { ...puzzleBase, card: 'k03', title: tr('구름이 가득한 성전'),
+  quote: tr('하늘과 하늘들의 하늘이라도 주를 용납하지 못하겠거든 하물며 내가 건축한 이 성전이오리이까'), ref: tr('왕상 8:27'),
+  endLines: [tr('구름이 여호와의 성전에 가득하매'), tr('여호와의 영광이 성전에 가득함이었더라'), tr('왕상 8:10–11')] };
+const pzDamascus = { ...puzzleBase, card: 'a02', title: tr('다메섹 길의 빛'),
+  quote: tr('사울아 사울아 네가 어찌하여 나를 박해하느냐'), ref: tr('행 9:4'),
+  endLines: [tr('나는 네가 박해하는 예수라'), tr('일어나 시내로 들어가라'), tr('행 9:5–6')] };
+
+export const MINI = { jesus: { e02: pzBethlehem, e04: magi, e05: egypt, e07: boyJesus, e11: cana, e17: fishing, e22: twelve, e23: rock, e28: bail, e31: loaves, e32: water, e39: stones, e42: sheep, e43: coin, e46: climb, e48: palms, e59: tiberias },
+  david: { d01: herdDavid, d02: pzAnoint, d03: lyre, d05: sling, d10: arrows, d16: cave, d24: arkDance, d38: templeStones }, moses: { m02: nile, m04: pzBush, m09: redSea, m15: counsel, m12: manna, m14: hands, m35: jericho, m39: tribes }, paul: { a02: pzDamascus, a04: wallBasket, a17: prison, a35: storm, a36: wreck, a37: viper }, kings: { k03: pzTemple, k15: carmel, k24: naaman, k25: axe, k26: dothan, k30: lastArrow } };
 
 /* ---------- 놀이 틀: 소개 → 놀이(제한 시간) → 성공 연출/실패 → 결과 ---------- */
 // host: 모달 안의 상자. fx: { play, pour } (game-audio.js). 끝나면 done({ ok, left, tries })
@@ -3672,7 +3760,7 @@ export function playMini(game, host, fx, done) {
       <div class="mpanel intro"><q>${game.quote}</q><cite>${game.ref}</cite><p>${game.help}</p><button class="go">${tr('시작')}</button></div>
     </div></div>`;
   host._mini = () => S; // 확인용(캡처 스크립트)
-  (game.art || []).forEach(art); // 그림 조각을 소개 화면 동안 미리 받는다
+  (game.art || []).forEach(art); game.preload?.(); // 그림 조각을 소개 화면 동안 미리 받는다
   const cv = host.querySelector('canvas'), g = cv.getContext('2d'), stage = host.querySelector('.mstage'), bar = host.querySelector('.mtime i'), sec = host.querySelector('.mtime em');
   // 글이 화면 밖으로 넘치지 않게(사용자 2026-11: 긴 끝 말씀이 잘렸다): 너비를 주지 않은 글이 화면 폭보다 길면 글씨를 줄여 한 줄에 맞춘다.
   // 가운데 맞춤은 화면 폭, 왼쪽·오른쪽 맞춤은 그 자리에서 화면 끝까지. 그래도 넘치면 마지막으로 좌우를 눌러 담는다
