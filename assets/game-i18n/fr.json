@@ -313,7 +313,6 @@
  "제사장들의 양각 나팔 소리에 맞춰 걸어라 — 마지막엔 크게 외쳐라!": "Marche au rythme des cors des prêtres — et à la fin, pousse un grand cri !",
  "일곱째 날에는 그 성을 일곱 번 돌며 제사장들은 나팔을 불 것이며": "Le septième jour, vous ferez sept fois le tour de la ville, et les prêtres sonneront du cor",
  "수 6:4": "Jos 6:4",
- "나팔(음표)이 오른쪽에서 흘러와요. 왼쪽 원에 닿을 때 화면을 눌러요.<br>날이 갈수록 빨라져요. 여섯 번 놓치면 흐트러져요. 마지막에 \"외치라!\" — 마구 눌러요!": "Les cors (notes) arrivent par la droite. Touche l’écran quand ils atteignent le cercle de gauche.<br>Ça va de plus en plus vite. Six ratés et tout se désordonne. À la fin : « Criez ! » — tape à toute vitesse !",
  "일곱째 날 — 외치라!": "Septième jour — criez !",
  "{0}일째{1}": "Jour {0}{1}",
  " — 일곱 바퀴": " — sept tours",
@@ -338,7 +337,6 @@
  "종려가지를 박자에 맞춰 흔들어라 — 성문 앞에서는 크게 호산나!": "Agite les palmes en rythme — et devant la porte, crie bien fort Hosanna !",
  "종려나무 가지를 가지고 맞으러 나가 외치되 호산나 찬송하리로다": "Ils prirent des branches de palmiers, sortirent à sa rencontre et criaient : Hosanna ! Béni soit-il !",
  "요 12:13": "Jn 12:13",
- "종려가지(음표)가 오른쪽에서 흘러와요. 왼쪽 원에 닿을 때 눌러요.<br>길을 내려갈수록 빨라져요. 여섯 번 놓치면 흐트러져요. 마지막에 \"호산나!\" — 마구 눌러요!": "Les palmes (notes) arrivent par la droite. Touche quand elles atteignent le cercle de gauche.<br>Plus on descend le chemin, plus c’est rapide. Six ratés et tout se désordonne. À la fin : « Hosanna ! » — tape à toute vitesse !",
  "호산나! 찬송하리로다": "Hosanna ! Béni soit-il !",
  "호산나!": "Hosanna !",
  "마구 눌러 호산나!": "Tape vite : Hosanna !",
@@ -438,7 +436,6 @@
  "너도 함께 가자 — 소고 박자에 맞춰 발을 구르렴. 성문에 이르면 크게 환호하고!": "Viens avec nous — frappe du pied au rythme des tambourins. Et à la porte, crie de joie !",
  "다윗이 여호와 앞에서 힘을 다하여 춤을 추는데 그 때에 다윗이 베 에봇을 입었더라": "David dansait de toutes ses forces devant le Seigneur ; il était vêtu d’un éphod de lin",
  "삼하 6:14": "2 S 6:14",
- "소고(음표)가 오른쪽에서 흘러와요. 왼쪽 원에 닿을 때 눌러요.<br>여섯 걸음마다 잠깐 멈춰요(제사). 갈수록 빨라져요. 여섯 번 놓치면 흐트러져요. 마지막에 마구 눌러 환호해요!": "Les tambourins (notes) arrivent par la droite. Touche quand ils atteignent le cercle de gauche.<br>Tous les six pas, une courte pause (le sacrifice). Ça va de plus en plus vite. Six ratés et tout se désordonne. À la fin, tape vite pour crier de joie !",
  "즐거이 환호하며 나팔을 불고!": "Des cris de joie et le son des trompettes !",
  "환호하라!": "Criez de joie !",
  "마구 눌러 환호해요!": "Tape vite pour crier de joie !",
@@ -565,7 +562,6 @@
  "너도 같이 부르자 — 음표에 맞춰. 마지막엔 마음껏 소리 높여!": "Chante avec nous — en suivant les notes. Et à la fin, élève ta voix de tout ton cœur !",
  "한밤중에 바울과 실라가 기도하고 하나님을 찬송하매 죄수들이 듣더라": "Vers minuit, Paul et Silas priaient et chantaient les louanges de Dieu, et les prisonniers les écoutaient",
  "행 16:25": "Ac 16:25",
- "음표가 오른쪽에서 흘러와요. 왼쪽 원에 닿을 때 눌러요.<br>갈수록 빨라져요. 여섯 번 놓치면 흐트러져요. 마지막에 마구 눌러 찬송을 높이면 —": "Les notes arrivent par la droite. Touche quand elles atteignent le cercle de gauche.<br>Ça va de plus en plus vite. Six ratés et tout se désordonne. À la fin, tape vite pour élever la louange, et alors —",
  "소리 높여 찬송!": "Chantez plus fort !",
  "소리 높여!": "Plus fort !",
  "마구 눌러 찬송을 높여요!": "Tape vite pour élever la louange !",
@@ -1105,5 +1101,10 @@
  "행 9:4": "Ac 9:4",
  "나는 네가 박해하는 예수라": "Je suis Jésus, que tu persécutes",
  "일어나 시내로 들어가라": "Lève-toi et entre dans la ville",
- "행 9:5–6": "Ac 9:5–6"
+ "행 9:5–6": "Ac 9:5–6",
+ "나팔(음표)이 오른쪽에서 흘러와요. 왼쪽 원에 닿을 때 화면을 눌러요.<br>날이 갈수록 빨라져요. 박자가 들쭉날쭉해요 — 놓치거나 엇박에 누르는 게 여섯 번이면 흐트러져요. 마지막에 \"외치라!\" — 마구 눌러요!": "Les cors (notes) arrivent par la droite. Touche l’écran quand ils atteignent le cercle de gauche.<br>Ça va de plus en plus vite. Le rythme est irrégulier : six ratés ou touches à contretemps et tout se désordonne. À la fin : « Criez ! » — tape à toute vitesse !",
+ "종려가지(음표)가 오른쪽에서 흘러와요. 왼쪽 원에 닿을 때 눌러요.<br>길을 내려갈수록 빨라져요. 박자가 들쭉날쭉해요 — 놓치거나 엇박에 누르는 게 여섯 번이면 흐트러져요. 마지막에 \"호산나!\" — 마구 눌러요!": "Les palmes (notes) arrivent par la droite. Touche quand elles atteignent le cercle de gauche.<br>Plus on descend le chemin, plus c’est rapide. Le rythme est irrégulier : six ratés ou touches à contretemps et tout se désordonne. À la fin : « Hosanna ! » — tape à toute vitesse !",
+ "소고(음표)가 오른쪽에서 흘러와요. 왼쪽 원에 닿을 때 눌러요.<br>여섯 걸음마다 잠깐 멈춰요(제사). 갈수록 빨라져요. 박자가 들쭉날쭉해요 — 놓치거나 엇박에 누르는 게 여섯 번이면 흐트러져요. 마지막에 마구 눌러 환호해요!": "Les tambourins (notes) arrivent par la droite. Touche quand ils atteignent le cercle de gauche.<br>Tous les six pas, une courte pause (le sacrifice). Ça va de plus en plus vite. Le rythme est irrégulier : six ratés ou touches à contretemps et tout se désordonne. À la fin, tape vite pour crier de joie !",
+ "음표가 오른쪽에서 흘러와요. 왼쪽 원에 닿을 때 눌러요.<br>갈수록 빨라져요. 박자가 들쭉날쭉해요 — 놓치거나 엇박에 누르는 게 여섯 번이면 흐트러져요. 마지막에 마구 눌러 찬송을 높이면 —": "Les notes arrivent par la droite. Touche quand elles atteignent le cercle de gauche.<br>Ça va de plus en plus vite. Le rythme est irrégulier : six ratés ou touches à contretemps et tout se désordonne. À la fin, tape vite pour élever la louange, et alors —",
+ "엇박자!": "Contretemps !"
 }

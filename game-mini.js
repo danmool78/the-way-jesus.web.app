@@ -1476,7 +1476,7 @@ const jericho = {
   title: tr('무너진 성벽'), task: tr('나팔에 맞춰 일곱째 날까지 성 돌기'),
   ask: [tr('엿새 동안 날마다 이 성을 한 바퀴 돌고, 일곱째 날에는 일곱 바퀴를 돌라 하셨다.'), tr('제사장들의 양각 나팔 소리에 맞춰 걸어라 — 마지막엔 크게 외쳐라!')],
   quote: tr('일곱째 날에는 그 성을 일곱 번 돌며 제사장들은 나팔을 불 것이며'), ref: tr('수 6:4'),
-  help: tr('나팔(음표)이 오른쪽에서 흘러와요. 왼쪽 원에 닿을 때 화면을 눌러요.<br>날이 갈수록 빨라져요. 여섯 번 놓치면 흐트러져요. 마지막에 "외치라!" — 마구 눌러요!'),
+  help: tr('나팔(음표)이 오른쪽에서 흘러와요. 왼쪽 원에 닿을 때 화면을 눌러요.<br>날이 갈수록 빨라져요. 박자가 들쭉날쭉해요 — 놓치거나 엇박에 누르는 게 여섯 번이면 흐트러져요. 마지막에 "외치라!" — 마구 눌러요!'),
   seconds: 55,
   // 박자표 [박 수, 간격]: 날마다 여섯 박(1–6일은 0.85→0.6초 간격), 일곱째 날은 박자 열넷을 빠르게
   plan: [1, 2, 3, 4, 5, 6, 7].map(d => d < 7 ? [6, 0.9 - d * 0.05] : [14, 0.42]), art: ['m35/bg', 'm35/fallen', 'm35/priests', 'm35/ark', 'm35/people'],
@@ -1486,7 +1486,12 @@ const jericho = {
   endLines: [tr('백성이 큰 소리로 외쳐 부를 때에'), tr('성벽이 무너져 내린지라'), tr('수 6:20')],
   init() {
     const notes = []; let t = 1.6;
-    this.plan.forEach(([n, gap], i) => { for (let k = 0; k < n; k++) { notes.push({ t, day: i + 1, st: 0, last: i === this.plan.length - 1 }); t += gap; } t += 1.1; });
+    // 박자를 섞는다(사용자 2026-11: 고른 박자는 박자에 맞춰 막 눌러도 됐다) — 긴·짧은 박 묶음을 이어 붙이고, 구간 길이는 원래대로 맞춘다. 가장 짧은 박도 0.34초(판정 창이 겹치지 않게)
+    const RHY = [[1], [1], [1.5, 0.5], [0.5, 1.5], [0.75, 0.75, 1.5], [0.5, 0.5, 1]];
+    this.plan.forEach(([n, gap], i) => {
+      const u = []; while (u.length < n) u.push(...RHY[Math.floor(Math.random() * RHY.length)]); u.length = n;
+      const gs = u.map(x => Math.max(0.34, x * gap)), k = n * gap / gs.reduce((a, b) => a + b, 0);
+      gs.forEach((g, j) => { notes.push({ t, day: i + 1, st: 0, last: i === this.plan.length - 1 }); t += Math.max(0.34, g * k); }); t += 1.1; });
     return { notes, t: 0, miss: 0, hit: 0, combo: 0, msg: null, sparks: [], shout: 0, shoutOn: false, fall: 0, flash: 0, endT: t };
   },
   day(S) { const n = S.notes.find(n => !n.st); return n ? n.day : this.plan.length; },
@@ -1502,7 +1507,10 @@ const jericho = {
   down(x, y, S) {
     if (S.shoutOn) { if (!S.fall) { S.shout = Math.min(1, S.shout + 0.075); S.fx.play('shout'); if (S.shout >= 1) { S.fall = 0.001; S.fx.play(this.doneFx || 'collapse'); } } return; }
     const n = S.notes.filter(n => !n.st).sort((a, b) => Math.abs(a.t - S.t) - Math.abs(b.t - S.t))[0];
-    if (!n || Math.abs(n.t - S.t) > WIN) return; // 음표 근처가 아니면 그냥 (헛누름은 벌하지 않는다)
+    if (!n || Math.abs(n.t - S.t) > WIN) { // 엇박에 누르면 놓친 것과 같이 센다(사용자 2026-11: 막 눌러도 성공했다). 방금 맞힌 뒤 0.1초 안의 겹 누름은 봐준다
+      if (S.t - (S.lastHit ?? -9) < 0.1) return;
+      S.miss++; S.combo = 0; S.flash = 0; S.fx.play('miss'); S.msg = { t: tr('엇박자!'), c: '#ffb38a', at: 0.6, x: HITX + 50, y: LANE - 44 }; return; }
+    S.lastHit = S.t;
     const d = Math.abs(n.t - S.t); n.st = 1; S.hit++; S.combo++; for (const f of this.hitFx) S.fx.play(f); S.flash = 1;
     S.msg = { t: d < 0.08 ? tr('딱 맞게!') : tr('좋아요'), c: d < 0.08 ? '#ffe29a' : '#e8f0d0', at: 0.5, x: HITX + 50, y: LANE - 44 };
     for (let i = 0; i < (d < 0.08 ? 8 : 4); i++) S.sparks.push({ x: HITX + rnd(-12, 12), y: LANE + rnd(-12, 12), vy: rnd(-50, -15), life: rnd(0.3, 0.6), r: rnd(1.2, 2.4) });
@@ -1571,7 +1579,7 @@ const PALM_SEG = [tr('감람산 꼭대기'), tr('벳바게 비탈'), tr('길이 
 const palms = { ...jericho, title: tr('종려가지의 행렬'), task: tr('종려가지를 흔들며 성까지'),
   ask: [tr('오늘은 너도 저 무리 속에 서 보렴.'), tr('종려가지를 박자에 맞춰 흔들어라 — 성문 앞에서는 크게 호산나!')],
   quote: tr('종려나무 가지를 가지고 맞으러 나가 외치되 호산나 찬송하리로다'), ref: tr('요 12:13'),
-  help: tr('종려가지(음표)가 오른쪽에서 흘러와요. 왼쪽 원에 닿을 때 눌러요.<br>길을 내려갈수록 빨라져요. 여섯 번 놓치면 흐트러져요. 마지막에 "호산나!" — 마구 눌러요!'),
+  help: tr('종려가지(음표)가 오른쪽에서 흘러와요. 왼쪽 원에 닿을 때 눌러요.<br>길을 내려갈수록 빨라져요. 박자가 들쭉날쭉해요 — 놓치거나 엇박에 누르는 게 여섯 번이면 흐트러져요. 마지막에 "호산나!" — 마구 눌러요!'),
   seconds: 36, art: ['e48/bg', 'e48/rider', 'e48/crowd-a', 'e48/crowd-b'], plan: [[6, 0.78], [8, 0.62], [10, 0.5], [12, 0.4]],
   label: (S, d) => S.shoutOn ? tr('호산나! 찬송하리로다') : PALM_SEG[d - 1],
   shoutMsg: tr('호산나!'), shoutText: [tr('마구 눌러 호산나!'), tr('찬송하리로다!')], hitFx: ['swish', 'step'], doneFx: 'shout', note: palmNote, ink: '#2a2a18',
@@ -2140,7 +2148,7 @@ const ARK_SEG = [tr('오벧에돔의 집에서 — 여섯 걸음'), tr('제사�
 const arkDance = { ...jericho, title: tr('춤추며 올라온 법궤'), task: tr('소고 박자에 맞춰 다윗 성까지'),
   ask: [tr('여섯 걸음을 떼었을 때 나는 제사를 드렸고, 세마포 에봇을 입고 주 앞에서 힘을 다해 춤을 추었단다.'), tr('너도 함께 가자 — 소고 박자에 맞춰 발을 구르렴. 성문에 이르면 크게 환호하고!')],
   quote: tr('다윗이 여호와 앞에서 힘을 다하여 춤을 추는데 그 때에 다윗이 베 에봇을 입었더라'), ref: tr('삼하 6:14'),
-  help: tr('소고(음표)가 오른쪽에서 흘러와요. 왼쪽 원에 닿을 때 눌러요.<br>여섯 걸음마다 잠깐 멈춰요(제사). 갈수록 빨라져요. 여섯 번 놓치면 흐트러져요. 마지막에 마구 눌러 환호해요!'),
+  help: tr('소고(음표)가 오른쪽에서 흘러와요. 왼쪽 원에 닿을 때 눌러요.<br>여섯 걸음마다 잠깐 멈춰요(제사). 갈수록 빨라져요. 박자가 들쭉날쭉해요 — 놓치거나 엇박에 누르는 게 여섯 번이면 흐트러져요. 마지막에 마구 눌러 환호해요!'),
   seconds: 40, art: ['d24/bg', 'd24/david', 'd24/crowd', 'm35/ark'], plan: [[6, 0.74], [6, 0.64], [8, 0.54], [8, 0.47], [10, 0.41]],
   label: (S, d) => S.shoutOn ? tr('즐거이 환호하며 나팔을 불고!') : ARK_SEG[d - 1],
   shoutMsg: tr('환호하라!'), shoutText: [tr('마구 눌러 환호해요!'), tr('여호와의 궤가 다윗 성으로!')], hitFx: ['timbrel', 'step'], doneFx: 'horn', note: drumNote, ink: '#2a1e10',
@@ -2799,7 +2807,7 @@ const prison = { ...jericho, title: tr('한밤의 찬송과 흔들린 감옥'), 
   art: ['a17/bg', 'a17/paul-silas', 'a17/prisoners', 'a17/door-open'],
   ask: [tr('매를 맞고 발이 차꼬에 묶였어도, 실라와 나는 한밤중에 하나님을 찬송했단다.'), tr('너도 같이 부르자 — 음표에 맞춰. 마지막엔 마음껏 소리 높여!')],
   quote: tr('한밤중에 바울과 실라가 기도하고 하나님을 찬송하매 죄수들이 듣더라'), ref: tr('행 16:25'),
-  help: tr('음표가 오른쪽에서 흘러와요. 왼쪽 원에 닿을 때 눌러요.<br>갈수록 빨라져요. 여섯 번 놓치면 흐트러져요. 마지막에 마구 눌러 찬송을 높이면 —'),
+  help: tr('음표가 오른쪽에서 흘러와요. 왼쪽 원에 닿을 때 눌러요.<br>갈수록 빨라져요. 박자가 들쭉날쭉해요 — 놓치거나 엇박에 누르는 게 여섯 번이면 흐트러져요. 마지막에 마구 눌러 찬송을 높이면 —'),
   seconds: 36, plan: [[6, 0.85], [8, 0.7], [8, 0.58], [10, 0.48]],
   label: (S, d) => S.shoutOn ? tr('소리 높여 찬송!') : HYMN_SEG[d - 1],
   shoutMsg: tr('소리 높여!'), shoutText: [tr('마구 눌러 찬송을 높여요!'), tr('땅이 흔들린다!')], hitFx: ['plink'], doneFx: 'collapse', note: hymnNote, ink: '#f4ecd8',
