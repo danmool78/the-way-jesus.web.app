@@ -14,7 +14,7 @@ import { buildNav } from './game-nav.js';
 import { CHARS, STRENGTHS, effects, unlockedBy } from './game-chars.js';
 import { CAST, FOLLOW, SIZE, LEADS, GEAR, BOAT, SETS } from './game-cast.js';
 import { MINI, playMini } from './game-mini.js';
-import { t as tr, LANG, applyT } from './game-i18n.js';
+import { t as tr, LANG, LANGS, applyT } from './game-i18n.js';
 // 다른 언어: 고정 글씨·제목·문서 언어를 바꾼다 (game-i18n.js)
 applyT(); document.documentElement.lang = LANG; if (LANG !== 'ko') document.title = tr('그 길 — 순례 게임 | 걸어서 만나는 예수');
 
@@ -1230,6 +1230,30 @@ function frame(now) {
   drawTags();
 }
 
+// 놀이 점검(관리자 — 사용자 2026-11): game.html?minis — 여정별로 놀이를 모두 늘어놓고 바로 해 본다(링크 없이 주소로만).
+// 놀이 중 [성공 보기]·[실패 보기]로 끝 장면을 곧장 보고, 언어를 바꿔 번역도 본다. 마지막 결과는 이 기기에만(theway-game-minicheck)
+async function openMinis(j = store.get('theway-game-minicheck-j', 'jesus')) {
+  store.set('theway-game-minicheck-j', j);
+  const suf = LANG === 'ko' ? '' : '.' + LANG, url = JOURNEYS[j].data;
+  const [M, D] = await Promise.all([fetch('assets/cards.json').then(r => r.json()).catch(() => null), fetch(url.replace('.json', suf + '.json')).then(r => r.ok ? r.json() : fetch(url).then(r => r.json()))]);
+  const rec = store.get('theway-game-minicheck', {}), ev = id => D.events.find(e => e.id === id) || {}, img = id => M?.files?.[id] ? `${M.base}/${M.files[id]}` : '';
+  const ids = Object.keys(MINI[j] || {}).sort();
+  const s = sheet(`<div class="body minis"><small>그 길 순례 · 관리자</small><h2>놀이 점검</h2>
+    <div class="mjs">${Object.keys(JOURNEYS).map(k => `<button data-j="${k}" class="${k === j ? 'on' : ''}">${esc(JOURNEYS[k].short)} <b>${Object.keys(MINI[k] || {}).length}</b></button>`).join('')}</div>
+    <label class="mlang">언어 <select>${LANGS.map(l => `<option ${l === LANG ? 'selected' : ''}>${l}</option>`).join('')}</select></label>
+    <div class="mgrid">${ids.map(id => { const g = MINI[j][id], r = rec[j + id];
+      return `<button data-id="${id}"><span class="mimg" style="background-image:url('${img(id)}')"></span><small>${id} · ${esc(ev(id).title || '')}</small><b>${esc(g.title)}</b><i>${g.seconds}초${r ? ` · ${r.ok ? `성공 ${r.left}초 남음` : '실패'}` : ''}</i></button>`; }).join('')}</div>
+    <a class="go ghost" href="game.html${LANG === 'ko' ? '' : '?lang=' + LANG}">게임 로비로</a></div>`);
+  s.querySelector('.mjs').onclick = e => { const b = e.target.closest('[data-j]'); if (b) openMinis(b.dataset.j); };
+  s.querySelector('.mlang select').onchange = e => { location.search = `?minis&lang=${e.target.value}`; };
+  s.querySelector('.mgrid').onclick = e => { const b = e.target.closest('[data-id]'); if (!b) return; const id = b.dataset.id;
+    const v = sheet('<div class="mtools"><button data-w>성공 보기</button><button data-l>실패 보기</button><button data-x>목록으로</button></div><div class="mhost"></div>'); v.querySelector('.card').classList.add('minicard');
+    const host = v.querySelector('.mhost');
+    playMini(MINI[j][id], host, snd, r => { const R = store.get('theway-game-minicheck', {}); R[j + id] = { ok: r.ok, left: r.left || 0 }; store.set('theway-game-minicheck', R); v.querySelector('.card').classList.remove('minicard'); openMinis(j); });
+    v.querySelector('.mtools').onclick = ev2 => { const t = ev2.target; if (t.matches('[data-w]')) host._end(true); else if (t.matches('[data-l]')) host._end(false); else if (t.matches('[data-x]')) host._close(); };
+  };
+}
+if (new URLSearchParams(location.search).has('minis')) openMinis();
 if (new URLSearchParams(location.search).has('debug')) window.__game = { G, me, pv, toXZ, goalXZ, steer: (x, z) => { stick.x = x; stick.y = z; }, startLeg: (...a) => startLeg(...a), wetAt: (x, z) => wetAt(x, z), standXZ: () => standXZ(), mini: (id, cb) => playMiniGame(MINI[JID][id], cb || (r => console.log('mini', JSON.stringify(r)))), meet: () => meet(), pick: id => { G.idx = G.events.findIndex(e => e.id === id); pickWord(G.events[G.idx], () => {}); } }; // 끝까지 자동으로 걸어 보는 확인용
 setupUI(); resize();
 requestAnimationFrame(frame);
