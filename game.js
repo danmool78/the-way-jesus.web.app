@@ -1280,6 +1280,6 @@ async function minisGate() {
   } catch { box('로그인 도구를 불러오지 못했어요.'); }
 }
 if (new URLSearchParams(location.search).has('minis')) minisGate();
-if (new URLSearchParams(location.search).has('debug')) window.__game = { G, me, pv, toXZ, goalXZ, steer: (x, z) => { stick.x = x; stick.y = z; }, startLeg: (...a) => startLeg(...a), wetAt: (x, z) => wetAt(x, z), standXZ: () => standXZ(), mini: (id, cb) => playMiniGame(MINI[JID][id], cb || (r => console.log('mini', JSON.stringify(r)))), meet: () => meet(), pick: id => { G.idx = G.events.findIndex(e => e.id === id); pickWord(G.events[G.idx], () => {}); }, reveal: (id, s = 3) => { G.idx = G.events.findIndex(e => e.id === id); reveal(G.events[G.idx], s, 0); } }; // 끝까지 자동으로 걸어 보는 확인용
+if (new URLSearchParams(location.search).has('debug')) window.__game = { G, me, pv, toXZ, goalXZ, steer: (x, z) => { stick.x = x; stick.y = z; }, startLeg: (...a) => startLeg(...a), wetAt: (x, z) => wetAt(x, z), standXZ: () => standXZ(), mini: (id, cb) => playMiniGame(MINI[JID][id], cb || (r => console.log('mini', JSON.stringify(r)))), meet: () => meet(), pick: id => { G.idx = G.events.findIndex(e => e.id === id); pickWord(G.events[G.idx], () => {}); }, treasure: id => foundTreasure({ id }), reveal: (id, s = 3) => { G.idx = G.events.findIndex(e => e.id === id); reveal(G.events[G.idx], s, 0); } }; // 끝까지 자동으로 걸어 보는 확인용
 setupUI(); resize();
 requestAnimationFrame(frame);

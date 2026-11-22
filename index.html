@@ -295,8 +295,8 @@ const GAME_SHOTS = ['ko', 'en', 'es', 'fr', 'id', 'ja', 'pt', 'zh'];
 function gameShow(lang) {
   const L = GAME_SHOTS.includes(lang) ? lang : 'en', scr = document.getElementById('gameScr'), cap = document.getElementById('gameCap'), dots = document.getElementById('gameDots');
   document.getElementById('gameBk1').src = cardUrl('d05'); document.getElementById('gameBk2').src = cardUrl('m10');
-  const caps = [1, 2, 3, 4].map(n => t('landGameC' + n));
-  scr.innerHTML = [1, 2, 3, 4].map(n => `<img src="assets/land/game/${L}-${n}.webp?v=1" alt="" loading="lazy">`).join(''); dots.innerHTML = '<i></i>'.repeat(4);
+  const SL = [5, 3, 4, 2], caps = [1, 3, 4, 2].map(n => t('landGameC' + n)); // 보기 좋은 것부터(사용자 2026-11: 지도 화면은 멋지지 않다): 전설 보물 · 장면 놀이 · 말씀 카드 · 3D 만남
+  scr.innerHTML = SL.map(n => `<img src="assets/land/game/${L}-${n}.webp?v=2" alt="" loading="lazy">`).join(''); dots.innerHTML = '<i></i>'.repeat(4);
   const M = ['e11', 'd05', 'm35', 'e23', 'a35', 'k15', 'e42', 'm02', 'd03', 'e17', 'k26', 'm12', 'a37', 'e46', 'm09', 'd16', 'k30', 'e04', 'a04']; // 장면 놀이 화면(assets/land/minis — gameshots.mjs minis)
   document.getElementById('gameMinis').innerHTML = [...M, ...M].map(id => `<img src="assets/land/minis/${id}.webp?v=1" alt="" loading="lazy">`).join('');
   let k = 0; const show = () => { scr.querySelectorAll('img').forEach((im, i) => im.classList.toggle('on', i === k)); dots.querySelectorAll('i').forEach((d, i) => d.classList.toggle('on', i === k)); cap.textContent = caps[k]; };
