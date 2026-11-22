@@ -3786,7 +3786,7 @@ const spearJug = { ...cave, P: 'd18', who: 'saul', whoH: 130, whoX: 412, stopX: 
   art: ['d18/bg', 'd18/saul-a', 'd18/saul-b', 'd16/david-sneak'],
   T: { go: tr('창과 물병까지 살금살금'), act: tr('창과 물병을 집어요'), back: tr('어둠 속으로 돌아가요'), now: tr('지금 — 눌러서 창과 물병을 집어요'), done: tr('집었어요 — 이제 돌아가요'), caught: tr('아브넬이 깨었어요'), late: tr('날이 밝아 오고 있어요') },
   endLines: [tr('여호와께서 오늘 왕을 내 손에 넘기셨으나'), tr('기름 부음 받은 이에게 손을 대지 아니하였나이다'), tr('삼상 26:23')] };
-const nephew = { ...cave, P: 'a32', who: 'plot', whoH: 150, whoX: 412, stopX: 140, seconds: 17, sneaker: 'a32/boy', chip: 'rgba(0,0,0,0)',
+const nephew = { ...cave, P: 'a32', who: 'plot', whoH: 210, whoX: 410, stopX: 150, seconds: 17, sneaker: 'a32/boy', chip: 'rgba(0,0,0,0)',
   title: tr('조카가 엿들은 음모'), task: tr('들키지 않고 음모를 엿듣고 돌아오기'),
   ask: [tr('사십여 명이 나를 죽이기 전에는 먹지도 마시지도 않겠다고 맹세했단다.'), tr('내 누이의 아들이 그 말을 엿들었지 — 네가 그 아이가 되어 보렴. 그들이 돌아볼 땐 멈추고!')],
   quote: tr('담대하라 네가 예루살렘에서 나의 일을 증언한 것 같이 로마에서도 증언하여야 하리라'), ref: tr('행 23:11'),

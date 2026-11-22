@@ -968,7 +968,7 @@
   "plot-a": {
    "h": 420,
    "ratio": "16:9",
-   "p": "Wide side view: a group of four Jewish men in robes and head coverings huddled together whispering a secret plot by lamplight, all facing right toward each other, seen from the side. Night colors."
+   "p": "Wide side view, FULL BODY from head to feet with sandals visible, standing on the ground: a group of four Jewish men in long robes and head coverings huddled together whispering a secret plot by the light of a small oil lamp one of them holds, all facing right toward each other. Nobody cropped at the waist. Night colors."
   },
   "plot-b": {
    "h": 420,
@@ -976,7 +976,7 @@
    "ref": [
     "_src/mini-art/a32/plot-a.png"
    ],
-   "p": "Redraw the second reference image exactly the same — same four men, poses, clothes, lamp, framing and colors — with one change only: the leftmost man has turned his head to look suspiciously to the left over his shoulder."
+   "p": "Redraw the second reference image exactly the same — same four men full body head to feet, poses, clothes, lamp, framing and colors — with one change only: the leftmost man has turned his head to look suspiciously to the left over his shoulder. Keep the background perfectly flat pure green (#00FF00) like the reference."
   },
   "boy": {
    "h": 420,
