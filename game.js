@@ -267,7 +267,9 @@ const SAME = 5; // 이만큼 붙은 장면은 같은 자리로 친다 (걷지 �
 // 발자국 (빛기둥 대신 — 빛기둥은 너무 빤한 힌트였다, 사용자 2026-11): 목적지 TRACK km 안쪽에만 그분이 걸어가신 굽은 발자국이 있고,
 // 내 둘레 PRINT_R km 안의 것만 보인다. 그 언저리까지는 단서로 찾아가고, 발자국을 만나면 따라간다
 const TRACK = 10, PRINT_R = 2.8, PRINT_GAP = 0.3, MAXP = 220; // 발은 키(약 1.3)의 6분의 1쯤 — 작게 하는 대신 촘촘히 (컸을 때는 사람보다 커 보였다, 사용자 2026-11)
-const ASK = 50;    // '길 묻기' 한 번에 깎이는 카드 점수     // 이만큼 다가가야 그분이 보인다  // 이만큼(km) 다가가면 도착
+// 등불 기름(사용자 2026-11): 길을 물을 때마다 한 방울씩 쓴다 — 이름 알려 주기 1, 방향 화살표 1. 말씀 카드를 얻으면 채워진다(금 카드 2, 은·동 1), 보물도 1.
+// 점수를 깎던 것보다 손에 쥔 것이 줄어드는 게 잘 보였다. 여정마다 따로(진행 기록 oil), 처음 5·많아야 9 (마 25:4 슬기로운 처녀들의 기름)
+const OIL0 = 5, OILMAX = 9;     // 이만큼 다가가야 그분이 보인다  // 이만큼(km) 다가가면 도착
 const WALK = 30;   // 하루에 걷는 거리(km) — '몇 일째'
 
 function waterMesh(poly, color) {
@@ -502,8 +504,11 @@ addEventListener('wheel', e => { if (!G.me || !$('#setup').classList.contains('h
 }
 $('#ask').onclick = () => {
   if (G.busy || !G.me) return;
-  if (!G.named) { G.named = true; G.asks += 0.6; missionText(); toast(tr('{0:으로/로} 가세요<small>지도에서 이름을 찾아보세요 · 이 장면 카드 점수가 {1}점 줄어요</small>', esc(placeOf(G.events[G.idx]).name), ASK * 0.6), true, 3000); return; }
-  const k = G.fx.fx === 'ask' ? 0.5 : 1; G.asks += k; G.askT = 5; toast(tr('이쪽으로 가세요<small>이 장면 카드 점수가 {0}점 줄어요</small>', ASK * k), true, 2200);
+  const free = G.named && G.fx.fx === 'ask'; // 안드레: 방향 화살표에는 기름이 들지 않는다
+  if (!free && G.oil <= 0) { snd.play('miss'); toast(tr('등불 기름이 다 떨어졌어요<small>말씀 카드를 얻으면 다시 채워져요</small>'), false, 2600); return; }
+  if (!free) { G.oil--; drawOil(); save(); }
+  if (!G.named) { G.named = true; G.asks++; missionText(); toast(tr('{0:으로/로} 가세요<small>지도에서 이름을 찾아보세요 · 등불 기름 한 방울을 썼어요</small>', esc(placeOf(G.events[G.idx]).name)), true, 3000); return; }
+  G.asks++; G.askT = 5; toast(free ? tr('이쪽으로 가세요<small>안드레는 기름 없이 길을 물어요</small>') : tr('이쪽으로 가세요<small>등불 기름 한 방울을 썼어요</small>'), true, 2200);
 };
 // 나가기: 언제든 (진행은 마지막으로 만난 장면까지 저장되어 있어 '이어 걷기'로 돌아온다 — 사용자 2026-11)
 $('#quit').onclick = () => {
@@ -522,6 +527,8 @@ function toast(html, good = false, ms = 2600) {
   const t = $('#toast'); t.innerHTML = html; t.classList.toggle('good', good); t.classList.add('on');
   clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), ms);
 }
+function drawOil() { $('#oil').innerHTML = [...Array(Math.max(OIL0, G.oil)).keys()].map(i => `<i class="${i < G.oil ? '' : 'empty'}"></i>`).join(''); }
+const addOil = n => { const k = Math.min(OILMAX - G.oil, n); G.oil += k; drawOil(); return k; };
 function drawWater() { $('#water').innerHTML = [...Array(G.waterMax || 3).keys()].map(i => `<i class="${i < G.water ? '' : 'empty'}"></i>`).join(''); }
 const LOST = [tr('모래바람이 불어와 길을 잃었어요!'), tr('광야에서 방향을 잃었어요!'), tr('엉뚱한 길로 너무 멀리 왔어요!')];
 function penalty(kind) {
@@ -672,10 +679,10 @@ function missCard(e) {
 function reveal(e, stars, straight) {
   {
     snd.play('card');
-    const pts = Math.max(10, stars * 100 + Math.round(G.meetLeft || 0) * 10 - G.asks * ASK + (G.bonus || 0)), got = collect(e, stars, pts), fresh = got.fresh;
+    const pts = Math.max(10, stars * 100 + Math.round(G.meetLeft || 0) * 10 + (G.bonus || 0)), got = collect(e, stars, pts), fresh = got.fresh, oil = addOil(stars === 3 ? 2 : 1);
     const v = showCard(tcard(e, G.idx, { s: stars, p: pts }, 'big reveal'),
       `<div class="row"><a class="go ghost" href="${appLink(e)}" data-listen>${tr('이 장면 듣기')}</a><button class="go" id="next">${nextLabel()}</button></div>`,
-      `<p class="gotcard">${fresh ? tr('새 말씀 카드!') : got.best ? tr('최고 기록 갱신!') : tr('이미 모은 카드')} ${tr(' +{0}점', num(pts))}${straight >= SAME * 1.5 ? tr(' · 걸은 길 {0}km / 곧은 길 {1}km', Math.round(G.legWalked), Math.round(straight)) : ''}</p>`);
+      `<p class="gotcard">${fresh ? tr('새 말씀 카드!') : got.best ? tr('최고 기록 갱신!') : tr('이미 모은 카드')} ${tr(' +{0}점', num(pts))}${straight >= SAME * 1.5 ? tr(' · 걸은 길 {0}km / 곧은 길 {1}km', Math.round(G.legWalked), Math.round(straight)) : ''}${oil ? tr(' · 등불 기름 +{0}', oil) : ''}</p>`);
     v.querySelector('#next').onclick = () => { closeSheet(); G.idx++; save(); G.idx < G.events.length ? startLeg() : finish(); };
   }
 }
@@ -779,11 +786,11 @@ function foundTreasure(h) {
   brand();
   const t = TLIST.find(x => x.id === h.id), sp = G.tfx[h.id];
   if (sp) { G.scene.remove(sp); sp.material.dispose(); delete G.tfx[h.id]; } // 반짝임 재질만 버린다 (빛 그림은 함께 쓴다)
-  G.hide = G.hide.filter(x => x !== h); G.foundRun = (G.foundRun || 0) + 1;
+  G.hide = G.hide.filter(x => x !== h); G.foundRun = (G.foundRun || 0) + 1; const oil = addOil(1);
   const d = tdeck(), fresh = !d[t.id]; d[t.id] = (d[t.id] || 0) + 1; store.set(tkey(), d); save(); drawCardBtn();
   snd.play('treasure');
   const v = showCard(treasureCard(t, tsrc(t), 'big reveal', esc), `<div class="row"><button class="go" id="tBack">${tr('계속 걷기')}</button></div>`,
-    `<p class="gotcard">${tr('숨겨진 보물을 찾았어요! · {0}', RARITY[t.rarity].name)}${fresh ? tr(' · +{0}점', RARITY[t.rarity].pts) : tr(' · 이미 찾은 보물')}</p>`);
+    `<p class="gotcard">${tr('숨겨진 보물을 찾았어요! · {0}', RARITY[t.rarity].name)}${fresh ? tr(' · +{0}점', RARITY[t.rarity].pts) : tr(' · 이미 찾은 보물')}${oil ? tr(' · 등불 기름 +{0}', oil) : ''}</p>`);
   v.querySelector('#tBack').onclick = closeSheet;
 }
 function openCards() {
@@ -807,7 +814,7 @@ function openCards() {
     v.querySelector('#backDeck').onclick = G.dismiss = openCards; };
 }
 $('#cardsBtn').onclick = () => openCards();
-const save = () => store.set('theway-game-' + JID, { idx: G.idx, total: G.total, stars: G.stars, hide: (G.hide || []).map(({ id, x, z }) => ({ id, x, z })) });
+const save = () => store.set('theway-game-' + JID, { idx: G.idx, total: G.total, stars: G.stars, oil: G.oil, hide: (G.hide || []).map(({ id, x, z }) => ({ id, x, z })) });
 
 /* ---------- 한 구간 ---------- */
 // 시간 안에 닿으면 그분을 3D로 가까이 만나고(meet), 늦으면 그분은 벌써 다음 장면 자리로 걸어가신다 —
@@ -1010,7 +1017,7 @@ async function begin(fresh) {
   await loadJourney();
   if (J.sail) await loadMask(); // 지중해의 뭍과 바다
   const saved = store.get('theway-game-' + JID, null);
-  G.idx = saved?.idx || 0; G.total = saved?.total || 0; G.stars = saved?.stars || []; G.missed = [];
+  G.idx = saved?.idx || 0; G.total = saved?.total || 0; G.stars = saved?.stars || []; G.missed = []; G.oil = saved?.oil ?? OIL0; drawOil();
   G.hide = saved?.hide || hideTreasures(TLIST, G.data.places, toXZ, (x, z) => wetAt(x, z));
   $('#setup').classList.add('hidden');
   for (const s of ['#hud', '#waterBox', '#dayBox', '#arrow', '#stick', '#cardsBtn', '#ask', '#quit', '#sound']) $(s).classList.remove('hidden');
