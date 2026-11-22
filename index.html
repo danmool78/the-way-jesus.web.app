@@ -109,15 +109,15 @@ a{color:inherit}
 .share svg,.big svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8}
 .card.soon{filter:grayscale(.6) brightness(.7)}
 
-/* 장면 놀이 띠는 작고 은근하게(사용자 2026-11: 너무 크게 보여 준다) */
+/* 휴대폰·장면 놀이 띠는 작게, 글은 한 줄로(사용자 2026-11: 크고 장황하다 — 게임이 있다는 걸 알리고 눌러 보게 하는 게 목적) */
 /* ---------- 순례 게임 띠: 왼쪽에 실제 게임 화면이 차례로 넘어가는 휴대폰(뒤에 금·은 카드), 오른쪽에 글·숫자·단추 — 게임처럼 보이게(사용자 2026-11: '게임이라는 생각이 안 든다') ---------- */
-.game{position:relative;margin-top:84px;display:grid;grid-template-columns:1fr 1.1fr;align-items:center;gap:40px;padding:44px 48px;border-radius:28px;overflow:hidden;
+.game{position:relative;margin-top:84px;display:grid;grid-template-columns:.8fr 1.2fr;align-items:center;gap:32px;padding:30px 44px;border-radius:28px;overflow:hidden;
   background:radial-gradient(ellipse 70% 90% at 22% 50%,rgba(226,189,114,.22),transparent 70%),linear-gradient(135deg,#241a10,#120e0a);border:1px solid rgba(226,189,114,.3)}
-.game-show{position:relative;height:470px;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.game-show .cardbk{position:absolute;top:50%;left:50%;width:150px;aspect-ratio:720/964;object-fit:cover;border-radius:12px;border:3px solid var(--rim);box-shadow:0 16px 34px rgba(0,0,0,.6);opacity:.9}
+.game-show{position:relative;height:330px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.game-show .cardbk{position:absolute;top:50%;left:50%;width:104px;aspect-ratio:720/964;object-fit:cover;border-radius:12px;border:3px solid var(--rim);box-shadow:0 16px 34px rgba(0,0,0,.6);opacity:.9}
 .game-show .cardbk:nth-of-type(1){--rim:#c98b5a;transform:translate(-128%,-56%) rotate(-14deg)}
 .game-show .cardbk:nth-of-type(2){--rim:#e8c768;transform:translate(28%,-56%) rotate(14deg)}
-.phone{position:relative;z-index:2;width:208px;aspect-ratio:390/780;border-radius:30px;padding:7px;background:linear-gradient(160deg,#3a3026,#120d09);box-shadow:0 24px 60px rgba(0,0,0,.7),0 0 0 1px rgba(226,189,114,.35),0 0 40px rgba(226,189,114,.18)}
+.phone{position:relative;z-index:2;width:146px;aspect-ratio:390/780;border-radius:30px;padding:7px;background:linear-gradient(160deg,#3a3026,#120d09);box-shadow:0 24px 60px rgba(0,0,0,.7),0 0 0 1px rgba(226,189,114,.35),0 0 40px rgba(226,189,114,.18)}
 .phone .scr{position:relative;width:100%;height:100%;border-radius:24px;overflow:hidden;background:#1a140e}
 .phone .scr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.04);transition:opacity .7s,transform 3.2s ease-out}
 .phone .scr img.on{opacity:1;transform:scale(1)}
@@ -126,17 +126,17 @@ a{color:inherit}
 .game-tag{display:flex;align-items:center;gap:10px;color:var(--gold2);font:800 14px var(--sans);letter-spacing:.12em;flex-wrap:wrap}
 .game-tag img{width:38px;height:38px;border-radius:9px}
 .game-tag .free{margin-left:4px;padding:3px 9px;border-radius:999px;border:1px solid rgba(226,189,114,.45);font:700 11.5px var(--sans);letter-spacing:.02em;color:#f3dfae}
-.game h2{margin:14px 0 0;font:800 34px/1.25 var(--serif);color:#fff6e4;text-shadow:0 2px 18px rgba(226,189,114,.25)}
+.game h2{margin:12px 0 0;font:800 30px/1.25 var(--serif);color:#fff6e4;text-shadow:0 2px 18px rgba(226,189,114,.25)}
 .game p{margin:12px 0 0;color:var(--muted);line-height:1.75}
-.game-stats{display:flex;gap:0;margin:18px 0 4px;border:1px solid rgba(226,189,114,.28);border-radius:16px;overflow:hidden;background:rgba(0,0,0,.25)}
+.game-stats{display:flex;gap:0;margin:16px 0 22px;max-width:420px;border:1px solid rgba(226,189,114,.28);border-radius:16px;overflow:hidden;background:rgba(0,0,0,.25)}
 .game-stats div{flex:1;padding:10px 6px;text-align:center}.game-stats div+div{border-left:1px solid rgba(226,189,114,.2)}
-.game-stats b{display:block;font:800 26px/1.1 var(--sans);color:#f1cf7f}.game-stats small{color:var(--muted);font-size:12px}
+.game-stats b{display:block;font:800 21px/1.1 var(--sans);color:#f1cf7f}.game-stats small{color:var(--muted);font-size:12px}
 .game-points{list-style:none;margin:16px 0 26px;padding:0;display:grid;gap:9px;color:var(--ink);font-size:15px}
 .game-points li{display:flex;gap:10px;align-items:baseline}.game-points li i{font-style:normal;width:22px;text-align:center}
 .game .btn.main{font-size:17px;padding:15px 30px;box-shadow:0 0 0 0 rgba(226,189,114,.6);animation:playPulse 2.4s infinite}
 @keyframes playPulse{0%{box-shadow:0 0 0 0 rgba(226,189,114,.55)}70%{box-shadow:0 0 0 16px rgba(226,189,114,0)}100%{box-shadow:0 0 0 0 rgba(226,189,114,0)}}
-.game-minis{grid-column:1/-1;margin:2px -48px -44px;padding:12px 0 14px;border-top:1px solid rgba(226,189,114,.18);background:rgba(0,0,0,.22);overflow:hidden}
-.game-minis h3{margin:0 48px 8px;font:700 12.5px var(--sans);color:rgba(241,207,127,.8)}.game-minis h3 small{margin-left:8px;color:var(--muted);font-weight:500;font-size:11.5px}
+.game-minis{grid-column:1/-1;margin:0 -44px -30px;padding:12px 0 14px;border-top:1px solid rgba(226,189,114,.18);background:rgba(0,0,0,.22);overflow:hidden}
+.game-minis h3{margin:0 44px 8px;font:700 12.5px var(--sans);color:rgba(241,207,127,.8)}.game-minis h3 small{margin-left:8px;color:var(--muted);font-weight:500;font-size:11.5px}
 .mreel{display:flex;gap:8px;opacity:.8;width:max-content;animation:mreel 60s linear infinite}
 .mreel img{width:58px;aspect-ratio:4/5;object-fit:cover;border-radius:8px;border:1px solid rgba(226,189,114,.3);box-shadow:0 4px 10px rgba(0,0,0,.45)}
 .mreel .lock{position:relative;flex:none;border-radius:8px;overflow:hidden}.mreel .lock img{filter:blur(7px) brightness(.45) saturate(.6);transform:scale(1.15)}.mreel .lock b{position:absolute;inset:0;display:grid;place-items:center;font:800 18px var(--sans);color:rgba(241,207,127,.85)}
@@ -144,9 +144,9 @@ a{color:inherit}
 @media (prefers-reduced-motion:reduce){.mreel{animation:none}}
 @media (prefers-reduced-motion:reduce){.game .btn.main{animation:none}.phone .scr img{transition:opacity .3s}}
 @media (max-width:900px){
-  .game{grid-template-columns:1fr;margin:56px 22px 0;padding:30px 20px 30px;gap:14px}
-  .game-show{height:420px}.phone{width:186px}.game-show .cardbk{width:118px}
-  .game h2{font-size:26px}.game-stats b{font-size:22px}
+  .game{grid-template-columns:1fr;margin:56px 22px 0;padding:22px 20px 26px;gap:8px}
+  .game-show{height:290px}.phone{width:128px}.game-show .cardbk{width:88px}
+  .game h2{font-size:24px}.game-stats b{font-size:19px}
   .game-minis{margin:8px -20px -30px}.game-minis h3{margin:0 20px 8px}.mreel img{width:50px}
 }
 }
@@ -227,10 +227,9 @@ button,a,img,svg,nav,header,.btn{-webkit-touch-callout:none;-webkit-user-select:
       <div class="phone"><div class="scr" id="gameScr"></div></div><div class="game-cap" id="gameCap"></div><div class="game-dots" id="gameDots"></div></div>
     <div class="game-txt">
       <div class="game-tag"><img src="assets/game-icon.svg" alt=""><span data-i="landGameTag">순례 게임</span><span class="free" data-i="landGameFree">무료 · 설치 없이</span></div>
-      <h2 data-i="landGameH">걷고, 만나고, 모으는 성경 순례 게임</h2>
-      <p data-i="landGameP">단서 하나 들고 지도를 걸어 그분을 찾아가세요. 늦으면 은·동, 길을 잃으면 모래바람 — 제때 만나면 금빛 말씀 카드가 손에 들어옵니다.</p>
+      <h2 data-i="landGameH">성경 순례 게임</h2>
+      <p data-i="landGameP">지도를 걸어 그분을 만나고, 말씀 카드를 모으세요.</p>
       <div class="game-stats"><div><b>5</b><small data-i="landGameS1">여정</small></div><div><b>50+</b><small data-i="landGameS2">장면 놀이</small></div><div><b>220+</b><small data-i="landGameS3">말씀 카드</small></div></div>
-      <ul class="game-points"><li><i>🧭</i><span data-i="landGame1">단서와 발자국만 보고 길 찾기</span></li><li><i>🎮</i><span data-i="landGame2">장면마다 미니게임 — 퍼즐·박자·피하기</span></li><li><i>🃏</i><span data-i="landGame3">금·은·동 말씀 카드와 숨겨진 보물</span></li></ul>
       <a class="btn main" href="/game.html" data-i="landGameGo">▶ 지금 플레이</a>
     </div>
     <div class="game-minis" aria-hidden="true"><h3><span data-i="landGameMini">장면마다 새 놀이가 이어져요</span><small data-i="landGameMiniS">퍼즐 · 박자 · 피하기 · 기억 · 겨누기 · 숨기 …</small></h3><div class="mreel" id="gameMinis"></div></div>
