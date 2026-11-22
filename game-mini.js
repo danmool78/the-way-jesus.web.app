@@ -3333,7 +3333,7 @@ const lastArrow = {
       if (S.reload > 0) S.reload -= dt;
     } else if (S.ph === 'hit') { if ((S.next -= dt) <= 0) { S.ph = 'strike'; S.ring = 0; S.fx.play('pick'); } }
     else if (S.ph === 'strike' && S.n < STRIKES) { // 팔이 올라가는 동안 고리가 차고, 다 차면 화살이 빛나는 동안(win)만 친다
-      if (S.ring < 1) { S.ring = Math.min(1, S.ring + dt / S.rise); if (S.ring >= 1) { S.win = S.n >= 3 ? 0.26 : 0.32; S.fx.play('glint'); } }
+      if (S.ring < 1) { S.ring = Math.min(1, S.ring + dt / S.rise); if (S.ring >= 1) { S.win = S.n >= 3 ? 0.4 : 0.48; S.fx.play('glint'); } }
       else if ((S.win -= dt) <= 0) { S.stop++; S.fx.play('late'); S.msg = { t: S.stop >= 3 ? tr('왕이 멈추었어요…') : tr('머뭇거렸어요 — 계속 치세요!'), c: '#ffb08a', at: 0.9, x: 200, y: 300 }; this.reset(S); }
     }
   },
