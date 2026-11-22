@@ -267,9 +267,9 @@ const SAME = 5; // 이만큼 붙은 장면은 같은 자리로 친다 (걷지 �
 // 발자국 (빛기둥 대신 — 빛기둥은 너무 빤한 힌트였다, 사용자 2026-11): 목적지 TRACK km 안쪽에만 그분이 걸어가신 굽은 발자국이 있고,
 // 내 둘레 PRINT_R km 안의 것만 보인다. 그 언저리까지는 단서로 찾아가고, 발자국을 만나면 따라간다
 const TRACK = 10, PRINT_R = 2.8, PRINT_GAP = 0.3, MAXP = 220; // 발은 키(약 1.3)의 6분의 1쯤 — 작게 하는 대신 촘촘히 (컸을 때는 사람보다 커 보였다, 사용자 2026-11)
-// 등불 기름(사용자 2026-11): 길을 물을 때마다 한 방울씩 쓴다 — 이름 알려 주기 1, 방향 화살표 1. 그분을 만나 말씀을 받으면 등불이 다시 채워진다(시 119:105 — 금 카드 2, 은·동 1).
-// 점수를 깎던 것보다 손에 쥔 것이 줄어드는 게 잘 보였다. 여정마다 따로(진행 기록 oil), 처음 5·많아야 9 (마 25:4 슬기로운 처녀들의 기름)
-const OIL0 = 5, OILMAX = 9;     // 이만큼 다가가야 그분이 보인다  // 이만큼(km) 다가가면 도착
+// 등불 기름(사용자 2026-11): 길을 물을 때마다 한 방울씩 쓴다 — 방향 화살표 3초. 그분을 만나 말씀을 받으면 등불이 다시 채워진다(시 119:105 — 금 카드 2, 은·동 1).
+// 점수를 깎던 것보다 손에 쥔 것이 줄어드는 게 잘 보였다. 여정마다 따로(진행 기록 oil), 처음이자 가득 3 — 9는 너무 넉넉했다 (마 25:4 슬기로운 처녀들의 기름)
+const OIL0 = 3, OILMAX = 3;
 const WALK = 30;   // 하루에 걷는 거리(km) — '몇 일째'
 
 function waterMesh(poly, color) {
@@ -1018,7 +1018,7 @@ async function begin(fresh) {
   await loadJourney();
   if (J.sail) await loadMask(); // 지중해의 뭍과 바다
   const saved = store.get('theway-game-' + JID, null);
-  G.idx = saved?.idx || 0; G.total = saved?.total || 0; G.stars = saved?.stars || []; G.missed = []; G.oil = saved?.oil ?? OIL0; drawOil();
+  G.idx = saved?.idx || 0; G.total = saved?.total || 0; G.stars = saved?.stars || []; G.missed = []; G.oil = Math.min(OILMAX, saved?.oil ?? OIL0); drawOil();
   G.hide = saved?.hide || hideTreasures(TLIST, G.data.places, toXZ, (x, z) => wetAt(x, z));
   $('#setup').classList.add('hidden');
   for (const s of ['#hud', '#waterBox', '#dayBox', '#arrow', '#stick', '#cardsBtn', '#ask', '#quit', '#sound']) $(s).classList.remove('hidden');
