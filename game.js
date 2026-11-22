@@ -1230,7 +1230,7 @@ function frame(now) {
   drawTags();
 }
 
-// 놀이 점검(관리자 — 사용자 2026-11): game.html?minis — 여정별로 놀이를 모두 늘어놓고 바로 해 본다(링크 없이 주소로만).
+// 놀이 점검(관리자 — 사용자 2026-11): game.html?minis — 여정별로 놀이를 모두 늘어놓고 바로 해 본다(관리자 페이지에서 잇고, 관리자 로그인만 — minisGate).
 // 놀이 중 [성공 보기]·[실패 보기]로 끝 장면을 곧장 보고, 언어를 바꿔 번역도 본다. 마지막 결과는 이 기기에만(theway-game-minicheck)
 async function openMinis(j = store.get('theway-game-minicheck-j', 'jesus')) {
   store.set('theway-game-minicheck-j', j);
@@ -1253,7 +1253,24 @@ async function openMinis(j = store.get('theway-game-minicheck-j', 'jesus')) {
     v.querySelector('.mtools').onclick = ev2 => { const t = ev2.target; if (t.matches('[data-w]')) host._end(true); else if (t.matches('[data-l]')) host._end(false); else if (t.matches('[data-x]')) host._close(); };
   };
 }
-if (new URLSearchParams(location.search).has('minis')) openMinis();
+// 관리자만(사용자 2026-11): 관리자 페이지와 같은 Google 로그인(Firebase, 같은 주소라 로그인이 이어진다)을 하고,
+// 관리자 Worker가 허락된 계정으로 받아 주는지 물어 통과해야 목록을 연다 — 아니면 로그인 안내만
+async function minisGate() {
+  const box = msg => sheet(`<div class="body minis"><small>그 길 순례 · 관리자</small><h2>놀이 점검</h2><p class="sub">${msg}</p>
+    <div class="row"><button class="go" id="mLogin">Google로 로그인</button><a class="go ghost" href="admin.html">관리자 페이지</a></div></div>`);
+  try {
+    const [{ initializeApp }, A] = await Promise.all([import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js'), import('https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js')]);
+    const auth = A.getAuth(initializeApp({ apiKey: 'AIzaSyA5wjIVA5kc8_Zyar6_-8X7kNVPaQn4j1Y', authDomain: 'the-way-jesus.firebaseapp.com', projectId: 'the-way-jesus', appId: '1:618365957327:web:d42bd6b7e94f79390673ba' })); // admin.js와 같은 공개 설정값
+    const check = async u => {
+      if (!u) { const s = box('관리자만 볼 수 있어요. 관리자 계정으로 로그인해 주세요.'); s.querySelector('#mLogin').onclick = () => A.signInWithPopup(auth, new A.GoogleAuthProvider()).catch(() => {}); return; }
+      const r = await fetch('https://theway-admin.danmool78.workers.dev/gh/repos/danmool78/the-way-jesus.web.app', { headers: { Authorization: `Bearer ${await u.getIdToken()}` } }).catch(() => null);
+      if (r?.ok) openMinis();
+      else { const s = box(r?.status === 403 ? '허락된 관리자 계정이 아니에요.' : '확인하지 못했어요. 잠시 뒤 다시 열어 주세요.'); s.querySelector('#mLogin').onclick = () => A.signOut(auth).then(() => A.signInWithPopup(auth, new A.GoogleAuthProvider())).catch(() => {}); }
+    };
+    A.onAuthStateChanged(auth, check);
+  } catch { box('로그인 도구를 불러오지 못했어요.'); }
+}
+if (new URLSearchParams(location.search).has('minis')) minisGate();
 if (new URLSearchParams(location.search).has('debug')) window.__game = { G, me, pv, toXZ, goalXZ, steer: (x, z) => { stick.x = x; stick.y = z; }, startLeg: (...a) => startLeg(...a), wetAt: (x, z) => wetAt(x, z), standXZ: () => standXZ(), mini: (id, cb) => playMiniGame(MINI[JID][id], cb || (r => console.log('mini', JSON.stringify(r)))), meet: () => meet(), pick: id => { G.idx = G.events.findIndex(e => e.id === id); pickWord(G.events[G.idx], () => {}); } }; // 끝까지 자동으로 걸어 보는 확인용
 setupUI(); resize();
 requestAnimationFrame(frame);
