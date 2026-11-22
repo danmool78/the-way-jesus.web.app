@@ -138,6 +138,7 @@ a{color:inherit}
 .game-minis h3{margin:0 48px 12px;font:800 15px var(--sans);color:#f1cf7f}.game-minis h3 small{margin-left:8px;color:var(--muted);font-weight:600;font-size:12.5px}
 .mreel{display:flex;gap:12px;width:max-content;animation:mreel 60s linear infinite}
 .mreel img{width:112px;aspect-ratio:4/5;object-fit:cover;border-radius:12px;border:2px solid rgba(226,189,114,.35);box-shadow:0 8px 18px rgba(0,0,0,.5)}
+.mreel .lock{position:relative;flex:none;border-radius:12px;overflow:hidden}.mreel .lock img{filter:blur(7px) brightness(.45) saturate(.6);transform:scale(1.15)}.mreel .lock b{position:absolute;inset:0;display:grid;place-items:center;font:800 34px var(--sans);color:rgba(241,207,127,.85)}
 @keyframes mreel{to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.mreel{animation:none}}
 @media (prefers-reduced-motion:reduce){.game .btn.main{animation:none}.phone .scr img{transition:opacity .3s}}
@@ -295,12 +296,14 @@ const GAME_SHOTS = ['ko', 'en', 'es', 'fr', 'id', 'ja', 'pt', 'zh'];
 function gameShow(lang) {
   const L = GAME_SHOTS.includes(lang) ? lang : 'en', scr = document.getElementById('gameScr'), cap = document.getElementById('gameCap'), dots = document.getElementById('gameDots');
   document.getElementById('gameBk1').src = cardUrl('d05'); document.getElementById('gameBk2').src = cardUrl('m10');
-  const caps = [1, 2, 3, 4].map(n => t('landGameC' + n));
-  scr.innerHTML = [1, 2, 3, 4].map(n => `<img src="assets/land/game/${L}-${n}.webp?v=1" alt="" loading="lazy">`).join(''); dots.innerHTML = '<i></i>'.repeat(4);
-  const M = ['e11', 'd05', 'm35', 'e23', 'a35', 'k15', 'e42', 'm02', 'd03', 'e17', 'k26', 'm12', 'a37', 'e46', 'm09', 'd16', 'k30', 'e04', 'a04']; // 장면 놀이 화면(assets/land/minis — gameshots.mjs minis)
-  document.getElementById('gameMinis').innerHTML = [...M, ...M].map(id => `<img src="assets/land/minis/${id}.webp?v=1" alt="" loading="lazy">`).join('');
+  const SL = [5, 3, 4], caps = [1, 3, 4].map(n => t('landGameC' + n)); // 그림으로 된 화면만(사용자 2026-11: 3D 지도·만남 화면은 아직 그래픽이 부족하다): 전설 보물 · 장면 놀이 · 말씀 카드
+  scr.innerHTML = SL.map(n => `<img src="assets/land/game/${L}-${n}.webp?v=2" alt="" loading="lazy">`).join(''); dots.innerHTML = '<i></i>'.repeat(SL.length);
+  // 장면 놀이 띠: 다 보여 주면 김이 샌다(사용자 2026-11) — 몇 개만 그대로, 나머지는 흐리게 가리고 자물쇠로 '더 있다'만
+  const SHOW = ['e11', 'm35', 'a35', 'd03', 'e42'], HIDE = ['d05', 'e23', 'k15', 'm02', 'e17', 'k26', 'm12', 'a37', 'e46', 'm09'];
+  const M = SHOW.flatMap((id, i) => [`<img src="assets/land/minis/${id}.webp?v=1" alt="" loading="lazy">`, ...HIDE.slice(i * 2, i * 2 + 2).map(h => `<span class="lock"><img src="assets/land/minis/${h}.webp?v=1" alt="" loading="lazy"><b>?</b></span>`)]).join('');
+  document.getElementById('gameMinis').innerHTML = M + M;
   let k = 0; const show = () => { scr.querySelectorAll('img').forEach((im, i) => im.classList.toggle('on', i === k)); dots.querySelectorAll('i').forEach((d, i) => d.classList.toggle('on', i === k)); cap.textContent = caps[k]; };
-  show(); clearInterval(gameShow.t); if (!matchMedia('(prefers-reduced-motion: reduce)').matches) gameShow.t = setInterval(() => { k = (k + 1) % 4; show(); }, 3000);
+  show(); clearInterval(gameShow.t); if (!matchMedia('(prefers-reduced-motion: reduce)').matches) gameShow.t = setInterval(() => { k = (k + 1) % SL.length; show(); }, 3000);
 }
 // 카드 그림: 순례 게임 카드(장면 id) — 시편·잠언은 카드가 없어 다윗의 수금 장면과 잠언 거리 무대를 쓴다. GoodNews·'왜 기독교인가'는 그 페이지의 펜 그림
 let CARDS = null;
