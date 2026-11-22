@@ -504,11 +504,12 @@ addEventListener('wheel', e => { if (!G.me || !$('#setup').classList.contains('h
 }
 $('#ask').onclick = () => {
   if (G.busy || !G.me) return;
-  const free = G.named && G.fx.fx === 'ask'; // 안드레: 방향 화살표에는 기름이 들지 않는다
+  // 누를 때마다 기름 한 방울 → 방향 화살표 3초 (이름 알려 주기 단계는 뺐다 — 사용자 2026-11). 안드레는 두 번에 한 번 기름 없이
+  const free = G.fx.fx === 'ask' && G.asks % 2 === 1;
   if (!free && G.oil <= 0) { snd.play('miss'); toast(tr('등불 기름이 다 떨어졌어요<small>말씀 카드를 얻으면 다시 채워져요</small>'), false, 2600); return; }
   if (!free) { G.oil--; drawOil(); save(); }
-  if (!G.named) { G.named = true; G.asks++; missionText(); toast(tr('{0:으로/로} 가세요<small>지도에서 이름을 찾아보세요 · 등불 기름 한 방울을 썼어요</small>', esc(placeOf(G.events[G.idx]).name)), true, 3000); return; }
-  G.asks++; G.askT = 5; toast(free ? tr('이쪽으로 가세요<small>안드레는 기름 없이 길을 물어요</small>') : tr('이쪽으로 가세요<small>등불 기름 한 방울을 썼어요</small>'), true, 2200);
+  G.asks++; G.askT = 3;
+  toast(free ? tr('이쪽으로 가세요<small>안드레는 두 번에 한 번 기름 없이 길을 물어요</small>') : tr('이쪽으로 가세요<small>등불 기름 한 방울을 썼어요</small>'), true, 2200);
 };
 // 나가기: 언제든 (진행은 마지막으로 만난 장면까지 저장되어 있어 '이어 걷기'로 돌아온다 — 사용자 2026-11)
 $('#quit').onclick = () => {
