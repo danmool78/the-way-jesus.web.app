@@ -1043,7 +1043,8 @@ const rock = {
   update(dt, S) {
     for (const p of S.sparks) { p.y += p.vy * dt; p.life -= dt; } S.sparks = S.sparks.filter(p => p.life > 0);
     if (S.msg) S.msg.at -= dt;
-    if (S.clearing) { S.clearing.t -= dt; if (S.clearing.t <= 0) { for (const r of S.clearing.rows) { S.grid.splice(r, 1); S.grid.unshift(Array(COLS).fill(-1)); } S.clearing = null; spawn(S); } return; }
+    if (S.clearing) { S.clearing.t -= dt; if (S.clearing.t <= 0) { for (const r of S.clearing.rows) { S.grid.splice(r, 1); S.grid.unshift(Array(COLS).fill(-1)); } S.clearing = null; if (S.rows < GOALROWS) spawn(S); else S.cur = null; } return; }
+    if (S.rows >= GOALROWS) { S.cur = null; return; } // 성공 뒤(끝 연출 중에도 update가 돈다) 돌이 계속 내려오던 것(사용자 2026-11)
     if (S.dead || !S.cur) return;
     const speed = 0.62 * Math.pow(0.86, S.rows);
     S.fallT += dt; if (S.fallT >= speed) { S.fallT = 0; if (!step(S, 0, 1)) land(S); }
@@ -2300,7 +2301,7 @@ const redSea = {
     floatMsg(g, S.msg);
   },
   end(g, k, S) { // 물이 다시 흘러 병거를 덮고(14:28), 백성은 건너편에
-    S.cars.forEach(c => { if (c.st === 'run') c.st = 'stop'; }); this.update(0.016, S);
+    S.next = 99; S.cars.forEach(c => { if (c.st === 'run') c.st = 'stop'; }); this.update(0.016, S); // 성공 뒤엔 새 병거가 오지 않게
     const close = clamp((k - 0.15) * 2.2, 0, 1); this.sea(g, S, close, 1);
     for (const c of S.cars) chariot(g, c.x, LANES[c.L], 1, S.t);
     this.sea(g, S, close, 2); // 물이 병거 위를 덮는다(14:28)
@@ -2627,7 +2628,7 @@ const cave = {
     g.save(); g.filter = `brightness(${0.45 + lit * 0.55})`; spr(g, this.sneaker, S.x, 448 - bob, 128, { flip: S.phase === 'back' }); g.restore(); // 어둠 속에서는 어둡게
     if (S.phase === 'cut') { g.strokeStyle = `rgba(255,226,150,${0.6 + 0.4 * Math.sin(S.t * 10)})`; g.lineWidth = 2.5; g.beginPath(); g.arc((this.stopX ?? ROBE_X) + 8, 440, 18, 0, 7); g.stroke(); }
   },
-  end(g, k, S) { S.st = 'calm'; S.look = 0; S.hold = false; this.update(0.016, S); this.draw(g, S);
+  end(g, k, S) { S.st = 'calm'; S.stT = 99; S.look = 0; S.hold = false; this.update(0.016, S); this.draw(g, S); // stT: 성공 뒤에도 '음…' 소리가 되풀이됐다
     if (k > 0.3) { g.save(); g.globalAlpha = clamp((k - 0.3) * 2, 0, 1); g.fillStyle = 'rgba(20,12,8,.82)'; g.fillRect(0, 140, W, 84);
       g.font = '700 16px "Gowun Batang",serif'; g.textAlign = 'center'; g.fillStyle = '#fff0d6'; const [l1, l2, rf] = this.endLines; g.fillText(l1, W / 2, 170); g.fillText(l2, W / 2, 194);
       g.font = '600 11px "Noto Sans KR",sans-serif'; g.fillStyle = '#e6cfa6'; g.fillText(rf, W / 2, 213); g.restore(); }
