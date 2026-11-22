@@ -1049,7 +1049,7 @@ async function begin(fresh) {
   await G.world.ready; $('#loading').classList.add('hidden');
   spawnPatrols(); placeLocals();
   startLeg();
-  if (G.idx === 0) G.askT = 9; // 첫 출발에는 방향 화살표를 한 번 거저 보여 준다(사용자 2026-11)
+  G.askT = 6; // 게임을 열면(처음이든 이어 걷기든) 방향 화살표를 한 번 거저 보여 준다(사용자 2026-11)
   if (G.idx === 0) toast(tr('{0}님, {1:을/를} 따라 걸어요<small>지도에서 장소 이름을 찾아 걸어가세요 · 가까이 가면 그분의 발자국이 보여요</small>', esc(me.name), esc(J.who)), true, 4200);
 }
 
@@ -1184,7 +1184,7 @@ function frame(now) {
   G.world?.setTime((G.clock / 360 + 0.22) % 1);
   drawPrints(me0.pos.x, me0.pos.y); updateTreasures(me0.pos.x, me0.pos.y, t);
   const dp = Math.hypot(...(goalXZ() || [0, 0]).map((v, i) => v - (i ? me0.pos.y : me0.pos.x)));
-  G.askT -= dt; G.hintT -= dt; G.hintCool -= dt;
+  if (!G.busy) G.askT -= dt; G.hintT -= dt; G.hintCool -= dt; // 화살표 시간은 걸을 수 있을 때만 줄어든다(시작 안내 중에 다 지나가 버렸다)
   if (!G.named && dp < 5) { G.named = true; missionText(); }
   // 카메라: 북쪽이 위, 비스듬히 내려다보며 따라간다
   // 바다 위에서는 멀리 보이게 (배가 빨라 뭍이 금세 지나간다) — 내리면 다시 가까이
