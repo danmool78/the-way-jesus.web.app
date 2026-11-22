@@ -3574,16 +3574,16 @@ const lyre = {
 /* ---------- 장인 이드로의 조언 (출 18:13–27): 송사를 나눠 맡기기 — 분류 ---------- */
 // 송사를 들고 온 사람들이 줄을 선다(카드에 그 일에 얽힌 사람 수). 끌어서 알맞은 재판장에게: 열 명까지 십부장, 쉰 명까지 오십부장,
 // 백 명까지 백부장, 그 위는 천부장 — '어려운 일'(⚖)만 모세에게(18:22). 재판장은 한 건을 듣는 동안 바쁘고, 모세는 훨씬 오래 걸린다
-// (모두 모세에게 가져가면 줄이 넘친다 — 18:18). 줄이 여섯을 넘으면 실패, 스물네 건을 마치면 성공.
+// (모두 모세에게 가져가면 줄이 넘친다 — 18:18). 줄이 여섯을 넘으면 실패, 스무 건을 마치면 성공.
 const JUDGES = [{ cap: 10, name: tr('십부장') }, { cap: 50, name: tr('오십부장') }, { cap: 100, name: tr('백부장') }, { cap: 1000, name: tr('천부장') }, { cap: 0, name: tr('모세'), hard: true }];
-const SEAT_X = [42, 121, 200, 279, 354], SEAT_Y = 236, SLOTS = [[70, 340], [200, 340], [330, 340], [70, 440], [200, 440], [330, 440]], CASES = 24, QMAX = 6;
+const SEAT_X = [42, 121, 200, 279, 354], SEAT_Y = 236, SLOTS = [[70, 340], [200, 340], [330, 340], [70, 440], [200, 440], [330, 440]], CASES = 20, QMAX = 6;
 const counsel = {
   title: tr('장인 이드로의 조언'), task: tr('송사를 알맞은 재판장에게 나눠 맡기기'), art: ['m15/bg', 'm15/moses', 'm15/elder', 'm15/man', 'm15/woman', 'm15/jethro'],
   ask: [tr('장인 말씀대로 천부장·백부장·오십부장·십부장을 세웠단다. 이번엔 네가 송사를 나눠 맡겨 보렴.'), tr('작은 일은 알맞은 재판장에게, 어려운 일만 내게 가져오너라 — 줄이 넘치지 않게!')],
   quote: tr('큰 일은 모두 네게 가져갈 것이요 작은 일은 모두 그들이 스스로 재판할 것이니'), ref: tr('출 18:22'),
   help: tr('송사 카드를 끌어 재판장에게 맡겨요. 카드의 사람 수를 보세요 — <b>열 명까지 십부장, 쉰까지 오십부장, 백까지 백부장, 그 위는 천부장.</b><br>⚖ 어려운 일만 모세에게! 모세는 오래 걸려요. 줄이 여섯을 넘으면 실패.'),
-  seconds: 33,
-  init() { return { Q: [], next: 0.4, gap: 1.35, done: 0, busy: JUDGES.map(() => 0), drag: null, t: 0, msg: null, fly: [], over: false, made: 0 }; },
+  seconds: 38,
+  init() { return { Q: [], next: 0.4, gap: 1.7, done: 0, busy: JUDGES.map(() => 0), drag: null, t: 0, msg: null, fly: [], over: false, made: 0 }; },
   card(S) {
     const hard = S.made > 2 && Math.random() < 0.16, tier = Math.floor(Math.random() * 4), lo = [2, 11, 51, 101][tier], hi = [10, 50, 100, 900][tier];
     const n = Math.round(rnd(lo, hi) / (tier === 3 ? 10 : 1)) * (tier === 3 ? 10 : 1);
@@ -3594,7 +3594,7 @@ const counsel = {
     if ((S.next -= dt) <= 0 && S.made < CASES + 8) { // 줄에 한 사람씩 — 갈수록 빨리
       if (S.Q.length >= QMAX) { S.over = true; S.fx.play('late'); }
       else { S.Q.push(this.card(S)); S.fx.play('step'); }
-      S.gap = Math.max(1.0, S.gap - 0.025); S.next = S.gap * rnd(0.85, 1.15);
+      S.gap = Math.max(1.35, S.gap - 0.025); S.next = S.gap * rnd(0.85, 1.15);
     }
     S.Q.forEach((c, i) => { if (c === S.drag) return; const [x, y] = SLOTS[i]; c.x += (x - c.x) * Math.min(1, dt * 8); c.y += (y - c.y) * Math.min(1, dt * 8); });
     for (const f of S.fly) { f.k += dt * 2.6; } S.fly = S.fly.filter(f => f.k < 1);
