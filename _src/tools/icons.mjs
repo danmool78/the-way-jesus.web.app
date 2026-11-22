@@ -16,7 +16,7 @@ const J = {
   paul: { name: '그 길 — 바울', short: '그 길 · 바울', c: ['#e1f1fb', '#70b5da', '#3e7fa8', '#bbdff3'] },
   psalms: { name: '그 길 — 시편', short: '그 길 · 시편', c: ['#e0f4f0', '#5fb3a5', '#2f7d70', '#b5e0d8'] },
   proverbs: { name: '그 길 — 잠언', short: '그 길 · 잠언', c: ['#fbe6ef', '#d98fb0', '#a2547a', '#f2c8da'] },
-  goodnews: { name: 'GoodNews', short: 'GoodNews', c: ['#fde6e2', '#e58a7f', '#a8473f', '#f4c3bb'] },
+  goodnews: { name: '돌아오는 길', short: '돌아오는 길', c: ['#fde6e2', '#e58a7f', '#a8473f', '#f4c3bb'] },
 };
 const base = readFileSync('assets/icon.svg', 'utf8'), man = JSON.parse(readFileSync('manifest.webmanifest', 'utf8'));
 const ids = process.argv.slice(2).length ? process.argv.slice(2) : Object.keys(J);
