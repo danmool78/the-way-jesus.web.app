@@ -71,9 +71,23 @@ FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="p
 
 # 검색하는 말(광고 키워드 점검, 사용자 2026-11): 앱의 장면 이름은 시적인 이름이라 사람들이 찾는 말(오병이어·탕자의 비유 등)과 달랐다.
 # 한국어 장면 페이지의 제목·설명·본문 첫 줄·목록에 '흔히 부르는 이름'을 함께 적는다 — 원본 _src/seo/aka.ko.json
-AKA = {k: v for k, v in json.load(open(os.path.join(here, 'seo', 'aka.ko.json'), encoding='utf-8')).items() if k != '_'}
+def _aka(l):
+    f = os.path.join(here, 'seo', 'aka.%s.json' % l)
+    return {k: v for k, v in json.load(open(f, encoding='utf-8')).items() if k != '_'} if os.path.exists(f) else {}
+AKA = {l: _aka(l) for l in ('ko', 'en', 'es', 'pt', 'fr', 'id', 'ja', 'zh')}
+# 페이지 글씨(언어별): 흔히 부르는 이름 앞말, 시편의 'N편' 이름, 노래 가사 머리, 시편 목록 제목, 노래 단추
+SEO_UI = {
+    'ko': {'aka': '흔히 이렇게 불러요', 'ps': '시편 {n}편', 'lyr': '노래 가사', 'pslist': '시편 {n}편 — 노래가 태어난 자리를 따라', 'pswalk': '노래 듣고 그 자리 걷기'},
+    'en': {'aka': 'Also known as', 'ps': 'Psalm {n}', 'lyr': 'The song (in English)', 'pslist': '{n} Psalms — where the songs were born', 'pswalk': 'Hear the song and walk the place'},
+    'es': {'aka': 'También conocido como', 'ps': 'Salmo {n}', 'lyr': 'La canción (en español)', 'pslist': '{n} salmos — donde nacieron los cantos', 'pswalk': 'Escucha el canto y recorre el lugar'},
+    'pt': {'aka': 'Também conhecido como', 'ps': 'Salmo {n}', 'lyr': 'A canção (em português)', 'pslist': '{n} salmos — onde os cânticos nasceram', 'pswalk': 'Ouça o cântico e percorra o lugar'},
+    'fr': {'aka': 'Aussi appelé', 'ps': 'Psaume {n}', 'lyr': 'Le chant (en français)', 'pslist': '{n} psaumes — là où les chants sont nés', 'pswalk': 'Écouter le chant et parcourir le lieu'},
+    'id': {'aka': 'Juga dikenal sebagai', 'ps': 'Mazmur {n}', 'lyr': 'Lagu (dalam bahasa Indonesia)', 'pslist': '{n} Mazmur — di tempat lagu-lagu itu lahir', 'pswalk': 'Dengarkan lagunya dan jelajahi tempatnya'},
+    'ja': {'aka': 'よく知られた呼び名', 'ps': '詩編{n}編', 'lyr': '歌（日本語の意味）', 'pslist': '詩編{n}編 — 歌が生まれた場所をたどって', 'pswalk': '歌を聴いてその場所を歩く'},
+    'zh': {'aka': '常见名称', 'ps': '诗篇第{n}篇', 'lyr': '歌词（中文释义）', 'pslist': '诗篇{n}篇 — 沿着诗歌诞生的地方', 'pswalk': '听这首歌，走过那个地方'},
+}
 # 여정 목록 페이지 머리에 붙이는 검색어(한국어) — 사람들이 그 여정을 찾을 때 쓰는 말
-LIST_KW = {
+LIST_KW_KO = {
     'index': '예수님 생애 순서 · 예수님 생애 지도 · 예수님 이동 경로 지도 · 예수님 발자취 · 사복음서 차이와 사복음서 대조',
     'moses': '출애굽 경로 · 출애굽 지도 · 광야 40년 경로 · 여호수아의 가나안 입성',
     'david': '다윗의 생애 순서 · 사울을 피해 다닌 다윗의 도피 경로 지도',
@@ -83,13 +97,71 @@ LIST_KW = {
     'goodnews': '복음 전도 · 영접 기도 · 처음 듣는 기독교',
     'psalms': '시편 노래 · 시편이 쓰인 자리와 배경 · 시편 23편·121편·51편',
 }
+LIST_KW = {'ko': LIST_KW_KO,
+    'en': {'index': 'Life of Jesus in order · Map of where Jesus walked · Harmony of the four Gospels',
+           'moses': 'Exodus route map · 40 years in the wilderness · Joshua entering Canaan',
+           'david': 'Life of David in order · Map of David fleeing from Saul',
+           'kings': 'Books of Kings in order · From Solomon to the exile in Babylon · Elijah and Elisha',
+           'paul': "Paul's missionary journeys map · First, second and third journeys · Paul's voyage to Rome",
+           'proverbs': 'Proverbs made simple · A chapter of Proverbs a day for 31 days',
+           'goodnews': 'The gospel explained simply · How to become a Christian · Prayer to receive Christ',
+           'psalms': 'Psalms as songs · Where the Psalms were written · Psalm 23, Psalm 121, Psalm 51'},
+    'es': {'index': 'Vida de Jesús en orden · Mapa de los viajes de Jesús · Armonía de los cuatro Evangelios',
+           'moses': 'Mapa de la ruta del Éxodo · 40 años en el desierto · Josué y la entrada a Canaán',
+           'david': 'Vida de David en orden · Mapa de la huida de David ante Saúl',
+           'kings': 'Libros de Reyes en orden · De Salomón al exilio en Babilonia · Elías y Eliseo',
+           'paul': 'Mapa de los viajes misioneros de Pablo · Primer, segundo y tercer viaje · Viaje de Pablo a Roma',
+           'proverbs': 'Proverbios explicado · Un capítulo de Proverbios al día durante 31 días',
+           'goodnews': 'El evangelio explicado · Cómo ser cristiano · Oración para recibir a Cristo',
+           'psalms': 'Salmos cantados · Dónde se escribieron los Salmos · Salmo 23, Salmo 121, Salmo 51'},
+    'pt': {'index': 'Vida de Jesus em ordem · Mapa das viagens de Jesus · Harmonia dos quatro Evangelhos',
+           'moses': 'Mapa da rota do Êxodo · 40 anos no deserto · Josué e a entrada em Canaã',
+           'david': 'Vida de Davi em ordem · Mapa da fuga de Davi diante de Saul',
+           'kings': 'Livros dos Reis em ordem · De Salomão ao exílio na Babilônia · Elias e Eliseu',
+           'paul': 'Mapa das viagens missionárias de Paulo · Primeira, segunda e terceira viagem · Viagem de Paulo a Roma',
+           'proverbs': 'Provérbios explicado · Um capítulo de Provérbios por dia em 31 dias',
+           'goodnews': 'O evangelho explicado · Como se tornar cristão · Oração para receber Cristo',
+           'psalms': 'Salmos em canção · Onde os Salmos foram escritos · Salmo 23, Salmo 121, Salmo 51'},
+    'fr': {'index': 'Vie de Jésus dans l’ordre · Carte des déplacements de Jésus · Concordance des quatre Évangiles',
+           'moses': 'Carte de la route de l’Exode · 40 ans au désert · Josué et l’entrée en Canaan',
+           'david': 'Vie de David dans l’ordre · Carte de la fuite de David devant Saül',
+           'kings': 'Livres des Rois dans l’ordre · De Salomon à l’exil à Babylone · Élie et Élisée',
+           'paul': 'Carte des voyages missionnaires de Paul · Premier, deuxième et troisième voyage · Voyage de Paul à Rome',
+           'proverbs': 'Les Proverbes expliqués · Un chapitre des Proverbes par jour pendant 31 jours',
+           'goodnews': 'L’Évangile expliqué · Comment devenir chrétien · Prière pour recevoir Christ',
+           'psalms': 'Les Psaumes en chants · Où les Psaumes ont été écrits · Psaume 23, Psaume 121, Psaume 51'},
+    'id': {'index': 'Kehidupan Yesus berurutan · Peta perjalanan Yesus · Harmoni keempat Injil',
+           'moses': 'Peta rute Keluaran · 40 tahun di padang gurun · Yosua memasuki Kanaan',
+           'david': 'Kehidupan Daud berurutan · Peta pelarian Daud dari Saul',
+           'kings': 'Kitab Raja-raja berurutan · Dari Salomo sampai pembuangan ke Babel · Elia dan Elisa',
+           'paul': 'Peta perjalanan misi Paulus · Perjalanan misi pertama, kedua dan ketiga · Perjalanan Paulus ke Roma',
+           'proverbs': 'Amsal dengan mudah · Satu pasal Amsal sehari selama 31 hari',
+           'goodnews': 'Injil dengan sederhana · Cara menjadi orang Kristen · Doa menerima Kristus',
+           'psalms': 'Mazmur dalam lagu · Tempat Mazmur ditulis · Mazmur 23, Mazmur 121, Mazmur 51'},
+    'ja': {'index': 'イエスの生涯 順番 · イエスが歩いた道の地図 · 四福音書の対観',
+           'moses': '出エジプトの経路 地図 · 荒野の40年 · ヨシュアのカナン入国',
+           'david': 'ダビデの生涯 順番 · サウルから逃れたダビデの道 地図',
+           'kings': '列王記 順番 · ソロモンからバビロン捕囚まで · エリヤとエリシャ',
+           'paul': 'パウロの伝道旅行 地図 · 第一次・第二次・第三次伝道旅行 · パウロのローマへの旅',
+           'proverbs': 'やさしい箴言 · 一日一章 31日の箴言',
+           'goodnews': '福音をやさしく · クリスチャンになるには · 信仰告白の祈り',
+           'psalms': '歌で聴く詩編 · 詩編が書かれた場所 · 詩編23編・121編・51編'},
+    'zh': {'index': '耶稣生平顺序 · 耶稣行走路线地图 · 四福音书对照',
+           'moses': '出埃及路线地图 · 旷野四十年 · 约书亚进迦南',
+           'david': '大卫生平顺序 · 大卫躲避扫罗的路线地图',
+           'kings': '列王纪顺序 · 从所罗门到被掳巴比伦 · 以利亚与以利沙',
+           'paul': '保罗宣教旅程地图 · 第一次、第二次、第三次宣教旅程 · 保罗前往罗马',
+           'proverbs': '轻松读箴言 · 每天一章 31天读完箴言',
+           'goodnews': '福音简明讲解 · 如何成为基督徒 · 决志祷告',
+           'psalms': '用歌声听诗篇 · 诗篇写成的地方 · 诗篇23篇、121篇、51篇'},
+}
 def aka(e, lang):
-    if lang != 'ko': return []
-    if e['id'] in AKA: return AKA[e['id']]
+    if e['id'] in AKA.get(lang, {}): return AKA[lang][e['id']]
     m = re.match(r'ps(\d+)$', e['id'])
-    if m and e.get('song'):  # 시편: '시편 23편'과 노래 첫 줄
+    if m and e.get('song'):  # 시편: 'N편'(그 언어로)과 노래 첫 줄(한국어는 가사, 다른 언어는 그 뜻)
         first = next((l.strip() for l in e['song']['lyrics'].split('\n') if l.strip() and not l.strip().startswith('[')), '')
-        return ['시편 %s편' % m.group(1)] + ([first] if first else [])
+        if lang != 'ko': first = (e['song'].get('tr') or {}).get(first, '')
+        return [SEO_UI[lang]['ps'].format(n=m.group(1))] + ([first] if first else [])
     return []
 
 JID, JDIR = 'jesus', root  # 지금 만드는 여정과 그 data*.json 폴더 (아래 여정마다 바꾼다)
@@ -148,7 +220,6 @@ JL = {}  # 여정마다 번역이 있는 언어 (잠언처럼 아직 한국어�
 for JID, JDIR, LIST, OG in JOURNEYS:  # 먼저 모두 알아 둔다 — 앞 여정의 목록이 뒤 여정 목록으로 잇는 링크를 고를 때 쓴다
     k0 = load('ko')['events'][0]['story'][0]
     JL[LIST] = ['ko'] + [l for l in LANGS[1:] if load(l)['events'][0]['story'][0] != k0]
-    if JID == 'psalms': JL[LIST] = ['ko']  # 시편은 노래가 한국어라 검색 페이지도 한국어만 (2026-11)
 for JID, JDIR, LIST, OG in JOURNEYS:
     for lang in JL[LIST]:
         D = load(lang)
@@ -157,7 +228,7 @@ for JID, JDIR, LIST, OG in JOURNEYS:
             jt = ui[next(x['title'] for x in D['journey']['series'] if x['id'] == JID)]
             P.update({k: v.replace('{t}', jt) for k, v in PAGE_J[lang].items()}, listLead=ui.get('metaDesc', ''))
         t = lambda k, **kw: ui[k].format(**kw) if kw else ui[k]
-        if JID == 'psalms' and lang == 'ko': P['listTitle'] = '시편 {n}편 — 노래가 태어난 자리를 따라'  # 시편은 '장면, 일어난 순서'가 아니다
+        if JID == 'psalms': P['listTitle'] = SEO_UI[lang]['pslist']  # 시편은 '장면, 일어난 순서'가 아니다
         scenes = ([D['prologue']] if 'prologue' in D else []) + D['events']
         n = len(D['events'])
         per = {p['id']: p for p in D['periods']}
@@ -172,7 +243,8 @@ for JID, JDIR, LIST, OG in JOURNEYS:
             if JID == 'psalms' and A:  # 시편: '시편 23편 — 나의 목자 · 여호와는 나의 목자시니'
                 title = '%s — %s · %s | %s' % (A[0], e['title'].split('·', 1)[-1].strip(), A[1] if len(A) > 1 else place, ui['appName'])
             else:
-                title = '%s%s — %s · %s | %s' % (e['title'], '(%s)' % A[0] if A else '', place, e['when'], ui['appName'])
+                br = '(%s)' if lang == 'ko' else '（%s）' if lang in ('ja', 'zh') else ' (%s)'  # 괄호: 한국어는 붙여, 중일은 전각, 라틴 글자 언어는 띄어
+                title = '%s%s — %s · %s | %s' % (e['title'], br % A[0] if A else '', place, e['when'], ui['appName'])
             desc = (e.get('subtitle', '') + '. ' if e.get('subtitle') else '') + e['story'][0]
             if A: desc = '%s. %s' % (' · '.join(A), desc)
             desc = desc[:150] + ('…' if len(desc) > 150 else '')
@@ -189,15 +261,18 @@ for JID, JDIR, LIST, OG in JOURNEYS:
             b = [head(lang, JL[LIST], e['id'], title, desc, img, ld)]
             b.append('<article>\n<div class="eyebrow">%s%s</div>\n<h1>%s</h1>\n' % (esc(p), '' if pro else ' · %d / %d' % (i + (0 if 'prologue' in D else 1), n), esc(e['title'])))
             if e.get('subtitle'): b.append('<p class="sub">%s</p>\n' % esc(e['subtitle']))
-            if A: b.append('<p class="aka">흔히 이렇게 불러요 · %s</p>\n' % ' · '.join(esc(x) for x in A))
+            if A: b.append('<p class="aka">%s · %s</p>\n' % (esc(SEO_UI[lang]['aka']), ' · '.join(esc(x) for x in A)))
             b.append('<p class="meta">%s</p>\n' % ' · '.join(esc(x) for x in (place, e['when'], refs(e)) if x))  # 시편처럼 본문 표시가 없으면 꼬리 ' · '가 남았다
             if 'img' in e:
                 b.append('<figure><img src="/%s" alt="%s" loading="lazy" width="1200" height="900"><figcaption>%s</figcaption></figure>\n' % (esc(e['img']['src']), esc(e['img'].get('title', e['title'])), esc(e['img']['credit'])))
             b.append('<h2>%s</h2>\n' % esc(t('storyLabel')) + ''.join('<p>%s</p>\n' % esc(s) for s in e['story']))
-            if e.get('song') and lang == 'ko':
+            if e.get('song'):  # 노래 가사: 한국어는 가사 그대로, 다른 언어는 줄마다 그 말로 옮긴 뜻(앱의 자막과 같은 것)
+                tr = e['song'].get('tr') or {}
+                line = (lambda l: l) if lang == 'ko' else (lambda l: tr.get(l, ''))
                 st = [re.sub(r'\[[^\]]*\]', '', x).strip() for x in e['song']['lyrics'].split('\n\n')]
-                b.append('<h2>노래 가사</h2>\n<div class="lyr">%s</div>\n' % ''.join('<p>%s</p>' % '<br>'.join(esc(l) for l in x.split('\n') if l.strip()) for x in st if x))
-            b.append('<a class="go" href="%s">%s →</a>\n' % (app_url(lang, e['id']), esc('노래 듣고 그 자리 걷기' if JID == 'psalms' and lang == 'ko' else P['walk'])))
+                st = ['<br>'.join(esc(line(l.strip())) for l in x.split('\n') if l.strip() and line(l.strip())) for x in st if x]
+                if any(st): b.append('<h2>%s</h2>\n<div class="lyr">%s</div>\n' % (esc(SEO_UI[lang]['lyr']), ''.join('<p>%s</p>' % x for x in st if x)))
+            b.append('<a class="go" href="%s">%s →</a>\n' % (app_url(lang, e['id']), esc(SEO_UI[lang]['pswalk'] if JID == 'psalms' else P['walk'])))
             b.append('<h2>%s</h2>\n' % esc(t('hisWords')) + ''.join('<blockquote><p>%s</p><footer>%s · %s</footer></blockquote>\n' % (esc(w['text']), esc(w['who']), esc(w['ref'])) for w in e['words']))
             b.append('<p class="fine">%s</p>\n' % esc(t('wordsNote', r=refs(e))))
             if e.get('note'): b.append('<h2>%s</h2>\n<div class="box"><p>%s</p></div>\n' % (esc(t('noteHead')), esc(e['note'])))
@@ -210,7 +285,7 @@ for JID, JDIR, LIST, OG in JOURNEYS:
             open(os.path.join(out_dir, fname(e['id'], lang)), 'w', encoding='utf-8').write(''.join(b))
             if lang == 'ko': urls.append(e['id']); imgs[e['id']] = img.split('?')[0]; JL[e['id']] = JL[LIST]
         # 장면 목록: 시대별로 묶어 모든 장면 페이지로 잇는다
-        KW = LIST_KW.get(LIST, '') if lang == 'ko' else ''
+        KW = LIST_KW.get(lang, {}).get(LIST, '')
         title = '%s%s | %s' % (P['listTitle'].format(n=n), ' · ' + KW.split(' · ')[0] if KW else '', ui['appName'])
         ld = {'@context': 'https://schema.org', '@type': 'ItemList', 'name': P['listTitle'].format(n=n), 'numberOfItems': len(scenes),
               'itemListElement': [{'@type': 'ListItem', 'position': k + 1, 'url': '%s/s/%s' % (SITE, fname(e['id'], lang)), 'name': e['title']} for k, e in enumerate(scenes)]}

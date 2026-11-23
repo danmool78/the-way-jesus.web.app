@@ -1,0 +1,947 @@
+{
+ "e01": [
+  "Anunciação a Maria",
+  "Anjo Gabriel visita Maria",
+  "Sonho de José"
+ ],
+ "e02": [
+  "Nascimento de Jesus",
+  "Natal",
+  "Pastores de Belém"
+ ],
+ "e03": [
+  "Apresentação de Jesus no Templo",
+  "Simeão e Ana"
+ ],
+ "e04": [
+  "Visita dos Reis Magos",
+  "Os três reis magos",
+  "Estrela de Belém"
+ ],
+ "e05": [
+  "Fuga para o Egito",
+  "Matança dos inocentes"
+ ],
+ "e06": [
+  "Retorno do Egito para Nazaré",
+  "Infância de Jesus em Nazaré"
+ ],
+ "e07": [
+  "Jesus aos 12 anos no Templo",
+  "Menino Jesus no Templo"
+ ],
+ "e08": [
+  "Batismo de Jesus",
+  "Jesus é batizado por João Batista"
+ ],
+ "e09": [
+  "Tentação de Jesus no deserto",
+  "Jesus jejua 40 dias"
+ ],
+ "e10": [
+  "Primeiros discípulos de Jesus",
+  "Vinde e vede",
+  "Eis o Cordeiro de Deus"
+ ],
+ "e11": [
+  "Bodas de Caná",
+  "Jesus transforma água em vinho"
+ ],
+ "e12": [
+  "Purificação do Templo",
+  "Jesus expulsa os vendilhões do Templo"
+ ],
+ "e13": [
+  "Jesus e Nicodemos",
+  "Nascer de novo",
+  "João 3:16"
+ ],
+ "e14": [
+  "A mulher samaritana",
+  "Jesus e a samaritana no poço",
+  "Água viva"
+ ],
+ "e15": [
+  "Cura do filho do oficial do rei",
+  "Segundo sinal em Caná"
+ ],
+ "e16": [
+  "Jesus rejeitado em Nazaré",
+  "Nenhum profeta é aceito em sua terra"
+ ],
+ "e17": [
+  "Pescadores de homens",
+  "Chamado dos primeiros discípulos",
+  "Pesca maravilhosa"
+ ],
+ "e18": [
+  "Cura da sogra de Pedro",
+  "Jesus em Cafarnaum"
+ ],
+ "e19": [
+  "Cura do paralítico",
+  "Paralítico descido pelo telhado"
+ ],
+ "e20": [
+  "Chamado de Mateus",
+  "Mateus, o cobrador de impostos"
+ ],
+ "e21": [
+  "Tanque de Betesda",
+  "Cura do paralítico de 38 anos"
+ ],
+ "e22": [
+  "Os doze apóstolos",
+  "Escolha dos doze discípulos"
+ ],
+ "e23": [
+  "Sermão do Monte",
+  "Bem-aventuranças",
+  "Pai Nosso"
+ ],
+ "e24": [
+  "A fé do centurião",
+  "Cura do servo do centurião"
+ ],
+ "e25": [
+  "Filho da viúva de Naim",
+  "Ressurreição do filho da viúva"
+ ],
+ "e26": [
+  "Mulher pecadora unge os pés de Jesus",
+  "Jesus na casa de Simão, o fariseu"
+ ],
+ "e27": [
+  "Parábola do semeador",
+  "Parábola do grão de mostarda",
+  "Parábolas do Reino"
+ ],
+ "e28": [
+  "Jesus acalma a tempestade",
+  "Jesus repreende o vento e o mar"
+ ],
+ "e29": [
+  "Endemoninhado gadareno",
+  "Legião e os porcos"
+ ],
+ "e30": [
+  "Filha de Jairo",
+  "Talita cumi",
+  "Mulher do fluxo de sangue"
+ ],
+ "e31": [
+  "Multiplicação dos pães",
+  "Cinco pães e dois peixes",
+  "Alimentação dos cinco mil"
+ ],
+ "e32": [
+  "Jesus anda sobre as águas",
+  "Pedro anda sobre as águas"
+ ],
+ "e33": [
+  "Eu sou o pão da vida",
+  "Discurso do pão da vida"
+ ],
+ "e34": [
+  "Mulher cananeia",
+  "A fé da mulher siro-fenícia"
+ ],
+ "e35": [
+  "Efatá",
+  "Cura do surdo e gago"
+ ],
+ "e36": [
+  "Confissão de Pedro",
+  "Tu és o Cristo",
+  "Quem dizeis que eu sou"
+ ],
+ "e37": [
+  "Transfiguração de Jesus",
+  "Monte da Transfiguração"
+ ],
+ "e38": [
+  "Quem é o maior no Reino dos céus",
+  "Parábola do servo que não perdoou"
+ ],
+ "e39": [
+  "A mulher adúltera",
+  "Atire a primeira pedra"
+ ],
+ "e40": [
+  "Cura do cego de nascença",
+  "Tanque de Siloé"
+ ],
+ "e41": [
+  "Parábola do bom samaritano",
+  "Marta e Maria"
+ ],
+ "e42": [
+  "Eu sou o bom pastor",
+  "O bom pastor"
+ ],
+ "e43": [
+  "Parábola do filho pródigo",
+  "Parábola da ovelha perdida",
+  "Parábola da dracma perdida"
+ ],
+ "e44": [
+  "Ressurreição de Lázaro",
+  "Lázaro, vem para fora"
+ ],
+ "e45": [
+  "O jovem rico",
+  "Jesus abençoa as crianças",
+  "Deixai vir a mim as criancinhas"
+ ],
+ "e46": [
+  "Zaqueu",
+  "Cura do cego Bartimeu"
+ ],
+ "e47": [
+  "Maria unge Jesus em Betânia",
+  "Vaso de alabastro"
+ ],
+ "e48": [
+  "Entrada triunfal em Jerusalém",
+  "Domingo de Ramos",
+  "Hosana"
+ ],
+ "e49": [
+  "Purificação do Templo",
+  "Minha casa será chamada casa de oração",
+  "Figueira amaldiçoada"
+ ],
+ "e50": [
+  "Dai a César o que é de César",
+  "O maior mandamento",
+  "A oferta da viúva pobre"
+ ],
+ "e51": [
+  "Sermão profético",
+  "Sinais do fim dos tempos",
+  "Parábola das dez virgens"
+ ],
+ "e52": [
+  "Santa Ceia",
+  "Última Ceia",
+  "Jesus lava os pés dos discípulos"
+ ],
+ "e53": [
+  "Jesus no Getsêmani",
+  "Oração no Getsêmani",
+  "Prisão de Jesus"
+ ],
+ "e54": [
+  "Julgamento de Jesus",
+  "Jesus diante de Pilatos",
+  "Negação de Pedro"
+ ],
+ "e55": [
+  "Crucificação de Jesus",
+  "Morte de Jesus na cruz",
+  "Paixão de Cristo"
+ ],
+ "e56": [
+  "Ressurreição de Jesus",
+  "O túmulo vazio",
+  "Jesus aparece a Maria Madalena"
+ ],
+ "e57": [
+  "Caminho de Emaús",
+  "Discípulos de Emaús"
+ ],
+ "e58": [
+  "Tomé, o incrédulo",
+  "Jesus aparece aos discípulos"
+ ],
+ "e59": [
+  "Pesca dos 153 peixes",
+  "Apascenta as minhas ovelhas",
+  "Pedro, tu me amas?"
+ ],
+ "e60": [
+  "A Grande Comissão",
+  "Ide e fazei discípulos"
+ ],
+ "e61": [
+  "Ascensão de Jesus"
+ ],
+ "m01": [
+  "Escravidão de Israel no Egito",
+  "Êxodo 1"
+ ],
+ "m02": [
+  "Nascimento de Moisés",
+  "Moisés no cesto no rio Nilo"
+ ],
+ "m03": [
+  "Fuga de Moisés para Midiã",
+  "Moisés mata o egípcio"
+ ],
+ "m04": [
+  "A sarça ardente",
+  "Chamado de Moisés"
+ ],
+ "m05": [
+  "Deixa ir o meu povo",
+  "Moisés diante de Faraó"
+ ],
+ "m06": [
+  "As dez pragas do Egito",
+  "Pragas do Egito"
+ ],
+ "m07": [
+  "A primeira Páscoa",
+  "Páscoa no Egito",
+  "Sangue do cordeiro nos umbrais"
+ ],
+ "m08": [
+  "Coluna de nuvem e coluna de fogo"
+ ],
+ "m09": [
+  "Travessia do Mar Vermelho",
+  "Abertura do Mar Vermelho"
+ ],
+ "m10": [
+  "Cântico de Moisés",
+  "Cântico de Miriã"
+ ],
+ "m11": [
+  "Águas amargas de Mara"
+ ],
+ "m12": [
+  "Maná do céu",
+  "Codornizes e maná"
+ ],
+ "m13": [
+  "Água da rocha",
+  "Moisés fere a rocha em Refidim"
+ ],
+ "m14": [
+  "Batalha contra Amaleque",
+  "Arão e Hur sustentam as mãos de Moisés"
+ ],
+ "m15": [
+  "Conselho de Jetro",
+  "Jetro aconselha Moisés"
+ ],
+ "m16": [
+  "Monte Sinai",
+  "Aliança no Sinai"
+ ],
+ "m17": [
+  "Os Dez Mandamentos",
+  "Dez Mandamentos no Sinai"
+ ],
+ "m18": [
+  "Sangue da aliança",
+  "Moisés sobe ao monte Sinai por 40 dias"
+ ],
+ "m19": [
+  "O bezerro de ouro"
+ ],
+ "m20": [
+  "Moisés vê a glória de Deus",
+  "Mostra-me a tua glória"
+ ],
+ "m21": [
+  "O tabernáculo",
+  "Glória de Deus enche o tabernáculo"
+ ],
+ "m22": [
+  "Codornizes no deserto",
+  "Quibrote-Hataavá"
+ ],
+ "m23": [
+  "Os doze espias",
+  "Josué e Calebe"
+ ],
+ "m24": [
+  "A vara de Arão que floresceu",
+  "Rebelião de Corá"
+ ],
+ "m25": [
+  "Águas de Meribá",
+  "Moisés fere a rocha"
+ ],
+ "m26": [
+  "Morte de Arão no monte Hor"
+ ],
+ "m27": [
+  "A serpente de bronze",
+  "Serpente de metal no deserto"
+ ],
+ "m28": [
+  "Vitória sobre Seom e Ogue"
+ ],
+ "m29": [
+  "Balaão e a jumenta",
+  "A jumenta de Balaão"
+ ],
+ "m30": [
+  "Shemá Israel",
+  "Ouve, ó Israel"
+ ],
+ "m31": [
+  "Morte de Moisés",
+  "Moisés no monte Nebo"
+ ],
+ "m32": [
+  "Sê forte e corajoso",
+  "Josué 1"
+ ],
+ "m33": [
+  "Raabe e os espias",
+  "O cordão vermelho de Raabe"
+ ],
+ "m34": [
+  "Travessia do rio Jordão",
+  "As doze pedras do Jordão"
+ ],
+ "m35": [
+  "Queda dos muros de Jericó",
+  "Batalha de Jericó"
+ ],
+ "m36": [
+  "O pecado de Acã",
+  "Conquista de Ai"
+ ],
+ "m37": [
+  "Altar no monte Ebal",
+  "Bênçãos e maldições no Ebal e Gerizim"
+ ],
+ "m38": [
+  "Sol, detém-te em Gibeom",
+  "O dia em que o sol parou"
+ ],
+ "m39": [
+  "Divisão da terra em Siló"
+ ],
+ "m40": [
+  "Eu e a minha casa serviremos ao Senhor",
+  "Despedida de Josué"
+ ],
+ "d01": [
+  "Davi, o pastor de ovelhas",
+  "Davi mata o leão e o urso"
+ ],
+ "d02": [
+  "Unção de Davi",
+  "Samuel unge Davi"
+ ],
+ "d03": [
+  "Davi toca harpa para Saul"
+ ],
+ "d04": [
+  "Golias",
+  "Vale de Elá"
+ ],
+ "d05": [
+  "Davi e Golias",
+  "Cinco pedras lisas",
+  "A funda de Davi"
+ ],
+ "d06": [
+  "Davi e Jônatas",
+  "Amizade de Davi e Jônatas"
+ ],
+ "d07": [
+  "Saul feriu os seus milhares, Davi os seus dez milhares",
+  "Inveja de Saul"
+ ],
+ "d08": [
+  "Mical ajuda Davi a fugir pela janela"
+ ],
+ "d09": [
+  "Davi foge para Samuel em Ramá",
+  "Saul entre os profetas"
+ ],
+ "d10": [
+  "As três flechas de Jônatas",
+  "Jônatas avisa Davi"
+ ],
+ "d11": [
+  "Davi e os pães da proposição em Nobe",
+  "Massacre dos sacerdotes de Nobe"
+ ],
+ "d12": [
+  "Davi se finge de louco em Gate"
+ ],
+ "d13": [
+  "Caverna de Adulão"
+ ],
+ "d14": [
+  "Davi salva Queila"
+ ],
+ "d15": [
+  "Davi no deserto de Zife"
+ ],
+ "d16": [
+  "Davi poupa Saul na caverna",
+  "Davi corta a orla do manto de Saul",
+  "En-Gedi"
+ ],
+ "d17": [
+  "Davi e Abigail",
+  "Nabal e Abigail"
+ ],
+ "d18": [
+  "Davi poupa Saul pela segunda vez",
+  "A lança e a bilha de Saul"
+ ],
+ "d19": [
+  "Ziclague",
+  "Davi recupera tudo em Ziclague"
+ ],
+ "d20": [
+  "Morte de Saul",
+  "Monte Gilboa",
+  "Lamento de Davi por Saul e Jônatas"
+ ],
+ "d21": [
+  "Davi ungido rei em Hebrom"
+ ],
+ "d22": [
+  "Davi conquista Jerusalém",
+  "Cidade de Davi"
+ ],
+ "d23": [
+  "Uzá e a arca",
+  "Morte de Uzá"
+ ],
+ "d24": [
+  "Davi dança diante da arca"
+ ],
+ "d25": [
+  "Aliança davídica",
+  "Promessa de Deus a Davi"
+ ],
+ "d26": [
+  "Mefibosete",
+  "Davi e Mefibosete"
+ ],
+ "d27": [
+  "Vitórias de Davi"
+ ],
+ "d28": [
+  "Davi e Bate-Seba"
+ ],
+ "d29": [
+  "Natã repreende Davi",
+  "Tu és esse homem"
+ ],
+ "d30": [
+  "Rebelião de Absalão",
+  "Absalão"
+ ],
+ "d31": [
+  "Davi foge de Absalão"
+ ],
+ "d32": [
+  "Simei amaldiçoa Davi"
+ ],
+ "d33": [
+  "Davi em Maanaim"
+ ],
+ "d34": [
+  "Morte de Absalão",
+  "Absalão preso pelos cabelos no carvalho"
+ ],
+ "d35": [
+  "Meu filho Absalão",
+  "Davi chora por Absalão"
+ ],
+ "d36": [
+  "Recenseamento de Davi",
+  "Eira de Araúna"
+ ],
+ "d37": [
+  "Salomão ungido rei",
+  "Adonias tenta tomar o trono"
+ ],
+ "d38": [
+  "Davi prepara a construção do templo"
+ ],
+ "d39": [
+  "Últimas palavras de Davi",
+  "Morte de Davi"
+ ],
+ "k01": [
+  "Salomão pede sabedoria",
+  "Sonho de Salomão em Gibeom"
+ ],
+ "k02": [
+  "Julgamento de Salomão",
+  "Sabedoria de Salomão"
+ ],
+ "k03": [
+  "Dedicação do templo de Salomão",
+  "Oração de Salomão"
+ ],
+ "k04": [
+  "A rainha de Sabá",
+  "Visita da rainha de Sabá a Salomão"
+ ],
+ "k05": [
+  "As mulheres de Salomão",
+  "Salomão se desvia de Deus"
+ ],
+ "k06": [
+  "Jeroboão e Aías",
+  "A capa rasgada em doze pedaços"
+ ],
+ "k07": [
+  "Divisão do reino de Israel",
+  "Roboão"
+ ],
+ "k08": [
+  "Bezerros de ouro de Jeroboão",
+  "Betel e Dã"
+ ],
+ "k09": [
+  "O homem de Deus de Judá",
+  "O profeta e o leão"
+ ],
+ "k10": [
+  "Mulher de Jeroboão disfarçada",
+  "Aías e a esposa de Jeroboão"
+ ],
+ "k11": [
+  "Sisaque invade Jerusalém",
+  "Escudos de ouro de Salomão"
+ ],
+ "k12": [
+  "Elias e Acabe",
+  "Elias anuncia a seca"
+ ],
+ "k13": [
+  "Elias alimentado pelos corvos",
+  "Ribeiro de Querite"
+ ],
+ "k14": [
+  "A viúva de Sarepta",
+  "Elias e a viúva de Sarepta"
+ ],
+ "k15": [
+  "Elias no monte Carmelo",
+  "Elias e os profetas de Baal"
+ ],
+ "k16": [
+  "Nuvem do tamanho da mão de um homem",
+  "Elias ora pela chuva"
+ ],
+ "k17": [
+  "Elias debaixo do zimbro",
+  "Elias foge de Jezabel"
+ ],
+ "k18": [
+  "Elias no monte Horebe",
+  "Cicio tranquilo e suave"
+ ],
+ "k19": [
+  "Chamado de Eliseu",
+  "Elias lança a capa sobre Eliseu"
+ ],
+ "k20": [
+  "A vinha de Nabote"
+ ],
+ "k21": [
+  "O profeta Micaías",
+  "Morte de Acabe"
+ ],
+ "k22": [
+  "Elias arrebatado ao céu",
+  "Carro de fogo",
+  "Porção dobrada"
+ ],
+ "k23": [
+  "A sunamita",
+  "Eliseu ressuscita o filho da sunamita"
+ ],
+ "k24": [
+  "Naamã, o leproso",
+  "Cura de Naamã no rio Jordão"
+ ],
+ "k25": [
+  "O machado que flutuou",
+  "Eliseu e o machado"
+ ],
+ "k26": [
+  "Cavalos e carros de fogo",
+  "Eliseu em Dotã"
+ ],
+ "k27": [
+  "Os quatro leprosos",
+  "Cerco de Samaria"
+ ],
+ "k28": [
+  "Jeú",
+  "Morte de Jezabel"
+ ],
+ "k29": [
+  "Joás, o menino rei",
+  "Atalia"
+ ],
+ "k30": [
+  "Morte de Eliseu",
+  "Eliseu e as flechas"
+ ],
+ "k31": [
+  "Queda de Samaria",
+  "Fim do reino do Norte"
+ ],
+ "k32": [
+  "Ezequias",
+  "Neustã",
+  "Ezequias destrói a serpente de bronze"
+ ],
+ "k33": [
+  "Rabsaqué",
+  "Senaqueribe ameaça Jerusalém"
+ ],
+ "k34": [
+  "Oração de Ezequias",
+  "Ezequias estende a carta diante do Senhor"
+ ],
+ "k35": [
+  "Anjo mata 185 mil assírios",
+  "Derrota de Senaqueribe"
+ ],
+ "k36": [
+  "Cura de Ezequias",
+  "Sombra do relógio de sol volta"
+ ],
+ "k37": [
+  "Ezequias mostra os tesouros aos babilônios"
+ ],
+ "k38": [
+  "Josias",
+  "Livro da Lei encontrado no templo",
+  "Reforma de Josias"
+ ],
+ "k39": [
+  "Morte de Josias em Megido"
+ ],
+ "k40": [
+  "Destruição de Jerusalém",
+  "Queda de Judá",
+  "Destruição do templo de Salomão"
+ ],
+ "k41": [
+  "Exílio na Babilônia",
+  "Cativeiro babilônico"
+ ],
+ "a01": [
+  "Apedrejamento de Estêvão",
+  "Martírio de Estêvão"
+ ],
+ "a02": [
+  "Conversão de Paulo",
+  "Caminho de Damasco"
+ ],
+ "a03": [
+  "Ananias e Saulo",
+  "Rua Direita"
+ ],
+ "a04": [
+  "Paulo desce o muro num cesto",
+  "Fuga de Damasco"
+ ],
+ "a05": [
+  "Barnabé apresenta Paulo aos apóstolos",
+  "Paulo em Jerusalém"
+ ],
+ "a06": [
+  "Igreja de Antioquia",
+  "Chamados cristãos pela primeira vez"
+ ],
+ "a07": [
+  "Primeira viagem missionária de Paulo",
+  "Separai-me Barnabé e Saulo"
+ ],
+ "a08": [
+  "Elimas, o mágico",
+  "Sérgio Paulo em Pafos"
+ ],
+ "a09": [
+  "Paulo em Antioquia da Pisídia"
+ ],
+ "a10": [
+  "Paulo e Barnabé em Listra",
+  "Paulo apedrejado em Listra"
+ ],
+ "a11": [
+  "Volta da primeira viagem missionária"
+ ],
+ "a12": [
+  "Concílio de Jerusalém"
+ ],
+ "a13": [
+  "Separação de Paulo e Barnabé",
+  "Segunda viagem missionária de Paulo"
+ ],
+ "a14": [
+  "Timóteo",
+  "Paulo escolhe Timóteo"
+ ],
+ "a15": [
+  "Visão do macedônio",
+  "Chamado à Macedônia"
+ ],
+ "a16": [
+  "Lídia, a vendedora de púrpura",
+  "Igreja de Filipos"
+ ],
+ "a17": [
+  "Paulo e Silas na prisão",
+  "Carcereiro de Filipos",
+  "Paulo e Silas louvam à meia-noite"
+ ],
+ "a18": [
+  "Os bereanos",
+  "Paulo em Bereia"
+ ],
+ "a19": [
+  "Paulo no Areópago",
+  "Ao deus desconhecido"
+ ],
+ "a20": [
+  "Áquila e Priscila",
+  "Paulo, o fazedor de tendas"
+ ],
+ "a21": [
+  "Paulo em Corinto",
+  "Não temas, fala e não te cales"
+ ],
+ "a22": [
+  "Escola de Tirano",
+  "Terceira viagem missionária de Paulo",
+  "Paulo em Éfeso"
+ ],
+ "a23": [
+  "Filhos de Ceva",
+  "Livros de magia queimados em Éfeso"
+ ],
+ "a24": [
+  "Grande é a Diana dos efésios",
+  "Tumulto em Éfeso"
+ ],
+ "a25": [
+  "Tito consola Paulo na Macedônia"
+ ],
+ "a26": [
+  "Carta aos Romanos",
+  "Paulo escreve Romanos em Corinto"
+ ],
+ "a27": [
+  "Êutico cai da janela",
+  "Ressurreição de Êutico"
+ ],
+ "a28": [
+  "Despedida de Paulo em Mileto",
+  "Discurso aos anciãos de Éfeso"
+ ],
+ "a29": [
+  "Profecia de Ágabo",
+  "O cinto de Paulo"
+ ],
+ "a30": [
+  "Prisão de Paulo no templo"
+ ],
+ "a31": [
+  "Defesa de Paulo nas escadas",
+  "Paulo, cidadão romano"
+ ],
+ "a32": [
+  "Conspiração contra Paulo",
+  "Sobrinho de Paulo"
+ ],
+ "a33": [
+  "Paulo diante de Félix"
+ ],
+ "a34": [
+  "Apelo a César",
+  "Paulo diante de Festo e Agripa"
+ ],
+ "a35": [
+  "Naufrágio de Paulo",
+  "Vento Euroaquilão"
+ ],
+ "a36": [
+  "Naufrágio de Paulo",
+  "Nenhuma vida se perderá"
+ ],
+ "a37": [
+  "Paulo em Malta",
+  "Paulo picado pela víbora"
+ ],
+ "a38": [
+  "Chegada de Paulo a Roma",
+  "Fórum de Ápio"
+ ],
+ "a39": [
+  "Paulo preso em Roma",
+  "Cartas da prisão"
+ ],
+ "a40": [
+  "Carta a Filemom",
+  "Onésimo"
+ ],
+ "a41": [
+  "Carta a Tito",
+  "Tito em Creta"
+ ],
+ "a42": [
+  "Combati o bom combate",
+  "Segunda carta a Timóteo",
+  "Últimas palavras de Paulo"
+ ],
+ "p01": [
+  "Provérbios 1",
+  "A sabedoria clama nas ruas"
+ ],
+ "p02": [
+  "Vai ter com a formiga, ó preguiçoso",
+  "Provérbios formiga"
+ ],
+ "p03": [
+  "Balança enganosa",
+  "Provérbios 11:1"
+ ],
+ "p04": [
+  "Amigo em Provérbios",
+  "Ferro com ferro se afia"
+ ],
+ "p05": [
+  "Provérbios 7",
+  "Guarda o teu coração"
+ ],
+ "p06": [
+  "Oração de Agur",
+  "Provérbios 30"
+ ],
+ "p07": [
+  "Provérbios 31",
+  "Mulher virtuosa"
+ ],
+ "p08": [
+  "Provérbios 9",
+  "A casa da sabedoria"
+ ],
+ "g01": [
+  "O amor de Deus",
+  "Plano de salvação"
+ ],
+ "g02": [
+  "Pecado e separação de Deus",
+  "Queda do homem"
+ ],
+ "g03": [
+  "Jesus, o único caminho",
+  "Morte e ressurreição de Jesus"
+ ],
+ "g04": [
+  "Oração de entrega a Jesus",
+  "Como aceitar Jesus"
+ ]
+}
