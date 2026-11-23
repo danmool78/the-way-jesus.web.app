@@ -658,8 +658,13 @@ function drawCard12(g, c, S) {
       if (two) { const h = Math.ceil(words.length / 2); g.fillText(words.slice(0, h).join(' '), 0, -9 + oy); g.fillText(words.slice(h).join(' '), 0, 10 + oy); } else g.fillText(d[0], 0, oy);
     } else { // 이야기 카드: 그림 글자 + 한 줄
       g.font = `${S.icons ? 28 : 24}px "Apple Color Emoji","Noto Color Emoji",sans-serif`; g.fillText(d[1], 0, S.icons ? -9 : -12);
-      let fs = 11; g.font = `600 ${fs}px "Noto Sans KR",sans-serif`; while (g.measureText(d[2]).width > CW - 8 && fs > 8) g.font = `600 ${--fs}px "Noto Sans KR",sans-serif`; // 카드 폭에 맞게
-      g.fillStyle = '#5a4022'; g.fillText(d[2], 0, 19);
+      // 카드 폭에 맞게: 글씨를 10px까지만 줄이고, 그래도 넘치면 두 줄로(8px까지 줄이니 읽을 수 없었다 — 사용자 2026-11)
+      let fs = 12; const fit = t => { g.font = `700 ${fs}px "Noto Sans KR",sans-serif`; return g.measureText(t).width <= CW - 8; };
+      g.fillStyle = '#4a3218';
+      while (!fit(d[2]) && fs > 10) fs--;
+      if (fit(d[2])) g.fillText(d[2], 0, 19);
+      else { const w = d[2].split(' '); let best = 1, bw = 1e9; for (let i = 1; i < w.length; i++) { g.font = `700 11px "Noto Sans KR",sans-serif`; const m = Math.max(g.measureText(w.slice(0, i).join(' ')).width, g.measureText(w.slice(i).join(' ')).width); if (m < bw) { bw = m; best = i; } }
+        fs = 11; const a = w.slice(0, best).join(' '), b = w.slice(best).join(' '); while (!(fit(a) && fit(b)) && fs > 9) fs--; g.fillText(a, 0, 14); g.fillText(b, 0, 27); }
     }
     if (c.glow > 0) { g.strokeStyle = `rgba(255,220,120,${c.glow})`; g.lineWidth = 5; rrect(g, -CW / 2, -CH / 2, CW, CH, 8); g.stroke(); }
   }
@@ -3831,11 +3836,11 @@ const plagues = { ...twelve, icons: true, data: PLAGUES, scene: 'm06', backSc: '
   help: tr('처음 3초 동안 카드를 모두 보여 줘요 — 잘 봐 두세요.<br>두 장씩 뒤집어 <b>같은 그림</b>의 재앙과 그 일을 짝지어요. 틀리면 다시 덮여요.'),
   seconds: 80, endLines: [tr('바로가 밤에 모세와 아론을 불러'), tr('너희는 일어나 내 백성 가운데에서 떠나라'), tr('출 12:31')] };
 const LETTERS = [
-  [tr('로마서'), '🏛️', tr('로마의 성도들에게'), tr('롬 1:7')], [tr('고린도전서'), '⚓', tr('고린도 교회에'), tr('고전 1:2')],
-  [tr('갈라디아서'), '⛰️', tr('갈라디아 여러 교회에'), tr('갈 1:2')], [tr('에베소서'), '🏟️', tr('에베소의 성도들에게'), tr('엡 1:1')],
-  [tr('빌립보서'), '🟣', tr('빌립보의 성도들에게'), tr('빌 1:1')], [tr('골로새서'), '🌿', tr('골로새의 형제들에게'), tr('골 1:2')],
-  [tr('데살로니가전서'), '⛵', tr('데살로니가 교회에'), tr('살전 1:1')], [tr('디모데전서'), '👦', tr('믿음의 참 아들 디모데에게'), tr('딤전 1:2')],
-  [tr('디도서'), '🏝️', tr('그레데에 남겨 둔 디도에게'), tr('딛 1:4')], [tr('빌레몬서'), '⛓️', tr('사랑받는 동역자 빌레몬에게'), tr('몬 1:1')]];
+  [tr('로마서'), '🏛️', tr('로마 교회'), tr('롬 1:7')], [tr('고린도전서'), '⚓', tr('고린도 교회'), tr('고전 1:2')],
+  [tr('갈라디아서'), '⛰️', tr('갈라디아 교회들'), tr('갈 1:2')], [tr('에베소서'), '🏟️', tr('에베소 교회'), tr('엡 1:1')],
+  [tr('빌립보서'), '🟣', tr('빌립보 교회'), tr('빌 1:1')], [tr('골로새서'), '🌿', tr('골로새 교회'), tr('골 1:2')],
+  [tr('데살로니가전서'), '⛵', tr('데살로니가 교회'), tr('살전 1:1')], [tr('디모데전서'), '👦', tr('아들 디모데'), tr('딤전 1:2')],
+  [tr('디도서'), '🏝️', tr('그레데의 디도'), tr('딛 1:4')], [tr('빌레몬서'), '⛓️', tr('동역자 빌레몬'), tr('몬 1:1')]];
 const letters = { ...twelve, icons: true, data: LETTERS, scene: 'a39', backSc: 'e22', art: ['a39/bg', 'e22/back', 'e22/face'],
   title: tr('셋집에서 두 해'), task: tr('바울의 편지와 받는 이 짝 맞추기'),
   ask: [tr('매인 몸이었지만, 여기서 나는 여러 교회와 형제들에게 편지를 썼단다.'), tr('어느 편지가 누구에게 갔는지 기억하니? 짝지어 보렴.')],
