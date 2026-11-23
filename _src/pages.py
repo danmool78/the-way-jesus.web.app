@@ -243,7 +243,8 @@ for JID, JDIR, LIST, OG in JOURNEYS:
             if JID == 'psalms' and A:  # 시편: '시편 23편 — 나의 목자 · 여호와는 나의 목자시니'
                 title = '%s — %s · %s | %s' % (A[0], e['title'].split('·', 1)[-1].strip(), A[1] if len(A) > 1 else place, ui['appName'])
             else:
-                title = '%s%s — %s · %s | %s' % (e['title'], '(%s)' % A[0] if A else '', place, e['when'], ui['appName'])
+                br = '(%s)' if lang == 'ko' else '（%s）' if lang in ('ja', 'zh') else ' (%s)'  # 괄호: 한국어는 붙여, 중일은 전각, 라틴 글자 언어는 띄어
+                title = '%s%s — %s · %s | %s' % (e['title'], br % A[0] if A else '', place, e['when'], ui['appName'])
             desc = (e.get('subtitle', '') + '. ' if e.get('subtitle') else '') + e['story'][0]
             if A: desc = '%s. %s' % (' · '.join(A), desc)
             desc = desc[:150] + ('…' if len(desc) > 150 else '')
