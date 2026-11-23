@@ -137,7 +137,6 @@
  "누가 누구인지 기억해 다오 — 이름과 그 사람의 이야기를 짝지어 보렴.": "Souviens-toi de qui est qui — associe chaque nom à son histoire.",
  "이에 열둘을 세우셨으니 이는 자기와 함께 있게 하시고": "Il en établit douze pour qu’ils soient avec lui",
  "막 3:14": "Mc 3:14",
- "처음 3초 동안 카드를 모두 보여 줘요 — 잘 봐 두세요.<br>두 장씩 뒤집어 이름과 그 사람의 이야기를 짝지어요. 틀리면 다시 덮여요.": "Pendant les 3 premières secondes, toutes les cartes sont visibles — regarde bien.<br>Retourne-les deux par deux pour associer un nom et son histoire. Si c’est faux, elles se retournent.",
  "잘 봐 두세요 · {0}": "Regarde bien · {0}",
  "자기와 함께 있게 하시고": "Pour qu’ils soient avec lui",
  "보내사 전도도 하게 하시려 함이러라": "et pour les envoyer prêcher",
@@ -1259,5 +1258,6 @@
  "데살로니가 교회": "Église de Thessalonique",
  "아들 디모데": "Timothée, son fils",
  "그레데의 디도": "Tite en Crète",
- "동역자 빌레몬": "Philémon, collaborateur"
+ "동역자 빌레몬": "Philémon, collaborateur",
+ "처음 3초 동안 카드를 모두 보여 줘요 — 잘 봐 두세요.<br>두 장씩 뒤집어 <b>같은 그림</b>의 이름과 그 사람의 이야기를 짝지어요. 틀리면 다시 덮여요.": "Toutes les cartes sont montrées pendant 3 secondes — regarde bien.<br>Retourne-en deux à la fois et associe chaque nom à son histoire grâce à <b>la même image</b>. Les mauvaises paires se referment."
 }
