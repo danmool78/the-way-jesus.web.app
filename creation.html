@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#f7f1e6">
+<meta name="description" content="그 길 · 하나님의 생각을 따라 — 과학자가 아닌 평신도가, 과학이 측정하고 관측해 확인한 사실과 과학자들의 말을 모았습니다. 우주의 시작, 정교한 숫자, 수학으로 읽히는 우주, 생명의 암호.">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<title>하나님의 생각을 따라 — 그 길</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* '왜 기독교인가'은 손그림과 맞춰 밝은 종이 바탕. 앱 공용 색(var)을 이 페이지에서만 덮는다 */
+  :root{--bg:#f7f1e6;--ink:#2b2620;--muted:#7a6f60;--faint:#a39a8a;--gold:#d0685b;--gold2:#c0564a;--line:#e8dece;color-scheme:light}
+  /* 왜 기독교인가 — 묻고 답하기(qna.html)와 같은 결. 글보다 도표와 단순한 그림을 앞세운다(명화는 쓰지 않는다) */
+  body{overflow:auto;word-break:keep-all;background:radial-gradient(ellipse 90% 100% at 50% 0%,rgba(208,104,91,.08),transparent 70%) 0 0/100% 900px no-repeat local,var(--bg)} /* 바탕이 화면 높이마다 되풀이되며 이음선이 보였다: 맨 위에 한 번만 깔고 종이색으로 부드럽게 녹인다 */
+  .why{max-width:760px;margin:0 auto;padding:28px 20px 64px}
+  .why-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .why-top a{color:var(--gold2);text-decoration:none;display:inline-flex;align-items:center;gap:8px;font-size:14px}
+  .why-top img{width:28px;height:28px}
+  .why-top .back{border:1px solid #dccfba;border-radius:999px;padding:7px 14px}
+  .why-top .back:hover{border-color:var(--gold)}
+  .why h1{font-family:var(--serif);font-size:36px;margin:34px 0 6px;color:#2b2620;text-align:center}
+  .why .sub{text-align:center;color:var(--gold2);font-family:var(--serif);font-size:17px;margin:0 0 18px}
+  .why .lead{color:var(--muted);line-height:1.9;margin:0 0 10px;text-align:center}
+  .why h2{font-family:var(--serif);font-size:24px;color:var(--gold2);margin:60px 0 14px;padding-top:12px;border-top:1px solid #e8dece;scroll-margin-top:16px}
+  .why h2 small{display:block;font-family:var(--sans);font-size:12px;color:var(--faint);letter-spacing:.08em;margin-bottom:4px}
+  .why h3{font-size:16px;color:#2b2620;margin:26px 0 8px}
+  .why p{color:#3d362d;line-height:1.9;font-size:15.5px;margin:0 0 12px}
+  .why b{color:var(--gold2)}
+  /* 말씀 — 새로 옮긴 글 */
+  .verse{margin:16px 0;padding:14px 18px;border-left:2px solid var(--gold);background:rgba(208,104,91,.06);border-radius:0 12px 12px 0;font-family:var(--serif);font-size:16.5px;line-height:1.85;color:#2b2620}
+  .verse cite{display:block;font-family:var(--sans);font-style:normal;font-size:12px;color:var(--muted);margin-top:4px}
+  .verse.big{border:0;background:none;text-align:center;font-size:19px;padding:8px 6px}
+  .card{border:1px solid #e8dece;border-radius:16px;background:#fffaf2;padding:16px 18px;margin:14px 0}
+  .card.warm{border-color:#d6c8b2;background:#fff6ef}
+  .card p:last-child{margin-bottom:0}
+  .why .motto{font-family:var(--serif);font-size:19px;line-height:1.7;color:#2b2620;text-align:center}
+  /* 그림 — 손으로 그린 단순한 SVG. 글씨는 폰에서도 읽히게 크게 */
+  .ill{display:block;width:100%;max-width:560px;height:auto;margin:16px auto 6px}
+  .ill text{font-family:'Noto Sans KR',sans-serif}
+  .ill .t{font-family:'Gowun Batang',serif;font-weight:700}
+  /* 일러스트 — 기쁜 소식 그림과 같은 화풍(paint.mjs) */
+  .art{margin:18px auto 8px;max-width:640px}
+  .art img{display:block;width:100%;border-radius:16px;background:#f7f1e6;border:1px solid #eadfcd;box-shadow:0 6px 18px rgba(90,60,30,.08)}
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:640px;margin:18px auto 8px}
+  .pair .art{margin:0}
+  .pair figcaption{text-align:center;font-family:var(--serif);font-weight:700;color:var(--gold2);font-size:15px;margin-top:8px}
+  .why .cap{text-align:center;font-family:var(--serif);color:var(--gold2);font-size:16.5px;margin:0 0 16px}
+  /* 모든 사람의 세 물음 */
+  .asks{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0 6px}
+  .asks div{border:1px solid #e8dece;border-radius:14px;padding:14px 10px;text-align:center;background:#fffaf2;font-size:14px;line-height:1.6;color:#3d362d}
+  .asks svg{width:30px;height:30px;display:block;margin:0 auto 8px}
+  /* 서로 다른 답 — 물음마다 종교별 칩 */
+  .claims{display:grid;gap:12px;margin:14px 0}
+  .claim{border:1px solid #e8dece;border-radius:16px;background:#fffaf2;padding:14px 16px}
+  .claim h4{margin:0 0 10px;font-family:var(--serif);font-size:16.5px;color:#2b2620}
+  .claim ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .claim li{display:flex;gap:8px;align-items:baseline;font-size:13.5px;line-height:1.55;color:#3d362d;background:rgba(60,40,20,.04);border-radius:10px;padding:7px 10px}
+  .claim li i{flex:none;font-style:normal;font-size:11.5px;font-weight:700;border-radius:999px;padding:1px 7px;color:#fffaf2}
+  .c-c{background:#d97a6c}.c-i{background:#8fb2b4}.c-b{background:#c9a3c9}.c-h{background:#e3a07a}.c-j{background:#a9b98a}
+  /* 하나는 틀린다 — 맞서는 두 주장 */
+  .vs{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch;margin:16px 0}
+  .vs div{border-radius:14px;padding:14px;text-align:center;font-size:14px;line-height:1.6;color:#3d362d;background:#fffaf2;border:1px solid #e8dece}
+  .vs div b{display:block;font-family:var(--serif);font-size:16px;color:#2b2620;margin-bottom:4px}
+  .vs span{align-self:center;font-family:var(--serif);font-size:30px;color:var(--gold)}
+  /* 스펙트럼 — 종교마다 막대 위 한 점. 누르면 풀이가 열린다 */
+  .spec-head{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin:18px 0 6px}
+  .spec details{border-bottom:1px solid #e8dece}
+  .spec summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:96px 1fr 16px;gap:12px;align-items:center;padding:12px 0}
+  .spec summary::-webkit-details-marker{display:none}
+  .spec summary b{font-family:var(--serif);font-size:15px;color:#2b2620;font-weight:700}
+  .spec .track{position:relative;height:8px;border-radius:4px;background:linear-gradient(90deg,#ece3d4,#b9ab95 60%,var(--gold))}
+  .spec .dot{position:absolute;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:#2b2620;border:3px solid #fffaf2;box-shadow:0 0 0 1px #b9ab95}
+  .spec .me .dot{background:var(--gold);box-shadow:0 0 0 1px var(--gold),0 0 14px rgba(208,104,91,.5)}
+  .spec .chev{width:8px;height:8px;border-right:2px solid var(--faint);border-bottom:2px solid var(--faint);transform:rotate(45deg);transition:transform .2s}
+  .spec details[open] .chev{transform:rotate(-135deg)}
+  .spec dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0 0 14px;padding:12px 14px;border-radius:12px;background:#fffaf2;font-size:14px;line-height:1.75}
+  .spec dt{color:var(--faint)}
+  .spec dd{margin:0;color:#3d362d}
+  .why .hint{font-size:12.5px;color:var(--faint);margin:8px 0 0;line-height:1.7}
+  /* 재판관 이야기 세 걸음 */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+  .steps div{border:1px solid #e8dece;border-radius:14px;padding:14px 12px;background:#fffaf2;font-size:14px;line-height:1.7;color:#3d362d}
+  .steps div:last-child{border-color:var(--gold)}
+  .steps i{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--gold);color:#ffffff;font-style:normal;font-weight:700;font-size:13px;margin-bottom:8px}
+  /* 죄의 값 — 네 가지 답 */
+  .price{display:grid;gap:8px;margin:14px 0}
+  .price div{display:grid;grid-template-columns:110px 1fr;gap:12px;align-items:center;border:1px solid #e8dece;border-radius:12px;padding:11px 14px;background:#fffaf2;font-size:14px;line-height:1.7;color:#3d362d}
+  .price div>b{font-family:var(--serif);color:#2b2620}
+  .price .me{border-color:var(--gold);background:rgba(208,104,91,.07)}
+  /* 때와 장소 */
+  .when{display:flex;gap:14px;align-items:center;border:1px solid #d6c8b2;border-radius:16px;padding:16px 18px;margin:16px 0;background:#fffaf2}
+  .when svg{flex:none;width:40px;height:40px}
+  .when b{display:block;font-family:var(--serif);font-size:18px;color:#2b2620}
+  .when span{font-size:13px;color:var(--muted)}
+  .when a{margin-left:auto;flex:none;font-size:13px;color:var(--gold2);text-decoration:none;border:1px solid #d6c8b2;border-radius:999px;padding:7px 12px}
+  /* 진짜(O)·가짜(X) 맞대기 — 머리와 칸이 같은 격자. 바탕색 대신 가는 선과 글씨 색으로 가른다 */
+  .ox{margin:18px 0;border:1px solid #e8dece;border-radius:18px;background:#fffdf9;overflow:hidden;box-shadow:0 4px 16px rgba(90,60,30,.05)}
+  .ox-h,.ox-r{display:grid;grid-template-columns:1fr 1fr}
+  .ox-h div{display:flex;align-items:center;gap:8px;padding:14px 16px 12px;font-family:var(--serif);font-weight:700;font-size:16px;border-bottom:3px solid}
+  .ox-h .o{color:#4f6b3f;border-color:#9dbb8c}.ox-h .x{color:#b8473b;border-color:#e9a79c}
+  .ox-r{border-top:1px solid #efe6d8}
+  .ox-h+.ox-r{border-top:0}
+  .ox-k{grid-column:1/-1;padding:9px 16px;margin-bottom:6px;font-family:var(--serif);font-weight:700;font-size:15px;color:#5a3f22;background:#efe2cc}
+  .ox-r>div:nth-child(n+2){position:relative;padding:6px 16px 14px 38px;font-size:14px;line-height:1.7}
+  .ox-r>div:nth-child(2){color:#3d362d}
+  .ox-r>div:nth-child(3){color:#7a6f60;border-left:1px solid #efe6d8}
+  .ox-r>div:nth-child(2)::before{content:'';position:absolute;left:15px;top:11px;width:10px;height:10px;border:2.5px solid #6f9160;border-radius:50%}
+  .ox-r>div:nth-child(3)::before{content:'✕';position:absolute;left:15px;top:6px;font-size:14px;font-weight:700;color:#d06a5d}
+  .ox-r>div:nth-child(2) b{color:#3f5a31}.ox-r>div:nth-child(3) b{color:#a8443a}
+  .mk{flex:none;width:20px;height:20px}
+  @media (min-width:640px){
+    .ox-h,.ox-r{grid-template-columns:160px 1fr 1fr}
+    .ox-h::before{content:'';align-self:stretch;background:#efe2cc;border-bottom:3px solid #dcc7a5}
+    .ox-k{grid-column:auto;margin:0;padding:14px 16px;align-self:stretch;display:flex;align-items:center;border-right:1px solid #e3d3b8}
+    .ox-r>div:nth-child(n+2){padding:14px 16px 14px 38px}
+    .ox-r>div:nth-child(2)::before{top:19px}.ox-r>div:nth-child(3)::before{top:14px}
+  }
+  /* 믿어야 아는 것들 */
+  .know{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
+  .know div{border:1px solid #e8dece;border-radius:16px;background:#fffaf2;padding:14px 12px;font-size:13.5px;line-height:1.6;color:#3d362d}
+  .know svg{width:34px;height:34px;display:block;margin-bottom:6px}
+  .know b{display:block;font-family:var(--serif);font-size:16px;color:#2b2620;margin-bottom:3px}
+  .flip{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin:16px 0;text-align:center}
+  .flip div{border-radius:16px;padding:14px 10px;font-family:var(--serif);font-size:17px;line-height:1.5}
+  .flip .a{background:#f0ebe2;color:#7a6f60}.flip .b{background:#fbe4df;color:#b8473b;font-weight:700}
+  .flip small{display:block;font-family:var(--sans);font-size:12px;color:var(--muted);font-weight:400;margin-top:2px}
+  .flip span{font-size:22px;color:var(--faint)}
+  @media (max-width:600px){.know{grid-template-columns:1fr 1fr}}
+  .end{text-align:center;margin-top:40px}
+  .end a{display:inline-block;padding:14px 28px;border-radius:999px;background:linear-gradient(180deg,#d97a6c,#c0564a);color:#ffffff;font-weight:700;text-decoration:none;margin:4px}
+  .end a.ghost{background:none;border:1px solid #d6c8b2;color:var(--gold2)}
+  .why .foot{text-align:center;margin-top:36px;font-size:12px;color:var(--faint);line-height:1.8}
+  .foot a{color:var(--faint)}
+  @media (max-width:600px){
+    .why h1{font-size:30px}.why h2{font-size:21px}
+    .asks{gap:8px}.asks div{padding:12px 6px;font-size:13px}
+    .claim ul{grid-template-columns:1fr}
+    .spec summary{grid-template-columns:78px 1fr 14px;gap:10px}
+    .spec summary b{font-size:14px}
+    .steps{grid-template-columns:1fr}
+    .price div{grid-template-columns:92px 1fr}
+    .vs div{padding:12px 8px;font-size:13px}
+    .when{flex-wrap:wrap}.when a{margin-left:54px}
+  }
+  /* '왜 기독교인가' 표지와 '펼쳐 보기' — 처음엔 그림과 물음만, 풀이는 접어 둔다 */
+  .tag{display:block;width:max-content;margin:30px auto 0;font-size:12px;letter-spacing:.12em;color:var(--gold2);border:1px solid #d6c8b2;border-radius:999px;padding:4px 12px}
+  .why section{margin:64px 0 0;padding-top:14px;border-top:1px solid #e8dece}
+  .why section>small{display:block;font-size:12px;color:var(--faint);letter-spacing:.08em;text-align:center}
+  .why section>h2{border:0;margin:4px 0 4px;padding:0;text-align:center;font-size:23px}
+  .more{margin:6px 0 0}
+  .more>summary{list-style:none;cursor:pointer;width:max-content;margin:4px auto 0;display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--gold2);border:1px solid #d6c8b2;border-radius:999px;padding:8px 16px;background:rgba(208,104,91,.05);transition:background .2s,border-color .2s}
+  .more>summary::-webkit-details-marker{display:none}
+  .more>summary:hover{border-color:var(--gold);background:rgba(208,104,91,.1)}
+  .more>summary::after{content:'';width:7px;height:7px;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:translateY(-2px) rotate(45deg);transition:transform .2s}
+  .more[open]>summary::after{transform:translateY(2px) rotate(-135deg)}
+  .more[open]>summary .o{display:none}.more>summary .c{display:none}.more[open]>summary .c{display:inline}
+  .more>div{margin-top:14px;animation:open .35s ease}
+  @keyframes open{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+  .why h1{margin-top:34px}
+  /* 그다음 이야기 — 교회 */
+  .part{margin:84px 0 0;text-align:center}
+  .part span{display:inline-block;font-size:12px;letter-spacing:.14em;color:#fff;background:var(--gold);border-radius:999px;padding:5px 14px}
+  .part h2{border:0;margin:12px 0 6px;padding:0;font-size:24px;line-height:1.5}
+  .part p{color:var(--muted);text-align:center}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 6px;position:relative}
+  .tl::before{content:'';position:absolute;left:15px;top:10px;bottom:10px;width:2px;background:#e8dece}
+  .tl li{position:relative;padding:0 0 14px 40px}
+  .tl li::before{content:'';position:absolute;left:3px;top:5px;width:16px;height:16px;border-radius:50%;background:#fffaf2;border:3px solid #d6c8b2}
+  .tl li.on::before{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 5px rgba(208,104,91,.15)}
+  .tl b{display:block;font-family:var(--serif);font-size:16px;color:#2b2620}
+  .tl span{font-size:14px;color:#3d362d;line-height:1.7}
+  .tl a{font-size:12.5px;color:var(--gold2);text-decoration:none;margin-left:4px;white-space:nowrap}
+  .roles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
+  .roles div{border:1px solid #e8dece;border-radius:14px;padding:12px;background:#fffaf2;font-size:13px;line-height:1.6;color:#3d362d}
+  .roles b{display:block;font-family:var(--serif);font-size:15.5px;color:#2b2620;margin-bottom:2px}
+  .roles i{font-style:normal;font-size:11px;font-weight:700;border-radius:999px;padding:1px 7px;margin-left:4px;vertical-align:2px}
+  .r-up{background:#fbe9e5;color:#b8473b}.r-in{background:#f6efe2;color:#8a6a35}.r-out{background:#eef3e8;color:#4f6b3f}
+  .ache{border:1px solid #f0cfc8;border-radius:16px;background:#fff4f0;padding:16px 18px;margin:14px 0}
+  .ache p{margin:0 0 12px}.ache p:last-child{margin:0}
+  .ache .h{font-family:var(--serif);font-size:18px;color:#b8473b;text-align:center;margin-bottom:14px}
+  .fv{list-style:none;counter-reset:w;margin:14px 0;padding:0}
+  .fv li{counter-increment:w;position:relative;padding:11px 14px 11px 50px;margin:8px 0;border:1px solid #e8dece;border-radius:14px;background:#fffaf2;font-size:14.5px;line-height:1.65;color:#3d362d}
+  .fv li::before{content:counter(w);position:absolute;left:14px;top:11px;width:24px;height:24px;border-radius:50%;background:#5f8150;color:#fff;font-weight:700;font-size:13px;display:grid;place-items:center}
+  .fv b{color:#2b2620}
+  @media (max-width:600px){.roles{grid-template-columns:1fr 1fr}}
+  /* 교단이 결의한 대표 이단 — 이 앱의 판단이 아니라 교단 결의를 옮긴 것(출처를 늘 함께) */
+  .notice{border:1px solid #e3c9a0;background:#fff8e9;border-radius:14px;padding:13px 16px;margin:14px 0;font-size:13.5px;line-height:1.75;color:#5b4a2e}
+  .notice b{color:#7a5a1f}
+  .hg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+  .hg>div{border:1px solid #e8dece;border-radius:16px;background:#fffaf2;padding:14px 15px}
+  .hg h4{margin:0;font-family:var(--serif);font-size:17px;color:#2b2620}
+  .hg .aka{font-size:12.5px;color:var(--muted);margin:2px 0 8px;line-height:1.5}
+  .hg .res{display:flex;flex-wrap:wrap;gap:5px;margin:0 0 9px}
+  .hg .res span{font-size:11.5px;border-radius:999px;padding:2px 8px;background:#f6efe2;color:#6d5a3a;white-space:nowrap}
+  .hg q{display:block;font-size:13px;line-height:1.65;color:#3d362d;quotes:none;border-left:2px solid #e3b5ab;padding-left:9px}
+  .hg q small{display:block;color:var(--faint);font-size:11.5px;margin-top:2px}
+  .src{font-size:12.5px;line-height:1.8;color:var(--muted);margin:12px 0 0;padding-left:18px}
+  .src a{color:var(--gold2)}
+  @media (max-width:640px){.hg{grid-template-columns:1fr}}
+  /* 배경음악 단추 — 오른쪽 아래에 떠 있고, 끄면 그 선택을 기억한다 */
+  .bgm{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));z-index:20;display:flex;align-items:center;gap:7px;padding:9px 14px;border-radius:999px;border:1px solid #e3c9bd;background:rgba(255,250,242,.94);color:#b8473b;font:500 13px var(--sans);box-shadow:0 4px 14px rgba(90,60,30,.12);cursor:pointer;backdrop-filter:blur(6px)}
+  .bgm svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .bgm.off{color:#8a7f70;border-color:#e2d8c8}
+  .bgm.off .wave{display:none}.bgm:not(.off) .mute{display:none}
+  /* 소책자 내려받기 — 보기용(A5)과 인쇄소용(도련·재단선) */
+  .dl{margin:40px 0 0;border:1px solid #e3d3b8;border-radius:16px;background:#fffaf2;padding:18px;display:grid;grid-template-columns:auto 1fr;gap:6px 16px;align-items:center}
+  .dl svg{grid-row:span 2;width:44px;height:56px}
+  .dl b{font-family:var(--serif);font-size:17px;color:#2b2620}
+  .dl p{margin:0!important;font-size:14px!important;color:var(--muted)!important;line-height:1.7!important}
+  .dl div{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+  .dl a{flex:1;min-width:150px;text-align:center;text-decoration:none;border-radius:999px;padding:11px 14px;font-weight:700;font-size:14px;border:1px solid #d6c8b2;color:var(--gold2);background:#fff}
+  .dl a:first-child{background:linear-gradient(180deg,#e08a7d,#c9604f);color:#fff;border-color:transparent}
+  .dl small{display:block;font-weight:400;font-size:11.5px;opacity:.85}
+  .why .fakelead{margin:4px 0 16px;padding:14px 18px;border-radius:14px;background:#fff8f1;border:1px solid #ecd8cb;line-height:1.85} /* '가짜'는 다른 종교가 아니라는 것을 먼저 분명히 */
+  .why .ans{margin:28px 0 8px;display:grid;gap:10px} .why .ans>div{background:#fffdf9;border:1px solid var(--line);border-radius:14px;padding:12px 16px} .why .ans small{display:block;font-size:13.5px;color:var(--muted);margin-bottom:3px} .why .ans span{font-family:var(--serif);font-size:17px;line-height:1.7} /* 처음 세 물음에 대한 답 — 글의 처음과 끝을 잇는다 */
+  .more.qa[open]>summary .o{display:inline}.more.qa[open]>summary .c{display:none} /* 물음 펼치기: 펼친 뒤에도 물음이 보이게 */
+  .why .vid{margin:40px 0 10px}.why .vid video{display:block;width:100%;aspect-ratio:16/9;border-radius:16px;border:1px solid var(--line);background:#f7f1e6;box-shadow:0 6px 18px rgba(90,60,30,.08)}.why .vid figcaption{text-align:center;font-size:13.5px;color:var(--muted);margin-top:10px}.why .vid figcaption b{display:block;font-size:16px;color:var(--ink);margin-bottom:2px}
+  /* 하나님의 생각을 따라: 사실 카드(연도·값 + 이름 + 풀이), 과학자의 말, 출처 */
+  .why .facts{display:grid;gap:10px;margin:16px 0}
+  .why .facts>div{display:grid;grid-template-columns:auto 1fr;gap:2px 14px;border:1px solid #e8dece;border-radius:14px;background:#fffaf2;padding:13px 15px}
+  .why .facts em{grid-row:span 2;font-style:normal;font-family:var(--serif);font-weight:700;color:var(--gold2);font-size:17px;min-width:58px;line-height:1.4}
+  .why .facts b{font-size:15px;color:#2b2620}
+  .why .facts span{font-size:13.5px;line-height:1.7;color:#5d5345}
+  .why .q{margin:18px 0;padding:14px 18px;border-left:3px solid #d6c8b2;background:#fbf6ee;border-radius:0 12px 12px 0;font-family:var(--serif);font-size:15.5px;line-height:1.85;color:#3d362d}
+  .why .q cite{display:block;margin-top:6px;font-family:var(--sans);font-style:normal;font-size:12.5px;color:var(--muted)}
+  .why .srcs{margin:6px 0;padding-left:18px;font-size:12.5px;line-height:1.7;color:var(--muted)}
+  .why .src{margin-top:34px}
+  .ox.oq .ox-r>div:nth-child(3)::before{content:'?'} /* 반대쪽은 틀렸다가 아니라 '아직 확인되지 않은 가설' */
+</style>
+<script>/* 폰에서 화면 전체가 확대되지 않게 — 두 번 누르기·오므리기로 틀이 커져 어긋났다(사용자). 아이폰은 user-scalable=no를 무시해 직접 막는다 (지도·3D의 두 손가락 확대는 포인터 이벤트라 그대로) */
+['gesturestart', 'gesturechange'].forEach(k => document.addEventListener(k, e => e.preventDefault(), { passive: false }));
+document.addEventListener('touchmove', e => { if (e.scale !== undefined && e.scale !== 1) e.preventDefault(); }, { passive: false });</script>
+<style>/* 앱처럼(사용자): 당겨서 새로 고침·튕김 없이, 단추를 길게 눌러도 복사 메뉴·눌림 테두리가 뜨지 않게 (글은 그대로 고를 수 있다) */
+html,body{overscroll-behavior:none}
+html{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+button,a,img,svg,nav,header,.btn{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}</style>
+</head>
+<body>
+<main class="why">
+  <nav class="why-top">
+    <a href="./"><img src="assets/logo.svg" alt=""><b style="font-family:var(--serif);font-size:20px">그 길</b></a>
+    <a class="back" href="qna.html">묻고 답하기 →</a>
+  </nav>
+
+  <h1>하나님의 생각을 따라</h1>
+  <p class="sub">과학이 읽어 낸 창조의 질서</p>
+  <div class="asks">
+    <div><svg viewBox="0 0 32 32" fill="none" stroke="#d0685b" stroke-width="1.8" stroke-linecap="round"><circle cx="16" cy="16" r="2.5" fill="#d0685b"/><path d="M16 5v4M16 23v4M5 16h4M23 16h4M8.5 8.5l2.8 2.8M20.7 20.7l2.8 2.8M23.5 8.5l-2.8 2.8M11.3 20.7l-2.8 2.8"/></svg>우주는 어떻게<br>시작됐을까?</div>
+    <div><svg viewBox="0 0 32 32" fill="none" stroke="#d0685b" stroke-width="1.8" stroke-linecap="round"><circle cx="16" cy="17" r="10"/><path d="M16 17l5-6"/><path d="M9 11.5l1.5 1.2M23 11.5l-1.5 1.2M16 7v2"/></svg>이 정교함은<br>우연일까?</div>
+    <div><svg viewBox="0 0 32 32" fill="none" stroke="#d0685b" stroke-width="1.8" stroke-linecap="round"><path d="M10 4c0 8 12 8 12 16s-12 8-12 8M22 4c0 8-12 8-12 16s12 8 12 8"/><path d="M12 9h8M12 23h8"/></svg>생명은<br>어디서 왔을까?</div>
+  </div>
+  <p class="lead">저는 과학자가 아닙니다. 사업을 하는 평신도입니다. 그래서 제 생각을 앞세우지 않고, 과학자들이 <b>측정하고 관측해 확인한 사실</b>과 그들이 직접 남긴 말을 모았습니다. 자료는 AI의 도움을 받아 찾고, 출처를 하나하나 확인했습니다. 판단은 읽는 분의 몫입니다.</p>
+
+  <section>
+  <small>하나</small>
+  <h2>과학은 어디서 시작됐을까?</h2>
+  <figure class="art"><img src="assets/img/creation/kepler.webp" alt="열린 창가에서 망원경 곁에 서서 행성의 길을 올려다보는 옛 천문학자" loading="lazy"></figure>
+  <p class="cap">질서 있게 지으셨다면, 그 질서는 읽을 수 있다</p>
+  <p>근대 과학을 연 사람들 가운데 많은 이가 창조주를 믿었습니다. 질서 있는 하나님이 세상을 지으셨으니, 세상에도 사람이 읽어 낼 수 있는 법칙이 있으리라 믿었기 때문입니다.</p>
+  <ol class="tl">
+    <li><b>케플러 (1571–1630)</b><span>행성 운동의 세 법칙. "하나님은 우리가 그 법칙들을 알아보기를 원하셨다. 자기 형상대로 우리를 지으셔서, 자기 생각에 함께하게 하셨다." (1599년의 편지)</span></li>
+    <li><b>파스칼 (1623–1662)</b><span>압력의 원리, 확률론. 『팡세』를 쓴 그리스도인</span></li>
+    <li class="on"><b>뉴턴 (1643–1727)</b><span>만유인력과 운동 법칙. "해와 행성과 혜성의 이 아름다운 체계는 지혜롭고 능력 있는 존재의 뜻과 다스림에서만 나올 수 있다." (『프린키피아』 일반 주해, 1713)</span></li>
+    <li><b>패러데이 (1791–1867)</b><span>전자기 유도. 평생 작은 교회를 섬겼고, 장로로도 일했습니다</span></li>
+    <li><b>멘델 (1822–1884)</b><span>유전 법칙. 수도원의 수사이자 원장</span></li>
+    <li><b>맥스웰 (1831–1879)</b><span>전자기 방정식. 케임브리지 캐번디시 연구소 문에 시편 111편 2절을 새기게 했습니다</span></li>
+  </ol>
+  <div class="verse">주님께서 하시는 일은 크시니, 그 일을 기뻐하는 사람마다 그것을 깊이 살핀다.<cite>시편 111:2 · 캐번디시 연구소 문에 새긴 말씀</cite></div>
+  <details class="more"><summary><span class="o">과학은 신앙과 싸워 왔을까?</span><span class="c">접기</span></summary><div>
+  <p>"과학이 발전할수록 신이 설 자리가 줄었다"는 말을 자주 듣습니다. 번개도, 병도, 행성의 길도 예전에는 하나님이 그때그때 하시는 일로 여겼지만 지금은 법칙으로 설명하기 때문입니다.</p>
+  <p>그런데 과학이 밝혀낸 것은 언제나 <b>질서</b>였습니다. 번개는 전기의 법칙을, 병은 세균과 몸의 법칙을, 행성은 중력의 법칙을 정확히 따릅니다. 법칙이 정교할수록, 그 법칙을 세운 분은 더 분명해집니다. 성경은 하나님이 만물을 지으셨을 뿐 아니라 <b>지금도 붙들고 계신다</b>고 말합니다(히 1:3). 자연법칙은 하나님이 세상을 붙드시는 평소의 방식입니다.</p>
+  <p>그러니 과학은 하나님을 밀어낸 것이 아니라, <b>하나님이 일하시는 방식을 발견해 내는 일</b>입니다.</p>
+  </div></details>
+  </section>
+
+  <section>
+  <small>둘</small>
+  <h2>우주에는 시작이 있었을까?</h2>
+  <p style="text-align:center;margin:14px 0 20px">오랫동안 과학자들은 우주가 처음부터 늘 그대로 있었다고 생각했습니다.</p>
+  <figure class="art"><img src="assets/img/creation/beginning.webp" alt="한 점의 붉은 빛에서 은하와 별들이 꽃잎처럼 퍼져 나가고, 언덕 위의 작은 사람이 올려다보는 그림" loading="lazy"></figure>
+  <p class="cap">영원할 것 같던 우주에, 첫날이 있었습니다</p>
+  <div class="facts">
+    <div><em>법칙</em><b>열역학 제2법칙</b><span>쓸 수 있는 에너지는 쓸 수 없는 쪽으로만 흘러갑니다. 예외가 관측된 적 없는 법칙입니다. 우주가 영원했다면 이미 다 식어 끝났어야 합니다.</span></div>
+    <div><em>1929</em><b>멀어지는 은하</b><span>허블이 관측했습니다. 먼 은하일수록 더 빨리 멀어집니다. 시간을 거꾸로 돌리면 우주는 한 점으로 모입니다.</span></div>
+    <div><em>1965</em><b>우주배경복사</b><span>펜지어스와 윌슨이 하늘 전체에서 고르게 오는 희미한 전파를 잡았습니다. 우주가 뜨겁던 처음의 흔적입니다(1978년 노벨 물리학상).</span></div>
+  </div>
+  <div class="verse">태초에 하나님이 하늘과 땅을 창조하셨다.<cite>창세기 1:1</cite></div>
+  <details class="more"><summary><span class="o">과학자들은 처음에 이것을 반기지 않았다</span><span class="c">접기</span></summary><div>
+  <p>아인슈타인도 처음에는 우주가 그대로 있도록 자기 방정식에 항 하나를 더했습니다(1917). 우주가 팽창한다는 생각을 처음 내놓은 사람은 벨기에의 물리학자이자 사제였던 <b>조르주 르메트르</b>입니다(1927).</p>
+  <p>영국의 천문학자 <b>프레드 호일</b>은 시작이 있는 우주를 끝까지 받아들이지 않았고, 1949년 BBC 라디오에서 이 생각을 '빅뱅'이라고 불렀습니다. 그 이름이 그대로 굳었습니다.</p>
+  <p>시작이 있는 것에는 원인이 있습니다. 성경의 첫 문장은 바로 그 시작을 말합니다.</p>
+  </div></details>
+  </section>
+
+  <section>
+  <small>셋</small>
+  <h2>이 정교함은 우연일까?</h2>
+  <p style="text-align:center;margin:14px 0 20px">우주를 이루는 숫자들은 실제로 잰 값입니다. 그런데 그 값들이 놀랍도록 좁은 자리에 있습니다.</p>
+  <figure class="art"><img src="assets/img/creation/dials.webp" alt="여섯 개의 눈금판 바늘이 모두 좁은 붉은 칸을 가리키는 큰 기계 앞에서, 작은 사람이 손잡이를 조심스레 돌리는 그림" loading="lazy"></figure>
+  <p class="cap">조금만 달라도 별도, 원자도, 생명도 없습니다</p>
+  <div class="facts">
+    <div><em>0.007</em><b>원자핵이 뭉치는 세기</b><span>수소가 헬륨이 될 때 질량의 0.7%가 에너지가 됩니다. 0.006이면 우주에는 수소밖에 없고, 0.008이면 수소가 남지 않습니다. 물도, 별빛도 없습니다. (마틴 리스, 『여섯 개의 수』, 1999)</span></div>
+    <div><em>7.65</em><b>탄소가 만들어지는 자리</b><span>별 속에서 탄소가 만들어지려면 탄소 원자핵에 꼭 맞는 에너지 준위(7.65 MeV)가 있어야 합니다. 호일이 '있어야 한다'고 예측했고(1953), 실험으로 확인됐습니다.</span></div>
+    <div><em>10<sup>120</sup></em><b>우주상수</b><span>빈 공간이 가진 에너지는 이론으로 어림한 값보다 10<sup>120</sup>배쯤 작습니다. 조금만 컸어도 우주가 너무 빨리 퍼져 은하와 별이 뭉치지 못했습니다.</span></div>
+    <div><em>10<sup>10<sup>123</sup></sup></em><b>처음 우주의 질서</b><span>로저 펜로즈는 우주가 처음에 지금처럼 질서 있게 시작될 확률을 1/10<sup>10<sup>123</sup></sup>로 계산했습니다(『황제의 새 마음』, 1989). 0을 우주의 모든 원자에 하나씩 써도 다 쓸 수 없는 수입니다.</span></div>
+  </div>
+  <blockquote class="q">사실을 상식적으로 해석하면, 어떤 초지성이 물리학과 화학과 생물학에 손을 댄 것처럼 보인다.<cite>프레드 호일, 1981 — 젊어서 무신론자였고, 빅뱅을 끝까지 받아들이지 않은 천문학자</cite></blockquote>
+  <details class="more qa"><summary><span class="o">그래도 우연일 수는 없을까?</span><span class="c">접기</span></summary><div>
+  <p>이 정교함을 우연으로 설명하려고 나온 생각이 <b>다중우주</b>입니다. 우리 우주 말고도 셀 수 없이 많은 우주가 있어서, 그중 하나가 우연히 맞았다는 것입니다. 그러나 다른 우주는 지금까지 관측된 적이 없고, 원리상 관측하기도 어렵습니다. 확인된 사실이 아니라 <b>가설</b>입니다.</p>
+  <p>관측된 것은 하나의 우주, 그리고 그 우주의 놀랍도록 정교한 숫자들입니다.</p>
+  </div></details>
+  </section>
+
+  <section>
+  <small>넷</small>
+  <h2>우주는 왜 수학으로 읽힐까?</h2>
+  <figure class="art"><img src="assets/img/creation/neptune.webp" alt="책상에서 깃펜으로 계산하는 천문학자와, 그 계산이 가리키는 하늘 자리에 빛나는 작은 행성" loading="lazy"></figure>
+  <p class="cap">종이 위의 계산이, 하늘에서 맞아떨어집니다</p>
+  <div class="facts">
+    <div><em>1846</em><b>해왕성</b><span>르베리에가 천왕성 궤도의 작은 어긋남으로 보이지 않는 행성의 자리를 계산했습니다. 갈레가 편지를 받은 그날 밤, 그 자리에서 1도도 안 떨어진 곳에서 해왕성을 찾았습니다.</span></div>
+    <div><em>1932</em><b>반물질</b><span>디랙의 방정식(1928)이 '전자와 똑같지만 전기가 반대인 입자'를 요구했고, 4년 뒤 앤더슨이 실제로 찾았습니다.</span></div>
+    <div><em>2015</em><b>중력파</b><span>아인슈타인의 방정식(1916)이 예언한 시공간의 떨림을, 100년 뒤 LIGO가 계산대로 잡았습니다.</span></div>
+  </div>
+  <blockquote class="q">물리 법칙을 수학의 언어로 쓸 수 있다는 기적은, 우리가 이해하지도 못하고 받을 자격도 없는 놀라운 선물이다.<cite>유진 위그너, 「자연과학에서 수학의 터무니없는 효력」, 1960 (노벨 물리학상 수상자)</cite></blockquote>
+  <details class="more"><summary><span class="o">왜 그럴까</span><span class="c">접기</span></summary><div>
+  <p>수학은 사람이 머릿속에서 따져 낸 것입니다. 그런데 그것이 수십억 광년 떨어진 별과, 눈에 보이지 않는 입자의 움직임까지 맞힙니다. 아인슈타인은 "세상의 영원한 수수께끼는, 세상이 이해된다는 것"이라고 했습니다(「물리학과 실재」, 1936).</p>
+  <p>성경은 이 수수께끼에 답합니다. 세상은 <b>말씀</b>으로 지어졌고(요 1:1–3), 사람은 그 말씀하신 분의 <b>형상</b>대로 지어졌습니다(창 1:27). 우주를 지은 생각과 그것을 읽는 우리의 생각이 같은 분에게서 왔기에, 우주는 읽힙니다. 케플러가 말한 '하나님의 생각에 함께한다'는 것이 바로 이것입니다.</p>
+  </div></details>
+  </section>
+
+  <section>
+  <small>다섯</small>
+  <h2>생명은 어디서 왔을까?</h2>
+  <figure class="art"><img src="assets/img/creation/dna.webp" alt="펼쳐진 두루마리가 이중 나선으로 꼬여 오르고, 그 아래 작은 사람이 앉아 읽는 그림" loading="lazy"></figure>
+  <p class="cap">세포 하나에, 30억 글자의 책이 들어 있습니다</p>
+  <div class="facts">
+    <div><em>1862</em><b>생명은 생명에서만</b><span>파스퇴르가 끓인 국물을 목이 굽은 병에 담아 보였습니다. 공기는 통해도 미생물이 들어가지 못하면, 아무것도 생겨나지 않았습니다. 생명이 없는 물질에서 생명이 저절로 생겨나는 것은 지금까지 한 번도 관측되지 않았습니다.</span></div>
+    <div><em>1966</em><b>유전 암호</b><span>DNA의 네 글자(A·T·G·C)를 세 글자씩 읽어 스무 가지 아미노산을 정하는 규칙이 다 풀렸습니다. 비유가 아니라 실제 암호입니다.</span></div>
+    <div><em>2003</em><b>사람의 설계도</b><span>인간 유전체 계획이 사람 DNA 약 30억 쌍을 거의 다 읽어 냈습니다. 이 계획을 이끈 프랜시스 콜린스는 그리스도인입니다.</span></div>
+  </div>
+  <blockquote class="q">DNA는 컴퓨터 프로그램과 같다. 그러나 지금까지 만든 어떤 소프트웨어보다 훨씬, 훨씬 앞서 있다.<cite>빌 게이츠, 『미래로 가는 길』, 1995</cite></blockquote>
+  <div class="verse">주님께서 나를 놀랍고 기이하게 지으셨으니, 내가 주님께 감사합니다.<cite>시편 139:14</cite></div>
+  <details class="more"><summary><span class="o">정보는 어디서 오는가</span><span class="c">접기</span></summary><div>
+  <p>책, 악보, 컴퓨터 프로그램처럼 뜻을 담은 암호는 우리가 아는 모든 경우에 <b>지성</b>에서 나왔습니다. 잉크가 저절로 문장이 되는 것을 본 사람은 없습니다.</p>
+  <p>1953년 밀러의 실험은 번개를 흉내 낸 전기로 아미노산 몇 가지를 만들었습니다. 그러나 그것은 글자 몇 개를 얻은 것이지, 뜻이 있는 문장을 얻은 것은 아닙니다. 생명이 처음 어떻게 생겨났는지에 대해서는 여러 <b>가설</b>이 있지만, 실험으로 재현된 것은 없습니다.</p>
+  </div></details>
+  </section>
+
+  <section>
+  <small>여섯</small>
+  <h2>그래도 남는 물음</h2>
+  <p style="text-align:center;margin:14px 0 20px">정직하게, 이 글이 말하지 않는 것도 밝혀 둡니다.</p>
+  <details class="more qa"><summary><span class="o">과학이 하나님을 증명하나요?</span><span class="c">접기</span></summary><div>
+  <p>아니요. 과학은 재고 관측할 수 있는 것을 다룹니다. 하나님은 실험실에 넣어 잴 수 있는 분이 아닙니다. 다만 확인된 사실들이 <b>한 방향을 가리킨다</b>는 것, 그리고 반대쪽 설명은 아직 가설로 남아 있다는 것을 보여 드릴 수 있을 뿐입니다.</p>
+  </div></details>
+  <details class="more qa"><summary><span class="o">진화는요?</span><span class="c">접기</span></summary><div>
+  <p>주류 과학은 생물이 오랜 세월에 걸쳐 변해 왔다고 봅니다. 그리스도인 사이에서도 이를 받아들이는 방식에 여러 견해가 있습니다. 이 글은 그 문제를 다루지 않습니다.</p>
+  <p>다만 어떤 과정을 거쳤든, 첫 생명과 그 안의 정보는 어디서 왔는지, 그리고 그 모든 과정을 가능하게 한 정교한 법칙은 어디서 왔는지는 여전히 남는 물음입니다.</p>
+  </div></details>
+  <details class="more qa"><summary><span class="o">지구와 우주의 나이는요?</span><span class="c">접기</span></summary><div>
+  <p>그리스도인 사이에도 젊은 지구와 오랜 지구, 두 견해가 있습니다. 이 글에 모은 사실들 — 우주의 시작, 정교한 숫자, 수학으로 읽히는 우주, 생명의 정보 — 은 어느 견해에서도 그대로 성립합니다.</p>
+  </div></details>
+  </section>
+
+  <section>
+  <small>정리</small>
+  <h2>한 문장으로 하면</h2>
+  <figure class="art"><img src="assets/img/creation/heavens.webp" alt="별이 가득한 밤하늘 아래 언덕 위에서 두 팔을 조금 벌리고 하늘을 올려다보는 사람" loading="lazy"></figure>
+  <div class="ox oq">
+    <div class="ox-h"><div class="o"><svg class="mk" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="#5f8150" stroke-width="3"/></svg>확인된 사실</div><div class="x"><svg class="mk" viewBox="0 0 24 24"><text x="12" y="18" text-anchor="middle" font-size="18" font-weight="700" fill="#c9584b">?</text></svg>아직 가설</div></div>
+    <div class="ox-r"><div class="ox-k">우주</div><div><b>시작이 있었다</b>(제2법칙, 팽창, 배경복사)</div><div>시작 없이 영원했다</div></div>
+    <div class="ox-r"><div class="ox-k">정교함</div><div><b>숫자들이 좁은 자리에 맞춰져 있다</b>(측정값)</div><div>셀 수 없는 우주 가운데 우연히 하나(다중우주)</div></div>
+    <div class="ox-r"><div class="ox-k">생명</div><div><b>생명은 생명에서만</b>, DNA는 암호</div><div>물질에서 저절로 생겨났다</div></div>
+  </div>
+  <div class="card warm">
+    <p class="motto" style="margin:4px 0 4px;color:var(--gold2)">과학은 하나님이 일하시는 방식을<br>발견해 내는 일입니다.</p>
+  </div>
+  <div class="verse big">하늘이 하나님의 영광을 선포하고, 창공이 그 손으로 하신 일을 알린다.<cite>시편 19:1</cite></div>
+  <div class="verse">세상을 창조하신 때부터, 보이지 않는 그분의 영원한 능력과 신성은 지으신 만물을 통해 분명히 보여 알려졌습니다. 그러므로 핑계할 수 없습니다.<cite>로마서 1:20</cite></div>
+  <p style="text-align:center;margin-top:26px">그런데 이 우주를 지은 분은 멀리서 바라보기만 하실까요?<br>성경은 그분이 <b>사람이 되어 우리에게 내려오셨다</b>고 말합니다.</p>
+  </section>
+
+  <details class="more src"><summary><span class="o">출처</span><span class="c">접기</span></summary><div>
+  <ul class="srcs">
+    <li>케플러가 헤르바르트 폰 호헨부르크에게 보낸 편지, 1599년 4월</li>
+    <li>뉴턴, 『자연철학의 수학적 원리』 2판 일반 주해, 1713</li>
+    <li>맥스웰과 캐번디시 연구소 문의 시편 111:2 — 케임브리지 대학 캐번디시 연구소</li>
+    <li>E. Hubble, 1929, PNAS 15:168 · A. Penzias, R. Wilson, 1965, ApJ 142:419</li>
+    <li>G. Lemaître, 1927, Annales de la Société Scientifique de Bruxelles · A. Einstein, 1917 (우주상수)</li>
+    <li>M. Rees, <i>Just Six Numbers</i>, 1999 · F. Hoyle, <i>Engineering &amp; Science</i>, 1981년 11월</li>
+    <li>S. Weinberg, 1987, PRL 59:2607 (우주상수의 범위) · R. Penrose, <i>The Emperor's New Mind</i>, 1989</li>
+    <li>U. Le Verrier, J. Galle, 1846 (해왕성) · P. Dirac, 1928 · C. Anderson, 1932 · LIGO, 2016, PRL 116:061102</li>
+    <li>E. Wigner, 1960, <i>Communications on Pure and Applied Mathematics</i> 13:1 · A. Einstein, 「Physics and Reality」, 1936</li>
+    <li>L. Pasteur, 1862 (자연발생설 반박) · S. Miller, 1953, Science 117:528 · 유전 암호 해독 1961–1966</li>
+    <li>인간 유전체 계획 완료, 2003 · F. Collins, <i>The Language of God</i>, 2006 · B. Gates, <i>The Road Ahead</i>, 1995</li>
+  </ul>
+  </div></details>
+
+  <div class="end">
+    <a href="why.html">왜 기독교인가 읽기 →</a>
+    <a class="ghost" href="app.html?j=jesus">예수의 발자취 걷기</a>
+  </div>
+  <p class="foot">그림은 AI로 만들고 사람이 다듬었습니다 · 자료는 AI의 도움으로 찾고 출처를 확인했습니다 · 말씀은 새로 옮긴 글입니다<br><a href="https://sssoft-idea.web.app/" target="_blank" rel="noopener">© SSSOFT</a></p>
+</main>
+<!-- Cloudflare Web Analytics: 쿠키·개인정보 없이 방문 수만 센다 --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f33dcbc61cc949909499f044d7eeae69"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
