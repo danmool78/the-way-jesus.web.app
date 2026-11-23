@@ -1756,7 +1756,8 @@ const wallBasket = {
   quote: tr('나는 광주리를 타고 들창문으로 성벽을 내려가 그 손에서 벗어났노라'), ref: tr('고후 11:33'),
   help: tr('누르고 있으면 광주리가 내려가고, 떼면 멈춰요.<br>창이 깜박이면 곧 불이 켜져요 — 불빛과 위쪽 횃불 빛 안에 머물면 들켜요. 땅까지 내려가요.'),
   P: 'a04', who: 'basket', endLines: [tr('그의 제자들이 밤에 광주리에 바울을 담아'), tr('성벽에서 달아 내리니라'), tr('행 9:25')],
-  seconds: 10, art: ['a04/bg', 'a04/basket', 'a04/guard', 'a04/win-shut', 'a04/win-open'],
+  // 12초·들킴 1.8배(사용자 2026-11 '시간 안에 되나?'): 10초에는 불빛을 기다리며 내려가면 2초 남짓밖에 안 남았고, 오히려 쉬지 않고 내려가도 82%가 성공했다
+  seconds: 12, seenK: 1.8, art: ['a04/bg', 'a04/basket', 'a04/guard', 'a04/win-shut', 'a04/win-open'],
   init() {
     return { y: B_TOP, v: 0, hold: false, seen: 0, t: 0, msg: null, cr: 0, landed: 0,
       wins: WINS.map(([x, y], i) => ({ x, y, st: 'dark', at: rnd(0.8, 2.2) + i * 0.4, lit: 0 })),
@@ -1782,7 +1783,7 @@ const wallBasket = {
     S.y = Math.min(B_BOT, S.y + S.v * dt);
     if (S.v > 6 && (S.cr -= dt) <= 0) { S.cr = 0.34 - S.v / 300; S.fx.play('creak'); }
     const L = this.light(S, S.y);
-    if (L > 0.15) { S.seen = Math.min(1, S.seen + L * 0.95 * dt); if (!S.msg || S.msg.at < 0) S.msg = { t: tr('불빛 안이에요!'), c: '#ffc28a', at: 0.5, x: B_X + 70, y: S.y }; }
+    if (L > 0.15) { S.seen = Math.min(1, S.seen + L * (this.seenK ?? 0.95) * dt); if (!S.msg || S.msg.at < 0) S.msg = { t: tr('불빛 안이에요!'), c: '#ffc28a', at: 0.5, x: B_X + 70, y: S.y }; }
     else S.seen = Math.max(0, S.seen - 0.1 * dt); // 어둠 속에서는 의심이 조금씩 가라앉는다
     if (S.y >= B_BOT && !S.landed) { S.landed = 0.001; S.fx.play('drop'); }
   },
