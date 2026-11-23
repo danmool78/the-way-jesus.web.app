@@ -2,7 +2,7 @@
 ../sitemap.xml을 만든다. 앱은 #e05 같은 주소로 장면을 열어 검색엔진이 장면마다 따로 읽지 못하므로, 글을 미리 써 둔 정적 페이지를
 두고 '지도 위에서 이 장면 걷기'로 앱에 잇는다. build.py 끝에서 부른다 (직접 고치지 말 것)
 Run: python3 _src/pages.py"""
-import json, os, html
+import json, os, html, re
 here = os.path.dirname(os.path.abspath(__file__))
 root = os.path.join(here, '..')
 SITE = 'https://thewaymap.org'
@@ -65,9 +65,32 @@ blockquote p{font-family:var(--serif);font-size:17px;margin:0}blockquote footer{
 .go{display:block;text-align:center;margin:30px 0;padding:15px 18px;border-radius:14px;text-decoration:none;font-family:var(--serif);font-size:17px;color:#2a1d0c;background:linear-gradient(180deg,#e9c97f,#b88a3e)}
 nav.pn{display:flex;justify-content:space-between;gap:12px;font-size:14px;margin-top:10px}nav.pn a{text-decoration:none;max-width:48%}
 .list ol{padding-left:0;list-style:none}.list li{border-top:1px solid var(--line);padding:10px 2px}.list li a{text-decoration:none;font-family:var(--serif);font-size:17px}
-.list li small{display:block;color:var(--muted);font-size:13px}.list h2{margin-top:30px}.langs{font-size:13px;color:var(--faint);margin-top:40px}
+.list li small{display:block;color:var(--muted);font-size:13px}.aka{font-size:14px;color:var(--muted);margin:0 0 6px}.kw{color:var(--gold);font-size:14px;margin:-4px 0 14px}.lyr p{font-family:var(--serif);font-size:17px;line-height:1.9;margin:0 0 14px}.list h2{margin-top:30px}.langs{font-size:13px;color:var(--faint);margin-top:40px}
 '''
 FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">'
+
+# 검색하는 말(광고 키워드 점검, 사용자 2026-11): 앱의 장면 이름은 시적인 이름이라 사람들이 찾는 말(오병이어·탕자의 비유 등)과 달랐다.
+# 한국어 장면 페이지의 제목·설명·본문 첫 줄·목록에 '흔히 부르는 이름'을 함께 적는다 — 원본 _src/seo/aka.ko.json
+AKA = {k: v for k, v in json.load(open(os.path.join(here, 'seo', 'aka.ko.json'), encoding='utf-8')).items() if k != '_'}
+# 여정 목록 페이지 머리에 붙이는 검색어(한국어) — 사람들이 그 여정을 찾을 때 쓰는 말
+LIST_KW = {
+    'index': '예수님 생애 순서 · 예수님 생애 지도 · 예수님 이동 경로 지도 · 예수님 발자취 · 사복음서 차이와 사복음서 대조',
+    'moses': '출애굽 경로 · 출애굽 지도 · 광야 40년 경로 · 여호수아의 가나안 입성',
+    'david': '다윗의 생애 순서 · 사울을 피해 다닌 다윗의 도피 경로 지도',
+    'kings': '열왕기 순서 · 솔로몬에서 바벨론 포로까지 · 엘리야와 엘리사',
+    'paul': '바울 전도여행 지도 · 바울 1차 2차 3차 전도여행 · 바울 로마 여정 · 바울 서신의 배경',
+    'proverbs': '잠언 쉽게 읽기 · 잠언 하루 한 장 · 잠언 31일 읽기',
+    'goodnews': '복음 전도 · 영접 기도 · 처음 듣는 기독교',
+    'psalms': '시편 노래 · 시편이 쓰인 자리와 배경 · 시편 23편·121편·51편',
+}
+def aka(e, lang):
+    if lang != 'ko': return []
+    if e['id'] in AKA: return AKA[e['id']]
+    m = re.match(r'ps(\d+)$', e['id'])
+    if m and e.get('song'):  # 시편: '시편 23편'과 노래 첫 줄
+        first = next((l.strip() for l in e['song']['lyrics'].split('\n') if l.strip() and not l.strip().startswith('[')), '')
+        return ['시편 %s편' % m.group(1)] + ([first] if first else [])
+    return []
 
 JID, JDIR = 'jesus', root  # 지금 만드는 여정과 그 data*.json 폴더 (아래 여정마다 바꾼다)
 def load(lang):
@@ -116,7 +139,7 @@ LANGS = ko['ui']['langs']
 urls, imgs, lists = [], {}, []  # sitemap: 장면 페이지, 장면 그림, 여정별 목록 페이지
 # 검색용 페이지를 만드는 여정: 예수(목록 s/index.html)와 장면이 있는 다른 여정(목록 s/<여정>.html). 시편은 노래(한국어 전용)라 뺀다
 JOURNEYS = [('jesus', root, 'index', 'assets/og.jpg')] + [(j['id'], os.path.join(root, 'j', j['id']), j['id'], 'j/%s/og.jpg' % j['id'])
-    for j in ko['journey']['series'] if j['id'] not in ('jesus', 'psalms') and os.path.exists(os.path.join(root, 'j', j['id'], 'data.json'))]
+    for j in ko['journey']['series'] if j['id'] != 'jesus' and os.path.exists(os.path.join(root, 'j', j['id'], 'data.json'))]
 def series_nav(lang):  # 목록 아래: 다른 여정의 목록으로 (검색엔진이 모든 여정의 장면을 따라 들어가게)
     D0 = load(lang); u = D0['ui']
     return '<p class="langs">%s · %s</p>' % (esc(u.get('seriesHead', '')), ' · '.join('<a href="%s">%s</a>' % (fname(lb, lang), esc(u[next(x['title'] for x in D0['journey']['series'] if x['id'] == jid)]))
@@ -125,6 +148,7 @@ JL = {}  # 여정마다 번역이 있는 언어 (잠언처럼 아직 한국어�
 for JID, JDIR, LIST, OG in JOURNEYS:  # 먼저 모두 알아 둔다 — 앞 여정의 목록이 뒤 여정 목록으로 잇는 링크를 고를 때 쓴다
     k0 = load('ko')['events'][0]['story'][0]
     JL[LIST] = ['ko'] + [l for l in LANGS[1:] if load(l)['events'][0]['story'][0] != k0]
+    if JID == 'psalms': JL[LIST] = ['ko']  # 시편은 노래가 한국어라 검색 페이지도 한국어만 (2026-11)
 for JID, JDIR, LIST, OG in JOURNEYS:
     for lang in JL[LIST]:
         D = load(lang)
@@ -133,6 +157,7 @@ for JID, JDIR, LIST, OG in JOURNEYS:
             jt = ui[next(x['title'] for x in D['journey']['series'] if x['id'] == JID)]
             P.update({k: v.replace('{t}', jt) for k, v in PAGE_J[lang].items()}, listLead=ui.get('metaDesc', ''))
         t = lambda k, **kw: ui[k].format(**kw) if kw else ui[k]
+        if JID == 'psalms' and lang == 'ko': P['listTitle'] = '시편 {n}편 — 노래가 태어난 자리를 따라'  # 시편은 '장면, 일어난 순서'가 아니다
         scenes = ([D['prologue']] if 'prologue' in D else []) + D['events']
         n = len(D['events'])
         per = {p['id']: p for p in D['periods']}
@@ -143,13 +168,19 @@ for JID, JDIR, LIST, OG in JOURNEYS:
             pro = 'prologue' in D and e is D['prologue']
             place = D['places'][e['place']]['name']
             p = per.get(e['p'], {}).get('name', '') if not pro else P['pro']
-            title = '%s — %s · %s | %s' % (e['title'], place, e['when'], ui['appName'])
+            A = aka(e, lang)
+            if JID == 'psalms' and A:  # 시편: '시편 23편 — 나의 목자 · 여호와는 나의 목자시니'
+                title = '%s — %s · %s | %s' % (A[0], e['title'].split('·', 1)[-1].strip(), A[1] if len(A) > 1 else place, ui['appName'])
+            else:
+                title = '%s%s — %s · %s | %s' % (e['title'], '(%s)' % A[0] if A else '', place, e['when'], ui['appName'])
             desc = (e.get('subtitle', '') + '. ' if e.get('subtitle') else '') + e['story'][0]
+            if A: desc = '%s. %s' % (' · '.join(A), desc)
             desc = desc[:150] + ('…' if len(desc) > 150 else '')
             img = e['img']['src'] if 'img' in e else OG
             ld = {'@context': 'https://schema.org', '@type': 'Article', 'headline': e['title'], 'description': desc, 'inLanguage': lang,
                   'image': '%s/%s' % (SITE, img), 'about': {'@type': 'Place', 'name': place}, 'isPartOf': {'@type': 'WebSite', 'name': ui['appName'], 'url': SITE + '/'},
                   'author': ORG, 'publisher': ORG, 'mainEntityOfPage': '%s/s/%s' % (SITE, fname(e['id'], lang))}
+            if A: ld.update(alternativeHeadline=' · '.join(A), keywords=', '.join(A))
             # 빵 부스러기(첫 화면 › 여정 장면 목록 › 장면): 검색 결과에 자리가 보이게
             ld = [ld, {'@context': 'https://schema.org', '@type': 'BreadcrumbList', 'itemListElement': [
                 {'@type': 'ListItem', 'position': 1, 'name': ui['appName'], 'item': SITE + '/'},
@@ -158,11 +189,15 @@ for JID, JDIR, LIST, OG in JOURNEYS:
             b = [head(lang, JL[LIST], e['id'], title, desc, img, ld)]
             b.append('<article>\n<div class="eyebrow">%s%s</div>\n<h1>%s</h1>\n' % (esc(p), '' if pro else ' · %d / %d' % (i + (0 if 'prologue' in D else 1), n), esc(e['title'])))
             if e.get('subtitle'): b.append('<p class="sub">%s</p>\n' % esc(e['subtitle']))
-            b.append('<p class="meta">%s · %s · %s</p>\n' % (esc(place), esc(e['when']), esc(refs(e))))
+            if A: b.append('<p class="aka">흔히 이렇게 불러요 · %s</p>\n' % ' · '.join(esc(x) for x in A))
+            b.append('<p class="meta">%s</p>\n' % ' · '.join(esc(x) for x in (place, e['when'], refs(e)) if x))  # 시편처럼 본문 표시가 없으면 꼬리 ' · '가 남았다
             if 'img' in e:
                 b.append('<figure><img src="/%s" alt="%s" loading="lazy" width="1200" height="900"><figcaption>%s</figcaption></figure>\n' % (esc(e['img']['src']), esc(e['img'].get('title', e['title'])), esc(e['img']['credit'])))
             b.append('<h2>%s</h2>\n' % esc(t('storyLabel')) + ''.join('<p>%s</p>\n' % esc(s) for s in e['story']))
-            b.append('<a class="go" href="%s">%s →</a>\n' % (app_url(lang, e['id']), esc(P['walk'])))
+            if e.get('song') and lang == 'ko':
+                st = [re.sub(r'\[[^\]]*\]', '', x).strip() for x in e['song']['lyrics'].split('\n\n')]
+                b.append('<h2>노래 가사</h2>\n<div class="lyr">%s</div>\n' % ''.join('<p>%s</p>' % '<br>'.join(esc(l) for l in x.split('\n') if l.strip()) for x in st if x))
+            b.append('<a class="go" href="%s">%s →</a>\n' % (app_url(lang, e['id']), esc('노래 듣고 그 자리 걷기' if JID == 'psalms' and lang == 'ko' else P['walk'])))
             b.append('<h2>%s</h2>\n' % esc(t('hisWords')) + ''.join('<blockquote><p>%s</p><footer>%s · %s</footer></blockquote>\n' % (esc(w['text']), esc(w['who']), esc(w['ref'])) for w in e['words']))
             b.append('<p class="fine">%s</p>\n' % esc(t('wordsNote', r=refs(e))))
             if e.get('note'): b.append('<h2>%s</h2>\n<div class="box"><p>%s</p></div>\n' % (esc(t('noteHead')), esc(e['note'])))
@@ -175,14 +210,15 @@ for JID, JDIR, LIST, OG in JOURNEYS:
             open(os.path.join(out_dir, fname(e['id'], lang)), 'w', encoding='utf-8').write(''.join(b))
             if lang == 'ko': urls.append(e['id']); imgs[e['id']] = img.split('?')[0]; JL[e['id']] = JL[LIST]
         # 장면 목록: 시대별로 묶어 모든 장면 페이지로 잇는다
-        title = '%s | %s' % (P['listTitle'].format(n=n), ui['appName'])
+        KW = LIST_KW.get(LIST, '') if lang == 'ko' else ''
+        title = '%s%s | %s' % (P['listTitle'].format(n=n), ' · ' + KW.split(' · ')[0] if KW else '', ui['appName'])
         ld = {'@context': 'https://schema.org', '@type': 'ItemList', 'name': P['listTitle'].format(n=n), 'numberOfItems': len(scenes),
               'itemListElement': [{'@type': 'ListItem', 'position': k + 1, 'url': '%s/s/%s' % (SITE, fname(e['id'], lang)), 'name': e['title']} for k, e in enumerate(scenes)]}
-        b = [head(lang, JL[LIST], LIST, title, P['listLead'], OG, ld), '<div class="list">\n<h1>%s</h1>\n<p>%s</p>\n<a class="go" href="%s">%s →</a>\n' % (esc(P['listTitle'].format(n=n)), esc(P['listLead']), app_url(lang), esc(P['open']))]
+        b = [head(lang, JL[LIST], LIST, title, P['listLead'], OG, ld), '<div class="list">\n<h1>%s</h1>\n%s<p>%s</p>\n<a class="go" href="%s">%s →</a>\n' % (esc(P['listTitle'].format(n=n)), '<p class="kw">%s</p>\n' % esc(KW) if KW else '', esc(P['listLead']), app_url(lang), esc(P['open']))]
         groups = ([(P['pro'], [D['prologue']])] if 'prologue' in D else []) + [(pp['name'] + ' · ' + pp['span'], [e for e in D['events'] if e['p'] == pp['id']]) for pp in D['periods']]
         for name, es in groups:
             if not es: continue
-            b.append('<h2>%s</h2>\n<ol>\n' % esc(name) + ''.join('<li><a href="%s">%s</a><small>%s · %s</small></li>\n' % (fname(e['id'], lang), esc(e['title']), esc(D['places'][e['place']]['name']), esc(e['when'])) for e in es) + '</ol>\n')
+            b.append('<h2>%s</h2>\n<ol>\n' % esc(name) + ''.join('<li><a href="%s">%s</a><small>%s · %s%s</small></li>\n' % (fname(e['id'], lang), esc(e['title']), esc(D['places'][e['place']]['name']), esc(e['when']), ''.join(' · ' + esc(x) for x in [x for x in aka(e, lang) if x != e['when']][:2])) for e in es) + '</ol>\n')
         b.append('</div>\n' + series_nav(lang) + langline(JL[LIST], LIST, lang) + '</main>\n' + CF + '\n</body>\n</html>\n')
         open(os.path.join(out_dir, fname(LIST, lang)), 'w', encoding='utf-8').write(''.join(b))
 
@@ -197,6 +233,7 @@ sm = ['<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemap
       '<url><loc>%s/</loc><image:image><image:loc>%s/assets/og-series.jpg</image:loc></image:image></url>\n' % (SITE, SITE)]
 # 여정 공유 주소(/moses 등)는 싣지 않는다 — 열면 앱으로 넘어가는 미리보기 카드라 색인되지 않고, 크롤링만 헛되이 썼다(Search Console 301, 2026-11)
 sm += [entry(lambda l: fname('qna', l)), entry(lambda l: fname('why', l), 'assets/img/why/mountain.webp')]
+sm.append('<url><loc>%s/game.html</loc><image:image><image:loc>%s/assets/game-icon.svg</image:loc></image:image></url>\n' % (SITE, SITE))  # 말씀 탐험(게임) — 한 주소에서 언어를 고른다
 sm += [entry(lambda l, b=b: 's/' + fname(b, l), None, JL[b]) for _, _, b, _ in JOURNEYS]
 sm += [entry(lambda l, b=b: 's/' + fname(b, l), imgs.get(b) if imgs.get(b, '').startswith('assets/img/') else None, JL[b]) for b in urls]
 sm.append('</urlset>\n')
