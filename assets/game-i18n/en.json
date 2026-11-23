@@ -137,7 +137,6 @@
  "누가 누구인지 기억해 다오 — 이름과 그 사람의 이야기를 짝지어 보렴.": "Remember who is who for me — match each name with that person's story.",
  "이에 열둘을 세우셨으니 이는 자기와 함께 있게 하시고": "He appointed twelve, so that they would be with him",
  "막 3:14": "Mk 3:14",
- "처음 3초 동안 카드를 모두 보여 줘요 — 잘 봐 두세요.<br>두 장씩 뒤집어 이름과 그 사람의 이야기를 짝지어요. 틀리면 다시 덮여요.": "For the first 3 seconds all the cards are shown — look carefully.<br>Turn over two at a time to match a name with that person's story. Wrong pairs flip back.",
  "잘 봐 두세요 · {0}": "Look carefully · {0}",
  "자기와 함께 있게 하시고": "So that they would be with him",
  "보내사 전도도 하게 하시려 함이러라": "and so that he could send them out to preach",
@@ -1259,5 +1258,6 @@
  "데살로니가 교회": "Church in Thessalonica",
  "아들 디모데": "Timothy, his son",
  "그레데의 디도": "Titus in Crete",
- "동역자 빌레몬": "Philemon, co-worker"
+ "동역자 빌레몬": "Philemon, co-worker",
+ "처음 3초 동안 카드를 모두 보여 줘요 — 잘 봐 두세요.<br>두 장씩 뒤집어 <b>같은 그림</b>의 이름과 그 사람의 이야기를 짝지어요. 틀리면 다시 덮여요.": "All cards are shown for the first 3 seconds — look closely.<br>Flip two at a time and match each name with that person’s story by <b>the same picture</b>. Wrong pairs flip back."
 }
