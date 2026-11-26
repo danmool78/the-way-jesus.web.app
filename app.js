@@ -514,7 +514,8 @@ function frameStage(i, ms = 1300, mode = 'open') {
   animateTo({ x: cx - (fx - st.dx) * u, y: cy - (fy - st.dy) * u, w: r.width * u, h: r.height * u }, ms);
   return true;
 }
-window.recenterStage = () => { if (fitMode !== 'all' && EVENTS) frameStage(idx, 600, $('#scene').classList.contains('peek') ? 'peek' : 'open'); };
+let openingTill = 0; // 처음 전체 지도에서 확대해 들어가는 동안(openingZoom) — animateTo가 자동 맞춤을 건너뛴다
+window.recenterStage = () => { if (openingGo) return openingGo(); if (fitMode !== 'all' && EVENTS) frameStage(idx, 600, $('#scene').classList.contains('peek') ? 'peek' : 'open'); };
 // 화면을 돌리거나 창 크기를 바꾸면 빈 영역도 바뀌므로 다시 맞춘다
 let recenterT; addEventListener('resize', () => { clearTimeout(recenterT); recenterT = setTimeout(() => window.recenterStage(), 250); });
 // 전체 경로: 지도 틀 전체가 아니라 장소들이 모인 땅을 카드에 가리지 않는 영역에 꽉 차게.
@@ -552,14 +553,29 @@ function fitAll() {
   }
   animateTo(reserveCard({ ...landNow() }), 1100);
 }
-function animateTo(target, ms) {
+// 처음 열 때: 여정 전체 땅을 먼저 보여 주고(0.9초 머묾) 장면 자리로 천천히 확대해 들어간다(사용자 2026-11) — 어디를 걷는 여정인지 한눈에
+function openingZoom() {
+  if (fitMode === 'all' || onEden() || window.terrainOn || reduced() || !EVENTS) return;
+  cancelAnimationFrame(anim);
+  view = reserveCard({ ...LAND }); applyView();
+  const at = idx; openingTill = Infinity;
+  // 확대는 0.9초 머문 뒤, 그리고 3D 무대가 다 올라온 뒤(recenterStage)에 — 확대 도중에 무대를 짓느라 화면이 멈칫하고 장면으로 건너뛰었다. 무대가 늦으면 4초에 그냥
+  let n = 0; const go = () => { if (++n !== 2) return; openingGo = null;
+    if (fitMode === 'all' || idx !== at || window.terrainOn) { openingTill = 0; return; }
+    openingTill = 0; if (!frameStage(idx, 2200)) frame([evAt(idx).place], 2200); openingTill = performance.now() + 2300; };
+  openingGo = go; setTimeout(go, 900); setTimeout(() => { if (openingGo === go) { n = 1; go(); } }, 4000);
+}
+let openingGo = null;
+function animateTo(target, ms, user) {
+  if (user) openingTill = 0; else if (performance.now() < openingTill) return; // 처음 확대해 들어가는 동안은 다른 자동 맞춤(장면 열기·무대 준비)이 끼어들지 않게 — 0.3초 만에 장면으로 튀었다
   cancelAnimationFrame(anim);
   preloadRelief(target);
-  const from = { ...view }, t0 = performance.now();
+  const from = { ...view }; let t0 = performance.now(), last = 0;
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) ms = 0;
   // 로그 스케일 보간: 크게 확대/축소할 때도 자연스럽게
   const lerp = (a, b, k) => a + (b - a) * k;
   const step = now => {
+    if (last && now - last > 100) t0 += now - last - 16; last = now; // 무대를 짓느라 화면이 멈춘 동안은 시간을 세지 않는다 — 멈췄다 풀리면 한 번에 건너뛰었다
     const k = ms ? Math.min(1, (now - t0) / ms) : 1, e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
     const w = Math.exp(lerp(Math.log(from.w), Math.log(target.w), e)), h = Math.exp(lerp(Math.log(from.h), Math.log(target.h), e));
     const cx = lerp(from.x + from.w / 2, target.x + target.w / 2, e), cy = lerp(from.y + from.h / 2, target.y + target.h / 2, e);
@@ -658,7 +674,7 @@ window.zoomMap = f => {
   const ax = inView ? ax0 : view.x + view.w / 2, ay = inView ? ay0 : view.y + view.h / 2;
   const k = Math.min(Math.max(view.w * f, Math.min(minViewW(), view.w)), maxViewW()) / view.w;
   followWalk = false;
-  animateTo({ x: ax - (ax - view.x) * k, y: ay - (ay - view.y) * k, w: view.w * k, h: view.h * k }, 320);
+  animateTo({ x: ax - (ax - view.x) * k, y: ay - (ay - view.y) * k, w: view.w * k, h: view.h * k }, 320, true);
 };
 
 // 위경도 → 화면(client) 좌표. 3D 무대(stage.js)가 물가·들판 같은 실제 지점에 소품을 세울 때 쓴다
@@ -1251,6 +1267,7 @@ function showIntro(resume) {
     document.body.classList.remove('intro-open');
     // 랜딩이 떠 있는 동안 멈춰 둔 무대를 이 장면의 처음부터 다시 연다 (뒤에서 이미 끝난 등장 연출을 보게)
     if (i !== idx) go(i); else dispatchEvent(new CustomEvent('stage:scene', { detail: { ev: evAt(idx) } }));
+    setTimeout(openingZoom, 30); // 시작 화면을 걷으면 전체 지도에서 장면으로 확대해 들어간다
   };
   const onEsc = ev => { if (ev.key === 'Escape' && !$('dialog[open]')) close(idx); }; // Esc로 영상 창을 닫을 때는 랜딩은 그대로
   // 처음 걷는 사람과 '처음부터 다시'는 프롤로그(첫 아담)부터
@@ -2311,6 +2328,7 @@ const getData = f => fetch(f).then(r => { if (!r.ok) throw Error(r.status); retu
   $$('#seriesList .jshare').forEach(b => b.onclick = () => shareLink(b.dataset.share === 'why' ? { url: `${SITE}/${LANG === 'ko' ? 'why.html' : `why.${LANG}.html`}`, title: `${t('appName')} — ${t('whyH')}` } : b.dataset.share === 'game' ? { url: `${SITE}/game.html`, title: `${t('appName')} — ${t('landGameTag')}` } : shareOf(b.dataset.share)));
   // 첫 시작 화면: 장면 주소로 바로 들어온 때(#e05)와 연출 확인(?beat=)은 건너뛴다
   if (!hashOk && !quick && !new URLSearchParams(location.search).has('beat') && !ONE) showIntro(fromLast > 0 ? fromLast : -1);
+  else if (!ONE && !new URLSearchParams(location.search).has('beat')) setTimeout(openingZoom, 30); // 장면 주소로 바로 열었을 때도
   if (ONE) oneStart();
   $('.brand').onclick = ev => { ev.preventDefault(); showIntro(state.last && idx > 0 ? idx : -1); }; // 기록을 지운 뒤에는 처음 온 사람처럼
 
