@@ -501,7 +501,7 @@ function freeArea(mode) {
   const cw = Math.min(460, r.width * .42) + 14;
   return { l: 0, t: 0, r: r.width - cw, b: r.height };
 }
-function frameStage(i, ms = 1300, mode = 'open') {
+function frameStage(i, ms = 1300, mode = $('#scene').classList.contains('peek') ? 'peek' : 'open') { // 카드가 접혀 있으면 접힌 만큼 비운 자리 가운데에
   if (window.terrainOn) return true; // 3D 지형 모드에서는 terrain.js가 카메라를 맡는다
   const e = evAt(i), st = window.stageFrame?.(e), r = map.getBoundingClientRect();
   if (!st || !r.width) return false;
@@ -885,7 +885,7 @@ function cancelWalk() {
 }
 // mode: open(펼침) · peek(제목줄만) · full(모바일에서 글을 읽을 때 지도 위로 끝까지 올린 시트 — open도 함께 단다)
 // 사용자가 고른 카드 모양(접힘·펼침·끝까지). 다음 장면에 닿으면 이 모양으로 — 늘 펼쳐 버려 접어 둔 사람이 매번 다시 접어야 했다
-let cardUser = 'open';
+let cardUser = 'peek'; // 처음엔 카드를 접어 무대·지도를 넓게 — 펼치면 그 뒤로는 펼친 채로(사용자 2026-11)
 function setCard(mode, user) {
   const c = $('#scene');
   if (user) cardUser = mode;
