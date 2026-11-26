@@ -890,6 +890,7 @@ function setCard(mode, user) {
   const c = $('#scene');
   if (user) cardUser = mode;
   if (mode === 'full' && innerWidth > 900) mode = 'open';
+  if (mode === 'open' && innerWidth <= 900) mode = 'full'; // 휴대폰은 접기·끝까지 펴기 둘만 — 반만 편 시트는 지도도 글도 어중간했다(사용자 2026-11)
   c.classList.toggle('peek', mode === 'peek');
   c.classList.toggle('open', mode === 'open' || mode === 'full');
   c.classList.toggle('full', mode === 'full');
@@ -1018,21 +1019,18 @@ function openGloss(b) {
 }
 function sheetDrag() {
   const sc = $('#scene'), mobile = () => innerWidth <= 900;
-  const level = () => sc.classList.contains('peek') ? 0 : sc.classList.contains('full') ? 2 : 1;
-  const to = n => { setCard(['peek', 'open', 'full'][n], true); if (n < 2) window.recenterStage(); };
+  const level = () => sc.classList.contains('peek') ? 0 : 1; // 접힘·펼침 둘만
+  const to = n => { setCard(n ? 'full' : 'peek', true); if (!n) window.recenterStage(); };
   let d = null;
   const down = e => { if (!mobile()) return; d = { id: e.pointerId, y: e.clientY }; e.currentTarget.setPointerCapture(e.pointerId); };
   const up = e => {
     if (!d || e.pointerId !== d.id) return;
     const dy = e.clientY - d.y, n = level(); d = null;
-    if (dy < -30) to(Math.min(2, n + 1));
-    else if (dy > 30) to(Math.max(0, n - 1));
-    else if (Math.abs(dy) < 8) { if (e.currentTarget.classList.contains('sheetgrip')) to(n === 2 ? 1 : 2); else if (!n) to(1); }
+    if (dy < -30) to(1);
+    else if (dy > 30) to(0);
+    else if (Math.abs(dy) < 8) { if (e.currentTarget.classList.contains('sheetgrip')) to(n ? 0 : 1); else if (!n) to(1); }
   };
   [$('.sheetgrip', sc), $('.cardbar', sc)].forEach(el => { el.onpointerdown = down; el.onpointerup = up; el.onpointercancel = () => { d = null; }; });
-  let ty = null;
-  sc.ontouchstart = e => { ty = e.touches[0].clientY; };
-  sc.ontouchmove = e => { if (ty !== null && mobile() && level() === 1 && ty - e.touches[0].clientY > 14) { ty = null; setCard('full', true); } };
 }
 // 탭 바꾸기. 아래 금빛 단추는 다음 탭으로 이어 읽게 하고, 마지막 탭에서는 다음 장소로 걷기
 function showTab(k) {
@@ -2028,8 +2026,8 @@ function letterWire(root) {
 }
 function letterOnMap(id) {
   if ($('#journey').hidden) setView('journey');
-  // 휴대폰에서 끝까지 펼친 시트는 지도를 다 덮는다 — 반으로 내려 길이 보이게
-  if (innerWidth <= 900 && $('#scene').classList.contains('full')) setCard('open', true);
+  // 휴대폰에서 펼친 시트는 지도를 다 덮는다 — 접어 길이 보이게
+  if (innerWidth <= 900 && $('#scene').classList.contains('full')) setCard('peek', true);
   requestAnimationFrame(() => showLetters([id], true));
 }
 function openLetter(id) {
