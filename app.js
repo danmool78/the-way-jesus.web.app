@@ -1519,7 +1519,8 @@ function oneBlocked() {
   if (!b) { b = document.createElement('button'); b.id = 'onePlay'; b.type = 'button'; b.setAttribute('aria-label', t('listenScene')); b.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>'; document.body.append(b); }
   b.hidden = false; b.onclick = () => { b.hidden = true; speakScene(() => setTimeout(() => parent.postMessage('theway-one-done', '*'), 1200)); };
 }
-function speakScene(onDone) { followRead = true; speakQueue(sceneScript(), evAt(idx)?.song ? () => songPlay(onDone) : onDone); sceneReading = true; } // 시편: 노래 앞 낭독이 끝나면 노래
+// 낭독을 시작하면 폰에서는 장면 카드를 접어 무대가 보이게 한다(사용자 2026-11) — 듣는 동안은 무대를 보고, 글은 카드를 올려 본다
+function speakScene(onDone) { if (innerWidth <= 900) setCard('peek'); followRead = true; speakQueue(sceneScript(), evAt(idx)?.song ? () => songPlay(onDone) : onDone); sceneReading = true; } // 시편: 노래 앞 낭독이 끝나면 노래
 const stageBeat = (beat, s) => {
   const e = evAt(idx);
   if (e?.stops || e?.start) {
