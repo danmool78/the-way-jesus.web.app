@@ -173,7 +173,9 @@ export class StageModel {
     this.legs = [['Left'], ['Right']].map(([s]) => ({ up: bone(body, s + 'UpLeg'), lo: bone(body, s + 'Leg'), foot: bone(body, s + 'Foot'), toe: bone(body, s + 'ToeBase'), tip: bone(body, s + 'Toe_End') }));
     const hips = bone(body, 'Hips'); this.hipH = hips ? hips.getWorldPosition(v1).y * body.scale.x / (body.scale.x || 1) : 0.5; this.body = body; this.legW = 0;
     this.stone = newStone(); this.p.root.add(this.stone); this.hipsB = bone(body, 'Hips');
-    this.headB = bone(body, 'Head'); this.neckB = bone(body, 'Neck'); this.spineB = bone(body, 'Spine1') || bone(body, 'Spine'); this.topB = bone(body, 'HeadTop_End');
+    this.headB = bone(body, 'Head');
+    // 키 작은 사람은 몸을 똑같이 줄이면 머리까지 작아져 거인 옆의 인형처럼 보였다(사용자 2026-11: 삭개오) — 작아진 만큼 머리를 조금 키운다
+    { const hh = TYPES[type]?.height || 1; this.headK = hh < 0.95 ? (1 / hh) ** 0.6 : 0; } this.neckB = bone(body, 'Neck'); this.spineB = bone(body, 'Spine1') || bone(body, 'Spine'); this.topB = bone(body, 'HeadTop_End');
     // 날개(천사): 뼈 없는 따로 뜬 모델을 등(Spine2) 자리에 매 화면 붙인다 — 몸통만 따라가고 팔과는 상관없다
     if (o.wings) { this.wings = clone(o.wings.scene); this.wings.traverse(m => { if (m.isMesh) { m.frustumCulled = false; m.material = brighten(m.material).clone(); this.mats.push(m.material); } }); this.p.root.add(this.wings); this.wingB = bone(body, 'Spine2') || this.spineB; }
     this.play('idle', 0);
@@ -338,6 +340,7 @@ export class StageModel {
     if (!this.rest) { this.rest = []; const add = b => b && this.rest.push([b, b.quaternion.clone()]); this.legs.forEach(l => [l.up, l.lo, l.foot].forEach(add)); this.arms.forEach(([, m]) => [m.up, m.lo, m.hand].forEach(add)); [this.headB, this.neckB, this.spineB].forEach(add); }
     for (const [b, q] of this.rest) b.quaternion.copy(q);
     this.mixer.update(dt);
+    if (this.headK && this.headB) this.headB.scale.setScalar(this.headK);
     // 빌린 무릎 꿇기(기도) 동작이면 발등을 뒤로 눕혀 바닥에 편다 — 다른 모델의 발 각도라 발끝이 뒤에서 위로 들렸다(e02 목자, 사용자 2026-11)
     if (this.cur === this.acts.pray && kneel) { const r0 = this.p.root; r0.updateMatrixWorld(true); const back = new THREE.Vector3(0, 0.25, -1).normalize().applyQuaternion(r0.getWorldQuaternion(new THREE.Quaternion()));
       // 정강이도 땅에 눕힌다 — 빌린 동작은 다리 길이가 달라 무릎에서 정강이가 뒤로 치켜 올라가 발바닥이 하늘을 봤다(사용자 2026-11: 발목을 펴서 발등이 땅에)

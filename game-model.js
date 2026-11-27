@@ -444,6 +444,7 @@ export class ModelActor {
       i.setEffectiveWeight(1 - this.soft); this.acts.talk.setEffectiveWeight(this.soft);
     }
     this.mixer.update(dt);
+    if (this.headK && this.head) this.head.scale.setScalar(this.headK); // 키 작은 사람의 머리(game.js headOf)
     // 끄덕임: 고개를 두 번 가볍게 숙였다 든다 (곁의 사람이 그분의 말을 들으며)
     if (this.nodT > 0 && this.head) { this.nodT -= dt; const u = 1 - this.nodT / 0.9; this._nodQ = this.head.quaternion.clone(); this.head.quaternion.multiply(QB.setFromAxisAngle(AX, Math.sin(u * Math.PI * 2) ** 2 * 0.22)); }
     // 엄지 돌리기는 팔을 늘어뜨린 서 있기·걷기에만 — 말하기(손바닥을 펴는 손짓)·기도·잠에도 넣으니 손목이 비틀렸다(사용자 2026-11: 동작을 구분해 보정)

@@ -121,7 +121,7 @@ export const LEADS = {
 export const FOLLOW = { jesus: { from: 'e17', pool: ['john', 'andrew', 'james', 'peter'] } };
 // 키가 다른 사람 (삭개오는 키가 작았다 — 눅 19:3)
 // 골리앗은 여섯 규빗 한 뼘(삼상 17:4 — 약 2.9m, 보통 사람 1.7m의 1.7배), 사울은 모든 백성보다 어깨 위만큼 더 컸다(삼상 9:2 — 30cm 남짓)
-export const SIZE = { zacchaeus: 0.75, goliath: 1.7, saul: 1.18 };
+export const SIZE = { zacchaeus: 0.85, goliath: 1.7, saul: 1.18 };
 // 손에 드는 것 (game-model.js makeGear): 사람마다 하나둘. 순례자·목자·모세의 지팡이, 병정의 창과 방패, 우물가 여인의 물동이
 export const GEAR = {
   'pilgrim-man': ['staff'], 'pilgrim-woman': ['staff'], shepherd: ['crook'], jethro: ['crook'], david: ['crook'],
