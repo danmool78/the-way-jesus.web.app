@@ -344,6 +344,18 @@ function soldierAt(x, z) {
   if (!roman() && G.manG) return Object.assign(new ModelActor(tinted(G.manG, 'pilgrim-man', '#8a3324'), x, z).hold(['spear', 'shield', 'helmet']), { march: true });
   return new Actor('soldier', x, z, 0, { gaze: false });
 }
+// 병정의 시야(사용자 2026-11: 시야를 피해 다니게, 들키면 빠른 걸음으로 쫓아온다): 앞쪽 부채꼴 안에 들면 짝과 함께 쫓아오고(걷기보다 빠르고 달리기보다 느리게 — 달리면 따돌린다),
+// 붙잡히면 검문. 뒤나 옆으로 돌아가면 바로 곁을 지나도 모른다(너무 바짝 붙으면 들킨다). 시야는 땅에 옅은 붉은 부채꼴로 보인다
+const SIGHT = 7, SIGHT_HALF = 0.6, CHASE_SP = 4.4, CHASE_T = 8, GIVEUP = 12;
+const wrapA = a => Math.atan2(Math.sin(a), Math.cos(a));
+function sightCone() {
+  const n = 16, pos = [0, 0, 0];
+  for (let i = 0; i <= n; i++) { const a = -SIGHT_HALF + 2 * SIGHT_HALF * i / n; pos.push(Math.sin(a) * SIGHT, 0, Math.cos(a) * SIGHT); }
+  const idx = []; for (let i = 1; i <= n; i++) idx.push(0, i, i + 1);
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setIndex(idx);
+  const m = new THREE.Mesh(g, new THREE.MeshBasicMaterial({ color: 0xff4a2a, transparent: true, opacity: 0.16, depthTest: false, depthWrite: false, side: THREE.DoubleSide }));
+  m.renderOrder = 5; m.visible = false; return m;
+}
 function spawnPatrols() {
   // 큰 성읍(예루살렘·가버나움·여리고·가이사랴 등) 둘레를 둘씩 오가는 로마 병정
   G.patrols = [];
@@ -361,7 +373,8 @@ function spawnPatrols() {
     const L = Math.hypot(B[0] - A[0], B[1] - A[1]) || 1, nx = -(B[1] - A[1]) / L * 0.4, nz = (B[0] - A[0]) / L * 0.4;
     for (let i = 0; i < 2; i++) {
       const o = i ? [-nx, -nz] : [nx, nz], s = soldierAt(A[0] + o[0], A[1] + o[1]);
-      s.big = SCALE * 1.15; s.realWalk = true; s.speed = 2.2; G.scene.add(s.p.root); G.patrols.push({ s, A, B, to: 1, o }); // 병정은 순례자보다 크고 단단하게
+      s.big = SCALE * 1.15; s.realWalk = true; s.speed = 2.2; G.scene.add(s.p.root); // 병정은 순례자보다 크고 단단하게
+      const cone = sightCone(); G.scene.add(cone); G.patrols.push({ s, A, B, to: 1, o, cone, chase: 0 });
     }
   }
 }
@@ -393,17 +406,29 @@ function updateEvents(dt, me0) {
     if (d < 5 && !inputDir()) W.still += dt; else W.still = Math.max(0, W.still - dt);
     if (W.still > 2.2) { W.helped = true; W.a.set('idle'); G.bonus += 100; snd.play('bonus'); toast(tr('가서 너도 이와 같이 하라 (눅 10:37)<small>쓰러진 이를 도왔어요 · 이 장면 카드 +100점</small>'), true, 4000); }
   }
-  // 로마 병정
+  // 로마 병정 — 순찰하다 시야(앞쪽 부채꼴)에 내가 들면 짝과 함께 쫓아온다
   for (const P of G.patrols || []) {
-    const T = P.to ? P.B : P.A, d = Math.hypot(P.s.pos.x - px, P.s.pos.y - pz);
+    const T = P.to ? P.B : P.A, dx = px - P.s.pos.x, dz = pz - P.s.pos.y, d = Math.hypot(dx, dz);
     P.s.ground = GH(P.s.pos.x, P.s.pos.y); P.s.showT = d < 40 ? 1 : 0;
+    const C = P.cone; C.visible = d < 40 && !G.busy; C.position.set(P.s.pos.x, P.s.ground + 0.3, P.s.pos.y); C.rotation.y = P.s.face; C.material.opacity = P.chase > 0 ? 0.3 : 0.16;
     // 검문 중: 붙잡은 짝은 그 자리에 서서 나를 본다 (그냥 지나가 버리면 검문 같지 않았다 — 사용자 2026-11)
-    if (G.checkT > 0 && G.checkBy === P.A) { P.s.goal.copy(P.s.pos); P.s.target = G.me; continue; }
-    P.s.target = null; P.s.moveTo(T[0] + P.o[0], T[1] + P.o[1]);
-    if (Math.hypot(P.s.pos.x - T[0] - P.o[0], P.s.pos.y - T[1] - P.o[1]) < 0.4) P.to = 1 - P.to;
-    if (d < 2.4 && !(G.checkT > -3)) {
-      G.checkT = G.fx.check; G.checkBy = P.A; snd.play('halt'); toast(roman() ? tr('로마 병정에게 붙잡혔어요!<small>검문을 받느라 잠시 멈춥니다 · 병정을 피해 다니세요</small>') : tr('성을 지키는 병사에게 붙잡혔어요!<small>검문을 받느라 잠시 멈춥니다 · 병사를 피해 다니세요</small>'), false, 2800);
-      for (const Q of G.patrols) if (Q.A === P.A) { Q.s.goal.copy(Q.s.pos); Q.s.target = G.me; } // 짝도 함께 멈춘다
+    if (G.checkT > 0 && G.checkBy === P.A) { P.s.goal.copy(P.s.pos); P.s.target = G.me; P.chase = 0; P.s.speed = 2.2; continue; }
+    P.s.target = null;
+    if (P.chase > 0) { // 쫓는 중: 내 쪽으로 빠른 걸음 — 멀어지거나 시간이 지나면 순찰로 돌아간다
+      P.chase -= dt; P.s.speed = CHASE_SP; P.s.moveTo(px, pz);
+      if (d > GIVEUP || P.chase <= 0 || G.busy) { P.chase = 0; P.s.speed = 2.2; if (d > GIVEUP && !P.lostT) { P.lostT = 1; toast(tr('병정을 따돌렸어요'), true, 1800); } }
+    } else {
+      P.s.moveTo(T[0] + P.o[0], T[1] + P.o[1]);
+      if (Math.hypot(P.s.pos.x - T[0] - P.o[0], P.s.pos.y - T[1] - P.o[1]) < 0.4) P.to = 1 - P.to;
+      const seen = d < SIGHT && Math.abs(wrapA(Math.atan2(dx, dz) - P.s.face)) < SIGHT_HALF;
+      if (seen && !G.busy && !(G.checkT > -3)) {
+        for (const Q of G.patrols) if (Q.A === P.A) { Q.chase = CHASE_T; Q.lostT = 0; }
+        snd.play('halt'); toast(roman() ? tr('로마 병정이 나를 보았어요!<small>쫓아와요 — 달려서 따돌려요 (원 밖으로 끌기 · PC는 Shift)</small>') : tr('성을 지키는 병사가 나를 보았어요!<small>쫓아와요 — 달려서 따돌려요 (원 밖으로 끌기 · PC는 Shift)</small>'), false, 2600);
+      }
+    }
+    if ((P.chase > 0 ? d < 2.4 : d < 1.2) && !(G.checkT > -3) && !G.busy) { // 쫓아와 붙잡거나, 바짝 붙어 지나가다 들킴
+      G.checkT = G.fx.check; G.checkBy = P.A; snd.play('halt'); toast(roman() ? tr('로마 병정에게 붙잡혔어요!<small>검문을 받느라 잠시 멈춥니다 · 병정을 피해 다니세요</small>') : tr('성을 지키는 병사에게 붙잡혔어요!<small>검문을 받느라 잠시 멈춥니다 · 병사를 피해 다니세요</small>'), false, 2600);
+      for (const Q of G.patrols) if (Q.A === P.A) { Q.s.goal.copy(Q.s.pos); Q.s.target = G.me; Q.chase = 0; Q.s.speed = 2.2; } // 짝도 함께 멈춘다
       G.me.target = P.s; // 나도 병정을 돌아본다
     }
   }
