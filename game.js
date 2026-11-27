@@ -914,7 +914,7 @@ async function placeCast() {
     if (names[i].endsWith(':bearer') && prev) { const dx = G.me.pos.x - prev.pos.x, dz = G.me.pos.y - prev.pos.y, L = Math.hypot(dx, dz) || 1; ox = prev.pos.x + (dx * 0.85 - dz * 0.3) / L - gx; oz = prev.pos.y + (dz * 0.85 + dx * 0.3) / L - gz; } // 거인 몸에 겹치지 않게 조금 비켜
     const lie = names[i].endsWith(':lie'); // 누운 사람(베데스다의 병자 — 자리에 누워 있었다, 요 5:6)
     const a = new ModelActor(g, gx + ox, gz + oz, { noPillow: true }).hold(GEAR[names[i]]);
-    a.big = SCALE * (SIZE[names[i]] || 1); a.target = lie ? null : G.me; a.lie = lie; a.showT = 0; a.show = 0;
+    a.big = SCALE * (SIZE[names[i]] || 1); a.headK = headOf(SIZE[names[i]]); a.target = lie ? null : G.me; a.lie = lie; a.showT = 0; a.show = 0;
     if (lie) { a.set('sleep'); a.face = a.faceT = 1.2; }
     if (names[i] === 'goliath') a.set('taunt'); // 골리앗은 가슴을 치며 이스라엘을 모욕한다(삼상 17:10)
     G.scene.add(a.p.root); G.cast.push(a);
@@ -1040,7 +1040,7 @@ async function begin(fresh) {
   const lead = lname && await model(lname) && new ModelActor(await model(lname)).hold(GEAR[lname]);
   G.leader = lead || new Actor(J.leader, 0, 0, 0, { gaze: false }); G.leaderName = lead ? lname : null;
   G.fx = effects(myChar()); G.waterMax = G.fx.water; G.water = G.waterMax;
-  G.me = await pilgrim(sx, sz); G.me.realWalk = true; G.me.big = SCALE * (SIZE[myChar().id] || 1); G.me.walkRate = 1.5;
+  G.me = await pilgrim(sx, sz); G.me.realWalk = true; G.me.big = SCALE * (SIZE[myChar().id] || 1); G.me.headK = headOf(SIZE[myChar().id]); G.me.walkRate = 1.5;
   [G.soldierG, G.manG] = await Promise.all([roman() ? model('soldier') : null, model('pilgrim-man')]); // 병정·길가의 쓰러진 사람
   G.leader.realWalk = true; G.leader.big = SCALE; G.leader.target = G.me;
   G.scene.add(G.me.p.root, G.leader.p.root);
@@ -1053,6 +1053,8 @@ async function begin(fresh) {
   if (G.idx === 0) toast(tr('{0}님, {1:을/를} 따라 걸어요<small>지도에서 장소 이름을 찾아 걸어가세요 · 가까이 가면 그분의 발자국이 보여요</small>', esc(me.name), esc(J.who)), true, 4200);
 }
 
+// 키 작은 사람은 머리를 조금 키운다 — 몸을 똑같이 줄이니 머리도 작아져 다윗과 골리앗처럼 보였다(사용자 2026-11: 삭개오)
+const headOf = s => s && s < 0.95 ? (1 / s) ** 0.6 : 0;
 /* ---------- 이름표·화살표 ---------- */
 const tags = $('#tags'), v3 = new THREE.Vector3();
 const screen = (x, y, z) => { v3.set(x, y, z).project(G.cam); return [(v3.x + 1) / 2 * innerWidth, (1 - v3.y) / 2 * innerHeight, v3.z < 1]; };
