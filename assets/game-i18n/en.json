@@ -1262,5 +1262,8 @@
  "처음 3초 동안 카드를 모두 보여 줘요 — 잘 봐 두세요.<br>두 장씩 뒤집어 <b>같은 그림</b>의 이름과 그 사람의 이야기를 짝지어요. 틀리면 다시 덮여요.": "All cards are shown for the first 3 seconds — look closely.<br>Flip two at a time and match each name with that person’s story by <b>the same picture</b>. Wrong pairs flip back.",
  "병정을 따돌렸어요": "You shook off the soldiers",
  "로마 병정이 나를 보았어요!<small>쫓아와요 — 달려서 따돌려요 (원 밖으로 끌기 · PC는 Shift)</small>": "A Roman soldier saw you!<small>They’re coming — run to lose them (drag outside the ring · Shift on PC)</small>",
- "성을 지키는 병사가 나를 보았어요!<small>쫓아와요 — 달려서 따돌려요 (원 밖으로 끌기 · PC는 Shift)</small>": "A city guard saw you!<small>They’re coming — run to lose them (drag outside the ring · Shift on PC)</small>"
+ "성을 지키는 병사가 나를 보았어요!<small>쫓아와요 — 달려서 따돌려요 (원 밖으로 끌기 · PC는 Shift)</small>": "A city guard saw you!<small>They’re coming — run to lose them (drag outside the ring · Shift on PC)</small>",
+ "가파른 오르막이에요<small>숨이 차서 걸음이 느려져요 · 골짜기를 따라 돌아가도 돼요</small>": "A steep climb<small>You're out of breath and slow down · You can go around along the valley</small>",
+ "광야에 들어섰어요<small>물이 빨리 닳아요 · 우물이나 마을을 지나면 채울 수 있어요</small>": "You've entered the wilderness<small>Water runs out fast · Refill at a well or a village</small>",
+ "목이 말라 물을 마셨어요<small>광야에서는 물이 빨리 닳아요 · 물병 하나를 비웠습니다</small>": "Thirsty — you drank some water<small>Water runs out fast in the wilderness · One bottle is empty</small>"
 }

@@ -257,9 +257,23 @@ const ARRIVE = 2.5;
 const SAIL = 3.2, STORM = ['a35', 'a36'];
 const isSea = (x, z) => !!JOURNEYS[JID].sail && waterKey(...toLL(x, z)) === 'sea';
 // 이 구간을 곧장 가면 걸릴 시간(초): 바다는 배로 빠르게, 광풍 구간은 느리게
+// 산길 (사용자 2026-11 '산길 각도에 따라 빡세게'): 걷는 쪽으로 0.8km 앞의 땅과 견준 기울기로 빠르기를 바꾼다.
+// 높이는 EXAG(4)배 과장이라 g 0.25 ≈ 실제 6% 오르막(여리고→예루살렘 비탈) → 0.7배, g 0.5(가파른 골짜기 벽) → 0.4배. 내리막은 조금만 빨라진다(많아야 1.15배)
+const slopeK = g => g > 0 ? Math.max(0.4, 1 - 1.2 * g) : Math.min(1.15, 1 - 0.3 * g);
+const gradeAt = (x, z, dx, dz) => (GH(x + dx * 0.8, z + dz * 0.8) - GH(x, z)) / 0.8;
+// 광야 (사용자 2026-11 '광야는 물이 좀 빨리 닳게'): 비가 적은 땅 — 브엘세바 남쪽 네게브·시내, 유대 광야(예루살렘 동쪽 비탈에서 사해까지),
+// 요단 동쪽 너머 아라비아 사막. 나일 강가는 빼고, 마을·우물 8km 안(오아시스 여리고·엔게디 등)도 뺀다
+function desertAt(x, z) {
+  const [la, ln] = toLL(x, z);
+  const dry = la < 31.35 && ln > 32.4 || la > 31.15 && la < 31.9 && ln > 35.27 && ln < 35.55 || ln > 36.3;
+  if (!dry || waterKey(la, ln)) return false;
+  return ![...G.towns || [], ...G.world?.wells || []].some(([tx, tz]) => Math.abs(tx - x) < 8 && Math.abs(tz - z) < 8 && Math.hypot(tx - x, tz - z) < 8);
+}
+const THIRST = 26; // 광야를 이만큼(초) 걸을 때마다 물병 하나
 function legSeconds(sx, sz, gx, gz) {
-  const N = 60, L = Math.hypot(gx - sx, gz - sz); let t = 0;
-  for (let i = 0; i < N; i++) { const u = (i + 0.5) / N, sea = isSea(sx + (gx - sx) * u, sz + (gz - sz) * u); t += L / N / (G.speed * (sea ? SAIL : 1)); }
+  const N = 60, L = Math.hypot(gx - sx, gz - sz), ux = (gx - sx) / (L || 1), uz = (gz - sz) / (L || 1); let t = 0;
+  // 제한 시간도 곧은 길의 오르막·내리막만큼 — 산길을 넣고도 금 카드가 나오게
+  for (let i = 0; i < N; i++) { const u = (i + 0.5) / N, x = sx + (gx - sx) * u, z = sz + (gz - sz) * u, sea = isSea(x, z); t += L / N / (G.speed * (sea ? SAIL : slopeK(gradeAt(x, z, ux, uz)))); }
   return t * (STORM.includes(G.events[G.idx]?.id) ? 1.8 : 1);
 }
 const SEE = 3;
@@ -296,6 +310,7 @@ function buildWorld(j) {
     m.rotation.x = -Math.PI / 2; m.position.set((x0 + x1) / 2, -0.02, (z0 + z1) / 2); m.renderOrder = -30; S.add(m);
   }
   for (const [k, p] of Object.entries(WATERS)) { if (j.sail && k !== 'galilee' && k !== 'dead' && k !== 'hula') continue; const w = waterMesh(p, k === 'sea' || k === 'suez' || k === 'aqaba' ? '#4f7f99' : '#5f93ad'); w.position.y = LAKE_LEVEL[k] ?? 0.05; S.add(w); }
+  G.towns = Object.values(G.data.places).filter(p => !p.hidden && p.lat != null && !/광야|사막/.test(p.name)).map(p => toXZ(p.lat, p.lng));
   G.world = createWorld({ scene: S, renderer: G.r, toXZ, regions: j.terrain, places: G.data.places, journeyId: JID, wet: (x, z) => !!waterKey(...toLL(x, z)) });
   // 발자국: 납작한 타원 하나를 여러 번(InstancedMesh) — 한 번 만들어 장면마다 자리만 바꿔 쓴다
   const fg = new THREE.CircleGeometry(1, 14); fg.rotateX(-Math.PI / 2); fg.scale(0.05, 1, 0.11);
@@ -557,6 +572,12 @@ function drawOil() { $('#oil').innerHTML = [...Array(OILMAX).keys()].map(i => `<
 const addOil = n => { const k = Math.min(OILMAX - G.oil, n); G.oil += k; drawOil(); return k; };
 function drawWater() { $('#water').innerHTML = [...Array(G.waterMax || 3).keys()].map(i => `<i class="${i < G.water ? '' : 'empty'}"></i>`).join(''); }
 const LOST = [tr('모래바람이 불어와 길을 잃었어요!'), tr('광야에서 방향을 잃었어요!'), tr('엉뚱한 길로 너무 멀리 왔어요!')];
+// 광야의 목마름: 벌이 아니라 닳는 것 — 흔들림 없이 물병만 하나. 마지막 한 병은 남겨 둔다(목마름으로 퀴즈까지 가면 억울했다)
+function thirst() {
+  if (G.busy || G.water <= 1) return;
+  G.water--; drawWater(); snd.play('lose');
+  toast(tr('목이 말라 물을 마셨어요<small>광야에서는 물이 빨리 닳아요 · 물병 하나를 비웠습니다</small>'), false, 2600);
+}
 function penalty(kind) {
   if (G.coolT > 0 || G.busy) return;
   G.coolT = 3.5; G.lostT = 0;
@@ -1000,7 +1021,7 @@ function startLeg(walkFrom) {
   if (walkFrom) { G.leader.pos.set(...walkFrom); G.leader.goal.set(sx + 0.6, sz); G.leader.set('idle'); }
   else { G.leader.pos.set(sx + 0.6, sz); G.leader.goal.copy(G.leader.pos); G.leader.set('idle'); }
   G.trail = makeTrail(sx, sz, walkFrom); // 발자국도 그분이 서신 자리로
-  G.legStart = [G.me.pos.x, G.me.pos.y]; G.legWalked = 0; G.legT = 0; G.lostT = 0; G.asks = 0; G.askT = 0;
+  G.legStart = [G.me.pos.x, G.me.pos.y]; G.legWalked = 0; G.legT = 0; G.thirstT = 0; G.lostT = 0; G.asks = 0; G.askT = 0;
   G.legStraight = Math.hypot(gx - G.me.pos.x, gz - G.me.pos.y);
   // 길 거리: 바다·호수를 돌아가는 실제 걸음으로 잰다 (game-nav.js) — 길 잃음·길 묻기·제한 시간·등불·별이 모두 이것으로
   G.nav = G.legStraight < SAME ? null : buildNav({ from: [G.me.pos.x, G.me.pos.y], to: [gx, gz], walkable: (x, z) => !blocked(x, z) });
@@ -1132,7 +1153,7 @@ function frame(now) {
     pv.r.render(pv.scene, pv.cam); return;
   }
   if (!G.me) return;
-  G.coolT -= dt; G.slowT -= dt; G.legT += dt;
+  G.coolT -= dt; G.slowT -= dt; G.legT += dt; G.steepCool -= dt; G.desertCool -= dt;
   const me0 = G.me, dir = !G.busy && !(G.checkT > 0) && inputDir();
   if (!G.busy) updateEvents(dt, me0);
   // 광풍 (바울 — 그레데 앞바다·아드리아 바다를 건너는 동안): 바람이 쉬지 않고 배를 남서쪽으로 민다. 흔들리며 방향이 조금씩 바뀐다
@@ -1153,8 +1174,10 @@ function frame(now) {
     const boat = onGalilee(me0.pos.x, me0.pos.y), run = !boat && (keys.has('shift') || G.runDrag);
     const soft = stick.k && !run ? Math.min(1, Math.max(0.4, stick.k)) : 1; // 조금만 끌면 천천히
     const sea = boat && isSea(me0.pos.x, me0.pos.y); // 지중해의 배는 걷기보다 훨씬 빠르다 (하루 30km를 걷고, 배는 바람을 타면 100km 넘게 간다)
-    const sp = G.speed * (G.slowT > 0 ? (G.fx.fx === 'wild' ? 0.75 : 0.45) : 1) * (sea ? SAIL * (G.fx.fx === 'boat' ? 1.15 : 1) * (G.stormOn ? 0.6 : 1) : boat ? (G.fx.fx === 'boat' ? 0.95 : 0.65) : 1) * (run ? 1.8 : soft), step = sp * dt;
-    me0.walkRate = run ? 2.6 : 1.5 * soft;
+    const sk = boat ? 1 : (G.slope = (G.slope ?? 1) + (slopeK(gradeAt(me0.pos.x, me0.pos.y, dir[0], dir[1])) - (G.slope ?? 1)) * Math.min(1, dt * 4)); // 부드럽게
+    if (sk < 0.74 && !(G.steepCool > 0) && G.legT > 2) { G.steepCool = 45; toast(tr('가파른 오르막이에요<small>숨이 차서 걸음이 느려져요 · 골짜기를 따라 돌아가도 돼요</small>'), false, 2800); }
+    const sp = sk * G.speed * (G.slowT > 0 ? (G.fx.fx === 'wild' ? 0.75 : 0.45) : 1) * (sea ? SAIL * (G.fx.fx === 'boat' ? 1.15 : 1) * (G.stormOn ? 0.6 : 1) : boat ? (G.fx.fx === 'boat' ? 0.95 : 0.65) : 1) * (run ? 1.8 : soft), step = sp * dt;
+    me0.walkRate = (run ? 2.6 : 1.5 * soft) * Math.sqrt(sk);
     // 이미 물·가장자리 안에 서 있으면(물 위 장면에서 이어 걷기 등) 어느 쪽으로든 나올 수 있게 — 갇혀 물병만 잃었다(사용자 2026-11)
     let nx = me0.pos.x + dir[0] * step, nz = me0.pos.y + dir[1] * step;
     let hit = blocked(me0.pos.x, me0.pos.y) ? null : blocked(nx, nz);
@@ -1167,6 +1190,12 @@ function frame(now) {
       const moved = Math.hypot(nx - me0.pos.x, nz - me0.pos.y);
       me0.speed = sp; me0.goal.set(me0.pos.x + (nx - me0.pos.x) * 2, me0.pos.y + (nz - me0.pos.y) * 2);
       G.legWalked += moved; G.total += moved;
+      // 광야: 걷는 동안 목이 말라 물병이 닳는다. 들어설 때 한 번 알려 주고, 우물·마을에서 다시 채운다
+      if (!boat && desertAt(nx, nz)) {
+        if (!G.inDesert) { G.inDesert = true; if (!(G.desertCool > 0)) { G.desertCool = 60; toast(tr('광야에 들어섰어요<small>물이 빨리 닳아요 · 우물이나 마을을 지나면 채울 수 있어요</small>'), false, 3200); } }
+        G.thirstT = (G.thirstT || 0) + dt;
+        if (G.thirstT > THIRST) { G.thirstT = 0; thirst(); }
+      } else G.inDesert = false;
       // 길 잃음: 목표에서 멀어지는 쪽으로 오래 걸으면
       const d = navD(nx, nz);
       // 한참 헤매면 잠깐 바른 쪽을 그냥 가리켜 준다 (사용자 2026-11) — 걷는데 12초 동안 1km도 가까워지지 않으면, 20초에 한 번
@@ -1307,6 +1336,6 @@ async function minisGate() {
   } catch { box('로그인 도구를 불러오지 못했어요.'); }
 }
 if (new URLSearchParams(location.search).has('minis')) minisGate();
-if (new URLSearchParams(location.search).has('debug')) window.__game = { G, me, pv, toXZ, goalXZ, steer: (x, z) => { stick.x = x; stick.y = z; }, startLeg: (...a) => startLeg(...a), wetAt: (x, z) => wetAt(x, z), standXZ: () => standXZ(), mini: (id, cb) => playMiniGame(MINI[JID][id], cb || (r => console.log('mini', JSON.stringify(r)))), meet: () => meet(), pick: id => { G.idx = G.events.findIndex(e => e.id === id); pickWord(G.events[G.idx], () => {}); }, treasure: id => foundTreasure({ id }), reveal: (id, s = 3) => { G.idx = G.events.findIndex(e => e.id === id); reveal(G.events[G.idx], s, 0); } }; // 끝까지 자동으로 걸어 보는 확인용
+if (new URLSearchParams(location.search).has('debug')) window.__game = { G, me, pv, toXZ, goalXZ, desertAt: (x, z) => desertAt(x, z), slopeK, gradeAt, steer: (x, z) => { stick.x = x; stick.y = z; }, startLeg: (...a) => startLeg(...a), wetAt: (x, z) => wetAt(x, z), standXZ: () => standXZ(), mini: (id, cb) => playMiniGame(MINI[JID][id], cb || (r => console.log('mini', JSON.stringify(r)))), meet: () => meet(), pick: id => { G.idx = G.events.findIndex(e => e.id === id); pickWord(G.events[G.idx], () => {}); }, treasure: id => foundTreasure({ id }), reveal: (id, s = 3) => { G.idx = G.events.findIndex(e => e.id === id); reveal(G.events[G.idx], s, 0); } }; // 끝까지 자동으로 걸어 보는 확인용
 setupUI(); resize();
 requestAnimationFrame(frame);
