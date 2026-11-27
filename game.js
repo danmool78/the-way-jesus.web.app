@@ -60,13 +60,13 @@ const WATERS = {
 // 갈대 바다 (모세 여정만, 사용자 2026-11 '갈대 바다에 왔는데 물이 없네'): 장소 핀(30.1, 32.55)이 수에즈 만 끝(29.97)보다 북쪽 맨땅이었다.
 // 만 끝에서 쓴 호수까지 좁은 바다를 잇고, 핀을 가로지르는 띠(plug)는 '바닷가의 노래'(m10)로 가는 동안만 갈라져 마른 땅이 된다(출 14:22) —
 // 그 길로 건너 맞은편 바닷가(REED_EAST)에서 노래한다. 그 뒤엔 물이 다시 덮는다(14:28)
-const REED = {
-  s: [[29.95, 32.52], [30.085, 32.515], [30.085, 32.625], [29.95, 32.61]],
-  plug: [[30.085, 32.515], [30.115, 32.515], [30.115, 32.625], [30.085, 32.625]],
-  n: [[30.115, 32.515], [30.2, 32.5], [30.29, 32.44], [30.31, 32.47], [30.22, 32.56], [30.115, 32.625]],
+const REED = { // 사용자 2026-11 '병거가 잠겨 죽을 정도면 큰 바다여야지' — 수에즈 만에 넓게 이어 폭 20km 남짓
+  s: [[29.8, 32.45], [29.95, 32.5], [30.085, 32.515], [30.085, 32.73], [29.95, 32.72], [29.8, 32.7]],
+  plug: [[30.085, 32.515], [30.115, 32.515], [30.115, 32.73], [30.085, 32.73]],
+  n: [[30.115, 32.515], [30.2, 32.5], [30.29, 32.44], [30.31, 32.47], [30.29, 32.62], [30.2, 32.72], [30.115, 32.73]],
   bitter: [[30.45, 32.33], [30.4, 32.42], [30.28, 32.45], [30.32, 32.36]],
 };
-const REED_EAST = { m10: [30.1, 32.665] };
+const REED_EAST = { m10: [30.1, 32.765] };
 const reedOpen = () => G.events?.[G.idx]?.id === 'm10';
 
 /* ---------- 좌표: 1단위 = 1km, 북쪽이 -z ---------- */
@@ -90,7 +90,7 @@ const inBase = (b, la, ln) => { const B = BASES[b]; return la > B.lat0 && la < B
 function waterKey(la, ln) {
   if (!JOURNEYS[JID]?.sail) {
     for (const [k, p] of Object.entries(WATERS)) if (inPoly(la, ln, p)) return k;
-    if (JID === 'moses' && la > 29.9 && la < 30.5 && ln > 32.3 && ln < 32.7) for (const [k, p] of Object.entries(REED)) if (inPoly(la, ln, p) && !(k === 'plug' && reedOpen())) return 'reed';
+    if (JID === 'moses' && la > 29.75 && la < 30.5 && ln > 32.3 && ln < 32.8) for (const [k, p] of Object.entries(REED)) if (inPoly(la, ln, p) && !(k === 'plug' && reedOpen())) return 'reed';
     return null;
   }
   for (const k of ['galilee', 'dead', 'hula']) if (inPoly(la, ln, WATERS[k])) return k;
@@ -98,7 +98,7 @@ function waterKey(la, ln) {
   return MASK.land && !MASK.land(la, ln) ? 'sea' : null;
 }
 const SEA_Y = 0.03; // 지중해 수면 (바울 여정 — 바탕 그림 밑에 까는 바다)
-const REED_Y = 0.14; // 갈대 바다 수면 — 서쪽 기슭 땅(0.1–0.13)이 물을 덮지 않게
+const REED_Y = 0.22; // 갈대 바다 수면 — 기슭 땅(서쪽 0.1–0.13, 동쪽 0.15–0.2)이 물을 덮지 않게
 const inPoly = (lat, lng, poly) => { let c = false; for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const [ai, bi] = poly[i], [aj, bj] = poly[j]; if ((ai > lat) !== (aj > lat) && lng < (bj - bi) * (lat - ai) / (aj - ai) + bi) c = !c; } return c; };
 
 /* ---------- 순례자 꾸미기 ---------- */
@@ -328,7 +328,13 @@ function buildWorld(j) {
   for (const [k, p] of Object.entries(WATERS)) { if (j.sail && k !== 'galilee' && k !== 'dead' && k !== 'hula') continue; const w = waterMesh(p, k === 'sea' || k === 'suez' || k === 'aqaba' ? '#4f7f99' : '#5f93ad'); w.position.y = LAKE_LEVEL[k] ?? 0.05; S.add(w); }
   if (JID === 'moses') { // 갈대 바다: 띠(plug)는 따로 — 갈라진 동안 숨긴다
     G.reedPlug = null;
-    for (const [k, p] of Object.entries(REED)) { const w = waterMesh(p, '#5f93ad'); w.position.y = REED_Y; S.add(w); if (k === 'plug') G.reedPlug = w; }
+    for (const [k, p] of Object.entries(REED)) { const w = waterMesh(p, '#4f7f99'); w.position.y = REED_Y; S.add(w); if (k === 'plug') G.reedPlug = w; }
+    // 갈라진 동안 길 양쪽에 선 물벽(14:22 '물이 좌우에 벽이 되니')
+    const [x0, z0] = toXZ(30.1, 32.515), [x1] = toXZ(30.1, 32.73), [, zN] = toXZ(30.115, 32.6), [, zS] = toXZ(30.085, 32.6), H = 1.6;
+    const wm = new THREE.MeshStandardMaterial({ color: '#5f93ad', roughness: .3, metalness: .1, transparent: true, opacity: .8 });
+    G.reedWalls = new THREE.Group();
+    for (const z of [zN, zS]) { const b = new THREE.Mesh(new THREE.BoxGeometry(x1 - x0, H, 0.5), wm); b.position.set((x0 + x1) / 2, REED_Y + H / 2, z); G.reedWalls.add(b); }
+    G.reedWalls.visible = false; S.add(G.reedWalls);
   }
   G.towns = Object.values(G.data.places).filter(p => !p.hidden && p.lat != null && !/광야|사막/.test(p.name)).map(p => toXZ(p.lat, p.lng));
   G.world = createWorld({ scene: S, renderer: G.r, toXZ, regions: j.terrain, places: G.data.places, journeyId: JID, wet: (x, z) => !!waterKey(...toLL(x, z)) });
@@ -1174,7 +1180,7 @@ function frame(now) {
     pv.r.render(pv.scene, pv.cam); return;
   }
   if (!G.me) return;
-  if (G.reedPlug) G.reedPlug.visible = !reedOpen();
+  if (G.reedPlug) { G.reedPlug.visible = !reedOpen(); G.reedWalls.visible = reedOpen(); }
   G.coolT -= dt; G.slowT -= dt; G.legT += dt; G.steepCool -= dt; G.desertCool -= dt;
   const me0 = G.me, dir = !G.busy && !(G.checkT > 0) && inputDir();
   if (!G.busy) updateEvents(dt, me0);
