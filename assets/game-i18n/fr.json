@@ -1265,5 +1265,6 @@
  "성을 지키는 병사가 나를 보았어요!<small>쫓아와요 — 달려서 따돌려요 (원 밖으로 끌기 · PC는 Shift)</small>": "Un garde de la ville t’a vu !<small>Il te poursuit — cours pour le semer (glisse hors du cercle · Maj sur PC)</small>",
  "가파른 오르막이에요<small>숨이 차서 걸음이 느려져요 · 골짜기를 따라 돌아가도 돼요</small>": "Une montée raide<small>Tu es essoufflé et tu ralentis · Tu peux contourner par la vallée</small>",
  "광야에 들어섰어요<small>물이 빨리 닳아요 · 우물이나 마을을 지나면 채울 수 있어요</small>": "Tu entres dans le désert<small>L'eau s'épuise vite · Remplis-la à un puits ou dans un village</small>",
- "목이 말라 물을 마셨어요<small>광야에서는 물이 빨리 닳아요 · 물병 하나를 비웠습니다</small>": "Assoiffé, tu as bu<small>Dans le désert, l'eau s'épuise vite · Une gourde est vide</small>"
+ "목이 말라 물을 마셨어요<small>광야에서는 물이 빨리 닳아요 · 물병 하나를 비웠습니다</small>": "Assoiffé, tu as bu<small>Dans le désert, l'eau s'épuise vite · Une gourde est vide</small>",
+ "물병 하나를 채웠어요": "Une gourde remplie"
 }
